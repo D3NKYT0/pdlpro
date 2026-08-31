@@ -17,7 +17,7 @@ export function RegisterPage() {
     try {
       await register({ username, email, password, accept_terms: acceptTerms })
       toast.success('Conta criada. Confirme o e-mail enviado.')
-      navigate('/')
+      navigate('/painel')
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha no cadastro')
     }

@@ -1,12 +1,19 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { isApiError, isTwoFactorChallenge } from '../services/api'
 
+function safeNext(value: string | null) {
+  if (value && value.startsWith('/') && !value.startsWith('//')) return value
+  return '/painel'
+}
+
 export function LoginPage() {
   const { login, verifyTwoFactor } = useAuth()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const next = safeNext(params.get('next'))
   const [loginValue, setLoginValue] = useState('')
   const [password, setPassword] = useState('')
   const [challenge, setChallenge] = useState('')
@@ -17,7 +24,7 @@ export function LoginPage() {
     try {
       if (challenge) {
         await verifyTwoFactor(challenge, code)
-        navigate('/')
+        navigate(next)
         return
       }
       const result = await login(loginValue, password)
@@ -26,7 +33,7 @@ export function LoginPage() {
         toast.success('Informe o código do autenticador')
         return
       }
-      navigate('/')
+      navigate(next)
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha no login')
     }

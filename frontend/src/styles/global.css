@@ -46,6 +46,7 @@ button, input, select { font: inherit; }
   border-radius: 8px;
 }
 .nav a.active, .nav a:hover { background: rgba(212, 175, 55, 0.12); color: var(--text); }
+.shell .card { background: rgba(27, 24, 18, 0.96); }
 .content { padding: 32px 40px; }
 .card {
   background: var(--bg-panel);
