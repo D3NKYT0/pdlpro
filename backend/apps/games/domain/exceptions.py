@@ -14,3 +14,11 @@ class AlreadyClaimedError(ConflictError):
 
 class GameInactiveError(ValidationDomainError):
     message = "Este jogo não está ativo."
+
+
+class BoxEmptyError(ValidationDomainError):
+    message = "Esta caixa não tem boosters restantes."
+
+
+class BoxNotOwnedError(ValidationDomainError):
+    message = "Essa caixa não pertence a você."

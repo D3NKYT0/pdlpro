@@ -1,6 +1,19 @@
 from django.contrib import admin
 
-from apps.games.infrastructure.models import Bag, BagItem, DailyBonusClaim, GameConfig, Prize, SpinHistory
+from apps.games.infrastructure.models import (
+    Bag,
+    BagItem,
+    Box,
+    BoxSlot,
+    BoxType,
+    CatalogItem,
+    DailyBonusClaim,
+    DiceHistory,
+    GameConfig,
+    Prize,
+    SlotHistory,
+    SpinHistory,
+)
 
 
 @admin.register(GameConfig)
@@ -31,3 +44,34 @@ class BagItemAdmin(admin.ModelAdmin):
 @admin.register(DailyBonusClaim)
 class DailyBonusClaimAdmin(admin.ModelAdmin):
     list_display = ("user", "claimed_on", "amount")
+
+
+@admin.register(CatalogItem)
+class CatalogItemAdmin(admin.ModelAdmin):
+    list_display = ("name", "item_id", "rarity", "weight", "active")
+
+
+@admin.register(BoxType)
+class BoxTypeAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "boosters_amount", "active")
+    filter_horizontal = ("items",)
+
+
+@admin.register(Box)
+class BoxAdmin(admin.ModelAdmin):
+    list_display = ("user", "box_type", "created_at")
+
+
+@admin.register(BoxSlot)
+class BoxSlotAdmin(admin.ModelAdmin):
+    list_display = ("box", "item_name", "rarity", "opened")
+
+
+@admin.register(DiceHistory)
+class DiceHistoryAdmin(admin.ModelAdmin):
+    list_display = ("user", "bet_type", "roll", "won", "payout")
+
+
+@admin.register(SlotHistory)
+class SlotHistoryAdmin(admin.ModelAdmin):
+    list_display = ("user", "reels", "won", "payout")

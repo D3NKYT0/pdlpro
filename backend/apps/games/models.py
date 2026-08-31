@@ -1,3 +1,29 @@
-from apps.games.infrastructure.models import Bag, BagItem, DailyBonusClaim, GameConfig, Prize, SpinHistory
+from apps.games.infrastructure.models import (
+    Bag,
+    BagItem,
+    Box,
+    BoxSlot,
+    BoxType,
+    CatalogItem,
+    DailyBonusClaim,
+    DiceHistory,
+    GameConfig,
+    Prize,
+    SlotHistory,
+    SpinHistory,
+)
 
-__all__ = ["Bag", "BagItem", "DailyBonusClaim", "GameConfig", "Prize", "SpinHistory"]
+__all__ = [
+    "Bag",
+    "BagItem",
+    "Box",
+    "BoxSlot",
+    "BoxType",
+    "CatalogItem",
+    "DailyBonusClaim",
+    "DiceHistory",
+    "GameConfig",
+    "Prize",
+    "SlotHistory",
+    "SpinHistory",
+]

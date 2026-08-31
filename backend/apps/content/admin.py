@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.content.infrastructure.models import DownloadLink, Faq, News
+from apps.content.infrastructure.models import CalendarEvent, DownloadLink, Faq, News, WikiPage
 
 
 @admin.register(News)
@@ -18,3 +18,16 @@ class FaqAdmin(admin.ModelAdmin):
 @admin.register(DownloadLink)
 class DownloadLinkAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "is_published")
+
+
+@admin.register(WikiPage)
+class WikiPageAdmin(admin.ModelAdmin):
+    list_display = ("title", "slug", "category", "is_published", "is_menu_item", "order")
+    prepopulated_fields = {"slug": ("title",)}
+    list_filter = ("category", "is_published")
+
+
+@admin.register(CalendarEvent)
+class CalendarEventAdmin(admin.ModelAdmin):
+    list_display = ("title", "starts_at", "ends_at", "is_published")
+    list_filter = ("is_published",)

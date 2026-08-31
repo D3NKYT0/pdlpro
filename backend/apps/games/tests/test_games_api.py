@@ -91,3 +91,37 @@ def test_buy_tokens_and_spin_roulette(api, player):
     assert bag.status_code == 200
     assert bag.data[0]["item_name"] == "Adena"
     assert bag.data[0]["quantity"] == 1
+
+
+@pytest.mark.django_db
+def test_buy_and_open_box(api, player):
+    from apps.games.infrastructure.models import BoxType, CatalogItem
+
+    CatalogItem.objects.create(name="Scroll", item_id=736, rarity="common", weight=10)
+    box_type = BoxType.objects.create(name="Bronze", price=Decimal("5.00"), boosters_amount=2)
+    Wallet.objects.create(user=player, balance=Decimal("20.00"))
+    player.fichas = 3
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert bought.status_code == 200, bought.data
+    assert bought.data["remaining"] == 2
+    opened = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
+    assert opened.status_code == 200, opened.data
+    assert opened.data["item"]["name"] == "Scroll"
+    assert opened.data["remaining"] == 1
+
+
+@pytest.mark.django_db
+def test_dice_and_slots(api, player):
+    GameConfig.objects.update_or_create(code="dice", defaults={"name": "Dados", "active": True, "settings": {"min_bet": 1}})
+    GameConfig.objects.update_or_create(code="slots", defaults={"name": "Slots", "active": True, "settings": {"cost": 1}})
+    player.fichas = 20
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    dice = api.post("/api/v1/customer/games/dice/", {"bet_type": "even", "amount": 1}, format="json")
+    assert dice.status_code == 200, dice.data
+    assert dice.data["roll"] in range(1, 7)
+    slots = api.post("/api/v1/customer/games/slots/")
+    assert slots.status_code == 200, slots.data
+    assert len(slots.data["reels"]) == 3

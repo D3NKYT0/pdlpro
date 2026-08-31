@@ -1,3 +1,3 @@
-from apps.content.infrastructure.models import DownloadLink, Faq, News
+from apps.content.infrastructure.models import CalendarEvent, DownloadLink, Faq, News, WikiPage
 
-__all__ = ["DownloadLink", "Faq", "News"]
+__all__ = ["CalendarEvent", "DownloadLink", "Faq", "News", "WikiPage"]

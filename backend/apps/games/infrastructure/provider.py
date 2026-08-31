@@ -1,3 +1,10 @@
+from apps.games.application.box_use_cases import (
+    BuyBoxUseCase,
+    ListBoxTypesUseCase,
+    OpenBoxUseCase,
+    TransferBagToInventoryUseCase,
+)
+from apps.games.application.minigame_use_cases import GetMinigamesStateUseCase, PlayDiceUseCase, SpinSlotsUseCase
 from apps.games.application.use_cases import (
     BuyTokensUseCase,
     ClaimDailyBonusUseCase,
@@ -20,5 +27,12 @@ class GamesProvider(AppProvider):
             ClaimDailyBonusUseCase,
             GetDailyBonusStateUseCase,
             GetBagUseCase,
+            ListBoxTypesUseCase,
+            BuyBoxUseCase,
+            OpenBoxUseCase,
+            TransferBagToInventoryUseCase,
+            GetMinigamesStateUseCase,
+            PlayDiceUseCase,
+            SpinSlotsUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

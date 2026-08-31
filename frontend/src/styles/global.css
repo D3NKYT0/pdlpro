@@ -78,7 +78,7 @@ button, input, select { font: inherit; }
   border: 1px solid var(--border);
 }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.field input {
+.field input, .field select {
   background: #0f0d0a;
   border: 1px solid var(--border);
   color: var(--text);

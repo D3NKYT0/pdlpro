@@ -3,7 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
-from apps.content.infrastructure.models import DownloadLink, Faq, News
+from django.db.models import Q
+
+from apps.content.infrastructure.models import CalendarEvent, DownloadLink, Faq, News, WikiPage
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
 
@@ -66,4 +68,98 @@ class ListDownloadsUseCase(UseCase[None, list[dict]]):
         return [
             {"id": str(item.id), "title": item.title, "url": item.url, "category": item.category}
             for item in DownloadLink.objects.filter(is_published=True)
+        ]
+
+
+@dataclass(frozen=True, slots=True)
+class WikiPageDTO:
+    id: UUID
+    slug: str
+    title: str
+    summary: str
+    body: str
+    category: str
+    icon: str
+    is_menu_item: bool
+
+
+class ListWikiPagesUseCase(UseCase[None, list[WikiPageDTO]]):
+    def execute(self, data: None = None) -> list[WikiPageDTO]:
+        return [
+            WikiPageDTO(
+                id=item.id,
+                slug=item.slug,
+                title=item.title,
+                summary=item.summary,
+                body="",
+                category=item.category,
+                icon=item.icon,
+                is_menu_item=item.is_menu_item,
+            )
+            for item in WikiPage.objects.filter(is_published=True)
+        ]
+
+
+@dataclass(frozen=True, slots=True)
+class GetWikiPageInput:
+    slug: str
+
+
+class GetWikiPageUseCase(UseCase[GetWikiPageInput, WikiPageDTO]):
+    def execute(self, data: GetWikiPageInput) -> WikiPageDTO:
+        item = WikiPage.objects.filter(slug=data.slug, is_published=True).first()
+        if item is None:
+            raise EntityNotFoundError("Página do wiki não encontrada.")
+        return WikiPageDTO(
+            id=item.id,
+            slug=item.slug,
+            title=item.title,
+            summary=item.summary,
+            body=item.body,
+            category=item.category,
+            icon=item.icon,
+            is_menu_item=item.is_menu_item,
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class SearchWikiInput:
+    query: str
+
+
+class SearchWikiUseCase(UseCase[SearchWikiInput, list[WikiPageDTO]]):
+    def execute(self, data: SearchWikiInput) -> list[WikiPageDTO]:
+        query = data.query.strip()
+        if len(query) < 2:
+            return []
+        rows = WikiPage.objects.filter(is_published=True).filter(
+            Q(title__icontains=query) | Q(summary__icontains=query) | Q(body__icontains=query)
+        )
+        return [
+            WikiPageDTO(
+                id=item.id,
+                slug=item.slug,
+                title=item.title,
+                summary=item.summary,
+                body="",
+                category=item.category,
+                icon=item.icon,
+                is_menu_item=item.is_menu_item,
+            )
+            for item in rows[:30]
+        ]
+
+
+class ListCalendarEventsUseCase(UseCase[None, list[dict]]):
+    def execute(self, data: None = None) -> list[dict]:
+        return [
+            {
+                "id": str(item.id),
+                "title": item.title,
+                "description": item.description,
+                "starts_at": item.starts_at.isoformat(),
+                "ends_at": item.ends_at.isoformat(),
+                "color": item.color,
+            }
+            for item in CalendarEvent.objects.filter(is_published=True)
         ]

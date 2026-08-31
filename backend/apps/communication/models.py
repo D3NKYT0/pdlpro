@@ -1,3 +1,3 @@
-from apps.communication.infrastructure.models import Notification
+from apps.communication.infrastructure.models import Chat, ChatMessage, Friendship, Notification
 
-__all__ = ["Notification"]
+__all__ = ["Chat", "ChatMessage", "Friendship", "Notification"]
