@@ -50,6 +50,7 @@ export function AppShell() {
           {user ? (
             <>
               <div className="muted">{user.display_name}</div>
+              {!user.is_email_verified ? <div className="muted">Confirme seu e-mail</div> : null}
               <button className="btn ghost" type="button" onClick={() => void logout()}>
                 Sair
               </button>
@@ -58,6 +59,13 @@ export function AppShell() {
             <NavLink to="/login">Entrar</NavLink>
           )}
         </div>
+        <p className="muted legal-links">
+          <NavLink to="/terms">Termos</NavLink>
+          {' · '}
+          <NavLink to="/privacy">Privacidade</NavLink>
+          {' · '}
+          <NavLink to="/agreement">Acordo</NavLink>
+        </p>
       </aside>
       <main className="content">
         <Outlet />

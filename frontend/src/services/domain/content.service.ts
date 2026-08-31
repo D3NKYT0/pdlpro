@@ -29,4 +29,7 @@ export const contentApi = {
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),
   wikiPage: (slug: string) => request<ApiWikiPage>(`/public/wiki/${slug}/`),
   calendar: () => request<ApiCalendarEvent[]>('/public/calendar/'),
+  legal: () => request<{ version: string; documents: Array<{ slug: string; title: string }> }>('/public/legal/'),
+  legalDocument: (slug: string) =>
+    request<{ slug: string; title: string; body: string; version: string }>(`/public/legal/${slug}/`),
 }

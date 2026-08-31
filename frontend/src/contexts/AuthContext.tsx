@@ -6,7 +6,7 @@ interface AuthContextValue {
   loading: boolean
   login: (login: string, password: string) => Promise<ApiUser | TwoFactorChallenge>
   verifyTwoFactor: (challenge: string, code: string) => Promise<void>
-  register: (payload: { username: string; email: string; password: string }) => Promise<void>
+  register: (payload: { username: string; email: string; password: string; accept_terms: boolean }) => Promise<void>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
 }

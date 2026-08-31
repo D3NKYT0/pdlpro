@@ -1,11 +1,15 @@
 from django.urls import path
 
 from apps.accounts.presentation.views.auth import (
+    ConfirmPasswordResetView,
     CsrfView,
     LoginView,
     LogoutView,
     RefreshView,
     RegisterView,
+    RequestEmailVerificationView,
+    RequestPasswordResetView,
+    VerifyEmailView,
     VerifyTwoFactorLoginView,
 )
 
@@ -14,6 +18,10 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="auth-register"),
     path("login/", LoginView.as_view(), name="auth-login"),
     path("2fa/verify/", VerifyTwoFactorLoginView.as_view(), name="auth-2fa-verify"),
+    path("email/verify/request/", RequestEmailVerificationView.as_view(), name="auth-email-verify-request"),
+    path("email/verify/", VerifyEmailView.as_view(), name="auth-email-verify"),
+    path("password-reset/", RequestPasswordResetView.as_view(), name="auth-password-reset"),
+    path("password-reset/confirm/", ConfirmPasswordResetView.as_view(), name="auth-password-reset-confirm"),
     path("refresh/", RefreshView.as_view(), name="auth-refresh"),
     path("logout/", LogoutView.as_view(), name="auth-logout"),
 ]

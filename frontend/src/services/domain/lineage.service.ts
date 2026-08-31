@@ -59,6 +59,16 @@ export const lineageApi = {
       method: 'POST',
       body: JSON.stringify({ login, password }),
     }),
+  requestLinkByEmail: (email: string) =>
+    request<{ sent: boolean }>('/customer/server/accounts/link-email/', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+  confirmLinkByEmail: (token: string) =>
+    request<ApiGameAccount>('/customer/server/accounts/link-email/confirm/', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    }),
   unlink: (login: string) =>
     request('/customer/server/accounts/unlink/', { method: 'POST', body: JSON.stringify({ login }) }),
   characters: (login?: string) =>

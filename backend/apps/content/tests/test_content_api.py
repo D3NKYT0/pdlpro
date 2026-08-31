@@ -42,3 +42,15 @@ def test_calendar_and_faq(api):
     faq = api.get("/api/v1/public/faq/")
     assert faq.status_code == 200
     assert faq.data[0]["question"] == "Como doar?"
+
+
+@pytest.mark.django_db
+def test_legal_documents(api):
+    listed = api.get("/api/v1/public/legal/")
+    assert listed.status_code == 200
+    slugs = {item["slug"] for item in listed.data["documents"]}
+    assert slugs == {"terms", "privacy", "agreement"}
+    terms = api.get("/api/v1/public/legal/terms/")
+    assert terms.status_code == 200
+    assert terms.data["title"]
+    assert terms.data["body"]

@@ -27,6 +27,7 @@ psycopg2-binary==2.9.12
 PyJWT==2.13.0
 PyMySQL==1.1.2
 pyotp==2.9.0
+pywebpush==2.0.3
 pytest==9.0.3
 pytest-cov==7.1.0
 pytest-django==4.12.0

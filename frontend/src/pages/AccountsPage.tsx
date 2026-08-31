@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { isApiError, lineageApi } from '../services/api'
@@ -6,9 +7,11 @@ import { isApiError, lineageApi } from '../services/api'
 export function AccountsPage() {
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
+  const [params, setParams] = useSearchParams()
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [registerPassword, setRegisterPassword] = useState('')
+  const [linkEmail, setLinkEmail] = useState('')
   const selectedLogin = accounts.data?.accounts[0]?.login
 
   const characters = useQuery({
@@ -25,6 +28,32 @@ export function AccountsPage() {
       await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha ao registrar')
+    }
+  }
+
+  useEffect(() => {
+    const token = params.get('link_token')
+    if (!token) return
+    lineageApi
+      .confirmLinkByEmail(token)
+      .then(async () => {
+        toast.success('Conta Lineage vinculada pelo e-mail')
+        await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
+      })
+      .catch((error) => toast.error(isApiError(error) ? error.message : 'Falha ao confirmar vínculo'))
+      .finally(() => {
+        params.delete('link_token')
+        setParams(params, { replace: true })
+      })
+  }, [params, queryClient, setParams])
+
+  async function onLinkByEmail(event: FormEvent) {
+    event.preventDefault()
+    try {
+      await lineageApi.requestLinkByEmail(linkEmail)
+      toast.success('Enviamos o link para o e-mail da conta Lineage')
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha ao solicitar vínculo')
     }
   }
 
@@ -59,6 +88,16 @@ export function AccountsPage() {
           </label>
           <button className="btn" type="submit">
             Registrar
+          </button>
+        </form>
+        <form onSubmit={onLinkByEmail}>
+          <h3>Vincular pelo e-mail da conta L2</h3>
+          <label className="field">
+            E-mail no jogo
+            <input type="email" value={linkEmail} onChange={(e) => setLinkEmail(e.target.value)} required />
+          </label>
+          <button className="btn" type="submit">
+            Enviar link
           </button>
         </form>
         <form onSubmit={onLink}>

@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
+from apps.accounts.domain.mailer import IMailer
 from apps.server.domain.access import AccessibleAccount, IAccountAccessService
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
@@ -181,3 +182,87 @@ class UpdateGamePasswordUseCase(UseCase[UpdateGamePasswordInput, None]):
         if len(data.password) < 6:
             raise ValidationDomainError("A senha precisa ter ao menos 6 caracteres.")
         self._lineage.update_account_password(login, data.password)
+
+
+LINK_BY_EMAIL_SALT = "pdl-link-l2-email"
+LINK_BY_EMAIL_MAX_AGE = 3600
+
+
+@dataclass(frozen=True, slots=True)
+class RequestLinkByEmailInput:
+    actor: AccountActor
+    email: str
+
+
+class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
+    def __init__(self, lineage: ILineageGateway, mailer: IMailer) -> None:
+        self._lineage = lineage
+        self._mailer = mailer
+
+    def execute(self, data: RequestLinkByEmailInput) -> dict:
+        from django.conf import settings
+        from django.core import signing
+
+        email = data.email.strip().lower()
+        if not email:
+            raise ValidationDomainError("Informe um e-mail.")
+        account = next((row for row in self._lineage.find_accounts_by_email(email) if not row.linked_user_id), None)
+        if account is None:
+            raise ValidationDomainError("Nenhuma conta não vinculada foi encontrada com esse e-mail.")
+        token = signing.dumps({"login": account.login, "email": email}, salt=LINK_BY_EMAIL_SALT)
+        base = getattr(settings, "FRONTEND_URL", "") or getattr(settings, "PROJECT_URL", "http://localhost:3000")
+        link = f"{base.rstrip('/')}/accounts?link_token={token}"
+        self._mailer.send(
+            email,
+            "Vinculação de conta Lineage",
+            f"Clique no link para vincular a conta {account.login} ao PDL PRO:\n\n{link}\n\nO link expira em 1 hora.",
+        )
+        return {"sent": True}
+
+
+@dataclass(frozen=True, slots=True)
+class ConfirmLinkByEmailInput:
+    actor: AccountActor
+    token: str
+
+
+class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._lineage = lineage
+        self._access = access
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: ConfirmLinkByEmailInput) -> GameAccount:
+        from django.core import signing
+
+        try:
+            payload = signing.loads(data.token, salt=LINK_BY_EMAIL_SALT, max_age=LINK_BY_EMAIL_MAX_AGE)
+        except signing.BadSignature as exc:
+            raise ValidationDomainError("Link de vinculação inválido ou expirado.") from exc
+        login = str(payload.get("login") or "")
+        email = str(payload.get("email") or "")
+        account = self._lineage.get_account_by_login_and_email(login, email)
+        if account is None:
+            raise GameAccountNotFoundError()
+        if account.linked_user_id:
+            raise AccountAlreadyLinkedError()
+        if login.lower() != data.actor.username.lower() and not self._access.can_link_more(
+            data.actor.user_id, data.actor.username
+        ):
+            raise LinkSlotLimitError()
+        with self._unit_of_work:
+            linked = self._lineage.link_account(login, str(data.actor.user_id))
+            from django.contrib.auth import get_user_model
+
+            user = get_user_model().objects.get(id=data.actor.user_id)
+            ManagedLineageAccount.objects.update_or_create(
+                user=user,
+                login=login,
+                defaults={"is_primary": login.lower() == data.actor.username.lower()},
+            )
+        return linked

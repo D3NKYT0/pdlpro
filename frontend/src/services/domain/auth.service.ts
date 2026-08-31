@@ -42,8 +42,22 @@ export const authApi = {
   progress: () => request<ApiGamerProfile>('/shared/me/progress/'),
   claimReward: (rewardId: string) =>
     request<{ claimed: boolean; item_name: string }>(`/shared/me/rewards/${rewardId}/claim/`, { method: 'POST' }),
-  register: (payload: { username: string; email: string; password: string; display_name?: string }) =>
-    request<ApiUser>('/auth/register/', { method: 'POST', body: JSON.stringify(payload) }),
+  register: (payload: {
+    username: string
+    email: string
+    password: string
+    display_name?: string
+    accept_terms: boolean
+  }) => request<ApiUser>('/auth/register/', { method: 'POST', body: JSON.stringify(payload) }),
+  requestEmailVerification: () => request<{ sent: boolean; already_verified: boolean }>('/auth/email/verify/request/', { method: 'POST' }),
+  verifyEmail: (token: string) => request<{ verified: boolean }>('/auth/email/verify/', { method: 'POST', body: JSON.stringify({ token }) }),
+  requestPasswordReset: (email: string) =>
+    request<{ sent: boolean }>('/auth/password-reset/', { method: 'POST', body: JSON.stringify({ email }) }),
+  confirmPasswordReset: (token: string, password: string) =>
+    request<{ reset: boolean }>('/auth/password-reset/confirm/', {
+      method: 'POST',
+      body: JSON.stringify({ token, password }),
+    }),
   logout: () => request<{ ok: boolean }>('/auth/logout/', { method: 'POST' }),
   me: () => request<ApiUser>('/shared/me/'),
   updateMe: (payload: { display_name?: string; bio?: string }) =>

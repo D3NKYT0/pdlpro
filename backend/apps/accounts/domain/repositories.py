@@ -42,3 +42,15 @@ class IUserRepository(ABC):
     @abstractmethod
     def update_profile(self, user_id: UUID, *, display_name: str | None, bio: str | None) -> UserEntity:
         raise NotImplementedError
+
+    @abstractmethod
+    def mark_email_verified(self, user_id: UUID) -> UserEntity:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_password(self, user_id: UUID, password: str) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
+        raise NotImplementedError

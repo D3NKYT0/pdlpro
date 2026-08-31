@@ -58,6 +58,8 @@ export function LoginPage() {
         </button>
         <p className="muted">
           Sem conta? <Link to="/register">Cadastre-se</Link>
+          {' · '}
+          <Link to="/forgot-password">Esqueci a senha</Link>
         </p>
       </form>
     </div>

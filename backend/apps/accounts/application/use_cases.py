@@ -10,8 +10,12 @@ from apps.accounts.domain.exceptions import (
     UsernameTakenError,
     UserNotFoundError,
 )
+from django.conf import settings
+
+from apps.accounts.application.email_use_cases import RequestEmailVerificationUseCase
 from apps.accounts.domain.repositories import IUserRepository
 from common.architecture.base import UnitOfWork, UseCase
+from common.architecture.exceptions import ValidationDomainError
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,14 +24,23 @@ class RegisterUserInput:
     email: str
     password: str
     display_name: str = ""
+    accept_terms: bool = False
 
 
 class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
-    def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        unit_of_work: UnitOfWork,
+        request_email_verification: RequestEmailVerificationUseCase,
+    ) -> None:
         self._users = users
         self._unit_of_work = unit_of_work
+        self._request_email_verification = request_email_verification
 
     def execute(self, data: RegisterUserInput) -> UserEntity:
+        if not data.accept_terms:
+            raise ValidationDomainError("Aceite os termos de uso e a política de privacidade.")
         username = data.username.strip()
         email = data.email.strip().lower()
         if self._users.exists_username(username):
@@ -35,12 +48,15 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
         if self._users.exists_email(email):
             raise EmailTakenError()
         with self._unit_of_work:
-            return self._users.create(
+            user = self._users.create(
                 username=username,
                 email=email,
                 password=data.password,
                 display_name=data.display_name.strip() or username,
             )
+            user = self._users.accept_terms(user.id, getattr(settings, "LEGAL_DOCS_VERSION", "2026-08-31"))
+        self._request_email_verification.execute(user.id)
+        return user
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,88 +1,107 @@
-# PDL PRO — Painel Definitivo Lineage 2.0
+# PDL PRO
 
-Monorepo com **frontend React** e **backend Django API-only**, usando a topologia do CARDGAME e **arquitetura limpa com injeção de dependência**. Tudo que importa é classe: use cases, repositórios, gateways, providers e controllers.
+Painel web para comunidades e servidores de **Lineage 2**, reunindo conta do jogo, carteira, loja, inventário, marketplace, leilões, conteúdo e recursos sociais em uma única aplicação.
 
-## Estrutura
+O repositório é um monorepo com backend Django/DRF, frontend React e integrações opcionais com o banco do servidor de jogo. A API segue uma arquitetura em camadas, com casos de uso e injeção de dependência explícita.
 
-```
-PRO/
-├── backend/          # Django 6 + DRF — somente API
-├── frontend/         # React 19 + Vite + TanStack Query
-├── nginx/
-└── docker-compose.yml
-```
+> Projeto em desenvolvimento ativo. Antes de publicar em produção, revise a configuração, os provedores externos e a lista de verificação de implantação.
 
-### Backend (clean architecture)
+## Principais recursos
 
-Cada domínio em `backend/apps/<domínio>/`:
+- Cadastro, login, cookies JWT, CSRF, recuperação de senha, verificação de e-mail e 2FA.
+- Contas e personagens do Lineage 2, rankings e status de login/game server.
+- Carteira, transferências, loja e pagamentos por mock, Mercado Pago ou Stripe.
+- Inventário, marketplace de personagens e leilões.
+- Notícias, wiki, calendário, FAQ, downloads e documentos legais.
+- Clãs, feed social, amizades, chat, notificações e Web Push.
+- Minigames, recompensas, progresso, economia e passe de batalha.
+- Admin Django, documentação OpenAPI, tarefas Celery e WebSockets com Channels.
 
-| Camada | Pasta | Responsabilidade |
-|---|---|---|
-| Domínio | `domain/` | Entidades, exceções, interfaces (ABC) |
-| Aplicação | `application/` | Use cases (classes) |
-| Infraestrutura | `infrastructure/` | ORM, repositórios, gateways, `*Provider` de DI |
-| Apresentação | `presentation/` | Views DRF, serializers, URLs |
+## Stack
 
-O container (`common/di`) faz **constructor injection**. Cada request abre um **scope**. Views herdam `InjectedAPIView` e resolvem use cases com `self.resolve(GetWalletUseCase)`.
-
-API:
-
-| Prefixo | Uso |
+| Área | Tecnologias |
 |---|---|
-| `/api/v1/auth/` | Cadastro, login, refresh, logout, CSRF |
-| `/api/v1/public/` | Status, rankings, notícias, FAQ, downloads |
-| `/api/v1/shared/` | Perfil, carteira, loja |
-| `/api/v1/customer/` | Conta Lineage (expansão) |
-| `/api/v1/system/` | Health e versão |
+| Backend | Python 3.14, Django 6, Django REST Framework |
+| Frontend | React 19, TypeScript 6, Vite 8, TanStack Query |
+| Dados | PostgreSQL 18 ou SQLite no desenvolvimento; MySQL para o Lineage 2 |
+| Assíncrono | Redis, Celery, Django Channels e Daphne |
+| Infraestrutura | Docker Compose, Gunicorn e Nginx |
+| Qualidade | Pytest, Ruff, Vitest e build TypeScript |
 
-Identificadores públicos são UUID. Erros usam `{ error_code, message, details, request_id }`.
+## Início rápido com Docker
 
-### Frontend
+Pré-requisitos: Docker com Compose v2 e portas `80` e `3000` livres.
 
-Features consomem só `services/api.ts`. HTTP, CSRF e refresh de JWT ficam em `services/infra/`. Páginas não falam com `fetch` direto.
+No PowerShell:
 
-## Como rodar
-
-```bash
-copy .env.example .env
-cd backend
-py -3 -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-py -3 manage.py migrate
-py -3 manage.py createsuperuser
-py -3 manage.py runserver
-```
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Admin: http://127.0.0.1:8000/admin/  
-Swagger: http://127.0.0.1:8000/api/docs/swagger-ui/  
-SPA: http://localhost:3000
-
-Docker:
-
-```bash
+```powershell
+Copy-Item .env.example .env
 docker compose --profile dev up --build
 ```
 
-## Banco Lineage 2
+As migrações são executadas pelo entrypoint do backend. Para criar um administrador:
 
-O painel (PostgreSQL) é separado do banco do jogo (MySQL). A porta é `ILineageGateway`:
+```powershell
+docker compose exec backend python manage.py createsuperuser
+```
 
-- `NullLineageGateway` se `LINEAGE_DB_ENABLED=false`
-- `SqlAlchemyLineageGateway` se `true`
+Serviços disponíveis:
 
-Rankings e status nunca vazam SQL para o frontend.
+| Serviço | URL |
+|---|---|
+| Aplicação via Nginx | <http://localhost> |
+| Frontend Vite direto | <http://localhost:3000> |
+| Admin Django | <http://localhost/admin/> |
+| Swagger UI | <http://localhost/api/docs/swagger-ui/> |
+| ReDoc | <http://localhost/api/docs/redoc/> |
+| Health check | <http://localhost/api/v1/system/health/> |
 
-## Qualidade
+Para encerrar:
 
-- Sem duplicação: bases em `common/architecture` e `common/di`
-- Use case é a única entrada da regra de negócio
-- Novo módulo: entidade → interface → use case → repositório → provider → view
+```powershell
+docker compose down
+```
 
-Apps já modelados para expansão: payment, inventory, marketplace, auction, games, social, communication, clans.
+Os volumes de banco, Redis e mídia são preservados. Consulte [Desenvolvimento](docs/development.md) para instalação nativa, testes e comandos de manutenção.
+
+## Estrutura do repositório
+
+```text
+.
+├── backend/             # Django, DRF, Celery, Channels e integrações
+│   ├── apps/            # Módulos de negócio
+│   ├── common/          # DI, contratos, middleware e utilitários
+│   └── core/            # Settings, roteamento e composição do projeto
+├── frontend/            # SPA React + TypeScript
+├── docs/                # Documentação técnica e operacional
+├── nginx/               # Proxy reverso para HTTP e WebSocket
+├── docker-compose.yml
+└── version.json         # Versões do produto e da API
+```
+
+## Documentação
+
+- [Índice da documentação](docs/README.md)
+- [Desenvolvimento local](docs/development.md)
+- [Configuração e variáveis de ambiente](docs/configuration.md)
+- [API, autenticação e contratos](docs/api.md)
+- [Arquitetura](docs/architecture.md)
+- [Implantação](docs/deployment.md)
+- [Como contribuir](CONTRIBUTING.md)
+- [Política de segurança](SECURITY.md)
+- [Histórico de mudanças](CHANGELOG.md)
+
+## Banco do Lineage 2
+
+Os dados do painel ficam no PostgreSQL/SQLite e permanecem separados do banco do jogo. A porta `ILineageGateway` seleciona uma implementação em tempo de execução:
+
+- `NullLineageGateway` quando `LINEAGE_DB_ENABLED=false`;
+- `SqlAlchemyLineageGateway` quando `LINEAGE_DB_ENABLED=true`.
+
+As consultas SQL são mantidas no backend e organizadas por dialeto em `backend/apps/server/infrastructure/lineage/queries/`. Os módulos disponíveis são `lucerav2` e `dreamv3`; selecione um deles com `LINEAGE_QUERY_MODULE`.
+
+## Licença
+
+Copyright © 2026 Daniel Amaral. Todos os direitos reservados.
+
+Este projeto possui [licença proprietária](LICENSE). O acesso ao código-fonte não concede permissão para copiar, modificar, distribuir ou explorar o software sem autorização expressa do titular.

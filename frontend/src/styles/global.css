@@ -93,6 +93,7 @@ button, input, select { font: inherit; }
 .hero h1 { font-size: 3rem; margin: 0 0 12px; }
 .auth-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .auth-card { width: min(420px, 100%); }
+.legal-links { margin-top: auto; font-size: 0.85rem; }
 .pay-currency { display: flex; gap: 8px; margin: 12px 0; }
 .pay-packs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
 .pay-pack {

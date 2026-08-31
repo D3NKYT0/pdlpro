@@ -40,6 +40,8 @@ class LineageQueryCatalog:
         "top_clans",
         "top_adena",
         "get_account",
+        "find_accounts_by_email",
+        "get_account_by_login_and_email",
         "get_account_password",
         "register_account",
         "link_account",

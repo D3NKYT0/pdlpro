@@ -4,6 +4,8 @@ from rest_framework.response import Response
 
 from apps.server.application.account_use_cases import (
     AccountActor,
+    ConfirmLinkByEmailInput,
+    ConfirmLinkByEmailUseCase,
     GetLinkSlotsUseCase,
     LinkGameAccountInput,
     LinkGameAccountUseCase,
@@ -12,6 +14,8 @@ from apps.server.application.account_use_cases import (
     ListCharactersUseCase,
     RegisterGameAccountInput,
     RegisterGameAccountUseCase,
+    RequestLinkByEmailInput,
+    RequestLinkByEmailUseCase,
     UnlinkGameAccountInput,
     UnlinkGameAccountUseCase,
     UpdateGamePasswordInput,
@@ -188,6 +192,29 @@ class UnstuckView(InjectedAPIView):
             )
         )
         return Response({"ok": True})
+
+
+class RequestLinkByEmailView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Conta Lineage"])
+    def post(self, request):
+        return Response(
+            self.resolve(RequestLinkByEmailUseCase).execute(
+                RequestLinkByEmailInput(actor=actor_from(request), email=request.data.get("email", ""))
+            )
+        )
+
+
+class ConfirmLinkByEmailView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Conta Lineage"])
+    def post(self, request):
+        account = self.resolve(ConfirmLinkByEmailUseCase).execute(
+            ConfirmLinkByEmailInput(actor=actor_from(request), token=request.data.get("token", ""))
+        )
+        return Response(GameAccountSerializer(account).data)
 
 
 class PurchaseSlotView(InjectedAPIView):

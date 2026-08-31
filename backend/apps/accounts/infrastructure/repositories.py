@@ -69,3 +69,23 @@ class DjangoUserRepository(IUserRepository):
             user.bio = bio
         user.save(update_fields=["display_name", "bio", "updated_at"])
         return self._to_entity(user)
+
+    def mark_email_verified(self, user_id: UUID) -> UserEntity:
+        user = User.objects.get(id=user_id)
+        user.is_email_verified = True
+        user.save(update_fields=["is_email_verified", "updated_at"])
+        return self._to_entity(user)
+
+    def set_password(self, user_id: UUID, password: str) -> None:
+        user = User.objects.get(id=user_id)
+        user.set_password(password)
+        user.save(update_fields=["password", "updated_at"])
+
+    def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
+        from django.utils import timezone
+
+        user = User.objects.get(id=user_id)
+        user.terms_accepted_at = timezone.now()
+        user.terms_and_privacy_version = version
+        user.save(update_fields=["terms_accepted_at", "terms_and_privacy_version", "updated_at"])
+        return self._to_entity(user)

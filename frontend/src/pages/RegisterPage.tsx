@@ -10,11 +10,13 @@ export function RegisterPage() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [acceptTerms, setAcceptTerms] = useState(false)
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     try {
-      await register({ username, email, password })
+      await register({ username, email, password, accept_terms: acceptTerms })
+      toast.success('Conta criada. Confirme o e-mail enviado.')
       navigate('/')
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha no cadastro')
@@ -36,6 +38,12 @@ export function RegisterPage() {
         <label className="field">
           Senha
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
+        </label>
+        <label className="field">
+          <span>
+            <input type="checkbox" checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.checked)} required /> Aceito os{' '}
+            <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
+          </span>
         </label>
         <button className="btn" type="submit">
           Registrar

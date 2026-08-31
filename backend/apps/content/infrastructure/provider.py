@@ -1,3 +1,4 @@
+from apps.content.application.legal import GetLegalDocumentUseCase, ListLegalDocumentsUseCase
 from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageUseCase,
@@ -24,5 +25,7 @@ class ContentProvider(AppProvider):
             GetWikiPageUseCase,
             SearchWikiUseCase,
             ListCalendarEventsUseCase,
+            ListLegalDocumentsUseCase,
+            GetLegalDocumentUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

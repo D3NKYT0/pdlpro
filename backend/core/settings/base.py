@@ -155,6 +155,10 @@ JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS_PDL
 PROJECT_TITLE = env("PROJECT_TITLE", default="PDL PRO")
 PROJECT_DESCRIPTION = env("PROJECT_DESCRIPTION", default="Painel Definitivo Lineage 2.0")
 PROJECT_URL = env("PROJECT_URL", default="http://localhost")
+FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")
+VAPID_PUBLIC_KEY = env("VAPID_PUBLIC_KEY", default="")
+VAPID_PRIVATE_KEY = env("VAPID_PRIVATE_KEY", default="")
+VAPID_SUBJECT = env("VAPID_SUBJECT", default="mailto:noreply@localhost")
 
 LINEAGE_DB_ENABLED = env.bool("LINEAGE_DB_ENABLED", default=False)
 LINEAGE_DB_HOST = env("LINEAGE_DB_HOST", default="127.0.0.1")

@@ -4,6 +4,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from apps.content.application.legal import GetLegalDocumentUseCase, ListLegalDocumentsUseCase
 from apps.content.application.use_cases import (
     GetNewsInput,
     GetNewsUseCase,
@@ -101,3 +102,21 @@ class CalendarEventListView(InjectedAPIView):
     @extend_schema(tags=["Calendário"])
     def get(self, request):
         return Response(self.resolve(ListCalendarEventsUseCase).execute(None))
+
+
+class LegalListView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(tags=["Legal"])
+    def get(self, request):
+        return Response(self.resolve(ListLegalDocumentsUseCase).execute())
+
+
+class LegalDetailView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(tags=["Legal"])
+    def get(self, request, slug: str):
+        return Response(asdict(self.resolve(GetLegalDocumentUseCase).execute(slug)))

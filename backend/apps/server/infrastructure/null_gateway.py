@@ -78,6 +78,20 @@ class NullLineageGateway(ILineageGateway):
             return None
         return GameAccount(login=row["login"], email=row["email"], linked_user_id=row["linked_user_id"])
 
+    def find_accounts_by_email(self, email: str) -> list[GameAccount]:
+        target = email.strip().lower()
+        return [
+            GameAccount(login=row["login"], email=row["email"], linked_user_id=row["linked_user_id"])
+            for row in self._accounts.values()
+            if (row["email"] or "").lower() == target
+        ]
+
+    def get_account_by_login_and_email(self, login: str, email: str) -> GameAccount | None:
+        account = self.get_account(login)
+        if account is None or account.email.lower() != email.strip().lower():
+            return None
+        return account
+
     def register_account(self, login: str, password: str, email: str) -> GameAccount:
         key = login.lower()
         if key in self._accounts:

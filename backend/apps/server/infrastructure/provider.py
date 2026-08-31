@@ -1,9 +1,11 @@
 from apps.server.application.account_use_cases import (
+    ConfirmLinkByEmailUseCase,
     GetLinkSlotsUseCase,
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
     ListCharactersUseCase,
     RegisterGameAccountUseCase,
+    RequestLinkByEmailUseCase,
     UnlinkGameAccountUseCase,
     UpdateGamePasswordUseCase,
 )
@@ -54,5 +56,7 @@ class ServerProvider(AppProvider):
             ChangeSexUseCase,
             UnstuckCharacterUseCase,
             PurchaseLinkSlotUseCase,
+            RequestLinkByEmailUseCase,
+            ConfirmLinkByEmailUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

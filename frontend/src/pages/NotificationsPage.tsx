@@ -1,10 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { isApiError, notificationApi } from '../services/api'
+import { disableBrowserPush, enableBrowserPush, isApiError, notificationApi, pushApi } from '../services/api'
 
 export function NotificationsPage() {
   const queryClient = useQueryClient()
   const query = useQuery({ queryKey: ['notifications'], queryFn: notificationApi.list })
+  const vapid = useQuery({ queryKey: ['push-vapid'], queryFn: pushApi.vapid })
 
   async function markOne(id: string) {
     try {
@@ -29,6 +30,34 @@ export function NotificationsPage() {
     <section className="card">
       <h1>Avisos</h1>
       <p className="muted">{query.data?.unread ?? 0} não lidos</p>
+      {vapid.data?.enabled ? (
+        <p>
+          <button
+            className="btn ghost"
+            type="button"
+            onClick={() =>
+              void enableBrowserPush()
+                .then(() => toast.success('Push ativado neste navegador'))
+                .catch((error) => toast.error(isApiError(error) ? error.message : String(error)))
+            }
+          >
+            Ativar push
+          </button>{' '}
+          <button
+            className="btn ghost"
+            type="button"
+            onClick={() =>
+              void disableBrowserPush()
+                .then(() => toast.success('Push desativado'))
+                .catch((error) => toast.error(isApiError(error) ? error.message : String(error)))
+            }
+          >
+            Desativar
+          </button>
+        </p>
+      ) : (
+        <p className="muted">Push disponível quando o servidor tiver chaves VAPID.</p>
+      )}
       {query.data?.unread ? (
         <p>
           <button className="btn ghost" type="button" onClick={() => void markAll()}>

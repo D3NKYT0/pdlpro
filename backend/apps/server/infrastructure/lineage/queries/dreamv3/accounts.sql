@@ -6,6 +6,17 @@ FROM accounts
 WHERE login = :login
 LIMIT 1
 
+-- name: find_accounts_by_email
+SELECT login, email, linked_uuid
+FROM accounts
+WHERE email = :email
+
+-- name: get_account_by_login_and_email
+SELECT login, email, linked_uuid
+FROM accounts
+WHERE login = :login AND email = :email
+LIMIT 1
+
 -- name: get_account_password
 SELECT password
 FROM accounts

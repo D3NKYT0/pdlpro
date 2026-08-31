@@ -18,6 +18,15 @@ from apps.accounts.application.twofa import (
     make_login_challenge,
 )
 from apps.accounts.application.progress_use_cases import ClaimRewardInput, ClaimRewardUseCase, GetGamerProfileUseCase
+from apps.accounts.application.email_use_cases import (
+    ConfirmPasswordResetInput,
+    ConfirmPasswordResetUseCase,
+    RequestEmailVerificationUseCase,
+    RequestPasswordResetInput,
+    RequestPasswordResetUseCase,
+    VerifyEmailInput,
+    VerifyEmailUseCase,
+)
 from apps.accounts.application.use_cases import (
     AuthenticateUserInput,
     AuthenticateUserUseCase,
@@ -68,6 +77,7 @@ class RegisterView(InjectedAPIView):
                 email=data["email"],
                 password=data["password"],
                 display_name=data.get("display_name", ""),
+                accept_terms=data["accept_terms"],
             )
         )
         from django.contrib.auth import get_user_model
@@ -188,6 +198,57 @@ class GamerProfileView(InjectedAPIView):
     @extend_schema(tags=["Perfil"])
     def get(self, request):
         return Response(self.resolve(GetGamerProfileUseCase).execute(request.user.id))
+
+
+class RequestEmailVerificationView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Auth"])
+    def post(self, request):
+        return Response(self.resolve(RequestEmailVerificationUseCase).execute(request.user.id))
+
+
+class VerifyEmailView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    throttle_classes = [AnonRateThrottle]
+
+    @extend_schema(tags=["Auth"])
+    def post(self, request):
+        return Response(
+            self.resolve(VerifyEmailUseCase).execute(VerifyEmailInput(token=request.data.get("token", "")))
+        )
+
+
+class RequestPasswordResetView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    throttle_classes = [AnonRateThrottle]
+
+    @extend_schema(tags=["Auth"])
+    def post(self, request):
+        return Response(
+            self.resolve(RequestPasswordResetUseCase).execute(
+                RequestPasswordResetInput(email=request.data.get("email", ""))
+            )
+        )
+
+
+class ConfirmPasswordResetView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    throttle_classes = [AnonRateThrottle]
+
+    @extend_schema(tags=["Auth"])
+    def post(self, request):
+        return Response(
+            self.resolve(ConfirmPasswordResetUseCase).execute(
+                ConfirmPasswordResetInput(
+                    token=request.data.get("token", ""),
+                    password=request.data.get("password", ""),
+                )
+            )
+        )
 
 
 class ClaimRewardView(InjectedAPIView):

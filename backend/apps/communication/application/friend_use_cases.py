@@ -5,7 +5,8 @@ from uuid import UUID
 
 from django.db.models import Q
 
-from apps.communication.domain.repositories import INotificationRepository
+from apps.communication.application.notify import NotifyUser
+from apps.communication.domain.push import IPushSender
 from apps.communication.infrastructure.models import Chat, ChatMessage, Friendship
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
@@ -64,8 +65,8 @@ class SendFriendRequestInput:
 
 
 class SendFriendRequestUseCase(UseCase[SendFriendRequestInput, dict]):
-    def __init__(self, notifications: INotificationRepository) -> None:
-        self._notifications = notifications
+    def __init__(self, notifier: NotifyUser) -> None:
+        self._notifier = notifier
 
     def execute(self, data: SendFriendRequestInput) -> dict:
         from django.contrib.auth import get_user_model
@@ -86,7 +87,7 @@ class SendFriendRequestUseCase(UseCase[SendFriendRequestInput, dict]):
             Friendship.objects.get_or_create(user=me, friend=other, defaults={"accepted": True})
             return {"id": str(incoming.id), "accepted": True, "username": other.username}
         row = Friendship.objects.create(user=me, friend=other, accepted=False)
-        self._notifications.create(
+        self._notifier.send(
             other.id,
             title="Pedido de amizade",
             body=f"{me.username} quer ser seu amigo.",
@@ -184,6 +185,9 @@ class SendMessageInput:
 
 
 class SendMessageUseCase(UseCase[SendMessageInput, dict]):
+    def __init__(self, push: IPushSender) -> None:
+        self._push = push
+
     def execute(self, data: SendMessageInput) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -202,6 +206,12 @@ class SendMessageUseCase(UseCase[SendMessageInput, dict]):
         msg = ChatMessage.objects.create(chat=chat, sender=me, text=text)
         chat.last_message = text
         chat.save(update_fields=["last_message", "updated_at"])
+        self._push.send(
+            other.id,
+            title=f"Mensagem de {me.username}",
+            body=text[:140],
+            url="/friends",
+        )
         return {
             "id": str(msg.id),
             "sender": me.username,

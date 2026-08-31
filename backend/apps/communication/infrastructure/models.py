@@ -50,3 +50,15 @@ class ChatMessage(BaseModel):
         verbose_name = "Mensagem"
         verbose_name_plural = "Mensagens"
         ordering = ["created_at"]
+
+
+class PushSubscription(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="push_subscriptions")
+    endpoint = models.URLField(max_length=500)
+    auth = models.CharField(max_length=255)
+    p256dh = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = "Inscrição push"
+        verbose_name_plural = "Inscrições push"
+        unique_together = ("user", "endpoint")

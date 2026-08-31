@@ -28,7 +28,7 @@ def test_health(api):
 def test_register_and_me(api):
     response = api.post(
         "/api/v1/auth/register/",
-        {"username": "knight", "email": "knight@pdl.dev", "password": "Secret123"},
+        {"username": "knight", "email": "knight@pdl.dev", "password": "Secret123", "accept_terms": True},
         format="json",
     )
     assert response.status_code == 200
@@ -36,6 +36,7 @@ def test_register_and_me(api):
     me = api.get("/api/v1/shared/me/")
     assert me.status_code == 200
     assert me.data["username"] == "knight"
+    assert me.data["is_email_verified"] is False
 
 
 @pytest.mark.django_db

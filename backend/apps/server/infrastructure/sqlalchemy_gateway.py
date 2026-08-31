@@ -135,13 +135,20 @@ class SqlAlchemyLineageGateway(ILineageGateway):
     def get_top_adena(self, limit: int = 10) -> list[RankingEntry]:
         return self._ranking("top_adena", limit)
 
-    def get_account(self, login: str) -> GameAccount | None:
-        rows = self._fetch("get_account", {"login": login})
-        if not rows:
-            return None
-        row = rows[0]
+    def _account_from_row(self, row: dict) -> GameAccount:
         linked = str(row["linked_uuid"]).strip() if row.get("linked_uuid") else None
         return GameAccount(login=row["login"], email=row.get("email") or "", linked_user_id=linked or None)
+
+    def get_account(self, login: str) -> GameAccount | None:
+        rows = self._fetch("get_account", {"login": login})
+        return self._account_from_row(rows[0]) if rows else None
+
+    def find_accounts_by_email(self, email: str) -> list[GameAccount]:
+        return [self._account_from_row(row) for row in self._fetch("find_accounts_by_email", {"email": email})]
+
+    def get_account_by_login_and_email(self, login: str, email: str) -> GameAccount | None:
+        rows = self._fetch("get_account_by_login_and_email", {"login": login, "email": email})
+        return self._account_from_row(rows[0]) if rows else None
 
     def register_account(self, login: str, password: str, email: str) -> GameAccount:
         if self.get_account(login):

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { friendsApi, isApiError } from '../services/api'
@@ -9,6 +9,7 @@ export function FriendsPage() {
   const [search, setSearch] = useState('')
   const [peer, setPeer] = useState('')
   const [text, setText] = useState('')
+  const socketRef = useRef<WebSocket | null>(null)
   const found = useQuery({
     queryKey: ['friends-search', search],
     queryFn: () => friendsApi.search(search),
@@ -19,6 +20,27 @@ export function FriendsPage() {
     queryFn: () => friendsApi.messages(peer),
     enabled: Boolean(peer),
   })
+
+  useEffect(() => {
+    socketRef.current?.close()
+    socketRef.current = null
+    if (!peer) return
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+    const socket = new WebSocket(`${protocol}://${window.location.host}/ws/chat/${encodeURIComponent(peer)}/`)
+    socket.onmessage = (event) => {
+      const payload = JSON.parse(event.data)
+      if (payload.error) {
+        toast.error(payload.error)
+        return
+      }
+      void queryClient.invalidateQueries({ queryKey: ['chat', peer] })
+    }
+    socketRef.current = socket
+    return () => {
+      socket.close()
+      socketRef.current = null
+    }
+  }, [peer, queryClient])
 
   async function refresh() {
     await queryClient.invalidateQueries({ queryKey: ['friends'] })
@@ -47,6 +69,12 @@ export function FriendsPage() {
 
   async function send(event: FormEvent) {
     event.preventDefault()
+    const socket = socketRef.current
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({ text }))
+      setText('')
+      return
+    }
     try {
       await friendsApi.send(peer, text)
       setText('')

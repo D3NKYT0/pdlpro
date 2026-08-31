@@ -1,12 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AppShell } from '../../components/layout/AppShell'
 import { DownloadsPage } from '../../pages/DownloadsPage'
+import { ForgotPasswordPage } from '../../pages/ForgotPasswordPage'
 import { HomePage } from '../../pages/HomePage'
+import { LegalPage } from '../../pages/LegalPage'
 import { LoginPage } from '../../pages/LoginPage'
 import { NewsDetailPage } from '../../pages/NewsDetailPage'
 import { NewsPage } from '../../pages/NewsPage'
 import { RankingsPage } from '../../pages/RankingsPage'
 import { RegisterPage } from '../../pages/RegisterPage'
+import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
 import { AccountsPage } from '../../pages/AccountsPage'
 import { AuctionPage } from '../../pages/AuctionPage'
@@ -22,6 +25,7 @@ import { NotificationsPage } from '../../pages/NotificationsPage'
 import { ProgressPage } from '../../pages/ProgressPage'
 import { WalletPage } from '../../pages/WalletPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
+import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
 import { WikiPage } from '../../pages/WikiPage'
 import { RequireAuth } from './RequireAuth'
 
@@ -31,6 +35,9 @@ export function AppRoutes() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route element={<AppShell />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/rankings" element={<RankingsPage />} />
@@ -46,6 +53,9 @@ export function AppRoutes() {
           <Route path="/clans" element={<ClansPage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/downloads" element={<DownloadsPage />} />
+          <Route path="/terms" element={<LegalPage />} />
+          <Route path="/privacy" element={<LegalPage />} />
+          <Route path="/agreement" element={<LegalPage />} />
           <Route element={<RequireAuth />}>
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/accounts" element={<AccountsPage />} />
