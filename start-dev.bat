@@ -26,10 +26,8 @@ echo API:  http://127.0.0.1:8000
 echo Site: http://localhost:3000
 echo.
 
-start "PDL PRO API" /D "%~dp0backend" cmd /k ^
-  "call .venv\Scripts\activate.bat && set "DJANGO_SETTINGS_MODULE=core.settings.development" && set "DATABASE_URL=sqlite:///db.sqlite3" && set "LINEAGE_DB_ENABLED=false" && python manage.py migrate && python manage.py runserver 127.0.0.1:8000"
-
-start "PDL PRO Front" /D "%~dp0frontend" cmd /k "npm run dev"
+start "PDL PRO API" /D "%~dp0backend" cmd /k run-dev.bat
+start "PDL PRO Front" /D "%~dp0frontend" cmd /k npm run dev
 
 timeout /t 5 /nobreak >nul
 start "" "http://localhost:3000"
