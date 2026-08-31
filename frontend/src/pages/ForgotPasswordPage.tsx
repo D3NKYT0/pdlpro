@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { AuthField, AuthPanel } from '../components/auth/AuthPanel'
 import { authApi, isApiError } from '../services/api'
 
 export function ForgotPasswordPage() {
@@ -17,20 +18,23 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <div className="auth-page">
-      <form className="card auth-card" onSubmit={onSubmit}>
-        <h1>Recuperar senha</h1>
-        <label className="field">
-          E-mail
-          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
-        </label>
-        <button className="btn" type="submit">
-          Enviar link
-        </button>
-        <p className="muted">
-          <Link to="/login">Voltar ao login</Link>
+    <AuthPanel
+      title="Esqueceu sua senha?"
+      lead="Digite seu e-mail abaixo e enviaremos instruções para redefinir sua senha."
+      footer={
+        <p>
+          <Link to="/login">← Voltar para o login</Link>
         </p>
+      }
+    >
+      <form onSubmit={onSubmit}>
+        <AuthField label="Seu e-mail">
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required placeholder="seunome@email.com" />
+        </AuthField>
+        <button className="theme-btn-gold" type="submit">
+          Enviar instruções
+        </button>
       </form>
-    </div>
+    </AuthPanel>
   )
 }

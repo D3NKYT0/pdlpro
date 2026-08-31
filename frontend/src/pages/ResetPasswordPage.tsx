@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { authApi, isApiError } from '../services/api'
 
 export function ResetPasswordPage() {
@@ -21,21 +22,24 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="auth-page">
-      <form className="card auth-card" onSubmit={onSubmit}>
-        <h1>Nova senha</h1>
-        {!token ? <p className="muted">Link inválido.</p> : null}
-        <label className="field">
-          Nova senha
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={8} />
-        </label>
-        <button className="btn" type="submit" disabled={!token}>
+    <AuthPanel
+      title="Nova senha"
+      lead="Defina uma nova senha para voltar ao reino."
+      footer={
+        <p>
+          <Link to="/login">← Voltar para o login</Link>
+        </p>
+      }
+    >
+      <form onSubmit={onSubmit}>
+        {!token ? <p className="auth-lead">Link inválido.</p> : null}
+        <AuthField label="Nova senha">
+          <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
+        </AuthField>
+        <button className="theme-btn-gold" type="submit" disabled={!token}>
           Salvar
         </button>
-        <p className="muted">
-          <Link to="/login">Entrar</Link>
-        </p>
       </form>
-    </div>
+    </AuthPanel>
   )
 }

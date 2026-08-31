@@ -239,10 +239,10 @@ export function HomePage() {
                 </h3>
                 <p>Entre para a competição e mostre suas habilidades no nosso servidor!</p>
                 <div className="cta-buttons">
-                  <Link to="/register" className="cta-btn primary">
+                  <Link to="/register" className="theme-btn-gold">
                     Criar Conta
                   </Link>
-                  <Link to="/downloads" className="cta-btn secondary">
+                  <Link to="/downloads" className="theme-btn-outline">
                     Baixar Jogo
                   </Link>
                 </div>

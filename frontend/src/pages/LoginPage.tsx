@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
 import { isApiError, isTwoFactorChallenge } from '../services/api'
 
@@ -40,35 +41,39 @@ export function LoginPage() {
   }
 
   return (
-    <div className="auth-page">
-      <form className="card auth-card" onSubmit={onSubmit}>
-        <h1>{challenge ? 'Verificação 2FA' : 'Entrar'}</h1>
+    <AuthPanel
+      title={challenge ? 'Verificação 2FA' : 'Entre no Reino'}
+      lead={challenge ? 'Informe o código do autenticador para continuar.' : undefined}
+      footer={
+        <>
+          <p>
+            Ainda não tem conta? <Link to="/register">Forje seu destino</Link>
+          </p>
+          <p>
+            <Link to="/forgot-password">Esqueceu a senha?</Link>
+          </p>
+        </>
+      }
+    >
+      <form onSubmit={onSubmit}>
         {challenge ? (
-          <label className="field">
-            Código do autenticador
-            <input value={code} onChange={(e) => setCode(e.target.value)} required autoFocus inputMode="numeric" />
-          </label>
+          <AuthField label="Código do autenticador">
+            <input value={code} onChange={(event) => setCode(event.target.value)} required autoFocus inputMode="numeric" />
+          </AuthField>
         ) : (
           <>
-            <label className="field">
-              Usuário ou e-mail
-              <input value={loginValue} onChange={(e) => setLoginValue(e.target.value)} required />
-            </label>
-            <label className="field">
-              Senha
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </label>
+            <AuthField label="Usuário">
+              <input value={loginValue} onChange={(event) => setLoginValue(event.target.value)} required autoComplete="username" />
+            </AuthField>
+            <AuthField label="Senha">
+              <AuthPassword value={password} onChange={setPassword} required autoComplete="current-password" />
+            </AuthField>
           </>
         )}
-        <button className="btn" type="submit">
-          {challenge ? 'Confirmar' : 'Acessar'}
+        <button className="theme-btn-gold" type="submit">
+          {challenge ? 'Confirmar' : 'Entrar no Reino'}
         </button>
-        <p className="muted">
-          Sem conta? <Link to="/register">Cadastre-se</Link>
-          {' · '}
-          <Link to="/forgot-password">Esqueci a senha</Link>
-        </p>
       </form>
-    </div>
+    </AuthPanel>
   )
 }

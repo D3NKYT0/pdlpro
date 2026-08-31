@@ -94,13 +94,13 @@ export function InfoPage() {
           <h2>Como começar</h2>
           <p>{data?.notes.start}</p>
           <p className="info-actions">
-            <Link className="cta-btn primary" to="/register">
+            <Link className="theme-btn-gold" to="/register">
               Criar conta
             </Link>
-            <Link className="cta-btn secondary" to="/downloads">
+            <Link className="theme-btn-outline" to="/downloads">
               Baixar jogo
             </Link>
-            <Link className="cta-btn secondary" to="/wiki">
+            <Link className="theme-btn-outline" to="/wiki">
               Abrir wiki
             </Link>
           </p>

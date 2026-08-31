@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
 import { isApiError } from '../services/api'
 
@@ -24,34 +25,33 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="auth-page">
-      <form className="card auth-card" onSubmit={onSubmit}>
-        <h1>Criar conta</h1>
-        <label className="field">
-          Usuário
-          <input value={username} onChange={(e) => setUsername(e.target.value)} required minLength={3} maxLength={16} />
+    <AuthPanel
+      title="Crie sua conta mestre"
+      lead="Preencha os campos abaixo para se juntar à aventura."
+      footer={
+        <p>
+          <Link to="/login">← Já tem conta? Faça login</Link>
+        </p>
+      }
+    >
+      <form onSubmit={onSubmit}>
+        <AuthField label="Usuário">
+          <input value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} maxLength={16} autoComplete="username" />
+        </AuthField>
+        <AuthField label="E-mail">
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />
+        </AuthField>
+        <AuthField label="Senha">
+          <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
+        </AuthField>
+        <label className="auth-check">
+          <input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} required />
+          Eu concordo com os <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
         </label>
-        <label className="field">
-          E-mail
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </label>
-        <label className="field">
-          Senha
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
-        </label>
-        <label className="field">
-          <span>
-            <input type="checkbox" checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.checked)} required /> Aceito os{' '}
-            <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
-          </span>
-        </label>
-        <button className="btn" type="submit">
+        <button className="theme-btn-gold" type="submit">
           Registrar
         </button>
-        <p className="muted">
-          Já tem conta? <Link to="/login">Entrar</Link>
-        </p>
       </form>
-    </div>
+    </AuthPanel>
   )
 }

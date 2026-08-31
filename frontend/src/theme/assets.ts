@@ -27,6 +27,7 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/pages/news-detail.css',
   '/theme/pages/extras.css',
   '/theme/pages/info-page.css',
+  '/theme/pages/auth.css',
 ]
 
 export const ROUTE_THEME_STYLES = [

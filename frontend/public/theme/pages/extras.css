@@ -3,14 +3,6 @@ html.pdl-public nav .close {
   cursor: pointer;
 }
 
-html.pdl-public .auth-page {
-  min-height: calc(100vh - 220px);
-  display: grid;
-  place-items: center;
-  padding: 48px 16px 80px;
-}
-
-html.pdl-public .auth-card,
 html.pdl-public .theme-panel {
   width: min(1100px, 100%);
   background: rgba(53, 47, 35, 0.95);
@@ -20,11 +12,6 @@ html.pdl-public .theme-panel {
   color: #fff;
 }
 
-html.pdl-public .auth-card {
-  width: min(420px, 100%);
-}
-
-html.pdl-public .auth-card h1,
 html.pdl-public .theme-panel h1 {
   font-size: 36px;
   line-height: 1.15;
@@ -77,8 +64,7 @@ html.pdl-public .tops-content .table td {
   border-bottom: 1px solid rgba(230, 199, 125, 0.15);
 }
 
-html.pdl-public .tops-content .btn,
-html.pdl-public .auth-card .btn {
+html.pdl-public .tops-content .btn {
   margin: 0 6px 8px 0;
 }
 

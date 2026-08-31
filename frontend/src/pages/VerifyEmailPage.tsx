@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { AuthPanel } from '../components/auth/AuthPanel'
 import { authApi, isApiError } from '../services/api'
 
 export function VerifyEmailPage() {
@@ -16,14 +17,18 @@ export function VerifyEmailPage() {
   }, [token])
 
   return (
-    <div className="auth-page">
-      <section className="card auth-card">
-        <h1>Verificar e-mail</h1>
-        <p>{status}</p>
-        <p className="muted">
-          <Link to="/login">Entrar</Link>
+    <AuthPanel
+      title="Verificar e-mail"
+      lead={status}
+      footer={
+        <p>
+          <Link className="theme-btn-gold" to="/login">
+            Entrar no Reino
+          </Link>
         </p>
-      </section>
-    </div>
+      }
+    >
+      <div />
+    </AuthPanel>
   )
 }
