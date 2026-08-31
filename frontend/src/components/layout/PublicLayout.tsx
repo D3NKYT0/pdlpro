@@ -6,7 +6,8 @@ import { useDefaultTheme } from '../../theme/useDefaultTheme'
 
 const links = [
   { to: '/', label: 'Início', end: true },
-  { to: '/wiki', label: 'Informações' },
+  { to: '/informacoes', label: 'Informações' },
+  { to: '/wiki', label: 'Wiki' },
   { to: '/news', label: 'Notícias' },
   { to: '/faq', label: 'Perguntas Frequentes' },
 ]

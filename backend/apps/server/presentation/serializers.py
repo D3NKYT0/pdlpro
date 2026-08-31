@@ -1,6 +1,17 @@
 from rest_framework import serializers
 
 
+class ServerInfoSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    description = serializers.CharField()
+    chronicle = serializers.CharField()
+    rates = serializers.DictField(child=serializers.CharField())
+    enchant = serializers.DictField(child=serializers.CharField())
+    max_level = serializers.IntegerField()
+    features = serializers.ListField(child=serializers.CharField())
+    notes = serializers.DictField(child=serializers.CharField())
+
+
 class ServerStatusSerializer(serializers.Serializer):
     game_online = serializers.BooleanField()
     login_online = serializers.BooleanField()

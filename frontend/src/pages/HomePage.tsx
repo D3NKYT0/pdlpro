@@ -4,9 +4,9 @@ import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
 
 const wikiLinks = [
-  { to: '/wiki', label: 'Informações Gerais' },
-  { to: '/wiki', label: 'Taxas de Experiência' },
-  { to: '/wiki', label: 'Chefes de Raide e Instâncias' },
+  { to: '/wiki', label: 'Guias do jogo' },
+  { to: '/wiki', label: 'Comandos' },
+  { to: '/wiki', label: 'Classes e raças' },
   { to: '/faq', label: 'Ajuda no Jogo' },
   { to: '/calendar', label: 'Guia de Eventos' },
 ]
@@ -21,8 +21,8 @@ const rankingLinks = [
 ]
 
 const features = [
-  { to: '/wiki', image: 'features/1.jpg', title: 'PvP e Castelos' },
-  { to: '/wiki', image: 'features/2.jpg', title: 'Missões Personalizadas' },
+  { to: '/informacoes#pvp', image: 'features/1.jpg', title: 'PvP e Castelos' },
+  { to: '/informacoes#features', image: 'features/2.jpg', title: 'Missões Personalizadas' },
   { to: '/calendar', image: 'features/3.jpg', title: 'Eventos e Recompensas' },
 ]
 

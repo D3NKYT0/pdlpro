@@ -1,7 +1,8 @@
 import { request } from '../infra/http'
-import type { ApiRankingEntry, ApiServerStatus } from '../types'
+import type { ApiRankingEntry, ApiServerInfo, ApiServerStatus } from '../types'
 
 export const serverApi = {
+  info: () => request<ApiServerInfo>('/public/server/info/'),
   status: () => request<ApiServerStatus>('/public/server/status/'),
   rankings: (kind: string) => request<ApiRankingEntry[]>(`/public/server/rankings/${kind}/`),
   world: (name: string, params: Record<string, string> = {}) => {

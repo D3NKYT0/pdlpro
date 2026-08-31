@@ -27,6 +27,7 @@ import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
 import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
 import { WalletPage } from '../../pages/WalletPage'
+import { InfoPage } from '../../pages/InfoPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
 import { WikiPage } from '../../pages/WikiPage'
 import { LEGACY_PANEL_REDIRECTS } from './legacyRedirects'
@@ -47,6 +48,7 @@ export function AppRoutes() {
             <Route path="/rankings" element={<RankingsPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/:slug" element={<NewsDetailPage />} />
+            <Route path="/informacoes" element={<InfoPage />} />
             <Route path="/wiki" element={<WikiPage />} />
             <Route path="/wiki/:slug" element={<WikiDetailPage />} />
             <Route path="/calendar" element={<CalendarPage />} />

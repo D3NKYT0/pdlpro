@@ -10,6 +10,17 @@ export interface ApiUser {
   is_2fa_enabled?: boolean
 }
 
+export interface ApiServerInfo {
+  name: string
+  description: string
+  chronicle: string
+  rates: Record<string, string>
+  enchant: Record<string, string>
+  max_level: number
+  features: string[]
+  notes: Record<string, string>
+}
+
 export interface ApiServerStatus {
   game_online: boolean
   login_online: boolean

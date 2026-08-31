@@ -26,6 +26,7 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/pages/faq-page.css',
   '/theme/pages/news-detail.css',
   '/theme/pages/extras.css',
+  '/theme/pages/info-page.css',
 ]
 
 export const ROUTE_THEME_STYLES = [

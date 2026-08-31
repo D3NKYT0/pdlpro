@@ -2,9 +2,19 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from apps.server.domain.gateways import ILineageGateway, RankingEntry, ServerStatus
+from django.conf import settings
+
+from apps.server.domain.gateways import ILineageGateway, RankingEntry, ServerInfo, ServerStatus
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
+
+CHRONICLE_BY_MODULE = {
+    "dreamv3": "Interlude",
+    "l2dev": "High Five",
+    "l2jfrozen": "Interlude",
+    "lucera": "Interlude",
+    "lucerav2": "Interlude",
+}
 
 PUBLIC_LINEAGE_QUERIES = frozenset(
     {
@@ -24,6 +34,42 @@ PUBLIC_LINEAGE_QUERIES = frozenset(
 @dataclass(frozen=True, slots=True)
 class GetServerStatusInput:
     pass
+
+
+class GetServerInfoUseCase(UseCase[None, ServerInfo]):
+    def execute(self, data: None = None) -> ServerInfo:
+        module = str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or "")
+        chronicle = str(getattr(settings, "SERVER_CHRONICLE", "") or "").strip()
+        if not chronicle:
+            chronicle = CHRONICLE_BY_MODULE.get(module, module.capitalize() if module else "Lineage 2")
+        features = [item.strip() for item in getattr(settings, "SERVER_FEATURES", []) if str(item).strip()]
+        return ServerInfo(
+            name=str(getattr(settings, "PROJECT_TITLE", "PDL PRO")),
+            description=str(getattr(settings, "PROJECT_DESCRIPTION", "")),
+            chronicle=chronicle,
+            rates={
+                "xp": str(getattr(settings, "XP_RATE", "x1")),
+                "sp": str(getattr(settings, "SP_RATE", "x1")),
+                "adena": str(getattr(settings, "ADENA_RATE", "x1")),
+                "drop": str(getattr(settings, "DROP_RATE", "x1")),
+                "spoil": str(getattr(settings, "SPOIL_RATE", "x1")),
+            },
+            enchant={
+                "safe": str(getattr(settings, "ENCHANT_SAFE", "+3")),
+                "max": str(getattr(settings, "ENCHANT_MAX", "+16")),
+            },
+            max_level=int(getattr(settings, "MAX_LEVEL", 80)),
+            features=features
+            or [
+                "PvP e guerras de castelo",
+                "Eventos periódicos",
+                "Loja e marketplace no painel",
+            ],
+            notes={
+                "pvp": str(getattr(settings, "SERVER_PVP_NOTE", "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.")),
+                "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
+            },
+        )
 
 
 class GetServerStatusUseCase(UseCase[GetServerStatusInput, ServerStatus]):

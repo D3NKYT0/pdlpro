@@ -12,6 +12,18 @@ class ServerStatus:
 
 
 @dataclass(frozen=True, slots=True)
+class ServerInfo:
+    name: str
+    description: str
+    chronicle: str
+    rates: dict[str, str]
+    enchant: dict[str, str]
+    max_level: int
+    features: list[str]
+    notes: dict[str, str]
+
+
+@dataclass(frozen=True, slots=True)
 class RankingEntry:
     position: int
     name: str

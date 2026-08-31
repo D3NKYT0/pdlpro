@@ -5,13 +5,24 @@ from rest_framework.response import Response
 from apps.server.application.use_cases import (
     GetRankingInput,
     GetRankingUseCase,
+    GetServerInfoUseCase,
     GetServerStatusInput,
     GetServerStatusUseCase,
     RunPublicLineageQueryInput,
     RunPublicLineageQueryUseCase,
 )
-from apps.server.presentation.serializers import RankingEntrySerializer, ServerStatusSerializer
+from apps.server.presentation.serializers import RankingEntrySerializer, ServerInfoSerializer, ServerStatusSerializer
 from common.views import InjectedAPIView
+
+
+class ServerInfoView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(tags=["Servidor"], responses=ServerInfoSerializer)
+    def get(self, request):
+        info = self.resolve(GetServerInfoUseCase).execute()
+        return Response(ServerInfoSerializer(info).data)
 
 
 class ServerStatusView(InjectedAPIView):

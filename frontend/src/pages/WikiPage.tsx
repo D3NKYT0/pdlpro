@@ -12,7 +12,7 @@ export function WikiPage() {
       <div className="w-content container">
         <div className="page-header">
           <h1 className="page-title">Wiki</h1>
-          <p className="page-description">Informações, rates, bosses e guias do servidor.</p>
+          <p className="page-description">Guias, comandos, classes e conteúdo do jogo. Rates e crônica ficam em Informações.</p>
         </div>
         <div className="card">
           <div className="card-header">
@@ -38,7 +38,11 @@ export function WikiPage() {
             </div>
           </article>
         ))}
-        {!pages.data?.length ? <p className="page-description">Nenhuma página publicada. Cadastre no admin.</p> : null}
+        {!pages.data?.length ? (
+          <p className="page-description">
+            Nenhuma página publicada. Cadastre no admin. Para rates e crônica, veja <Link to="/informacoes">Informações</Link>.
+          </p>
+        ) : null}
       </div>
     </div>
   )

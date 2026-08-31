@@ -154,6 +154,27 @@ JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS_PDL
 
 PROJECT_TITLE = env("PROJECT_TITLE", default="PDL PRO")
 PROJECT_DESCRIPTION = env("PROJECT_DESCRIPTION", default="Painel Definitivo Lineage 2.0")
+SERVER_CHRONICLE = env("SERVER_CHRONICLE", default="")
+XP_RATE = env("XP_RATE", default="x1")
+SP_RATE = env("SP_RATE", default="x1")
+ADENA_RATE = env("ADENA_RATE", default="x1")
+DROP_RATE = env("DROP_RATE", default="x1")
+SPOIL_RATE = env("SPOIL_RATE", default="x1")
+ENCHANT_SAFE = env("ENCHANT_SAFE", default="+3")
+ENCHANT_MAX = env("ENCHANT_MAX", default="+16")
+MAX_LEVEL = env.int("MAX_LEVEL", default=80)
+SERVER_FEATURES = env.list(
+    "SERVER_FEATURES",
+    default=["PvP e guerras de castelo", "Eventos periódicos", "Loja e marketplace no painel"],
+)
+SERVER_PVP_NOTE = env(
+    "SERVER_PVP_NOTE",
+    default="Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.",
+)
+SERVER_START_NOTE = env(
+    "SERVER_START_NOTE",
+    default="Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.",
+)
 PROJECT_URL = env("PROJECT_URL", default="http://localhost")
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")
 VAPID_PUBLIC_KEY = env("VAPID_PUBLIC_KEY", default="")
