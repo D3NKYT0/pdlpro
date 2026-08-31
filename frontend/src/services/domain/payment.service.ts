@@ -1,20 +1,27 @@
 import { request } from '../infra/http'
-import type { ApiBonusPreview, ApiPaymentOrder } from '../types'
+import type { ApiBonusPreview, ApiPaymentCatalog, ApiPaymentOrder } from '../types'
 
 export const paymentApi = {
+  catalog: () => request<ApiPaymentCatalog>('/customer/payments/catalog/'),
   list: () => request<ApiPaymentOrder[]>('/customer/payments/'),
-  create: (amount: string, method = 'mock') =>
+  create: (payload: { amount?: string; method?: string; currency?: string; package_id?: string }) =>
     request<ApiPaymentOrder>('/customer/payments/', {
       method: 'POST',
-      body: JSON.stringify({ amount, method }),
+      body: JSON.stringify(payload),
     }),
-  preview: (amount: string) =>
+  preview: (payload: { amount?: string; currency?: string; package_id?: string }) =>
     request<ApiBonusPreview>('/customer/payments/preview/', {
       method: 'POST',
-      body: JSON.stringify({ amount }),
+      body: JSON.stringify(payload),
     }),
   confirm: (orderId: string) =>
     request<ApiPaymentOrder>(`/customer/payments/${orderId}/confirm/`, { method: 'POST' }),
+  process: (orderId: string, payload: Record<string, unknown>) =>
+    request<ApiPaymentOrder>(`/customer/payments/${orderId}/process/`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  status: (orderId: string) => request<ApiPaymentOrder>(`/customer/payments/${orderId}/status/`),
   cancel: (orderId: string) =>
     request<ApiPaymentOrder>(`/customer/payments/${orderId}/cancel/`, { method: 'POST' }),
 }

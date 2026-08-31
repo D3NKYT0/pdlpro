@@ -13,11 +13,24 @@ class IPaymentOrderRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def get_by_external_id(self, external_id: str) -> PaymentOrderEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
     def list_by_user(self, user_id: UUID) -> list[PaymentOrderEntity]:
         raise NotImplementedError
 
     @abstractmethod
-    def find_reusable(self, user_id: UUID, amount: Decimal, method: str, hours: int) -> PaymentOrderEntity | None:
+    def find_reusable(
+        self,
+        user_id: UUID,
+        amount: Decimal,
+        method: str,
+        hours: int,
+        *,
+        currency: str,
+        package_code: str,
+    ) -> PaymentOrderEntity | None:
         raise NotImplementedError
 
     @abstractmethod
@@ -28,17 +41,33 @@ class IPaymentOrderRepository(ABC):
         amount: Decimal,
         coins: Decimal,
         method: str,
+        currency: str,
+        package_code: str,
         external_id: str,
         checkout_url: str,
+        client_secret: str = "",
     ) -> PaymentOrderEntity:
         raise NotImplementedError
 
     @abstractmethod
-    def update_checkout(self, order_id: UUID, *, external_id: str, checkout_url: str) -> PaymentOrderEntity:
+    def update_checkout(
+        self,
+        order_id: UUID,
+        *,
+        external_id: str,
+        checkout_url: str,
+        client_secret: str = "",
+        gateway_data: dict | None = None,
+        status: str | None = None,
+    ) -> PaymentOrderEntity:
         raise NotImplementedError
 
     @abstractmethod
     def mark_cancelled(self, order_id: UUID) -> PaymentOrderEntity:
+        raise NotImplementedError
+
+    @abstractmethod
+    def mark_failed(self, order_id: UUID) -> PaymentOrderEntity:
         raise NotImplementedError
 
     @abstractmethod

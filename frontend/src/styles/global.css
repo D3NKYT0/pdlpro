@@ -93,6 +93,22 @@ button, input, select { font: inherit; }
 .hero h1 { font-size: 3rem; margin: 0 0 12px; }
 .auth-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .auth-card { width: min(420px, 100%); }
+.pay-currency { display: flex; gap: 8px; margin: 12px 0; }
+.pay-packs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
+.pay-pack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  background: #0f0d0a;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+}
+.pay-pack:hover, .pay-pack:focus { border-color: var(--gold); }
+#payment-brick, #stripe-element { min-height: 120px; margin: 12px 0; }
 
 @media (max-width: 900px) {
   .shell { grid-template-columns: 1fr; }

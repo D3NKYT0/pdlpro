@@ -6,19 +6,29 @@ from common.models import BaseModel
 class PedidoPagamento(BaseModel):
     class Status(models.TextChoices):
         PENDING = "pending", "Pendente"
+        PROCESSING = "processing", "Processando"
         CONFIRMED = "confirmed", "Confirmado"
         CANCELLED = "cancelled", "Cancelado"
         FAILED = "failed", "Falhou"
 
+    class Currency(models.TextChoices):
+        BRL = "BRL", "Real"
+        USD = "USD", "Dólar"
+
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="payment_orders")
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     coins = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    currency = models.CharField(max_length=3, choices=Currency.choices, default=Currency.BRL)
+    package_code = models.CharField(max_length=40, blank=True)
     method = models.CharField(max_length=20, default="mock")
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
     external_id = models.CharField(max_length=120, blank=True)
     checkout_url = models.CharField(max_length=500, blank=True)
+    client_secret = models.CharField(max_length=500, blank=True)
     bonus_applied = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     total_credited = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    gateway_data = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name = "Pedido de pagamento"

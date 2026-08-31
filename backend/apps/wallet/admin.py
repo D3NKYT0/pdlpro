@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.wallet.infrastructure.models import CoinConfig, CoinPurchaseBonus, Wallet, WalletTransaction
+from apps.wallet.infrastructure.models import CoinConfig, CoinPackage, CoinPurchaseBonus, Wallet, WalletTransaction
 
 
 @admin.register(Wallet)
@@ -16,7 +16,12 @@ class WalletTransactionAdmin(admin.ModelAdmin):
 
 @admin.register(CoinConfig)
 class CoinConfigAdmin(admin.ModelAdmin):
-    list_display = ("name", "coin_id", "multiplier", "active")
+    list_display = ("name", "coin_id", "multiplier", "usd_multiplier", "active")
+
+
+@admin.register(CoinPackage)
+class CoinPackageAdmin(admin.ModelAdmin):
+    list_display = ("code", "name", "coins", "price_brl", "price_usd", "active", "sort_order")
 
 
 @admin.register(CoinPurchaseBonus)

@@ -49,15 +49,45 @@ export interface ApiPaymentOrder {
   id: string
   amount: string
   coins: string
+  currency: string
+  package_code: string
   method: string
   status: string
   checkout_url: string
+  client_secret?: string
   bonus_applied: string
   total_credited: string
+  pix_qr_code?: string
+  pix_qr_code_base64?: string
+  pix_ticket_url?: string
+  boleto_url?: string
+  boleto_barcode?: string
+  gateway_message?: string
+}
+
+export interface ApiCoinPackage {
+  id: string
+  code: string
+  name: string
+  coins: string
+  price_brl: string
+  price_usd: string
+  badge: string
+  bonus: string
+  total_coins: string
+}
+
+export interface ApiPaymentCatalog {
+  currency: string
+  methods: Array<{ id: string; public_key: string; currencies: string[] }>
+  packages: ApiCoinPackage[]
+  allow_custom_amount: boolean
 }
 
 export interface ApiBonusPreview {
   amount: string
+  currency?: string
+  coins?: string
   bonus: string
   percent: string
   description: string

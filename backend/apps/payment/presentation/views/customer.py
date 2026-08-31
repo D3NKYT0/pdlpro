@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from uuid import UUID
 
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
@@ -11,10 +12,15 @@ from apps.payment.application.use_cases import (
     ConfirmPaymentUseCase,
     CreatePaymentOrderInput,
     CreatePaymentOrderUseCase,
+    GetPaymentCatalogUseCase,
+    GetPaymentStatusInput,
+    GetPaymentStatusUseCase,
     ListPaymentOrdersInput,
     ListPaymentOrdersUseCase,
     PreviewBonusInput,
     PreviewPaymentBonusUseCase,
+    ProcessPaymentInput,
+    ProcessPaymentUseCase,
 )
 from apps.payment.domain.entities import PaymentOrderEntity
 from apps.payment.presentation.serializers import CreatePaymentOrderSerializer, PreviewBonusSerializer
@@ -27,7 +33,23 @@ def dump_order(order: PaymentOrderEntity) -> dict:
     payload["user_id"] = str(payload["user_id"])
     for key in ("amount", "coins", "bonus_applied", "total_credited"):
         payload[key] = str(payload[key])
+    gateway = payload.pop("gateway_data", {}) or {}
+    payload["pix_qr_code"] = gateway.get("pix_qr_code") or ""
+    payload["pix_qr_code_base64"] = gateway.get("pix_qr_code_base64") or ""
+    payload["pix_ticket_url"] = gateway.get("pix_ticket_url") or ""
+    payload["boleto_url"] = gateway.get("boleto_url") or ""
+    payload["boleto_barcode"] = gateway.get("boleto_barcode") or ""
+    payload["gateway_message"] = gateway.get("message") or ""
     return payload
+
+
+class PaymentCatalogView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Pagamento"])
+    def get(self, request):
+        catalog = self.resolve(GetPaymentCatalogUseCase).execute()
+        return Response(catalog)
 
 
 class PaymentOrderListView(InjectedAPIView):
@@ -42,11 +64,14 @@ class PaymentOrderListView(InjectedAPIView):
     def post(self, request):
         serializer = CreatePaymentOrderSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
         order = self.resolve(CreatePaymentOrderUseCase).execute(
             CreatePaymentOrderInput(
                 user_id=request.user.id,
-                amount=serializer.validated_data["amount"],
-                method=serializer.validated_data.get("method") or "mock",
+                amount=data.get("amount"),
+                method=data.get("method") or "",
+                currency=data.get("currency") or "BRL",
+                package_id=data.get("package_id") or "",
             )
         )
         return Response(dump_order(order))
@@ -59,17 +84,15 @@ class PreviewPaymentBonusView(InjectedAPIView):
     def post(self, request):
         serializer = PreviewBonusSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        preview = self.resolve(PreviewPaymentBonusUseCase).execute(
-            PreviewBonusInput(amount=serializer.validated_data["amount"])
-        )
+        data = serializer.validated_data
         return Response(
-            {
-                "amount": str(preview.amount),
-                "bonus": str(preview.bonus),
-                "percent": str(preview.percent),
-                "description": preview.description,
-                "total": str(preview.total),
-            }
+            self.resolve(PreviewPaymentBonusUseCase).execute(
+                PreviewBonusInput(
+                    amount=data.get("amount") or 0,
+                    currency=data.get("currency") or "BRL",
+                    package_id=data.get("package_id") or "",
+                )
+            )
         )
 
 
@@ -91,5 +114,41 @@ class ConfirmPaymentOrderView(InjectedAPIView):
     def post(self, request, order_id):
         order = self.resolve(ConfirmPaymentUseCase).execute(
             ConfirmPaymentInput(order_id=order_id, user_id=request.user.id)
+        )
+        return Response(dump_order(order))
+
+
+class ProcessPaymentOrderView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Pagamento"])
+    def post(self, request, order_id):
+        outcome = self.resolve(ProcessPaymentUseCase).execute(
+            ProcessPaymentInput(
+                user_id=request.user.id,
+                order_id=order_id,
+                payload=request.data if isinstance(request.data, dict) else {},
+                payer_email=request.user.email,
+            )
+        )
+        order = dump_order(outcome["order"])
+        result = outcome["result"]
+        order["status_detail"] = result.status
+        order["pix_qr_code"] = result.pix_qr_code or order["pix_qr_code"]
+        order["pix_qr_code_base64"] = result.pix_qr_code_base64 or order["pix_qr_code_base64"]
+        order["pix_ticket_url"] = result.pix_ticket_url or order["pix_ticket_url"]
+        order["boleto_url"] = result.boleto_url or order["boleto_url"]
+        order["boleto_barcode"] = result.boleto_barcode or order["boleto_barcode"]
+        order["gateway_message"] = result.message or order["gateway_message"]
+        return Response(order)
+
+
+class PaymentOrderStatusView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Pagamento"])
+    def get(self, request, order_id: UUID):
+        order = self.resolve(GetPaymentStatusUseCase).execute(
+            GetPaymentStatusInput(user_id=request.user.id, order_id=order_id)
         )
         return Response(dump_order(order))

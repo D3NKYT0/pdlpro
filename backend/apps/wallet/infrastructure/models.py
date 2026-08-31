@@ -40,6 +40,7 @@ class CoinConfig(BaseModel):
     name = models.CharField(max_length=100)
     coin_id = models.PositiveIntegerField(default=57)
     multiplier = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("1.00"))
+    usd_multiplier = models.DecimalField(max_digits=8, decimal_places=2, default=Decimal("5.00"))
     active = models.BooleanField(default=True)
     withdraw_fee_percent = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("0.00"))
 
@@ -69,3 +70,22 @@ class CoinPurchaseBonus(BaseModel):
 
     def __str__(self) -> str:
         return self.description
+
+
+class CoinPackage(BaseModel):
+    code = models.CharField(max_length=40, unique=True)
+    name = models.CharField(max_length=80)
+    coins = models.DecimalField(max_digits=12, decimal_places=2)
+    price_brl = models.DecimalField(max_digits=12, decimal_places=2)
+    price_usd = models.DecimalField(max_digits=12, decimal_places=2)
+    badge = models.CharField(max_length=40, blank=True)
+    active = models.BooleanField(default=True)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Pacote de moedas"
+        verbose_name_plural = "Pacotes de moedas"
+        ordering = ["sort_order", "coins"]
+
+    def __str__(self) -> str:
+        return self.name
