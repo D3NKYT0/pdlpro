@@ -25,20 +25,18 @@ export function ResetPasswordPage() {
     <AuthPanel
       title="Nova senha"
       lead="Defina uma nova senha para voltar ao reino."
-      footer={
-        <p>
-          <Link to="/login">← Voltar para o login</Link>
-        </p>
-      }
     >
-      <form onSubmit={onSubmit}>
+      <form className="auth-form" onSubmit={onSubmit}>
         {!token ? <p className="auth-lead">Link inválido.</p> : null}
         <AuthField label="Nova senha">
           <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
         </AuthField>
-        <button className="theme-btn-gold" type="submit" disabled={!token}>
-          Salvar
-        </button>
+        <div className="h-link">
+          <button type="submit" disabled={!token}>
+            Salvar senha
+          </button>
+          <Link to="/login">Entrar no Reino</Link>
+        </div>
       </form>
     </AuthPanel>
   )

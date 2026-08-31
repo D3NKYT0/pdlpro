@@ -20,15 +20,11 @@ export function VerifyEmailPage() {
     <AuthPanel
       title="Verificar e-mail"
       lead={status}
-      footer={
-        <p>
-          <Link className="theme-btn-gold" to="/login">
-            Entrar no Reino
-          </Link>
-        </p>
-      }
     >
-      <div />
+      <div className="h-link">
+        <Link to="/login">Entrar no Reino</Link>
+        <Link to="/">Voltar ao início</Link>
+      </div>
     </AuthPanel>
   )
 }

@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { themeImage } from '../../theme/assets'
 
 type AuthPanelProps = {
   title: string
@@ -7,14 +8,31 @@ type AuthPanelProps = {
   footer?: ReactNode
 }
 
+const defaultLead = '"Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna."'
+
 export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
   return (
-    <section className="auth-panel">
-      <h1>{title}</h1>
-      {lead ? <p className="auth-lead">{lead}</p> : null}
-      {children}
-      {footer ? <div className="auth-links">{footer}</div> : null}
-    </section>
+    <>
+      <div className="video">
+        <video autoPlay muted loop playsInline src={themeImage('video.mp4')} onError={(event) => event.currentTarget.remove()} />
+      </div>
+      <section className="h auth-hero">
+        <div className="auth-split">
+          <div className="auth-brand">
+            <div className="h-logo">
+              <img className="letters" src={themeImage('logo.png')} alt="PDL" />
+              <img className="circle" src={themeImage('logo-circle.png')} alt="" />
+            </div>
+            <h1>{title}</h1>
+            <p className="hero-description">{lead || defaultLead}</p>
+          </div>
+          <div className="auth-panel">
+            {children}
+            {footer ? <div className="auth-extra">{footer}</div> : null}
+          </div>
+        </div>
+      </section>
+    </>
   )
 }
 

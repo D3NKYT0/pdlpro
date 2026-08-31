@@ -28,15 +28,10 @@ export function RegisterPage() {
     <AuthPanel
       title="Crie sua conta mestre"
       lead="Preencha os campos abaixo para se juntar à aventura."
-      footer={
-        <p>
-          <Link to="/login">← Já tem conta? Faça login</Link>
-        </p>
-      }
     >
-      <form onSubmit={onSubmit}>
+      <form className="auth-form" onSubmit={onSubmit}>
         <AuthField label="Usuário">
-          <input value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} maxLength={16} autoComplete="username" />
+          <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} maxLength={16} autoComplete="username" />
         </AuthField>
         <AuthField label="E-mail">
           <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />
@@ -48,9 +43,10 @@ export function RegisterPage() {
           <input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} required />
           Eu concordo com os <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
         </label>
-        <button className="theme-btn-gold" type="submit">
-          Registrar
-        </button>
+        <div className="h-link">
+          <button type="submit">Crie sua conta mestra</button>
+          <Link to="/login">Entrar no Reino</Link>
+        </div>
       </form>
     </AuthPanel>
   )

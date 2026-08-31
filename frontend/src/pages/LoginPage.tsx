@@ -45,17 +45,12 @@ export function LoginPage() {
       title={challenge ? 'Verificação 2FA' : 'Entre no Reino'}
       lead={challenge ? 'Informe o código do autenticador para continuar.' : undefined}
       footer={
-        <>
-          <p>
-            Ainda não tem conta? <Link to="/register">Forje seu destino</Link>
-          </p>
-          <p>
-            <Link to="/forgot-password">Esqueceu a senha?</Link>
-          </p>
-        </>
+        <p>
+          <Link to="/forgot-password">Esqueceu a senha?</Link>
+        </p>
       }
     >
-      <form onSubmit={onSubmit}>
+      <form className="auth-form" onSubmit={onSubmit}>
         {challenge ? (
           <AuthField label="Código do autenticador">
             <input value={code} onChange={(event) => setCode(event.target.value)} required autoFocus inputMode="numeric" />
@@ -63,16 +58,17 @@ export function LoginPage() {
         ) : (
           <>
             <AuthField label="Usuário">
-              <input value={loginValue} onChange={(event) => setLoginValue(event.target.value)} required autoComplete="username" />
+              <input type="text" value={loginValue} onChange={(event) => setLoginValue(event.target.value)} required autoComplete="username" />
             </AuthField>
             <AuthField label="Senha">
               <AuthPassword value={password} onChange={setPassword} required autoComplete="current-password" />
             </AuthField>
           </>
         )}
-        <button className="theme-btn-gold" type="submit">
-          {challenge ? 'Confirmar' : 'Entrar no Reino'}
-        </button>
+        <div className="h-link">
+          <button type="submit">{challenge ? 'Confirmar' : 'Entrar no Reino'}</button>
+          <Link to="/register">Crie sua conta mestra</Link>
+        </div>
       </form>
     </AuthPanel>
   )

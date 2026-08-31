@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { AuthLayout } from '../../components/layout/AuthLayout'
 import { PrivateLayout } from '../../components/layout/PrivateLayout'
 import { PublicContent, PublicLayout } from '../../components/layout/PublicLayout'
 import { AccountsPage } from '../../pages/AccountsPage'
@@ -38,16 +37,13 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AuthLayout />}>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
-        </Route>
-
-        <Route element={<PublicLayout />}>
-          <Route path="/" element={<HomePage />} />
           <Route element={<PublicContent />}>
             <Route path="/rankings" element={<RankingsPage />} />
             <Route path="/news" element={<NewsPage />} />
