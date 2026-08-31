@@ -11,3 +11,6 @@ class PostEntity:
     author_username: str
     body: str
     created_at: str
+    likes_count: int = 0
+    comments_count: int = 0
+    liked: bool = False

@@ -125,3 +125,92 @@ def test_dice_and_slots(api, player):
     slots = api.post("/api/v1/customer/games/slots/")
     assert slots.status_code == 200, slots.data
     assert len(slots.data["reels"]) == 3
+
+
+@pytest.mark.django_db
+def test_fishing_cast(api, player):
+    from unittest.mock import patch
+
+    from apps.games.infrastructure.models import Fish
+
+    GameConfig.objects.update_or_create(
+        code="fishing", defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1}}
+    )
+    fish = Fish.objects.create(name="Lambari Teste", rarity="common", min_rod_level=1, weight=10, xp_reward=10)
+    player.fichas = 5
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    with (
+        patch("apps.games.application.fishing_use_cases.random.randint", return_value=1),
+        patch("apps.games.application.fishing_use_cases.random.choices", return_value=[fish]),
+    ):
+        cast = api.post("/api/v1/customer/games/fishing/")
+    assert cast.status_code == 200, cast.data
+    assert cast.data["success"] is True
+    assert cast.data["fish"]["name"] == "Lambari Teste"
+    state = api.get("/api/v1/customer/games/fishing/")
+    assert state.status_code == 200
+    assert state.data["rod"]["xp"] >= 10
+
+
+@pytest.mark.django_db
+def test_economy_fight_and_enchant(api, player):
+    from unittest.mock import patch
+
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    monster = Monster.objects.create(
+        name="Goblin Teste",
+        level=1,
+        required_weapon_level=0,
+        fragment_reward=12,
+        hp=10,
+        attack=1,
+        defense=0,
+        respawn_seconds=5,
+    )
+    player.fichas = 3
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is True
+    assert fight.data["fragments_earned"] == 12
+    with patch("apps.games.application.economy_use_cases.random.randint", return_value=1):
+        enchant = api.post("/api/v1/customer/games/economy/enchant/")
+    assert enchant.status_code == 200, enchant.data
+    assert enchant.data["success"] is True
+    weapon = EconomyWeapon.objects.get(user=player)
+    assert weapon.level == 1
+    assert weapon.fragments == 2
+
+
+@pytest.mark.django_db
+def test_battle_pass_claim_free_reward(api, player):
+    from datetime import timedelta
+
+    from django.utils import timezone
+
+    from apps.games.infrastructure.models import BattlePassLevel, BattlePassReward, BattlePassSeason
+
+    BattlePassSeason.objects.update(active=False)
+    season = BattlePassSeason.objects.create(
+        name="Teste BP",
+        starts_at=timezone.now() - timedelta(days=1),
+        ends_at=timezone.now() + timedelta(days=10),
+        active=True,
+        premium_price=Decimal("10.00"),
+    )
+    level = BattlePassLevel.objects.create(season=season, level=1, required_xp=0)
+    reward = BattlePassReward.objects.create(
+        level_row=level, is_premium=False, item_id=57, item_name="Adena", quantity=50
+    )
+    api.force_authenticate(user=player)
+    state = api.get("/api/v1/customer/games/battle-pass/")
+    assert state.status_code == 200, state.data
+    assert state.data["current_level"] == 1
+    claimed = api.post(f"/api/v1/customer/games/battle-pass/{reward.id}/claim/")
+    assert claimed.status_code == 200, claimed.data
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert any(item["item_name"] == "Adena" and item["quantity"] >= 50 for item in bag.data)

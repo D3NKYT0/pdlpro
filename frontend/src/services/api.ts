@@ -1,6 +1,7 @@
 export * from './types'
 export { request, isApiError, ApiError } from './infra/http'
-export { authApi } from './domain/auth.service'
+export { authApi, isTwoFactorChallenge } from './domain/auth.service'
+export type { TwoFactorChallenge } from './domain/auth.service'
 export { serverApi } from './domain/server.service'
 export { walletApi } from './domain/wallet.service'
 export { shopApi } from './domain/shop.service'

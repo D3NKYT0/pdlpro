@@ -3,16 +3,27 @@ from django.contrib import admin
 from apps.games.infrastructure.models import (
     Bag,
     BagItem,
+    BattlePassLevel,
+    BattlePassReward,
+    BattlePassSeason,
     Box,
     BoxSlot,
     BoxType,
     CatalogItem,
     DailyBonusClaim,
     DiceHistory,
+    EconomyFightLog,
+    EconomyWeapon,
+    Fish,
+    FishingCatch,
+    FishingRod,
     GameConfig,
+    Monster,
     Prize,
     SlotHistory,
     SpinHistory,
+    UserBattlePassClaim,
+    UserBattlePassProgress,
 )
 
 
@@ -75,3 +86,58 @@ class DiceHistoryAdmin(admin.ModelAdmin):
 @admin.register(SlotHistory)
 class SlotHistoryAdmin(admin.ModelAdmin):
     list_display = ("user", "reels", "won", "payout")
+
+
+@admin.register(FishingRod)
+class FishingRodAdmin(admin.ModelAdmin):
+    list_display = ("user", "level", "xp")
+
+
+@admin.register(Fish)
+class FishAdmin(admin.ModelAdmin):
+    list_display = ("name", "rarity", "min_rod_level", "weight", "active")
+
+
+@admin.register(FishingCatch)
+class FishingCatchAdmin(admin.ModelAdmin):
+    list_display = ("user", "fish", "success", "rod_level", "created_at")
+
+
+@admin.register(EconomyWeapon)
+class EconomyWeaponAdmin(admin.ModelAdmin):
+    list_display = ("user", "level", "fragments")
+
+
+@admin.register(Monster)
+class MonsterAdmin(admin.ModelAdmin):
+    list_display = ("name", "level", "required_weapon_level", "active")
+
+
+@admin.register(EconomyFightLog)
+class EconomyFightLogAdmin(admin.ModelAdmin):
+    list_display = ("user", "monster", "won", "fragments_earned")
+
+
+@admin.register(BattlePassSeason)
+class BattlePassSeasonAdmin(admin.ModelAdmin):
+    list_display = ("name", "starts_at", "ends_at", "active", "premium_price")
+
+
+@admin.register(BattlePassLevel)
+class BattlePassLevelAdmin(admin.ModelAdmin):
+    list_display = ("season", "level", "required_xp")
+
+
+@admin.register(BattlePassReward)
+class BattlePassRewardAdmin(admin.ModelAdmin):
+    list_display = ("level_row", "is_premium", "item_name", "quantity")
+
+
+@admin.register(UserBattlePassProgress)
+class UserBattlePassProgressAdmin(admin.ModelAdmin):
+    list_display = ("user", "season", "xp", "has_premium")
+
+
+@admin.register(UserBattlePassClaim)
+class UserBattlePassClaimAdmin(admin.ModelAdmin):
+    list_display = ("user", "reward", "created_at")

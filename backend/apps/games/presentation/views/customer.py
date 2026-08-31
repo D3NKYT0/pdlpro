@@ -2,6 +2,21 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from apps.games.application.battle_pass_use_cases import (
+    BuyBattlePassPremiumInput,
+    BuyBattlePassPremiumUseCase,
+    ClaimBattlePassRewardInput,
+    ClaimBattlePassRewardUseCase,
+    GetBattlePassUseCase,
+)
+from apps.games.application.economy_use_cases import (
+    EnchantWeaponInput,
+    EnchantWeaponUseCase,
+    FightMonsterInput,
+    FightMonsterUseCase,
+    GetEconomyStateUseCase,
+)
+from apps.games.application.fishing_use_cases import CastLineInput, CastLineUseCase, GetFishingStateUseCase
 from apps.games.application.box_use_cases import (
     BuyBoxInput,
     BuyBoxUseCase,
@@ -150,3 +165,69 @@ class SlotsView(InjectedAPIView):
     @extend_schema(tags=["Jogos"])
     def post(self, request):
         return Response(self.resolve(SpinSlotsUseCase).execute(SpinSlotsInput(user_id=request.user.id)))
+
+
+class FishingView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def get(self, request):
+        return Response(self.resolve(GetFishingStateUseCase).execute(request.user.id))
+
+    @extend_schema(tags=["Jogos"])
+    def post(self, request):
+        return Response(self.resolve(CastLineUseCase).execute(CastLineInput(user_id=request.user.id)))
+
+
+class EconomyView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def get(self, request):
+        return Response(self.resolve(GetEconomyStateUseCase).execute(request.user.id))
+
+
+class FightMonsterView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def post(self, request, monster_id):
+        return Response(
+            self.resolve(FightMonsterUseCase).execute(
+                FightMonsterInput(user_id=request.user.id, monster_id=monster_id)
+            )
+        )
+
+
+class EnchantWeaponView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def post(self, request):
+        return Response(self.resolve(EnchantWeaponUseCase).execute(EnchantWeaponInput(user_id=request.user.id)))
+
+
+class BattlePassView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def get(self, request):
+        return Response(self.resolve(GetBattlePassUseCase).execute(request.user.id))
+
+    @extend_schema(tags=["Jogos"])
+    def post(self, request):
+        return Response(
+            self.resolve(BuyBattlePassPremiumUseCase).execute(BuyBattlePassPremiumInput(user_id=request.user.id))
+        )
+
+
+class ClaimBattlePassView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Jogos"])
+    def post(self, request, reward_id):
+        return Response(
+            self.resolve(ClaimBattlePassRewardUseCase).execute(
+                ClaimBattlePassRewardInput(user_id=request.user.id, reward_id=reward_id)
+            )
+        )

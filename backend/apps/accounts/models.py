@@ -1,3 +1,17 @@
-from apps.accounts.infrastructure.models import User
+from apps.accounts.infrastructure.models import (
+    Achievement,
+    GamerProfile,
+    RewardClaim,
+    RewardDefinition,
+    User,
+    UserAchievement,
+)
 
-__all__ = ["User"]
+__all__ = [
+    "Achievement",
+    "GamerProfile",
+    "RewardClaim",
+    "RewardDefinition",
+    "User",
+    "UserAchievement",
+]

@@ -7,6 +7,17 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import AnonRateThrottle
 
+from apps.accounts.application.twofa import (
+    ConfirmTwoFactorInput,
+    ConfirmTwoFactorUseCase,
+    DisableTwoFactorInput,
+    DisableTwoFactorUseCase,
+    SetupTwoFactorUseCase,
+    VerifyTwoFactorLoginInput,
+    VerifyTwoFactorLoginUseCase,
+    make_login_challenge,
+)
+from apps.accounts.application.progress_use_cases import ClaimRewardInput, ClaimRewardUseCase, GetGamerProfileUseCase
 from apps.accounts.application.use_cases import (
     AuthenticateUserInput,
     AuthenticateUserUseCase,
@@ -81,6 +92,8 @@ class LoginView(InjectedAPIView):
         from django.contrib.auth import get_user_model
 
         orm_user = get_user_model().objects.get(id=user.id)
+        if orm_user.is_2fa_enabled:
+            return Response({"requires_2fa": True, "challenge": make_login_challenge(orm_user.id)})
         return build_auth_response(request, orm_user)
 
 
@@ -132,3 +145,56 @@ class MeView(InjectedAPIView):
             UpdateProfileInput(user_id=request.user.id, **serializer.validated_data)
         )
         return Response(UserSerializer(user).data)
+
+
+class VerifyTwoFactorLoginView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    throttle_classes = [AnonRateThrottle]
+
+    @extend_schema(tags=["Auth"])
+    def post(self, request):
+        user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
+            VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
+        )
+        return build_auth_response(request, user)
+
+
+class TwoFactorView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Perfil"])
+    def post(self, request):
+        action = request.data.get("action") or "setup"
+        if action == "setup":
+            return Response(self.resolve(SetupTwoFactorUseCase).execute(request.user.id))
+        code = request.data.get("code", "")
+        if action == "confirm":
+            return Response(
+                self.resolve(ConfirmTwoFactorUseCase).execute(ConfirmTwoFactorInput(user_id=request.user.id, code=code))
+            )
+        if action == "disable":
+            return Response(
+                self.resolve(DisableTwoFactorUseCase).execute(DisableTwoFactorInput(user_id=request.user.id, code=code))
+            )
+        from common.architecture.exceptions import ValidationDomainError
+
+        raise ValidationDomainError("Ação 2FA inválida.")
+
+
+class GamerProfileView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Perfil"])
+    def get(self, request):
+        return Response(self.resolve(GetGamerProfileUseCase).execute(request.user.id))
+
+
+class ClaimRewardView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Perfil"])
+    def post(self, request, reward_id):
+        return Response(
+            self.resolve(ClaimRewardUseCase).execute(ClaimRewardInput(user_id=request.user.id, reward_id=reward_id))
+        )

@@ -1,9 +1,16 @@
+from apps.games.application.battle_pass_use_cases import (
+    BuyBattlePassPremiumUseCase,
+    ClaimBattlePassRewardUseCase,
+    GetBattlePassUseCase,
+)
 from apps.games.application.box_use_cases import (
     BuyBoxUseCase,
     ListBoxTypesUseCase,
     OpenBoxUseCase,
     TransferBagToInventoryUseCase,
 )
+from apps.games.application.economy_use_cases import EnchantWeaponUseCase, FightMonsterUseCase, GetEconomyStateUseCase
+from apps.games.application.fishing_use_cases import CastLineUseCase, GetFishingStateUseCase
 from apps.games.application.minigame_use_cases import GetMinigamesStateUseCase, PlayDiceUseCase, SpinSlotsUseCase
 from apps.games.application.use_cases import (
     BuyTokensUseCase,
@@ -34,5 +41,13 @@ class GamesProvider(AppProvider):
             GetMinigamesStateUseCase,
             PlayDiceUseCase,
             SpinSlotsUseCase,
+            GetFishingStateUseCase,
+            CastLineUseCase,
+            GetEconomyStateUseCase,
+            FightMonsterUseCase,
+            EnchantWeaponUseCase,
+            GetBattlePassUseCase,
+            ClaimBattlePassRewardUseCase,
+            BuyBattlePassPremiumUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { authApi, type ApiUser } from '../services/api'
+import { authApi, isTwoFactorChallenge, type ApiUser, type TwoFactorChallenge } from '../services/api'
 
 interface AuthContextValue {
   user: ApiUser | null
   loading: boolean
-  login: (login: string, password: string) => Promise<void>
+  login: (login: string, password: string) => Promise<ApiUser | TwoFactorChallenge>
+  verifyTwoFactor: (challenge: string, code: string) => Promise<void>
   register: (payload: { username: string; email: string; password: string }) => Promise<void>
   logout: () => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -27,11 +29,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       user,
       loading,
-      login: async (login, password) => setUser(await authApi.login(login, password)),
+      login: async (login, password) => {
+        const result = await authApi.login(login, password)
+        if (isTwoFactorChallenge(result)) return result
+        setUser(result)
+        return result
+      },
+      verifyTwoFactor: async (challenge, code) => {
+        setUser(await authApi.verifyTwoFactor(challenge, code))
+      },
       register: async (payload) => setUser(await authApi.register(payload)),
       logout: async () => {
         await authApi.logout()
         setUser(null)
+      },
+      refreshUser: async () => {
+        setUser(await authApi.me())
       },
     }),
     [user, loading],

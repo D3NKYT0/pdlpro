@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiBagItem, ApiDailyBonus, ApiRouletteState, ApiSpinResult } from '../types'
+import type { ApiBagItem, ApiBattlePass, ApiDailyBonus, ApiEconomyState, ApiFishingState, ApiRouletteState, ApiSpinResult } from '../types'
 
 export const gamesApi = {
   roulette: () => request<ApiRouletteState>('/customer/games/roulette/'),
@@ -47,4 +47,33 @@ export const gamesApi = {
     request<{ reels: string[]; won: boolean; payout: number; fichas: number }>('/customer/games/slots/', {
       method: 'POST',
     }),
+  fishing: () => request<ApiFishingState>('/customer/games/fishing/'),
+  cast: () =>
+    request<{
+      success: boolean
+      fish: { name: string; rarity: string } | null
+      rod: { level: number; xp: number }
+      fichas: number
+    }>('/customer/games/fishing/', { method: 'POST' }),
+  economy: () => request<ApiEconomyState>('/customer/games/economy/'),
+  fight: (monsterId: string) =>
+    request<{
+      won: boolean
+      rounds: number
+      fragments_earned: number
+      weapon: { level: number; fragments: number }
+      fichas: number
+    }>(`/customer/games/economy/${monsterId}/fight/`, { method: 'POST' }),
+  enchant: () =>
+    request<{ success: boolean; weapon: { level: number; fragments: number } }>(
+      '/customer/games/economy/enchant/',
+      { method: 'POST' },
+    ),
+  battlePass: () => request<ApiBattlePass>('/customer/games/battle-pass/'),
+  claimBattlePass: (rewardId: string) =>
+    request<{ claimed: boolean; item_name: string }>(`/customer/games/battle-pass/${rewardId}/claim/`, {
+      method: 'POST',
+    }),
+  buyBattlePassPremium: () =>
+    request<{ has_premium: boolean }>('/customer/games/battle-pass/', { method: 'POST' }),
 }

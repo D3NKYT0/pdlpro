@@ -10,6 +10,8 @@ export function GamesPage() {
   const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
   const boxes = useQuery({ queryKey: ['boxes'], queryFn: gamesApi.boxes })
   const minigames = useQuery({ queryKey: ['minigames'], queryFn: gamesApi.minigames })
+  const fishing = useQuery({ queryKey: ['fishing'], queryFn: gamesApi.fishing })
+  const economy = useQuery({ queryKey: ['economy'], queryFn: gamesApi.economy })
   const inventories = useQuery({ queryKey: ['inventory'], queryFn: () => inventoryApi.dashboard() })
   const [amount, setAmount] = useState('5')
   const [diceAmount, setDiceAmount] = useState('1')
@@ -22,6 +24,8 @@ export function GamesPage() {
     await queryClient.invalidateQueries({ queryKey: ['bag'] })
     await queryClient.invalidateQueries({ queryKey: ['boxes'] })
     await queryClient.invalidateQueries({ queryKey: ['minigames'] })
+    await queryClient.invalidateQueries({ queryKey: ['fishing'] })
+    await queryClient.invalidateQueries({ queryKey: ['economy'] })
     await queryClient.invalidateQueries({ queryKey: ['wallet'] })
     await queryClient.invalidateQueries({ queryKey: ['inventory'] })
   }
@@ -96,6 +100,42 @@ export function GamesPage() {
       await refresh()
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha nos slots')
+    }
+  }
+
+  async function castLine() {
+    try {
+      const result = await gamesApi.cast()
+      toast[result.success ? 'success' : 'error'](
+        result.success ? `Pescou ${result.fish?.name}` : 'O peixe escapou',
+      )
+      await refresh()
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha na pesca')
+    }
+  }
+
+  async function fight(monsterId: string) {
+    try {
+      const result = await gamesApi.fight(monsterId)
+      toast[result.won ? 'success' : 'error'](
+        result.won ? `Vitória · +${result.fragments_earned} fragmentos` : 'Derrota',
+      )
+      await refresh()
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha no combate')
+    }
+  }
+
+  async function enchant() {
+    try {
+      const result = await gamesApi.enchant()
+      toast[result.success ? 'success' : 'error'](
+        result.success ? `Arma +${result.weapon.level}` : 'O encantamento falhou',
+      )
+      await refresh()
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha no encante')
     }
   }
 
@@ -187,6 +227,41 @@ export function GamesPage() {
         <p>
           <button className="btn" type="button" onClick={() => void playSlots()}>
             Girar slots ({minigames.data?.slots.cost ?? 1} ficha)
+          </button>
+        </p>
+        <h2>Pesca</h2>
+        <p className="muted">
+          Vara nv. {fishing.data?.rod.level ?? 1} · XP {fishing.data?.rod.xp ?? 0} · custo {fishing.data?.cost ?? 1} ficha
+        </p>
+        <p>
+          <button className="btn" type="button" onClick={() => void castLine()}>
+            Lançar linha
+          </button>
+        </p>
+        {(fishing.data?.recent ?? []).map((row, index) => (
+          <p key={`${row.created_at}-${index}`} className="muted">
+            {row.success ? row.fish : 'escapou'} · {row.created_at}
+          </p>
+        ))}
+        <h2>Economia</h2>
+        <p className="muted">
+          Arma +{economy.data?.weapon.level ?? 0} · {economy.data?.weapon.fragments ?? 0} fragmentos
+        </p>
+        {(economy.data?.monsters ?? []).map((monster) => (
+          <p key={monster.id}>
+            {monster.name} (req. +{monster.required_weapon_level}){' '}
+            {monster.alive ? (
+              <button className="btn" type="button" onClick={() => void fight(monster.id)}>
+                Lutar (1 ficha)
+              </button>
+            ) : (
+              <span className="muted">respawn {monster.respawn_in}s</span>
+            )}
+          </p>
+        ))}
+        <p>
+          <button className="btn" type="button" onClick={() => void enchant()}>
+            Encantar (10 fragmentos)
           </button>
         </p>
         <h2>Bag</h2>

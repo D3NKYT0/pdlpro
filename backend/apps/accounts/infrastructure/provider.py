@@ -1,3 +1,10 @@
+from apps.accounts.application.progress_use_cases import ClaimRewardUseCase, GetGamerProfileUseCase
+from apps.accounts.application.twofa import (
+    ConfirmTwoFactorUseCase,
+    DisableTwoFactorUseCase,
+    SetupTwoFactorUseCase,
+    VerifyTwoFactorLoginUseCase,
+)
 from apps.accounts.application.use_cases import (
     AuthenticateUserUseCase,
     GetCurrentUserUseCase,
@@ -18,3 +25,12 @@ class AccountsProvider(AppProvider):
         container.register_self(AuthenticateUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(GetCurrentUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(UpdateProfileUseCase, lifetime=Lifetime.TRANSIENT)
+        for use_case in (
+            SetupTwoFactorUseCase,
+            ConfirmTwoFactorUseCase,
+            DisableTwoFactorUseCase,
+            VerifyTwoFactorLoginUseCase,
+            GetGamerProfileUseCase,
+            ClaimRewardUseCase,
+        ):
+            container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

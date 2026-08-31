@@ -23,6 +23,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     role = serializers.CharField(read_only=True)
     is_email_verified = serializers.BooleanField(read_only=True)
     fichas = serializers.IntegerField(read_only=True)
+    is_2fa_enabled = serializers.BooleanField(read_only=True)
     avatar = serializers.ImageField(read_only=True, allow_null=True)
     bio = serializers.CharField(required=False, allow_blank=True)
 
@@ -37,6 +38,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "is_email_verified": instance.is_email_verified,
                 "fichas": instance.fichas,
                 "avatar_url": instance.avatar_url,
+                "is_2fa_enabled": instance.is_2fa_enabled,
             }
         data = super().to_representation(instance)
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None

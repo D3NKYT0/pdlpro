@@ -17,6 +17,7 @@ const links = [
   { to: '/marketplace', label: 'Marketplace' },
   { to: '/auctions', label: 'Leilão' },
   { to: '/games', label: 'Jogos' },
+  { to: '/progress', label: 'Progresso' },
   { to: '/accounts', label: 'Conta L2' },
   { to: '/inventory', label: 'Inventário' },
   { to: '/wallet', label: 'Carteira' },

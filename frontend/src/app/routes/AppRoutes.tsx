@@ -19,6 +19,7 @@ import { GamesPage } from '../../pages/GamesPage'
 import { InventoryPage } from '../../pages/InventoryPage'
 import { MarketplacePage } from '../../pages/MarketplacePage'
 import { NotificationsPage } from '../../pages/NotificationsPage'
+import { ProgressPage } from '../../pages/ProgressPage'
 import { WalletPage } from '../../pages/WalletPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
 import { WikiPage } from '../../pages/WikiPage'
@@ -50,6 +51,7 @@ export function AppRoutes() {
             <Route path="/accounts" element={<AccountsPage />} />
             <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/games" element={<GamesPage />} />
+            <Route path="/progress" element={<ProgressPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/friends" element={<FriendsPage />} />
           </Route>

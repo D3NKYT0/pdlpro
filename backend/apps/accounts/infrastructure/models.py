@@ -1,6 +1,7 @@
 import uuid
 from typing import ClassVar
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -80,3 +81,56 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff_member(self) -> bool:
         return self.role in {self.Role.STAFF, self.Role.ADMIN, self.Role.MODERATOR} or self.is_staff
+
+
+class GamerProfile(BaseModel):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="gamer_profile")
+    xp = models.PositiveIntegerField(default=0)
+    level = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = "Perfil gamer"
+
+
+class Achievement(BaseModel):
+    code = models.CharField(max_length=40, unique=True)
+    name = models.CharField(max_length=80)
+    description = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = "Conquista"
+
+
+class UserAchievement(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="achievements")
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name="unlocks")
+
+    class Meta:
+        verbose_name = "Conquista do jogador"
+        unique_together = ("user", "achievement")
+
+
+class RewardDefinition(BaseModel):
+    class Kind(models.TextChoices):
+        LEVEL = "level", "Nível"
+        ACHIEVEMENT = "achievement", "Conquista"
+
+    kind = models.CharField(max_length=20, choices=Kind.choices)
+    reference = models.CharField(max_length=40)
+    item_id = models.PositiveIntegerField(default=57)
+    item_name = models.CharField(max_length=120, default="Adena")
+    enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
+    description = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = "Recompensa"
+
+
+class RewardClaim(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reward_claims")
+    reward = models.ForeignKey(RewardDefinition, on_delete=models.CASCADE, related_name="claims")
+
+    class Meta:
+        verbose_name = "Recompensa resgatada"
+        unique_together = ("user", "reward")

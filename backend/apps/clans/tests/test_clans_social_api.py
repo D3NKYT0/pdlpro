@@ -70,3 +70,21 @@ def test_social_feed_create_and_list(api, leader):
     feed = api.get("/api/v1/public/feed/")
     assert feed.data[0]["body"] == "Servidor no ar."
     assert feed.data[0]["author_username"] == "leader1"
+    assert feed.data[0]["likes_count"] == 0
+    liked = api.post(f"/api/v1/customer/social/posts/{created.data['id']}/like/")
+    assert liked.status_code == 200, liked.data
+    assert liked.data["liked"] is True
+    assert liked.data["likes_count"] == 1
+    comment = api.post(
+        f"/api/v1/customer/social/posts/{created.data['id']}/comments/",
+        {"body": "Boa!"},
+        format="json",
+    )
+    assert comment.status_code == 200, comment.data
+    listed = api.get(f"/api/v1/customer/social/posts/{created.data['id']}/comments/")
+    assert listed.status_code == 200
+    assert listed.data[0]["body"] == "Boa!"
+    feed = api.get("/api/v1/public/feed/")
+    assert feed.data[0]["liked"] is True
+    assert feed.data[0]["likes_count"] == 1
+    assert feed.data[0]["comments_count"] == 1

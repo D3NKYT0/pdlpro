@@ -14,3 +14,4 @@ class UserEntity:
     is_email_verified: bool
     fichas: int
     avatar_url: str | None
+    is_2fa_enabled: bool = False

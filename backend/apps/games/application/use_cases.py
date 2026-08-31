@@ -148,6 +148,11 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
             wallet = self._wallets.get_or_create(data.user_id)
             self._wallets.credit(wallet.id, amount, origin="daily_bonus", description="Bônus diário")
             DailyBonusClaim.objects.create(user=user, claimed_on=today, amount=amount)
+            from apps.accounts.application.progress import add_xp
+            from apps.games.application.battle_pass_xp import add_battle_pass_xp
+
+            add_xp(user, 15)
+            add_battle_pass_xp(user, 10)
         return {"amount": str(amount), "claimed_on": today.isoformat()}
 
 

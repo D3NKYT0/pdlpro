@@ -8,7 +8,7 @@ from apps.social.domain.entities import PostEntity
 
 class IPostRepository(ABC):
     @abstractmethod
-    def list_published(self, *, limit: int = 50) -> list[PostEntity]:
+    def list_published(self, *, viewer_id: UUID | None = None, limit: int = 50) -> list[PostEntity]:
         raise NotImplementedError
 
     @abstractmethod

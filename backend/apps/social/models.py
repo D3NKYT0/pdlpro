@@ -1,3 +1,3 @@
-from apps.social.infrastructure.models import Post
+from apps.social.infrastructure.models import Comment, Post, PostLike
 
-__all__ = ["Post"]
+__all__ = ["Comment", "Post", "PostLike"]

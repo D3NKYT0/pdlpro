@@ -144,3 +144,129 @@ class SlotHistory(BaseModel):
 
     class Meta:
         verbose_name = "Giro de slots"
+
+
+class FishingRod(BaseModel):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="fishing_rod")
+    level = models.PositiveIntegerField(default=1)
+    xp = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Vara de pesca"
+
+
+class Fish(BaseModel):
+    name = models.CharField(max_length=80)
+    rarity = models.CharField(max_length=20, default="common")
+    min_rod_level = models.PositiveIntegerField(default=1)
+    weight = models.PositiveIntegerField(default=10)
+    xp_reward = models.PositiveIntegerField(default=10)
+    fichas_reward = models.PositiveIntegerField(default=0)
+    item_id = models.PositiveIntegerField(default=0)
+    item_name = models.CharField(max_length=120, blank=True)
+    enchant = models.PositiveIntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Peixe"
+
+
+class FishingCatch(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="fishing_catches")
+    fish = models.ForeignKey(Fish, on_delete=models.SET_NULL, null=True, blank=True)
+    success = models.BooleanField(default=False)
+    rod_level = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = "Pescaria"
+
+
+class EconomyWeapon(BaseModel):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="economy_weapon")
+    level = models.PositiveIntegerField(default=0)
+    fragments = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Arma da economia"
+
+
+class Monster(BaseModel):
+    name = models.CharField(max_length=80)
+    level = models.PositiveIntegerField(default=1)
+    required_weapon_level = models.PositiveIntegerField(default=0)
+    fragment_reward = models.PositiveIntegerField(default=3)
+    hp = models.PositiveIntegerField(default=40)
+    attack = models.PositiveIntegerField(default=8)
+    defense = models.PositiveIntegerField(default=2)
+    respawn_seconds = models.PositiveIntegerField(default=30)
+    defeated_at = models.DateTimeField(null=True, blank=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Monstro"
+
+
+class EconomyFightLog(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="economy_fights")
+    monster = models.ForeignKey(Monster, on_delete=models.SET_NULL, null=True)
+    won = models.BooleanField(default=False)
+    rounds = models.PositiveIntegerField(default=0)
+    fragments_earned = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Combate da economia"
+
+
+class BattlePassSeason(BaseModel):
+    name = models.CharField(max_length=80)
+    starts_at = models.DateTimeField()
+    ends_at = models.DateTimeField()
+    active = models.BooleanField(default=True)
+    premium_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("50.00"))
+
+    class Meta:
+        verbose_name = "Temporada do passe"
+
+
+class BattlePassLevel(BaseModel):
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="levels")
+    level = models.PositiveIntegerField()
+    required_xp = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Nível do passe"
+        unique_together = ("season", "level")
+        ordering = ["level"]
+
+
+class BattlePassReward(BaseModel):
+    level_row = models.ForeignKey(BattlePassLevel, on_delete=models.CASCADE, related_name="rewards")
+    is_premium = models.BooleanField(default=False)
+    item_id = models.PositiveIntegerField(default=57)
+    item_name = models.CharField(max_length=120, default="Adena")
+    enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
+    description = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = "Recompensa do passe"
+
+
+class UserBattlePassProgress(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="battle_passes")
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="progress")
+    xp = models.PositiveIntegerField(default=0)
+    has_premium = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Progresso do passe"
+        unique_together = ("user", "season")
+
+
+class UserBattlePassClaim(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="battle_pass_claims")
+    reward = models.ForeignKey(BattlePassReward, on_delete=models.CASCADE, related_name="claims")
+
+    class Meta:
+        verbose_name = "Resgate do passe"
+        unique_together = ("user", "reward")

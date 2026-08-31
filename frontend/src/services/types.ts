@@ -7,6 +7,7 @@ export interface ApiUser {
   is_email_verified: boolean
   fichas: number
   avatar_url: string | null
+  is_2fa_enabled?: boolean
 }
 
 export interface ApiServerStatus {
@@ -154,6 +155,79 @@ export interface ApiPost {
   author_username: string
   body: string
   created_at: string
+  likes_count?: number
+  comments_count?: number
+  liked?: boolean
+}
+
+export interface ApiComment {
+  id: string
+  author_id: string
+  author_username: string
+  body: string
+  created_at: string
+}
+
+export interface ApiGamerProfile {
+  xp: number
+  level: number
+  xp_next: number
+  unlocked_now: string[]
+  achievements: Array<{ code: string; name: string; description: string }>
+  rewards: Array<{
+    id: string
+    kind: string
+    reference: string
+    description: string
+    item_name: string
+    quantity: number
+    claimed: boolean
+    available: boolean
+  }>
+}
+
+export interface ApiBattlePass {
+  season: { id: string; name: string; premium_price: string; ends_at: string } | null
+  xp: number
+  has_premium: boolean
+  current_level: number
+  levels: Array<{
+    level: number
+    required_xp: number
+    unlocked: boolean
+    rewards: Array<{
+      id: string
+      is_premium: boolean
+      item_name: string
+      quantity: number
+      description: string
+      claimed: boolean
+      locked_premium: boolean
+    }>
+  }>
+}
+
+export interface ApiFishingState {
+  fichas: number
+  cost: number
+  active: boolean
+  rod: { level: number; xp: number }
+  fish: Array<{ id: string; name: string; rarity: string; min_rod_level: number }>
+  recent: Array<{ success: boolean; fish: string | null; created_at: string }>
+}
+
+export interface ApiEconomyState {
+  fichas: number
+  weapon: { level: number; fragments: number }
+  monsters: Array<{
+    id: string
+    name: string
+    level: number
+    required_weapon_level: number
+    fragment_reward: number
+    alive: boolean
+    respawn_in: number
+  }>
 }
 
 export interface ApiAuction {

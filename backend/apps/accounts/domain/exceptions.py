@@ -19,3 +19,9 @@ class InvalidCredentialsError(DomainError):
     error_code = "INVALID_CREDENTIALS"
     status_code = 401
     message = "Usuário ou senha inválidos."
+
+
+class InvalidTwoFactorError(DomainError):
+    error_code = "INVALID_2FA"
+    status_code = 400
+    message = "Código 2FA inválido."
