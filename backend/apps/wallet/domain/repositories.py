@@ -21,6 +21,10 @@ class IWalletRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def credit_bonus(self, wallet_id: UUID, amount: Decimal, *, origin: str, description: str) -> WalletEntity:
+        raise NotImplementedError
+
+    @abstractmethod
     def debit(self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str) -> WalletEntity:
         raise NotImplementedError
 

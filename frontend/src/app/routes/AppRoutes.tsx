@@ -8,6 +8,10 @@ import { NewsPage } from '../../pages/NewsPage'
 import { RankingsPage } from '../../pages/RankingsPage'
 import { RegisterPage } from '../../pages/RegisterPage'
 import { ShopPage } from '../../pages/ShopPage'
+import { AccountsPage } from '../../pages/AccountsPage'
+import { AuctionPage } from '../../pages/AuctionPage'
+import { InventoryPage } from '../../pages/InventoryPage'
+import { MarketplacePage } from '../../pages/MarketplacePage'
 import { WalletPage } from '../../pages/WalletPage'
 import { RequireAuth } from './RequireAuth'
 
@@ -23,9 +27,13 @@ export function AppRoutes() {
           <Route path="/news" element={<NewsPage />} />
           <Route path="/news/:slug" element={<NewsDetailPage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/marketplace" element={<MarketplacePage />} />
+          <Route path="/auctions" element={<AuctionPage />} />
           <Route path="/downloads" element={<DownloadsPage />} />
           <Route element={<RequireAuth />}>
             <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/accounts" element={<AccountsPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
           </Route>
         </Route>
       </Routes>

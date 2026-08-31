@@ -52,3 +52,20 @@ class CoinConfig(BaseModel):
             if self.active:
                 CoinConfig.objects.exclude(pk=self.pk).update(active=False)
             super().save(*args, **kwargs)
+
+
+class CoinPurchaseBonus(BaseModel):
+    min_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    max_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    percent = models.DecimalField(max_digits=5, decimal_places=2)
+    description = models.CharField(max_length=200)
+    active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Bônus de compra"
+        verbose_name_plural = "Bônus de compra"
+        ordering = ["order", "min_amount"]
+
+    def __str__(self) -> str:
+        return self.description

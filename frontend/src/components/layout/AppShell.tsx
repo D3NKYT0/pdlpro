@@ -6,6 +6,10 @@ const links = [
   { to: '/rankings', label: 'Rankings' },
   { to: '/news', label: 'Notícias' },
   { to: '/shop', label: 'Loja' },
+  { to: '/marketplace', label: 'Marketplace' },
+  { to: '/auctions', label: 'Leilão' },
+  { to: '/accounts', label: 'Conta L2' },
+  { to: '/inventory', label: 'Inventário' },
   { to: '/wallet', label: 'Carteira' },
   { to: '/downloads', label: 'Downloads' },
 ]

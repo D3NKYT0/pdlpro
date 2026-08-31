@@ -42,6 +42,18 @@ class DjangoWalletRepository(IWalletRepository):
         )
         return self._to_entity(wallet)
 
+    def credit_bonus(self, wallet_id: UUID, amount: Decimal, *, origin: str, description: str) -> WalletEntity:
+        Wallet.objects.filter(id=wallet_id).update(bonus_balance=F("bonus_balance") + amount)
+        wallet = Wallet.objects.select_related("user").get(id=wallet_id)
+        WalletTransaction.objects.create(
+            wallet=wallet,
+            kind=WalletTransaction.Kind.CREDIT,
+            amount=amount,
+            origin=origin,
+            description=description,
+        )
+        return self._to_entity(wallet)
+
     def debit(self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str) -> WalletEntity:
         updated = Wallet.objects.filter(id=wallet_id, balance__gte=amount).update(balance=F("balance") - amount)
         if not updated:

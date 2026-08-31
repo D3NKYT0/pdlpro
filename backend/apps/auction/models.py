@@ -1,3 +1,3 @@
-from apps.auction.infrastructure.models import Auction
+from apps.auction.infrastructure.models import Auction, Bid
 
-__all__ = ["Auction"]
+__all__ = ["Auction", "Bid"]

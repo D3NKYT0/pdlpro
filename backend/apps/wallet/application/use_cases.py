@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
+from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
 from apps.wallet.domain.entities import InsufficientBalanceError, InvalidTransferError, WalletEntity, WalletNotFoundError
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -67,3 +68,18 @@ class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
             if updated is None:
                 raise WalletNotFoundError()
             return updated
+
+
+@dataclass(frozen=True, slots=True)
+class PreviewPurchaseBonusInput:
+    amount: Decimal
+
+
+class PreviewPurchaseBonusUseCase(UseCase[PreviewPurchaseBonusInput, BonusPreview]):
+    def __init__(self, bonus_policy: IPurchaseBonusPolicy) -> None:
+        self._bonus_policy = bonus_policy
+
+    def execute(self, data: PreviewPurchaseBonusInput) -> BonusPreview:
+        if data.amount <= 0:
+            raise InvalidTransferError("O valor deve ser maior que zero.")
+        return self._bonus_policy.preview(data.amount)

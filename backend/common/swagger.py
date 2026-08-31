@@ -36,5 +36,7 @@ pdl_swagger_tags: list[dict[str, str]] = [
     {"name": "Carteira", "description": "Saldo, transferências e extrato."},
     {"name": "Loja", "description": "Itens, pacotes, carrinho e checkout."},
     {"name": "Conteúdo", "description": "Notícias, FAQ e páginas públicas."},
+    {"name": "Conta Lineage", "description": "Vínculo de conta, personagens e serviços."},
+    {"name": "Inventário", "description": "Retirada, depósito e troca de itens no painel."},
     {"name": "Sistema", "description": "Health check e versão da API."},
 ]
