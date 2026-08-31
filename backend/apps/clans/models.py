@@ -1,3 +1,3 @@
-from apps.clans.infrastructure.models import ClanProfile
+from apps.clans.infrastructure.models import ClanApplication, ClanProfile
 
-__all__ = ["ClanProfile"]
+__all__ = ["ClanApplication", "ClanProfile"]

@@ -2,7 +2,14 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.server.application.use_cases import GetRankingInput, GetRankingUseCase, GetServerStatusInput, GetServerStatusUseCase
+from apps.server.application.use_cases import (
+    GetRankingInput,
+    GetRankingUseCase,
+    GetServerStatusInput,
+    GetServerStatusUseCase,
+    RunPublicLineageQueryInput,
+    RunPublicLineageQueryUseCase,
+)
 from apps.server.presentation.serializers import RankingEntrySerializer, ServerStatusSerializer
 from common.views import InjectedAPIView
 
@@ -26,3 +33,30 @@ class RankingView(InjectedAPIView):
         limit = int(request.query_params.get("limit", 10))
         entries = self.resolve(GetRankingUseCase).execute(GetRankingInput(kind=kind, limit=min(limit, 50)))
         return Response(RankingEntrySerializer(entries, many=True).data)
+
+
+def dump_sql_row(row: dict) -> dict:
+    payload = {}
+    for key, value in row.items():
+        if hasattr(value, "isoformat"):
+            payload[key] = value.isoformat()
+        elif isinstance(value, bytes):
+            continue
+        elif isinstance(value, (int, float, str, bool)) or value is None:
+            payload[key] = value
+        else:
+            payload[key] = str(value)
+    return payload
+
+
+class PublicLineageQueryView(InjectedAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(tags=["Servidor"])
+    def get(self, request, name: str):
+        params = {key: value for key, value in request.query_params.items()}
+        rows = self.resolve(RunPublicLineageQueryUseCase).execute(
+            RunPublicLineageQueryInput(name=name, params=params)
+        )
+        return Response([dump_sql_row(row) for row in rows])

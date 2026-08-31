@@ -273,6 +273,11 @@ class SqlAlchemyLineageGateway(ILineageGateway):
     def transfer_character(self, char_id: int, new_account: str) -> None:
         self._execute("transfer_character", {"acc": new_account, "cid": char_id})
 
+    def query(self, name: str, params: dict | None = None) -> list[dict]:
+        if not self._sql.has(name):
+            return []
+        return self._fetch(name, params)
+
     def _require_offline(self, login: str, char_id: int) -> GameCharacter:
         char = self.get_character(login, char_id)
         if char is None:

@@ -79,6 +79,9 @@ class LineageQueryCatalog:
     def __getitem__(self, name: str) -> str:
         return self.get(name)
 
+    def has(self, name: str) -> bool:
+        return name in self._statements
+
     @classmethod
     def load(cls, dialect: str) -> LineageQueryCatalog:
         folder = cls.ROOT / dialect

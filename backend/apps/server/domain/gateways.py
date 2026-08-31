@@ -124,3 +124,8 @@ class ILineageGateway(ABC):
 
     @abstractmethod
     def transfer_character(self, char_id: int, new_account: str) -> None: ...
+
+    @abstractmethod
+    def query(self, name: str, params: dict | None = None) -> list[dict]:
+        """Executa uma query nomeada do catálogo SQL. Sem SQL no Python."""
+        ...

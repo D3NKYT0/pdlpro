@@ -1,21 +1,33 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../../contexts/AuthContext'
+import { notificationApi } from '../../services/api'
 
 const links = [
   { to: '/', label: 'Início' },
   { to: '/rankings', label: 'Rankings' },
   { to: '/news', label: 'Notícias' },
+  { to: '/feed', label: 'Feed' },
+  { to: '/clans', label: 'Clãs' },
   { to: '/shop', label: 'Loja' },
   { to: '/marketplace', label: 'Marketplace' },
   { to: '/auctions', label: 'Leilão' },
+  { to: '/games', label: 'Jogos' },
   { to: '/accounts', label: 'Conta L2' },
   { to: '/inventory', label: 'Inventário' },
   { to: '/wallet', label: 'Carteira' },
+  { to: '/notifications', label: 'Avisos' },
   { to: '/downloads', label: 'Downloads' },
 ]
 
 export function AppShell() {
   const { user, logout } = useAuth()
+  const notices = useQuery({
+    queryKey: ['notifications'],
+    queryFn: notificationApi.list,
+    enabled: Boolean(user),
+  })
+  const unread = notices.data?.unread ?? 0
 
   return (
     <div className="shell">
@@ -25,6 +37,7 @@ export function AppShell() {
           {links.map((link) => (
             <NavLink key={link.to} to={link.to} end={link.to === '/'}>
               {link.label}
+              {link.to === '/notifications' && unread ? ` (${unread})` : ''}
             </NavLink>
           ))}
         </nav>

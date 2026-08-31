@@ -6,4 +6,8 @@ urlpatterns = [
     path("payments/", include("apps.payment.presentation.urls.customer")),
     path("marketplace/", include("apps.marketplace.presentation.urls.customer")),
     path("auctions/", include("apps.auction.presentation.urls.customer")),
+    path("notifications/", include("apps.communication.presentation.urls.customer")),
+    path("games/", include("apps.games.presentation.urls.customer")),
+    path("clans/", include("apps.clans.presentation.urls.customer")),
+    path("social/", include("apps.social.presentation.urls.customer")),
 ]

@@ -200,6 +200,9 @@ class NullLineageGateway(ILineageGateway):
         )
         self._characters.setdefault(key, []).append(moved)
 
+    def query(self, name: str, params: dict | None = None) -> list[dict]:
+        return []
+
     def seed_character(self, login: str, name: str, *, items: list[GameItem] | None = None) -> GameCharacter:
         """Apenas testes/dev: cria um personagem no gateway em memória."""
         key = login.lower()

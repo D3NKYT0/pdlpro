@@ -13,7 +13,7 @@ from apps.server.application.character_use_cases import (
     PurchaseLinkSlotUseCase,
     UnstuckCharacterUseCase,
 )
-from apps.server.application.use_cases import GetRankingUseCase, GetServerStatusUseCase
+from apps.server.application.use_cases import GetRankingUseCase, GetServerStatusUseCase, RunPublicLineageQueryUseCase
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRepository
@@ -42,6 +42,7 @@ class ServerProvider(AppProvider):
         for use_case in (
             GetServerStatusUseCase,
             GetRankingUseCase,
+            RunPublicLineageQueryUseCase,
             ListAccessibleAccountsUseCase,
             GetLinkSlotsUseCase,
             RegisterGameAccountUseCase,
