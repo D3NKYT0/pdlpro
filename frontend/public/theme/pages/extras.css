@@ -1,0 +1,109 @@
+html.pdl-public nav .open,
+html.pdl-public nav .close {
+  cursor: pointer;
+}
+
+html.pdl-public .auth-page {
+  min-height: calc(100vh - 220px);
+  display: grid;
+  place-items: center;
+  padding: 48px 16px 80px;
+}
+
+html.pdl-public .auth-card,
+html.pdl-public .theme-panel {
+  width: min(1100px, 100%);
+  background: rgba(53, 47, 35, 0.95);
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  color: #fff;
+}
+
+html.pdl-public .auth-card {
+  width: min(420px, 100%);
+}
+
+html.pdl-public .auth-card h1,
+html.pdl-public .theme-panel h1 {
+  font-size: 36px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: #e6c77d;
+}
+
+html.pdl-public .theme-page {
+  padding: 24px 0 80px;
+}
+
+html.pdl-public .theme-panel h3,
+html.pdl-public .theme-panel a {
+  color: #e6c77d;
+}
+
+html.pdl-public .theme-panel article + article {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(230, 199, 125, 0.15);
+}
+
+html.pdl-public .field input,
+html.pdl-public .field select,
+html.pdl-public .theme-panel input {
+  background: #0f0d0a;
+  border: 1px solid rgba(230, 199, 125, 0.25);
+  color: #fff;
+}
+
+html.pdl-public .tops-nav-container {
+  top: 73px;
+  height: calc(100vh - 73px);
+}
+
+html.pdl-public .tops-content {
+  padding-top: 24px;
+}
+
+html.pdl-public .tops-content .table {
+  width: 100%;
+  color: #fff;
+  border-collapse: collapse;
+}
+
+html.pdl-public .tops-content .table th,
+html.pdl-public .tops-content .table td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(230, 199, 125, 0.15);
+}
+
+html.pdl-public .tops-content .btn,
+html.pdl-public .auth-card .btn {
+  margin: 0 6px 8px 0;
+}
+
+html.pdl-public .wiki .w-content {
+  padding: 40px 0 80px;
+}
+
+html.pdl-public .tops-nav-link {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+html.pdl-public .banner-track {
+  animation: pdl-marquee 22s linear infinite;
+}
+
+@keyframes pdl-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.site-back {
+  color: #d4af37;
+  font-size: 0.9rem;
+}

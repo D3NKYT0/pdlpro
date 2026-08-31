@@ -10,23 +10,30 @@
   --ok: #6fbf73;
   --border: rgba(212, 175, 55, 0.22);
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-  font-family: "Outfit", system-ui, sans-serif;
-  color: var(--text);
-  background: var(--bg);
   line-height: 1.5;
 }
 
 * { box-sizing: border-box; }
 html, body, #root { min-height: 100%; margin: 0; }
-body {
+
+html:not(.pdl-public) {
+  font-family: "Outfit", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+html:not(.pdl-public) body {
   background:
     radial-gradient(1200px 500px at 10% -10%, rgba(212, 175, 55, 0.12), transparent 50%),
     radial-gradient(900px 400px at 100% 0%, rgba(120, 70, 20, 0.18), transparent 45%),
     var(--bg);
 }
 
-h1, h2, h3, .brand { font-family: "Cinzel", serif; letter-spacing: 0.04em; }
-a { color: var(--gold); text-decoration: none; }
+html:not(.pdl-public) h1,
+html:not(.pdl-public) h2,
+html:not(.pdl-public) h3,
+html:not(.pdl-public) .brand { font-family: "Cinzel", serif; letter-spacing: 0.04em; }
+html:not(.pdl-public) a { color: var(--gold); text-decoration: none; }
 button, input, select { font: inherit; }
 
 .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }

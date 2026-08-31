@@ -1,75 +1,134 @@
-import { useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { themeImage } from '../../theme/assets'
+import { useDefaultTheme } from '../../theme/useDefaultTheme'
 
 const links = [
-  { to: '/', label: 'Início' },
-  { to: '/rankings', label: 'Rankings' },
+  { to: '/', label: 'Início', end: true },
+  { to: '/wiki', label: 'Informações' },
   { to: '/news', label: 'Notícias' },
-  { to: '/wiki', label: 'Wiki' },
-  { to: '/faq', label: 'FAQ' },
-  { to: '/calendar', label: 'Calendário' },
+  { to: '/faq', label: 'Perguntas Frequentes' },
 ]
+
+function navActive(path: string, to: string, end?: boolean) {
+  if (end) return path === to
+  return path === to || path.startsWith(`${to}/`)
+}
 
 export function PublicLayout() {
   const { user } = useAuth()
   const { pathname } = useLocation()
-  const [open, setOpen] = useState(false)
-  const home = pathname === '/'
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useDefaultTheme()
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 1)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    const timer = window.setTimeout(() => setLoading(false), 700)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.clearTimeout(timer)
+    }
+  }, [])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   return (
-    <div className={`public-site${home ? ' is-home' : ''}`}>
-      <nav className="public-nav">
-        <NavLink className="public-brand" to="/">
-          PDL PRO
-        </NavLink>
-        <button className="public-nav-toggle" type="button" aria-label="Menu" onClick={() => setOpen((value) => !value)}>
-          {open ? 'Fechar' : 'Menu'}
-        </button>
-        <ul className={open ? 'is-open' : undefined} onClick={() => setOpen(false)}>
+    <>
+      <div className={`loading${loading ? '' : ' scale'}`} style={loading ? undefined : { display: 'none' }}>
+        <div className="l-logo">
+          <div className="letters">
+            <img src={themeImage('logo.png')} alt="Logo do Lineage2" />
+          </div>
+          <div className="circle">
+            <img src={themeImage('logo-circle.png')} alt="" />
+          </div>
+        </div>
+      </div>
+
+      <nav className={scrolled ? 'scrolled' : undefined}>
+        <div className="open" onClick={() => setMenuOpen(true)}>
+          <i className="fa-solid fa-bars" />
+        </div>
+
+        <ul className={menuOpen ? 'active' : undefined}>
+          <div className="close" onClick={() => setMenuOpen(false)}>
+            <i className="fa-solid fa-xmark" />
+          </div>
+          <span>
+            <img src={themeImage('icons/nav-icon.png')} alt="" />
+          </span>
           {links.map((link) => (
-            <li key={link.to}>
-              <NavLink to={link.to} end={link.to === '/'}>
-                {link.label}
-              </NavLink>
+            <li key={link.to} className={navActive(pathname, link.to, link.end) ? 'active' : undefined}>
+              <Link to={link.to}>{link.label}</Link>
             </li>
           ))}
         </ul>
-        <div className="public-nav-actions">
+
+        <div>
           {user ? (
-            <Link className="public-user" to="/painel">
-              Minha conta
+            <Link className="user" to="/painel">
+              <img src={themeImage('icons/user.png')} alt="" />
+              <span>Minha Conta</span>
             </Link>
           ) : (
-            <Link className="public-user" to="/login">
-              Entrar
+            <Link className="user" to="/login">
+              <img src={themeImage('icons/user.png')} alt="" />
+              <span>Entrar</span>
             </Link>
           )}
-          <Link className="public-download" to="/downloads">
+          <Link className="download" to="/downloads">
             Download
           </Link>
         </div>
       </nav>
-      <div className="public-main">
+
+      <div className="main-content">
         <Outlet />
       </div>
-      <footer className="public-footer">
-        <div className="public-footer-links">
-          <Link to="/agreement">Acordo do usuário</Link>
-          <Link to="/terms">Termos de serviço</Link>
-          <Link to="/privacy">Política de privacidade</Link>
+
+      <footer>
+        <div className="language">
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <span>
+              <img src={themeImage('icons/world.png')} alt="" />
+              &nbsp;&nbsp;&nbsp;Português
+            </span>
+            <span>
+              <img className="cursor" src={themeImage('icons/downcursor.png')} alt="" />
+            </span>
+          </span>
+          <ul className="language-dropdown">
+            <li>
+              <span>Português</span>
+            </li>
+          </ul>
         </div>
-        <p>© {new Date().getFullYear()} PDL PRO</p>
-        <p className="muted">Feito com cuidado por aventureiros para aventureiros.</p>
+
+        <div className="copyright container">
+          <div className="c-link">
+            <Link to="/agreement">Acordo do Usuário</Link>
+            <Link to="/terms">Termos de Serviço</Link>
+            <Link to="/privacy">Política de Privacidade</Link>
+          </div>
+          <div className="c-text">
+            <img src={themeImage('logo.png')} alt="Logo do Lineage2" />
+            <p>© {new Date().getFullYear()} PDL PRO</p>
+            <span style={{ textAlign: 'center', display: 'block' }}>Feito com ❤️ por aventureiros para aventureiros.</span>
+          </div>
+        </div>
       </footer>
-    </div>
+    </>
   )
 }
 
 export function PublicContent() {
-  return (
-    <div className="public-page">
-      <Outlet />
-    </div>
-  )
+  return <Outlet />
 }

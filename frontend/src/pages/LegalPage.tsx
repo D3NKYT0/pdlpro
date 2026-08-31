@@ -14,10 +14,12 @@ export function LegalPage() {
   const doc = useQuery({ queryKey: ['legal', slug], queryFn: () => contentApi.legalDocument(slug) })
 
   return (
-    <section className="card hero">
-      <h1>{doc.data?.title ?? 'Documento'}</h1>
-      <p className="muted">Versão {doc.data?.version}</p>
-      <p>{doc.data?.body}</p>
-    </section>
+    <div className="container terms-page" style={{ padding: '40px 16px 80px' }}>
+      <div className="bg-dark">
+        <h1>🛡️ {doc.data?.title ?? 'Documento'}</h1>
+        <p className="text-sm">Versão {doc.data?.version}</p>
+        <p>{doc.data?.body}</p>
+      </div>
+    </div>
   )
 }

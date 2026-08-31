@@ -34,87 +34,101 @@ export function RankingsPage() {
   const worldKeys = worldRows[0] ? Object.keys(worldRows[0]) : []
 
   return (
-    <section className="card">
-      <h1>Rankings e mundo</h1>
-      <p>
-        {rankingKinds.map((item) => (
-          <button
-            key={item}
-            className={tab.type === 'ranking' && tab.kind === item ? 'btn' : 'btn ghost'}
-            type="button"
-            onClick={() => setTab({ type: 'ranking', kind: item })}
-          >
-            {item.toUpperCase()}
-          </button>
-        ))}
-        {worldKinds.map((item) => (
-          <button
-            key={item.name}
-            className={tab.type === 'world' && tab.name === item.name ? 'btn' : 'btn ghost'}
-            type="button"
-            onClick={() => setTab({ type: 'world', name: item.name })}
-          >
-            {item.label}
-          </button>
-        ))}
-      </p>
-      {tab.type === 'ranking' ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(rankings.data ?? []).map((row) => (
-              <tr key={`${row.position}-${row.name}`}>
-                <td>{row.position}</td>
-                <td>{row.name}</td>
-                <td>{row.value}</td>
-              </tr>
+    <div className="tops-container">
+      <aside className="tops-nav-container">
+        <div className="tops-nav-header">
+          <h2>Rankings</h2>
+        </div>
+        <nav className="tops-nav-menu">
+          <ul className="tops-nav-list">
+            {rankingKinds.map((item) => (
+              <li className="tops-nav-item" key={item}>
+                <button
+                  className={`tops-nav-link${tab.type === 'ranking' && tab.kind === item ? ' active' : ''}`}
+                  type="button"
+                  onClick={() => setTab({ type: 'ranking', kind: item })}
+                >
+                  <i className="fas fa-trophy" />
+                  {item.toUpperCase()}
+                </button>
+              </li>
             ))}
-          </tbody>
-        </table>
-      ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              {worldKeys.map((key) => (
-                <th key={key}>{key}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {worldRows.map((row, index) => (
-              <tr key={index}>
-                {worldKeys.map((key) => (
-                  <td key={key}>{String(row[key] ?? '')}</td>
+            {worldKinds.map((item) => (
+              <li className="tops-nav-item" key={item.name}>
+                <button
+                  className={`tops-nav-link${tab.type === 'world' && tab.name === item.name ? ' active' : ''}`}
+                  type="button"
+                  onClick={() => setTab({ type: 'world', name: item.name })}
+                >
+                  <i className="fas fa-globe" />
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+      <div className="tops-content">
+        <div className="content-wrapper">
+          <div className="tops-header-section">
+            <h1>{tab.type === 'ranking' ? tab.kind.toUpperCase() : worldKinds.find((item) => item.name === tab.name)?.label}</h1>
+            <p className="lead">Rankings e consultas do mundo Lineage.</p>
+          </div>
+          {tab.type === 'ranking' ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(rankings.data ?? []).map((row) => (
+                  <tr key={`${row.position}-${row.name}`}>
+                    <td>{row.position}</td>
+                    <td>{row.name}</td>
+                    <td>{row.value}</td>
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      {!rankings.data?.length && tab.type === 'ranking' ? (
-        <p className="muted">Sem dados. Conecte o banco Lineage em LINEAGE_DB_ENABLED.</p>
-      ) : null}
-      {tab.type === 'world' && !worldRows.length ? (
-        <p className="muted">Sem dados desta consulta no momento.</p>
-      ) : null}
-      <h2>Buscar personagem</h2>
-      <label className="field">
-        Nome
-        <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="mínimo 2 letras" />
-      </label>
-      {(characters.data ?? []).map((row, index) => (
-        <p key={index}>
-          {Object.entries(row)
-            .map(([key, value]) => `${key}: ${value}`)
-            .join(' · ')}
-        </p>
-      ))}
-    </section>
+              </tbody>
+            </table>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  {worldKeys.map((key) => (
+                    <th key={key}>{key}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {worldRows.map((row, index) => (
+                  <tr key={index}>
+                    {worldKeys.map((key) => (
+                      <td key={key}>{String(row[key] ?? '')}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {!rankings.data?.length && tab.type === 'ranking' ? <p className="lead">Sem dados. Conecte o banco Lineage em LINEAGE_DB_ENABLED.</p> : null}
+          {tab.type === 'world' && !worldRows.length ? <p className="lead">Sem dados desta consulta no momento.</p> : null}
+          <h2 className="card-title">Buscar personagem</h2>
+          <label className="field">
+            Nome
+            <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="mínimo 2 letras" />
+          </label>
+          {(characters.data ?? []).map((row, index) => (
+            <p key={index}>
+              {Object.entries(row)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(' · ')}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }

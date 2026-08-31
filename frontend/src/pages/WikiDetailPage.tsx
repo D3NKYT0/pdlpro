@@ -7,13 +7,21 @@ export function WikiDetailPage() {
   const page = useQuery({ queryKey: ['wiki-page', slug], queryFn: () => contentApi.wikiPage(slug) })
 
   return (
-    <section className="card">
-      <p>
-        <Link to="/wiki">← Wiki</Link>
-      </p>
-      <h1>{page.data?.title ?? 'Wiki'}</h1>
-      <p className="muted">{page.data?.category}</p>
-      <div style={{ whiteSpace: 'pre-wrap' }}>{page.data?.body}</div>
-    </section>
+    <div className="wiki">
+      <div className="w-content container">
+        <p>
+          <Link to="/wiki">← Wiki</Link>
+        </p>
+        <div className="card">
+          <div className="card-header">
+            <h1 className="card-title">{page.data?.title ?? 'Wiki'}</h1>
+          </div>
+          <div className="card-body">
+            <p className="card-text">{page.data?.category}</p>
+            <div style={{ whiteSpace: 'pre-wrap' }}>{page.data?.body}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
