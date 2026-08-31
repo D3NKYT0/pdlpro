@@ -1,0 +1,14 @@
+from rest_framework import serializers
+
+
+class ShopItemSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    name = serializers.CharField()
+    item_id = serializers.IntegerField()
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
+    quantity = serializers.IntegerField()
+
+
+class AddToCartSerializer(serializers.Serializer):
+    item_id = serializers.UUIDField()
+    quantity = serializers.IntegerField(min_value=1, default=1)

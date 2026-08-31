@@ -1,0 +1,147 @@
+networks:
+  pdl_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  media_files:
+  frontend_node_modules:
+
+x-backend-app-image: &backend-app-image
+  image: pdl_backend:local
+  build:
+    context: ./backend
+  pull_policy: never
+
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: pdl_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-pdl}
+      POSTGRES_USER: ${DB_USER:-pdl}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pdl}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - pdl_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 20s
+
+  redis:
+    image: redis:8-alpine
+    container_name: pdl_redis
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - pdl_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+  backend:
+    <<: *backend-app-image
+    container_name: pdl_backend
+    command: gunicorn core.wsgi:application -c gunicorn.conf.py
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - ./backend/staticfiles:/app/staticfiles
+      - media_files:/app/media
+    env_file:
+      - ./.env
+    environment:
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-core.settings.development}
+      GUNICORN_RELOAD: ${GUNICORN_RELOAD:-true}
+      RUN_MIGRATIONS: "true"
+      RUN_COLLECTSTATIC: "false"
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://${DB_USER:-pdl}:${DB_PASSWORD:-pdl}@db:5432/${DB_NAME:-pdl}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pdl_net
+    expose:
+      - "8000"
+
+  asgi:
+    <<: *backend-app-image
+    container_name: pdl_asgi
+    command: daphne -b 0.0.0.0 -p 8001 core.asgi:application
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./.env
+    environment:
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-core.settings.development}
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://${DB_USER:-pdl}:${DB_PASSWORD:-pdl}@db:5432/${DB_NAME:-pdl}
+    depends_on:
+      - backend
+    networks:
+      - pdl_net
+    expose:
+      - "8001"
+
+  celery_worker:
+    <<: *backend-app-image
+    container_name: pdl_celery_worker
+    command: celery -A core worker -l info
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./.env
+    environment:
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-core.settings.development}
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://${DB_USER:-pdl}:${DB_PASSWORD:-pdl}@db:5432/${DB_NAME:-pdl}
+    depends_on:
+      - backend
+    networks:
+      - pdl_net
+
+  frontend_dev:
+    image: node:22-alpine
+    container_name: pdl_frontend_dev
+    profiles: ["dev"]
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    environment:
+      DOCKER: "true"
+    ports:
+      - "3000:3000"
+    networks:
+      - pdl_net
+
+  nginx:
+    image: nginx:1.30-alpine
+    container_name: pdl_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./backend/staticfiles:/var/www/static:ro
+      - media_files:/var/www/media:ro
+    depends_on:
+      - backend
+    networks:
+      - pdl_net

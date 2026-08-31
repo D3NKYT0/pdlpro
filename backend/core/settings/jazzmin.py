@@ -1,0 +1,45 @@
+JAZZMIN_SETTINGS_PDL = {
+    "site_title": "PDL PRO",
+    "site_header": "PDL PRO Admin",
+    "site_brand": "PDL PRO",
+    "welcome_sign": "Painel Definitivo Lineage 2.0",
+    "copyright": "PDL PRO",
+    "show_ui_builder": False,
+    "navigation_expanded": False,
+    "search_model": [
+        "accounts.User",
+        "wallet.Wallet",
+        "shop.ShopItem",
+        "content.News",
+    ],
+    "order_with_respect_to": [
+        "accounts",
+        "server",
+        "wallet",
+        "payment",
+        "shop",
+        "inventory",
+        "content",
+        "communication",
+        "social",
+        "games",
+        "auction",
+        "marketplace",
+        "clans",
+        "staff",
+    ],
+    "icons": {
+        "accounts.User": "fas fa-user",
+        "wallet.Wallet": "fas fa-wallet",
+        "shop.ShopItem": "fas fa-store",
+        "content.News": "fas fa-newspaper",
+        "server.ManagedLineageAccount": "fas fa-gamepad",
+    },
+}
+
+JAZZMIN_UI_TWEAKS_PDL = {
+    "theme": "darkly",
+    "dark_mode_theme": "darkly",
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+}
