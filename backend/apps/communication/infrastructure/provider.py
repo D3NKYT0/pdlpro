@@ -1,13 +1,3 @@
-from apps.communication.application.friend_use_cases import (
-    AcceptFriendRequestUseCase,
-    ListFriendsUseCase,
-    ListMessagesUseCase,
-    RejectFriendRequestUseCase,
-    RemoveFriendUseCase,
-    SearchPlayersUseCase,
-    SendFriendRequestUseCase,
-    SendMessageUseCase,
-)
 from apps.communication.application.notify import NotifyUser
 from apps.communication.application.push_use_cases import (
     GetVapidPublicKeyUseCase,
@@ -35,13 +25,5 @@ class CommunicationProvider(AppProvider):
             GetVapidPublicKeyUseCase,
             SubscribePushUseCase,
             UnsubscribePushUseCase,
-            ListFriendsUseCase,
-            SearchPlayersUseCase,
-            SendFriendRequestUseCase,
-            AcceptFriendRequestUseCase,
-            RejectFriendRequestUseCase,
-            RemoveFriendUseCase,
-            ListMessagesUseCase,
-            SendMessageUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

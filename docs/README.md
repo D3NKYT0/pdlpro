@@ -6,7 +6,7 @@ Este diretório concentra a documentação técnica e operacional do projeto.
 |---|---|
 | [Desenvolvimento](development.md) | Instalação, execução local, testes e comandos frequentes |
 | [Configuração](configuration.md) | Variáveis de ambiente e integrações externas |
-| [API](api.md) | Namespaces, autenticação, paginação, erros e WebSockets |
+| [API](api.md) | Namespaces, autenticação, paginação e erros |
 | [Arquitetura](architecture.md) | Camadas, dependências, DI, módulos e fluxo de mudança |
 | [Implantação](deployment.md) | Limites do Compose atual e checklist de produção |
 

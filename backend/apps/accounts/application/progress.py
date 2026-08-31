@@ -18,13 +18,9 @@ def add_xp(user, amount: int) -> GamerProfile:
 
 
 def unlock_achievements(user) -> list[str]:
-    from apps.communication.infrastructure.models import Friendship
     from apps.games.infrastructure.models import DailyBonusClaim, FishingCatch, SpinHistory
-    from apps.social.infrastructure.models import Post
 
     checks = {
-        "first_post": lambda: Post.objects.filter(author=user).exists(),
-        "first_friend": lambda: Friendship.objects.filter(user=user, accepted=True).exists(),
         "daily_bonus": lambda: DailyBonusClaim.objects.filter(user=user).exists(),
         "first_spin": lambda: SpinHistory.objects.filter(user=user).exists(),
         "first_fish": lambda: FishingCatch.objects.filter(user=user, success=True).exists(),

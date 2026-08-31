@@ -190,25 +190,6 @@ export interface ApiClanApplication {
   status: string
 }
 
-export interface ApiPost {
-  id: string
-  author_id: string
-  author_username: string
-  body: string
-  created_at: string
-  likes_count?: number
-  comments_count?: number
-  liked?: boolean
-}
-
-export interface ApiComment {
-  id: string
-  author_id: string
-  author_username: string
-  body: string
-  created_at: string
-}
-
 export interface ApiGamerProfile {
   xp: number
   level: number

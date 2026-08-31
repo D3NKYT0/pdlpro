@@ -68,8 +68,7 @@ Não mantenha estado específico de usuário em singletons.
 | `auction` | Leilões e lances |
 | `content` | Notícias, wiki, calendário, FAQ, downloads e legais |
 | `games` | Minigames, recompensas, economia e passe de batalha |
-| `social` | Feed, curtidas e comentários |
-| `communication` | Notificações, amizades, chat e push |
+| `communication` | Notificações e push |
 | `clans` | Perfis, candidaturas e gestão de clãs |
 | `staff` | Endpoints operacionais do sistema |
 

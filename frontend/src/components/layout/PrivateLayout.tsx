@@ -16,8 +16,6 @@ const links = [
   { to: '/painel/games', label: 'Jogos' },
   { to: '/painel/progress', label: 'Progresso' },
   { to: '/painel/clans', label: 'Clãs' },
-  { to: '/painel/feed', label: 'Feed' },
-  { to: '/painel/friends', label: 'Amigos' },
   { to: '/painel/notifications', label: 'Avisos' },
 ]
 

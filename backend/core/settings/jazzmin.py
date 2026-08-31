@@ -21,7 +21,6 @@ JAZZMIN_SETTINGS_PDL = {
         "inventory",
         "content",
         "communication",
-        "social",
         "games",
         "auction",
         "marketplace",

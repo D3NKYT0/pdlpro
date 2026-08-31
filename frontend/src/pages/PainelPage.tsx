@@ -9,7 +9,6 @@ const shortcuts = [
   { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências' },
   { to: '/painel/shop', label: 'Loja', text: 'Itens da loja do painel' },
   { to: '/painel/games', label: 'Jogos', text: 'Roleta, caixas, pesca e mais' },
-  { to: '/painel/friends', label: 'Amigos', text: 'Pedidos e chat' },
 ]
 
 export function PainelPage() {

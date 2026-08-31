@@ -1,6 +1,6 @@
 # PDL PRO
 
-Painel web para comunidades e servidores de **Lineage 2**, reunindo conta do jogo, carteira, loja, inventário, marketplace, leilões, conteúdo e recursos sociais em uma única aplicação.
+Painel web para comunidades e servidores de **Lineage 2**, reunindo conta do jogo, carteira, loja, inventário, marketplace, leilões e conteúdo em uma única aplicação.
 
 O repositório é um monorepo com backend Django/DRF, frontend React e integrações opcionais com o banco do servidor de jogo. A API segue uma arquitetura em camadas, com casos de uso e injeção de dependência explícita.
 
@@ -13,9 +13,9 @@ O repositório é um monorepo com backend Django/DRF, frontend React e integraç
 - Carteira, transferências, loja e pagamentos por mock, Mercado Pago ou Stripe.
 - Inventário, marketplace de personagens e leilões.
 - Notícias, wiki, calendário, FAQ, downloads e documentos legais.
-- Clãs, feed social, amizades, chat, notificações e Web Push.
+- Clãs, notificações e Web Push.
 - Minigames, recompensas, progresso, economia e passe de batalha.
-- Admin Django, documentação OpenAPI, tarefas Celery e WebSockets com Channels.
+- Admin Django, documentação OpenAPI e tarefas Celery.
 
 ## Stack
 

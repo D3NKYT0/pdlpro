@@ -6,5 +6,4 @@ urlpatterns = [
     path("", include("apps.marketplace.presentation.urls.public")),
     path("", include("apps.auction.presentation.urls.public")),
     path("", include("apps.clans.presentation.urls.public")),
-    path("", include("apps.social.presentation.urls.public")),
 ]

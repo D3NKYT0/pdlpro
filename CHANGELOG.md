@@ -12,6 +12,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Guias de contribuição e segurança.
 - Licença proprietária explícita.
 
+### Removido
+
+- Rede social: feed, curtidas, comentários, amizades e chat entre jogadores.
+
 ### Alterado
 
 - README reorganizado com início rápido, stack, recursos e índice da documentação.

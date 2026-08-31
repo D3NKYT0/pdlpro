@@ -7,9 +7,7 @@ import { CalendarPage } from '../../pages/CalendarPage'
 import { ClansPage } from '../../pages/ClansPage'
 import { DownloadsPage } from '../../pages/DownloadsPage'
 import { FaqPage } from '../../pages/FaqPage'
-import { FeedPage } from '../../pages/FeedPage'
 import { ForgotPasswordPage } from '../../pages/ForgotPasswordPage'
-import { FriendsPage } from '../../pages/FriendsPage'
 import { GamesPage } from '../../pages/GamesPage'
 import { HomePage } from '../../pages/HomePage'
 import { InventoryPage } from '../../pages/InventoryPage'
@@ -69,12 +67,10 @@ export function AppRoutes() {
             <Route path="/painel/games" element={<GamesPage />} />
             <Route path="/painel/progress" element={<ProgressPage />} />
             <Route path="/painel/notifications" element={<NotificationsPage />} />
-            <Route path="/painel/friends" element={<FriendsPage />} />
             <Route path="/painel/shop" element={<ShopPage />} />
             <Route path="/painel/marketplace" element={<MarketplacePage />} />
             <Route path="/painel/auctions" element={<AuctionPage />} />
             <Route path="/painel/clans" element={<ClansPage />} />
-            <Route path="/painel/feed" element={<FeedPage />} />
           </Route>
         </Route>
 

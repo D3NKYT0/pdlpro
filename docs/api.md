@@ -9,7 +9,6 @@
 | Swagger UI | `/api/docs/swagger-ui/` |
 | ReDoc | `/api/docs/redoc/` |
 | Admin Django | `/admin/` |
-| WebSocket de chat | `/ws/chat/<username>/` |
 
 Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, use `http://localhost` por meio do Nginx.
 
@@ -18,7 +17,7 @@ Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, 
 | Prefixo | Acesso | Conteúdo |
 |---|---|---|
 | `/api/v1/auth/` | Público ou sessão | CSRF, cadastro, login, 2FA, e-mail, senha, refresh e logout |
-| `/api/v1/public/` | Anônimo | Status, rankings, notícias, wiki, calendário, FAQ, downloads, feed, clãs e mercados públicos |
+| `/api/v1/public/` | Anônimo | Status, rankings, notícias, wiki, calendário, FAQ, downloads, clãs e mercados públicos |
 | `/api/v1/shared/` | Autenticado | Perfil, progresso, recompensas, carteira, loja e conteúdo compartilhado |
 | `/api/v1/customer/` | Autenticado | Contas, personagens, inventário, pagamentos, mercados, jogos, comunicação e clãs |
 | `/api/v1/system/` | Operacional | Health, versão e webhooks de pagamento |
@@ -100,20 +99,6 @@ Códigos comuns:
 | 429 | `RATE_LIMIT_EXCEEDED` |
 | 500 | `INTERNAL_SERVER_ERROR` |
 | 503 | `SERVICE_UNAVAILABLE` |
-
-## WebSocket de chat
-
-Conecte em `ws://localhost/ws/chat/<username>/` no ambiente local via Nginx, ou use `wss://` em produção. A autenticação é obtida do cookie JWT durante o handshake.
-
-A conexão é aceita somente quando o usuário está autenticado e a amizade com o destinatário foi aceita. Mensagens são JSON:
-
-```json
-{
-  "text": "Olá!"
-}
-```
-
-As origens do handshake são validadas por `WEBSOCKET_ALLOWED_ORIGINS`.
 
 ## Versionamento
 

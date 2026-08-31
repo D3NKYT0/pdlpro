@@ -5,10 +5,8 @@ export const LEGACY_PANEL_REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/games', to: '/painel/games' },
   { from: '/progress', to: '/painel/progress' },
   { from: '/notifications', to: '/painel/notifications' },
-  { from: '/friends', to: '/painel/friends' },
   { from: '/shop', to: '/painel/shop' },
   { from: '/marketplace', to: '/painel/marketplace' },
   { from: '/auctions', to: '/painel/auctions' },
   { from: '/clans', to: '/painel/clans' },
-  { from: '/feed', to: '/painel/feed' },
 ]
