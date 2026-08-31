@@ -20,7 +20,7 @@ export function PainelPage() {
     <div className="grid">
       <section className="card">
         <h1>Olá, {user?.display_name || user?.username}</h1>
-        <p className="muted">Este é o seu painel. O site público continua em Início.</p>
+        <p className="muted">Sua conta mestra no reino. O site público continua em Início.</p>
       </section>
       <section className="grid cols-3">
         <article className="card">

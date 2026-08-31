@@ -28,6 +28,7 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/pages/extras.css',
   '/theme/pages/info-page.css',
   '/theme/pages/auth.css',
+  '/theme/pages/panel.css',
 ]
 
 export const ROUTE_THEME_STYLES = [
