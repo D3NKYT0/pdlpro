@@ -1,22 +1,101 @@
 # Implantação
 
-## Estado do Compose
+## Modos do Compose
 
-O `docker-compose.yml` atual é uma base de desenvolvimento e integração. Ele executa backend, ASGI, worker, bancos, Nginx e — com o perfil `dev` — Vite. Não é uma distribuição de produção pronta porque o frontend ainda é servido pelo servidor de desenvolvimento e o Nginx está configurado para `localhost` e HTTP.
+- `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
+- `docker-compose.prod.yml`: produção, com frontend compilado, Django em settings
+  de produção e Caddy fornecendo HTTPS automático.
+
+O domínio padrão da produção é `pdl.denky.dev.br`, mas pode ser alterado pela
+variável `DOMAIN`.
 
 ## Topologia atual
 
 ```text
 Internet/local host
        │ :80
-     Nginx
+  Caddy (:80/:443)
        ├── /api, /admin ──> Gunicorn :8000
        ├── /ws ───────────> Daphne :8001
        ├── /static, /media
-       └── / ─────────────> Vite :3000 (perfil dev)
+       └── / ─────────────> React estático
 
 Gunicorn/Daphne/Celery ──> PostgreSQL + Redis
                        └─> MySQL Lineage 2 (opcional)
+```
+
+## Primeira implantação
+
+Antes do deploy:
+
+1. Crie um registro DNS `A` para `pdl.denky.dev.br` apontando para o IPv4 do
+   servidor (e `AAAA` somente se o IPv6 funcionar no servidor).
+2. Libere TCP `80` e `443` e UDP `443` no firewall. A porta `22` deve permanecer
+   disponível para SSH.
+3. Instale Docker Engine com o plugin Docker Compose v2.
+
+O DNS de `pdl.denky.dev.br` usa proxy da Cloudflare. Configure SSL/TLS como
+`Full (strict)`, nunca `Flexible`. Se a primeira emissão do certificado falhar,
+altere o registro temporariamente para `DNS only`, aguarde a emissão pelo Caddy
+e reative o proxy.
+
+No servidor:
+
+```bash
+sudo mkdir -p /opt/pdlpro
+sudo chown "$USER":"$USER" /opt/pdlpro
+git clone https://github.com/D3NKYT0/pdlpro.git /opt/pdlpro
+cd /opt/pdlpro
+cp .env.example .env
+nano .env
+```
+
+Configure ao menos os valores abaixo. Gere `SECRET_KEY` com
+`openssl rand -hex 64` e `DB_PASSWORD` com `openssl rand -hex 32`.
+
+```dotenv
+DOMAIN=pdl.denky.dev.br
+ACME_EMAIL=admin@pdl.denky.dev.br
+SECRET_KEY=valor-aleatorio-com-no-minimo-50-caracteres
+DB_NAME=pdl
+DB_USER=pdl
+DB_PASSWORD=valor-aleatorio-com-no-minimo-16-caracteres
+ALLOWED_HOSTS=pdl.denky.dev.br
+CORS_ALLOWED_ORIGINS=https://pdl.denky.dev.br
+CSRF_TRUSTED_ORIGINS=https://pdl.denky.dev.br
+PROJECT_URL=https://pdl.denky.dev.br
+FRONTEND_URL=https://pdl.denky.dev.br
+WEBAUTHN_RP_ID=pdl.denky.dev.br
+WEBAUTHN_ORIGINS=https://pdl.denky.dev.br
+GUNICORN_RELOAD=false
+RUN_COLLECTSTATIC=true
+OPENAPI_DOCS_PUBLIC=false
+```
+
+Inicie a aplicação:
+
+```bash
+./setup.sh install --production
+docker compose --env-file .env -f docker-compose.prod.yml ps
+docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web backend
+```
+
+Quando DNS e portas estiverem corretos, o Caddy solicitará e renovará o
+certificado automaticamente. Acesse `https://pdl.denky.dev.br` e crie o admin:
+
+```bash
+docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
+```
+
+## Atualizações
+
+Faça backup antes de aplicar uma nova versão:
+
+```bash
+cd /opt/pdlpro
+./setup.sh backup
+git pull --ff-only
+./setup.sh deploy --production
 ```
 
 ## Checklist de produção

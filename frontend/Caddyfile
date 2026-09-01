@@ -1,0 +1,41 @@
+{
+	email {$ACME_EMAIL:admin@pdl.denky.dev.br}
+}
+
+{$DOMAIN:pdl.denky.dev.br} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+
+	handle /static/* {
+		root * /var/www
+		file_server
+	}
+
+	handle /media/* {
+		root * /var/www
+		file_server
+	}
+
+	@backend path /api /api/* /admin /admin/*
+	handle @backend {
+		reverse_proxy backend:8000
+	}
+
+	@websocket path /ws /ws/*
+	handle @websocket {
+		reverse_proxy asgi:8001
+	}
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

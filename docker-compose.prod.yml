@@ -1,0 +1,143 @@
+networks:
+  pdl_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_files:
+  media_files:
+  caddy_data:
+  caddy_config:
+
+x-backend-app-image: &backend-app-image
+  image: pdl_backend:local
+  build:
+    context: ./backend
+  pull_policy: never
+
+x-backend-environment: &backend-environment
+  DJANGO_SETTINGS_MODULE: core.settings.production
+  DEBUG: "false"
+  GUNICORN_RELOAD: "false"
+  REDIS_URL: redis://redis:6379/0
+  DATABASE_URL: postgres://${DB_USER:?DB_USER is required}:${DB_PASSWORD:?DB_PASSWORD is required}@db:5432/${DB_NAME:?DB_NAME is required}
+
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:?DB_NAME is required}
+      POSTGRES_USER: ${DB_USER:?DB_USER is required}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - pdl_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 20s
+
+  redis:
+    image: redis:8-alpine
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - pdl_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+  backend:
+    <<: *backend-app-image
+    command: gunicorn core.wsgi:application -c gunicorn.conf.py
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      <<: *backend-environment
+      RUN_MIGRATIONS: "true"
+      RUN_COLLECTSTATIC: "true"
+    volumes:
+      - static_files:/app/staticfiles
+      - media_files:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pdl_net
+    expose:
+      - "8000"
+
+  asgi:
+    <<: *backend-app-image
+    command: daphne -b 0.0.0.0 -p 8001 core.asgi:application
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      <<: *backend-environment
+      RUN_MIGRATIONS: "false"
+      RUN_COLLECTSTATIC: "false"
+    volumes:
+      - media_files:/app/media
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - pdl_net
+    expose:
+      - "8001"
+
+  celery_worker:
+    <<: *backend-app-image
+    command: celery -A core worker -l info
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      <<: *backend-environment
+      RUN_MIGRATIONS: "false"
+      RUN_COLLECTSTATIC: "false"
+    volumes:
+      - media_files:/app/media
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - pdl_net
+
+  web:
+    image: pdl_web:local
+    pull_policy: never
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.production
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:-pdl.denky.dev.br}
+      ACME_EMAIL: ${ACME_EMAIL:-admin@pdl.denky.dev.br}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - static_files:/var/www/static:ro
+      - media_files:/var/www/media:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+      - asgi
+    networks:
+      - pdl_net

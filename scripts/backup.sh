@@ -55,10 +55,10 @@ cleanup() {
 trap cleanup EXIT
 
 info "Criando backup em $backup_path..."
-compose exec -T db sh -c 'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom --no-owner --no-privileges' > "$temporary_path"
+operational_compose exec -T db sh -c 'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom --no-owner --no-privileges' > "$temporary_path"
 
 [[ -s "$temporary_path" ]] || die "o backup gerado está vazio"
-compose exec -T db sh -c 'exec pg_restore --list' < "$temporary_path" >/dev/null
+operational_compose exec -T db sh -c 'exec pg_restore --list' < "$temporary_path" >/dev/null
 mv -- "$temporary_path" "$backup_path"
 
 if checksum="$(sha256_file "$backup_path")"; then

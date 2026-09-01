@@ -3,6 +3,7 @@
 LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(cd "${LIB_DIR}/../.." && pwd)"
 readonly COMPOSE_FILE="${ROOT_DIR}/docker-compose.yml"
+readonly PRODUCTION_COMPOSE_FILE="${ROOT_DIR}/docker-compose.prod.yml"
 readonly ENV_FILE="${ROOT_DIR}/.env"
 
 info() {
@@ -50,20 +51,42 @@ compose() {
   docker compose --project-directory "$ROOT_DIR" --env-file "$ENV_FILE" -f "$COMPOSE_FILE" "$@"
 }
 
+production_compose() {
+  docker compose --project-directory "$ROOT_DIR" --env-file "$ENV_FILE" -f "$PRODUCTION_COMPOSE_FILE" "$@"
+}
+
+production_is_active() {
+  [[ -f "$PRODUCTION_COMPOSE_FILE" ]] &&
+    [[ -n "$(production_compose ps --all --quiet web 2>/dev/null)" ]]
+}
+
+operational_compose() {
+  if production_is_active; then
+    production_compose "$@"
+  else
+    compose "$@"
+  fi
+}
+
+read_env_value() {
+  local key="$1"
+  awk -F= -v key="$key" '$1 == key { sub(/^[^=]*=/, ""); print; exit }' "$ENV_FILE"
+}
+
 service_is_running() {
   local service="$1"
-  [[ "$(compose ps --status running --quiet "$service" 2>/dev/null)" != "" ]]
+  [[ "$(operational_compose ps --status running --quiet "$service" 2>/dev/null)" != "" ]]
 }
 
 ensure_database_running() {
   if ! service_is_running db; then
     info "Iniciando o PostgreSQL..."
-    compose up -d db
+    operational_compose up -d db
   fi
 
   local attempt
   for attempt in $(seq 1 60); do
-    if compose exec -T db sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"' >/dev/null 2>&1; then
+    if operational_compose exec -T db sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"' >/dev/null 2>&1; then
       return 0
     fi
     sleep 1

@@ -44,12 +44,17 @@ No Bash/WSL, os mesmos fluxos estão centralizados no `setup.sh`:
 ```bash
 ./setup.sh install
 ./setup.sh deploy --dev
+./setup.sh deploy --production
 ./setup.sh backup
 ./setup.sh restore --path backups/db/pdl_YYYYMMDDTHHMMSSZ.dump
 ```
 
 Execute `./setup.sh help` para listar os comandos encontrados automaticamente
 em `scripts/` e `./setup.sh help <comando>` para consultar suas opções.
+
+O deploy de produção usa `docker-compose.prod.yml`, gera o frontend estático e
+obtém HTTPS automaticamente para o domínio configurado em `DOMAIN`. Consulte
+[Implantação](docs/deployment.md) antes de publicar.
 
 As migrações são executadas pelo entrypoint do backend. Para criar um administrador:
 

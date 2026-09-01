@@ -10,11 +10,12 @@ show_help() {
 Prepara a configuração inicial e inicia o PDL PRO.
 
 Uso:
-  ./setup.sh install [--no-start] [--no-dev]
+  ./setup.sh install [--production|--no-dev] [--no-start]
 
 Opções:
   --no-start  Valida o ambiente e cria o .env, mas não inicia os serviços.
   --no-dev    Não inicia o frontend Vite (a instalação local usa dev por padrão).
+  --production  Usa build estático, settings de produção e HTTPS automático.
   -h, --help  Exibe esta ajuda.
 EOF
 }
@@ -31,6 +32,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --no-start) start_services=0 ;;
     --no-dev) deploy_args=(--build) ;;
+    --production) deploy_args=(--production --build) ;;
     -h|--help) show_help; exit 0 ;;
     *) die "opção desconhecida para install: $1" ;;
   esac

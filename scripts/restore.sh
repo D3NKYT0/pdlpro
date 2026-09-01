@@ -65,7 +65,7 @@ else
 fi
 
 ensure_database_running
-compose exec -T db sh -c 'exec pg_restore --list' < "$backup_path" >/dev/null || die "arquivo de backup inválido"
+operational_compose exec -T db sh -c 'exec pg_restore --list' < "$backup_path" >/dev/null || die "arquivo de backup inválido"
 
 if [[ "$force" -ne 1 ]]; then
   if [[ ! -t 0 ]]; then
@@ -86,18 +86,18 @@ done
 restart_services() {
   if [[ ${#services_to_restart[@]} -gt 0 ]]; then
     info "Reiniciando serviços da aplicação..."
-    compose up -d "${services_to_restart[@]}"
+    operational_compose up -d "${services_to_restart[@]}"
   fi
 }
 trap restart_services EXIT
 
 if [[ ${#services_to_restart[@]} -gt 0 ]]; then
   info "Pausando serviços da aplicação durante a restauração..."
-  compose stop "${services_to_restart[@]}"
+  operational_compose stop "${services_to_restart[@]}"
 fi
 
 info "Restaurando $backup_path..."
-compose exec -T db sh -c 'exec pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --no-owner --no-privileges --exit-on-error' < "$backup_path"
+operational_compose exec -T db sh -c 'exec pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --no-owner --no-privileges --exit-on-error' < "$backup_path"
 
 restart_services
 trap - EXIT
