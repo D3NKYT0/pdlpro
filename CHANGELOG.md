@@ -20,6 +20,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - README reorganizado com início rápido, stack, recursos e índice da documentação.
 - Documento de arquitetura ampliado com dependências, DI e fluxo de implementação.
+- Swagger UI e ReDoc com o tema ouro/escuro do frontend e do Jazzmin.
 
 ## [2.0.0] - 2026-08-31
 

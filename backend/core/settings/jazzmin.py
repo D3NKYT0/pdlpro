@@ -10,6 +10,7 @@ JAZZMIN_SETTINGS_PDL = {
     "site_logo_classes": "pdl-admin-logo",
     "site_icon": "pdl_admin/img/favicon-32x32.png",
     "custom_css": "pdl_admin/css/admin.css",
+    "custom_js": "pdl_admin/js/forms.js",
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
     "navigation_expanded": False,

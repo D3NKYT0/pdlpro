@@ -1,0 +1,620 @@
+/* PDL form system: shared by ModelAdmin forms and reusable Django forms. */
+
+.pdl-form-system {
+  --pdl-form-bg: rgba(11, 9, 6, 0.78);
+  --pdl-form-raised: rgba(24, 20, 14, 0.88);
+  --pdl-form-border: rgba(197, 161, 97, 0.24);
+  --pdl-form-border-focus: rgba(239, 204, 123, 0.76);
+  --pdl-form-label: #c5a161;
+  --pdl-form-text: #f7eedc;
+  --pdl-form-muted: #9f937d;
+}
+
+.change-form #content-main > form > .row > .col-lg-9 > .card {
+  overflow: visible;
+  background:
+    radial-gradient(circle at 100% 0, rgba(212, 175, 55, 0.055), transparent 35%),
+    rgba(15, 12, 8, 0.93);
+  border-color: rgba(212, 175, 55, 0.28);
+}
+
+.change-form #content-main > form > .row > .col-lg-9 > .card > .card-body {
+  padding: 0;
+}
+
+.pdl-form-system .form-group,
+.pdl-form-system .pdl-field-shell {
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.15rem;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.018), transparent 48%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.11);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.pdl-form-system .form-group:last-child,
+.pdl-form-system .pdl-field-shell:last-child {
+  border-bottom: 0;
+}
+
+.pdl-form-system .pdl-field-shell::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  content: "";
+  background: transparent;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.pdl-form-system .pdl-field-shell.is-focused,
+.pdl-form-system .pdl-field-shell:focus-within {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.055), transparent 58%);
+}
+
+.pdl-form-system .pdl-field-shell.is-focused::before,
+.pdl-form-system .pdl-field-shell:focus-within::before {
+  background: var(--pdl-gold-soft, #c5a161);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.45);
+}
+
+.pdl-form-system .pdl-field-shell.has-errors {
+  background: linear-gradient(90deg, rgba(179, 54, 39, 0.08), transparent 55%);
+}
+
+.pdl-form-system .pdl-field-shell.has-errors::before {
+  background: #d45c4a;
+}
+
+.pdl-form-system .form-group > .row {
+  min-height: 52px;
+  align-items: center;
+}
+
+.pdl-form-system .form-group label,
+.pdl-form-system .pdl-field-shell > label {
+  margin-bottom: 0;
+  color: var(--pdl-form-label);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+}
+
+.pdl-form-system .form-group label .text-red,
+.pdl-form-system .pdl-field-shell[data-pdl-required="true"] > label::before {
+  color: #e5b85a !important;
+}
+
+.pdl-form-system .pdl-field-shell[data-pdl-kind] label::after {
+  display: inline-flex;
+  margin-left: 0.55rem;
+  padding: 0.1rem 0.35rem;
+  color: #806a40;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.11);
+  vertical-align: middle;
+}
+
+.pdl-form-system .pdl-field-shell[data-pdl-kind="money"] label::after { content: "valor"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="json"] label::after { content: "json"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="datetime"] label::after { content: "data e hora"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="date"] label::after { content: "data"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="url"] label::after { content: "link"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="email"] label::after { content: "e-mail"; }
+.pdl-form-system .pdl-field-shell[data-pdl-kind="code"] label::after,
+.pdl-form-system .pdl-field-shell[data-pdl-kind="slug"] label::after,
+.pdl-form-system .pdl-field-shell[data-pdl-kind="uuid"] label::after { content: "identificador"; }
+
+.pdl-control,
+.pdl-form-system input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+.pdl-form-system select:not(.select2-hidden-accessible),
+.pdl-form-system textarea:not(.select2-search__field) {
+  min-height: 48px;
+  color: var(--pdl-form-text) !important;
+  background:
+    linear-gradient(180deg, rgba(17, 14, 10, 0.94), rgba(8, 7, 5, 0.96)) !important;
+  border: 1px solid var(--pdl-form-border) !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.018), 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.pdl-control:hover,
+.pdl-form-system input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):hover,
+.pdl-form-system select:not(.select2-hidden-accessible):hover,
+.pdl-form-system textarea:not(.select2-search__field):hover {
+  border-color: rgba(212, 175, 55, 0.42) !important;
+}
+
+.pdl-control:focus,
+.pdl-form-system input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):focus,
+.pdl-form-system select:not(.select2-hidden-accessible):focus,
+.pdl-form-system textarea:not(.select2-search__field):focus {
+  color: #fff !important;
+  background: #0e0c08 !important;
+  border-color: var(--pdl-form-border-focus) !important;
+  outline: 0;
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.085),
+    0 0 24px rgba(151, 100, 34, 0.13) !important;
+}
+
+.pdl-control::placeholder,
+.pdl-form-system input::placeholder,
+.pdl-form-system textarea::placeholder {
+  color: rgba(181, 167, 140, 0.43) !important;
+}
+
+.pdl-control:disabled,
+.pdl-control[readonly],
+.pdl-form-system input:disabled,
+.pdl-form-system select:disabled,
+.pdl-form-system textarea:disabled {
+  color: #897d68 !important;
+  background: rgba(7, 6, 4, 0.68) !important;
+  border-style: dashed !important;
+  cursor: not-allowed;
+  opacity: 0.78;
+}
+
+.pdl-textarea,
+.pdl-form-system textarea {
+  min-height: 128px;
+  padding: 0.85rem 1rem !important;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.pdl-json {
+  min-height: 190px !important;
+  color: #e7cd91 !important;
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace !important;
+  font-size: 0.82rem !important;
+  tab-size: 2;
+}
+
+.pdl-monospace {
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace !important;
+  font-size: 0.86rem;
+  letter-spacing: 0.015em;
+}
+
+.pdl-money {
+  padding-left: 3.1rem !important;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.pdl-field-shell[data-pdl-kind="money"] .col-sm-9,
+.pdl-field-shell[data-pdl-kind="money"] > div:last-child {
+  position: relative;
+}
+
+.pdl-field-shell[data-pdl-kind="money"] .col-sm-9::before,
+.pdl-field-shell[data-pdl-kind="money"] > div:last-child::before {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 1rem;
+  color: #887344;
+  content: "¤";
+  font-family: "PDL Cambria", Cambria, Georgia, serif;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.pdl-field-shell[data-pdl-currency="BRL"] .col-sm-9::before,
+.pdl-field-shell[data-pdl-currency="BRL"] > div:last-child::before { content: "R$"; }
+.pdl-field-shell[data-pdl-currency="USD"] .col-sm-9::before,
+.pdl-field-shell[data-pdl-currency="USD"] > div:last-child::before { content: "$"; }
+
+.pdl-form-system .form-check-input,
+.pdl-check {
+  width: 22px;
+  min-height: 22px !important;
+  margin: 0;
+  padding: 0 !important;
+  background: #090806 !important;
+  border: 1px solid rgba(212, 175, 55, 0.38) !important;
+  border-radius: 2px !important;
+  box-shadow: none;
+}
+
+.pdl-form-system .form-check-input:checked,
+.pdl-check:checked {
+  background-color: #b48a36 !important;
+  border-color: #e0bd72 !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+}
+
+.pdl-form-system .pdl-check[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff8e8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.25' d='M3 8.3 6.35 11.5 13 4.7'/%3E%3C/svg%3E") !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+}
+
+.pdl-form-system .pdl-check[type="radio"]:checked {
+  background-image: radial-gradient(circle, #fff8e8 0 30%, transparent 34%) !important;
+}
+
+.pdl-form-system input[type="radio"] {
+  border-radius: 50% !important;
+}
+
+.pdl-choice-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.45rem;
+  padding: 0.65rem !important;
+  list-style: none;
+  background: rgba(7, 6, 4, 0.44);
+  border: 1px solid var(--pdl-form-border);
+}
+
+.pdl-choice-group > div,
+.pdl-choice-group > li {
+  padding: 0.55rem 0.65rem;
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.pdl-file::file-selector-button,
+.pdl-form-system input[type="file"]::file-selector-button {
+  height: 46px;
+  margin: -0.55rem 0.9rem -0.55rem -0.75rem;
+  padding: 0 1rem;
+  color: #f5ead2;
+  background: linear-gradient(180deg, #574426, #2d2213);
+  border: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.pdl-form-system .datetime {
+  display: grid;
+  grid-template-columns: auto minmax(160px, 1fr) auto minmax(130px, 0.75fr);
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  margin: 0;
+}
+
+.pdl-form-system .datetime br {
+  display: none;
+}
+
+.pdl-form-system .datetime label {
+  margin: 0;
+  color: #8f7b55;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pdl-multi-control,
+.pdl-form-system .vDateField,
+.pdl-form-system .vTimeField {
+  width: 100% !important;
+}
+
+.pdl-form-system .related-widget-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.pdl-form-system .related-widget-wrapper .select2-container,
+.pdl-form-system .related-widget-wrapper > select {
+  flex: 1;
+}
+
+.pdl-form-system .select2-hidden-accessible.pdl-control,
+.pdl-form-system select.select2-hidden-accessible {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.pdl-form-system .related-widget-wrapper-link {
+  display: inline-flex;
+  width: 42px;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  color: var(--pdl-gold-soft) !important;
+  background: rgba(212, 175, 55, 0.055);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.pdl-form-system .related-widget-wrapper-link:hover {
+  color: var(--pdl-gold-bright) !important;
+  background: rgba(212, 175, 55, 0.13);
+  border-color: rgba(212, 175, 55, 0.42);
+}
+
+.pdl-form-system .related-widget-wrapper-link img {
+  opacity: 0.88;
+  filter: sepia(1) saturate(0.75) brightness(1.03);
+}
+
+.pdl-form-system .help-block,
+.pdl-form-system .help,
+.pdl-form-system .form-text {
+  margin-top: 0.42rem;
+  color: var(--pdl-form-muted) !important;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.pdl-form-system .help-block.text-red,
+.pdl-form-system .errorlist,
+.pdl-form-system .invalid-feedback {
+  color: #e68c7e !important;
+}
+
+.pdl-form-system .errorlist {
+  margin: 0.4rem 0 0;
+  padding: 0.55rem 0.75rem;
+  list-style: none;
+  background: rgba(151, 45, 34, 0.12);
+  border-left: 2px solid #d45c4a;
+}
+
+.pdl-form-system .select2-container--default .select2-selection--single,
+.pdl-form-system .select2-container--default .select2-selection--multiple {
+  min-height: 48px;
+  color: var(--pdl-form-text) !important;
+  background: linear-gradient(180deg, rgba(17, 14, 10, 0.94), rgba(8, 7, 5, 0.96)) !important;
+  border: 1px solid var(--pdl-form-border) !important;
+  border-radius: 0 !important;
+}
+
+.pdl-form-system .select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--pdl-form-text) !important;
+  line-height: 46px;
+}
+
+.pdl-form-system .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 46px;
+}
+
+.pdl-form-system .select2-container--default .select2-selection--multiple {
+  display: flex;
+  align-items: center;
+  padding: 0.35rem 0.55rem;
+}
+
+.pdl-form-system .select2-selection--multiple .select2-selection__rendered {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+}
+
+.pdl-form-system .select2-search--inline {
+  display: inline-flex;
+  min-width: 9rem;
+  flex: 1 1 9rem;
+  align-items: center;
+}
+
+.pdl-form-system .select2-search--inline .select2-search__field {
+  width: 100% !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: 0 0.35rem !important;
+  color: var(--pdl-form-text) !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  resize: none;
+}
+
+.pdl-form-system .select2-selection__choice {
+  margin: 0 !important;
+  padding: 0.28rem 0.5rem 0.28rem 1.7rem !important;
+  color: #ead7aa !important;
+  background: rgba(197, 161, 97, 0.12) !important;
+  border: 1px solid rgba(197, 161, 97, 0.28) !important;
+  border-radius: 2px !important;
+}
+
+.pdl-form-system .select2-selection__choice__remove {
+  height: 100%;
+  color: #d8b96e !important;
+  border-color: rgba(197, 161, 97, 0.18) !important;
+}
+
+.pdl-static-widget {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  color: #b8aa8f;
+  background: rgba(8, 7, 5, 0.58);
+  border: 1px dashed rgba(197, 161, 97, 0.22);
+}
+
+.pdl-static-widget ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0 0 0.7rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pdl-static-widget[data-pdl-field="password"] ul {
+  display: none;
+}
+
+.pdl-static-widget[data-pdl-field="password"] > p:first-of-type:not(:last-child) {
+  display: none;
+}
+
+.pdl-static-widget[data-pdl-field="password"]::before {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: #d8bd7d;
+  content: "Senha protegida";
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pdl-static-widget strong {
+  color: #ead7aa;
+}
+
+.pdl-static-widget p {
+  margin: 0.7rem 0 0;
+}
+
+.pdl-static-widget .button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  color: #f4e6c5 !important;
+  background: linear-gradient(180deg, rgba(86, 65, 32, 0.92), rgba(38, 28, 15, 0.96));
+  border: 1px solid rgba(212, 175, 55, 0.34);
+}
+
+.pdl-form-system fieldset.module,
+.pdl-form-system .inline-group {
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: rgba(15, 12, 8, 0.9);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.pdl-form-system fieldset.module > h2,
+.pdl-form-system .inline-group > h2 {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  color: var(--pdl-gold-bright);
+  font-family: "PDL Cambria", Cambria, Georgia, serif;
+  font-size: 1rem;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), transparent 60%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.pdl-form-actions,
+.change-form #jazzy-actions {
+  position: sticky;
+  top: 86px;
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 100% 0, rgba(212, 175, 55, 0.09), transparent 42%),
+    rgba(13, 10, 7, 0.94);
+  border: 1px solid rgba(212, 175, 55, 0.27);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.34);
+}
+
+.pdl-form-actions::before,
+.change-form #jazzy-actions::before {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #8f7950;
+  content: "Ações do registro";
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.change-form #jazzy-actions > .d-flex,
+.change-form #jazzy-actions .object-tools {
+  display: grid !important;
+  gap: 0.5rem !important;
+}
+
+.change-form #jazzy-actions .btn,
+.change-form #jazzy-actions input[type="submit"] {
+  width: 100%;
+  min-height: 48px;
+  white-space: normal;
+}
+
+/* Keep the approved button artwork while adapting destructive/history actions. */
+.change-form #jazzy-actions .btn-danger,
+.change-form #jazzy-actions a.deletelink {
+  background:
+    linear-gradient(rgba(112, 28, 20, 0.64), rgba(76, 18, 14, 0.7)),
+    url("../img/button-1.png") center / 100% 100% no-repeat !important;
+  -webkit-mask: url("../img/button-1.png") center / 100% 100% no-repeat;
+  mask: url("../img/button-1.png") center / 100% 100% no-repeat;
+}
+
+.change-form #jazzy-actions .object-tools {
+  margin-top: 0.25rem !important;
+}
+
+.change-form #jazzy-actions .object-tools .btn-secondary,
+.change-form #jazzy-actions .object-tools .btn-default {
+  background: url("../img/button-1.png") center / 100% 100% no-repeat !important;
+}
+
+.pdl-form-system .readonly {
+  display: block;
+  min-height: 44px;
+  padding: 0.7rem 0.85rem;
+  color: #b9ac94 !important;
+  background: rgba(7, 6, 4, 0.58);
+  border: 1px dashed rgba(212, 175, 55, 0.17);
+}
+
+@media (max-width: 991.98px) {
+  .pdl-form-actions,
+  .change-form #jazzy-actions {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .pdl-form-system .form-group,
+  .pdl-form-system .pdl-field-shell {
+    padding: 0.85rem;
+  }
+
+  .pdl-form-system .form-group label {
+    margin-bottom: 0.5rem;
+  }
+
+  .pdl-choice-group {
+    grid-template-columns: 1fr;
+  }
+
+  .pdl-form-system .datetime {
+    grid-template-columns: 1fr;
+  }
+
+  .pdl-multi-control,
+  .pdl-form-system .vDateField,
+  .pdl-form-system .vTimeField {
+    width: 100% !important;
+  }
+}

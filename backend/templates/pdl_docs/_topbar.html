@@ -1,0 +1,19 @@
+{% load static %}
+<header class="pdl-docs-topbar">
+    <a class="pdl-docs-brand" href="{% url 'swagger-ui' %}">
+        <img src="{% static 'pdl_admin/img/logo.png' %}" alt="" class="pdl-docs-crest">
+        <span>
+            <small>Documentação da API</small>
+            <strong>{{ docs_product }}</strong>
+        </span>
+    </a>
+    <nav class="pdl-docs-nav" aria-label="Documentação">
+        <a href="{% url 'swagger-ui' %}" {% if docs_active == 'swagger' %}aria-current="page"{% endif %}>Swagger</a>
+        <a href="{% url 'redoc' %}" {% if docs_active == 'redoc' %}aria-current="page"{% endif %}>ReDoc</a>
+        <a href="{% url 'schema' %}">Schema</a>
+        <a href="{% url 'admin:index' %}">Admin</a>
+        {% if docs_frontend_url %}
+        <a href="{{ docs_frontend_url }}">Painel</a>
+        {% endif %}
+    </nav>
+</header>

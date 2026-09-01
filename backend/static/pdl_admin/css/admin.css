@@ -1,3 +1,5 @@
+@import url("forms.css");
+
 @font-face {
   font-family: "PDL Cambria";
   src: url("../font/Cambria-Bold.woff2") format("woff2");
@@ -915,6 +917,20 @@ h6,
   border-radius: 0;
   box-shadow: inset 0 1px 0 rgba(255, 231, 177, 0.05), 0 8px 24px rgba(0, 0, 0, 0.24);
   clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+
+.pdl-page-tools .breadcrumb {
+  min-height: 48px;
+  align-items: center;
+  padding: 0.2rem 1.3rem !important;
+}
+
+.pdl-page-tools .breadcrumb-item:first-child {
+  margin-left: 0.1rem;
+}
+
+.pdl-page-tools .breadcrumb-item:last-child {
+  margin-right: 0.1rem;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {

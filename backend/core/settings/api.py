@@ -41,13 +41,77 @@ def get_spectacular_settings(api_version):
         "VERSION": api_version,
         "SERVE_INCLUDE_SCHEMA": False,
         "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.32.0",
+        "SWAGGER_UI_FAVICON_HREF": "/static/pdl_admin/img/favicon-32x32.png",
         "SWAGGER_UI_SETTINGS": {
             "docExpansion": "list",
             "defaultModelsExpandDepth": 1,
             "displayRequestDuration": True,
+            "deepLinking": True,
             "filter": True,
             "persistAuthorization": True,
+            "tryItOutEnabled": True,
+            "withCredentials": True,
             "operationsSorter": "alpha",
+            "syntaxHighlight": {
+                "activate": True,
+                "theme": "obsidian",
+            },
+        },
+        "REDOC_UI_SETTINGS": {
+            "hideDownloadButton": False,
+            "expandDefaultSchemaDescriptions": True,
+            "theme": {
+                "colors": {
+                    "primary": {"main": "#d4af37"},
+                    "success": {"main": "#6fbf73"},
+                    "error": {"main": "#d45c4a"},
+                    "text": {
+                        "primary": "#f4ead4",
+                        "secondary": "#b5a78c",
+                    },
+                    "http": {
+                        "get": "#6fbf73",
+                        "post": "#d4af37",
+                        "put": "#c5a161",
+                        "patch": "#efcc7b",
+                        "delete": "#d45c4a",
+                        "options": "#b5a78c",
+                        "head": "#8ab4d4",
+                    },
+                },
+                "sidebar": {
+                    "backgroundColor": "#14110d",
+                    "textColor": "#f4ead4",
+                    "activeTextColor": "#efcc7b",
+                    "width": "278px",
+                },
+                "rightPanel": {
+                    "backgroundColor": "#080705",
+                    "textColor": "#f4ead4",
+                },
+                "typography": {
+                    "fontSize": "15px",
+                    "fontFamily": '"Source Sans Pro", system-ui, sans-serif',
+                    "headings": {
+                        "fontFamily": '"PDL Cambria", Cambria, Georgia, serif',
+                        "fontWeight": "700",
+                    },
+                    "code": {
+                        "backgroundColor": "#1b1812",
+                        "color": "#efcc7b",
+                    },
+                    "links": {
+                        "color": "#c5a161",
+                        "visited": "#d4af37",
+                        "hover": "#efcc7b",
+                    },
+                },
+                "schema": {
+                    "nestedBackground": "#14110d",
+                    "typeNameColor": "#efcc7b",
+                    "typeTitleColor": "#f4ead4",
+                },
+            },
         },
         "COMPONENT_SPLIT_REQUEST": True,
         "TAGS": pdl_swagger_tags,

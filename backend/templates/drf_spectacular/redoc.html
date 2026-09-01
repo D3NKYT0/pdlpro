@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" class="pdl-docs pdl-docs--redoc">
+  <head>
+    {% include "pdl_docs/_head.html" %}
+    <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}">
+  </head>
+  <body>
+    {% include "pdl_docs/_topbar.html" with docs_active="redoc" %}
+    {% if settings %}
+    <div id="redoc-container"></div>
+    <script src="{{ redoc_standalone }}"></script>
+    <script>
+      const redocSettings = {{ settings|safe }};
+      Redoc.init("{{ schema_url }}", redocSettings, document.getElementById('redoc-container'))
+    </script>
+    {% else %}
+    <redoc spec-url="{{ schema_url }}"></redoc>
+    <script src="{{ redoc_standalone }}"></script>
+    {% endif %}
+  </body>
+</html>

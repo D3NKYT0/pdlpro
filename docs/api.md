@@ -10,7 +10,7 @@
 | ReDoc | `/api/docs/redoc/` |
 | Admin Django | `/admin/` |
 
-Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, use `http://localhost` por meio do Nginx.
+O Swagger e o ReDoc usam o mesmo visual ouro/escuro do frontend e do Jazzmin. Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, use `http://localhost` por meio do Nginx.
 
 ## Namespaces
 
