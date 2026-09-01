@@ -53,6 +53,7 @@ export interface ApiGameItem {
   name: string
   quantity: number
   enchant: number
+  tradeable: boolean
 }
 
 export interface ApiCharacterEquipmentItem extends ApiGameItem {

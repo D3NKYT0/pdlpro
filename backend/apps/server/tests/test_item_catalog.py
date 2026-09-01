@@ -17,10 +17,12 @@ SAMPLE = """
   <etcitem id="57" name="Adena">
     <set name="crystal_type" value="NONE"/>
     <set name="icon" value="icon.etc_adena_i00"/>
+    <set name="tradeable" value="true"/>
     <set name="type" value="MONEY"/>
   </etcitem>
   <armor id="114" name="Squire&apos;s Shirt">
     <set name="crystal_type" value="NONE"/>
+    <set name="tradeable" value="false"/>
     <set name="type" value="LIGHT"/>
     <equip><slot id="CHEST"/></equip>
   </armor>
@@ -35,14 +37,18 @@ def test_parses_xml_catalog(tmp_path: Path):
     assert sword is not None
     assert sword.name == "Short Sword"
     assert sword.category == "WEAPON"
+    assert sword.tradeable is True
     adena = catalog.get(57)
     assert adena is not None
     assert adena.name == "Adena"
     assert adena.category == "COMUM"
+    assert catalog.is_tradeable(57) is True
     shirt = catalog.get(114)
     assert shirt is not None
     assert shirt.name == "Squire's Shirt"
     assert shirt.category == "ARMOR"
+    assert catalog.is_tradeable(114) is False
+    assert catalog.is_tradeable(999999) is False
 
 
 def test_search_by_id_and_name(tmp_path: Path):
@@ -58,5 +64,7 @@ def test_real_xml_has_adena():
     if item is None:
         pytest.skip("XML do catálogo L2 não está presente")
     assert item.name == "Adena"
+    assert item.tradeable is True
+    assert catalog.is_tradeable(57) is True
     assert item_display_name(57) == "Adena"
     assert item_display_name(99999999) == "Item 99999999"

@@ -188,6 +188,7 @@ LINEAGE_DB_NAME = env("LINEAGE_DB_NAME", default="l2jdb")
 LINEAGE_DB_USER = env("LINEAGE_DB_USER", default="l2user")
 LINEAGE_DB_PASSWORD = env("LINEAGE_DB_PASSWORD", default="")
 LINEAGE_QUERY_MODULE = env("LINEAGE_QUERY_MODULE", default="lucerav2")
+LINEAGE_ITEM_XML_DIR = env("LINEAGE_ITEM_XML_DIR", default=str(BASE_DIR / "data" / "items"))
 LINEAGE_DB_POOL_SIZE = env.int("LINEAGE_DB_POOL_SIZE", default=2)
 LINEAGE_DB_MAX_OVERFLOW = env.int("LINEAGE_DB_MAX_OVERFLOW", default=4)
 

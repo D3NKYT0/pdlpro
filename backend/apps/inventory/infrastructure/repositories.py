@@ -6,6 +6,7 @@ from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
 from apps.inventory.domain.exceptions import InsufficientItemQuantityError
 from apps.inventory.domain.repositories import IInventoryRepository
 from apps.inventory.infrastructure.models import BlockedServerItem, Inventory, InventoryItem, InventoryLog
+from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
 
 
 class DjangoInventoryRepository(IInventoryRepository):
@@ -93,7 +94,7 @@ class DjangoInventoryRepository(IInventoryRepository):
         )
 
     def is_blocked(self, item_id: int) -> bool:
-        return BlockedServerItem.objects.filter(item_id=item_id).exists()
+        return BlockedServerItem.objects.filter(item_id=item_id).exists() or not item_is_tradeable(item_id)
 
     def log(self, user_id: UUID, *, action: str, item_id: int, item_name: str, quantity: int, enchant: int, origin: str, destination: str) -> None:
         from django.contrib.auth import get_user_model

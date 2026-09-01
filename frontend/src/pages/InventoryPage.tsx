@@ -3,17 +3,31 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import {
   ArrowDownToLine,
+  ArrowRightLeft,
   Backpack,
   ChevronLeft,
   ChevronRight,
   PackageOpen,
   RefreshCcw,
   Search,
+  Send,
   UserRoundSearch,
 } from 'lucide-react'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 import { ItemIdField } from '../components/ItemIdField'
+
+interface PanelItemAction {
+  mode: 'trade' | 'deposit'
+  recordId: string
+  inventoryId: string
+  originAccount: string
+  originCharacter: string
+  itemId: number
+  itemName: string
+  availableQuantity: number
+  enchant: number
+}
 
 export function InventoryPage() {
   const queryClient = useQueryClient()
@@ -38,6 +52,21 @@ export function InventoryPage() {
   const [gameItemSearch, setGameItemSearch] = useState('')
   const [gameItemsPage, setGameItemsPage] = useState(1)
   const [gameItemsPageSize, setGameItemsPageSize] = useState(8)
+  const [panelItemAction, setPanelItemAction] = useState<PanelItemAction | null>(null)
+  const [panelActionQuantity, setPanelActionQuantity] = useState('1')
+  const [destinationLogin, setDestinationLogin] = useState('')
+  const [destinationInventoryId, setDestinationInventoryId] = useState('')
+  const [panelActionPending, setPanelActionPending] = useState(false)
+
+  const accountLogins = (accounts.data?.accounts ?? []).map((account) => account.login)
+  const destinationInventories = useQuery({
+    queryKey: ['inventory-destinations', accountLogins],
+    queryFn: async () => {
+      const rows = await Promise.all(accountLogins.map((accountLogin) => inventoryApi.dashboard(accountLogin)))
+      return rows.flat()
+    },
+    enabled: accountLogins.length > 0,
+  })
 
   const gameItems = useQuery({
     queryKey: ['game-items', login, charId],
@@ -74,11 +103,22 @@ export function InventoryPage() {
     setGameItemsPage((page) => Math.min(page, gameItemsPageCount))
   }, [gameItemsPageCount])
 
+  const availableDestinationInventories = (destinationInventories.data ?? []).filter(
+    (inventory) => inventory.inventory_id !== panelItemAction?.inventoryId,
+  )
+  const destinationAccounts = (accounts.data?.accounts ?? []).filter((account) =>
+    availableDestinationInventories.some((inventory) => inventory.account_name === account.login),
+  )
+  const destinationCharacters = availableDestinationInventories.filter(
+    (inventory) => inventory.account_name === destinationLogin,
+  )
+
   async function refreshInventory() {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] }),
       queryClient.invalidateQueries({ queryKey: ['characters', login] }),
       queryClient.invalidateQueries({ queryKey: ['inventory', login] }),
+      queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
     ])
   }
 
@@ -100,19 +140,79 @@ export function InventoryPage() {
   }
 
   async function onDeposit(inventoryId: string, depositItemId: number, enchant: number) {
+    if (!panelItemAction) return
+    const depositQuantity = Number(panelActionQuantity)
+    if (!Number.isInteger(depositQuantity) || depositQuantity < 1 || depositQuantity > panelItemAction.availableQuantity) {
+      toast.error('Informe uma quantidade válida para enviar ao jogo')
+      return
+    }
+
+    setPanelActionPending(true)
     try {
       await inventoryApi.deposit({
-        login,
+        login: panelItemAction.originAccount,
         inventory_id: inventoryId,
         item_id: depositItemId,
-        quantity: 1,
+        quantity: depositQuantity,
         enchant,
       })
-      toast.success('Item enviado ao personagem')
-      await queryClient.invalidateQueries({ queryKey: ['inventory', login] })
+      toast.success(`${depositQuantity}x enviado para ${panelItemAction.originCharacter}`)
+      setPanelItemAction(null)
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+        queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
+      ])
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha no depósito')
+    } finally {
+      setPanelActionPending(false)
     }
+  }
+
+  async function onTrade(event: FormEvent) {
+    event.preventDefault()
+    if (!panelItemAction || panelItemAction.mode !== 'trade') return
+    const tradeQuantity = Number(panelActionQuantity)
+    const destination = (destinationInventories.data ?? []).find(
+      (inventory) => inventory.inventory_id === destinationInventoryId,
+    )
+
+    if (!destinationLogin || !destination) {
+      toast.error('Selecione a conta e o personagem de destino')
+      return
+    }
+    if (!Number.isInteger(tradeQuantity) || tradeQuantity < 1 || tradeQuantity > panelItemAction.availableQuantity) {
+      toast.error('Informe uma quantidade válida para transferir')
+      return
+    }
+
+    setPanelActionPending(true)
+    try {
+      await inventoryApi.trade({
+        origin_inventory_id: panelItemAction.inventoryId,
+        destination_inventory_id: destination.inventory_id,
+        item_id: panelItemAction.itemId,
+        quantity: tradeQuantity,
+        enchant: panelItemAction.enchant,
+      })
+      toast.success(`${tradeQuantity}x transferido para ${destination.character_name}`)
+      setPanelItemAction(null)
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+        queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
+      ])
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha na transferência')
+    } finally {
+      setPanelActionPending(false)
+    }
+  }
+
+  function openPanelItemAction(action: PanelItemAction) {
+    setPanelItemAction(action)
+    setPanelActionQuantity('1')
+    setDestinationLogin('')
+    setDestinationInventoryId('')
   }
 
   return (
@@ -257,12 +357,22 @@ export function InventoryPage() {
                 </div>
                 <div className="inventory-game-table-body" role="rowgroup">
                   {visibleGameItems.map((item, index) => (
-                    <div className="inventory-game-item" role="row" key={`${item.item_id}-${item.enchant}-${index}`}>
+                    <div
+                      className={`inventory-game-item${item.tradeable ? '' : ' not-tradeable'}`}
+                      role="row"
+                      key={`${item.item_id}-${item.enchant}-${index}`}
+                    >
                       <div className="inventory-game-item-main" role="cell">
                         <ItemIcon itemId={item.item_id} name={item.name} size={42} />
                         <span>
                           <strong>{item.name || `Item ${item.item_id}`}</strong>
-                          <small>{item.enchant > 0 ? `Equipamento +${item.enchant}` : 'Item do personagem'}</small>
+                          <small>
+                            {item.enchant > 0 ? `Equipamento +${item.enchant}` : 'Item do personagem'}
+                            {' · '}
+                            <b className={item.tradeable ? 'tradeable' : 'not-tradeable'}>
+                              {item.tradeable ? 'Negociável' : 'Não negociável no XML'}
+                            </b>
+                          </small>
                         </span>
                       </div>
                       <span className="inventory-game-item-data" role="cell" data-label="ID">
@@ -280,12 +390,14 @@ export function InventoryPage() {
                       <button
                         className="btn ghost inventory-game-select"
                         type="button"
+                        disabled={!item.tradeable}
+                        title={item.tradeable ? 'Selecionar para retirada' : 'Este item possui tradeable=false ou não existe no XML'}
                         onClick={() => {
                           setItemId(String(item.item_id))
                           setQuantity('1')
                         }}
                       >
-                        Selecionar
+                        {item.tradeable ? 'Selecionar' : 'Bloqueado'}
                       </button>
                     </div>
                   ))}
@@ -345,21 +457,195 @@ export function InventoryPage() {
           <div className="inventory-character-heading">
             <PackageOpen aria-hidden="true" />
             <div>
-              <span className="panel-eyebrow">Baú do painel</span>
+              <span className="panel-eyebrow">Baú do painel · conta {row.account_name}</span>
               <h2>{row.character_name}</h2>
             </div>
           </div>
           <div className="inventory-panel-items">
             {row.items.map((item) => (
-              <div className="inventory-panel-item" key={item.id}>
+              <div
+                className={`inventory-panel-item${panelItemAction?.recordId === item.id ? ' action-open' : ''}`}
+                key={item.id}
+              >
                 <ItemIcon itemId={item.item_id} name={item.item_name} size={32} />
                 <span>
                   <strong>{item.item_name || `Item ${item.item_id}`}</strong>
                   <small>+{item.enchant} · quantidade {item.quantity}</small>
                 </span>
-                <button className="btn ghost" type="button" onClick={() => void onDeposit(row.inventory_id, item.item_id, item.enchant)}>
-                  Enviar ao jogo
-                </button>
+                <div className="inventory-panel-item-actions">
+                  <button
+                    className="btn ghost"
+                    type="button"
+                    disabled={panelActionPending}
+                    onClick={() => openPanelItemAction({
+                      mode: 'trade',
+                      recordId: item.id,
+                      inventoryId: row.inventory_id,
+                      originAccount: row.account_name,
+                      originCharacter: row.character_name,
+                      itemId: item.item_id,
+                      itemName: item.item_name || `Item ${item.item_id}`,
+                      availableQuantity: item.quantity,
+                      enchant: item.enchant,
+                    })}
+                  >
+                    <ArrowRightLeft aria-hidden="true" />
+                    Transferir
+                  </button>
+                  <button
+                    className="btn ghost"
+                    type="button"
+                    disabled={panelActionPending}
+                    onClick={() => openPanelItemAction({
+                      mode: 'deposit',
+                      recordId: item.id,
+                      inventoryId: row.inventory_id,
+                      originAccount: row.account_name,
+                      originCharacter: row.character_name,
+                      itemId: item.item_id,
+                      itemName: item.item_name || `Item ${item.item_id}`,
+                      availableQuantity: item.quantity,
+                      enchant: item.enchant,
+                    })}
+                  >
+                    <Send aria-hidden="true" />
+                    Enviar ao jogo
+                  </button>
+                </div>
+
+                {panelItemAction?.recordId === item.id && panelItemAction.mode === 'trade' ? (
+                  <form className="inventory-item-action-panel" onSubmit={onTrade}>
+                    <div className="inventory-item-action-heading">
+                      <ArrowRightLeft aria-hidden="true" />
+                      <div>
+                        <span className="panel-eyebrow">Transferência entre personagens</span>
+                        <strong>{panelItemAction.itemName}</strong>
+                        <small>Origem: conta {panelItemAction.originAccount} · {panelItemAction.originCharacter}</small>
+                      </div>
+                    </div>
+
+                    <div className="inventory-item-action-fields">
+                      <label className="field">
+                        Conta de destino
+                        <select
+                          value={destinationLogin}
+                          onChange={(event) => {
+                            setDestinationLogin(event.target.value)
+                            setDestinationInventoryId('')
+                          }}
+                          disabled={destinationInventories.isLoading}
+                          required
+                        >
+                          <option value="">
+                            {destinationInventories.isLoading ? 'Carregando contas...' : 'Selecione a conta'}
+                          </option>
+                          {destinationAccounts.map((account) => (
+                            <option value={account.login} key={account.login}>
+                              {account.login}{account.is_primary ? ' — principal' : ''}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="field">
+                        Personagem de destino
+                        <select
+                          value={destinationInventoryId}
+                          onChange={(event) => setDestinationInventoryId(event.target.value)}
+                          disabled={!destinationLogin}
+                          required
+                        >
+                          <option value="">Selecione o personagem</option>
+                          {destinationCharacters.map((inventory) => (
+                            <option value={inventory.inventory_id} key={inventory.inventory_id}>
+                              {inventory.character_name} — nível {inventory.character.level}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="field">
+                        Quantidade
+                        <input
+                          type="number"
+                          min={1}
+                          max={panelItemAction.availableQuantity}
+                          inputMode="numeric"
+                          value={panelActionQuantity}
+                          onChange={(event) => setPanelActionQuantity(event.target.value)}
+                          required
+                        />
+                      </label>
+                    </div>
+
+                    {destinationInventories.isError ? (
+                      <p className="inventory-item-action-notice inventory-item-action-error">
+                        Não foi possível carregar os personagens de destino. Use Atualizar e tente novamente.
+                      </p>
+                    ) : null}
+
+                    {!destinationInventories.isLoading && !destinationInventories.isError && !destinationAccounts.length ? (
+                      <p className="inventory-item-action-notice">
+                        Não existe outro personagem disponível para receber este item.
+                      </p>
+                    ) : null}
+
+                    <div className="inventory-item-action-buttons">
+                      <button className="btn ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
+                        Cancelar
+                      </button>
+                      <button
+                        className="btn"
+                        type="submit"
+                        disabled={panelActionPending || destinationInventories.isError || !destinationInventoryId}
+                      >
+                        <ArrowRightLeft aria-hidden="true" />
+                        {panelActionPending ? 'Transferindo...' : 'Confirmar transferência'}
+                      </button>
+                    </div>
+                  </form>
+                ) : null}
+
+                {panelItemAction?.recordId === item.id && panelItemAction.mode === 'deposit' ? (
+                  <form
+                    className="inventory-item-action-panel inventory-deposit-confirmation"
+                    onSubmit={(event) => {
+                      event.preventDefault()
+                      void onDeposit(row.inventory_id, item.item_id, item.enchant)
+                    }}
+                  >
+                    <div className="inventory-item-action-heading">
+                      <Send aria-hidden="true" />
+                      <div>
+                        <span className="panel-eyebrow">Confirmar envio ao jogo</span>
+                        <strong>{panelItemAction.itemName}</strong>
+                        <small>Destino: conta {row.account_name} · personagem {row.character_name}</small>
+                      </div>
+                    </div>
+                    <label className="field inventory-deposit-quantity">
+                      Quantidade
+                      <input
+                        type="number"
+                        min={1}
+                        max={panelItemAction.availableQuantity}
+                        inputMode="numeric"
+                        value={panelActionQuantity}
+                        onChange={(event) => setPanelActionQuantity(event.target.value)}
+                        required
+                      />
+                    </label>
+                    <p className="inventory-item-action-notice">
+                      O item sairá do painel e entrará na fila de entrega deste personagem.
+                    </p>
+                    <div className="inventory-item-action-buttons">
+                      <button className="btn ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
+                        Cancelar
+                      </button>
+                      <button className="btn" type="submit" disabled={panelActionPending}>
+                        <Send aria-hidden="true" />
+                        {panelActionPending ? 'Enviando...' : `Enviar para ${row.character_name}`}
+                      </button>
+                    </div>
+                  </form>
+                ) : null}
               </div>
             ))}
             {!row.items.length ? <div className="inventory-panel-empty">Nenhum item guardado no painel.</div> : null}

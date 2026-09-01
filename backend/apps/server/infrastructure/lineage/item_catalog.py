@@ -83,6 +83,7 @@ class L2Item:
     category: str
     grade: str
     icon: str = ""
+    tradeable: bool = True
 
 
 class LineageItemCatalog:
@@ -99,6 +100,10 @@ class LineageItemCatalog:
         if item:
             return item.name
         return fallback or f"Item {item_id}"
+
+    def is_tradeable(self, item_id: int) -> bool:
+        item = self.get(item_id)
+        return bool(item and item.tradeable)
 
     def search(self, query: str, limit: int = 20) -> list[L2Item]:
         trimmed = query.strip()
@@ -130,7 +135,11 @@ class LineageItemCatalog:
 
     @classmethod
     def default_root(cls) -> Path:
-        return Path(settings.BASE_DIR) / "data" / "items"
+        configured = getattr(settings, "LINEAGE_ITEM_XML_DIR", "")
+        if not configured:
+            return Path(settings.BASE_DIR) / "data" / "items"
+        folder = Path(configured)
+        return folder if folder.is_absolute() else Path(settings.BASE_DIR) / folder
 
     @classmethod
     def load(cls, root: Path | None = None) -> LineageItemCatalog:
@@ -138,7 +147,7 @@ class LineageItemCatalog:
         items: dict[int, L2Item] = {}
         if not folder.is_dir():
             return cls(items)
-        for path in sorted(folder.glob("*.xml")):
+        for path in sorted(folder.rglob("*.xml")):
             for item in cls._parse(path.read_text(encoding="utf-8")):
                 items[item.id] = item
         return cls(items)
@@ -152,6 +161,8 @@ class LineageItemCatalog:
             if not name or re.search(r"not in use", name, re.I) or re.fullmatch(r"not used", name, re.I):
                 continue
             sets = {key: value for key, value in SET_RE.findall(body)}
+            normalized_sets = {key.casefold(): value for key, value in sets.items()}
+            raw_tradeable = normalized_sets.get("tradeable", normalized_sets.get("tradable", "true"))
             slots: list[str] = []
             for slot_value in SLOT_RE.findall(body):
                 slots.extend(part.strip() for part in slot_value.split(";") if part.strip())
@@ -162,6 +173,7 @@ class LineageItemCatalog:
                     category=_classify(kind.lower(), sets.get("type", ""), slots),
                     grade=_map_grade(sets.get("crystal_type", "NONE")),
                     icon=sets.get("icon", ""),
+                    tradeable=raw_tradeable.strip().casefold() in {"true", "1", "yes"},
                 )
             )
         return parsed
@@ -174,3 +186,7 @@ def get_item_catalog() -> LineageItemCatalog:
 
 def item_display_name(item_id: int, fallback: str | None = None) -> str:
     return get_item_catalog().name_for(item_id, fallback=fallback)
+
+
+def item_is_tradeable(item_id: int) -> bool:
+    return get_item_catalog().is_tradeable(item_id)
