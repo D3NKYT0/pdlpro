@@ -2,8 +2,15 @@ JAZZMIN_SETTINGS_PDL = {
     "site_title": "PDL PRO",
     "site_header": "PDL PRO Admin",
     "site_brand": "PDL PRO",
-    "welcome_sign": "Painel Definitivo Lineage 2.0",
+    "welcome_sign": "Acesso ao painel administrativo",
     "copyright": "PDL PRO",
+    "site_logo": "pdl_admin/img/logo.png",
+    "login_logo": "pdl_admin/img/logo.png",
+    "login_logo_dark": "pdl_admin/img/logo.png",
+    "site_logo_classes": "pdl-admin-logo",
+    "site_icon": "pdl_admin/img/favicon-32x32.png",
+    "custom_css": "pdl_admin/css/admin.css",
+    "use_google_fonts_cdn": True,
     "show_ui_builder": False,
     "navigation_expanded": False,
     "search_model": [
@@ -38,7 +45,20 @@ JAZZMIN_SETTINGS_PDL = {
 
 JAZZMIN_UI_TWEAKS_PDL = {
     "theme": "darkly",
-    "dark_mode_theme": "darkly",
+    "default_theme_mode": "dark",
+    "accent": "accent-warning",
     "navbar": "navbar-dark",
     "sidebar": "sidebar-dark-primary",
+    "brand_colour": "navbar-dark",
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "sidebar_nav_child_indent": True,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
 }
