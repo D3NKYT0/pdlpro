@@ -12,6 +12,22 @@ html.pdl-panel {
 }
 
 html.pdl-panel body {
+  margin: 0;
+}
+
+html.pdl-panel a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html.pdl-panel button,
+html.pdl-panel input,
+html.pdl-panel select,
+html.pdl-panel textarea {
+  font: inherit;
+}
+
+html.pdl-panel body {
   background-size: cover !important;
 }
 
@@ -36,20 +52,19 @@ html.pdl-panel .shell {
   display: grid;
   grid-template-columns: 264px minmax(0, 1fr);
   gap: 28px;
-  width: min(1500px, 100%);
+  width: 100%;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 105px 28px 64px;
+  padding: 22px 28px 42px;
 }
 
 html.pdl-panel .sidebar {
   position: sticky;
-  top: 97px;
+  top: 22px;
   display: flex;
   align-self: start;
   flex-direction: column;
   gap: 18px;
-  height: calc(100vh - 121px);
+  height: calc(100vh - 44px);
   min-height: 610px;
   padding: 24px 16px 18px;
   overflow: hidden;
@@ -293,7 +308,7 @@ html.pdl-panel .content {
 html.pdl-panel .content > .grid,
 html.pdl-panel .content > .card {
   width: 100%;
-  max-width: 1160px;
+  max-width: none;
 }
 
 html.pdl-panel .grid {
@@ -742,7 +757,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 @media (max-width: 900px) {
   html.pdl-panel .shell {
     grid-template-columns: 1fr;
-    padding-top: 91px;
+    padding-top: 18px;
   }
 
   html.pdl-panel .sidebar {
@@ -823,7 +838,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 @media (max-width: 600px) {
   html.pdl-panel .shell {
     gap: 14px;
-    padding: 87px 10px 36px;
+    padding: 10px 10px 36px;
   }
 
   html.pdl-panel .sidebar {
@@ -844,6 +859,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .panel-menu {
     display: flex;
+    flex-direction: row;
     width: calc(100% + 28px);
     margin-right: -14px;
     margin-left: -14px;

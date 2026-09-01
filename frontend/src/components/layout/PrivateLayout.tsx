@@ -21,7 +21,6 @@ import { useAuth } from '../../contexts/AuthContext'
 import { notificationApi } from '../../services/api'
 import { themeImage } from '../../theme/assets'
 import { usePanelTheme } from '../../theme/usePanelTheme'
-import { SiteNav } from './SiteNav'
 
 const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/painel', label: 'Painel', icon: LayoutDashboard, end: true },
@@ -51,7 +50,6 @@ export function PrivateLayout() {
 
   return (
     <div className="panel-app">
-      <SiteNav />
       <div className="shell">
         <aside className="sidebar">
           <div className="panel-brand">
@@ -65,7 +63,7 @@ export function PrivateLayout() {
             <ArrowLeft aria-hidden="true" />
             <span>Voltar ao site</span>
           </NavLink>
-          <div className="panel-menu" aria-label="Navegação da área do jogador">
+          <div className="panel-menu" role="navigation" aria-label="Navegação da área do jogador">
             {links.map((link) => {
               const Icon = link.icon
               return (

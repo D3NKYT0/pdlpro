@@ -29,6 +29,12 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/pages/extras.css',
   '/theme/pages/info-page.css',
   '/theme/pages/auth.css',
+]
+
+export const PANEL_THEME_STYLES = [
+  'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap',
+  themeAsset('css/font/stylesheet.css'),
+  themeAsset('css/font.css'),
   '/theme/pages/panel.css',
 ]
 
