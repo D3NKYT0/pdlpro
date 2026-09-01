@@ -27,6 +27,7 @@ import { RankingsPage } from '../../pages/RankingsPage'
 import { RegisterPage } from '../../pages/RegisterPage'
 import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
+import { SupportPage } from '../../pages/SupportPage'
 import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
 import { WalletPage } from '../../pages/WalletPage'
 import { InfoPage } from '../../pages/InfoPage'
@@ -40,6 +41,7 @@ import { AdminNewsPage } from '../../pages/admin/AdminNewsPage'
 import { AdminServerPage } from '../../pages/admin/AdminServerPage'
 import { AdminServicesPage } from '../../pages/admin/AdminServicesPage'
 import { AdminShopPage } from '../../pages/admin/AdminShopPage'
+import { AdminSupportPage } from '../../pages/admin/AdminSupportPage'
 import { RequireAuth } from './RequireAuth'
 import { RequireStaff } from './RequireStaff'
 
@@ -84,6 +86,7 @@ export function AppRoutes() {
             <Route path="/painel/games" element={<GamesPage />} />
             <Route path="/painel/progress" element={<ProgressPage />} />
             <Route path="/painel/notifications" element={<NotificationsPage />} />
+            <Route path="/painel/support" element={<SupportPage />} />
             <Route path="/painel/shop" element={<ShopPage />} />
             <Route path="/painel/marketplace" element={<MarketplacePage />} />
             <Route path="/painel/auctions" element={<AuctionPage />} />
@@ -95,6 +98,7 @@ export function AppRoutes() {
               <Route path="/painel/admin/loja" element={<AdminShopPage />} />
               <Route path="/painel/admin/noticias" element={<AdminNewsPage />} />
               <Route path="/painel/admin/jogos" element={<AdminGamesPage />} />
+              <Route path="/painel/admin/atendimento" element={<AdminSupportPage />} />
             </Route>
           </Route>
         </Route>

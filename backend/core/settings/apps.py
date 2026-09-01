@@ -40,6 +40,7 @@ LOCAL_APPS = [
     "apps.auction.apps.AuctionConfig",
     "apps.games.apps.GamesConfig",
     "apps.communication.apps.CommunicationConfig",
+    "apps.support.apps.SupportConfig",
     "apps.staff.apps.StaffConfig",
 ]
 

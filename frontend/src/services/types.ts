@@ -311,3 +311,43 @@ export interface ApiAuction {
   created_at: string
   updated_at: string
 }
+
+export interface ApiSupportMessage {
+  id: string
+  body: string
+  author_name: string
+  is_staff_reply: boolean
+  is_internal: boolean
+  created_at: string
+}
+
+export interface ApiSupportTicket {
+  id: string
+  protocol: string
+  subject: string
+  description: string
+  category: string
+  category_label: string
+  priority: string
+  priority_label: string
+  status: string
+  status_label: string
+  context: Record<string, string>
+  assigned_to: string
+  created_at: string
+  updated_at: string
+  last_activity_at: string
+  first_response_at: string | null
+  resolved_at: string | null
+  closed_at: string | null
+  sla_due_at: string
+  sla_breached: boolean
+  message_count?: number
+  messages?: ApiSupportMessage[]
+  customer?: { id: string; username: string; display_name: string; email: string }
+}
+
+export interface ApiSupportList {
+  results: ApiSupportTicket[]
+  summary: Record<string, number>
+}

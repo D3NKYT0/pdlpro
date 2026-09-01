@@ -5,6 +5,7 @@ import {
   Coins,
   ExternalLink,
   Gamepad2,
+  Headphones,
   Newspaper,
   Server,
   Settings2,
@@ -17,6 +18,12 @@ type Entry = { to: string; title: string; description: string; icon: LucideIcon;
 type Category = { name: string; entries: Entry[] }
 
 const categories: Category[] = [
+  {
+    name: 'Atendimento',
+    entries: [
+      { to: '/painel/admin/atendimento', title: 'Fila de chamados', description: 'SLA, responsáveis, respostas e histórico do jogador', icon: Headphones },
+    ],
+  },
   {
     name: 'Sistema',
     entries: [

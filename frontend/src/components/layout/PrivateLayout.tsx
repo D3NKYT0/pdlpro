@@ -7,6 +7,7 @@ import {
   Gamepad2,
   Gavel,
   LayoutDashboard,
+  Headphones,
   LogOut,
   Package,
   ShieldCheck,
@@ -20,7 +21,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { canAccessStaff } from '../../lib/staff'
-import { notificationApi } from '../../services/api'
+import { notificationApi, supportApi } from '../../services/api'
 import { themeImage } from '../../theme/assets'
 import { usePanelTheme } from '../../theme/usePanelTheme'
 
@@ -37,6 +38,7 @@ const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean 
   { to: '/painel/games', label: 'Jogos', icon: Gamepad2 },
   { to: '/painel/progress', label: 'Progresso', icon: Trophy },
   { to: '/painel/notifications', label: 'Avisos', icon: Bell },
+  { to: '/painel/support', label: 'Atendimento', icon: Headphones },
 ]
 
 export function PrivateLayout() {
@@ -48,6 +50,12 @@ export function PrivateLayout() {
     enabled: Boolean(user),
   })
   const unread = notices.data?.unread ?? 0
+  const support = useQuery({
+    queryKey: ['support-tickets'],
+    queryFn: supportApi.list,
+    enabled: Boolean(user),
+  })
+  const waitingSupport = support.data?.summary.waiting_user ?? 0
 
   usePanelTheme()
 
@@ -74,6 +82,7 @@ export function PrivateLayout() {
                   <Icon aria-hidden="true" />
                   <span>{link.label}</span>
                   {link.to === '/painel/notifications' && unread ? <b className="menu-badge">{unread}</b> : null}
+                  {link.to === '/painel/support' && waitingSupport ? <b className="menu-badge">{waitingSupport}</b> : null}
                 </NavLink>
               )
             })}

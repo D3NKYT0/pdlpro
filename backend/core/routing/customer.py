@@ -7,6 +7,7 @@ urlpatterns = [
     path("marketplace/", include("apps.marketplace.presentation.urls.customer")),
     path("auctions/", include("apps.auction.presentation.urls.customer")),
     path("notifications/", include("apps.communication.presentation.urls.customer")),
+    path("support/", include("apps.support.presentation.urls.customer")),
     path("push/", include("apps.communication.presentation.urls.push")),
     path("games/", include("apps.games.presentation.urls.customer")),
 ]
