@@ -785,33 +785,133 @@ html.pdl-docs .swagger-ui .errors-wrapper {
 
 /* ReDoc */
 
-.pdl-docs--redoc #redoc-container,
-.pdl-docs--redoc redoc {
-  display: block;
-}
-
-.pdl-docs--redoc .redoc-wrap {
+html.pdl-docs--redoc .redoc-wrap {
   background: transparent;
 }
 
-.pdl-docs--redoc .menu-content {
+html.pdl-docs--redoc #redoc-container,
+html.pdl-docs--redoc redoc {
+  display: block;
+}
+
+html.pdl-docs--redoc .menu-content {
   top: var(--pdl-docs-topbar) !important;
   height: calc(100vh - var(--pdl-docs-topbar)) !important;
   background: var(--pdl-surface) !important;
   border-right: 1px solid var(--pdl-border);
 }
 
-.pdl-docs--redoc .menu-content a,
-.pdl-docs--redoc .menu-content label {
+html.pdl-docs--redoc .menu-content a,
+html.pdl-docs--redoc .menu-content label {
   color: var(--pdl-text);
 }
 
-.pdl-docs--redoc .api-content {
+html.pdl-docs--redoc .api-content {
+  padding: 36px 40px 72px !important;
+  color: var(--pdl-text);
   background: transparent;
 }
 
-.pdl-docs--redoc [role="search"] input,
-.pdl-docs--redoc input[type="search"] {
+html.pdl-docs--redoc .api-content h1,
+html.pdl-docs--redoc .api-content h2,
+html.pdl-docs--redoc .api-content h3 {
+  color: var(--pdl-gold-bright) !important;
+  font-family: var(--pdl-display) !important;
+  line-height: 1.3 !important;
+}
+
+html.pdl-docs--redoc .api-content h2 {
+  margin: 2rem 0 0.9rem !important;
+  font-size: 1.4rem !important;
+}
+
+html.pdl-docs--redoc .api-content p,
+html.pdl-docs--redoc .api-content li {
+  color: var(--pdl-muted) !important;
+  font-size: 17px !important;
+  line-height: 1.75 !important;
+}
+
+html.pdl-docs--redoc .api-content ul,
+html.pdl-docs--redoc .api-content ol {
+  margin: 0.4em 0 1.2em !important;
+}
+
+html.pdl-docs--redoc .api-content li {
+  margin: 0.5em 0 !important;
+}
+
+html.pdl-docs--redoc .api-content a {
+  color: var(--pdl-gold-soft) !important;
+}
+
+html.pdl-docs--redoc .api-content code,
+html.pdl-docs--redoc .redoc-wrap code {
+  display: inline-block;
+  padding: 4px 10px !important;
+  color: var(--pdl-gold-bright) !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  background: #1b1812 !important;
+  border: 1px solid var(--pdl-border) !important;
+  border-radius: 0 !important;
+}
+
+html.pdl-docs--redoc .api-content table,
+html.pdl-docs--redoc .redoc-wrap table {
+  width: 100%;
+  margin: 10px 0 22px !important;
+  overflow: hidden;
+  background: rgba(8, 7, 5, 0.55) !important;
+  border: 1px solid var(--pdl-border) !important;
+  border-collapse: collapse !important;
+}
+
+html.pdl-docs--redoc .api-content table thead,
+html.pdl-docs--redoc .api-content table tbody,
+html.pdl-docs--redoc .api-content table tr,
+html.pdl-docs--redoc .redoc-wrap table thead,
+html.pdl-docs--redoc .redoc-wrap table tbody,
+html.pdl-docs--redoc .redoc-wrap table tr {
+  background: transparent !important;
+}
+
+html.pdl-docs--redoc .api-content table th,
+html.pdl-docs--redoc .redoc-wrap table th {
+  padding: 16px 20px !important;
+  color: var(--pdl-gold-bright) !important;
+  font-family: var(--pdl-display) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(212, 175, 55, 0.08) !important;
+  border: 1px solid var(--pdl-border) !important;
+}
+
+html.pdl-docs--redoc .api-content table td,
+html.pdl-docs--redoc .redoc-wrap table td {
+  padding: 16px 20px !important;
+  color: var(--pdl-text) !important;
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  vertical-align: middle !important;
+  background: rgba(12, 10, 8, 0.92) !important;
+  border: 1px solid var(--pdl-border) !important;
+}
+
+html.pdl-docs--redoc .api-content table tbody tr:nth-child(even) td,
+html.pdl-docs--redoc .redoc-wrap table tbody tr:nth-child(even) td {
+  background: rgba(20, 17, 13, 0.96) !important;
+}
+
+html.pdl-docs--redoc .api-content table td code,
+html.pdl-docs--redoc .redoc-wrap table td code {
+  color: var(--pdl-gold-bright) !important;
+  background: rgba(8, 7, 5, 0.88) !important;
+}
+
+html.pdl-docs--redoc [role="search"] input,
+html.pdl-docs--redoc input[type="search"] {
   color: var(--pdl-text);
   background: rgba(14, 12, 9, 0.82);
   border: 1px solid var(--pdl-border);
@@ -860,6 +960,15 @@ html.pdl-docs .swagger-ui .errors-wrapper {
 
   html.pdl-docs .swagger-ui .btn.execute {
     width: 100%;
+  }
+
+  html.pdl-docs--redoc .api-content {
+    padding: 24px 16px 48px !important;
+  }
+
+  html.pdl-docs--redoc .api-content table th,
+  html.pdl-docs--redoc .api-content table td {
+    padding: 12px 14px !important;
   }
 }
 

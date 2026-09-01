@@ -533,6 +533,10 @@
   box-shadow: 0 22px 54px rgba(0, 0, 0, 0.34);
 }
 
+.change-form #jazzy-actions {
+  row-gap: 0.5rem;
+}
+
 .pdl-form-actions::before,
 .change-form #jazzy-actions::before {
   display: block;
@@ -574,7 +578,7 @@
 }
 
 .change-form #jazzy-actions .object-tools {
-  margin-top: 0.25rem !important;
+  margin-top: 0 !important;
 }
 
 .change-form #jazzy-actions .object-tools .btn-secondary,
@@ -585,6 +589,9 @@
   line-height: 1 !important;
   padding-block: 0 !important;
   background: url("../img/button-1.png") center / 100% 100% no-repeat !important;
+  box-shadow: none !important;
+  -webkit-mask: url("../img/button-1.png") center / 100% 100% no-repeat;
+  mask: url("../img/button-1.png") center / 100% 100% no-repeat;
 }
 
 .pdl-form-system .readonly {

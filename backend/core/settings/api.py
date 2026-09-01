@@ -90,11 +90,13 @@ def get_spectacular_settings(api_version):
                     "textColor": "#f4ead4",
                 },
                 "typography": {
-                    "fontSize": "15px",
+                    "fontSize": "17px",
+                    "lineHeight": "1.75",
                     "fontFamily": '"Source Sans Pro", system-ui, sans-serif',
                     "headings": {
                         "fontFamily": '"PDL Cambria", Cambria, Georgia, serif',
                         "fontWeight": "700",
+                        "lineHeight": "1.35",
                     },
                     "code": {
                         "backgroundColor": "#1b1812",
