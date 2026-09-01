@@ -140,6 +140,7 @@ export interface ApiRoulettePrize {
   name: string
   weight: number
   rarity: string
+  item_id?: number
 }
 
 export interface ApiRouletteState {
@@ -204,6 +205,7 @@ export interface ApiGamerProfile {
     kind: string
     reference: string
     description: string
+    item_id?: number
     item_name: string
     quantity: number
     claimed: boolean
@@ -223,6 +225,7 @@ export interface ApiBattlePass {
     rewards: Array<{
       id: string
       is_premium: boolean
+      item_id?: number
       item_name: string
       quantity: number
       description: string

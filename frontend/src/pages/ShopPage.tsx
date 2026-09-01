@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { shopApi } from '../services/api'
 import { isApiError } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
+import { ItemIcon } from '../components/ItemIcon'
 
 export function ShopPage() {
   const { user } = useAuth()
@@ -23,7 +24,10 @@ export function ShopPage() {
       <div className="grid cols-3">
         {(catalog.data ?? []).map((item) => (
           <article className="card" key={item.id}>
-            <h3>{item.name}</h3>
+            <div className="item-cell">
+              <ItemIcon itemId={item.item_id} name={item.name} size={36} />
+              <h3>{item.name}</h3>
+            </div>
             <p className="muted">
               {item.quantity}x — R$ {item.price}
             </p>

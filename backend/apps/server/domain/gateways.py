@@ -60,6 +60,7 @@ class GameItem:
     name: str
     quantity: int
     enchant: int
+    slot: int | None = None
 
 
 class ILineageGateway(ABC):
@@ -118,6 +119,9 @@ class ILineageGateway(ABC):
 
     @abstractmethod
     def list_character_items(self, char_id: int) -> list[GameItem]: ...
+
+    @abstractmethod
+    def list_character_equipment(self, char_id: int) -> list[GameItem]: ...
 
     @abstractmethod
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem: ...

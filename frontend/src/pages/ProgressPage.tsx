@@ -8,7 +8,6 @@ import {
   KeyRound,
   LockKeyhole,
   Medal,
-  PackageOpen,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -17,6 +16,7 @@ import {
 import toast from 'react-hot-toast'
 import { authApi, gamesApi, isApiError } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
+import { ItemIcon } from '../components/ItemIcon'
 
 export function ProgressPage() {
   const { user, refreshUser } = useAuth()
@@ -160,7 +160,7 @@ export function ProgressPage() {
             <div className="profile-reward-list">
               {(progress.data?.rewards ?? []).map((row) => (
                 <article className={`profile-reward ${row.claimed ? 'claimed' : row.available ? 'available' : 'locked'}`} key={row.id}>
-                  <PackageOpen aria-hidden="true" />
+                  <ItemIcon itemId={row.item_id} name={row.item_name} size={28} />
                   <span><strong>{row.item_name} × {row.quantity}</strong><small>{row.description}</small></span>
                   {row.claimed ? (
                     <b><Check aria-hidden="true" /> Resgatada</b>
@@ -252,7 +252,7 @@ export function ProgressPage() {
                       <div className="pass-tier-lane free-lane">
                         {freeRewards.map((reward) => (
                           <div className={`pass-reward ${reward.claimed ? 'claimed' : !level.unlocked ? 'locked' : 'available'}`} key={reward.id}>
-                            <Gift aria-hidden="true" />
+                            <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
                             <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
                             {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : !level.unlocked ? <b><LockKeyhole aria-hidden="true" /></b> : (
                               <button className="btn" type="button" onClick={() => void claimPass(reward.id)}>Resgatar</button>
@@ -266,7 +266,7 @@ export function ProgressPage() {
                           const locked = reward.locked_premium || !level.unlocked
                           return (
                             <div className={`pass-reward ${reward.claimed ? 'claimed' : locked ? 'locked' : 'available'}`} key={reward.id}>
-                              <Crown aria-hidden="true" />
+                              <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
                               <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
                               {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : locked ? <b><LockKeyhole aria-hidden="true" /></b> : (
                                 <button className="btn" type="button" onClick={() => void claimPass(reward.id)}>Resgatar</button>

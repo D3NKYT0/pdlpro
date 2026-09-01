@@ -7,6 +7,13 @@ WHERE owner_id = :char_id
   AND loc IN ('INVENTORY', 'WAREHOUSE')
 ORDER BY loc, item_id
 
+-- name: list_character_equipment
+SELECT item_id, count AS quantity, enchant_level AS enchant, loc_data AS slot
+FROM items
+WHERE owner_id = :char_id
+  AND loc = 'PAPERDOLL'
+ORDER BY loc_data
+
 -- name: delete_item_stack
 DELETE FROM items
 WHERE owner_id = :char_id AND item_id = :item_id AND enchant_level = :enchant

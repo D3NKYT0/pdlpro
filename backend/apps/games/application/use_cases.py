@@ -35,7 +35,13 @@ class GetRouletteStateUseCase(UseCase[UUID, dict]):
             "fail_chance": (config.settings or {}).get("fail_chance", 20) if config else 20,
             "cost": (config.settings or {}).get("cost", 1) if config else 1,
             "prizes": [
-                {"id": str(prize.id), "name": prize.name, "weight": prize.weight, "rarity": prize.rarity}
+                {
+                    "id": str(prize.id),
+                    "name": prize.name,
+                    "weight": prize.weight,
+                    "rarity": prize.rarity,
+                    "item_id": prize.item_id,
+                }
                 for prize in prizes
             ],
         }

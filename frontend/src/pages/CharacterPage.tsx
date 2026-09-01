@@ -4,18 +4,77 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import {
   ArrowLeft,
+  CircleDot,
   Crown,
+  Eye,
+  Footprints,
+  Gem,
+  Hand,
   MapPin,
   Package,
   Pencil,
   Shield,
+  Shirt,
+  Sparkles,
   Store,
+  Sword,
   Undo2,
   UsersRound,
   VenusAndMars,
+  type LucideIcon,
 } from 'lucide-react'
 import { formatServicePrice, getClassName } from '../lib/lineage'
-import { isApiError, lineageApi } from '../services/api'
+import { inventoryApi, isApiError, lineageApi } from '../services/api'
+import type { ApiCharacterEquipmentItem } from '../services/domain/lineage.service'
+import { ItemIcon } from '../components/ItemIcon'
+
+interface EquipmentSlotDefinition {
+  key: string
+  label: string
+  slotIds: number[]
+  icon: LucideIcon
+}
+
+const EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
+  { key: 'left-ear', label: 'Brinco esquerdo', slotIds: [2], icon: Gem },
+  { key: 'head', label: 'Elmo', slotIds: [6], icon: Crown },
+  { key: 'right-ear', label: 'Brinco direito', slotIds: [1], icon: Gem },
+  { key: 'neck', label: 'Colar', slotIds: [3], icon: Gem },
+  { key: 'chest', label: 'Armadura', slotIds: [10], icon: Shirt },
+  { key: 'cloak', label: 'Capa', slotIds: [13], icon: Sparkles },
+  { key: 'left-ring', label: 'Anel esquerdo', slotIds: [5], icon: CircleDot },
+  { key: 'gloves', label: 'Luvas', slotIds: [9], icon: Hand },
+  { key: 'right-ring', label: 'Anel direito', slotIds: [4], icon: CircleDot },
+  { key: 'weapon', label: 'Arma', slotIds: [14, 7], icon: Sword },
+  { key: 'legs', label: 'Calças', slotIds: [11], icon: Shirt },
+  { key: 'offhand', label: 'Mão secundária', slotIds: [8], icon: Shield },
+  { key: 'feet', label: 'Botas', slotIds: [12], icon: Footprints },
+]
+
+const DISPLAYED_EQUIPMENT_SLOTS = new Set(EQUIPMENT_SLOTS.flatMap((slot) => slot.slotIds))
+
+function EquipmentSlot({ definition, item }: { definition: EquipmentSlotDefinition; item?: ApiCharacterEquipmentItem }) {
+  const Icon = definition.icon
+  return (
+    <article
+      className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : ''}`}
+      aria-label={`${definition.label}: ${item ? item.name : 'vazio'}`}
+    >
+      <span className="character-equipment-slot-label">{definition.label}</span>
+      {item ? <ItemIcon itemId={item.item_id} name={item.name} size={32} /> : <Icon aria-hidden="true" />}
+      <span className="character-equipment-slot-copy">
+        <strong>{item?.name || 'Vazio'}</strong>
+        {item ? (
+          <small>
+            ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}
+          </small>
+        ) : (
+          <small>Sem item equipado</small>
+        )}
+      </span>
+    </article>
+  )
+}
 
 export function CharacterPage() {
   const { login = '', charId = '' } = useParams()
@@ -27,12 +86,19 @@ export function CharacterPage() {
     enabled: Boolean(login),
   })
   const prices = useQuery({ queryKey: ['service-prices'], queryFn: lineageApi.servicePrices })
+  const equipment = useQuery({
+    queryKey: ['character-equipment', login, id],
+    queryFn: () => inventoryApi.equipment(id, login),
+    enabled: Boolean(login) && Number.isFinite(id) && id > 0,
+  })
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
   const [submitting, setSubmitting] = useState<'nick' | 'sex' | 'unstuck' | null>(null)
   const char = (characters.data ?? []).find((item) => Number(item.char_id) === id)
   const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
+  const equippedItems = equipment.data ?? []
+  const additionalEquipment = equippedItems.filter((item) => !DISPLAYED_EQUIPMENT_SLOTS.has(item.slot))
 
   async function refreshCharacter() {
     await queryClient.invalidateQueries({ queryKey: ['characters', login] })
@@ -168,6 +234,61 @@ export function CharacterPage() {
             </dl>
             {!offline ? (
               <p className="character-offline-hint">O personagem precisa estar offline para usar os serviços.</p>
+            ) : null}
+          </section>
+
+          <section className="card character-equipment">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">Itens do personagem</span>
+                <h2>Equipamentos</h2>
+              </div>
+              <span className="character-readonly-chip">
+                <Eye aria-hidden="true" />
+                Somente leitura
+              </span>
+            </div>
+
+            <div className="character-equipment-summary">
+              <Package aria-hidden="true" />
+              <strong>{equippedItems.length}</strong>
+              <span>{equippedItems.length === 1 ? 'item equipado' : 'itens equipados'}</span>
+            </div>
+
+            {equipment.isLoading ? <div className="character-equipment-message">Carregando equipamentos...</div> : null}
+            {equipment.isError ? (
+              <div className="character-equipment-message is-error">
+                Não foi possível consultar os equipamentos deste personagem.
+              </div>
+            ) : null}
+
+            {!equipment.isLoading && !equipment.isError ? (
+              <div className="character-paperdoll" aria-label="Equipamentos atuais do personagem">
+                {EQUIPMENT_SLOTS.map((definition) => (
+                  <EquipmentSlot
+                    key={definition.key}
+                    definition={definition}
+                    item={equippedItems.find((item) => definition.slotIds.includes(item.slot))}
+                  />
+                ))}
+              </div>
+            ) : null}
+
+            {additionalEquipment.length ? (
+              <div className="character-equipment-additional">
+                <span>Outros slots equipados</span>
+                <div>
+                  {additionalEquipment.map((item) => (
+                    <article key={`${item.slot}-${item.item_id}`}>
+                      <ItemIcon itemId={item.item_id} name={item.name} size={28} />
+                      <span>
+                        <strong>{item.name}</strong>
+                        <small>Slot {item.slot} · ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}</small>
+                      </span>
+                    </article>
+                  ))}
+                </div>
+              </div>
             ) : null}
           </section>
 

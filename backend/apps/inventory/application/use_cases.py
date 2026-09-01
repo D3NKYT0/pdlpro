@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
-from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
-from apps.inventory.domain.exceptions import InsufficientItemQuantityError, InventoryNotFoundError, ItemBlockedError
+from apps.inventory.domain.entities import InventoryItemEntity
+from apps.inventory.domain.exceptions import InventoryNotFoundError, ItemBlockedError
 from apps.inventory.domain.repositories import IInventoryRepository
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import GameItem, ILineageGateway
@@ -193,3 +193,18 @@ class ListGameItemsUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
         if not self._access.can_access(actor.user_id, actor.username, login):
             raise AuthorizationError()
         return self._lineage.list_character_items(char_id)
+
+
+class ListCharacterEquipmentUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+        self._lineage = lineage
+        self._access = access
+
+    def execute(self, data: tuple[InventoryActor, int]) -> list[GameItem]:
+        actor, char_id = data
+        login = actor.login or actor.username
+        if not self._access.can_access(actor.user_id, actor.username, login):
+            raise AuthorizationError()
+        if self._lineage.get_character(login, char_id) is None:
+            raise InventoryNotFoundError("Personagem não encontrado nesta conta.")
+        return self._lineage.list_character_equipment(char_id)

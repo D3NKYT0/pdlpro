@@ -58,6 +58,7 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
                         {
                             "id": str(reward.id),
                             "is_premium": reward.is_premium,
+                            "item_id": reward.item_id,
                             "item_name": reward.item_name,
                             "quantity": reward.quantity,
                             "description": reward.description,

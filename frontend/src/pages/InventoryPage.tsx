@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { ArrowDownToLine, Backpack, PackageOpen, RefreshCcw, UserRoundSearch } from 'lucide-react'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
+import { ItemIcon } from '../components/ItemIcon'
+import { ItemIdField } from '../components/ItemIdField'
 
 export function InventoryPage() {
   const queryClient = useQueryClient()
@@ -145,10 +147,7 @@ export function InventoryPage() {
                 ))}
               </select>
             </label>
-            <label className="field">
-              Item ID
-              <input inputMode="numeric" value={itemId} onChange={(e) => setItemId(e.target.value)} required />
-            </label>
+            <ItemIdField value={itemId} required onChange={(id) => setItemId(id)} />
             <label className="field">
               Quantidade
               <input inputMode="numeric" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
@@ -180,6 +179,7 @@ export function InventoryPage() {
           <div className="inventory-panel-items">
             {row.items.map((item) => (
               <div className="inventory-panel-item" key={item.id}>
+                <ItemIcon itemId={item.item_id} name={item.item_name} size={32} />
                 <span>
                   <strong>{item.item_name || `Item ${item.item_id}`}</strong>
                   <small>+{item.enchant} · quantidade {item.quantity}</small>

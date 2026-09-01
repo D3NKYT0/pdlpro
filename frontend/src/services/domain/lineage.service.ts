@@ -55,6 +55,10 @@ export interface ApiGameItem {
   enchant: number
 }
 
+export interface ApiCharacterEquipmentItem extends ApiGameItem {
+  slot: number
+}
+
 export const lineageApi = {
   accounts: () =>
     request<{ accounts: ApiAccessibleAccount[]; slots: { used: number; total: number; can_link: boolean } }>(
@@ -112,6 +116,10 @@ export const inventoryApi = {
   gameItems: (charId: number, login?: string) =>
     request<ApiGameItem[]>(
       `/customer/inventory/characters/${charId}/items/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
+    ),
+  equipment: (charId: number, login?: string) =>
+    request<ApiCharacterEquipmentItem[]>(
+      `/customer/inventory/characters/${charId}/equipment/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
     ),
   withdraw: (payload: { login?: string; char_id: number; item_id: number; quantity: number }) =>
     request('/customer/inventory/withdraw/', { method: 'POST', body: JSON.stringify(payload) }),

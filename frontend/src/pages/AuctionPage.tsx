@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { auctionApi, inventoryApi, isApiError } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
+import { ItemIcon } from '../components/ItemIcon'
 
 export function AuctionPage() {
   const { user } = useAuth()
@@ -65,7 +66,8 @@ export function AuctionPage() {
         <h1>Leilões</h1>
         {(open.data ?? []).map((auction) => (
           <article className="card" key={auction.id}>
-            <h3>
+            <h3 className="item-cell">
+              <ItemIcon itemId={auction.item_id} name={auction.item_name} size={32} />
               {auction.item_name} x{auction.quantity}
             </h3>
             <p className="muted">

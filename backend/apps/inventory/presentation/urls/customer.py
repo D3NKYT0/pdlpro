@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.inventory.presentation.views.customer import (
+    CharacterEquipmentView,
     CharacterItemsView,
     DepositItemView,
     InventoryDashboardView,
@@ -14,4 +15,9 @@ urlpatterns = [
     path("deposit/", DepositItemView.as_view(), name="customer-inventory-deposit"),
     path("trade/", TradeItemView.as_view(), name="customer-inventory-trade"),
     path("characters/<int:char_id>/items/", CharacterItemsView.as_view(), name="customer-inventory-char-items"),
+    path(
+        "characters/<int:char_id>/equipment/",
+        CharacterEquipmentView.as_view(),
+        name="customer-character-equipment",
+    ),
 ]

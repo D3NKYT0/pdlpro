@@ -23,6 +23,7 @@ from apps.server.domain.gateways import (
     ServerStatus,
 )
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
+from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.server.infrastructure.null_gateway import SocketStatusProbe
 from apps.server.infrastructure.passwords import LineagePasswordHasher
 
@@ -206,17 +207,25 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         rows = self._fetch("get_character", {"login": login, "char_id": char_id})
         return self._character(rows[0]) if rows else None
 
+    def _game_item(self, row, slot: int | None = None) -> GameItem:
+        item_id = int(row["item_id"])
+        return GameItem(
+            item_id=item_id,
+            name=item_display_name(item_id),
+            quantity=int(row["quantity"] or 1),
+            enchant=int(row["enchant"] or 0),
+            slot=slot,
+        )
+
     def list_character_items(self, char_id: int) -> list[GameItem]:
         rows = self._fetch("list_character_items", {"char_id": char_id})
-        return [
-            GameItem(
-                item_id=int(row["item_id"]),
-                name=f"Item {row['item_id']}",
-                quantity=int(row["quantity"] or 1),
-                enchant=int(row["enchant"] or 0),
-            )
-            for row in rows
-        ]
+        return [self._game_item(row) for row in rows]
+
+    def list_character_equipment(self, char_id: int) -> list[GameItem]:
+        if not self._sql.has("list_character_equipment"):
+            return []
+        rows = self._fetch("list_character_equipment", {"char_id": char_id})
+        return [self._game_item(row, slot=int(row["slot"])) for row in rows]
 
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
         items = [item for item in self.list_character_items(char_id) if item.item_id == item_id]
@@ -237,7 +246,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             remaining -= take
             if remaining <= 0:
                 return GameItem(item.item_id, item.name, quantity, item.enchant)
-        return GameItem(item_id, f"Item {item_id}", quantity, withdrawn_enchant)
+        return GameItem(item_id, item_display_name(item_id), quantity, withdrawn_enchant)
 
     def deposit_item(self, char_name: str, item_id: int, quantity: int, enchant: int) -> None:
         rows = self._fetch("find_character_id_by_name", {"name": char_name})

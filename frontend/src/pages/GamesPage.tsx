@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { gamesApi, inventoryApi, isApiError } from '../services/api'
+import { ItemIcon } from '../components/ItemIcon'
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy' | 'bag'
 
@@ -261,7 +262,7 @@ export function GamesPage() {
                 <div className="prize-list">
                   {(roulette.data?.prizes ?? []).map((prize) => (
                     <div className="prize-item" key={prize.id}>
-                      <Gift aria-hidden="true" />
+                      <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
                       <span><strong>{prize.name}</strong><small>{prize.rarity}</small></span>
                       <b>{prize.weight}</b>
                     </div>
@@ -453,7 +454,7 @@ export function GamesPage() {
             <div className="bag-items">
               {(bag.data ?? []).map((item) => (
                 <div className="bag-item" key={`${item.item_id}-${item.enchant}`}>
-                  <PackageOpen aria-hidden="true" />
+                  <ItemIcon itemId={item.item_id} name={item.item_name} size={28} />
                   <span>{item.item_name} {item.enchant ? `+${item.enchant}` : ''}</span>
                   <strong>× {item.quantity}</strong>
                 </div>

@@ -8,6 +8,7 @@ from apps.inventory.application.use_cases import (
     DepositItemInput,
     DepositItemUseCase,
     InventoryActor,
+    ListCharacterEquipmentUseCase,
     ListGameItemsUseCase,
     SyncInventoriesUseCase,
     TradeItemInput,
@@ -64,6 +65,16 @@ class CharacterItemsView(InjectedAPIView):
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
         items = self.resolve(ListGameItemsUseCase).execute((inventory_actor(request, login), char_id))
+        return Response([asdict(item) for item in items])
+
+
+class CharacterEquipmentView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Inventário"])
+    def get(self, request, char_id: int):
+        login = request.query_params.get("login") or request.user.username
+        items = self.resolve(ListCharacterEquipmentUseCase).execute((inventory_actor(request, login), char_id))
         return Response([asdict(item) for item in items])
 
 

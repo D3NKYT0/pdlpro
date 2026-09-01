@@ -1,5 +1,6 @@
 from apps.inventory.application.use_cases import (
     DepositItemUseCase,
+    ListCharacterEquipmentUseCase,
     ListGameItemsUseCase,
     SyncInventoriesUseCase,
     TradeItemUseCase,
@@ -21,5 +22,6 @@ class InventoryProvider(AppProvider):
             DepositItemUseCase,
             TradeItemUseCase,
             ListGameItemsUseCase,
+            ListCharacterEquipmentUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

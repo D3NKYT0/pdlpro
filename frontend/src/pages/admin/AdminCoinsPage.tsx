@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
+import { ItemIdField } from '../../components/ItemIdField'
 
 export function AdminCoinsPage() {
   const queryClient = useQueryClient()
@@ -50,7 +51,13 @@ export function AdminCoinsPage() {
       <form className="card admin-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
           <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} /></label>
-          <label className="field">Item ID<input value={coinId} onChange={(e) => setCoinId(e.target.value)} /></label>
+          <ItemIdField
+            value={coinId}
+            onChange={(id, item) => {
+              setCoinId(id)
+              if (item) setName(item.name)
+            }}
+          />
         </div>
         <div className="account-form-fields">
           <label className="field">Multiplicador<input value={multiplier} onChange={(e) => setMultiplier(e.target.value)} /></label>

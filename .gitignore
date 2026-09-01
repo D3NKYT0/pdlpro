@@ -61,3 +61,8 @@ celerybeat-schedule
 celerybeat-schedule-shm
 celerybeat-schedule-wal
 celerybeat.pid
+
+# L2 item art (regenerate with `npm run icons`)
+/frontend/public/item-icons/*
+!/frontend/public/item-icons/README.md
+!/frontend/public/item-icons/default.jpg

@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
+import { ItemIcon } from '../../components/ItemIcon'
+import { ItemIdField } from '../../components/ItemIdField'
 
 export function AdminShopPage() {
   const queryClient = useQueryClient()
@@ -51,7 +53,14 @@ export function AdminShopPage() {
       <form className="card admin-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
           <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} required /></label>
-          <label className="field">Item ID<input value={itemId} onChange={(e) => setItemId(e.target.value)} required /></label>
+          <ItemIdField
+            value={itemId}
+            required
+            onChange={(id, item) => {
+              setItemId(id)
+              if (item) setName(item.name)
+            }}
+          />
         </div>
         <div className="account-form-fields">
           <label className="field">Preço<input value={price} onChange={(e) => setPrice(e.target.value)} required /></label>
@@ -79,7 +88,12 @@ export function AdminShopPage() {
           <tbody>
             {(shop.data ?? []).map((item) => (
               <tr key={item.id}>
-                <td>{item.name}</td>
+                <td>
+                  <span className="item-cell">
+                    <ItemIcon itemId={item.item_id} name={item.name} size={28} />
+                    {item.name}
+                  </span>
+                </td>
                 <td>{item.item_id}</td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>

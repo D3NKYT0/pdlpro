@@ -136,12 +136,15 @@ class NullLineageGateway(ILineageGateway):
         return None
 
     def list_character_items(self, char_id: int) -> list[GameItem]:
-        return list(self._items.get(char_id, []))
+        return [item for item in self._items.get(char_id, []) if item.slot is None]
+
+    def list_character_equipment(self, char_id: int) -> list[GameItem]:
+        return [item for item in self._items.get(char_id, []) if item.slot is not None]
 
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
         items = self._items.setdefault(char_id, [])
         for index, item in enumerate(items):
-            if item.item_id == item_id and item.quantity >= quantity:
+            if item.slot is None and item.item_id == item_id and item.quantity >= quantity:
                 remaining = item.quantity - quantity
                 withdrawn = GameItem(item.item_id, item.name, quantity, item.enchant)
                 if remaining:

@@ -35,6 +35,7 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
                     "kind": reward.kind,
                     "reference": reward.reference,
                     "description": reward.description or reward.item_name,
+                    "item_id": reward.item_id,
                     "item_name": reward.item_name,
                     "quantity": reward.quantity,
                     "claimed": reward.pk in claimed_ids,

@@ -62,3 +62,31 @@ def test_withdraw_and_deposit_roundtrip(api, player):
     assert deposited.status_code == 200
     leftover = api.get("/api/v1/customer/inventory/")
     assert leftover.data[0]["items"][0]["quantity"] == 60
+
+
+@pytest.mark.django_db
+def test_character_equipment_is_read_only_and_scoped_to_the_account(api, player):
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    from common.di.bootstrap import DependencyInjection
+
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character(
+        "hero",
+        "SirHero",
+        items=[
+            GameItem(57, "Adena", 1000, 0),
+            GameItem(2413, "Helmet", 1, 3, slot=6),
+            GameItem(10, "Sword", 1, 7, slot=7),
+        ],
+    )
+
+    response = api.get(f"/api/v1/customer/inventory/characters/{char.char_id}/equipment/")
+
+    assert response.status_code == 200
+    assert response.data == [
+        {"item_id": 2413, "name": "Helmet", "quantity": 1, "enchant": 3, "slot": 6},
+        {"item_id": 10, "name": "Sword", "quantity": 1, "enchant": 7, "slot": 7},
+    ]
+    assert api.post(f"/api/v1/customer/inventory/characters/{char.char_id}/equipment/").status_code == 405

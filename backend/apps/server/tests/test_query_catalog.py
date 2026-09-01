@@ -19,6 +19,12 @@ def test_dreamv3_catalog_uses_charid():
     assert "obj_Id" not in catalog["transfer_character"]
 
 
+def test_mobius_catalog_exposes_read_only_paperdoll_query():
+    catalog = LineageQueryCatalog.load("mobius")
+    assert "PAPERDOLL" in catalog["list_character_equipment"]
+    assert "loc_data AS slot" in catalog["list_character_equipment"]
+
+
 def test_unknown_dialect_fails():
     with pytest.raises(QueryDialectNotFoundError):
         LineageQueryCatalog.load("nao_existe")
