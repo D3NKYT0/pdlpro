@@ -179,11 +179,11 @@ function castleInfo(row: WorldRow) {
   const meta =
     CASTLE_CATALOG.find((item) => item.id === id) ??
     CASTLE_CATALOG.find((item) => item.slug === slug || item.title.toLowerCase() === slug)
-  const resolvedSlug = meta?.slug ?? slug || 'castle'
+  const resolvedSlug = meta?.slug ?? (slug || 'castle')
   return {
     id,
     slug: resolvedSlug,
-    title: meta?.title ?? rawName || `Castelo ${id || ''}`.trim(),
+    title: meta?.title ?? (rawName || `Castelo ${id || ''}`.trim()),
     territory: meta?.territory ?? 'Reino de Aden',
     blurb: meta?.blurb ?? 'Fortaleza do reino.',
     image: themeImage(`castles/${resolvedSlug}.jpg`),
