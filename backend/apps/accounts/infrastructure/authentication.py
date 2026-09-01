@@ -83,25 +83,28 @@ class CookieJWTAuthentication(JWTAuthentication):
         return user, validated_token
 
 
+def _cookie_kwargs(request, *, max_age: int) -> dict[str, Any]:
+    return {
+        "httponly": True,
+        "secure": _cookie_secure(request),
+        "samesite": _cookie_samesite(),
+        "max_age": max_age,
+        "path": "/",
+    }
+
+
 def set_auth_cookies(request, response: Response, *, refresh: RefreshToken) -> Response:
     access = str(refresh.access_token)
-    secure = _cookie_secure(request)
-    samesite = _cookie_samesite()
+    cookie_age = int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
     response.set_cookie(
         get_access_cookie_name(),
         access,
-        httponly=True,
-        secure=secure,
-        samesite=samesite,
-        max_age=int(settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()),
+        **_cookie_kwargs(request, max_age=cookie_age),
     )
     response.set_cookie(
         get_refresh_cookie_name(),
         str(refresh),
-        httponly=True,
-        secure=secure,
-        samesite=samesite,
-        max_age=int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds()),
+        **_cookie_kwargs(request, max_age=cookie_age),
     )
     get_token(request)
     response.data = {
@@ -113,8 +116,10 @@ def set_auth_cookies(request, response: Response, *, refresh: RefreshToken) -> R
 
 
 def clear_auth_cookies(response: Response) -> Response:
-    response.delete_cookie(get_access_cookie_name())
-    response.delete_cookie(get_refresh_cookie_name())
+    samesite = _cookie_samesite()
+    delete_samesite = samesite if isinstance(samesite, str) else "Lax"
+    response.delete_cookie(get_access_cookie_name(), path="/", samesite=delete_samesite)
+    response.delete_cookie(get_refresh_cookie_name(), path="/", samesite=delete_samesite)
     return response
 
 

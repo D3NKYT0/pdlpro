@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { authApi, isTwoFactorChallenge, type ApiUser, type TwoFactorChallenge } from '../services/api'
+import { refreshSession } from '../services/infra/http'
+import { restoreSession } from '../services/infra/session'
+
+const REFRESH_EVERY_MS = 10 * 60 * 1000
+const RETRY_EVERY_MS = 5000
 
 interface AuthContextValue {
   user: ApiUser | null
@@ -18,12 +23,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    authApi
-      .me()
-      .then(setUser)
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false))
+    let cancelled = false
+    let retryTimer: ReturnType<typeof setTimeout> | undefined
+
+    const scheduleRetry = () => {
+      retryTimer = setTimeout(() => {
+        void restoreSession(() => authApi.me()).then((result) => {
+          if (cancelled) return
+          if (result.user) {
+            setUser(result.user)
+            return
+          }
+          if (result.retry) scheduleRetry()
+        })
+      }, RETRY_EVERY_MS)
+    }
+
+    void restoreSession(() => authApi.me()).then((result) => {
+      if (cancelled) return
+      setUser(result.user)
+      setLoading(false)
+      if (result.retry) scheduleRetry()
+    })
+
+    return () => {
+      cancelled = true
+      if (retryTimer) clearTimeout(retryTimer)
+    }
   }, [])
+
+  useEffect(() => {
+    if (!user) return
+
+    const keepAlive = () => {
+      void refreshSession()
+    }
+    const intervalId = window.setInterval(keepAlive, REFRESH_EVERY_MS)
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') keepAlive()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+
+    return () => {
+      window.clearInterval(intervalId)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [user])
 
   const value = useMemo<AuthContextValue>(
     () => ({

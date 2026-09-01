@@ -15,25 +15,45 @@ export function isApiError(value: unknown): value is ApiError {
   return value instanceof ApiError
 }
 
+type RequestOptions = RequestInit & { authRetry?: boolean }
+
 const BASE = '/api/v1'
 const SAFE = new Set(['GET', 'HEAD', 'OPTIONS'])
+const TRANSIENT_HTTP = new Set([408, 425, 429, 500, 502, 503, 504])
 let csrfToken: string | null = null
 let refreshPromise: Promise<boolean> | null = null
 
-async function readCsrf(): Promise<string | null> {
-  if (csrfToken) return csrfToken
-  const response = await fetch(`${BASE}/auth/csrf/`, { credentials: 'include' })
-  if (!response.ok) return null
-  const data = await response.json()
-  csrfToken = data.csrfToken ?? null
-  return csrfToken
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const method = (init.method || 'GET').toUpperCase()
-  const headers = new Headers(init.headers)
+async function send(input: string, init: RequestInit): Promise<Response> {
+  try {
+    return await fetch(input, init)
+  } catch {
+    throw new ApiError('Não foi possível conectar ao servidor.', 0, 'NETWORK_ERROR')
+  }
+}
+
+async function readCsrf(): Promise<string | null> {
+  if (csrfToken) return csrfToken
+  try {
+    const response = await send(`${BASE}/auth/csrf/`, { credentials: 'include' })
+    if (!response.ok) return null
+    const data = await response.json()
+    csrfToken = data.csrfToken ?? null
+    return csrfToken
+  } catch {
+    return null
+  }
+}
+
+export async function request<T>(path: string, init: RequestOptions = {}): Promise<T> {
+  const { authRetry = false, ...rest } = init
+  const method = (rest.method || 'GET').toUpperCase()
+  const headers = new Headers(rest.headers)
   headers.set('Accept', 'application/json')
-  if (init.body && !headers.has('Content-Type')) {
+  if (rest.body && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
   if (!SAFE.has(method)) {
@@ -41,15 +61,38 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
     if (csrf) headers.set('X-CSRFToken', csrf)
   }
 
-  const response = await fetch(`${BASE}${path}`, {
-    ...init,
-    headers,
-    credentials: 'include',
-  })
+  const attempts = SAFE.has(method) ? 3 : 1
+  let response: Response | undefined
 
-  if (response.status === 401 && !path.startsWith('/auth/')) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      response = await send(`${BASE}${path}`, {
+        ...rest,
+        headers,
+        credentials: 'include',
+      })
+    } catch (error) {
+      if (attempt < attempts && error instanceof ApiError && error.status === 0) {
+        await delay(250 * attempt)
+        continue
+      }
+      throw error
+    }
+
+    if (attempt < attempts && TRANSIENT_HTTP.has(response.status)) {
+      await delay(250 * attempt)
+      continue
+    }
+    break
+  }
+
+  if (!response) {
+    throw new ApiError('Não foi possível conectar ao servidor.', 0, 'NETWORK_ERROR')
+  }
+
+  if (response.status === 401 && !path.startsWith('/auth/') && !authRetry) {
     const refreshed = await refreshSession()
-    if (refreshed) return request<T>(path, init)
+    if (refreshed) return request<T>(path, { ...init, authRetry: true })
   }
 
   if (!response.ok) {
@@ -73,16 +116,33 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
 
 export async function refreshSession(): Promise<boolean> {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${BASE}/auth/refresh/`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: '{}',
-    })
-      .then((response) => response.ok)
-      .finally(() => {
-        refreshPromise = null
+    refreshPromise = (async () => {
+      const headers = new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       })
+      const csrf = await readCsrf()
+      if (csrf) headers.set('X-CSRFToken', csrf)
+      try {
+        const response = await send(`${BASE}/auth/refresh/`, {
+          method: 'POST',
+          credentials: 'include',
+          headers,
+          body: '{}',
+        })
+        if (response.ok) csrfToken = null
+        return response.ok
+      } catch {
+        return false
+      }
+    })().finally(() => {
+      refreshPromise = null
+    })
   }
   return refreshPromise
+}
+
+export function resetHttpClient() {
+  csrfToken = null
+  refreshPromise = null
 }

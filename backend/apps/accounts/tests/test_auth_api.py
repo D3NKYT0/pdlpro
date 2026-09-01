@@ -51,6 +51,46 @@ def test_login(api, user):
 
 
 @pytest.mark.django_db
+def test_login_cookies_outlive_access_token(api, user):
+    from django.conf import settings as django_settings
+
+    response = api.post(
+        "/api/v1/auth/login/",
+        {"login": "hero", "password": "Secret123"},
+        format="json",
+    )
+    assert response.status_code == 200
+    access_name = django_settings.REST_AUTH["JWT_AUTH_COOKIE"]
+    refresh_name = django_settings.REST_AUTH["JWT_AUTH_REFRESH_COOKIE"]
+    expected_age = int(django_settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
+    assert int(response.cookies[access_name]["max-age"]) == expected_age
+    assert int(response.cookies[refresh_name]["max-age"]) == expected_age
+    assert response.cookies[access_name]["path"] == "/"
+    assert response.cookies[refresh_name]["path"] == "/"
+
+
+@pytest.mark.django_db
+def test_refresh_restores_session_without_access_cookie(api, user):
+    from django.conf import settings as django_settings
+
+    login = api.post(
+        "/api/v1/auth/login/",
+        {"login": "hero", "password": "Secret123"},
+        format="json",
+    )
+    assert login.status_code == 200
+    access_name = django_settings.REST_AUTH["JWT_AUTH_COOKIE"]
+    api.cookies.pop(access_name, None)
+    blocked = api.get("/api/v1/shared/me/")
+    assert blocked.status_code == 401
+    refreshed = api.post("/api/v1/auth/refresh/", {}, format="json")
+    assert refreshed.status_code == 200, refreshed.data
+    me = api.get("/api/v1/shared/me/")
+    assert me.status_code == 200
+    assert me.data["username"] == "hero"
+
+
+@pytest.mark.django_db
 def test_wallet_is_created_on_first_access(api, user):
     api.force_authenticate(user=user)
     response = api.get("/api/v1/shared/wallet/")
