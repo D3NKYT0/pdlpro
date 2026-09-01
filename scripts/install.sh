@@ -15,7 +15,7 @@ Uso:
 Opções:
   --no-start  Valida o ambiente e cria o .env, mas não inicia os serviços.
   --no-dev    Não inicia o frontend Vite (a instalação local usa dev por padrão).
-  --production  Usa build estático, settings de produção e HTTPS automático.
+  --production  Usa build estático e settings de produção atrás do proxy reverso.
   -h, --help  Exibe esta ajuda.
 EOF
 }

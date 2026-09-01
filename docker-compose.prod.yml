@@ -7,8 +7,6 @@ volumes:
   redis_data:
   static_files:
   media_files:
-  caddy_data:
-  caddy_config:
 
 x-backend-app-image: &backend-app-image
   image: pdl_backend:local
@@ -124,18 +122,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.production
     restart: unless-stopped
-    environment:
-      DOMAIN: ${DOMAIN:-pdl.denky.dev.br}
-      ACME_EMAIL: ${ACME_EMAIL:-admin@pdl.denky.dev.br}
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - "${APP_BIND_ADDRESS:-0.0.0.0}:${APP_HTTP_PORT:-8080}:80"
     volumes:
       - static_files:/var/www/static:ro
       - media_files:/var/www/media:ro
-      - caddy_data:/data
-      - caddy_config:/config
     depends_on:
       - backend
       - asgi

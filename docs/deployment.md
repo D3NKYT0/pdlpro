@@ -4,7 +4,7 @@
 
 - `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
 - `docker-compose.prod.yml`: produção, com frontend compilado, Django em settings
-  de produção e Caddy fornecendo HTTPS automático.
+  de produção e Nginx interno atrás do proxy reverso HTTPS.
 
 O domínio padrão da produção é `pdl.denky.dev.br`, mas pode ser alterado pela
 variável `DOMAIN`.
@@ -14,7 +14,9 @@ variável `DOMAIN`.
 ```text
 Internet/local host
        │ :80
-  Caddy (:80/:443)
+  Proxy reverso HTTPS
+       │ HTTP :8080
+  Nginx interno
        ├── /api, /admin ──> Gunicorn :8000
        ├── /ws ───────────> Daphne :8001
        ├── /static, /media
@@ -30,14 +32,13 @@ Antes do deploy:
 
 1. Crie um registro DNS `A` para `pdl.denky.dev.br` apontando para o IPv4 do
    servidor (e `AAAA` somente se o IPv6 funcionar no servidor).
-2. Libere TCP `80` e `443` e UDP `443` no firewall. A porta `22` deve permanecer
-   disponível para SSH.
+2. Permita que o servidor do proxy reverso alcance a porta TCP `8080` do PDL.
+   Essa porta não deve ser publicada para toda a internet.
 3. Instale Docker Engine com o plugin Docker Compose v2.
 
-O DNS de `pdl.denky.dev.br` usa proxy da Cloudflare. Configure SSL/TLS como
-`Full (strict)`, nunca `Flexible`. Se a primeira emissão do certificado falhar,
-altere o registro temporariamente para `DNS only`, aguarde a emissão pelo Caddy
-e reative o proxy.
+O certificado e a configuração Cloudflare ficam sob responsabilidade do proxy
+reverso externo. Ele deve encaminhar `Host`, `X-Forwarded-For` e
+`X-Forwarded-Proto: https`, além de suportar upgrade de WebSocket.
 
 No servidor:
 
@@ -55,7 +56,8 @@ Configure ao menos os valores abaixo. Gere `SECRET_KEY` com
 
 ```dotenv
 DOMAIN=pdl.denky.dev.br
-ACME_EMAIL=admin@pdl.denky.dev.br
+APP_BIND_ADDRESS=0.0.0.0
+APP_HTTP_PORT=8080
 SECRET_KEY=valor-aleatorio-com-no-minimo-50-caracteres
 DB_NAME=pdl
 DB_USER=pdl
@@ -80,8 +82,23 @@ docker compose --env-file .env -f docker-compose.prod.yml ps
 docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web backend
 ```
 
-Quando DNS e portas estiverem corretos, o Caddy solicitará e renovará o
-certificado automaticamente. Acesse `https://pdl.denky.dev.br` e crie o admin:
+Configure o proxy externo com destino `http://IP_PRIVADO_DO_PDL:8080`. Depois,
+acesse `https://pdl.denky.dev.br` e crie o admin:
+
+Exemplo do bloco no proxy Nginx externo:
+
+```nginx
+location / {
+    proxy_pass http://IP_PRIVADO_DO_PDL:8080;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+```
 
 ```bash
 docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser

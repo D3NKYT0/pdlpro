@@ -53,7 +53,7 @@ Execute `./setup.sh help` para listar os comandos encontrados automaticamente
 em `scripts/` e `./setup.sh help <comando>` para consultar suas opções.
 
 O deploy de produção usa `docker-compose.prod.yml`, gera o frontend estático e
-obtém HTTPS automaticamente para o domínio configurado em `DOMAIN`. Consulte
+publica um Nginx interno para uso atrás de um proxy reverso HTTPS. Consulte
 [Implantação](docs/deployment.md) antes de publicar.
 
 As migrações são executadas pelo entrypoint do backend. Para criar um administrador:

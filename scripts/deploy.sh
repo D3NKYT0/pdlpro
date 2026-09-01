@@ -16,7 +16,7 @@ Opções:
   --build     Reconstrói as imagens (padrão).
   --no-build  Reutiliza as imagens locais existentes.
   --dev       Ativa o perfil dev e inicia o frontend Vite.
-  --production  Build estático, Django production e HTTPS automático.
+  --production  Build estático e Django production atrás do proxy reverso.
   --pull      Atualiza as imagens base antes do deploy.
   -h, --help  Exibe esta ajuda.
 EOF
@@ -57,7 +57,6 @@ cd "$ROOT_DIR"
 if [[ "$production" -eq 1 ]]; then
   [[ -f "$PRODUCTION_COMPOSE_FILE" ]] || die "docker-compose.prod.yml não encontrado"
   domain="$(read_env_value DOMAIN)"
-  acme_email="$(read_env_value ACME_EMAIL)"
   secret_key="$(read_env_value SECRET_KEY)"
   db_password="$(read_env_value DB_PASSWORD)"
   allowed_hosts="$(read_env_value ALLOWED_HOSTS)"
@@ -65,7 +64,6 @@ if [[ "$production" -eq 1 ]]; then
   csrf_origins="$(read_env_value CSRF_TRUSTED_ORIGINS)"
   [[ -n "$domain" ]] || die "defina DOMAIN no .env"
   [[ "$domain" != "localhost" ]] || die "DOMAIN não pode ser localhost em produção"
-  [[ "$acme_email" == *@* ]] || die "defina ACME_EMAIL no .env"
   [[ ${#secret_key} -ge 50 && "$secret_key" != change-me-* ]] || die "defina uma SECRET_KEY forte (mínimo de 50 caracteres) no .env"
   [[ ${#db_password} -ge 16 && "$db_password" != "pdl" ]] || die "defina uma DB_PASSWORD forte (mínimo de 16 caracteres) no .env"
   [[ ",$allowed_hosts," == *",$domain,"* ]] || die "inclua $domain em ALLOWED_HOSTS no .env"
