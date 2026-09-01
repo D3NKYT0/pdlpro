@@ -13,7 +13,7 @@ import {
   Send,
   UserRoundSearch,
 } from 'lucide-react'
-import { inventoryApi, isApiError, lineageApi } from '../services/api'
+import { gamesApi, inventoryApi, isApiError, lineageApi } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 import { ItemIdField } from '../components/ItemIdField'
 
@@ -29,9 +29,13 @@ interface PanelItemAction {
   enchant: number
 }
 
+type InventoryTab = 'characters' | 'bag'
+
 export function InventoryPage() {
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
+  const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
+  const [activeTab, setActiveTab] = useState<InventoryTab>('characters')
   const [selectedLogin, setSelectedLogin] = useState('')
   const primaryLogin = accounts.data?.accounts.find((account) => account.is_primary)?.login
   const fallbackLogin = primaryLogin ?? accounts.data?.accounts[0]?.login ?? ''
@@ -57,6 +61,8 @@ export function InventoryPage() {
   const [destinationLogin, setDestinationLogin] = useState('')
   const [destinationInventoryId, setDestinationInventoryId] = useState('')
   const [panelActionPending, setPanelActionPending] = useState(false)
+  const [bagTransferInventoryId, setBagTransferInventoryId] = useState('')
+  const [bagTransferPending, setBagTransferPending] = useState(false)
 
   const accountLogins = (accounts.data?.accounts ?? []).map((account) => account.login)
   const destinationInventories = useQuery({
@@ -98,6 +104,7 @@ export function InventoryPage() {
     (_, index) => gameItemPageWindowStart + index,
   )
   const gameItemsQuantity = filteredGameItems.reduce((total, item) => total + item.quantity, 0)
+  const bagItemsQuantity = (bag.data ?? []).reduce((total, item) => total + item.quantity, 0)
 
   useEffect(() => {
     setGameItemsPage((page) => Math.min(page, gameItemsPageCount))
@@ -119,6 +126,7 @@ export function InventoryPage() {
       queryClient.invalidateQueries({ queryKey: ['characters', login] }),
       queryClient.invalidateQueries({ queryKey: ['inventory', login] }),
       queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
+      queryClient.invalidateQueries({ queryKey: ['bag'] }),
     ])
   }
 
@@ -208,6 +216,35 @@ export function InventoryPage() {
     }
   }
 
+  async function onTransferBag(event: FormEvent) {
+    event.preventDefault()
+    const destination = (destinationInventories.data ?? []).find(
+      (inventory) => inventory.inventory_id === bagTransferInventoryId,
+    )
+    if (!destination) {
+      toast.error('Selecione o personagem que receberá os itens')
+      return
+    }
+
+    setBagTransferPending(true)
+    try {
+      const result = await gamesApi.transferBag(destination.inventory_id)
+      toast.success(`${result.moved} itens movidos para o inventário de ${destination.character_name}`)
+      setBagTransferInventoryId('')
+      setSelectedLogin(destination.account_name)
+      setActiveTab('characters')
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['bag'] }),
+        queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+        queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
+      ])
+    } catch (error) {
+      toast.error(isApiError(error) ? error.message : 'Falha ao mover os itens da Bag')
+    } finally {
+      setBagTransferPending(false)
+    }
+  }
+
   function openPanelItemAction(action: PanelItemAction) {
     setPanelItemAction(action)
     setPanelActionQuantity('1')
@@ -228,6 +265,42 @@ export function InventoryPage() {
           Atualizar
         </button>
       </section>
+
+      <div className="inventory-tabs" role="tablist" aria-label="Seções do inventário">
+        <button
+          className={activeTab === 'characters' ? 'active' : undefined}
+          id="inventory-tab-characters"
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'characters'}
+          aria-controls="inventory-panel-characters"
+          onClick={() => setActiveTab('characters')}
+        >
+          <PackageOpen aria-hidden="true" />
+          <span>Inventários dos personagens</span>
+        </button>
+        <button
+          className={activeTab === 'bag' ? 'active' : undefined}
+          id="inventory-tab-bag"
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'bag'}
+          aria-controls="inventory-panel-bag"
+          onClick={() => setActiveTab('bag')}
+        >
+          <Backpack aria-hidden="true" />
+          <span>Bag do site</span>
+          {bagItemsQuantity > 0 ? <b>{bagItemsQuantity.toLocaleString('pt-BR')}</b> : null}
+        </button>
+      </div>
+
+      {activeTab === 'characters' ? (
+        <div
+          className="inventory-tab-content"
+          id="inventory-panel-characters"
+          role="tabpanel"
+          aria-labelledby="inventory-tab-characters"
+        >
 
       <section className="card inventory-control-card">
         <div className="inventory-control-heading">
@@ -652,6 +725,102 @@ export function InventoryPage() {
           </div>
         </section>
       ))}
+        </div>
+      ) : null}
+
+      {activeTab === 'bag' ? (
+        <section
+          className="card inventory-bag-card"
+          id="inventory-panel-bag"
+          role="tabpanel"
+          aria-labelledby="inventory-tab-bag"
+        >
+          <div className="inventory-bag-heading">
+            <div className="inventory-bag-title">
+              <Backpack aria-hidden="true" />
+              <div>
+                <span className="panel-eyebrow">Armazenamento do site</span>
+                <h2>Bag do site</h2>
+                <p>Prêmios e recompensas ficam guardados aqui antes de serem enviados ao jogo.</p>
+              </div>
+            </div>
+            <div className="inventory-bag-summary">
+              <span>{bag.data?.length ?? 0} tipos</span>
+              <strong>{bagItemsQuantity.toLocaleString('pt-BR')} itens</strong>
+            </div>
+          </div>
+
+          <div className="inventory-bag-content">
+            <div className="inventory-bag-items">
+              {bag.isLoading ? <div className="inventory-bag-empty">Carregando itens da Bag...</div> : null}
+              {bag.isError ? <div className="inventory-bag-empty error">Não foi possível carregar a Bag.</div> : null}
+              {!bag.isLoading && !bag.isError ? (bag.data ?? []).map((item) => (
+                <article className="inventory-bag-item" key={`${item.item_id}-${item.enchant}`}>
+                  <ItemIcon itemId={item.item_id} name={item.item_name} size={46} />
+                  <div>
+                    <span className="panel-eyebrow">ID #{item.item_id}</span>
+                    <strong>{item.item_name || `Item ${item.item_id}`}</strong>
+                    <small>{item.enchant > 0 ? `Encantamento +${item.enchant}` : 'Sem encantamento'}</small>
+                  </div>
+                  <span className="inventory-bag-quantity">
+                    <small>Quantidade</small>
+                    <b>× {item.quantity.toLocaleString('pt-BR')}</b>
+                  </span>
+                </article>
+              )) : null}
+              {!bag.isLoading && !bag.isError && !bag.data?.length ? (
+                <div className="inventory-bag-empty">
+                  <Backpack aria-hidden="true" />
+                  <strong>Sua Bag está vazia</strong>
+                  <span>Prêmios obtidos no site aparecerão aqui.</span>
+                </div>
+              ) : null}
+            </div>
+
+            <form className="inventory-bag-transfer" onSubmit={onTransferBag}>
+              <div className="inventory-bag-transfer-heading">
+                <Send aria-hidden="true" />
+                <div>
+                  <span className="panel-eyebrow">Preparar envio</span>
+                  <h3>Mover para um personagem</h3>
+                </div>
+              </div>
+              <p>
+                Escolha o personagem. Os itens entrarão no inventário dele no painel e ficarão prontos para usar “Enviar ao jogo”.
+              </p>
+              <label className="field">
+                Personagem de destino
+                <select
+                  value={bagTransferInventoryId}
+                  onChange={(event) => setBagTransferInventoryId(event.target.value)}
+                  disabled={destinationInventories.isLoading || !bag.data?.length}
+                  required
+                >
+                  <option value="">
+                    {destinationInventories.isLoading ? 'Carregando personagens...' : 'Selecione o personagem'}
+                  </option>
+                  {(destinationInventories.data ?? []).map((inventory) => (
+                    <option value={inventory.inventory_id} key={inventory.inventory_id}>
+                      {inventory.character_name} — conta {inventory.account_name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {destinationInventories.isError ? (
+                <span className="inventory-bag-transfer-error">Não foi possível carregar os personagens.</span>
+              ) : null}
+              <button
+                className="btn"
+                type="submit"
+                disabled={!bag.data?.length || !bagTransferInventoryId || bagTransferPending || destinationInventories.isError}
+              >
+                <ArrowRightLeft aria-hidden="true" />
+                {bagTransferPending ? 'Movendo itens...' : 'Mover para o inventário'}
+              </button>
+            </form>
+          </div>
+        </section>
+      ) : null}
     </div>
   )
 }

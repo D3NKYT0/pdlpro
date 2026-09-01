@@ -1817,6 +1817,318 @@ html.pdl-panel .inventory-panel-empty {
   font-size: 11px;
 }
 
+html.pdl-panel .inventory-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid rgba(230, 199, 125, 0.18);
+  background: rgba(10, 9, 7, 0.82);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
+}
+
+html.pdl-panel .inventory-tabs button {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 9px 14px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.46);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+html.pdl-panel .inventory-tabs button::after {
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  left: 18%;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, var(--panel-gold-bright), transparent);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+html.pdl-panel .inventory-tabs button:hover {
+  border-color: rgba(197, 161, 97, 0.12);
+  background: rgba(197, 161, 97, 0.045);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+html.pdl-panel .inventory-tabs button.active {
+  border-color: rgba(230, 199, 125, 0.26);
+  background: linear-gradient(180deg, rgba(197, 161, 97, 0.14), rgba(197, 161, 97, 0.045));
+  color: #fff;
+}
+
+html.pdl-panel .inventory-tabs button.active::after {
+  opacity: 1;
+}
+
+html.pdl-panel .inventory-tabs button > svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: rgba(197, 161, 97, 0.62);
+  stroke-width: 1.45;
+}
+
+html.pdl-panel .inventory-tabs button.active > svg {
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .inventory-tabs button > b {
+  min-width: 21px;
+  padding: 3px 6px;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  color: var(--panel-gold-bright);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-tab-content {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  animation: inventory-tab-enter 220ms ease both;
+}
+
+html.pdl-panel .inventory-bag-card {
+  min-width: 0;
+  animation: inventory-tab-enter 220ms ease both;
+}
+
+@keyframes inventory-tab-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html.pdl-panel .inventory-bag-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .inventory-bag-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+html.pdl-panel .inventory-bag-title > svg {
+  flex: 0 0 auto;
+  width: 41px;
+  height: 41px;
+  padding: 10px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(197, 161, 97, 0.065);
+  color: var(--panel-gold);
+  stroke-width: 1.35;
+}
+
+html.pdl-panel .inventory-bag-title h2 {
+  margin: 4px 0 3px;
+}
+
+html.pdl-panel .inventory-bag-title p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .inventory-bag-summary {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 10px 13px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(197, 161, 97, 0.035);
+}
+
+html.pdl-panel .inventory-bag-summary span {
+  color: var(--panel-muted);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .inventory-bag-summary strong {
+  color: var(--panel-gold-bright);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-bag-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 0.42fr);
+  align-items: start;
+  gap: 22px;
+}
+
+html.pdl-panel .inventory-bag-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+html.pdl-panel .inventory-bag-item {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid rgba(197, 161, 97, 0.11);
+  background:
+    linear-gradient(135deg, rgba(197, 161, 97, 0.035), transparent 52%),
+    rgba(5, 5, 4, 0.35);
+}
+
+html.pdl-panel .inventory-bag-item .l2-item-icon {
+  border-color: rgba(230, 199, 125, 0.26);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+}
+
+html.pdl-panel .inventory-bag-item > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+html.pdl-panel .inventory-bag-item strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .inventory-bag-item small {
+  color: var(--panel-muted);
+  font-size: 8px;
+}
+
+html.pdl-panel .inventory-bag-quantity {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 3px;
+}
+
+html.pdl-panel .inventory-bag-quantity b {
+  color: var(--panel-gold-bright);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-bag-transfer {
+  display: grid;
+  gap: 13px;
+  margin: 0;
+  padding-left: 22px;
+  border-left: 1px solid rgba(197, 161, 97, 0.12);
+}
+
+html.pdl-panel .inventory-bag-transfer-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+html.pdl-panel .inventory-bag-transfer-heading > svg {
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  color: var(--panel-gold);
+  stroke-width: 1.35;
+}
+
+html.pdl-panel .inventory-bag-transfer-heading h3 {
+  margin: 3px 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-bag-transfer > p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+html.pdl-panel .inventory-bag-transfer .field {
+  margin: 0;
+}
+
+html.pdl-panel .inventory-bag-transfer .btn {
+  width: 100%;
+  min-width: 0;
+}
+
+html.pdl-panel .inventory-bag-transfer-error {
+  color: rgba(235, 145, 127, 0.72);
+  font-size: 9px;
+}
+
+html.pdl-panel .inventory-bag-empty {
+  display: grid;
+  grid-column: 1 / -1;
+  min-height: 130px;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  padding: 20px;
+  border: 1px dashed rgba(197, 161, 97, 0.14);
+  color: var(--panel-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+html.pdl-panel .inventory-bag-empty > svg {
+  width: 25px;
+  height: 25px;
+  color: rgba(197, 161, 97, 0.42);
+  stroke-width: 1.35;
+}
+
+html.pdl-panel .inventory-bag-empty strong {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-bag-empty.error {
+  border-color: rgba(205, 98, 76, 0.22);
+  color: rgba(235, 145, 127, 0.72);
+}
+
 /* Marketplace */
 html.pdl-panel .marketplace-page {
   display: grid;
@@ -4754,7 +5066,7 @@ html.pdl-panel .token-balance strong {
 
 html.pdl-panel .game-tabs {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   padding: 6px;
   border: 1px solid rgba(230, 199, 125, 0.18);
@@ -5426,6 +5738,17 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 900px) {
+  html.pdl-panel .inventory-bag-content {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .inventory-bag-transfer {
+    padding-top: 20px;
+    padding-left: 0;
+    border-top: 1px solid rgba(197, 161, 97, 0.12);
+    border-left: 0;
+  }
+
   html.pdl-panel .marketplace-side-column {
     grid-template-columns: 1fr;
   }
@@ -5496,6 +5819,10 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 760px) {
+  html.pdl-panel .inventory-bag-items {
+    grid-template-columns: 1fr;
+  }
+
   html.pdl-panel .auction-listing-grid,
   html.pdl-panel .auction-detail-grid {
     grid-template-columns: 1fr;
@@ -5680,6 +6007,28 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 600px) {
+  html.pdl-panel .inventory-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .inventory-tabs button {
+    justify-content: flex-start;
+  }
+
+  html.pdl-panel .inventory-tabs button > b {
+    margin-left: auto;
+  }
+
+  html.pdl-panel .inventory-bag-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .inventory-bag-summary {
+    width: 100%;
+    align-items: flex-start;
+  }
+
   html.pdl-panel .auction-listing-card-footer {
     align-items: flex-start;
     flex-direction: column;

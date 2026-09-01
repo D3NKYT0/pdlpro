@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  Backpack,
   Box,
   Coins,
   Dices,
@@ -15,10 +14,10 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { gamesApi, inventoryApi, isApiError } from '../services/api'
+import { gamesApi, isApiError } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 
-type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy' | 'bag'
+type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
 
 const gameTabs: Array<{ id: GameTab; label: string; icon: LucideIcon }> = [
   { id: 'roulette', label: 'Roleta', icon: RotateCw },
@@ -26,23 +25,19 @@ const gameTabs: Array<{ id: GameTab; label: string; icon: LucideIcon }> = [
   { id: 'chance', label: 'Dados e slots', icon: Dices },
   { id: 'fishing', label: 'Pesca', icon: Fish },
   { id: 'economy', label: 'Economia', icon: Sword },
-  { id: 'bag', label: 'Bag', icon: Backpack },
 ]
 
 export function GamesPage() {
   const queryClient = useQueryClient()
   const roulette = useQuery({ queryKey: ['roulette'], queryFn: gamesApi.roulette })
   const bonus = useQuery({ queryKey: ['daily-bonus'], queryFn: gamesApi.dailyBonus })
-  const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
   const boxes = useQuery({ queryKey: ['boxes'], queryFn: gamesApi.boxes })
   const minigames = useQuery({ queryKey: ['minigames'], queryFn: gamesApi.minigames })
   const fishing = useQuery({ queryKey: ['fishing'], queryFn: gamesApi.fishing })
   const economy = useQuery({ queryKey: ['economy'], queryFn: gamesApi.economy })
-  const inventories = useQuery({ queryKey: ['inventory'], queryFn: () => inventoryApi.dashboard() })
   const [amount, setAmount] = useState('5')
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
-  const [inventoryId, setInventoryId] = useState('')
   const [activeGame, setActiveGame] = useState<GameTab>('roulette')
 
   async function refresh() {
@@ -163,17 +158,6 @@ export function GamesPage() {
       await refresh()
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha no encante')
-    }
-  }
-
-  async function transferBag(event: FormEvent) {
-    event.preventDefault()
-    try {
-      const result = await gamesApi.transferBag(inventoryId)
-      toast.success(`${result.moved} itens enviados ao inventário`)
-      await refresh()
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha na transferência')
     }
   }
 
@@ -435,46 +419,6 @@ export function GamesPage() {
           </button>
         </section>
 
-        <section
-          className="card game-module game-bag"
-          id="game-panel-bag"
-          role="tabpanel"
-          aria-labelledby="game-tab-bag"
-          hidden={activeGame !== 'bag'}
-        >
-          <div className="game-module-heading">
-            <span className="game-module-icon"><Backpack aria-hidden="true" /></span>
-            <div>
-              <span className="panel-eyebrow">Recompensas</span>
-              <h2>Bag</h2>
-            </div>
-            <span className="game-cost">{bag.data?.length ?? 0} tipos de item</span>
-          </div>
-          <div className="bag-content">
-            <div className="bag-items">
-              {(bag.data ?? []).map((item) => (
-                <div className="bag-item" key={`${item.item_id}-${item.enchant}`}>
-                  <ItemIcon itemId={item.item_id} name={item.item_name} size={28} />
-                  <span>{item.item_name} {item.enchant ? `+${item.enchant}` : ''}</span>
-                  <strong>× {item.quantity}</strong>
-                </div>
-              ))}
-              {!bag.data?.length ? <div className="game-empty"><Backpack aria-hidden="true" /> Sua bag está vazia.</div> : null}
-            </div>
-            <form className="bag-transfer" onSubmit={transferBag}>
-              <label className="field">
-                Enviar bag ao inventário
-                <select value={inventoryId} onChange={(event) => setInventoryId(event.target.value)} required>
-                  <option value="">Escolha o personagem</option>
-                  {(inventories.data ?? []).map((row) => (
-                    <option key={row.inventory_id} value={row.inventory_id}>{row.character_name}</option>
-                  ))}
-                </select>
-              </label>
-              <button className="btn" type="submit"><Backpack aria-hidden="true" /> Transferir itens</button>
-            </form>
-          </div>
-        </section>
       </div>
     </div>
   )
