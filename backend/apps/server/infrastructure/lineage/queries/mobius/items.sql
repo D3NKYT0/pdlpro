@@ -27,13 +27,12 @@ LIMIT 1
 
 -- name: deposit_item
 INSERT INTO items_delayed (
-    payment_id, owner_id, item_id, count,
-    enchant_level, variationId1, variationId2,
+    owner_id, item_id, count, enchant_level,
+    attribute, attribute_level,
     flags, payment_status, description
 )
-SELECT
-    COALESCE(MAX(payment_id), 0) + 1,
-    :owner_id, :item_id, :qty,
-    :enchant, 0, 0,
+VALUES (
+    :owner_id, :item_id, :qty, :enchant,
+    -1, -1,
     0, 0, 'DONATE WEB'
-FROM items_delayed
+)

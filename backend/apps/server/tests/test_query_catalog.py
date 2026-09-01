@@ -25,6 +25,16 @@ def test_mobius_catalog_exposes_read_only_paperdoll_query():
     assert "loc_data AS slot" in catalog["list_character_equipment"]
 
 
+def test_mobius_deposit_matches_items_delayed_schema():
+    catalog = LineageQueryCatalog.load("mobius")
+    deposit_sql = catalog["deposit_item"]
+
+    assert "attribute" in deposit_sql
+    assert "attribute_level" in deposit_sql
+    assert "variationId1" not in deposit_sql
+    assert "payment_id" not in deposit_sql
+
+
 def test_unknown_dialect_fails():
     with pytest.raises(QueryDialectNotFoundError):
         LineageQueryCatalog.load("nao_existe")
