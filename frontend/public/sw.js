@@ -8,6 +8,8 @@ self.addEventListener('push', (event) => {
   event.waitUntil(
     self.registration.showNotification(payload.title || 'PDL PRO', {
       body: payload.body || '',
+      icon: '/favicon/android-chrome-192x192.png',
+      badge: '/favicon/favicon-32x32.png',
       data: { url: payload.url || '/' },
     }),
   )
