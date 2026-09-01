@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import {
   Activity,
@@ -43,15 +43,52 @@ export function InfoPage() {
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const data = info.data
-  const active = hash.replace('#', '') || 'geral'
+  const [activeSection, setActiveSection] = useState(hash.replace('#', '') || 'geral')
   const statusLabel = status.isLoading ? 'Verificando' : status.data?.game_online ? 'Online' : 'Offline'
   const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
 
   useEffect(() => {
     const id = hash.replace('#', '')
     if (!id || !data) return
+    setActiveSection(id)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [hash, data])
+
+  useEffect(() => {
+    if (!data) return
+
+    let animationFrame = 0
+
+    const updateActiveSection = () => {
+      const marker = window.scrollY + Math.min(window.innerHeight * 0.32, 280)
+      let currentSection = sections[0].id
+
+      sections.forEach(({ id }) => {
+        const element = document.getElementById(id)
+        if (!element) return
+
+        const elementTop = element.getBoundingClientRect().top + window.scrollY
+        if (elementTop <= marker) currentSection = id
+      })
+
+      setActiveSection((current) => (current === currentSection ? current : currentSection))
+    }
+
+    const handleScroll = () => {
+      window.cancelAnimationFrame(animationFrame)
+      animationFrame = window.requestAnimationFrame(updateActiveSection)
+    }
+
+    updateActiveSection()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [data])
 
   return (
     <div className="info-page">
@@ -107,7 +144,12 @@ export function InfoPage() {
 
       <nav className="info-nav container" aria-label="Seções">
         {sections.map(({ id, label, icon: Icon }) => (
-          <a key={id} href={`#${id}`} className={active === id ? 'is-active' : undefined}>
+          <a
+            key={id}
+            href={`#${id}`}
+            className={activeSection === id ? 'is-active' : undefined}
+            aria-current={activeSection === id ? 'location' : undefined}
+          >
             <Icon aria-hidden="true" />
             {label}
           </a>

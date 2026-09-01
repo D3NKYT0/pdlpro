@@ -1,32 +1,13 @@
-import { useEffect, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { themeImage } from '../../theme/assets'
 import { useDefaultTheme } from '../../theme/useDefaultTheme'
 import { SiteNav } from './SiteNav'
 
 export function PublicLayout() {
-  const [loading, setLoading] = useState(true)
-
   useDefaultTheme()
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 700)
-    return () => window.clearTimeout(timer)
-  }, [])
 
   return (
     <>
-      <div className={`loading${loading ? '' : ' scale'}`} style={loading ? undefined : { display: 'none' }}>
-        <div className="l-logo">
-          <div className="letters">
-            <img src={themeImage('logo.png')} alt="Logo do Lineage2" />
-          </div>
-          <div className="circle">
-            <img src={themeImage('logo-circle.png')} alt="" />
-          </div>
-        </div>
-      </div>
-
       <SiteNav />
 
       <div className="main-content">

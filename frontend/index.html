@@ -11,8 +11,65 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #050403;
+      }
+
+      #app-bootstrap-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: #080705;
+      }
+
+      #app-bootstrap-loader::before {
+        content: '';
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(190, 129, 48, 0.12), transparent 68%);
+      }
+
+      #app-bootstrap-loader div {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      #app-bootstrap-loader img {
+        width: 132px;
+        height: 132px;
+        object-fit: contain;
+        animation: bootstrap-loader-spin 5s linear infinite;
+      }
+
+      #app-bootstrap-loader span {
+        margin-top: 22px;
+        color: #b49356;
+        font: 600 10px/1.4 Arial, sans-serif;
+        letter-spacing: 2.6px;
+        text-transform: uppercase;
+      }
+
+      @keyframes bootstrap-loader-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
+    <div id="app-bootstrap-loader" role="status" aria-label="Carregando a aplicação">
+      <div>
+        <img src="/theme/default/images/logo-circle.png" alt="" />
+        <span>Preparando sua jornada</span>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

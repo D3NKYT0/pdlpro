@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { GlobalLoadingOverlay } from '../../components/layout/GlobalLoadingOverlay'
 import { PrivateLayout } from '../../components/layout/PrivateLayout'
 import { PublicContent, PublicLayout } from '../../components/layout/PublicLayout'
 import { AccountsPage } from '../../pages/AccountsPage'
@@ -34,6 +35,7 @@ import { RequireAuth } from './RequireAuth'
 export function AppRoutes() {
   return (
     <BrowserRouter>
+      <GlobalLoadingOverlay />
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />

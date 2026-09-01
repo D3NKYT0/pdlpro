@@ -6,6 +6,7 @@ import { themeImage } from '../../theme/assets'
 const links = [
   { to: '/', label: 'Início', end: true },
   { to: '/informacoes', label: 'Informações' },
+  { to: '/rankings', label: 'Rankings' },
   { to: '/wiki', label: 'Wiki' },
   { to: '/news', label: 'Notícias' },
   { to: '/faq', label: 'Perguntas Frequentes' },

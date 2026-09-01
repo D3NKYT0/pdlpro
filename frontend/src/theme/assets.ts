@@ -28,6 +28,7 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/pages/news-detail.css',
   '/theme/pages/extras.css',
   '/theme/pages/info-page.css',
+  '/theme/pages/rankings-page.css',
   '/theme/pages/auth.css',
 ]
 
@@ -38,7 +39,4 @@ export const PANEL_THEME_STYLES = [
   '/theme/pages/panel.css',
 ]
 
-export const ROUTE_THEME_STYLES = [
-  { test: (path: string) => path.startsWith('/rankings'), href: themeAsset('css/tops.css') },
-  { test: (path: string) => path.startsWith('/rankings'), href: themeAsset('css/tops-tables.css') },
-]
+export const ROUTE_THEME_STYLES: Array<{ test: (path: string) => boolean; href: string }> = []

@@ -16,6 +16,179 @@
 * { box-sizing: border-box; }
 html, body, #root { min-height: 100%; margin: 0; }
 
+body.global-loading {
+  overflow: hidden !important;
+}
+
+.global-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  color: #d6b66f;
+  font-family: "Outfit", "Source Sans Pro", sans-serif;
+  background:
+    linear-gradient(rgba(5, 4, 3, 0.94), rgba(5, 4, 3, 0.98)),
+    url('/theme/default/images/bg/5.jpg') center / cover no-repeat;
+  transition: opacity 420ms ease, visibility 420ms ease, transform 420ms ease;
+  isolation: isolate;
+}
+
+.global-loader::before,
+.global-loader::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.global-loader::before {
+  inset: 0;
+  opacity: 0.09;
+  background-image:
+    linear-gradient(rgba(212, 173, 98, 0.24) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 173, 98, 0.24) 1px, transparent 1px);
+  background-size: 78px 78px;
+  mask-image: radial-gradient(circle at center, #000, transparent 72%);
+}
+
+.global-loader::after {
+  width: 440px;
+  height: 440px;
+  border: 1px solid rgba(212, 173, 98, 0.12);
+  transform: rotate(45deg);
+}
+
+.global-loader--leaving {
+  opacity: 0;
+  transform: scale(1.035);
+  pointer-events: none;
+}
+
+.global-loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.global-loader__glow {
+  position: absolute;
+  width: min(680px, 92vw);
+  height: min(680px, 92vw);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(190, 129, 48, 0.15), rgba(91, 58, 22, 0.04) 38%, transparent 70%);
+  animation: globalLoaderGlow 2.6s ease-in-out infinite;
+}
+
+.global-loader__content {
+  position: relative;
+  z-index: 1;
+  width: min(420px, calc(100vw - 48px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.global-loader__crest {
+  position: relative;
+  width: 138px;
+  height: 138px;
+  display: grid;
+  place-items: center;
+}
+
+.global-loader__crest::before,
+.global-loader__crest::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(212, 173, 98, 0.18);
+  transform: rotate(45deg);
+}
+
+.global-loader__crest::after {
+  inset: 22px;
+  border-color: rgba(212, 173, 98, 0.1);
+  animation: globalLoaderDiamond 2.4s ease-in-out infinite;
+}
+
+.global-loader__crest img {
+  position: relative;
+  z-index: 1;
+  width: 126px;
+  height: 126px;
+  object-fit: contain;
+  animation: globalLoaderSpin 6s linear infinite;
+}
+
+.global-loader__wordmark {
+  width: min(250px, 70vw);
+  height: auto;
+  object-fit: contain;
+  margin-top: 14px;
+  filter: sepia(0.18) brightness(1.08);
+}
+
+.global-loader__content > span {
+  color: rgba(218, 187, 120, 0.72);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 24px;
+}
+
+.global-loader__progress {
+  position: relative;
+  width: 190px;
+  height: 1px;
+  overflow: hidden;
+  margin-top: 18px;
+  background: rgba(212, 173, 98, 0.16);
+}
+
+.global-loader__progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, #e0bd72, transparent);
+  animation: globalLoaderProgress 1.25s ease-in-out infinite;
+}
+
+@keyframes globalLoaderSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes globalLoaderDiamond {
+  0%, 100% { opacity: 0.3; transform: rotate(45deg) scale(0.92); }
+  50% { opacity: 0.8; transform: rotate(45deg) scale(1.08); }
+}
+
+@keyframes globalLoaderGlow {
+  0%, 100% { opacity: 0.55; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes globalLoaderProgress {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(340%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-loader,
+  .global-loader__glow,
+  .global-loader__crest img,
+  .global-loader__crest::after,
+  .global-loader__progress i {
+    animation: none;
+    transition-duration: 120ms;
+  }
+}
+
 html:not(.pdl-public):not(.pdl-panel) {
   font-family: "Outfit", system-ui, sans-serif;
   color: var(--text);

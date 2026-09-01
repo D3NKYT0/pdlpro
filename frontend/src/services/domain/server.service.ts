@@ -4,7 +4,8 @@ import type { ApiRankingEntry, ApiServerInfo, ApiServerStatus } from '../types'
 export const serverApi = {
   info: () => request<ApiServerInfo>('/public/server/info/'),
   status: () => request<ApiServerStatus>('/public/server/status/'),
-  rankings: (kind: string) => request<ApiRankingEntry[]>(`/public/server/rankings/${kind}/`),
+  rankings: (kind: string, limit?: number) =>
+    request<ApiRankingEntry[]>(`/public/server/rankings/${kind}/${limit ? `?limit=${limit}` : ''}`),
   world: (name: string, params: Record<string, string> = {}) => {
     const query = new URLSearchParams(params).toString()
     return request<Record<string, string | number | boolean | null>[]>(
