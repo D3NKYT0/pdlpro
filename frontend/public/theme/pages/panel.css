@@ -900,6 +900,28 @@ html.pdl-panel .character-stats {
   margin: 0;
 }
 
+html.pdl-panel .character-overview-grid {
+  display: grid;
+  grid-template-areas:
+    'equipment info'
+    'equipment services';
+  grid-template-columns: minmax(460px, 0.72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: 18px;
+}
+
+html.pdl-panel .character-overview-grid .character-equipment {
+  grid-area: equipment;
+}
+
+html.pdl-panel .character-overview-grid .character-sheet {
+  grid-area: info;
+}
+
+html.pdl-panel .character-overview-grid .character-services {
+  grid-area: services;
+}
+
 html.pdl-panel .character-stats > div {
   padding: 12px 13px;
   border: 1px solid rgba(197, 161, 97, 0.14);
@@ -981,85 +1003,135 @@ html.pdl-panel .character-equipment-summary span {
 }
 
 html.pdl-panel .character-paperdoll {
-  display: grid;
-  grid-template-areas:
-    'left-ear head head head right-ear'
-    'neck chest chest chest cloak'
-    'left-ring gloves gloves gloves right-ring'
-    'weapon legs legs legs offhand'
-    '. feet feet feet .';
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  max-width: 980px;
+  width: min(100%, 400px);
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  padding: 26px 24px 24px;
+  border: 1px solid rgba(197, 161, 97, 0.18);
   background:
-    radial-gradient(circle at 50% 44%, rgba(197, 161, 97, 0.095), transparent 34%),
-    linear-gradient(145deg, rgba(197, 161, 97, 0.035), transparent 45%),
-    rgba(5, 5, 4, 0.34);
+    radial-gradient(circle at 50% 29%, rgba(197, 161, 97, 0.07), transparent 28%),
+    linear-gradient(145deg, rgba(197, 161, 97, 0.035), transparent 46%),
+    rgba(7, 6, 5, 0.56);
+  box-shadow: inset 0 0 38px rgba(197, 161, 97, 0.025);
+}
+
+html.pdl-panel .character-equipment-group + .character-equipment-group {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .character-equipment-group h3 {
+  margin: 0 0 15px;
+  color: rgba(255, 255, 255, 0.54);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .character-equipment-slots {
+  display: grid;
+  gap: 10px;
+  justify-content: center;
+}
+
+html.pdl-panel .character-equipment-group-body .character-equipment-slots {
+  grid-template-areas:
+    '. head .'
+    'gloves chest feet'
+    '. legs .';
+  grid-template-columns: repeat(3, minmax(0, 96px));
+}
+
+html.pdl-panel .character-equipment-group-weapons .character-equipment-slots {
+  grid-template-columns: repeat(2, minmax(0, 112px));
+  justify-content: space-between;
+}
+
+html.pdl-panel .character-equipment-group-accessories .character-equipment-slots {
+  grid-template-areas:
+    'left-ear neck right-ear'
+    'left-ring . right-ring';
+  grid-template-columns: repeat(3, minmax(0, 96px));
 }
 
 html.pdl-panel .character-equipment-slot {
-  display: grid;
-  min-height: 88px;
-  grid-template-columns: 36px minmax(0, 1fr);
-  align-content: center;
-  align-items: center;
-  gap: 3px 10px;
-  padding: 11px;
-  border: 1px dashed rgba(197, 161, 97, 0.16);
-  background: rgba(7, 6, 5, 0.46);
+  display: flex;
+  min-width: 0;
+  gap: 5px;
   color: rgba(255, 255, 255, 0.32);
+  flex-direction: column;
 }
 
-html.pdl-panel .character-equipment-slot.is-filled {
-  border-style: solid;
-  border-color: rgba(230, 199, 125, 0.32);
+html.pdl-panel .character-equipment-slot-cell {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(197, 161, 97, 0.16);
+  border-radius: 3px;
+  background: rgba(7, 6, 5, 0.46);
+}
+
+html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell {
+  border-color: rgba(230, 199, 125, 0.42);
   background:
     linear-gradient(145deg, rgba(197, 161, 97, 0.12), transparent 58%),
     rgba(10, 8, 6, 0.76);
-  box-shadow: inset 0 0 24px rgba(197, 161, 97, 0.035);
+  box-shadow: inset 0 0 24px rgba(197, 161, 97, 0.05), 0 0 18px rgba(197, 161, 97, 0.025);
   color: var(--panel-gold-bright);
 }
 
-html.pdl-panel .character-equipment-slot > svg,
-html.pdl-panel .character-equipment-slot > .l2-item-icon {
-  grid-row: 2;
-  width: 34px;
-  height: 34px;
-  padding: 7px;
-  border: 1px solid currentColor;
-  opacity: 0.7;
-  stroke-width: 1.25;
+html.pdl-panel .character-equipment-slot-cell > svg,
+html.pdl-panel .character-equipment-slot-cell > .l2-item-icon {
+  width: 40px;
+  height: 40px;
+  color: currentColor;
+  opacity: 0.58;
+  stroke-width: 1.45;
 }
 
-html.pdl-panel .character-equipment-slot > .l2-item-icon {
-  padding: 2px;
+html.pdl-panel .character-equipment-slot-cell > .l2-item-icon {
   opacity: 1;
   object-fit: contain;
   image-rendering: pixelated;
 }
 
+html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell > svg,
+html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell > .l2-item-icon {
+  transform: translateY(-9px);
+}
+
 html.pdl-panel .character-equipment-slot-label {
-  grid-column: 1 / -1;
   color: rgba(255, 255, 255, 0.38);
-  font-size: 8px;
+  font-size: 7px;
   letter-spacing: 0.08em;
+  text-align: center;
   text-transform: uppercase;
 }
 
 html.pdl-panel .character-equipment-slot-copy {
+  position: absolute;
+  right: 5px;
+  bottom: 7px;
+  left: 5px;
   display: flex;
   min-width: 0;
-  grid-row: 2;
+  align-items: center;
   flex-direction: column;
+  text-align: center;
 }
 
 html.pdl-panel .character-equipment-slot-copy strong {
+  max-width: 100%;
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 11px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 8px;
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1067,29 +1139,22 @@ html.pdl-panel .character-equipment-slot-copy strong {
 
 html.pdl-panel .character-equipment-slot-copy small {
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.32);
-  font-size: 8px;
+  color: rgba(230, 199, 125, 0.58);
+  font-size: 6px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-copy small {
-  color: rgba(230, 199, 125, 0.58);
-}
-
-html.pdl-panel .equipment-slot-left-ear { grid-area: left-ear; }
 html.pdl-panel .equipment-slot-head { grid-area: head; }
-html.pdl-panel .equipment-slot-right-ear { grid-area: right-ear; }
-html.pdl-panel .equipment-slot-neck { grid-area: neck; }
-html.pdl-panel .equipment-slot-chest { grid-area: chest; }
-html.pdl-panel .equipment-slot-cloak { grid-area: cloak; }
-html.pdl-panel .equipment-slot-left-ring { grid-area: left-ring; }
 html.pdl-panel .equipment-slot-gloves { grid-area: gloves; }
-html.pdl-panel .equipment-slot-right-ring { grid-area: right-ring; }
-html.pdl-panel .equipment-slot-weapon { grid-area: weapon; }
-html.pdl-panel .equipment-slot-legs { grid-area: legs; }
-html.pdl-panel .equipment-slot-offhand { grid-area: offhand; }
+html.pdl-panel .equipment-slot-chest { grid-area: chest; }
 html.pdl-panel .equipment-slot-feet { grid-area: feet; }
+html.pdl-panel .equipment-slot-legs { grid-area: legs; }
+html.pdl-panel .equipment-slot-left-ear { grid-area: left-ear; }
+html.pdl-panel .equipment-slot-neck { grid-area: neck; }
+html.pdl-panel .equipment-slot-right-ear { grid-area: right-ear; }
+html.pdl-panel .equipment-slot-left-ring { grid-area: left-ring; }
+html.pdl-panel .equipment-slot-right-ring { grid-area: right-ring; }
 
 html.pdl-panel .character-equipment-message {
   display: grid;
@@ -3921,6 +3986,14 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .security-module {
     grid-column: 1 / -1;
   }
+
+  html.pdl-panel .character-overview-grid {
+    grid-template-areas:
+      'info'
+      'equipment'
+      'services';
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 900px) {
@@ -4009,13 +4082,12 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .character-paperdoll {
-    grid-template-areas: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: 12px;
   }
 
-  html.pdl-panel .character-equipment-slot {
-    grid-area: auto;
+  html.pdl-panel .character-equipment-group-body .character-equipment-slots,
+  html.pdl-panel .character-equipment-group-accessories .character-equipment-slots {
+    gap: 8px;
   }
 
   html.pdl-panel .admin-entry-grid,

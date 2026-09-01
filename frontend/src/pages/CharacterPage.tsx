@@ -35,21 +35,34 @@ interface EquipmentSlotDefinition {
   icon: LucideIcon
 }
 
-const EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'left-ear', label: 'Brinco esquerdo', slotIds: [2], icon: Gem },
+const BODY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
   { key: 'head', label: 'Elmo', slotIds: [6], icon: Crown },
-  { key: 'right-ear', label: 'Brinco direito', slotIds: [1], icon: Gem },
-  { key: 'neck', label: 'Colar', slotIds: [3], icon: Gem },
-  { key: 'chest', label: 'Armadura', slotIds: [10], icon: Shirt },
-  { key: 'cloak', label: 'Capa', slotIds: [13], icon: Sparkles },
-  { key: 'left-ring', label: 'Anel esquerdo', slotIds: [5], icon: CircleDot },
   { key: 'gloves', label: 'Luvas', slotIds: [9], icon: Hand },
-  { key: 'right-ring', label: 'Anel direito', slotIds: [4], icon: CircleDot },
-  { key: 'weapon', label: 'Arma', slotIds: [14, 7], icon: Sword },
-  { key: 'legs', label: 'Calças', slotIds: [11], icon: Shirt },
-  { key: 'offhand', label: 'Mão secundária', slotIds: [8], icon: Shield },
+  { key: 'chest', label: 'Armadura', slotIds: [10], icon: Shirt },
   { key: 'feet', label: 'Botas', slotIds: [12], icon: Footprints },
+  { key: 'legs', label: 'Calças', slotIds: [11], icon: Shirt },
 ]
+
+const WEAPON_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
+  { key: 'weapon', label: 'Arma', slotIds: [14, 7], icon: Sword },
+  { key: 'offhand', label: 'Mão secundária', slotIds: [8], icon: Shield },
+]
+
+const ACCESSORY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
+  { key: 'left-ear', label: 'Brinco', slotIds: [2], icon: Gem },
+  { key: 'neck', label: 'Colar', slotIds: [3], icon: Gem },
+  { key: 'right-ear', label: 'Brinco', slotIds: [1], icon: Gem },
+  { key: 'left-ring', label: 'Anel', slotIds: [5], icon: CircleDot },
+  { key: 'right-ring', label: 'Anel', slotIds: [4], icon: CircleDot },
+]
+
+const EQUIPMENT_SLOT_GROUPS = [
+  { key: 'body', label: 'Equipamentos', slots: BODY_EQUIPMENT_SLOTS },
+  { key: 'weapons', label: 'Armas', slots: WEAPON_EQUIPMENT_SLOTS },
+  { key: 'accessories', label: 'Acessórios', slots: ACCESSORY_EQUIPMENT_SLOTS },
+]
+
+const EQUIPMENT_SLOTS = EQUIPMENT_SLOT_GROUPS.flatMap((group) => group.slots)
 
 const DISPLAYED_EQUIPMENT_SLOTS = new Set(EQUIPMENT_SLOTS.flatMap((slot) => slot.slotIds))
 
@@ -59,19 +72,24 @@ function EquipmentSlot({ definition, item }: { definition: EquipmentSlotDefiniti
     <article
       className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : ''}`}
       aria-label={`${definition.label}: ${item ? item.name : 'vazio'}`}
+      title={item ? `${item.name} · ID ${item.item_id}${item.enchant > 0 ? ` · +${item.enchant}` : ''}` : definition.label}
     >
       <span className="character-equipment-slot-label">{definition.label}</span>
-      {item ? <ItemIcon itemId={item.item_id} name={item.name} size={32} /> : <Icon aria-hidden="true" />}
-      <span className="character-equipment-slot-copy">
-        <strong>{item?.name || 'Vazio'}</strong>
+      <div className="character-equipment-slot-cell">
         {item ? (
-          <small>
-            ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}
-          </small>
+          <ItemIcon itemId={item.item_id} name={item.name} size={38} />
         ) : (
-          <small>Sem item equipado</small>
+          <Icon aria-hidden="true" />
         )}
-      </span>
+        {item ? (
+          <span className="character-equipment-slot-copy">
+            <strong>{item.name}</strong>
+            <small>
+              ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}
+            </small>
+          </span>
+        ) : null}
+      </div>
     </article>
   )
 }
@@ -184,7 +202,7 @@ export function CharacterPage() {
       ) : null}
 
       {char ? (
-        <>
+        <div className="character-overview-grid">
           <section className="card character-sheet">
             <div className="account-section-heading">
               <div>
@@ -240,8 +258,8 @@ export function CharacterPage() {
           <section className="card character-equipment">
             <div className="account-section-heading">
               <div>
-                <span className="panel-eyebrow">Itens do personagem</span>
-                <h2>Equipamentos</h2>
+                <span className="panel-eyebrow">Visual do personagem</span>
+                <h2>Itens equipados</h2>
               </div>
               <span className="character-readonly-chip">
                 <Eye aria-hidden="true" />
@@ -264,12 +282,19 @@ export function CharacterPage() {
 
             {!equipment.isLoading && !equipment.isError ? (
               <div className="character-paperdoll" aria-label="Equipamentos atuais do personagem">
-                {EQUIPMENT_SLOTS.map((definition) => (
-                  <EquipmentSlot
-                    key={definition.key}
-                    definition={definition}
-                    item={equippedItems.find((item) => definition.slotIds.includes(item.slot))}
-                  />
+                {EQUIPMENT_SLOT_GROUPS.map((group) => (
+                  <section className={`character-equipment-group character-equipment-group-${group.key}`} key={group.key}>
+                    <h3>{group.label}</h3>
+                    <div className="character-equipment-slots">
+                      {group.slots.map((definition) => (
+                        <EquipmentSlot
+                          key={definition.key}
+                          definition={definition}
+                          item={equippedItems.find((item) => definition.slotIds.includes(item.slot))}
+                        />
+                      ))}
+                    </div>
+                  </section>
                 ))}
               </div>
             ) : null}
@@ -382,7 +407,7 @@ export function CharacterPage() {
               </div>
             </section>
           </div>
-        </>
+        </div>
       ) : null}
     </div>
   )
