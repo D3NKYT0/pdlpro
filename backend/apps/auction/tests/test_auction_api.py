@@ -56,6 +56,10 @@ def test_create_bid_and_close_auction(api, seller, bidder):
         format="json",
     )
     assert created.status_code == 200, created.data
+    assert created.data["item_name"] == "Adena"
+    assert created.data["quantity"] == 20
+    assert created.data["item_enchant"] == 0
+    assert created.data["created_at"]
     auction_id = created.data["id"]
 
     api.force_authenticate(user=bidder)

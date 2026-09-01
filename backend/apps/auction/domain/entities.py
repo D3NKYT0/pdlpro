@@ -22,6 +22,8 @@ class AuctionEntity:
     character_name: str
     ends_at: datetime
     status: str
+    created_at: datetime
+    updated_at: datetime
 
 
 @dataclass(frozen=True, slots=True)

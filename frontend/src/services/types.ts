@@ -276,6 +276,7 @@ export interface ApiEconomyState {
 
 export interface ApiAuction {
   id: string
+  seller_id: string
   seller_username: string
   item_id: number
   item_name: string
@@ -283,7 +284,11 @@ export interface ApiAuction {
   quantity: number
   min_bid: string
   current_bid: string | null
+  highest_bidder_id: string | null
+  highest_bidder_username: string | null
   character_name: string
   ends_at: string
   status: string
+  created_at: string
+  updated_at: string
 }

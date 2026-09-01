@@ -26,6 +26,8 @@ class DjangoAuctionRepository(IAuctionRepository):
             character_name=row.character_name,
             ends_at=row.ends_at,
             status=row.status,
+            created_at=row.created_at,
+            updated_at=row.updated_at,
         )
 
     def _bid(self, row: Bid) -> BidEntity:

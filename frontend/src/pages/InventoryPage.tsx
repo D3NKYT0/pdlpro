@@ -370,7 +370,7 @@ export function InventoryPage() {
                             {item.enchant > 0 ? `Equipamento +${item.enchant}` : 'Item do personagem'}
                             {' · '}
                             <b className={item.tradeable ? 'tradeable' : 'not-tradeable'}>
-                              {item.tradeable ? 'Negociável' : 'Não negociável no XML'}
+                              {item.tradeable ? 'Negociável' : 'Não negociável'}
                             </b>
                           </small>
                         </span>
@@ -391,7 +391,7 @@ export function InventoryPage() {
                         className="btn ghost inventory-game-select"
                         type="button"
                         disabled={!item.tradeable}
-                        title={item.tradeable ? 'Selecionar para retirada' : 'Este item possui tradeable=false ou não existe no XML'}
+                        title={item.tradeable ? 'Selecionar para retirada' : 'Este item possui tradeable=false'}
                         onClick={() => {
                           setItemId(String(item.item_id))
                           setQuantity('1')

@@ -27,6 +27,8 @@ def dump_auction(auction: AuctionEntity) -> dict:
     payload["min_bid"] = str(payload["min_bid"])
     payload["current_bid"] = str(payload["current_bid"]) if payload["current_bid"] is not None else None
     payload["ends_at"] = payload["ends_at"].isoformat()
+    payload["created_at"] = payload["created_at"].isoformat()
+    payload["updated_at"] = payload["updated_at"].isoformat()
     return payload
 
 
