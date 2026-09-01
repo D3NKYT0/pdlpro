@@ -1345,23 +1345,290 @@ html.pdl-panel .inventory-withdraw-form .btn {
 }
 
 html.pdl-panel .inventory-game-items {
-  display: flex;
-  gap: 4px;
-  margin-top: 13px;
-  padding: 12px 14px;
-  border: 1px solid rgba(197, 161, 97, 0.1);
-  background: rgba(5, 5, 4, 0.25);
-  flex-direction: column;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(5, 5, 4, 0.28);
 }
 
-html.pdl-panel .inventory-game-items strong {
-  color: rgba(255, 255, 255, 0.72);
+html.pdl-panel .inventory-game-items .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+html.pdl-panel .inventory-game-items-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+html.pdl-panel .inventory-game-items-heading h3 {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+html.pdl-panel .inventory-game-items-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--panel-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+html.pdl-panel .inventory-game-items-summary b {
+  color: rgba(197, 161, 97, 0.5);
+  font-weight: 400;
+}
+
+html.pdl-panel .inventory-game-toolbar {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) auto;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+html.pdl-panel .inventory-game-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+html.pdl-panel .inventory-game-search > svg {
+  position: absolute;
+  left: 13px;
+  width: 15px;
+  height: 15px;
+  color: rgba(230, 199, 125, 0.58);
+  pointer-events: none;
+}
+
+html.pdl-panel .inventory-game-search input,
+html.pdl-panel .inventory-game-page-size select {
+  width: 100%;
+  height: 39px;
+  border: 1px solid rgba(197, 161, 97, 0.16);
+  border-radius: 0;
+  outline: 0;
+  background: rgba(0, 0, 0, 0.26);
+  color: rgba(255, 255, 255, 0.8);
+  font: inherit;
   font-size: 11px;
 }
 
-html.pdl-panel .inventory-game-items span {
+html.pdl-panel .inventory-game-search input {
+  padding: 0 14px 0 38px;
+}
+
+html.pdl-panel .inventory-game-search input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+html.pdl-panel .inventory-game-page-size {
+  display: grid;
+  grid-template-columns: auto 68px;
+  align-items: center;
+  gap: 8px;
   color: var(--panel-muted);
   font-size: 10px;
+}
+
+html.pdl-panel .inventory-game-page-size select {
+  padding: 0 9px;
+}
+
+html.pdl-panel .inventory-game-search input:hover,
+html.pdl-panel .inventory-game-page-size select:hover,
+html.pdl-panel .inventory-game-search input:focus,
+html.pdl-panel .inventory-game-page-size select:focus {
+  border-color: rgba(230, 199, 125, 0.38);
+}
+
+html.pdl-panel .inventory-game-table {
+  border: 1px solid rgba(197, 161, 97, 0.12);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+html.pdl-panel .inventory-game-table-head,
+html.pdl-panel .inventory-game-item {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 88px 88px 102px 106px;
+  align-items: center;
+  gap: 12px;
+}
+
+html.pdl-panel .inventory-game-table-head {
+  min-height: 35px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
+  background: rgba(197, 161, 97, 0.045);
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .inventory-game-table-body {
+  display: grid;
+}
+
+html.pdl-panel .inventory-game-item {
+  min-height: 65px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.075);
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+html.pdl-panel .inventory-game-item:last-child {
+  border-bottom: 0;
+}
+
+html.pdl-panel .inventory-game-item:hover {
+  border-color: rgba(197, 161, 97, 0.16);
+  background: rgba(197, 161, 97, 0.035);
+}
+
+html.pdl-panel .inventory-game-item-main {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+html.pdl-panel .inventory-game-item-main .l2-item-icon {
+  border: 1px solid rgba(230, 199, 125, 0.28);
+  background: rgba(0, 0, 0, 0.42);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+  image-rendering: auto;
+}
+
+html.pdl-panel .inventory-game-item-main > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+html.pdl-panel .inventory-game-item-main strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 11px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .inventory-game-item-main small,
+html.pdl-panel .inventory-game-item-data small {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 9px;
+}
+
+html.pdl-panel .inventory-game-item-data {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+html.pdl-panel .inventory-game-item-data small {
+  display: none;
+}
+
+html.pdl-panel .inventory-game-item-data b {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+html.pdl-panel .inventory-game-item-quantity b {
+  color: var(--panel-gold-bright);
+  font-size: 12px;
+}
+
+html.pdl-panel .inventory-game-select.btn {
+  min-width: 0;
+  width: 106px;
+  height: 34px;
+  padding: 0 12px;
+  font-size: 10px;
+}
+
+html.pdl-panel .inventory-game-state {
+  display: grid;
+  min-height: 112px;
+  place-items: center;
+  padding: 18px;
+  border: 1px dashed rgba(197, 161, 97, 0.14);
+  color: var(--panel-muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+html.pdl-panel .inventory-game-state-error {
+  border-color: rgba(205, 98, 76, 0.22);
+  color: rgba(235, 145, 127, 0.72);
+}
+
+html.pdl-panel .inventory-game-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .inventory-game-pagination > div {
+  display: flex;
+  gap: 5px;
+}
+
+html.pdl-panel .inventory-game-pagination button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(0, 0, 0, 0.24);
+  color: rgba(255, 255, 255, 0.52);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+html.pdl-panel .inventory-game-pagination button:hover:not(:disabled),
+html.pdl-panel .inventory-game-pagination button.active {
+  border-color: rgba(230, 199, 125, 0.42);
+  background: rgba(197, 161, 97, 0.12);
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .inventory-game-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.32;
+}
+
+html.pdl-panel .inventory-game-pagination svg {
+  width: 13px;
+  height: 13px;
 }
 
 html.pdl-panel .inventory-character-card {
@@ -4085,6 +4352,34 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     padding: 12px;
   }
 
+  html.pdl-panel .inventory-withdraw-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html.pdl-panel .inventory-withdraw-form .btn {
+    width: 100%;
+  }
+
+  html.pdl-panel .inventory-game-table-head {
+    display: none;
+  }
+
+  html.pdl-panel .inventory-game-item {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 12px 16px;
+    padding: 13px;
+  }
+
+  html.pdl-panel .inventory-game-item-main {
+    grid-column: 1 / -1;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(197, 161, 97, 0.075);
+  }
+
+  html.pdl-panel .inventory-game-item-data small {
+    display: block;
+  }
+
   html.pdl-panel .character-equipment-group-body .character-equipment-slots,
   html.pdl-panel .character-equipment-group-accessories .character-equipment-slots {
     gap: 8px;
@@ -4239,6 +4534,44 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .card .card {
     padding: 16px;
+  }
+
+  html.pdl-panel .inventory-withdraw-form,
+  html.pdl-panel .inventory-game-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .inventory-game-items {
+    padding: 14px;
+  }
+
+  html.pdl-panel .inventory-game-items-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  html.pdl-panel .inventory-game-page-size {
+    justify-self: start;
+  }
+
+  html.pdl-panel .inventory-game-item {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  html.pdl-panel .inventory-game-select.btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  html.pdl-panel .inventory-game-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .inventory-game-pagination > div {
+    width: 100%;
+    justify-content: center;
   }
 
   html.pdl-panel .games-hero {

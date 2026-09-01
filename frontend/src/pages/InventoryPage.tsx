@@ -1,7 +1,16 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { ArrowDownToLine, Backpack, PackageOpen, RefreshCcw, UserRoundSearch } from 'lucide-react'
+import {
+  ArrowDownToLine,
+  Backpack,
+  ChevronLeft,
+  ChevronRight,
+  PackageOpen,
+  RefreshCcw,
+  Search,
+  UserRoundSearch,
+} from 'lucide-react'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 import { ItemIdField } from '../components/ItemIdField'
@@ -26,6 +35,9 @@ export function InventoryPage() {
   const [charId, setCharId] = useState<number | ''>('')
   const [itemId, setItemId] = useState('57')
   const [quantity, setQuantity] = useState('1')
+  const [gameItemSearch, setGameItemSearch] = useState('')
+  const [gameItemsPage, setGameItemsPage] = useState(1)
+  const [gameItemsPageSize, setGameItemsPageSize] = useState(8)
 
   const gameItems = useQuery({
     queryKey: ['game-items', login, charId],
@@ -36,6 +48,31 @@ export function InventoryPage() {
   useEffect(() => {
     setCharId('')
   }, [login])
+
+  useEffect(() => {
+    setGameItemsPage(1)
+  }, [login, charId, gameItemSearch, gameItemsPageSize])
+
+  const normalizedGameItemSearch = gameItemSearch.trim().toLocaleLowerCase('pt-BR')
+  const filteredGameItems = (gameItems.data ?? []).filter((item) => {
+    if (!normalizedGameItemSearch) return true
+    return item.name.toLocaleLowerCase('pt-BR').includes(normalizedGameItemSearch)
+      || String(item.item_id).includes(normalizedGameItemSearch)
+  })
+  const gameItemsPageCount = Math.max(1, Math.ceil(filteredGameItems.length / gameItemsPageSize))
+  const currentGameItemsPage = Math.min(gameItemsPage, gameItemsPageCount)
+  const gameItemsPageStart = (currentGameItemsPage - 1) * gameItemsPageSize
+  const visibleGameItems = filteredGameItems.slice(gameItemsPageStart, gameItemsPageStart + gameItemsPageSize)
+  const gameItemPageWindowStart = Math.max(1, Math.min(currentGameItemsPage - 2, gameItemsPageCount - 4))
+  const visibleGameItemPages = Array.from(
+    { length: Math.min(5, gameItemsPageCount) },
+    (_, index) => gameItemPageWindowStart + index,
+  )
+  const gameItemsQuantity = filteredGameItems.reduce((total, item) => total + item.quantity, 0)
+
+  useEffect(() => {
+    setGameItemsPage((page) => Math.min(page, gameItemsPageCount))
+  }, [gameItemsPageCount])
 
   async function refreshInventory() {
     await Promise.all([
@@ -159,11 +196,147 @@ export function InventoryPage() {
           </form>
         ) : null}
 
-        {gameItems.data?.length ? (
-          <div className="inventory-game-items">
-            <strong>Itens no personagem</strong>
-            <span>{gameItems.data.map((item) => `${item.name} x${item.quantity}`).join(', ')}</span>
-          </div>
+        {charId ? (
+          <section className="inventory-game-items" aria-labelledby="inventory-game-items-title">
+            <div className="inventory-game-items-heading">
+              <div>
+                <span className="panel-eyebrow">Mochila no jogo</span>
+                <h3 id="inventory-game-items-title">Itens no personagem</h3>
+              </div>
+              {!gameItems.isLoading && !gameItems.isError ? (
+                <span className="inventory-game-items-summary">
+                  {filteredGameItems.length} {filteredGameItems.length === 1 ? 'item' : 'itens'}
+                  <b aria-hidden="true">·</b>
+                  {gameItemsQuantity.toLocaleString('pt-BR')} unidades
+                </span>
+              ) : null}
+            </div>
+
+            <div className="inventory-game-toolbar">
+              <label className="inventory-game-search">
+                <Search aria-hidden="true" />
+                <span className="sr-only">Buscar item no personagem</span>
+                <input
+                  type="search"
+                  value={gameItemSearch}
+                  onChange={(event) => setGameItemSearch(event.target.value)}
+                  placeholder="Buscar por nome ou ID"
+                />
+              </label>
+              <label className="inventory-game-page-size">
+                <span>Por página</span>
+                <select
+                  value={gameItemsPageSize}
+                  onChange={(event) => setGameItemsPageSize(Number(event.target.value))}
+                >
+                  <option value={8}>8</option>
+                  <option value={16}>16</option>
+                  <option value={32}>32</option>
+                </select>
+              </label>
+            </div>
+
+            {gameItems.isLoading ? (
+              <div className="inventory-game-state">Carregando itens do personagem...</div>
+            ) : null}
+
+            {gameItems.isError ? (
+              <div className="inventory-game-state inventory-game-state-error">
+                Não foi possível carregar os itens. Use Atualizar e tente novamente.
+              </div>
+            ) : null}
+
+            {!gameItems.isLoading && !gameItems.isError && visibleGameItems.length ? (
+              <div className="inventory-game-table" role="table" aria-label="Itens no personagem">
+                <div className="inventory-game-table-head" role="row">
+                  <span role="columnheader">Item</span>
+                  <span role="columnheader">ID</span>
+                  <span role="columnheader">Encanto</span>
+                  <span role="columnheader">Quantidade</span>
+                  <span className="sr-only" role="columnheader">Ação</span>
+                </div>
+                <div className="inventory-game-table-body" role="rowgroup">
+                  {visibleGameItems.map((item, index) => (
+                    <div className="inventory-game-item" role="row" key={`${item.item_id}-${item.enchant}-${index}`}>
+                      <div className="inventory-game-item-main" role="cell">
+                        <ItemIcon itemId={item.item_id} name={item.name} size={42} />
+                        <span>
+                          <strong>{item.name || `Item ${item.item_id}`}</strong>
+                          <small>{item.enchant > 0 ? `Equipamento +${item.enchant}` : 'Item do personagem'}</small>
+                        </span>
+                      </div>
+                      <span className="inventory-game-item-data" role="cell" data-label="ID">
+                        <small>ID</small>
+                        <b>#{item.item_id}</b>
+                      </span>
+                      <span className="inventory-game-item-data" role="cell" data-label="Encanto">
+                        <small>Encanto</small>
+                        <b>{item.enchant > 0 ? `+${item.enchant}` : '—'}</b>
+                      </span>
+                      <span className="inventory-game-item-data inventory-game-item-quantity" role="cell" data-label="Quantidade">
+                        <small>Quantidade</small>
+                        <b>{item.quantity.toLocaleString('pt-BR')}</b>
+                      </span>
+                      <button
+                        className="btn ghost inventory-game-select"
+                        type="button"
+                        onClick={() => {
+                          setItemId(String(item.item_id))
+                          setQuantity('1')
+                        }}
+                      >
+                        Selecionar
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {!gameItems.isLoading && !gameItems.isError && !visibleGameItems.length ? (
+              <div className="inventory-game-state">
+                {gameItemSearch ? 'Nenhum item corresponde à busca.' : 'Este personagem não possui itens no inventário.'}
+              </div>
+            ) : null}
+
+            {!gameItems.isLoading && !gameItems.isError && filteredGameItems.length ? (
+              <nav className="inventory-game-pagination" aria-label="Paginação dos itens">
+                <span>
+                  Exibindo {gameItemsPageStart + 1}–{Math.min(gameItemsPageStart + gameItemsPageSize, filteredGameItems.length)} de {filteredGameItems.length}
+                </span>
+                <div>
+                  <button
+                    type="button"
+                    aria-label="Página anterior"
+                    onClick={() => setGameItemsPage((page) => Math.max(1, page - 1))}
+                    disabled={currentGameItemsPage === 1}
+                  >
+                    <ChevronLeft aria-hidden="true" />
+                  </button>
+                  {visibleGameItemPages.map((page) => (
+                    <button
+                      className={page === currentGameItemsPage ? 'active' : ''}
+                      type="button"
+                      aria-label={`Página ${page}`}
+                      aria-current={page === currentGameItemsPage ? 'page' : undefined}
+                      onClick={() => setGameItemsPage(page)}
+                      key={page}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    aria-label="Próxima página"
+                    onClick={() => setGameItemsPage((page) => Math.min(gameItemsPageCount, page + 1))}
+                    disabled={currentGameItemsPage === gameItemsPageCount}
+                  >
+                    <ChevronRight aria-hidden="true" />
+                  </button>
+                </div>
+              </nav>
+            ) : null}
+          </section>
         ) : null}
       </section>
 
