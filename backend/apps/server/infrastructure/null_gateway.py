@@ -173,7 +173,19 @@ class NullLineageGateway(ILineageGateway):
         self._replace_character(
             login,
             char_id,
-            GameCharacter(char.char_id, name, char.level, False, char.sex, char.pvp, char.pk, char.class_id),
+            GameCharacter(
+                char.char_id,
+                name,
+                char.level,
+                False,
+                char.sex,
+                char.pvp,
+                char.pk,
+                char.class_id,
+                char.title,
+                char.clan_name,
+                char.is_clan_leader,
+            ),
         )
 
     def change_sex(self, login: str, char_id: int, sex: int) -> None:
@@ -181,7 +193,19 @@ class NullLineageGateway(ILineageGateway):
         self._replace_character(
             login,
             char_id,
-            GameCharacter(char.char_id, char.name, char.level, False, sex, char.pvp, char.pk, char.class_id),
+            GameCharacter(
+                char.char_id,
+                char.name,
+                char.level,
+                False,
+                sex,
+                char.pvp,
+                char.pk,
+                char.class_id,
+                char.title,
+                char.clan_name,
+                char.is_clan_leader,
+            ),
         )
 
     def unstuck(self, login: str, char_id: int) -> None:

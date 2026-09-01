@@ -45,6 +45,10 @@ class GameCharacterSerializer(serializers.Serializer):
     sex = serializers.IntegerField()
     pvp = serializers.IntegerField()
     pk = serializers.IntegerField()
+    class_id = serializers.IntegerField()
+    title = serializers.CharField(allow_blank=True)
+    clan_name = serializers.CharField(allow_blank=True)
+    is_clan_leader = serializers.BooleanField()
 
 
 class RegisterGameAccountSerializer(serializers.Serializer):

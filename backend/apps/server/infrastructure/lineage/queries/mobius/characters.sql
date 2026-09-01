@@ -9,9 +9,13 @@ SELECT
     C.sex,
     C.pvpkills AS pvp,
     C.pkkills AS pk,
-    COALESCE(CS.class_id, 0) AS class_id
+    COALESCE(CS.class_id, 0) AS class_id,
+    COALESCE(C.title, '') AS title,
+    COALESCE(D.name, '') AS clan_name,
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
+LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
 WHERE C.account_name = :login
 ORDER BY CS.level DESC, C.char_name ASC
 
@@ -24,9 +28,13 @@ SELECT
     C.sex,
     C.pvpkills AS pvp,
     C.pkkills AS pk,
-    COALESCE(CS.class_id, 0) AS class_id
+    COALESCE(CS.class_id, 0) AS class_id,
+    COALESCE(C.title, '') AS title,
+    COALESCE(D.name, '') AS clan_name,
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
+LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
 WHERE C.account_name = :login AND C.obj_Id = :char_id
 LIMIT 1
 

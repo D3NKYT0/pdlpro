@@ -1,5 +1,21 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  ArrowDownLeft,
+  ArrowUpRight,
+  Banknote,
+  CircleDollarSign,
+  Clock3,
+  Coins,
+  CreditCard,
+  History,
+  Landmark,
+  ReceiptText,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  UserRound,
+} from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
@@ -12,6 +28,35 @@ function formatMoney(value: string, currency: 'BRL' | 'USD') {
     style: 'currency',
     currency,
   }).format(Number.isFinite(amount) ? amount : 0)
+}
+
+const orderStatusLabels: Record<string, string> = {
+  pending: 'Aguardando',
+  processing: 'Processando',
+  confirmed: 'Confirmado',
+  paid: 'Pago',
+  failed: 'Falhou',
+  cancelled: 'Cancelado',
+}
+
+function getOrderStatus(status: string) {
+  const normalized = status.toLowerCase()
+  const modifier = ['confirmed', 'paid'].includes(normalized)
+    ? 'is-success'
+    : ['failed', 'cancelled'].includes(normalized)
+      ? 'is-danger'
+      : 'is-pending'
+  return { label: orderStatusLabels[normalized] ?? status, modifier }
+}
+
+function getTransactionPresentation(kind: string, amount: string) {
+  const numericAmount = Number(amount)
+  const outgoing = numericAmount < 0 || /(debit|out|withdraw|purchase|spent|send)/i.test(kind)
+  const absoluteAmount = Number.isFinite(numericAmount) ? Math.abs(numericAmount).toFixed(2) : amount
+  return {
+    outgoing,
+    amount: `${outgoing ? '−' : '+'}${absoluteAmount} moedas`,
+  }
 }
 
 export function WalletPage() {
@@ -28,6 +73,7 @@ export function WalletPage() {
   const [document, setDocument] = useState('')
   const [order, setOrder] = useState<ApiPaymentOrder | null>(null)
   const [busy, setBusy] = useState(false)
+  const [transferBusy, setTransferBusy] = useState(false)
   const brickRef = useRef<{ unmount: () => void } | null>(null)
 
   const methods = catalog.data?.methods ?? []
@@ -168,123 +214,280 @@ export function WalletPage() {
 
   async function onTransfer(event: FormEvent) {
     event.preventDefault()
+    setTransferBusy(true)
     try {
       await walletApi.transfer(recipient, amount)
       toast.success('Transferência enviada')
+      setRecipient('')
+      setAmount('')
       await refreshWallet()
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Falha na transferência')
+    } finally {
+      setTransferBusy(false)
     }
   }
 
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
+  const packages = catalog.data?.packages ?? []
+  const transactions = tx.data?.results ?? []
+  const paymentOrders = orders.data ?? []
 
   return (
-    <div className="grid cols-2">
-      <section className="card">
-        <h1>Banco PDL</h1>
-        <div className="stat">{wallet.data?.balance ?? '0.00'} moedas</div>
-        <p className="muted">Bônus: {wallet.data?.bonus_balance ?? '0.00'}</p>
-        <div className="pay-currency">
-          <button className={`btn ${currency === 'BRL' ? '' : 'ghost'}`} type="button" onClick={() => setCurrency('BRL')}>
-            BRL
-          </button>
-          <button className={`btn ${currency === 'USD' ? '' : 'ghost'}`} type="button" onClick={() => setCurrency('USD')}>
-            USD
-          </button>
+    <div className="wallet-page">
+      <section className="card wallet-hero">
+        <div className="wallet-hero-copy">
+          <span className="panel-eyebrow">Tesouraria do jogador</span>
+          <span className="wallet-title-icon" aria-hidden="true">
+            <Landmark />
+          </span>
+          <h1>Banco PDL</h1>
+          <p>Gerencie suas moedas, recargas e transferências em um só lugar.</p>
+          <div className="wallet-trust-row">
+            <span><ShieldCheck aria-hidden="true" /> Pagamento protegido</span>
+            <span><Clock3 aria-hidden="true" /> Crédito após confirmação</span>
+          </div>
         </div>
-        <p className="muted">
-          {currency === 'USD'
-            ? 'Dólar via Stripe, no próprio site.'
-            : 'Real via Mercado Pago (cartão, PIX ou boleto) no próprio site.'}
-        </p>
-        <div className="pay-packs">
-          {(catalog.data?.packages ?? []).map((pack) => (
-            <button
-              key={pack.id}
-              className="pay-pack"
-              type="button"
-              disabled={busy}
-              onClick={() => void startPurchase(pack.id)}
-            >
-              {pack.badge ? <span className="muted">{pack.badge}</span> : null}
-              <strong>{pack.name}</strong>
-              <span className="stat" style={{ fontSize: '1.2rem' }}>
-                {pack.total_coins} moedas
-              </span>
-              <span>{formatMoney(pack[priceKey], currency)}</span>
-            </button>
-          ))}
-        </div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            void startPurchase()
-          }}
-        >
-          <label className="field">
-            Valor avulso ({currency})
-            <input value={customAmount} onChange={(event) => setCustomAmount(event.target.value)} placeholder={currency === 'USD' ? '9.90' : '50.00'} />
-          </label>
-          <button className="btn" type="submit" disabled={busy || !customAmount}>
-            Comprar valor avulso
-          </button>
-        </form>
-        {order?.method === 'mercadopago' && !order.pix_qr_code ? (
-          <label className="field">
-            CPF ou CNPJ
-            <input value={document} onChange={(event) => setDocument(event.target.value)} placeholder="000.000.000-00" />
-          </label>
-        ) : null}
-        <div id="payment-brick" />
-        {order?.method === 'stripe' ? (
-          <form onSubmit={(event) => void payStripe(event)}>
-            <div id="stripe-element" />
-            <button className="btn" type="submit" disabled={busy}>
-              Pagar com cartão
-            </button>
-          </form>
-        ) : null}
-        {order?.pix_qr_code ? (
+
+        <div className="wallet-balance-card">
+          <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
           <div>
-            <p>PIX copia e cola</p>
-            <textarea className="field" readOnly value={order.pix_qr_code} rows={3} />
-            {order.pix_qr_code_base64 ? (
-              <img alt="QR Code PIX" src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
+            <small>Saldo disponível</small>
+            <strong>{wallet.data?.balance ?? '0.00'} <span>moedas</span></strong>
+          </div>
+          <div className="wallet-bonus-chip">
+            <Sparkles aria-hidden="true" />
+            <span>Bônus</span>
+            <b>{wallet.data?.bonus_balance ?? '0.00'}</b>
+          </div>
+        </div>
+      </section>
+
+      <div className="wallet-main-grid">
+        <section className="card wallet-purchase-card">
+          <header className="wallet-section-heading">
+            <span className="wallet-section-icon" aria-hidden="true"><CreditCard /></span>
+            <div>
+              <span className="panel-eyebrow">Adicionar saldo</span>
+              <h2>Escolha sua recarga</h2>
+              <p>Selecione a moeda de pagamento e o pacote ideal para você.</p>
+            </div>
+            <div className="wallet-currency-switch" role="group" aria-label="Moeda do pagamento">
+              <button
+                className={currency === 'BRL' ? 'is-active' : ''}
+                type="button"
+                aria-pressed={currency === 'BRL'}
+                onClick={() => setCurrency('BRL')}
+              >
+                <span>R$</span> BRL
+              </button>
+              <button
+                className={currency === 'USD' ? 'is-active' : ''}
+                type="button"
+                aria-pressed={currency === 'USD'}
+                onClick={() => setCurrency('USD')}
+              >
+                <span>$</span> USD
+              </button>
+            </div>
+          </header>
+
+          <div className="wallet-payment-note">
+            <ShieldCheck aria-hidden="true" />
+            <span>
+              <strong>{currency === 'USD' ? 'Pagamento internacional via Stripe' : 'Pagamento nacional via Mercado Pago'}</strong>
+              <small>{currency === 'USD' ? 'Cartão processado com segurança no próprio site.' : 'Pague com cartão, PIX ou boleto sem sair do painel.'}</small>
+            </span>
+          </div>
+
+          <div className="pay-packs">
+            {packages.map((pack) => (
+              <button
+                key={pack.id}
+                className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
+                type="button"
+                disabled={busy}
+                aria-label={`Comprar ${pack.total_coins} moedas por ${formatMoney(pack[priceKey], currency)}`}
+                onClick={() => void startPurchase(pack.id)}
+              >
+                {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
+                <span className="pay-pack-name">{pack.name}</span>
+                <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
+                <small>moedas</small>
+                {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">+ {pack.bonus} de bônus</span> : null}
+                <strong className="pay-pack-price">{formatMoney(pack[priceKey], currency)}</strong>
+                <span className="pay-pack-action">Escolher pacote</span>
+              </button>
+            ))}
+          </div>
+
+          {catalog.isLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> Carregando pacotes...</div> : null}
+
+          <div className="wallet-custom-purchase">
+            <div className="wallet-custom-copy">
+              <span className="wallet-section-icon" aria-hidden="true"><Banknote /></span>
+              <div>
+                <strong>Prefere outro valor?</strong>
+                <small>Informe quanto deseja pagar e calcularemos as moedas.</small>
+              </div>
+            </div>
+            <form
+              className="wallet-custom-form"
+              onSubmit={(event) => {
+                event.preventDefault()
+                void startPurchase()
+              }}
+            >
+              <label className="field">
+                <span>Valor em {currency}</span>
+                <input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  inputMode="decimal"
+                  value={customAmount}
+                  onChange={(event) => setCustomAmount(event.target.value)}
+                  placeholder={currency === 'USD' ? '9.90' : '50.00'}
+                />
+              </label>
+              <button className="btn" type="submit" disabled={busy || !customAmount}>
+                <CircleDollarSign aria-hidden="true" /> Comprar agora
+              </button>
+            </form>
+          </div>
+
+          <div className="wallet-checkout">
+            {order?.method === 'mercadopago' && !order.pix_qr_code ? (
+              <label className="field">
+                <span>CPF ou CNPJ do pagador</span>
+                <input value={document} onChange={(event) => setDocument(event.target.value)} placeholder="000.000.000-00" />
+              </label>
+            ) : null}
+            {order?.method === 'mercadopago' ? <div id="payment-brick" /> : null}
+            {order?.method === 'stripe' ? (
+              <form onSubmit={(event) => void payStripe(event)}>
+                <div id="stripe-element" />
+                <button className="btn" type="submit" disabled={busy}>
+                  <CreditCard aria-hidden="true" /> Pagar com cartão
+                </button>
+              </form>
+            ) : null}
+            {order?.pix_qr_code ? (
+              <div className="wallet-pix-result">
+                <h3>PIX copia e cola</h3>
+                <textarea readOnly value={order.pix_qr_code} rows={3} />
+                {order.pix_qr_code_base64 ? (
+                  <img alt="QR Code PIX" src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
+                ) : null}
+              </div>
             ) : null}
           </div>
-        ) : null}
-        <form onSubmit={onTransfer}>
-          <h3>Transferir moedas</h3>
-          <label className="field">
-            Destinatário
-            <input value={recipient} onChange={(e) => setRecipient(e.target.value)} required />
-          </label>
-          <label className="field">
-            Valor
-            <input value={amount} onChange={(e) => setAmount(e.target.value)} required />
-          </label>
-          <button className="btn" type="submit">
-            Transferir
-          </button>
-        </form>
-      </section>
-      <section className="card">
-        <h2>Pedidos</h2>
-        {(orders.data ?? []).map((row) => (
-          <p key={row.id}>
-            {row.coins} moedas · {row.currency} {row.amount} · {row.method} · {row.status}
-          </p>
-        ))}
-        {!orders.data?.length && <p className="muted">Nenhum pedido ainda.</p>}
-        <h2>Extrato</h2>
-        {(tx.data?.results ?? []).map((row) => (
-          <p key={row.id}>
-            {row.kind} {row.amount} — {row.description}
-          </p>
-        ))}
-        {!tx.data?.results?.length && <p className="muted">Sem movimentações.</p>}
-      </section>
+        </section>
+
+        <aside className="wallet-side-column">
+          <section className="card wallet-transfer-card">
+            <header className="wallet-compact-heading">
+              <span className="wallet-section-icon" aria-hidden="true"><Send /></span>
+              <div>
+                <span className="panel-eyebrow">Entre jogadores</span>
+                <h2>Transferir moedas</h2>
+              </div>
+            </header>
+            <p className="muted">Envie moedas diretamente para outro jogador usando o nome da conta.</p>
+            <form className="wallet-transfer-form" onSubmit={onTransfer}>
+              <label className="field">
+                <span className="wallet-field-label"><UserRound aria-hidden="true" /> Destinatário</span>
+                <input
+                  value={recipient}
+                  onChange={(event) => setRecipient(event.target.value)}
+                  placeholder="Nome do jogador"
+                  autoComplete="off"
+                  required
+                />
+              </label>
+              <label className="field">
+                <span className="wallet-field-label"><Coins aria-hidden="true" /> Quantidade</span>
+                <input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  inputMode="decimal"
+                  value={amount}
+                  onChange={(event) => setAmount(event.target.value)}
+                  placeholder="0.00"
+                  required
+                />
+              </label>
+              <button className="btn" type="submit" disabled={transferBusy || !recipient || !amount}>
+                <Send aria-hidden="true" /> {transferBusy ? 'Enviando...' : 'Transferir moedas'}
+              </button>
+              <small className="wallet-transfer-warning"><ShieldCheck aria-hidden="true" /> Confira o destinatário antes de confirmar.</small>
+            </form>
+          </section>
+
+          <section className="card wallet-activity-card">
+            <div className="wallet-activity-section">
+              <header className="wallet-activity-heading">
+                <span className="wallet-section-icon" aria-hidden="true"><ReceiptText /></span>
+                <div><span className="panel-eyebrow">Recargas</span><h2>Pedidos</h2></div>
+                <b>{paymentOrders.length}</b>
+              </header>
+              {orders.isLoading ? (
+                <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando pedidos...</span></div>
+              ) : paymentOrders.length ? (
+                <div className="wallet-activity-list">
+                  {paymentOrders.map((row) => {
+                    const status = getOrderStatus(row.status)
+                    const orderCurrency = row.currency === 'USD' ? 'USD' : 'BRL'
+                    return (
+                      <article className="wallet-activity-item" key={row.id}>
+                        <span className="wallet-row-icon" aria-hidden="true"><CircleDollarSign /></span>
+                        <span className="wallet-row-copy">
+                          <strong>{row.coins} moedas</strong>
+                          <small>{formatMoney(row.amount, orderCurrency)} · {row.method}</small>
+                        </span>
+                        <span className={`wallet-status ${status.modifier}`}>{status.label}</span>
+                      </article>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="wallet-empty-state"><ReceiptText aria-hidden="true" /><span><strong>Nenhum pedido</strong><small>Suas recargas aparecerão aqui.</small></span></div>
+              )}
+            </div>
+
+            <div className="wallet-activity-section">
+              <header className="wallet-activity-heading">
+                <span className="wallet-section-icon" aria-hidden="true"><History /></span>
+                <div><span className="panel-eyebrow">Movimentações</span><h2>Extrato</h2></div>
+                <b>{transactions.length}</b>
+              </header>
+              {tx.isLoading ? (
+                <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando extrato...</span></div>
+              ) : transactions.length ? (
+                <div className="wallet-activity-list">
+                  {transactions.map((row) => {
+                    const presentation = getTransactionPresentation(row.kind, row.amount)
+                    const DirectionIcon = presentation.outgoing ? ArrowUpRight : ArrowDownLeft
+                    return (
+                      <article className="wallet-activity-item" key={row.id}>
+                        <span className={`wallet-row-icon ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`} aria-hidden="true"><DirectionIcon /></span>
+                        <span className="wallet-row-copy">
+                          <strong>{row.description || row.kind}</strong>
+                          <small>{row.kind}</small>
+                        </span>
+                        <span className={`wallet-transaction-value ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`}>{presentation.amount}</span>
+                      </article>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="wallet-empty-state"><History aria-hidden="true" /><span><strong>Extrato vazio</strong><small>Entradas e saídas serão exibidas aqui.</small></span></div>
+              )}
+            </div>
+          </section>
+        </aside>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 from apps.server.application.account_use_cases import (
     ConfirmLinkByEmailUseCase,
+    GetCharacterUseCase,
     GetLinkSlotsUseCase,
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
@@ -12,6 +13,7 @@ from apps.server.application.account_use_cases import (
 from apps.server.application.character_use_cases import (
     ChangeNicknameUseCase,
     ChangeSexUseCase,
+    ListServicePricesUseCase,
     PurchaseLinkSlotUseCase,
     UnstuckCharacterUseCase,
 )
@@ -58,10 +60,12 @@ class ServerProvider(AppProvider):
             LinkGameAccountUseCase,
             UnlinkGameAccountUseCase,
             ListCharactersUseCase,
+            GetCharacterUseCase,
             UpdateGamePasswordUseCase,
             ChangeNicknameUseCase,
             ChangeSexUseCase,
             UnstuckCharacterUseCase,
+            ListServicePricesUseCase,
             PurchaseLinkSlotUseCase,
             RequestLinkByEmailUseCase,
             ConfirmLinkByEmailUseCase,

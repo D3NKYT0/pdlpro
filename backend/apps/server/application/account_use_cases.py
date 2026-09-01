@@ -164,6 +164,28 @@ class ListCharactersUseCase(UseCase[ListCharactersInput, list[GameCharacter]]):
 
 
 @dataclass(frozen=True, slots=True)
+class GetCharacterInput:
+    actor: AccountActor
+    login: str
+    char_id: int
+
+
+class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+        self._lineage = lineage
+        self._access = access
+
+    def execute(self, data: GetCharacterInput) -> GameCharacter:
+        login = data.login or data.actor.username
+        if not self._access.can_access(data.actor.user_id, data.actor.username, login):
+            raise AuthorizationError("Você não tem acesso a esta conta Lineage.")
+        char = self._lineage.get_character(login, data.char_id)
+        if char is None:
+            raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
+        return char
+
+
+@dataclass(frozen=True, slots=True)
 class UpdateGamePasswordInput:
     actor: AccountActor
     login: str

@@ -1,13 +1,15 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { CheckCircle2, Crown, Link2, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Crown, Link2, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
 
 export function AccountsPage() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
   const [params, setParams] = useSearchParams()
@@ -208,15 +210,47 @@ export function AccountsPage() {
                 <tr>
                   <th>Nome</th>
                   <th>Lv</th>
+                  <th>Classe</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {(characters.data ?? []).map((char) => (
-                  <tr key={char.char_id}>
-                    <td>{char.name}</td>
+                  <tr
+                    key={char.char_id}
+                    role="link"
+                    tabIndex={0}
+                    onClick={() => navigate(`/painel/accounts/${selectedLogin}/${char.char_id}`)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        navigate(`/painel/accounts/${selectedLogin}/${char.char_id}`)
+                      }
+                    }}
+                  >
+                    <td>
+                      <Link
+                        className="account-character-link"
+                        to={`/painel/accounts/${selectedLogin}/${char.char_id}`}
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        {char.name}
+                      </Link>
+                    </td>
                     <td>{char.level}</td>
+                    <td>{getClassName(char.class_id)}</td>
                     <td><span className={`badge ${char.online ? '' : 'off'}`}>{char.online ? 'Online' : 'Offline'}</span></td>
+                    <td>
+                      <Link
+                        className="account-character-open"
+                        to={`/painel/accounts/${selectedLogin}/${char.char_id}`}
+                        aria-label={`Abrir ${char.name}`}
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        <ChevronRight aria-hidden="true" />
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>

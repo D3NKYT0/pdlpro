@@ -49,6 +49,9 @@ class GameCharacter:
     pvp: int = 0
     pk: int = 0
     class_id: int = 0
+    title: str = ""
+    clan_name: str = ""
+    is_clan_leader: bool = False
 
 
 @dataclass(frozen=True, slots=True)

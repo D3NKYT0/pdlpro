@@ -20,6 +20,17 @@ export interface ApiGameCharacter {
   sex: number
   pvp: number
   pk: number
+  class_id: number
+  title: string
+  clan_name: string
+  is_clan_leader: boolean
+}
+
+export interface ApiServicePrices {
+  CHANGE_NICKNAME: string
+  CHANGE_SEX: string
+  LINK_SLOT: string
+  UNSTUCK: string
 }
 
 export interface ApiInventoryRow {
@@ -73,6 +84,11 @@ export const lineageApi = {
     request('/customer/server/accounts/unlink/', { method: 'POST', body: JSON.stringify({ login }) }),
   characters: (login?: string) =>
     request<ApiGameCharacter[]>(`/customer/server/characters/${login ? `?login=${encodeURIComponent(login)}` : ''}`),
+  character: (login: string, charId: number) =>
+    request<ApiGameCharacter>(
+      `/customer/server/characters/${charId}/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
+    ),
+  servicePrices: () => request<ApiServicePrices>('/customer/server/services/'),
   changeNickname: (login: string, char_id: number, name: string) =>
     request('/customer/server/characters/nickname/', {
       method: 'POST',

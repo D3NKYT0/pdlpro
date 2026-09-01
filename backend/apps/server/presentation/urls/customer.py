@@ -3,6 +3,7 @@ from django.urls import path
 from apps.server.presentation.views.customer import (
     ChangeNicknameView,
     ChangeSexView,
+    CharacterDetailView,
     CharactersView,
     ConfirmLinkByEmailView,
     LineageAccountsView,
@@ -10,6 +11,7 @@ from apps.server.presentation.views.customer import (
     PurchaseSlotView,
     RegisterGameAccountView,
     RequestLinkByEmailView,
+    ServicePricesView,
     UnlinkGameAccountView,
     UnstuckView,
     UpdateGamePasswordView,
@@ -27,7 +29,9 @@ urlpatterns = [
     path("accounts/password/", UpdateGamePasswordView.as_view(), name="customer-accounts-password"),
     path("accounts/slots/", PurchaseSlotView.as_view(), name="customer-accounts-slots"),
     path("characters/", CharactersView.as_view(), name="customer-characters"),
+    path("characters/<int:char_id>/", CharacterDetailView.as_view(), name="customer-character-detail"),
     path("characters/nickname/", ChangeNicknameView.as_view(), name="customer-nickname"),
     path("characters/sex/", ChangeSexView.as_view(), name="customer-sex"),
     path("characters/unstuck/", UnstuckView.as_view(), name="customer-unstuck"),
+    path("services/", ServicePricesView.as_view(), name="customer-service-prices"),
 ]

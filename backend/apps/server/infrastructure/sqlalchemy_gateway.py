@@ -98,6 +98,9 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             pvp=int(row.get("pvp") or 0),
             pk=int(row.get("pk") or 0),
             class_id=int(row.get("class_id") or 0),
+            title=str(row.get("title") or "").strip(),
+            clan_name=str(row.get("clan_name") or "").strip(),
+            is_clan_leader=bool(int(row.get("is_clan_leader") or 0)),
         )
 
     def get_status(self) -> ServerStatus:

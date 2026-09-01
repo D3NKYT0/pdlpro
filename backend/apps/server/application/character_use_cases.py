@@ -106,6 +106,19 @@ class PurchaseLinkSlotInput:
     quantity: int
 
 
+class ListServicePricesUseCase(UseCase[None, dict]):
+    def __init__(self, prices: IServicePriceRepository) -> None:
+        self._prices = prices
+
+    def execute(self, data: None = None) -> dict:
+        return {
+            "CHANGE_NICKNAME": str(self._prices.get_price("CHANGE_NICKNAME")),
+            "CHANGE_SEX": str(self._prices.get_price("CHANGE_SEX")),
+            "LINK_SLOT": str(self._prices.get_price("LINK_SLOT")),
+            "UNSTUCK": "0.00",
+        }
+
+
 class PurchaseLinkSlotUseCase(UseCase[PurchaseLinkSlotInput, dict]):
     def __init__(
         self,

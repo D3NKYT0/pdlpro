@@ -9,7 +9,10 @@ SELECT
     sex,
     pvpkills AS pvp,
     pkkills AS pk,
-    classid AS class_id
+    classid AS class_id,
+    COALESCE(title, '') AS title,
+    COALESCE((SELECT clan_name FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), '') AS clan_name,
+    COALESCE((SELECT IF(leader_id = characters.charId, 1, 0) FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), 0) AS is_clan_leader
 FROM characters
 WHERE account_name = :login
 
@@ -22,7 +25,10 @@ SELECT
     sex,
     pvpkills AS pvp,
     pkkills AS pk,
-    classid AS class_id
+    classid AS class_id,
+    COALESCE(title, '') AS title,
+    COALESCE((SELECT clan_name FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), '') AS clan_name,
+    COALESCE((SELECT IF(leader_id = characters.charId, 1, 0) FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), 0) AS is_clan_leader
 FROM characters
 WHERE account_name = :login AND charId = :char_id
 LIMIT 1

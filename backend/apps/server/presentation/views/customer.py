@@ -6,6 +6,8 @@ from apps.server.application.account_use_cases import (
     AccountActor,
     ConfirmLinkByEmailInput,
     ConfirmLinkByEmailUseCase,
+    GetCharacterInput,
+    GetCharacterUseCase,
     GetLinkSlotsUseCase,
     LinkGameAccountInput,
     LinkGameAccountUseCase,
@@ -25,6 +27,7 @@ from apps.server.application.character_use_cases import (
     ChangeNicknameUseCase,
     ChangeSexUseCase,
     CharacterServiceInput,
+    ListServicePricesUseCase,
     PurchaseLinkSlotInput,
     PurchaseLinkSlotUseCase,
     UnstuckCharacterUseCase,
@@ -112,6 +115,18 @@ class CharactersView(InjectedAPIView):
             ListCharactersInput(actor=actor_from(request), login=login)
         )
         return Response(GameCharacterSerializer(chars, many=True).data)
+
+
+class CharacterDetailView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Conta Lineage"])
+    def get(self, request, char_id: int):
+        login = request.query_params.get("login") or request.user.username
+        char = self.resolve(GetCharacterUseCase).execute(
+            GetCharacterInput(actor=actor_from(request), login=login, char_id=char_id)
+        )
+        return Response(GameCharacterSerializer(char).data)
 
 
 class UpdateGamePasswordView(InjectedAPIView):
@@ -228,3 +243,11 @@ class PurchaseSlotView(InjectedAPIView):
             PurchaseLinkSlotInput(user_id=request.user.id, quantity=serializer.validated_data["quantity"])
         )
         return Response(result)
+
+
+class ServicePricesView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Conta Lineage"])
+    def get(self, request):
+        return Response(self.resolve(ListServicePricesUseCase).execute())

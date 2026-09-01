@@ -5,6 +5,7 @@ import { PublicContent, PublicLayout } from '../../components/layout/PublicLayou
 import { AccountsPage } from '../../pages/AccountsPage'
 import { AuctionPage } from '../../pages/AuctionPage'
 import { CalendarPage } from '../../pages/CalendarPage'
+import { CharacterPage } from '../../pages/CharacterPage'
 import { ClansPage } from '../../pages/ClansPage'
 import { DownloadsPage } from '../../pages/DownloadsPage'
 import { FaqPage } from '../../pages/FaqPage'
@@ -65,6 +66,7 @@ export function AppRoutes() {
             <Route path="/painel" element={<PainelPage />} />
             <Route path="/painel/wallet" element={<WalletPage />} />
             <Route path="/painel/accounts" element={<AccountsPage />} />
+            <Route path="/painel/accounts/:login/:charId" element={<CharacterPage />} />
             <Route path="/painel/inventory" element={<InventoryPage />} />
             <Route path="/painel/games" element={<GamesPage />} />
             <Route path="/painel/progress" element={<ProgressPage />} />
