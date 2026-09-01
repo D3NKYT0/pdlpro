@@ -740,6 +740,179 @@ html.pdl-panel .account-empty-state span {
   font-size: 11px;
 }
 
+html.pdl-panel .inventory-page {
+  gap: 18px;
+}
+
+html.pdl-panel .inventory-hero {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.9) 62%, rgba(22, 16, 10, 0.68)),
+    url(/theme/default/images/bg/2.jpg) center 42% / cover no-repeat;
+}
+
+html.pdl-panel .inventory-hero > div,
+html.pdl-panel .inventory-hero > button {
+  position: relative;
+  z-index: 1;
+}
+
+html.pdl-panel .inventory-hero h1 {
+  margin: 7px 0 5px;
+}
+
+html.pdl-panel .inventory-hero p {
+  margin: 0;
+}
+
+html.pdl-panel .inventory-refresh {
+  min-width: 126px;
+  height: 40px;
+  font-size: 12px;
+}
+
+html.pdl-panel .inventory-refresh:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+html.pdl-panel .inventory-control-card {
+  min-height: 360px;
+}
+
+html.pdl-panel .inventory-control-heading,
+html.pdl-panel .inventory-character-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .inventory-control-heading > svg,
+html.pdl-panel .inventory-character-heading > svg {
+  width: 39px;
+  height: 39px;
+  padding: 9px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(197, 161, 97, 0.065);
+  color: var(--panel-gold);
+  stroke-width: 1.35;
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .inventory-control-heading > svg > *,
+html.pdl-panel .inventory-character-heading > svg > * {
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+html.pdl-panel .inventory-control-heading h2,
+html.pdl-panel .inventory-character-heading h2 {
+  margin: 4px 0 0;
+}
+
+html.pdl-panel .inventory-account-field {
+  max-width: 430px;
+  margin-bottom: 18px;
+}
+
+html.pdl-panel .inventory-withdraw-form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(140px, 0.8fr) minmax(120px, 0.6fr) auto;
+  align-items: end;
+  gap: 12px;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(5, 5, 4, 0.3);
+}
+
+html.pdl-panel .inventory-withdraw-form .field {
+  margin: 0;
+}
+
+html.pdl-panel .inventory-withdraw-form .btn {
+  min-width: 152px;
+}
+
+html.pdl-panel .inventory-game-items {
+  display: flex;
+  gap: 4px;
+  margin-top: 13px;
+  padding: 12px 14px;
+  border: 1px solid rgba(197, 161, 97, 0.1);
+  background: rgba(5, 5, 4, 0.25);
+  flex-direction: column;
+}
+
+html.pdl-panel .inventory-game-items strong {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 11px;
+}
+
+html.pdl-panel .inventory-game-items span {
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .inventory-character-card {
+  min-width: 0;
+}
+
+html.pdl-panel .inventory-panel-items {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .inventory-panel-item {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 12px;
+  border: 1px solid rgba(197, 161, 97, 0.12);
+  background: rgba(5, 5, 4, 0.3);
+}
+
+html.pdl-panel .inventory-panel-item > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+html.pdl-panel .inventory-panel-item strong {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+}
+
+html.pdl-panel .inventory-panel-item small {
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .inventory-panel-item .btn {
+  min-width: 125px;
+  height: 37px;
+  font-size: 11px;
+}
+
+html.pdl-panel .inventory-panel-empty {
+  display: grid;
+  min-height: 88px;
+  place-items: center;
+  border: 1px dashed rgba(197, 161, 97, 0.14);
+  color: var(--panel-muted);
+  font-size: 11px;
+}
+
 html.pdl-panel .panel-welcome {
   display: flex;
   min-height: 185px;

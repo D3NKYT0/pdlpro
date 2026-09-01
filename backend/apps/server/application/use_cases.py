@@ -127,4 +127,12 @@ class RunPublicLineageQueryUseCase(UseCase[RunPublicLineageQueryInput, list[dict
                 raise ValidationDomainError("Informe ao menos 2 caracteres.")
             params["query"] = f"%{query}%"
             params["limit"] = min(int(params.get("limit") or 20), 50)
+        if data.name == "siege_participants":
+            try:
+                castle_id = int(params.get("castle_id") or 0)
+            except (TypeError, ValueError):
+                castle_id = 0
+            if castle_id < 1 or castle_id > 9:
+                raise ValidationDomainError("Castelo inválido.")
+            params["castle_id"] = castle_id
         return self._lineage.query(data.name, params)

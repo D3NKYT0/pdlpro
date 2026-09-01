@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import {
   Castle,
   Clock,
@@ -11,11 +11,13 @@ import {
   Star,
   Swords,
   Trophy,
+  Users,
   type LucideIcon,
 } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { serverApi } from '../services/api'
 import type { ApiRankingEntry } from '../services/types'
+import { themeImage } from '../theme/assets'
 
 type RankingTab = {
   id: string
@@ -84,6 +86,24 @@ const bossNames: Record<string, string> = {
   '29068': 'Antharas',
 }
 
+const CASTLE_CATALOG: Array<{
+  id: number
+  slug: string
+  title: string
+  territory: string
+  blurb: string
+}> = [
+  { id: 1, slug: 'gludio', title: 'Gludio', territory: 'Território de Gludio', blurb: 'A fortaleza do oeste, porta de entrada do continente.' },
+  { id: 2, slug: 'dion', title: 'Dion', territory: 'Território de Dion', blurb: 'Castelo das terras ao sul, entre Gludio e Giran.' },
+  { id: 3, slug: 'giran', title: 'Giran', territory: 'Território de Giran', blurb: 'O coração comercial do reino e um dos mais disputados.' },
+  { id: 4, slug: 'oren', title: 'Oren', territory: 'Território de Oren', blurb: 'Domínio ao norte, à sombra da Ivory Tower.' },
+  { id: 5, slug: 'aden', title: 'Aden', territory: 'Capital de Aden', blurb: 'A fortaleza real, símbolo máximo de poder no continente.' },
+  { id: 6, slug: 'innadril', title: 'Innadril', territory: 'Território de Innadril', blurb: 'O castelo das águas, em Heine.' },
+  { id: 7, slug: 'goddard', title: 'Goddard', territory: 'Território de Goddard', blurb: 'A fortaleza do norte, caminho para as terras geladas.' },
+  { id: 8, slug: 'rune', title: 'Rune', territory: 'Território de Rune', blurb: 'O bastião do extremo norte, vizinho de Elmore.' },
+  { id: 9, slug: 'schuttgart', title: 'Schuttgart', territory: 'Território de Schuttgart', blurb: 'A cidadela das montanhas nevadas.' },
+]
+
 function tabFromParam(param: string | null): Tab {
   if (param === 'olympiad_ranking') return tabs.find((item) => item.id === 'olympiad') ?? tabs[0]
   if (param === 'grandboss_status') return tabs.find((item) => item.id === 'grandboss') ?? tabs[0]
@@ -127,7 +147,86 @@ function parseDate(value: unknown): Date | null {
 
 function formatDate(value: unknown) {
   const date = parseDate(value)
-  return date ? date.toLocaleString('pt-BR') : '—'
+  return date
+    ? date.toLocaleString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    : '—'
+}
+
+function formatRelative(date: Date) {
+  const diffSec = Math.round((date.getTime() - Date.now()) / 1000)
+  const abs = Math.abs(diffSec)
+  const rtf = new Intl.RelativeTimeFormat('pt-BR', { numeric: 'auto' })
+  if (abs < 3600) return rtf.format(Math.round(diffSec / 60), 'minute')
+  if (abs < 86400) return rtf.format(Math.round(diffSec / 3600), 'hour')
+  return rtf.format(Math.round(diffSec / 86400), 'day')
+}
+
+function displayName(value: unknown, empty = '—') {
+  const text = String(value ?? '').trim()
+  return text && text !== 'None' && text !== 'null' ? text : empty
+}
+
+function castleIdOf(row: WorldRow) {
+  const value = row.castle_id ?? row.id
+  const numeric = Number(value)
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : 0
+}
+
+function castleInfo(row: WorldRow) {
+  const id = castleIdOf(row)
+  const rawName = displayName(row.name, '')
+  const slug = rawName.toLowerCase().replace(/[^a-z]/g, '')
+  const meta =
+    CASTLE_CATALOG.find((item) => item.id === id) ??
+    CASTLE_CATALOG.find((item) => item.slug === slug || item.title.toLowerCase() === slug)
+  const resolvedSlug = meta?.slug ?? slug || 'castle'
+  return {
+    id,
+    slug: resolvedSlug,
+    title: meta?.title ?? rawName || `Castelo ${id || ''}`.trim(),
+    territory: meta?.territory ?? 'Reino de Aden',
+    blurb: meta?.blurb ?? 'Fortaleza do reino.',
+    image: themeImage(`castles/${resolvedSlug}.jpg`),
+  }
+}
+
+function siegeState(value: unknown) {
+  const date = parseDate(value)
+  if (!date) return { kind: 'idle' as const, label: 'Sem data marcada', detail: '—' }
+  const diff = date.getTime() - Date.now()
+  const twoHours = 2 * 60 * 60 * 1000
+  if (diff <= 0 && diff > -twoHours) {
+    return { kind: 'live' as const, label: 'Sob cerco', detail: formatDate(value) }
+  }
+  if (diff > 0) {
+    return { kind: 'soon' as const, label: formatRelative(date), detail: formatDate(value) }
+  }
+  return { kind: 'idle' as const, label: 'Aguardando calendário', detail: formatDate(value) }
+}
+
+function formatTreasury(value: unknown) {
+  if (value == null || value === '') return 'Vazio'
+  const amount = Number(value)
+  if (!Number.isFinite(amount) || amount <= 0) return 'Vazio'
+  return `${amount.toLocaleString('pt-BR')} adena`
+}
+
+function splitParticipants(rows: WorldRow[], ownerName: string) {
+  const owner = ownerName.trim().toLowerCase()
+  const attackers: string[] = []
+  const defenders: string[] = []
+  for (const row of rows) {
+    const name = displayName(row.clan_name, '')
+    if (!name) continue
+    const type = Number(row.type)
+    const isOwner = name.toLowerCase() === owner
+    if (isOwner || type === 1 || type === 3 || type === -1) {
+      if (!defenders.includes(name)) defenders.push(name)
+    } else if (!attackers.includes(name)) {
+      attackers.push(name)
+    }
+  }
+  return { attackers, defenders }
 }
 
 function formatRespawn(value: unknown) {
@@ -280,7 +379,11 @@ export function RankingsPage() {
               <small>{tab.kicker}</small>
               <h2>{tab.label}</h2>
             </div>
-            {tab.valueLabel ? <em>{tab.valueLabel}</em> : null}
+            {tab.valueLabel ? (
+              <em>{tab.valueLabel}</em>
+            ) : tab.id === 'siege' && worldRows.length ? (
+              <em>{worldRows.length} fortalezas</em>
+            ) : null}
           </div>
 
           {isLoading ? (
@@ -350,39 +453,7 @@ export function RankingsPage() {
               <EmptyWorld />
             )
           ) : tab.id === 'siege' ? (
-            worldRows.length ? (
-              <div className="rankings-world-grid">
-                {worldRows.map((row) => (
-                  <article className="rankings-world-card siege" key={String(row.castle_id ?? row.name)}>
-                    <div className="rankings-mark sm">
-                      <Castle aria-hidden="true" />
-                    </div>
-                    <span>Castelo</span>
-                    <strong>{String(row.name ?? '—')}</strong>
-                    <dl>
-                      <div>
-                        <dt>Clã</dt>
-                        <dd>{String(row.clan_name ?? 'Livre')}</dd>
-                      </div>
-                      <div>
-                        <dt>Líder</dt>
-                        <dd>{String(row.leader ?? '—')}</dd>
-                      </div>
-                      <div>
-                        <dt>Siege</dt>
-                        <dd>{formatDate(row.sdate)}</dd>
-                      </div>
-                      <div>
-                        <dt>Tesouro</dt>
-                        <dd>{formatWorldCell('stax', row.stax)}</dd>
-                      </div>
-                    </dl>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <EmptyWorld />
-            )
+            worldRows.length ? <SiegeBoard rows={worldRows} /> : <EmptyWorld />
           ) : worldRows.length ? (
             <div className="rankings-table-wrap">
               <table className="rankings-table">
@@ -457,6 +528,166 @@ export function RankingsPage() {
           )}
         </section>
       </main>
+    </div>
+  )
+}
+
+function SiegeBoard({ rows }: { rows: WorldRow[] }) {
+  const castles = [...rows].sort((a, b) => castleIdOf(a) - castleIdOf(b))
+  const participants = useQueries({
+    queries: castles.map((row) => {
+      const castleId = castleIdOf(row)
+      return {
+        queryKey: ['world', 'siege_participants', castleId],
+        queryFn: () => serverApi.world('siege_participants', { castle_id: String(castleId) }),
+        enabled: castleId > 0,
+      }
+    }),
+  })
+  const occupied = castles.filter((row) => displayName(row.clan_name, '')).length
+  const nextSiege = castles
+    .map((row) => parseDate(row.sdate))
+    .filter((date): date is Date => Boolean(date && date.getTime() > Date.now()))
+    .sort((a, b) => a.getTime() - b.getTime())[0]
+  const liveCount = castles.filter((row) => siegeState(row.sdate).kind === 'live').length
+
+  return (
+    <div className="rankings-siege">
+      <dl className="rankings-siege-summary">
+        <div>
+          <dt>Ocupados</dt>
+          <dd>
+            {occupied}/{castles.length}
+          </dd>
+        </div>
+        <div>
+          <dt>Livres</dt>
+          <dd>{castles.length - occupied}</dd>
+        </div>
+        <div>
+          <dt>Em guerra</dt>
+          <dd>{liveCount || 'Nenhum'}</dd>
+        </div>
+        <div>
+          <dt>Próximo cerco</dt>
+          <dd>{nextSiege ? formatRelative(nextSiege) : '—'}</dd>
+        </div>
+      </dl>
+
+      <div className="rankings-siege-list">
+        {castles.map((row, index) => {
+          const info = castleInfo(row)
+          const owner = displayName(row.clan_name, '')
+          const leader = displayName(row.leader ?? row.char_name, 'Sem líder')
+          const ally = displayName(row.ally_name, 'Sem aliança')
+          const siege = siegeState(row.sdate)
+          const sides = splitParticipants(participants[index]?.data ?? [], owner)
+          const owned = Boolean(owner)
+
+          return (
+            <article className={`rankings-castle${owned ? ' is-owned' : ''}${siege.kind === 'live' ? ' is-live' : ''}`} key={info.slug || String(info.id)}>
+              <div className="rankings-castle-visual">
+                <img src={info.image} alt={`Castelo de ${info.title}`} onError={(event) => event.currentTarget.remove()} />
+                <span className="rankings-castle-fallback" aria-hidden="true">
+                  <Castle />
+                </span>
+                <div className="rankings-castle-visual-copy">
+                  <small>{info.territory}</small>
+                  <strong>{info.title}</strong>
+                </div>
+                <em className={`rankings-castle-status is-${siege.kind}`}>
+                  {siege.kind === 'live' ? 'Sob cerco' : owned ? 'Dominado' : 'Sem dono'}
+                </em>
+              </div>
+
+              <div className="rankings-castle-body">
+                <header>
+                  <span>{info.territory}</span>
+                  <h3>{info.title} Castle</h3>
+                  <p>{info.blurb}</p>
+                </header>
+
+                <dl className="rankings-castle-meta">
+                  <div>
+                    <dt>Clã dono</dt>
+                    <dd>
+                      <span className="rankings-crest sm" aria-hidden="true">
+                        <span>{initial(owner || info.title)}</span>
+                      </span>
+                      {owner || 'Sem dono'}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Líder</dt>
+                    <dd>{leader}</dd>
+                  </div>
+                  <div>
+                    <dt>Aliança</dt>
+                    <dd>{ally}</dd>
+                  </div>
+                  <div>
+                    <dt>Tesouro</dt>
+                    <dd>{formatTreasury(row.stax)}</dd>
+                  </div>
+                  <div>
+                    <dt>Próxima guerra</dt>
+                    <dd>
+                      {siege.detail}
+                      {siege.kind === 'soon' ? <small>{siege.label}</small> : null}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Forças do cerco</dt>
+                    <dd>
+                      {sides.attackers.length} atacantes · {sides.defenders.length} defensores
+                    </dd>
+                  </div>
+                </dl>
+
+                {sides.attackers.length || sides.defenders.length ? (
+                  <div className="rankings-castle-forces">
+                    <div>
+                      <h4>
+                        <Swords aria-hidden="true" />
+                        Atacantes
+                      </h4>
+                      {sides.attackers.length ? (
+                        <ul>
+                          {sides.attackers.map((name) => (
+                            <li key={`atk-${name}`}>{name}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>Nenhum clã registrado</p>
+                      )}
+                    </div>
+                    <div>
+                      <h4>
+                        <Shield aria-hidden="true" />
+                        Defensores
+                      </h4>
+                      {sides.defenders.length ? (
+                        <ul>
+                          {sides.defenders.map((name) => (
+                            <li key={`def-${name}`}>{name}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>Nenhum clã registrado</p>
+                      )}
+                    </div>
+                  </div>
+                ) : participants[index]?.isLoading ? (
+                  <p className="rankings-castle-hint">
+                    <Users aria-hidden="true" />
+                    Consultando clãs inscritos no cerco...
+                  </p>
+                ) : null}
+              </div>
+            </article>
+          )
+        })}
+      </div>
     </div>
   )
 }

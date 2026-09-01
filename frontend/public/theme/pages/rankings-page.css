@@ -585,10 +585,6 @@
   letter-spacing: 0.4px;
 }
 
-.rankings-world-card.siege {
-  min-height: 280px;
-}
-
 .rankings-world-card dl {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -608,6 +604,307 @@
   font-size: 14px;
   margin: 4px 0 0;
   word-break: break-word;
+}
+
+.rankings-siege {
+  display: grid;
+  gap: 18px;
+}
+
+.rankings-siege-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: rgba(212, 173, 98, 0.18);
+  border: 1px solid var(--rank-line);
+}
+
+.rankings-siege-summary > div {
+  padding: 18px 20px;
+  background: rgba(8, 7, 5, 0.96);
+}
+
+.rankings-siege-summary dt {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.rankings-siege-summary dd {
+  color: #f0d18b;
+  font-family: Cambria, Georgia, serif;
+  font-size: 22px;
+  margin: 8px 0 0;
+}
+
+.rankings-siege-list {
+  display: grid;
+  gap: 18px;
+}
+
+.rankings-castle {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--rank-line);
+  background: linear-gradient(145deg, rgba(18, 15, 11, 0.96), rgba(7, 7, 6, 0.96));
+  transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+.rankings-castle:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 173, 98, 0.45);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38);
+}
+
+.rankings-castle.is-live {
+  border-color: rgba(219, 112, 94, 0.45);
+}
+
+.rankings-castle-visual {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  background: #120f0c;
+}
+
+.rankings-castle-visual img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  transform: scale(1.02);
+  transition: transform 0.6s ease;
+}
+
+.rankings-castle:hover .rankings-castle-visual img {
+  transform: scale(1.1);
+}
+
+.rankings-castle-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(212, 173, 98, 0.35);
+}
+
+.rankings-castle-fallback svg {
+  width: 64px;
+  height: 64px;
+}
+
+.rankings-castle-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(6, 5, 4, 0.05) 20%, rgba(6, 5, 4, 0.82) 100%),
+    linear-gradient(90deg, transparent 70%, rgba(6, 5, 4, 0.28));
+  pointer-events: none;
+}
+
+.rankings-castle-visual-copy {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  z-index: 3;
+}
+
+.rankings-castle-visual-copy small {
+  display: block;
+  color: rgba(240, 209, 139, 0.78);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.rankings-castle-visual-copy strong {
+  display: block;
+  color: #fff;
+  font-family: Cambria, Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-top: 4px;
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.rankings-castle-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 7px 11px;
+  color: #e8c777;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  border: 1px solid rgba(212, 173, 98, 0.38);
+  background: rgba(8, 7, 5, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.rankings-castle-status.is-live {
+  color: #ffb4a8;
+  border-color: rgba(219, 112, 94, 0.5);
+}
+
+.rankings-castle-status.is-idle {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.rankings-castle-body {
+  padding: 28px 30px 26px;
+}
+
+.rankings-castle-body header span {
+  display: block;
+  color: var(--rank-gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.rankings-castle-body h3 {
+  color: #f0d18b;
+  font-family: Cambria, Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 6px 0 8px;
+}
+
+.rankings-castle-body header p {
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.rankings-castle-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0;
+  background: rgba(212, 173, 98, 0.16);
+}
+
+.rankings-castle-meta > div {
+  min-height: 76px;
+  padding: 14px 16px;
+  background: rgba(6, 6, 5, 0.94);
+}
+
+.rankings-castle-meta dt {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.rankings-castle-meta dd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #eee4d1;
+  font-size: 15px;
+  margin: 8px 0 0;
+  word-break: break-word;
+}
+
+.rankings-castle-meta dd small {
+  display: block;
+  width: 100%;
+  color: #e8c777;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+.rankings-castle-meta .rankings-crest.sm {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  font-size: 12px;
+}
+
+.rankings-castle-forces {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.rankings-castle-forces > div {
+  padding: 14px 16px;
+  border: 1px solid rgba(212, 173, 98, 0.14);
+  background: rgba(212, 173, 98, 0.04);
+}
+
+.rankings-castle-forces h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e8c777;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.rankings-castle-forces h4 svg {
+  width: 14px;
+  height: 14px;
+}
+
+.rankings-castle-forces ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rankings-castle-forces li,
+.rankings-castle-forces p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  margin: 0;
+}
+
+.rankings-castle-forces li {
+  padding: 5px 10px;
+  border: 1px solid rgba(212, 173, 98, 0.18);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.rankings-castle-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  margin: 16px 0 0;
+}
+
+.rankings-castle-hint svg {
+  width: 14px;
+  height: 14px;
+  color: var(--rank-gold);
 }
 
 .rankings-table-wrap {
@@ -735,6 +1032,10 @@
   .rankings-world-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .rankings-castle {
+    grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 900px) {
@@ -789,6 +1090,16 @@
   .rankings-card-inner {
     min-height: 240px;
   }
+
+  .rankings-siege-summary,
+  .rankings-castle,
+  .rankings-castle-forces {
+    grid-template-columns: 1fr;
+  }
+
+  .rankings-castle-visual {
+    min-height: 220px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -832,6 +1143,22 @@
 
   .rankings-heading h2 {
     font-size: 24px;
+  }
+
+  .rankings-siege-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rankings-castle-body {
+    padding: 22px 18px 20px;
+  }
+
+  .rankings-castle-body h3 {
+    font-size: 24px;
+  }
+
+  .rankings-castle-meta {
+    grid-template-columns: 1fr;
   }
 }
 
