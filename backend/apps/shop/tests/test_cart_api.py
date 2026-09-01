@@ -2,7 +2,9 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
+from apps.games.infrastructure.models import BagItem
 from apps.shop.infrastructure.models import ShopItem
+from apps.wallet.infrastructure.models import Wallet
 
 
 @pytest.fixture
@@ -52,3 +54,19 @@ def test_cart_add_list_update_and_remove(api, user, item):
 def test_cart_is_private(api, item):
     response = api.get("/api/v1/shared/shop/cart/")
     assert response.status_code == 401
+
+
+@pytest.mark.django_db
+def test_checkout_delivers_all_purchased_units_to_bag(api, user, item):
+    api.force_authenticate(user=user)
+    Wallet.objects.create(user=user, balance="20.00")
+    added = api.post("/api/v1/shared/shop/cart/", {"item_id": str(item.id), "quantity": 10}, format="json")
+    assert added.status_code == 200, added.data
+
+    checkout = api.post("/api/v1/shared/shop/checkout/", format="json")
+
+    assert checkout.status_code == 200, checkout.data
+    bag_item = BagItem.objects.get(bag__user=user, item_id=item.item_id)
+    assert bag_item.quantity == 10_000
+    assert api.get("/api/v1/shared/shop/cart/").data["items"] == []
+    assert Wallet.objects.get(user=user).balance == 10

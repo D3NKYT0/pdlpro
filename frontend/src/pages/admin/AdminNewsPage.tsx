@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { FilePenLine, Newspaper, PencilLine, Send } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -14,6 +15,14 @@ export function AdminNewsPage() {
   const [editing, setEditing] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
 
+  function resetEditor() {
+    setTitle('')
+    setExcerpt('')
+    setBody('')
+    setPublished(true)
+    setEditing(null)
+  }
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     setSaving(true)
@@ -26,11 +35,7 @@ export function AdminNewsPage() {
         is_published: published,
       })
       toast.success(editing ? 'Notícia atualizada' : 'Notícia criada')
-      setTitle('')
-      setExcerpt('')
-      setBody('')
-      setPublished(true)
-      setEditing(null)
+      resetEditor()
       await queryClient.invalidateQueries({ queryKey: ['staff-news'] })
       await queryClient.invalidateQueries({ queryKey: ['news'] })
     } catch (error) {
@@ -43,36 +48,53 @@ export function AdminNewsPage() {
   return (
     <div className="account-page">
       <AdminHeader kicker="Conteúdo" title="Notícias" description="Avisos publicados na home e na página de news." />
-      <form className="card admin-form" onSubmit={onSubmit}>
-        <label className="field">Título<input value={title} onChange={(e) => setTitle(e.target.value)} required /></label>
-        <label className="field">Resumo<input value={excerpt} onChange={(e) => setExcerpt(e.target.value)} /></label>
-        <label className="field">Conteúdo<textarea value={body} onChange={(e) => setBody(e.target.value)} rows={8} required /></label>
-        <label className="admin-check">
-          <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
-          Publicar agora
-        </label>
-        <AdminSaveBar saving={saving} label={editing ? 'Atualizar notícia' : 'Publicar notícia'} />
-      </form>
-      <section className="card">
-        {(news.data ?? []).map((item) => (
-          <div className="admin-service-row" key={item.id}>
-            <strong>{item.title}</strong>
-            <span className="muted">{item.is_published ? 'Publicada' : 'Rascunho'}</span>
-            <button
-              className="btn ghost"
-              type="button"
-              onClick={() => {
-                setEditing(item.id)
-                setTitle(item.title)
-                setExcerpt(item.excerpt)
-                setBody(item.body)
-                setPublished(item.is_published)
-              }}
-            >
-              Editar
-            </button>
+      <form className="admin-news-editor" onSubmit={onSubmit}>
+        <section className="card admin-config-section">
+          <header>
+            <span><FilePenLine /></span>
+            <div><span className="panel-eyebrow">{editing ? 'Edição' : 'Nova publicação'}</span><h2>{editing ? 'Editar notícia' : 'Escrever notícia'}</h2><p>Prepare o título, a chamada e o conteúdo que aparecerão para os jogadores.</p></div>
+          </header>
+          <label className="field">Título <small>{title.length}/120</small><input maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} required /></label>
+          <label className="field">Resumo <small>{excerpt.length}/240</small><input maxLength={240} value={excerpt} onChange={(e) => setExcerpt(e.target.value)} /></label>
+          <label className="field">Conteúdo<textarea value={body} onChange={(e) => setBody(e.target.value)} rows={9} required /></label>
+        </section>
+
+        <aside className="card admin-news-publish">
+          <header><span><Send /></span><div><span className="panel-eyebrow">Publicação</span><h2>Status e envio</h2></div></header>
+          <label className="admin-toggle">
+            <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
+            <span className="admin-toggle-control" aria-hidden="true"><i /></span>
+            <span><strong>{published ? 'Publicar agora' : 'Salvar como rascunho'}</strong><small>{published ? 'Visível assim que for salva.' : 'Somente a equipe poderá visualizar.'}</small></span>
+            <b>{published ? 'Público' : 'Rascunho'}</b>
+          </label>
+          <div className="admin-news-checklist">
+            <span><small>Título</small><b>{title.trim() ? 'Pronto' : 'Pendente'}</b></span>
+            <span><small>Conteúdo</small><b>{body.trim() ? 'Pronto' : 'Pendente'}</b></span>
           </div>
-        ))}
+          <AdminSaveBar saving={saving} label={editing ? 'Atualizar notícia' : published ? 'Publicar notícia' : 'Salvar rascunho'} />
+          {editing ? <button className="btn ghost" type="button" onClick={resetEditor}>Cancelar edição</button> : null}
+        </aside>
+      </form>
+      <section className="card admin-news-library">
+        <header className="admin-services-heading">
+          <span><Newspaper /></span>
+          <div><span className="panel-eyebrow">Biblioteca</span><h2>Notícias cadastradas</h2><p>Revise publicações e continue trabalhando nos rascunhos.</p></div>
+          <div className="admin-services-summary"><strong>{(news.data ?? []).length}</strong><small>no total</small></div>
+        </header>
+        {(news.data ?? []).length ? <div className="admin-news-list">{(news.data ?? []).map((item) => (
+          <article className="admin-news-item" key={item.id}>
+            <span><Newspaper /></span>
+            <div><div><h3>{item.title}</h3><b className={item.is_published ? 'is-published' : ''}>{item.is_published ? 'Publicada' : 'Rascunho'}</b></div><p>{item.excerpt || 'Sem resumo cadastrado.'}</p></div>
+            <button className="btn ghost" type="button" onClick={() => {
+              setEditing(item.id)
+              setTitle(item.title)
+              setExcerpt(item.excerpt)
+              setBody(item.body)
+              setPublished(item.is_published)
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}><PencilLine /> Editar</button>
+          </article>
+        ))}</div> : <div className="account-empty-state"><Newspaper /><strong>Nenhuma notícia cadastrada</strong><span>Use o editor acima para criar a primeira publicação.</span></div>}
       </section>
     </div>
   )

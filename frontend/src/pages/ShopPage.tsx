@@ -48,6 +48,7 @@ export function ShopPage() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['shop-cart'] }),
         queryClient.invalidateQueries({ queryKey: ['wallet'] }),
+        queryClient.invalidateQueries({ queryKey: ['bag'] }),
       ])
       toast.success(`Compra concluída: ${money.format(Number(result.total))}`)
     } catch (error) {

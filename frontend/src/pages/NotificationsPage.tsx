@@ -55,9 +55,7 @@ export function NotificationsPage() {
             Desativar
           </button>
         </p>
-      ) : (
-        <p className="muted">Push disponível quando o servidor tiver chaves VAPID.</p>
-      )}
+      ) : null}
       {query.data?.unread ? (
         <p>
           <button className="btn ghost" type="button" onClick={() => void markAll()}>

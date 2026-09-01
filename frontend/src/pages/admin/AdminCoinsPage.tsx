@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { BadgeDollarSign, Coins, Percent, Scale } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -48,23 +49,46 @@ export function AdminCoinsPage() {
   return (
     <div className="account-page">
       <AdminHeader kicker="Financeiro" title="Moedas" description="Moeda ativa da carteira e taxas de saque." />
-      <form className="card admin-form" onSubmit={onSubmit}>
-        <div className="account-form-fields">
-          <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} /></label>
-          <ItemIdField
-            value={coinId}
-            onChange={(id, item) => {
-              setCoinId(id)
-              if (item) setName(item.name)
-            }}
-          />
+      <form className="admin-coins-form" onSubmit={onSubmit}>
+        <section className="card admin-config-section admin-coin-identity">
+          <header>
+            <span><Coins /></span>
+            <div><span className="panel-eyebrow">Moeda principal</span><h2>Identidade da carteira</h2><p>Vincule a moeda virtual ao item correspondente no servidor.</p></div>
+          </header>
+          <div className="account-form-fields">
+            <label className="field">Nome exibido<input value={name} onChange={(e) => setName(e.target.value)} /></label>
+            <ItemIdField
+              value={coinId}
+              onChange={(id, item) => {
+                setCoinId(id)
+                if (item) setName(item.name)
+              }}
+            />
+          </div>
+        </section>
+
+        <section className="admin-coin-metrics">
+          <label className="card admin-coin-metric field">
+            <span className="admin-coin-metric-icon"><Scale /></span>
+            <span><b>Multiplicador</b><small>Ajuste global aplicado à moeda</small></span>
+            <span className="admin-coin-input"><b>×</b><input type="number" min="0" step="0.01" value={multiplier} onChange={(e) => setMultiplier(e.target.value)} /></span>
+          </label>
+          <label className="card admin-coin-metric field">
+            <span className="admin-coin-metric-icon"><BadgeDollarSign /></span>
+            <span><b>Conversão por USD</b><small>Moedas entregues por dólar</small></span>
+            <span className="admin-coin-input"><b>$</b><input type="number" min="0" step="0.01" value={usd} onChange={(e) => setUsd(e.target.value)} /></span>
+          </label>
+          <label className="card admin-coin-metric field">
+            <span className="admin-coin-metric-icon"><Percent /></span>
+            <span><b>Taxa de retirada</b><small>Percentual retido no saque</small></span>
+            <span className="admin-coin-input"><b>%</b><input type="number" min="0" max="100" step="0.01" value={fee} onChange={(e) => setFee(e.target.value)} /></span>
+          </label>
+        </section>
+
+        <div className="card admin-server-actions">
+          <span><strong>Configuração da moeda</strong><small>{name || 'Moeda sem nome'} · Item {coinId || 'não definido'} · taxa de {fee || '0'}%</small></span>
+          <AdminSaveBar saving={saving} />
         </div>
-        <div className="account-form-fields">
-          <label className="field">Multiplicador<input value={multiplier} onChange={(e) => setMultiplier(e.target.value)} /></label>
-          <label className="field">Moedas por USD<input value={usd} onChange={(e) => setUsd(e.target.value)} /></label>
-        </div>
-        <label className="field">Taxa de retirada (%)<input value={fee} onChange={(e) => setFee(e.target.value)} /></label>
-        <AdminSaveBar saving={saving} />
       </form>
     </div>
   )

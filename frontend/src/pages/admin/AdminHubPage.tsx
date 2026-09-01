@@ -10,7 +10,6 @@ import {
   Settings2,
   ShoppingBag,
   SlidersHorizontal,
-  WalletCards,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -30,7 +29,6 @@ const categories: Category[] = [
     entries: [
       { to: '/painel/admin/moedas', title: 'Moedas', description: 'Moeda ativa, multiplicador e taxa', icon: Coins },
       { to: '/painel/admin/loja', title: 'Loja', description: 'Itens vendidos no painel', icon: ShoppingBag },
-      { to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo e slots', icon: WalletCards },
     ],
   },
   {
@@ -46,7 +44,7 @@ const categories: Category[] = [
   },
   {
     name: 'Servidor',
-    entries: [{ to: '/painel/admin/servicos', title: 'Services', description: 'Preços dos serviços Lineage', icon: Settings2 }],
+    entries: [{ to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo, slots e destravamento', icon: Settings2 }],
   },
 ]
 

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
+from apps.games.application.bag import add_to_bag
 from apps.shop.infrastructure.models import Cart, CartItem, ShopItem, ShopPurchase
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository
@@ -140,5 +141,12 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
                 raise InsufficientBalanceError()
             self._wallets.debit(wallet.id, total, destination="shop", description="Compra na loja")
             purchase = ShopPurchase.objects.create(user=user, total=total)
+            for row in items:
+                add_to_bag(
+                    user,
+                    item_id=row.item.item_id,
+                    item_name=row.item.name,
+                    quantity=row.item.quantity * row.quantity,
+                )
             cart.items.all().delete()
         return {"purchase_id": str(purchase.id), "total": str(total)}
