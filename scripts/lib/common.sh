@@ -4,7 +4,7 @@ LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(cd "${LIB_DIR}/../.." && pwd)"
 readonly COMPOSE_FILE="${ROOT_DIR}/docker-compose.yml"
 readonly PRODUCTION_COMPOSE_FILE="${ROOT_DIR}/docker-compose.prod.yml"
-readonly ENV_FILE="${ROOT_DIR}/.env"
+readonly ENV_FILE="${PDL_ENV_FILE:-${ROOT_DIR}/.env}"
 
 info() {
   printf '[INFO] %s\n' "$*"
@@ -70,7 +70,7 @@ operational_compose() {
 
 read_env_value() {
   local key="$1"
-  awk -F= -v key="$key" '$1 == key { sub(/^[^=]*=/, ""); print; exit }' "$ENV_FILE"
+  awk -F= -v key="$key" '$1 == key { sub(/\r$/, ""); sub(/^[^=]*=/, ""); print; exit }' "$ENV_FILE"
 }
 
 service_is_running() {

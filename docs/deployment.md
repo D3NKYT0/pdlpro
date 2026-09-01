@@ -47,12 +47,29 @@ sudo mkdir -p /opt/pdlpro
 sudo chown "$USER":"$USER" /opt/pdlpro
 git clone https://github.com/D3NKYT0/pdlpro.git /opt/pdlpro
 cd /opt/pdlpro
-cp .env.example .env
-nano .env
+./setup.sh configure-production
 ```
 
-Configure ao menos os valores abaixo. Gere `SECRET_KEY` com
-`openssl rand -hex 64` e `DB_PASSWORD` com `openssl rand -hex 32`.
+Esse comando cria o `.env`, gera os segredos sem exibi-los e salva o arquivo
+anterior em `backups/config/`. O Docker deve estar em execucao para que a senha
+gerada seja sincronizada com o PostgreSQL. Para substituir segredos expostos:
+
+```bash
+./setup.sh configure-production --rotate-secrets
+```
+
+Tambem e possivel rotacionar apenas um segredo:
+
+```bash
+./setup.sh configure-production --rotate-secret-key
+./setup.sh configure-production --rotate-db-password
+```
+
+Em uma instalacao existente, a rotacao atualiza o role PostgreSQL, grava o novo
+`.env` e recria os servicos dependentes. Se alguma etapa falhar, o comando tenta
+restaurar tanto a senha anterior do banco quanto o arquivo de configuracao.
+
+O resultado relevante sera equivalente aos valores abaixo:
 
 ```dotenv
 DOMAIN=pdl.denky.dev.br

@@ -44,6 +44,7 @@ No Bash/WSL, os mesmos fluxos estão centralizados no `setup.sh`:
 ```bash
 ./setup.sh install
 ./setup.sh deploy --dev
+./setup.sh configure-production
 ./setup.sh deploy --production
 ./setup.sh backup
 ./setup.sh restore --path backups/db/pdl_YYYYMMDDTHHMMSSZ.dump
