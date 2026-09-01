@@ -17,6 +17,7 @@ Opções:
   --no-build  Reutiliza as imagens locais existentes.
   --dev       Ativa o perfil dev e inicia o frontend Vite.
   --production  Build estático e Django production atrás do proxy reverso.
+                Detectado automaticamente quando o .env usa settings de produção.
   --pull      Atualiza as imagens base antes do deploy.
   -h, --help  Exibe esta ajuda.
 EOF
@@ -53,6 +54,14 @@ require_project_files
 require_docker
 ensure_env_file
 cd "$ROOT_DIR"
+
+if [[ "$production" -eq 0 && "$dev" -eq 0 ]]; then
+  settings_module="$(read_env_value DJANGO_SETTINGS_MODULE)"
+  if [[ "$settings_module" == "core.settings.production" ]]; then
+    production=1
+    info "Ambiente de produção detectado pelo .env."
+  fi
+fi
 
 if [[ "$production" -eq 1 ]]; then
   [[ -f "$PRODUCTION_COMPOSE_FILE" ]] || die "docker-compose.prod.yml não encontrado"
