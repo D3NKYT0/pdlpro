@@ -38,6 +38,7 @@ from django.conf import settings
 class ServerProvider(AppProvider):
     def register(self, container: Container) -> None:
         if settings.LINEAGE_DB_ENABLED:
+            # Catálogo recarregado no boot; arquivos .sql do dialeto entram aqui.
             catalog = LineageQueryCatalog.load(getattr(settings, "LINEAGE_QUERY_MODULE", "lucerav2"))
             container.register(LineageQueryCatalog, instance=catalog, lifetime=Lifetime.SINGLETON)
             container.register(ILineageGateway, SqlAlchemyLineageGateway, lifetime=Lifetime.SINGLETON)

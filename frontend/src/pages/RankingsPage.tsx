@@ -204,6 +204,26 @@ function siegeState(value: unknown) {
   return { kind: 'idle' as const, label: 'Aguardando calendário', detail: formatDate(value) }
 }
 
+function withCastleCatalog(rows: WorldRow[]): WorldRow[] {
+  return CASTLE_CATALOG.map((castle) => {
+    const live =
+      rows.find((row) => castleIdOf(row) === castle.id) ??
+      rows.find((row) => displayName(row.name, '').toLowerCase().replace(/[^a-z]/g, '') === castle.slug)
+    return {
+      ...(live ?? {}),
+      castle_id: castle.id,
+      name: displayName(live?.name, castle.title),
+    }
+  })
+}
+
+function formatTax(value: unknown) {
+  if (value == null || value === '') return '—'
+  const amount = Number(value)
+  if (!Number.isFinite(amount)) return '—'
+  return `${amount.toLocaleString('pt-BR')}%`
+}
+
 function formatTreasury(value: unknown) {
   if (value == null || value === '') return 'Vazio'
   const amount = Number(value)
@@ -453,7 +473,7 @@ export function RankingsPage() {
               <EmptyWorld />
             )
           ) : tab.id === 'siege' ? (
-            worldRows.length ? <SiegeBoard rows={worldRows} /> : <EmptyWorld />
+            <SiegeBoard rows={worldRows} />
           ) : worldRows.length ? (
             <div className="rankings-table-wrap">
               <table className="rankings-table">
@@ -533,7 +553,7 @@ export function RankingsPage() {
 }
 
 function SiegeBoard({ rows }: { rows: WorldRow[] }) {
-  const castles = [...rows].sort((a, b) => castleIdOf(a) - castleIdOf(b))
+  const castles = withCastleCatalog(rows)
   const participants = useQueries({
     queries: castles.map((row) => {
       const castleId = castleIdOf(row)
@@ -628,6 +648,10 @@ function SiegeBoard({ rows }: { rows: WorldRow[] }) {
                   <div>
                     <dt>Tesouro</dt>
                     <dd>{formatTreasury(row.stax)}</dd>
+                  </div>
+                  <div>
+                    <dt>Taxa</dt>
+                    <dd>{formatTax(row.tax)}</dd>
                   </div>
                   <div>
                     <dt>Próxima guerra</dt>
