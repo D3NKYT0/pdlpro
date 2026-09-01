@@ -1,24 +1,41 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import {
+  Activity,
+  BookOpen,
+  Check,
+  Coins,
+  Crown,
+  Download,
+  Gem,
+  PackageOpen,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Sparkles,
+  Swords,
+  UserPlus,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { serverApi } from '../services/api'
-import { themeImage } from '../theme/assets'
 
-const rateLabels: Record<string, string> = {
-  xp: 'XP',
-  sp: 'SP',
-  adena: 'Adena',
-  drop: 'Drop',
-  spoil: 'Spoil',
-}
+const rateCards: Array<{ key: string; label: string; detail: string; icon: LucideIcon }> = [
+  { key: 'xp', label: 'Experiência', detail: 'Progressão de nível', icon: Zap },
+  { key: 'sp', label: 'Skill Points', detail: 'Evolução de habilidades', icon: Sparkles },
+  { key: 'adena', label: 'Adena', detail: 'Economia do servidor', icon: Coins },
+  { key: 'drop', label: 'Drop', detail: 'Itens dos monstros', icon: PackageOpen },
+  { key: 'spoil', label: 'Spoil', detail: 'Coleta de materiais', icon: Gem },
+]
 
-const sections = [
-  { id: 'geral', label: 'Geral' },
-  { id: 'rates', label: 'Rates' },
-  { id: 'enchant', label: 'Encantamento' },
-  { id: 'features', label: 'Recursos' },
-  { id: 'pvp', label: 'PvP' },
-  { id: 'comecar', label: 'Começar' },
+const sections: Array<{ id: string; label: string; icon: LucideIcon }> = [
+  { id: 'geral', label: 'Visão geral', icon: Server },
+  { id: 'rates', label: 'Rates', icon: Activity },
+  { id: 'enchant', label: 'Encantamento', icon: ShieldCheck },
+  { id: 'features', label: 'Recursos', icon: Sparkles },
+  { id: 'pvp', label: 'PvP', icon: Swords },
+  { id: 'comecar', label: 'Começar', icon: Rocket },
 ]
 
 export function InfoPage() {
@@ -27,6 +44,8 @@ export function InfoPage() {
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const data = info.data
   const active = hash.replace('#', '') || 'geral'
+  const statusLabel = status.isLoading ? 'Verificando' : status.data?.game_online ? 'Online' : 'Offline'
+  const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
 
   useEffect(() => {
     const id = hash.replace('#', '')
@@ -37,25 +56,65 @@ export function InfoPage() {
   return (
     <div className="info-page">
       <header className="info-hero">
-        <div className="title container">
-          <span>
-            <img src={themeImage('icons/text.png')} alt="" />
-            Servidor
-          </span>
-          <h1>Informações</h1>
-          <p>A ficha clássica: crônica, rates e o que muda no gameplay.</p>
+        <div className="info-hero-glow" aria-hidden="true" />
+        <div className="container info-hero-inner">
+          <div className="info-hero-copy">
+            <span className="info-eyebrow">
+              <Crown aria-hidden="true" />
+              Guia oficial do servidor
+            </span>
+            <h1>
+              Conheça o <em>reino</em>
+            </h1>
+            <p>Rates, progressão e regras essenciais reunidos em uma visão clara antes de começar sua jornada.</p>
+            <div className="info-hero-actions">
+              <Link className="info-action info-action-primary" to="/downloads">
+                <Download aria-hidden="true" />
+                Baixar o jogo
+              </Link>
+              <Link className="info-action info-action-secondary" to="/register">
+                <UserPlus aria-hidden="true" />
+                Criar conta
+              </Link>
+            </div>
+          </div>
+
+          <aside className="info-hero-card" aria-label="Resumo do servidor">
+            <div className="info-server-mark">
+              <Server aria-hidden="true" />
+            </div>
+            <div className="info-server-heading">
+              <span>Servidor principal</span>
+              <strong>{data?.name ?? 'PDL PRO'}</strong>
+            </div>
+            <div className={`info-live-status ${statusClass}`}>
+              <i aria-hidden="true" />
+              {statusLabel}
+            </div>
+            <dl className="info-hero-metrics">
+              <div>
+                <dt>Crônica</dt>
+                <dd>{data?.chronicle ?? '—'}</dd>
+              </div>
+              <div>
+                <dt>Nível máximo</dt>
+                <dd>{data?.max_level ?? '—'}</dd>
+              </div>
+            </dl>
+          </aside>
         </div>
       </header>
 
       <nav className="info-nav container" aria-label="Seções">
-        {sections.map((item) => (
-          <a key={item.id} href={`#${item.id}`} className={active === item.id ? 'is-active' : undefined}>
-            {item.label}
+        {sections.map(({ id, label, icon: Icon }) => (
+          <a key={id} href={`#${id}`} className={active === id ? 'is-active' : undefined}>
+            <Icon aria-hidden="true" />
+            {label}
           </a>
         ))}
       </nav>
 
-      <div className="container">
+      <main className="container info-content">
         {info.isLoading ? (
           <div className="info-empty">
             <span className="info-diamond" aria-hidden="true" />
@@ -68,70 +127,120 @@ export function InfoPage() {
           </div>
         ) : (
           <>
-            <section className="info-section" id="geral">
-              <h2>Geral</h2>
-              <div className="info-plaque">
+            <section className="info-section info-overview" id="geral">
+              <div className="info-section-heading">
+                <span>01</span>
                 <div>
-                  <strong>{data?.name ?? '—'}</strong>
-                  <span>Nome</span>
-                </div>
-                <div>
-                  <strong>{data?.chronicle ?? '—'}</strong>
-                  <span>Crônica</span>
-                </div>
-                <div>
-                  <strong>{data?.max_level ?? '—'}</strong>
-                  <span>Nível máximo</span>
-                </div>
-                <div>
-                  <strong className={status.data?.game_online ? 'is-online' : 'is-offline'}>
-                    <i className="fas fa-circle" />
-                    {status.data?.game_online ? 'Online' : 'Offline'}
-                  </strong>
-                  <span>Servidor</span>
+                  <small>O essencial</small>
+                  <h2>Visão geral</h2>
                 </div>
               </div>
-              {data?.description ? <p className="info-lead">{data.description}</p> : null}
+              <div className="info-overview-grid">
+                <article className="info-story-card">
+                  <span className="info-card-kicker">Um clássico vivo</span>
+                  <h3>{data?.name ?? 'PDL PRO'}</h3>
+                  <p>{data?.description || 'Uma experiência Lineage II criada para valorizar cada conquista e cada rivalidade.'}</p>
+                  <div className="info-story-line">
+                    <span />
+                    Crônica {data?.chronicle ?? '—'}
+                  </div>
+                </article>
+
+                <div className="info-plaque">
+                  <div>
+                    <Server aria-hidden="true" />
+                    <span>Servidor</span>
+                    <strong>{data?.name ?? '—'}</strong>
+                  </div>
+                  <div>
+                    <BookOpen aria-hidden="true" />
+                    <span>Crônica</span>
+                    <strong>{data?.chronicle ?? '—'}</strong>
+                  </div>
+                  <div>
+                    <Crown aria-hidden="true" />
+                    <span>Nível máximo</span>
+                    <strong>{data?.max_level ?? '—'}</strong>
+                  </div>
+                  <div>
+                    <Activity aria-hidden="true" />
+                    <span>Status</span>
+                    <strong className={statusClass}>{statusLabel}</strong>
+                  </div>
+                </div>
+              </div>
             </section>
 
             <section className="info-section" id="rates">
-              <h2>Rates</h2>
+              <div className="info-section-heading">
+                <span>02</span>
+                <div>
+                  <small>Ritmo da jornada</small>
+                  <h2>Rates do servidor</h2>
+                </div>
+              </div>
               <div className="info-rate-grid">
-                {Object.entries(rateLabels).map(([key, label]) => (
-                  <article className="info-tile" key={key}>
-                    <div>
-                      <strong>{data?.rates[key] ?? '—'}</strong>
-                      <span>{label}</span>
+                {rateCards.map(({ key, label, detail, icon: Icon }) => (
+                  <article className="info-rate-card" key={key}>
+                    <div className="info-card-icon">
+                      <Icon aria-hidden="true" />
                     </div>
+                    <span>{label}</span>
+                    <strong>{data?.rates[key] ?? '—'}</strong>
+                    <small>{detail}</small>
                   </article>
                 ))}
               </div>
             </section>
 
             <section className="info-section" id="enchant">
-              <h2>Encantamento</h2>
+              <div className="info-section-heading">
+                <span>03</span>
+                <div>
+                  <small>Fortaleça seu equipamento</small>
+                  <h2>Encantamento</h2>
+                </div>
+              </div>
               <div className="info-enchant">
-                <article className="info-tile">
-                  <div>
-                    <strong>{data?.enchant.safe ?? '—'}</strong>
-                    <span>Safe</span>
+                <article>
+                  <div className="info-enchant-icon">
+                    <ShieldCheck aria-hidden="true" />
                   </div>
+                  <div>
+                    <span>Encantamento seguro</span>
+                    <p>Até este valor, seu equipamento evolui sem risco.</p>
+                  </div>
+                  <strong>{data?.enchant.safe ?? '—'}</strong>
                 </article>
-                <article className="info-tile">
-                  <div>
-                    <strong>{data?.enchant.max ?? '—'}</strong>
-                    <span>Máximo</span>
+                <article>
+                  <div className="info-enchant-icon">
+                    <Sparkles aria-hidden="true" />
                   </div>
+                  <div>
+                    <span>Limite máximo</span>
+                    <p>O ápice de poder permitido para cada equipamento.</p>
+                  </div>
+                  <strong>{data?.enchant.max ?? '—'}</strong>
                 </article>
               </div>
             </section>
 
             <section className="info-section" id="features">
-              <h2>Recursos</h2>
+              <div className="info-section-heading">
+                <span>04</span>
+                <div>
+                  <small>O que espera por você</small>
+                  <h2>Recursos do reino</h2>
+                </div>
+              </div>
               {(data?.features ?? []).length ? (
                 <ul className="info-features">
-                  {(data?.features ?? []).map((item) => (
-                    <li key={item}>{item}</li>
+                  {(data?.features ?? []).map((item, index) => (
+                    <li key={item}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <Check aria-hidden="true" />
+                      <strong>{item}</strong>
+                    </li>
                   ))}
                 </ul>
               ) : (
@@ -141,33 +250,52 @@ export function InfoPage() {
 
             <div className="info-split">
               <section className="info-panel" id="pvp">
+                <div className="info-panel-icon">
+                  <Swords aria-hidden="true" />
+                </div>
+                <small>Conquiste seu nome</small>
                 <h2>PvP e castelos</h2>
                 <p>{data?.notes.pvp || 'Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.'}</p>
+                <span className="info-panel-number">05</span>
               </section>
               <section className="info-panel" id="comecar">
+                <div className="info-panel-icon">
+                  <Rocket aria-hidden="true" />
+                </div>
+                <small>Prepare sua jornada</small>
                 <h2>Como começar</h2>
                 <p>{data?.notes.start || 'Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.'}</p>
+                <span className="info-panel-number">06</span>
               </section>
             </div>
 
-            <div className="info-cta">
-              <span>
-                <img src={themeImage('icons/text.png')} alt="" />
-                Entre no reino
-              </span>
-              <p>Crie a conta mestra, baixe o cliente e consulte a wiki quando precisar.</p>
-              <div className="info-cta-links">
-                <Link to="/downloads">Baixar Jogo</Link>
-                <Link to="/register">Criar Conta</Link>
+            <section className="info-cta">
+              <div>
+                <span className="info-eyebrow">
+                  <Crown aria-hidden="true" />
+                  Sua lenda começa agora
+                </span>
+                <h2>Pronto para entrar no reino?</h2>
+                <p>Crie sua conta, prepare o cliente e consulte a wiki sempre que precisar.</p>
               </div>
-              <Link className="info-wiki-link" to="/wiki">
-                Abrir wiki
-                <img src={themeImage('icons/more.png')} alt="" />
-              </Link>
-            </div>
+              <div className="info-cta-actions">
+                <Link className="info-action info-action-primary" to="/register">
+                  <UserPlus aria-hidden="true" />
+                  Criar conta
+                </Link>
+                <Link className="info-action info-action-secondary" to="/downloads">
+                  <Download aria-hidden="true" />
+                  Baixar jogo
+                </Link>
+                <Link className="info-wiki-link" to="/wiki">
+                  <BookOpen aria-hidden="true" />
+                  Abrir wiki
+                </Link>
+              </div>
+            </section>
           </>
         )}
-      </div>
+      </main>
     </div>
   )
 }
