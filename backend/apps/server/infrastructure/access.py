@@ -24,10 +24,8 @@ class DjangoAccountAccessService(IAccountAccessService):
         return bool(account and account.linked_user_id == str(user_id))
 
     def list_accounts(self, user_id: UUID, username: str) -> list[AccessibleAccount]:
-        seen: dict[str, AccessibleAccount] = {
-            username.lower(): AccessibleAccount(login=username, is_primary=True, linked=True)
-        }
-        for row in ManagedLineageAccount.objects.filter(user__id=user_id):
+        seen: dict[str, AccessibleAccount] = {}
+        for row in ManagedLineageAccount.objects.filter(user__id=user_id).order_by("-is_primary", "login"):
             seen[row.login.lower()] = AccessibleAccount(
                 login=row.login,
                 is_primary=row.is_primary,

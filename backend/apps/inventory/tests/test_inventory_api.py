@@ -21,6 +21,10 @@ def player(db):
 @pytest.mark.django_db
 def test_register_and_list_accounts(api, player):
     api.force_authenticate(user=player)
+    before = api.get("/api/v1/customer/server/accounts/")
+    assert before.status_code == 200
+    assert before.data["accounts"] == []
+
     response = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
     assert response.status_code == 200
     assert response.data["login"] == "hero"

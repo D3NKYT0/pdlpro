@@ -427,6 +427,319 @@ html.pdl-panel .badge.off {
   color: #dc6b5b;
 }
 
+html.pdl-panel .account-page {
+  display: grid;
+  gap: 18px;
+}
+
+html.pdl-panel .account-hero {
+  display: flex;
+  min-height: 154px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.88) 58%, rgba(22, 16, 10, 0.72)),
+    url(/theme/default/images/bg/3.jpg) center 38% / cover no-repeat;
+}
+
+html.pdl-panel .account-hero::after {
+  position: absolute;
+  right: 8%;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(197, 161, 97, 0.09);
+  content: '';
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .account-hero > div {
+  position: relative;
+  z-index: 1;
+}
+
+html.pdl-panel .account-hero h1 {
+  margin: 7px 0 5px;
+}
+
+html.pdl-panel .account-hero p {
+  margin: 0;
+}
+
+html.pdl-panel .account-slot-summary {
+  display: grid;
+  grid-template-columns: 39px auto;
+  min-width: 190px;
+  align-items: center;
+  gap: 1px 12px;
+  padding: 14px 17px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(5, 5, 4, 0.62);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+}
+
+html.pdl-panel .account-slot-summary > svg {
+  grid-row: 1 / 3;
+  width: 39px;
+  height: 39px;
+  padding: 9px;
+  border: 1px solid rgba(230, 199, 125, 0.25);
+  border-radius: 50%;
+  color: var(--panel-gold-bright);
+  stroke-width: 1.35;
+}
+
+html.pdl-panel .account-slot-summary span {
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .account-slot-summary strong {
+  color: var(--panel-gold-bright);
+  font-family: Cambria, serif;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+html.pdl-panel .account-content-grid {
+  grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.88fr);
+  align-items: start;
+}
+
+html.pdl-panel .account-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .account-section-heading h2 {
+  margin: 4px 0 0;
+}
+
+html.pdl-panel .account-status-pill,
+html.pdl-panel .account-login-chip {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(230, 199, 125, 0.17);
+  background: rgba(197, 161, 97, 0.05);
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .account-status-pill svg {
+  width: 14px;
+  height: 14px;
+}
+
+html.pdl-panel .account-status-pill.is-active {
+  border-color: rgba(128, 201, 135, 0.24);
+  background: rgba(128, 201, 135, 0.055);
+  color: #80c987;
+}
+
+html.pdl-panel .account-login-chip {
+  border-color: rgba(230, 199, 125, 0.24);
+  color: var(--panel-gold-bright);
+  text-transform: none;
+}
+
+html.pdl-panel .account-list {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .account-list-item {
+  display: grid;
+  grid-template-columns: 39px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 11px 13px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(5, 5, 4, 0.34);
+}
+
+html.pdl-panel .account-list-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  background: rgba(197, 161, 97, 0.065);
+  color: var(--panel-gold-bright);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .account-list-icon svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.4;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .account-list-item > span:nth-child(2) {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+html.pdl-panel .account-list-item strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+html.pdl-panel .account-list-item small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+}
+
+html.pdl-panel .account-list-item > b {
+  color: #80c987;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .account-created-state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 13px;
+  padding: 13px 15px;
+  border: 1px solid rgba(128, 201, 135, 0.18);
+  background: rgba(128, 201, 135, 0.045);
+}
+
+html.pdl-panel .account-created-state > svg {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  color: #80c987;
+  stroke-width: 1.5;
+}
+
+html.pdl-panel .account-created-state > div {
+  display: flex;
+  flex-direction: column;
+}
+
+html.pdl-panel .account-created-state strong {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+}
+
+html.pdl-panel .account-created-state span {
+  color: rgba(255, 255, 255, 0.43);
+  font-size: 10px;
+}
+
+html.pdl-panel .account-management .account-action-form {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .account-management .account-action-form h3 {
+  margin: 0 0 4px;
+}
+
+html.pdl-panel .account-management .account-action-form > p {
+  margin-bottom: 15px;
+  font-size: 11px;
+}
+
+html.pdl-panel .account-form-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+html.pdl-panel .account-form-title > svg {
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  color: var(--panel-gold);
+  stroke-width: 1.4;
+}
+
+html.pdl-panel .account-form-title p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 11px;
+}
+
+html.pdl-panel .account-form-title p strong {
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .account-form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .account-action-form .btn {
+  min-width: 138px;
+  height: 41px;
+  font-size: 12px;
+}
+
+html.pdl-panel .account-action-form .btn:disabled {
+  cursor: wait;
+  filter: grayscale(0.45) brightness(0.7);
+  opacity: 0.72;
+}
+
+html.pdl-panel .account-characters {
+  min-height: 420px;
+}
+
+html.pdl-panel .account-empty-state {
+  display: flex;
+  min-height: 190px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px;
+  border: 1px dashed rgba(197, 161, 97, 0.16);
+  color: var(--panel-muted);
+  flex-direction: column;
+  text-align: center;
+}
+
+html.pdl-panel .account-empty-state > svg {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 5px;
+  color: rgba(197, 161, 97, 0.58);
+  stroke-width: 1.25;
+}
+
+html.pdl-panel .account-empty-state strong {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 13px;
+}
+
+html.pdl-panel .account-empty-state span {
+  max-width: 330px;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 11px;
+}
+
 html.pdl-panel .panel-welcome {
   display: flex;
   min-height: 185px;
@@ -2098,6 +2411,15 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-template-columns: 1fr;
   }
 
+  html.pdl-panel .account-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .account-slot-summary {
+    width: 100%;
+  }
+
   html.pdl-panel .game-roulette,
   html.pdl-panel .game-daily,
   html.pdl-panel .game-boxes,
@@ -2265,8 +2587,22 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .game-inline-form,
-  html.pdl-panel .game-form-grid {
+  html.pdl-panel .game-form-grid,
+  html.pdl-panel .account-form-fields {
     grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .account-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .account-list-item {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  html.pdl-panel .account-list-item > b {
+    grid-column: 2;
   }
 
   html.pdl-panel .game-inline-form .btn {
