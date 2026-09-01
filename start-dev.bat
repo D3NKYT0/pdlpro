@@ -21,7 +21,7 @@ if not exist "frontend\node_modules\" (
   popd
 )
 
-echo Subindo PDL PRO com SQLite local. O banco em 192.168.15.4 nao e usado.
+echo Subindo PDL PRO com SQLite local e integracao Lineage definida no .env.
 echo API:  http://127.0.0.1:8000
 echo Site: http://localhost:3000
 echo.
