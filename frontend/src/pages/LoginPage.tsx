@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Fingerprint } from 'lucide-react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
 import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
@@ -128,10 +129,10 @@ export function LoginPage() {
               <Fingerprint aria-hidden="true" /> {passkeyLoading ? 'Aguardando...' : 'Chave de acesso'}
             </button>
             <button type="button" className="auth-method" disabled={!capabilities.data?.google} onClick={() => void beginOAuth('google', 'login')} title={!capabilities.data?.google ? 'Configure as credenciais Google no ambiente' : undefined}>
-              <b className="auth-provider-google">G</b> Google
+              <GoogleIcon /> Google
             </button>
             <button type="button" className="auth-method" disabled={!capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'login')} title={!capabilities.data?.discord ? 'Configure as credenciais Discord no ambiente' : undefined}>
-              <i className="fa-brands fa-discord" aria-hidden="true" /> Discord
+              <DiscordIcon /> Discord
             </button>
           </div>
           <p className="auth-security-note"><i className="fa-solid fa-shield-halved" /> Protegido por CAPTCHA adaptativo, verificação de e-mail e 2FA.</p>

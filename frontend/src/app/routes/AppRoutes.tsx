@@ -87,7 +87,6 @@ export function AppRoutes() {
             <Route path="/painel/shop" element={<ShopPage />} />
             <Route path="/painel/marketplace" element={<MarketplacePage />} />
             <Route path="/painel/auctions" element={<AuctionPage />} />
-            <Route path="/painel/clans" element={<Navigate to="/painel" replace />} />
             <Route element={<RequireStaff />}>
               <Route path="/painel/admin" element={<AdminHubPage />} />
               <Route path="/painel/admin/servidor" element={<AdminServerPage />} />

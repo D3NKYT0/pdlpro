@@ -39,7 +39,6 @@ LOCAL_APPS = [
     "apps.marketplace.apps.MarketplaceConfig",
     "apps.auction.apps.AuctionConfig",
     "apps.games.apps.GamesConfig",
-    "apps.social.apps.SocialConfig",
     "apps.communication.apps.CommunicationConfig",
     "apps.staff.apps.StaffConfig",
 ]

@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { BadgeCheck, Fingerprint, KeyRound, Link2, MailCheck, Plus, ShieldCheck, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { useAuth } from '../contexts/AuthContext'
 import { credentialJSON, creationOptions } from '../lib/webauthn'
 import { authApi, isApiError } from '../services/api'
@@ -115,8 +116,8 @@ export function AccountSecurityPage() {
 
         <section className="card security-card security-connections">
           <header><span><Link2 /></span><div><h2>Contas conectadas</h2><p>Outras formas de entrar</p></div></header>
-          <div className="security-provider"><b className="auth-provider-google">G</b><span><strong>Google</strong><small>{googleConnected ? 'Conta conectada' : capabilities.data?.google ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><button className="btn ghost" disabled={googleConnected || !capabilities.data?.google} onClick={() => void beginOAuth('google', 'link')}>{googleConnected ? 'Conectado' : 'Conectar'}</button></div>
-          <div className="security-provider"><i className="fa-brands fa-discord" /><span><strong>Discord</strong><small>{discordConnected ? 'Conta conectada' : capabilities.data?.discord ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><button className="btn ghost" disabled={discordConnected || !capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'link')}>{discordConnected ? 'Conectado' : 'Conectar'}</button></div>
+          <div className="security-provider"><GoogleIcon /><span><strong>Google</strong><small>{googleConnected ? 'Conta conectada' : capabilities.data?.google ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><button className="btn ghost" disabled={googleConnected || !capabilities.data?.google} onClick={() => void beginOAuth('google', 'link')}>{googleConnected ? 'Conectado' : 'Conectar'}</button></div>
+          <div className="security-provider"><DiscordIcon /><span><strong>Discord</strong><small>{discordConnected ? 'Conta conectada' : capabilities.data?.discord ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><button className="btn ghost" disabled={discordConnected || !capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'link')}>{discordConnected ? 'Conectado' : 'Conectar'}</button></div>
           <div className="security-provider"><ShieldCheck /><span><strong>CAPTCHA adaptativo</strong><small>{capabilities.data?.captcha ? 'Proteção ativa após tentativas suspeitas' : 'Configure as chaves hCaptcha no ambiente'}</small></span><b className={capabilities.data?.captcha ? 'is-on' : 'is-off'}>{capabilities.data?.captcha ? 'Ativo' : 'Configurar'}</b></div>
         </section>
       </div>

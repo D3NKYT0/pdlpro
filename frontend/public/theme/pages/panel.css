@@ -6067,7 +6067,7 @@ html.pdl-panel .security-passkey-list article button svg { width: 15px; }
 html.pdl-panel .security-provider { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; min-height: 52px; padding: 10px 0; border-bottom: 1px solid rgba(218,174,81,.12); }
 html.pdl-panel .security-provider:last-child { border: 0; }
 html.pdl-panel .security-provider > svg,
-html.pdl-panel .security-provider > i { width: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
+html.pdl-panel .security-provider > i { width: 22px; height: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
 html.pdl-panel .security-provider > span { display: flex; min-width: 0; flex-direction: column; }
 html.pdl-panel .security-provider small { color: rgba(239,224,194,.48); }
 html.pdl-panel .security-provider .btn { min-width: 92px; }
