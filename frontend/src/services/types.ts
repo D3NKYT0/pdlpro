@@ -51,6 +51,23 @@ export interface ApiShopItem {
   quantity: number
 }
 
+export interface ApiCartItem {
+  id: string
+  shop_item_id: string
+  item_id: number
+  name: string
+  unit_price: string
+  quantity: number
+  grant_quantity: number
+  line_total: string
+}
+
+export interface ApiCart {
+  items: ApiCartItem[]
+  count: number
+  total: string
+}
+
 export interface ApiNews {
   id: string
   slug: string
@@ -239,7 +256,9 @@ export interface ApiGamerProfile {
   level: number
   xp_next: number
   unlocked_now: string[]
-  achievements: Array<{ code: string; name: string; description: string }>
+  unlocked_count: number
+  total_achievements: number
+  achievements: Array<{ code: string; name: string; description: string; unlocked: boolean }>
   rewards: Array<{
     id: string
     kind: string

@@ -13,6 +13,7 @@ import {
   UserRound,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { AchievementGrid } from '../components/AchievementGrid'
 import { useAuth } from '../contexts/AuthContext'
 import { authApi, isApiError } from '../services/api'
 
@@ -42,7 +43,8 @@ export function ProfilePage() {
 
   const completedFields = [Boolean(user?.avatar_url || avatar), Boolean(displayName.trim()), Boolean(bio.trim())].filter(Boolean).length
   const completeness = Math.round((completedFields / 3) * 100)
-  const achievements = progress.data?.achievements.length ?? 0
+  const unlockedCount = progress.data?.unlocked_count ?? progress.data?.achievements?.filter((row) => row.unlocked).length ?? 0
+  const totalAchievements = progress.data?.total_achievements ?? progress.data?.achievements?.length ?? 0
 
   function chooseAvatar(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
@@ -142,7 +144,7 @@ export function ProfilePage() {
             </div>
             <div className="user-profile-stat-list">
               <div><Trophy aria-hidden="true" /><span><small>Nível</small><strong>{progress.data?.level ?? 1}</strong></span></div>
-              <div><Sparkles aria-hidden="true" /><span><small>Conquistas</small><strong>{achievements}</strong></span></div>
+              <div><Sparkles aria-hidden="true" /><span><small>Conquistas</small><strong>{unlockedCount}/{totalAchievements || 0}</strong></span></div>
               <div><Coins aria-hidden="true" /><span><small>Fichas</small><strong>{user?.fichas ?? 0}</strong></span></div>
             </div>
           </section>
@@ -161,6 +163,8 @@ export function ProfilePage() {
           </section>
         </aside>
       </div>
+
+      <AchievementGrid achievements={progress.data?.achievements ?? []} />
     </div>
   )
 }

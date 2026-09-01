@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from apps.accounts.application.achievement_rules import build_achievement_rules
 from apps.accounts.infrastructure.models import Achievement, GamerProfile, UserAchievement
+
+_RULES = None
 
 
 def xp_for_level(level: int) -> int:
@@ -18,17 +21,14 @@ def add_xp(user, amount: int) -> GamerProfile:
 
 
 def unlock_achievements(user) -> list[str]:
-    from apps.games.infrastructure.models import DailyBonusClaim, FishingCatch, SpinHistory
-
-    checks = {
-        "daily_bonus": lambda: DailyBonusClaim.objects.filter(user=user).exists(),
-        "first_spin": lambda: SpinHistory.objects.filter(user=user).exists(),
-        "first_fish": lambda: FishingCatch.objects.filter(user=user, success=True).exists(),
-    }
+    global _RULES
+    if _RULES is None:
+        _RULES = build_achievement_rules()
+    catalog = {row.code: row for row in Achievement.objects.all()}
     unlocked = []
-    for code, predicate in checks.items():
-        achievement = Achievement.objects.filter(code=code).first()
-        if achievement is None or not predicate():
+    for code, predicate in _RULES.items():
+        achievement = catalog.get(code)
+        if achievement is None or not predicate(user):
             continue
         _, created = UserAchievement.objects.get_or_create(user=user, achievement=achievement)
         if created:

@@ -50,7 +50,7 @@ export function AdminShopPage() {
   return (
     <div className="account-page">
       <AdminHeader kicker="Financeiro" title="Loja" description="Itens vendidos no painel do jogador." />
-      <form className="card admin-form" onSubmit={onSubmit}>
+      <form className="card admin-form admin-shop-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
           <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} required /></label>
           <ItemIdField

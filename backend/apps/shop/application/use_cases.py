@@ -53,7 +53,64 @@ class AddToCartUseCase(UseCase[AddToCartInput, dict]):
             if not created:
                 cart_item.quantity += data.quantity
                 cart_item.save(update_fields=["quantity", "updated_at"])
-        return {"ok": True, "quantity": cart_item.quantity}
+        return get_cart_snapshot(data.user_id)
+
+
+def get_cart_snapshot(user_id: UUID) -> dict:
+    cart = Cart.objects.filter(user__id=user_id).first()
+    rows = list(cart.items.select_related("item").order_by("created_at")) if cart else []
+    items = []
+    total = Decimal("0.00")
+    count = 0
+    for row in rows:
+        line_total = row.item.price * row.quantity
+        total += line_total
+        count += row.quantity
+        items.append({
+            "id": str(row.id),
+            "shop_item_id": str(row.item.id),
+            "item_id": row.item.item_id,
+            "name": row.item.name,
+            "unit_price": str(row.item.price),
+            "quantity": row.quantity,
+            "grant_quantity": row.item.quantity,
+            "line_total": str(line_total),
+        })
+    return {"items": items, "count": count, "total": str(total)}
+
+
+@dataclass(frozen=True, slots=True)
+class GetCartInput:
+    user_id: UUID
+
+
+class GetCartUseCase(UseCase[GetCartInput, dict]):
+    def execute(self, data: GetCartInput) -> dict:
+        return get_cart_snapshot(data.user_id)
+
+
+@dataclass(frozen=True, slots=True)
+class UpdateCartItemInput:
+    user_id: UUID
+    cart_item_id: UUID
+    quantity: int
+
+
+class UpdateCartItemUseCase(UseCase[UpdateCartItemInput, dict]):
+    def __init__(self, unit_of_work: UnitOfWork) -> None:
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: UpdateCartItemInput) -> dict:
+        row = CartItem.objects.filter(id=data.cart_item_id, cart__user__id=data.user_id).first()
+        if row is None:
+            raise EntityNotFoundError("Item do carrinho não encontrado.")
+        with self._unit_of_work:
+            if data.quantity == 0:
+                row.delete()
+            else:
+                row.quantity = data.quantity
+                row.save(update_fields=["quantity", "updated_at"])
+        return get_cart_snapshot(data.user_id)
 
 
 @dataclass(frozen=True, slots=True)

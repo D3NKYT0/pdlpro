@@ -7,9 +7,13 @@ from apps.shop.application.use_cases import (
     AddToCartUseCase,
     CheckoutInput,
     CheckoutUseCase,
+    GetCartInput,
+    GetCartUseCase,
     ListShopItemsUseCase,
+    UpdateCartItemInput,
+    UpdateCartItemUseCase,
 )
-from apps.shop.presentation.serializers import AddToCartSerializer, ShopItemSerializer
+from apps.shop.presentation.serializers import AddToCartSerializer, ShopItemSerializer, UpdateCartItemSerializer
 from common.views import InjectedAPIView
 
 
@@ -26,6 +30,10 @@ class ShopCatalogView(InjectedAPIView):
 class ShopCartView(InjectedAPIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(tags=["Loja"])
+    def get(self, request):
+        return Response(self.resolve(GetCartUseCase).execute(GetCartInput(user_id=request.user.id)))
+
     @extend_schema(tags=["Loja"], request=AddToCartSerializer)
     def post(self, request):
         serializer = AddToCartSerializer(data=request.data)
@@ -36,6 +44,30 @@ class ShopCartView(InjectedAPIView):
                 item_id=serializer.validated_data["item_id"],
                 quantity=serializer.validated_data["quantity"],
             )
+        )
+        return Response(result)
+
+
+class ShopCartItemView(InjectedAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Loja"], request=UpdateCartItemSerializer)
+    def patch(self, request, cart_item_id):
+        serializer = UpdateCartItemSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = self.resolve(UpdateCartItemUseCase).execute(
+            UpdateCartItemInput(
+                user_id=request.user.id,
+                cart_item_id=cart_item_id,
+                quantity=serializer.validated_data["quantity"],
+            )
+        )
+        return Response(result)
+
+    @extend_schema(tags=["Loja"])
+    def delete(self, request, cart_item_id):
+        result = self.resolve(UpdateCartItemUseCase).execute(
+            UpdateCartItemInput(user_id=request.user.id, cart_item_id=cart_item_id, quantity=0)
         )
         return Response(result)
 

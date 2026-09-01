@@ -8,15 +8,17 @@ import {
   Server,
   ShoppingBag,
   SlidersHorizontal,
+  Trophy,
   UserRoundCog,
   CircleUserRound,
   Users,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
+import { AchievementGrid } from '../components/AchievementGrid'
 import { useAuth } from '../contexts/AuthContext'
 import { canAccessStaff } from '../lib/staff'
-import { serverApi } from '../services/api'
+import { authApi, serverApi } from '../services/api'
 
 const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon }> = [
   { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound },
@@ -25,11 +27,13 @@ const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIc
   { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências', icon: WalletCards },
   { to: '/painel/shop', label: 'Loja', text: 'Itens da loja do painel', icon: ShoppingBag },
   { to: '/painel/games', label: 'Jogos', text: 'Roleta, caixas, pesca e mais', icon: Gamepad2 },
+  { to: '/painel/progress', label: 'Conquistas', text: 'Marcos da conta e prêmios', icon: Trophy },
 ]
 
 export function PainelPage() {
   const { user } = useAuth()
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress, enabled: Boolean(user) })
   const dashboardShortcuts = canAccessStaff(user)
     ? [...shortcuts, { to: '/painel/admin', label: 'Admin', text: 'Configurar o painel, rates e loja', icon: SlidersHorizontal }]
     : shortcuts
@@ -69,6 +73,8 @@ export function PainelPage() {
           </div>
         </article>
       </section>
+
+      <AchievementGrid achievements={progress.data?.achievements ?? []} />
 
       <section className="panel-section-heading">
         <div>

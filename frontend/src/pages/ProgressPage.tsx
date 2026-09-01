@@ -1,19 +1,18 @@
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  Award,
   Check,
   Crown,
   Gift,
   KeyRound,
   LockKeyhole,
-  Medal,
   ShieldCheck,
   Sparkles,
   Trophy,
   Zap,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { AchievementGrid } from '../components/AchievementGrid'
 import { authApi, gamesApi, isApiError } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { ItemIcon } from '../components/ItemIcon'
@@ -130,27 +129,10 @@ export function ProgressPage() {
         </div>
       </section>
 
+      <AchievementGrid achievements={progress.data?.achievements ?? []} showRewardsLink={false} />
+
       <div className="progress-layout">
         <div className="progress-side-column">
-          <section className="card progress-module">
-            <div className="progress-module-heading">
-              <span><Medal aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Marcos da conta</span><h2>Conquistas</h2></div>
-              <b>{progress.data?.achievements.length ?? 0}</b>
-            </div>
-            <div className="achievement-list">
-              {(progress.data?.achievements ?? []).map((row) => (
-                <article className="achievement-item" key={row.code}>
-                  <Award aria-hidden="true" />
-                  <span><strong>{row.name}</strong><small>{row.description}</small></span>
-                  <Check aria-hidden="true" />
-                </article>
-              ))}
-              {!progress.data?.achievements.length ? (
-                <div className="progress-empty"><Medal aria-hidden="true" /> Continue jogando para desbloquear conquistas.</div>
-              ) : null}
-            </div>
-          </section>
 
           <section className="card progress-module">
             <div className="progress-module-heading">

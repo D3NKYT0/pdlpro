@@ -99,7 +99,7 @@ export function AccountSecurityPage() {
 
         <section className="card security-card">
           <header><span><KeyRound /></span><div><h2>Autenticação em duas etapas</h2><p>Aplicativo autenticador (TOTP)</p></div><b className={user?.is_2fa_enabled ? 'is-on' : 'is-off'}>{user?.is_2fa_enabled ? 'Ativo' : 'Inativo'}</b></header>
-          {!user?.is_2fa_enabled && !secret ? <button className="btn" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> Ativar 2FA</button> : null}
+          {!user?.is_2fa_enabled && !secret ? <button className="btn security-2fa-start" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> Ativar 2FA</button> : null}
           {secret ? <div className="security-secret"><span>Chave do autenticador</span><strong>{secret}</strong><small>Guarde em local seguro e adicione ao Google Authenticator, Authy ou similar.</small></div> : null}
           {(secret || user?.is_2fa_enabled) ? <form className="security-inline-form" onSubmit={submit2fa}><label className="field">Código de 6 dígitos<input value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" required /></label><button className="btn" disabled={busy === '2fa'}>{user?.is_2fa_enabled ? 'Desativar 2FA' : 'Confirmar ativação'}</button></form> : null}
         </section>

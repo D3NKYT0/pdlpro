@@ -17,9 +17,17 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
         user = get_user_model().objects.get(id=data)
         profile, _ = GamerProfile.objects.get_or_create(user=user)
         unlocked = unlock_achievements(user)
+        unlocked_codes = set(
+            UserAchievement.objects.filter(user=user).values_list("achievement__code", flat=True)
+        )
         achievements = [
-            {"code": row.achievement.code, "name": row.achievement.name, "description": row.achievement.description}
-            for row in UserAchievement.objects.select_related("achievement").filter(user=user)
+            {
+                "code": row.code,
+                "name": row.name,
+                "description": row.description,
+                "unlocked": row.code in unlocked_codes,
+            }
+            for row in Achievement.objects.order_by("name")
         ]
         claimed_ids = set(RewardClaim.objects.filter(user=user).values_list("reward_id", flat=True))
         rewards = []
@@ -47,6 +55,8 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
             "level": profile.level,
             "xp_next": xp_for_level(profile.level),
             "unlocked_now": unlocked,
+            "unlocked_count": len(unlocked_codes),
+            "total_achievements": len(achievements),
             "achievements": achievements,
             "rewards": rewards,
         }

@@ -114,7 +114,7 @@ class WebAuthnCredential(BaseModel):
 
 
 class Achievement(BaseModel):
-    code = models.CharField(max_length=40, unique=True)
+    code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=80)
     description = models.CharField(max_length=200, blank=True)
 

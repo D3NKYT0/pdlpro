@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -78,37 +79,69 @@ export function AdminServerPage() {
   return (
     <div className="account-page">
       <AdminHeader kicker="Servidor" title="Painel e servidor" description="Nome, rates e aviso de coming soon exibidos no site." />
-      <form className="card admin-form" onSubmit={onSubmit}>
-        <div className="account-form-fields">
-          <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} /></label>
-          <label className="field">Slogan<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></label>
+      <form className="admin-server-form" onSubmit={onSubmit}>
+        <section className="card admin-config-section">
+          <header><span><ServerCog /></span><div><span className="panel-eyebrow">Identidade</span><h2>Informações do servidor</h2><p>Dados principais exibidos na página inicial.</p></div></header>
+          <div className="account-form-fields">
+            <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} /></label>
+            <label className="field">Slogan<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></label>
+          </div>
+          <label className="field">Descrição<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></label>
+          <div className="account-form-fields">
+            <label className="field">Chronicle<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></label>
+            <label className="field">Nível máximo<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></label>
+          </div>
+        </section>
+
+        <div className="admin-server-columns">
+          <section className="card admin-config-section">
+            <header><span><Gauge /></span><div><span className="panel-eyebrow">Progressão</span><h2>Rates do servidor</h2><p>Multiplicadores de experiência e itens.</p></div></header>
+            <div className="admin-server-rate-grid">
+              <label className="field">XP<input value={xp} onChange={(e) => setXp(e.target.value)} /></label>
+              <label className="field">SP<input value={sp} onChange={(e) => setSp(e.target.value)} /></label>
+              <label className="field">Adena<input value={adena} onChange={(e) => setAdena(e.target.value)} /></label>
+              <label className="field">Drop<input value={drop} onChange={(e) => setDrop(e.target.value)} /></label>
+              <label className="field">Spoil<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></label>
+            </div>
+          </section>
+
+          <section className="card admin-config-section">
+            <header><span><Sparkles /></span><div><span className="panel-eyebrow">Equipamentos</span><h2>Encantamento</h2><p>Limites usados nas informações públicas.</p></div></header>
+            <div className="account-form-fields">
+              <label className="field">Enchant seguro<input value={safe} onChange={(e) => setSafe(e.target.value)} /></label>
+              <label className="field">Enchant máximo<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></label>
+            </div>
+          </section>
         </div>
-        <label className="field">Descrição<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></label>
-        <div className="account-form-fields">
-          <label className="field">Chronicle<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></label>
-          <label className="field">Nível máximo<input value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></label>
-        </div>
-        <div className="admin-rate-grid">
-          <label className="field">XP<input value={xp} onChange={(e) => setXp(e.target.value)} /></label>
-          <label className="field">SP<input value={sp} onChange={(e) => setSp(e.target.value)} /></label>
-          <label className="field">Adena<input value={adena} onChange={(e) => setAdena(e.target.value)} /></label>
-          <label className="field">Drop<input value={drop} onChange={(e) => setDrop(e.target.value)} /></label>
-          <label className="field">Spoil<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></label>
-          <label className="field">Enchant safe<input value={safe} onChange={(e) => setSafe(e.target.value)} /></label>
-          <label className="field">Enchant máx.<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></label>
-        </div>
-        <label className="field">Recursos (um por linha)<textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></label>
-        <label className="field">Nota de PvP<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={2} /></label>
-        <label className="field">Nota inicial<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={2} /></label>
-        <label className="admin-check">
-          <input type="checkbox" checked={comingSoon} onChange={(e) => setComingSoon(e.target.checked)} />
-          Ativar Coming Soon
-        </label>
-        <label className="admin-check">
-          <input type="checkbox" checked={staffOnly} onChange={(e) => setStaffOnly(e.target.checked)} />
-          Login só para staff enquanto o Coming Soon estiver ativo
-        </label>
-        <AdminSaveBar saving={saving} />
+
+        <section className="card admin-config-section">
+          <header><span><FileText /></span><div><span className="panel-eyebrow">Conteúdo público</span><h2>Recursos e notas</h2><p>Textos complementares apresentados aos jogadores.</p></div></header>
+          <label className="field">Recursos <small>Um recurso por linha</small><textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></label>
+          <div className="account-form-fields">
+            <label className="field">Nota de PvP<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={3} /></label>
+            <label className="field">Nota inicial<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></label>
+          </div>
+        </section>
+
+        <section className="card admin-config-section admin-access-section">
+          <header><span><LockKeyhole /></span><div><span className="panel-eyebrow">Controle de acesso</span><h2>Publicação do servidor</h2><p>Defina quem pode entrar enquanto o projeto está em preparação.</p></div></header>
+          <div className="admin-toggle-list">
+            <label className="admin-toggle">
+              <input type="checkbox" checked={comingSoon} onChange={(e) => setComingSoon(e.target.checked)} />
+              <span className="admin-toggle-control" aria-hidden="true"><i /></span>
+              <span><strong>Ativar Coming Soon</strong><small>Exibe a página de lançamento para visitantes.</small></span>
+              <b>{comingSoon ? 'Ativo' : 'Inativo'}</b>
+            </label>
+            <label className={`admin-toggle${!comingSoon ? ' is-disabled' : ''}`}>
+              <input type="checkbox" checked={staffOnly} disabled={!comingSoon} onChange={(e) => setStaffOnly(e.target.checked)} />
+              <span className="admin-toggle-control" aria-hidden="true"><i /></span>
+              <span><strong>Permitir login apenas para staff</strong><small>Bloqueia jogadores comuns durante o Coming Soon.</small></span>
+              <b>{staffOnly && comingSoon ? 'Ativo' : 'Inativo'}</b>
+            </label>
+          </div>
+        </section>
+
+        <div className="card admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></div>
       </form>
     </div>
   )
