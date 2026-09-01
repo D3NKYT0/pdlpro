@@ -17,6 +17,9 @@ from apps.accounts.application.twofa import (
     VerifyTwoFactorLoginUseCase,
     make_login_challenge,
 )
+from apps.accounts.application.captcha import captcha_required, clear_failures, register_failure, verify_hcaptcha
+from apps.accounts.application.oauth import begin_oauth, complete_oauth
+from apps.accounts.domain.exceptions import InvalidCredentialsError
 from apps.accounts.application.progress_use_cases import ClaimRewardInput, ClaimRewardUseCase, GetGamerProfileUseCase
 from apps.accounts.application.email_use_cases import (
     ConfirmPasswordResetInput,
@@ -45,6 +48,8 @@ from apps.accounts.infrastructure.authentication import (
 )
 from apps.accounts.presentation.serializers import (
     LoginSerializer,
+    OAuthBeginSerializer,
+    OAuthCompleteSerializer,
     RegisterSerializer,
     UpdateProfileSerializer,
     UserSerializer,
@@ -71,6 +76,13 @@ class RegisterView(InjectedAPIView):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
+        from django.conf import settings
+
+        if settings.HCAPTCHA_ENABLED and not verify_hcaptcha(data.get("hcaptcha_token", ""), request.META.get("REMOTE_ADDR", "")):
+            return Response(
+                {"message": "Resolva o CAPTCHA para criar sua conta.", "details": {"captcha_required": True}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         user = self.resolve(RegisterUserUseCase).execute(
             RegisterUserInput(
                 username=data["username"],
@@ -96,15 +108,76 @@ class LoginView(InjectedAPIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        user = self.resolve(AuthenticateUserUseCase).execute(
-            AuthenticateUserInput(login=data["login"], password=data["password"])
-        )
+        needs_captcha = captcha_required(request, data["login"])
+        if needs_captcha and not verify_hcaptcha(data.get("hcaptcha_token", ""), request.META.get("REMOTE_ADDR", "")):
+            return Response(
+                {"message": "Resolva o CAPTCHA para continuar.", "details": {"captcha_required": True}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            user = self.resolve(AuthenticateUserUseCase).execute(
+                AuthenticateUserInput(login=data["login"], password=data["password"])
+            )
+        except InvalidCredentialsError:
+            register_failure(request, data["login"])
+            raise InvalidCredentialsError(
+                details={"captcha_required": captcha_required(request, data["login"])}
+            )
+        clear_failures(request, data["login"])
         from django.contrib.auth import get_user_model
 
         orm_user = get_user_model().objects.get(id=user.id)
         if orm_user.is_2fa_enabled:
             return Response({"requires_2fa": True, "challenge": make_login_challenge(orm_user.id)})
         return build_auth_response(request, orm_user)
+
+
+class AuthCapabilitiesView(InjectedAPIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        from django.conf import settings
+        from allauth.socialaccount.models import SocialAccount
+
+        connected = []
+        if request.user.is_authenticated:
+            connected = list(SocialAccount.objects.filter(user=request.user).values_list("provider", flat=True))
+
+        return Response({
+            "passkeys": True,
+            "two_factor": True,
+            "email_verification": True,
+            "captcha": settings.HCAPTCHA_ENABLED,
+            "hcaptcha_site_key": settings.HCAPTCHA_SITE_KEY,
+            "google": bool(settings.GOOGLE_CLIENT_ID and settings.GOOGLE_CLIENT_SECRET),
+            "discord": bool(settings.DISCORD_CLIENT_ID and settings.DISCORD_CLIENT_SECRET),
+            "connected_providers": connected,
+        })
+
+
+class OAuthBeginView(InjectedAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = OAuthBeginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        return Response({"authorization_url": begin_oauth(data["provider"], data["mode"], request.user)})
+
+
+class OAuthCompleteView(InjectedAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = OAuthCompleteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        user, linked = complete_oauth(data["provider"], data["code"], data["state"])
+        if linked:
+            return Response({"linked": True})
+        if user.is_2fa_enabled:
+            return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
+        return build_auth_response(request, user)
 
 
 class RefreshView(InjectedAPIView):

@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiGamerProfile, ApiUser } from '../types'
+import type { ApiAuthCapabilities, ApiGamerProfile, ApiPasskeyBegin, ApiPasskeyCredential, ApiUser } from '../types'
 
 export type TwoFactorChallenge = { requires_2fa: true; challenge: string }
 
@@ -14,10 +14,11 @@ export function isTwoFactorChallenge(value: unknown): value is TwoFactorChalleng
 
 export const authApi = {
   csrf: () => request<{ csrfToken: string }>('/auth/csrf/'),
-  login: (login: string, password: string) =>
+  capabilities: () => request<ApiAuthCapabilities>('/auth/capabilities/'),
+  login: (login: string, password: string, hcaptchaToken = '') =>
     request<ApiUser | TwoFactorChallenge>('/auth/login/', {
       method: 'POST',
-      body: JSON.stringify({ login, password }),
+      body: JSON.stringify({ login, password, hcaptcha_token: hcaptchaToken }),
     }),
   verifyTwoFactor: (challenge: string, code: string) =>
     request<ApiUser>('/auth/2fa/verify/', {
@@ -48,7 +49,18 @@ export const authApi = {
     password: string
     display_name?: string
     accept_terms: boolean
+    hcaptcha_token?: string
   }) => request<ApiUser>('/auth/register/', { method: 'POST', body: JSON.stringify(payload) }),
+  beginOAuth: (provider: 'google' | 'discord', mode: 'login' | 'link') =>
+    request<{ authorization_url: string }>('/auth/oauth/begin/', {
+      method: 'POST',
+      body: JSON.stringify({ provider, mode }),
+    }),
+  completeOAuth: (provider: 'google' | 'discord', code: string, state: string) =>
+    request<ApiUser | TwoFactorChallenge | { linked: true }>('/auth/oauth/complete/', {
+      method: 'POST',
+      body: JSON.stringify({ provider, code, state }),
+    }),
   requestEmailVerification: () => request<{ sent: boolean; already_verified: boolean }>('/auth/email/verify/request/', { method: 'POST' }),
   verifyEmail: (token: string) => request<{ verified: boolean }>('/auth/email/verify/', { method: 'POST', body: JSON.stringify({ token }) }),
   requestPasswordReset: (email: string) =>
@@ -65,4 +77,10 @@ export const authApi = {
       method: 'PATCH',
       body: payload instanceof FormData ? payload : JSON.stringify(payload),
     }),
+  passkeys: () => request<ApiPasskeyCredential[]>('/auth/passkeys/'),
+  beginPasskeyRegistration: (nickname: string) => request<ApiPasskeyBegin>('/auth/passkeys/register/begin/', { method: 'POST', body: JSON.stringify({ nickname }) }),
+  completePasskeyRegistration: (state: string, credential: unknown, nickname: string) => request<ApiPasskeyCredential>('/auth/passkeys/register/complete/', { method: 'POST', body: JSON.stringify({ state, credential, nickname }) }),
+  beginPasskeyLogin: (login: string) => request<ApiPasskeyBegin>('/auth/passkeys/login/begin/', { method: 'POST', body: JSON.stringify({ login }) }),
+  completePasskeyLogin: (state: string, credential: unknown) => request<ApiUser | TwoFactorChallenge>('/auth/passkeys/login/complete/', { method: 'POST', body: JSON.stringify({ state, credential }) }),
+  deletePasskey: (id: string) => request<void>(`/auth/passkeys/${id}/`, { method: 'DELETE' }),
 }

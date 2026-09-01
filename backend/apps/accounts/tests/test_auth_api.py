@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 import pytest
+from django.test import override_settings
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
@@ -40,6 +41,32 @@ def test_register_and_me(api):
 
 
 @pytest.mark.django_db
+@override_settings(HCAPTCHA_ENABLED=True, HCAPTCHA_SITE_KEY="test-site", HCAPTCHA_SECRET_KEY="test-secret")
+def test_register_requires_captcha_when_enabled(api):
+    response = api.post(
+        "/api/v1/auth/register/",
+        {"username": "knight", "email": "knight@pdl.dev", "password": "Secret123", "accept_terms": True},
+        format="json",
+    )
+    assert response.status_code == 400
+    assert response.data["details"]["captcha_required"] is True
+
+
+@pytest.mark.django_db
+@override_settings(
+    GOOGLE_CLIENT_ID="google-client",
+    GOOGLE_CLIENT_SECRET="google-secret",
+    FRONTEND_URL="http://localhost:3000",
+)
+def test_google_oauth_begin_returns_provider_authorization_url(api):
+    response = api.post("/api/v1/auth/oauth/begin/", {"provider": "google", "mode": "login"}, format="json")
+    assert response.status_code == 200, response.data
+    assert response.data["authorization_url"].startswith("https://accounts.google.com/o/oauth2/v2/auth?")
+    assert "client_id=google-client" in response.data["authorization_url"]
+    assert "auth%2Fcallback%2Fgoogle" in response.data["authorization_url"]
+
+
+@pytest.mark.django_db
 def test_update_profile_with_avatar(api, user):
     from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -70,6 +97,36 @@ def test_login(api, user):
     )
     assert response.status_code == 200
     assert response.data["username"] == "hero"
+
+
+@pytest.mark.django_db
+@override_settings(HCAPTCHA_ENABLED=True, HCAPTCHA_SITE_KEY="test-site", HCAPTCHA_SECRET_KEY="test-secret")
+def test_login_requires_captcha_after_repeated_failures(api, user):
+    for _ in range(3):
+        failed = api.post("/api/v1/auth/login/", {"login": "hero", "password": "wrong-password"}, format="json")
+        assert failed.status_code == 401
+
+    blocked = api.post("/api/v1/auth/login/", {"login": "hero", "password": "Secret123"}, format="json")
+    assert blocked.status_code == 400
+    assert blocked.data["details"]["captcha_required"] is True
+
+
+@pytest.mark.django_db
+def test_auth_capabilities_and_passkey_registration_begin(api, user):
+    capabilities = api.get("/api/v1/auth/capabilities/")
+    assert capabilities.status_code == 200
+    assert capabilities.data["passkeys"] is True
+    assert capabilities.data["two_factor"] is True
+    assert capabilities.data["email_verification"] is True
+
+    api.force_authenticate(user=user)
+    listed = api.get("/api/v1/auth/passkeys/")
+    assert listed.status_code == 200
+    assert listed.data == []
+    begun = api.post("/api/v1/auth/passkeys/register/begin/", {"nickname": "Notebook"}, format="json")
+    assert begun.status_code == 200, begun.data
+    assert begun.data["state"]
+    assert begun.data["options"]["challenge"]
 
 
 @pytest.mark.django_db

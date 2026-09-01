@@ -5,6 +5,7 @@ from apps.accounts.infrastructure.models import (
     RewardDefinition,
     User,
     UserAchievement,
+    WebAuthnCredential,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "RewardDefinition",
     "User",
     "UserAchievement",
+    "WebAuthnCredential",
 ]

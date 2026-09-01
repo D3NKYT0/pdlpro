@@ -3,6 +3,7 @@ import { GlobalLoadingOverlay } from '../../components/layout/GlobalLoadingOverl
 import { PrivateLayout } from '../../components/layout/PrivateLayout'
 import { PublicContent, PublicLayout } from '../../components/layout/PublicLayout'
 import { AccountsPage } from '../../pages/AccountsPage'
+import { AccountSecurityPage } from '../../pages/AccountSecurityPage'
 import { AuctionPage } from '../../pages/AuctionPage'
 import { CalendarPage } from '../../pages/CalendarPage'
 import { CharacterPage } from '../../pages/CharacterPage'
@@ -19,6 +20,7 @@ import { MarketplacePage } from '../../pages/MarketplacePage'
 import { NewsDetailPage } from '../../pages/NewsDetailPage'
 import { NewsPage } from '../../pages/NewsPage'
 import { NotificationsPage } from '../../pages/NotificationsPage'
+import { OAuthCallbackPage } from '../../pages/OAuthCallbackPage'
 import { PainelPage } from '../../pages/PainelPage'
 import { ProfilePage } from '../../pages/ProfilePage'
 import { ProgressPage } from '../../pages/ProgressPage'
@@ -54,6 +56,7 @@ export function AppRoutes() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
           <Route element={<PublicContent />}>
             <Route path="/rankings" element={<RankingsPage />} />
             <Route path="/news" element={<NewsPage />} />
@@ -74,6 +77,7 @@ export function AppRoutes() {
           <Route element={<PrivateLayout />}>
             <Route path="/painel" element={<PainelPage />} />
             <Route path="/painel/profile" element={<ProfilePage />} />
+            <Route path="/painel/security" element={<AccountSecurityPage />} />
             <Route path="/painel/wallet" element={<WalletPage />} />
             <Route path="/painel/accounts" element={<AccountsPage />} />
             <Route path="/painel/accounts/:login/:charId" element={<CharacterPage />} />

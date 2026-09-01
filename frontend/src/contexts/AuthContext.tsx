@@ -9,9 +9,9 @@ const RETRY_EVERY_MS = 5000
 interface AuthContextValue {
   user: ApiUser | null
   loading: boolean
-  login: (login: string, password: string) => Promise<ApiUser | TwoFactorChallenge>
+  login: (login: string, password: string, hcaptchaToken?: string) => Promise<ApiUser | TwoFactorChallenge>
   verifyTwoFactor: (challenge: string, code: string) => Promise<void>
-  register: (payload: { username: string; email: string; password: string; accept_terms: boolean }) => Promise<void>
+  register: (payload: { username: string; email: string; password: string; accept_terms: boolean; hcaptcha_token?: string }) => Promise<void>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
 }
@@ -74,8 +74,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       user,
       loading,
-      login: async (login, password) => {
-        const result = await authApi.login(login, password)
+      login: async (login, password, hcaptchaToken) => {
+        const result = await authApi.login(login, password, hcaptchaToken)
         if (isTwoFactorChallenge(result)) return result
         setUser(result)
         return result

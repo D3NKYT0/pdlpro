@@ -39,3 +39,4 @@ ruff==0.15.12
 SQLAlchemy==2.0.46
 stripe==15.1.0
 whitenoise==6.11.0
+webauthn==2.8.0

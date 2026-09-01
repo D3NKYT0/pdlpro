@@ -137,6 +137,29 @@ export interface ApiCharacterListing {
   sold_at: string | null
 }
 
+export interface ApiAuthCapabilities {
+  passkeys: boolean
+  two_factor: boolean
+  email_verification: boolean
+  captcha: boolean
+  hcaptcha_site_key: string
+  google: boolean
+  discord: boolean
+  connected_providers: Array<'google' | 'discord'>
+}
+
+export interface ApiPasskeyCredential {
+  id: string
+  nickname: string
+  created_at: string
+  last_used_at: string | null
+}
+
+export interface ApiPasskeyBegin {
+  options: Record<string, any>
+  state: string
+}
+
 export interface ApiNotification {
   id: string
   title: string

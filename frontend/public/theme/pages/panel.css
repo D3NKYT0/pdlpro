@@ -5688,6 +5688,62 @@ html.pdl-panel .user-profile-page {
   gap: 22px;
 }
 
+html.pdl-panel .security-page { display: grid; gap: 22px; }
+html.pdl-panel .security-hero { display: flex; align-items: center; gap: 20px; min-height: 142px; }
+html.pdl-panel .security-hero > span { width: 72px; height: 72px; display: grid; place-items: center; color: #e1bd70; border: 1px solid rgba(218,174,81,.3); background: rgba(218,174,81,.08); transform: rotate(45deg); }
+html.pdl-panel .security-hero > span svg { width: 32px; height: 32px; transform: rotate(-45deg); }
+html.pdl-panel .security-hero h1 { margin: 2px 0; }
+html.pdl-panel .security-hero p { margin: 4px 0 0; }
+html.pdl-panel .security-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; align-items: start; }
+html.pdl-panel .security-card { display: grid; gap: 16px; }
+html.pdl-panel .security-card > header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; }
+html.pdl-panel .security-card > header > span { width: 42px; height: 42px; display: grid; place-items: center; color: #e1bd70; border: 1px solid rgba(218,174,81,.24); background: rgba(218,174,81,.07); }
+html.pdl-panel .security-card > header > span svg { width: 20px; height: 20px; }
+html.pdl-panel .security-card h2 { margin: 0; font-size: 22px; }
+html.pdl-panel .security-card header p { margin: 2px 0 0; color: rgba(239,224,194,.52); font-size: 12px; }
+html.pdl-panel .security-card header > b,
+html.pdl-panel .security-provider > b:last-child { padding: 5px 9px; border-radius: 999px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+html.pdl-panel .security-card .is-on { color: #8fd19e; border: 1px solid rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
+html.pdl-panel .security-card .is-off { color: #d6a767; border: 1px solid rgba(214,167,103,.3); background: rgba(214,167,103,.08); }
+html.pdl-panel .security-success { display: flex; align-items: center; gap: 9px; color: #8fd19e; }
+html.pdl-panel .security-success svg { width: 19px; }
+html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border: 1px solid rgba(218,174,81,.22); background: rgba(5,5,5,.38); }
+html.pdl-panel .security-secret span { color: rgba(239,224,194,.56); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+html.pdl-panel .security-secret strong { color: #f0d28c; font-family: monospace; overflow-wrap: anywhere; }
+html.pdl-panel .security-secret small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-inline-form { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
+html.pdl-panel .security-inline-form .field { margin: 0; }
+html.pdl-panel .security-add-passkey { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
+html.pdl-panel .security-add-passkey .field { margin: 0; }
+html.pdl-panel .security-passkey-list { display: grid; gap: 8px; }
+html.pdl-panel .security-passkey-list article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; border: 1px solid rgba(218,174,81,.14); background: rgba(218,174,81,.035); }
+html.pdl-panel .security-passkey-list article > svg { width: 21px; color: #d9ae59; }
+html.pdl-panel .security-passkey-list article span { display: flex; min-width: 0; flex-direction: column; }
+html.pdl-panel .security-passkey-list article small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-passkey-list article button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #cf7a6d; background: transparent; border: 1px solid rgba(207,122,109,.25); cursor: pointer; }
+html.pdl-panel .security-passkey-list article button svg { width: 15px; }
+html.pdl-panel .security-provider { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; min-height: 52px; padding: 10px 0; border-bottom: 1px solid rgba(218,174,81,.12); }
+html.pdl-panel .security-provider:last-child { border: 0; }
+html.pdl-panel .security-provider > svg,
+html.pdl-panel .security-provider > i { width: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
+html.pdl-panel .security-provider > span { display: flex; min-width: 0; flex-direction: column; }
+html.pdl-panel .security-provider small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-provider .btn { min-width: 92px; }
+
+@media (max-width: 900px) {
+  html.pdl-panel .security-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  html.pdl-panel .security-hero { align-items: flex-start; flex-direction: column; }
+  html.pdl-panel .security-card > header { grid-template-columns: auto 1fr; }
+  html.pdl-panel .security-card > header > b { grid-column: 2; justify-self: start; }
+  html.pdl-panel .security-inline-form,
+  html.pdl-panel .security-add-passkey { grid-template-columns: 1fr; }
+  html.pdl-panel .security-provider { grid-template-columns: 30px 1fr; }
+  html.pdl-panel .security-provider > :last-child { grid-column: 2; justify-self: start; }
+}
+
 html.pdl-panel .user-profile-hero {
   padding: 0;
   overflow: hidden;

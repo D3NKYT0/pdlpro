@@ -62,14 +62,47 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, min_length=8)
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     accept_terms = serializers.BooleanField()
+    hcaptcha_token = serializers.CharField(required=False, allow_blank=True, write_only=True)
 
 
 class LoginSerializer(serializers.Serializer):
     login = serializers.CharField()
     password = serializers.CharField(write_only=True)
+    hcaptcha_token = serializers.CharField(required=False, allow_blank=True, write_only=True)
 
 
 class UpdateProfileSerializer(serializers.Serializer):
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
     avatar = serializers.ImageField(required=False)
+
+
+class PasskeyCredentialSerializer(serializers.ModelSerializer):
+    class Meta:
+        from apps.accounts.infrastructure.models import WebAuthnCredential
+
+        model = WebAuthnCredential
+        fields = ["id", "nickname", "created_at", "last_used_at"]
+        read_only_fields = fields
+
+
+class PasskeyBeginSerializer(serializers.Serializer):
+    login = serializers.CharField(required=False, allow_blank=True)
+    nickname = serializers.CharField(required=False, allow_blank=True, max_length=64)
+
+
+class PasskeyCompleteSerializer(serializers.Serializer):
+    state = serializers.CharField(max_length=128)
+    credential = serializers.JSONField()
+    nickname = serializers.CharField(required=False, allow_blank=True, max_length=64)
+
+
+class OAuthBeginSerializer(serializers.Serializer):
+    provider = serializers.ChoiceField(choices=["google", "discord"])
+    mode = serializers.ChoiceField(choices=["login", "link"], default="login")
+
+
+class OAuthCompleteSerializer(serializers.Serializer):
+    provider = serializers.ChoiceField(choices=["google", "discord"])
+    code = serializers.CharField()
+    state = serializers.CharField()

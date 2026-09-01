@@ -92,6 +92,27 @@ class GamerProfile(BaseModel):
         verbose_name = "Perfil gamer"
 
 
+class WebAuthnCredential(BaseModel):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="webauthn_credentials",
+    )
+    credential_id = models.BinaryField(unique=True)
+    public_key = models.BinaryField()
+    sign_count = models.PositiveBigIntegerField(default=0)
+    transports = models.JSONField(default=list, blank=True)
+    aaguid = models.CharField(max_length=36, blank=True, default="")
+    nickname = models.CharField(max_length=64, blank=True, default="")
+    last_used_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Chave de acesso"
+        verbose_name_plural = "Chaves de acesso"
+        ordering = ["-created_at"]
+        indexes = [models.Index(fields=["user", "created_at"], name="pdl_webauthn_user_created")]
+
+
 class Achievement(BaseModel):
     code = models.CharField(max_length=40, unique=True)
     name = models.CharField(max_length=80)

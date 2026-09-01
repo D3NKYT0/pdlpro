@@ -10,6 +10,7 @@ import {
   LogOut,
   Package,
   Shield,
+  ShieldCheck,
   ShoppingBag,
   SlidersHorizontal,
   Store,
@@ -27,6 +28,7 @@ import { usePanelTheme } from '../../theme/usePanelTheme'
 const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/painel', label: 'Painel', icon: LayoutDashboard, end: true },
   { to: '/painel/profile', label: 'Meu perfil', icon: CircleUserRound },
+  { to: '/painel/security', label: 'Conta e segurança', icon: ShieldCheck },
   { to: '/painel/accounts', label: 'Conta L2', icon: UserRoundCog },
   { to: '/painel/inventory', label: 'Inventário', icon: Package },
   { to: '/painel/wallet', label: 'Carteira', icon: WalletCards },

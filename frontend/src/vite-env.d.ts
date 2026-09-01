@@ -7,6 +7,9 @@ interface ImportMetaEnv {
   readonly VITE_TRAILER_YOUTUBE_ID?: string
   readonly VITE_SERVER_NAME?: string
   readonly VITE_SERVER_DESCRIPTION?: string
+  readonly VITE_HCAPTCHA_SITEKEY?: string
+  readonly VITE_GOOGLE_CLIENT_ID?: string
+  readonly VITE_DISCORD_CLIENT_ID?: string
 }
 
 interface ImportMeta {
