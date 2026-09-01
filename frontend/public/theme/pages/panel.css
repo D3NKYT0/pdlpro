@@ -1817,6 +1817,682 @@ html.pdl-panel .inventory-panel-empty {
   font-size: 11px;
 }
 
+/* Marketplace */
+html.pdl-panel .marketplace-page {
+  display: grid;
+  grid-template-areas:
+    'hero hero'
+    'catalog side';
+  grid-template-columns: minmax(0, 1.4fr) minmax(390px, 0.6fr);
+  align-items: start;
+  gap: 18px;
+}
+
+html.pdl-panel .marketplace-hero {
+  display: flex;
+  grid-area: hero;
+  min-height: 150px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(10, 9, 8, 0.98), rgba(17, 13, 10, 0.84) 64%, rgba(20, 14, 9, 0.62)),
+    url(/theme/default/images/bg/4.jpg) center 42% / cover no-repeat;
+}
+
+html.pdl-panel .marketplace-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+html.pdl-panel .marketplace-hero h1 {
+  margin: 7px 0 5px;
+}
+
+html.pdl-panel .marketplace-hero p {
+  margin: 0;
+}
+
+html.pdl-panel .marketplace-catalog-card {
+  grid-area: catalog;
+  min-width: 0;
+}
+
+html.pdl-panel .marketplace-side-column {
+  display: grid;
+  grid-area: side;
+  gap: 18px;
+  min-width: 0;
+}
+
+html.pdl-panel .marketplace-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+}
+
+html.pdl-panel .marketplace-section-heading h2 {
+  margin: 4px 0 0;
+}
+
+html.pdl-panel .marketplace-section-heading > span {
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .marketplace-section-heading.compact {
+  align-items: center;
+}
+
+html.pdl-panel .marketplace-section-heading.compact > svg {
+  width: 37px;
+  height: 37px;
+  padding: 9px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  color: var(--panel-gold);
+  stroke-width: 1.35;
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .marketplace-section-heading.compact > svg > * {
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+html.pdl-panel .marketplace-listing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .marketplace-listing-card {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid rgba(197, 161, 97, 0.13);
+  background: rgba(5, 5, 4, 0.3);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: border-color 170ms ease, background-color 170ms ease, transform 170ms ease;
+}
+
+html.pdl-panel .marketplace-listing-card:hover,
+html.pdl-panel .marketplace-listing-card.is-owner {
+  border-color: rgba(230, 199, 125, 0.28);
+  background: rgba(197, 161, 97, 0.045);
+}
+
+html.pdl-panel .marketplace-listing-card:hover {
+  transform: translateY(-2px);
+}
+
+html.pdl-panel .marketplace-listing-card-top,
+html.pdl-panel .marketplace-detail-identity,
+html.pdl-panel .marketplace-sale-main,
+html.pdl-panel .marketplace-character-preview-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+html.pdl-panel .marketplace-listing-card-top > div:last-child,
+html.pdl-panel .marketplace-detail-identity > div:last-child,
+html.pdl-panel .marketplace-sale-main > div:last-child,
+html.pdl-panel .marketplace-character-preview-head > div:nth-child(2) {
+  min-width: 0;
+}
+
+html.pdl-panel .marketplace-character-emblem {
+  display: grid;
+  flex: 0 0 auto;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(197, 161, 97, 0.065);
+  color: var(--panel-gold);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .marketplace-character-emblem.small {
+  width: 34px;
+  height: 34px;
+}
+
+html.pdl-panel .marketplace-character-emblem svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.35;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .marketplace-listing-card h3 {
+  margin: 4px 0 3px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .marketplace-listing-card p,
+html.pdl-panel .marketplace-detail-identity p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
+html.pdl-panel .marketplace-listing-card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(197, 161, 97, 0.09);
+  border-bottom: 1px solid rgba(197, 161, 97, 0.09);
+}
+
+html.pdl-panel .marketplace-listing-card-stats span {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 5px;
+  border-right: 1px solid rgba(197, 161, 97, 0.09);
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-listing-card-stats span:last-child {
+  border-right: 0;
+}
+
+html.pdl-panel .marketplace-listing-card-stats b {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-listing-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+html.pdl-panel .marketplace-listing-card-footer > strong {
+  color: var(--panel-gold-bright);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-open-listing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font: inherit;
+  font-size: 10px;
+}
+
+html.pdl-panel .marketplace-open-listing:hover {
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .marketplace-open-listing svg {
+  width: 13px;
+  height: 13px;
+}
+
+html.pdl-panel .marketplace-listing-detail {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid rgba(230, 199, 125, 0.28);
+  background:
+    linear-gradient(135deg, rgba(197, 161, 97, 0.055), transparent 42%),
+    rgba(4, 4, 3, 0.42);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.22);
+}
+
+html.pdl-panel .marketplace-listing-detail-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
+}
+
+html.pdl-panel .marketplace-detail-identity h2 {
+  margin: 4px 0 3px;
+}
+
+html.pdl-panel .marketplace-detail-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+html.pdl-panel .marketplace-owner-badge,
+html.pdl-panel .marketplace-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 25px;
+  padding: 0 9px;
+  border: 1px solid rgba(197, 161, 97, 0.18);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .marketplace-owner-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+html.pdl-panel .marketplace-status.for-sale {
+  border-color: rgba(122, 184, 107, 0.25);
+  color: rgba(156, 211, 142, 0.82);
+}
+
+html.pdl-panel .marketplace-status.sold {
+  border-color: rgba(114, 153, 202, 0.25);
+  color: rgba(142, 181, 229, 0.82);
+}
+
+html.pdl-panel .marketplace-status.cancelled {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.42);
+}
+
+html.pdl-panel .marketplace-status.disputed {
+  border-color: rgba(214, 132, 91, 0.25);
+  color: rgba(235, 154, 113, 0.82);
+}
+
+html.pdl-panel .marketplace-detail-close {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--panel-muted);
+  cursor: pointer;
+}
+
+html.pdl-panel .marketplace-detail-close:hover {
+  border-color: rgba(230, 199, 125, 0.34);
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .marketplace-detail-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+html.pdl-panel .marketplace-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.38fr);
+  gap: 16px;
+}
+
+html.pdl-panel .marketplace-character-stats,
+html.pdl-panel .marketplace-character-preview-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: rgba(197, 161, 97, 0.1);
+}
+
+html.pdl-panel .marketplace-character-stats > div,
+html.pdl-panel .marketplace-character-preview-stats > div {
+  display: flex;
+  min-width: 0;
+  min-height: 58px;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(8, 7, 6, 0.96);
+}
+
+html.pdl-panel .marketplace-character-stats dt,
+html.pdl-panel .marketplace-character-preview-stats dt {
+  color: var(--panel-muted);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .marketplace-character-stats dd,
+html.pdl-panel .marketplace-character-preview-stats dd {
+  margin: 0;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .marketplace-purchase-summary {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px;
+  border: 1px solid rgba(197, 161, 97, 0.13);
+  background: rgba(197, 161, 97, 0.035);
+}
+
+html.pdl-panel .marketplace-purchase-summary > span,
+html.pdl-panel .marketplace-purchase-summary > small {
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-purchase-summary > strong {
+  color: var(--panel-gold-bright);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-purchase-summary .btn {
+  width: 100%;
+  min-width: 0;
+  height: 39px;
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+html.pdl-panel .marketplace-owner-note {
+  line-height: 1.45;
+}
+
+html.pdl-panel .marketplace-detail-copy {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.32fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+html.pdl-panel .marketplace-detail-copy > div {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(197, 161, 97, 0.1);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+html.pdl-panel .marketplace-detail-copy strong,
+html.pdl-panel .marketplace-detail-copy p {
+  display: block;
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+html.pdl-panel .marketplace-detail-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+
+html.pdl-panel .marketplace-detail-section-heading > svg {
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .marketplace-detail-section-heading h3 {
+  margin: 3px 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-equipment-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+html.pdl-panel .marketplace-equipment-item {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(197, 161, 97, 0.09);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+html.pdl-panel .marketplace-equipment-item .l2-item-icon,
+html.pdl-panel .marketplace-character-preview-equipment .l2-item-icon {
+  border: 1px solid rgba(230, 199, 125, 0.24);
+  background: rgba(0, 0, 0, 0.34);
+}
+
+html.pdl-panel .marketplace-equipment-item > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+html.pdl-panel .marketplace-equipment-item strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .marketplace-equipment-item small,
+html.pdl-panel .marketplace-equipment-empty {
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-equipment-empty,
+html.pdl-panel .marketplace-empty {
+  display: grid;
+  min-height: 82px;
+  place-items: center;
+  border: 1px dashed rgba(197, 161, 97, 0.13);
+  color: var(--panel-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+html.pdl-panel .marketplace-empty svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+  color: rgba(197, 161, 97, 0.4);
+}
+
+html.pdl-panel .marketplace-sell-card form {
+  display: grid;
+  gap: 13px;
+}
+
+html.pdl-panel .marketplace-sell-card .field {
+  margin: 0;
+}
+
+html.pdl-panel .marketplace-sell-card textarea {
+  min-height: 86px;
+  resize: vertical;
+}
+
+html.pdl-panel .marketplace-sell-card form > .btn {
+  width: 100%;
+}
+
+html.pdl-panel .marketplace-character-preview {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(197, 161, 97, 0.035);
+}
+
+html.pdl-panel .marketplace-character-preview-head > div:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+html.pdl-panel .marketplace-character-preview-head strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+html.pdl-panel .marketplace-character-preview-head small {
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-online-state {
+  padding: 5px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .marketplace-online-state.online {
+  border-color: rgba(113, 180, 99, 0.24);
+  color: rgba(142, 211, 128, 0.78);
+}
+
+html.pdl-panel .marketplace-online-state.offline {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+html.pdl-panel .marketplace-character-preview-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html.pdl-panel .marketplace-character-preview-stats > div {
+  min-height: 49px;
+}
+
+html.pdl-panel .marketplace-character-preview-equipment {
+  display: grid;
+  gap: 7px;
+}
+
+html.pdl-panel .marketplace-character-preview-equipment > span {
+  color: var(--panel-muted);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-character-preview-equipment > div {
+  display: flex;
+  gap: 5px;
+  min-height: 34px;
+  flex-wrap: wrap;
+}
+
+html.pdl-panel .marketplace-character-preview-equipment small,
+html.pdl-panel .marketplace-character-preview > p {
+  margin: 0;
+  color: rgba(230, 145, 126, 0.72);
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-sales-list {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .marketplace-sale-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(197, 161, 97, 0.1);
+  background: rgba(5, 5, 4, 0.25);
+}
+
+html.pdl-panel .marketplace-sale-main strong {
+  display: block;
+  margin-bottom: 3px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-sale-main small,
+html.pdl-panel .marketplace-sale-meta small {
+  color: var(--panel-muted);
+  font-size: 8px;
+}
+
+html.pdl-panel .marketplace-sale-meta {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+html.pdl-panel .marketplace-sale-meta > strong {
+  color: var(--panel-gold-bright);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+html.pdl-panel .marketplace-sale-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 7px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(197, 161, 97, 0.08);
+}
+
+html.pdl-panel .marketplace-sale-actions .btn {
+  min-width: 105px;
+  height: 34px;
+  padding: 0 12px;
+  font-size: 9px;
+}
+
+html.pdl-panel .marketplace-sale-actions .btn.danger {
+  color: rgba(235, 145, 127, 0.82);
+}
+
+html.pdl-panel .marketplace-auth-card {
+  grid-area: side;
+}
+
 html.pdl-panel .panel-welcome {
   display: flex;
   min-height: 185px;
@@ -4346,6 +5022,19 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 1350px) {
+  html.pdl-panel .marketplace-page {
+    grid-template-areas:
+      'hero'
+      'catalog'
+      'side';
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .marketplace-side-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
   html.pdl-panel .game-tabs button {
     padding-right: 8px;
     padding-left: 8px;
@@ -4398,6 +5087,10 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 900px) {
+  html.pdl-panel .marketplace-side-column {
+    grid-template-columns: 1fr;
+  }
+
   html.pdl-panel .shell {
     grid-template-columns: 1fr;
     padding-top: 18px;
@@ -4464,6 +5157,31 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 760px) {
+  html.pdl-panel .marketplace-listing-grid,
+  html.pdl-panel .marketplace-detail-grid,
+  html.pdl-panel .marketplace-detail-copy,
+  html.pdl-panel .marketplace-equipment-list {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .marketplace-listing-detail-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .marketplace-detail-top-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  html.pdl-panel .marketplace-detail-close {
+    margin-left: auto;
+  }
+
+  html.pdl-panel .marketplace-character-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   html.pdl-panel .grid.cols-2,
   html.pdl-panel .grid.cols-3 {
     grid-template-columns: 1fr;
@@ -4618,6 +5336,42 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 }
 
 @media (max-width: 600px) {
+  html.pdl-panel .marketplace-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .marketplace-hero .btn {
+    width: 100%;
+  }
+
+  html.pdl-panel .marketplace-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .marketplace-listing-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .marketplace-sale-row {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .marketplace-sale-meta {
+    justify-items: start;
+  }
+
+  html.pdl-panel .marketplace-sale-actions {
+    justify-content: stretch;
+  }
+
+  html.pdl-panel .marketplace-sale-actions .btn {
+    min-width: 0;
+    width: 100%;
+  }
+
   html.pdl-panel .shell {
     gap: 14px;
     padding: 10px 10px 36px;

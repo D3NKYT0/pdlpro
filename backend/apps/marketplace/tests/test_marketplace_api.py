@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
-from apps.server.domain.gateways import ILineageGateway
+from apps.server.domain.gateways import GameItem, ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
 
@@ -30,7 +30,11 @@ def test_list_and_buy_character(api, seller, buyer):
     assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json").status_code == 200
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
-    char = gateway.seed_character("seller", "SirSell")
+    char = gateway.seed_character(
+        "seller",
+        "SirSell",
+        items=[GameItem(2413, "Helmet", 1, 3, slot=6)],
+    )
 
     listed = api.post(
         "/api/v1/customer/marketplace/",
@@ -38,6 +42,12 @@ def test_list_and_buy_character(api, seller, buyer):
         format="json",
     )
     assert listed.status_code == 200, listed.data
+    assert listed.data["char_pvp"] == 0
+    assert listed.data["char_pk"] == 0
+    assert listed.data["equipment"] == [
+        {"item_id": 2413, "name": "Helmet", "quantity": 1, "enchant": 3, "slot": 6}
+    ]
+    assert listed.data["created_at"]
     listing_id = listed.data["id"]
     catalog = api.get("/api/v1/public/marketplace/")
     assert catalog.status_code == 200

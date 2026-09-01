@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from decimal import Decimal
 from uuid import UUID
 
@@ -82,6 +82,7 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
             raise CharacterOfflineRequiredError()
         if self._listings.find_active_by_char(data.char_id):
             raise CharacterAlreadyListedError()
+        equipment = [asdict(item) for item in self._lineage.list_character_equipment(char.char_id)]
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
         with self._unit_of_work:
             self._lineage.transfer_character(data.char_id, master)
@@ -91,6 +92,13 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
                 char_name=char.name,
                 char_level=char.level,
                 char_class=char.class_id,
+                char_title=char.title,
+                char_sex=char.sex,
+                char_pvp=char.pvp,
+                char_pk=char.pk,
+                char_clan_name=char.clan_name,
+                char_is_clan_leader=char.is_clan_leader,
+                equipment=equipment,
                 old_account=login,
                 price=data.price,
                 notes=data.notes,

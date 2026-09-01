@@ -115,9 +115,25 @@ export interface ApiCharacterListing {
   char_name: string
   char_level: number
   char_class: number
+  char_title: string
+  char_sex: number
+  char_pvp: number
+  char_pk: number
+  char_clan_name: string
+  char_is_clan_leader: boolean
+  equipment: Array<{
+    item_id: number
+    name: string
+    quantity: number
+    enchant: number
+    slot: number | null
+  }>
   price: string
   status: string
   notes: string
+  created_at: string
+  updated_at: string
+  sold_at: string | null
 }
 
 export interface ApiNotification {
