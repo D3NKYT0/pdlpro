@@ -398,12 +398,6 @@ export function CharacterPage() {
                   <Store aria-hidden="true" />
                   Marketplace
                 </Link>
-                {char.is_clan_leader ? (
-                  <Link className="btn ghost" to="/painel/clans">
-                    <Shield aria-hidden="true" />
-                    Painel do clã
-                  </Link>
-                ) : null}
               </div>
             </section>
           </div>

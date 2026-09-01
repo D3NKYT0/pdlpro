@@ -13,7 +13,6 @@ export { auctionApi } from './domain/auction.service'
 export { notificationApi } from './domain/notification.service'
 export { pushApi, enableBrowserPush, disableBrowserPush } from './domain/push.service'
 export { gamesApi } from './domain/games.service'
-export { clansApi } from './domain/clans.service'
 export { staffApi } from './domain/staff.service'
 export type {
   ApiPanelSettings,

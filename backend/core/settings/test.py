@@ -7,6 +7,9 @@ from .development import *  # noqa: E402, F403
 os.environ["REDIS_URL"] = "memory://"
 
 TESTING = True
+PAYMENT_METHODS = ["mock", "mercadopago", "stripe"]
+PAYMENT_ALLOW_MOCK = True
+PAYMENT_MOCK_AUTO_CONFIRM = True
 SECRET_KEY = "django-insecure-test-key-with-more-than-thirty-two-characters-for-jwt"
 DEBUG = False
 LINEAGE_DB_ENABLED = False

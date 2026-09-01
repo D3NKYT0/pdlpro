@@ -13,7 +13,7 @@ O repositório é um monorepo com backend Django/DRF, frontend React e integraç
 - Carteira, transferências, loja e pagamentos por mock, Mercado Pago ou Stripe.
 - Inventário, marketplace de personagens e leilões.
 - Notícias, wiki, calendário, FAQ, downloads e documentos legais.
-- Clãs, notificações e Web Push.
+- Notificações e Web Push.
 - Minigames, recompensas, progresso, economia e passe de batalha.
 - Admin Django, documentação OpenAPI e tarefas Celery.
 

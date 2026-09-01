@@ -8,5 +8,5 @@ export const LEGACY_PANEL_REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/shop', to: '/painel/shop' },
   { from: '/marketplace', to: '/painel/marketplace' },
   { from: '/auctions', to: '/painel/auctions' },
-  { from: '/clans', to: '/painel/clans' },
+  { from: '/clans', to: '/painel' },
 ]

@@ -9,7 +9,6 @@ import {
   LayoutDashboard,
   LogOut,
   Package,
-  Shield,
   ShieldCheck,
   ShoppingBag,
   SlidersHorizontal,
@@ -37,7 +36,6 @@ const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean 
   { to: '/painel/auctions', label: 'Leilão', icon: Gavel },
   { to: '/painel/games', label: 'Jogos', icon: Gamepad2 },
   { to: '/painel/progress', label: 'Progresso', icon: Trophy },
-  { to: '/painel/clans', label: 'Clãs', icon: Shield },
   { to: '/painel/notifications', label: 'Avisos', icon: Bell },
 ]
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from django.conf import settings
+
 from apps.payment.domain.exceptions import PaymentMethodUnavailableError
 from apps.payment.domain.gateways import IPaymentGateway
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
@@ -39,6 +41,7 @@ class PaymentGatewayRegistry:
                     "id": name,
                     "public_key": gateway.public_key(),
                     "currencies": ["BRL"] if name == "mercadopago" else ["USD", "BRL"] if name == "stripe" else ["BRL", "USD"],
+                    "auto_confirm": name == "mock" and getattr(settings, "PAYMENT_MOCK_AUTO_CONFIRM", False),
                 }
             )
         return methods

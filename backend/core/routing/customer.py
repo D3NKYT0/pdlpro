@@ -9,5 +9,4 @@ urlpatterns = [
     path("notifications/", include("apps.communication.presentation.urls.customer")),
     path("push/", include("apps.communication.presentation.urls.push")),
     path("games/", include("apps.games.presentation.urls.customer")),
-    path("clans/", include("apps.clans.presentation.urls.customer")),
 ]

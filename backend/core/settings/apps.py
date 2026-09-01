@@ -41,7 +41,6 @@ LOCAL_APPS = [
     "apps.games.apps.GamesConfig",
     "apps.social.apps.SocialConfig",
     "apps.communication.apps.CommunicationConfig",
-    "apps.clans.apps.ClansConfig",
     "apps.staff.apps.StaffConfig",
 ]
 

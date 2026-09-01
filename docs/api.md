@@ -17,9 +17,9 @@ O Swagger e o ReDoc usam o mesmo visual ouro/escuro do frontend e do Jazzmin. Em
 | Prefixo | Acesso | Conteúdo |
 |---|---|---|
 | `/api/v1/auth/` | Público ou sessão | CSRF, cadastro, login, 2FA, e-mail, senha, refresh e logout |
-| `/api/v1/public/` | Anônimo | Status, rankings, notícias, wiki, calendário, FAQ, downloads, clãs e mercados públicos |
+| `/api/v1/public/` | Anônimo | Status, rankings, notícias, wiki, calendário, FAQ, downloads e mercados públicos |
 | `/api/v1/shared/` | Autenticado | Perfil, progresso, recompensas, carteira, loja e conteúdo compartilhado |
-| `/api/v1/customer/` | Autenticado | Contas, personagens, inventário, pagamentos, mercados, jogos, comunicação e clãs |
+| `/api/v1/customer/` | Autenticado | Contas, personagens, inventário, pagamentos, mercados, jogos e comunicação |
 | `/api/v1/system/` | Operacional | Health, versão e webhooks de pagamento |
 
 A lista completa e os métodos aceitos devem ser consultados no Swagger/ReDoc ou diretamente nos arquivos `backend/apps/*/presentation/urls/`.

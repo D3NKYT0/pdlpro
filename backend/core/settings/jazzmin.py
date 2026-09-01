@@ -35,7 +35,6 @@ JAZZMIN_SETTINGS_PDL = {
         "games",
         "auction",
         "marketplace",
-        "clans",
         "staff",
     ],
     "icons": JAZZMIN_ICONS_PDL,

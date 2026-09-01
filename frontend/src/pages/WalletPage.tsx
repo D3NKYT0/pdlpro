@@ -79,7 +79,10 @@ export function WalletPage() {
   const methods = catalog.data?.methods ?? []
   const mp = methods.find((item) => item.id === 'mercadopago' && item.currencies.includes(currency))
   const stripe = methods.find((item) => item.id === 'stripe' && item.currencies.includes(currency))
-  const mock = methods.find((item) => item.id === 'mock')
+  const mock = methods.find((item) => item.id === 'mock' && item.currencies.includes(currency))
+  const paymentMethod = currency === 'USD' ? stripe?.id || mock?.id : mp?.id || mock?.id
+  const paymentAvailable = Boolean(paymentMethod)
+  const simulatedPayment = paymentMethod === 'mock'
 
   async function refreshWallet() {
     await queryClient.invalidateQueries({ queryKey: ['wallet'] })
@@ -88,6 +91,10 @@ export function WalletPage() {
   }
 
   async function startPurchase(packageId?: string) {
+    if (!paymentMethod) {
+      toast.error('As recargas estão temporariamente indisponíveis. Tente novamente mais tarde.')
+      return
+    }
     setBusy(true)
     try {
       await brickRef.current?.unmount()
@@ -96,14 +103,16 @@ export function WalletPage() {
         package_id: packageId,
         amount: packageId ? undefined : customAmount,
         currency,
-        method: currency === 'USD' ? stripe?.id || mock?.id : mp?.id || mock?.id,
+        method: paymentMethod,
       })
       setOrder(created)
-      if (created.method === 'mock') {
+      if (created.method === 'mock' && mock?.auto_confirm) {
         const confirmed = await paymentApi.confirm(created.id)
         toast.success(`${confirmed.coins} moedas creditadas`)
         setOrder(null)
         await refreshWallet()
+      } else if (created.method === 'mock') {
+        toast.success('Pedido criado e aguardando confirmação.')
       }
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Não foi possível iniciar o pagamento')
@@ -292,11 +301,11 @@ export function WalletPage() {
             </div>
           </header>
 
-          <div className="wallet-payment-note">
+          <div className={`wallet-payment-note${paymentAvailable ? '' : ' is-unavailable'}`}>
             <ShieldCheck aria-hidden="true" />
             <span>
-              <strong>{currency === 'USD' ? 'Pagamento internacional via Stripe' : 'Pagamento nacional via Mercado Pago'}</strong>
-              <small>{currency === 'USD' ? 'Cartão processado com segurança no próprio site.' : 'Pague com cartão, PIX ou boleto sem sair do painel.'}</small>
+              <strong>{paymentAvailable ? simulatedPayment ? 'Pagamento sujeito a confirmação' : currency === 'USD' ? 'Pagamento internacional via Stripe' : 'Pagamento nacional via Mercado Pago' : 'Recargas temporariamente indisponíveis'}</strong>
+              <small>{paymentAvailable ? simulatedPayment ? mock?.auto_confirm ? 'O crédito automático está habilitado neste ambiente.' : 'O saldo será adicionado somente após a aprovação do pedido.' : currency === 'USD' ? 'Cartão processado com segurança no próprio site.' : 'Pague com cartão, PIX ou boleto sem sair do painel.' : 'Nenhuma cobrança será criada enquanto o serviço de pagamento estiver indisponível.'}</small>
             </span>
           </div>
 
@@ -306,7 +315,7 @@ export function WalletPage() {
                 key={pack.id}
                 className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
                 type="button"
-                disabled={busy}
+                disabled={busy || !paymentAvailable}
                 aria-label={`Comprar ${pack.total_coins} moedas por ${formatMoney(pack[priceKey], currency)}`}
                 onClick={() => void startPurchase(pack.id)}
               >
@@ -316,7 +325,7 @@ export function WalletPage() {
                 <small>moedas</small>
                 {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">+ {pack.bonus} de bônus</span> : null}
                 <strong className="pay-pack-price">{formatMoney(pack[priceKey], currency)}</strong>
-                <span className="pay-pack-action">Escolher pacote</span>
+                <span className="pay-pack-action">{paymentAvailable ? 'Escolher pacote' : 'Indisponível'}</span>
               </button>
             ))}
           </div>
@@ -350,7 +359,7 @@ export function WalletPage() {
                   placeholder={currency === 'USD' ? '9.90' : '50.00'}
                 />
               </label>
-              <button className="btn" type="submit" disabled={busy || !customAmount}>
+              <button className="btn" type="submit" disabled={busy || !customAmount || !paymentAvailable}>
                 <CircleDollarSign aria-hidden="true" /> Comprar agora
               </button>
             </form>

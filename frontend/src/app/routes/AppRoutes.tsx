@@ -7,7 +7,6 @@ import { AccountSecurityPage } from '../../pages/AccountSecurityPage'
 import { AuctionPage } from '../../pages/AuctionPage'
 import { CalendarPage } from '../../pages/CalendarPage'
 import { CharacterPage } from '../../pages/CharacterPage'
-import { ClansPage } from '../../pages/ClansPage'
 import { DownloadsPage } from '../../pages/DownloadsPage'
 import { FaqPage } from '../../pages/FaqPage'
 import { ForgotPasswordPage } from '../../pages/ForgotPasswordPage'
@@ -88,7 +87,7 @@ export function AppRoutes() {
             <Route path="/painel/shop" element={<ShopPage />} />
             <Route path="/painel/marketplace" element={<MarketplacePage />} />
             <Route path="/painel/auctions" element={<AuctionPage />} />
-            <Route path="/painel/clans" element={<ClansPage />} />
+            <Route path="/painel/clans" element={<Navigate to="/painel" replace />} />
             <Route element={<RequireStaff />}>
               <Route path="/painel/admin" element={<AdminHubPage />} />
               <Route path="/painel/admin/servidor" element={<AdminServerPage />} />

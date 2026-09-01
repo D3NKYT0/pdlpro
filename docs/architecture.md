@@ -69,7 +69,6 @@ Não mantenha estado específico de usuário em singletons.
 | `content` | Notícias, wiki, calendário, FAQ, downloads e legais |
 | `games` | Minigames, recompensas, economia e passe de batalha |
 | `communication` | Notificações e push |
-| `clans` | Perfis, candidaturas e gestão de clãs |
 | `staff` | Endpoints operacionais do sistema |
 
 `common/` contém capacidades transversais, como container de DI, middleware, paginação, permissões, contrato de erro e suporte a OpenAPI.

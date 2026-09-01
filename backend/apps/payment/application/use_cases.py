@@ -25,7 +25,10 @@ from common.architecture.exceptions import AuthorizationError, ValidationDomainE
 
 
 def _configured_methods() -> list[str]:
-    return [method.lower() for method in getattr(settings, "PAYMENT_METHODS", ["mock"])]
+    methods = [method.lower() for method in getattr(settings, "PAYMENT_METHODS", ["mercadopago", "stripe"])]
+    if not getattr(settings, "PAYMENT_ALLOW_MOCK", False):
+        methods = [method for method in methods if method != "mock"]
+    return methods
 
 
 class GetPaymentCatalogUseCase(UseCase[None, dict]):
@@ -269,8 +272,9 @@ class ConfirmPaymentUseCase(UseCase[ConfirmPaymentInput, PaymentOrderEntity]):
         self._settle = settle
 
     def execute(self, data: ConfirmPaymentInput) -> PaymentOrderEntity:
+        allowed = ("mock",) if getattr(settings, "PAYMENT_ALLOW_MOCK", False) else ()
         return self._settle.execute(
-            SettlePaymentInput(order_id=data.order_id, user_id=data.user_id, allow_methods=("mock",))
+            SettlePaymentInput(order_id=data.order_id, user_id=data.user_id, allow_methods=allowed)
         )
 
 

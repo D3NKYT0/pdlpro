@@ -111,7 +111,7 @@ export interface ApiCoinPackage {
 
 export interface ApiPaymentCatalog {
   currency: string
-  methods: Array<{ id: string; public_key: string; currencies: string[] }>
+  methods: Array<{ id: string; public_key: string; currencies: string[]; auto_confirm?: boolean }>
   packages: ApiCoinPackage[]
   allow_custom_amount: boolean
 }
@@ -225,30 +225,6 @@ export interface ApiBagItem {
   item_name: string
   quantity: number
   enchant: number
-}
-
-export interface ApiClan {
-  id: string
-  name: string
-  description: string
-  recruiting: boolean
-  owner_id: string
-  owner_username: string
-  motd: string
-  focus: string
-  min_level: number
-  clan_id: number | null
-}
-
-export interface ApiClanApplication {
-  id: string
-  clan_id: string
-  clan_name: string
-  user_id: string
-  username: string
-  char_name: string
-  message: string
-  status: string
 }
 
 export interface ApiGamerProfile {

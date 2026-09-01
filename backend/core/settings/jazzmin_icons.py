@@ -110,8 +110,4 @@ JAZZMIN_ICONS_PDL = {
     "communication.notification": "fas fa-bell",
     "communication.pushsubscription": "fas fa-mobile-alt",
 
-    # Clans.
-    "clans": "fas fa-shield-alt",
-    "clans.clanprofile": "fas fa-shield-alt",
-    "clans.clanapplication": "fas fa-file-signature",
 }
