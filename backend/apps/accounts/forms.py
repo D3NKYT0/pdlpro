@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from apps.accounts.infrastructure.models import User
 from common.forms import PDLAdminFormMixin
@@ -37,6 +38,24 @@ class PDLUserLabelsMixin:
         for field_name, label in self.field_labels.items():
             if field_name in self.fields:
                 self.fields[field_name].label = label
+
+        transfer_fields = {
+            "groups": (
+                "grupos",
+                "Pesquise os grupos disponíveis e use as setas para atribuir ou remover.",
+            ),
+            "user_permissions": (
+                "permissões",
+                "Pesquise as permissões disponíveis e use as setas para atribuir ou remover.",
+            ),
+        }
+        for field_name, (verbose_name, help_text) in transfer_fields.items():
+            if field_name not in self.fields:
+                continue
+            field = self.fields[field_name]
+            field.widget = FilteredSelectMultiple(verbose_name, is_stacked=False)
+            field.widget.choices = field.choices
+            field.help_text = help_text
 
 
 class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):

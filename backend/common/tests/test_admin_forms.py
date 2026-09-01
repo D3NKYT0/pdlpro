@@ -3,6 +3,7 @@ from decimal import Decimal
 import pytest
 from django import forms
 from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
@@ -81,6 +82,9 @@ def test_user_change_form_uses_safe_password_and_compact_special_widgets():
     assert "pdl-static-widget" in form.fields["password"].widget.attrs["class"]
     assert "pdl-check" in form.fields["is_superuser"].widget.attrs["class"]
     assert "pdl-control" not in form.fields["is_superuser"].widget.attrs["class"]
+    assert isinstance(form.fields["groups"].widget, FilteredSelectMultiple)
+    assert isinstance(form.fields["user_permissions"].widget, FilteredSelectMultiple)
+    assert "admin/js/SelectFilter2.js" in str(form.media)
 
 
 def test_user_admin_add_form_uses_password_confirmation_fields():

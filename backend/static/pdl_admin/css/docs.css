@@ -917,6 +917,55 @@ html.pdl-docs--redoc input[type="search"] {
   border: 1px solid var(--pdl-border);
 }
 
+html.pdl-docs--redoc .react-tabs > ul,
+html.pdl-docs--redoc [role="tablist"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 14px;
+}
+
+html.pdl-docs--redoc .react-tabs > ul > li,
+html.pdl-docs--redoc .react-tabs__tab,
+html.pdl-docs--redoc [role="tab"],
+html.pdl-docs--redoc [role="tablist"] > button,
+html.pdl-docs--redoc [role="tablist"] > li,
+html.pdl-docs--redoc [role="tablist"] > li > button {
+  min-width: 72px;
+  min-height: 36px;
+  padding: 8px 14px !important;
+  color: var(--pdl-gold-bright) !important;
+  font-family: var(--pdl-font) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
+  text-align: center;
+  background: rgba(14, 12, 9, 0.94) !important;
+  border: 1px solid var(--pdl-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html.pdl-docs--redoc .react-tabs__tab *,
+html.pdl-docs--redoc [role="tab"] *,
+html.pdl-docs--redoc [role="tablist"] button * {
+  color: inherit !important;
+}
+
+html.pdl-docs--redoc .react-tabs__tab--selected,
+html.pdl-docs--redoc .react-tabs > ul > li.react-tabs__tab--selected,
+html.pdl-docs--redoc [role="tab"][aria-selected="true"],
+html.pdl-docs--redoc [role="tablist"] button[aria-selected="true"] {
+  color: #1a1408 !important;
+  background: var(--pdl-gold) !important;
+  border-color: var(--pdl-gold) !important;
+}
+
+html.pdl-docs--redoc .react-tabs__tab-panel {
+  background: var(--pdl-ink) !important;
+  border: 1px solid var(--pdl-border);
+}
+
 @media (max-width: 767.98px) {
   :root {
     --pdl-docs-topbar: 118px;

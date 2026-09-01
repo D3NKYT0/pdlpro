@@ -65,9 +65,18 @@ def get_spectacular_settings(api_version):
                     "primary": {"main": "#d4af37"},
                     "success": {"main": "#6fbf73"},
                     "error": {"main": "#d45c4a"},
+                    "warning": {"main": "#efcc7b"},
                     "text": {
                         "primary": "#f4ead4",
                         "secondary": "#b5a78c",
+                    },
+                    "gray": {
+                        "50": "#14110d",
+                        "100": "#1b1812",
+                    },
+                    "border": {
+                        "dark": "rgba(212, 175, 55, 0.44)",
+                        "light": "rgba(212, 175, 55, 0.24)",
                     },
                     "http": {
                         "get": "#6fbf73",
@@ -77,6 +86,28 @@ def get_spectacular_settings(api_version):
                         "delete": "#d45c4a",
                         "options": "#b5a78c",
                         "head": "#8ab4d4",
+                    },
+                    "responses": {
+                        "success": {
+                            "color": "#6fbf73",
+                            "backgroundColor": "rgba(111, 191, 115, 0.16)",
+                            "tabTextColor": "#efcc7b",
+                        },
+                        "error": {
+                            "color": "#d45c4a",
+                            "backgroundColor": "rgba(212, 92, 74, 0.18)",
+                            "tabTextColor": "#efcc7b",
+                        },
+                        "redirect": {
+                            "color": "#efcc7b",
+                            "backgroundColor": "rgba(239, 204, 123, 0.14)",
+                            "tabTextColor": "#efcc7b",
+                        },
+                        "info": {
+                            "color": "#8ab4d4",
+                            "backgroundColor": "rgba(138, 180, 212, 0.16)",
+                            "tabTextColor": "#efcc7b",
+                        },
                     },
                 },
                 "sidebar": {
@@ -88,7 +119,15 @@ def get_spectacular_settings(api_version):
                 "rightPanel": {
                     "backgroundColor": "#080705",
                     "textColor": "#f4ead4",
+                    "servers": {
+                        "overlay": {
+                            "backgroundColor": "#14110d",
+                            "textColor": "#f4ead4",
+                        },
+                        "url": {"backgroundColor": "#1b1812"},
+                    },
                 },
+                "codeBlock": {"backgroundColor": "#0b0a08"},
                 "typography": {
                     "fontSize": "17px",
                     "lineHeight": "1.75",

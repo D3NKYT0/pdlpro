@@ -40,7 +40,7 @@
     {% endif %}
     <link rel="stylesheet" href="{% static 'jazzmin/css/main.css' %}">
     {% if jazzmin_settings.custom_css %}
-    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}?v=20260901.3">
     {% endif %}
 
     <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
@@ -401,7 +401,7 @@
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
 <script src="{% static 'jazzmin/js/main.js' %}"></script>
-{% if jazzmin_settings.custom_js %}<script src="{% static jazzmin_settings.custom_js %}"></script>{% endif %}
+{% if jazzmin_settings.custom_js %}<script src="{% static jazzmin_settings.custom_js %}?v=20260901.2"></script>{% endif %}
 {% if jazzmin_settings.show_ui_builder %}
 <script>window.ui_changes = {{ jazzmin_ui.raw|as_json|safe }};</script>
 <script src="{% static 'jazzmin/js/ui-builder.js' %}"></script>

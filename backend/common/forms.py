@@ -117,6 +117,8 @@ class PDLAdminFormMixin:
             self._add_class(widget, "pdl-control form-control pdl-multi-control")
             for child in widget.widgets:
                 self._add_class(child, "pdl-control form-control pdl-multi-control")
+        elif self._is_filtered_select(widget):
+            self._add_class(widget, "pdl-transfer-source")
         elif self._is_select2_source(widget):
             self._add_class(widget, "pdl-select-source")
         elif isinstance(widget, forms.CheckboxInput):
@@ -287,6 +289,10 @@ class PDLAdminFormMixin:
         return isinstance(widget, (forms.Select, forms.SelectMultiple)) and (
             "admin-autocomplete" in classes or "autocomplete" in widget.__class__.__name__.lower()
         )
+
+    @staticmethod
+    def _is_filtered_select(widget):
+        return widget.__class__.__name__ == "FilteredSelectMultiple"
 
     @staticmethod
     def _add_class(widget, css_classes):

@@ -106,6 +106,7 @@
     function enhanceControl(control) {
         if (!control || control.dataset.pdlEnhanced) return;
         if (control.matches("input[type='hidden'], input[type='submit'], input[type='button'], button")) return;
+        if (control.matches(".selectfilter, .pdl-transfer-source") || control.closest(".selector")) return;
         if (control.matches(".select2-search__field")) {
             if (!control.placeholder) control.placeholder = "Pesquisar e selecionar...";
             return;
@@ -148,6 +149,34 @@
         });
     }
 
+    function enhanceTransferSelector(selector) {
+        if (!selector || selector.dataset.pdlTransferEnhanced) return;
+        const source = selector.querySelector("select[data-field-name]");
+        const fieldName = (source?.dataset.fieldName || "itens").toLowerCase();
+        const labels = fieldName.includes("permiss")
+            ? { available: "Permissões disponíveis", chosen: "Permissões selecionadas" }
+            : { available: "Grupos disponíveis", chosen: "Grupos selecionados" };
+
+        const availableLabel = selector.querySelector(".selector-available-title label");
+        const chosenLabel = selector.querySelector(".selector-chosen-title label");
+        const availableHelp = selector.querySelector(".selector-available-title .helptext");
+        const chosenHelp = selector.querySelector(".selector-chosen-title .helptext");
+        const availableFilter = selector.querySelector(".selector-available .selector-filter input");
+        const chosenFilter = selector.querySelector(".selector-chosen .selector-filter input");
+        const chooseAll = selector.querySelector(".selector-chooseall");
+        const clearAll = selector.querySelector(".selector-clearall");
+
+        if (availableLabel) availableLabel.textContent = labels.available;
+        if (chosenLabel) chosenLabel.textContent = labels.chosen;
+        if (availableHelp) availableHelp.textContent = "Selecione um ou mais itens e use a seta para adicionar.";
+        if (chosenHelp) chosenHelp.textContent = "Selecione os itens que deseja remover desta conta.";
+        if (availableFilter) availableFilter.placeholder = "Filtrar disponíveis...";
+        if (chosenFilter) chosenFilter.placeholder = "Filtrar selecionados...";
+        if (chooseAll) chooseAll.textContent = "Adicionar todos";
+        if (clearAll) clearAll.textContent = "Remover todos";
+        selector.dataset.pdlTransferEnhanced = "true";
+    }
+
     function enhanceForm(form) {
         if (!form || form.matches(".pdl-account-menu__logout")) return;
         form.classList.add("pdl-form-system");
@@ -165,6 +194,8 @@
         if (root.matches && root.matches("input, select, textarea")) enhanceControl(root);
         root.querySelectorAll("#content-main form, #change-list-filters form, .inline-group form").forEach(enhanceForm);
         root.querySelectorAll("#content-main input, #content-main select, #content-main textarea, #change-list-filters input, #change-list-filters select").forEach(enhanceControl);
+        if (root.matches && root.matches(".selector")) enhanceTransferSelector(root);
+        root.querySelectorAll(".selector").forEach(enhanceTransferSelector);
         const actions = document.querySelector("#jazzy-actions");
         if (actions) actions.classList.add("pdl-form-actions");
     }
