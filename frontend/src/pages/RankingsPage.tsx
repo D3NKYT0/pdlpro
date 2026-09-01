@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { serverApi } from '../services/api'
 
 const rankingKinds = ['pvp', 'pk', 'level', 'online', 'clans', 'adena']
@@ -11,8 +12,21 @@ const worldKinds = [
 
 type Tab = { type: 'ranking'; kind: string } | { type: 'world'; name: string }
 
+function tabFromParam(param: string | null): Tab {
+  if (param === 'olympiad') return { type: 'world', name: 'olympiad_ranking' }
+  if (param && worldKinds.some((item) => item.name === param)) return { type: 'world', name: param }
+  if (param && rankingKinds.includes(param)) return { type: 'ranking', kind: param }
+  return { type: 'ranking', kind: 'pvp' }
+}
+
 export function RankingsPage() {
-  const [tab, setTab] = useState<Tab>({ type: 'ranking', kind: 'pvp' })
+  const [searchParams] = useSearchParams()
+  const tabParam = searchParams.get('tab')
+  const [tab, setTab] = useState<Tab>(() => tabFromParam(tabParam))
+
+  useEffect(() => {
+    setTab(tabFromParam(tabParam))
+  }, [tabParam])
   const [search, setSearch] = useState('')
   const rankings = useQuery({
     queryKey: ['rankings', tab],

@@ -22,6 +22,7 @@ export const PUBLIC_THEME_STYLES = [
   '/theme/public/css/faq.css',
   '/theme/public/css/terms.css',
   '/theme/pages/home-extras.css',
+  '/theme/pages/public-pages.css',
   '/theme/pages/news-page.css',
   '/theme/pages/faq-page.css',
   '/theme/pages/news-detail.css',
@@ -32,7 +33,6 @@ export const PUBLIC_THEME_STYLES = [
 ]
 
 export const ROUTE_THEME_STYLES = [
-  { test: (path: string) => path.startsWith('/wiki'), href: themeAsset('css/wiki.css') },
   { test: (path: string) => path.startsWith('/rankings'), href: themeAsset('css/tops.css') },
   { test: (path: string) => path.startsWith('/rankings'), href: themeAsset('css/tops-tables.css') },
 ]

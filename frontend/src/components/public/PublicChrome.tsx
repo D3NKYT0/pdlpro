@@ -1,0 +1,32 @@
+import type { ReactNode } from 'react'
+import { themeImage } from '../../theme/assets'
+
+type PublicHeroProps = {
+  kicker: string
+  title: string
+  description?: string
+}
+
+export function PublicHero({ kicker, title, description }: PublicHeroProps) {
+  return (
+    <header className="public-hero">
+      <div className="title container">
+        <span>
+          <img src={themeImage('icons/text.png')} alt="" />
+          {kicker}
+        </span>
+        <h1>{title}</h1>
+        {description ? <p>{description}</p> : null}
+      </div>
+    </header>
+  )
+}
+
+export function PublicEmpty({ children }: { children: ReactNode }) {
+  return (
+    <div className="public-empty">
+      <span className="public-diamond" aria-hidden="true" />
+      <p>{children}</p>
+    </div>
+  )
+}

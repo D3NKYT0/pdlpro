@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { PublicEmpty, PublicHero } from '../components/public/PublicChrome'
 import { contentApi } from '../services/api'
 
 export function FaqPage() {
@@ -7,47 +8,35 @@ export function FaqPage() {
   const [open, setOpen] = useState(0)
 
   return (
-    <div className="faq-container">
+    <div className="public-page">
+      <PublicHero
+        kicker="Ajuda"
+        title="Perguntas Frequentes"
+        description="Dúvidas comuns da comunidade, reunidas num só lugar."
+      />
       <div className="container">
-        <div className="faq-header">
-          <h1 className="faq-title">
-            <i className="fas fa-question-circle me-3" /> Perguntas Frequentes
-          </h1>
-          <p className="faq-subtitle">Veja abaixo as dúvidas mais comuns da comunidade. Nossa equipe está sempre pronta para ajudar!</p>
-        </div>
-        <div className="faq-card">
-          <div className="faq-card-header">
-            <i className="fas fa-lightbulb faq-icon" />
-            <h2 className="faq-card-title">Central de Ajuda</h2>
-            <p className="faq-card-description">Explore as seções abaixo para encontrar as informações que você precisa</p>
+        {faq.isLoading ? (
+          <PublicEmpty>Consultando a central de ajuda...</PublicEmpty>
+        ) : (faq.data ?? []).length ? (
+          <div className="public-accordion">
+            {(faq.data ?? []).map((item, index) => (
+              <article className={open === index ? 'is-open' : undefined} key={item.id}>
+                <button
+                  type="button"
+                  aria-expanded={open === index}
+                  onClick={() => setOpen(open === index ? -1 : index)}
+                >
+                  <span className="public-diamond sm" aria-hidden="true" />
+                  {item.question}
+                  <i className="fa-solid fa-chevron-right public-chevron" aria-hidden="true" />
+                </button>
+                {open === index ? <div className="public-accordion-body">{item.answer}</div> : null}
+              </article>
+            ))}
           </div>
-          <div className="faq-card-body">
-            {(faq.data ?? []).length ? (
-              <div className="faq-accordion">
-                {(faq.data ?? []).map((item, index) => (
-                  <div className="faq-item" key={item.id}>
-                    <div className="faq-item-header">
-                      <button
-                        className={`faq-button${open === index ? '' : ' collapsed'}`}
-                        type="button"
-                        onClick={() => setOpen(open === index ? -1 : index)}
-                      >
-                        <i className="fas fa-chevron-right me-3" />
-                        {item.question}
-                      </button>
-                    </div>
-                    {open === index ? <div className="faq-collapse-body">{item.answer}</div> : null}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="faq-empty">
-                <i className="fas fa-inbox faq-empty-icon" />
-                Nenhuma pergunta publicada.
-              </div>
-            )}
-          </div>
-        </div>
+        ) : (
+          <PublicEmpty>Nenhuma pergunta publicada no momento.</PublicEmpty>
+        )}
       </div>
     </div>
   )

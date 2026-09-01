@@ -12,13 +12,21 @@ const wikiLinks = [
 ]
 
 const rankingLinks = [
-  { to: '/rankings', label: 'Ranking PvP' },
-  { to: '/rankings', label: 'Ranking PK' },
-  { to: '/rankings', label: 'Ranking Adena' },
-  { to: '/rankings', label: 'Ranking Clãs' },
-  { to: '/rankings', label: 'Ranking Nível' },
-  { to: '/rankings', label: 'Ranking Olimpíada' },
+  { to: '/rankings?tab=pvp', label: 'PvP', icon: 'fa-khanda' },
+  { to: '/rankings?tab=pk', label: 'PK', icon: 'fa-skull' },
+  { to: '/rankings?tab=adena', label: 'Adena', icon: 'fa-coins' },
+  { to: '/rankings?tab=clans', label: 'Clãs', icon: 'fa-shield-halved' },
+  { to: '/rankings?tab=level', label: 'Nível', icon: 'fa-star' },
+  { to: '/rankings?tab=olympiad', label: 'Olimpíada', icon: 'fa-trophy' },
 ]
+
+function formatScore(value: number) {
+  return value.toLocaleString('pt-BR')
+}
+
+function clanInitial(name: string) {
+  return (name.trim()[0] || '?').toUpperCase()
+}
 
 const features = [
   { to: '/informacoes#pvp', image: 'features/1.jpg', title: 'PvP e Castelos' },
@@ -134,137 +142,147 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="clans" id="top-clans">
-        <div className="clans-title title container">
+      <section className="home-clans" id="top-clans">
+        <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
             Melhores Clãs
           </span>
+          <h1>Os clãs que dominam o reino</h1>
         </div>
-        <div className="clans-table container">
-          <div className="table-header">
-            <div className="col-rank">#</div>
-            <div className="col-crest">Cresta</div>
-            <div className="col-name">Nome do Clã</div>
-            <div className="col-level">Nível</div>
-            <div className="col-reputation">Reputação</div>
-            <div className="col-alliance">Aliança</div>
-            <div className="col-leader">Líder</div>
-            <div className="col-members">Membros</div>
+
+        {clans.isLoading ? (
+          <div className="home-empty container">
+            <span className="home-crest" aria-hidden="true">
+              <i className="fa-solid fa-shield-halved" />
+            </span>
+            <p>Consultando o hall da fama...</p>
           </div>
-          <div className="table-body">
-            {(clans.data ?? []).slice(0, 8).map((clan, index) => (
-              <div className={`table-row${index === 0 ? ' first-place' : ''}`} key={`${clan.position}-${clan.name}`}>
-                <div className="col-rank">{index === 0 ? <span className="rank-icon">👑</span> : clan.position}</div>
-                <div className="col-crest">
-                  <div className="crest-container" />
-                </div>
-                <div className="col-name">{clan.name}</div>
-                <div className="col-level">—</div>
-                <div className="col-reputation">{clan.value}</div>
-                <div className="col-alliance">—</div>
-                <div className="col-leader">—</div>
-                <div className="col-members">—</div>
-              </div>
-            ))}
-            {!clans.data?.length ? (
-              <div className="table-row">
-                <div className="col-name">Nenhum clã ranqueado no momento.</div>
-              </div>
+        ) : clans.data?.length ? (
+          <>
+            <div className="clan-podium container">
+              {clans.data.slice(0, 3).map((clan, index) => (
+                <article className={`clan-card place-${index + 1}`} key={`${clan.position}-${clan.name}`}>
+                  <div className="clan-card-inner">
+                    <span className="clan-place">
+                      {index === 0 ? <i className="fa-solid fa-crown" /> : null}
+                      {clan.position}º
+                    </span>
+                    <span className="home-crest" aria-hidden="true">
+                      <span>{clanInitial(clan.name)}</span>
+                    </span>
+                    <h3>{clan.name}</h3>
+                    <strong>{formatScore(clan.value)}</strong>
+                    <em>Reputação</em>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {clans.data.length > 3 ? (
+              <ol className="clan-board container">
+                {clans.data.slice(3, 8).map((clan) => (
+                  <li key={`${clan.position}-${clan.name}`}>
+                    <span className="clan-board-rank">{clan.position}</span>
+                    <span className="home-crest sm" aria-hidden="true">
+                      <span>{clanInitial(clan.name)}</span>
+                    </span>
+                    <span className="clan-board-name">{clan.name}</span>
+                    <span className="clan-board-score">{formatScore(clan.value)}</span>
+                  </li>
+                ))}
+              </ol>
             ) : null}
+            <div className="home-more container">
+              <Link to="/rankings?tab=clans">
+                Ver ranking completo
+                <img src={themeImage('icons/more.png')} alt="" />
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className="home-empty container">
+            <span className="home-crest" aria-hidden="true">
+              <i className="fa-solid fa-shield-halved" />
+            </span>
+            <p>O hall da fama ainda aguarda o primeiro clã.</p>
+            <Link to="/rankings?tab=clans">Ver rankings</Link>
           </div>
-        </div>
+        )}
       </section>
 
-      <section className="tops-section">
-        <div className="tops-title title container">
-          <h1>Rankings do Servidor</h1>
-        </div>
-        <div className="tops-content container">
-          <span className="line">
-            <img src={themeImage('icons/line.png')} alt="" />
+      <section className="home-rankings">
+        <div className="title container">
+          <span>
+            <img src={themeImage('icons/text.png')} alt="" />
+            Rankings do Servidor
           </span>
-          <div className="tops-grid">
-            <div className="tops-column">
-              <div className="tops">
-                <div>
-                  <span>
-                    Rankings
-                    <Link to="/rankings">
-                      <img src={themeImage('icons/more.png')} alt="" />
-                    </Link>
-                  </span>
-                  <ul>
-                    {rankingLinks.map((item) => (
-                      <li key={item.label}>
-                        <Link to={item.to}>
-                          <span />
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="tops-info-column">
-              <div className="stats-card">
-                <h3>
-                  <i className="fas fa-chart-line" /> Estatísticas
-                </h3>
-                <div className="stats-grid">
-                  <div className="stat-item">
-                    <div className="stat-number">{status.data?.players_online ?? 0}</div>
-                    <div className="stat-label">Online</div>
-                  </div>
-                  <div className="stat-item">
-                    <div className="stat-number">{clans.data?.length ?? 0}</div>
-                    <div className="stat-label">Clãs</div>
-                  </div>
-                  <div className="stat-item">
-                    <div className="stat-number">24/7</div>
-                    <div className="stat-label">Uptime</div>
-                  </div>
-                  <div className="stat-item">
-                    <div className={`stat-number ${status.data?.game_online ? 'online' : 'offline'}`}>
-                      <i className="fas fa-circle" /> {status.data?.game_online ? 'Online' : 'Offline'}
-                    </div>
-                    <div className="stat-label">Servidor</div>
-                  </div>
-                </div>
-              </div>
-              <div className="cta-card">
-                <h3>
-                  <i className="fas fa-star" /> Seja o Melhor!
-                </h3>
-                <p>Entre para a competição e mostre suas habilidades no nosso servidor!</p>
-                <div className="cta-buttons">
-                  <Link to="/register" className="theme-btn-gold">
-                    Criar Conta
-                  </Link>
-                  <Link to="/downloads" className="theme-btn-outline">
-                    Baixar Jogo
-                  </Link>
-                </div>
-              </div>
-            </div>
+          <h1>Prove seu valor no campo de batalha</h1>
+        </div>
+
+        <div className="ranking-tiles container">
+          {rankingLinks.map((item) => (
+            <Link className="ranking-tile" key={item.label} to={item.to}>
+              <span className="ranking-tile-inner">
+                <i className={`fa-solid ${item.icon}`} />
+                <strong>{item.label}</strong>
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="server-plaque container">
+          <div>
+            <strong>{status.data?.players_online ?? 0}</strong>
+            <span>Online</span>
+          </div>
+          <div>
+            <strong>{clans.data?.length ?? 0}</strong>
+            <span>Clãs</span>
+          </div>
+          <div>
+            <strong>24/7</strong>
+            <span>Uptime</span>
+          </div>
+          <div>
+            <strong className={status.data?.game_online ? 'is-online' : 'is-offline'}>
+              <i className="fas fa-circle" />
+              {status.data?.game_online ? 'Online' : 'Offline'}
+            </strong>
+            <span>Servidor</span>
+          </div>
+        </div>
+
+        <div className="home-cta container">
+          <span>
+            <img src={themeImage('icons/text.png')} alt="" />
+            Seja o melhor
+          </span>
+          <p>Entre para a competição e mostre suas habilidades no nosso servidor.</p>
+          <div className="home-cta-links">
+            <Link to="/downloads">Baixar Jogo</Link>
+            <Link to="/register">Criar Conta</Link>
           </div>
         </div>
       </section>
 
-      <div className="apoiadores-banner">
+      <div className="apoiadores-banner" aria-hidden="true">
         <div className="banner-track">
-          {Array.from({ length: 12 }, (_, index) => (
-            <span key={index}>APOIADORES</span>
+          {Array.from({ length: 16 }, (_, index) => (
+            <span key={index}>Apoiadores</span>
           ))}
         </div>
       </div>
 
       <section className="trailer-section">
-        <div className="container text-center">
-          <h2 className="trailer-title">🎬 Trailer Oficial</h2>
-          <div className="video-wrapper">
-            <div className="video-overlay" />
+        <div className="title container">
+          <span>
+            <img src={themeImage('icons/text.png')} alt="" />
+            Cinematic
+          </span>
+          <h1>Trailer Oficial</h1>
+        </div>
+        <div className="trailer-frame container">
+          <div className="trailer-frame-inner">
             <iframe
               src={`https://www.youtube.com/embed/${trailerId}`}
               title="Trailer oficial"
@@ -272,8 +290,8 @@ export function HomePage() {
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
-          <p className="trailer-description">Assista ao trailer e mergulhe no mundo épico do nosso servidor!</p>
         </div>
+        <p className="trailer-description">Assista ao trailer e mergulhe no mundo épico do nosso servidor.</p>
       </section>
 
       {discord ? (
