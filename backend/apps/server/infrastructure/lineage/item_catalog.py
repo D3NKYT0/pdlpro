@@ -162,7 +162,7 @@ class LineageItemCatalog:
                 continue
             sets = {key: value for key, value in SET_RE.findall(body)}
             normalized_sets = {key.casefold(): value for key, value in sets.items()}
-            raw_tradeable = normalized_sets.get("tradeable", normalized_sets.get("tradable", "true"))
+            raw_tradeable = normalized_sets.get("tradeable", "true")
             slots: list[str] = []
             for slot_value in SLOT_RE.findall(body):
                 slots.extend(part.strip() for part in slot_value.split(";") if part.strip())
