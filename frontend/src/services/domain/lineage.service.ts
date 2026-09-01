@@ -86,7 +86,7 @@ export const lineageApi = {
     request<ApiGameCharacter[]>(`/customer/server/characters/${login ? `?login=${encodeURIComponent(login)}` : ''}`),
   character: (login: string, charId: number) =>
     request<ApiGameCharacter>(
-      `/customer/server/characters/${charId}/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
+      `/customer/server/characters/${charId}/?login=${encodeURIComponent(login)}`,
     ),
   servicePrices: () => request<ApiServicePrices>('/customer/server/services/'),
   changeNickname: (login: string, char_id: number, name: string) =>

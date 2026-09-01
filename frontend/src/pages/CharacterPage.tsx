@@ -21,20 +21,20 @@ export function CharacterPage() {
   const { login = '', charId = '' } = useParams()
   const queryClient = useQueryClient()
   const id = Number(charId)
-  const character = useQuery({
-    queryKey: ['character', login, id],
-    queryFn: () => lineageApi.character(login, id),
-    enabled: Boolean(login) && Number.isFinite(id),
+  const characters = useQuery({
+    queryKey: ['characters', login],
+    queryFn: () => lineageApi.characters(login),
+    enabled: Boolean(login),
   })
   const prices = useQuery({ queryKey: ['service-prices'], queryFn: lineageApi.servicePrices })
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
   const [submitting, setSubmitting] = useState<'nick' | 'sex' | 'unstuck' | null>(null)
-  const char = character.data
+  const char = (characters.data ?? []).find((item) => Number(item.char_id) === id)
+  const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
 
   async function refreshCharacter() {
-    await queryClient.invalidateQueries({ queryKey: ['character', login, id] })
     await queryClient.invalidateQueries({ queryKey: ['characters', login] })
   }
 
@@ -101,8 +101,15 @@ export function CharacterPage() {
         ) : null}
       </header>
 
-      {character.isLoading ? <div className="card account-empty-state">Carregando personagem...</div> : null}
-      {character.isError ? (
+      {characters.isLoading ? <div className="card account-empty-state">Carregando personagem...</div> : null}
+      {characters.isError ? (
+        <div className="card account-empty-state">
+          <UsersRound aria-hidden="true" />
+          <strong>Não foi possível abrir o personagem</strong>
+          <span>{isApiError(characters.error) ? characters.error.message : 'Volte para a conta e tente novamente.'}</span>
+        </div>
+      ) : null}
+      {missing ? (
         <div className="card account-empty-state">
           <UsersRound aria-hidden="true" />
           <strong>Personagem não encontrado</strong>
