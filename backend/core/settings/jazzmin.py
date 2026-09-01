@@ -1,3 +1,6 @@
+from .jazzmin_icons import JAZZMIN_ICONS_PDL
+
+
 JAZZMIN_SETTINGS_PDL = {
     "site_title": "PDL PRO",
     "site_header": "PDL PRO Admin",
@@ -35,13 +38,7 @@ JAZZMIN_SETTINGS_PDL = {
         "clans",
         "staff",
     ],
-    "icons": {
-        "accounts.User": "fas fa-user",
-        "wallet.Wallet": "fas fa-wallet",
-        "shop.ShopItem": "fas fa-store",
-        "content.News": "fas fa-newspaper",
-        "server.ManagedLineageAccount": "fas fa-gamepad",
-    },
+    "icons": JAZZMIN_ICONS_PDL,
 }
 
 JAZZMIN_UI_TWEAKS_PDL = {
