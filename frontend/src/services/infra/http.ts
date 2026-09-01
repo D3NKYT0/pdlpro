@@ -53,7 +53,7 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
   const method = (rest.method || 'GET').toUpperCase()
   const headers = new Headers(rest.headers)
   headers.set('Accept', 'application/json')
-  if (rest.body && !headers.has('Content-Type')) {
+  if (rest.body && !(rest.body instanceof FormData) && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
   if (!SAFE.has(method)) {

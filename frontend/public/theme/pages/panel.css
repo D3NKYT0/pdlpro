@@ -231,22 +231,32 @@ html.pdl-panel .menu-badge {
 
 html.pdl-panel .panel-user {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
+  grid-template-columns: 40px minmax(0, 1fr) 36px;
   align-items: center;
-  gap: 10px;
-  padding: 16px 7px 0;
+  gap: 9px;
+  min-width: 0;
+  padding: 16px 2px 0;
   border-top: 1px solid rgba(197, 161, 97, 0.16);
 }
 
 html.pdl-panel .panel-user-avatar {
   display: grid;
-  width: 34px;
-  height: 34px;
+  box-sizing: border-box;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  aspect-ratio: 1;
   place-items: center;
+  overflow: hidden;
+  padding: 0;
   border: 1px solid rgba(230, 199, 125, 0.24);
   border-radius: 50%;
   background: rgba(197, 161, 97, 0.08);
   color: var(--panel-gold);
+  line-height: 0;
 }
 
 html.pdl-panel .panel-user-avatar svg {
@@ -268,11 +278,17 @@ html.pdl-panel .panel-user-copy strong {
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.25;
 }
 
 html.pdl-panel .panel-user-copy span {
+  display: block;
+  overflow: hidden;
   color: rgba(255, 255, 255, 0.4);
   font-size: 10px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 html.pdl-panel .panel-user .btn {
@@ -5665,6 +5681,330 @@ html.pdl-panel .bag-transfer .btn {
   width: auto;
   min-width: 170px;
   justify-self: start;
+}
+
+html.pdl-panel .user-profile-page {
+  display: grid;
+  gap: 22px;
+}
+
+html.pdl-panel .user-profile-hero {
+  padding: 0;
+  overflow: hidden;
+}
+
+html.pdl-panel .user-profile-cover {
+  height: 170px;
+  background:
+    linear-gradient(110deg, rgba(25, 17, 8, 0.28), rgba(5, 5, 5, 0.72)),
+    radial-gradient(circle at 22% 35%, rgba(221, 174, 76, 0.52), transparent 32%),
+    url('/theme/default/images/bg/5.jpg') center 36% / cover;
+  border-bottom: 1px solid rgba(218, 174, 81, 0.3);
+}
+
+html.pdl-panel .user-profile-identity {
+  min-height: 122px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 22px;
+  padding: 0 28px 24px;
+}
+
+html.pdl-panel .user-profile-avatar {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  margin-top: -54px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 0;
+  color: #dcb765;
+  background: #11100d;
+  border: 4px solid #d6ad55;
+  border-radius: 50%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(218, 174, 81, 0.2);
+  cursor: pointer;
+}
+
+html.pdl-panel .user-profile-avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html.pdl-panel .user-profile-avatar > svg {
+  width: 68px;
+  height: 68px;
+}
+
+html.pdl-panel .user-profile-avatar > span {
+  position: absolute;
+  inset: auto 0 0;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: #f8e7bd;
+  background: rgba(5, 5, 5, 0.8);
+  transform: translateY(100%);
+  transition: transform 180ms ease;
+}
+
+html.pdl-panel .user-profile-avatar:hover > span,
+html.pdl-panel .user-profile-avatar:focus-visible > span {
+  transform: translateY(0);
+}
+
+html.pdl-panel .user-profile-avatar > span svg {
+  width: 18px;
+  height: 18px;
+}
+
+html.pdl-panel .user-profile-identity h1 {
+  margin: 2px 0 0;
+}
+
+html.pdl-panel .user-profile-identity p {
+  margin: 2px 0 0;
+  color: rgba(239, 224, 194, 0.62);
+}
+
+html.pdl-panel .user-profile-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  color: #d6a767;
+  border: 1px solid rgba(214, 167, 103, 0.3);
+  border-radius: 999px;
+  background: rgba(214, 167, 103, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+html.pdl-panel .user-profile-verified.is-verified {
+  color: #8fd19e;
+  border-color: rgba(111, 191, 115, 0.32);
+  background: rgba(111, 191, 115, 0.08);
+}
+
+html.pdl-panel .user-profile-verified svg {
+  width: 17px;
+  height: 17px;
+}
+
+html.pdl-panel .user-profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.75fr);
+  gap: 22px;
+  align-items: start;
+}
+
+html.pdl-panel .user-profile-main,
+html.pdl-panel .user-profile-sidebar {
+  display: grid;
+  gap: 22px;
+}
+
+html.pdl-panel .user-profile-section-title {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+html.pdl-panel .user-profile-section-title > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #e1bd70;
+  border: 1px solid rgba(218, 174, 81, 0.26);
+  background: rgba(218, 174, 81, 0.08);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .user-profile-section-title > span svg {
+  width: 19px;
+  height: 19px;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .user-profile-section-title h2 {
+  margin: 1px 0 0;
+}
+
+html.pdl-panel .user-profile-section-title > strong {
+  color: #e1bd70;
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+}
+
+html.pdl-panel .user-profile-section-title.compact {
+  grid-template-columns: auto 1fr;
+}
+
+html.pdl-panel .user-profile-completeness .progress-bar {
+  margin-bottom: 11px;
+}
+
+html.pdl-panel .user-profile-completeness > p {
+  margin: 0;
+}
+
+html.pdl-panel .user-profile-form-card form {
+  display: grid;
+}
+
+html.pdl-panel .user-profile-form-card .field {
+  margin-bottom: 18px;
+  color: #e9d5aa;
+  font-weight: 700;
+}
+
+html.pdl-panel .user-profile-form-card .field input,
+html.pdl-panel .user-profile-form-card .field textarea {
+  width: 100%;
+  margin-top: 3px;
+  padding: 12px 14px;
+  color: #f3e6c9;
+  background: rgba(5, 5, 5, 0.58);
+  border: 1px solid rgba(218, 174, 81, 0.24);
+  border-radius: 7px;
+  outline: 0;
+  resize: vertical;
+}
+
+html.pdl-panel .user-profile-form-card .field small {
+  color: rgba(239, 224, 194, 0.52);
+  font-weight: 400;
+}
+
+html.pdl-panel .user-profile-form-card .field small:last-child {
+  justify-self: end;
+}
+
+html.pdl-panel .user-profile-form-card form > .btn {
+  justify-self: start;
+}
+
+html.pdl-panel .user-profile-form-card .btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+html.pdl-panel .user-profile-stat-list {
+  display: grid;
+  gap: 10px;
+}
+
+html.pdl-panel .user-profile-stat-list > div {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid rgba(218, 174, 81, 0.14);
+  background: rgba(218, 174, 81, 0.035);
+}
+
+html.pdl-panel .user-profile-stat-list > div > svg {
+  width: 21px;
+  height: 21px;
+  color: #d9ae59;
+}
+
+html.pdl-panel .user-profile-stat-list span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+html.pdl-panel .user-profile-stat-list small,
+html.pdl-panel .user-profile-account dt {
+  color: rgba(239, 224, 194, 0.58);
+}
+
+html.pdl-panel .user-profile-stat-list strong {
+  color: #f0d28c;
+  font-size: 18px;
+}
+
+html.pdl-panel .user-profile-account dl {
+  margin: 0;
+}
+
+html.pdl-panel .user-profile-account dl > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(218, 174, 81, 0.12);
+}
+
+html.pdl-panel .user-profile-account dl > div:last-child {
+  border-bottom: 0;
+}
+
+html.pdl-panel .user-profile-account dd {
+  margin: 0;
+  color: #ead6aa;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+html.pdl-panel .panel-user-avatar img {
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+html.pdl-panel .panel-user-copy {
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  html.pdl-panel .user-profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  html.pdl-panel .user-profile-cover {
+    height: 120px;
+  }
+
+  html.pdl-panel .user-profile-identity {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 0 18px 22px;
+  }
+
+  html.pdl-panel .user-profile-avatar {
+    width: 112px;
+    height: 112px;
+  }
+
+  html.pdl-panel .user-profile-section-title {
+    grid-template-columns: auto 1fr;
+  }
+
+  html.pdl-panel .user-profile-section-title > strong {
+    grid-column: 2;
+  }
 }
 
 html.pdl-panel :is(a, button, input, select, textarea):focus-visible {

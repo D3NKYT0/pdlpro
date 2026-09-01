@@ -22,6 +22,10 @@ export default defineConfig({
         target: process.env.DOCKER === 'true' ? 'http://backend:8000' : 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
+      '/media': {
+        target: process.env.DOCKER === 'true' ? 'http://backend:8000' : 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
       '/ws': {
         target: process.env.DOCKER === 'true' ? 'http://backend:8000' : 'http://127.0.0.1:8000',
         changeOrigin: true,

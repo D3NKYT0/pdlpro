@@ -37,6 +37,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "username": instance.username,
                 "email": instance.email,
                 "display_name": instance.display_name,
+                "bio": instance.bio,
                 "role": instance.role,
                 "is_email_verified": instance.is_email_verified,
                 "fichas": instance.fichas,
@@ -71,3 +72,4 @@ class LoginSerializer(serializers.Serializer):
 class UpdateProfileSerializer(serializers.Serializer):
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
+    avatar = serializers.ImageField(required=False)

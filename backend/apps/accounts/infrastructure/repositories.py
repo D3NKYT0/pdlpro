@@ -18,6 +18,7 @@ class DjangoUserRepository(IUserRepository):
             username=user.username,
             email=user.email,
             display_name=user.display_name or user.username,
+            bio=user.bio,
             role=user.role,
             is_email_verified=user.is_email_verified,
             fichas=user.fichas,
@@ -64,13 +65,26 @@ class DjangoUserRepository(IUserRepository):
         user = User.objects.filter(id=user_id).first()
         return bool(user and user.check_password(password))
 
-    def update_profile(self, user_id: UUID, *, display_name: str | None, bio: str | None) -> UserEntity:
+    def update_profile(
+        self,
+        user_id: UUID,
+        *,
+        display_name: str | None,
+        bio: str | None,
+        avatar: object | None = None,
+    ) -> UserEntity:
         user = User.objects.get(id=user_id)
+        update_fields = ["updated_at"]
         if display_name is not None:
             user.display_name = display_name
+            update_fields.append("display_name")
         if bio is not None:
             user.bio = bio
-        user.save(update_fields=["display_name", "bio", "updated_at"])
+            update_fields.append("bio")
+        if avatar is not None:
+            user.avatar = avatar
+            update_fields.append("avatar")
+        user.save(update_fields=update_fields)
         return self._to_entity(user)
 
     def mark_email_verified(self, user_id: UUID) -> UserEntity:

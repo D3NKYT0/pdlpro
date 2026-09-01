@@ -60,6 +60,9 @@ export const authApi = {
     }),
   logout: () => request<{ ok: boolean }>('/auth/logout/', { method: 'POST' }),
   me: () => request<ApiUser>('/shared/me/'),
-  updateMe: (payload: { display_name?: string; bio?: string }) =>
-    request<ApiUser>('/shared/me/', { method: 'PATCH', body: JSON.stringify(payload) }),
+  updateMe: (payload: { display_name?: string; bio?: string } | FormData) =>
+    request<ApiUser>('/shared/me/', {
+      method: 'PATCH',
+      body: payload instanceof FormData ? payload : JSON.stringify(payload),
+    }),
 }

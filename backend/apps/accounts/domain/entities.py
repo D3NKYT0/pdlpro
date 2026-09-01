@@ -10,6 +10,7 @@ class UserEntity:
     username: str
     email: str
     display_name: str
+    bio: str
     role: str
     is_email_verified: bool
     fichas: int

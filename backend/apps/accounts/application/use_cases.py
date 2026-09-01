@@ -97,6 +97,7 @@ class UpdateProfileInput:
     user_id: UUID
     display_name: str | None = None
     bio: str | None = None
+    avatar: object | None = None
 
 
 class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
@@ -112,4 +113,5 @@ class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
                 data.user_id,
                 display_name=data.display_name,
                 bio=data.bio,
+                avatar=data.avatar,
             )

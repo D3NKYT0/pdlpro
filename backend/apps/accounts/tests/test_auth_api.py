@@ -40,6 +40,28 @@ def test_register_and_me(api):
 
 
 @pytest.mark.django_db
+def test_update_profile_with_avatar(api, user):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    api.force_authenticate(user=user)
+    avatar = SimpleUploadedFile(
+        "avatar.gif",
+        b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;",
+        content_type="image/gif",
+    )
+    response = api.patch(
+        "/api/v1/shared/me/",
+        {"display_name": "Sir Hero", "bio": "Guardião de Aden", "avatar": avatar},
+        format="multipart",
+    )
+
+    assert response.status_code == 200, response.data
+    assert response.data["display_name"] == "Sir Hero"
+    assert response.data["bio"] == "Guardião de Aden"
+    assert response.data["avatar_url"].endswith(".gif")
+
+
+@pytest.mark.django_db
 def test_login(api, user):
     response = api.post(
         "/api/v1/auth/login/",

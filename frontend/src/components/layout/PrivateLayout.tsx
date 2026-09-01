@@ -26,6 +26,7 @@ import { usePanelTheme } from '../../theme/usePanelTheme'
 
 const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/painel', label: 'Painel', icon: LayoutDashboard, end: true },
+  { to: '/painel/profile', label: 'Meu perfil', icon: CircleUserRound },
   { to: '/painel/accounts', label: 'Conta L2', icon: UserRoundCog },
   { to: '/painel/inventory', label: 'Inventário', icon: Package },
   { to: '/painel/wallet', label: 'Carteira', icon: WalletCards },
@@ -86,13 +87,13 @@ export function PrivateLayout() {
           <div className="panel-user">
             {user ? (
               <>
-                <div className="panel-user-avatar" aria-hidden="true">
-                  <CircleUserRound />
-                </div>
-                <div className="panel-user-copy">
+                <NavLink className="panel-user-avatar" to="/painel/profile" aria-label="Abrir meu perfil">
+                  {user.avatar_url ? <img src={user.avatar_url} alt="" /> : <CircleUserRound />}
+                </NavLink>
+                <NavLink className="panel-user-copy" to="/painel/profile">
                   <strong>{user.display_name || user.username}</strong>
                   <span>{user.is_email_verified ? 'Conta verificada' : 'Confirme seu e-mail'}</span>
-                </div>
+                </NavLink>
                 <button
                   className="btn ghost"
                   type="button"

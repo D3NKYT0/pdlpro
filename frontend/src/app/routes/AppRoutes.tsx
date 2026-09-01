@@ -20,6 +20,7 @@ import { NewsDetailPage } from '../../pages/NewsDetailPage'
 import { NewsPage } from '../../pages/NewsPage'
 import { NotificationsPage } from '../../pages/NotificationsPage'
 import { PainelPage } from '../../pages/PainelPage'
+import { ProfilePage } from '../../pages/ProfilePage'
 import { ProgressPage } from '../../pages/ProgressPage'
 import { RankingsPage } from '../../pages/RankingsPage'
 import { RegisterPage } from '../../pages/RegisterPage'
@@ -72,6 +73,7 @@ export function AppRoutes() {
         <Route element={<RequireAuth />}>
           <Route element={<PrivateLayout />}>
             <Route path="/painel" element={<PainelPage />} />
+            <Route path="/painel/profile" element={<ProfilePage />} />
             <Route path="/painel/wallet" element={<WalletPage />} />
             <Route path="/painel/accounts" element={<AccountsPage />} />
             <Route path="/painel/accounts/:login/:charId" element={<CharacterPage />} />

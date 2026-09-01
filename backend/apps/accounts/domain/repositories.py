@@ -40,7 +40,14 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update_profile(self, user_id: UUID, *, display_name: str | None, bio: str | None) -> UserEntity:
+    def update_profile(
+        self,
+        user_id: UUID,
+        *,
+        display_name: str | None,
+        bio: str | None,
+        avatar: object | None = None,
+    ) -> UserEntity:
         raise NotImplementedError
 
     @abstractmethod

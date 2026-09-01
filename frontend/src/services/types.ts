@@ -3,6 +3,7 @@ export interface ApiUser {
   username: string
   email: string
   display_name: string
+  bio: string
   role: string
   is_email_verified: boolean
   fichas: number

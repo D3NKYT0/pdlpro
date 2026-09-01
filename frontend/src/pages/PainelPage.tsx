@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   SlidersHorizontal,
   UserRoundCog,
+  CircleUserRound,
   Users,
   WalletCards,
   type LucideIcon,
@@ -18,6 +19,7 @@ import { canAccessStaff } from '../lib/staff'
 import { serverApi } from '../services/api'
 
 const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon }> = [
+  { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound },
   { to: '/painel/accounts', label: 'Conta L2', text: 'Vincular login e personagens', icon: UserRoundCog },
   { to: '/painel/inventory', label: 'Inventário', text: 'Retirar e depositar itens', icon: Package },
   { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências', icon: WalletCards },
