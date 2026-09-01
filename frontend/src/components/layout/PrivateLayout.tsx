@@ -11,6 +11,7 @@ import {
   Package,
   Shield,
   ShoppingBag,
+  SlidersHorizontal,
   Store,
   Trophy,
   UserRoundCog,
@@ -18,6 +19,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { canAccessStaff } from '../../lib/staff'
 import { notificationApi } from '../../services/api'
 import { themeImage } from '../../theme/assets'
 import { usePanelTheme } from '../../theme/usePanelTheme'
@@ -74,6 +76,12 @@ export function PrivateLayout() {
                 </NavLink>
               )
             })}
+            {canAccessStaff(user) ? (
+              <NavLink to="/painel/admin">
+                <SlidersHorizontal aria-hidden="true" />
+                <span>Admin</span>
+              </NavLink>
+            ) : null}
           </div>
           <div className="panel-user">
             {user ? (

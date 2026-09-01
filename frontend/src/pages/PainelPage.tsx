@@ -7,12 +7,14 @@ import {
   Package,
   Server,
   ShoppingBag,
+  SlidersHorizontal,
   UserRoundCog,
   Users,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { canAccessStaff } from '../lib/staff'
 import { serverApi } from '../services/api'
 
 const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon }> = [
@@ -26,6 +28,9 @@ const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIc
 export function PainelPage() {
   const { user } = useAuth()
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const dashboardShortcuts = canAccessStaff(user)
+    ? [...shortcuts, { to: '/painel/admin', label: 'Admin', text: 'Configurar o painel, rates e loja', icon: SlidersHorizontal }]
+    : shortcuts
 
   return (
     <div className="grid panel-dashboard">
@@ -71,7 +76,7 @@ export function PainelPage() {
       </section>
 
       <section className="grid cols-3 panel-shortcuts">
-        {shortcuts.map((item) => {
+        {dashboardShortcuts.map((item) => {
           const Icon = item.icon
           return (
             <Link className="card shortcut-card" key={item.to} to={item.to}>

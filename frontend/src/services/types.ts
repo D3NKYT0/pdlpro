@@ -8,6 +8,9 @@ export interface ApiUser {
   fichas: number
   avatar_url: string | null
   is_2fa_enabled?: boolean
+  is_staff?: boolean
+  is_superuser?: boolean
+  is_staff_member?: boolean
 }
 
 export interface ApiServerInfo {

@@ -47,7 +47,20 @@ class IndexConfig(BaseModel):
     public_id = models.UUIDField(default=uuid4, editable=False, unique=True)
     slogan = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
+    name = models.CharField(max_length=120, blank=True)
+    description = models.TextField(blank=True)
+    chronicle = models.CharField(max_length=80, blank=True)
+    rates = models.JSONField(default=dict, blank=True)
+    enchant = models.JSONField(default=dict, blank=True)
+    max_level = models.PositiveIntegerField(default=80)
+    features = models.JSONField(default=list, blank=True)
+    notes = models.JSONField(default=dict, blank=True)
+    coming_soon = models.BooleanField(default=False)
+    staff_only_login = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Configuração da home"
-        verbose_name_plural = "Configurações da home"
+        verbose_name = "Configuração do painel"
+        verbose_name_plural = "Configurações do painel"
+
+    def __str__(self) -> str:
+        return self.name or self.slogan or "Configuração do painel"

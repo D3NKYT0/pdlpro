@@ -24,6 +24,9 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     is_email_verified = serializers.BooleanField(read_only=True)
     fichas = serializers.IntegerField(read_only=True)
     is_2fa_enabled = serializers.BooleanField(read_only=True)
+    is_staff = serializers.BooleanField(read_only=True)
+    is_superuser = serializers.BooleanField(read_only=True)
+    is_staff_member = serializers.BooleanField(read_only=True)
     avatar = serializers.ImageField(read_only=True, allow_null=True)
     bio = serializers.CharField(required=False, allow_blank=True)
 
@@ -39,9 +42,15 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "fichas": instance.fichas,
                 "avatar_url": instance.avatar_url,
                 "is_2fa_enabled": instance.is_2fa_enabled,
+                "is_staff": instance.is_staff,
+                "is_superuser": instance.is_superuser,
+                "is_staff_member": instance.is_staff_member,
             }
         data = super().to_representation(instance)
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None
+        data["is_staff"] = bool(getattr(instance, "is_staff", False))
+        data["is_superuser"] = bool(getattr(instance, "is_superuser", False))
+        data["is_staff_member"] = bool(getattr(instance, "is_staff_member", False))
         data.pop("avatar", None)
         return data
 

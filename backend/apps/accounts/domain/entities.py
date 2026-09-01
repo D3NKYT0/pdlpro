@@ -15,3 +15,6 @@ class UserEntity:
     fichas: int
     avatar_url: str | None
     is_2fa_enabled: bool = False
+    is_staff: bool = False
+    is_superuser: bool = False
+    is_staff_member: bool = False

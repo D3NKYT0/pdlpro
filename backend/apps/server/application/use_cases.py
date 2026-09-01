@@ -43,7 +43,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         if not chronicle:
             chronicle = CHRONICLE_BY_MODULE.get(module, module.capitalize() if module else "Lineage 2")
         features = [item.strip() for item in getattr(settings, "SERVER_FEATURES", []) if str(item).strip()]
-        return ServerInfo(
+        info = ServerInfo(
             name=str(getattr(settings, "PROJECT_TITLE", "PDL PRO")),
             description=str(getattr(settings, "PROJECT_DESCRIPTION", "")),
             chronicle=chronicle,
@@ -69,6 +69,25 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
                 "pvp": str(getattr(settings, "SERVER_PVP_NOTE", "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.")),
                 "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
             },
+        )
+        from apps.server.infrastructure.models import IndexConfig
+
+        row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
+        if row is None:
+            return info
+        rates = {**info.rates, **{key: str(value) for key, value in (row.rates or {}).items() if value}}
+        enchant = {**info.enchant, **{key: str(value) for key, value in (row.enchant or {}).items() if value}}
+        notes = {**info.notes, **{key: str(value) for key, value in (row.notes or {}).items() if value}}
+        overlay_features = [str(item).strip() for item in (row.features or []) if str(item).strip()]
+        return ServerInfo(
+            name=row.name or info.name,
+            description=row.description or info.description,
+            chronicle=row.chronicle or info.chronicle,
+            rates=rates,
+            enchant=enchant,
+            max_level=int(row.max_level or info.max_level),
+            features=overlay_features or info.features,
+            notes=notes,
         )
 
 

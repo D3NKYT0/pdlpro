@@ -23,6 +23,9 @@ class DjangoUserRepository(IUserRepository):
             fichas=user.fichas,
             avatar_url=avatar_url,
             is_2fa_enabled=user.is_2fa_enabled,
+            is_staff=bool(user.is_staff),
+            is_superuser=bool(user.is_superuser),
+            is_staff_member=bool(user.is_staff_member),
         )
 
     def get_by_id(self, user_id: UUID) -> UserEntity | None:
