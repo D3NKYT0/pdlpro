@@ -1,0 +1,411 @@
+{# PDL shell based on Jazzmin 3.0.4 admin/base.html; review this override when upgrading Jazzmin. #}
+{% load i18n static jazzmin admin_urls %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_jazzmin_settings request as jazzmin_settings %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'pt-br' }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="robots" content="none, noarchive">
+    <script>
+        (function () {
+            var mode = localStorage.getItem('jazzmin-theme-mode') || '{{ jazzmin_ui.default_theme_mode|default:"dark" }}';
+            if (mode === 'auto') {
+                mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-bs-theme', mode);
+        })();
+    </script>
+
+    <title>{% block title %}{{ title }} | {{ jazzmin_settings.site_title }}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/adminlte/css/adminlte.min.css' %}" id="adminlte-css">
+    <link rel="stylesheet" {% if jazzmin_ui.theme.name != 'default' %}href="{{ jazzmin_ui.theme.src }}"{% endif %} id="jazzmin-theme" data-theme-base="{% static 'vendor/bootswatch' %}">
+    {% if jazzmin_settings.show_theme_chooser %}
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem('jazzmin-theme');
+            if (savedTheme && savedTheme !== 'default') {
+                var link = document.getElementById('jazzmin-theme');
+                link.setAttribute('href', link.getAttribute('data-theme-base') + '/' + savedTheme + '/bootstrap.min.css');
+            }
+        })();
+    </script>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'jazzmin/css/main.css' %}">
+    {% if jazzmin_settings.custom_css %}
+    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    {% endif %}
+
+    <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
+    <link rel="icon" href="{% static jazzmin_settings.site_icon %}" sizes="32x32" type="image/png">
+    {% if jazzmin_settings.use_google_fonts_cdn %}
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700" rel="stylesheet">
+    {% endif %}
+
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+</head>
+<body class="layout-fixed{% if jazzmin_settings.show_sidebar %} sidebar-expand-lg sidebar-open{% else %} no-sidebar{% endif %} bg-body-tertiary {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now 'Z' %}">
+<div class="app-wrapper pdl-admin-shell">
+
+{% if not is_popup %}
+    <nav class="app-header navbar navbar-expand bg-body {{ jazzmin_ui.navbar_classes }}" id="jazzy-navbar" aria-label="Barra de comandos">
+        <div class="container-fluid pdl-commandbar">
+            <div class="pdl-commandbar__left">
+                {% if jazzmin_settings.show_sidebar %}
+                <button class="pdl-icon-button" data-lte-toggle="sidebar" type="button" aria-label="Alternar menu lateral">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                {% endif %}
+
+                <a class="pdl-commandbar__context" href="{% url 'admin:index' %}">
+                    <span class="pdl-commandbar__sigil"><i class="fas fa-shield-alt" aria-hidden="true"></i></span>
+                    <span>
+                        <small>Central de operações</small>
+                        <strong>{{ jazzmin_settings.site_brand }}</strong>
+                    </span>
+                </a>
+
+                {% get_top_menu user request.current_app|default:'admin' as top_menu %}
+                {% if top_menu %}
+                <div class="pdl-quick-links d-none d-xl-flex">
+                    {% for link in top_menu %}
+                        {% if link.children %}
+                        <div class="dropdown">
+                            <a class="pdl-quick-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ link.name }}</a>
+                            <div class="dropdown-menu pdl-compact-menu">
+                                {% for child in link.children %}
+                                <a class="dropdown-item" href="{{ child.url }}" {% if child.new_window %}target="_blank" rel="noopener"{% endif %}>{{ child.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="pdl-quick-link" href="{{ link.url }}" {% if link.new_window %}target="_blank" rel="noopener"{% endif %}>{{ link.name }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="pdl-commandbar__right">
+                {% if jazzmin_settings.search_model %}
+                <div class="dropdown pdl-search-menu">
+                    <button class="pdl-command-button" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline">Busca global</span>
+                        <kbd class="d-none d-xl-inline">{{ jazzmin_settings.search_models_parsed|length }}</kbd>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end pdl-search-dropdown">
+                        <div class="pdl-menu-heading">
+                            <span class="pdl-menu-heading__icon"><i class="fas fa-compass" aria-hidden="true"></i></span>
+                            <span>
+                                <small>Localizar registros</small>
+                                <strong>Busca global</strong>
+                            </span>
+                        </div>
+                        <div class="pdl-search-grid">
+                            {% for search_model in jazzmin_settings.search_models_parsed %}
+                            <form action="{{ search_model.search_url }}" method="get" class="pdl-command-search">
+                                <label for="pdl-search-{{ forloop.counter }}">{{ search_model.search_name }}</label>
+                                <div class="input-group">
+                                    <input id="pdl-search-{{ forloop.counter }}" class="form-control form-control-navbar" name="q" type="search" placeholder="Pesquisar..." aria-label="Pesquisar {{ search_model.search_name }}">
+                                    <button class="btn btn-navbar" type="submit" aria-label="Pesquisar">
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if 'django.contrib.admindocs'|app_is_installed %}
+                <a class="pdl-icon-button d-none d-md-inline-flex" href="{% url 'django-admindocs-docroot' %}" title="Documentação">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                </a>
+                {% endif %}
+
+                {% if jazzmin_settings.show_theme_chooser %}
+                <div class="dropdown">
+                    <button class="pdl-icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Aparência">
+                        <i class="fas fa-adjust" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end pdl-compact-menu p-3">
+                        <label class="form-label" for="jazzmin-theme-select">Tema</label>
+                        <select class="form-select form-select-sm mb-3" id="jazzmin-theme-select">
+                            {% for theme_name in jazzmin_ui.theme_list %}
+                            <option value="{{ theme_name }}" {% if theme_name == jazzmin_ui.theme.name %}selected{% endif %}>{{ theme_name|title }}</option>
+                            {% endfor %}
+                        </select>
+                        <label class="form-label" for="jazzmin-mode-select">Modo</label>
+                        <select class="form-select form-select-sm" id="jazzmin-mode-select">
+                            <option value="light">Claro</option>
+                            <option value="dark">Escuro</option>
+                            <option value="auto">Automático</option>
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if jazzmin_settings.language_chooser %}
+                <div class="dropdown">
+                    <button class="pdl-icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Idioma">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end pdl-compact-menu">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path|remove_lang:LANGUAGE_CODE }}">
+                            {% for language in languages %}
+                            <button type="submit" name="language" value="{{ language.code }}" class="dropdown-item {% if language.code == LANGUAGE_CODE %}active{% endif %}" lang="{{ language.code }}">{{ language.name_local|title }}</button>
+                            {% endfor %}
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="dropdown pdl-account">
+                    <button class="pdl-account__trigger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="pdl-account__avatar">
+                            {% if jazzmin_settings|has_jazzmin_setting:'user_avatar' %}
+                            <img src="{% get_user_avatar request.user %}" alt="">
+                            {% else %}
+                            <i class="fas fa-user" aria-hidden="true"></i>
+                            {% endif %}
+                        </span>
+                        <span class="pdl-account__copy d-none d-md-flex">
+                            <strong>{{ request.user }}</strong>
+                            <small>{% if request.user.is_superuser %}Superadministrador{% else %}Equipe{% endif %}</small>
+                        </span>
+                        <i class="fas fa-chevron-down pdl-account__chevron d-none d-sm-inline" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-end pdl-account-menu" id="jazzy-usermenu">
+                        <div class="pdl-account-menu__header">
+                            <span class="pdl-account-menu__crest"><i class="fas fa-crown" aria-hidden="true"></i></span>
+                            <span>
+                                <small>Sessão administrativa</small>
+                                <strong>{{ request.user.get_full_name|default:request.user }}</strong>
+                            </span>
+                        </div>
+                        <div class="pdl-account-menu__actions">
+                            {% if perms|can_view_self %}
+                            <a href="{% jazzy_admin_url request.user request.current_app|default:'admin' %}" class="pdl-account-action">
+                                <i class="fas fa-id-card" aria-hidden="true"></i>
+                                <span><strong>Meu perfil</strong><small>Dados e permissões</small></span>
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'admin:password_change' %}" class="pdl-account-action">
+                                <i class="fas fa-key" aria-hidden="true"></i>
+                                <span><strong>Alterar senha</strong><small>Segurança da conta</small></span>
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                            {% get_user_menu user request.current_app|default:'admin' as user_menu %}
+                            {% for link in user_menu %}
+                            <a href="{{ link.url }}" class="pdl-account-action" {% if link.new_window %}target="_blank" rel="noopener"{% endif %}>
+                                <i class="{{ link.icon }}" aria-hidden="true"></i>
+                                <span><strong>{{ link.name }}</strong><small>Acesso rápido</small></span>
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        <form class="pdl-account-menu__logout" method="post" action="{% url 'admin:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                                <span>Encerrar sessão</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block sidebar %}
+    {% if jazzmin_settings.show_sidebar %}
+        {% get_side_menu as side_menu_list %}
+        <aside class="app-sidebar bg-body-secondary shadow {{ jazzmin_ui.sidebar_classes }}" id="jazzy-sidebar" data-bs-theme="dark">
+            <div class="sidebar-brand pdl-sidebar-brand">
+                <a href="{% url 'admin:index' %}" class="brand-link {{ jazzmin_ui.brand_classes }}" id="jazzy-logo">
+                    <span class="pdl-sidebar-brand__mark">
+                        <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }}" class="{{ jazzmin_settings.site_logo_classes }} brand-image">
+                    </span>
+                    <span class="brand-text pdl-sidebar-brand__copy">
+                        <strong>{{ jazzmin_settings.site_brand }}</strong>
+                        <small>Painel administrativo</small>
+                    </span>
+                </a>
+            </div>
+
+            <div class="sidebar-wrapper">
+                <div class="pdl-sidebar-profile">
+                    <span class="pdl-sidebar-profile__avatar">
+                        {% if jazzmin_settings|has_jazzmin_setting:'user_avatar' %}
+                        <img src="{% get_user_avatar request.user %}" alt="">
+                        {% else %}
+                        <i class="fas fa-user-shield" aria-hidden="true"></i>
+                        {% endif %}
+                    </span>
+                    <span class="pdl-sidebar-profile__copy">
+                        <small>Operador ativo</small>
+                        {% if perms|can_view_self %}
+                        <a href="{% jazzy_admin_url request.user request.current_app|default:'admin' %}">{{ request.user }}</a>
+                        {% else %}
+                        <strong>{{ request.user }}</strong>
+                        {% endif %}
+                    </span>
+                    <span class="pdl-sidebar-profile__status" title="Sessão ativa"></span>
+                </div>
+
+                <div class="pdl-sidebar-caption"><span>Navegação</span></div>
+                <nav class="mt-1" aria-label="Navegação administrativa">
+                    <ul class="nav sidebar-menu flex-column {{ jazzmin_ui.sidebar_list_classes }}" data-lte-toggle="treeview" role="navigation" data-accordion="false" id="jazzy-navigation">
+                        <li class="nav-item pdl-menu-item">
+                            <a href="{% url 'admin:index' %}" class="nav-link">
+                                <span class="pdl-nav-emblem"><i class="fas fa-th-large" aria-hidden="true"></i></span>
+                                <p><span>Visão geral</span></p>
+                            </a>
+                        </li>
+
+                        {% if jazzmin_settings.navigation_expanded %}
+                            {% for app in side_menu_list %}
+                            <li class="nav-header">{{ app.name }}</li>
+                                {% for model in app.models %}
+                                <li class="nav-item pdl-menu-item">
+                                    {% if model.url %}
+                                    <a href="{{ model.url }}" class="nav-link">
+                                        <span class="pdl-nav-emblem"><i class="{{ model.icon }}" aria-hidden="true"></i></span>
+                                        <p><span>{{ model.name }}</span></p>
+                                    </a>
+                                    {% else %}
+                                    <span class="nav-link disabled">
+                                        <span class="pdl-nav-emblem"><i class="{{ model.icon }}" aria-hidden="true"></i></span>
+                                        <p><span>{{ model.name }}</span></p>
+                                    </span>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% for app in side_menu_list %}
+                            <li class="nav-item has-treeview pdl-menu-group">
+                                <a href="#" class="nav-link">
+                                    <span class="pdl-nav-emblem"><i class="{{ app.icon }}" aria-hidden="true"></i></span>
+                                    <p>
+                                        <span>{{ app.name|truncatechars:24 }}</span>
+                                        <i class="nav-arrow fas fa-chevron-right" aria-hidden="true"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    {% for model in app.models %}
+                                    <li class="nav-item pdl-menu-child">
+                                        <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link{% if not model.url %} disabled{% endif %}">
+                                            <span class="pdl-nav-node"></span>
+                                            <i class="{{ model.icon }} nav-icon" aria-hidden="true"></i>
+                                            <p><span>{{ model.name }}</span></p>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </nav>
+                <div class="pdl-sidebar-footer">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    <span>PDL PRO <small>Ambiente protegido</small></span>
+                </div>
+            </div>
+        </aside>
+    {% endif %}
+    {% endblock %}
+{% endif %}
+
+<main class="app-main" {% if is_popup %}style="margin-left:0; padding-top:20px;"{% endif %}>
+    {% block page_content %}
+        {% if not is_popup %}
+        <div class="app-content-header pdl-page-header">
+            <div class="container-fluid">
+                <div class="pdl-page-header__inner">
+                    <div class="pdl-page-title">
+                        <small><i class="fas fa-gem" aria-hidden="true"></i> Administração PDL</small>
+                        <h3 class="mb-0">{% block content_title %}{% endblock %}</h3>
+                    </div>
+                    <div class="pdl-page-tools">
+                        <div>{% block breadcrumbs %}{% endblock %}</div>
+                        {% block page_actions %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="app-content">
+            <div class="container-fluid">
+                {% block messages %}
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                        {% if message.tags == 'success' %}<i class="fas fa-check-circle"></i>{% elif message.tags == 'error' %}<i class="fas fa-exclamation-circle"></i>{% elif message.tags == 'warning' %}<i class="fas fa-exclamation-triangle"></i>{% else %}<i class="fas fa-info-circle"></i>{% endif %}
+                        {{ message|capfirst }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    </div>
+                    {% endfor %}
+                {% endblock messages %}
+                <div class="row">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</main>
+
+{% block footer %}
+{% if not is_popup %}
+<footer class="app-footer {{ jazzmin_ui.footer_classes }} pdl-admin-footer">
+    <span><strong>PDL PRO</strong> &copy; {% now 'Y' %}</span>
+    <span class="d-none d-sm-inline"><i class="fas fa-shield-alt" aria-hidden="true"></i> Central administrativa</span>
+</footer>
+{% if jazzmin_settings.show_ui_builder %}
+{% include 'jazzmin/includes/ui_builder_panel.html' %}
+{% endif %}
+{% endif %}
+{% endblock %}
+
+</div>
+
+{% if jazzmin_settings.show_ui_builder %}
+<div id="codeBox" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h4 class="modal-title">Configuração visual</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+            <div class="modal-body"><pre><code></code></pre></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
+<script src="{% static 'jazzmin/js/main.js' %}"></script>
+{% if jazzmin_settings.custom_js %}<script src="{% static jazzmin_settings.custom_js %}"></script>{% endif %}
+{% if jazzmin_settings.show_ui_builder %}
+<script>window.ui_changes = {{ jazzmin_ui.raw|as_json|safe }};</script>
+<script src="{% static 'jazzmin/js/ui-builder.js' %}"></script>
+{% endif %}
+{% block extrajs %}{% endblock %}
+</body>
+</html>
