@@ -79,6 +79,13 @@ DATABASES = {
     )
 }
 
+# URLs SQLite relativas devem apontar sempre para o backend, independentemente
+# da pasta a partir da qual um comando de gerenciamento foi executado.
+if DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
+    sqlite_name = Path(DATABASES["default"]["NAME"])
+    if not sqlite_name.is_absolute():
+        DATABASES["default"]["NAME"] = BASE_DIR / sqlite_name
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
