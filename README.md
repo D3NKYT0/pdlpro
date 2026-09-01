@@ -39,6 +39,18 @@ Copy-Item .env.example .env
 docker compose --profile dev up --build
 ```
 
+No Bash/WSL, os mesmos fluxos estão centralizados no `setup.sh`:
+
+```bash
+./setup.sh install
+./setup.sh deploy --dev
+./setup.sh backup
+./setup.sh restore --path backups/db/pdl_YYYYMMDDTHHMMSSZ.dump
+```
+
+Execute `./setup.sh help` para listar os comandos encontrados automaticamente
+em `scripts/` e `./setup.sh help <comando>` para consultar suas opções.
+
 As migrações são executadas pelo entrypoint do backend. Para criar um administrador:
 
 ```powershell
@@ -75,6 +87,8 @@ Os volumes de banco, Redis e mídia são preservados. Consulte [Desenvolvimento]
 ├── frontend/            # SPA React + TypeScript
 ├── docs/                # Documentação técnica e operacional
 ├── nginx/               # Proxy reverso para HTTP e WebSocket
+├── scripts/             # Instalação, deploy, backup e restauração
+├── setup.sh             # Dispatcher dos scripts operacionais
 ├── docker-compose.yml
 └── version.json         # Versões do produto e da API
 ```
