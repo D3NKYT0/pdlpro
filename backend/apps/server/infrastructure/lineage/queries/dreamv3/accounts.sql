@@ -24,8 +24,8 @@ WHERE login = :login
 LIMIT 1
 
 -- name: register_account
-INSERT INTO accounts (login, password, accessLevel, email)
-VALUES (:login, :password, 0, :email)
+INSERT INTO accounts (login, password, accessLevel, email, created_time)
+VALUES (:login, :password, 0, :email, :created_time)
 
 -- name: link_account
 UPDATE accounts

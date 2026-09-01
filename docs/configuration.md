@@ -30,7 +30,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LINEAGE_DB_ENABLED` | Ativa o gateway SQLAlchemy para o banco do jogo |
 | `LINEAGE_DB_HOST`, `LINEAGE_DB_PORT` | Endereço do MySQL |
 | `LINEAGE_DB_NAME`, `LINEAGE_DB_USER`, `LINEAGE_DB_PASSWORD` | Credenciais do schema Lineage |
-| `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2` ou `dreamv3` |
+| `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2`, `dreamv3` ou `mobius` |
 | `LINEAGE_DB_POOL_SIZE` | Conexões permanentes no pool |
 | `LINEAGE_DB_MAX_OVERFLOW` | Conexões extras permitidas |
 | `GAME_SERVER_IP` | Host usado no status do login/game server |
@@ -39,6 +39,29 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `FAKE_PLAYERS_FACTOR`, `FAKE_PLAYERS_MIN`, `FAKE_PLAYERS_MAX` | Ajustes opcionais da contagem pública |
 
 Use um usuário MySQL com o menor conjunto de permissões possível. Recursos que alteram conta, senha, personagem ou inventário precisam das permissões específicas exigidas pelas consultas do módulo; rankings e status devem permanecer somente leitura sempre que possível.
+
+### Schema Dream v3
+
+O catálogo `dreamv3` corresponde à estrutura verificada no banco `l2jdreamv3`:
+
+- Personagens: `characters.obj_Id`; nível/classe base em `character_subclasses`.
+- Clãs: nome e líder em `clan_subpledges` com `type = 0`.
+- Itens: `item_id` identifica a instância; `item_type` identifica o template;
+  quantidade em `amount`, localização em `location` e equipamento em `slot`.
+- Entrega: `items_delayed.owner_id`, `enchant_level` e `payment_id` AUTO_INCREMENT.
+- Olimpíadas: `oly_nobles.points_current` e `oly_heroes`.
+- Contas: `email`, `linked_uuid` e `created_time`.
+
+O catálogo contém 39 consultas, incluindo mundo, clãs e equipamentos. Não escolha
+o módulo apenas pelo nome do banco: outras distribuições chamadas Dream podem
+usar estruturas diferentes. Nenhuma alteração de schema do jogo é aplicada pelo painel.
+
+Os testes locais usam uma representação do schema em memória. A validação no
+MySQL pode usar `EXPLAIN` (sem `ANALYZE`) para conferir os planos das consultas,
+sem executar INSERT/UPDATE/DELETE. Isso não substitui um teste de integração
+controlado de cadastro, login no jogo e consumo da fila `items_delayed`.
+O módulo mantém SHA1 para novas senhas; confirme o algoritmo no loginserver
+antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mistos.
 
 ## Autenticação e origens
 

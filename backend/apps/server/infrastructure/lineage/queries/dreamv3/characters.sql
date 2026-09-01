@@ -1,58 +1,66 @@
--- Dream v3 / L2J — personagens (PK charId).
+-- Dream v3 (l2jdreamv3) — personagens (PK obj_Id, level/classe em character_subclasses).
 
 -- name: list_characters
 SELECT
-    charId AS char_id,
-    char_name AS name,
-    level,
-    online,
-    sex,
-    pvpkills AS pvp,
-    pkkills AS pk,
-    classid AS class_id,
-    COALESCE(title, '') AS title,
-    COALESCE((SELECT clan_name FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), '') AS clan_name,
-    COALESCE((SELECT IF(leader_id = characters.charId, 1, 0) FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), 0) AS is_clan_leader
-FROM characters
-WHERE account_name = :login
+    C.obj_Id AS char_id,
+    C.char_name AS name,
+    COALESCE(CS.level, 0) AS level,
+    C.online,
+    C.sex,
+    C.pvpkills AS pvp,
+    C.pkkills AS pk,
+    COALESCE(CS.class_id, 0) AS class_id,
+    COALESCE(C.title, '') AS title,
+    COALESCE(D.name, '') AS clan_name,
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
+FROM characters C
+LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
+LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
+WHERE C.account_name = :login
+ORDER BY CS.level DESC, C.char_name ASC
 
 -- name: get_character
 SELECT
-    charId AS char_id,
-    char_name AS name,
-    level,
-    online,
-    sex,
-    pvpkills AS pvp,
-    pkkills AS pk,
-    classid AS class_id,
-    COALESCE(title, '') AS title,
-    COALESCE((SELECT clan_name FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), '') AS clan_name,
-    COALESCE((SELECT IF(leader_id = characters.charId, 1, 0) FROM clan_data WHERE clan_id = characters.clanid LIMIT 1), 0) AS is_clan_leader
-FROM characters
-WHERE account_name = :login AND charId = :char_id
+    C.obj_Id AS char_id,
+    C.char_name AS name,
+    COALESCE(CS.level, 0) AS level,
+    C.online,
+    C.sex,
+    C.pvpkills AS pvp,
+    C.pkkills AS pk,
+    COALESCE(CS.class_id, 0) AS class_id,
+    COALESCE(C.title, '') AS title,
+    COALESCE(D.name, '') AS clan_name,
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
+FROM characters C
+LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
+LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
+WHERE C.account_name = :login AND C.obj_Id = :char_id
 LIMIT 1
 
 -- name: nickname_exists
-SELECT charId AS char_id
-FROM characters
-WHERE char_name = :name
+SELECT C.obj_Id AS char_id
+FROM characters C
+WHERE C.char_name = :name
 LIMIT 1
 
 -- name: change_nickname
 UPDATE characters
 SET char_name = :name
-WHERE charId = :cid AND account_name = :login
+WHERE obj_Id = :cid AND account_name = :login
+LIMIT 1
 
 -- name: change_sex
 UPDATE characters
 SET sex = :sex
-WHERE charId = :cid AND account_name = :login
+WHERE obj_Id = :cid AND account_name = :login
+LIMIT 1
 
 -- name: unstuck
 UPDATE characters
 SET x = :x, y = :y, z = :z
-WHERE charId = :cid AND account_name = :login
+WHERE obj_Id = :cid AND account_name = :login
+LIMIT 1
 
 -- name: count_characters
 SELECT COUNT(*) AS total
@@ -62,15 +70,15 @@ WHERE account_name = :login
 -- name: verify_character_ownership
 SELECT COUNT(*) AS total
 FROM characters
-WHERE charId = :char_id AND account_name = :login
+WHERE obj_Id = :char_id AND account_name = :login
 
 -- name: transfer_character
 UPDATE characters
 SET account_name = :acc
-WHERE charId = :cid
+WHERE obj_Id = :cid
 
 -- name: find_character_id_by_name
-SELECT charId AS char_id
+SELECT obj_Id AS char_id
 FROM characters
 WHERE char_name = :name
 LIMIT 1

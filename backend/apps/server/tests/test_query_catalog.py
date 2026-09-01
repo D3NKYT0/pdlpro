@@ -13,10 +13,12 @@ def test_lucerav2_catalog_loads_required_queries():
     assert catalog["top_pvp"].lstrip().upper().startswith("SELECT")
 
 
-def test_dreamv3_catalog_uses_charid():
+def test_dreamv3_catalog_matches_character_schema():
     catalog = LineageQueryCatalog.load("dreamv3")
-    assert "charId" in catalog["list_characters"]
-    assert "obj_Id" not in catalog["transfer_character"]
+    assert "obj_Id" in catalog["list_characters"]
+    assert "character_subclasses" in catalog["list_characters"]
+    assert "clan_subpledges" in catalog["list_characters"]
+    assert "obj_Id" in catalog["transfer_character"]
 
 
 def test_mobius_catalog_exposes_read_only_paperdoll_query():
