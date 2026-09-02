@@ -34,6 +34,7 @@ import { InfoPage } from '../../pages/InfoPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
 import { WikiPage } from '../../pages/WikiPage'
 import { LEGACY_PANEL_REDIRECTS } from './legacyRedirects'
+import { AdminAccountsPage } from '../../pages/admin/AdminAccountsPage'
 import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
 import { AdminFinancialReportsPage } from '../../pages/admin/AdminFinancialReportsPage'
 import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
@@ -99,6 +100,7 @@ export function AppRoutes() {
               <Route path="/painel/admin/itens" element={<AdminItemObservationPage />} />
               <Route path="/painel/admin/itens/customs" element={<AdminCustomItemsPage />} />
               <Route path="/painel/admin/servidor" element={<AdminServerPage />} />
+              <Route path="/painel/admin/contas" element={<AdminAccountsPage />} />
               <Route path="/painel/admin/servicos" element={<AdminServicesPage />} />
               <Route path="/painel/admin/moedas" element={<AdminCoinsPage />} />
               <Route path="/painel/admin/loja" element={<AdminShopPage />} />

@@ -1052,6 +1052,71 @@ html.pdl-panel .admin-server-actions > span { display: flex; flex-direction: col
 html.pdl-panel .admin-server-actions small { color: var(--panel-muted); }
 html.pdl-panel .admin-server-actions .btn { width: 160px; min-width: 160px; height: 40px; }
 
+html.pdl-panel .admin-account-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px;
+  margin: 0;
+}
+
+html.pdl-panel .admin-account-search .field {
+  margin: 0;
+}
+
+html.pdl-panel .admin-account-search .btn {
+  min-width: 148px;
+  height: 41px;
+}
+
+html.pdl-panel .admin-account-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+
+html.pdl-panel .admin-account-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid rgba(197, 161, 97, 0.13);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+html.pdl-panel .admin-account-meta dt {
+  color: var(--panel-muted);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .admin-account-meta dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 13px;
+}
+
+html.pdl-panel .admin-account-unlink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+html.pdl-panel .admin-account-unlink p {
+  margin: 0;
+}
+
+html.pdl-panel .btn.is-danger {
+  filter: hue-rotate(310deg) saturate(1.15);
+}
+
+html.pdl-panel .btn.is-danger:hover {
+  filter: hue-rotate(310deg) saturate(1.15) brightness(135%);
+}
+
 html.pdl-panel .admin-coins-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-coin-identity .account-form-fields { align-items: end; }
 html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
@@ -1125,6 +1190,11 @@ html.pdl-panel .admin-news-item .btn svg { width: 14px; }
   html.pdl-panel .admin-toggle > b { grid-column: 2; justify-self: start; }
   html.pdl-panel .admin-server-actions { align-items: stretch; flex-direction: column; }
   html.pdl-panel .admin-server-actions .btn { width: 100%; }
+  html.pdl-panel .admin-account-search,
+  html.pdl-panel .admin-account-meta,
+  html.pdl-panel .admin-account-unlink { grid-template-columns: 1fr; flex-direction: column; align-items: stretch; }
+  html.pdl-panel .admin-account-search .btn,
+  html.pdl-panel .admin-account-unlink .btn { width: 100%; }
   html.pdl-panel .admin-news-item { grid-template-columns: auto minmax(0,1fr); }
   html.pdl-panel .admin-news-item .btn { grid-column: 2; width: 100%; }
 }

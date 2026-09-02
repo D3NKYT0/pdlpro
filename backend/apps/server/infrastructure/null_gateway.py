@@ -123,6 +123,11 @@ class NullLineageGateway(ILineageGateway):
             raise GameAccountNotFoundError()
         row["linked_user_id"] = None
 
+    def clear_account_link(self, login: str) -> GameAccount:
+        row = self._require_account(login)
+        row["linked_user_id"] = None
+        return self.get_account(login)
+
     def update_account_password(self, login: str, password: str) -> None:
         row = self._require_account(login)
         row["password"] = self._hasher.hash(password)

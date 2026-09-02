@@ -19,6 +19,7 @@ export type {
   ApiPanelSettings,
   ApiStaffCoin,
   ApiStaffGame,
+  ApiStaffGameAccount,
   ApiStaffNews,
   ApiStaffService,
   ApiStaffShopItem,

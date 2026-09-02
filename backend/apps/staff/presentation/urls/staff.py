@@ -1,4 +1,5 @@
 from django.urls import path
+from apps.staff.presentation.views.accounts import StaffInspectGameAccountView, StaffUnlinkGameAccountView
 from apps.staff.presentation.views.financial_reports import (
     BalanceReportView, CashFlowReportView, PaymentReportView, ReconciliationReportView,
 )
@@ -32,6 +33,8 @@ urlpatterns = [
     path("item-observation/compare/", ObservationComparisonView.as_view()),
     path("item-observation/categories/", ObservationCategoriesView.as_view()),
     path("item-observation/categories/<uuid:category_id>/", ObservationCategoryView.as_view()),
+    path("accounts/", StaffInspectGameAccountView.as_view(), name="staff-accounts-inspect"),
+    path("accounts/unlink/", StaffUnlinkGameAccountView.as_view(), name="staff-accounts-unlink"),
     path("panel/", StaffPanelSettingsView.as_view(), name="staff-panel-settings"),
     path("services/", StaffServicePricesView.as_view(), name="staff-service-prices"),
     path("coins/", StaffCoinConfigView.as_view(), name="staff-coins"),

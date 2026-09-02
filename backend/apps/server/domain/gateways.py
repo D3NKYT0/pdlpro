@@ -109,6 +109,9 @@ class ILineageGateway(ABC):
     def unlink_account(self, login: str, user_id: str) -> None: ...
 
     @abstractmethod
+    def clear_account_link(self, login: str) -> GameAccount: ...
+
+    @abstractmethod
     def update_account_password(self, login: str, password: str) -> None: ...
 
     @abstractmethod

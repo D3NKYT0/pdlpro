@@ -60,6 +60,14 @@ export interface ApiStaffGame {
   settings: Record<string, unknown>
 }
 
+export interface ApiStaffGameAccount {
+  login: string
+  email: string
+  linked: boolean
+  linked_user_id: string | null
+  panel_username: string | null
+}
+
 export const staffApi = {
   panel: () => request<ApiPanelSettings>('/staff/panel/'),
   savePanel: (payload: Partial<ApiPanelSettings>) =>
@@ -85,4 +93,11 @@ export const staffApi = {
   games: () => request<ApiStaffGame[]>('/staff/games/'),
   saveGame: (payload: Partial<ApiStaffGame>) =>
     request<ApiStaffGame>('/staff/games/', { method: 'PUT', body: JSON.stringify(payload) }),
+  inspectAccount: (login: string) =>
+    request<ApiStaffGameAccount>(`/staff/accounts/?login=${encodeURIComponent(login)}`),
+  unlinkAccount: (login: string) =>
+    request<ApiStaffGameAccount>('/staff/accounts/unlink/', {
+      method: 'POST',
+      body: JSON.stringify({ login }),
+    }),
 }

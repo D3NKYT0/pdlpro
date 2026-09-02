@@ -13,6 +13,7 @@ import {
   Settings2,
   ShoppingBag,
   SlidersHorizontal,
+  Unlink,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -58,6 +59,7 @@ const categories: Category[] = [
       { to: '/painel/admin/itens', title: 'Observar itens', description: 'Economia do servidor, favoritos, snapshots e comparação entre datas', icon: ChartNoAxesCombined },
       { to: '/painel/admin/itens/customs', title: 'Itens customizados', description: 'Cadastrar nome, ID, imagem e metadados no catálogo único', icon: PackagePlus },
       { to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo, slots e destravamento', icon: Settings2 },
+      { to: '/painel/admin/contas', title: 'Contas Lineage', description: 'Consultar login e remover o vínculo com o painel', icon: Unlink },
     ],
   },
 ]

@@ -196,6 +196,17 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             raise GameAccountNotFoundError()
         self._execute("unlink_account", {"login": login})
 
+    def clear_account_link(self, login: str) -> GameAccount:
+        account = self.get_account(login)
+        if account is None:
+            raise GameAccountNotFoundError()
+        if account.linked_user_id:
+            self._execute("unlink_account", {"login": login})
+        updated = self.get_account(login)
+        if updated is None:
+            raise GameAccountNotFoundError()
+        return updated
+
     def update_account_password(self, login: str, password: str) -> None:
         if self.get_account(login) is None:
             raise GameAccountNotFoundError()

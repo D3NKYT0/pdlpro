@@ -181,6 +181,30 @@ class UnlinkGameAccountUseCase(UseCase[UnlinkGameAccountInput, None]):
             ManagedLineageAccount.objects.filter(user__id=data.actor.user_id, login__iexact=data.login).delete()
 
 
+class InspectGameAccountUseCase(UseCase[str, dict]):
+    def __init__(self, lineage: ILineageGateway) -> None:
+        self._lineage = lineage
+
+    def execute(self, data: str) -> dict:
+        return _staff_account_snapshot(self._lineage, _require_login(data))
+
+
+class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
+    def __init__(self, lineage: ILineageGateway, unit_of_work: UnitOfWork) -> None:
+        self._lineage = lineage
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: str) -> dict:
+        login = _require_login(data)
+        account = self._lineage.get_account(login)
+        if account is None:
+            raise GameAccountNotFoundError()
+        with self._unit_of_work:
+            self._lineage.clear_account_link(login)
+            ManagedLineageAccount.objects.filter(login__iexact=login).delete()
+        return _staff_account_snapshot(self._lineage, login)
+
+
 @dataclass(frozen=True, slots=True)
 class ListCharactersInput:
     actor: AccountActor
@@ -353,3 +377,39 @@ def _remember_managed(user_id: UUID, login: str, *, primary: bool) -> None:
         login=login,
         defaults={"is_primary": primary},
     )
+
+
+def _require_login(login: str) -> str:
+    value = (login or "").strip()
+    if not value:
+        raise ValidationDomainError("Informe o login da conta Lineage.")
+    return value
+
+
+def _staff_account_snapshot(lineage: ILineageGateway, login: str) -> dict:
+    account = lineage.get_account((login or "").strip())
+    if account is None:
+        raise GameAccountNotFoundError()
+    return {
+        "login": account.login,
+        "email": account.email,
+        "linked": bool(account.linked_user_id),
+        "linked_user_id": account.linked_user_id,
+        "panel_username": _panel_username(account.linked_user_id),
+    }
+
+
+def _panel_username(linked_user_id: str | None) -> str | None:
+    if not linked_user_id:
+        return None
+    from django.contrib.auth import get_user_model
+
+    compact = str(linked_user_id).replace("-", "").strip()
+    if len(compact) != 32:
+        return None
+    try:
+        uid = UUID(compact)
+    except ValueError:
+        return None
+    user = get_user_model().objects.filter(id=uid).first()
+    return user.username if user else None
