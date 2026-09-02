@@ -9,6 +9,7 @@ from apps.server.application.account_use_cases import (
     GetCharacterInput,
     GetCharacterUseCase,
     GetLinkSlotsUseCase,
+    InspectPrimaryLoginUseCase,
     LinkGameAccountInput,
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
@@ -39,6 +40,7 @@ from apps.server.presentation.serializers import (
     GameAccountSerializer,
     GameCharacterSerializer,
     LinkGameAccountSerializer,
+    PrimaryLoginStateSerializer,
     PurchaseSlotSerializer,
     RegisterGameAccountSerializer,
     UnlinkGameAccountSerializer,
@@ -57,9 +59,17 @@ class LineageAccountsView(InjectedAPIView):
 
     @extend_schema(tags=["Conta Lineage"])
     def get(self, request):
-        accounts = self.resolve(ListAccessibleAccountsUseCase).execute(actor_from(request))
-        slots = self.resolve(GetLinkSlotsUseCase).execute(actor_from(request))
-        return Response({"accounts": AccessibleAccountSerializer(accounts, many=True).data, "slots": slots})
+        actor = actor_from(request)
+        primary = self.resolve(InspectPrimaryLoginUseCase).execute(actor)
+        accounts = self.resolve(ListAccessibleAccountsUseCase).execute(actor)
+        slots = self.resolve(GetLinkSlotsUseCase).execute(actor)
+        return Response(
+            {
+                "accounts": AccessibleAccountSerializer(accounts, many=True).data,
+                "slots": slots,
+                "primary": PrimaryLoginStateSerializer(primary).data,
+            }
+        )
 
 
 class RegisterGameAccountView(InjectedAPIView):
@@ -70,7 +80,11 @@ class RegisterGameAccountView(InjectedAPIView):
         serializer = RegisterGameAccountSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         account = self.resolve(RegisterGameAccountUseCase).execute(
-            RegisterGameAccountInput(actor=actor_from(request), password=serializer.validated_data["password"])
+            RegisterGameAccountInput(
+                actor=actor_from(request),
+                password=serializer.validated_data["password"],
+                login=serializer.validated_data.get("login") or "",
+            )
         )
         return Response(GameAccountSerializer(account).data)
 

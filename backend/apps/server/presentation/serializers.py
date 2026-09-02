@@ -53,6 +53,20 @@ class GameCharacterSerializer(serializers.Serializer):
 
 class RegisterGameAccountSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=6, write_only=True)
+    login = serializers.CharField(required=False, allow_blank=True, max_length=16)
+
+    def validate_login(self, value: str) -> str:
+        login = (value or "").strip()
+        if not login:
+            return ""
+        if not login.isalnum() or not (3 <= len(login) <= 16):
+            raise serializers.ValidationError("Use 3 a 16 letras ou números, sem espaços.")
+        return login
+
+
+class PrimaryLoginStateSerializer(serializers.Serializer):
+    login = serializers.CharField()
+    status = serializers.CharField()
 
 
 class LinkGameAccountSerializer(serializers.Serializer):

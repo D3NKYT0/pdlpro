@@ -4,9 +4,10 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.domain.mailer import IMailer
-from apps.server.domain.access import AccessibleAccount, IAccountAccessService
+from apps.server.domain.access import AccessibleAccount, IAccountAccessService, PrimaryLoginState, same_linked_user
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
+    GameAccountAlreadyExistsError,
     GameAccountNotFoundError,
     LinkSlotLimitError,
 )
@@ -40,46 +41,78 @@ class GetLinkSlotsUseCase(UseCase[AccountActor, dict]):
         return {"used": used, "total": total, "can_link": used < total}
 
 
+class InspectPrimaryLoginUseCase(UseCase[AccountActor, PrimaryLoginState]):
+    def __init__(self, lineage: ILineageGateway) -> None:
+        self._lineage = lineage
+
+    def execute(self, data: AccountActor) -> PrimaryLoginState:
+        login = data.username
+        account = self._lineage.get_account(login)
+        if account and same_linked_user(account.linked_user_id, data.user_id):
+            _remember_managed(data.user_id, login, primary=True)
+            return PrimaryLoginState(login=login, status="owned")
+        if account is None:
+            return PrimaryLoginState(login=login, status="available")
+        if account.linked_user_id:
+            _promote_existing_primary(data.user_id)
+            return PrimaryLoginState(login=login, status="taken")
+        return PrimaryLoginState(login=login, status="unclaimed")
+
+
 @dataclass(frozen=True, slots=True)
 class RegisterGameAccountInput:
     actor: AccountActor
     password: str
+    login: str = ""
 
 
 class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount]):
     def __init__(
         self,
         lineage: ILineageGateway,
-        access: IAccountAccessService,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._lineage = lineage
-        self._access = access
         self._unit_of_work = unit_of_work
 
     def execute(self, data: RegisterGameAccountInput) -> GameAccount:
-        login = data.actor.username
-        existing = self._lineage.get_account(login)
-        if existing is None:
+        if _has_primary(data.actor.user_id):
+            raise ValidationDomainError("Você já possui uma conta principal.")
+        preferred = data.actor.username
+        custom = (data.login or "").strip()
+        if custom.lower() == preferred.lower():
+            custom = ""
+        preferred_account = self._lineage.get_account(preferred)
+        preferred_taken = bool(
+            preferred_account
+            and preferred_account.linked_user_id
+            and not same_linked_user(preferred_account.linked_user_id, data.actor.user_id)
+        )
+        if preferred_taken:
+            if not custom:
+                raise AccountAlreadyLinkedError(
+                    f"O login {preferred} já está vinculado a outro painel. "
+                    "Crie a conta com outro login ou vincule uma conta existente."
+                )
+            if self._lineage.get_account(custom) is not None:
+                raise GameAccountAlreadyExistsError()
+            login = custom
             account = self._lineage.register_account(login, data.password, data.actor.email)
         else:
-            account = existing
-        if account.linked_user_id and account.linked_user_id != str(data.actor.user_id):
-            raise AccountAlreadyLinkedError()
+            login = preferred
+            if preferred_account is None:
+                account = self._lineage.register_account(login, data.password, data.actor.email)
+            elif same_linked_user(preferred_account.linked_user_id, data.actor.user_id):
+                account = preferred_account
+            else:
+                if not self._lineage.validate_credentials(login, data.password):
+                    raise ValidationDomainError("Login ou senha da conta Lineage inválidos.")
+                account = preferred_account
         with self._unit_of_work:
-            linked = self._lineage.link_account(login, str(data.actor.user_id))
-            self._remember(data.actor.user_id, login, primary=True)
-        return linked
-
-    def _remember(self, user_id: UUID, login: str, *, primary: bool) -> None:
-        from django.contrib.auth import get_user_model
-
-        user = get_user_model().objects.get(id=user_id)
-        ManagedLineageAccount.objects.update_or_create(
-            user=user,
-            login=login,
-            defaults={"is_primary": primary},
-        )
+            if not same_linked_user(account.linked_user_id, data.actor.user_id):
+                account = self._lineage.link_account(login, str(data.actor.user_id))
+            _remember_managed(data.actor.user_id, login, primary=True)
+        return account
 
 
 @dataclass(frozen=True, slots=True)
@@ -107,23 +140,23 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
         account = self._lineage.get_account(login)
         if account is None:
             raise GameAccountNotFoundError()
-        if account.linked_user_id:
+        already_ours = same_linked_user(account.linked_user_id, data.actor.user_id)
+        if account.linked_user_id and not already_ours:
             raise AccountAlreadyLinkedError()
-        if login.lower() != data.actor.username.lower() and not self._access.can_link_more(
+        is_preferred = login.lower() == data.actor.username.lower()
+        if not is_preferred and not already_ours and not self._access.can_link_more(
             data.actor.user_id, data.actor.username
         ):
             raise LinkSlotLimitError()
         with self._unit_of_work:
-            linked = self._lineage.link_account(login, str(data.actor.user_id))
-            from django.contrib.auth import get_user_model
-
-            user = get_user_model().objects.get(id=data.actor.user_id)
-            ManagedLineageAccount.objects.update_or_create(
-                user=user,
-                login=login,
-                defaults={"is_primary": login.lower() == data.actor.username.lower()},
+            if not already_ours:
+                account = self._lineage.link_account(login, str(data.actor.user_id))
+            _remember_managed(
+                data.actor.user_id,
+                login,
+                primary=is_preferred or not _has_primary(data.actor.user_id),
             )
-        return linked
+        return account
 
 
 @dataclass(frozen=True, slots=True)
@@ -138,7 +171,10 @@ class UnlinkGameAccountUseCase(UseCase[UnlinkGameAccountInput, None]):
         self._unit_of_work = unit_of_work
 
     def execute(self, data: UnlinkGameAccountInput) -> None:
-        if data.login.lower() == data.actor.username.lower():
+        managed = ManagedLineageAccount.objects.filter(
+            user__id=data.actor.user_id, login__iexact=data.login
+        ).first()
+        if (managed and managed.is_primary) or data.login.lower() == data.actor.username.lower():
             raise ValidationDomainError("Não é possível desvincular a conta principal.")
         with self._unit_of_work:
             self._lineage.unlink_account(data.login, str(data.actor.user_id))
@@ -271,20 +307,49 @@ class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
         account = self._lineage.get_account_by_login_and_email(login, email)
         if account is None:
             raise GameAccountNotFoundError()
-        if account.linked_user_id:
+        already_ours = same_linked_user(account.linked_user_id, data.actor.user_id)
+        if account.linked_user_id and not already_ours:
             raise AccountAlreadyLinkedError()
-        if login.lower() != data.actor.username.lower() and not self._access.can_link_more(
+        is_preferred = login.lower() == data.actor.username.lower()
+        if not is_preferred and not already_ours and not self._access.can_link_more(
             data.actor.user_id, data.actor.username
         ):
             raise LinkSlotLimitError()
         with self._unit_of_work:
-            linked = self._lineage.link_account(login, str(data.actor.user_id))
-            from django.contrib.auth import get_user_model
-
-            user = get_user_model().objects.get(id=data.actor.user_id)
-            ManagedLineageAccount.objects.update_or_create(
-                user=user,
-                login=login,
-                defaults={"is_primary": login.lower() == data.actor.username.lower()},
+            if not already_ours:
+                account = self._lineage.link_account(login, str(data.actor.user_id))
+            _remember_managed(
+                data.actor.user_id,
+                login,
+                primary=is_preferred or not _has_primary(data.actor.user_id),
             )
-        return linked
+        return account
+
+
+def _has_primary(user_id: UUID) -> bool:
+    return ManagedLineageAccount.objects.filter(user__id=user_id, is_primary=True).exists()
+
+
+def _promote_existing_primary(user_id: UUID) -> None:
+    if _has_primary(user_id):
+        return
+    extra = ManagedLineageAccount.objects.filter(user__id=user_id).order_by("created_at").first()
+    if extra is None:
+        return
+    extra.is_primary = True
+    extra.save(update_fields=["is_primary"])
+
+
+def _remember_managed(user_id: UUID, login: str, *, primary: bool) -> None:
+    from django.contrib.auth import get_user_model
+
+    user = get_user_model().objects.get(id=user_id)
+    if primary:
+        ManagedLineageAccount.objects.filter(user=user, is_primary=True).exclude(login__iexact=login).update(
+            is_primary=False
+        )
+    ManagedLineageAccount.objects.update_or_create(
+        user=user,
+        login=login,
+        defaults={"is_primary": primary},
+    )

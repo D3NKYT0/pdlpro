@@ -564,6 +564,12 @@ html.pdl-panel .account-status-pill.is-active {
   color: #80c987;
 }
 
+html.pdl-panel .account-status-pill.is-conflict {
+  color: #e8a45c;
+  border-color: rgba(232, 164, 92, 0.28);
+  background: rgba(232, 164, 92, 0.08);
+}
+
 html.pdl-panel .account-login-chip {
   border-color: rgba(230, 199, 125, 0.24);
   color: var(--panel-gold-bright);
@@ -659,6 +665,15 @@ html.pdl-panel .account-created-state strong {
 html.pdl-panel .account-created-state span {
   color: rgba(255, 255, 255, 0.43);
   font-size: 10px;
+}
+
+html.pdl-panel .account-created-state.is-conflict {
+  border-color: rgba(232, 164, 92, 0.28);
+  background: rgba(232, 164, 92, 0.06);
+}
+
+html.pdl-panel .account-created-state.is-conflict > svg {
+  color: #e8a45c;
 }
 
 html.pdl-panel .account-management .account-action-form {

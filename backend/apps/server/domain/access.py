@@ -12,6 +12,19 @@ class AccessibleAccount:
     linked: bool
 
 
+@dataclass(frozen=True, slots=True)
+class PrimaryLoginState:
+    login: str
+    status: str
+
+
+def same_linked_user(linked_user_id: str | None, user_id: UUID | str) -> bool:
+    if not linked_user_id:
+        return False
+    linked = str(linked_user_id).replace("-", "").strip().lower()
+    return linked == str(user_id).replace("-", "").lower()
+
+
 class IAccountAccessService(ABC):
     @abstractmethod
     def can_access(self, user_id: UUID, username: str, login: str) -> bool:

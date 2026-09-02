@@ -1,4 +1,7 @@
 from django.urls import path
+from apps.staff.presentation.views.financial_reports import (
+    BalanceReportView, CashFlowReportView, PaymentReportView, ReconciliationReportView,
+)
 from apps.staff.presentation.views.custom_items import CustomItemsView, CustomItemDetailView
 from apps.staff.presentation.views.item_observation import (
     ObservationAccessView, ObservationLiveView, ObservationFavoriteView, ObservationSnapshotsView,
@@ -15,6 +18,10 @@ from apps.staff.presentation.views.config import (
 )
 
 urlpatterns = [
+    path("financial-reports/balances/", BalanceReportView.as_view(), name="staff-report-balances"),
+    path("financial-reports/cash-flow/", CashFlowReportView.as_view(), name="staff-report-cash-flow"),
+    path("financial-reports/payments/", PaymentReportView.as_view(), name="staff-report-payments"),
+    path("financial-reports/reconciliation/", ReconciliationReportView.as_view(), name="staff-report-reconciliation"),
     path("custom-items/", CustomItemsView.as_view(), name="staff-custom-items"),
     path("custom-items/<uuid:item_uuid>/", CustomItemDetailView.as_view(), name="staff-custom-item-detail"),
     path("item-observation/access/", ObservationAccessView.as_view()),

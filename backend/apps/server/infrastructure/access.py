@@ -4,7 +4,7 @@ from uuid import UUID
 
 from django.conf import settings
 
-from apps.server.domain.access import AccessibleAccount, IAccountAccessService
+from apps.server.domain.access import AccessibleAccount, IAccountAccessService, same_linked_user
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import ILinkSlotRepository
 from apps.server.infrastructure.models import ManagedLineageAccount
@@ -16,12 +16,14 @@ class DjangoAccountAccessService(IAccountAccessService):
         self._slots = slots
 
     def can_access(self, user_id: UUID, username: str, login: str) -> bool:
-        if login.lower() == username.lower():
-            return True
         if ManagedLineageAccount.objects.filter(user__id=user_id, login__iexact=login).exists():
             return True
         account = self._lineage.get_account(login)
-        return bool(account and account.linked_user_id == str(user_id))
+        if account and same_linked_user(account.linked_user_id, user_id):
+            return True
+        if login.lower() != username.lower():
+            return False
+        return account is None or not account.linked_user_id or same_linked_user(account.linked_user_id, user_id)
 
     def list_accounts(self, user_id: UUID, username: str) -> list[AccessibleAccount]:
         seen: dict[str, AccessibleAccount] = {}
@@ -38,7 +40,7 @@ class DjangoAccountAccessService(IAccountAccessService):
         return used < total
 
     def slot_usage(self, user_id: UUID, username: str) -> tuple[int, int]:
-        used = ManagedLineageAccount.objects.filter(user__id=user_id).exclude(login__iexact=username).count()
+        used = ManagedLineageAccount.objects.filter(user__id=user_id, is_primary=False).count()
         free = int(getattr(settings, "ACCOUNT_LINK_FREE_SLOTS", 3))
         extra = self._slots.extra_slots(user_id)
         return used, free + extra

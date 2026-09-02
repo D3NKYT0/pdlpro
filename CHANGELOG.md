@@ -8,6 +8,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Relatórios financeiros na central administrativa: saldos, fluxo de caixa diário,
+  pedidos e pagamentos, e reconciliação de carteiras, com filtros, totais, paginação
+  e gráfico de movimentações. APIs restritas à equipe; bônus incluídos na reconciliação
+  e totais de pagamentos separados por BRL/USD.
 - Documentação de desenvolvimento, configuração, API e implantação.
 - Guias de contribuição e segurança.
 - Licença proprietária explícita.

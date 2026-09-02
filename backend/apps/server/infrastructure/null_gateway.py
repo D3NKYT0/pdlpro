@@ -4,6 +4,7 @@ import socket
 
 from django.conf import settings
 
+from apps.server.domain.access import same_linked_user
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
     CharacterOfflineRequiredError,
@@ -111,14 +112,14 @@ class NullLineageGateway(ILineageGateway):
 
     def link_account(self, login: str, user_id: str) -> GameAccount:
         row = self._require_account(login)
-        if row["linked_user_id"] and row["linked_user_id"] != user_id:
+        if row["linked_user_id"] and not same_linked_user(row["linked_user_id"], user_id):
             raise AccountAlreadyLinkedError()
         row["linked_user_id"] = user_id
         return self.get_account(login)
 
     def unlink_account(self, login: str, user_id: str) -> None:
         row = self._require_account(login)
-        if row["linked_user_id"] != user_id:
+        if not same_linked_user(row["linked_user_id"], user_id):
             raise GameAccountNotFoundError()
         row["linked_user_id"] = None
 

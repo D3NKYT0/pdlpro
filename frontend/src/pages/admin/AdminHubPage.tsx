@@ -36,6 +36,7 @@ const categories: Category[] = [
   {
     name: 'Financeiro',
     entries: [
+      { to: '/painel/admin/financeiro/saldos', title: 'Relatórios financeiros', description: 'Saldos, fluxo de caixa, pedidos e reconciliação de carteiras', icon: ChartNoAxesCombined },
       { to: '/painel/admin/moedas', title: 'Moedas', description: 'Moeda ativa, multiplicador e taxa', icon: Coins },
       { to: '/painel/admin/loja', title: 'Loja', description: 'Itens vendidos no painel', icon: ShoppingBag },
     ],

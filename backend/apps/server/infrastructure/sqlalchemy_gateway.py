@@ -7,6 +7,7 @@ from django.conf import settings
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 
+from apps.server.domain.access import same_linked_user
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
     CharacterOfflineRequiredError,
@@ -181,7 +182,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         account = self.get_account(login)
         if account is None:
             raise GameAccountNotFoundError()
-        if account.linked_user_id and account.linked_user_id != user_id:
+        if account.linked_user_id and not same_linked_user(account.linked_user_id, user_id):
             raise AccountAlreadyLinkedError()
         self._execute("link_account", {"uuid": user_id, "login": login})
         updated = self.get_account(login)
@@ -191,7 +192,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
 
     def unlink_account(self, login: str, user_id: str) -> None:
         account = self.get_account(login)
-        if account is None or account.linked_user_id != user_id:
+        if account is None or not same_linked_user(account.linked_user_id, user_id):
             raise GameAccountNotFoundError()
         self._execute("unlink_account", {"login": login})
 

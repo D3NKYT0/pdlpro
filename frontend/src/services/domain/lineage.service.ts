@@ -12,6 +12,13 @@ export interface ApiAccessibleAccount {
   linked: boolean
 }
 
+export type ApiPrimaryLoginStatus = 'available' | 'owned' | 'unclaimed' | 'taken'
+
+export interface ApiPrimaryLoginState {
+  login: string
+  status: ApiPrimaryLoginStatus
+}
+
 export interface ApiGameCharacter {
   char_id: number
   name: string
@@ -62,13 +69,15 @@ export interface ApiCharacterEquipmentItem extends ApiGameItem {
 
 export const lineageApi = {
   accounts: () =>
-    request<{ accounts: ApiAccessibleAccount[]; slots: { used: number; total: number; can_link: boolean } }>(
-      '/customer/server/accounts/',
-    ),
-  register: (password: string) =>
+    request<{
+      accounts: ApiAccessibleAccount[]
+      slots: { used: number; total: number; can_link: boolean }
+      primary: ApiPrimaryLoginState
+    }>('/customer/server/accounts/'),
+  register: (password: string, login?: string) =>
     request<ApiGameAccount>('/customer/server/accounts/register/', {
       method: 'POST',
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password, ...(login ? { login } : {}) }),
     }),
   link: (login: string, password: string) =>
     request<ApiGameAccount>('/customer/server/accounts/link/', {

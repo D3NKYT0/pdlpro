@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { CheckCircle2, ChevronRight, Crown, Link2, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
@@ -16,11 +16,17 @@ export function AccountsPage() {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [registerPassword, setRegisterPassword] = useState('')
+  const [alternateLogin, setAlternateLogin] = useState('')
+  const [useAlternateLogin, setUseAlternateLogin] = useState(false)
   const [linkEmail, setLinkEmail] = useState('')
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
   const selectedLogin = primaryAccount?.login ?? linkedAccounts[0]?.login
+  const preferredLogin = accounts.data?.primary?.login ?? user?.username ?? ''
+  const primaryStatus = accounts.data?.primary?.status
+  const primaryTaken = Boolean(!primaryAccount && (primaryStatus === 'taken' || useAlternateLogin))
+  const primaryUnclaimed = Boolean(!primaryAccount && primaryStatus === 'unclaimed' && !useAlternateLogin)
 
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],
@@ -32,11 +38,16 @@ export function AccountsPage() {
     event.preventDefault()
     setSubmitting('register')
     try {
-      await lineageApi.register(registerPassword)
-      toast.success('Conta Lineage criada e vinculada')
+      await lineageApi.register(registerPassword, primaryTaken ? alternateLogin : undefined)
+      toast.success(primaryUnclaimed ? 'Conta Lineage vinculada' : 'Conta Lineage criada e vinculada')
       await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
       setRegisterPassword('')
+      setAlternateLogin('')
+      setUseAlternateLogin(false)
     } catch (error) {
+      if (isApiError(error) && error.errorCode === 'ACCOUNT_ALREADY_LINKED') {
+        setUseAlternateLogin(true)
+      }
       toast.error(isApiError(error) ? error.message : 'Falha ao registrar')
     } finally {
       setSubmitting(null)
@@ -110,9 +121,9 @@ export function AccountsPage() {
               <span className="panel-eyebrow">Acesso ao servidor</span>
               <h2>Suas contas</h2>
             </div>
-            <span className={`account-status-pill ${primaryAccount ? 'is-active' : ''}`}>
-              {primaryAccount ? <CheckCircle2 aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
-              {primaryAccount ? 'Principal ativa' : 'Aguardando criação'}
+            <span className={`account-status-pill ${primaryAccount ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
+              {primaryAccount ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
+              {primaryAccount ? 'Principal ativa' : primaryTaken ? 'Login ocupado' : 'Aguardando criação'}
             </span>
           </div>
 
@@ -135,21 +146,54 @@ export function AccountsPage() {
             </div>
           ) : null}
 
+          {!accounts.isLoading && !primaryAccount && primaryTaken ? (
+            <div className="account-created-state is-conflict">
+              <ShieldAlert aria-hidden="true" />
+              <div>
+                <strong>O login {preferredLogin} já está vinculado</strong>
+                <span>
+                  Essa conta Lineage pertence a outro painel. Crie a principal com outro login ou vincule abaixo uma conta que já seja sua.
+                </span>
+              </div>
+            </div>
+          ) : null}
+
           {!accounts.isLoading && !primaryAccount ? (
             <form className="account-action-form" onSubmit={onRegister}>
               <div className="account-form-title">
                 <UserRoundPlus aria-hidden="true" />
                 <div>
-                  <h3>Criar conta principal</h3>
-                  <p>O login do jogo será <strong>{user?.username}</strong>.</p>
+                  <h3>{primaryTaken ? 'Criar com outro login' : primaryUnclaimed ? 'Reivindicar conta principal' : 'Criar conta principal'}</h3>
+                  <p>
+                    {primaryTaken
+                      ? 'Escolha um login livre para o jogo. Ele fica vinculado a este painel.'
+                      : primaryUnclaimed
+                        ? <>Já existe uma conta <strong>{preferredLogin}</strong> no servidor. Informe a senha do jogo para vinculá-la.</>
+                        : <>O login do jogo será <strong>{preferredLogin}</strong>.</>}
+                  </p>
                 </div>
               </div>
+              {primaryTaken ? (
+                <label className="field">
+                  Novo login do jogo
+                  <input
+                    value={alternateLogin}
+                    onChange={(e) => setAlternateLogin(e.target.value)}
+                    required
+                    minLength={3}
+                    maxLength={16}
+                    autoComplete="username"
+                  />
+                </label>
+              ) : null}
               <label className="field">
                 Senha do jogo
                 <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={6} />
               </label>
               <button className="btn" type="submit" disabled={submitting !== null}>
-                {submitting === 'register' ? 'Criando...' : 'Criar e vincular'}
+                {submitting === 'register'
+                  ? (primaryUnclaimed ? 'Vinculando...' : 'Criando...')
+                  : (primaryTaken ? 'Criar conta principal' : primaryUnclaimed ? 'Vincular conta' : 'Criar e vincular')}
               </button>
             </form>
           ) : null}
