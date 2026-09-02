@@ -1,3 +1,8 @@
+import { Card } from '../components/ui/Card'
+import { Tabs } from '../components/ui/Tabs'
+import { apiErrorMessage } from '../lib/errors'
+import { Button } from '../components/ui/Button'
+import { Field } from '../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -13,7 +18,7 @@ import {
   Send,
   UserRoundSearch,
 } from 'lucide-react'
-import { gamesApi, inventoryApi, isApiError, lineageApi } from '../services/api'
+import { gamesApi, inventoryApi, lineageApi } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 import { ItemIdField } from '../components/ItemIdField'
 
@@ -143,7 +148,7 @@ export function InventoryPage() {
       await queryClient.invalidateQueries({ queryKey: ['inventory', login] })
       await queryClient.invalidateQueries({ queryKey: ['game-items'] })
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha na retirada')
+      toast.error(apiErrorMessage(error, 'Falha na retirada'))
     }
   }
 
@@ -171,7 +176,7 @@ export function InventoryPage() {
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha no depósito')
+      toast.error(apiErrorMessage(error, 'Falha no depósito'))
     } finally {
       setPanelActionPending(false)
     }
@@ -210,7 +215,7 @@ export function InventoryPage() {
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha na transferência')
+      toast.error(apiErrorMessage(error, 'Falha na transferência'))
     } finally {
       setPanelActionPending(false)
     }
@@ -239,7 +244,7 @@ export function InventoryPage() {
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha ao mover os itens da Bag')
+      toast.error(apiErrorMessage(error, 'Falha ao mover os itens da Bag'))
     } finally {
       setBagTransferPending(false)
     }
@@ -254,45 +259,22 @@ export function InventoryPage() {
 
   return (
     <div className="grid inventory-page">
-      <section className="card inventory-hero">
+      <Card className="inventory-hero">
         <div>
           <span className="panel-eyebrow">Armazém do aventureiro</span>
           <h1>Inventário</h1>
           <p className="muted">Transfira itens entre seus personagens e o painel com segurança.</p>
         </div>
-        <button className="btn ghost inventory-refresh" type="button" onClick={() => void refreshInventory()} disabled={!login}>
+        <Button className="ghost inventory-refresh" type="button" onClick={() => void refreshInventory()} disabled={!login}>
           <RefreshCcw aria-hidden="true" />
           Atualizar
-        </button>
-      </section>
+        </Button>
+      </Card>
 
-      <div className="inventory-tabs" role="tablist" aria-label="Seções do inventário">
-        <button
-          className={activeTab === 'characters' ? 'active' : undefined}
-          id="inventory-tab-characters"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'characters'}
-          aria-controls="inventory-panel-characters"
-          onClick={() => setActiveTab('characters')}
-        >
-          <PackageOpen aria-hidden="true" />
-          <span>Inventários dos personagens</span>
-        </button>
-        <button
-          className={activeTab === 'bag' ? 'active' : undefined}
-          id="inventory-tab-bag"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'bag'}
-          aria-controls="inventory-panel-bag"
-          onClick={() => setActiveTab('bag')}
-        >
-          <Backpack aria-hidden="true" />
-          <span>Bag do site</span>
-          {bagItemsQuantity > 0 ? <b>{bagItemsQuantity.toLocaleString('pt-BR')}</b> : null}
-        </button>
-      </div>
+      <Tabs id="inventory" label="Escolha o inventário" className="inventory-tabs" value={activeTab} onChange={setActiveTab} items={[
+        { id: 'characters', label: 'Inventário dos personagens', icon: <PackageOpen aria-hidden="true" /> },
+        { id: 'bag', label: <>Bag do site {bagItemsQuantity > 0 && <b>{bagItemsQuantity.toLocaleString('pt-BR')}</b>}</>, icon: <Backpack aria-hidden="true" /> },
+      ]} />
 
       {activeTab === 'characters' ? (
         <div
@@ -302,7 +284,7 @@ export function InventoryPage() {
           aria-labelledby="inventory-tab-characters"
         >
 
-      <section className="card inventory-control-card">
+      <Card className="inventory-control-card">
         <div className="inventory-control-heading">
           <Backpack aria-hidden="true" />
           <div>
@@ -312,7 +294,7 @@ export function InventoryPage() {
         </div>
 
         {accounts.data?.accounts.length ? (
-          <label className="field inventory-account-field">
+          <Field className="inventory-account-field">
             Conta Lineage
             <select value={login} onChange={(event) => {
               // Limpa a seleção no mesmo render para não consultar o personagem
@@ -326,7 +308,7 @@ export function InventoryPage() {
                 </option>
               ))}
             </select>
-          </label>
+          </Field>
         ) : null}
 
         {accounts.isLoading || characters.isLoading ? (
@@ -351,7 +333,7 @@ export function InventoryPage() {
 
         {!characters.isLoading && Boolean(characters.data?.length) ? (
           <form className="inventory-withdraw-form" onSubmit={onWithdraw}>
-            <label className="field">
+            <Field>
               Personagem
               <select value={charId} onChange={(e) => setCharId(e.target.value ? Number(e.target.value) : '')} required>
                 <option value="">Selecione</option>
@@ -361,16 +343,16 @@ export function InventoryPage() {
                   </option>
                 ))}
               </select>
-            </label>
+            </Field>
             <ItemIdField value={itemId} required onChange={(id) => setItemId(id)} />
-            <label className="field">
+            <Field>
               Quantidade
               <input inputMode="numeric" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
-            </label>
-            <button className="btn" type="submit">
+            </Field>
+            <Button type="submit">
               <ArrowDownToLine aria-hidden="true" />
               Retirar do jogo
-            </button>
+            </Button>
           </form>
         ) : null}
 
@@ -465,8 +447,8 @@ export function InventoryPage() {
                         <small>Quantidade</small>
                         <b>{item.quantity.toLocaleString('pt-BR')}</b>
                       </span>
-                      <button
-                        className="btn ghost inventory-game-select"
+                      <Button
+                        className="ghost inventory-game-select"
                         type="button"
                         disabled={!item.tradeable}
                         title={item.tradeable ? 'Selecionar para retirada' : 'Este item possui tradeable=false'}
@@ -476,7 +458,7 @@ export function InventoryPage() {
                         }}
                       >
                         {item.tradeable ? 'Selecionar' : 'Bloqueado'}
-                      </button>
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -528,10 +510,10 @@ export function InventoryPage() {
             ) : null}
           </section>
         ) : null}
-      </section>
+      </Card>
 
       {(dashboard.data ?? []).map((row) => (
-        <section className="card inventory-character-card" key={row.inventory_id}>
+        <Card className="inventory-character-card" key={row.inventory_id}>
           <div className="inventory-character-heading">
             <PackageOpen aria-hidden="true" />
             <div>
@@ -551,8 +533,8 @@ export function InventoryPage() {
                   <small>+{item.enchant} · quantidade {item.quantity}</small>
                 </span>
                 <div className="inventory-panel-item-actions">
-                  <button
-                    className="btn ghost"
+                  <Button
+                    className="ghost"
                     type="button"
                     disabled={panelActionPending}
                     onClick={() => openPanelItemAction({
@@ -569,9 +551,9 @@ export function InventoryPage() {
                   >
                     <ArrowRightLeft aria-hidden="true" />
                     Transferir
-                  </button>
-                  <button
-                    className="btn ghost"
+                  </Button>
+                  <Button
+                    className="ghost"
                     type="button"
                     disabled={panelActionPending}
                     onClick={() => openPanelItemAction({
@@ -588,7 +570,7 @@ export function InventoryPage() {
                   >
                     <Send aria-hidden="true" />
                     Enviar ao jogo
-                  </button>
+                  </Button>
                 </div>
 
                 {panelItemAction?.recordId === item.id && panelItemAction.mode === 'trade' ? (
@@ -603,7 +585,7 @@ export function InventoryPage() {
                     </div>
 
                     <div className="inventory-item-action-fields">
-                      <label className="field">
+                      <Field>
                         Conta de destino
                         <select
                           value={destinationLogin}
@@ -623,8 +605,8 @@ export function InventoryPage() {
                             </option>
                           ))}
                         </select>
-                      </label>
-                      <label className="field">
+                      </Field>
+                      <Field>
                         Personagem de destino
                         <select
                           value={destinationInventoryId}
@@ -639,8 +621,8 @@ export function InventoryPage() {
                             </option>
                           ))}
                         </select>
-                      </label>
-                      <label className="field">
+                      </Field>
+                      <Field>
                         Quantidade
                         <input
                           type="number"
@@ -651,7 +633,7 @@ export function InventoryPage() {
                           onChange={(event) => setPanelActionQuantity(event.target.value)}
                           required
                         />
-                      </label>
+                      </Field>
                     </div>
 
                     {destinationInventories.isError ? (
@@ -667,17 +649,17 @@ export function InventoryPage() {
                     ) : null}
 
                     <div className="inventory-item-action-buttons">
-                      <button className="btn ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
+                      <Button className="ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
                         Cancelar
-                      </button>
-                      <button
-                        className="btn"
+                      </Button>
+                      <Button
+
                         type="submit"
                         disabled={panelActionPending || destinationInventories.isError || !destinationInventoryId}
                       >
                         <ArrowRightLeft aria-hidden="true" />
                         {panelActionPending ? 'Transferindo...' : 'Confirmar transferência'}
-                      </button>
+                      </Button>
                     </div>
                   </form>
                 ) : null}
@@ -698,7 +680,7 @@ export function InventoryPage() {
                         <small>Destino: conta {row.account_name} · personagem {row.character_name}</small>
                       </div>
                     </div>
-                    <label className="field inventory-deposit-quantity">
+                    <Field className="inventory-deposit-quantity">
                       Quantidade
                       <input
                         type="number"
@@ -709,18 +691,18 @@ export function InventoryPage() {
                         onChange={(event) => setPanelActionQuantity(event.target.value)}
                         required
                       />
-                    </label>
+                    </Field>
                     <p className="inventory-item-action-notice">
                       O item sairá do painel e entrará na fila de entrega deste personagem.
                     </p>
                     <div className="inventory-item-action-buttons">
-                      <button className="btn ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
+                      <Button className="ghost" type="button" onClick={() => setPanelItemAction(null)} disabled={panelActionPending}>
                         Cancelar
-                      </button>
-                      <button className="btn" type="submit" disabled={panelActionPending}>
+                      </Button>
+                      <Button type="submit" disabled={panelActionPending}>
                         <Send aria-hidden="true" />
                         {panelActionPending ? 'Enviando...' : `Enviar para ${row.character_name}`}
-                      </button>
+                      </Button>
                     </div>
                   </form>
                 ) : null}
@@ -728,14 +710,14 @@ export function InventoryPage() {
             ))}
             {!row.items.length ? <div className="inventory-panel-empty">Nenhum item guardado no painel.</div> : null}
           </div>
-        </section>
+        </Card>
       ))}
         </div>
       ) : null}
 
       {activeTab === 'bag' ? (
-        <section
-          className="card inventory-bag-card"
+        <Card
+          className="inventory-bag-card"
           id="inventory-panel-bag"
           role="tabpanel"
           aria-labelledby="inventory-tab-bag"
@@ -793,7 +775,7 @@ export function InventoryPage() {
               <p>
                 Escolha o personagem. Os itens entrarão no inventário dele no painel e ficarão prontos para usar “Enviar ao jogo”.
               </p>
-              <label className="field">
+              <Field>
                 Personagem de destino
                 <select
                   value={bagTransferInventoryId}
@@ -810,21 +792,21 @@ export function InventoryPage() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </Field>
               {destinationInventories.isError ? (
                 <span className="inventory-bag-transfer-error">Não foi possível carregar os personagens.</span>
               ) : null}
-              <button
-                className="btn"
+              <Button
+
                 type="submit"
                 disabled={!bag.data?.length || !bagTransferInventoryId || bagTransferPending || destinationInventories.isError}
               >
                 <ArrowRightLeft aria-hidden="true" />
                 {bagTransferPending ? 'Movendo itens...' : 'Mover para o inventário'}
-              </button>
+              </Button>
             </form>
           </div>
-        </section>
+        </Card>
       ) : null}
     </div>
   )

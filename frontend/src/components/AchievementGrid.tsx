@@ -1,3 +1,5 @@
+import { Card } from './ui/Card'
+import { Button } from './ui/Button'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Gift, Lock, Trophy } from 'lucide-react'
@@ -25,7 +27,7 @@ export function AchievementGrid({
   }, [achievements, currentPage])
 
   return (
-    <section className="card conquista-section">
+    <Card className="conquista-section">
       <div className="conquista-heading">
         <div>
           <span className="panel-eyebrow">Marcos da conta</span>
@@ -57,15 +59,15 @@ export function AchievementGrid({
 
       {totalPages > 1 ? (
         <nav className="conquista-pagination" aria-label="Páginas de conquistas">
-          <button type="button" className="btn ghost" disabled={currentPage <= 1} onClick={() => setPage(currentPage - 1)}>
+          <Button type="button" className="ghost" disabled={currentPage <= 1} onClick={() => setPage(currentPage - 1)}>
             Anterior
-          </button>
+          </Button>
           <span>{currentPage} / {totalPages}</span>
-          <button type="button" className="btn ghost" disabled={currentPage >= totalPages} onClick={() => setPage(currentPage + 1)}>
+          <Button type="button" className="ghost" disabled={currentPage >= totalPages} onClick={() => setPage(currentPage + 1)}>
             Próxima
-          </button>
+          </Button>
         </nav>
       ) : null}
-    </section>
+    </Card>
   )
 }

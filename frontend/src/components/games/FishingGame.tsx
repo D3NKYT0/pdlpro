@@ -1,3 +1,5 @@
+import { Card } from '../ui/Card'
+import { Button } from '../ui/Button'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Fish } from "lucide-react";
@@ -27,7 +29,7 @@ export function FishingGame() {
       <ErrorNotice error={query.error || fishing.error || action.error} />
       {(query.isPending || fishing.isPending) && <Loading />}
       <div className="program-two">
-        <section className="card program-section">
+        <Card className="program-section">
           <div>
             <span className="panel-eyebrow">Lago do reino</span>
             <h2>Pesca</h2>
@@ -79,12 +81,12 @@ export function FishingGame() {
               Cada lançamento custa {fishing.data?.cost || 1} ficha(s). A isca
               selecionada é consumida mesmo quando o peixe escapa.
             </small>
-            <button
-              className="btn fishing-cast-button"
+            <Button type="submit"
+              className="fishing-cast-button"
               disabled={action.busy || !canCast}
             >
               {action.busy ? "Aguarde…" : "Lançar a linha"}
-            </button>
+            </Button>
           </form>
           {fishing.data && !fishing.data.active && <p className="muted">A pescaria está temporariamente indisponível.</p>}
           {fishing.data?.active && fishing.data.fichas < fishing.data.cost && <p className="muted">Fichas insuficientes para lançar a linha. Compre fichas na aba Roleta.</p>}
@@ -93,8 +95,8 @@ export function FishingGame() {
               {result}
             </p>
           )}
-        </section>
-        <section className="card program-section">
+        </Card>
+        <Card className="program-section">
           <h2>Loja de iscas</h2>
           <label className="program-form">
             Quantidade por compra
@@ -114,8 +116,8 @@ export function FishingGame() {
               <small>
                 +{b.success_bonus} pontos de chance · Estoque: {b.quantity}
               </small>
-              <button
-                className="btn ghost"
+              <Button type="submit"
+                className="ghost"
                 disabled={action.busy || !validQuantity || !fishing.data || query.isError || fishing.isError || fishing.data.fichas < b.price * quantity}
                 onClick={() =>
                   void action.run(
@@ -125,16 +127,16 @@ export function FishingGame() {
                 }
               >
                 Comprar · {b.price * quantity} fichas
-              </button>
+              </Button>
             </article>
           ))}
           {query.data?.baits.length === 0 && (
             <Empty>Nenhuma isca à venda no momento.</Empty>
           )}
-        </section>
+        </Card>
       </div>
       {(fishing.data?.recent ?? []).length > 0 && (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>Últimos lançamentos</h2>
           <div className="recent-results">
             {fishing.data?.recent.map((row, index) => (
@@ -143,9 +145,9 @@ export function FishingGame() {
               </span>
             ))}
           </div>
-        </section>
+        </Card>
       )}
-      <section className="card program-section">
+      <Card className="program-section">
         <h2>Sua coleção</h2>
         <p className="muted">
           Descubra todas as espécies. Cada captura bem-sucedida fica registrada
@@ -176,7 +178,7 @@ export function FishingGame() {
             </article>
           ))}
         </div>
-      </section>
+      </Card>
     </div>
   );
 }

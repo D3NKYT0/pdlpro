@@ -28,6 +28,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | --- | --- |
 | [Ambiente local](desenvolvimento/ambiente-local.md) | Python, frontend, execução nativa, Docker e migrações |
 | [Frontend](desenvolvimento/frontend.md) | Organização, serviços HTTP, sessão, cache, rotas e assets |
+| [Componentes e padrão visual](desenvolvimento/componentes.md) | Catálogo local, botões, campos, estados, hooks e composição de novas telas |
 | [Testes e qualidade](desenvolvimento/testes.md) | Pytest, Vitest, isolamento, exemplos, cobertura e limites |
 | [Política de testes](desenvolvimento/politica-de-testes.md) | Testes obrigatórios para features e correções, critérios de review e CI |
 | [Preview isolado](desenvolvimento/preview.md) | Dados demonstrativos sem acessar pagamentos ou jogo reais |
@@ -39,6 +40,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Visão geral técnica](arquitetura/visao-geral.md) | Camadas, dependências e fluxo de uma mudança |
 | [Guia dos apps](arquitetura/apps.md) | Responsabilidades dos módulos e exemplos de casos de uso |
 | [Componentes compartilhados](arquitetura/common.md) | DI, lifetimes, transações, UUIDs, erros e admin |
+| [Reutilização e código repetido](arquitetura/reutilizacao.md) | Políticas compartilhadas, limites das abstrações e auditoria reproduzível |
 
 ### API e configuração
 
@@ -84,6 +86,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Uso e licença](projeto/licenca.md) | Resumo das condições e referência ao texto da licença |
 | [Validação de 02/09/2026](historico/2026-09-02-validacao.md) | Registro histórico de programas e recompensas; não é garantia de homologação atual |
 | [Ampliação dos testes em 02/09/2026](historico/2026-09-02-testes.md) | Cenários adicionados, resultados, cobertura, correções e lacunas restantes |
+| [Reutilização em 02/09/2026](historico/2026-09-02-reutilizacao.md) | Biblioteca visual, políticas consolidadas, botões, testes e validação no navegador |
 | [Changelog](historico/changelog.md) | Alterações entre versões |
 | [Licença completa](../LICENSE) | Texto que rege o uso e a redistribuição |
 

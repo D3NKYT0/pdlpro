@@ -38,6 +38,23 @@ const actions = [
   { method: 'fight', tab: 'economy', button: 'Lutar · 1 ficha', args: ['monster'], result: { won: true, fragments_earned: 2 }, message: 'Vitória · +2 fragmentos' },
   { method: 'enchant', tab: 'economy', button: 'Encantar · 10 fragmentos', args: [], result: { success: true, weapon: { level: 4 } }, message: 'Arma +4' },
 ] as const
+it('bloqueia repetição e outras ações enquanto o giro está pendente', async () => {
+  let finish!: (value: any) => void
+  vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
+  const user = mount('roulette')
+  await screen.findByText('10 fichas')
+  const spin = await screen.findByRole('button', { name: 'Girar agora' })
+  await user.dblClick(spin)
+  expect(gamesApi.spin).toHaveBeenCalledTimes(1)
+  expect(spin).toBeDisabled()
+  const buy = screen.getByRole('button', { name: 'Comprar' })
+  expect(buy).toBeDisabled()
+  await user.click(buy)
+  expect(gamesApi.buyTokens).not.toHaveBeenCalled()
+  finish({ failed: false, prize: { name: 'Adena' } })
+  await waitFor(() => expect(spin).toBeEnabled())
+  expect(toast.success).toHaveBeenCalledWith('Você ganhou Adena')
+})
 it.each(actions)('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
   const user = mount(scenario.tab)

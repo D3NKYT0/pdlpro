@@ -242,6 +242,11 @@ button, input, select { font: inherit; }
 .muted { color: var(--muted); }
 .btn {
   display: inline-flex;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 1 auto;
+  justify-self: start;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -486,14 +491,12 @@ button, input, select { font: inherit; }
   .support-main-head { padding: 18px; }
   .support-create > .field, .support-category-fieldset, .support-form-footer, .support-privacy-note { margin-left: 18px; margin-right: 18px; }
   .support-form-footer { display: grid; }
-  .support-form-footer .btn { width: 100%; }
   .support-ticket-meta > span:not(.support-status) { display: none; }
   .support-conversation-head { align-items: flex-start; }
   .support-conversation-head > .btn { font-size: 0; padding: 8px; }
   .support-conversation-head > .btn::after { content: 'Fechar'; font-size: .7rem; }
   .support-message-list { padding: 18px 14px; }
   .support-reply { display: grid; padding: 14px; }
-  .support-reply .btn { width: 100%; }
   .staff-ticket-controls { display: grid; grid-template-columns: 1fr 1fr; }
   .staff-ticket-controls .btn { grid-column: 1 / -1; }
   .staff-ticket-context { grid-template-columns: 1fr; }

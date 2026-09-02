@@ -1,3 +1,4 @@
+import { Card } from '../../components/ui/Card'
 import { Link } from 'react-router-dom'
 import {
   Bell,
@@ -74,7 +75,7 @@ const categories: Category[] = [
 export function AdminHubPage() {
   return (
     <div className="account-page admin-hub">
-      <header className="card account-hero">
+      <Card as="header" className="account-hero">
         <div>
           <span className="panel-eyebrow">Área administrativa</span>
           <h1>Central de configurações</h1>
@@ -84,10 +85,10 @@ export function AdminHubPage() {
           <SlidersHorizontal aria-hidden="true" />
           Staff
         </span>
-      </header>
+      </Card>
 
       {categories.map((category) => (
-        <section className="card admin-category" key={category.name}>
+        <Card className="admin-category" key={category.name}>
           <div className="account-section-heading">
             <div>
               <span className="panel-eyebrow">Módulo</span>
@@ -119,7 +120,7 @@ export function AdminHubPage() {
               )
             })}
           </div>
-        </section>
+        </Card>
       ))}
 
       <p className="muted admin-hub-note">

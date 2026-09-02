@@ -1,3 +1,9 @@
+import { Card } from '../../components/ui/Card'
+import { TicketMessages } from '../../components/support/TicketMessages'
+import { apiErrorMessage } from '../../lib/errors'
+import { TicketStatus } from '../../components/support/TicketStatus'
+import { formatDateTime } from '../../lib/formatters'
+import { Button } from '../../components/ui/Button'
 import { useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -16,7 +22,7 @@ import {
   UserCheck,
   Users,
 } from 'lucide-react'
-import { isApiError, staffSupportApi } from '../../services/api'
+import { staffSupportApi } from '../../services/api'
 import type { ApiSupportTicket } from '../../services/types'
 
 const statusLabels: Record<string, string> = {
@@ -24,15 +30,6 @@ const statusLabels: Record<string, string> = {
   waiting_team: 'Aguardando equipe', resolved: 'Resolvido', closed: 'Fechado',
 }
 const priorityLabels: Record<string, string> = { low: 'Baixa', normal: 'Normal', high: 'Alta', urgent: 'Urgente' }
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value))
-}
-
-function Status({ ticket }: { ticket: ApiSupportTicket }) {
-  const tone = ticket.status === 'waiting_user' ? 'attention' : ['resolved', 'closed'].includes(ticket.status) ? 'done' : ticket.status === 'open' ? 'new' : 'progress'
-  return <span className={`support-status ${tone}`}>{ticket.status_label}</span>
-}
 
 export function AdminSupportPage() {
   const queryClient = useQueryClient()
@@ -73,7 +70,7 @@ export function AdminSupportPage() {
       toast.success('Chamado atualizado')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível atualizar')
+      toast.error(apiErrorMessage(error, 'Não foi possível atualizar'))
     } finally {
       setPending(false)
     }
@@ -90,7 +87,7 @@ export function AdminSupportPage() {
       setInternal(false)
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível responder')
+      toast.error(apiErrorMessage(error, 'Não foi possível responder'))
     } finally {
       setPending(false)
     }
@@ -103,18 +100,18 @@ export function AdminSupportPage() {
           {ticket.sla_breached ? <b className="sla-breach"><AlertTriangle /> SLA vencido</b> : null}
           <span className={`priority-dot ${ticket.priority}`} title={`Prioridade ${ticket.priority_label}`} />
           <small>{ticket.protocol}</small>
-          <time>{formatDate(ticket.last_activity_at)}</time>
+          <time>{formatDateTime(ticket.last_activity_at, 'short')}</time>
         </span>
         <strong>{ticket.subject}</strong>
         <span>{ticket.customer?.display_name} · {ticket.category_label}</span>
-        <footer><Status ticket={ticket} /><small>{ticket.assigned_to}</small></footer>
+        <footer><TicketStatus ticket={ticket} /><small>{ticket.assigned_to}</small></footer>
       </button>
     )
   }
 
   return (
     <div className="staff-support-page">
-      <header className="card staff-support-hero">
+      <Card as="header" className="staff-support-hero">
         <div>
           <a className="character-back" href="/painel/admin"><ArrowLeft /> Central</a>
           <span className="panel-eyebrow"><Headphones /> Operação de atendimento</span>
@@ -122,7 +119,7 @@ export function AdminSupportPage() {
           <p className="muted">Priorize, assuma e resolva sem perder o histórico do jogador.</p>
         </div>
         <div className="staff-support-live"><i /> Operação online</div>
-      </header>
+      </Card>
 
       <section className="staff-support-metrics">
         <button type="button" onClick={() => setStatus('open')}><Inbox /><span><b>{queue.data?.summary.open ?? 0}</b> novos</span></button>
@@ -154,28 +151,21 @@ export function AdminSupportPage() {
               <header className="staff-ticket-head">
                 <button className="support-mobile-back" type="button" onClick={() => { setSelectedId(''); setParams({}) }}><ArrowLeft /></button>
                 <div><span className="panel-eyebrow">{selected.protocol}</span><h2>{selected.subject}</h2><p>{selected.customer?.display_name} <small>@{selected.customer?.username} · {selected.customer?.email}</small></p></div>
-                <Status ticket={selected} />
+                <TicketStatus ticket={selected} />
               </header>
               <div className="staff-ticket-controls">
                 <label>Status<select value={selected.status} disabled={pending} onChange={(event) => void update({ status: event.target.value })}>{Object.entries(statusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
                 <label>Prioridade<select value={selected.priority} disabled={pending} onChange={(event) => void update({ priority: event.target.value })}>{Object.entries(priorityLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-                <button className="btn ghost compact" type="button" disabled={pending || selected.assigned_to !== 'Equipe PDL'} onClick={() => void update({ assigned_to: 'me' })}><UserCheck /> {selected.assigned_to === 'Equipe PDL' ? 'Assumir chamado' : selected.assigned_to}</button>
+                <Button className="ghost compact" type="button" disabled={pending || selected.assigned_to !== 'Equipe PDL'} onClick={() => void update({ assigned_to: 'me' })}><UserCheck /> {selected.assigned_to === 'Equipe PDL' ? 'Assumir chamado' : selected.assigned_to}</Button>
               </div>
               <div className="staff-ticket-context">
-                <span><b>Categoria</b>{selected.category_label}</span><span><b>Aberto em</b>{formatDate(selected.created_at)}</span><span><b>SLA inicial</b>{selected.sla_breached ? 'Vencido' : formatDate(selected.sla_due_at)}</span>
+                <span><b>Categoria</b>{selected.category_label}</span><span><b>Aberto em</b>{formatDateTime(selected.created_at, 'short')}</span><span><b>SLA inicial</b>{selected.sla_breached ? 'Vencido' : formatDateTime(selected.sla_due_at, 'short')}</span>
               </div>
-              <div className="support-message-list staff-messages">
-                {(selected.messages ?? []).map((message) => (
-                  <article className={`support-message ${message.is_staff_reply ? 'staff' : 'player'}${message.is_internal ? ' internal' : ''}`} key={message.id}>
-                    <div className="support-message-avatar">{message.is_staff_reply ? <Headphones /> : message.author_name.slice(0, 1)}</div>
-                    <div><header><strong>{message.author_name}{message.is_internal ? ' · nota interna' : ''}</strong><time>{formatDate(message.created_at)}</time></header><p>{message.body}</p></div>
-                  </article>
-                ))}
-              </div>
+              <TicketMessages messages={selected.messages ?? []} staff />
               <form className={`support-reply staff-reply${internal ? ' internal' : ''}`} onSubmit={submitReply}>
                 <div className="staff-reply-mode"><button type="button" className={!internal ? 'active' : ''} onClick={() => setInternal(false)}>Resposta ao jogador</button><button type="button" className={internal ? 'active' : ''} onClick={() => setInternal(true)}>Nota interna</button></div>
                 <label><span>{internal ? 'Somente a equipe verá esta nota' : 'O jogador receberá uma notificação'}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={4} placeholder={internal ? 'Contexto para outros atendentes...' : 'Escreva uma resposta clara e objetiva...'} required /></label>
-                <button className="btn" type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : internal ? 'Adicionar nota' : 'Enviar resposta'}</button>
+                <Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : internal ? 'Adicionar nota' : 'Enviar resposta'}</Button>
               </form>
             </>
           ) : <div className="support-empty"><MessageSquareText /><h2>Selecione um chamado</h2><p>Os casos urgentes e fora do SLA aparecem primeiro.</p></div>}

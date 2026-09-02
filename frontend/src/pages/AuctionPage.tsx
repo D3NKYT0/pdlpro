@@ -1,3 +1,8 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { formatCurrency, formatDateTime as formatDate } from '../lib/formatters'
+import { Field } from '../components/ui/Field'
+import { Button } from '../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -17,21 +22,13 @@ import {
 } from 'lucide-react'
 import { ItemIcon } from '../components/ItemIcon'
 import { useAuth } from '../contexts/AuthContext'
-import { auctionApi, inventoryApi, isApiError, lineageApi } from '../services/api'
+import { auctionApi, inventoryApi, lineageApi } from '../services/api'
 import type { ApiAuction } from '../services/types'
 
 const auctionStatus: Record<string, { label: string; className: string }> = {
   open: { label: 'Aberto', className: 'open' },
   finished: { label: 'Finalizado', className: 'finished' },
   cancelled: { label: 'Cancelado', className: 'cancelled' },
-}
-
-function formatCurrency(value: string | null) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value) || 0)
-}
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
 }
 
 function formatRemaining(value: string) {
@@ -130,7 +127,7 @@ function AuctionDetail({
 
           {!isOwner && auction.status === 'open' ? (
             <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
-              <label className="field">
+              <Field>
                 Personagem que receberá o item
                 <select value={bidCharacter} onChange={(event) => onCharacterChange(event.target.value)} required>
                   <option value="">Selecione o personagem</option>
@@ -140,8 +137,8 @@ function AuctionDetail({
                     </option>
                   ))}
                 </select>
-              </label>
-              <label className="field">
+              </Field>
+              <Field>
                 Seu lance
                 <input
                   type="number"
@@ -152,10 +149,10 @@ function AuctionDetail({
                   onChange={(event) => onAmountChange(event.target.value)}
                   required
                 />
-              </label>
-              <button className="btn" type="submit" disabled={pending}>
+              </Field>
+              <Button type="submit" disabled={pending}>
                 <Gavel aria-hidden="true" /> {pending ? 'Enviando...' : 'Dar lance'}
-              </button>
+              </Button>
             </form>
           ) : null}
 
@@ -236,7 +233,7 @@ export function AuctionPage() {
       setMinBid('')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível criar o leilão')
+      toast.error(apiErrorMessage(error, 'Não foi possível criar o leilão'))
     } finally {
       setCreating(false)
     }
@@ -250,7 +247,7 @@ export function AuctionPage() {
       toast.success('Lance enviado')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Lance recusado')
+      toast.error(apiErrorMessage(error, 'Lance recusado'))
     } finally {
       setBidding(false)
     }
@@ -258,18 +255,18 @@ export function AuctionPage() {
 
   return (
     <div className="marketplace-page auction-page">
-      <section className="card marketplace-hero auction-hero">
+      <Card className="marketplace-hero auction-hero">
         <div>
           <span className="panel-eyebrow">Negociação de itens</span>
           <h1>Leilões</h1>
           <p className="muted">Confira o item, acompanhe os lances e escolha quem receberá o prêmio.</p>
         </div>
-        <button className="btn ghost" type="button" onClick={() => void refresh()}>
+        <Button className="ghost" type="button" onClick={() => void refresh()}>
           <RefreshCcw aria-hidden="true" /> Atualizar
-        </button>
-      </section>
+        </Button>
+      </Card>
 
-      <section className="card marketplace-catalog-card auction-catalog-card">
+      <Card className="marketplace-catalog-card auction-catalog-card">
         <div className="marketplace-section-heading">
           <div>
             <span className="panel-eyebrow">Itens disponíveis</span>
@@ -333,11 +330,11 @@ export function AuctionPage() {
         {!open.isLoading && !open.data?.length ? (
           <div className="marketplace-empty"><Gavel aria-hidden="true" /> Nenhum leilão aberto.</div>
         ) : null}
-      </section>
+      </Card>
 
       {user ? (
         <aside className="marketplace-side-column auction-side-column">
-          <section className="card auction-create-card">
+          <Card className="auction-create-card">
             <div className="marketplace-section-heading compact">
               <div>
                 <span className="panel-eyebrow">Novo anúncio</span>
@@ -346,7 +343,7 @@ export function AuctionPage() {
               <BadgeDollarSign aria-hidden="true" />
             </div>
             <form onSubmit={onCreate}>
-              <label className="field">
+              <Field>
                 Inventário do personagem
                 <select
                   value={inventoryId}
@@ -364,7 +361,7 @@ export function AuctionPage() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </Field>
 
               {selectedInventory ? (
                 <div className="auction-inventory-summary">
@@ -377,7 +374,7 @@ export function AuctionPage() {
                 </div>
               ) : null}
 
-              <label className="field">
+              <Field>
                 Item
                 <select
                   value={itemKey}
@@ -395,7 +392,7 @@ export function AuctionPage() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </Field>
 
               {selectedItem ? (
                 <div className="auction-selected-item">
@@ -412,7 +409,7 @@ export function AuctionPage() {
               ) : null}
 
               <div className="auction-form-grid">
-                <label className="field">
+                <Field>
                   Quantidade
                   <input
                     type="number"
@@ -422,8 +419,8 @@ export function AuctionPage() {
                     onChange={(event) => setQuantity(event.target.value)}
                     required
                   />
-                </label>
-                <label className="field">
+                </Field>
+                <Field>
                   Duração
                   <select value={hours} onChange={(event) => setHours(event.target.value)} required>
                     <option value="1">1 hora</option>
@@ -434,9 +431,9 @@ export function AuctionPage() {
                     <option value="72">3 dias</option>
                     <option value="168">7 dias</option>
                   </select>
-                </label>
+                </Field>
               </div>
-              <label className="field">
+              <Field>
                 Lance inicial
                 <input
                   type="number"
@@ -448,18 +445,18 @@ export function AuctionPage() {
                   placeholder="0,00"
                   required
                 />
-              </label>
+              </Field>
               <div className="auction-security-note">
                 <ShieldCheck aria-hidden="true" />
                 <span>O item sai do inventário do painel e fica reservado até o encerramento.</span>
               </div>
-              <button className="btn" type="submit" disabled={!selectedItem || creating}>
+              <Button type="submit" disabled={!selectedItem || creating}>
                 <Gavel aria-hidden="true" /> {creating ? 'Publicando...' : 'Publicar leilão'}
-              </button>
+              </Button>
             </form>
-          </section>
+          </Card>
 
-          <section className="card auction-history-card">
+          <Card className="auction-history-card">
             <div className="marketplace-section-heading compact">
               <div>
                 <span className="panel-eyebrow">Seus anúncios</span>
@@ -487,9 +484,9 @@ export function AuctionPage() {
                       <small>{formatDate(auction.created_at)}</small>
                     </div>
                     <div className="marketplace-sale-actions">
-                      <button className="btn ghost" type="button" onClick={() => viewAuction(auction)}>
+                      <Button className="ghost" type="button" onClick={() => viewAuction(auction)}>
                         <Eye aria-hidden="true" /> Visualizar
-                      </button>
+                      </Button>
                     </div>
                   </article>
                 )
@@ -497,12 +494,12 @@ export function AuctionPage() {
               {mine.isLoading ? <div className="marketplace-empty">Carregando histórico...</div> : null}
               {!mine.isLoading && !mine.data?.length ? <div className="marketplace-empty">Você ainda não criou leilões.</div> : null}
             </div>
-          </section>
+          </Card>
         </aside>
       ) : (
-        <section className="card marketplace-auth-card">
+        <Card className="marketplace-auth-card">
           <p className="muted">Entre para criar leilões ou dar lances.</p>
-        </section>
+        </Card>
       )}
     </div>
   )

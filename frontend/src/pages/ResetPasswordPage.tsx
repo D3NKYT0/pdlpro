@@ -1,8 +1,9 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
-import { authApi, isApiError } from '../services/api'
+import { authApi } from '../services/api'
 
 export function ResetPasswordPage() {
   const [params] = useSearchParams()
@@ -17,7 +18,7 @@ export function ResetPasswordPage() {
       toast.success('Senha redefinida')
       navigate('/login')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível redefinir')
+      toast.error(apiErrorMessage(error, 'Não foi possível redefinir'))
     }
   }
 

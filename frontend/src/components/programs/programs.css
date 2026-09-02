@@ -297,33 +297,6 @@ html.pdl-panel .program-hero--editorial p {
 .status-pending {
   color: #d9bb70;
 }
-.program-empty {
-  padding: 30px 18px;
-  text-align: center;
-  color: var(--muted);
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-}
-.program-empty p {
-  margin: 0;
-  max-width: 420px;
-}
-.program-error {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 18px;
-  border: 1px solid #733d32;
-  color: #edb4a8;
-  background: #321910;
-  border-radius: 6px;
-}
-.program-error svg {
-  flex-shrink: 0;
-}
 .program-rewards {
   display: flex;
   flex-wrap: wrap;

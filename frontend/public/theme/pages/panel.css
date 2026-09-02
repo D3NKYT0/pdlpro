@@ -319,10 +319,8 @@ html.pdl-panel .panel-user-copy span {
 }
 
 html.pdl-panel .panel-user .btn {
-  min-width: 34px;
-  width: 34px;
   height: 34px;
-  padding: 0;
+  padding: 0 9px;
   border: 1px solid rgba(197, 161, 97, 0.2);
   border-radius: 50%;
   background: rgba(197, 161, 97, 0.06);
@@ -751,7 +749,6 @@ html.pdl-panel .account-form-fields {
 }
 
 html.pdl-panel .account-action-form .btn {
-  min-width: 138px;
   height: 41px;
   font-size: 12px;
 }
@@ -916,8 +913,6 @@ html.pdl-panel .admin-form {
 
 html.pdl-panel .admin-shop-form > .btn {
   justify-self: start;
-  width: 160px;
-  min-width: 160px;
   height: 40px;
 }
 
@@ -943,7 +938,7 @@ html.pdl-panel .shop-product { display: grid; grid-template-columns: auto minmax
 html.pdl-panel .shop-product-info h3 { margin: 0; }
 html.pdl-panel .shop-product-info p { margin: 4px 0; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .shop-product-info strong { color: var(--panel-gold-bright); font-size: 18px; }
-html.pdl-panel .shop-product > .btn { grid-column: 1 / -1; justify-self: start; min-width: 145px; width: 145px; height: 39px; }
+html.pdl-panel .shop-product > .btn { grid-column: 1 / -1; justify-self: start; height: 39px; }
 html.pdl-panel .shop-cart-items { display: grid; gap: 9px; }
 html.pdl-panel .shop-cart-item { display: grid; grid-template-columns: auto minmax(0,1fr) auto auto; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid rgba(218,174,81,.11); }
 html.pdl-panel .shop-cart-item > span { display: flex; min-width: 0; flex-direction: column; }
@@ -964,7 +959,6 @@ html.pdl-panel .shop-cart-summary p strong { color: var(--panel-text); }
 html.pdl-panel .shop-cart-summary .shop-cart-total { padding-top: 10px; font-size: 18px; border-top: 1px solid rgba(218,174,81,.1); }
 html.pdl-panel .shop-cart-summary .shop-cart-total strong { color: var(--panel-gold-bright); font-size: 24px; }
 html.pdl-panel .shop-insufficient { color: #d47d70; }
-html.pdl-panel .shop-cart-summary .btn { width: 100%; }
 
 @media (max-width: 1120px) {
   html.pdl-panel .shop-layout { grid-template-columns: 1fr; }
@@ -1077,7 +1071,7 @@ html.pdl-panel .admin-toggle:has(input:checked) > b { color: #8fd19e; border-col
 html.pdl-panel .admin-server-actions { position: sticky; z-index: 4; bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 15px; padding-bottom: 15px; background: rgba(15,13,9,.96); box-shadow: 0 -10px 30px rgba(0,0,0,.28); backdrop-filter: blur(12px); }
 html.pdl-panel .admin-server-actions > span { display: flex; flex-direction: column; gap: 3px; }
 html.pdl-panel .admin-server-actions small { color: var(--panel-muted); }
-html.pdl-panel .admin-server-actions .btn { width: 160px; min-width: 160px; height: 40px; }
+html.pdl-panel .admin-server-actions .btn { height: 40px; }
 
 html.pdl-panel .admin-accounts-page {
   gap: 16px;
@@ -1121,7 +1115,6 @@ html.pdl-panel .admin-accounts-search input {
 
 html.pdl-panel .admin-accounts-search .btn {
   flex: 0 0 auto;
-  min-width: 148px;
   height: 45px;
 }
 
@@ -1343,7 +1336,6 @@ html.pdl-panel .admin-news-checklist { display: grid; gap: 8px; padding: 12px; b
 html.pdl-panel .admin-news-checklist > span { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 html.pdl-panel .admin-news-checklist small { color: var(--panel-muted); }
 html.pdl-panel .admin-news-checklist b { color: var(--panel-gold-bright); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
-html.pdl-panel .admin-news-publish > .btn { width: 100%; min-width: 0; }
 html.pdl-panel .admin-news-library { display: grid; gap: 20px; }
 html.pdl-panel .admin-news-list { display: grid; gap: 9px; }
 html.pdl-panel .admin-news-item { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 13px; padding: 13px 14px; border: 1px solid rgba(197,161,97,.14); background: rgba(0,0,0,.15); }
@@ -1354,7 +1346,7 @@ html.pdl-panel .admin-news-item h3 { margin: 0; font-size: 15px; }
 html.pdl-panel .admin-news-item p { margin: 5px 0 0; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .admin-news-item b { padding: 4px 7px; color: #d8b068; border: 1px solid rgba(216,176,104,.24); border-radius: 999px; font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
 html.pdl-panel .admin-news-item b.is-published { color: #8fd19e; border-color: rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
-html.pdl-panel .admin-news-item .btn { min-width: 100px; width: 100px; height: 36px; }
+html.pdl-panel .admin-news-item .btn { height: 36px; }
 html.pdl-panel .admin-news-item .btn svg { width: 14px; }
 
 @media (max-width: 1050px) {
@@ -1374,15 +1366,14 @@ html.pdl-panel .admin-news-item .btn svg { width: 14px; }
   html.pdl-panel .admin-toggle { grid-template-columns: auto minmax(0,1fr); }
   html.pdl-panel .admin-toggle > b { grid-column: 2; justify-self: start; }
   html.pdl-panel .admin-server-actions { align-items: stretch; flex-direction: column; }
-  html.pdl-panel .admin-server-actions .btn { width: 100%; }
   html.pdl-panel .admin-accounts-search { align-items: stretch; flex-direction: column; }
   html.pdl-panel .admin-accounts-search label,
-  html.pdl-panel .admin-accounts-search .btn,
   html.pdl-panel .admin-accounts-danger { max-width: none; width: 100%; }
+  html.pdl-panel .admin-accounts-search .btn { max-width: none; }
   html.pdl-panel .admin-accounts-facts { grid-template-columns: 1fr; }
   html.pdl-panel .admin-accounts-footer { align-items: stretch; flex-direction: column; }
   html.pdl-panel .admin-news-item { grid-template-columns: auto minmax(0,1fr); }
-  html.pdl-panel .admin-news-item .btn { grid-column: 2; width: 100%; }
+  html.pdl-panel .admin-news-item .btn { grid-column: 2; }
 }
 
 html.pdl-panel .field textarea {
@@ -1842,10 +1833,6 @@ html.pdl-panel .inventory-withdraw-form .field {
   margin: 0;
 }
 
-html.pdl-panel .inventory-withdraw-form .btn {
-  min-width: 152px;
-}
-
 html.pdl-panel .inventory-game-items {
   margin-top: 18px;
   padding: 18px;
@@ -2080,8 +2067,6 @@ html.pdl-panel .inventory-game-item-quantity b {
 }
 
 html.pdl-panel .inventory-game-select.btn {
-  min-width: 0;
-  width: 106px;
   height: 34px;
   padding: 0 12px;
   font-size: 10px;
@@ -2205,7 +2190,6 @@ html.pdl-panel .inventory-panel-item-actions {
 }
 
 html.pdl-panel .inventory-panel-item-actions .btn {
-  min-width: 112px;
   height: 37px;
   padding: 0 13px;
   font-size: 11px;
@@ -2292,7 +2276,6 @@ html.pdl-panel .inventory-item-action-buttons {
 }
 
 html.pdl-panel .inventory-item-action-buttons .btn {
-  min-width: 150px;
   height: 39px;
   font-size: 10px;
 }
@@ -2587,11 +2570,6 @@ html.pdl-panel .inventory-bag-transfer > p {
 
 html.pdl-panel .inventory-bag-transfer .field {
   margin: 0;
-}
-
-html.pdl-panel .inventory-bag-transfer .btn {
-  width: 100%;
-  min-width: 0;
 }
 
 html.pdl-panel .inventory-bag-transfer-error {
@@ -3029,8 +3007,6 @@ html.pdl-panel .marketplace-purchase-summary > strong {
 }
 
 html.pdl-panel .marketplace-purchase-summary .btn {
-  width: 100%;
-  min-width: 0;
   height: 39px;
   margin-top: 5px;
   font-size: 10px;
@@ -3162,10 +3138,6 @@ html.pdl-panel .marketplace-sell-card textarea {
   resize: vertical;
 }
 
-html.pdl-panel .marketplace-sell-card form > .btn {
-  width: 100%;
-}
-
 html.pdl-panel .marketplace-character-preview {
   display: grid;
   gap: 12px;
@@ -3293,13 +3265,12 @@ html.pdl-panel .marketplace-sale-actions {
 }
 
 html.pdl-panel .marketplace-sale-actions .btn {
-  min-width: 105px;
   height: 34px;
   padding: 0 12px;
   font-size: 9px;
 }
 
-html.pdl-panel .marketplace-sale-actions .btn.danger {
+html.pdl-panel .btn.danger {
   color: rgba(235, 145, 127, 0.82);
 }
 
@@ -3562,12 +3533,6 @@ html.pdl-panel .auction-create-card .field {
   margin: 0;
 }
 
-html.pdl-panel .auction-bid-form .btn,
-html.pdl-panel .auction-create-card form > .btn {
-  width: 100%;
-  min-width: 0;
-}
-
 html.pdl-panel .auction-inventory-summary {
   padding: 11px;
   border: 1px solid rgba(197, 161, 97, 0.11);
@@ -3794,7 +3759,6 @@ html.pdl-panel .btn {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 150px;
   height: 45px;
   padding: 0 20px;
   border: 0;
@@ -3819,14 +3783,14 @@ html.pdl-panel .btn.ghost {
   color: rgba(255, 255, 255, 0.86);
 }
 
-html.pdl-panel .btn:hover {
-  filter: brightness(135%);
+html.pdl-panel .btn:hover:not(:disabled) {
+  filter: var(--ui-button-tone, brightness(1)) brightness(135%);
   text-shadow: 0 0 14px orange;
   transform: translateY(-1px);
 }
 
-html.pdl-panel .btn:active {
-  filter: brightness(110%);
+html.pdl-panel .btn:active:not(:disabled) {
+  filter: var(--ui-button-tone, brightness(1)) brightness(110%);
   transform: translateY(0);
 }
 
@@ -4491,10 +4455,6 @@ html.pdl-panel .wallet-checkout .field > span {
   letter-spacing: 0.04em;
 }
 
-html.pdl-panel .wallet-custom-form .btn {
-  min-width: 166px;
-}
-
 html.pdl-panel .wallet-checkout:not(:empty) {
   margin-top: 18px;
   padding-top: 18px;
@@ -4574,8 +4534,6 @@ html.pdl-panel .wallet-field-label svg {
 
 html.pdl-panel .wallet-transfer-form .btn {
   justify-self: start;
-  width: 190px;
-  min-width: 190px;
   height: 40px;
   margin-top: 2px;
 }
@@ -4829,10 +4787,6 @@ html.pdl-panel .wallet-empty-state small {
 
   html.pdl-panel .wallet-custom-form {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  html.pdl-panel .wallet-custom-form .btn {
-    width: 100%;
   }
 }
 
@@ -5126,7 +5080,6 @@ html.pdl-panel .profile-reward.claimed > b { color: #80c987; }
 html.pdl-panel .profile-reward.locked { opacity: 0.62; }
 
 html.pdl-panel .profile-reward .btn {
-  min-width: 105px;
   height: 36px;
   padding: 0 12px;
   font-size: 11px;
@@ -5198,11 +5151,6 @@ html.pdl-panel .security-form .field {
   margin: 0;
 }
 
-html.pdl-panel .security-form .btn,
-html.pdl-panel .security-module > .btn {
-  min-width: 135px;
-}
-
 html.pdl-panel .battle-pass-card {
   overflow: hidden;
   background:
@@ -5235,10 +5183,6 @@ html.pdl-panel .battle-pass-title p {
   margin: 1px 0 0;
   color: var(--panel-muted);
   font-size: 11px;
-}
-
-html.pdl-panel .battle-pass-header .btn {
-  min-width: 190px;
 }
 
 html.pdl-panel .premium-active {
@@ -5475,7 +5419,6 @@ html.pdl-panel .pass-reward.claimed {
 html.pdl-panel .pass-reward.claimed > b { color: #80c987; }
 
 html.pdl-panel .pass-reward .btn {
-  min-width: 90px;
   height: 33px;
   padding: 0 10px;
   font-size: 10px;
@@ -5823,10 +5766,6 @@ html.pdl-panel .game-inline-form .field > span {
   font-weight: 400;
 }
 
-html.pdl-panel .game-inline-form .btn {
-  min-width: 128px;
-}
-
 html.pdl-panel .game-subsection {
   margin-top: 21px;
 }
@@ -5986,11 +5925,6 @@ html.pdl-panel .daily-value strong {
   font-weight: 400;
 }
 
-html.pdl-panel .game-daily > .btn {
-  width: auto;
-  min-width: 165px;
-}
-
 html.pdl-panel .game-state,
 html.pdl-panel .game-empty {
   display: flex;
@@ -6019,7 +5953,6 @@ html.pdl-panel .game-state.is-complete {
 
 html.pdl-panel .game-list-item .btn,
 html.pdl-panel .monster-item .btn {
-  min-width: 112px;
   height: 37px;
   padding: 0 13px;
   font-size: 11px;
@@ -6041,7 +5974,6 @@ html.pdl-panel .game-actions {
 
 html.pdl-panel .game-actions .btn {
   flex: 0 0 auto;
-  min-width: 165px;
 }
 
 html.pdl-panel .game-stats-row {
@@ -6167,8 +6099,6 @@ html.pdl-panel .bag-transfer {
 }
 
 html.pdl-panel .bag-transfer .btn {
-  width: auto;
-  min-width: 170px;
   justify-self: start;
 }
 
@@ -6211,7 +6141,6 @@ html.pdl-panel .conquista-heading-actions > b {
 }
 
 html.pdl-panel .conquista-heading-actions .btn {
-  min-width: 0;
   height: 36px;
   padding: 0 12px;
   font-size: 11px;
@@ -6341,7 +6270,6 @@ html.pdl-panel .security-provider > svg,
 html.pdl-panel .security-provider > i { width: 22px; height: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
 html.pdl-panel .security-provider > span { display: flex; min-width: 0; flex-direction: column; }
 html.pdl-panel .security-provider small { color: rgba(239,224,194,.48); }
-html.pdl-panel .security-provider .btn { min-width: 92px; }
 
 @media (max-width: 900px) {
   html.pdl-panel .security-grid { grid-template-columns: 1fr; }
@@ -6963,10 +6891,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  html.pdl-panel .inventory-withdraw-form .btn {
-    width: 100%;
-  }
-
   html.pdl-panel .inventory-game-table-head {
     display: none;
   }
@@ -7140,10 +7064,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     flex-direction: column;
   }
 
-  html.pdl-panel .marketplace-hero .btn {
-    width: 100%;
-  }
-
   html.pdl-panel .marketplace-section-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -7164,11 +7084,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .marketplace-sale-actions {
     justify-content: stretch;
-  }
-
-  html.pdl-panel .marketplace-sale-actions .btn {
-    min-width: 0;
-    width: 100%;
   }
 
   html.pdl-panel .shell {
@@ -7207,11 +7122,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .panel-user {
     display: grid;
     width: 100%;
-  }
-
-  html.pdl-panel .panel-user .btn {
-    min-width: 34px;
-    width: 34px;
   }
 
   html.pdl-panel .panel-status-grid {
@@ -7265,7 +7175,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .inventory-game-select.btn {
     grid-column: 1 / -1;
-    width: 100%;
   }
 
   html.pdl-panel .inventory-game-pagination {
@@ -7284,11 +7193,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     width: 100%;
   }
 
-  html.pdl-panel .inventory-panel-item-actions .btn {
-    min-width: 0;
-    width: 100%;
-  }
-
   html.pdl-panel .inventory-item-action-panel {
     padding: 14px;
   }
@@ -7304,11 +7208,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .inventory-item-action-buttons {
     display: grid;
     grid-template-columns: 1fr;
-  }
-
-  html.pdl-panel .inventory-item-action-buttons .btn {
-    min-width: 0;
-    width: 100%;
   }
 
   html.pdl-panel .games-hero {
@@ -7351,10 +7250,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-column: 2;
   }
 
-  html.pdl-panel .game-inline-form .btn {
-    width: 100%;
-  }
-
   html.pdl-panel .game-stats-row {
     grid-template-columns: 1fr;
   }
@@ -7363,11 +7258,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .monster-item {
     align-items: flex-start;
     flex-wrap: wrap;
-  }
-
-  html.pdl-panel .game-list-item .btn,
-  html.pdl-panel .monster-item .btn {
-    width: 100%;
   }
 
   html.pdl-panel .profile-progress-hero {
@@ -7403,18 +7293,9 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-template-columns: 1fr;
   }
 
-  html.pdl-panel .security-form .btn {
-    width: 100%;
-  }
-
   html.pdl-panel .battle-pass-header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  html.pdl-panel .battle-pass-header .btn {
-    min-width: 0;
-    width: 100%;
   }
 
   html.pdl-panel .battle-pass-overview {
@@ -7422,13 +7303,8 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .btn {
-    min-width: 132px;
     height: 43px;
     padding: 0 16px;
-  }
-
-  html.pdl-panel form > .btn {
-    width: 100%;
   }
 
   html.pdl-panel .table {

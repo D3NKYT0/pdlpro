@@ -1,3 +1,4 @@
+import { Card } from '../components/ui/Card'
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
@@ -18,7 +19,7 @@ export function RoadmapPage() {
   });
   return (
     <div className="program-page program-public">
-      <header className="card program-hero">
+      <Card as="header" className="program-hero">
         <div>
           <span className="panel-eyebrow">O próximo capítulo</span>
           <h1>Roadmap do servidor</h1>
@@ -28,12 +29,12 @@ export function RoadmapPage() {
           </p>
         </div>
         <Flag />
-      </header>
+      </Card>
       <ErrorNotice error={query.error} />
       {query.isPending && <Loading />}
       <div className="program-grid">
         {["planned", "progress", "completed"].map((status) => (
-          <section className="card program-section" key={status}>
+          <Card className="program-section" key={status}>
             <div className="program-section-heading">
               <Status value={status} />
               <small className="muted">
@@ -67,7 +68,7 @@ export function RoadmapPage() {
             {query.data && !query.data.some((e) => e.status === status) && (
               <Empty>Nenhuma atualização nesta etapa.</Empty>
             )}
-          </section>
+          </Card>
         ))}
       </div>
     </div>
@@ -91,7 +92,7 @@ export function RoadmapDetailPage() {
       <ErrorNotice error={query.error} />
       {query.isPending && <Loading />}
       {entry && (
-        <article className="card program-section">
+        <Card as="article" className="program-section">
           <div className="program-section-heading">
             <span className="panel-eyebrow">{entry.category}</span>
             <Status value={entry.status} />
@@ -108,7 +109,7 @@ export function RoadmapDetailPage() {
               )}
             </p>
           )}
-        </article>
+        </Card>
       )}
     </div>
   );

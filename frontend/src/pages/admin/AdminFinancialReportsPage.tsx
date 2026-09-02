@@ -1,3 +1,6 @@
+import { Card } from '../../components/ui/Card'
+import { Field } from '../../components/ui/Field'
+import { Button } from '../../components/ui/Button'
 import { type FormEvent, type ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { NavLink, Navigate, useParams, useSearchParams } from 'react-router-dom'
@@ -48,11 +51,11 @@ function ReportSummary({ data }: { data: FinancialReport }) {
         <Metric label="Bônus creditados" value={quantity(data.summary.bonus_applied)} detail="Incluídos no total de moedas creditadas" />
       </div>
       <div className="finance-metrics">
-        {data.summary.currencies.map((item) => <article className="card finance-currency" key={item.currency}>
+        {data.summary.currencies.map((item) => <Card as="article" className="finance-currency" key={item.currency}>
           <span className="panel-eyebrow">{item.currency === 'BRL' ? 'Reais · BRL' : 'Dólares · USD'}</span>
           <strong>{money(item.confirmed_amount, item.currency)}</strong><span>Confirmado</span>
           <dl><div><dt>Pendente / processando</dt><dd>{money(item.pending_amount, item.currency)}</dd></div><div><dt>Valor de todos os pedidos</dt><dd>{money(item.total_amount, item.currency)}</dd></div><div><dt>Pedidos</dt><dd>{item.count}</dd></div></dl>
-        </article>)}
+        </Card>)}
       </div>
       <StatusCounts statuses={data.summary.statuses} />
     </>
@@ -92,16 +95,16 @@ function Filters({ kind, params, apply }: { kind: FinancialReportKind; params: U
     apply(next)
   }
   return <form className="card finance-filters" onSubmit={submit}>
-    <label className="field">Usuário<input name="username" defaultValue={params.get('username') || ''} placeholder="Buscar pelo nome" maxLength={150} /></label>
-    {dated && <><label className="field">Data inicial<input type="date" name="date_from" defaultValue={params.get('date_from') || ''} /></label><label className="field">Data final<input type="date" name="date_to" defaultValue={params.get('date_to') || ''} /></label></>}
-    {kind !== 'cash-flow' && <label className="field">Situação<select name="status" defaultValue={params.get('status') || ''}><option value="">Todas</option>{statuses.map((status) => <option key={status} value={status}>{statusLabels[status]}</option>)}</select></label>}
+    <Field>Usuário<input name="username" defaultValue={params.get('username') || ''} placeholder="Buscar pelo nome" maxLength={150} /></Field>
+    {dated && <><Field>Data inicial<input type="date" name="date_from" defaultValue={params.get('date_from') || ''} /></Field><Field>Data final<input type="date" name="date_to" defaultValue={params.get('date_to') || ''} /></Field></>}
+    {kind !== 'cash-flow' && <Field>Situação<select name="status" defaultValue={params.get('status') || ''}><option value="">Todas</option>{statuses.map((status) => <option key={status} value={status}>{statusLabels[status]}</option>)}</select></Field>}
     {kind === 'payments' && <>
-      <label className="field">Método<input name="method" list="finance-methods" defaultValue={params.get('method') || ''} placeholder="Todos os métodos" maxLength={20} /><datalist id="finance-methods">{Object.entries(methodLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</datalist></label>
-      <label className="field">Moeda<select name="currency" defaultValue={params.get('currency') || ''}><option value="">Todas</option><option value="BRL">Real (BRL)</option><option value="USD">Dólar (USD)</option></select></label>
+      <Field>Método<input name="method" list="finance-methods" defaultValue={params.get('method') || ''} placeholder="Todos os métodos" maxLength={20} /><datalist id="finance-methods">{Object.entries(methodLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</datalist></Field>
+      <Field>Moeda<select name="currency" defaultValue={params.get('currency') || ''}><option value="">Todas</option><option value="BRL">Real (BRL)</option><option value="USD">Dólar (USD)</option></select></Field>
     </>}
-    {kind !== 'cash-flow' && <><label className="field">{rangeLabel} mínimo<input type="number" step="0.01" name="minimum" defaultValue={params.get('minimum') || ''} placeholder="Sem limite" /></label><label className="field">{rangeLabel} máximo<input type="number" step="0.01" name="maximum" defaultValue={params.get('maximum') || ''} placeholder="Sem limite" /></label></>}
-    <label className="field">Por página<select name="page_size" defaultValue={params.get('page_size') || '20'}><option value="20">20 registros</option><option value="50">50 registros</option></select></label>
-    <div className="finance-actions"><button className="btn" type="submit"><Search size={16} />Aplicar filtros</button><button className="btn secondary" type="button" onClick={() => apply(new URLSearchParams())}>Limpar</button></div>
+    {kind !== 'cash-flow' && <><Field>{rangeLabel} mínimo<input type="number" step="0.01" name="minimum" defaultValue={params.get('minimum') || ''} placeholder="Sem limite" /></Field><Field>{rangeLabel} máximo<input type="number" step="0.01" name="maximum" defaultValue={params.get('maximum') || ''} placeholder="Sem limite" /></Field></>}
+    <Field>Por página<select name="page_size" defaultValue={params.get('page_size') || '20'}><option value="20">20 registros</option><option value="50">50 registros</option></select></Field>
+    <div className="finance-actions"><Button type="submit"><Search size={16} />Aplicar filtros</Button><Button className="secondary" type="button" onClick={() => apply(new URLSearchParams())}>Limpar</Button></div>
   </form>
 }
 
@@ -124,11 +127,11 @@ function ReportTable({ data }: { data: FinancialReport }) {
 function CashFlowChart({ data }: { data: Extract<FinancialReport, { kind: 'cash-flow' }> }) {
   const rows = [...data.results].reverse()
   const max = Math.max(1, ...rows.flatMap((row) => [Number(row.credits), Number(row.debits)]))
-  return <section className="card finance-chart"><div className="finance-section-heading"><div><h3>Movimentação diária</h3><p className="muted">Dias desta página, em ordem cronológica · moedas</p></div><div className="finance-chart-legend"><span><ArrowDownLeft size={14} />Entradas</span><span><ArrowUpRight size={14} />Saídas</span></div></div>
+  return <Card className="finance-chart"><div className="finance-section-heading"><div><h3>Movimentação diária</h3><p className="muted">Dias desta página, em ordem cronológica · moedas</p></div><div className="finance-chart-legend"><span><ArrowDownLeft size={14} />Entradas</span><span><ArrowUpRight size={14} />Saídas</span></div></div>
     <div className="finance-chart-scroll"><div className="finance-bars" role="img" aria-label="Entradas e saídas por dia. Valores disponíveis na tabela abaixo.">
       {rows.map((row) => <div className="finance-bar-day" key={row.day}><div className="finance-bar-pair" title={`${dayLabel(row.day)}: entradas ${quantity(row.credits)}, saídas ${quantity(row.debits)}`}><span style={{ height: `${Number(row.credits) / max * 100}%` }} /><span style={{ height: `${Number(row.debits) / max * 100}%` }} /></div><small>{dayLabel(row.day).slice(0, 5)}</small></div>)}
     </div></div>
-  </section>
+  </Card>
 }
 
 export function AdminFinancialReportsPage() {
@@ -148,23 +151,23 @@ export function AdminFinancialReportsPage() {
   return <div className="account-page financial-reports">
     <AdminHeader kicker="Financeiro" title="Relatórios financeiros" description="Acompanhe pagamentos, movimentações e a integridade das carteiras do painel." />
     <nav className="finance-tabs" aria-label="Relatórios financeiros">{reports.map((item) => { const Icon = item.icon; return <NavLink key={item.slug} to={`/painel/admin/financeiro/${item.slug}`} className={() => item.kind === kind ? 'is-active' : ''}><Icon size={18} />{item.title}</NavLink> })}</nav>
-    <div className="finance-section-heading"><div><h2>{selected.title}</h2><p className="muted">{selected.description}</p></div><button className="btn secondary" onClick={() => void query.refetch()} disabled={query.isFetching}><RefreshCw size={16} />{query.isFetching ? 'Atualizando…' : 'Atualizar'}</button></div>
+    <div className="finance-section-heading"><div><h2>{selected.title}</h2><p className="muted">{selected.description}</p></div><Button type="submit" className="secondary" onClick={() => void query.refetch()} disabled={query.isFetching}><RefreshCw size={16} />{query.isFetching ? 'Atualizando…' : 'Atualizar'}</Button></div>
     <Filters key={`${kind}:${params}`} kind={kind} params={params} apply={setParams} />
     <p className="finance-explanation">{kind === 'payments'
       ? 'Período pela data de criação do pedido. Totais em BRL e USD são independentes. Moedas e bônus creditados consideram apenas pedidos confirmados; simulações são identificadas na origem.'
       : kind === 'cash-flow'
         ? 'Valores em moedas da carteira. Inclui bônus e transferências internas; não representa receita em dinheiro. O acumulado começa em zero no início do período filtrado.'
         : 'Valores em moedas da carteira. Saldo total = principal + bônus; saldo pelo histórico = entradas − saídas. Diferenças até 0,01 são consistentes; até 1,00 ficam em análise. A consulta não altera saldos.'}</p>
-    {query.isPending && <section className="card finance-empty" role="status">Carregando relatório…</section>}
-    {query.isError && <section className="card finance-error" role="alert"><strong>Não foi possível carregar o relatório.</strong><p>{isApiError(query.error) ? query.error.message : 'Tente novamente.'}</p>{isApiError(query.error) && Object.entries(query.error.details).map(([key, value]) => <p key={key}>{key}: {typeof value === 'string' ? value : JSON.stringify(value)}</p>)}<button className="btn secondary" onClick={() => void query.refetch()}>Tentar novamente</button></section>}
+    {query.isPending && <Card className="finance-empty" role="status">Carregando relatório…</Card>}
+    {query.isError && <Card className="finance-error" role="alert"><strong>Não foi possível carregar o relatório.</strong><p>{isApiError(query.error) ? query.error.message : 'Tente novamente.'}</p>{isApiError(query.error) && Object.entries(query.error.details).map(([key, value]) => <p key={key}>{key}: {typeof value === 'string' ? value : JSON.stringify(value)}</p>)}<Button type="submit" className="secondary" onClick={() => void query.refetch()}>Tentar novamente</Button></Card>}
     {data && !query.isError && <>
       <ReportSummary data={data} />
       {data.kind === 'cash-flow' && data.results.length > 0 && <CashFlowChart data={data} />}
-      <section className="card finance-results" aria-busy={query.isFetching}>
+      <Card className="finance-results" aria-busy={query.isFetching}>
         <div className="finance-section-heading"><div><h3>Detalhamento</h3><p className="muted">{data.count.toLocaleString('pt-BR')} registros · Totais calculados sobre todos os resultados dos filtros.</p></div></div>
         {data.results.length ? <div className="finance-table" tabIndex={0} role="region" aria-label={`Tabela: ${selected.title}`}><ReportTable data={data} /></div> : <div className="finance-empty"><Search size={28} /><h3>Nenhum registro encontrado</h3><p className="muted">Ajuste os filtros ou consulte novamente após novas movimentações.</p></div>}
-        <div className="finance-pagination"><span>Página {page} de {data.total_pages}</span><div><button className="btn secondary" disabled={!data.previous || query.isFetching} onClick={() => changePage(page - 1)}>Anterior</button><button className="btn secondary" disabled={!data.next || query.isFetching} onClick={() => changePage(page + 1)}>Próxima</button></div></div>
-      </section>
+        <div className="finance-pagination"><span>Página {page} de {data.total_pages}</span><div><Button type="submit" className="secondary" disabled={!data.previous || query.isFetching} onClick={() => changePage(page - 1)}>Anterior</Button><Button type="submit" className="secondary" disabled={!data.next || query.isFetching} onClick={() => changePage(page + 1)}>Próxima</Button></div></div>
+      </Card>
     </>}
   </div>
 }

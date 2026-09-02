@@ -1,3 +1,5 @@
+import { Card } from '../components/ui/Card'
+import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -83,7 +85,7 @@ export function ShopPage() {
         ))}
       </div>
       {tab === "history" ? (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>Histórico de compras</h2>
           <ErrorNotice error={purchases.error} />
           {purchases.isPending && <Loading />}
@@ -114,10 +116,10 @@ export function ShopPage() {
               Suas compras aparecerão aqui, com itens e valores preservados.
             </Empty>
           )}
-        </section>
+        </Card>
       ) : (
         <div className="program-two">
-          <section className="card program-section">
+          <Card className="program-section">
             <h2>
               {tab === "items" ? "Itens disponíveis" : "Pacotes especiais"}
             </h2>
@@ -136,8 +138,8 @@ export function ShopPage() {
                       <p>{item.quantity} unidades</p>
                       <strong>{money(item.price)} moedas</strong>
                     </div>
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={action.busy}
                       onClick={() => {
                         key.current = null;
@@ -149,7 +151,7 @@ export function ShopPage() {
                     >
                       <Plus size={17} />
                       Adicionar
-                    </button>
+                    </Button>
                   </article>
                 ))}
               {tab === "packages" &&
@@ -168,8 +170,8 @@ export function ShopPage() {
                       ))}
                     </div>
                     <strong>{money(pack.total_price)} moedas</strong>
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={action.busy || !pack.contents.length}
                       onClick={() => {
                         key.current = null;
@@ -190,15 +192,15 @@ export function ShopPage() {
                     >
                       <Plus size={17} />
                       Adicionar pacote
-                    </button>
+                    </Button>
                   </article>
                 ))}
             </div>
             {(tab === "items" ? catalog.data : packages.data)?.length === 0 && (
               <Empty>Nenhum produto disponível nesta categoria.</Empty>
             )}
-          </section>
-          <aside className="card program-section">
+          </Card>
+          <Card as="aside" className="program-section">
             <div className="program-section-heading">
               <h2>Seu carrinho</h2>
               <ShoppingCart color="var(--gold)" />
@@ -211,31 +213,31 @@ export function ShopPage() {
                   <span>{money(row.line_total)}</span>
                 </div>
                 <div className="program-actions">
-                  <button
-                    className="btn ghost"
+                  <Button type="submit"
+                    className="ghost"
                     disabled={action.busy}
                     aria-label={`Diminuir ${row.name}`}
                     onClick={() => void change(row, row.quantity - 1)}
                   >
                     <Minus size={14} />
-                  </button>
+                  </Button>
                   <span>{row.quantity}</span>
-                  <button
-                    className="btn ghost"
+                  <Button type="submit"
+                    className="ghost"
                     disabled={action.busy || row.quantity >= 99}
                     aria-label={`Aumentar ${row.name}`}
                     onClick={() => void change(row, row.quantity + 1)}
                   >
                     <Plus size={14} />
-                  </button>
-                  <button
-                    className="btn ghost"
+                  </Button>
+                  <Button type="submit"
+                    className="ghost"
                     disabled={action.busy}
                     aria-label={`Remover ${row.name}`}
                     onClick={() => void change(row, 0)}
                   >
                     <Trash2 size={15} />
-                  </button>
+                  </Button>
                 </div>
               </article>
             ))}
@@ -263,12 +265,12 @@ export function ShopPage() {
                 />
               </label>
               <div className="program-actions">
-                <button className="btn ghost" disabled={action.busy}>
+                <Button type="submit" className="ghost" disabled={action.busy}>
                   Aplicar cupom
-                </button>
+                </Button>
                 {cart.data?.promo_code && (
-                  <button
-                    className="btn ghost"
+                  <Button
+                    className="ghost"
                     type="button"
                     disabled={action.busy}
                     onClick={() =>
@@ -278,7 +280,7 @@ export function ShopPage() {
                     }
                   >
                     Remover {cart.data.promo_code}
-                  </button>
+                  </Button>
                 )}
               </div>
               <label className="program-check">
@@ -317,8 +319,8 @@ export function ShopPage() {
                 Saldo disponível: {wallet.data?.balance || "0.00"} moedas
               </small>
             </div>
-            <button
-              className="btn"
+            <Button type="submit"
+
               disabled={
                 action.busy ||
                 !cart.data?.items.length ||
@@ -339,8 +341,8 @@ export function ShopPage() {
             >
               <CheckCircle2 size={18} />{" "}
               {action.busy ? "Processando…" : "Finalizar compra"}
-            </button>
-          </aside>
+            </Button>
+          </Card>
         </div>
       )}
     </div>

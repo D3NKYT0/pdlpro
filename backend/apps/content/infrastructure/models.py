@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.text import slugify
 
 from common.models import BaseModel
+from .mixins import TitleSlugMixin
 
 
-class News(BaseModel):
+class News(TitleSlugMixin, BaseModel):
     """Notícia com slug, conteúdo e controle de publicação.
 
     Relaciona os registros por ``author``. Herda BaseModel: use ``id`` (UUID) nas APIs;
@@ -26,11 +26,6 @@ class News(BaseModel):
         verbose_name = "Notícia"
         verbose_name_plural = "Notícias"
         ordering = ["-published_at"]
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)[:200]
-        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.title
@@ -77,7 +72,7 @@ class DownloadLink(BaseModel):
         return self.title
 
 
-class WikiPage(BaseModel):
+class WikiPage(TitleSlugMixin, BaseModel):
     """Página da wiki com conteúdo, categoria e opções de navegação. Herda BaseModel: use ``id``
     (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
     de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
@@ -97,11 +92,6 @@ class WikiPage(BaseModel):
         verbose_name = "Página do wiki"
         verbose_name_plural = "Wiki"
         ordering = ["order", "title"]
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)[:200]
-        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.title

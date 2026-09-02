@@ -1,7 +1,8 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AuthPanel } from '../components/auth/AuthPanel'
-import { authApi, isApiError } from '../services/api'
+import { authApi } from '../services/api'
 
 export function VerifyEmailPage() {
   const [params] = useSearchParams()
@@ -13,7 +14,7 @@ export function VerifyEmailPage() {
     authApi
       .verifyEmail(token)
       .then(() => setStatus('E-mail confirmado. Você já pode usar a conta.'))
-      .catch((error) => setStatus(isApiError(error) ? error.message : 'Não foi possível confirmar o e-mail.'))
+      .catch((error) => setStatus(apiErrorMessage(error, 'Não foi possível confirmar o e-mail.')))
   }, [token])
 
   return (

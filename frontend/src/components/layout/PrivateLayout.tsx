@@ -1,3 +1,4 @@
+import { Button } from '../ui/Button'
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -194,8 +195,8 @@ export function PrivateLayout() {
                         : "Confirme seu e-mail"}
                     </span>
                   </NavLink>
-                  <button
-                    className="btn ghost"
+                  <Button
+                    className="ghost"
                     type="button"
                     title="Sair da conta"
                     onClick={() => {
@@ -204,7 +205,7 @@ export function PrivateLayout() {
                   >
                     <LogOut aria-hidden="true" />
                     <span>Sair</span>
-                  </button>
+                  </Button>
                 </>
               ) : null}
             </div>

@@ -1,3 +1,5 @@
+import { Card } from '../components/ui/Card'
+import { Button } from '../components/ui/Button'
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, Coins, TicketPercent } from "lucide-react";
 import { programsApi } from "../services/domain/programs.service";
@@ -30,15 +32,15 @@ export function SupportersPage() {
       {data && (
         <>
           <div className="program-grid">
-            <div className="card program-stat">
+            <Card as="div" className="program-stat">
               <small>Comissão disponível</small>
               <strong>{Number(data.available).toFixed(2)} moedas</strong>
-            </div>
-            <div className="card program-stat">
+            </Card>
+            <Card as="div" className="program-stat">
               <small>Sua participação</small>
               <strong>{profile?.commission_percent || "0"}%</strong>
-            </div>
-            <div className="card program-stat">
+            </Card>
+            <Card as="div" className="program-stat">
               <small>Seu cadastro</small>
               <div style={{ marginTop: 14 }}>
                 {profile ? (
@@ -47,10 +49,10 @@ export function SupportersPage() {
                   <span className="muted">Ainda não enviado</span>
                 )}
               </div>
-            </div>
+            </Card>
           </div>
           <div className="program-two">
-            <section className="card program-section">
+            <Card className="program-section">
               <h2>
                 {profile ? "Seu perfil de apoiador" : "Faça parte do programa"}
               </h2>
@@ -118,19 +120,19 @@ export function SupportersPage() {
                   />
                 </label>
                 <div className="program-actions">
-                  <button className="btn" disabled={action.busy} type="submit">
+                  <Button disabled={action.busy} type="submit">
                     {action.busy
                       ? "Enviando…"
                       : profile
                         ? "Salvar perfil"
                         : "Enviar candidatura"}
                     <ArrowUpRight size={17} />
-                  </button>
+                  </Button>
                 </div>
               </form>
-            </section>
+            </Card>
             <div className="program-page">
-              <section className="card program-section">
+              <Card className="program-section">
                 <div className="program-section-heading">
                   <h2>Seus cupons</h2>
                   <TicketPercent size={22} />
@@ -152,8 +154,8 @@ export function SupportersPage() {
                     Após a aprovação, a equipe poderá vincular seus cupons.
                   </Empty>
                 )}
-              </section>
-              <section className="card program-section">
+              </Card>
+              <Card className="program-section">
                 <h2>Solicitar comissão</h2>
                 <p className="muted">
                   As comissões aprovadas são creditadas na sua carteira do
@@ -161,8 +163,8 @@ export function SupportersPage() {
                   por bônus.
                 </p>
                 <div className="program-actions">
-                  <button
-                    className="btn"
+                  <Button type="submit"
+
                     disabled={
                       action.busy ||
                       profile?.status !== "approved" ||
@@ -177,12 +179,12 @@ export function SupportersPage() {
                   >
                     <Coins size={18} />
                     Solicitar saldo disponível
-                  </button>
+                  </Button>
                 </div>
-              </section>
+              </Card>
             </div>
           </div>
-          <section className="card program-section">
+          <Card className="program-section">
             <h2>Solicitações de comissão</h2>
             {data.payouts.length ? (
               <div className="program-table-wrap">
@@ -214,8 +216,8 @@ export function SupportersPage() {
             ) : (
               <Empty>Você ainda não solicitou comissões.</Empty>
             )}
-          </section>
-          <section className="card program-section">
+          </Card>
+          <Card className="program-section">
             <h2>Comissões geradas</h2>
             {data.commissions.length ? (
               <div className="program-table-wrap">
@@ -247,7 +249,7 @@ export function SupportersPage() {
                 As compras realizadas com seus cupons aparecerão aqui.
               </Empty>
             )}
-          </section>
+          </Card>
         </>
       )}
     </div>

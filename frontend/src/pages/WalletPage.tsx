@@ -1,3 +1,7 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { Field } from '../components/ui/Field'
+import { Button } from '../components/ui/Button'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -20,7 +24,7 @@ import {
 import toast from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
-import { isApiError, paymentApi, walletApi } from '../services/api'
+import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder } from '../services/types'
 
 function formatMoney(value: string, currency: 'BRL' | 'USD') {
@@ -116,7 +120,7 @@ export function WalletPage() {
         toast.success('Pedido criado e aguardando confirmação.')
       }
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível iniciar o pagamento')
+      toast.error(apiErrorMessage(error, 'Não foi possível iniciar o pagamento'))
     } finally {
       setBusy(false)
     }
@@ -154,7 +158,7 @@ export function WalletPage() {
         }
         brickRef.current = controller
       } catch (error) {
-        toast.error(isApiError(error) ? error.message : 'Falha ao abrir o Mercado Pago')
+        toast.error(apiErrorMessage(error, 'Falha ao abrir o Mercado Pago'))
       }
     })()
     return () => {
@@ -176,7 +180,7 @@ export function WalletPage() {
         unmount = session.unmount
         brickRef.current = session
       } catch (error) {
-        toast.error(isApiError(error) ? error.message : 'Falha ao abrir o Stripe')
+        toast.error(apiErrorMessage(error, 'Falha ao abrir o Stripe'))
       }
     })()
     return () => unmount?.()
@@ -216,7 +220,7 @@ export function WalletPage() {
         toast.success('Pagamento enviado. Aguarde a confirmação.')
       }
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha no Stripe')
+      toast.error(apiErrorMessage(error, 'Falha no Stripe'))
     } finally {
       setBusy(false)
     }
@@ -232,7 +236,7 @@ export function WalletPage() {
       setAmount('')
       await refreshWallet()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha na transferência')
+      toast.error(apiErrorMessage(error, 'Falha na transferência'))
     } finally {
       setTransferBusy(false)
     }
@@ -246,7 +250,7 @@ export function WalletPage() {
   return (
     <div className="wallet-page">
       <div className="program-actions"><Link className="btn ghost" to="/painel/wallet/jogo">Transferir moedas entre carteira e jogo ↗</Link></div>
-      <section className="card wallet-hero">
+      <Card className="wallet-hero">
         <div className="wallet-hero-copy">
           <span className="panel-eyebrow">Tesouraria do jogador</span>
           <span className="wallet-title-icon" aria-hidden="true">
@@ -272,10 +276,10 @@ export function WalletPage() {
             <b>{wallet.data?.bonus_balance ?? '0.00'}</b>
           </div>
         </div>
-      </section>
+      </Card>
 
       <div className="wallet-main-grid">
-        <section className="card wallet-purchase-card">
+        <Card className="wallet-purchase-card">
           <header className="wallet-section-heading">
             <span className="wallet-section-icon" aria-hidden="true"><CreditCard /></span>
             <div>
@@ -349,7 +353,7 @@ export function WalletPage() {
                 void startPurchase()
               }}
             >
-              <label className="field">
+              <Field>
                 <span>Valor em {currency}</span>
                 <input
                   type="number"
@@ -360,27 +364,27 @@ export function WalletPage() {
                   onChange={(event) => setCustomAmount(event.target.value)}
                   placeholder={currency === 'USD' ? '9.90' : '50.00'}
                 />
-              </label>
-              <button className="btn" type="submit" disabled={busy || !customAmount || !paymentAvailable}>
+              </Field>
+              <Button type="submit" disabled={busy || !customAmount || !paymentAvailable}>
                 <CircleDollarSign aria-hidden="true" /> Comprar agora
-              </button>
+              </Button>
             </form>
           </div>
 
           <div className="wallet-checkout">
             {order?.method === 'mercadopago' && !order.pix_qr_code ? (
-              <label className="field">
+              <Field>
                 <span>CPF ou CNPJ do pagador</span>
                 <input value={document} onChange={(event) => setDocument(event.target.value)} placeholder="000.000.000-00" />
-              </label>
+              </Field>
             ) : null}
             {order?.method === 'mercadopago' ? <div id="payment-brick" /> : null}
             {order?.method === 'stripe' ? (
               <form onSubmit={(event) => void payStripe(event)}>
                 <div id="stripe-element" />
-                <button className="btn" type="submit" disabled={busy}>
+                <Button type="submit" disabled={busy}>
                   <CreditCard aria-hidden="true" /> Pagar com cartão
-                </button>
+                </Button>
               </form>
             ) : null}
             {order?.pix_qr_code ? (
@@ -393,10 +397,10 @@ export function WalletPage() {
               </div>
             ) : null}
           </div>
-        </section>
+        </Card>
 
         <aside className="wallet-side-column">
-          <section className="card wallet-transfer-card">
+          <Card className="wallet-transfer-card">
             <header className="wallet-compact-heading">
               <span className="wallet-section-icon" aria-hidden="true"><Send /></span>
               <div>
@@ -406,7 +410,7 @@ export function WalletPage() {
             </header>
             <p className="muted">Envie moedas diretamente para outro jogador usando o nome da conta.</p>
             <form className="wallet-transfer-form" onSubmit={onTransfer}>
-              <label className="field">
+              <Field>
                 <span className="wallet-field-label"><UserRound aria-hidden="true" /> Destinatário</span>
                 <input
                   value={recipient}
@@ -415,8 +419,8 @@ export function WalletPage() {
                   autoComplete="off"
                   required
                 />
-              </label>
-              <label className="field">
+              </Field>
+              <Field>
                 <span className="wallet-field-label"><Coins aria-hidden="true" /> Quantidade</span>
                 <input
                   type="number"
@@ -428,15 +432,15 @@ export function WalletPage() {
                   placeholder="0.00"
                   required
                 />
-              </label>
-              <button className="btn" type="submit" disabled={transferBusy || !recipient || !amount}>
+              </Field>
+              <Button type="submit" disabled={transferBusy || !recipient || !amount}>
                 <Send aria-hidden="true" /> {transferBusy ? 'Enviando...' : 'Transferir moedas'}
-              </button>
+              </Button>
               <small className="wallet-transfer-warning"><ShieldCheck aria-hidden="true" /> Confira o destinatário antes de confirmar.</small>
             </form>
-          </section>
+          </Card>
 
-          <section className="card wallet-activity-card">
+          <Card className="wallet-activity-card">
             <div className="wallet-activity-section">
               <header className="wallet-activity-heading">
                 <span className="wallet-section-icon" aria-hidden="true"><ReceiptText /></span>
@@ -496,7 +500,7 @@ export function WalletPage() {
                 <div className="wallet-empty-state"><History aria-hidden="true" /><span><strong>Extrato vazio</strong><small>Entradas e saídas serão exibidas aqui.</small></span></div>
               )}
             </div>
-          </section>
+          </Card>
         </aside>
       </div>
     </div>

@@ -1,3 +1,10 @@
+import { Card } from '../components/ui/Card'
+import { TicketMessages } from '../components/support/TicketMessages'
+import { apiErrorMessage } from '../lib/errors'
+import { TicketStatus } from '../components/support/TicketStatus'
+import { formatDateTime } from '../lib/formatters'
+import { Button } from '../components/ui/Button'
+import { Field } from '../components/ui/Field'
 import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -18,7 +25,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react'
-import { isApiError, supportApi } from '../services/api'
+import { supportApi } from '../services/api'
 import type { ApiSupportTicket } from '../services/types'
 
 const categories = [
@@ -31,23 +38,6 @@ const categories = [
   ['suggestion', 'Sugestão', 'Ideias para melhorar o servidor'],
   ['other', 'Outro assunto', 'Para tudo que não se encaixa acima'],
 ] as const
-
-const statusTone: Record<string, string> = {
-  open: 'new',
-  in_progress: 'progress',
-  waiting_user: 'attention',
-  waiting_team: 'progress',
-  resolved: 'done',
-  closed: 'closed',
-}
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value))
-}
-
-function TicketStatus({ ticket }: { ticket: ApiSupportTicket }) {
-  return <span className={`support-status ${statusTone[ticket.status] ?? ''}`}>{ticket.status_label}</span>
-}
 
 export function SupportPage() {
   const queryClient = useQueryClient()
@@ -100,7 +90,7 @@ export function SupportPage() {
       setParams({ ticket: ticket.id })
       await refresh(ticket.id)
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível abrir o chamado')
+      toast.error(apiErrorMessage(error, 'Não foi possível abrir o chamado'))
     } finally {
       setPending(false)
     }
@@ -116,7 +106,7 @@ export function SupportPage() {
       toast.success('Mensagem enviada para a equipe')
       await refresh(selectedId)
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível enviar a mensagem')
+      toast.error(apiErrorMessage(error, 'Não foi possível enviar a mensagem'))
     } finally {
       setPending(false)
     }
@@ -130,7 +120,7 @@ export function SupportPage() {
       toast.success(action === 'close' ? 'Chamado encerrado' : 'Chamado reaberto')
       await refresh(selectedId)
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível atualizar o chamado')
+      toast.error(apiErrorMessage(error, 'Não foi possível atualizar o chamado'))
     } finally {
       setPending(false)
     }
@@ -138,16 +128,16 @@ export function SupportPage() {
 
   return (
     <div className="support-page">
-      <header className="card support-hero">
+      <Card as="header" className="support-hero">
         <div>
           <span className="panel-eyebrow"><Headphones aria-hidden="true" /> Central de atendimento</span>
           <h1>Como podemos ajudar?</h1>
           <p className="muted">Abra, acompanhe e responda seus chamados em um só lugar.</p>
         </div>
-        <button className="btn support-new-button" type="button" onClick={() => { setCreating(true); setParams({}) }}>
+        <Button className="support-new-button" type="button" onClick={() => { setCreating(true); setParams({}) }}>
           <Plus aria-hidden="true" /> Novo chamado
-        </button>
-      </header>
+        </Button>
+      </Card>
 
       <section className="support-overview" aria-label="Resumo dos chamados">
         <div className="support-stat"><LifeBuoy /><span><strong>{list.data?.summary.active ?? 0}</strong> em atendimento</span></div>
@@ -174,7 +164,7 @@ export function SupportPage() {
                 onClick={() => { setCreating(false); setParams({ ticket: ticket.id }) }}
                 key={ticket.id}
               >
-                <span className="support-ticket-row-top"><b>{ticket.protocol}</b><small>{formatDate(ticket.last_activity_at)}</small></span>
+                <span className="support-ticket-row-top"><b>{ticket.protocol}</b><small>{formatDateTime(ticket.last_activity_at, 'short')}</small></span>
                 <strong>{ticket.subject}</strong>
                 <span className="support-ticket-row-bottom"><TicketStatus ticket={ticket} /><small>{ticket.message_count ?? 0} mensagens</small></span>
               </button>
@@ -203,11 +193,11 @@ export function SupportPage() {
                   ))}
                 </div>
               </fieldset>
-              <label className="field">Assunto<input value={subject} onChange={(event) => setSubject(event.target.value)} minLength={6} maxLength={160} placeholder="Resuma o problema em uma frase" required /></label>
-              <label className="field">Detalhes<textarea value={description} onChange={(event) => setDescription(event.target.value)} minLength={20} rows={7} placeholder="Diga o que você tentou, quando aconteceu e qualquer informação importante..." required /></label>
+              <Field>Assunto<input value={subject} onChange={(event) => setSubject(event.target.value)} minLength={6} maxLength={160} placeholder="Resuma o problema em uma frase" required /></Field>
+              <Field>Detalhes<textarea value={description} onChange={(event) => setDescription(event.target.value)} minLength={20} rows={7} placeholder="Diga o que você tentou, quando aconteceu e qualquer informação importante..." required /></Field>
               <div className="support-form-footer">
-                <label className="field">Prioridade<select value={priority} onChange={(event) => setPriority(event.target.value)}><option value="low">Baixa — dúvida ou sugestão</option><option value="normal">Normal — preciso de ajuda</option><option value="high">Alta — impede meu acesso ou uso</option><option value="urgent">Urgente — segurança ou pagamento</option></select></label>
-                <button className="btn" type="submit" disabled={pending || !category}><Send /> {pending ? 'Abrindo...' : 'Abrir chamado'}</button>
+                <Field>Prioridade<select value={priority} onChange={(event) => setPriority(event.target.value)}><option value="low">Baixa — dúvida ou sugestão</option><option value="normal">Normal — preciso de ajuda</option><option value="high">Alta — impede meu acesso ou uso</option><option value="urgent">Urgente — segurança ou pagamento</option></select></Field>
+                <Button type="submit" disabled={pending || !category}><Send /> {pending ? 'Abrindo...' : 'Abrir chamado'}</Button>
               </div>
               <p className="support-privacy-note"><ShieldCheck /> Suas informações ficam visíveis apenas para você e para a equipe responsável.</p>
             </form>
@@ -215,24 +205,17 @@ export function SupportPage() {
             <div className="support-conversation">
               <div className="support-main-head support-conversation-head">
                 <button className="support-mobile-back" type="button" onClick={() => setParams({})}><ArrowLeft /></button>
-                <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> Aberto em {formatDate(detail.data.created_at)}</span><span>Atendente: {detail.data.assigned_to}</span></div></div>
-                <button className="btn ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(detail.data.status === 'closed' ? 'reopen' : 'close')}>{detail.data.status === 'closed' ? 'Reabrir' : 'Encerrar'}</button>
+                <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> Aberto em {formatDateTime(detail.data.created_at, 'short')}</span><span>Atendente: {detail.data.assigned_to}</span></div></div>
+                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(detail.data.status === 'closed' ? 'reopen' : 'close')}>{detail.data.status === 'closed' ? 'Reabrir' : 'Encerrar'}</Button>
               </div>
               {detail.data.status === 'waiting_user' ? <div className="support-action-banner"><CircleAlert /><div><strong>A equipe precisa da sua resposta</strong><span>Confira a última mensagem abaixo para o atendimento continuar.</span></div></div> : null}
-              <div className="support-message-list">
-                {(detail.data.messages ?? []).map((message) => (
-                  <article className={`support-message ${message.is_staff_reply ? 'staff' : 'player'}`} key={message.id}>
-                    <div className="support-message-avatar">{message.is_staff_reply ? <Headphones /> : message.author_name.slice(0, 1).toUpperCase()}</div>
-                    <div><header><strong>{message.is_staff_reply ? 'Equipe PDL' : message.author_name}</strong><time>{formatDate(message.created_at)}</time></header><p>{message.body}</p></div>
-                  </article>
-                ))}
-              </div>
+              <TicketMessages messages={detail.data.messages ?? []} />
               {!['closed', 'resolved'].includes(detail.data.status) ? (
-                <form className="support-reply" onSubmit={submitReply}><label><span>Responder à equipe</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder="Escreva sua mensagem..." required /></label><button className="btn" type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : 'Enviar'}</button></form>
+                <form className="support-reply" onSubmit={submitReply}><label><span>Responder à equipe</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder="Escreva sua mensagem..." required /></label><Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : 'Enviar'}</Button></form>
               ) : <div className="support-closed-note"><CheckCircle2 /><div><strong>Este atendimento foi finalizado</strong><span>Se o problema continuar, você pode reabrir o chamado.</span></div></div>}
             </div>
           ) : (
-            <div className="support-empty"><Sparkles /><h2>Atendimento humano, sem perder o contexto</h2><p>Selecione um chamado ou abra um novo. Todo o histórico fica organizado aqui.</p><button className="btn" type="button" onClick={() => setCreating(true)}><Plus /> Abrir chamado</button></div>
+            <div className="support-empty"><Sparkles /><h2>Atendimento humano, sem perder o contexto</h2><p>Selecione um chamado ou abra um novo. Todo o histórico fica organizado aqui.</p><Button type="button" onClick={() => setCreating(true)}><Plus /> Abrir chamado</Button></div>
           )}
         </main>
       </div>

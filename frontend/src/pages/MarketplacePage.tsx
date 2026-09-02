@@ -1,3 +1,8 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { formatCurrency, formatDateTime as formatDate } from '../lib/formatters'
+import { Button } from '../components/ui/Button'
+import { Field } from '../components/ui/Field'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -18,7 +23,7 @@ import {
 import { ItemIcon } from '../components/ItemIcon'
 import { useAuth } from '../contexts/AuthContext'
 import { getClassName } from '../lib/lineage'
-import { inventoryApi, isApiError, lineageApi, marketplaceApi } from '../services/api'
+import { inventoryApi, lineageApi, marketplaceApi } from '../services/api'
 import type { ApiCharacterListing } from '../services/types'
 
 const listingStatus: Record<string, { label: string; className: string }> = {
@@ -26,15 +31,6 @@ const listingStatus: Record<string, { label: string; className: string }> = {
   sold: { label: 'Vendido', className: 'sold' },
   cancelled: { label: 'Cancelado', className: 'cancelled' },
   disputed: { label: 'Em disputa', className: 'disputed' },
-}
-
-function formatCurrency(value: string) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value) || 0)
-}
-
-function formatDate(value?: string | null) {
-  if (!value) return 'Data indisponível'
-  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
 }
 
 function ListingEquipment({ equipment }: { equipment: ApiCharacterListing['equipment'] }) {
@@ -106,15 +102,15 @@ function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCancel }: 
           <strong>{formatCurrency(listing.price)}</strong>
           <small>Vendedor: {listing.seller_username}</small>
           {isOwner && listing.status === 'for_sale' ? (
-            <button className="btn ghost" type="button" onClick={() => onCancel(listing.id)} disabled={pending}>
+            <Button className="ghost" type="button" onClick={() => onCancel(listing.id)} disabled={pending}>
               {pending ? 'Cancelando...' : 'Cancelar anúncio'}
-            </button>
+            </Button>
           ) : null}
           {!isOwner && listing.status === 'for_sale' ? (
-            <button className="btn" type="button" onClick={() => onBuy(listing.id)} disabled={pending}>
+            <Button type="button" onClick={() => onBuy(listing.id)} disabled={pending}>
               <ShoppingCart aria-hidden="true" />
               {pending ? 'Processando...' : 'Comprar personagem'}
-            </button>
+            </Button>
           ) : null}
           {isOwner ? <small className="marketplace-owner-note">Esta é a mesma visualização apresentada ao comprador.</small> : null}
         </aside>
@@ -190,7 +186,7 @@ export function MarketplacePage() {
       setNotes('')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível listar')
+      toast.error(apiErrorMessage(error, 'Não foi possível listar'))
     } finally {
       setPublishing(false)
     }
@@ -204,7 +200,7 @@ export function MarketplacePage() {
       toast.success('Compra concluída')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível comprar')
+      toast.error(apiErrorMessage(error, 'Não foi possível comprar'))
     } finally {
       setPendingListingId('')
     }
@@ -218,7 +214,7 @@ export function MarketplacePage() {
       toast.success('Venda cancelada')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível cancelar')
+      toast.error(apiErrorMessage(error, 'Não foi possível cancelar'))
     } finally {
       setPendingListingId('')
     }
@@ -226,18 +222,18 @@ export function MarketplacePage() {
 
   return (
     <div className="marketplace-page">
-      <section className="card marketplace-hero">
+      <Card className="marketplace-hero">
         <div>
           <span className="panel-eyebrow">Comércio entre jogadores</span>
           <h1>Marketplace</h1>
           <p className="muted">Conheça o personagem, confira seus equipamentos e negocie com segurança.</p>
         </div>
-        <button className="btn ghost" type="button" onClick={() => void refresh()}>
+        <Button className="ghost" type="button" onClick={() => void refresh()}>
           <RefreshCcw aria-hidden="true" /> Atualizar
-        </button>
-      </section>
+        </Button>
+      </Card>
 
-      <section className="card marketplace-catalog-card">
+      <Card className="marketplace-catalog-card">
         <div className="marketplace-section-heading">
           <div>
             <span className="panel-eyebrow">Personagens disponíveis</span>
@@ -293,11 +289,11 @@ export function MarketplacePage() {
         {!catalog.isLoading && !catalog.data?.length ? (
           <div className="marketplace-empty"><Store aria-hidden="true" /> Nenhum personagem à venda.</div>
         ) : null}
-      </section>
+      </Card>
 
       {user ? (
         <aside className="marketplace-side-column">
-          <section className="card marketplace-sell-card">
+          <Card className="marketplace-sell-card">
             <div className="marketplace-section-heading compact">
               <div>
                 <span className="panel-eyebrow">Novo anúncio</span>
@@ -306,7 +302,7 @@ export function MarketplacePage() {
               <BadgeDollarSign aria-hidden="true" />
             </div>
             <form onSubmit={onList}>
-              <label className="field">
+              <Field>
                 Personagem
                 <select value={charId} onChange={(event) => setCharId(event.target.value)} required>
                   <option value="">Selecione para visualizar</option>
@@ -316,7 +312,7 @@ export function MarketplacePage() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </Field>
 
               {selectedCharacter ? (
                 <div className="marketplace-character-preview">
@@ -353,21 +349,21 @@ export function MarketplacePage() {
                 </div>
               ) : null}
 
-              <label className="field">
+              <Field>
                 Preço
                 <input type="number" min="0.01" step="0.01" inputMode="decimal" value={price} onChange={(event) => setPrice(event.target.value)} placeholder="0,00" required />
-              </label>
-              <label className="field">
+              </Field>
+              <Field>
                 Descrição para o comprador
                 <textarea value={notes} onChange={(event) => setNotes(event.target.value)} maxLength={500} placeholder="Destaques, build ou observações do personagem" />
-              </label>
-              <button className="btn" type="submit" disabled={publishing || !selectedCharacter || selectedCharacter.online}>
+              </Field>
+              <Button type="submit" disabled={publishing || !selectedCharacter || selectedCharacter.online}>
                 <Store aria-hidden="true" /> {publishing ? 'Publicando...' : 'Publicar anúncio'}
-              </button>
+              </Button>
             </form>
-          </section>
+          </Card>
 
-          <section className="card marketplace-sales-card">
+          <Card className="marketplace-sales-card">
             <div className="marketplace-section-heading compact">
               <div>
                 <span className="panel-eyebrow">Histórico</span>
@@ -393,13 +389,13 @@ export function MarketplacePage() {
                       <small>{formatDate(listing.sold_at || listing.created_at)}</small>
                     </div>
                     <div className="marketplace-sale-actions">
-                      <button className="btn ghost" type="button" onClick={() => setSelectedListing(listing)}>
+                      <Button className="ghost" type="button" onClick={() => setSelectedListing(listing)}>
                         <Eye aria-hidden="true" /> Visualizar
-                      </button>
+                      </Button>
                       {listing.status === 'for_sale' ? (
-                        <button className="btn ghost danger" type="button" onClick={() => void cancel(listing.id)} disabled={pendingListingId === listing.id}>
+                        <Button className="ghost danger" type="button" onClick={() => void cancel(listing.id)} disabled={pendingListingId === listing.id}>
                           {pendingListingId === listing.id ? 'Cancelando...' : 'Cancelar'}
-                        </button>
+                        </Button>
                       ) : null}
                     </div>
                   </article>
@@ -407,12 +403,12 @@ export function MarketplacePage() {
               })}
               {!mine.isLoading && !mine.data?.length ? <div className="marketplace-empty">Você ainda não criou anúncios.</div> : null}
             </div>
-          </section>
+          </Card>
         </aside>
       ) : (
-        <section className="card marketplace-auth-card">
+        <Card className="marketplace-auth-card">
           <p className="muted">Entre para vender ou comprar personagens.</p>
-        </section>
+        </Card>
       )}
     </div>
   )

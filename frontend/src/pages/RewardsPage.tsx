@@ -1,3 +1,5 @@
+import { Card } from '../components/ui/Card'
+import { Button } from '../components/ui/Button'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useSearchParams } from "react-router-dom";
@@ -74,17 +76,17 @@ function BattleJourney() {
       <ErrorNotice error={pass.error || details.error || action.error} />
       {(pass.isPending || details.isPending) && <Loading />}
       {pass.data && !pass.data.season ? (
-        <section className="card program-section">
+        <Card className="program-section">
           <Empty>
             A próxima temporada está sendo preparada. Volte em breve.
           </Empty>
           <h2>Histórico de recompensas</h2>
           <RewardHistoryList history={data?.history || []} />
-        </section>
+        </Card>
       ) : (
         pass.data?.season && (
           <>
-            <section className="card program-section">
+            <Card className="program-section">
               <div className="program-section-heading">
                 <div>
                   <span className="panel-eyebrow">Temporada ativa</span>
@@ -117,8 +119,8 @@ function BattleJourney() {
                       Passe premium ativo
                     </span>
                   ) : (
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={action.busy}
                       onClick={() =>
                         void action.run(
@@ -129,7 +131,7 @@ function BattleJourney() {
                     >
                       <Crown size={17} />
                       Premium · {pass.data.season.premium_price} moedas
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -152,7 +154,7 @@ function BattleJourney() {
                 />
                 Resgatar automaticamente os prêmios de nível desbloqueados
               </label>
-            </section>
+            </Card>
             <div className="program-tabs">
               {[
                 ["quests", "Missões"],
@@ -173,7 +175,7 @@ function BattleJourney() {
             {tab === "quests" && (
               <div className="program-grid">
                 {data?.quests.map((q) => (
-                  <article className="card program-section" key={q.id}>
+                  <Card as="article" className="program-section" key={q.id}>
                     <div className="program-section-heading">
                       <h3>{q.name}</h3>
                       <span className="program-status">
@@ -192,8 +194,8 @@ function BattleJourney() {
                     <small className="muted">
                       {Math.min(q.current, q.target)} / {q.target} · +{q.xp} XP
                     </small>
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={
                         action.busy || q.claimed || q.current < q.target
                       }
@@ -205,8 +207,8 @@ function BattleJourney() {
                       }
                     >
                       {q.claimed ? "Missão resgatada" : "Resgatar XP"}
-                    </button>
-                  </article>
+                    </Button>
+                  </Card>
                 ))}
                 {data?.quests.length === 0 && (
                   <Empty>Nenhuma missão publicada nesta temporada.</Empty>
@@ -216,7 +218,7 @@ function BattleJourney() {
             {tab === "levels" && (
               <div className="program-grid">
                 {pass.data.levels.map((level) => (
-                  <section className="card program-section" key={level.level}>
+                  <Card className="program-section" key={level.level}>
                     <h3>Nível {level.level}</h3>
                     <small className="muted">
                       {level.required_xp} XP necessários
@@ -236,8 +238,8 @@ function BattleJourney() {
                         <small className="muted">
                           {r.is_premium ? "Premium" : "Gratuito"}
                         </small>
-                        <button
-                          className="btn ghost"
+                        <Button type="submit"
+                          className="ghost"
                           disabled={
                             action.busy ||
                             r.claimed ||
@@ -258,17 +260,17 @@ function BattleJourney() {
                               : r.locked_premium
                                 ? "Requer premium"
                                 : "Resgatar"}
-                        </button>
+                        </Button>
                       </article>
                     ))}
-                  </section>
+                  </Card>
                 ))}
               </div>
             )}
             {tab === "exchanges" && (
               <div className="program-grid">
                 {data?.exchanges.map((e) => (
-                  <article className="card program-section" key={e.id}>
+                  <Card as="article" className="program-section" key={e.id}>
                     <h3>{e.name}</h3>
                     <p className="muted">
                       Entregue {e.required_quantity} × item #
@@ -279,8 +281,8 @@ function BattleJourney() {
                       {e.limit || "ilimitadas"}
                     </small>
                     <RewardList rewards={e.rewards} />
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={
                         action.busy ||
                         e.owned < e.required_quantity ||
@@ -294,8 +296,8 @@ function BattleJourney() {
                       }
                     >
                       Trocar itens
-                    </button>
-                  </article>
+                    </Button>
+                  </Card>
                 ))}
                 {data?.exchanges.length === 0 && (
                   <Empty>Nenhuma troca disponível nesta temporada.</Empty>
@@ -305,13 +307,13 @@ function BattleJourney() {
             {tab === "milestones" && (
               <div className="program-grid">
                 {data?.milestones.map((m) => (
-                  <article className="card program-section" key={m.id}>
+                  <Card as="article" className="program-section" key={m.id}>
                     <h3>{m.name}</h3>
                     <Meter value={pass.data?.xp || 0} max={m.required_xp} />
                     <small className="muted">Meta: {m.required_xp} XP</small>
                     <RewardList rewards={m.rewards} />
-                    <button
-                      className="btn"
+                    <Button type="submit"
+
                       disabled={
                         action.busy ||
                         m.claimed ||
@@ -325,8 +327,8 @@ function BattleJourney() {
                       }
                     >
                       {m.claimed ? "Marco resgatado" : "Resgatar marco"}
-                    </button>
-                  </article>
+                    </Button>
+                  </Card>
                 ))}
                 {data?.milestones.length === 0 && (
                   <Empty>Nenhum marco publicado nesta temporada.</Empty>
@@ -334,7 +336,7 @@ function BattleJourney() {
               </div>
             )}
             {tab === "history" && (
-              <section className="card program-section">
+              <Card className="program-section">
                 <h2>Histórico de recompensas</h2>
                 <div className="program-grid">
                   <div className="program-stat">
@@ -347,7 +349,7 @@ function BattleJourney() {
                   </div>
                 </div>
                 <RewardHistoryList history={data?.history || []} />
-              </section>
+              </Card>
             )}
           </>
         )
@@ -373,7 +375,7 @@ function DailyJourney() {
       {query.isPending && <Loading />}
       {data && (
         <>
-          <section className="card program-section">
+          <Card className="program-section">
             <div className="program-section-heading">
               <div>
                 <span className="panel-eyebrow">
@@ -389,8 +391,8 @@ function DailyJourney() {
                 : `Receba ${fallback.data?.amount || "0"} moedas de saldo por dia.`}
             </p>
             <div className="program-actions">
-              <button
-                className="btn"
+              <Button type="submit"
+
                 disabled={action.busy || data.claimed || !fallback.data?.active}
                 onClick={() =>
                   void action.run(
@@ -403,9 +405,9 @@ function DailyJourney() {
                 {data.claimed
                   ? "Recompensa de hoje resgatada"
                   : "Resgatar recompensa de hoje"}
-              </button>
+              </Button>
             </div>
-          </section>
+          </Card>
           <div className="program-grid">
             {data.days.map((d) => (
               <article
@@ -421,7 +423,7 @@ function DailyJourney() {
             ))}
           </div>
           {data.pool.length > 0 && (
-            <section className="card program-section">
+            <Card className="program-section">
               <h2>Possíveis prêmios extras</h2>
               <p className="muted">
                 Um conjunto é sorteado a cada resgate, de acordo com os pesos
@@ -444,12 +446,12 @@ function DailyJourney() {
                   </article>
                 ))}
               </div>
-            </section>
+            </Card>
           )}
-          <section className="card program-section">
+          <Card className="program-section">
             <h2>Histórico de bônus</h2>
             <RewardHistoryList history={data.history} />
-          </section>
+          </Card>
         </>
       )}
     </>
@@ -486,15 +488,15 @@ function GameStatistics() {
       {query.data && (
         <>
           <div className="program-grid">
-            <div className="card program-stat">
+            <Card as="div" className="program-stat">
               <small>Suas partidas</small>
               <strong>{query.data.plays}</strong>
-            </div>
-            <div className="card program-stat">
+            </Card>
+            <Card as="div" className="program-stat">
               <small>Resultados positivos</small>
               <strong>{query.data.wins}</strong>
-            </div>
-            <div className="card program-stat">
+            </Card>
+            <Card as="div" className="program-stat">
               <small>Taxa de sucesso</small>
               <strong>
                 {query.data.plays
@@ -502,9 +504,9 @@ function GameStatistics() {
                   : "0"}
                 %
               </strong>
-            </div>
+            </Card>
           </div>
-          <section className="card program-section">
+          <Card className="program-section">
             <h2>Ranking de desempenho</h2>
             <p className="muted">
               Jogadores com mais resultados positivos neste jogo; partidas como
@@ -536,7 +538,7 @@ function GameStatistics() {
             ) : (
               <Empty>A primeira partida começa este ranking.</Empty>
             )}
-          </section>
+          </Card>
         </>
       )}
     </>

@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
@@ -5,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
-import { isApiError } from '../services/api'
 import { authApi } from '../services/api'
 
 export function RegisterPage() {
@@ -25,7 +25,7 @@ export function RegisterPage() {
       toast.success('Conta criada. Confirme o e-mail enviado.')
       navigate('/painel')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha no cadastro')
+      toast.error(apiErrorMessage(error, 'Falha no cadastro'))
     }
   }
 

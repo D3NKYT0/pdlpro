@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
@@ -51,7 +52,7 @@ export function LoginPage() {
         setCaptchaRequired(true)
         setCaptchaToken('')
       }
-      toast.error(isApiError(error) ? error.message : 'Falha no login')
+      toast.error(apiErrorMessage(error, 'Falha no login'))
     }
   }
 
@@ -74,7 +75,7 @@ export function LoginPage() {
       await refreshUser()
       navigate(next)
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível entrar com a chave de acesso.')
+      toast.error(apiErrorMessage(error, 'Não foi possível entrar com a chave de acesso.'))
     } finally {
       setPasskeyLoading(false)
     }

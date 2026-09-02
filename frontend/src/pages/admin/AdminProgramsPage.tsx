@@ -1,3 +1,5 @@
+import { Card } from '../../components/ui/Card'
+import { Button } from '../../components/ui/Button'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Check, X, Plus, Pencil, Trash2 } from "lucide-react";
@@ -32,7 +34,7 @@ export function AdminResourcesPage() {
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
       {categories.map((category) => (
-        <section className="card program-section" key={category}>
+        <Card className="program-section" key={category}>
           <h2>{category}</h2>
           <div className="program-grid">
             {query.data
@@ -66,7 +68,7 @@ export function AdminResourcesPage() {
                 </article>
               ))}
           </div>
-        </section>
+        </Card>
       ))}
     </div>
   );
@@ -89,18 +91,18 @@ export function AdminRoadmapPage() {
       />
       <ErrorNotice error={query.error || action.error} />
       <div className="program-actions">
-        <button
-          className="btn"
+        <Button type="submit"
+
           onClick={() =>
             setEdit({ status: "planned", progress: 0, published: true })
           }
         >
           <Plus size={18} />
           Nova atualização
-        </button>
+        </Button>
       </div>
       {edit && (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>{edit.id ? "Editar atualização" : "Nova atualização"}</h2>
           <form
             key={edit.id || "new"}
@@ -202,24 +204,24 @@ export function AdminRoadmapPage() {
               Publicar no site
             </label>
             <div className="program-actions">
-              <button className="btn" disabled={action.busy}>
+              <Button type="submit" disabled={action.busy}>
                 Salvar atualização
-              </button>
-              <button
-                className="btn ghost"
+              </Button>
+              <Button
+                className="ghost"
                 type="button"
                 onClick={() => setEdit(null)}
               >
                 Cancelar
-              </button>
+              </Button>
             </div>
           </form>
-        </section>
+        </Card>
       )}
       {query.isPending && <Loading />}
       <div className="program-grid">
         {query.data?.map((r) => (
-          <article className="card program-section" key={r.id}>
+          <Card as="article" className="program-section" key={r.id}>
             <Status value={r.status} />
             <h2>{r.title}</h2>
             <p className="muted">
@@ -227,14 +229,14 @@ export function AdminRoadmapPage() {
               {r.published ? "Publicado" : "Rascunho"}
             </p>
             <div className="program-actions">
-              <button className="btn ghost" onClick={() => setEdit(r)}>
+              <Button type="submit" className="ghost" onClick={() => setEdit(r)}>
                 <Pencil size={16} />
                 Editar
-              </button>
+              </Button>
               {remove === r.id ? (
                 <>
-                  <button
-                    className="btn"
+                  <Button type="submit"
+
                     disabled={action.busy}
                     onClick={() =>
                       void action
@@ -243,22 +245,22 @@ export function AdminRoadmapPage() {
                     }
                   >
                     Confirmar exclusão
-                  </button>
-                  <button className="btn ghost" onClick={() => setRemove(null)}>
+                  </Button>
+                  <Button type="submit" className="ghost" onClick={() => setRemove(null)}>
                     Cancelar
-                  </button>
+                  </Button>
                 </>
               ) : (
-                <button
-                  className="btn ghost"
+                <Button type="submit"
+                  className="ghost"
                   onClick={() => setRemove(r.id)}
                   aria-label={`Excluir ${r.title}`}
                 >
                   <Trash2 size={16} />
-                </button>
+                </Button>
               )}
             </div>
-          </article>
+          </Card>
         ))}
       </div>
       {query.data?.length === 0 && (
@@ -285,7 +287,7 @@ export function AdminSupportersPage() {
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
       {edit && (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>Analisar {edit.name}</h2>
           <form
             className="program-form"
@@ -332,23 +334,23 @@ export function AdminSupportersPage() {
               <textarea name="review_note" defaultValue={edit.review_note} />
             </label>
             <div className="program-actions">
-              <button className="btn" disabled={action.busy}>
+              <Button type="submit" disabled={action.busy}>
                 Salvar análise
-              </button>
-              <button
-                className="btn ghost"
+              </Button>
+              <Button
+                className="ghost"
                 type="button"
                 onClick={() => setEdit(null)}
               >
                 Cancelar
-              </button>
+              </Button>
             </div>
           </form>
-        </section>
+        </Card>
       )}
       <div className="program-grid">
         {query.data?.supporters.map((s) => (
-          <article className="card program-section" key={s.id}>
+          <Card as="article" className="program-section" key={s.id}>
             <div className="program-section-heading">
               <h2>{s.name}</h2>
               <Status value={s.status} />
@@ -361,17 +363,17 @@ export function AdminSupportersPage() {
               Visitar canal ↗
             </a>
             <div className="program-actions">
-              <button className="btn ghost" onClick={() => setEdit(s)}>
+              <Button type="submit" className="ghost" onClick={() => setEdit(s)}>
                 Analisar cadastro
-              </button>
+              </Button>
             </div>
-          </article>
+          </Card>
         ))}
       </div>
       {query.data?.supporters.length === 0 && (
         <Empty>Nenhuma candidatura recebida.</Empty>
       )}
-      <section className="card program-section">
+      <Card className="program-section">
         <h2>Solicitações de comissão</h2>
         <p className="muted">
           A aprovação credita o valor na carteira do apoiador. Uma solicitação
@@ -399,8 +401,8 @@ export function AdminSupportersPage() {
                     <td>
                       {p.status === "pending" ? (
                         <div className="program-actions">
-                          <button
-                            className="btn ghost"
+                          <Button type="submit"
+                            className="ghost"
                             disabled={action.busy}
                             onClick={() =>
                               void action.run(
@@ -411,9 +413,9 @@ export function AdminSupportersPage() {
                           >
                             <Check size={16} />
                             Creditar
-                          </button>
-                          <button
-                            className="btn ghost"
+                          </Button>
+                          <Button type="submit"
+                            className="ghost"
                             disabled={action.busy}
                             onClick={() =>
                               void action.run(() =>
@@ -423,7 +425,7 @@ export function AdminSupportersPage() {
                           >
                             <X size={16} />
                             Recusar
-                          </button>
+                          </Button>
                         </div>
                       ) : (
                         "Processado"
@@ -437,7 +439,7 @@ export function AdminSupportersPage() {
         ) : (
           <Empty>Nenhuma comissão solicitada.</Empty>
         )}
-      </section>
+      </Card>
     </div>
   );
 }

@@ -1,3 +1,7 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { Button } from '../components/ui/Button'
+import { Field } from '../components/ui/Field'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
@@ -13,7 +17,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { AchievementGrid } from '../components/AchievementGrid'
-import { authApi, gamesApi, isApiError } from '../services/api'
+import { authApi, gamesApi } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { ItemIcon } from '../components/ItemIcon'
 
@@ -39,7 +43,7 @@ export function ProgressPage() {
       toast.success(`${result.item_name} enviado à bag`)
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível resgatar')
+      toast.error(apiErrorMessage(error, 'Não foi possível resgatar'))
     }
   }
 
@@ -49,7 +53,7 @@ export function ProgressPage() {
       toast.success(`${result.item_name} enviado à bag`)
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível resgatar o passe')
+      toast.error(apiErrorMessage(error, 'Não foi possível resgatar o passe'))
     }
   }
 
@@ -59,7 +63,7 @@ export function ProgressPage() {
       toast.success('Passe premium ativado')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha ao comprar o passe')
+      toast.error(apiErrorMessage(error, 'Falha ao comprar o passe'))
     }
   }
 
@@ -69,7 +73,7 @@ export function ProgressPage() {
       setSetupSecret(result.secret)
       toast.success('Salve o segredo e confirme com o código')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha ao iniciar 2FA')
+      toast.error(apiErrorMessage(error, 'Falha ao iniciar 2FA'))
     }
   }
 
@@ -87,7 +91,7 @@ export function ProgressPage() {
       setSetupSecret('')
       await refresh()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Código inválido')
+      toast.error(apiErrorMessage(error, 'Código inválido'))
     }
   }
 
@@ -107,7 +111,7 @@ export function ProgressPage() {
 
   return (
     <div className="progress-page">
-      <section className="card profile-progress-hero">
+      <Card className="profile-progress-hero">
         <div className="profile-progress-title">
           <span className="profile-progress-icon"><Trophy aria-hidden="true" /></span>
           <div>
@@ -127,14 +131,14 @@ export function ProgressPage() {
           </div>
           <div className="progress-bar"><i style={{ width: `${profilePercent}%` }} /></div>
         </div>
-      </section>
+      </Card>
 
       <AchievementGrid achievements={progress.data?.achievements ?? []} showRewardsLink={false} />
 
       <div className="progress-layout">
         <div className="progress-side-column">
 
-          <section className="card progress-module">
+          <Card className="progress-module">
             <div className="progress-module-heading">
               <span><Gift aria-hidden="true" /></span>
               <div><span className="panel-eyebrow">Prêmios de evolução</span><h2>Recompensas</h2></div>
@@ -147,7 +151,7 @@ export function ProgressPage() {
                   {row.claimed ? (
                     <b><Check aria-hidden="true" /> Resgatada</b>
                   ) : row.available ? (
-                    <button className="btn" type="button" onClick={() => void claimReward(row.id)}>Resgatar</button>
+                    <Button type="button" onClick={() => void claimReward(row.id)}>Resgatar</Button>
                   ) : (
                     <b><LockKeyhole aria-hidden="true" /> Bloqueada</b>
                   )}
@@ -155,9 +159,9 @@ export function ProgressPage() {
               ))}
               {!progress.data?.rewards.length ? <div className="progress-empty">Nenhuma recompensa disponível.</div> : null}
             </div>
-          </section>
+          </Card>
 
-          <section className="card progress-module security-module">
+          <Card className="progress-module security-module">
             <div className="progress-module-heading">
               <span><ShieldCheck aria-hidden="true" /></span>
               <div><span className="panel-eyebrow">Proteção da conta</span><h2>Segurança</h2></div>
@@ -167,24 +171,24 @@ export function ProgressPage() {
             </div>
             <p className="muted">Use autenticação em duas etapas para proteger seus personagens e itens.</p>
             {!user?.is_2fa_enabled ? (
-              <button className="btn ghost" type="button" onClick={() => void setupTwoFactor()}>
+              <Button className="ghost" type="button" onClick={() => void setupTwoFactor()}>
                 <KeyRound aria-hidden="true" /> Gerar segredo
-              </button>
+              </Button>
             ) : null}
             {setupSecret ? <div className="setup-secret"><span>Segredo do autenticador</span><strong>{setupSecret}</strong></div> : null}
             <form className="security-form" onSubmit={confirmTwoFactor}>
-              <label className="field">
+              <Field>
                 Código do autenticador
                 <input value={code} onChange={(event) => setCode(event.target.value)} required inputMode="numeric" />
-              </label>
-              <button className="btn" type="submit">
+              </Field>
+              <Button type="submit">
                 {user?.is_2fa_enabled ? 'Desativar 2FA' : 'Confirmar 2FA'}
-              </button>
+              </Button>
             </form>
-          </section>
+          </Card>
         </div>
 
-        <section className="card battle-pass-card">
+        <Card className="battle-pass-card">
           {pass?.season ? (
             <>
               <header className="battle-pass-header">
@@ -199,9 +203,9 @@ export function ProgressPage() {
                 {pass.has_premium ? (
                   <span className="premium-active"><Sparkles aria-hidden="true" /> Premium ativo</span>
                 ) : (
-                  <button className="btn" type="button" onClick={() => void buyPremium()}>
+                  <Button type="button" onClick={() => void buyPremium()}>
                     <Crown aria-hidden="true" /> Premium · R$ {pass.season.premium_price}
-                  </button>
+                  </Button>
                 )}
               </header>
 
@@ -237,7 +241,7 @@ export function ProgressPage() {
                             <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
                             <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
                             {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : !level.unlocked ? <b><LockKeyhole aria-hidden="true" /></b> : (
-                              <button className="btn" type="button" onClick={() => void claimPass(reward.id)}>Resgatar</button>
+                              <Button type="button" onClick={() => void claimPass(reward.id)}>Resgatar</Button>
                             )}
                           </div>
                         ))}
@@ -251,7 +255,7 @@ export function ProgressPage() {
                               <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
                               <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
                               {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : locked ? <b><LockKeyhole aria-hidden="true" /></b> : (
-                                <button className="btn" type="button" onClick={() => void claimPass(reward.id)}>Resgatar</button>
+                                <Button type="button" onClick={() => void claimPass(reward.id)}>Resgatar</Button>
                               )}
                             </div>
                           )
@@ -266,7 +270,7 @@ export function ProgressPage() {
           ) : (
             <div className="progress-empty large"><Crown aria-hidden="true" /> Nenhuma temporada ativa.</div>
           )}
-        </section>
+        </Card>
       </div>
     </div>
   )

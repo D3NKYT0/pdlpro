@@ -1,8 +1,9 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AuthField, AuthPanel } from '../components/auth/AuthPanel'
-import { authApi, isApiError } from '../services/api'
+import { authApi } from '../services/api'
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -13,7 +14,7 @@ export function ForgotPasswordPage() {
       await authApi.requestPasswordReset(email)
       toast.success('Se o e-mail existir, enviamos o link de redefinição.')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível enviar')
+      toast.error(apiErrorMessage(error, 'Não foi possível enviar'))
     }
   }
 

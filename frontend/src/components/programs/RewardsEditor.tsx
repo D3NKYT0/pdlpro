@@ -1,3 +1,4 @@
+import { Button } from '../ui/Button'
 import { Plus, Trash2 } from "lucide-react";
 import type { Reward } from "../../services/domain/programs.service";
 
@@ -77,20 +78,20 @@ export function RewardsEditor({
               </>
             )}
           </div>
-          <button
+          <Button
             type="button"
-            className="btn ghost"
+            className="ghost"
             onClick={() => onChange(value.filter((_, i) => i !== index))}
           >
             <Trash2 size={14} />
             Remover recompensa
-          </button>
+          </Button>
         </div>
       ))}
       <div className="program-actions">
-        <button
+        <Button
           type="button"
-          className="btn ghost"
+          className="ghost"
           onClick={() =>
             onChange([
               ...value,
@@ -106,7 +107,7 @@ export function RewardsEditor({
         >
           <Plus size={16} />
           Adicionar recompensa
-        </button>
+        </Button>
       </div>
     </div>
   );

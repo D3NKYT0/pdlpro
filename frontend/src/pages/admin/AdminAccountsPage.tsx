@@ -1,7 +1,10 @@
+import { Card } from '../../components/ui/Card'
+import { apiErrorMessage } from '../../lib/errors'
+import { Button } from '../../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { CheckCircle2, Link2Off, Search, ShieldAlert, Unlink } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { isApiError, staffApi, type ApiStaffGameAccount } from '../../services/api'
+import { staffApi, type ApiStaffGameAccount } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
 
 export function AdminAccountsPage() {
@@ -17,7 +20,7 @@ export function AdminAccountsPage() {
       setAccount(await staffApi.inspectAccount(login.trim()))
     } catch (error) {
       setAccount(null)
-      toast.error(isApiError(error) ? error.message : 'Não foi possível consultar a conta')
+      toast.error(apiErrorMessage(error, 'Não foi possível consultar a conta'))
     } finally {
       setLooking(false)
     }
@@ -34,7 +37,7 @@ export function AdminAccountsPage() {
       setAccount(updated)
       toast.success(`O vínculo de ${updated.login} foi removido`)
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível desvincular')
+      toast.error(apiErrorMessage(error, 'Não foi possível desvincular'))
     } finally {
       setUnlinking(false)
     }
@@ -55,7 +58,7 @@ export function AdminAccountsPage() {
         description="Consulte um login do jogo e remova o vínculo com o painel."
       />
 
-      <section className="card admin-accounts-panel">
+      <Card className="admin-accounts-panel">
         <header className="admin-services-heading">
           <span><Search /></span>
           <div>
@@ -78,11 +81,11 @@ export function AdminAccountsPage() {
               placeholder="admin"
             />
           </label>
-          <button className="btn" type="submit" disabled={looking || unlinking}>
+          <Button type="submit" disabled={looking || unlinking}>
             {looking ? 'Consultando...' : 'Consultar'}
-          </button>
+          </Button>
         </form>
-      </section>
+      </Card>
 
       {account ? (
         <section className={`card admin-accounts-result ${account.linked ? 'is-linked' : 'is-free'}`}>

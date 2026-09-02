@@ -1,3 +1,7 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { Field } from '../components/ui/Field'
+import { Button } from '../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -131,7 +135,7 @@ export function CharacterPage() {
       setNickname('')
       await refreshCharacter()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível alterar o nickname')
+      toast.error(apiErrorMessage(error, 'Não foi possível alterar o nickname'))
     } finally {
       setSubmitting(null)
     }
@@ -146,7 +150,7 @@ export function CharacterPage() {
       toast.success('Sexo alterado')
       await refreshCharacter()
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível alterar o sexo')
+      toast.error(apiErrorMessage(error, 'Não foi possível alterar o sexo'))
     } finally {
       setSubmitting(null)
     }
@@ -158,7 +162,7 @@ export function CharacterPage() {
       await lineageApi.unstuck(login, id)
       toast.success('Personagem destravado')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível destravar')
+      toast.error(apiErrorMessage(error, 'Não foi possível destravar'))
     } finally {
       setSubmitting(null)
     }
@@ -166,7 +170,7 @@ export function CharacterPage() {
 
   return (
     <div className="account-page character-page">
-      <header className="card account-hero">
+      <Card as="header" className="account-hero">
         <div>
           <Link className="character-back" to="/painel/accounts">
             <ArrowLeft aria-hidden="true" />
@@ -183,27 +187,27 @@ export function CharacterPage() {
             {char.online ? 'Online' : 'Offline'}
           </span>
         ) : null}
-      </header>
+      </Card>
 
-      {characters.isLoading ? <div className="card account-empty-state">Carregando personagem...</div> : null}
+      {characters.isLoading ? <Card as="div" className="account-empty-state">Carregando personagem...</Card> : null}
       {characters.isError ? (
-        <div className="card account-empty-state">
+        <Card as="div" className="account-empty-state">
           <UsersRound aria-hidden="true" />
           <strong>Não foi possível abrir o personagem</strong>
           <span>{isApiError(characters.error) ? characters.error.message : 'Volte para a conta e tente novamente.'}</span>
-        </div>
+        </Card>
       ) : null}
       {missing ? (
-        <div className="card account-empty-state">
+        <Card as="div" className="account-empty-state">
           <UsersRound aria-hidden="true" />
           <strong>Personagem não encontrado</strong>
           <span>Volte para a conta e escolha outro personagem.</span>
-        </div>
+        </Card>
       ) : null}
 
       {char ? (
         <div className="character-overview-grid">
-          <section className="card character-sheet">
+          <Card className="character-sheet">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">Informações</span>
@@ -253,9 +257,9 @@ export function CharacterPage() {
             {!offline ? (
               <p className="character-offline-hint">O personagem precisa estar offline para usar os serviços.</p>
             ) : null}
-          </section>
+          </Card>
 
-          <section className="card character-equipment">
+          <Card className="character-equipment">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">Visual do personagem</span>
@@ -315,10 +319,10 @@ export function CharacterPage() {
                 </div>
               </div>
             ) : null}
-          </section>
+          </Card>
 
           <div className="grid cols-2 character-services">
-            <section className="card">
+            <Card>
               <div className="account-form-title">
                 <Pencil aria-hidden="true" />
                 <div>
@@ -327,7 +331,7 @@ export function CharacterPage() {
                 </div>
               </div>
               <form className="account-action-form" onSubmit={onChangeNickname}>
-                <label className="field">
+                <Field>
                   Novo nickname
                   <input
                     value={nickname}
@@ -337,14 +341,14 @@ export function CharacterPage() {
                     required
                     disabled={!offline}
                   />
-                </label>
-                <button className="btn" type="submit" disabled={!offline || submitting !== null}>
+                </Field>
+                <Button type="submit" disabled={!offline || submitting !== null}>
                   {submitting === 'nick' ? 'Alterando...' : 'Alterar nickname'}
-                </button>
+                </Button>
               </form>
-            </section>
+            </Card>
 
-            <section className="card">
+            <Card>
               <div className="account-form-title">
                 <VenusAndMars aria-hidden="true" />
                 <div>
@@ -353,21 +357,21 @@ export function CharacterPage() {
                 </div>
               </div>
               <form className="account-action-form" onSubmit={onChangeSex}>
-                <label className="field">
+                <Field>
                   Novo sexo
                   <select value={sex} onChange={(event) => setSex(event.target.value as 'M' | 'F' | '')} required disabled={!offline}>
                     <option value="">Selecione</option>
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
                   </select>
-                </label>
-                <button className="btn" type="submit" disabled={!offline || submitting !== null}>
+                </Field>
+                <Button type="submit" disabled={!offline || submitting !== null}>
                   {submitting === 'sex' ? 'Alterando...' : 'Alterar sexo'}
-                </button>
+                </Button>
               </form>
-            </section>
+            </Card>
 
-            <section className="card">
+            <Card>
               <div className="account-form-title">
                 <Undo2 aria-hidden="true" />
                 <div>
@@ -376,12 +380,12 @@ export function CharacterPage() {
                 </div>
               </div>
               <p className="muted">Use se o personagem travou ou caiu em um lugar inacessível.</p>
-              <button className="btn" type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
+              <Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
                 {submitting === 'unstuck' ? 'Destravando...' : 'Destravar personagem'}
-              </button>
-            </section>
+              </Button>
+            </Card>
 
-            <section className="card character-shortcuts">
+            <Card className="character-shortcuts">
               <div className="account-form-title">
                 <MapPin aria-hidden="true" />
                 <div>
@@ -399,7 +403,7 @@ export function CharacterPage() {
                   Marketplace
                 </Link>
               </div>
-            </section>
+            </Card>
           </div>
         </div>
       ) : null}

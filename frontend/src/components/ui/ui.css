@@ -1,0 +1,45 @@
+.ui-button:disabled { opacity: .55; cursor: not-allowed; }
+.ui-button[aria-busy="true"] { cursor: progress; }
+.ui-button:focus-visible, .ui-field :is(input, select, textarea):focus-visible, .ui-toggle input:focus-visible + span {
+  outline: 2px solid var(--gold); outline-offset: 3px;
+}
+.btn.ui-button.danger { color: rgba(235, 145, 127, 0.82); }
+/* Variações usam a arte existente do tema; a tonalidade também acompanha o hover. */
+html.pdl-panel .btn.ui-button--success { --ui-button-tone: hue-rotate(65deg) saturate(1.35); filter: var(--ui-button-tone); }
+html.pdl-panel .btn.ui-button--warning { --ui-button-tone: hue-rotate(-12deg) saturate(1.8) brightness(1.12); filter: var(--ui-button-tone); }
+html.pdl-panel .btn.ui-button--danger { --ui-button-tone: hue-rotate(-38deg) saturate(2); filter: var(--ui-button-tone); }
+html.pdl-panel .btn.ui-button.ui-button--sm { height: 36px; padding: 0 14px; font-size: 12px; }
+html.pdl-panel .btn.ui-button.ui-button--lg { height: 54px; padding: 0 26px; font-size: 16px; }
+html.pdl-panel .btn.ui-button.ui-button--icon { height: 45px; padding: 0 12px; }
+html.pdl-panel .btn.ui-button--icon.ui-button--sm { height: 36px; padding: 0 9px; }
+html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17px; }
+.ui-button--icon .ui-button-busy-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ui-button-spinner { flex-shrink: 0; animation: ui-button-spin 1s linear infinite; }
+@keyframes ui-button-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ui-button-spinner { animation: none; } }
+.ui-field textarea { background: #0f0d0a; border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font: inherit; resize: vertical; }
+.ui-field { min-width: 0; }
+.ui-field :is(input, select, textarea) { min-width: 0; max-width: 100%; }
+.ui-field-error { color: var(--danger); }
+.ui-field :is(input, select, textarea):disabled { opacity: .6; cursor: not-allowed; }
+.ui-page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.ui-page-header > div { min-width: 0; }
+.ui-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 32px 20px; text-align: center; color: var(--muted); }
+.ui-empty p { margin: 0; }
+.ui-error { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--danger); border-radius: 10px; color: var(--danger); }
+.ui-error svg { flex-shrink: 0; }
+.ui-toggle { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.ui-toggle:has(input:disabled) { opacity: .6; cursor: not-allowed; }
+.ui-action-group { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ui-pagination { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ui-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.ui-tabs > button { display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-panel); color: var(--muted); font: inherit; cursor: pointer; }
+.ui-tabs > button[aria-selected="true"] { color: var(--gold); border-color: var(--gold); background: rgba(212, 175, 55, .08); }
+.ui-tabs > button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.ui-toggle > input[type="checkbox"] { position: absolute; width: 1px; height: 1px; min-height: 0; margin: 0; padding: 0; border: 0; opacity: 0; clip-path: inset(50%); }
+.ui-toggle .admin-toggle-control { display: inline-flex; align-items: center; flex-shrink: 0; width: 42px; height: 24px; padding: 3px; border: 1px solid var(--border); border-radius: 20px; background: #0f0d0a; }
+.ui-toggle .admin-toggle-control i { width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform .15s; }
+.ui-toggle input:checked + .admin-toggle-control { border-color: var(--gold); }
+.ui-toggle input:checked + .admin-toggle-control i { transform: translateX(17px); background: var(--gold); }
+@media (prefers-reduced-motion: reduce) { .ui-toggle .admin-toggle-control i { transition: none; } }
+@media (max-width: 640px) { .ui-page-header { align-items: flex-start; flex-wrap: wrap; } }

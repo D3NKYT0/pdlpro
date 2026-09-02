@@ -1,0 +1,10 @@
+.ui-showcase { max-width: 1200px; margin: 0 auto; padding: 32px 20px; }
+html.pdl-panel .ui-showcase > .game-tabs { margin: 24px 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ui-showcase-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.ui-showcase-buttons { grid-column: 1 / -1; }
+.ui-showcase .ui-showcase-result { margin-top: 24px; margin-bottom: 0; color: var(--panel-muted); }
+.ui-showcase h2 { margin-top: 0; }
+.ui-showcase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+.ui-showcase .ui-error { flex-wrap: wrap; }
+.ui-showcase-grid > form { margin: 0; }
+@media (max-width: 700px) { .ui-showcase-grid { grid-template-columns: 1fr; } .ui-showcase { padding: 16px; } }

@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../lib/errors'
 import { useEffect, useRef } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AuthPanel } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
 import type { OAuthProvider } from '../lib/oauth'
-import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
+import { authApi, isTwoFactorChallenge } from '../services/api'
 
 export function OAuthCallbackPage() {
   const { provider } = useParams()
@@ -38,7 +39,7 @@ export function OAuthCallbackPage() {
       toast.success(`Entrada com ${provider === 'google' ? 'Google' : 'Discord'} concluída.`)
       navigate('/painel', { replace: true })
     }).catch((error) => {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível concluir a autenticação.')
+      toast.error(apiErrorMessage(error, 'Não foi possível concluir a autenticação.'))
       navigate('/login', { replace: true })
     })
   }, [navigate, params, provider, refreshUser])

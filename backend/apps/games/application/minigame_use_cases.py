@@ -4,19 +4,14 @@ import random
 from dataclasses import dataclass
 from uuid import UUID
 
-from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
+from apps.games.application.configuration import require_active_game
+from apps.games.domain.exceptions import InsufficientTokensError
 from apps.games.infrastructure.models import DiceHistory, GameConfig, SlotHistory
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 SLOT_SYMBOLS = ("sword", "shield", "crown", "adena", "scroll")
 
-
-def _active(code: str) -> GameConfig:
-    row = GameConfig.objects.filter(code=code, active=True).first()
-    if row is None:
-        raise GameInactiveError()
-    return row
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,7 +42,7 @@ class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
     def execute(self, data: PlayDiceInput) -> dict:
         from django.contrib.auth import get_user_model
 
-        config = _active("dice")
+        config = require_active_game("dice")
         min_bet = int((config.settings or {}).get("min_bet", 1))
         if data.amount < min_bet:
             raise ValidationDomainError(f"Aposta mínima: {min_bet} fichas.")
@@ -118,7 +113,7 @@ class SpinSlotsUseCase(UseCase[SpinSlotsInput, dict]):
     def execute(self, data: SpinSlotsInput) -> dict:
         from django.contrib.auth import get_user_model
 
-        config = _active("slots")
+        config = require_active_game("slots")
         cost = int((config.settings or {}).get("cost", 1))
         with self._unit_of_work:
             user = get_user_model().objects.select_for_update().get(id=data.user_id)

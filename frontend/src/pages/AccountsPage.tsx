@@ -1,3 +1,7 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { Field } from '../components/ui/Field'
+import { Button } from '../components/ui/Button'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -48,7 +52,7 @@ export function AccountsPage() {
       if (isApiError(error) && error.errorCode === 'ACCOUNT_ALREADY_LINKED') {
         setUseAlternateLogin(true)
       }
-      toast.error(isApiError(error) ? error.message : 'Falha ao registrar')
+      toast.error(apiErrorMessage(error, 'Falha ao registrar'))
     } finally {
       setSubmitting(null)
     }
@@ -63,7 +67,7 @@ export function AccountsPage() {
         toast.success('Conta Lineage vinculada pelo e-mail')
         await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
       })
-      .catch((error) => toast.error(isApiError(error) ? error.message : 'Falha ao confirmar vínculo'))
+      .catch((error) => toast.error(apiErrorMessage(error, 'Falha ao confirmar vínculo')))
       .finally(() => {
         params.delete('link_token')
         setParams(params, { replace: true })
@@ -77,7 +81,7 @@ export function AccountsPage() {
       await lineageApi.requestLinkByEmail(linkEmail)
       toast.success('Enviamos o link para o e-mail da conta Lineage')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha ao solicitar vínculo')
+      toast.error(apiErrorMessage(error, 'Falha ao solicitar vínculo'))
     } finally {
       setSubmitting(null)
     }
@@ -93,7 +97,7 @@ export function AccountsPage() {
       setLogin('')
       setPassword('')
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha ao vincular')
+      toast.error(apiErrorMessage(error, 'Falha ao vincular'))
     } finally {
       setSubmitting(null)
     }
@@ -101,7 +105,7 @@ export function AccountsPage() {
 
   return (
     <div className="account-page">
-      <header className="card account-hero">
+      <Card as="header" className="account-hero">
         <div>
           <span className="panel-eyebrow">Central de personagens</span>
           <h1>Conta Lineage</h1>
@@ -112,10 +116,10 @@ export function AccountsPage() {
           <span>Contas adicionais</span>
           <strong>{accounts.data?.slots.used ?? 0}/{accounts.data?.slots.total ?? 0}</strong>
         </div>
-      </header>
+      </Card>
 
       <div className="grid cols-2 account-content-grid">
-        <section className="card account-management">
+        <Card className="account-management">
           <div className="account-section-heading">
             <div>
               <span className="panel-eyebrow">Acesso ao servidor</span>
@@ -174,7 +178,7 @@ export function AccountsPage() {
                 </div>
               </div>
               {primaryTaken ? (
-                <label className="field">
+                <Field>
                   Novo login do jogo
                   <input
                     value={alternateLogin}
@@ -184,17 +188,17 @@ export function AccountsPage() {
                     maxLength={16}
                     autoComplete="username"
                   />
-                </label>
+                </Field>
               ) : null}
-              <label className="field">
+              <Field>
                 Senha do jogo
                 <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={6} />
-              </label>
-              <button className="btn" type="submit" disabled={submitting !== null}>
+              </Field>
+              <Button type="submit" disabled={submitting !== null}>
                 {submitting === 'register'
                   ? (primaryUnclaimed ? 'Vinculando...' : 'Criando...')
                   : (primaryTaken ? 'Criar conta principal' : primaryUnclaimed ? 'Vincular conta' : 'Criar e vincular')}
-              </button>
+              </Button>
             </form>
           ) : null}
 
@@ -211,35 +215,35 @@ export function AccountsPage() {
           <form className="account-action-form" onSubmit={onLinkByEmail}>
             <h3>Vincular pelo e-mail da conta L2</h3>
             <p className="muted">Receba um link de confirmação no endereço cadastrado no jogo.</p>
-            <label className="field">
+            <Field>
               E-mail no jogo
               <input type="email" value={linkEmail} onChange={(e) => setLinkEmail(e.target.value)} required />
-            </label>
-            <button className="btn" type="submit" disabled={submitting !== null}>
+            </Field>
+            <Button type="submit" disabled={submitting !== null}>
               {submitting === 'email' ? 'Enviando...' : 'Enviar link'}
-            </button>
+            </Button>
           </form>
 
           <form className="account-action-form" onSubmit={onLink}>
             <h3>Vincular conta existente</h3>
             <p className="muted">Use o login e a senha de uma conta adicional já existente.</p>
             <div className="account-form-fields">
-              <label className="field">
+              <Field>
                 Login
                 <input value={login} onChange={(e) => setLogin(e.target.value)} required />
-              </label>
-              <label className="field">
+              </Field>
+              <Field>
                 Senha
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </label>
+              </Field>
             </div>
-            <button className="btn" type="submit" disabled={submitting !== null}>
+            <Button type="submit" disabled={submitting !== null}>
               {submitting === 'link' ? 'Vinculando...' : 'Vincular conta'}
-            </button>
+            </Button>
           </form>
-        </section>
+        </Card>
 
-        <section className="card account-characters">
+        <Card className="account-characters">
           <div className="account-section-heading">
             <div>
               <span className="panel-eyebrow">Mundo do jogo</span>
@@ -314,7 +318,7 @@ export function AccountsPage() {
               <span>Crie sua conta principal ou vincule uma conta existente para ver os personagens.</span>
             </div>
           ) : null}
-        </section>
+        </Card>
       </div>
     </div>
   )

@@ -1,9 +1,12 @@
+import { Card } from '../../components/ui/Card'
+import { apiErrorMessage } from '../../lib/errors'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Boxes, CircleDollarSign, CircleDot, Dices, Fish, Gamepad2, Gift } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { isApiError, staffApi } from '../../services/api'
+import { staffApi } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
+import { Toggle } from '../../components/ui/Toggle'
 
 const GAME_META = {
   daily_bonus: { Icon: Gift, description: 'Entrega uma recompensa diária aos jogadores.' },
@@ -26,7 +29,7 @@ export function AdminGamesPage() {
       toast.success(active ? 'Jogo ativado' : 'Jogo desativado')
       await queryClient.invalidateQueries({ queryKey: ['staff-games'] })
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível atualizar')
+      toast.error(apiErrorMessage(error, 'Não foi possível atualizar'))
     } finally {
       setUpdating(null)
     }
@@ -35,7 +38,7 @@ export function AdminGamesPage() {
   return (
     <div className="account-page">
       <AdminHeader kicker="Jogos" title="Módulos de jogos" description="Ligue ou desligue os minigames do painel." />
-      <section className="card admin-games-panel">
+      <Card className="admin-games-panel">
         <header className="admin-services-heading">
           <span><Gamepad2 /></span>
           <div><span className="panel-eyebrow">Disponibilidade</span><h2>Experiências do painel</h2><p>Os módulos ativos ficam acessíveis na central de jogos dos jogadores.</p></div>
@@ -50,11 +53,7 @@ export function AdminGamesPage() {
                 <article className={`admin-game-card${game.active ? ' is-active' : ' is-inactive'}`} key={game.id}>
                   <span className="admin-game-icon"><Icon /></span>
                   <div><h3>{game.name}</h3><code>{game.code}</code><p>{meta.description}</p></div>
-                  <label className={`admin-game-switch${updating === game.id ? ' is-busy' : ''}`}>
-                    <input type="checkbox" checked={game.active} disabled={updating === game.id} onChange={(event) => void toggle(game.id, event.target.checked)} />
-                    <span className="admin-toggle-control" aria-hidden="true"><i /></span>
-                    <span>{updating === game.id ? 'Atualizando' : game.active ? 'Ativo' : 'Inativo'}</span>
-                  </label>
+                  <Toggle className="admin-game-switch" busy={updating === game.id} label={updating === game.id ? 'Atualizando' : game.active ? 'Ativo' : 'Inativo'} checked={game.active} onChange={(event) => void toggle(game.id, event.target.checked)} />
                 </article>
               )
             })}
@@ -65,7 +64,7 @@ export function AdminGamesPage() {
             <span>Crie as configurações no Django Admin; depois elas aparecem aqui para ligar e desligar.</span>
           </div>
         )}
-      </section>
+      </Card>
     </div>
   )
 }

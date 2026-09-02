@@ -1,3 +1,5 @@
+import { Card } from '../../components/ui/Card'
+import { Button } from '../../components/ui/Button'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Plus, Pencil, Trash2 } from "lucide-react";
@@ -71,13 +73,13 @@ export function AdminCommercePage() {
         ))}
       </div>
       <div className="program-actions">
-        <button className="btn" onClick={() => open()}>
+        <Button type="submit" onClick={() => open()}>
           <Plus size={18} />
           Criar {tab === "packages" ? "pacote" : "cupom"}
-        </button>
+        </Button>
       </div>
       {draft && (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>
             {draft.id ? "Editar" : "Novo"}{" "}
             {tab === "packages" ? "pacote" : "cupom"}
@@ -177,8 +179,8 @@ export function AdminCommercePage() {
                         }
                       />
                     </label>
-                    <button
-                      className="btn ghost"
+                    <Button
+                      className="ghost"
                       type="button"
                       onClick={() =>
                         setContents(contents.filter((_, j) => i !== j))
@@ -186,12 +188,12 @@ export function AdminCommercePage() {
                     >
                       <Trash2 size={14} />
                       Remover item
-                    </button>
+                    </Button>
                   </div>
                 ))}
                 <div className="program-actions">
-                  <button
-                    className="btn ghost"
+                  <Button
+                    className="ghost"
                     type="button"
                     onClick={() =>
                       setContents([...contents, { item: "", quantity: 1 }])
@@ -199,7 +201,7 @@ export function AdminCommercePage() {
                   >
                     <Plus size={16} />
                     Adicionar item
-                  </button>
+                  </Button>
                 </div>
               </>
             ) : (
@@ -274,30 +276,30 @@ export function AdminCommercePage() {
               Ativo
             </label>
             <div className="program-actions">
-              <button
-                className="btn"
+              <Button type="submit"
+
                 disabled={
                   action.busy || (tab === "packages" && !contents.length)
                 }
               >
                 Salvar
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                className="btn ghost"
+                className="ghost"
                 onClick={() => setDraft(null)}
               >
                 Cancelar
-              </button>
+              </Button>
             </div>
           </form>
-        </section>
+        </Card>
       )}
       {(packs.isPending || promos.isPending) && <Loading />}
       <div className="program-grid">
         {tab === "packages"
           ? packs.data?.map((p) => (
-              <article className="card program-section" key={p.id}>
+              <Card as="article" className="program-section" key={p.id}>
                 <div className="program-section-heading">
                   <h2>{p.name}</h2>
                   <Status value={p.active ? "available" : "rejected"} />
@@ -309,15 +311,15 @@ export function AdminCommercePage() {
                   </small>
                 ))}
                 <div className="program-actions">
-                  <button className="btn ghost" onClick={() => open(p)}>
+                  <Button type="submit" className="ghost" onClick={() => open(p)}>
                     <Pencil size={16} />
                     Editar pacote
-                  </button>
+                  </Button>
                 </div>
-              </article>
+              </Card>
             ))
           : promos.data?.map((p) => (
-              <article className="card program-section" key={p.id}>
+              <Card as="article" className="program-section" key={p.id}>
                 <div className="program-section-heading">
                   <h2>{p.code}</h2>
                   <Status value={p.active ? "available" : "rejected"} />
@@ -327,12 +329,12 @@ export function AdminCommercePage() {
                   {p.uses} utilizações · Limite {p.max_uses || "ilimitado"}
                 </small>
                 <div className="program-actions">
-                  <button className="btn ghost" onClick={() => open(p)}>
+                  <Button type="submit" className="ghost" onClick={() => open(p)}>
                     <Pencil size={16} />
                     Editar cupom
-                  </button>
+                  </Button>
                 </div>
-              </article>
+              </Card>
             ))}
       </div>
       {(tab === "packages" ? packs.data : promos.data)?.length === 0 && (

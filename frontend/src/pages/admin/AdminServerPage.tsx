@@ -1,8 +1,11 @@
+import { Card } from '../../components/ui/Card'
+import { apiErrorMessage } from '../../lib/errors'
+import { Field } from '../../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { isApiError, staffApi } from '../../services/api'
+import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 
 export function AdminServerPage() {
@@ -70,7 +73,7 @@ export function AdminServerPage() {
       await queryClient.invalidateQueries({ queryKey: ['staff-panel'] })
       await queryClient.invalidateQueries({ queryKey: ['server-info'] })
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível salvar')
+      toast.error(apiErrorMessage(error, 'Não foi possível salvar'))
     } finally {
       setSaving(false)
     }
@@ -80,50 +83,50 @@ export function AdminServerPage() {
     <div className="account-page">
       <AdminHeader kicker="Servidor" title="Painel e servidor" description="Nome, rates e aviso de coming soon exibidos no site." />
       <form className="admin-server-form" onSubmit={onSubmit}>
-        <section className="card admin-config-section">
+        <Card className="admin-config-section">
           <header><span><ServerCog /></span><div><span className="panel-eyebrow">Identidade</span><h2>Informações do servidor</h2><p>Dados principais exibidos na página inicial.</p></div></header>
           <div className="account-form-fields">
-            <label className="field">Nome<input value={name} onChange={(e) => setName(e.target.value)} /></label>
-            <label className="field">Slogan<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></label>
+            <Field>Nome<input value={name} onChange={(e) => setName(e.target.value)} /></Field>
+            <Field>Slogan<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></Field>
           </div>
-          <label className="field">Descrição<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></label>
+          <Field>Descrição<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></Field>
           <div className="account-form-fields">
-            <label className="field">Chronicle<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></label>
-            <label className="field">Nível máximo<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></label>
+            <Field>Chronicle<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></Field>
+            <Field>Nível máximo<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></Field>
           </div>
-        </section>
+        </Card>
 
         <div className="admin-server-columns">
-          <section className="card admin-config-section">
+          <Card className="admin-config-section">
             <header><span><Gauge /></span><div><span className="panel-eyebrow">Progressão</span><h2>Rates do servidor</h2><p>Multiplicadores de experiência e itens.</p></div></header>
             <div className="admin-server-rate-grid">
-              <label className="field">XP<input value={xp} onChange={(e) => setXp(e.target.value)} /></label>
-              <label className="field">SP<input value={sp} onChange={(e) => setSp(e.target.value)} /></label>
-              <label className="field">Adena<input value={adena} onChange={(e) => setAdena(e.target.value)} /></label>
-              <label className="field">Drop<input value={drop} onChange={(e) => setDrop(e.target.value)} /></label>
-              <label className="field">Spoil<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></label>
+              <Field>XP<input value={xp} onChange={(e) => setXp(e.target.value)} /></Field>
+              <Field>SP<input value={sp} onChange={(e) => setSp(e.target.value)} /></Field>
+              <Field>Adena<input value={adena} onChange={(e) => setAdena(e.target.value)} /></Field>
+              <Field>Drop<input value={drop} onChange={(e) => setDrop(e.target.value)} /></Field>
+              <Field>Spoil<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></Field>
             </div>
-          </section>
+          </Card>
 
-          <section className="card admin-config-section">
+          <Card className="admin-config-section">
             <header><span><Sparkles /></span><div><span className="panel-eyebrow">Equipamentos</span><h2>Encantamento</h2><p>Limites usados nas informações públicas.</p></div></header>
             <div className="account-form-fields">
-              <label className="field">Enchant seguro<input value={safe} onChange={(e) => setSafe(e.target.value)} /></label>
-              <label className="field">Enchant máximo<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></label>
+              <Field>Enchant seguro<input value={safe} onChange={(e) => setSafe(e.target.value)} /></Field>
+              <Field>Enchant máximo<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></Field>
             </div>
-          </section>
+          </Card>
         </div>
 
-        <section className="card admin-config-section">
+        <Card className="admin-config-section">
           <header><span><FileText /></span><div><span className="panel-eyebrow">Conteúdo público</span><h2>Recursos e notas</h2><p>Textos complementares apresentados aos jogadores.</p></div></header>
-          <label className="field">Recursos <small>Um recurso por linha</small><textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></label>
+          <Field>Recursos <small>Um recurso por linha</small><textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></Field>
           <div className="account-form-fields">
-            <label className="field">Nota de PvP<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={3} /></label>
-            <label className="field">Nota inicial<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></label>
+            <Field>Nota de PvP<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={3} /></Field>
+            <Field>Nota inicial<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></Field>
           </div>
-        </section>
+        </Card>
 
-        <section className="card admin-config-section admin-access-section">
+        <Card className="admin-config-section admin-access-section">
           <header><span><LockKeyhole /></span><div><span className="panel-eyebrow">Controle de acesso</span><h2>Publicação do servidor</h2><p>Defina quem pode entrar enquanto o projeto está em preparação.</p></div></header>
           <div className="admin-toggle-list">
             <label className="admin-toggle">
@@ -139,9 +142,9 @@ export function AdminServerPage() {
               <b>{staffOnly && comingSoon ? 'Ativo' : 'Inativo'}</b>
             </label>
           </div>
-        </section>
+        </Card>
 
-        <div className="card admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></div>
+        <Card as="div" className="admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></Card>
       </form>
     </div>
   )

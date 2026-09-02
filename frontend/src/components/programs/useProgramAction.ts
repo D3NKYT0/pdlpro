@@ -1,32 +1,23 @@
-import { useRef, useState } from "react";
+import { useAsyncAction } from '../../hooks/useAsyncAction';
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export function useProgramAction() {
   const client = useQueryClient();
-  const [busy, setBusy] = useState(false);
-  const inFlight = useRef(false);
-  const [error, setError] = useState<unknown>(null);
+  const action = useAsyncAction();
   async function run(
-    action: () => Promise<unknown>,
+    operation: () => Promise<unknown>,
     message = "Alteração salva.",
   ) {
-    if (inFlight.current) return false;
-    inFlight.current = true;
-    setBusy(true);
-    setError(null);
-    try {
-      await action();
-      toast.success(message);
-      return true;
-    } catch (err) {
-      setError(err);
-      return false;
-    } finally {
-      await client.invalidateQueries();
-      inFlight.current = false;
-      setBusy(false);
-    }
+    const result = await action.run(async () => {
+      try {
+        await operation();
+        toast.success(message);
+      } finally {
+        await client.invalidateQueries();
+      }
+    });
+    return result.ok;
   }
-  return { busy, error, run };
+  return { busy: action.pending, error: action.error, run };
 }

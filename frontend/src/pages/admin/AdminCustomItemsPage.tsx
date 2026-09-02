@@ -1,3 +1,7 @@
+import { Card } from '../../components/ui/Card'
+import { Pagination } from '../../components/ui/Pagination'
+import { Button } from '../../components/ui/Button'
+import { Field } from '../../components/ui/Field'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ImagePlus, PackagePlus, Search, Pencil, Save, Plus, ShieldCheck, Info, Power, FileJson } from 'lucide-react'
@@ -57,9 +61,9 @@ export function AdminCustomItemsPage() {
     <AdminHeader kicker="Catálogo único" title="Itens customizados" description="Novos itens com identidade própria, integrados ao catálogo utilizado em todo o painel." />
     <div className="custom-items-notice"><ShieldCheck size={19} /><p>Dados no banco do PDL e imagens em media. Este cadastro não cria itens no servidor L2; o mesmo ID precisa estar configurado no jogo.</p></div>
     <div className="custom-items-layout">
-      <section className="card custom-items-list">
+      <Card className="custom-items-list">
         <header><div><span className="panel-eyebrow">Seus itens</span><h2>Catálogo custom</h2></div><span className="custom-count">{list.data?.count ?? '—'} itens</span></header>
-        <form className="custom-search" onSubmit={e => { e.preventDefault(); setFilter(search); setPage(1) }}><label><Search size={16} /><input aria-label="Buscar custom por nome ou ID" placeholder="Nome ou ID do item" value={search} maxLength={100} onChange={e => setSearch(e.target.value)} /></label><button className="btn">Buscar</button></form>
+        <form className="custom-search" onSubmit={e => { e.preventDefault(); setFilter(search); setPage(1) }}><label><Search size={16} /><input aria-label="Buscar custom por nome ou ID" placeholder="Nome ou ID do item" value={search} maxLength={100} onChange={e => setSearch(e.target.value)} /></label><Button type="submit" >Buscar</Button></form>
         {list.isPending && <p className="muted" role="status">Carregando itens…</p>}
         {list.isError && <div role="alert" className="custom-error">{errorText(list.error)} <button type="button" onClick={() => void list.refetch()}>Tentar novamente</button></div>}
         {list.data?.results.length === 0 && <div className="custom-empty"><PackagePlus size={34} /><h3>{filter ? 'Nenhum item encontrado' : 'Seu próximo item começa aqui'}</h3><p>{filter ? 'Tente outro nome ou ID.' : 'Cadastre nome, ID, imagem e metadados. O novo item aparecerá nas buscas do painel.'}</p></div>}
@@ -68,8 +72,8 @@ export function AdminCustomItemsPage() {
           {row.conflicts_with_xml && <p className="custom-error">Este ID também existe no XML. O XML tem prioridade no catálogo.</p>}
           <div className="custom-card-footer"><small>{row.tradeable ? 'Negociável' : 'Não negociável'} · {Object.keys(row.metadata).length} metadados extras</small>{list.data.permissions.change && <div><button type="button" disabled={busy} onClick={() => { save.reset(); edit(row) }}><Pencil size={14} />Editar</button><button type="button" disabled={busy} onClick={() => activate.mutate(row)}><Power size={14} />{row.active ? 'Desativar' : 'Ativar'}</button></div>}</div>
         </article>)}</div>
-        {list.data && list.data.pages > 1 && <nav className="custom-pagination"><button className="btn" disabled={list.data.page <= 1} onClick={() => setPage(value => value - 1)}>Anterior</button><span>{list.data.page} / {list.data.pages}</span><button className="btn" disabled={list.data.page >= list.data.pages} onClick={() => setPage(value => value + 1)}>Próxima</button></nav>}
-      </section>
+        {list.data && list.data.pages > 1 && <Pagination className="custom-pagination" page={list.data.page} pages={list.data.pages} onChange={setPage} busy={list.isFetching} />}
+      </Card>
       {canEdit ? <form className="card custom-item-editor" onSubmit={e => { e.preventDefault(); save.mutate() }}>
         <header><span className="custom-editor-icon">{editing ? <Pencil size={22} /> : <Plus size={24} />}</span><div><span className="panel-eyebrow">{editing ? 'Editar cadastro' : 'Adicionar ao catálogo'}</span><h2>{editing ? editing.name : 'Novo item custom'}</h2></div></header>
         <fieldset disabled={busy}>
@@ -78,14 +82,14 @@ export function AdminCustomItemsPage() {
             if (next && next.size > 2 * 1024 * 1024) { toast.error('A imagem deve ter até 2 MB.'); e.target.value = ''; setFile(null); return }
             setFile(next)
           }} /></span></label>
-          <div className="custom-fields"><label className="field">ID no jogo<input type="number" min={1} max={2147483647} required readOnly={!!editing} value={form.item_id} onChange={e => setForm({ ...form, item_id: e.target.value })} /><small>{editing ? 'O ID é permanente para preservar referências.' : 'Use um ID livre, ainda ausente no XML.'}</small></label><label className="field">Nome<input required maxLength={255} placeholder="Ex.: Medalha do Imperador" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} /></label>
-            <label className="field">Tipo<select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>{list.data?.categories.map(type => <option key={type.value} value={type.value}>{type.label}</option>)}</select></label><label className="field">Grau<select value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })}>{list.data?.grades.map(grade => <option key={grade.value} value={grade.value}>{grade.label}</option>)}</select></label></div>
+          <div className="custom-fields"><Field>ID no jogo<input type="number" min={1} max={2147483647} required readOnly={!!editing} value={form.item_id} onChange={e => setForm({ ...form, item_id: e.target.value })} /><small>{editing ? 'O ID é permanente para preservar referências.' : 'Use um ID livre, ainda ausente no XML.'}</small></Field><Field>Nome<input required maxLength={255} placeholder="Ex.: Medalha do Imperador" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} /></Field>
+            <Field>Tipo<select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>{list.data?.categories.map(type => <option key={type.value} value={type.value}>{type.label}</option>)}</select></Field><Field>Grau<select value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })}>{list.data?.grades.map(grade => <option key={grade.value} value={grade.value}>{grade.label}</option>)}</select></Field></div>
           <div className="custom-switches"><label><input type="checkbox" checked={form.tradeable} onChange={e => setForm({ ...form, tradeable: e.target.checked })} />Negociável</label><label><input type="checkbox" checked={form.active} onChange={e => setForm({ ...form, active: e.target.checked })} />Disponível no catálogo</label></div>
-          <label className="field custom-json"><span><FileJson size={15} /> Metadados adicionais (JSON)</span><textarea rows={5} value={form.metadata} spellCheck={false} onChange={e => setForm({ ...form, metadata: e.target.value })} /><small>Ex.: {JSON.stringify({ raridade: 'raro', descricao: 'Moeda do evento' })}. Até 16 KB. Estes dados são públicos: não inclua senhas ou segredos.</small></label>
+          <Field className="custom-json"><span><FileJson size={15} /> Metadados adicionais (JSON)</span><textarea rows={5} value={form.metadata} spellCheck={false} onChange={e => setForm({ ...form, metadata: e.target.value })} /><small>Ex.: {JSON.stringify({ raridade: 'raro', descricao: 'Moeda do evento' })}. Até 16 KB. Estes dados são públicos: não inclua senhas ou segredos.</small></Field>
         </fieldset>
         {save.isError && <p role="alert" className="custom-error">{errorText(save.error)}</p>}
-        <footer><span><Info size={14} /> Desativar preserva o cadastro e a imagem.</span><div>{editing && <button type="button" className="custom-cancel" disabled={busy} onClick={() => { reset(); save.reset() }}>Cancelar</button>}<button className="btn" disabled={busy}><Save size={16} />{save.isPending ? 'Salvando…' : editing ? 'Salvar alterações' : 'Cadastrar item'}</button></div></footer>
-      </form> : list.data && <aside className="card custom-empty"><PackagePlus size={32} /><p>{list.data.permissions.change ? 'Selecione um item para editar.' : 'Seu acesso permite apenas consultar os itens customizados.'}</p></aside>}
+        <footer><span><Info size={14} /> Desativar preserva o cadastro e a imagem.</span><div>{editing && <button type="button" className="custom-cancel" disabled={busy} onClick={() => { reset(); save.reset() }}>Cancelar</button>}<Button type="submit" disabled={busy}><Save size={16} />{save.isPending ? 'Salvando…' : editing ? 'Salvar alterações' : 'Cadastrar item'}</Button></div></footer>
+      </form> : list.data && <Card as="aside" className="custom-empty"><PackagePlus size={32} /><p>{list.data.permissions.change ? 'Selecione um item para editar.' : 'Seu acesso permite apenas consultar os itens customizados.'}</p></Card>}
     </div>
   </div>
 }

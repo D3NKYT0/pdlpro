@@ -1,7 +1,11 @@
+import { Card } from '../../components/ui/Card'
+import { useFeedbackAction } from '../../hooks/useFeedbackAction'
+import { Field } from '../../components/ui/Field'
+import { Button } from '../../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { isApiError, staffApi } from '../../services/api'
+import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 import { ItemIcon } from '../../components/ItemIcon'
 import { ItemIdField } from '../../components/ItemIdField'
@@ -16,7 +20,8 @@ export function AdminShopPage() {
   const [price, setPrice] = useState('')
   const [quantity, setQuantity] = useState('1')
   const [editing, setEditing] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
+  const action = useFeedbackAction()
+  const saving = action.pending
 
   async function refresh() {
     await queryClient.invalidateQueries({ queryKey: ['staff-shop'] })
@@ -25,8 +30,7 @@ export function AdminShopPage() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
-    setSaving(true)
-    try {
+    await action.run(async () => {
       await staffApi.saveShopItem({
         id: editing || undefined,
         name,
@@ -42,11 +46,7 @@ export function AdminShopPage() {
       setQuantity('1')
       setEditing(null)
       await refresh()
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível salvar')
-    } finally {
-      setSaving(false)
-    }
+    }, 'Não foi possível salvar')
   }
 
   return (
@@ -54,7 +54,7 @@ export function AdminShopPage() {
       <AdminHeader kicker="Financeiro" title="Loja" description="Itens vendidos no painel do jogador." />
       <form className="card admin-form admin-shop-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
-          <label className="field">Nome do catálogo<input value={catalog.getById(itemId)?.name ?? (itemId ? `Item ${itemId}` : '')} readOnly /><small>Definido pelo ID selecionado, na fonte única de itens.</small></label>
+          <Field>Nome do catálogo<input value={catalog.getById(itemId)?.name ?? (itemId ? `Item ${itemId}` : '')} readOnly /><small>Definido pelo ID selecionado, na fonte única de itens.</small></Field>
           <ItemIdField
             value={itemId}
             required
@@ -65,12 +65,12 @@ export function AdminShopPage() {
           />
         </div>
         <div className="account-form-fields">
-          <label className="field">Preço<input value={price} onChange={(e) => setPrice(e.target.value)} required /></label>
-          <label className="field">Quantidade<input value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></label>
+          <Field>Preço<input value={price} onChange={(e) => setPrice(e.target.value)} required /></Field>
+          <Field>Quantidade<input value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></Field>
         </div>
         <AdminSaveBar saving={saving} label={editing ? 'Atualizar item' : 'Criar item'} />
       </form>
-      <section className="card">
+      <Card>
         <div className="account-section-heading">
           <div>
             <span className="panel-eyebrow">Catálogo</span>
@@ -100,8 +100,8 @@ export function AdminShopPage() {
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
                 <td>
-                  <button
-                    className="btn ghost"
+                  <Button
+                    className="ghost"
                     type="button"
                     onClick={() => {
                       setEditing(item.id)
@@ -112,13 +112,13 @@ export function AdminShopPage() {
                     }}
                   >
                     Editar
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </section>
+      </Card>
     </div>
   )
 }

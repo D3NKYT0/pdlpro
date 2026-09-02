@@ -1,3 +1,5 @@
+import { Card } from '../components/ui/Card'
+import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftRight, ShieldCheck, RefreshCw } from "lucide-react";
@@ -48,7 +50,7 @@ export function GameExchangePage() {
   };
   return (
     <div className="program-page">
-      <header className="card program-hero">
+      <Card as="header" className="program-hero">
         <div>
           <Link to="/painel/wallet" className="character-back">
             ← Voltar à carteira
@@ -61,13 +63,13 @@ export function GameExchangePage() {
           </p>
         </div>
         <ArrowLeftRight />
-      </header>
+      </Card>
       <ErrorNotice
         error={query.error || accounts.error || chars.error || action.error}
       />
       {query.isPending && <Loading />}
       <div className="program-two">
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>Nova transferência</h2>
           {query.data && !query.data.enabled && (
             <p className="program-note">
@@ -178,8 +180,8 @@ export function GameExchangePage() {
                 {(gross - fee).toFixed(2)} no saldo.
               </p>
             )}
-            <button
-              className="btn"
+            <Button type="submit"
+
               disabled={action.busy || !query.data?.enabled || !coin}
             >
               {action.busy
@@ -187,10 +189,10 @@ export function GameExchangePage() {
                 : confirmation
                   ? "Confirmar transferência"
                   : "Revisar transferência"}
-            </button>
+            </Button>
           </form>
-        </section>
-        <section className="card program-section">
+        </Card>
+        <Card className="program-section">
           <div className="program-section-heading">
             <h2>Resumo da conversão</h2>
             <ShieldCheck color="var(--gold)" />
@@ -218,9 +220,9 @@ export function GameExchangePage() {
             entrega do servidor. Em caso de falha de conexão, retome a operação
             pendente no histórico.
           </p>
-        </section>
+        </Card>
       </div>
-      <section className="card program-section">
+      <Card className="program-section">
         <h2>Histórico de transferências</h2>
         {query.data?.history.length ? (
           <div className="program-table-wrap">
@@ -251,8 +253,8 @@ export function GameExchangePage() {
                     </td>
                     <td>
                       {r.status === "pending" && (
-                        <button
-                          className="btn ghost"
+                        <Button type="submit"
+                          className="ghost"
                           disabled={action.busy}
                           onClick={() =>
                             void action.run(async () => {
@@ -270,7 +272,7 @@ export function GameExchangePage() {
                         >
                           <RefreshCw size={14} />
                           Retomar
-                        </button>
+                        </Button>
                       )}
                     </td>
                   </tr>
@@ -283,7 +285,7 @@ export function GameExchangePage() {
             Você ainda não realizou transferências entre a carteira e o jogo.
           </Empty>
         )}
-      </section>
+      </Card>
     </div>
   );
 }

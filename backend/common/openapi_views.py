@@ -15,6 +15,15 @@ def docs_chrome_context():
     }
 
 
+class DocsChromeMixin:
+    """Acrescenta o mesmo contexto visual às interfaces Swagger e ReDoc."""
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        response.data.update(docs_chrome_context())
+        return response
+
+
 class PdlSpectacularAPIView(SpectacularAPIView):
     """Publica o schema OpenAPI com acesso anônimo e limitação de requisições.
 
@@ -26,7 +35,7 @@ class PdlSpectacularAPIView(SpectacularAPIView):
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
 
-class PdlSpectacularSwaggerView(SpectacularSwaggerView):
+class PdlSpectacularSwaggerView(DocsChromeMixin, SpectacularSwaggerView):
     """Renderiza a interface Swagger pública com o contexto visual do painel.
 
     Configure a URL do schema em ``as_view(url_name=...)``. Acrescenta título do projeto e
@@ -35,13 +44,9 @@ class PdlSpectacularSwaggerView(SpectacularSwaggerView):
 
     permission_classes = [AllowAny]
 
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-        response.data.update(docs_chrome_context())
-        return response
 
 
-class PdlSpectacularRedocView(SpectacularRedocView):
+class PdlSpectacularRedocView(DocsChromeMixin, SpectacularRedocView):
     """Renderiza a interface ReDoc pública com o contexto visual do painel.
 
     Configure a URL do schema em ``as_view(url_name=...)``. Compartilha com o Swagger o título
@@ -49,8 +54,3 @@ class PdlSpectacularRedocView(SpectacularRedocView):
     """
 
     permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-        response.data.update(docs_chrome_context())
-        return response

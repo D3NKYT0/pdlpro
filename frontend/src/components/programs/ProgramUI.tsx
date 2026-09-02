@@ -2,9 +2,7 @@ import type { ReactNode } from "react";
 import {
   CheckCircle2,
   CircleDashed,
-  AlertCircle,
   Gift,
-  Clock3,
 } from "lucide-react";
 import type {
   Reward,
@@ -34,34 +32,9 @@ export function Status({ value }: { value: string }) {
     </span>
   );
 }
-export function Empty({ children }: { children: ReactNode }) {
-  return (
-    <div className="program-empty">
-      <CircleDashed size={28} />
-      <p>{children}</p>
-    </div>
-  );
-}
-export function ErrorNotice({ error }: { error: unknown }) {
-  return error ? (
-    <div className="program-error" role="alert">
-      <AlertCircle size={18} />
-      <span>
-        {error instanceof Error
-          ? error.message
-          : "Não foi possível concluir. Tente novamente."}
-      </span>
-    </div>
-  ) : null;
-}
-export function Loading() {
-  return (
-    <div className="program-empty" role="status">
-      <Clock3 size={24} />
-      <p>Carregando informações…</p>
-    </div>
-  );
-}
+// Compatibilidade dos imports existentes; implementação visual única em ui/.
+export { EmptyState as Empty, ErrorNotice, LoadingState as Loading } from '../ui/Feedback';
+import { EmptyState as Empty } from '../ui/Feedback';
 export function RewardList({ rewards }: { rewards: Reward[] }) {
   return (
     <div className="program-rewards">

@@ -9,18 +9,13 @@ from uuid import UUID
 from django.db.models import F
 from django.utils import timezone
 
-from apps.games.domain.exceptions import AlreadyClaimedError, GameInactiveError, InsufficientTokensError
+from apps.games.application.configuration import require_active_game
+from apps.games.domain.exceptions import AlreadyClaimedError, InsufficientTokensError
 from apps.games.infrastructure.models import Bag, BagItem, DailyBonusClaim, GameConfig, Prize, SpinHistory
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError
 
-
-def _config(code: str) -> GameConfig:
-    row = GameConfig.objects.filter(code=code, active=True).first()
-    if row is None:
-        raise GameInactiveError()
-    return row
 
 
 class GetRouletteStateUseCase(UseCase[UUID, dict]):
@@ -79,7 +74,7 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
     def execute(self, data: SpinRouletteInput) -> dict:
         from django.contrib.auth import get_user_model
 
-        config = _config("roulette")
+        config = require_active_game("roulette")
         cost = int((config.settings or {}).get("cost", 1))
         fail_chance = int((config.settings or {}).get("fail_chance", 20))
         prizes = list(Prize.objects.filter(active=True))
@@ -191,7 +186,7 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
     def execute(self, data: ClaimDailyBonusInput) -> dict:
         from django.contrib.auth import get_user_model
 
-        config = _config("daily_bonus")
+        config = require_active_game("daily_bonus")
         amount = Decimal(str((config.settings or {}).get("amount", "10.00")))
         today = timezone.localdate()
         with self._unit_of_work:

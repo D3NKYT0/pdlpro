@@ -1,3 +1,5 @@
+import { Card } from '../../components/ui/Card'
+import { Button } from '../../components/ui/Button'
 import { useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { Plus, Pencil } from "lucide-react";
@@ -249,14 +251,14 @@ export function AdminGameContentPage() {
       <div className="program-section-heading">
         <h2>{config.label}</h2>
         <div className="program-actions">
-          <button className="btn" onClick={() => open()}>
+          <Button type="submit" onClick={() => open()}>
             <Plus size={18} />
             Novo registro
-          </button>
+          </Button>
         </div>
       </div>
       {draft && (
-        <section className="card program-section">
+        <Card className="program-section">
           <h2>
             {editId ? "Editar" : "Criar"} · {config.label}
           </h2>
@@ -366,24 +368,24 @@ export function AdminGameContentPage() {
               />
             )}
             <div className="program-actions">
-              <button className="btn" disabled={action.busy}>
+              <Button type="submit" disabled={action.busy}>
                 Salvar configuração
-              </button>
-              <button
-                className="btn ghost"
+              </Button>
+              <Button
+                className="ghost"
                 type="button"
                 onClick={() => setDraft(null)}
               >
                 Cancelar
-              </button>
+              </Button>
             </div>
           </form>
-        </section>
+        </Card>
       )}
       {query.isPending && <Loading />}
       <div className="program-grid">
         {query.data?.map((row) => (
-          <article className="card program-section" key={row.id}>
+          <Card as="article" className="program-section" key={row.id}>
             <h3>{rowLabel(row)}</h3>
             <div className="program-page">
               {config.fields
@@ -421,12 +423,12 @@ export function AdminGameContentPage() {
                 ))}
             </div>
             <div className="program-actions">
-              <button className="btn ghost" onClick={() => open(row)}>
+              <Button type="submit" className="ghost" onClick={() => open(row)}>
                 <Pencil size={16} />
                 Editar
-              </button>
+              </Button>
             </div>
-          </article>
+          </Card>
         ))}
       </div>
       {query.data?.length === 0 && (

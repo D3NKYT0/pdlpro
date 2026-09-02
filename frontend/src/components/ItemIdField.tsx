@@ -1,3 +1,4 @@
+import { Field } from './ui/Field'
 import { useEffect, useRef, useState } from 'react'
 import { ItemIcon } from './ItemIcon'
 import { useItemCatalog, type L2CatalogItem } from '../lib/item-icons'
@@ -26,7 +27,7 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
   }, [])
 
   return (
-    <label className="field item-id-field" ref={containerRef}>
+    <Field className="item-id-field" ref={containerRef}>
       {label}
       <div className="item-id-control">
         <ItemIcon itemId={value} name={selected?.name} size={34} />
@@ -73,6 +74,6 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
           ))}
         </div>
       ) : null}
-    </label>
+    </Field>
   )
 }

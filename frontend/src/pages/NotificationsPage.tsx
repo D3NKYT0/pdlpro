@@ -1,3 +1,6 @@
+import { Card } from '../components/ui/Card'
+import { apiErrorMessage } from '../lib/errors'
+import { Button } from '../components/ui/Button'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { disableBrowserPush, enableBrowserPush, isApiError, notificationApi, pushApi } from '../services/api'
@@ -12,7 +15,7 @@ export function NotificationsPage() {
       await notificationApi.markRead(id)
       await queryClient.invalidateQueries({ queryKey: ['notifications'] })
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível marcar como lida')
+      toast.error(apiErrorMessage(error, 'Não foi possível marcar como lida'))
     }
   }
 
@@ -22,18 +25,18 @@ export function NotificationsPage() {
       toast.success('Todas marcadas como lidas')
       await queryClient.invalidateQueries({ queryKey: ['notifications'] })
     } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível atualizar')
+      toast.error(apiErrorMessage(error, 'Não foi possível atualizar'))
     }
   }
 
   return (
-    <section className="card">
+    <Card>
       <h1>Avisos</h1>
       <p className="muted">{query.data?.unread ?? 0} não lidos</p>
       {vapid.data?.enabled ? (
         <p>
-          <button
-            className="btn ghost"
+          <Button
+            className="ghost"
             type="button"
             onClick={() =>
               void enableBrowserPush()
@@ -42,9 +45,9 @@ export function NotificationsPage() {
             }
           >
             Ativar push
-          </button>{' '}
-          <button
-            className="btn ghost"
+          </Button>{' '}
+          <Button
+            className="ghost"
             type="button"
             onClick={() =>
               void disableBrowserPush()
@@ -53,31 +56,31 @@ export function NotificationsPage() {
             }
           >
             Desativar
-          </button>
+          </Button>
         </p>
       ) : null}
       {query.data?.unread ? (
         <p>
-          <button className="btn ghost" type="button" onClick={() => void markAll()}>
+          <Button className="ghost" type="button" onClick={() => void markAll()}>
             Marcar todas
-          </button>
+          </Button>
         </p>
       ) : null}
       {(query.data?.results ?? []).map((item) => (
-        <article className="card" key={item.id}>
+        <Card as="article"  key={item.id}>
           <h3>{item.title}</h3>
           <p>{item.body}</p>
           <p className="muted">
             {item.kind} — {item.is_read ? 'lida' : 'nova'}
           </p>
           {!item.is_read ? (
-            <button className="btn" type="button" onClick={() => void markOne(item.id)}>
+            <Button type="button" onClick={() => void markOne(item.id)}>
               Marcar como lida
-            </button>
+            </Button>
           ) : null}
-        </article>
+        </Card>
       ))}
       {!query.data?.results.length && <p className="muted">Nenhum aviso ainda.</p>}
-    </section>
+    </Card>
   )
 }

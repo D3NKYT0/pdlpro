@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { EmptyState } from '../ui/Feedback'
 import { themeImage } from '../../theme/assets'
 
 type PublicHeroProps = {
@@ -24,9 +25,6 @@ export function PublicHero({ kicker, title, description }: PublicHeroProps) {
 
 export function PublicEmpty({ children }: { children: ReactNode }) {
   return (
-    <div className="public-empty">
-      <span className="public-diamond" aria-hidden="true" />
-      <p>{children}</p>
-    </div>
+    <EmptyState className="public-empty" icon={<span className="public-diamond" aria-hidden="true" />}>{children}</EmptyState>
   )
 }

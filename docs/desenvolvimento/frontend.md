@@ -14,6 +14,7 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 | `contexts/AuthContext.tsx` | Estado de autenticação |
 | `pages/`, `pages/admin/` | Telas públicas, do jogador e administrativas |
 | `components/` | Componentes reutilizáveis |
+| `components/ui/`, `hooks/` | Biblioteca visual e ciclo compartilhado de ações |
 | `services/api.ts` | Exportações de serviços consumidos pelas telas |
 | `services/domain/` | Operações organizadas por capacidade do backend |
 | `services/infra/` | HTTP, erros e recuperação da sessão |
@@ -46,7 +47,7 @@ O build gera `frontend/dist`. `npm run preview` serve esse build para uma confer
 3. Acrescente a operação ao serviço de domínio e às exportações de `services/api.ts` quando necessário.
 4. Consuma o serviço na página, usando TanStack Query para consultas e invalidação após mutações.
 5. Registre a rota e a proteção adequada. A proteção visual não substitui a autorização no backend.
-6. Trate estados de carregamento, vazio, erro e acesso negado. Use componentes e estilos já existentes.
+6. Trate estados de carregamento, vazio, erro e acesso negado com a [biblioteca de componentes](componentes.md). Consulte também as [regras de reutilização](../arquitetura/reutilizacao.md).
 7. Acrescente testes proporcionais ao comportamento e confira a tela no navegador.
 
 ## Sessão e HTTP

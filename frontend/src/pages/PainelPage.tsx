@@ -1,3 +1,4 @@
+import { Card } from '../components/ui/Card'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import {
@@ -40,14 +41,14 @@ export function PainelPage() {
 
   return (
     <div className="grid panel-dashboard">
-      <section className="card panel-welcome">
+      <Card className="panel-welcome">
         <span className="panel-eyebrow">Visão geral da conta</span>
         <h1>Olá, {user?.display_name || user?.username}</h1>
         <p className="muted">Gerencie sua jornada, seus personagens e recompensas em um só lugar.</p>
-      </section>
+      </Card>
 
       <section className="grid cols-3 panel-status-grid" aria-label="Status do servidor">
-        <article className="card status-card">
+        <Card as="article" className="status-card">
           <Server aria-hidden="true" />
           <div className="status-copy">
             <span className="muted">Game server</span>
@@ -55,8 +56,8 @@ export function PainelPage() {
               {status.data?.game_online ? 'Online' : 'Offline'}
             </div>
           </div>
-        </article>
-        <article className="card status-card">
+        </Card>
+        <Card as="article" className="status-card">
           <KeyRound aria-hidden="true" />
           <div className="status-copy">
             <span className="muted">Login server</span>
@@ -64,14 +65,14 @@ export function PainelPage() {
               {status.data?.login_online ? 'Online' : 'Offline'}
             </div>
           </div>
-        </article>
-        <article className="card status-card">
+        </Card>
+        <Card as="article" className="status-card">
           <Users aria-hidden="true" />
           <div className="status-copy">
             <span className="muted">Jogadores online</span>
             <div className="stat">{status.data?.players_online ?? 0}</div>
           </div>
-        </article>
+        </Card>
       </section>
 
       <AchievementGrid achievements={progress.data?.achievements ?? []} />

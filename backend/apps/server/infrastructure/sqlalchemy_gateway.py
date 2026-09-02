@@ -8,9 +8,9 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 
 from apps.server.domain.access import same_linked_user
+from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
-    CharacterOfflineRequiredError,
     GameAccountAlreadyExistsError,
     GameAccountNotFoundError,
     NicknameTakenError,
@@ -396,9 +396,4 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return self._fetch(name, params)
 
     def _require_offline(self, login: str, char_id: int) -> GameCharacter:
-        char = self.get_character(login, char_id)
-        if char is None:
-            raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
-        if char.online:
-            raise CharacterOfflineRequiredError()
-        return char
+        return require_offline_character(self.get_character(login, char_id))
