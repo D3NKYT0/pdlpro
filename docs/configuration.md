@@ -72,6 +72,13 @@ observação de inflação do projeto SITE: totais por localização, busca por 
 quantidade mínima, categorias, ordenação, favoritos pessoais e comparação entre
 snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`;
 itens sem nome conhecido aparecem como `Item <ID>`.
+O frontend exibe os ícones locais em `/item-icons/<ID>.jpg` (com imagem padrão
+quando indisponíveis). Nome, tipo, grau e possibilidade de troca vêm do XML
+configurado no backend, não do catálogo estático do navegador. Itens desconhecidos
+mostram “Sem XML”. O grau/tipo exibido no histórico é do XML atual; nomes e quantidades
+salvos no snapshot são preservados. Após trocar arquivos XML, reinicie o backend
+para recarregar o catálogo em cache. O XML contém referências a texturas do cliente,
+não as imagens: itens customizados também precisam de seu JPG em `frontend/public/item-icons/`.
 
 As consultas são SELECTs executados em uma transação MySQL somente leitura.
 Os módulos `dreamv3`, `lucerav2` e `mobius` possuem SQL específico para seus schemas.

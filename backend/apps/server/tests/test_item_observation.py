@@ -73,6 +73,33 @@ def test_dashboard_and_permission_filtered_navigation(enabled, logged):
         reverse("admin:server_itemobservationsnapshot_monitor")
 
 
+def test_api_metadata_uses_configured_xml(enabled, logged, settings, tmp_path):
+    from apps.server.infrastructure.lineage.item_catalog import get_item_catalog
+    (tmp_path / "custom.xml").write_text('''<list><weapon id="57" name="Custom Gold Sword">
+        <set name="crystal_type" value="A"/><set name="type" value="SWORD"/>
+        <set name="tradeable" value="false"/></weapon></list>''', encoding="utf-8")
+    settings.LINEAGE_ITEM_XML_DIR = str(tmp_path)
+    get_item_catalog.cache_clear()
+    try:
+        row = logged.get(BASE).data["results"][0]
+        assert row["item_name"] == "Custom Gold Sword"
+        assert row["catalog_found"] is True
+        assert row["grade"] == "A"
+        assert row["item_type"] == "WEAPON"
+        assert row["tradeable"] is False
+        logged.put(BASE + "favorites/999999/", {"active": True}, format="json")
+        missing = logged.get(BASE, {"favorites": "true"}).data["results"][0]
+        assert missing["catalog_found"] is False
+        assert missing["grade"] is None
+        assert missing["tradeable"] is None
+        snapshot = logged.post(BASE + "snapshots/", {}, format="json").data
+        detail = logged.get(BASE + f"snapshots/{snapshot['id']}/").data["results"][0]
+        assert detail["grade"] == "A"
+        assert detail["item_name"] == "Custom Gold Sword"
+    finally:
+        get_item_catalog.cache_clear()
+
+
 def test_anonymous_player_and_staff_without_permission_cannot_observe(client):
     client = APIClient()
     assert client.get(BASE).status_code in (401, 403)

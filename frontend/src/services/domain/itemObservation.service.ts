@@ -6,7 +6,8 @@ export type ObservationAccess = {
 }
 export type ItemCategory = { id: string; name: string; description: string; item_ids: number[]; order: number }
 export type ItemCategoryInput = Omit<ItemCategory, 'id'>
-export type ObservedItem = {
+export type ItemMetadata = { catalog_found?: boolean; item_type?: string | null; grade?: string | null; tradeable?: boolean | null }
+export type ObservedItem = ItemMetadata & {
   item_id: number; item_name: string; category_name: string; quantity: string
   instances: string; unique_owners: string; is_favorite?: boolean; location?: string
 }
@@ -22,7 +23,7 @@ export type ItemSnapshot = {
   notes: string; total_characters: number; total_instances: number; total_quantity: string; site_quantity: string
 }
 export type ObservationDetail = ObservationPage<ObservedItem> & { snapshot: ItemSnapshot }
-export type ItemChange = {
+export type ItemChange = ItemMetadata & {
   item_id: number; item_name: string; location: string; before: string; after: string
   change: string; percentage: string | null
 }

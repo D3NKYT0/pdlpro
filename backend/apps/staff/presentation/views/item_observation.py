@@ -14,7 +14,7 @@ from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory, ItemObservationFavorite, ItemObservationSnapshot,
 )
-from apps.server.infrastructure.lineage.item_catalog import item_display_name
+from apps.server.infrastructure.lineage.item_catalog import get_item_catalog, item_display_name
 from common.exceptions import PdlAPIException
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
@@ -80,8 +80,15 @@ def paginate(rows, page_number, serialize=lambda row: row):
             "page": page.number, "pages": page.paginator.num_pages}
 
 
+def item_metadata(item_id):
+    item = get_item_catalog().get(item_id)
+    return {"catalog_found": item is not None, "item_type": item.category if item else None,
+            "grade": item.grade if item else None, "tradeable": item.tradeable if item else None}
+
+
 def item_json(row):
-    return {**row, **{key: str(row[key]) for key in ("quantity", "instances", "unique_owners")}}
+    return {**row, **item_metadata(row["item_id"]),
+            **{key: str(row[key]) for key in ("quantity", "instances", "unique_owners")}}
 
 
 class ObservationView(InjectedAPIView):
@@ -179,7 +186,7 @@ class ObservationSnapshotView(ObservationView):
         snapshot = get_object_or_404(ItemObservationSnapshot, id=snapshot_id)
         page = query(PageQuery, request)["page"]
         def serialize(row):
-            return {"item_id": row.item_id, "item_name": row.item_name, "category_name": row.category_name,
+            return {**item_metadata(row.item_id), "item_id": row.item_id, "item_name": row.item_name, "category_name": row.category_name,
                     "location": row.location, "quantity": str(row.quantity), "instances": str(row.instances),
                     "unique_owners": str(row.unique_owners)}
         return Response({"snapshot": SnapshotSerializer(snapshot).data,
@@ -198,7 +205,7 @@ class ObservationComparisonView(ObservationView):
         after = get_object_or_404(ItemObservationSnapshot, id=options["after"])
         rows = self.safely(lambda: compare_snapshots(before, after), unavailable_status=400)
         def serialize(row):
-            return {**row, "before": str(row["before"]), "after": str(row["after"]), "change": str(row["change"]),
+            return {**row, **item_metadata(row["item_id"]), "before": str(row["before"]), "after": str(row["after"]), "change": str(row["change"]),
                     "percentage": str(row["percentage"]) if row["percentage"] is not None else None}
         return Response({"before": SnapshotSerializer(before).data, "after": SnapshotSerializer(after).data,
                          **paginate(rows, options["page"], serialize)})
