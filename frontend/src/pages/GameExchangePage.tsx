@@ -71,8 +71,10 @@ export function GameExchangePage() {
           <h2>Nova transferência</h2>
           {query.data && !query.data.enabled && (
             <p className="program-note">
-              {query.data.unavailable_reason || "A integração do jogo está indisponível."} A transferência ficará
-              disponível quando a integração estiver pronta.
+              {query.data.unavailable_reason ||
+                "A integração do jogo está indisponível."}{" "}
+              A transferência ficará disponível quando a integração estiver
+              pronta.
             </p>
           )}
           <form

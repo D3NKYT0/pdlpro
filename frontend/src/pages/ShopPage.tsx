@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ShoppingBag,
   ShoppingCart,
   Package,
   Plus,
@@ -17,6 +16,7 @@ import {
 } from "../services/domain/commerce.service";
 import { Empty, ErrorNotice, Loading } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
+import { ProgramHeader } from "../components/programs/ProgramHeader";
 
 export function ShopPage() {
   const catalog = useQuery({ queryKey: ["shop"], queryFn: shopApi.catalog });
@@ -59,17 +59,11 @@ export function ShopPage() {
   }
   return (
     <div className="program-page shop-page">
-      <header className="card program-hero">
-        <div>
-          <span className="panel-eyebrow">Mercado do jogador</span>
-          <h1>Loja do servidor</h1>
-          <p>
-            Itens, pacotes e vantagens para sua jornada. Suas compras são
-            entregues na bag do painel.
-          </p>
-        </div>
-        <ShoppingBag />
-      </header>
+      <ProgramHeader
+        eyebrow="Mercado do jogador"
+        title="Loja do servidor"
+        description="Itens, pacotes e vantagens para sua jornada. Suas compras são entregues na bag do painel."
+      />
       <ErrorNotice
         error={catalog.error || packages.error || cart.error || action.error}
       />
@@ -180,7 +174,16 @@ export function ShopPage() {
                       onClick={() => {
                         key.current = null;
                         void action.run(
-                          () => commerceApi.packageQuantity(pack.id, 1),
+                          () =>
+                            commerceApi.packageQuantity(
+                              pack.id,
+                              Math.min(
+                                99,
+                                (cart.data?.items.find(
+                                  (row) => row.package_id === pack.id,
+                                )?.quantity || 0) + 1,
+                              ),
+                            ),
                           "Pacote adicionado.",
                         );
                       }}

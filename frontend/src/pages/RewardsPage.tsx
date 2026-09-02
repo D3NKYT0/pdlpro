@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
-import { Crown, Gift, Fish, Trophy, CheckCircle2 } from "lucide-react";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { Crown, Gift, CheckCircle2 } from "lucide-react";
 import { gamesApi } from "../services/api";
 import { programsApi } from "../services/domain/programs.service";
 import {
@@ -14,28 +14,23 @@ import {
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
 import { ResourceGate } from "../components/programs/ResourceGate";
+import { ProgramHeader } from "../components/programs/ProgramHeader";
 
 export function RewardsPage() {
   const [params, setParams] = useSearchParams();
   const tab = params.get("tab") || "battle";
+  if (tab === "fishing") return <Navigate to="/painel/games?tab=fishing" replace />;
   return (
     <div className="program-page">
-      <header className="card program-hero">
-        <div>
-          <span className="panel-eyebrow">Cada conquista importa</span>
-          <h1>Jornada e recompensas</h1>
-          <p>
-            Cumpra missões, descubra novos prêmios e acompanhe sua evolução no
-            servidor.
-          </p>
-        </div>
-        <Trophy />
-      </header>
+      <ProgramHeader
+        eyebrow="Cada conquista importa"
+        title="Jornada e recompensas"
+        description="Cumpra missões, descubra novos prêmios e acompanhe sua evolução no servidor."
+      />
       <div className="program-tabs">
         {[
           ["battle", "Passe de batalha"],
           ["daily", "Bônus diário"],
-          ["fishing", "Pesca e coleção"],
           ["statistics", "Rankings e estatísticas"],
         ].map(([id, label]) => (
           <button
@@ -54,10 +49,6 @@ export function RewardsPage() {
       ) : tab === "daily" ? (
         <ResourceGate code="daily-bonus">
           <DailyJourney />
-        </ResourceGate>
-      ) : tab === "fishing" ? (
-        <ResourceGate code="fishing">
-          <FishingJourney />
         </ResourceGate>
       ) : (
         <GameStatistics />
@@ -83,7 +74,13 @@ function BattleJourney() {
       <ErrorNotice error={pass.error || details.error || action.error} />
       {(pass.isPending || details.isPending) && <Loading />}
       {pass.data && !pass.data.season ? (
-        <Empty>A próxima temporada está sendo preparada. Volte em breve.</Empty>
+        <section className="card program-section">
+          <Empty>
+            A próxima temporada está sendo preparada. Volte em breve.
+          </Empty>
+          <h2>Histórico de recompensas</h2>
+          <RewardHistoryList history={data?.history || []} />
+        </section>
       ) : (
         pass.data?.season && (
           <>
@@ -338,7 +335,7 @@ function BattleJourney() {
             )}
             {tab === "history" && (
               <section className="card program-section">
-                <h2>Seu histórico na temporada</h2>
+                <h2>Histórico de recompensas</h2>
                 <div className="program-grid">
                   <div className="program-stat">
                     <small>Prêmios de nível</small>
@@ -459,147 +456,6 @@ function DailyJourney() {
   );
 }
 
-function FishingJourney() {
-  const query = useQuery({
-    queryKey: ["fishing-details"],
-    queryFn: programsApi.fishing,
-  });
-  const fishing = useQuery({
-    queryKey: ["fishing"],
-    queryFn: gamesApi.fishing,
-  });
-  const action = useProgramAction();
-  const [bait, setBait] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [result, setResult] = useState("");
-  return (
-    <>
-      <ErrorNotice error={query.error || fishing.error || action.error} />
-      {(query.isPending || fishing.isPending) && <Loading />}
-      <div className="program-two">
-        <section className="card program-section">
-          <div className="program-section-heading">
-            <h2>Seu próximo lançamento</h2>
-            <Fish color="var(--gold)" size={30} />
-          </div>
-          <div className="program-grid">
-            <div className="program-stat">
-              <small>Vara de pesca</small>
-              <strong>Nível {fishing.data?.rod.level || 1}</strong>
-            </div>
-            <div className="program-stat">
-              <small>Fichas disponíveis</small>
-              <strong>{fishing.data?.fichas || 0}</strong>
-            </div>
-          </div>
-          <form
-            className="program-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void action.run(async () => {
-                const r = await gamesApi.cast(bait || undefined);
-                setResult(
-                  r.success
-                    ? `Você pescou ${r.fish?.name}!`
-                    : "O peixe escapou. Tente novamente.",
-                );
-              }, "Lançamento concluído.");
-            }}
-          >
-            <label>
-              Isca
-              <select value={bait} onChange={(e) => setBait(e.target.value)}>
-                <option value="">Sem isca especial</option>
-                {query.data?.baits
-                  .filter((b) => b.quantity > 0)
-                  .map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.name} · {b.quantity} no estoque · +{b.success_bonus}%
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <small className="muted">
-              Cada lançamento custa {fishing.data?.cost || 1} ficha(s). A isca
-              selecionada é consumida mesmo quando o peixe escapa.
-            </small>
-            <button
-              className="btn"
-              disabled={action.busy || !fishing.data?.active}
-            >
-              Lançar a linha
-            </button>
-          </form>
-          {result && (
-            <p className="program-note" role="status">
-              {result}
-            </p>
-          )}
-        </section>
-        <section className="card program-section">
-          <h2>Loja de iscas</h2>
-          <label className="program-form">
-            Quantidade por compra
-            <input
-              type="number"
-              min={1}
-              max={999}
-              value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-            />
-          </label>
-          {query.data?.baits.map((b) => (
-            <article className="program-item" key={b.id}>
-              <h3>{b.name}</h3>
-              <p>{b.description}</p>
-              <small>
-                +{b.success_bonus} pontos de chance · Estoque: {b.quantity}
-              </small>
-              <button
-                className="btn ghost"
-                disabled={action.busy || quantity < 1 || quantity > 999}
-                onClick={() =>
-                  void action.run(
-                    () => programsApi.buyBait(b.id, quantity),
-                    "Iscas adicionadas ao estoque.",
-                  )
-                }
-              >
-                Comprar · {b.price * quantity} fichas
-              </button>
-            </article>
-          ))}
-          {query.data?.baits.length === 0 && (
-            <Empty>Nenhuma isca à venda no momento.</Empty>
-          )}
-        </section>
-      </div>
-      <section className="card program-section">
-        <h2>Sua coleção</h2>
-        <p className="muted">
-          Descubra todas as espécies. Cada captura bem-sucedida fica registrada
-          na sua coleção.
-        </p>
-        <div className="program-grid">
-          {query.data?.collection.map((f) => (
-            <article
-              className={`program-item ${f.count ? "" : "program-day is-locked"}`}
-              key={f.id}
-            >
-              <Fish color={f.count ? "var(--gold)" : "var(--muted)"} />
-              <h3>{f.name}</h3>
-              <small>
-                {f.rarity} ·{" "}
-                {f.count ? `${f.count} capturas` : "Ainda não descoberto"}
-              </small>
-            </article>
-          ))}
-        </div>
-      </section>
-    </>
-  );
-}
-
 function GameStatistics() {
   const [game, setGame] = useState("roulette");
   const query = useQuery({
@@ -649,9 +505,10 @@ function GameStatistics() {
             </div>
           </div>
           <section className="card program-section">
-            <h2>Ranking de participação</h2>
+            <h2>Ranking de desempenho</h2>
             <p className="muted">
-              Jogadores com mais partidas registradas neste jogo.
+              Jogadores com mais resultados positivos neste jogo; partidas como
+              desempate.
             </p>
             {query.data.leaderboard.length ? (
               <div className="program-table-wrap">
@@ -661,6 +518,7 @@ function GameStatistics() {
                       <th>Posição</th>
                       <th>Jogador</th>
                       <th>Partidas</th>
+                      <th>Resultados positivos</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -669,6 +527,7 @@ function GameStatistics() {
                         <td>{i + 1}</td>
                         <td>{r.username}</td>
                         <td>{r.score}</td>
+                        <td>{r.wins}</td>
                       </tr>
                     ))}
                   </tbody>

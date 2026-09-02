@@ -37,14 +37,14 @@ export function SiteNav() {
 
   return (
     <nav className={scrolled ? 'scrolled' : undefined}>
-      <div className="open" onClick={() => setMenuOpen(true)}>
+      <button type="button" className="open" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
         <i className="fa-solid fa-bars" />
-      </div>
+      </button>
 
       <ul className={menuOpen ? 'active' : undefined}>
-        <div className="close" onClick={() => setMenuOpen(false)}>
+        <button type="button" className="close" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>
           <i className="fa-solid fa-xmark" />
-        </div>
+        </button>
         <span>
           <img src={themeImage('icons/nav-icon.png')} alt="" />
         </span>

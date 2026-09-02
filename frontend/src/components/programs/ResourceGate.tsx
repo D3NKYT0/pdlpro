@@ -20,7 +20,7 @@ export function ResourceGate({
   if (query.error) return <ErrorNotice error={query.error} />;
   if (query.data?.some((r) => r.code === code && !r.enabled))
     return (
-      <section className="card program-section">
+      <section className="card program-section program-page">
         <h1>Recurso temporariamente desativado</h1>
         <Empty>
           A equipe pausou este módulo. Seus dados e seu progresso continuam

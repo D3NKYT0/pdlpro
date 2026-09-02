@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Handshake, ArrowUpRight, Coins, TicketPercent } from "lucide-react";
+import { ArrowUpRight, Coins, TicketPercent } from "lucide-react";
 import { programsApi } from "../services/domain/programs.service";
 import {
   Empty,
@@ -8,6 +8,7 @@ import {
   Status,
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
+import { ProgramHeader } from "../components/programs/ProgramHeader";
 
 export function SupportersPage() {
   const query = useQuery({
@@ -19,17 +20,11 @@ export function SupportersPage() {
   const profile = data?.profile;
   return (
     <div className="program-page">
-      <header className="card program-hero">
-        <div>
-          <span className="panel-eyebrow">Cresça com a comunidade</span>
-          <h1>Programa de apoiadores</h1>
-          <p>
-            Compartilhe o servidor, acompanhe seus cupons e receba comissões
-            pelas compras que você indicar.
-          </p>
-        </div>
-        <Handshake />
-      </header>
+      <ProgramHeader
+        eyebrow="Cresça com a comunidade"
+        title="Programa de apoiadores"
+        description="Compartilhe o servidor, acompanhe seus cupons e receba comissões pelas compras que você indicar."
+      />
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
       {data && (

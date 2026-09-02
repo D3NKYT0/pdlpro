@@ -44,7 +44,7 @@ class GameExchangeView(InjectedAPIView):
                 else None,
                 "history": [
                     dict(exchange_dump(r), login=r.login, character_id=r.character_id)
-                    for r in GameExchange.objects.filter(user=request.user)[:100]
+                    for r in GameExchange.objects.filter(user=request.user).order_by("-created_at")[:100]
                 ],
             }
         )

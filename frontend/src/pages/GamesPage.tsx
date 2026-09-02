@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Box,
@@ -17,6 +17,8 @@ import {
 import toast from 'react-hot-toast'
 import { gamesApi, isApiError } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
+import { FishingGame } from '../components/games/FishingGame'
+import { ResourceGate } from '../components/programs/ResourceGate'
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
 
@@ -34,12 +36,20 @@ export function GamesPage() {
   const bonus = useQuery({ queryKey: ['daily-bonus'], queryFn: gamesApi.dailyBonus })
   const boxes = useQuery({ queryKey: ['boxes'], queryFn: gamesApi.boxes })
   const minigames = useQuery({ queryKey: ['minigames'], queryFn: gamesApi.minigames })
-  const fishing = useQuery({ queryKey: ['fishing'], queryFn: gamesApi.fishing })
   const economy = useQuery({ queryKey: ['economy'], queryFn: gamesApi.economy })
   const [amount, setAmount] = useState('5')
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
-  const [activeGame, setActiveGame] = useState<GameTab>('roulette')
+  const [params, setParams] = useSearchParams()
+  const requestedGame = params.get('tab')
+  const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
+  function setActiveGame(tab: GameTab) {
+    setParams((current) => {
+      const next = new URLSearchParams(current)
+      next.set('tab', tab)
+      return next
+    })
+  }
 
   async function refresh() {
     await queryClient.invalidateQueries({ queryKey: ['roulette'] })
@@ -126,18 +136,6 @@ export function GamesPage() {
     }
   }
 
-  async function castLine() {
-    try {
-      const result = await gamesApi.cast()
-      toast[result.success ? 'success' : 'error'](
-        result.success ? `Pescou ${result.fish?.name}` : 'O peixe escapou',
-      )
-      await refresh()
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Falha na pesca')
-    }
-  }
-
   async function fight(monsterId: string) {
     try {
       const result = await gamesApi.fight(monsterId)
@@ -166,7 +164,7 @@ export function GamesPage() {
 
   return (
     <div className="games-page">
-      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">Missões, bônus diário, iscas e rankings ↗</Link></div>
+      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">Missões, bônus diário e rankings ↗</Link></div>
       <header className="card games-hero">
         <div className="games-hero-copy">
           <span className="panel-eyebrow">Central de jogos</span>
@@ -355,34 +353,18 @@ export function GamesPage() {
           </form>
         </section>
 
-        <section
-          className="card game-module game-fishing"
+        <div
           id="game-panel-fishing"
           role="tabpanel"
           aria-labelledby="game-tab-fishing"
           hidden={activeGame !== 'fishing'}
         >
-          <div className="game-module-heading">
-            <span className="game-module-icon"><Fish aria-hidden="true" /></span>
-            <div>
-              <span className="panel-eyebrow">Lago do reino</span>
-              <h2>Pesca</h2>
-            </div>
-          </div>
-          <div className="game-stats-row">
-            <span><small>Vara</small><strong>Nível {fishing.data?.rod.level ?? 1}</strong></span>
-            <span><small>Experiência</small><strong>{fishing.data?.rod.xp ?? 0} XP</strong></span>
-            <span><small>Custo</small><strong>{fishing.data?.cost ?? 1} ficha</strong></span>
-          </div>
-          <button className="btn" type="button" onClick={() => void castLine()}><Fish aria-hidden="true" /> Lançar linha</button>
-          {(fishing.data?.recent ?? []).length ? (
-            <div className="recent-results">
-              {(fishing.data?.recent ?? []).map((row, index) => (
-                <span key={`${row.created_at}-${index}`}>{row.success ? row.fish : 'O peixe escapou'} · {row.created_at}</span>
-              ))}
-            </div>
-          ) : null}
-        </section>
+          {activeGame === 'fishing' && (
+            <ResourceGate code="fishing">
+              <FishingGame />
+            </ResourceGate>
+          )}
+        </div>
 
         <section
           className="card game-module game-economy"

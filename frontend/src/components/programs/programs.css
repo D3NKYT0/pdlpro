@@ -3,6 +3,12 @@
   gap: 22px;
   min-width: 0;
 }
+html.pdl-panel .fishing-game .fishing-cast-button {
+  justify-self: start;
+  width: auto;
+  min-width: 180px;
+  max-width: 100%;
+}
 html.pdl-panel .program-page h1,
 html.pdl-panel .program-page h2,
 html.pdl-panel .program-page h3 {
@@ -51,6 +57,7 @@ html.pdl-panel .program-page .program-switch::after {
 .program-page h2,
 .program-page h3 {
   margin: 0;
+  overflow-wrap: anywhere;
 }
 .program-page h2 {
   font-size: 22px;
@@ -81,10 +88,66 @@ html.pdl-panel .program-page .program-switch::after {
   color: var(--gold);
   opacity: 0.8;
 }
+.program-hero > div {
+  min-width: 0;
+}
 .program-hero p {
   max-width: 680px;
   margin-bottom: 0;
   color: var(--muted);
+}
+/* Quiet, typography-led headers for the player programs. */
+html.pdl-panel .program-page .program-hero--editorial {
+  position: relative;
+  padding: 32px 36px;
+  background: linear-gradient(110deg, #19160f 0%, #100f0c 85%);
+  border-color: rgba(197, 161, 97, 0.2);
+  box-shadow: none;
+}
+html.pdl-panel .program-page .program-hero--editorial::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 36px;
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, #b39a65, transparent);
+  pointer-events: none;
+}
+html.pdl-panel .program-page .program-hero--editorial::before {
+  display: none;
+}
+html.pdl-panel .program-hero--editorial .panel-eyebrow {
+  display: block;
+  margin: 0 0 12px;
+  color: #ac9670;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+html.pdl-panel .program-hero--editorial h1 {
+  color: #e1cfaa;
+  font-size: clamp(28px, 2.8vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  text-shadow: none;
+}
+html.pdl-panel .program-hero--editorial p {
+  max-width: 760px;
+  text-wrap: pretty;
+  margin: 12px 0 0;
+  color: #a49d90;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+@media (max-width: 600px) {
+  html.pdl-panel .program-page .program-hero--editorial {
+    padding: 25px 22px;
+  }
+  html.pdl-panel .program-page .program-hero--editorial::after {
+    left: 22px;
+  }
 }
 .program-grid {
   display: grid;
@@ -207,6 +270,7 @@ html.pdl-panel .program-page .program-switch::after {
   border-color: var(--gold-dim);
 }
 .program-status {
+  width: fit-content;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -423,6 +487,47 @@ html.pdl-panel .program-page .program-switch::after {
   max-width: 1180px;
   margin: 36px auto;
   padding: 0 24px;
+  color: #ded3bc;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.program-public .program-grid {
+  align-items: start;
+}
+.program-public .program-section {
+  align-content: start;
+}
+.program-public .card {
+  border-radius: 3px;
+  background: linear-gradient(135deg, #201b12, #100e0b);
+  border: 1px solid #483b25;
+}
+.program-public h1,
+.program-public h2,
+.program-public h3 {
+  color: #e6cf8b;
+  font-family: Cambria, serif;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.program-public h1 {
+  font-size: 44px;
+}
+.program-public .panel-eyebrow {
+  color: #ad9564;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.program-public .character-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d9bd7e;
+  text-decoration: none;
+}
+.program-public .character-back:hover {
+  color: #fff0bb;
 }
 @media (max-width: 900px) {
   .program-two {
@@ -460,5 +565,8 @@ html.pdl-panel .program-page .program-switch::after {
   }
   .program-public {
     padding: 0 16px;
+  }
+  .program-public h1 {
+    font-size: 28px;
   }
 }

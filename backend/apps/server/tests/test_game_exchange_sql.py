@@ -3,6 +3,7 @@
 SQLite validates the transaction algorithm; dialect SELECTs are also checked by
 test_dreamv3_queries. Deployment still requires a real offline-character smoke test.
 """
+
 import re
 
 import pytest
@@ -18,8 +19,12 @@ def gateway():
     queries = LineageQueryCatalog.load("dreamv3")
     queries._statements = dict(queries._statements)
     for name in ("exchange_get_receipt", "exchange_character", "exchange_stacks"):
-        queries._statements[name] = re.sub(r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.I)
-    queries._statements["exchange_insert_receipt"] = "INSERT INTO pdl_exchange_receipts(receipt,completed) VALUES(:receipt,0) ON CONFLICT(receipt) DO NOTHING"
+        queries._statements[name] = re.sub(
+            r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.I
+        )
+    queries._statements["exchange_insert_receipt"] = (
+        "INSERT INTO pdl_exchange_receipts(receipt,completed) VALUES(:receipt,0) ON CONFLICT(receipt) DO NOTHING"
+    )
     engine = create_engine("sqlite://")
     with engine.begin() as conn:
         for sql in (
@@ -43,14 +48,17 @@ def test_deposit_receipt_replays_once(gateway):
         gateway.exchange_coins("deposit", "player", 1, 57, 10, "to_game")
     with gateway._engine.connect() as conn:
         assert conn.execute(text("SELECT SUM(count) FROM items_delayed")).scalar() == 10
-        assert conn.execute(text("SELECT completed FROM pdl_exchange_receipts")).scalar() == 1
+        assert (
+            conn.execute(text("SELECT completed FROM pdl_exchange_receipts")).scalar()
+            == 1
+        )
 
 
 def test_withdraw_consumes_stacks_once(gateway):
     for _ in range(3):
         gateway.exchange_coins("withdraw", "player", 1, 57, 10, "from_game")
     with gateway._engine.connect() as conn:
-        assert conn.execute(text("SELECT item_id,amount FROM items")).all() == [(2,15)]
+        assert conn.execute(text("SELECT item_id,amount FROM items")).all() == [(2, 15)]
 
 
 @pytest.mark.parametrize("cause", ["balance", "online", "ownership"])
@@ -64,7 +72,10 @@ def test_rejection_remains_terminal_even_after_condition_changes(gateway, cause)
         gateway.exchange_coins("rejected", login, 1, 57, quantity, "from_game")
     with gateway._engine.begin() as conn:
         assert conn.execute(text("SELECT SUM(amount) FROM items")).scalar() == 25
-        assert conn.execute(text("SELECT completed FROM pdl_exchange_receipts")).scalar() == -1
+        assert (
+            conn.execute(text("SELECT completed FROM pdl_exchange_receipts")).scalar()
+            == -1
+        )
         conn.execute(text("UPDATE characters SET online=0"))
         conn.execute(text("UPDATE items SET amount=100"))
     with pytest.raises(ValidationDomainError):

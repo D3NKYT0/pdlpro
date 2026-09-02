@@ -152,6 +152,25 @@ def test_rejected_payout_releases_only_its_commissions(staff, supporter):
     )
 
 
+@pytest.mark.parametrize("role", ["player", "staff", "admin"])
+def test_supporter_approval_updates_only_player_role(staff, supporter, role):
+    user = supporter.user
+    user.role = role
+    user.save()
+    url = f"/api/v1/staff/supporters/{supporter.id}/"
+    assert (
+        staff.patch(
+            url, {"status": "approved", "commission_percent": "15"}, format="json"
+        ).status_code
+        == 200
+    )
+    user.refresh_from_db()
+    assert user.role == ("supporter" if role == "player" else role)
+    assert staff.patch(url, {"status": "rejected"}, format="json").status_code == 200
+    user.refresh_from_db()
+    assert user.role == role
+
+
 def test_roadmap_publication_and_staff_permissions(api, staff):
     public = RoadmapEntry.objects.create(title="Visible", description="Details")
     private = RoadmapEntry.objects.create(
@@ -550,7 +569,13 @@ def test_exchange_financial_outcomes(player, direction, outcome):
     CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
     wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
     case = ExchangeCoinsUseCase(Gateway(), Access())
-    data = dict(request_key=uuid4(), direction=direction, login="player", character_id=1, quantity=20)
+    data = dict(
+        request_key=uuid4(),
+        direction=direction,
+        login="player",
+        character_id=1,
+        quantity=20,
+    )
     if outcome == "unready":
         with pytest.raises(ValidationError):
             case.execute(player, data)
@@ -559,11 +584,15 @@ def test_exchange_financial_outcomes(player, direction, outcome):
     else:
         for _ in range(3):
             result = case.execute(player, data)
-            assert result["status"] == ("completed" if outcome == "success" else "rejected")
+            assert result["status"] == (
+                "completed" if outcome == "success" else "rejected"
+            )
         if outcome == "success":
             assert WalletTransaction.objects.count() == 1
         else:
-            assert WalletTransaction.objects.count() == (2 if direction == "to_game" else 0)
+            assert WalletTransaction.objects.count() == (
+                2 if direction == "to_game" else 0
+            )
     wallet.refresh_from_db()
     expected = Decimal(100)
     if outcome == "success":

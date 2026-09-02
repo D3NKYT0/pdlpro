@@ -8,7 +8,13 @@ from apps.accounts.application.progress import add_xp
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.infrastructure.models import Fish, FishingCatch, FishingRod, GameConfig, UserFishingBait
+from apps.games.infrastructure.models import (
+    Fish,
+    FishingCatch,
+    FishingRod,
+    GameConfig,
+    UserFishingBait,
+)
 from common.architecture.base import UnitOfWork, UseCase
 
 SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18}
@@ -28,14 +34,25 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
         user = get_user_model().objects.get(id=data)
         rod, _ = FishingRod.objects.get_or_create(user=user)
         config = GameConfig.objects.filter(code="fishing").first()
-        catches = FishingCatch.objects.select_related("fish").filter(user=user).order_by("-created_at")[:8]
+        catches = (
+            FishingCatch.objects.select_related("fish")
+            .filter(user=user)
+            .order_by("-created_at")[:8]
+        )
         return {
             "fichas": user.fichas,
-            "cost": int((config.settings or {}).get("cost_per_cast", 1)) if config else 1,
+            "cost": int((config.settings or {}).get("cost_per_cast", 1))
+            if config
+            else 1,
             "active": bool(config and config.active),
             "rod": {"level": rod.level, "xp": rod.xp},
             "fish": [
-                {"id": str(fish.id), "name": fish.name, "rarity": fish.rarity, "min_rod_level": fish.min_rod_level}
+                {
+                    "id": str(fish.id),
+                    "name": fish.name,
+                    "rarity": fish.rarity,
+                    "min_rod_level": fish.min_rod_level,
+                }
                 for fish in Fish.objects.filter(active=True)
             ],
             "recent": [
@@ -68,7 +85,13 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
             bonus = 0
             if data.bait_id:
                 from rest_framework.exceptions import ValidationError
-                stock = UserFishingBait.objects.select_for_update().select_related("bait").filter(user=user, bait__id=data.bait_id, bait__active=True).first()
+
+                stock = (
+                    UserFishingBait.objects.select_for_update()
+                    .select_related("bait")
+                    .filter(user=user, bait__id=data.bait_id, bait__active=True)
+                    .first()
+                )
                 if not stock or stock.quantity < 1:
                     raise ValidationError("Você não possui esta isca.")
                 stock.quantity -= 1
@@ -81,7 +104,13 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
             pool = list(Fish.objects.filter(active=True, min_rod_level__lte=rod.level))
             if not pool:
                 pool = list(Fish.objects.filter(active=True))
-            fish = random.choices(pool, weights=[max(item.weight, 1) for item in pool], k=1)[0] if pool else None
+            fish = (
+                random.choices(
+                    pool, weights=[max(item.weight, 1) for item in pool], k=1
+                )[0]
+                if pool
+                else None
+            )
             chance = SUCCESS_CHANCE.get(fish.rarity, 70) if fish else 0
             chance = min(95, chance + rod.level * 2 + bonus)
             success = bool(fish) and random.randint(1, 100) <= chance
@@ -94,11 +123,18 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                 if fish.fichas_reward:
                     user.fichas += fish.fichas_reward
                 if fish.item_id:
-                    add_to_bag(user, item_id=fish.item_id, item_name=fish.item_name or fish.name, enchant=fish.enchant)
+                    add_to_bag(
+                        user,
+                        item_id=fish.item_id,
+                        item_name=fish.item_name or fish.name,
+                        enchant=fish.enchant,
+                    )
                 add_xp(user, 8)
                 add_battle_pass_xp(user, 5)
             user.save(update_fields=["fichas", "updated_at"])
-            FishingCatch.objects.create(user=user, fish=fish, success=success, rod_level=rod.level)
+            FishingCatch.objects.create(
+                user=user, fish=fish, success=success, rod_level=rod.level
+            )
         return {
             "success": success,
             "fish": {"name": fish.name, "rarity": fish.rarity} if fish else None,

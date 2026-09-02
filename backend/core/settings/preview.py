@@ -1,10 +1,16 @@
 """Isolated local visual QA; no live game or payment providers."""
+
 from .test import *  # noqa: F403
 
 DEBUG = True
 PDL_QA_PREVIEW = True
 TESTING = False
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "preview.sqlite3"}}  # noqa: F405
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "preview.sqlite3",  # noqa: F405
+    }
+}
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3001", "http://127.0.0.1:3001"]
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},

@@ -26,6 +26,10 @@ def validate_rewards(rewards):
             kind = reward["kind"]
             if kind in ("item", "tokens") and amount != int(amount):
                 raise ValueError
+            if kind in ("balance", "bonus") and amount != amount.quantize(
+                Decimal("0.01")
+            ):
+                raise ValueError
             entry = {
                 "kind": kind,
                 "quantity": str(amount.quantize(Decimal("0.01")))

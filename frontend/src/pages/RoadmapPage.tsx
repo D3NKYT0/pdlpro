@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { Flag, CalendarDays, ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -37,7 +38,7 @@ export function RoadmapPage() {
               <Status value={status} />
               <small className="muted">
                 {query.data?.filter((e) => e.status === status).length || 0}{" "}
-                atualizações
+                {query.data?.filter((e) => e.status === status).length === 1 ? "atualização" : "atualizações"}
               </small>
             </div>
             {query.data
@@ -75,6 +76,7 @@ export function RoadmapPage() {
 
 export function RoadmapDetailPage() {
   const { id = "" } = useParams();
+  useEffect(() => { window.scrollTo(0, 0); }, [id]);
   const query = useQuery({
     queryKey: ["roadmap", id],
     queryFn: () => programsApi.roadmapDetail(id),

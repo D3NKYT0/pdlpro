@@ -22,14 +22,16 @@ from common.architecture.exceptions import EntityNotFoundError, ValidationDomain
 
 def _active_season() -> BattlePassSeason | None:
     now = timezone.now()
-    return (
-        BattlePassSeason.objects.filter(active=True, starts_at__lte=now, ends_at__gte=now).first()
-    )
+    return BattlePassSeason.objects.filter(
+        active=True, starts_at__lte=now, ends_at__gte=now
+    ).first()
 
 
 def _current_level(progress: UserBattlePassProgress) -> int:
     row = (
-        BattlePassLevel.objects.filter(season=progress.season, required_xp__lte=progress.xp)
+        BattlePassLevel.objects.filter(
+            season=progress.season, required_xp__lte=progress.xp
+        )
         .order_by("-level")
         .first()
     )
@@ -44,16 +46,24 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
         if season is None:
             return {"season": None, "levels": []}
         user = get_user_model().objects.get(id=data)
-        progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=season)
-        claimed = set(UserBattlePassClaim.objects.filter(user=user).values_list("reward_id", flat=True))
+        progress, _ = UserBattlePassProgress.objects.get_or_create(
+            user=user, season=season
+        )
+        claimed = set(
+            UserBattlePassClaim.objects.filter(user=user).values_list(
+                "reward_id", flat=True
+            )
+        )
         current = _current_level(progress)
         levels = []
-        for row in BattlePassLevel.objects.filter(season=season).prefetch_related("rewards"):
+        for row in BattlePassLevel.objects.filter(season=season).prefetch_related(
+            "rewards"
+        ):
             levels.append(
                 {
                     "level": row.level,
                     "required_xp": row.required_xp,
-                    "unlocked": current >= row.level,
+                    "unlocked": progress.xp >= row.required_xp,
                     "rewards": [
                         {
                             "id": str(reward.id),
@@ -63,7 +73,8 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
                             "quantity": reward.quantity,
                             "description": reward.description,
                             "claimed": reward.pk in claimed,
-                            "locked_premium": reward.is_premium and not progress.has_premium,
+                            "locked_premium": reward.is_premium
+                            and not progress.has_premium,
                         }
                         for reward in row.rewards.all()
                     ],
@@ -94,15 +105,24 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
     def execute(self, data: ClaimBattlePassRewardInput) -> dict:
         from django.contrib.auth import get_user_model
 
-        reward = BattlePassReward.objects.select_related("level_row", "level_row__season").filter(id=data.reward_id).first()
+        reward = (
+            BattlePassReward.objects.select_related("level_row", "level_row__season")
+            .filter(id=data.reward_id)
+            .first()
+        )
         if reward is None:
             raise EntityNotFoundError("Recompensa do passe não encontrada.")
         user = get_user_model().objects.select_for_update().get(id=data.user_id)
         season = reward.level_row.season
-        if not season.active or not season.starts_at <= timezone.now() <= season.ends_at:
+        if (
+            not season.active
+            or not season.starts_at <= timezone.now() <= season.ends_at
+        ):
             raise ValidationDomainError("Esta temporada não está ativa.")
-        progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=reward.level_row.season)
-        if _current_level(progress) < reward.level_row.level:
+        progress, _ = UserBattlePassProgress.objects.get_or_create(
+            user=user, season=reward.level_row.season
+        )
+        if progress.xp < reward.level_row.required_xp:
             raise ValidationDomainError("Nível do passe insuficiente.")
         if reward.is_premium and not progress.has_premium:
             raise ValidationDomainError("Compre o passe premium para este prêmio.")
@@ -117,10 +137,28 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
         )
         UserBattlePassClaim.objects.create(user=user, reward=reward)
         from apps.games.infrastructure.models import GameRewardLog
-        GameRewardLog.objects.create(user=user, season=season, kind="reward", source=reward.id,
-            label=reward.item_name, rewards=[{"kind": "item", "item_id": reward.item_id, "name": reward.item_name,
-                                            "quantity": reward.quantity, "enchant": reward.enchant}])
-        return {"claimed": True, "item_id": reward.item_id, "item_name": reward.item_name}
+
+        GameRewardLog.objects.create(
+            user=user,
+            season=season,
+            kind="reward",
+            source=reward.id,
+            label=reward.item_name,
+            rewards=[
+                {
+                    "kind": "item",
+                    "item_id": reward.item_id,
+                    "name": reward.item_name,
+                    "quantity": reward.quantity,
+                    "enchant": reward.enchant,
+                }
+            ],
+        )
+        return {
+            "claimed": True,
+            "item_id": reward.item_id,
+            "item_name": reward.item_name,
+        }
 
 
 @dataclass(frozen=True, slots=True)
@@ -141,7 +179,9 @@ class BuyBattlePassPremiumUseCase(UseCase[BuyBattlePassPremiumInput, dict]):
             raise EntityNotFoundError("Nenhuma temporada ativa.")
         with self._unit_of_work:
             user = get_user_model().objects.select_for_update().get(id=data.user_id)
-            progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=season)
+            progress, _ = UserBattlePassProgress.objects.get_or_create(
+                user=user, season=season
+            )
             if progress.has_premium:
                 raise ValidationDomainError("Você já tem o passe premium.")
             wallet = self._wallets.get_or_create(data.user_id)
@@ -159,9 +199,12 @@ class BuyBattlePassPremiumUseCase(UseCase[BuyBattlePassPremiumInput, dict]):
 
 
 def auto_claim_rewards(user, progress):
-    rewards = BattlePassReward.objects.filter(level_row__season=progress.season,
-        level_row__required_xp__lte=progress.xp).exclude(claims__user=user)
+    rewards = BattlePassReward.objects.filter(
+        level_row__season=progress.season, level_row__required_xp__lte=progress.xp
+    ).exclude(claims__user=user)
     if not progress.has_premium:
         rewards = rewards.filter(is_premium=False)
     for reward in rewards:
-        ClaimBattlePassRewardUseCase().execute(ClaimBattlePassRewardInput(user_id=user.id, reward_id=reward.id))
+        ClaimBattlePassRewardUseCase().execute(
+            ClaimBattlePassRewardInput(user_id=user.id, reward_id=reward.id)
+        )

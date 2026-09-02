@@ -120,9 +120,13 @@ class StaffSupporterView(APIView):
             # Do not replace staff/moderator/admin privileges with a supporter role.
             user = row.user
             if row.status == "approved" and user.role == "player":
-                type(user).objects.filter(pk=user.pk, role="player").update(role="supporter")
+                type(user).objects.filter(pk=user.pk, role="player").update(
+                    role="supporter"
+                )
             elif row.status == "rejected" and user.role == "supporter":
-                type(user).objects.filter(pk=user.pk, role="supporter").update(role="player")
+                type(user).objects.filter(pk=user.pk, role="supporter").update(
+                    role="player"
+                )
         return Response(SupporterSerializer(row).data)
 
 

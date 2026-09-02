@@ -130,7 +130,7 @@ export type GameStats = {
   plays: number;
   wins: number;
   payout: number;
-  leaderboard: { username: string; score: number }[];
+  leaderboard: { username: string; score: number; wins: number }[];
 };
 export type ConfigRow = { id: string; [key: string]: unknown };
 

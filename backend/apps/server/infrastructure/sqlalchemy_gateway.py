@@ -68,6 +68,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         required = {"characters", "items", "items_delayed", "pdl_exchange_receipts"}
         if any(engines.get(name) != "INNODB" for name in required):
             raise RuntimeError("A integração requer recibos instalados e tabelas InnoDB.")
+        # Catch an outdated receipt schema before a wallet reservation is created.
+        self._fetch("exchange_get_receipt", {"receipt": "__readiness_check__"})
 
     def exchange_coins(self, receipt: str, login: str, char_id: int, item_id: int, quantity: int, direction: str) -> None:
         from common.architecture.exceptions import ValidationDomainError

@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Q
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
@@ -78,12 +78,22 @@ def quest_count(user, quest):
 def battle_details(user):
     season = active_season()
     logs = GameRewardLog.objects.filter(user=user)
+    history = [
+        {
+            "id": str(r.id),
+            "kind": r.kind,
+            "label": r.label,
+            "rewards": r.rewards,
+            "created_at": r.created_at,
+        }
+        for r in logs.exclude(kind="daily_bonus")[:100]
+    ]
     if not season:
         return {
             "quests": [],
             "exchanges": [],
             "milestones": [],
-            "history": [],
+            "history": history,
             "auto_claim": False,
             "statistics": {},
         }
@@ -129,16 +139,6 @@ def battle_details(user):
             "claimed": logs.filter(kind="milestone", source=m.id).exists(),
         }
         for m in season.milestones.order_by("required_xp")
-    ]
-    history = [
-        {
-            "id": str(r.id),
-            "kind": r.kind,
-            "label": r.label,
-            "rewards": r.rewards,
-            "created_at": r.created_at,
-        }
-        for r in logs.filter(season=season)[:100]
     ]
     return {
         "quests": quests,
@@ -369,14 +369,18 @@ def game_statistics(user, kind):
     wins = rows.filter(**{success: kind != "roulette"}).count()
     leaderboard = list(
         model.objects.values("user__username")
-        .annotate(score=Count("pk"))
-        .order_by("-score", "user__username")[:20]
+        .annotate(
+            score=Count("pk"),
+            wins=Count("pk", filter=Q(**{success: kind != "roulette"})),
+        )
+        .order_by("-wins", "-score", "user__username")[:20]
     )
     return {
         "plays": rows.count(),
         "wins": wins,
         "leaderboard": [
-            {"username": r["user__username"], "score": r["score"]} for r in leaderboard
+            {"username": r["user__username"], "score": r["score"], "wins": r["wins"]}
+            for r in leaderboard
         ],
         "payout": rows.aggregate(total=Sum("payout"))["total"] or 0
         if kind in ("dice", "slots")

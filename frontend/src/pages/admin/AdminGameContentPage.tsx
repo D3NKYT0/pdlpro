@@ -408,11 +408,15 @@ export function AdminGameContentPage() {
                           : "Não"
                         : f.type === "datetime-local"
                           ? new Date(String(row[f.key])).toLocaleString("pt-BR")
-                        : f.type === "date"
-                          ? new Date(`${row[f.key]}T12:00:00`).toLocaleDateString("pt-BR")
-                        : f.options
-                          ? f.options.find(([key]) => key === row[f.key])?.[1] || String(row[f.key])
-                        : String(row[f.key] ?? "—")}
+                          : f.type === "date"
+                            ? new Date(
+                                `${row[f.key]}T12:00:00`,
+                              ).toLocaleDateString("pt-BR")
+                            : f.options
+                              ? f.options.find(
+                                  ([key]) => key === row[f.key],
+                                )?.[1] || String(row[f.key])
+                              : String(row[f.key] ?? "—")}
                   </small>
                 ))}
             </div>

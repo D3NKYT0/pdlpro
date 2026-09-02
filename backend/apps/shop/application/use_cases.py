@@ -7,7 +7,7 @@ from uuid import UUID
 from apps.shop.infrastructure.models import Cart, CartItem, ShopItem
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
-from common.architecture.exceptions import EntityNotFoundError
+from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +50,8 @@ class AddToCartUseCase(UseCase[AddToCartInput, dict]):
             cart, _ = Cart.objects.get_or_create(user=user)
             cart_item, created = CartItem.objects.get_or_create(cart=cart, item=item, defaults={"quantity": data.quantity})
             if not created:
+                if cart_item.quantity + data.quantity > 99:
+                    raise ValidationDomainError("Máximo de 99 unidades por produto no carrinho.")
                 cart_item.quantity += data.quantity
                 cart_item.save(update_fields=["quantity", "updated_at"])
         return get_cart_snapshot(data.user_id)

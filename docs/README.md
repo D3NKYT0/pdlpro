@@ -9,6 +9,7 @@ Este diretório concentra a documentação técnica e operacional do projeto.
 | [API](api.md) | Namespaces, autenticação, paginação e erros |
 | [Arquitetura](architecture.md) | Camadas, dependências, DI, módulos e fluxo de mudança |
 | [Implantação](deployment.md) | Limites do Compose atual e checklist de produção |
+| [Programas e recompensas](programs-and-rewards.md) | Apoiadores, roadmap, recursos, loja, passe, bônus, pesca e preparação de carteira ↔ jogo |
 
 Documentos na raiz:
 

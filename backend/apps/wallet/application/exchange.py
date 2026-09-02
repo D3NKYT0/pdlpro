@@ -16,6 +16,8 @@ def exchange_dump(row):
         "id": str(row.id),
         "request_key": str(row.request_key),
         "direction": row.direction,
+        "login": row.login,
+        "character_id": row.character_id,
         "character_name": row.character_name,
         "item_id": row.item_id,
         "quantity": row.quantity,
@@ -51,11 +53,15 @@ class ExchangeCoinsUseCase:
                     )
             else:
                 if GameExchange.objects.filter(user=user, status="pending").exists():
-                    raise ValidationError("Retome a transferência pendente no histórico antes de iniciar outra.")
+                    raise ValidationError(
+                        "Retome a transferência pendente no histórico antes de iniciar outra."
+                    )
                 try:
                     self.lineage.assert_exchange_ready()
                 except Exception:
-                    raise ValidationError("Integração de moedas indisponível. A equipe precisa verificar a conexão, os recibos e as tabelas transacionais.")
+                    raise ValidationError(
+                        "Integração de moedas indisponível. A equipe precisa verificar a conexão, os recibos e as tabelas transacionais."
+                    )
                 if not self.access.can_access(user.id, user.username, data["login"]):
                     raise ValidationError("Conta não vinculada ao seu usuário.")
                 char = self.lineage.get_character(data["login"], data["character_id"])
