@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { PANEL_THEME_STYLES, themeImage } from './assets'
+import { reassertInstalledTheme } from './ThemeProvider'
 
 function upsertPanelStyle(href: string) {
   const existing = document.querySelector<HTMLLinkElement>(`link[data-pdl-panel-theme="${href}"]`)
@@ -22,6 +23,7 @@ export function usePanelTheme() {
     document.body.style.minHeight = '100vh'
 
     const styles = PANEL_THEME_STYLES.map(upsertPanelStyle)
+    reassertInstalledTheme()
 
     return () => {
       document.documentElement.classList.remove('pdl-panel')

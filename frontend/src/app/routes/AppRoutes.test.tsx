@@ -75,6 +75,7 @@ const pages = [
   ['/painel/admin/noticias', 'Notícias'],
   ['/painel/admin/jogos', 'Módulos de jogos'],
   ['/painel/admin/atendimento', 'Fila de chamados'],
+  ['/painel/admin/temas', 'Temas do PDL'],
 ]
 
 it.each(pages)('abre %s com API pendente', (path, heading) => {

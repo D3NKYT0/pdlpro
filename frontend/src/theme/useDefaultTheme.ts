@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { PUBLIC_THEME_STYLES, ROUTE_THEME_STYLES, themeImage } from './assets'
+import { reassertInstalledTheme } from './ThemeProvider'
 
 function upsertLink(href: string, group: string) {
   const existing = document.querySelector<HTMLLinkElement>(`link[data-pdl-theme="${href}"]`)
@@ -25,6 +26,7 @@ export function useDefaultTheme() {
     document.body.style.minHeight = '100vh'
 
     const core = PUBLIC_THEME_STYLES.map((href) => upsertLink(href, 'core'))
+    reassertInstalledTheme()
 
     return () => {
       document.documentElement.classList.remove('pdl-public')
@@ -40,5 +42,6 @@ export function useDefaultTheme() {
   useEffect(() => {
     document.querySelectorAll('link[data-pdl-group="route"]').forEach((link) => link.remove())
     ROUTE_THEME_STYLES.filter((item) => item.test(pathname)).forEach((item) => upsertLink(item.href, 'route'))
+    reassertInstalledTheme()
   }, [pathname])
 }

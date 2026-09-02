@@ -7,6 +7,8 @@ import { ApiError, request } from './services/infra/http'
 import { queryClient } from './services/infra/queryClient'
 import App from './App'
 
+const defaultTheme = { id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL', description: '', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
+
 vi.mock('./services/infra/http', async original => ({ ...await original<object>(), request: vi.fn() }))
 beforeEach(() => {
   vi.resetAllMocks()
@@ -15,6 +17,7 @@ beforeEach(() => {
 afterEach(() => { cleanup(); queryClient.clear(); vi.restoreAllMocks() })
 it('visitante abre rota privada e recebe login com destino preservado', async () => {
   vi.mocked(request).mockImplementation(path => {
+    if (path === '/public/theme/') return Promise.resolve(defaultTheme) as ReturnType<typeof request>
     if (path === '/shared/me/') return Promise.reject(new ApiError('Sem sessão', 401, 'UNAUTHORIZED'))
     return new Promise(() => {})
   })
@@ -26,6 +29,7 @@ it('visitante abre rota privada e recebe login com destino preservado', async ()
 })
 it('sessão restaurada abre painel com dados do usuário', async () => {
   vi.mocked(request).mockImplementation(path => {
+    if (path === '/public/theme/') return Promise.resolve(defaultTheme) as ReturnType<typeof request>
     if (path === '/shared/me/') return Promise.resolve({ id: 'user', username: 'Tester', display_name: 'Tester', email: 'user@test.dev', is_staff: false, is_email_verified: true }) as ReturnType<typeof request>
     return new Promise(() => {})
   })

@@ -14,6 +14,7 @@ import {
   Settings2,
   ShoppingBag,
   SlidersHorizontal,
+  Palette,
   Unlink,
   type LucideIcon,
 } from 'lucide-react'
@@ -39,6 +40,7 @@ const categories: Category[] = [
     name: 'Sistema',
     entries: [
       { to: '/painel/admin/servidor', title: 'Painel e servidor', description: 'Nome, rates, chronicle e coming soon', icon: Server },
+      { to: '/painel/admin/temas', title: 'Temas', description: 'Instalar, ativar e restaurar a aparência do frontend', icon: Palette },
       { to: '/admin/', title: 'Django Admin', description: 'CRUD completo do sistema', icon: ExternalLink, external: true },
     ],
   },

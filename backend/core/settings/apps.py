@@ -43,6 +43,7 @@ LOCAL_APPS = [
     "apps.communication.apps.CommunicationConfig",
     "apps.support.apps.SupportConfig",
     "apps.staff.apps.StaffConfig",
+    "apps.themes.apps.ThemesConfig",
 ]
 
 INSTALLED_APPS_PDL = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

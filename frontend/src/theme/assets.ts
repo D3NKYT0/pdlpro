@@ -1,7 +1,15 @@
 export const THEME = '/theme/default'
 
+let runtimeAssets: Record<string, string> = {}
+
+/** Atualiza somente aliases declarados pelo pacote. Assets ausentes continuam no default. */
+export function configureRuntimeTheme(assets: Record<string, string> = {}) {
+  runtimeAssets = { ...assets }
+}
+
 export function themeAsset(path: string) {
-  return `${THEME}/${path.replace(/^\//, '')}`
+  const normalized = path.replace(/^\//, '')
+  return runtimeAssets[normalized] || `${THEME}/${normalized}`
 }
 
 export function themeImage(path: string) {

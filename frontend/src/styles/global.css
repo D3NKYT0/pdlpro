@@ -20,6 +20,12 @@ body.global-loading {
   overflow: hidden !important;
 }
 
+.theme-bootstrap {
+  position: fixed;
+  inset: 0;
+  background: #070706;
+}
+
 .global-loader {
   position: fixed;
   inset: 0;

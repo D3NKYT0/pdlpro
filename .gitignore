@@ -30,6 +30,7 @@ local_settings.py
 node_modules/
 /frontend/dist/
 /frontend/build/
+/frontend/theme-packages/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

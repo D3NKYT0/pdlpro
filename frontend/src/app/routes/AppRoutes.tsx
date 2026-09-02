@@ -56,6 +56,7 @@ import { GameExchangePage } from '../../pages/GameExchangePage'
 import { AdminResourcesPage, AdminRoadmapPage, AdminSupportersPage } from '../../pages/admin/AdminProgramsPage'
 import { AdminCommercePage } from '../../pages/admin/AdminCommercePage'
 import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
+import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
 
 export function AppRoutes() {
   return (
@@ -125,6 +126,7 @@ export function AppRoutes() {
               <Route path="/painel/admin/noticias" element={<AdminNewsPage />} />
               <Route path="/painel/admin/jogos" element={<AdminGamesPage />} />
               <Route path="/painel/admin/atendimento" element={<AdminSupportPage />} />
+              <Route path="/painel/admin/temas" element={<AdminThemesPage />} />
             </Route>
           </Route>
         </Route>

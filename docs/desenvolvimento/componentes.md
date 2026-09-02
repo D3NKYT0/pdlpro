@@ -4,6 +4,10 @@
 
 Novas telas devem compor a biblioteca existente. Os componentes compartilham interação e acessibilidade; o tema do painel define a aparência. O catálogo usa o mesmo `usePanelTheme` de `PrivateLayout`, incluindo as fontes, o fundo e as texturas originais dos botões.
 
+Temas instaláveis sobrescrevem os tokens e assets declarados sem substituir estes componentes.
+O contrato, os limites do ZIP e o fallback do tema `default` estão documentados em
+[Temas instaláveis](../funcionalidades/temas.md).
+
 Para telas Django/Jazzmin, consulte a [interface compartilhada do backend](interface-admin.md), que mantém as variantes equivalentes e preserva o envio nativo dos formulários.
 
 ## Experimentar o catálogo
