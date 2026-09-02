@@ -136,7 +136,7 @@ class CommerceView(APIView):
                 ).data
             )
         if section == "purchases":
-            rows = ShopPurchase.objects.filter(user=request.user)[:100]
+            rows = ShopPurchase.objects.filter(user=request.user).order_by("-created_at")[:100]
             return Response(
                 [
                     {

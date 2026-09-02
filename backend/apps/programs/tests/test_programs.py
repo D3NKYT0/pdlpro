@@ -488,6 +488,9 @@ def test_exchange_coins_retries_without_double_debit(player):
         calls = 0
         receipts = set()
 
+        def assert_exchange_ready(self):
+            pass
+
         def get_character(self, *args):
             return GameCharacter(1, "Hero", 80, False, 0)
 
@@ -515,3 +518,55 @@ def test_exchange_coins_retries_without_double_debit(player):
     assert len(gateway.receipts) == 1 and gateway.calls == 2
     assert Wallet.objects.get(user=player).balance == 90
     assert GameExchange.objects.count() == 1
+
+
+@pytest.mark.parametrize("direction", ["to_game", "from_game"])
+@pytest.mark.parametrize("outcome", ["success", "rejected", "unready"])
+def test_exchange_financial_outcomes(player, direction, outcome):
+    from decimal import Decimal
+    from apps.wallet.application.exchange import ExchangeCoinsUseCase
+    from apps.server.domain.gateways import GameCharacter
+    from apps.wallet.infrastructure.exchange_models import GameExchange
+    from apps.wallet.infrastructure.models import WalletTransaction
+    from common.architecture.exceptions import ValidationDomainError
+    from rest_framework.exceptions import ValidationError
+
+    class Access:
+        def can_access(self, *args):
+            return True
+
+    class Gateway:
+        def assert_exchange_ready(self):
+            if outcome == "unready":
+                raise RuntimeError("Missing transactional receipt table")
+
+        def get_character(self, *args):
+            return GameCharacter(1, "Hero", 80, False, 0)
+
+        def exchange_coins(self, *args):
+            if outcome == "rejected":
+                raise ValidationDomainError("Insufficient game coins")
+
+    CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
+    wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
+    case = ExchangeCoinsUseCase(Gateway(), Access())
+    data = dict(request_key=uuid4(), direction=direction, login="player", character_id=1, quantity=20)
+    if outcome == "unready":
+        with pytest.raises(ValidationError):
+            case.execute(player, data)
+        assert not GameExchange.objects.exists()
+        assert not WalletTransaction.objects.exists()
+    else:
+        for _ in range(3):
+            result = case.execute(player, data)
+            assert result["status"] == ("completed" if outcome == "success" else "rejected")
+        if outcome == "success":
+            assert WalletTransaction.objects.count() == 1
+        else:
+            assert WalletTransaction.objects.count() == (2 if direction == "to_game" else 0)
+    wallet.refresh_from_db()
+    expected = Decimal(100)
+    if outcome == "success":
+        expected += Decimal("9.50") if direction == "from_game" else Decimal("-10")
+    assert wallet.balance == expected
+    assert wallet.bonus_balance == 20

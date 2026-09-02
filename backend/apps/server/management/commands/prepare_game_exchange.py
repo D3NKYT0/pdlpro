@@ -13,4 +13,8 @@ class Command(BaseCommand):
             raise CommandError("Ative LINEAGE_DB_ENABLED e configure o banco do jogo antes de preparar recibos.")
         gateway = DependencyInjection.root().resolve(ILineageGateway)
         gateway._execute("exchange_create_receipts")
+        try:
+            gateway.assert_exchange_ready()
+        except Exception as exc:
+            raise CommandError("Recibos criados, mas characters, items, items_delayed e recibos precisam usar InnoDB. Verifique as tabelas com o administrador do servidor.") from exc
         self.stdout.write(self.style.SUCCESS("Tabela pdl_exchange_receipts preparada."))

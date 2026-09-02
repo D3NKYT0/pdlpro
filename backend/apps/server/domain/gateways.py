@@ -66,6 +66,10 @@ class GameItem:
 class ILineageGateway(ABC):
     """Porta única para o banco do Lineage 2. Nunca expor SQL ao frontend."""
 
+    def assert_exchange_ready(self) -> None:
+        """Read-only check of durable receipts and transactional game tables."""
+        raise NotImplementedError("Transferência de moedas indisponível neste servidor.")
+
     def exchange_coins(self, receipt: str, login: str, char_id: int, item_id: int, quantity: int, direction: str) -> None:
         """Apply once, atomically with a durable receipt in the game database."""
         raise NotImplementedError("Transferência de moedas indisponível neste servidor.")

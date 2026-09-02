@@ -11,6 +11,11 @@ from apps.programs.models import (
 class SupporterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
 
+    def validate_image(self, image):
+        if image and image.size > 5 * 1024 * 1024:
+            raise serializers.ValidationError("A imagem deve ter no máximo 5 MB.")
+        return image
+
     class Meta:
         model = Supporter
         fields = [

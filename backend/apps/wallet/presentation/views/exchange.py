@@ -22,10 +22,18 @@ class GameExchangeView(InjectedAPIView):
 
     def get(self, request):
         config = CoinConfig.objects.filter(active=True).first()
+        enabled = False
+        unavailable_reason = "O banco do jogo está desconectado."
+        if settings.LINEAGE_DB_ENABLED:
+            try:
+                self.resolve(ExchangeCoinsUseCase).lineage.assert_exchange_ready()
+                enabled, unavailable_reason = True, ""
+            except Exception:
+                unavailable_reason = "A equipe precisa preparar os recibos de transferência e verificar a conexão e as tabelas InnoDB do jogo."
         return Response(
             {
-                "enabled": settings.LINEAGE_DB_ENABLED
-                or getattr(settings, "TESTING", False),
+                "enabled": enabled,
+                "unavailable_reason": unavailable_reason,
                 "coin": {
                     "name": config.name,
                     "item_id": config.coin_id,

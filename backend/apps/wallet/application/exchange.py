@@ -50,6 +50,12 @@ class ExchangeCoinsUseCase:
                         "Esta chave já pertence a outra transferência."
                     )
             else:
+                if GameExchange.objects.filter(user=user, status="pending").exists():
+                    raise ValidationError("Retome a transferência pendente no histórico antes de iniciar outra.")
+                try:
+                    self.lineage.assert_exchange_ready()
+                except Exception:
+                    raise ValidationError("Integração de moedas indisponível. A equipe precisa verificar a conexão, os recibos e as tabelas transacionais.")
                 if not self.access.can_access(user.id, user.username, data["login"]):
                     raise ValidationError("Conta não vinculada ao seu usuário.")
                 char = self.lineage.get_character(data["login"], data["character_id"])

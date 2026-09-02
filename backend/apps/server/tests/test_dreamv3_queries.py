@@ -16,7 +16,7 @@ from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 CATALOG = LineageQueryCatalog.load("dreamv3")
 READ_QUERIES = [
     name for name, sql in CATALOG._statements.items()
-    if re.sub(r"(?m)^\s*--.*$", "", sql).strip().upper().startswith("SELECT")
+    if re.sub(r"(?m)^\s*--.*$", "", sql).strip().upper().startswith("SELECT") and name != "exchange_table_engines"
 ]
 
 
@@ -30,7 +30,7 @@ def schema():
             login TEXT PRIMARY KEY, password TEXT NOT NULL, accessLevel INTEGER,
             email TEXT NOT NULL DEFAULT '', created_time INTEGER, linked_uuid TEXT
         );
-        CREATE TABLE pdl_exchange_receipts (receipt TEXT PRIMARY KEY, completed INTEGER);
+        CREATE TABLE pdl_exchange_receipts (receipt TEXT PRIMARY KEY, completed INTEGER, error TEXT);
         CREATE TABLE characters (
             obj_Id INTEGER PRIMARY KEY, account_name TEXT, char_name TEXT,
             online INTEGER, sex INTEGER, pvpkills INTEGER, pkkills INTEGER,
@@ -88,7 +88,7 @@ def test_complete_feature_catalog():
     assert set(CATALOG.REQUIRED) <= CATALOG._statements.keys()
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
-    assert len(CATALOG._statements) == 50
+    assert len(CATALOG._statements) == 52
 
 
 @pytest.mark.parametrize("name", READ_QUERIES)

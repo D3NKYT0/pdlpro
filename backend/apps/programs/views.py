@@ -112,10 +112,17 @@ class StaffSupporterView(APIView):
     def patch(self, request, entry_id):
         serializer = SupporterReviewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        row = get_object_or_404(Supporter, id=entry_id)
-        for key, value in serializer.validated_data.items():
-            setattr(row, key, value)
-        row.save()
+        with transaction.atomic():
+            row = get_object_or_404(Supporter.objects.select_for_update(), id=entry_id)
+            for key, value in serializer.validated_data.items():
+                setattr(row, key, value)
+            row.save()
+            # Do not replace staff/moderator/admin privileges with a supporter role.
+            user = row.user
+            if row.status == "approved" and user.role == "player":
+                type(user).objects.filter(pk=user.pk, role="player").update(role="supporter")
+            elif row.status == "rejected" and user.role == "supporter":
+                type(user).objects.filter(pk=user.pk, role="supporter").update(role="player")
         return Response(SupporterSerializer(row).data)
 
 

@@ -62,40 +62,64 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             )
         return self._engine
 
+    def assert_exchange_ready(self) -> None:
+        rows = self._fetch("exchange_table_engines")
+        engines = {row["table_name"].lower(): (row["engine"] or "").upper() for row in rows}
+        required = {"characters", "items", "items_delayed", "pdl_exchange_receipts"}
+        if any(engines.get(name) != "INNODB" for name in required):
+            raise RuntimeError("A integração requer recibos instalados e tabelas InnoDB.")
+
     def exchange_coins(self, receipt: str, login: str, char_id: int, item_id: int, quantity: int, direction: str) -> None:
         from common.architecture.exceptions import ValidationDomainError
 
         if direction not in ("to_game", "from_game") or quantity < 1:
             raise ValidationDomainError("Transferência inválida.")
-        params = {"receipt": receipt, "login": login, "char_id": char_id, "item_id": item_id, "qty": quantity,
-                  "owner_id": char_id, "enchant": 0}
+        self.assert_exchange_ready()
+        params = {"receipt": receipt, "login": login, "char_id": char_id,
+                  "item_id": item_id, "qty": quantity, "owner_id": char_id, "enchant": 0}
+        rejection = None
         with self._engine_or_create().begin() as connection:
             def execute(name, values=None):
                 return connection.execute(text(self._sql[name]), values or params)
+
             execute("exchange_insert_receipt")
-            if execute("exchange_get_receipt").mappings().one()["completed"]:
+            receipt_row = execute("exchange_get_receipt").mappings().one()
+            if receipt_row["completed"] == 1:
                 return
-            char = execute("exchange_character").mappings().first()
-            if not char or char["online"]:
-                raise ValidationDomainError("Personagem não pertence à conta ou está online.")
-            if direction == "to_game":
-                params["name"] = char["name"]
-                execute("deposit_item")
+            if receipt_row["completed"] == -1:
+                rejection = receipt_row["error"] or "Transferência rejeitada."
             else:
-                stacks = list(execute("exchange_stacks").mappings())
-                if sum(int(s["quantity"]) for s in stacks) < quantity:
-                    raise ValidationDomainError("Moedas insuficientes no personagem.")
-                remaining = quantity
-                for stack in stacks:
-                    take = min(remaining, int(stack["quantity"]))
-                    values = dict(params, stack_id=stack["stack_id"], qty=take)
-                    if execute("exchange_decrement", values).rowcount != 1:
-                        raise ValidationDomainError("O inventário mudou. Tente novamente.")
-                    execute("exchange_delete_empty", values)
-                    remaining -= take
-                    if remaining == 0:
-                        break
-            execute("exchange_complete_receipt")
+                try:
+                    # A business rejection rolls back all item changes, but its
+                    # terminal receipt is committed. Concurrent retries must not
+                    # apply a transfer that the wallet has already refunded.
+                    with connection.begin_nested():
+                        char = execute("exchange_character").mappings().first()
+                        if not char or char["online"]:
+                            raise ValidationDomainError("Personagem não pertence à conta ou está online.")
+                        if direction == "to_game":
+                            params["name"] = char["name"]
+                            execute("deposit_item")
+                        else:
+                            stacks = list(execute("exchange_stacks").mappings())
+                            if sum(int(s["quantity"]) for s in stacks) < quantity:
+                                raise ValidationDomainError("Moedas insuficientes no personagem.")
+                            remaining = quantity
+                            for stack in stacks:
+                                take = min(remaining, int(stack["quantity"]))
+                                values = dict(params, stack_id=stack["stack_id"], qty=take)
+                                if execute("exchange_decrement", values).rowcount != 1:
+                                    raise ValidationDomainError("O inventário mudou. Tente novamente.")
+                                execute("exchange_delete_empty", values)
+                                remaining -= take
+                                if remaining == 0:
+                                    break
+                        execute("exchange_complete_receipt")
+                except ValidationDomainError as exc:
+                    rejection = str(exc)[:300]
+                    execute("exchange_reject_receipt", dict(params, error=rejection))
+        if rejection:
+            raise ValidationDomainError(rejection)
 
     def _bind(self, sql: str, params: dict | None) -> dict:
         needed = set(BIND_RE.findall(sql))

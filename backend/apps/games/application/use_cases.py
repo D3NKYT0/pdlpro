@@ -3,11 +3,11 @@ from __future__ import annotations
 import random
 import time
 from dataclasses import dataclass
-from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
 from django.db.models import F
+from django.utils import timezone
 
 from apps.games.domain.exceptions import AlreadyClaimedError, GameInactiveError, InsufficientTokensError
 from apps.games.infrastructure.models import Bag, BagItem, DailyBonusClaim, GameConfig, Prize, SpinHistory
@@ -146,14 +146,16 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
 
         config = _config("daily_bonus")
         amount = Decimal(str((config.settings or {}).get("amount", "10.00")))
-        today = date.today()
+        today = timezone.localdate()
         with self._unit_of_work:
-            user = get_user_model().objects.get(id=data.user_id)
+            user = get_user_model().objects.select_for_update().get(id=data.user_id)
             if DailyBonusClaim.objects.filter(user=user, claimed_on=today).exists():
                 raise AlreadyClaimedError()
             wallet = self._wallets.get_or_create(data.user_id)
             self._wallets.credit(wallet.id, amount, origin="daily_bonus", description="Bônus diário")
             DailyBonusClaim.objects.create(user=user, claimed_on=today, amount=amount)
+            from apps.games.infrastructure.models import GameRewardLog
+            GameRewardLog.objects.create(user=user, kind="daily_bonus", label="Bônus diário", rewards=[{"kind": "balance", "quantity": str(amount)}])
             from apps.accounts.application.progress import add_xp
             from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
@@ -165,7 +167,7 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
 class GetDailyBonusStateUseCase(UseCase[UUID, dict]):
     def execute(self, data: UUID) -> dict:
         config = GameConfig.objects.filter(code="daily_bonus").first()
-        today = date.today()
+        today = timezone.localdate()
         claimed = DailyBonusClaim.objects.filter(user__id=data, claimed_on=today).exists()
         amount = str((config.settings or {}).get("amount", "10.00")) if config else "10.00"
         return {"claimed": claimed, "amount": amount, "active": bool(config and config.active)}
