@@ -63,6 +63,8 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet)
 
     def debit(self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str) -> WalletEntity:
+        # A condição de saldo e o débito ficam no mesmo UPDATE para evitar uma corrida
+        # entre a consulta de saldo feita pelo caso de uso e outra movimentação.
         updated = Wallet.objects.filter(id=wallet_id, balance__gte=amount).update(balance=F("balance") - amount)
         if not updated:
             raise InsufficientBalanceError()

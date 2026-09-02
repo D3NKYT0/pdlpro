@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class ShopItemSerializer(serializers.Serializer):
-    """Contrato de dados de ``ShopItemSerializer`` na API de shop.
+    """Representa um produto da loja com seu UUID, item do jogo, preço e quantidade.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``id``, ``name``, ``item_id``, ``price``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     id = serializers.UUIDField()
@@ -18,12 +18,12 @@ class ShopItemSerializer(serializers.Serializer):
 
 
 class AddToCartSerializer(serializers.Serializer):
-    """Contrato de dados de ``AddToCartSerializer`` na API de shop.
+    """Valida produto e quantidade para inclusão no carrinho.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``item_id``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     item_id = serializers.UUIDField()
@@ -31,12 +31,12 @@ class AddToCartSerializer(serializers.Serializer):
 
 
 class UpdateCartItemSerializer(serializers.Serializer):
-    """Contrato de dados de ``UpdateCartItemSerializer`` na API de shop.
+    """Valida a nova quantidade de uma linha do carrinho; zero solicita remoção.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     quantity = serializers.IntegerField(min_value=0, max_value=99)

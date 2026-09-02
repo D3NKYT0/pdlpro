@@ -21,12 +21,12 @@ from common.permissions import IsStaffMember
 
 
 class PackageItemSerializer(serializers.Serializer):
-    """Contrato de dados de ``PackageItemSerializer`` na API de shop.
+    """Representa e valida os itens que compõem um pacote da loja.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``item``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     item = serializers.SlugRelatedField(
@@ -36,12 +36,12 @@ class PackageItemSerializer(serializers.Serializer):
 
 
 class PackageSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``ShopPackage`` no módulo shop.
+    """Representa e valida o pacote comercial e sua composição.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``items``, ``contents``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     items = PackageItemSerializer(many=True, write_only=True)
@@ -89,12 +89,12 @@ class PackageSerializer(serializers.ModelSerializer):
 
 
 class PromoSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``PromotionCode`` no módulo shop.
+    """Representa e valida um código promocional e suas condições de uso.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``supporter``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     supporter = serializers.SlugRelatedField(
@@ -140,12 +140,12 @@ class PromoSerializer(serializers.ModelSerializer):
 
 
 class CartOptionsSerializer(serializers.Serializer):
-    """Contrato de dados de ``CartOptionsSerializer`` na API de shop.
+    """Valida as opções de compra associadas ao carrinho.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``promo_code``, ``use_bonus``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     promo_code = serializers.CharField(max_length=40, allow_blank=True, required=False)
@@ -153,12 +153,12 @@ class CartOptionsSerializer(serializers.Serializer):
 
 
 class CartPackageSerializer(serializers.Serializer):
-    """Contrato de dados de ``CartPackageSerializer`` na API de shop.
+    """Valida a seleção e a quantidade de pacotes no carrinho.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``package_id``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     package_id = serializers.UUIDField()

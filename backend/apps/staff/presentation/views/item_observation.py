@@ -34,24 +34,24 @@ class CanObserveItems(BasePermission):
 
 
 class PageQuery(serializers.Serializer):
-    """Contrato de dados de ``PageQuery`` na API de staff.
+    """Valida os parâmetros de paginação das consultas de observação de itens.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``page``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     page = serializers.IntegerField(default=1, min_value=1, max_value=1000000)
 
 
 class ItemQuery(PageQuery):
-    """Contrato de dados de ``ItemQuery`` na API de staff.
+    """Acrescenta filtros de itens à paginação das consultas de observação.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``search``, ``minimum``, ``category``, ``favorites``, ``sort``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     search = serializers.CharField(default="", allow_blank=True, max_length=100)
@@ -62,36 +62,36 @@ class ItemQuery(PageQuery):
 
 
 class CaptureInput(serializers.Serializer):
-    """Contrato de dados de ``CaptureInput`` na API de staff.
+    """Valida os parâmetros para criar uma captura de observação de itens.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``notes``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     notes = serializers.CharField(default="", allow_blank=True, max_length=2000)
 
 
 class FavoriteInput(serializers.Serializer):
-    """Contrato de dados de ``FavoriteInput`` na API de staff.
+    """Valida o item e os parâmetros da atualização de favoritos de observação.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``active``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     active = serializers.BooleanField()
 
 
 class ComparisonQuery(PageQuery):
-    """Contrato de dados de ``ComparisonQuery`` na API de staff.
+    """Valida a seleção e os filtros para comparar capturas de observação.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``before``, ``after``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     before = serializers.UUIDField()
@@ -99,12 +99,12 @@ class ComparisonQuery(PageQuery):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``ItemObservationCategory`` no módulo staff.
+    """Representa e valida uma categoria usada para organizar observações.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``id``, ``name``, ``description``, ``item_ids``, ``order``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     class Meta:
@@ -114,12 +114,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SnapshotSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``ItemObservationSnapshot`` no módulo staff.
+    """Representa os metadados de uma captura persistida de observação de itens.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``created_by``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     created_by = serializers.CharField(source="created_by.username", read_only=True, allow_null=True)

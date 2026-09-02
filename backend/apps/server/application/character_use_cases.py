@@ -112,11 +112,11 @@ class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
 
 
 class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):
-    """Solicita o reposicionamento do personagem autorizado e aplica a cobrança do serviço
-    configurado.
+    """Reposiciona um personagem por meio do gateway após verificar acesso à conta.
 
-    Uso: resolva pelo container e chame ``execute(data)`` com ``CharacterServiceInput``. O
-    retorno é ``None``.
+    Chame execute com CharacterServiceInput. Este serviço não debita a carteira;
+    ListServicePricesUseCase informa UNSTUCK como gratuito. O gateway verifica as condições do
+    personagem e o retorno é None.
     """
 
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
@@ -162,10 +162,10 @@ class ListServicePricesUseCase(UseCase[None, dict]):
 
 
 class PurchaseLinkSlotUseCase(UseCase[PurchaseLinkSlotInput, dict]):
-    """Compra um slot adicional de vínculo, debitando a carteira e aumentando o limite do usuário.
+    """Compra de 1 a 10 slots adicionais para vincular contas Lineage.
 
-    Uso: resolva pelo container e chame ``execute(data)`` com ``PurchaseLinkSlotInput``. O
-    retorno é ``dict``.
+    Recebe PurchaseLinkSlotInput, calcula o preço total, debita a carteira e acrescenta os slots
+    dentro do mesmo UnitOfWork. Retorna extra_slots e paid.
     """
 
     def __init__(

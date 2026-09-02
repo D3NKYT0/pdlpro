@@ -14,12 +14,12 @@ from common.views import InjectedAPIView
 
 
 class PushKeysSerializer(serializers.Serializer):
-    """Contrato de dados de ``PushKeysSerializer`` na API de communication.
+    """Valida as chaves auth e p256dh de uma assinatura Web Push.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``auth``, ``p256dh``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     auth = serializers.CharField()
@@ -27,12 +27,12 @@ class PushKeysSerializer(serializers.Serializer):
 
 
 class SubscribePushSerializer(serializers.Serializer):
-    """Contrato de dados de ``SubscribePushSerializer`` na API de communication.
+    """Valida endpoint e chaves para registrar a assinatura de push do navegador.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``endpoint``, ``keys``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     endpoint = serializers.URLField()
@@ -40,12 +40,12 @@ class SubscribePushSerializer(serializers.Serializer):
 
 
 class UnsubscribePushSerializer(serializers.Serializer):
-    """Contrato de dados de ``UnsubscribePushSerializer`` na API de communication.
+    """Valida o endpoint da assinatura de push que o usuário deseja remover.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``endpoint``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     endpoint = serializers.URLField()

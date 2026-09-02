@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class WalletSerializer(serializers.Serializer):
-    """Contrato de dados de ``WalletSerializer`` na API de wallet.
+    """Representa o UUID da carteira e seus saldos separados de moedas principais e bônus.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``id``, ``balance``, ``bonus_balance``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     id = serializers.UUIDField()
@@ -16,12 +16,13 @@ class WalletSerializer(serializers.Serializer):
 
 
 class TransferSerializer(serializers.Serializer):
-    """Contrato de dados de ``TransferSerializer`` na API de wallet.
+    """Valida destinatário, quantidade de moedas e descrição da transferência. O remetente vem da
+    sessão; saldo e valor positivo são conferidos no caso de uso.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``recipient_username``, ``amount``, ``description``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     recipient_username = serializers.CharField(max_length=16)

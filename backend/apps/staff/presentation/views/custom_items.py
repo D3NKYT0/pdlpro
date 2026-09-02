@@ -30,12 +30,12 @@ class CanViewCustomItems(BasePermission):
 
 
 class CustomItemSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``CustomCatalogItem`` no módulo staff.
+    """Representa e valida os metadados de um item customizado no catálogo.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``image``, ``icon_url``, ``conflicts_with_xml``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     image = serializers.ImageField(write_only=True)
@@ -104,12 +104,12 @@ class CustomItemSerializer(serializers.ModelSerializer):
 
 
 class CustomItemQuery(serializers.Serializer):
-    """Contrato de dados de ``CustomItemQuery`` na API de staff.
+    """Valida os filtros de pesquisa do catálogo administrativo de itens customizados.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``search``, ``page``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     search = serializers.CharField(default="", allow_blank=True, max_length=100)

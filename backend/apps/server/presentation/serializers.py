@@ -2,13 +2,13 @@ from rest_framework import serializers
 
 
 class ServerInfoSerializer(serializers.Serializer):
-    """Contrato de dados de ``ServerInfoSerializer`` na API de server.
+    """Representa a configuração pública do servidor, incluindo crônica, rates e características.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``name``, ``description``, ``chronicle``, ``rates``, ``enchant``,
     ``max_level``, ``features``, ``notes``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     name = serializers.CharField()
@@ -22,12 +22,12 @@ class ServerInfoSerializer(serializers.Serializer):
 
 
 class ServerStatusSerializer(serializers.Serializer):
-    """Contrato de dados de ``ServerStatusSerializer`` na API de server.
+    """Representa disponibilidade dos servidores de login/jogo e quantidade de jogadores.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``game_online``, ``login_online``, ``players_online``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     game_online = serializers.BooleanField()
@@ -36,12 +36,12 @@ class ServerStatusSerializer(serializers.Serializer):
 
 
 class RankingEntrySerializer(serializers.Serializer):
-    """Contrato de dados de ``RankingEntrySerializer`` na API de server.
+    """Representa uma posição de ranking com nome, valor e metadados adicionais.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``position``, ``name``, ``value``, ``extra``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     position = serializers.IntegerField()
@@ -51,12 +51,12 @@ class RankingEntrySerializer(serializers.Serializer):
 
 
 class GameAccountSerializer(serializers.Serializer):
-    """Contrato de dados de ``GameAccountSerializer`` na API de server.
+    """Representa uma conta Lineage por login, e-mail e vínculo ao usuário do painel.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``login``, ``email``, ``linked_user_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -65,12 +65,12 @@ class GameAccountSerializer(serializers.Serializer):
 
 
 class AccessibleAccountSerializer(serializers.Serializer):
-    """Contrato de dados de ``AccessibleAccountSerializer`` na API de server.
+    """Representa uma conta disponível para seleção, indicando vínculo e conta principal.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``login``, ``is_primary``, ``linked``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -79,13 +79,13 @@ class AccessibleAccountSerializer(serializers.Serializer):
 
 
 class GameCharacterSerializer(serializers.Serializer):
-    """Contrato de dados de ``GameCharacterSerializer`` na API de server.
+    """Representa os dados do personagem retornados pelo gateway, usando char_id inteiro do jogo.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``char_id``, ``name``, ``level``, ``online``, ``sex``, ``pvp``, ``pk``,
     ``class_id``, ``title``, ``clan_name``, ``is_clan_leader``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     char_id = serializers.IntegerField()
@@ -102,12 +102,12 @@ class GameCharacterSerializer(serializers.Serializer):
 
 
 class RegisterGameAccountSerializer(serializers.Serializer):
-    """Contrato de dados de ``RegisterGameAccountSerializer`` na API de server.
+    """Valida senha e eventual login alternativo para registrar a conta principal no jogo.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``password``, ``login``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     password = serializers.CharField(min_length=6, write_only=True)
@@ -123,12 +123,12 @@ class RegisterGameAccountSerializer(serializers.Serializer):
 
 
 class PrimaryLoginStateSerializer(serializers.Serializer):
-    """Contrato de dados de ``PrimaryLoginStateSerializer`` na API de server.
+    """Representa o estado do login preferido para orientar cadastro ou vínculo de conta.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``login``, ``status``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -136,12 +136,12 @@ class PrimaryLoginStateSerializer(serializers.Serializer):
 
 
 class LinkGameAccountSerializer(serializers.Serializer):
-    """Contrato de dados de ``LinkGameAccountSerializer`` na API de server.
+    """Valida login e senha usados para comprovar acesso antes de vincular uma conta Lineage.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``password``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(max_length=45)
@@ -149,24 +149,24 @@ class LinkGameAccountSerializer(serializers.Serializer):
 
 
 class UnlinkGameAccountSerializer(serializers.Serializer):
-    """Contrato de dados de ``UnlinkGameAccountSerializer`` na API de server.
+    """Valida o login da conta que o usuário deseja desvincular.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(max_length=45)
 
 
 class UpdateGamePasswordSerializer(serializers.Serializer):
-    """Contrato de dados de ``UpdateGamePasswordSerializer`` na API de server.
+    """Valida a nova senha e a identificação da conta Lineage.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``password``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(required=False, allow_blank=True)
@@ -174,12 +174,12 @@ class UpdateGamePasswordSerializer(serializers.Serializer):
 
 
 class ChangeNicknameSerializer(serializers.Serializer):
-    """Contrato de dados de ``ChangeNicknameSerializer`` na API de server.
+    """Valida os dados de solicitação de mudança de nome de personagem.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``char_id``, ``name``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -188,12 +188,12 @@ class ChangeNicknameSerializer(serializers.Serializer):
 
 
 class ChangeSexSerializer(serializers.Serializer):
-    """Contrato de dados de ``ChangeSexSerializer`` na API de server.
+    """Valida os dados de solicitação de mudança de sexo de personagem.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``char_id``, ``sex``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -202,12 +202,12 @@ class ChangeSexSerializer(serializers.Serializer):
 
 
 class UnstuckSerializer(serializers.Serializer):
-    """Contrato de dados de ``UnstuckSerializer`` na API de server.
+    """Valida a identificação do personagem para o serviço de reposicionamento.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``char_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField()
@@ -215,12 +215,12 @@ class UnstuckSerializer(serializers.Serializer):
 
 
 class PurchaseSlotSerializer(serializers.Serializer):
-    """Contrato de dados de ``PurchaseSlotSerializer`` na API de server.
+    """Valida a quantidade de slots adicionais de vínculo a comprar.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     quantity = serializers.IntegerField(min_value=1, max_value=10)

@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class ReportFiltersSerializer(serializers.Serializer):
-    """Contrato de dados de ``ReportFiltersSerializer`` na API de staff.
+    """Valida filtros e paginação comuns às consultas de relatórios financeiros.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``username``, ``page``, ``page_size``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     username = serializers.CharField(required=False, allow_blank=True, max_length=150)
@@ -16,12 +16,12 @@ class ReportFiltersSerializer(serializers.Serializer):
 
 
 class BalanceFiltersSerializer(ReportFiltersSerializer):
-    """Contrato de dados de ``BalanceFiltersSerializer`` na API de staff.
+    """Especializa a validação dos filtros para relatórios de saldo e conciliação.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``status``, ``minimum``, ``maximum``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     status = serializers.ChoiceField(choices=["consistent", "review", "discrepancy", "no_wallet"], required=False)
@@ -35,12 +35,12 @@ class BalanceFiltersSerializer(ReportFiltersSerializer):
 
 
 class CashFlowFiltersSerializer(ReportFiltersSerializer):
-    """Contrato de dados de ``CashFlowFiltersSerializer`` na API de staff.
+    """Especializa a validação dos filtros para relatórios de fluxo de caixa.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``date_from``, ``date_to``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     date_from = serializers.DateField(required=False)
@@ -53,12 +53,12 @@ class CashFlowFiltersSerializer(ReportFiltersSerializer):
 
 
 class PaymentFiltersSerializer(CashFlowFiltersSerializer, BalanceFiltersSerializer):
-    """Contrato de dados de ``PaymentFiltersSerializer`` na API de staff.
+    """Especializa a validação dos filtros para relatórios de pagamentos.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``status``, ``method``, ``currency``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     status = serializers.ChoiceField(choices=["pending", "processing", "confirmed", "cancelled", "failed"], required=False)
@@ -71,15 +71,15 @@ class PaymentFiltersSerializer(CashFlowFiltersSerializer, BalanceFiltersSerializ
 
 
 class BalanceRowSerializer(serializers.Serializer):
-    """Contrato de dados de ``BalanceRowSerializer`` na API de staff.
+    """Descreve uma linha do relatório de saldos e conciliação no contrato HTTP.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``username``, ``balance``, ``bonus_balance``, ``total_balance``,
     ``calculated_balance``, ``difference``, ``credits``, ``debits``, ``transaction_count``,
     ``credit_count``, ``debit_count``, ``first_transaction``, ``last_transaction``,
     ``report_status``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     username = serializers.CharField()
@@ -99,13 +99,13 @@ class BalanceRowSerializer(serializers.Serializer):
 
 
 class CashFlowRowSerializer(serializers.Serializer):
-    """Contrato de dados de ``CashFlowRowSerializer`` na API de staff.
+    """Descreve uma linha do relatório de fluxo de caixa no contrato HTTP.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``day``, ``credits``, ``debits``, ``net``, ``accumulated``,
     ``transaction_count``, ``credit_count``, ``debit_count``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     day = serializers.DateField()
@@ -119,14 +119,14 @@ class CashFlowRowSerializer(serializers.Serializer):
 
 
 class PaymentRowSerializer(serializers.Serializer):
-    """Contrato de dados de ``PaymentRowSerializer`` na API de staff.
+    """Descreve uma linha do relatório de pagamentos no contrato HTTP.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``id``, ``username``, ``amount``, ``currency``, ``coins``,
     ``bonus_applied``, ``total_credited``, ``status``, ``method``, ``payment_source``,
     ``created_at``, ``paid_at``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     id = serializers.UUIDField()
@@ -144,12 +144,12 @@ class PaymentRowSerializer(serializers.Serializer):
 
 
 class ReportResponseSerializer(serializers.Serializer):
-    """Contrato de dados de ``ReportResponseSerializer`` na API de staff.
+    """Define o envelope financeiro com paginação, linhas e resumo agregado.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``count``, ``total_pages``, ``next``, ``previous``, ``summary``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     count = serializers.IntegerField()
@@ -160,36 +160,36 @@ class ReportResponseSerializer(serializers.Serializer):
 
 
 class BalanceReportSerializer(ReportResponseSerializer):
-    """Contrato de dados de ``BalanceReportSerializer`` na API de staff.
+    """Especializa o envelope financeiro para linhas de saldo e conciliação.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``results``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     results = BalanceRowSerializer(many=True)
 
 
 class CashFlowReportSerializer(ReportResponseSerializer):
-    """Contrato de dados de ``CashFlowReportSerializer`` na API de staff.
+    """Especializa o envelope financeiro para linhas de fluxo de caixa.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``results``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     results = CashFlowRowSerializer(many=True)
 
 
 class PaymentReportSerializer(ReportResponseSerializer):
-    """Contrato de dados de ``PaymentReportSerializer`` na API de staff.
+    """Especializa o envelope financeiro para linhas de pagamentos.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``results``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     results = PaymentRowSerializer(many=True)

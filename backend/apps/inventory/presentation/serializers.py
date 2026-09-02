@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class WithdrawSerializer(serializers.Serializer):
-    """Contrato de dados de ``WithdrawSerializer`` na API de inventory.
+    """Valida os identificadores e a quantidade de itens a retirar do jogo para o painel.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``char_id``, ``item_id``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(required=False, allow_blank=True)
@@ -17,12 +17,12 @@ class WithdrawSerializer(serializers.Serializer):
 
 
 class DepositSerializer(serializers.Serializer):
-    """Contrato de dados de ``DepositSerializer`` na API de inventory.
+    """Valida os identificadores, a quantidade e o encantamento dos itens a enviar ao jogo.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``inventory_id``, ``item_id``, ``quantity``, ``enchant``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(required=False, allow_blank=True)
@@ -33,13 +33,13 @@ class DepositSerializer(serializers.Serializer):
 
 
 class TradeSerializer(serializers.Serializer):
-    """Contrato de dados de ``TradeSerializer`` na API de inventory.
+    """Valida a movimentação de itens entre inventários do painel.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``origin_inventory_id``, ``destination_inventory_id``, ``item_id``,
     ``quantity``, ``enchant``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     origin_inventory_id = serializers.UUIDField()

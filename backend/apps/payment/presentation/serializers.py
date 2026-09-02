@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class CreatePaymentOrderSerializer(serializers.Serializer):
-    """Contrato de dados de ``CreatePaymentOrderSerializer`` na API de payment.
+    """Valida valor ou pacote, moeda e método da compra de moedas do painel.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``amount``, ``method``, ``currency``, ``package_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False)
@@ -17,12 +17,12 @@ class CreatePaymentOrderSerializer(serializers.Serializer):
 
 
 class PreviewBonusSerializer(serializers.Serializer):
-    """Contrato de dados de ``PreviewBonusSerializer`` na API de payment.
+    """Valida os parâmetros da cotação e da prévia de bônus, sem criar pedido.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``amount``, ``currency``, ``package_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False, default=0)

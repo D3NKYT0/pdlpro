@@ -174,6 +174,7 @@ class Container:
             ):
                 continue
             if parameter.default is not inspect.Parameter.empty:
+                # Parâmetros opcionais preservam o default; só os obrigatórios entram na DI.
                 continue
             annotation = hints.get(name, parameter.annotation)
             if annotation is inspect.Parameter.empty or isinstance(annotation, str):

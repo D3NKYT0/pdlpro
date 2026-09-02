@@ -161,6 +161,8 @@ class ExchangeCoinsUseCase:
             return exchange_dump(row)
         except Exception:
             GameExchange.objects.filter(pk=row.pk, status="pending").update(
+                # A conexão pode cair após o jogo aplicar o envio. Preserve pending
+                # e retome pelo mesmo recibo, sem estornar uma operação incerta.
                 error="Conexão não confirmada. Retome esta mesma transferência; não crie outra."
             )
             row.refresh_from_db()

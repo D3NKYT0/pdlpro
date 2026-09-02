@@ -66,12 +66,12 @@ def filter_dates(rows, data):
 
 
 class DjangoFinancialReportRepository(IFinancialReportRepository):
-    """Adaptador Django de ``IFinancialReportRepository`` para consultas agregadas de saldos, fluxo
-    de caixa e pagamentos.
+    """Implementa consultas financeiras agregadas pelo ORM do Django.
 
-    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
-    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
-    UnitOfWork.
+    Injete pela porta IFinancialReportRepository e chame report com filtros validados. Seleciona
+    pagamentos, fluxo de caixa ou saldos/conciliação; retorna FinancialReportResult com
+    paginação e resumo. Os valores Decimal são serializados como texto para preservar duas casas
+    decimais. Esta classe consulta dados, sem alterar saldos ou liquidar pagamentos.
     """
 
     def report(self, data: FinancialReportInput) -> FinancialReportResult:

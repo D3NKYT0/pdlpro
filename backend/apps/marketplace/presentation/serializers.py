@@ -2,12 +2,12 @@ from rest_framework import serializers
 
 
 class CreateListingSerializer(serializers.Serializer):
-    """Contrato de dados de ``CreateListingSerializer`` na API de marketplace.
+    """Valida personagem, preço e dados do anúncio de venda no marketplace.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``login``, ``char_id``, ``price``, ``notes``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     login = serializers.CharField(max_length=45, required=False, allow_blank=True, default="")

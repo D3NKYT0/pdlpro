@@ -9,12 +9,13 @@ from apps.programs.models import (
 
 
 class SupporterSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``Supporter`` no módulo programs.
+    """Representa e valida o cadastro de apoiador; os campos de revisão seguem as restrições de
+    Meta.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``username``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     username = serializers.CharField(source="user.username", read_only=True)
@@ -49,12 +50,12 @@ class SupporterSerializer(serializers.ModelSerializer):
 
 
 class SupporterReviewSerializer(serializers.Serializer):
-    """Contrato de dados de ``SupporterReviewSerializer`` na API de programs.
+    """Valida o parecer administrativo e as condições do cadastro de apoiador.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``status``, ``review_note``, ``commission_percent``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     status = serializers.ChoiceField(choices=["approved", "rejected"])
@@ -65,12 +66,12 @@ class SupporterReviewSerializer(serializers.Serializer):
 
 
 class PayoutSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``CommissionPayout`` no módulo programs.
+    """Representa o pedido de repasse das comissões de um apoiador.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
 
     Campos declarados: ``supporter_name``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     supporter_name = serializers.CharField(source="supporter.name", read_only=True)
@@ -81,12 +82,12 @@ class PayoutSerializer(serializers.ModelSerializer):
 
 
 class PayoutReviewSerializer(serializers.Serializer):
-    """Contrato de dados de ``PayoutReviewSerializer`` na API de programs.
+    """Valida o estado e a observação usados pela equipe na revisão de um repasse.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``status``, ``note``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     status = serializers.ChoiceField(choices=["paid", "rejected"])
@@ -94,13 +95,13 @@ class PayoutReviewSerializer(serializers.Serializer):
 
 
 class RoadmapSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``RoadmapEntry`` no módulo programs.
+    """Representa e valida uma entrada do roadmap, incluindo publicação e progresso.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``id``, ``title``, ``description``, ``category``, ``status``,
     ``progress``, ``target_date``, ``published``, ``order``, ``updated_at``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     class Meta:
@@ -126,12 +127,12 @@ class RoadmapSerializer(serializers.ModelSerializer):
 
 
 class ResourceSerializer(serializers.ModelSerializer):
-    """Contrato DRF de ``SystemResource`` no módulo programs.
+    """Representa e valida a configuração de ativação de um recurso do painel.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``id``, ``code``, ``name``, ``category``, ``enabled``, ``description``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     class Meta:

@@ -32,12 +32,12 @@ from common.permissions import IsStaffMember
 
 
 class BattleActionSerializer(serializers.Serializer):
-    """Contrato de dados de ``BattleActionSerializer`` na API de games.
+    """Valida a ação e os identificadores do conteúdo adicional do passe de batalha.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``action``, ``entry_id``, ``enabled``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     action = serializers.ChoiceField(
@@ -84,12 +84,12 @@ class DailyDetailsView(APIView):
 
 
 class BaitPurchaseSerializer(serializers.Serializer):
-    """Contrato de dados de ``BaitPurchaseSerializer`` na API de games.
+    """Valida a seleção e a quantidade de iscas para compra.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``bait_id``, ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     bait_id = serializers.UUIDField()

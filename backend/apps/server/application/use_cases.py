@@ -33,10 +33,10 @@ PUBLIC_LINEAGE_QUERIES = frozenset(
 
 @dataclass(frozen=True, slots=True)
 class GetServerStatusInput:
-    """Dados de entrada de ``GetServerStatusUseCase.execute``.
+    """Entrada vazia de GetServerStatusUseCase.
 
-    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
-    permissões nem regras de negócio por conta própria.
+    Instancie GetServerStatusInput() para consultar o status; esta operação obtém seus
+    parâmetros das configurações e do gateway.
     """
 
     pass

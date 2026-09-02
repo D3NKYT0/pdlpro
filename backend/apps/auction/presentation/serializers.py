@@ -2,13 +2,13 @@ from rest_framework import serializers
 
 
 class CreateAuctionSerializer(serializers.Serializer):
-    """Contrato de dados de ``CreateAuctionSerializer`` na API de auction.
+    """Valida item, quantidade, lance mínimo e duração para criar um leilão.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``inventory_id``, ``item_id``, ``quantity``, ``enchant``, ``min_bid``,
     ``hours``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     inventory_id = serializers.UUIDField()
@@ -20,12 +20,12 @@ class CreateAuctionSerializer(serializers.Serializer):
 
 
 class PlaceBidSerializer(serializers.Serializer):
-    """Contrato de dados de ``PlaceBidSerializer`` na API de auction.
+    """Valida valor do lance e personagem de destino; prazo e saldo são verificados no caso de uso.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``amount``, ``character_name``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     amount = serializers.DecimalField(max_digits=12, decimal_places=2)

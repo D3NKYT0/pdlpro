@@ -2,48 +2,48 @@ from rest_framework import serializers
 
 
 class BuyTokensSerializer(serializers.Serializer):
-    """Contrato de dados de ``BuyTokensSerializer`` na API de games.
+    """Valida a quantidade de fichas solicitada para compra com saldo da carteira.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``amount``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     amount = serializers.IntegerField(min_value=1, max_value=1000)
 
 
 class BuyBoxSerializer(serializers.Serializer):
-    """Contrato de dados de ``BuyBoxSerializer`` na API de games.
+    """Valida o identificador do tipo de caixa que o jogador deseja comprar.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``box_type_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     box_type_id = serializers.UUIDField()
 
 
 class TransferBagSerializer(serializers.Serializer):
-    """Contrato de dados de ``TransferBagSerializer`` na API de games.
+    """Valida o inventário de destino para receber os itens da bag.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``inventory_id``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     inventory_id = serializers.UUIDField()
 
 
 class PlayDiceSerializer(serializers.Serializer):
-    """Contrato de dados de ``PlayDiceSerializer`` na API de games.
+    """Valida o valor e o tipo de aposta do jogo de dados.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``bet_type``, ``amount``, ``number``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     bet_type = serializers.ChoiceField(choices=["even", "odd", "high", "low", "number"])

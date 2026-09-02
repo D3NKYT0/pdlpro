@@ -10,13 +10,14 @@ from common.views import InjectedAPIView
 
 
 class ExchangeSerializer(serializers.Serializer):
-    """Contrato de dados de ``ExchangeSerializer`` na API de wallet.
+    """Valida direção, conta, personagem, quantidade e request_key do câmbio. A chave deve ser
+    preservada ao retomar a mesma operação.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
 
     Campos declarados: ``request_key``, ``direction``, ``login``, ``character_id``,
     ``quantity``.
-
-    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
-    leia data. Respeite os campos read_only/write_only.
     """
 
     request_key = serializers.UUIDField()

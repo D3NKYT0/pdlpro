@@ -36,6 +36,7 @@ class DjangoUnitOfWork(UnitOfWork):
     def commit(self) -> None:
         """Não antecipa commit: a confirmação ocorre ao sair normalmente do bloco."""
 
+        # Um commit aqui quebraria a composição com um atomic externo do Django.
         return None
 
     def rollback(self) -> None:
