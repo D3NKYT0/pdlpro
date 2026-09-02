@@ -86,6 +86,10 @@ e configuração staff enriquecem seus dados com o mesmo catálogo; preços, qua
 IDs de registros e valores históricos não são alterados.
 O XML contém referências a texturas do cliente,
 não as imagens: itens definidos por XML precisam de seu JPG em `frontend/public/item-icons/`.
+Os JPGs gerados são empacotados em `frontend/assets/item-icons.tar.gz`. Os scripts
+`predev` e `prebuild` restauram automaticamente o catálogo quando a cópia de trabalho
+contém apenas o placeholder. Depois de atualizar as fontes locais, execute
+`npm run icons` para importar e recriar o arquivo usado no deploy.
 Customs cadastrados no painel usam a imagem enviada para media, sem rebuild do frontend.
 
 ### Cadastro de itens customizados
