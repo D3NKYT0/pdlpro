@@ -38,10 +38,6 @@ JAZZMIN_SETTINGS_PDL = {
         "staff",
     ],
     "icons": JAZZMIN_ICONS_PDL,
-    "custom_links": {
-        "server": [{"name": "Observar itens", "url": "admin:server_itemobservationsnapshot_monitor",
-                    "icon": "fas fa-chart-line", "permissions": ["server.view_itemobservationsnapshot"]}],
-    },
 }
 
 JAZZMIN_UI_TWEAKS_PDL = {

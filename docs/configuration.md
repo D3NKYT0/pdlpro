@@ -63,9 +63,11 @@ controlado de cadastro, login no jogo e consumo da fila `items_delayed`.
 O módulo mantém SHA1 para novas senhas; confirme o algoritmo no loginserver
 antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mistos.
 
-### Observar itens no admin
+### Observar itens no painel administrativo
 
-Em `/admin/`, acesse **Servidor Lineage → Observar itens**. O painel traz a
+Em `/painel/admin`, acesse **Servidor → Observar itens** (`/painel/admin/itens`).
+Esta é uma tela operacional nativa do frontend, não uma tela do Django Admin.
+O painel traz a
 observação de inflação do projeto SITE: totais por localização, busca por nome/ID,
 quantidade mínima, categorias, ordenação, favoritos pessoais e comparação entre
 snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`;
@@ -84,11 +86,18 @@ um snapshot por dia/origem. Categorias são preservadas pelo nome no histórico,
 se forem excluídas depois. Comparações exigem a mesma origem e datas crescentes.
 Uma entrada sem quantidade anterior aparece como “Novo”, sem percentual artificial.
 
-Além de `is_staff`, a equipe precisa de `server.view_itemobservationsnapshot` para
+Além do acesso à área staff, a equipe precisa de `server.view_itemobservationsnapshot` para
 consultar o painel e `server.capture_itemobservationsnapshot` para criar snapshots.
-Categorias e exclusão de snapshots seguem as permissões normais de cada modelo no
-Django Admin. Superusuários já possuem todas essas permissões.
-O deploy de produção aplica a migration `server.0003` e publica o CSS do painel.
+Criar, editar e excluir categorias exige respectivamente `server.add_itemobservationcategory`,
+`server.change_itemobservationcategory` e `server.delete_itemobservationcategory`.
+Excluir snapshots exige `server.delete_itemobservationsnapshot`.
+Superusuários já possuem todas essas permissões. Elas podem ser atribuídas a grupos
+ou usuários; os dados de observação não são gerenciados pelo Django Admin.
+As APIs em `/api/v1/staff/item-observation/` verificam as permissões em cada operação;
+as escritas autenticadas por cookie exigem CSRF. Quantidades são retornadas como texto
+para preservar a precisão de inteiros grandes no navegador.
+O deploy de produção aplica a migration `server.0003` e recompila o frontend.
+Quem já aplicou essa migration mantém categorias, favoritos e snapshots existentes.
 
 ## Autenticação e origens
 

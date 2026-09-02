@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import {
   Bell,
+  ChartNoAxesCombined,
   CalendarDays,
   Coins,
   ExternalLink,
@@ -51,7 +52,10 @@ const categories: Category[] = [
   },
   {
     name: 'Servidor',
-    entries: [{ to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo, slots e destravamento', icon: Settings2 }],
+    entries: [
+      { to: '/painel/admin/itens', title: 'Observar itens', description: 'Economia do servidor, favoritos, snapshots e comparação entre datas', icon: ChartNoAxesCombined },
+      { to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo, slots e destravamento', icon: Settings2 },
+    ],
   },
 ]
 

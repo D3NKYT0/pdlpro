@@ -6,9 +6,12 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
-from django.test import Client
-from django.urls import reverse
+from django.contrib import admin
+from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
+from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
+from apps.accounts.infrastructure.authentication import get_access_cookie_name
 
 from apps.inventory.infrastructure.models import Inventory, InventoryItem
 from apps.server.application.item_observation import (
@@ -23,7 +26,7 @@ from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
 
 pytestmark = pytest.mark.django_db
-PREFIX = "admin:server_itemobservationsnapshot_"
+BASE = "/api/v1/staff/item-observation/"
 RAW = {
     "items": [{"item_id": 57, "quantity": 300, "instances": 2, "unique_owners": 1}],
     "details": [{"item_id": 57, "location": "INVENTORY", "quantity": 300, "instances": 2, "unique_owners": 1}],
@@ -48,7 +51,8 @@ def admin_user():
 
 @pytest.fixture
 def logged(client, admin_user):
-    client.force_login(admin_user)
+    client = APIClient()
+    client.force_authenticate(admin_user)
     return client
 
 
@@ -59,82 +63,138 @@ def gateway():
 
 
 def test_dashboard_and_permission_filtered_navigation(enabled, logged):
-    response = logged.get(reverse(PREFIX + "monitor"))
+    response = logged.get(BASE)
     assert response.status_code == 200
-    assert response.context_data["data"]["total_quantity"] == 300
-    assert "Capturar snapshot" in response.content.decode()
-    assert reverse(PREFIX + "monitor") in response.content.decode()
-    assert "csrfmiddlewaretoken" in response.content.decode()
+    assert response.data["totals"]["total_quantity"] == "300"
+    assert logged.get(BASE + "access/").data["capture"] is True
+    assert not admin.site.is_registered(ItemObservationSnapshot)
+    assert not admin.site.is_registered(ItemObservationCategory)
+    with pytest.raises(NoReverseMatch):
+        reverse("admin:server_itemobservationsnapshot_monitor")
 
 
 def test_anonymous_player_and_staff_without_permission_cannot_observe(client):
-    assert client.get(reverse(PREFIX + "monitor")).status_code == 302
+    client = APIClient()
+    assert client.get(BASE).status_code in (401, 403)
     user = get_user_model().objects.create_user(username="staff", email="staff@example.invalid", password="test", is_staff=True)
-    client.force_login(user)
-    for name in ("monitor", "compare"):
-        assert client.get(reverse(PREFIX + name)).status_code == 403
-    assert client.post(reverse(PREFIX + "capture")).status_code == 403
-    assert client.post(reverse(PREFIX + "favorite", args=[57]), {"action": "add"}).status_code == 403
+    client.force_authenticate(user)
+    for name in ("", "compare/", "access/", "snapshots/", "categories/"):
+        assert client.get(BASE + name).status_code == 403
+    assert client.post(BASE + "snapshots/", {}, format="json").status_code == 403
+    assert client.put(BASE + "favorites/57/", {"active": True}, format="json").status_code == 403
     user.is_staff = False
     user.save()
-    assert client.get(reverse(PREFIX + "monitor")).status_code == 302
+    assert client.get(BASE).status_code == 403
 
 
 def test_view_permission_does_not_grant_snapshot_capture(enabled, client):
+    client = APIClient()
     user = get_user_model().objects.create_user(username="reader", email="reader@example.invalid", password="test", is_staff=True)
     user.user_permissions.add(Permission.objects.get(codename="view_itemobservationsnapshot"))
-    client.force_login(user)
-    assert client.get(reverse(PREFIX + "monitor")).status_code == 200
-    assert client.post(reverse(PREFIX + "capture")).status_code == 403
+    client.force_authenticate(user)
+    assert client.get(BASE).status_code == 200
+    assert client.get(BASE + "access/").data["capture"] is False
+    assert client.post(BASE + "snapshots/", {}, format="json").status_code == 403
+    assert client.post(BASE + "categories/", {"name": "Denied"}, format="json").status_code == 403
+    category = ItemObservationCategory.objects.create(name="Existing")
+    assert client.put(BASE + f"categories/{category.id}/", {"name": "Denied"}, format="json").status_code == 403
+    assert client.delete(BASE + f"categories/{category.id}/").status_code == 403
+    snapshot = ItemObservationSnapshot.objects.create(source="test", snapshot_date=timezone.localdate())
+    assert client.delete(BASE + f"snapshots/{snapshot.id}/").status_code == 403
+    snapshot.delete()
     assert ItemObservationSnapshot.objects.count() == 0
 
 
 def test_mutations_require_post_and_csrf(enabled, logged, admin_user):
-    for name, args in (("capture", []), ("favorite", [57])):
-        assert logged.get(reverse(PREFIX + name, args=args)).status_code == 405
-    strict = Client(enforce_csrf_checks=True)
-    strict.force_login(admin_user)
-    assert strict.post(reverse(PREFIX + "capture")).status_code == 403
-    assert strict.post(reverse(PREFIX + "favorite", args=[57]), {"action": "add"}).status_code == 403
+    assert logged.get(BASE + "favorites/57/").status_code == 405
+    strict = APIClient(enforce_csrf_checks=True)
+    strict.cookies[get_access_cookie_name()] = str(RefreshToken.for_user(admin_user).access_token)
+    assert strict.get(BASE + "access/").status_code == 200
+    assert strict.post(BASE + "snapshots/", {}, format="json").status_code == 403
+    assert strict.put(BASE + "favorites/57/", {"active": True}, format="json").status_code == 403
+    token = strict.get("/api/v1/auth/csrf/").data["csrfToken"]
+    assert strict.put(BASE + "favorites/57/", {"active": True}, format="json", HTTP_X_CSRFTOKEN=token).status_code == 200
+
+
+def test_category_crud_validation_and_filter(enabled, logged):
+    url = BASE + "categories/"
+    for invalid in ([True], [0], [57, 57], ["57"], [2147483648]):
+        assert logged.post(url, {"name": "Invalid", "item_ids": invalid}, format="json").status_code == 400
+    response = logged.post(url, {"name": "Moedas", "item_ids": [57], "order": 1}, format="json")
+    assert response.status_code == 201
+    category_url = url + response.data["id"] + "/"
+    assert logged.get(BASE, {"category": "Moedas"}).data["count"] == 1
+    assert logged.get(BASE, {"category": "Unknown"}).data["count"] == 0
+    assert logged.put(category_url, {"name": "Coins", "item_ids": [57]}, format="json").status_code == 200
+    assert logged.delete(category_url).status_code == 204
+    assert logged.get(url).data == []
+
+
+def test_history_available_with_game_disabled_and_delete_cascades(settings, logged):
+    settings.LINEAGE_DB_ENABLED = False
+    snapshot = ItemObservationSnapshot.objects.create(source="offline", snapshot_date=timezone.localdate())
+    ItemObservationDetail.objects.create(snapshot=snapshot, item_id=57, item_name="Adena", location="SITE",
+                                         quantity=10, instances=1, unique_owners=1)
+    assert logged.get(BASE + "snapshots/").data["count"] == 1
+    assert logged.get(BASE + f"snapshots/{snapshot.id}/").status_code == 200
+    assert logged.delete(BASE + f"snapshots/{snapshot.id}/").status_code == 204
+    assert not ItemObservationDetail.objects.exists()
+    assert logged.get(BASE + f"snapshots/{snapshot.id}/").status_code == 404
+
+
+def test_api_preserves_large_quantities_and_paginates(enabled, logged, monkeypatch):
+    def many(self):
+        data = deepcopy(RAW)
+        data["items"] = [{"item_id": i, "quantity": 9007199254740993 + i,
+                          "instances": 1, "unique_owners": 1} for i in range(1, 62)]
+        return data
+    monkeypatch.setattr(NullLineageGateway, "observe_items", many)
+    response = logged.get(BASE, {"page": 2})
+    assert response.status_code == 200
+    assert response.data["count"] == 61
+    assert len(response.data["results"]) == 11
+    assert response.data["results"][-1]["quantity"] == "9007199254740994"
+    assert logged.post(BASE + "snapshots/", {"notes": "x" * 2001}, format="json").status_code == 400
+    assert logged.put(BASE + "favorites/0/", {"active": True}, format="json").status_code == 400
 
 
 def test_favorites_are_personal_and_scoped_to_source(enabled, logged, admin_user, settings):
     other = get_user_model().objects.create_user(username="other", email="other@example.invalid", password="test")
     ItemObservationFavorite.objects.create(user=other, source=observation_source(), item_id=57)
-    url = reverse(PREFIX + "favorite", args=[57])
-    logged.post(url, {"action": "add"})
-    logged.post(url, {"action": "add"})
+    url = BASE + "favorites/57/"
+    logged.put(url, {"active": True}, format="json")
+    logged.put(url, {"active": True}, format="json")
     assert ItemObservationFavorite.objects.filter(user=admin_user).count() == 1
-    response = logged.get(reverse(PREFIX + "monitor"), {"favorites": "on"})
-    assert response.context_data["page_obj"].paginator.count == 1
-    logged.post(url, {"action": "remove"})
+    response = logged.get(BASE, {"favorites": "true"})
+    assert response.data["count"] == 1
+    logged.put(url, {"active": False}, format="json")
     assert ItemObservationFavorite.objects.filter(user=other).count() == 1
     assert not ItemObservationFavorite.objects.filter(user=admin_user).exists()
     settings.LINEAGE_DB_NAME = "another-server"
-    assert logged.get(reverse(PREFIX + "monitor"), {"favorites": "on"}).context_data["page_obj"].paginator.count == 0
+    assert logged.get(BASE, {"favorites": "true"}).data["count"] == 0
 
 
 def test_absent_favorite_is_visible_at_zero(enabled, logged, admin_user):
     ItemObservationFavorite.objects.create(user=admin_user, source=observation_source(), item_id=999999)
-    response = logged.get(reverse(PREFIX + "monitor"), {"favorites": "on"})
-    assert response.context_data["page_obj"][0]["quantity"] == 0
+    response = logged.get(BASE, {"favorites": "true"})
+    assert response.data["results"][0]["quantity"] == "0"
 
 
 def test_filters_and_invalid_input(enabled, logged):
-    url = reverse(PREFIX + "monitor")
-    assert logged.get(url, {"search": "57"}).context_data["page_obj"].paginator.count == 1
-    assert logged.get(url, {"minimum": "301"}).context_data["page_obj"].paginator.count == 0
+    url = BASE
+    assert logged.get(url, {"search": "57"}).data["count"] == 1
+    assert logged.get(url, {"minimum": "301"}).data["count"] == 0
     response = logged.get(url, {"minimum": "not-a-number", "sort": "__dict__"})
-    assert response.status_code == 200
-    assert response.context_data["filters"].errors
+    assert response.status_code == 400
+    assert logged.get(BASE, {"page": -1}).status_code == 400
 
 
 def test_snapshot_includes_site_and_category_and_is_unique(enabled, logged, admin_user):
     category = ItemObservationCategory.objects.create(name="Moedas", item_ids=[57])
     inv = Inventory.objects.create(user=admin_user, character_name="Knight", account_name="test")
     InventoryItem.objects.create(inventory=inv, item_id=57, quantity=25)
-    response = logged.post(reverse(PREFIX + "capture"), {"notes": "Baseline"})
-    assert response.status_code == 302
+    response = logged.post(BASE + "snapshots/", {"notes": "Baseline"}, format="json")
+    assert response.status_code == 201
     snapshot = ItemObservationSnapshot.objects.get()
     assert snapshot.total_quantity == 300
     assert snapshot.site_quantity == 25
@@ -145,8 +205,10 @@ def test_snapshot_includes_site_and_category_and_is_unique(enabled, logged, admi
     category.delete()
     site.refresh_from_db()
     assert site.category_name == "Moedas"
-    assert logged.get(response.url).status_code == 200
-    logged.post(reverse(PREFIX + "capture"))
+    assert response.data["id"] == str(snapshot.id)
+    assert "seq_id" not in response.data
+    assert logged.get(BASE + f"snapshots/{snapshot.id}/").data["count"] == 2
+    assert logged.post(BASE + "snapshots/", {}, format="json").status_code == 409
     assert ItemObservationSnapshot.objects.count() == 1
 
 
@@ -163,11 +225,10 @@ def test_connection_errors_do_not_leak_credentials_or_create_snapshot(enabled, l
     def fail(self):
         raise RuntimeError("secret-db-password")
     monkeypatch.setattr(NullLineageGateway, "observe_items", fail)
-    response = logged.get(reverse(PREFIX + "monitor"))
-    assert response.status_code == 200
+    response = logged.get(BASE)
+    assert response.status_code == 503
     assert "secret-db-password" not in response.content.decode()
-    assert "indisponível" in response.content.decode()
-    logged.post(reverse(PREFIX + "capture"))
+    assert logged.post(BASE + "snapshots/", {}, format="json").status_code == 503
     assert not ItemObservationSnapshot.objects.exists()
 
 
@@ -190,9 +251,11 @@ def test_comparison_disappearance_new_items_and_same_source(enabled, logged):
     assert rows[57]["percentage"] == 50
     assert rows[10]["percentage"] == -100
     assert rows[11]["percentage"] is None
-    response = logged.get(reverse(PREFIX + "compare"), {"before": old.pk, "after": new.pk})
+    response = logged.get(BASE + "compare/", {"before": old.id, "after": new.id})
     assert response.status_code == 200
-    assert "Novo" in response.content.decode()
+    assert any(row["percentage"] is None for row in response.data["results"])
+    assert logged.get(BASE + "compare/", {"before": new.id, "after": old.id}).status_code == 400
+    assert logged.get(BASE + "compare/", {"before": old.pk, "after": new.pk}).status_code == 400
     with pytest.raises(ObservationUnavailable):
         compare_snapshots(new, old)
     new.source = "another-source"
