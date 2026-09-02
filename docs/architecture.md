@@ -96,6 +96,8 @@ page/component ──> domain service ──> services/infra/http.ts ──> /ap
 
 ## Como implementar uma mudança
 
+Os guias de [uso dos apps](../backend/apps/README.md) e de [componentes compartilhados](../backend/common/README.md) detalham as classes, mostram exemplos de resolução de casos de uso e explicam os limites de transações, identificadores e autorização. Consulte também as docstrings junto às implementações.
+
 Para um novo caso de uso no backend:
 
 1. Modele entidade, exceção ou interface no domínio.

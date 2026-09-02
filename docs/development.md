@@ -1,5 +1,7 @@
 # Desenvolvimento
 
+Para entender como usar e estender as classes do backend, consulte os guias de [apps](../backend/apps/README.md) e [common](../backend/common/README.md), além das docstrings no código.
+
 ## Pré-requisitos
 
 Escolha Docker ou instalação nativa.

@@ -24,6 +24,8 @@ Nomes de branch recomendados: `feature/...`, `fix/...`, `docs/...` e `refactor/.
 
 ### Backend
 
+- Documente classes públicas com docstrings em português: responsabilidade, uso, entradas/retornos relevantes e efeitos colaterais. Explique unidades, permissões exigidas e limites transacionais quando fizerem parte do contrato.
+- Use comentários para justificar decisões pouco óbvias; evite apenas repetir o nome da classe ou descrever cada linha. Consulte os guias de [apps](backend/apps/README.md) e [common](backend/common/README.md).
 - Regras de negócio entram por classes de caso de uso.
 - O domínio não depende de Django, DRF, SQLAlchemy ou detalhes HTTP.
 - Interfaces ficam no domínio; adaptadores concretos ficam em infraestrutura.
