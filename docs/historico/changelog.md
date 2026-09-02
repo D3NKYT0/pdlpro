@@ -10,6 +10,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Testes de autorização, identidade, pagamentos, carteira, inventário, comércio,
+  infraestrutura e atendimento no backend; contratos HTTP, sessão, rotas e
+  interações de telas no frontend. [Resultados e limites](2026-09-02-testes.md).
+- Cobertura com pisos verificados, Testing Library/jsdom, checagem de tipos dos
+  testes e workflow de qualidade para backend e frontend.
+- Política obrigatória de testes para novas features e correções em `AGENTS.md`
+  e no guia de desenvolvimento.
 - Guias de testes, frontend, pagamentos, backup/restauração e diagnóstico, com
   documentação organizada por assunto em `docs/` e índice central.
 
@@ -26,6 +33,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Removido
 
 - Rede social: feed, curtidas, comentários, amizades e chat entre jogadores.
+
+### Corrigido
+
+- Autorização de personagem na consulta de inventário e sinal de saídas no extrato.
+- Cotação por código de pacote, validação de identificador OAuth, desafios 2FA
+  malformados e autenticação de contas desativadas entre as etapas.
+- Conversão de transports e tratamento de falhas de verificação de passkeys.
 
 ### Alterado
 

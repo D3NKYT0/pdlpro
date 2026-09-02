@@ -12,7 +12,7 @@ vi.mock('../../services/domain/games.service', () => ({ gamesApi: { fishing: vi.
 vi.mock('../../services/domain/programs.service', () => ({ programsApi: { fishing: vi.fn(), buyBait: vi.fn() } }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
-const state = { active: true, cost: 2, fichas: 20, rod: { level: 3, xp: 40 }, recent: [] }
+const state = { active: true, cost: 2, fichas: 20, rod: { level: 3, xp: 40 }, fish: [], recent: [] }
 const details = {
   baits: [{ id: 'bait', name: 'Minhoca', description: 'Isca especial', quantity: 1, price: 3, success_bonus: 10 }, { id: 'empty', name: 'Mosca', description: '', quantity: 0, price: 5, success_bonus: 20 }],
   collection: [{ id: 'fish', name: 'Truta', rarity: 'rare', count: 1 }, { id: 'hidden', name: 'Carpa', rarity: 'epic', count: 0 }],

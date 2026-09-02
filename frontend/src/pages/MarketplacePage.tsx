@@ -160,6 +160,7 @@ export function MarketplacePage() {
   const [notes, setNotes] = useState('')
   const [selectedListing, setSelectedListing] = useState<ApiCharacterListing | null>(null)
   const [pendingListingId, setPendingListingId] = useState('')
+  const [publishing, setPublishing] = useState(false)
 
   const selectedCharacter = (characters.data ?? []).find((character) => String(character.char_id) === charId)
   const selectedCharacterEquipment = useQuery({
@@ -179,6 +180,8 @@ export function MarketplacePage() {
 
   async function onList(event: FormEvent) {
     event.preventDefault()
+    if (publishing) return
+    setPublishing(true)
     try {
       await marketplaceApi.list({ char_id: Number(charId), price, notes })
       toast.success('Personagem listado')
@@ -188,6 +191,8 @@ export function MarketplacePage() {
       await refresh()
     } catch (error) {
       toast.error(isApiError(error) ? error.message : 'Não foi possível listar')
+    } finally {
+      setPublishing(false)
     }
   }
 
@@ -356,8 +361,8 @@ export function MarketplacePage() {
                 Descrição para o comprador
                 <textarea value={notes} onChange={(event) => setNotes(event.target.value)} maxLength={500} placeholder="Destaques, build ou observações do personagem" />
               </label>
-              <button className="btn" type="submit" disabled={!selectedCharacter || selectedCharacter.online}>
-                <Store aria-hidden="true" /> Publicar anúncio
+              <button className="btn" type="submit" disabled={publishing || !selectedCharacter || selectedCharacter.online}>
+                <Store aria-hidden="true" /> {publishing ? 'Publicando...' : 'Publicar anúncio'}
               </button>
             </form>
           </section>

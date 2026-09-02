@@ -83,6 +83,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Segurança](projeto/seguranca.md) | Relato privado de vulnerabilidades e práticas operacionais |
 | [Uso e licença](projeto/licenca.md) | Resumo das condições e referência ao texto da licença |
 | [Validação de 02/09/2026](historico/2026-09-02-validacao.md) | Registro histórico de programas e recompensas; não é garantia de homologação atual |
+| [Ampliação dos testes em 02/09/2026](historico/2026-09-02-testes.md) | Cenários adicionados, resultados, cobertura, correções e lacunas restantes |
 | [Changelog](historico/changelog.md) | Alterações entre versões |
 | [Licença completa](../LICENSE) | Texto que rege o uso e a redistribuição |
 
