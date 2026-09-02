@@ -4,9 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from apps.games.application.bag import add_to_bag
-from apps.shop.infrastructure.models import Cart, CartItem, ShopItem, ShopPurchase
-from apps.wallet.domain.entities import InsufficientBalanceError
+from apps.shop.infrastructure.models import Cart, CartItem, ShopItem
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError
@@ -48,7 +46,7 @@ class AddToCartUseCase(UseCase[AddToCartInput, dict]):
         with self._unit_of_work:
             from django.contrib.auth import get_user_model
 
-            user = get_user_model().objects.get(id=data.user_id)
+            user = get_user_model().objects.select_for_update().get(id=data.user_id)
             cart, _ = Cart.objects.get_or_create(user=user)
             cart_item, created = CartItem.objects.get_or_create(cart=cart, item=item, defaults={"quantity": data.quantity})
             if not created:
@@ -102,10 +100,13 @@ class UpdateCartItemUseCase(UseCase[UpdateCartItemInput, dict]):
         self._unit_of_work = unit_of_work
 
     def execute(self, data: UpdateCartItemInput) -> dict:
-        row = CartItem.objects.filter(id=data.cart_item_id, cart__user__id=data.user_id).first()
-        if row is None:
-            raise EntityNotFoundError("Item do carrinho não encontrado.")
         with self._unit_of_work:
+            from django.contrib.auth import get_user_model
+
+            get_user_model().objects.select_for_update().get(id=data.user_id)
+            row = CartItem.objects.select_for_update().filter(id=data.cart_item_id, cart__user__id=data.user_id).first()
+            if row is None:
+                raise EntityNotFoundError("Item do carrinho não encontrado.")
             if data.quantity == 0:
                 row.delete()
             else:
@@ -125,28 +126,6 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
         self._unit_of_work = unit_of_work
 
     def execute(self, data: CheckoutInput) -> dict:
-        from django.contrib.auth import get_user_model
+        from apps.shop.application.commerce import checkout
 
-        user = get_user_model().objects.get(id=data.user_id)
-        cart = Cart.objects.filter(user=user).first()
-        if cart is None:
-            raise EntityNotFoundError("Carrinho vazio.")
-        items = list(cart.items.select_related("item").all())
-        if not items:
-            raise EntityNotFoundError("Carrinho vazio.")
-        total = sum((row.item.price * row.quantity for row in items), Decimal("0.00"))
-        with self._unit_of_work:
-            wallet = self._wallets.get_or_create(data.user_id)
-            if wallet.balance < total:
-                raise InsufficientBalanceError()
-            self._wallets.debit(wallet.id, total, destination="shop", description="Compra na loja")
-            purchase = ShopPurchase.objects.create(user=user, total=total)
-            for row in items:
-                add_to_bag(
-                    user,
-                    item_id=row.item.item_id,
-                    item_name=row.item.name,
-                    quantity=row.item.quantity * row.quantity,
-                )
-            cart.items.all().delete()
-        return {"purchase_id": str(purchase.id), "total": str(total)}
+        return checkout(data.user_id)

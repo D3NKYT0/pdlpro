@@ -48,13 +48,13 @@ export const gamesApi = {
       method: 'POST',
     }),
   fishing: () => request<ApiFishingState>('/customer/games/fishing/'),
-  cast: () =>
+  cast: (bait_id?: string) =>
     request<{
       success: boolean
       fish: { name: string; rarity: string } | null
       rod: { level: number; xp: number }
       fichas: number
-    }>('/customer/games/fishing/', { method: 'POST' }),
+    }>('/customer/games/fishing/', { method: 'POST', body: JSON.stringify({bait_id}) }),
   economy: () => request<ApiEconomyState>('/customer/games/economy/'),
   fight: (monsterId: string) =>
     request<{

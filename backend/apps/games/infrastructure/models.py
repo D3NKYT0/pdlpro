@@ -257,6 +257,7 @@ class UserBattlePassProgress(BaseModel):
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="progress")
     xp = models.PositiveIntegerField(default=0)
     has_premium = models.BooleanField(default=False)
+    auto_claim = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Progresso do passe"
@@ -270,3 +271,91 @@ class UserBattlePassClaim(BaseModel):
     class Meta:
         verbose_name = "Resgate do passe"
         unique_together = ("user", "reward")
+
+
+class BattlePassQuest(BaseModel):
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="quests")
+    name = models.CharField(max_length=120)
+    description = models.CharField(max_length=300, blank=True)
+    event = models.CharField(max_length=20, choices=[(s, s) for s in ("roulette", "dice", "slots", "fishing", "economy", "daily_bonus")])
+    target = models.PositiveIntegerField(default=1)
+    xp = models.PositiveIntegerField(default=25)
+    period = models.CharField(max_length=10, choices=[("daily", "Diária"), ("weekly", "Semanal"), ("season", "Temporada")], default="daily")
+    active = models.BooleanField(default=True)
+
+
+class BattlePassQuestClaim(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    quest = models.ForeignKey(BattlePassQuest, on_delete=models.PROTECT)
+    period_start = models.DateField()
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["user", "quest", "period_start"], name="unique_quest_period_claim")]
+
+
+class BattlePassExchange(BaseModel):
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="exchanges")
+    name = models.CharField(max_length=120)
+    required_item_id = models.PositiveIntegerField()
+    required_enchant = models.PositiveIntegerField(default=0)
+    required_quantity = models.PositiveIntegerField(default=1)
+    rewards = models.JSONField(default=list)
+    limit_per_user = models.PositiveIntegerField(default=1)
+    active = models.BooleanField(default=True)
+
+
+class BattlePassMilestone(BaseModel):
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="milestones")
+    name = models.CharField(max_length=120)
+    required_xp = models.PositiveIntegerField()
+    rewards = models.JSONField(default=list)
+
+
+class GameRewardLog(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    season = models.ForeignKey(BattlePassSeason, on_delete=models.SET_NULL, null=True, blank=True)
+    kind = models.CharField(max_length=30)
+    source = models.UUIDField(null=True, blank=True)
+    label = models.CharField(max_length=200)
+    rewards = models.JSONField(default=list)
+
+
+class DailyBonusSeason(BaseModel):
+    name = models.CharField(max_length=100)
+    starts_on = models.DateField()
+    ends_on = models.DateField()
+    active = models.BooleanField(default=True)
+
+
+class DailyBonusDay(BaseModel):
+    season = models.ForeignKey(DailyBonusSeason, on_delete=models.CASCADE, related_name="days")
+    day = models.PositiveIntegerField()
+    rewards = models.JSONField(default=list)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["season", "day"], name="unique_daily_season_day")]
+        ordering = ["day"]
+
+
+class DailyBonusPoolEntry(BaseModel):
+    season = models.ForeignKey(DailyBonusSeason, on_delete=models.CASCADE, related_name="pool")
+    name = models.CharField(max_length=100)
+    weight = models.PositiveIntegerField(default=1)
+    rewards = models.JSONField(default=list)
+
+
+class FishingBait(BaseModel):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=250, blank=True)
+    price = models.PositiveIntegerField(default=1)
+    success_bonus = models.PositiveIntegerField(default=5)
+    active = models.BooleanField(default=True)
+
+
+class UserFishingBait(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    bait = models.ForeignKey(FishingBait, on_delete=models.PROTECT)
+    quantity = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["user", "bait"], name="unique_user_bait")]

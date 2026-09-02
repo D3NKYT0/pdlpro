@@ -12,4 +12,5 @@ MIDDLEWARE_PDL = [
     "allauth.account.middleware.AccountMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.programs.middleware.ResourceGateMiddleware",
 ]

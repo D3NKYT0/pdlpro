@@ -8,7 +8,7 @@ from apps.accounts.application.progress import add_xp
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.infrastructure.models import Fish, FishingCatch, FishingRod, GameConfig
+from apps.games.infrastructure.models import Fish, FishingCatch, FishingRod, GameConfig, UserFishingBait
 from common.architecture.base import UnitOfWork, UseCase
 
 SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18}
@@ -52,6 +52,7 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
 @dataclass(frozen=True, slots=True)
 class CastLineInput:
     user_id: UUID
+    bait_id: UUID | None = None
 
 
 class CastLineUseCase(UseCase[CastLineInput, dict]):
@@ -64,6 +65,15 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
         cost = int((_config().settings or {}).get("cost_per_cast", 1))
         with self._unit_of_work:
             user = get_user_model().objects.select_for_update().get(id=data.user_id)
+            bonus = 0
+            if data.bait_id:
+                from rest_framework.exceptions import ValidationError
+                stock = UserFishingBait.objects.select_for_update().select_related("bait").filter(user=user, bait__id=data.bait_id, bait__active=True).first()
+                if not stock or stock.quantity < 1:
+                    raise ValidationError("Você não possui esta isca.")
+                stock.quantity -= 1
+                stock.save(update_fields=["quantity", "updated_at"])
+                bonus = stock.bait.success_bonus
             if user.fichas < cost:
                 raise InsufficientTokensError()
             user.fichas -= cost
@@ -73,7 +83,7 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                 pool = list(Fish.objects.filter(active=True))
             fish = random.choices(pool, weights=[max(item.weight, 1) for item in pool], k=1)[0] if pool else None
             chance = SUCCESS_CHANCE.get(fish.rarity, 70) if fish else 0
-            chance = min(95, chance + rod.level * 2)
+            chance = min(95, chance + rod.level * 2 + bonus)
             success = bool(fish) and random.randint(1, 100) <= chance
             if success and fish:
                 rod.xp += fish.xp_reward

@@ -30,6 +30,7 @@ def schema():
             login TEXT PRIMARY KEY, password TEXT NOT NULL, accessLevel INTEGER,
             email TEXT NOT NULL DEFAULT '', created_time INTEGER, linked_uuid TEXT
         );
+        CREATE TABLE pdl_exchange_receipts (receipt TEXT PRIMARY KEY, completed INTEGER);
         CREATE TABLE characters (
             obj_Id INTEGER PRIMARY KEY, account_name TEXT, char_name TEXT,
             online INTEGER, sex INTEGER, pvpkills INTEGER, pkkills INTEGER,
@@ -87,12 +88,13 @@ def test_complete_feature_catalog():
     assert set(CATALOG.REQUIRED) <= CATALOG._statements.keys()
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
-    assert len(CATALOG._statements) == 42
+    assert len(CATALOG._statements) == 50
 
 
 @pytest.mark.parametrize("name", READ_QUERIES)
 def test_selects_resolve_against_schema(schema, name):
-    sql = CATALOG[name]
+    # SQLite checks names/columns; locking syntax is verified on the MySQL contract.
+    sql = re.sub(r"\s+FOR UPDATE\s*$", "", CATALOG[name], flags=re.I)
     params = {key: 1 for key in re.findall(r":([a-zA-Z_][a-zA-Z0-9_]*)", sql)}
     schema.execute("EXPLAIN QUERY PLAN " + sql, params).fetchall()
 

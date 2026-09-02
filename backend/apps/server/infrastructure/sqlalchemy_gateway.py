@@ -62,6 +62,41 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             )
         return self._engine
 
+    def exchange_coins(self, receipt: str, login: str, char_id: int, item_id: int, quantity: int, direction: str) -> None:
+        from common.architecture.exceptions import ValidationDomainError
+
+        if direction not in ("to_game", "from_game") or quantity < 1:
+            raise ValidationDomainError("Transferência inválida.")
+        params = {"receipt": receipt, "login": login, "char_id": char_id, "item_id": item_id, "qty": quantity,
+                  "owner_id": char_id, "enchant": 0}
+        with self._engine_or_create().begin() as connection:
+            def execute(name, values=None):
+                return connection.execute(text(self._sql[name]), values or params)
+            execute("exchange_insert_receipt")
+            if execute("exchange_get_receipt").mappings().one()["completed"]:
+                return
+            char = execute("exchange_character").mappings().first()
+            if not char or char["online"]:
+                raise ValidationDomainError("Personagem não pertence à conta ou está online.")
+            if direction == "to_game":
+                params["name"] = char["name"]
+                execute("deposit_item")
+            else:
+                stacks = list(execute("exchange_stacks").mappings())
+                if sum(int(s["quantity"]) for s in stacks) < quantity:
+                    raise ValidationDomainError("Moedas insuficientes no personagem.")
+                remaining = quantity
+                for stack in stacks:
+                    take = min(remaining, int(stack["quantity"]))
+                    values = dict(params, stack_id=stack["stack_id"], qty=take)
+                    if execute("exchange_decrement", values).rowcount != 1:
+                        raise ValidationDomainError("O inventário mudou. Tente novamente.")
+                    execute("exchange_delete_empty", values)
+                    remaining -= take
+                    if remaining == 0:
+                        break
+            execute("exchange_complete_receipt")
+
     def _bind(self, sql: str, params: dict | None) -> dict:
         needed = set(BIND_RE.findall(sql))
         source = params or {}

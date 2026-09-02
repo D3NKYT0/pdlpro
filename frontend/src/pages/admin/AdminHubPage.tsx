@@ -21,6 +21,13 @@ type Entry = { to: string; title: string; description: string; icon: LucideIcon;
 type Category = { name: string; entries: Entry[] }
 
 const categories: Category[] = [
+  {name: 'Programas e expansão', entries: [
+    {to:'/painel/admin/apoiadores',title:'Apoiadores e comissões',description:'Candidaturas, percentuais e aprovação de comissões',icon:Coins},
+    {to:'/painel/admin/comercio',title:'Pacotes e cupons',description:'Pacotes de itens, descontos e cupons de apoiadores',icon:ShoppingBag},
+    {to:'/painel/admin/recursos',title:'Controle de recursos',description:'Ativar ou pausar módulos por categoria',icon:Settings2},
+    {to:'/painel/admin/roadmap',title:'Roadmap',description:'Planejamento, etapas e novidades do servidor',icon:CalendarDays},
+    {to:'/painel/admin/recompensas',title:'Oficina de recompensas',description:'Temporadas, missões, trocas, bônus e iscas',icon:Gamepad2},
+  ]},
   {
     name: 'Atendimento',
     entries: [

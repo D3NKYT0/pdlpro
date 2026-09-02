@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowDownLeft,
@@ -244,6 +245,7 @@ export function WalletPage() {
 
   return (
     <div className="wallet-page">
+      <div className="program-actions"><Link className="btn ghost" to="/painel/wallet/jogo">Transferir moedas entre carteira e jogo ↗</Link></div>
       <section className="card wallet-hero">
         <div className="wallet-hero-copy">
           <span className="panel-eyebrow">Tesouraria do jogador</span>

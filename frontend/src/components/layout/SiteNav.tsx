@@ -9,6 +9,7 @@ const links = [
   { to: '/rankings', label: 'Rankings' },
   { to: '/wiki', label: 'Wiki' },
   { to: '/news', label: 'Notícias' },
+  { to: '/roadmap', label: 'Roadmap' },
   { to: '/faq', label: 'Perguntas Frequentes' },
 ]
 

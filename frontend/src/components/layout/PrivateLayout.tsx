@@ -8,6 +8,8 @@ import {
   Gavel,
   LayoutDashboard,
   Headphones,
+  Handshake,
+  Gift,
   LogOut,
   Package,
   ShieldCheck,
@@ -24,6 +26,7 @@ import { canAccessStaff } from '../../lib/staff'
 import { notificationApi, supportApi } from '../../services/api'
 import { themeImage } from '../../theme/assets'
 import { usePanelTheme } from '../../theme/usePanelTheme'
+import { programsApi } from '../../services/domain/programs.service'
 
 const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/painel', label: 'Painel', icon: LayoutDashboard, end: true },
@@ -36,12 +39,16 @@ const links: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean 
   { to: '/painel/marketplace', label: 'Marketplace', icon: Store },
   { to: '/painel/auctions', label: 'Leilão', icon: Gavel },
   { to: '/painel/games', label: 'Jogos', icon: Gamepad2 },
+  { to: '/painel/recompensas', label: 'Jornada e recompensas', icon: Gift },
+  { to: '/painel/apoiadores', label: 'Apoiadores', icon: Handshake },
   { to: '/painel/progress', label: 'Progresso', icon: Trophy },
   { to: '/painel/notifications', label: 'Avisos', icon: Bell },
   { to: '/painel/support', label: 'Atendimento', icon: Headphones },
 ]
 
 export function PrivateLayout() {
+  const resources = useQuery({queryKey:['resources'],queryFn:programsApi.resources,staleTime:15000})
+  const codes: Record<string,string> = {wallet:'wallet',shop:'shop',inventory:'inventory',marketplace:'marketplace',auctions:'auction',games:'games',recompensas:'games',apoiadores:'supporters'}
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const notices = useQuery({
@@ -75,7 +82,7 @@ export function PrivateLayout() {
             <span>Voltar ao site</span>
           </NavLink>
           <div className="panel-menu" role="navigation" aria-label="Navegação da área do jogador">
-            {links.map((link) => {
+            {links.filter(link => !resources.data?.some(r => r.code===codes[link.to.split('/').pop() || ''] && !r.enabled)).map((link) => {
               const Icon = link.icon
               return (
                 <NavLink key={link.to} to={link.to} end={link.end}>

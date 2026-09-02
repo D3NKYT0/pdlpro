@@ -66,6 +66,10 @@ class GameItem:
 class ILineageGateway(ABC):
     """Porta única para o banco do Lineage 2. Nunca expor SQL ao frontend."""
 
+    def exchange_coins(self, receipt: str, login: str, char_id: int, item_id: int, quantity: int, direction: str) -> None:
+        """Apply once, atomically with a durable receipt in the game database."""
+        raise NotImplementedError("Transferência de moedas indisponível neste servidor.")
+
     @abstractmethod
     def get_status(self) -> ServerStatus: ...
 

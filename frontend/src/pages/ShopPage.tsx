@@ -1,120 +1,46 @@
-import { useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { CheckCircle2, Minus, Plus, ShoppingBag, ShoppingCart, Trash2 } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { useRef, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { ShoppingBag, ShoppingCart, Package, Plus, Minus, CheckCircle2, Trash2 } from 'lucide-react'
 import { ItemIcon } from '../components/ItemIcon'
-import { useAuth } from '../contexts/AuthContext'
-import { isApiError, shopApi, walletApi } from '../services/api'
-
-const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+import { shopApi, walletApi } from '../services/api'
+import { commerceApi, type CartLine } from '../services/domain/commerce.service'
+import { Empty, ErrorNotice, Loading } from '../components/programs/ProgramUI'
+import { useProgramAction } from '../components/programs/useProgramAction'
 
 export function ShopPage() {
-  const { user } = useAuth()
-  const queryClient = useQueryClient()
-  const catalog = useQuery({ queryKey: ['shop'], queryFn: shopApi.catalog })
-  const cart = useQuery({ queryKey: ['shop-cart'], queryFn: shopApi.cart, enabled: Boolean(user) })
-  const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me, enabled: Boolean(user) })
-  const [busy, setBusy] = useState('')
-
-  async function buy(id: string) {
-    setBusy(id)
-    try {
-      queryClient.setQueryData(['shop-cart'], await shopApi.addToCart(id))
-      toast.success('Item adicionado ao carrinho')
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível adicionar')
-    } finally {
-      setBusy('')
+  const catalog = useQuery({queryKey:['shop'], queryFn:shopApi.catalog})
+  const packages = useQuery({queryKey:['shop-packages'], queryFn:commerceApi.packages})
+  const cart = useQuery({queryKey:['shop-quote'], queryFn:commerceApi.quote})
+  const purchases = useQuery({queryKey:['shop-purchases'], queryFn:commerceApi.purchases})
+  const wallet = useQuery({queryKey:['wallet'], queryFn:walletApi.me})
+  const [tab,setTab] = useState('items')
+  const [coupon,setCoupon] = useState('')
+  const key = useRef<string | null>(null)
+  const action = useProgramAction()
+  const money = (v: string | number) => Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})
+  async function change(row: CartLine, quantity: number) {
+    key.current = null
+    if (row.kind === 'item') await action.run(() => quantity ? shopApi.updateCartItem(row.id,quantity) : shopApi.removeCartItem(row.id))
+    else {
+      if(row.package_id) await action.run(()=>commerceApi.packageQuantity(row.package_id!,quantity))
     }
   }
-
-  async function changeQuantity(id: string, quantity: number) {
-    setBusy(id)
-    try {
-      const result = quantity > 0 ? await shopApi.updateCartItem(id, quantity) : await shopApi.removeCartItem(id)
-      queryClient.setQueryData(['shop-cart'], result)
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível atualizar o carrinho')
-    } finally {
-      setBusy('')
-    }
-  }
-
-  async function checkout() {
-    if (!cart.data?.items.length) return
-    setBusy('checkout')
-    try {
-      const result = await shopApi.checkout()
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['shop-cart'] }),
-        queryClient.invalidateQueries({ queryKey: ['wallet'] }),
-        queryClient.invalidateQueries({ queryKey: ['bag'] }),
-      ])
-      toast.success(`Compra concluída: ${money.format(Number(result.total))}`)
-    } catch (error) {
-      toast.error(isApiError(error) ? error.message : 'Não foi possível finalizar a compra')
-    } finally {
-      setBusy('')
-    }
-  }
-
-  const balance = Number(wallet.data?.balance ?? 0)
-  const total = Number(cart.data?.total ?? 0)
-  const insufficient = total > balance
-
-  return (
-    <div className="shop-page">
-      <section className="card shop-hero">
-        <span><ShoppingBag aria-hidden="true" /></span>
-        <div><span className="panel-eyebrow">Mercado do jogador</span><h1>Loja</h1><p className="muted">Escolha seus itens e finalize tudo pelo carrinho.</p></div>
-        <div className="shop-cart-badge"><ShoppingCart /><strong>{cart.data?.count ?? 0}</strong><small>no carrinho</small></div>
-      </section>
-
-      <div className="shop-layout">
-        <section className="card shop-catalog">
-          <header className="shop-section-heading"><div><span className="panel-eyebrow">Catálogo</span><h2>Itens disponíveis</h2></div></header>
-          <div className="shop-product-grid">
-            {(catalog.data ?? []).map((item) => (
-              <article className="shop-product" key={item.id}>
-                <ItemIcon itemId={item.item_id} name={item.name} size={48} />
-                <div className="shop-product-info"><h3>{item.name}</h3><p>{item.quantity}x do item</p><strong>{money.format(Number(item.price))}</strong></div>
-                <button className="btn" type="button" disabled={busy === item.id} onClick={() => void buy(item.id)}>
-                  <Plus /> {busy === item.id ? 'Adicionando...' : 'Adicionar'}
-                </button>
-              </article>
-            ))}
-          </div>
-          {!catalog.data?.length ? <p className="muted">Nenhum item cadastrado no admin.</p> : null}
-        </section>
-
-        <aside className="card shop-cart-panel">
-          <header className="shop-section-heading"><div><span className="panel-eyebrow">Seu pedido</span><h2><ShoppingCart /> Carrinho</h2></div><b>{cart.data?.count ?? 0}</b></header>
-          <div className="shop-cart-items">
-            {(cart.data?.items ?? []).map((row) => (
-              <article className="shop-cart-item" key={row.id}>
-                <ItemIcon itemId={row.item_id} name={row.name} size={38} />
-                <span><strong>{row.name}</strong><small>{row.grant_quantity * row.quantity}x no total</small><b>{money.format(Number(row.line_total))}</b></span>
-                <div className="shop-quantity">
-                  <button type="button" aria-label={`Diminuir ${row.name}`} disabled={busy === row.id} onClick={() => void changeQuantity(row.id, row.quantity - 1)}><Minus /></button>
-                  <strong>{row.quantity}</strong>
-                  <button type="button" aria-label={`Aumentar ${row.name}`} disabled={busy === row.id || row.quantity >= 99} onClick={() => void changeQuantity(row.id, row.quantity + 1)}><Plus /></button>
-                </div>
-                <button className="shop-remove" type="button" aria-label={`Remover ${row.name}`} onClick={() => void changeQuantity(row.id, 0)}><Trash2 /></button>
-              </article>
-            ))}
-            {!cart.data?.items.length ? <div className="shop-cart-empty"><ShoppingCart /><strong>Seu carrinho está vazio</strong><small>Adicione um item do catálogo para começar.</small></div> : null}
-          </div>
-
-          <footer className="shop-cart-summary">
-            <p><span>Saldo disponível</span><strong>{money.format(balance)}</strong></p>
-            <p className="shop-cart-total"><span>Total</span><strong>{money.format(total)}</strong></p>
-            {insufficient ? <small className="shop-insufficient">Saldo insuficiente. Adicione saldo pela Carteira.</small> : null}
-            <button className="btn" type="button" disabled={!cart.data?.items.length || insufficient || busy === 'checkout'} onClick={() => void checkout()}>
-              <CheckCircle2 /> {busy === 'checkout' ? 'Finalizando...' : 'Finalizar compra'}
-            </button>
-          </footer>
-        </aside>
-      </div>
-    </div>
-  )
+  return <div className="program-page shop-page">
+    <header className="card program-hero"><div><span className="panel-eyebrow">Mercado do jogador</span><h1>Loja do servidor</h1><p>Itens, pacotes e vantagens para sua jornada. Suas compras são entregues na bag do painel.</p></div><ShoppingBag/></header>
+    <ErrorNotice error={catalog.error || packages.error || cart.error || action.error}/>
+    <div className="program-tabs" aria-label="Seções da loja">{[['items','Itens'],['packages','Pacotes'],['history','Minhas compras']].map(([id,label])=><button key={id} className={tab===id?'active':''} onClick={()=>setTab(id)}>{label}</button>)}</div>
+    {tab==='history' ? <section className="card program-section"><h2>Histórico de compras</h2><ErrorNotice error={purchases.error}/>{purchases.isPending && <Loading/>}{purchases.data?.map(p=><article className="program-item" key={p.id}><div className="program-section-heading"><strong>{new Date(p.created_at).toLocaleString('pt-BR')}</strong><span>{money(p.total)} moedas</span></div><div className="program-rewards">{p.items.map((i,index)=><span className="program-reward" key={index}>{i.quantity} × {i.name}</span>)}</div><small>Desconto: {money(p.discount)} · Bônus utilizado: {money(p.bonus_used)}{p.promo_code ? ` · Cupom ${p.promo_code}` : ''}</small></article>)}{purchases.data?.length===0 && <Empty>Suas compras aparecerão aqui, com itens e valores preservados.</Empty>}</section> :
+    <div className="program-two">
+      <section className="card program-section"><h2>{tab==='items'?'Itens disponíveis':'Pacotes especiais'}</h2>{(catalog.isPending || packages.isPending) && <Loading/>}<div className="shop-product-grid">
+        {tab==='items' && catalog.data?.map(item=><article className="shop-product" key={item.id}><ItemIcon itemId={item.item_id} name={item.name} size={48}/><div className="shop-product-info"><h3>{item.name}</h3><p>{item.quantity} unidades</p><strong>{money(item.price)} moedas</strong></div><button className="btn" disabled={action.busy} onClick={()=>{key.current=null;void action.run(()=>shopApi.addToCart(item.id),'Item adicionado.')}}><Plus size={17}/>Adicionar</button></article>)}
+        {tab==='packages' && packages.data?.map(pack=><article className="program-item" key={pack.id}><Package color="var(--gold)" size={32}/><h3>{pack.name}</h3><div className="program-rewards">{pack.contents.map((i,index)=><span className="program-reward" key={index}><ItemIcon itemId={i.item_id} size={28}/><span>{i.grant_quantity} × {i.name}</span></span>)}</div><strong>{money(pack.total_price)} moedas</strong><button className="btn" disabled={action.busy || !pack.contents.length} onClick={()=>{key.current=null;void action.run(()=>commerceApi.packageQuantity(pack.id,1),'Pacote adicionado.')}}><Plus size={17}/>Adicionar pacote</button></article>)}
+      </div>{(tab==='items'?catalog.data:packages.data)?.length===0 && <Empty>Nenhum produto disponível nesta categoria.</Empty>}</section>
+      <aside className="card program-section"><div className="program-section-heading"><h2>Seu carrinho</h2><ShoppingCart color="var(--gold)"/></div>{cart.isPending && <Loading/>}{cart.data?.items.map(row=><article className="program-item" key={row.id}><div className="program-section-heading"><strong>{row.name}</strong><span>{money(row.line_total)}</span></div><div className="program-actions"><button className="btn ghost" disabled={action.busy} aria-label={`Diminuir ${row.name}`} onClick={()=>void change(row,row.quantity-1)}><Minus size={14}/></button><span>{row.quantity}</span><button className="btn ghost" disabled={action.busy || row.quantity>=99} aria-label={`Aumentar ${row.name}`} onClick={()=>void change(row,row.quantity+1)}><Plus size={14}/></button><button className="btn ghost" disabled={action.busy} aria-label={`Remover ${row.name}`} onClick={()=>void change(row,0)}><Trash2 size={15}/></button></div></article>)}
+        {cart.data?.items.length===0 && <Empty>Escolha itens ou pacotes para começar.</Empty>}
+        <form className="program-form" onSubmit={e=>{e.preventDefault();key.current=null;void action.run(()=>commerceApi.options({promo_code:coupon}),'Cupom atualizado.')}}><label>Cupom de desconto<input value={coupon} onChange={e=>setCoupon(e.target.value)} maxLength={40} placeholder={cart.data?.promo_code || 'Código promocional'}/></label><div className="program-actions"><button className="btn ghost" disabled={action.busy}>Aplicar cupom</button>{cart.data?.promo_code && <button className="btn ghost" type="button" disabled={action.busy} onClick={()=>void action.run(()=>commerceApi.options({promo_code:''}))}>Remover {cart.data.promo_code}</button>}</div><label className="program-check"><input type="checkbox" checked={cart.data?.use_bonus || false} disabled={action.busy} onChange={e=>{key.current=null;void action.run(()=>commerceApi.options({use_bonus:e.target.checked}))}}/>Usar saldo bônus ({wallet.data?.bonus_balance || '0.00'})</label></form>
+        <div className="shop-cart-summary"><p><span>Subtotal</span><strong>{money(cart.data?.subtotal || 0)}</strong></p><p><span>Desconto</span><strong>− {money(cart.data?.discount || 0)}</strong></p><p><span>Bônus utilizado</span><strong>− {money(cart.data?.bonus_used || 0)}</strong></p><p className="shop-cart-total"><span>A pagar</span><strong>{money(cart.data?.balance_due || 0)}</strong></p><small className="muted">Saldo disponível: {wallet.data?.balance || '0.00'} moedas</small></div>
+        <button className="btn" disabled={action.busy || !cart.data?.items.length || Number(cart.data.balance_due)>Number(wallet.data?.balance || 0)} onClick={()=>{key.current ||= crypto.randomUUID(); void action.run(()=>commerceApi.checkout(key.current!),'Compra concluída! Itens entregues na bag.').then(ok=>{if(ok)key.current=null})}}><CheckCircle2 size={18}/> {action.busy?'Processando…':'Finalizar compra'}</button>
+      </aside>
+    </div>}
+  </div>
 }

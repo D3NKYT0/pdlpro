@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Box,
@@ -165,6 +166,7 @@ export function GamesPage() {
 
   return (
     <div className="games-page">
+      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">Missões, bônus diário, iscas e rankings ↗</Link></div>
       <header className="card games-hero">
         <div className="games-hero-copy">
           <span className="panel-eyebrow">Central de jogos</span>

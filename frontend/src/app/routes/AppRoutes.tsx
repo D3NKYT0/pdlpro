@@ -48,6 +48,14 @@ import { AdminShopPage } from '../../pages/admin/AdminShopPage'
 import { AdminSupportPage } from '../../pages/admin/AdminSupportPage'
 import { RequireAuth } from './RequireAuth'
 import { RequireStaff } from './RequireStaff'
+import { ResourceGate } from '../../components/programs/ResourceGate'
+import { SupportersPage } from '../../pages/SupportersPage'
+import { RoadmapPage, RoadmapDetailPage } from '../../pages/RoadmapPage'
+import { RewardsPage } from '../../pages/RewardsPage'
+import { GameExchangePage } from '../../pages/GameExchangePage'
+import { AdminResourcesPage, AdminRoadmapPage, AdminSupportersPage } from '../../pages/admin/AdminProgramsPage'
+import { AdminCommercePage } from '../../pages/admin/AdminCommercePage'
+import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
 
 export function AppRoutes() {
   return (
@@ -63,6 +71,8 @@ export function AppRoutes() {
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
           <Route element={<PublicContent />}>
+            <Route path="/roadmap" element={<ResourceGate code="roadmap"><RoadmapPage /></ResourceGate>} />
+            <Route path="/roadmap/:id" element={<ResourceGate code="roadmap"><RoadmapDetailPage /></ResourceGate>} />
             <Route path="/rankings" element={<RankingsPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/:slug" element={<NewsDetailPage />} />
@@ -80,21 +90,29 @@ export function AppRoutes() {
 
         <Route element={<RequireAuth />}>
           <Route element={<PrivateLayout />}>
+            <Route path="/painel/apoiadores" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
+            <Route path="/painel/recompensas" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
+            <Route path="/painel/wallet/jogo" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
             <Route path="/painel" element={<PainelPage />} />
             <Route path="/painel/profile" element={<ProfilePage />} />
             <Route path="/painel/security" element={<AccountSecurityPage />} />
-            <Route path="/painel/wallet" element={<WalletPage />} />
+            <Route path="/painel/wallet" element={<ResourceGate code="wallet"><WalletPage /></ResourceGate>} />
             <Route path="/painel/accounts" element={<AccountsPage />} />
             <Route path="/painel/accounts/:login/:charId" element={<CharacterPage />} />
-            <Route path="/painel/inventory" element={<InventoryPage />} />
-            <Route path="/painel/games" element={<GamesPage />} />
+            <Route path="/painel/inventory" element={<ResourceGate code="inventory"><InventoryPage /></ResourceGate>} />
+            <Route path="/painel/games" element={<ResourceGate code="games"><GamesPage /></ResourceGate>} />
             <Route path="/painel/progress" element={<ProgressPage />} />
             <Route path="/painel/notifications" element={<NotificationsPage />} />
             <Route path="/painel/support" element={<SupportPage />} />
-            <Route path="/painel/shop" element={<ShopPage />} />
-            <Route path="/painel/marketplace" element={<MarketplacePage />} />
-            <Route path="/painel/auctions" element={<AuctionPage />} />
+            <Route path="/painel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />
+            <Route path="/painel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
+            <Route path="/painel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />
             <Route element={<RequireStaff />}>
+              <Route path="/painel/admin/recursos" element={<AdminResourcesPage />} />
+              <Route path="/painel/admin/roadmap" element={<AdminRoadmapPage />} />
+              <Route path="/painel/admin/apoiadores" element={<AdminSupportersPage />} />
+              <Route path="/painel/admin/comercio" element={<AdminCommercePage />} />
+              <Route path="/painel/admin/recompensas" element={<AdminGameContentPage />} />
               <Route path="/painel/admin" element={<AdminHubPage />} />
               <Route path="/painel/admin/financeiro/:report?" element={<AdminFinancialReportsPage />} />
               <Route path="/painel/admin/itens" element={<AdminItemObservationPage />} />

@@ -88,6 +88,9 @@ class DailyBonusView(ItemCatalogAPIView):
 
     @extend_schema(tags=["Jogos"])
     def post(self, request):
+        from apps.games.application.advanced import daily_season, claim_daily_season
+        if daily_season():
+            return Response(claim_daily_season(request.user.id))
         return Response(
             self.resolve(ClaimDailyBonusUseCase).execute(ClaimDailyBonusInput(user_id=request.user.id))
         )
@@ -176,7 +179,9 @@ class FishingView(ItemCatalogAPIView):
 
     @extend_schema(tags=["Jogos"])
     def post(self, request):
-        return Response(self.resolve(CastLineUseCase).execute(CastLineInput(user_id=request.user.id)))
+        from rest_framework import serializers
+        bait_id = serializers.UUIDField(allow_null=True).run_validation(request.data.get("bait_id"))
+        return Response(self.resolve(CastLineUseCase).execute(CastLineInput(user_id=request.user.id, bait_id=bait_id)))
 
 
 class EconomyView(ItemCatalogAPIView):

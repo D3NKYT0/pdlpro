@@ -1,6 +1,8 @@
 from rest_framework.test import APIClient
+import pytest
 
 
+@pytest.mark.django_db
 def test_public_server_info_is_classic_lineage_page():
     api = APIClient()
     response = api.get("/api/v1/public/server/info/")

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link2Off, Search, Unlink } from 'lucide-react'
+import { CheckCircle2, Link2Off, Search, ShieldAlert, Unlink } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { isApiError, staffApi, type ApiStaffGameAccount } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
@@ -40,27 +40,43 @@ export function AdminAccountsPage() {
     }
   }
 
+  const panelOwner = account?.panel_username || account?.linked_user_id || '—'
+  const ownerHint = account?.panel_username
+    ? 'Usuário do painel'
+    : account?.linked_user_id
+      ? 'UUID sem usuário no painel'
+      : 'Sem dono no painel'
+
   return (
-    <div className="account-page">
+    <div className="account-page admin-accounts-page">
       <AdminHeader
         kicker="Servidor"
         title="Contas Lineage"
         description="Consulte um login do jogo e remova o vínculo com o painel."
       />
 
-      <section className="card admin-config-section">
-        <header>
+      <section className="card admin-accounts-panel">
+        <header className="admin-services-heading">
           <span><Search /></span>
           <div>
             <span className="panel-eyebrow">Consulta</span>
             <h2>Buscar pelo login</h2>
-            <p>O login é o mesmo usado para entrar no jogo.</p>
+            <p>Use o mesmo login com que o jogador entra no Lineage.</p>
           </div>
         </header>
-        <form className="admin-account-search" onSubmit={onInspect}>
-          <label className="field">
+        <form className="admin-accounts-search" onSubmit={onInspect}>
+          <label>
             Login da conta L2
-            <input value={login} onChange={(event) => setLogin(event.target.value)} required minLength={3} maxLength={45} autoComplete="off" />
+            <input
+              value={login}
+              onChange={(event) => setLogin(event.target.value)}
+              required
+              minLength={3}
+              maxLength={45}
+              autoComplete="off"
+              spellCheck={false}
+              placeholder="admin"
+            />
           </label>
           <button className="btn" type="submit" disabled={looking || unlinking}>
             {looking ? 'Consultando...' : 'Consultar'}
@@ -69,49 +85,68 @@ export function AdminAccountsPage() {
       </section>
 
       {account ? (
-        <section className="card admin-config-section">
-          <header>
-            <span><Unlink /></span>
+        <section className={`card admin-accounts-result ${account.linked ? 'is-linked' : 'is-free'}`}>
+          <header className="admin-accounts-result-head">
+            <span className="admin-accounts-result-icon">
+              {account.linked ? <ShieldAlert /> : <CheckCircle2 />}
+            </span>
             <div>
               <span className="panel-eyebrow">Resultado</span>
               <h2>{account.login}</h2>
-              <p>{account.linked ? 'Esta conta está vinculada a um painel.' : 'Esta conta não tem vínculo no momento.'}</p>
+              <p>
+                {account.linked
+                  ? 'Esta conta Lineage está presa a um painel.'
+                  : 'Esta conta está livre para ser criada ou vinculada.'}
+              </p>
             </div>
+            <b className={`account-status-pill ${account.linked ? 'is-conflict' : 'is-active'}`}>
+              {account.linked ? <Unlink /> : <CheckCircle2 />}
+              {account.linked ? 'Vinculada' : 'Livre'}
+            </b>
           </header>
-          <dl className="admin-account-meta">
-            <div>
-              <dt>Login</dt>
-              <dd>{account.login}</dd>
-            </div>
-            <div>
-              <dt>E-mail no jogo</dt>
-              <dd>{account.email || '—'}</dd>
-            </div>
-            <div>
-              <dt>Vínculo</dt>
-              <dd>{account.linked ? 'Vinculada' : 'Livre'}</dd>
-            </div>
-            <div>
-              <dt>Usuário do painel</dt>
-              <dd>{account.panel_username || '—'}</dd>
-            </div>
-          </dl>
+
+          <div className="admin-accounts-facts">
+            <article>
+              <small>Login</small>
+              <strong>{account.login}</strong>
+            </article>
+            <article>
+              <small>E-mail no jogo</small>
+              <strong title={account.email || undefined}>{account.email || '—'}</strong>
+            </article>
+            <article>
+              <small>Vínculo</small>
+              <strong className={account.linked ? 'is-warn' : 'is-ok'}>
+                {account.linked ? 'Ativo no servidor' : 'Sem linked_uuid'}
+              </strong>
+            </article>
+            <article>
+              <small>{ownerHint}</small>
+              <strong className={account.panel_username ? '' : 'is-mono'} title={panelOwner}>
+                {panelOwner}
+              </strong>
+            </article>
+          </div>
+
           {account.linked ? (
-            <div className="admin-account-unlink">
-              <p className="muted">A conta volta a ficar disponível para criação ou vínculo no painel do jogador.</p>
-              <button className="btn is-danger" type="button" onClick={() => void onUnlink()} disabled={unlinking}>
+            <footer className="admin-accounts-footer">
+              <div>
+                <strong>Remover o vínculo</strong>
+                <span>A conta volta a ficar disponível para criação ou vínculo no painel do jogador.</span>
+              </div>
+              <button type="button" className="admin-accounts-danger" onClick={() => void onUnlink()} disabled={unlinking}>
                 <Link2Off aria-hidden="true" />
                 {unlinking ? 'Desvinculando...' : 'Remover vínculo'}
               </button>
-            </div>
+            </footer>
           ) : (
-            <div className="account-created-state">
-              <Link2Off aria-hidden="true" />
+            <footer className="admin-accounts-footer is-ok">
+              <CheckCircle2 aria-hidden="true" />
               <div>
-                <strong>Sem vínculo</strong>
+                <strong>Nada a remover</strong>
                 <span>Não há linked_uuid nesta conta Lineage.</span>
               </div>
-            </div>
+            </footer>
           )}
         </section>
       ) : null}

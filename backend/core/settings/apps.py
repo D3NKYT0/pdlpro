@@ -28,6 +28,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "apps.programs.apps.ProgramsConfig",
     "common.apps.CommonConfig",
     "apps.accounts.apps.AccountsConfig",
     "apps.server.apps.ServerConfig",

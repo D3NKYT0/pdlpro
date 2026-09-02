@@ -106,6 +106,9 @@ JAZZMIN_ICONS_PDL = {
     "games.userbattlepassclaim": "fas fa-check-circle",
 
     # Notifications.
+    "server.indexconfig": "fas fa-home",
+    "support.ticket": "fas fa-ticket-alt",
+    "support.ticketmessage": "fas fa-comments",
     "communication": "fas fa-bullhorn",
     "communication.notification": "fas fa-bell",
     "communication.pushsubscription": "fas fa-mobile-alt",

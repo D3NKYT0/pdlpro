@@ -77,5 +77,9 @@ class ShopCheckoutView(ItemCatalogAPIView):
 
     @extend_schema(tags=["Loja"])
     def post(self, request):
-        result = self.resolve(CheckoutUseCase).execute(CheckoutInput(user_id=request.user.id))
+        from rest_framework import serializers
+        from apps.shop.application.commerce import checkout
+
+        key = serializers.UUIDField(allow_null=True).run_validation(request.data.get("request_key"))
+        result = checkout(request.user.id, key)
         return Response(result)
