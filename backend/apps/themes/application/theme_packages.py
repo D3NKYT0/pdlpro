@@ -7,6 +7,7 @@ import re
 import shutil
 import tempfile
 import zipfile
+from datetime import datetime
 from pathlib import Path, PurePosixPath
 from typing import BinaryIO
 
@@ -66,7 +67,7 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
 
     allowed = {
         "schemaVersion", "pdlVersion", "id", "name", "version", "author",
-        "description", "entrypoint", "assets",
+        "description", "entrypoint", "assets", "presentation",
     }
     unknown = sorted(set(manifest) - allowed)
     if unknown:
@@ -95,7 +96,120 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
             raise ValidationDomainError(f"O campo {field} do manifesto é inválido.")
     if not isinstance(manifest["assets"], dict):
         raise ValidationDomainError("assets precisa ser um objeto de caminhos lógicos.")
+    if "presentation" in manifest:
+        _validate_presentation(manifest["presentation"], manifest["assets"])
     return manifest
+
+
+def _object(value, label: str, required: set[str], optional: set[str] | None = None) -> dict:
+    if not isinstance(value, dict):
+        raise ValidationDomainError(f"{label} precisa ser um objeto.")
+    allowed = required | (optional or set())
+    unknown = sorted(set(value) - allowed)
+    missing = sorted(required - set(value))
+    if unknown or missing:
+        raise ValidationDomainError(
+            f"{label} não respeita o contrato do renderer.",
+            details={"unknown": unknown, "missing": missing},
+        )
+    return value
+
+
+def _text(value, label: str, *, limit: int = 240) -> str:
+    if not isinstance(value, str) or not value.strip() or len(value) > limit:
+        raise ValidationDomainError(f"{label} contém um texto inválido.")
+    return value
+
+
+def _route(value, label: str) -> str:
+    route = _text(value, label, limit=160)
+    if not route.startswith("/") or route.startswith("//") or "\\" in route:
+        raise ValidationDomainError(f"{label} precisa ser uma rota interna do PDL.")
+    return route
+
+
+def _validate_presentation(value, assets: dict) -> None:
+    """Valida a experiência declarativa executada pelos renderers confiáveis do frontend."""
+
+    presentation = _object(value, "presentation", {"renderer", "navigation", "home", "footer"})
+    if presentation["renderer"] != "portal-v1":
+        raise ValidationDomainError("O renderer solicitado pelo tema não é suportado.")
+
+    navigation = presentation["navigation"]
+    if not isinstance(navigation, list) or not 1 <= len(navigation) <= 12:
+        raise ValidationDomainError("presentation.navigation precisa ter entre 1 e 12 links.")
+    for index, raw_link in enumerate(navigation):
+        link = _object(raw_link, f"navigation[{index}]", {"label", "to"})
+        _text(link["label"], f"navigation[{index}].label", limit=40)
+        _route(link["to"], f"navigation[{index}].to")
+
+    home = _object(
+        presentation["home"], "presentation.home",
+        {"hero", "features", "ranking", "cta", "news"},
+    )
+    hero = _object(
+        home["hero"], "presentation.home.hero",
+        {"title", "description", "countdownLabel", "countdownAt", "actionLabel", "actionTo"},
+    )
+    for key in ("title", "description", "countdownLabel", "actionLabel"):
+        _text(hero[key], f"presentation.home.hero.{key}", limit=500 if key == "description" else 120)
+    _route(hero["actionTo"], "presentation.home.hero.actionTo")
+    try:
+        datetime.fromisoformat(_text(hero["countdownAt"], "presentation.home.hero.countdownAt").replace("Z", "+00:00"))
+    except ValueError:
+        raise ValidationDomainError("presentation.home.hero.countdownAt precisa usar data ISO 8601.") from None
+
+    features = _object(
+        home["features"], "presentation.home.features",
+        {"title", "subtitle", "actionLabel", "actionTo", "items"},
+    )
+    for key in ("title", "subtitle", "actionLabel"):
+        _text(features[key], f"presentation.home.features.{key}")
+    _route(features["actionTo"], "presentation.home.features.actionTo")
+    items = features["items"]
+    if not isinstance(items, list) or not 1 <= len(items) <= 12:
+        raise ValidationDomainError("presentation.home.features.items precisa ter entre 1 e 12 itens.")
+    for index, raw_item in enumerate(items):
+        item = _object(raw_item, f"features.items[{index}]", {"title", "description", "asset"})
+        _text(item["title"], f"features.items[{index}].title", limit=100)
+        _text(item["description"], f"features.items[{index}].description", limit=500)
+        asset = _text(item["asset"], f"features.items[{index}].asset", limit=160)
+        if asset not in assets:
+            raise ValidationDomainError("Um recurso visual da apresentação não foi declarado em assets.")
+
+    ranking = _object(
+        home["ranking"], "presentation.home.ranking",
+        {"title", "subtitle", "actionLabel", "actionTo", "tabs"},
+    )
+    for key in ("title", "subtitle", "actionLabel"):
+        _text(ranking[key], f"presentation.home.ranking.{key}")
+    _route(ranking["actionTo"], "presentation.home.ranking.actionTo")
+    tabs = ranking["tabs"]
+    allowed_rankings = {"pvp", "pk", "clans", "level", "adena", "online"}
+    if not isinstance(tabs, list) or not 1 <= len(tabs) <= 8:
+        raise ValidationDomainError("presentation.home.ranking.tabs precisa ter entre 1 e 8 abas.")
+    for index, raw_tab in enumerate(tabs):
+        tab = _object(raw_tab, f"ranking.tabs[{index}]", {"id", "label", "kind"})
+        if not isinstance(tab["id"], str) or not SLUG_RE.fullmatch(tab["id"]):
+            raise ValidationDomainError("Uma aba do ranking possui identificador inválido.")
+        _text(tab["label"], f"ranking.tabs[{index}].label", limit=40)
+        if tab["kind"] not in allowed_rankings:
+            raise ValidationDomainError("Uma aba solicita um ranking não permitido.")
+
+    for section_name in ("cta", "news"):
+        section = home[section_name]
+        if section_name == "cta":
+            section = _object(section, "presentation.home.cta", {"title", "description", "actionLabel", "actionTo"})
+            _text(section["description"], "presentation.home.cta.description", limit=500)
+            _text(section["actionLabel"], "presentation.home.cta.actionLabel", limit=80)
+            _route(section["actionTo"], "presentation.home.cta.actionTo")
+        else:
+            section = _object(section, "presentation.home.news", {"title"})
+        _text(section["title"], f"presentation.home.{section_name}.title", limit=120)
+
+    footer = _object(presentation["footer"], "presentation.footer", {"tagline", "copyright"})
+    _text(footer["tagline"], "presentation.footer.tagline", limit=300)
+    _text(footer["copyright"], "presentation.footer.copyright", limit=200)
 
 
 def _validate_css(path: str, content: bytes, available: set[str]) -> None:
@@ -187,7 +301,7 @@ def serialize_theme(theme: ThemePackage | None = None) -> dict:
             "id": "default", "package_id": None, "name": "PDL Default", "version": "2.0.0",
             "author": "PDL", "description": "Tema original preservado do PDL PRO.",
             "active": True, "builtin": True, "base_url": "/theme/default/",
-            "stylesheet_url": None, "assets": {},
+            "stylesheet_url": None, "assets": {}, "presentation": None,
         }
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
     assets = {
@@ -198,6 +312,7 @@ def serialize_theme(theme: ThemePackage | None = None) -> dict:
         "version": theme.version, "author": theme.author, "description": theme.description,
         "active": theme.is_active, "builtin": False, "base_url": base_url,
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
+        "presentation": theme.manifest.get("presentation"),
     }
 
 

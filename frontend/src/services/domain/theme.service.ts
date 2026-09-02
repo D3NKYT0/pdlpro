@@ -1,5 +1,54 @@
 import { request } from '../infra/http'
 
+export interface ThemeNavigationItem {
+  label: string
+  to: string
+}
+
+export interface ThemeFeatureItem {
+  title: string
+  description: string
+  asset: string
+}
+
+export interface ThemeRankingTab {
+  id: string
+  label: string
+  kind: 'pvp' | 'pk' | 'clans' | 'level' | 'adena' | 'online'
+}
+
+export interface ThemePresentation {
+  renderer: 'portal-v1'
+  navigation: ThemeNavigationItem[]
+  home: {
+    hero: {
+      title: string
+      description: string
+      countdownLabel: string
+      countdownAt: string
+      actionLabel: string
+      actionTo: string
+    }
+    features: {
+      title: string
+      subtitle: string
+      actionLabel: string
+      actionTo: string
+      items: ThemeFeatureItem[]
+    }
+    ranking: {
+      title: string
+      subtitle: string
+      actionLabel: string
+      actionTo: string
+      tabs: ThemeRankingTab[]
+    }
+    cta: { title: string; description: string; actionLabel: string; actionTo: string }
+    news: { title: string }
+  }
+  footer: { tagline: string; copyright: string }
+}
+
 export interface ApiTheme {
   id: string
   package_id: string | null
@@ -12,6 +61,7 @@ export interface ApiTheme {
   base_url: string
   stylesheet_url: string | null
   assets: Record<string, string>
+  presentation?: ThemePresentation | null
 }
 
 export const themeApi = {
@@ -28,4 +78,3 @@ export const themeApi = {
   ),
   remove: (theme: ApiTheme) => request<void>(`/staff/themes/${theme.package_id}/`, { method: 'DELETE' }),
 }
-

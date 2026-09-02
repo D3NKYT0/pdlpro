@@ -3,8 +3,8 @@
 [Índice](../README.md) · [Componentes](../desenvolvimento/componentes.md) · [Implantação](../operacao/implantacao.md)
 
 O PDL PRO aplica uma única identidade visual às páginas públicas, autenticação, painel do
-jogador e administração React. A estrutura, a acessibilidade e o comportamento continuam no
-produto; um tema fornece somente CSS e assets locais.
+jogador e administração React. Além de CSS e assets locais, um pacote pode selecionar um
+renderer homologado e declarar sua composição, conteúdo e comportamentos no `theme.json`.
 
 O tema `default` é interno, imutável e permanece em `frontend/public/theme/default`. Ele não é
 gravado na tabela de pacotes, não pode ser enviado, removido ou sobrescrito e volta a ser usado
@@ -63,6 +63,21 @@ Manifesto mínimo:
 `assets` mapeia o nome lógico usado pelo frontend para um arquivo do pacote. O caminho deve ser
 relativo e existir no ZIP. Não declare um asset para manter a versão do default.
 
+## Estrutura e comportamento
+
+O campo opcional `presentation` seleciona um renderer confiável do PDL. O renderer `portal-v1`
+entrega cabeçalho e rodapé próprios, menu móvel, hero com countdown, cards de recursos, rankings
+com abas e dados reais, CTA e notícias. Textos, rotas, itens e assets são declarados pelo pacote.
+
+O Valorem 2.0 usa esse contrato para portar a experiência que existia nos templates Django de
+`PDL/SITE`: o HTML virou componentes React sem perder a composição, e o comportamento de
+`js/theme.js` virou hooks e eventos testáveis. Isso mantém navegação SPA, autenticação,
+acessibilidade e integração com as APIs do PDL 2.0.
+
+JavaScript arbitrário e templates HTML executáveis não são carregados do ZIP. Um arquivo desse
+tipo teria acesso à sessão do usuário e permitiria XSS persistente. Novos comportamentos entram
+como capacidades versionadas do renderer e podem então ser usados por qualquer tema.
+
 O seletor raiz recomendado é:
 
 ```css
@@ -84,7 +99,7 @@ pacote também é aplicado como `data-pdl-theme` no elemento `html`.
 O instalador lê cada entrada e nunca chama a extração direta do ZIP. São bloqueados:
 
 - caminhos absolutos, `..`, nomes duplicados e links simbólicos;
-- JavaScript, HTML, SVG e extensões não permitidas;
+- JavaScript, HTML executável, SVG e extensões não permitidas;
 - `@import`, URLs externas, Data URLs e referências a arquivos ausentes no CSS;
 - pacotes com mais de 256 arquivos, 64 MB expandidos ou compressão suspeita;
 - o identificador reservado `default` e versões fora do contrato PDL 2.0.

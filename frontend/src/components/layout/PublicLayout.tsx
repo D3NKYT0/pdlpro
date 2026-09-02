@@ -2,9 +2,16 @@ import { Link, Outlet } from 'react-router-dom'
 import { themeImage } from '../../theme/assets'
 import { useDefaultTheme } from '../../theme/useDefaultTheme'
 import { SiteNav } from './SiteNav'
+import { PortalPublicLayout } from '../themes/PortalTheme'
+import { useTheme } from '../../theme/ThemeProvider'
 
 export function PublicLayout() {
   useDefaultTheme()
+  const theme = useTheme()
+
+  if (theme.presentation?.renderer === 'portal-v1') {
+    return <PortalPublicLayout presentation={theme.presentation} />
+  }
 
   return (
     <>

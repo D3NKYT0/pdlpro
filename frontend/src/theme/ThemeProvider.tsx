@@ -5,7 +5,7 @@ import { configureRuntimeTheme } from './assets'
 const DEFAULT_THEME: ApiTheme = {
   id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL',
   description: 'Tema original preservado do PDL PRO.', active: true, builtin: true,
-  base_url: '/theme/default/', stylesheet_url: null, assets: {},
+  base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null,
 }
 
 const ThemeContext = createContext<ApiTheme>(DEFAULT_THEME)

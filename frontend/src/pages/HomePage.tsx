@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
+import { useTheme } from '../theme/ThemeProvider'
+import { PortalHomePage } from '../components/themes/PortalTheme'
 
 const wikiLinks = [
   { to: '/wiki', label: 'Guias do jogo' },
@@ -34,7 +36,7 @@ const features = [
   { to: '/calendar', image: 'features/3.jpg', title: 'Eventos e Recompensas' },
 ]
 
-export function HomePage() {
+function DefaultHomePage() {
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
   const wiki = useQuery({ queryKey: ['wiki'], queryFn: () => contentApi.wiki() })
@@ -314,4 +316,12 @@ export function HomePage() {
       ) : null}
     </>
   )
+}
+
+export function HomePage() {
+  const theme = useTheme()
+  if (theme.presentation?.renderer === 'portal-v1') {
+    return <PortalHomePage presentation={theme.presentation} />
+  }
+  return <DefaultHomePage />
 }

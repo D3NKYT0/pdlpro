@@ -54,9 +54,74 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Tema original preservado do PDL PRO.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
+        "presentation": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]
+
+
+@pytest.mark.django_db
+def test_declarative_presentation_is_validated_and_published(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    presentation = {
+        "renderer": "portal-v1",
+        "navigation": [{"label": "HOME", "to": "/"}],
+        "home": {
+            "hero": {
+                "title": "Welcome", "description": "Valorem", "countdownLabel": "OPENING IN",
+                "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT", "actionTo": "/downloads",
+            },
+            "features": {
+                "title": "Systems", "subtitle": "Exclusive mechanics", "actionLabel": "SEE ALL",
+                "actionTo": "/informacoes", "items": [
+                    {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
+                ],
+            },
+            "ranking": {
+                "title": "Rating", "subtitle": "Server information", "actionLabel": "FULL RATING",
+                "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "TOP PVP", "kind": "pvp"}],
+            },
+            "cta": {
+                "title": "Ready?", "description": "Join now", "actionLabel": "CREATE ACCOUNT",
+                "actionTo": "/register",
+            },
+            "news": {"title": "NEWS"},
+        },
+        "footer": {"tagline": "A unique server", "copyright": "PDL"},
+    }
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "valorem.zip", theme_zip(manifest_overrides={"presentation": presentation}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["presentation"] == presentation
+
+
+@pytest.mark.django_db
+def test_presentation_rejects_executable_or_external_navigation(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "unsafe.zip",
+            theme_zip(manifest_overrides={
+                "presentation": {
+                    "renderer": "javascript", "navigation": [{"label": "BAD", "to": "https://evil.test"}],
+                    "home": {}, "footer": {},
+                },
+            }),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert response.status_code == 400
+    assert ThemePackage.objects.count() == 0
 
 
 @pytest.mark.django_db
