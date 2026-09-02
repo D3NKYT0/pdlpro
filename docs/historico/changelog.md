@@ -37,6 +37,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Corrigido
 
 - Autorização de personagem na consulta de inventário e sinal de saídas no extrato.
+- Limpeza da seleção ao trocar de conta no inventário e bloqueio de publicação
+  duplicada de personagem no marketplace enquanto a requisição está pendente.
 - Cotação por código de pacote, validação de identificador OAuth, desafios 2FA
   malformados e autenticação de contas desativadas entre as etapas.
 - Conversão de transports e tratamento de falhas de verificação de passkeys.

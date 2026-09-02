@@ -96,6 +96,9 @@ Os marcadores `unit`, `integration` e `architecture` estão registrados no Pytes
 | Sessão frontend | [http.test.ts](../../frontend/src/services/infra/http.test.ts), [session.test.ts](../../frontend/src/services/infra/session.test.ts) |
 | Catálogo frontend | [item-icons.test.ts](../../frontend/src/lib/item-icons.test.ts) |
 | Representação de telas | [ProgramScreens.test.tsx](../../frontend/src/components/programs/ProgramScreens.test.tsx), [AdminFinancialReportsPage.test.tsx](../../frontend/src/pages/admin/AdminFinancialReportsPage.test.tsx) |
+| Interação de conta e perfil | [AccountSecurityPage.test.tsx](../../frontend/src/pages/AccountSecurityPage.test.tsx), [ProfilePage.test.tsx](../../frontend/src/pages/ProfilePage.test.tsx) |
+| Interação de comércio e inventário | [TradingPages.test.tsx](../../frontend/src/pages/TradingPages.test.tsx), [InventoryPage.test.tsx](../../frontend/src/pages/InventoryPage.test.tsx) |
+| Interação de jogos e atendimento | [GamesPage.test.tsx](../../frontend/src/pages/GamesPage.test.tsx), [FishingGame.test.tsx](../../frontend/src/components/games/FishingGame.test.tsx), [SupportPage.test.tsx](../../frontend/src/pages/SupportPage.test.tsx) |
 
 O Vitest usa **Node por padrão** e descobre `src/**/*.test.{ts,tsx}`, conforme [vite.config.ts](../../frontend/vite.config.ts). Os testes de interface selecionam jsdom por arquivo e usam Testing Library, ambos instalados nas dependências de desenvolvimento. A suíte inclui contratos HTTP, renderização estática, interações de formulários e carregamento das [52 rotas](../../frontend/src/app/routes/AppRoutes.test.tsx). O carregamento das rotas verifica a montagem das páginas e seus layouts com a API pendente; não substitui os cenários de interação de cada funcionalidade nem uma suíte E2E em navegador real.
 

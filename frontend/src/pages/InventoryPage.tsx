@@ -314,7 +314,12 @@ export function InventoryPage() {
         {accounts.data?.accounts.length ? (
           <label className="field inventory-account-field">
             Conta Lineage
-            <select value={login} onChange={(event) => setSelectedLogin(event.target.value)}>
+            <select value={login} onChange={(event) => {
+              // Limpa a seleção no mesmo render para não consultar o personagem
+              // anterior usando o login da nova conta.
+              setCharId('')
+              setSelectedLogin(event.target.value)
+            }}>
               {accounts.data.accounts.map((account) => (
                 <option key={account.login} value={account.login}>
                   {account.login}{account.is_primary ? ' — principal' : ''}
