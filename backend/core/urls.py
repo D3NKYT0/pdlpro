@@ -12,6 +12,7 @@ from core import views
 
 urlpatterns = [
     path("", views.backend_index, name="backend_index"),
+    path("admin/components/", admin.site.admin_view(views.admin_components), name="admin-components"),
     path("admin/", admin.site.urls),
     path("api/v1/", include("core.api_urls")),
     path("api/schema/", PdlSpectacularAPIView.as_view(), name="schema"),

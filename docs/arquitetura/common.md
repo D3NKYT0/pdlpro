@@ -83,6 +83,8 @@ class InvalidDestinationError(ValidationDomainError):
 
 ## Admin, autenticação e documentação HTTP
 
+O [guia da interface do backend](../desenvolvimento/interface-admin.md) explica a base visual compartilhada, os botões, o catálogo do Jazzmin e a preservação das ações de envio.
+
 | Componente | Como reutilizar |
 | --- | --- |
 | `PDLModelAdmin` | Herde para aplicar o sistema de formulários aos modelos do admin |

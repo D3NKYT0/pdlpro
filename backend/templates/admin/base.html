@@ -6,7 +6,7 @@
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:'pt-br' }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE|default:'pt-br' }}" class="pdl-backend" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@
     {% endif %}
     <link rel="stylesheet" href="{% static 'jazzmin/css/main.css' %}">
     {% if jazzmin_settings.custom_css %}
-    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}?v=20260901.3">
+    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}?v=20260902.1">
     {% endif %}
 
     <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
@@ -51,6 +51,7 @@
 
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
+    {% include "pdl_ui/_button_assets.html" %}
 </head>
 <body class="layout-fixed{% if jazzmin_settings.show_sidebar %} sidebar-expand-lg sidebar-open{% else %} no-sidebar{% endif %} bg-body-tertiary {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now 'Z' %}">
 <div class="app-wrapper pdl-admin-shell">
@@ -95,6 +96,7 @@
             </div>
 
             <div class="pdl-commandbar__right">
+                <a class="pdl-quick-link" href="{% url 'admin-components' %}">Componentes</a>
                 {% if jazzmin_settings.search_model %}
                 <div class="dropdown pdl-search-menu">
                     <button class="pdl-command-button" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">

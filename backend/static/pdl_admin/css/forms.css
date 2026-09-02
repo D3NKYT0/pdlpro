@@ -795,43 +795,8 @@
   gap: 0.5rem !important;
 }
 
-.change-form #jazzy-actions .btn,
-.change-form #jazzy-actions input[type="submit"] {
-  width: 100%;
-  min-height: 48px;
-  white-space: normal;
-}
-
-/* Keep the approved button artwork while adapting destructive/history actions. */
-.change-form #jazzy-actions .btn-danger,
-.change-form #jazzy-actions a.deletelink {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;
-  padding-block: 0 !important;
-  background:
-    linear-gradient(rgba(112, 28, 20, 0.64), rgba(76, 18, 14, 0.7)),
-    url("../img/button-1.png") center / 100% 100% no-repeat !important;
-  -webkit-mask: url("../img/button-1.png") center / 100% 100% no-repeat;
-  mask: url("../img/button-1.png") center / 100% 100% no-repeat;
-}
-
 .change-form #jazzy-actions .object-tools {
   margin-top: 0 !important;
-}
-
-.change-form #jazzy-actions .object-tools .btn-secondary,
-.change-form #jazzy-actions .object-tools .btn-default {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;
-  padding-block: 0 !important;
-  background: url("../img/button-1.png") center / 100% 116% no-repeat !important;
-  box-shadow: none !important;
-  -webkit-mask: url("../img/button-1.png") center / 100% 116% no-repeat;
-  mask: url("../img/button-1.png") center / 100% 116% no-repeat;
 }
 
 .pdl-form-system .readonly {

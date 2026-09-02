@@ -1123,112 +1123,7 @@ label.required {
   background: rgba(212, 175, 55, 0.2);
 }
 
-/* Actions */
-
-.btn {
-  border-radius: 0;
-  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease, color 180ms ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn-primary,
-.btn-warning,
-.btn-success,
-input[type="submit"].default {
-  color: #fff !important;
-  font-weight: 400;
-  letter-spacing: 0.025em;
-  text-shadow: 0 1px 7px #000;
-  background: url("../img/button-1.png") center / 100% 100% no-repeat !important;
-  border: 0 !important;
-  box-shadow: none;
-}
-
-.btn-primary:hover,
-.btn-warning:hover,
-.btn-success:hover,
-input[type="submit"].default:hover {
-  color: #fff !important;
-  filter: brightness(1.28);
-  text-shadow: 0 0 15px rgba(255, 181, 62, 0.9);
-  box-shadow: none;
-}
-
-.btn-info {
-  color: #fff !important;
-  font-weight: 400;
-  letter-spacing: 0.025em;
-  text-shadow: 0 1px 7px #000;
-  background: url("../img/button-2.png") center / 100% 100% no-repeat !important;
-  border: 0 !important;
-  box-shadow: none;
-}
-
-.btn-info:hover,
-.btn-info:focus {
-  color: #fff !important;
-  filter: brightness(1.3);
-  text-shadow: 0 0 15px rgba(114, 200, 255, 0.85);
-}
-
-.btn-secondary,
-.btn-default {
-  color: #fff !important;
-  text-shadow: 0 1px 7px #000;
-  background: url("../img/button-3.png") center / 100% 100% no-repeat !important;
-  border: 0 !important;
-}
-
-.btn-secondary:hover,
-.btn-default:hover {
-  color: #fff !important;
-  filter: brightness(1.28);
-  text-shadow: 0 0 14px rgba(255, 181, 62, 0.76);
-}
-
-.btn-danger,
-a.deletelink {
-  color: #fff !important;
-  text-shadow: 0 1px 7px #000;
-  background:
-    linear-gradient(rgba(92, 20, 17, 0.54), rgba(92, 20, 17, 0.54)),
-    url("../img/button-3.png") center / 100% 100% no-repeat !important;
-  border: 0 !important;
-}
-
-.btn-danger:hover,
-a.deletelink:hover {
-  color: #fff !important;
-  filter: brightness(1.3);
-  text-shadow: 0 0 14px rgba(255, 102, 82, 0.78);
-}
-
-.btn-sm,
-.dashboard .btn-group .btn {
-  min-width: 92px;
-  min-height: 34px;
-  padding: 0.38rem 0.9rem;
-  line-height: 1.15;
-}
-
-.btn-group {
-  gap: 3px;
-}
-
-.btn-group > .btn:not(:first-child),
-.btn-group > .btn:not(:last-child) {
-  border-radius: 0;
-}
-
-.btn:focus-visible,
-.object-tools a:focus-visible,
-input[type="submit"]:focus-visible {
-  outline: 1px solid var(--pdl-gold-bright);
-  outline-offset: 2px;
-}
+/* Actions: shared rules live in buttons.css. */
 
 .addlink::before,
 .changelink::before,
@@ -1259,14 +1154,6 @@ input[type="submit"]:focus-visible {
 
 .historylink::before {
   content: "\f1da";
-}
-
-.object-tools a,
-.submit-row input,
-.submit-row a,
-.actions .button {
-  min-height: 40px;
-  padding: 0.55rem 1.3rem;
 }
 
 .submit-row,
@@ -1504,28 +1391,6 @@ body.login-page::after {
   justify-content: center;
   color: var(--pdl-gold-soft);
   background: rgba(13, 11, 8, 0.9);
-}
-
-.login-page .btn-primary {
-  width: 100%;
-  min-height: 58px;
-  margin-top: 0.45rem;
-  color: #fff !important;
-  font-weight: 400;
-  letter-spacing: 0.035em;
-  text-shadow: 0 1px 8px #000;
-  background: url("../img/button-1.png") center / 100% 100% no-repeat !important;
-  border: 0 !important;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.login-page .btn-primary:hover,
-.login-page .btn-primary:focus {
-  color: #fff !important;
-  filter: brightness(1.3);
-  text-shadow: 0 0 18px rgba(255, 176, 48, 0.9);
-  transform: translateY(-3px);
 }
 
 .login-page .callout {

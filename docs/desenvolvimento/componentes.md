@@ -4,6 +4,8 @@
 
 Novas telas devem compor a biblioteca existente. Os componentes compartilham interação e acessibilidade; o tema do painel define a aparência. O catálogo usa o mesmo `usePanelTheme` de `PrivateLayout`, incluindo as fontes, o fundo e as texturas originais dos botões.
 
+Para telas Django/Jazzmin, consulte a [interface compartilhada do backend](interface-admin.md), que mantém as variantes equivalentes e preserva o envio nativo dos formulários.
+
 ## Experimentar o catálogo
 
 Dentro de `frontend/`, execute `npm run dev` e abra [o catálogo local](http://localhost:3000/ui.html). Se escolher outra porta, use `/ui.html` nessa origem. A página demonstra os componentes reais sem consultar APIs: ações, formulário, carregamento, erro, paginação e teclado. Seus dados são descartados ao recarregar.

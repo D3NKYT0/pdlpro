@@ -1,0 +1,110 @@
+/* Per-control defaults have zero specificity so variants override them. */
+:where(.pdl-backend, .login-page, .pdl-docs) :where(.btn, .pdl-button, input[type="submit"], .object-tools a, .submit-row a, .actions .button) {
+  --pdl-button-image: url("../img/button-1.png");
+  --pdl-button-tone: brightness(1);
+  --pdl-button-height: 45px;
+  --pdl-button-padding-y: 10px;
+  --pdl-button-padding-x: 20px;
+  --pdl-button-font-size: 14px;
+}
+/* Shared action buttons for Jazzmin, login, custom Django pages and API docs.
+   Keep artwork/tones aligned with frontend/src/components/ui/ui.css.
+   Navigation toggles and SDK tabs retain their own semantics/layout. */
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn:not(.btn-navbar):not(.btn-link), .pdl-button, input[type="submit"].default, .object-tools a, .submit-row a, .actions .button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  flex: 0 1 auto;
+  gap: 8px;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--pdl-button-height);
+  height: auto;
+  padding: var(--pdl-button-padding-y) var(--pdl-button-padding-x);
+  border: 0;
+  border-radius: 0;
+  background: var(--pdl-button-image) center / 100% 100% no-repeat;
+  color: #fff;
+  font-family: "Source Sans Pro", system-ui, sans-serif;
+  font-size: var(--pdl-button-font-size);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  box-shadow: none;
+  filter: var(--pdl-button-tone);
+  cursor: pointer;
+  transition: filter 180ms ease, text-shadow 180ms ease, transform 180ms ease;
+}
+
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-secondary, .btn-default, .btn-info, .pdl-button--secondary, .try-out__btn, .btn-done) {
+  --pdl-button-image: url("../img/button-2.png");
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-success, .pdl-button--success) {
+  --pdl-button-tone: hue-rotate(65deg) saturate(1.35);
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-warning, .pdl-button--warning, .btn.cancel) {
+  --pdl-button-image: url("../img/button-1.png");
+  --pdl-button-tone: hue-rotate(-12deg) saturate(1.8) brightness(1.12);
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-danger, .pdl-button--danger, a.deletelink) {
+  --pdl-button-tone: hue-rotate(-38deg) saturate(2);
+}
+
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-sm, .pdl-button--sm) {
+  --pdl-button-height: 36px;
+  --pdl-button-padding-y: 8px;
+  --pdl-button-padding-x: 14px;
+  --pdl-button-font-size: 12px;
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn-lg, .pdl-button--lg) {
+  --pdl-button-height: 54px;
+  --pdl-button-padding-y: 14px;
+  --pdl-button-padding-x: 26px;
+  --pdl-button-font-size: 16px;
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) .pdl-button--icon {
+  --pdl-button-padding-x: 12px;
+}
+
+/* The Jazzmin action-region selector outranks vendor ID styles without !important. */
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn:not(.btn-navbar):not(.btn-link), .pdl-button, input[type="submit"].default, .object-tools a, .submit-row a, .actions .button):hover:not(:disabled):not(.disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  filter: var(--pdl-button-tone) brightness(1.35);
+  text-shadow: 0 0 14px orange;
+  transform: translateY(-1px);
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn, .pdl-button, input[type="submit"], .object-tools a, .submit-row a, .actions .button):active:not(:disabled):not(.disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  filter: var(--pdl-button-tone) brightness(1.1);
+  transform: translateY(0);
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn, .pdl-button, input[type="submit"], .object-tools a, .submit-row a, .actions .button):focus-visible {
+  outline: 2px solid var(--pdl-gold, #d4af37);
+  outline-offset: 3px;
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn, .pdl-button, input[type="submit"]):is(:disabled, .disabled, [aria-disabled="true"], [aria-busy="true"]) {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+  text-shadow: none;
+}
+:is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) [aria-busy="true"]:is(.btn, .pdl-button, input[type="submit"]) { cursor: progress; }
+.pdl-docs-nav .pdl-button[aria-current="page"] { outline: 1px solid var(--pdl-gold, #d4af37); outline-offset: 2px; }
+.pdl-docs .swagger-ui .btn svg { fill: currentColor; }
+.pdl-backend .btn-group { gap: 3px; flex-wrap: wrap; }
+.pdl-backend .btn-group > .btn { flex-grow: 0; }
+.pdl-button-status { display: inline-flex; align-items: center; gap: 8px; margin-inline: 8px; color: var(--pdl-muted); font-size: 13px; }
+.pdl-button-status::before { content: ""; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: pdl-button-spin 1s linear infinite; }
+@keyframes pdl-button-spin { to { transform: rotate(360deg); } }
+.pdl-component-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-block: 20px; }
+.pdl-components h3 { margin-top: 24px; }
+.pdl-components .card-body { min-width: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .pdl-button-status::before { animation: none; }
+  :is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) :is(.btn, .pdl-button, input[type="submit"]) { transition: none; }
+}

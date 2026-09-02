@@ -1,7 +1,18 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+from django.contrib import admin
+from django.template.response import TemplateResponse
 
 from common.version import API_VERSION
+
+
+@require_GET
+def admin_components(request):
+    """Catálogo sem escrita, protegido por admin.site.admin_view na configuração de URLs."""
+    return TemplateResponse(request, "admin/pdl_components.html", {
+        **admin.site.each_context(request),
+        "title": "Componentes de interface",
+    })
 
 
 @require_GET

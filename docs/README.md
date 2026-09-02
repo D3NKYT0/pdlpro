@@ -29,6 +29,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Ambiente local](desenvolvimento/ambiente-local.md) | Python, frontend, execução nativa, Docker e migrações |
 | [Frontend](desenvolvimento/frontend.md) | Organização, serviços HTTP, sessão, cache, rotas e assets |
 | [Componentes e padrão visual](desenvolvimento/componentes.md) | Catálogo local, botões, campos, estados, hooks e composição de novas telas |
+| [Interface do admin/backend](desenvolvimento/interface-admin.md) | Jazzmin, login, botões compartilhados, envio nativo e documentação HTTP |
 | [Testes e qualidade](desenvolvimento/testes.md) | Pytest, Vitest, isolamento, exemplos, cobertura e limites |
 | [Política de testes](desenvolvimento/politica-de-testes.md) | Testes obrigatórios para features e correções, critérios de review e CI |
 | [Preview isolado](desenvolvimento/preview.md) | Dados demonstrativos sem acessar pagamentos ou jogo reais |

@@ -8,12 +8,12 @@
         </span>
     </a>
     <nav class="pdl-docs-nav" aria-label="Documentação">
-        <a href="{% url 'swagger-ui' %}" {% if docs_active == 'swagger' %}aria-current="page"{% endif %}>Swagger</a>
-        <a href="{% url 'redoc' %}" {% if docs_active == 'redoc' %}aria-current="page"{% endif %}>ReDoc</a>
-        <a href="{% url 'schema' %}">Schema</a>
-        <a href="{% url 'admin:index' %}">Admin</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'swagger-ui' %}" {% if docs_active == 'swagger' %}aria-current="page"{% endif %}>Swagger</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'redoc' %}" {% if docs_active == 'redoc' %}aria-current="page"{% endif %}>ReDoc</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'schema' %}">Schema</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'admin:index' %}">Admin</a>
         {% if docs_frontend_url %}
-        <a href="{{ docs_frontend_url }}">Painel</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{{ docs_frontend_url }}">Painel</a>
         {% endif %}
     </nav>
 </header>
