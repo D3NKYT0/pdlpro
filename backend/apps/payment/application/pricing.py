@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
+from uuid import UUID
 
 from django.conf import settings
 
@@ -38,9 +39,14 @@ class CoinPricingService:
         if currency not in {"BRL", "USD"}:
             raise ValidationDomainError("Moeda inválida. Use BRL ou USD.")
         if package_id:
-            package = CoinPackage.objects.filter(id=package_id, active=True).first() or CoinPackage.objects.filter(
-                code=package_id, active=True
-            ).first()
+            # Códigos comerciais não passam pela conversão do UUIDField do ORM.
+            try:
+                package_uuid = UUID(str(package_id))
+            except ValueError:
+                package_uuid = None
+            package = CoinPackage.objects.filter(id=package_uuid, active=True).first() if package_uuid else None
+            if package is None:
+                package = CoinPackage.objects.filter(code=package_id, active=True).first()
             if package is None:
                 raise EntityNotFoundError("Pacote de moedas não encontrado.")
             price = package.price_brl if currency == "BRL" else package.price_usd

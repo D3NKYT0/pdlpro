@@ -5,8 +5,6 @@ from rest_framework.response import Response
 from apps.shop.application.use_cases import (
     AddToCartInput,
     AddToCartUseCase,
-    CheckoutInput,
-    CheckoutUseCase,
     GetCartInput,
     GetCartUseCase,
     ListShopItemsUseCase,

@@ -20,9 +20,9 @@ def make_login_challenge(user_id: UUID) -> str:
 def read_login_challenge(token: str) -> UUID:
     try:
         payload = signing.loads(token, salt=TWOFA_SALT, max_age=300)
-    except signing.BadSignature as exc:
+        return UUID(str(payload["uid"]))
+    except (signing.BadSignature, KeyError, TypeError, ValueError) as exc:
         raise InvalidTwoFactorError("Desafio 2FA expirado. Entre novamente.") from exc
-    return UUID(payload["uid"])
 
 
 def _verify(secret: str, code: str) -> bool:
@@ -137,7 +137,8 @@ class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, object]):
         from django.contrib.auth import get_user_model
 
         user_id = read_login_challenge(data.challenge)
-        user = get_user_model().objects.filter(id=user_id).first()
+        # O usuário pode ser desativado entre a senha e a conclusão do segundo fator.
+        user = get_user_model().objects.filter(id=user_id, is_active=True).first()
         if user is None:
             raise UserNotFoundError()
         if not user.is_2fa_enabled or not _verify(user.totp_secret, data.code):

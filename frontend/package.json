@@ -15,7 +15,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -b tsconfig.app.json tsconfig.test.json"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^2.2.0",
@@ -27,10 +29,15 @@
     "react-router-dom": "7.18.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/node": "^25.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "jsdom": "^30.0.1",
     "typescript": "^6.0.3",
     "vite": "^8.1.0",
     "vitest": "^4.1.5"

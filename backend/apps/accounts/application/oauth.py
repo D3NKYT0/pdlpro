@@ -132,7 +132,8 @@ def complete_oauth(provider: str, code: str, state: str):
         raise PdlAPIException("A tentativa de login expirou. Tente novamente.", error_code="OAUTH_STATE_INVALID")
 
     profile = _profile(provider, code)
-    provider_uid = str(profile.get("sub") if provider == "google" else profile.get("id", ""))
+    raw_uid = profile.get("sub") if provider == "google" else profile.get("id")
+    provider_uid = str(raw_uid).strip() if raw_uid is not None else ""
     email = str(profile.get("email", "")).strip().lower()
     verified = bool(profile.get("email_verified") if provider == "google" else profile.get("verified"))
     if not provider_uid or not email or not verified:

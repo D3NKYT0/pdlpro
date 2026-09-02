@@ -1,5 +1,26 @@
 # Implantação
 
+[← Índice da documentação](../README.md)
+
+## Formas de implantação
+
+### Stack completa em VPS
+
+É o modo principal de produção. Docker Compose executa frontend compilado, Nginx,
+Django, Daphne, Celery, Redis e PostgreSQL na mesma infraestrutura. O MySQL do jogo
+pode estar na própria rede ou em outro servidor com acesso restrito.
+
+### Frontend separado
+
+O build de `frontend/dist` pode ser publicado como conteúdo estático em cPanel, CDN
+ou storage estático. O backend permanece em uma VPS ou infraestrutura centralizada.
+
+Nesse modelo, configure HTTPS, fallback da SPA e encaminhamento de `/api/`, `/ws/` e
+`/media/` para o backend. Também ajuste `ALLOWED_HOSTS`, CORS, CSRF, WebAuthn e as URLs
+públicas para os domínios reais.
+
+As próximas seções detalham a implantação pelo Compose de produção. Para recuperar dados, consulte [Backup e restauração](backup-e-restauracao.md).
+
 ## Modos do Compose
 
 - `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
@@ -176,7 +197,7 @@ git pull --ff-only
 - Monitore latência, erros 5xx, fila Celery, conexões e espaço em disco.
 - Use `X-Request-ID` para correlação entre proxy e aplicação.
 - Restrinja ou proteja admin e documentação OpenAPI conforme o ambiente.
-- Aplique atualizações de segurança e siga [SECURITY.md](../SECURITY.md).
+- Aplique atualizações de segurança e siga [SECURITY.md](../projeto/seguranca.md).
 
 ## Verificação após implantação
 

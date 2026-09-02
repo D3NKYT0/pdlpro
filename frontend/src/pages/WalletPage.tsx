@@ -52,7 +52,7 @@ function getOrderStatus(status: string) {
 
 function getTransactionPresentation(kind: string, amount: string) {
   const numericAmount = Number(amount)
-  const outgoing = numericAmount < 0 || /(debit|out|withdraw|purchase|spent|send)/i.test(kind)
+  const outgoing = numericAmount < 0 || /(saida|saída|debit|out|withdraw|purchase|spent|send)/i.test(kind)
   const absoluteAmount = Number.isFinite(numericAmount) ? Math.abs(numericAmount).toFixed(2) : amount
   return {
     outgoing,

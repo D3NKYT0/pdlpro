@@ -6,7 +6,6 @@ from uuid import UUID
 from django.conf import settings
 from django.core import signing
 
-from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import UserNotFoundError
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import IUserRepository

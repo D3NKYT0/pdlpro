@@ -1,5 +1,7 @@
 # Arquitetura do PDL PRO
 
+[← Índice da documentação](../README.md)
+
 ## Visão geral
 
 O PDL PRO usa uma arquitetura modular em camadas. O backend separa regras de negócio de Django, banco de dados e transporte HTTP; o frontend concentra o acesso à API em serviços próprios.
@@ -30,7 +32,7 @@ presentation ──> application ──> domain
 | Infraestrutura | `backend/apps/<app>/infrastructure/` | ORM, repositórios, gateways e providers |
 | Apresentação | `backend/apps/<app>/presentation/` | Views, serializers, consumers e URLs |
 
-Regras centrais:
+Direção das dependências para novos fluxos:
 
 - o domínio não importa Django, DRF ou SQLAlchemy;
 - a aplicação depende de interfaces do domínio, não de implementações concretas;
@@ -38,9 +40,11 @@ Regras centrais:
 - apresentação trata HTTP/WebSocket e delega a regra ao caso de uso;
 - consultas do banco Lineage ficam nos catálogos SQL da infraestrutura.
 
+A estrutura atual tem variações: `programs` mantém arquivos na raiz do app, `support` concentra parte das regras nas views e alguns serviços acessam o ORM diretamente. Consulte o [mapa dos apps](apps.md) antes de presumir que todas as operações já seguem a separação completa.
+
 ## Injeção de dependência
 
-Cada app registra um `AppProvider` em seu `AppConfig.ready()`. O catálogo compõe o container raiz quando `DependencyInjection.root()` é usado pela primeira vez.
+Nos apps que usam DI, o `AppConfig.ready()` registra um `AppProvider`. O catálogo compõe o container raiz quando `DependencyInjection.root()` é usado pela primeira vez. Os módulos sem provider usam suas próprias entradas de serviço/view.
 
 O `DependencyInjectionMiddleware` cria um escopo por requisição. Views derivadas de `InjectedAPIView` usam `self.resolve(TipoDoCasoDeUso)`; o container inspeciona o construtor tipado e injeta as dependências registradas.
 
@@ -70,6 +74,8 @@ Não mantenha estado específico de usuário em singletons.
 | `games` | Minigames, recompensas, economia e passe de batalha |
 | `communication` | Notificações e push |
 | `staff` | Endpoints operacionais do sistema |
+| `programs` | Apoiadores, comissões, roadmap e ativação de recursos |
+| `support` | Chamados e atendimento ao jogador |
 
 `common/` contém capacidades transversais, como container de DI, middleware, paginação, permissões, contrato de erro e suporte a OpenAPI.
 
@@ -96,7 +102,7 @@ page/component ──> domain service ──> services/infra/http.ts ──> /ap
 
 ## Como implementar uma mudança
 
-Os guias de [uso dos apps](../backend/apps/README.md) e de [componentes compartilhados](../backend/common/README.md) detalham as classes, mostram exemplos de resolução de casos de uso e explicam os limites de transações, identificadores e autorização. Consulte também as docstrings junto às implementações.
+Os guias de [uso dos apps](apps.md) e de [componentes compartilhados](common.md) detalham as classes, mostram exemplos de resolução de casos de uso e explicam os limites de transações, identificadores e autorização. Consulte também as docstrings junto às implementações.
 
 Para um novo caso de uso no backend:
 
@@ -115,6 +121,7 @@ Escolha do namespace:
 - `public`: leitura anônima;
 - `shared`: capacidades autenticadas compartilhadas;
 - `customer`: operações de negócio do jogador;
+- `staff`: ferramentas e configurações restritas à equipe;
 - `system`: health, versão e webhooks de infraestrutura.
 
 ## Contratos transversais

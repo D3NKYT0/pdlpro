@@ -1,0 +1,15 @@
+[run]
+branch = True
+source = apps,common
+omit =
+    */tests/*
+    */migrations/*
+
+[report]
+show_missing = True
+skip_covered = True
+precision = 2
+fail_under = 84
+
+[html]
+directory = htmlcov

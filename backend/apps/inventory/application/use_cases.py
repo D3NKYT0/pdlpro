@@ -237,7 +237,7 @@ class TradeItemUseCase(UseCase[TradeItemInput, None]):
 
 
 class ListGameItemsUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
-    """Verifica acesso ao login e consulta itens do personagem pelo gateway.
+    """Confirma acesso ao login e propriedade do personagem antes de consultar seus itens.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[InventoryActor, int]``. O
     retorno é ``list[GameItem]``.
@@ -252,6 +252,8 @@ class ListGameItemsUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
         login = actor.login or actor.username
         if not self._access.can_access(actor.user_id, actor.username, login):
             raise AuthorizationError()
+        if self._lineage.get_character(login, char_id) is None:
+            raise InventoryNotFoundError("Personagem não encontrado nesta conta.")
         return self._lineage.list_character_items(char_id)
 
 

@@ -6,6 +6,20 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.{ts,tsx}'],
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.test.{ts,tsx}', 'src/**/*.d.ts', 'src/services/types/**', 'src/main.tsx'],
+      reporter: ['text', 'json-summary', 'html', 'lcov'],
+      thresholds: {
+        lines: 31,
+        statements: 30,
+        functions: 31,
+        branches: 22,
+        'src/services/domain/**': { lines: 95, statements: 95, functions: 95, branches: 85 },
+        'src/services/infra/http.ts': { lines: 95, statements: 95, functions: 100, branches: 85 },
+      },
+    },
   },
   server: {
     host: '0.0.0.0',

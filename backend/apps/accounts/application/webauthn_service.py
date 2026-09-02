@@ -14,7 +14,9 @@ from webauthn import (
     verify_registration_response,
 )
 from webauthn.helpers import base64url_to_bytes, bytes_to_base64url, options_to_json
+from webauthn.helpers.exceptions import WebAuthnException
 from webauthn.helpers.structs import (
+    AuthenticatorTransport,
     AuthenticatorSelectionCriteria,
     PublicKeyCredentialDescriptor,
     ResidentKeyRequirement,
@@ -58,9 +60,20 @@ def _pop(state: str) -> dict | None:
     return payload
 
 
+def _descriptor(row: WebAuthnCredential) -> PublicKeyCredentialDescriptor:
+    """Converte transports persistidos em JSON para os enums exigidos pelo SDK.
+
+    Valores desconhecidos de navegadores futuros são ignorados; a credencial
+    continua utilizável sem uma indicação de transporte.
+    """
+    supported = {transport.value for transport in AuthenticatorTransport}
+    transports = [AuthenticatorTransport(value) for value in (row.transports or []) if isinstance(value, str) and value in supported]
+    return PublicKeyCredentialDescriptor(id=bytes(row.credential_id), transports=transports or None)
+
+
 def begin_registration(user: User, nickname: str = "") -> dict:
     existing = [
-        PublicKeyCredentialDescriptor(id=row.credential_id, transports=row.transports or None)
+        _descriptor(row)
         for row in user.webauthn_credentials.all()
     ]
     options = generate_registration_options(
@@ -83,13 +96,16 @@ def complete_registration(user: User, state: str, credential: dict, nickname: st
     saved = _pop(state)
     if not saved or saved.get("kind") != "register" or saved.get("uid") != str(user.id):
         raise WebAuthnError("Desafio inválido ou expirado.")
-    verified = verify_registration_response(
-        credential=credential,
-        expected_challenge=base64url_to_bytes(saved["challenge"]),
-        expected_rp_id=_rp_id(),
-        expected_origin=_origins(),
-        require_user_verification=True,
-    )
+    try:
+        verified = verify_registration_response(
+            credential=credential,
+            expected_challenge=base64url_to_bytes(saved["challenge"]),
+            expected_rp_id=_rp_id(),
+            expected_origin=_origins(),
+            require_user_verification=True,
+        )
+    except WebAuthnException as exc:
+        raise WebAuthnError("Não foi possível validar esta chave de acesso.") from exc
     return WebAuthnCredential.objects.create(
         user=user,
         credential_id=verified.credential_id,
@@ -107,7 +123,7 @@ def begin_authentication(login: str = "") -> dict:
     if login.strip():
         query = {"email__iexact": login.strip()} if "@" in login else {"username__iexact": login.strip()}
         user = User.objects.filter(**query, is_active=True).first()
-        allow = [] if not user else [PublicKeyCredentialDescriptor(id=row.credential_id, transports=row.transports or None) for row in user.webauthn_credentials.all()]
+        allow = [] if not user else [_descriptor(row) for row in user.webauthn_credentials.all()]
         uid = str(user.id) if user else None
     options = generate_authentication_options(
         rp_id=_rp_id(),
@@ -126,15 +142,18 @@ def complete_authentication(state: str, credential: dict) -> User:
     row = WebAuthnCredential.objects.select_related("user").filter(credential_id=base64url_to_bytes(raw_id or "")).first()
     if not row or not row.user.is_active or (saved.get("uid") and saved["uid"] != str(row.user.id)):
         raise WebAuthnError("Credencial inválida.")
-    verified = verify_authentication_response(
-        credential=credential,
-        expected_challenge=base64url_to_bytes(saved["challenge"]),
-        expected_rp_id=_rp_id(),
-        expected_origin=_origins(),
-        credential_public_key=row.public_key,
-        credential_current_sign_count=row.sign_count,
-        require_user_verification=True,
-    )
+    try:
+        verified = verify_authentication_response(
+            credential=credential,
+            expected_challenge=base64url_to_bytes(saved["challenge"]),
+            expected_rp_id=_rp_id(),
+            expected_origin=_origins(),
+            credential_public_key=row.public_key,
+            credential_current_sign_count=row.sign_count,
+            require_user_verification=True,
+        )
+    except WebAuthnException as exc:
+        raise WebAuthnError("Não foi possível autenticar com esta chave.") from exc
     row.sign_count = verified.new_sign_count
     row.last_used_at = timezone.now()
     row.save(update_fields=["sign_count", "last_used_at", "updated_at"])

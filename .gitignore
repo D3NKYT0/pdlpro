@@ -49,6 +49,9 @@ backups/
 # Testing
 .pytest_cache/
 .coverage
+/backend/coverage.json
+/backend/coverage.xml
+/frontend/coverage/
 htmlcov/
 .mypy_cache/
 .ruff_cache/

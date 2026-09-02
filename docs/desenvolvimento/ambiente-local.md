@@ -1,6 +1,8 @@
 # Desenvolvimento
 
-Para entender como usar e estender as classes do backend, consulte os guias de [apps](../backend/apps/README.md) e [common](../backend/common/README.md), além das docstrings no código.
+[← Índice da documentação](../README.md)
+
+Para entender como usar e estender as classes do backend, consulte os guias de [apps](../arquitetura/apps.md) e [common](../arquitetura/common.md), além das docstrings no código.
 
 ## Pré-requisitos
 
@@ -105,26 +107,7 @@ O Vite abre em <http://localhost:3000> e encaminha `/api` e `/admin` para o back
 
 ## Testes e verificações
 
-Backend:
-
-```powershell
-cd backend
-ruff check .
-pytest
-pytest --cov=apps --cov=common --cov-report=term-missing
-python manage.py check
-python manage.py makemigrations --check --dry-run
-```
-
-Frontend:
-
-```powershell
-cd frontend
-npm run build
-npm run test:run -- --passWithNoTests
-```
-
-O frontend ainda não possui arquivos `*.test.*` ou `*.spec.*` versionados. A opção `--passWithNoTests` evita uma falha apenas por essa ausência; remova-a assim que a primeira suíte for adicionada. O comando `npm run test` mantém o Vitest em modo interativo.
+O [guia de testes](testes.md) explica os ambientes isolados, os comandos de Pytest e Vitest, a cobertura e os critérios de validação. Execute a suíte relevante antes de propor uma mudança.
 
 ## Migrações e dados iniciais
 
@@ -140,22 +123,4 @@ Revise o arquivo de migração antes do commit. Algumas migrações do projeto t
 
 ## Solução de problemas
 
-### O hostname `redis` não resolve fora do Docker
-
-O `.env.example` é orientado ao Compose. Para Celery ou Redis nativo, use:
-
-```dotenv
-REDIS_URL=redis://127.0.0.1:6379/0
-```
-
-### O frontend recebe erro de conexão
-
-Confirme que o backend responde em <http://127.0.0.1:8000/api/v1/system/health/> e que o Vite foi iniciado pelo script `npm run dev`.
-
-### O banco do Lineage não está disponível
-
-Mantenha `LINEAGE_DB_ENABLED=false` para desenvolver sem o banco do jogo. Para ativá-lo, confira o módulo de consultas e a conectividade conforme [Configuração](configuration.md).
-
-### Cookies ou CSRF falham
-
-Use o mesmo hostname durante todo o fluxo (`localhost` ou `127.0.0.1`) e verifique as origens CORS/CSRF. Misturar hostnames cria cookies e políticas de origem diferentes.
+Consulte o [guia de diagnóstico](../operacao/solucao-de-problemas.md) para falhas de conexão, sessão, Redis, ícones e integrações.

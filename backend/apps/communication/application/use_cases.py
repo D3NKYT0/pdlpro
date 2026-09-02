@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
-from apps.communication.domain.entities import NotificationEntity
 from apps.communication.domain.repositories import INotificationRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
