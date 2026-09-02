@@ -58,7 +58,7 @@ export function AdminCoinsPage() {
             <div><span className="panel-eyebrow">Moeda principal</span><h2>Identidade da carteira</h2><p>Vincule a moeda virtual ao item correspondente no servidor.</p></div>
           </header>
           <div className="account-form-fields">
-            <label className="field">Nome do catálogo XML<input value={catalog.getById(coinId)?.name ?? (coinId ? `Item ${coinId}` : '')} readOnly /><small>O nome vem do item selecionado no catálogo.</small></label>
+            <label className="field">Nome do catálogo<input value={catalog.getById(coinId)?.name ?? (coinId ? `Item ${coinId}` : '')} readOnly /><small>O nome vem do item selecionado no catálogo.</small></label>
             <ItemIdField
               value={coinId}
               onChange={(id, item) => {

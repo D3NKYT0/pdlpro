@@ -26,8 +26,8 @@ Documentos na raiz:
 - Rotas HTTP: `backend/core/api_urls.py` e arquivos `presentation/urls/`.
 - Rotas WebSocket: `backend/core/websocket_routing.py`.
 - Configuração: `backend/core/settings/` e `.env.example`.
-- Itens L2 (ID, nome, metadados e resolução de ícones): catálogo XML do backend
-  (`LINEAGE_ITEM_XML_DIR`), publicado em `/api/v1/public/items/catalog/`.
+- Itens L2 (ID, nome, metadados e resolução de ícones): catálogo único do backend
+  (XML em `LINEAGE_ITEM_XML_DIR` + customs no banco/media), publicado em `/api/v1/public/items/catalog/`.
   Nenhum catálogo independente é mantido no frontend.
 
 Ao alterar um comportamento público, atualize o documento correspondente no mesmo pull request.

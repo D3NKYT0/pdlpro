@@ -70,14 +70,14 @@ Esta é uma tela operacional nativa do frontend, não uma tela do Django Admin.
 O painel traz a
 observação de inflação do projeto SITE: totais por localização, busca por nome/ID,
 quantidade mínima, categorias, ordenação, favoritos pessoais e comparação entre
-snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`;
+snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`, agregado aos customs ativos do banco;
 itens sem nome conhecido aparecem como `Item <ID>`.
 Todas as telas e autocompletes consomem o catálogo canônico em
 `/api/v1/public/items/catalog/`. A API resolve ID, nome, tipo, grau, negociação e
 `icon_url`, incluindo aliases e imagem padrão. O frontend não monta URLs de ícones
-nem mantém JSON próprio. Os JPGs permanecem assets estáticos em `/item-icons/`.
+nem mantém JSON próprio. Ícones XML permanecem assets estáticos em `/item-icons/`; imagens dos customs ficam em `/media/custom-items/`.
 Itens desconhecidos
-mostram “Sem XML”. O grau/tipo exibido no histórico é do XML atual; nomes e quantidades
+mostram “Fora do catálogo”. O grau/tipo exibido no histórico é do catálogo atual; nomes e quantidades
 salvos no snapshot são preservados. Após trocar arquivos XML, reinicie o backend
 para recarregar o catálogo em cache. O cache compartilhado do navegador tem validade
 de 60 segundos e revalida ao voltar à aba ou montar um consumidor.
@@ -85,7 +85,37 @@ APIs de loja/carrinho, inventário, equipamentos, leilões, marketplace, jogos/r
 e configuração staff enriquecem seus dados com o mesmo catálogo; preços, quantidades,
 IDs de registros e valores históricos não são alterados.
 O XML contém referências a texturas do cliente,
-não as imagens: itens customizados também precisam de seu JPG em `frontend/public/item-icons/`.
+não as imagens: itens definidos por XML precisam de seu JPG em `frontend/public/item-icons/`.
+Customs cadastrados no painel usam a imagem enviada para media, sem rebuild do frontend.
+
+### Cadastro de itens customizados
+
+Em **Servidor → Itens customizados** (`/painel/admin/itens/customs`), informe ID no jogo,
+nome, imagem, tipo, grau, negociação e metadados adicionais em JSON. O JSON é público:
+não inclua senhas, tokens ou informações privadas. Limite: objeto de até 16 KB.
+
+A migration `server.0004` cria `CustomCatalogItem` no banco PDL. Não cria tabelas nem itens
+no L2. O mesmo ID precisa ser configurado no game server e no cliente para uso no jogo.
+O ID é único, positivo, permanente e não pode coincidir com um ID do XML. Se novos XML
+passarem a definir esse ID posteriormente, o XML prevalece e o editor indica o conflito.
+
+Imagens PNG/JPEG/WebP estáticas de até 2 MB e 1024 × 1024 são verificadas e regravadas
+como PNG, sem metadados embutidos ou nomes de arquivo do usuário, em
+`media/custom-items/<ID>/<uuid>.png`. Os volumes de media devem estar persistidos e
+incluídos nos backups junto ao banco. Imagens substituídas são preservadas; limpeza
+de versões antigas exige uma operação de manutenção separada.
+
+O catálogo único agrega XML e customs ativos, com uma leitura do banco por requisição
+e sem cache de customs entre requisições/processos. O cadastro invalida o cache ativo
+do frontend; as consultas do catálogo revalidam o cache HTTP. Não exige reiniciar o
+backend para criar, editar ou desativar customs. Outros clientes atualizam ao voltar
+à aba/remontar o catálogo após seu stale-time de 60 segundos.
+
+Desativar remove do catálogo, sem excluir dados ou imagens; IDs inativos continuam
+reservados e podem ser reativados. Itens ausentes do catálogo não são considerados
+negociáveis pelo fluxo de inventário. O acesso exige staff e `server.view_customcatalogitem`;
+cadastrar exige `server.add_customcatalogitem`, editar/ativar/desativar exige
+`server.change_customcatalogitem`. Superusuários possuem todas essas permissões.
 
 As consultas são SELECTs executados em uma transação MySQL somente leitura.
 Os módulos `dreamv3`, `lucerav2` e `mobius` possuem SQL específico para seus schemas.

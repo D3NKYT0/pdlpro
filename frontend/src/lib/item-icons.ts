@@ -10,6 +10,8 @@ export interface L2CatalogItem {
   icon_reference: string
   tradeable: boolean | null
   catalog_found: boolean
+  source?: 'xml' | 'custom' | null
+  metadata?: Record<string, unknown>
 }
 export type ItemCatalogResponse = { items: L2CatalogItem[]; default_icon_url: string }
 export const ITEM_CATALOG_KEY = ['item-catalog'] as const
@@ -51,11 +53,11 @@ export function searchCatalog(data: ReturnType<typeof indexItemCatalog> | undefi
   return [...starts, ...contains].slice(0, limit)
 }
 
-// One shared cache populated exclusively by the backend XML catalog. No bundled copy.
+// One shared cache populated by the backend's merged XML + custom catalog.
 export function useItemCatalog() {
   const query = useQuery({
     queryKey: ITEM_CATALOG_KEY,
-    queryFn: () => request<ItemCatalogResponse>('/public/items/catalog/'),
+    queryFn: () => request<ItemCatalogResponse>('/public/items/catalog/', { cache: 'no-cache' }),
     select: indexItemCatalog,
     staleTime: 60_000,
     retry: false,

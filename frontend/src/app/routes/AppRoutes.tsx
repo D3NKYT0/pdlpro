@@ -38,6 +38,7 @@ import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
 import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
 import { AdminHubPage } from '../../pages/admin/AdminHubPage'
 import { AdminItemObservationPage } from '../../pages/admin/AdminItemObservationPage'
+import { AdminCustomItemsPage } from '../../pages/admin/AdminCustomItemsPage'
 import { AdminNewsPage } from '../../pages/admin/AdminNewsPage'
 import { AdminServerPage } from '../../pages/admin/AdminServerPage'
 import { AdminServicesPage } from '../../pages/admin/AdminServicesPage'
@@ -94,6 +95,7 @@ export function AppRoutes() {
             <Route element={<RequireStaff />}>
               <Route path="/painel/admin" element={<AdminHubPage />} />
               <Route path="/painel/admin/itens" element={<AdminItemObservationPage />} />
+              <Route path="/painel/admin/itens/customs" element={<AdminCustomItemsPage />} />
               <Route path="/painel/admin/servidor" element={<AdminServerPage />} />
               <Route path="/painel/admin/servicos" element={<AdminServicesPage />} />
               <Route path="/painel/admin/moedas" element={<AdminCoinsPage />} />

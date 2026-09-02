@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from contextvars import ContextVar
+from contextlib import contextmanager
 from functools import lru_cache
 from pathlib import Path
 
@@ -84,6 +86,9 @@ class L2Item:
     grade: str
     icon: str = ""
     tradeable: bool = True
+    icon_url: str = ""
+    source: str = "xml"
+    metadata: dict = field(default_factory=dict)
 
 
 class LineageItemCatalog:
@@ -183,8 +188,49 @@ class LineageItemCatalog:
 
 
 @lru_cache(maxsize=1)
-def get_item_catalog() -> LineageItemCatalog:
+def get_xml_catalog() -> LineageItemCatalog:
     return LineageItemCatalog.load()
+
+
+_request_catalog = ContextVar("item_catalog", default=None)
+
+
+@contextmanager
+def item_catalog_scope():
+    """One coherent catalog snapshot/DB query per request, isolated across requests."""
+    token = _request_catalog.set({})
+    try:
+        yield
+    finally:
+        _request_catalog.reset(token)
+
+
+def get_item_catalog() -> LineageItemCatalog:
+    scope = _request_catalog.get()
+    if scope is not None and "catalog" in scope:
+        return scope["catalog"]
+    from apps.server.infrastructure.custom_item_models import CustomCatalogItem
+    items = {item.id: item for item in get_xml_catalog().all()}
+    for row in CustomCatalogItem.objects.filter(active=True):
+        # A newly installed XML must never be silently overridden by an old custom.
+        if row.item_id not in items:
+            items[row.item_id] = L2Item(id=row.item_id, name=row.name, category=row.category,
+                grade=row.grade, tradeable=row.tradeable, icon_url=row.image.url if row.image else "",
+                source="custom", metadata=row.metadata)
+    catalog = LineageItemCatalog(items)
+    if scope is not None:
+        scope["catalog"] = catalog
+    return catalog
+
+
+def clear_item_catalog():
+    get_xml_catalog.cache_clear()
+    scope = _request_catalog.get()
+    if scope is not None:
+        scope.clear()
+
+
+get_item_catalog.cache_clear = clear_item_catalog
 
 
 def item_display_name(item_id: int, fallback: str | None = None) -> str:
@@ -207,6 +253,8 @@ def item_metadata(item_id: int) -> dict:
         "id": str(item_id), "name": item.name if item else f"Item {item_id}",
         "category": item.category if item else None, "grade": item.grade if item else None,
         "tradeable": item.tradeable if item else None, "catalog_found": item is not None,
-        "icon_url": f"/item-icons/{ITEM_ICON_ID_OVERRIDES.get(item_id, item_id)}.jpg" if item else DEFAULT_ITEM_ICON,
+        "icon_url": (item.icon_url or f"/item-icons/{ITEM_ICON_ID_OVERRIDES.get(item_id, item_id)}.jpg") if item else DEFAULT_ITEM_ICON,
         "icon_reference": item.icon if item else "",
+        "source": item.source if item else None,
+        "metadata": item.metadata if item else {},
     }

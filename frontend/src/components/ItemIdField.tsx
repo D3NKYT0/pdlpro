@@ -50,7 +50,7 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
         />
       </div>
       {catalog.isError && <small role="alert">Catálogo indisponível. <button type="button" onClick={() => void catalog.refetch()}>Tentar novamente</button></small>}
-      {open && !catalog.isPending && !catalog.isError && query.trim() && !suggestions.length && <small>Nenhum item encontrado no catálogo XML.</small>}
+      {open && !catalog.isPending && !catalog.isError && query.trim() && !suggestions.length && <small>Nenhum item encontrado no catálogo.</small>}
       {open && suggestions.length > 0 ? (
         <div className="item-id-suggestions">
           {suggestions.map((item) => (

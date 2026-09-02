@@ -43,6 +43,7 @@ def test_public_catalog_uses_configured_xml_without_game_connection(custom_catal
     assert rows["858"]["icon_url"] == "/item-icons/11598.jpg"
 
 
+@pytest.mark.django_db
 def test_response_adapter_preserves_values_and_never_mutates_stored_payload(custom_catalog):
     row = {"id": str(uuid4()), "item_id": 57, "item_name": "Old saved name", "quantity": 9007199254740993,
            "price": Decimal("10.50"), "enchant": 7}

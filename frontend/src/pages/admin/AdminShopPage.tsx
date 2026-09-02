@@ -54,7 +54,7 @@ export function AdminShopPage() {
       <AdminHeader kicker="Financeiro" title="Loja" description="Itens vendidos no painel do jogador." />
       <form className="card admin-form admin-shop-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
-          <label className="field">Nome do catálogo XML<input value={catalog.getById(itemId)?.name ?? (itemId ? `Item ${itemId}` : '')} readOnly /><small>Definido pelo ID selecionado, na fonte única de itens.</small></label>
+          <label className="field">Nome do catálogo<input value={catalog.getById(itemId)?.name ?? (itemId ? `Item ${itemId}` : '')} readOnly /><small>Definido pelo ID selecionado, na fonte única de itens.</small></label>
           <ItemIdField
             value={itemId}
             required

@@ -2,6 +2,7 @@ MIDDLEWARE_PDL = [
     "common.middleware.RequestIdMiddleware",
     "common.middleware.ApiErrorContractMiddleware",
     "common.middleware.DependencyInjectionMiddleware",
+    "apps.server.presentation.catalog_middleware.ItemCatalogScopeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

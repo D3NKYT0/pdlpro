@@ -58,6 +58,7 @@ def test_search_by_id_and_name(tmp_path: Path):
     assert catalog.search("short")[0].id == 1
 
 
+@pytest.mark.django_db
 def test_real_xml_has_adena():
     catalog = LineageItemCatalog.load()
     item = catalog.get(57)

@@ -83,7 +83,7 @@ def paginate(rows, page_number, serialize=lambda row: row):
 def item_metadata(item_id):
     item = catalog_metadata(item_id)
     return {"catalog_found": item["catalog_found"], "item_type": item["category"],
-            "grade": item["grade"], "tradeable": item["tradeable"], "icon_url": item["icon_url"]}
+            "grade": item["grade"], "tradeable": item["tradeable"], "icon_url": item["icon_url"], "source": item["source"]}
 
 
 def item_json(row):

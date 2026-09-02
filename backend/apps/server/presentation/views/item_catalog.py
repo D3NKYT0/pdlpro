@@ -10,7 +10,7 @@ class ItemCatalogView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Catálogo de itens"], description="Catálogo canônico XML. Não consulta nem expõe o banco L2.")
+    @extend_schema(tags=["Catálogo de itens"], description="Catálogo canônico: XML + customs do banco PDL. Não consulta nem expõe o banco L2.")
     def get(self, request):
         return Response({"items": [item_metadata(item.id) for item in get_item_catalog().all()],
                          "default_icon_url": DEFAULT_ITEM_ICON},
