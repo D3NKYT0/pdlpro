@@ -52,7 +52,7 @@ O catálogo `dreamv3` corresponde à estrutura verificada no banco `l2jdreamv3`:
 - Olimpíadas: `oly_nobles.points_current` e `oly_heroes`.
 - Contas: `email`, `linked_uuid` e `created_time`.
 
-O catálogo contém 39 consultas, incluindo mundo, clãs e equipamentos. Não escolha
+O catálogo contém 42 consultas, incluindo mundo, clãs, equipamentos e observação administrativa. Não escolha
 o módulo apenas pelo nome do banco: outras distribuições chamadas Dream podem
 usar estruturas diferentes. Nenhuma alteração de schema do jogo é aplicada pelo painel.
 
@@ -62,6 +62,33 @@ sem executar INSERT/UPDATE/DELETE. Isso não substitui um teste de integração
 controlado de cadastro, login no jogo e consumo da fila `items_delayed`.
 O módulo mantém SHA1 para novas senhas; confirme o algoritmo no loginserver
 antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mistos.
+
+### Observar itens no admin
+
+Em `/admin/`, acesse **Servidor Lineage → Observar itens**. O painel traz a
+observação de inflação do projeto SITE: totais por localização, busca por nome/ID,
+quantidade mínima, categorias, ordenação, favoritos pessoais e comparação entre
+snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`;
+itens sem nome conhecido aparecem como `Item <ID>`.
+
+As consultas são SELECTs executados em uma transação MySQL somente leitura.
+Os módulos `dreamv3`, `lucerav2` e `mobius` possuem SQL específico para seus schemas.
+O recorte inclui INVENTORY, WAREHOUSE e PAPERDOLL de personagens com accesslevel=0,
+além de CLANWH com dono válido em clan_data. Pets, correio, itens de GM e itens
+órfãos não fazem parte desse recorte. O inventário do painel aparece separado como SITE.
+Uma captura com mais de 100 mil grupos é recusada, nunca salva parcialmente.
+
+Favoritos são privados por usuário e origem L2. Categorias e snapshots são salvos
+somente no banco do painel; nenhuma migration modifica o banco do jogo. Há no máximo
+um snapshot por dia/origem. Categorias são preservadas pelo nome no histórico, mesmo
+se forem excluídas depois. Comparações exigem a mesma origem e datas crescentes.
+Uma entrada sem quantidade anterior aparece como “Novo”, sem percentual artificial.
+
+Além de `is_staff`, a equipe precisa de `server.view_itemobservationsnapshot` para
+consultar o painel e `server.capture_itemobservationsnapshot` para criar snapshots.
+Categorias e exclusão de snapshots seguem as permissões normais de cada modelo no
+Django Admin. Superusuários já possuem todas essas permissões.
+O deploy de produção aplica a migration `server.0003` e publica o CSS do painel.
 
 ## Autenticação e origens
 

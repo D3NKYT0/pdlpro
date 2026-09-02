@@ -1,0 +1,42 @@
+{% extends "admin/server/item_observation/base.html" %}
+{% block observation_content %}
+{% if data %}
+<p class="observation-source">Origem: <code>{{ data.source }}</code></p>
+<div class="observation-metrics">
+  <article><span>Quantidade no L2</span><strong>{{ data.total_quantity|floatformat:"0g" }}</strong></article>
+  <article><span>Stacks no L2</span><strong>{{ data.total_instances|floatformat:"0g" }}</strong></article>
+  <article><span>Personagens sem privilégio GM</span><strong>{{ data.total_characters|floatformat:"0g" }}</strong></article>
+  <article><span>Quantidade no painel</span><strong>{{ data.site_quantity|floatformat:"0g" }}</strong></article>
+</div>
+<section class="observation-panel">
+  <h2>Onde estão os itens</h2>
+  <p>Inventário, baú, equipamento dos jogadores e baú dos clãs. Itens de GM, pets, correio e itens sem dono válido ficam fora deste recorte.</p>
+  <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Local</th><th>Tipos</th><th>Stacks</th><th>Quantidade</th></tr></thead><tbody>
+  {% for location in data.locations %}<tr><td>{{ location.location }}</td><td>{{ location.types }}</td><td>{{ location.instances|floatformat:"0g" }}</td><td>{{ location.quantity|floatformat:"0g" }}</td></tr>
+  {% empty %}<tr><td colspan="4">Nenhum item nesse recorte.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+<section class="observation-panel">
+  <h2>Itens do servidor</h2>
+  <form method="get" class="observation-filters">{{ filters.as_p }}<div><button class="btn btn-primary">Filtrar</button> <a href="{{ monitor_url }}">Limpar</a></div></form>
+  <p>Favoritos são pessoais. Um favorito ausente no L2 aparece com quantidade zero. “Donos” conta personagens e clãs distintos.</p>
+  <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Favorito</th><th>ID</th><th>Item</th><th>Categoria</th><th>Quantidade</th><th>Stacks</th><th>Donos</th></tr></thead><tbody>
+  {% for row in page_obj %}<tr>
+    <td><form method="post" action="{% url 'admin:server_itemobservationsnapshot_favorite' row.item_id %}">{% csrf_token %}
+      <input type="hidden" name="action" value="{% if row.is_favorite %}remove{% else %}add{% endif %}">
+      <button class="btn btn-sm btn-outline-secondary" aria-label="{% if row.is_favorite %}Remover{% else %}Adicionar{% endif %} favorito {{ row.item_name }}">{% if row.is_favorite %}★{% else %}☆{% endif %}</button>
+    </form></td>
+    <td>{{ row.item_id }}</td><td>{{ row.item_name }}</td><td>{{ row.category_name|default:"—" }}</td><td>{{ row.quantity|floatformat:"0g" }}</td><td>{{ row.instances|floatformat:"0g" }}</td><td>{{ row.unique_owners|floatformat:"0g" }}</td>
+  </tr>{% empty %}<tr><td colspan="7">Nenhum item encontrado.</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% include "admin/server/item_observation/pagination.html" %}
+</section>
+{% if can_capture %}<section class="observation-panel">
+  <h2>Registrar snapshot diário</h2><p>Uma captura por dia e por origem, incluindo o inventário do painel. Não movimenta itens no jogo.</p>
+  <form method="post" action="{% url 'admin:server_itemobservationsnapshot_capture' %}">{% csrf_token %}{{ capture_form.as_p }}<button class="btn btn-primary">Capturar snapshot</button></form>
+</section>{% endif %}
+{% else %}<section class="observation-panel"><h2>Consulta ao vivo indisponível</h2><p>Confira a mensagem acima. Os snapshots anteriores continuam disponíveis.</p></section>{% endif %}
+<section class="observation-panel"><h2>Últimos snapshots</h2>
+  <ul>{% for snapshot in recent %}<li><a href="{% url 'admin:server_itemobservationsnapshot_detail' snapshot.pk %}">{{ snapshot.snapshot_date }} — {{ snapshot.source }}</a></li>{% empty %}<li>Nenhum snapshot registrado.</li>{% endfor %}</ul>
+</section>
+{% endblock %}

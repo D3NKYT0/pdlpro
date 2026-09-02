@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from apps.server.infrastructure.models import IndexConfig, ManagedLineageAccount, ServicePrice
 from common.admin import PDLModelAdmin
+from apps.server.presentation import item_observation_admin  # noqa: F401
 
 
 @admin.register(ManagedLineageAccount)

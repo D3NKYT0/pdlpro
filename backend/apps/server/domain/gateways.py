@@ -150,6 +150,10 @@ class ILineageGateway(ABC):
     @abstractmethod
     def transfer_character(self, char_id: int, new_account: str) -> None: ...
 
+    def observe_items(self) -> dict:
+        """Administrative read-only inventory capture, unsupported by null gateways."""
+        raise NotImplementedError("Observação de itens indisponível neste gateway.")
+
     @abstractmethod
     def query(self, name: str, params: dict | None = None) -> list[dict]:
         """Executa uma query nomeada do catálogo SQL. Sem SQL no Python."""

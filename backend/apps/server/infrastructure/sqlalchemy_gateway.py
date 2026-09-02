@@ -292,6 +292,22 @@ class SqlAlchemyLineageGateway(ILineageGateway):
     def transfer_character(self, char_id: int, new_account: str) -> None:
         self._execute("transfer_character", {"acc": new_account, "cid": char_id})
 
+    def observe_items(self) -> dict:
+        # All reads share one MySQL snapshot; this path cannot mutate game data.
+        result = {}
+        with self._engine_or_create().connect() as connection:
+            connection.exec_driver_sql("START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY")
+            for key, name in (("items", "monitor_items"), ("details", "monitor_details"),
+                              ("characters", "monitor_characters")):
+                sql = self._sql[name]
+                if not sql.lstrip().upper().startswith("SELECT"):
+                    raise ValueError("Item observation requires SELECT statements.")
+                rows = connection.execute(text(sql), {"row_limit": 100001}).mappings().all()
+                if len(rows) > 100000:
+                    raise ValueError("O limite seguro de grupos de itens foi excedido; captura cancelada.")
+                result[key] = [dict(row) for row in rows]
+        return result
+
     def query(self, name: str, params: dict | None = None) -> list[dict]:
         if not self._sql.has(name):
             return []

@@ -1,0 +1,22 @@
+.pdl-observation { max-width: 1500px; margin: 0 auto; }
+.observation-header { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.observation-header h1 { font-size: 1.8rem; margin-bottom: .5rem; }
+.observation-eyebrow { color: #d4ae65; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; }
+.observation-header nav { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.observation-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.observation-metrics article, .observation-panel { border: 1px solid var(--bs-border-color, #494333); border-radius: .75rem; padding: 1.25rem; background: var(--bs-body-bg, #212529); }
+.observation-metrics span { display: block; font-size: .8rem; opacity: .8; }
+.observation-metrics strong { display: block; font-size: 1.6rem; overflow-wrap: anywhere; margin-top: .5rem; font-variant-numeric: tabular-nums; }
+.observation-panel { margin-bottom: 1.5rem; }
+.observation-panel h2 { font-size: 1.15rem; margin-bottom: 1rem; }
+.observation-panel p { font-size: .9rem; }
+.observation-panel table { margin-top: 1rem; font-variant-numeric: tabular-nums; }
+.observation-panel td, .observation-panel th { vertical-align: middle; }
+.observation-filters { display: flex; align-items: end; flex-wrap: wrap; gap: 1rem; }
+.observation-filters p { flex: 1 1 150px; margin: 0; }
+.observation-filters label { display: block; }
+.observation-filters input:not([type=checkbox]), .observation-filters select, .observation-panel textarea { width: 100%; }
+.observation-pagination { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.observation-source { overflow-wrap: anywhere; }
+@media (max-width: 900px) { .observation-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 500px) { .observation-metrics { grid-template-columns: 1fr; } .observation-panel { padding: .8rem; } }

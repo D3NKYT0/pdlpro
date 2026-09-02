@@ -23,6 +23,7 @@ READ_QUERIES = [
 @pytest.fixture
 def schema():
     connection = sqlite3.connect(":memory:")
+    connection.create_function("CONCAT", -1, lambda *args: "".join(map(str, args)))
     connection.row_factory = sqlite3.Row
     connection.executescript("""
         CREATE TABLE accounts (
@@ -86,7 +87,7 @@ def test_complete_feature_catalog():
     assert set(CATALOG.REQUIRED) <= CATALOG._statements.keys()
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
-    assert len(CATALOG._statements) == 39
+    assert len(CATALOG._statements) == 42
 
 
 @pytest.mark.parametrize("name", READ_QUERIES)
@@ -152,3 +153,12 @@ def test_register_records_creation_time(schema):
     })
     row = schema.execute("SELECT accessLevel, created_time FROM accounts WHERE login='test'").fetchone()
     assert tuple(row) == (0, 1700000000)
+
+
+def test_observation_includes_clan_warehouse_without_a_character_owner(schema):
+    schema.execute("INSERT INTO items VALUES (2000, 7, 57, 50, 'CLANWH', 0, -1)")
+    rows = schema.execute(CATALOG["monitor_items"], {"row_limit": 100}).fetchall()
+    adena = next(row for row in rows if row["item_id"] == 57)
+    assert adena["quantity"] == 400
+    assert adena["unique_owners"] == 2  # One character plus a clan.
+    assert all(row["item_id"] != 200 for row in rows)  # MAIL is outside the scope.
