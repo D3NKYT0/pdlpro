@@ -99,6 +99,10 @@ Pacotes ficam em `MEDIA_ROOT/themes/<tema>/<versão-hash>/` e são entregues sob
 e Nginx. `backend/media/` também é ignorado pelo Git. Preserve o volume `media_files` em
 upgrades e backups; ele é a fonte persistente dos temas instalados.
 
+No deploy, o entrypoint cria `/app/media/themes` e corrige sua permissão antes de iniciar a
+aplicação. O instalador também cria `MEDIA_ROOT/themes` com todos os diretórios pais, tornando
+seguros tanto o primeiro deploy com volume vazio quanto uma execução local sem a pasta criada.
+
 O endpoint público `GET /api/v1/public/theme/` informa o tema ativo. A administração usa
 `/api/v1/staff/themes/`; não exponha essas operações sem autenticação e papel de superusuário.
 

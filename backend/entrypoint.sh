@@ -20,8 +20,9 @@ else
     echo "[entrypoint] Skipping static collection (RUN_COLLECTSTATIC=false)."
 fi
 
-if ! gosu appuser test -w /app/media 2>/dev/null; then
-    echo "[entrypoint] Fixing media permissions..."
+mkdir -p /app/media/themes
+if ! gosu appuser test -w /app/media/themes 2>/dev/null; then
+    echo "[entrypoint] Fixing media and theme permissions..."
     chown -R appuser:appuser /app/media 2>/dev/null || true
 fi
 
