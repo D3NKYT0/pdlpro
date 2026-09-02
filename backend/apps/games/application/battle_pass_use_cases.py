@@ -112,7 +112,7 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
             quantity=reward.quantity,
         )
         UserBattlePassClaim.objects.create(user=user, reward=reward)
-        return {"claimed": True, "item_name": reward.item_name}
+        return {"claimed": True, "item_id": reward.item_id, "item_name": reward.item_name}
 
 
 @dataclass(frozen=True, slots=True)

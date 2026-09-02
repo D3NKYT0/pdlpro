@@ -17,7 +17,7 @@ from apps.marketplace.application.use_cases import (
 )
 from apps.marketplace.domain.entities import CharacterListingEntity
 from apps.marketplace.presentation.serializers import CreateListingSerializer
-from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 def dump_listing(listing: CharacterListingEntity) -> dict:
@@ -29,7 +29,7 @@ def dump_listing(listing: CharacterListingEntity) -> dict:
     return payload
 
 
-class PublicMarketplaceView(InjectedAPIView):
+class PublicMarketplaceView(ItemCatalogAPIView):
     permission_classes = [AllowAny]
 
     @extend_schema(tags=["Marketplace"])
@@ -38,7 +38,7 @@ class PublicMarketplaceView(InjectedAPIView):
         return Response([dump_listing(listing) for listing in listings])
 
 
-class MyListingsView(InjectedAPIView):
+class MyListingsView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])
@@ -64,7 +64,7 @@ class MyListingsView(InjectedAPIView):
         return Response(dump_listing(listing))
 
 
-class PurchaseListingView(InjectedAPIView):
+class PurchaseListingView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])
@@ -79,7 +79,7 @@ class PurchaseListingView(InjectedAPIView):
         return Response(dump_listing(listing))
 
 
-class CancelListingView(InjectedAPIView):
+class CancelListingView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])

@@ -18,6 +18,7 @@ from apps.staff.application.use_cases import (
 )
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class StaffPanelSettingsView(InjectedAPIView):
@@ -45,7 +46,7 @@ class StaffServicePricesView(InjectedAPIView):
         return Response(self.resolve(UpsertStaffServicePricesUseCase).execute(payload))
 
 
-class StaffCoinConfigView(InjectedAPIView):
+class StaffCoinConfigView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -57,7 +58,7 @@ class StaffCoinConfigView(InjectedAPIView):
         return Response(self.resolve(UpdateStaffCoinConfigUseCase).execute(request.data or {}))
 
 
-class StaffShopItemsView(InjectedAPIView):
+class StaffShopItemsView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])

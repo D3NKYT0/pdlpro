@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b tsconfig.app.json && vite build",
-    "catalog": "node scripts/build-l2-catalog.mjs",
     "icons": "node scripts/import-l2-icons.mjs",
     "preview": "vite preview",
     "lint": "eslint .",

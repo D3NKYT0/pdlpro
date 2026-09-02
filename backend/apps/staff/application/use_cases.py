@@ -9,6 +9,7 @@ from apps.content.infrastructure.models import News
 from apps.games.infrastructure.models import GameConfig
 from apps.server.application.use_cases import GetServerInfoUseCase
 from apps.server.infrastructure.models import IndexConfig, ServicePrice
+from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.shop.infrastructure.models import ShopItem
 from apps.wallet.infrastructure.models import CoinConfig
 from common.architecture.base import UseCase
@@ -145,8 +146,8 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
         row = CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
         if row is None:
             row = CoinConfig(name="Adena")
-        row.name = str(data.get("name") or row.name or "Adena")
         row.coin_id = int(data.get("coin_id") or row.coin_id or 57)
+        row.name = item_display_name(row.coin_id)
         row.multiplier = Decimal(str(data.get("multiplier") or row.multiplier or "1"))
         row.usd_multiplier = Decimal(str(data.get("usd_multiplier") or row.usd_multiplier or "5"))
         row.withdraw_fee_percent = Decimal(str(data.get("withdraw_fee_percent") or row.withdraw_fee_percent or "0"))
@@ -172,12 +173,10 @@ class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):
 
 class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
     def execute(self, data: dict) -> dict:
-        name = str(data.get("name") or "").strip()
-        if not name:
-            raise ValidationDomainError("Informe o nome do item.")
         item_id = int(data.get("item_id") or 0)
         if item_id <= 0:
             raise ValidationDomainError("Informe o ID do item no jogo.")
+        name = item_display_name(item_id)
         price = Decimal(str(data.get("price") or "0"))
         quantity = int(data.get("quantity") or 1)
         active = bool(data.get("active", True))

@@ -108,7 +108,8 @@ def test_buy_and_open_box(api, player):
     assert bought.data["remaining"] == 2
     opened = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
     assert opened.status_code == 200, opened.data
-    assert opened.data["item"]["name"] == "Scroll"
+    from apps.server.infrastructure.lineage.item_catalog import item_metadata
+    assert opened.data["item"]["name"] == item_metadata(opened.data["item"]["item_id"])["name"]
     assert opened.data["remaining"] == 1
 
 

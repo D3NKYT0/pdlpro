@@ -55,6 +55,7 @@ from apps.accounts.presentation.serializers import (
     UserSerializer,
 )
 from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class CsrfView(InjectedAPIView):
@@ -265,7 +266,7 @@ class TwoFactorView(InjectedAPIView):
         raise ValidationDomainError("Ação 2FA inválida.")
 
 
-class GamerProfileView(InjectedAPIView):
+class GamerProfileView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"])
@@ -324,7 +325,7 @@ class ConfirmPasswordResetView(InjectedAPIView):
         )
 
 
-class ClaimRewardView(InjectedAPIView):
+class ClaimRewardView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"])

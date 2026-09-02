@@ -93,7 +93,8 @@ def test_staff_can_update_coins_shop_and_news(api, staff):
         format="json",
     )
     assert created.status_code == 200, created.data
-    assert created.data["name"] == "Espada"
+    from apps.server.infrastructure.lineage.item_catalog import item_metadata
+    assert created.data["name"] == item_metadata(1)["name"]
 
     news = api.post(
         "/api/v1/staff/news/",

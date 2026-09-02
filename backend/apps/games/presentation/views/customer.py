@@ -50,10 +50,10 @@ from apps.games.presentation.serializers import (
     PlayDiceSerializer,
     TransferBagSerializer,
 )
-from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
-class RouletteView(InjectedAPIView):
+class RouletteView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -65,7 +65,7 @@ class RouletteView(InjectedAPIView):
         return Response(self.resolve(SpinRouletteUseCase).execute(SpinRouletteInput(user_id=request.user.id)))
 
 
-class BuyTokensView(InjectedAPIView):
+class BuyTokensView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"], request=BuyTokensSerializer)
@@ -79,7 +79,7 @@ class BuyTokensView(InjectedAPIView):
         )
 
 
-class DailyBonusView(InjectedAPIView):
+class DailyBonusView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -93,7 +93,7 @@ class DailyBonusView(InjectedAPIView):
         )
 
 
-class BagView(InjectedAPIView):
+class BagView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -111,7 +111,7 @@ class BagView(InjectedAPIView):
         )
 
 
-class BoxListView(InjectedAPIView):
+class BoxListView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -129,7 +129,7 @@ class BoxListView(InjectedAPIView):
         )
 
 
-class OpenBoxView(InjectedAPIView):
+class OpenBoxView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -137,7 +137,7 @@ class OpenBoxView(InjectedAPIView):
         return Response(self.resolve(OpenBoxUseCase).execute(OpenBoxInput(user_id=request.user.id, box_id=box_id)))
 
 
-class MinigamesView(InjectedAPIView):
+class MinigamesView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -145,7 +145,7 @@ class MinigamesView(InjectedAPIView):
         return Response(self.resolve(GetMinigamesStateUseCase).execute(request.user.id))
 
 
-class DiceView(InjectedAPIView):
+class DiceView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"], request=PlayDiceSerializer)
@@ -159,7 +159,7 @@ class DiceView(InjectedAPIView):
         )
 
 
-class SlotsView(InjectedAPIView):
+class SlotsView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -167,7 +167,7 @@ class SlotsView(InjectedAPIView):
         return Response(self.resolve(SpinSlotsUseCase).execute(SpinSlotsInput(user_id=request.user.id)))
 
 
-class FishingView(InjectedAPIView):
+class FishingView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -179,7 +179,7 @@ class FishingView(InjectedAPIView):
         return Response(self.resolve(CastLineUseCase).execute(CastLineInput(user_id=request.user.id)))
 
 
-class EconomyView(InjectedAPIView):
+class EconomyView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -187,7 +187,7 @@ class EconomyView(InjectedAPIView):
         return Response(self.resolve(GetEconomyStateUseCase).execute(request.user.id))
 
 
-class FightMonsterView(InjectedAPIView):
+class FightMonsterView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -199,7 +199,7 @@ class FightMonsterView(InjectedAPIView):
         )
 
 
-class EnchantWeaponView(InjectedAPIView):
+class EnchantWeaponView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -207,7 +207,7 @@ class EnchantWeaponView(InjectedAPIView):
         return Response(self.resolve(EnchantWeaponUseCase).execute(EnchantWeaponInput(user_id=request.user.id)))
 
 
-class BattlePassView(InjectedAPIView):
+class BattlePassView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -221,7 +221,7 @@ class BattlePassView(InjectedAPIView):
         )
 
 
-class ClaimBattlePassView(InjectedAPIView):
+class ClaimBattlePassView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])

@@ -43,4 +43,4 @@ if (existsSync(omegaIcons)) {
   process.exit(1);
 }
 
-console.log(`catalog is built from backend/data/items XML via: npm run catalog`);
+console.log('Item metadata and icon URLs are served by /api/v1/public/items/catalog/.');

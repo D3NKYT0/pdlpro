@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ItemIcon } from './ItemIcon'
-import { getL2CatalogItemById, searchL2Items, type L2CatalogItem } from '../lib/item-icons'
+import { useItemCatalog, type L2CatalogItem } from '../lib/item-icons'
 
 interface ItemIdFieldProps {
   value: string
@@ -13,8 +13,9 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const containerRef = useRef<HTMLLabelElement>(null)
-  const selected = getL2CatalogItemById(value)
-  const suggestions = useMemo(() => searchL2Items(query || value), [query, value])
+  const catalog = useItemCatalog()
+  const selected = catalog.getById(value)
+  const suggestions = catalog.search(open ? query : value)
 
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -31,7 +32,7 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
         <ItemIcon itemId={value} name={selected?.name} size={34} />
         <input
           value={open ? query : selected ? `${selected.id} — ${selected.name}` : value}
-          placeholder="ID ou nome do item"
+          placeholder={catalog.isPending ? 'Carregando catálogo…' : 'ID ou nome do item'}
           autoComplete="off"
           required={required}
           onFocus={() => {
@@ -43,10 +44,13 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
             setQuery(next)
             setOpen(true)
             const digits = next.trim()
-            if (/^\d+$/.test(digits)) onChange(digits, getL2CatalogItemById(digits))
+            if (/^\d+$/.test(digits)) onChange(digits, catalog.getById(digits))
+            else onChange('', null)
           }}
         />
       </div>
+      {catalog.isError && <small role="alert">Catálogo indisponível. <button type="button" onClick={() => void catalog.refetch()}>Tentar novamente</button></small>}
+      {open && !catalog.isPending && !catalog.isError && query.trim() && !suggestions.length && <small>Nenhum item encontrado no catálogo XML.</small>}
       {open && suggestions.length > 0 ? (
         <div className="item-id-suggestions">
           {suggestions.map((item) => (

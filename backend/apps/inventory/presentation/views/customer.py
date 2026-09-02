@@ -18,7 +18,7 @@ from apps.inventory.application.use_cases import (
 )
 from apps.inventory.presentation.serializers import DepositSerializer, TradeSerializer, WithdrawSerializer
 from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
-from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 def inventory_actor(request, login: str = "") -> InventoryActor:
@@ -36,7 +36,7 @@ def dump_item(item) -> dict:
     return payload
 
 
-class InventoryDashboardView(InjectedAPIView):
+class InventoryDashboardView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -59,7 +59,7 @@ class InventoryDashboardView(InjectedAPIView):
         return Response(payload)
 
 
-class CharacterItemsView(InjectedAPIView):
+class CharacterItemsView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -74,7 +74,7 @@ class CharacterItemsView(InjectedAPIView):
         return Response(payload)
 
 
-class CharacterEquipmentView(InjectedAPIView):
+class CharacterEquipmentView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -84,7 +84,7 @@ class CharacterEquipmentView(InjectedAPIView):
         return Response([asdict(item) for item in items])
 
 
-class WithdrawItemView(InjectedAPIView):
+class WithdrawItemView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=WithdrawSerializer)
@@ -103,7 +103,7 @@ class WithdrawItemView(InjectedAPIView):
         return Response(dump_item(item))
 
 
-class DepositItemView(InjectedAPIView):
+class DepositItemView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=DepositSerializer)
@@ -123,7 +123,7 @@ class DepositItemView(InjectedAPIView):
         return Response({"ok": True})
 
 
-class TradeItemView(InjectedAPIView):
+class TradeItemView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=TradeSerializer)

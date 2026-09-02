@@ -26,6 +26,24 @@ A lista completa e os métodos aceitos devem ser consultados no Swagger/ReDoc ou
 
 ## Autenticação
 
+### Catálogo canônico de itens
+
+`GET /api/v1/public/items/catalog/` é público e independe da conexão com o jogo.
+Retorna `items` e `default_icon_url`. Cada item contém `id` (ID L2 como string),
+`name`, `category`, `grade`, `tradeable`, `catalog_found`, `icon_url` e
+`icon_reference` (referência de textura do XML, não uma URL de imagem).
+As URLs de ícone são resolvidas exclusivamente pelo backend. O cache HTTP é de 60 segundos.
+
+APIs que apresentam itens atuais também retornam `item_metadata` e `icon_url`,
+resolvidos pelo mesmo serviço. `name`/`item_name` refletem o catálogo, sem alterar
+quantidades, preços, IDs comerciais (UUID) ou registros persistidos. IDs desconhecidos
+recebem `Item <ID>`, metadados nulos e a imagem padrão, sem adivinhar por nome.
+Snapshots mantêm o nome capturado, explicitamente histórico; tipo/grau/ícone são atuais.
+O frontend compartilha uma única consulta em cache, inclusive para autocomplete,
+e não possui catálogo JSON ou regras próprias de nomes/ícones.
+
+### Sessão
+
 A aplicação usa access e refresh JWT em cookies `HttpOnly`. O navegador deve enviar credenciais em todas as requisições:
 
 ```ts

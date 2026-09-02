@@ -72,12 +72,19 @@ observação de inflação do projeto SITE: totais por localização, busca por 
 quantidade mínima, categorias, ordenação, favoritos pessoais e comparação entre
 snapshots diários. Os nomes vêm do catálogo XML configurado em `LINEAGE_ITEM_XML_DIR`;
 itens sem nome conhecido aparecem como `Item <ID>`.
-O frontend exibe os ícones locais em `/item-icons/<ID>.jpg` (com imagem padrão
-quando indisponíveis). Nome, tipo, grau e possibilidade de troca vêm do XML
-configurado no backend, não do catálogo estático do navegador. Itens desconhecidos
+Todas as telas e autocompletes consomem o catálogo canônico em
+`/api/v1/public/items/catalog/`. A API resolve ID, nome, tipo, grau, negociação e
+`icon_url`, incluindo aliases e imagem padrão. O frontend não monta URLs de ícones
+nem mantém JSON próprio. Os JPGs permanecem assets estáticos em `/item-icons/`.
+Itens desconhecidos
 mostram “Sem XML”. O grau/tipo exibido no histórico é do XML atual; nomes e quantidades
 salvos no snapshot são preservados. Após trocar arquivos XML, reinicie o backend
-para recarregar o catálogo em cache. O XML contém referências a texturas do cliente,
+para recarregar o catálogo em cache. O cache compartilhado do navegador tem validade
+de 60 segundos e revalida ao voltar à aba ou montar um consumidor.
+APIs de loja/carrinho, inventário, equipamentos, leilões, marketplace, jogos/recompensas
+e configuração staff enriquecem seus dados com o mesmo catálogo; preços, quantidades,
+IDs de registros e valores históricos não são alterados.
+O XML contém referências a texturas do cliente,
 não as imagens: itens customizados também precisam de seu JPG em `frontend/public/item-icons/`.
 
 As consultas são SELECTs executados em uma transação MySQL somente leitura.

@@ -1,117 +1,68 @@
-import l2ItemsJson from '../data/l2-items.json'
-
-export type ItemCategory =
-  | 'WEAPON'
-  | 'SHIELD'
-  | 'HELMET'
-  | 'ARMOR'
-  | 'PANTS'
-  | 'BOOTS'
-  | 'GLOVES'
-  | 'NECKLACE'
-  | 'EARRING'
-  | 'RING'
-  | 'HAIR'
-  | 'FACE'
-  | 'UNDERWEAR'
-  | 'FORMAL'
-  | 'PET'
-  | 'COMUM'
-
-export type ItemGrade = 'NG' | 'D' | 'C' | 'B' | 'A' | 'S'
-
-type L2ItemEntry = [id: string, name: string, category: ItemCategory, grade: ItemGrade]
-
-const L2_ITEMS = l2ItemsJson as L2ItemEntry[]
+import { useQuery } from '@tanstack/react-query'
+import { request } from '../services/infra/http'
 
 export interface L2CatalogItem {
   id: string
   name: string
-  category: ItemCategory
-  grade: ItemGrade
+  category: string | null
+  grade: string | null
+  icon_url: string
+  icon_reference: string
+  tradeable: boolean | null
+  catalog_found: boolean
 }
-
-export const L2_ITEM_CATALOG: L2CatalogItem[] = L2_ITEMS.filter(
-  ([, name]) => name && !/not in use/i.test(name),
-).map(([id, name, category, grade]) => ({ id, name, category, grade }))
-
-export const DEFAULT_ITEM_ICON = '/item-icons/default.jpg'
-
-const ITEM_ICON_ID_OVERRIDES: Record<string, string> = {
-  '858': '11598',
-  '889': '11597',
-  '920': '11596',
-}
-
-export function getItemIconPath(id: string | number): string {
-  const raw = String(id)
-  const fileId = ITEM_ICON_ID_OVERRIDES[raw] ?? raw
-  return `/item-icons/${fileId}.jpg`
-}
+export type ItemCatalogResponse = { items: L2CatalogItem[]; default_icon_url: string }
+export const ITEM_CATALOG_KEY = ['item-catalog'] as const
 
 export function normalizeItemName(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[''`]/g, '')
-    .replace(/[^a-z0-9+]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
+  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
-const idToItem = new Map<string, L2CatalogItem>()
-const nameToItem = new Map<string, L2CatalogItem>()
-for (const item of L2_ITEM_CATALOG) {
-  if (!idToItem.has(item.id)) idToItem.set(item.id, item)
-  const key = normalizeItemName(item.name)
-  if (key && !nameToItem.has(key)) nameToItem.set(key, item)
+type IndexedCatalog = ItemCatalogResponse & { byId: Map<string, L2CatalogItem>; searchable: { item: L2CatalogItem; normalized: string }[] }
+const indexes = new WeakMap<ItemCatalogResponse, IndexedCatalog>()
+export function indexItemCatalog(data: ItemCatalogResponse): IndexedCatalog {
+  const cached = indexes.get(data)
+  if (cached) return cached
+  const indexed = {
+    ...data,
+    byId: new Map(data.items.map(item => [String(item.id), item])),
+    searchable: data.items.map(item => ({ item, normalized: normalizeItemName(item.name) })),
+  }
+  indexes.set(data, indexed)
+  return indexed
 }
 
-export function getL2CatalogItemById(id: string | number | null | undefined): L2CatalogItem | null {
-  if (id === null || id === undefined || id === '') return null
-  const raw = String(id).trim().replace(/^l2:/i, '')
-  if (!/^\d+$/.test(raw)) return null
-  return idToItem.get(raw) ?? null
-}
-
-export function getL2CatalogItem(name: string | null | undefined): L2CatalogItem | null {
-  if (!name) return null
-  const key = normalizeItemName(name.replace(/\s*\+\d+\s*$/, ''))
-  return nameToItem.get(key) ?? null
-}
-
-export function itemDisplayName(id: string | number | null | undefined, fallback?: string): string {
-  const item = getL2CatalogItemById(id)
-  if (item) return item.name
-  return fallback || (id ? `Item ${id}` : 'Item')
-}
-
-export function searchL2Items(query: string, limit = 20): L2CatalogItem[] {
-  const trimmed = query.trim()
-  if (!trimmed) return []
+export function searchCatalog(data: ReturnType<typeof indexItemCatalog> | undefined, query: string, limit = 20): L2CatalogItem[] {
+  const trimmed = query.trim().replace(/^#/, '')
+  if (!data || !trimmed) return []
   if (/^\d+$/.test(trimmed)) {
-    const exact = getL2CatalogItemById(trimmed)
-    if (exact) return [exact]
-    const matches: L2CatalogItem[] = []
-    for (const item of L2_ITEM_CATALOG) {
-      if (item.id.startsWith(trimmed)) {
-        matches.push(item)
-        if (matches.length >= limit) break
-      }
-    }
-    return matches
+    const exact = data.byId.get(trimmed)
+    return exact ? [exact] : data.items.filter(item => item.id.startsWith(trimmed)).slice(0, limit)
   }
-
-  const normalized = normalizeItemName(query)
+  const normalized = normalizeItemName(trimmed)
   if (normalized.length < 2) return []
-  const startsWith: L2CatalogItem[] = []
-  const contains: L2CatalogItem[] = []
-  for (const item of L2_ITEM_CATALOG) {
-    const key = normalizeItemName(item.name)
-    if (key.startsWith(normalized)) startsWith.push(item)
-    else if (key.includes(normalized)) contains.push(item)
-    if (startsWith.length >= limit) break
+  const starts: L2CatalogItem[] = [], contains: L2CatalogItem[] = []
+  for (const { item, normalized: name } of data.searchable) {
+    if (name.startsWith(normalized)) starts.push(item)
+    else if (name.includes(normalized)) contains.push(item)
+    if (starts.length >= limit) break
   }
-  return [...startsWith, ...contains].slice(0, limit)
+  return [...starts, ...contains].slice(0, limit)
+}
+
+// One shared cache populated exclusively by the backend XML catalog. No bundled copy.
+export function useItemCatalog() {
+  const query = useQuery({
+    queryKey: ITEM_CATALOG_KEY,
+    queryFn: () => request<ItemCatalogResponse>('/public/items/catalog/'),
+    select: indexItemCatalog,
+    staleTime: 60_000,
+    retry: false,
+  })
+  const getById = (id: string | number | null | undefined) => {
+    const key = String(id ?? '').trim().replace(/^l2:/i, '')
+    return query.data?.byId.get(key) ?? null
+  }
+  return { ...query, getById, search: (value: string, limit = 20) => searchCatalog(query.data, value, limit) }
 }

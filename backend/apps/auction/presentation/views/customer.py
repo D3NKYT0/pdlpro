@@ -16,7 +16,7 @@ from apps.auction.application.use_cases import (
 )
 from apps.auction.domain.entities import AuctionEntity, BidEntity
 from apps.auction.presentation.serializers import CreateAuctionSerializer, PlaceBidSerializer
-from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 def dump_auction(auction: AuctionEntity) -> dict:
@@ -42,7 +42,7 @@ def dump_bid(bid: BidEntity) -> dict:
     }
 
 
-class PublicAuctionListView(InjectedAPIView):
+class PublicAuctionListView(ItemCatalogAPIView):
     permission_classes = [AllowAny]
 
     @extend_schema(tags=["Leilão"])
@@ -52,7 +52,7 @@ class PublicAuctionListView(InjectedAPIView):
         return Response([dump_auction(auction) for auction in auctions])
 
 
-class MyAuctionsView(InjectedAPIView):
+class MyAuctionsView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Leilão"])
@@ -79,7 +79,7 @@ class MyAuctionsView(InjectedAPIView):
         return Response(dump_auction(auction))
 
 
-class PlaceBidView(InjectedAPIView):
+class PlaceBidView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Leilão"], request=PlaceBidSerializer)

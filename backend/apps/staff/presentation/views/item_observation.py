@@ -14,7 +14,7 @@ from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory, ItemObservationFavorite, ItemObservationSnapshot,
 )
-from apps.server.infrastructure.lineage.item_catalog import get_item_catalog, item_display_name
+from apps.server.infrastructure.lineage.item_catalog import item_metadata as catalog_metadata, item_display_name
 from common.exceptions import PdlAPIException
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
@@ -81,9 +81,9 @@ def paginate(rows, page_number, serialize=lambda row: row):
 
 
 def item_metadata(item_id):
-    item = get_item_catalog().get(item_id)
-    return {"catalog_found": item is not None, "item_type": item.category if item else None,
-            "grade": item.grade if item else None, "tradeable": item.tradeable if item else None}
+    item = catalog_metadata(item_id)
+    return {"catalog_found": item["catalog_found"], "item_type": item["category"],
+            "grade": item["grade"], "tradeable": item["tradeable"], "icon_url": item["icon_url"]}
 
 
 def item_json(row):

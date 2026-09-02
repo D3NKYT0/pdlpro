@@ -93,4 +93,4 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
         )
         RewardClaim.objects.create(user=user, reward=reward)
         add_xp(user, 5)
-        return {"claimed": True, "item_name": reward.item_name}
+        return {"claimed": True, "item_id": reward.item_id, "item_name": reward.item_name}

@@ -5,13 +5,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, expect, it, vi } from 'vitest'
 import { AdminHubPage } from './AdminHubPage'
 import { AdminItemObservationPage, Categories, Snapshots } from './AdminItemObservationPage'
+import { ITEM_CATALOG_KEY } from '../../lib/item-icons'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'observer' } }) }))
 
 const fullAccess = { capture: true, delete_snapshots: true, add_categories: true, change_categories: true, delete_categories: true }
 const readAccess = { capture: false, delete_snapshots: false, add_categories: false, change_categories: false, delete_categories: false }
+function seedCatalog(client: QueryClient) {
+  client.setQueryData(ITEM_CATALOG_KEY, { items: [{ id: '57', name: 'Adena custom XML', category: 'WEAPON', grade: 'A', icon_url: '/item-icons/57.jpg', tradeable: false, catalog_found: true }], default_icon_url: '/item-icons/default.jpg' })
+}
 function renderTab(tab: typeof Categories | typeof Snapshots, data: unknown, writable = true) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  seedCatalog(client)
   const key = tab === Categories ? ['categories'] : ['snapshots', 1]
   client.setQueryData(['staff-item-observation', 'observer', ...key], data)
   const html = renderToStaticMarkup(createElement(QueryClientProvider, { client }, createElement(MemoryRouter, null, createElement(tab, { access: writable ? fullAccess : readAccess }))))
@@ -64,6 +69,7 @@ describe('panel item observation entry', () => {
   })
   it('renders the live panel with read-only data and exact quantities', () => {
     const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    seedCatalog(client)
     client.setQueryData(['staff-item-observation', 'observer', 'access'], { capture: true })
     client.setQueryData(['staff-item-observation', 'observer', 'live', { search: '', minimum: '', category: '', favorites: false, sort: 'quantity', page: 1 }], {
       source: 'test-l2', totals: { total_quantity: '9007199254740993', total_instances: '1', total_characters: '1', site_quantity: '0' },

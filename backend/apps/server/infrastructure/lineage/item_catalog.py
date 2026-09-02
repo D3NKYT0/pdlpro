@@ -95,6 +95,9 @@ class LineageItemCatalog:
     def get(self, item_id: int) -> L2Item | None:
         return self._items.get(int(item_id))
 
+    def all(self) -> list[L2Item]:
+        return list(self._items.values())
+
     def name_for(self, item_id: int, fallback: str | None = None) -> str:
         item = self.get(item_id)
         if item:
@@ -190,3 +193,20 @@ def item_display_name(item_id: int, fallback: str | None = None) -> str:
 
 def item_is_tradeable(item_id: int) -> bool:
     return get_item_catalog().is_tradeable(item_id)
+
+
+# Asset filenames are resolved here, never independently by UI consumers.
+DEFAULT_ITEM_ICON = "/item-icons/default.jpg"
+ITEM_ICON_ID_OVERRIDES = {858: 11598, 889: 11597, 920: 11596}
+
+
+def item_metadata(item_id: int) -> dict:
+    item_id = int(item_id)
+    item = get_item_catalog().get(item_id)
+    return {
+        "id": str(item_id), "name": item.name if item else f"Item {item_id}",
+        "category": item.category if item else None, "grade": item.grade if item else None,
+        "tradeable": item.tradeable if item else None, "catalog_found": item is not None,
+        "icon_url": f"/item-icons/{ITEM_ICON_ID_OVERRIDES.get(item_id, item_id)}.jpg" if item else DEFAULT_ITEM_ICON,
+        "icon_reference": item.icon if item else "",
+    }

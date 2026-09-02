@@ -44,9 +44,15 @@ def test_list_and_buy_character(api, seller, buyer):
     assert listed.status_code == 200, listed.data
     assert listed.data["char_pvp"] == 0
     assert listed.data["char_pk"] == 0
-    assert listed.data["equipment"] == [
-        {"item_id": 2413, "name": "Helmet", "quantity": 1, "enchant": 3, "slot": 6}
-    ]
+    from apps.server.infrastructure.lineage.item_catalog import item_metadata
+    equipment = listed.data["equipment"]
+    assert len(equipment) == 1
+    assert equipment[0]["item_id"] == 2413
+    assert equipment[0]["name"] == item_metadata(2413)["name"]
+    assert equipment[0]["item_metadata"] == item_metadata(2413)
+    assert equipment[0]["quantity"] == 1
+    assert equipment[0]["enchant"] == 3
+    assert equipment[0]["slot"] == 6
     assert listed.data["created_at"]
     listing_id = listed.data["id"]
     catalog = api.get("/api/v1/public/marketplace/")

@@ -100,7 +100,7 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
             return {
                 "failed": False,
                 "fichas": user.fichas,
-                "prize": {"name": chosen.name, "rarity": chosen.rarity, "enchant": chosen.enchant},
+                "prize": {"item_id": chosen.item_id, "name": chosen.name, "rarity": chosen.rarity, "enchant": chosen.enchant},
             }
 
 

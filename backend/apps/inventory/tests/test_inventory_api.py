@@ -149,8 +149,12 @@ def test_character_equipment_is_read_only_and_scoped_to_the_account(api, player)
     response = api.get(f"/api/v1/customer/inventory/characters/{char.char_id}/equipment/")
 
     assert response.status_code == 200
-    assert response.data == [
-        {"item_id": 2413, "name": "Helmet", "quantity": 1, "enchant": 3, "slot": 6},
-        {"item_id": 10, "name": "Sword", "quantity": 1, "enchant": 7, "slot": 7},
+    from apps.server.infrastructure.lineage.item_catalog import item_metadata
+    assert [{key: row[key] for key in ("item_id", "quantity", "enchant", "slot")} for row in response.data] == [
+        {"item_id": 2413, "quantity": 1, "enchant": 3, "slot": 6},
+        {"item_id": 10, "quantity": 1, "enchant": 7, "slot": 7},
     ]
+    for row in response.data:
+        assert row["name"] == item_metadata(row["item_id"])["name"]
+        assert row["item_metadata"] == item_metadata(row["item_id"])
     assert api.post(f"/api/v1/customer/inventory/characters/{char.char_id}/equipment/").status_code == 405

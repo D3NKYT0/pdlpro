@@ -14,10 +14,10 @@ from apps.shop.application.use_cases import (
     UpdateCartItemUseCase,
 )
 from apps.shop.presentation.serializers import AddToCartSerializer, ShopItemSerializer, UpdateCartItemSerializer
-from common.views import InjectedAPIView
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
-class ShopCatalogView(InjectedAPIView):
+class ShopCatalogView(ItemCatalogAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -27,7 +27,7 @@ class ShopCatalogView(InjectedAPIView):
         return Response(ShopItemSerializer(items, many=True).data)
 
 
-class ShopCartView(InjectedAPIView):
+class ShopCartView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"])
@@ -48,7 +48,7 @@ class ShopCartView(InjectedAPIView):
         return Response(result)
 
 
-class ShopCartItemView(InjectedAPIView):
+class ShopCartItemView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"], request=UpdateCartItemSerializer)
@@ -72,7 +72,7 @@ class ShopCartItemView(InjectedAPIView):
         return Response(result)
 
 
-class ShopCheckoutView(InjectedAPIView):
+class ShopCheckoutView(ItemCatalogAPIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"])
