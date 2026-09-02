@@ -11,6 +11,14 @@ from apps.wallet.infrastructure.models import Wallet, WalletTransaction
 
 
 class DjangoWalletRepository(IWalletRepository):
+    """Persiste carteiras e extratos usando o ORM do Django.
+
+    Converte modelos em WalletEntity. Atualiza saldos com expressões F e usa um débito
+    condicional para impedir saldo principal negativo. Não valida valores positivos aqui; essa
+    validação pertence ao caso de uso. Use dentro de UnitOfWork para que alteração do saldo e
+    gravação do extrato revertam juntas em caso de erro. Não consome saldo de bônus nos débitos.
+    """
+
     def _to_entity(self, wallet: Wallet) -> WalletEntity:
         return WalletEntity(
             id=wallet.id,

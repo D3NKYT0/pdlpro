@@ -21,6 +21,14 @@ from common.permissions import IsStaffMember
 
 
 class PackageItemSerializer(serializers.Serializer):
+    """Contrato de dados de ``PackageItemSerializer`` na API de shop.
+
+    Campos declarados: ``item``, ``quantity``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     item = serializers.SlugRelatedField(
         slug_field="id", queryset=ShopItem.objects.all()
     )
@@ -28,6 +36,14 @@ class PackageItemSerializer(serializers.Serializer):
 
 
 class PackageSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``ShopPackage`` no módulo shop.
+
+    Campos declarados: ``items``, ``contents``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     items = PackageItemSerializer(many=True, write_only=True)
     contents = serializers.SerializerMethodField()
 
@@ -73,6 +89,14 @@ class PackageSerializer(serializers.ModelSerializer):
 
 
 class PromoSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``PromotionCode`` no módulo shop.
+
+    Campos declarados: ``supporter``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     supporter = serializers.SlugRelatedField(
         slug_field="id",
         queryset=Supporter.objects.filter(status="approved"),
@@ -116,16 +140,38 @@ class PromoSerializer(serializers.ModelSerializer):
 
 
 class CartOptionsSerializer(serializers.Serializer):
+    """Contrato de dados de ``CartOptionsSerializer`` na API de shop.
+
+    Campos declarados: ``promo_code``, ``use_bonus``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     promo_code = serializers.CharField(max_length=40, allow_blank=True, required=False)
     use_bonus = serializers.BooleanField(required=False)
 
 
 class CartPackageSerializer(serializers.Serializer):
+    """Contrato de dados de ``CartPackageSerializer`` na API de shop.
+
+    Campos declarados: ``package_id``, ``quantity``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     package_id = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=0, max_value=99, default=1)
 
 
 class CommerceView(APIView):
+    """Trata pacotes, opções e histórico de compras do comércio para o usuário da sessão.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, section):
@@ -190,6 +236,12 @@ class CommerceView(APIView):
 
 
 class StaffCommerceView(APIView):
+    """Administra as configurações de comércio suportadas pelo registro de modelos e serializers.
+
+    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def config(self, section):

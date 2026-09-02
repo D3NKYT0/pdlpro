@@ -1,4 +1,11 @@
 class Whirlpool2003:
+    """Implementação incremental do hash Whirlpool na variante de 2003.
+
+    Usada por LineagePasswordHasher para compatibilidade com contas Lucera. Alimente bytes em
+    ``update`` e obtenha ``digest`` ou ``hexdigest``. Para criar/verificar senhas de contas, use
+    o hasher que seleciona a variante e a codificação esperadas pelo servidor.
+    """
+
     BLOCK_SIZE = 64
     DIGEST0 = (
         "19FA61D75522A4669B44E39C1D2E1726C530232130D407F89AFEE0964997F7A7"

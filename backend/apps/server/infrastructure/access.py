@@ -11,6 +11,13 @@ from apps.server.infrastructure.models import ManagedLineageAccount
 
 
 class DjangoAccountAccessService(IAccountAccessService):
+    """Consulta vínculos Lineage e limites locais para autorizar acesso a contas.
+
+    Injete pela porta IAccountAccessService. Use ``can_access`` antes de operar uma conta e
+    ``can_link_more`` antes de adicionar vínculo secundário. ``list_accounts`` e ``slot_usage``
+    alimentam a seleção de contas na UI.
+    """
+
     def __init__(self, lineage: ILineageGateway, slots: ILinkSlotRepository) -> None:
         self._lineage = lineage
         self._slots = slots

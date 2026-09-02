@@ -6,6 +6,12 @@ from dataclasses import dataclass, field
 
 @dataclass(frozen=True, slots=True)
 class ServerStatus:
+    """Disponibilidade dos servidores de login e jogo e contagem informada de jogadores.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     game_online: bool
     login_online: bool
     players_online: int
@@ -13,6 +19,12 @@ class ServerStatus:
 
 @dataclass(frozen=True, slots=True)
 class ServerInfo:
+    """Configurações públicas de apresentação do servidor: crônica, rates e características.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     name: str
     description: str
     chronicle: str
@@ -25,6 +37,12 @@ class ServerInfo:
 
 @dataclass(frozen=True, slots=True)
 class RankingEntry:
+    """Uma posição do ranking, com nome, valor e metadados específicos em extra.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     position: int
     name: str
     value: int
@@ -33,6 +51,12 @@ class RankingEntry:
 
 @dataclass(frozen=True, slots=True)
 class GameAccount:
+    """Conta do Lineage identificada por login, com vínculo opcional ao usuário do painel.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     login: str
     email: str
     linked_user_id: str | None
@@ -41,6 +65,12 @@ class GameAccount:
 
 @dataclass(frozen=True, slots=True)
 class GameCharacter:
+    """Personagem do jogo; char_id é o identificador inteiro do Lineage, não um UUID do painel.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     char_id: int
     name: str
     level: int
@@ -56,6 +86,13 @@ class GameCharacter:
 
 @dataclass(frozen=True, slots=True)
 class GameItem:
+    """Pilha de item do jogo; item_id identifica o tipo de item e slot informa equipamento quando
+    presente.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     item_id: int
     name: str
     quantity: int
@@ -64,7 +101,16 @@ class GameItem:
 
 
 class ILineageGateway(ABC):
-    """Porta única para o banco do Lineage 2. Nunca expor SQL ao frontend."""
+    """Porta de acesso a contas, personagens, itens e consultas do Lineage 2.
+
+    Injete esta interface na aplicação; ServerProvider escolhe o adaptador. IDs de personagens e
+    itens são inteiros do jogo, enquanto linked_user_id identifica o usuário do painel.
+    ``query`` recebe nome de consulta do catálogo e parâmetros, nunca SQL vindo do cliente.
+    Operações opcionais, como câmbio e observação, podem lançar NotImplementedError.
+
+    O banco do jogo tem transações próprias: UnitOfWork do Django não desfaz automaticamente
+    escritas feitas por esta porta.
+    """
 
     def assert_exchange_ready(self) -> None:
         """Read-only check of durable receipts and transactional game tables."""

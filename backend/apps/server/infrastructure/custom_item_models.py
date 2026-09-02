@@ -33,6 +33,11 @@ def validate_custom_metadata(value):
 
 
 class CustomCatalogItem(BaseModel):
+    """Metadados de um item customizado que complementam o catálogo XML. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     item_id = models.PositiveIntegerField("ID no jogo", unique=True,
         validators=[MinValueValidator(1), MaxValueValidator(2147483647)])
     name = models.CharField("Nome", max_length=255)

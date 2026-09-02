@@ -16,6 +16,14 @@ logger = logging.getLogger(__name__)
 
 
 class MercadoPagoGateway(IPaymentGateway):
+    """Adaptador de IPaymentGateway para pagamentos via Mercado Pago.
+
+    Obtenha a instância pelo PaymentGatewayRegistry. Encapsula criação do checkout,
+    processamento e consulta de status; os casos de uso aplicam os resultados ao pedido e à
+    carteira. Depende das credenciais configuradas e não valida, por si só, a assinatura das
+    requisições de webhook.
+    """
+
     method_name = "mercadopago"
 
     def is_available(self) -> bool:

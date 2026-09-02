@@ -8,6 +8,14 @@ from apps.communication.infrastructure.models import Notification
 
 
 class DjangoNotificationRepository(INotificationRepository):
+    """Adaptador Django de ``INotificationRepository`` para notificações por usuário e marcação de
+    leitura.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _entity(self, row: Notification) -> NotificationEntity:
         return NotificationEntity(
             id=row.id,

@@ -9,7 +9,20 @@ from apps.wallet.infrastructure.models import CoinPurchaseBonus
 
 
 class DjangoPurchaseBonusPolicy(IPurchaseBonusPolicy):
+    """Calcula o bônus de compra a partir das faixas ativas do ORM.
+
+    Injete pela porta IPurchaseBonusPolicy e chame ``preview(amount)`` com a quantidade de
+    moedas, não com o valor em reais ou dólares. Retorna uma prévia; o crédito efetivo é
+    responsabilidade da liquidação do pagamento.
+    """
+
     def preview(self, amount: Decimal) -> BonusPreview:
+        """Seleciona a primeira faixa ativa compatível, ordenada por order e min_amount.
+
+        Limites da faixa são inclusivos; max_amount nulo não limita o teto. Sem faixa
+        compatível, o bônus é zero. Arredonda o bônus para duas casas decimais.
+        """
+
         amount = Decimal(str(amount))
         rule = (
             CoinPurchaseBonus.objects.filter(active=True, min_amount__lte=amount)

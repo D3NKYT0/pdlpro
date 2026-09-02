@@ -32,6 +32,14 @@ from common.permissions import IsStaffMember
 
 
 class BattleActionSerializer(serializers.Serializer):
+    """Contrato de dados de ``BattleActionSerializer`` na API de games.
+
+    Campos declarados: ``action``, ``entry_id``, ``enabled``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     action = serializers.ChoiceField(
         choices=["quest", "exchange", "milestone", "auto-claim"]
     )
@@ -45,6 +53,12 @@ class BattleActionSerializer(serializers.Serializer):
 
 
 class BattleDetailsView(APIView):
+    """Consulta o conteúdo adicional do passe e encaminha ações validadas ao serviço de batalha.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -57,6 +71,12 @@ class BattleDetailsView(APIView):
 
 
 class DailyDetailsView(APIView):
+    """Consulta o calendário e os detalhes do bônus diário para o jogador.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -64,11 +84,25 @@ class DailyDetailsView(APIView):
 
 
 class BaitPurchaseSerializer(serializers.Serializer):
+    """Contrato de dados de ``BaitPurchaseSerializer`` na API de games.
+
+    Campos declarados: ``bait_id``, ``quantity``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     bait_id = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=1, max_value=999, default=1)
 
 
 class FishingDetailsView(APIView):
+    """Lista iscas, estoque e capturas do usuário e permite comprar iscas.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -115,6 +149,12 @@ class FishingDetailsView(APIView):
 
 
 class GameStatisticsView(APIView):
+    """Expõe as estatísticas produzidas pelo serviço de jogos.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, kind):
@@ -244,6 +284,12 @@ def config_serializer(kind):
 
 
 class StaffGameContentView(APIView):
+    """Administra os tipos de conteúdo dos jogos previstos no registro de serializers.
+
+    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def get(self, request, kind):

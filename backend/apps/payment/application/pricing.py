@@ -11,6 +11,12 @@ from common.architecture.exceptions import EntityNotFoundError, ValidationDomain
 
 @dataclass(frozen=True, slots=True)
 class CoinQuote:
+    """Cotação que separa amount na moeda indicada por currency de coins no saldo do painel.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     coins: Decimal
     amount: Decimal
     currency: str
@@ -19,6 +25,14 @@ class CoinQuote:
 
 
 class CoinPricingService:
+    """Cota pacotes ou valores avulsos em BRL e USD para moedas do painel.
+
+    Chame ``quote(package_id=..., amount=..., currency=...)``. Um pacote ativo tem prioridade
+    sobre amount e pode ser localizado por UUID ou código. Sem pacote, exige amount positivo e
+    usa os multiplicadores da CoinConfig ativa ou os padrões configurados. Retorna CoinQuote sem
+    criar pagamento.
+    """
+
     def quote(self, *, package_id: str | None, amount: Decimal | None, currency: str) -> CoinQuote:
         currency = currency.upper()
         if currency not in {"BRL", "USD"}:

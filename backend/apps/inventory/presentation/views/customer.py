@@ -37,6 +37,12 @@ def dump_item(item) -> dict:
 
 
 class InventoryDashboardView(ItemCatalogAPIView):
+    """Entrada HTTP para ``SyncInventoriesUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -60,6 +66,12 @@ class InventoryDashboardView(ItemCatalogAPIView):
 
 
 class CharacterItemsView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListGameItemsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -75,6 +87,12 @@ class CharacterItemsView(ItemCatalogAPIView):
 
 
 class CharacterEquipmentView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListCharacterEquipmentUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"])
@@ -85,6 +103,12 @@ class CharacterEquipmentView(ItemCatalogAPIView):
 
 
 class WithdrawItemView(ItemCatalogAPIView):
+    """Entrada HTTP para ``WithdrawItemUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=WithdrawSerializer)
@@ -104,6 +128,12 @@ class WithdrawItemView(ItemCatalogAPIView):
 
 
 class DepositItemView(ItemCatalogAPIView):
+    """Entrada HTTP para ``DepositItemUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=DepositSerializer)
@@ -124,6 +154,12 @@ class DepositItemView(ItemCatalogAPIView):
 
 
 class TradeItemView(ItemCatalogAPIView):
+    """Entrada HTTP para ``TradeItemUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Inventário"], request=TradeSerializer)

@@ -7,6 +7,12 @@ from uuid import UUID
 
 @dataclass(frozen=True, slots=True)
 class PaymentOrderEntity:
+    """Estado do pedido de pagamento, separando valor monetário, moedas e dados de checkout.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     user_id: UUID
     amount: Decimal
@@ -25,6 +31,12 @@ class PaymentOrderEntity:
 
 @dataclass(frozen=True, slots=True)
 class CheckoutSession:
+    """Referências retornadas pelo provedor ao preparar o checkout de um pedido.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     external_id: str
     checkout_url: str
     client_secret: str = ""
@@ -33,6 +45,13 @@ class CheckoutSession:
 
 @dataclass(frozen=True, slots=True)
 class ProcessResult:
+    """Resultado normalizado do provedor, com status e dados de pagamento/PIX/boleto quando
+    disponíveis.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     status: str
     external_id: str = ""
     pix_qr_code: str = ""

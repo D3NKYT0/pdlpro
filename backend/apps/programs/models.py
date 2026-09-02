@@ -6,6 +6,13 @@ from common.models import BaseModel
 
 
 class Supporter(BaseModel):
+    """Cadastro de apoiador associado a um usuário, com revisão e percentual de comissão.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     channel_url = models.URLField()
@@ -26,6 +33,13 @@ class Supporter(BaseModel):
 
 
 class Commission(BaseModel):
+    """Comissão de uma compra da loja, vinculada ao apoiador e a um repasse quando solicitado.
+
+    Relaciona os registros por ``supporter``, ``purchase``, ``payout``. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     supporter = models.ForeignKey(
         Supporter, on_delete=models.PROTECT, related_name="commissions"
     )
@@ -41,6 +55,13 @@ class Commission(BaseModel):
 
 
 class CommissionPayout(BaseModel):
+    """Solicitação de repasse que agrupa comissões de um apoiador e acompanha sua aprovação.
+
+    Relaciona os registros por ``supporter``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     supporter = models.ForeignKey(
         Supporter, on_delete=models.PROTECT, related_name="payouts"
     )
@@ -54,6 +75,12 @@ class CommissionPayout(BaseModel):
 
 
 class RoadmapEntry(BaseModel):
+    """Entrega planejada ou concluída com progresso e publicação no roadmap público. Herda
+    BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de
+    aplicação para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     title = models.CharField(max_length=160)
     description = models.TextField()
     category = models.CharField(max_length=60, default="Servidor")
@@ -78,6 +105,12 @@ class RoadmapEntry(BaseModel):
 
 
 class SystemResource(BaseModel):
+    """Chave de ativação de funcionalidade consultada pelo ResourceGateMiddleware. Herda BaseModel:
+    use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação
+    para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     code = models.SlugField(unique=True)
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=60)

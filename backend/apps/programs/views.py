@@ -26,6 +26,12 @@ from common.permissions import IsStaffMember
 
 
 class SupporterView(APIView):
+    """Consulta o cadastro de apoiador, comissões e repasses do usuário e recebe sua inscrição.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -85,6 +91,12 @@ class SupporterView(APIView):
 
 
 class RequestPayoutView(APIView):
+    """Recebe a solicitação de repasse de comissões do apoiador autenticado.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -94,6 +106,12 @@ class RequestPayoutView(APIView):
 
 
 class StaffSupporterView(APIView):
+    """Permite à equipe consultar e revisar cadastros de apoiadores e suas condições.
+
+    Implementa GET, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def get(self, request):
@@ -131,6 +149,12 @@ class StaffSupporterView(APIView):
 
 
 class StaffPayoutView(APIView):
+    """Permite à equipe consultar e revisar pedidos de repasse de comissões.
+
+    Implementa PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def patch(self, request, entry_id):
@@ -149,6 +173,12 @@ class StaffPayoutView(APIView):
 
 
 class RoadmapView(APIView):
+    """Expõe as entradas publicadas do roadmap.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
 
     def get(self, request, entry_id=None):
@@ -161,6 +191,12 @@ class RoadmapView(APIView):
 
 
 class StaffRoadmapView(APIView):
+    """Permite à equipe criar, atualizar e excluir entradas do roadmap.
+
+    Implementa GET, POST, PATCH, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
+    acesso declarado: [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def get(self, request):
@@ -188,6 +224,12 @@ class StaffRoadmapView(APIView):
 
 
 class ResourceView(APIView):
+    """Lista os recursos do sistema e seu estado de ativação.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -197,6 +239,12 @@ class ResourceView(APIView):
 
 
 class StaffResourceView(ResourceView):
+    """Atualiza a configuração dos recursos do sistema pela interface administrativa.
+
+    Implementa PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def patch(self, request, entry_id):

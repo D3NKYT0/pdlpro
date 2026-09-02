@@ -19,12 +19,25 @@ from common.architecture.exceptions import AuthorizationError, ValidationDomainE
 
 @dataclass(frozen=True, slots=True)
 class AccountActor:
+    """Contexto do usuário do painel usado nas operações de contas Lineage.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     username: str
     email: str
 
 
 class ListAccessibleAccountsUseCase(UseCase[AccountActor, list[AccessibleAccount]]):
+    """Lista contas Lineage acessíveis ao usuário por meio da política de vínculos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AccountActor``. O retorno é
+    ``list[AccessibleAccount]``.
+    """
+
     def __init__(self, access: IAccountAccessService) -> None:
         self._access = access
 
@@ -33,6 +46,12 @@ class ListAccessibleAccountsUseCase(UseCase[AccountActor, list[AccessibleAccount
 
 
 class GetLinkSlotsUseCase(UseCase[AccountActor, dict]):
+    """Retorna slots usados, limite total e indicação de que ainda é possível vincular outra conta.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AccountActor``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, access: IAccountAccessService) -> None:
         self._access = access
 
@@ -42,6 +61,13 @@ class GetLinkSlotsUseCase(UseCase[AccountActor, dict]):
 
 
 class InspectPrimaryLoginUseCase(UseCase[AccountActor, PrimaryLoginState]):
+    """Classifica o login preferido como owned, available, taken ou unclaimed. Pode atualizar o
+    registro local de conta principal durante a inspeção.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AccountActor``. O retorno é
+    ``PrimaryLoginState``.
+    """
+
     def __init__(self, lineage: ILineageGateway) -> None:
         self._lineage = lineage
 
@@ -61,12 +87,27 @@ class InspectPrimaryLoginUseCase(UseCase[AccountActor, PrimaryLoginState]):
 
 @dataclass(frozen=True, slots=True)
 class RegisterGameAccountInput:
+    """Dados de entrada de ``RegisterGameAccountUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     password: str
     login: str = ""
 
 
 class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount]):
+    """Cria ou assume a conta principal do jogo, verificando credenciais quando o login já existe
+    sem vínculo. Registra o vínculo no Lineage e a referência local; essas gravações usam bancos
+    distintos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``RegisterGameAccountInput``. O
+    retorno é ``GameAccount``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -117,12 +158,26 @@ class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount])
 
 @dataclass(frozen=True, slots=True)
 class LinkGameAccountInput:
+    """Dados de entrada de ``LinkGameAccountUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     login: str
     password: str
 
 
 class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
+    """Valida credenciais, conflito de proprietário e limite de slots antes de vincular uma conta
+    Lineage ao usuário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``LinkGameAccountInput``. O
+    retorno é ``GameAccount``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -161,11 +216,25 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
 
 @dataclass(frozen=True, slots=True)
 class UnlinkGameAccountInput:
+    """Dados de entrada de ``UnlinkGameAccountUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     login: str
 
 
 class UnlinkGameAccountUseCase(UseCase[UnlinkGameAccountInput, None]):
+    """Remove o vínculo de uma conta secundária e sua referência local; impede desvincular a conta
+    principal.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UnlinkGameAccountInput``. O
+    retorno é ``None``.
+    """
+
     def __init__(self, lineage: ILineageGateway, unit_of_work: UnitOfWork) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
@@ -182,6 +251,12 @@ class UnlinkGameAccountUseCase(UseCase[UnlinkGameAccountInput, None]):
 
 
 class InspectGameAccountUseCase(UseCase[str, dict]):
+    """Produz uma visão administrativa de uma conta Lineage a partir do login. A view chamadora
+    deve exigir permissão de staff.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``str``. O retorno é ``dict``.
+    """
+
     def __init__(self, lineage: ILineageGateway) -> None:
         self._lineage = lineage
 
@@ -190,6 +265,12 @@ class InspectGameAccountUseCase(UseCase[str, dict]):
 
 
 class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
+    """Remove administrativamente o vínculo no Lineage e os registros locais e retorna a nova visão
+    da conta. Exige autorização de staff na entrada HTTP.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``str``. O retorno é ``dict``.
+    """
+
     def __init__(self, lineage: ILineageGateway, unit_of_work: UnitOfWork) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
@@ -207,11 +288,24 @@ class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ListCharactersInput:
+    """Dados de entrada de ``ListCharactersUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     login: str
 
 
 class ListCharactersUseCase(UseCase[ListCharactersInput, list[GameCharacter]]):
+    """Lista personagens de uma conta após verificar o acesso do usuário ao login informado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListCharactersInput``. O retorno
+    é ``list[GameCharacter]``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access
@@ -225,12 +319,25 @@ class ListCharactersUseCase(UseCase[ListCharactersInput, list[GameCharacter]]):
 
 @dataclass(frozen=True, slots=True)
 class GetCharacterInput:
+    """Dados de entrada de ``GetCharacterUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     login: str
     char_id: int
 
 
 class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
+    """Consulta um personagem da conta autorizada e rejeita personagens ausentes naquele login.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetCharacterInput``. O retorno é
+    ``GameCharacter``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access
@@ -247,12 +354,26 @@ class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
 
 @dataclass(frozen=True, slots=True)
 class UpdateGamePasswordInput:
+    """Dados de entrada de ``UpdateGamePasswordUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     login: str
     password: str
 
 
 class UpdateGamePasswordUseCase(UseCase[UpdateGamePasswordInput, None]):
+    """Verifica acesso à conta e senha com pelo menos seis caracteres antes de alterar a senha no
+    gateway.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateGamePasswordInput``. O
+    retorno é ``None``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access
@@ -272,11 +393,25 @@ LINK_BY_EMAIL_MAX_AGE = 3600
 
 @dataclass(frozen=True, slots=True)
 class RequestLinkByEmailInput:
+    """Dados de entrada de ``RequestLinkByEmailUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     email: str
 
 
 class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
+    """Busca uma conta ainda não vinculada pelo e-mail e envia um token assinado para confirmar o
+    vínculo.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``RequestLinkByEmailInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, lineage: ILineageGateway, mailer: IMailer) -> None:
         self._lineage = lineage
         self._mailer = mailer
@@ -304,11 +439,25 @@ class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ConfirmLinkByEmailInput:
+    """Dados de entrada de ``ConfirmLinkByEmailUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: AccountActor
     token: str
 
 
 class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
+    """Valida o token de e-mail, a conta e os slots disponíveis antes de salvar o vínculo e a
+    referência local.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmLinkByEmailInput``. O
+    retorno é ``GameAccount``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,

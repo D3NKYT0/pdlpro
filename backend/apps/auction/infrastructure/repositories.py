@@ -10,6 +10,13 @@ from apps.auction.infrastructure.models import Auction, Bid
 
 
 class DjangoAuctionRepository(IAuctionRepository):
+    """Adaptador Django de ``IAuctionRepository`` para leilões, lances e encerramento de ofertas.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _auction(self, row: Auction) -> AuctionEntity:
         return AuctionEntity(
             id=row.id,

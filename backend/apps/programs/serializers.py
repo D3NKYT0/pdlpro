@@ -9,6 +9,14 @@ from apps.programs.models import (
 
 
 class SupporterSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``Supporter`` no módulo programs.
+
+    Campos declarados: ``username``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     username = serializers.CharField(source="user.username", read_only=True)
 
     def validate_image(self, image):
@@ -41,6 +49,14 @@ class SupporterSerializer(serializers.ModelSerializer):
 
 
 class SupporterReviewSerializer(serializers.Serializer):
+    """Contrato de dados de ``SupporterReviewSerializer`` na API de programs.
+
+    Campos declarados: ``status``, ``review_note``, ``commission_percent``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     status = serializers.ChoiceField(choices=["approved", "rejected"])
     review_note = serializers.CharField(max_length=2000, allow_blank=True, default="")
     commission_percent = serializers.DecimalField(
@@ -49,6 +65,14 @@ class SupporterReviewSerializer(serializers.Serializer):
 
 
 class PayoutSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``CommissionPayout`` no módulo programs.
+
+    Campos declarados: ``supporter_name``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     supporter_name = serializers.CharField(source="supporter.name", read_only=True)
 
     class Meta:
@@ -57,11 +81,28 @@ class PayoutSerializer(serializers.ModelSerializer):
 
 
 class PayoutReviewSerializer(serializers.Serializer):
+    """Contrato de dados de ``PayoutReviewSerializer`` na API de programs.
+
+    Campos declarados: ``status``, ``note``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     status = serializers.ChoiceField(choices=["paid", "rejected"])
     note = serializers.CharField(max_length=300, allow_blank=True, default="")
 
 
 class RoadmapSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``RoadmapEntry`` no módulo programs.
+
+    Campos declarados: ``id``, ``title``, ``description``, ``category``, ``status``,
+    ``progress``, ``target_date``, ``published``, ``order``, ``updated_at``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     class Meta:
         model = RoadmapEntry
         fields = [
@@ -85,6 +126,14 @@ class RoadmapSerializer(serializers.ModelSerializer):
 
 
 class ResourceSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``SystemResource`` no módulo programs.
+
+    Campos declarados: ``id``, ``code``, ``name``, ``category``, ``enabled``, ``description``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     class Meta:
         model = SystemResource
         fields = ["id", "code", "name", "category", "enabled", "description"]

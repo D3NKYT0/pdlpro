@@ -14,6 +14,12 @@ from common.views import InjectedAPIView
 
 
 class NotificationListView(InjectedAPIView):
+    """Entrada HTTP para ``ListNotificationsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Notificações"])
@@ -28,6 +34,12 @@ class NotificationListView(InjectedAPIView):
 
 
 class MarkAllNotificationsReadView(InjectedAPIView):
+    """Entrada HTTP para ``MarkNotificationReadUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Notificações"])
@@ -40,6 +52,12 @@ class MarkAllNotificationsReadView(InjectedAPIView):
 
 
 class MarkNotificationReadView(InjectedAPIView):
+    """Entrada HTTP para ``MarkNotificationReadUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Notificações"])

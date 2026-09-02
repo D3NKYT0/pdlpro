@@ -32,6 +32,13 @@ from apps.wallet.infrastructure.models import CoinConfig, Wallet
 
 
 class Command(BaseCommand):
+    """Comando Django ``seed_program_preview``.
+
+    Cria dados fictícios apenas em core.settings.preview. Execute ``python manage.py
+    seed_program_preview --help`` para consultar opções antes de rodar a rotina no ambiente
+    desejado.
+    """
+
     help = "Cria dados fictícios apenas em core.settings.preview."
 
     def add_arguments(self, parser):

@@ -6,6 +6,13 @@ from common.models import BaseModel
 
 
 class News(BaseModel):
+    """Notícia com slug, conteúdo e controle de publicação.
+
+    Relaciona os registros por ``author``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     title = models.CharField(max_length=200)
     excerpt = models.CharField(max_length=300, blank=True)
@@ -30,6 +37,11 @@ class News(BaseModel):
 
 
 class Faq(BaseModel):
+    """Pergunta e resposta com ordenação e controle de publicação no FAQ. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     question = models.CharField(max_length=250)
     answer = models.TextField()
     order = models.PositiveIntegerField(default=0)
@@ -45,6 +57,11 @@ class Faq(BaseModel):
 
 
 class DownloadLink(BaseModel):
+    """Link de download organizado por categoria e estado de publicação. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     title = models.CharField(max_length=120)
     url = models.URLField()
     category = models.CharField(max_length=60, default="client")
@@ -61,6 +78,11 @@ class DownloadLink(BaseModel):
 
 
 class WikiPage(BaseModel):
+    """Página da wiki com conteúdo, categoria e opções de navegação. Herda BaseModel: use ``id``
+    (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
+    de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=400, blank=True)
@@ -86,6 +108,11 @@ class WikiPage(BaseModel):
 
 
 class CalendarEvent(BaseModel):
+    """Evento público com datas, descrição e apresentação no calendário. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     starts_at = models.DateTimeField()

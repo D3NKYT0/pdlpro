@@ -4,7 +4,20 @@ from common.models import BaseModel
 
 
 class PedidoPagamento(BaseModel):
+    """Pedido de compra de moedas com estado local, referências do provedor e dados de crédito.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     class Status(models.TextChoices):
+        """Valores aceitos para Status em PedidoPagamento.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         PENDING = "pending", "Pendente"
         PROCESSING = "processing", "Processando"
         CONFIRMED = "confirmed", "Confirmado"
@@ -12,6 +25,12 @@ class PedidoPagamento(BaseModel):
         FAILED = "failed", "Falhou"
 
     class Currency(models.TextChoices):
+        """Valores aceitos para Currency em PedidoPagamento.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         BRL = "BRL", "Real"
         USD = "USD", "Dólar"
 
@@ -37,6 +56,12 @@ class PedidoPagamento(BaseModel):
 
 
 class WebhookLog(BaseModel):
+    """Registro de recebimento e processamento de notificações de pagamento para auditoria. Herda
+    BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de
+    aplicação para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     kind = models.CharField(max_length=100)
     data_id = models.CharField(max_length=120)
     payload = models.JSONField(default=dict)

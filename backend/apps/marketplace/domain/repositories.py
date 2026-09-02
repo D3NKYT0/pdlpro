@@ -8,6 +8,13 @@ from apps.marketplace.domain.entities import CharacterListingEntity
 
 
 class ICharacterListingRepository(ABC):
+    """Porta de anúncios de personagens e transições entre venda e cancelamento.
+
+    Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
+    assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
+    ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    """
+
     @abstractmethod
     def get_by_id(self, listing_id: UUID) -> CharacterListingEntity | None:
         raise NotImplementedError

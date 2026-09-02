@@ -6,6 +6,12 @@ from common.models import BaseModel
 
 
 class ShopItem(BaseModel):
+    """Produto individual da loja que associa um tipo de item a preço e quantidade entregue. Herda
+    BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de
+    aplicação para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     name = models.CharField(max_length=100)
     item_id = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -22,6 +28,11 @@ class ShopItem(BaseModel):
 
 
 class ShopPackage(BaseModel):
+    """Pacote de produtos ofertado pela loja. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=100)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     active = models.BooleanField(default=True)
@@ -32,12 +43,26 @@ class ShopPackage(BaseModel):
 
 
 class ShopPackageItem(BaseModel):
+    """Composição de um pacote da loja com suas quantidades de itens.
+
+    Relaciona os registros por ``package``, ``item``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     package = models.ForeignKey(ShopPackage, on_delete=models.CASCADE, related_name="package_items")
     item = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
 
 class Cart(BaseModel):
+    """Carrinho do usuário que agrupa os produtos e opções da próxima compra.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField("accounts.User", on_delete=models.CASCADE, related_name="cart")
     promo_code = models.CharField(max_length=40, blank=True)
     use_bonus = models.BooleanField(default=False)
@@ -48,12 +73,26 @@ class Cart(BaseModel):
 
 
 class CartItem(BaseModel):
+    """Linha de produto individual e quantidade selecionada em um carrinho.
+
+    Relaciona os registros por ``cart``, ``item``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
     item = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
 
 class ShopPurchase(BaseModel):
+    """Histórico persistido de uma compra concluída na loja.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="purchases")
     total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal("0.00"))
     status = models.CharField(max_length=20, default="completed")
@@ -69,6 +108,13 @@ class ShopPurchase(BaseModel):
 
 
 class CartPackage(BaseModel):
+    """Linha de pacote selecionado para compra em um carrinho.
+
+    Relaciona os registros por ``cart``, ``package``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="packages")
     package = models.ForeignKey(ShopPackage, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
@@ -78,6 +124,13 @@ class CartPackage(BaseModel):
 
 
 class PromotionCode(BaseModel):
+    """Código promocional e condições de aplicação de desconto no comércio.
+
+    Relaciona os registros por ``supporter``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     code = models.CharField(max_length=40, unique=True)
     percent = models.DecimalField(max_digits=5, decimal_places=2)
     active = models.BooleanField(default=True)

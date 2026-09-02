@@ -20,6 +20,12 @@ from common.architecture.exceptions import ValidationDomainError
 
 @dataclass(frozen=True, slots=True)
 class RegisterUserInput:
+    """Dados de entrada de ``RegisterUserUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     username: str
     email: str
     password: str
@@ -28,6 +34,13 @@ class RegisterUserInput:
 
 
 class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
+    """Valida o aceite legal e a unicidade de usuário/e-mail, cria a conta e registra a versão
+    aceita em transação. Solicita o e-mail de verificação após a gravação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``RegisterUserInput``. O retorno é
+    ``UserEntity``.
+    """
+
     def __init__(
         self,
         users: IUserRepository,
@@ -61,11 +74,24 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
 
 @dataclass(frozen=True, slots=True)
 class AuthenticateUserInput:
+    """Dados de entrada de ``AuthenticateUserUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     login: str
     password: str
 
 
 class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
+    """Confere login e senha e retorna UserEntity ou InvalidCredentialsError. A emissão de tokens e
+    a etapa de 2FA são tratadas pela apresentação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AuthenticateUserInput``. O
+    retorno é ``UserEntity``.
+    """
+
     def __init__(self, users: IUserRepository) -> None:
         self._users = users
 
@@ -78,10 +104,23 @@ class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
 
 @dataclass(frozen=True, slots=True)
 class GetCurrentUserInput:
+    """Dados de entrada de ``GetCurrentUserUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class GetCurrentUserUseCase(UseCase[GetCurrentUserInput, UserEntity]):
+    """Consulta o usuário pelo UUID informado e sinaliza UserNotFoundError quando ausente.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetCurrentUserInput``. O retorno
+    é ``UserEntity``.
+    """
+
     def __init__(self, users: IUserRepository) -> None:
         self._users = users
 
@@ -94,6 +133,13 @@ class GetCurrentUserUseCase(UseCase[GetCurrentUserInput, UserEntity]):
 
 @dataclass(frozen=True, slots=True)
 class UpdateProfileInput:
+    """Dados de entrada de ``UpdateProfileUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     display_name: str | None = None
     bio: str | None = None
@@ -101,6 +147,12 @@ class UpdateProfileInput:
 
 
 class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
+    """Atualiza nome de exibição, biografia e avatar de um usuário existente em transação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateProfileInput``. O retorno
+    é ``UserEntity``.
+    """
+
     def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
         self._users = users
         self._unit_of_work = unit_of_work

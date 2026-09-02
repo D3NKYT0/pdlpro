@@ -25,6 +25,12 @@ from common.architecture.exceptions import ValidationDomainError
 
 
 class ListOpenAuctionsUseCase(UseCase[None, list[AuctionEntity]]):
+    """Lista os leilões abertos para consulta pública.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[AuctionEntity]``.
+    """
+
     def __init__(self, auctions: IAuctionRepository) -> None:
         self._auctions = auctions
 
@@ -34,10 +40,23 @@ class ListOpenAuctionsUseCase(UseCase[None, list[AuctionEntity]]):
 
 @dataclass(frozen=True, slots=True)
 class ListMyAuctionsInput:
+    """Dados de entrada de ``ListMyAuctionsUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class ListMyAuctionsUseCase(UseCase[ListMyAuctionsInput, list[AuctionEntity]]):
+    """Lista os leilões criados pelo vendedor informado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListMyAuctionsInput``. O retorno
+    é ``list[AuctionEntity]``.
+    """
+
     def __init__(self, auctions: IAuctionRepository) -> None:
         self._auctions = auctions
 
@@ -47,6 +66,14 @@ class ListMyAuctionsUseCase(UseCase[ListMyAuctionsInput, list[AuctionEntity]]):
 
 @dataclass(frozen=True, slots=True)
 class CreateAuctionInput:
+    """Dados de entrada de ``CreateAuctionUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada. Use Decimal para valores monetários, evitando conversão intermediária
+    por float.
+    """
+
     user_id: UUID
     inventory_id: UUID
     item_id: int
@@ -57,6 +84,13 @@ class CreateAuctionInput:
 
 
 class CreateAuctionUseCase(UseCase[CreateAuctionInput, AuctionEntity]):
+    """Valida lance mínimo, quantidade e duração de 1 a 168 horas, retira os itens do inventário e
+    cria o leilão com registro de movimentação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CreateAuctionInput``. O retorno
+    é ``AuctionEntity``.
+    """
+
     def __init__(
         self,
         auctions: IAuctionRepository,
@@ -104,6 +138,14 @@ class CreateAuctionUseCase(UseCase[CreateAuctionInput, AuctionEntity]):
 
 @dataclass(frozen=True, slots=True)
 class PlaceBidInput:
+    """Dados de entrada de ``PlaceBidUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada. Use Decimal para valores monetários, evitando conversão intermediária
+    por float.
+    """
+
     user_id: UUID
     auction_id: UUID
     amount: Decimal
@@ -111,6 +153,13 @@ class PlaceBidInput:
 
 
 class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
+    """Valida prazo e valor do lance, devolve o lance anterior e debita o novo participante antes
+    de registrar a oferta. O vendedor não pode dar lance no próprio leilão.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PlaceBidInput``. O retorno é
+    ``BidEntity``.
+    """
+
     def __init__(
         self,
         auctions: IAuctionRepository,
@@ -162,6 +211,14 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
 
 
 class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
+    """Finaliza leilões vencidos em transações individuais. Entrega os itens ao vencedor e credita
+    o vendedor ou devolve os itens ao vendedor quando não há lance; retorna a quantidade
+    encerrada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def __init__(
         self,
         auctions: IAuctionRepository,

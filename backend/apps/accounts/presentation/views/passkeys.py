@@ -17,6 +17,12 @@ from common.views import InjectedAPIView
 
 
 class PasskeyListView(InjectedAPIView):
+    """Lista as credenciais passkey registradas pelo usuário autenticado.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -25,6 +31,12 @@ class PasskeyListView(InjectedAPIView):
 
 
 class PasskeyRegisterBeginView(InjectedAPIView):
+    """Prepara o desafio WebAuthn para registrar uma passkey do usuário autenticado.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -34,6 +46,12 @@ class PasskeyRegisterBeginView(InjectedAPIView):
 
 
 class PasskeyRegisterCompleteView(InjectedAPIView):
+    """Valida a resposta ao desafio de registro e persiste a nova credencial passkey.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -47,6 +65,12 @@ class PasskeyRegisterCompleteView(InjectedAPIView):
 
 
 class PasskeyLoginBeginView(InjectedAPIView):
+    """Prepara o desafio WebAuthn para autenticação por passkey.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -58,6 +82,12 @@ class PasskeyLoginBeginView(InjectedAPIView):
 
 
 class PasskeyLoginCompleteView(InjectedAPIView):
+    """Valida a autenticação por passkey e inicia a sessão ou a etapa de 2FA.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -76,6 +106,12 @@ class PasskeyLoginCompleteView(InjectedAPIView):
 
 
 class PasskeyDeleteView(InjectedAPIView):
+    """Exclui uma credencial passkey limitada ao usuário da sessão.
+
+    Implementa DELETE; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, credential_id):

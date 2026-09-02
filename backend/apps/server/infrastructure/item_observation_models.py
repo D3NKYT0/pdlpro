@@ -13,6 +13,11 @@ def validate_item_ids(value):
 
 
 class ItemObservationCategory(BaseModel):
+    """Categoria usada pela equipe para organizar observações de itens. Herda BaseModel: use ``id``
+    (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
+    de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField("Nome", max_length=100, unique=True)
     description = models.TextField("Descrição", blank=True)
     item_ids = models.JSONField("IDs dos itens", default=list, blank=True, validators=[validate_item_ids],
@@ -29,6 +34,13 @@ class ItemObservationCategory(BaseModel):
 
 
 class ItemObservationSnapshot(BaseModel):
+    """Captura persistida do estado dos itens para consulta e comparação posteriores.
+
+    Relaciona os registros por ``created_by``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     snapshot_date = models.DateField("Data")
     source = models.CharField("Origem L2", max_length=255)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL,
@@ -51,6 +63,13 @@ class ItemObservationSnapshot(BaseModel):
 
 
 class ItemObservationDetail(BaseModel):
+    """Detalhe de um item ou agrupamento armazenado em uma captura de observação.
+
+    Relaciona os registros por ``snapshot``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     snapshot = models.ForeignKey(ItemObservationSnapshot, on_delete=models.CASCADE, related_name="details")
     item_id = models.PositiveIntegerField()
     item_name = models.CharField(max_length=255)
@@ -67,6 +86,13 @@ class ItemObservationDetail(BaseModel):
 
 
 class ItemObservationFavorite(BaseModel):
+    """Item acompanhado pela equipe na área de observação.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     source = models.CharField(max_length=255)
     item_id = models.PositiveIntegerField()

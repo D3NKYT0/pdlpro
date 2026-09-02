@@ -6,6 +6,12 @@ from uuid import UUID
 
 @dataclass(frozen=True, slots=True)
 class UserEntity:
+    """Dados de usuário que atravessam a porta de contas sem carregar o modelo ORM.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     username: str
     email: str

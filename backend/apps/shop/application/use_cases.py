@@ -12,6 +12,12 @@ from common.architecture.exceptions import EntityNotFoundError, ValidationDomain
 
 @dataclass(frozen=True, slots=True)
 class ShopItemDTO:
+    """Produto ativo do catálogo com UUID público, tipo de item do jogo, preço e quantidade.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     name: str
     item_id: int
@@ -20,6 +26,12 @@ class ShopItemDTO:
 
 
 class ListShopItemsUseCase(UseCase[None, list[ShopItemDTO]]):
+    """Lista os produtos ativos da loja, ordenados pelo nome, como ShopItemDTO.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[ShopItemDTO]``.
+    """
+
     def execute(self, data: None = None) -> list[ShopItemDTO]:
         items = ShopItem.objects.filter(active=True).order_by("name")
         return [
@@ -30,12 +42,26 @@ class ListShopItemsUseCase(UseCase[None, list[ShopItemDTO]]):
 
 @dataclass(frozen=True, slots=True)
 class AddToCartInput:
+    """Dados de entrada de ``AddToCartUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     item_id: UUID
     quantity: int = 1
 
 
 class AddToCartUseCase(UseCase[AddToCartInput, dict]):
+    """Adiciona um produto ativo ao carrinho ou acumula sua quantidade sob bloqueio do usuário;
+    retorna o carrinho recalculado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AddToCartInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -82,22 +108,49 @@ def get_cart_snapshot(user_id: UUID) -> dict:
 
 @dataclass(frozen=True, slots=True)
 class GetCartInput:
+    """Dados de entrada de ``GetCartUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class GetCartUseCase(UseCase[GetCartInput, dict]):
+    """Retorna a visão do carrinho do usuário calculada pelo serviço de comércio.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetCartInput``. O retorno é
+    ``dict``.
+    """
+
     def execute(self, data: GetCartInput) -> dict:
         return get_cart_snapshot(data.user_id)
 
 
 @dataclass(frozen=True, slots=True)
 class UpdateCartItemInput:
+    """Dados de entrada de ``UpdateCartItemUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     cart_item_id: UUID
     quantity: int
 
 
 class UpdateCartItemUseCase(UseCase[UpdateCartItemInput, dict]):
+    """Atualiza a quantidade de uma linha pertencente ao carrinho do usuário; quantidade zero
+    remove a linha.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateCartItemInput``. O retorno
+    é ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -119,10 +172,24 @@ class UpdateCartItemUseCase(UseCase[UpdateCartItemInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class CheckoutInput:
+    """Dados de entrada de ``CheckoutUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class CheckoutUseCase(UseCase[CheckoutInput, dict]):
+    """Delega a finalização do carrinho ao serviço checkout, responsável por cobrança, entrega e
+    histórico da compra.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CheckoutInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work

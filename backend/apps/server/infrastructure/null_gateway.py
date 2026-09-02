@@ -24,6 +24,12 @@ from apps.server.infrastructure.passwords import LineagePasswordHasher
 
 
 class SocketStatusProbe:
+    """Testa a abertura de uma conexão TCP com host, porta e timeout em segundos.
+
+    Retorna False para OSError. Uma conexão aceita indica disponibilidade da porta, sem validar
+    o protocolo do jogo nem contar jogadores conectados.
+    """
+
     def is_open(self, host: str, port: int, timeout: float) -> bool:
         try:
             with socket.create_connection((host, port), timeout=timeout):
@@ -33,7 +39,14 @@ class SocketStatusProbe:
 
 
 class NullLineageGateway(ILineageGateway):
-    """Gateway em memória quando o MySQL do jogo está desligado. Serve dev e testes."""
+    """Implementação em memória de ILineageGateway para desenvolvimento e testes.
+
+    ServerProvider a seleciona quando LINEAGE_DB_ENABLED está desabilitado. Contas, personagens
+    e itens vivem somente nesta instância; ``seed_character`` prepara cenários de teste.
+    Rankings e consultas nomeadas retornam listas vazias, enquanto o status ainda testa portas
+    TCP. Operações opcionais, como câmbio durável e observação de itens, permanecem
+    indisponíveis.
+    """
 
     def __init__(
         self,

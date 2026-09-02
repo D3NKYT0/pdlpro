@@ -11,6 +11,14 @@ from apps.marketplace.infrastructure.models import CharacterListing
 
 
 class DjangoCharacterListingRepository(ICharacterListingRepository):
+    """Adaptador Django de ``ICharacterListingRepository`` para anúncios de personagens e
+    transições entre venda e cancelamento.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _entity(self, row: CharacterListing) -> CharacterListingEntity:
         return CharacterListingEntity(
             id=row.id,

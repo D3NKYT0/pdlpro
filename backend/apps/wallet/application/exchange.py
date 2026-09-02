@@ -30,6 +30,19 @@ def exchange_dump(row):
 
 
 class ExchangeCoinsUseCase:
+    """Coordena o câmbio de saldo entre o painel e o jogo com retomada por recibo.
+
+    Chame ``execute(user, data)`` com usuário autenticado e dados validados por
+    ExchangeSerializer. ``request_key`` identifica a mesma operação e deve ser reutilizada com
+    os mesmos parâmetros em uma retomada. Valida vínculo, personagem offline, configuração e
+    precisão de duas casas do saldo.
+
+    Na ida ao jogo, reserva o saldo principal antes da chamada externa. Uma rejeição de domínio
+    estorna a reserva; uma falha de conexão mantém o registro pending para consultar/reaplicar o
+    mesmo recibo. Na volta, credita o painel após confirmação do gateway. O recibo durável no
+    jogo evita aplicar duas vezes; não há uma transação única entre os dois bancos.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService):
         self.lineage, self.access = lineage, access
 

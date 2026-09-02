@@ -19,6 +19,14 @@ RESOURCE_PATHS = {
 
 
 class ResourceGateMiddleware:
+    """Bloqueia rotas de recursos desativados em SystemResource.
+
+    Compara prefixos de /api/v1/ com RESOURCE_PATHS e retorna 403 com RESOURCE_DISABLED se
+    qualquer recurso correspondente estiver desativado. Rotas administrativas fora desse mapa
+    continuam disponíveis para reativação. Adicione novos prefixos ao mapa ao criar
+    funcionalidades controláveis.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 

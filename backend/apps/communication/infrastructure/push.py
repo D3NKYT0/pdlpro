@@ -13,6 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 class WebPushSender(IPushSender):
+    """Adaptador de IPushSender para as assinaturas Web Push persistidas.
+
+    Use ``is_configured`` e ``public_key`` para informar a disponibilidade ao cliente; ``send``
+    entrega a mensagem às assinaturas do usuário conforme a configuração VAPID. O ciclo de
+    inscrição é tratado pelos casos de uso de push, enquanto NotifyUser combina persistência e
+    envio.
+    """
+
     def is_configured(self) -> bool:
         return bool(getattr(settings, "VAPID_PUBLIC_KEY", "") and getattr(settings, "VAPID_PRIVATE_KEY", ""))
 
@@ -20,6 +28,12 @@ class WebPushSender(IPushSender):
         return str(getattr(settings, "VAPID_PUBLIC_KEY", "") or "")
 
     def send(self, user_id: UUID, *, title: str, body: str, url: str = "") -> int:
+        """Envia às assinaturas do usuário e retorna a quantidade de envios concluídos.
+
+        Sem configuração ou biblioteca, retorna zero. Remove a assinatura quando pywebpush lança
+        WebPushException; outras falhas são registradas no log.
+        """
+
         if not self.is_configured():
             return 0
         try:

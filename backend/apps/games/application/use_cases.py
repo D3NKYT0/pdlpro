@@ -24,6 +24,12 @@ def _config(code: str) -> GameConfig:
 
 
 class GetRouletteStateUseCase(UseCase[UUID, dict]):
+    """Lista prêmios ativos, custo e chance configurada de falha da roleta, junto ao saldo de
+    fichas.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -49,10 +55,24 @@ class GetRouletteStateUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class SpinRouletteInput:
+    """Dados de entrada de ``SpinRouletteUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
+    """Consome fichas e sorteia prêmio ou falha, registrando o giro e adicionando o prêmio à bag
+    quando houver.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``SpinRouletteInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -106,11 +126,24 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class BuyTokensInput:
+    """Dados de entrada de ``BuyTokensUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     amount: int
 
 
 class BuyTokensUseCase(UseCase[BuyTokensInput, dict]):
+    """Converte saldo da carteira em fichas e retorna o saldo de fichas atualizado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``BuyTokensInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work
@@ -133,10 +166,24 @@ class BuyTokensUseCase(UseCase[BuyTokensInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ClaimDailyBonusInput:
+    """Dados de entrada de ``ClaimDailyBonusUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
+    """Impede um segundo resgate na mesma data local, credita o bônus diário e registra recompensa
+    e progresso.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ClaimDailyBonusInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work
@@ -165,6 +212,11 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
 
 
 class GetDailyBonusStateUseCase(UseCase[UUID, dict]):
+    """Informa se o bônus diário está ativo, o valor configurado e se o usuário já resgatou hoje.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         config = GameConfig.objects.filter(code="daily_bonus").first()
         today = timezone.localdate()
@@ -174,6 +226,12 @@ class GetDailyBonusStateUseCase(UseCase[UUID, dict]):
 
 
 class GetBagUseCase(UseCase[UUID, list[dict]]):
+    """Lista os itens acumulados na bag do usuário; devolve lista vazia se ela ainda não existir.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é
+    ``list[dict]``.
+    """
+
     def execute(self, data: UUID) -> list[dict]:
         bag = Bag.objects.filter(user__id=data).first()
         if bag is None:

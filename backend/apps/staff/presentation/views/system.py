@@ -7,6 +7,12 @@ from common.version import API_VERSION
 
 
 class HealthView(APIView):
+    """Disponibiliza a resposta de health check do sistema.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -16,6 +22,12 @@ class HealthView(APIView):
 
 
 class VersionView(APIView):
+    """Disponibiliza os metadados de versão do sistema.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

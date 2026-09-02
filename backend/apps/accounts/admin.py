@@ -14,6 +14,13 @@ from common.admin import PDLModelAdmin
 
 @admin.register(User)
 class UserAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``User``.
+
+    A listagem exibe ``username``, ``email``, ``role``, ``is_active``, ``created_at``. Ajuste
+    filtros, busca e campos nesta classe para mudar a experiência da equipe no admin; regras
+    reutilizáveis ficam na aplicação.
+    """
+
     form = PDLUserChangeForm
     add_form = PDLUserCreationForm
     list_display = ("username", "email", "role", "is_active", "created_at")
@@ -71,24 +78,56 @@ class UserAdmin(PDLModelAdmin):
 
 @admin.register(GamerProfile)
 class GamerProfileAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``GamerProfile``.
+
+    A listagem exibe ``user``, ``level``, ``xp``. Ajuste filtros, busca e campos nesta classe
+    para mudar a experiência da equipe no admin; regras reutilizáveis ficam na aplicação.
+    """
+
     list_display = ("user", "level", "xp")
 
 
 @admin.register(Achievement)
 class AchievementAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``Achievement``.
+
+    A listagem exibe ``code``, ``name``. Ajuste filtros, busca e campos nesta classe para mudar
+    a experiência da equipe no admin; regras reutilizáveis ficam na aplicação.
+    """
+
     list_display = ("code", "name")
 
 
 @admin.register(UserAchievement)
 class UserAchievementAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``UserAchievement``.
+
+    A listagem exibe ``user``, ``achievement``, ``created_at``. Ajuste filtros, busca e campos
+    nesta classe para mudar a experiência da equipe no admin; regras reutilizáveis ficam na
+    aplicação.
+    """
+
     list_display = ("user", "achievement", "created_at")
 
 
 @admin.register(RewardDefinition)
 class RewardDefinitionAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``RewardDefinition``.
+
+    A listagem exibe ``kind``, ``reference``, ``item_name``, ``quantity``. Ajuste filtros, busca
+    e campos nesta classe para mudar a experiência da equipe no admin; regras reutilizáveis
+    ficam na aplicação.
+    """
+
     list_display = ("kind", "reference", "item_name", "quantity")
 
 
 @admin.register(RewardClaim)
 class RewardClaimAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``RewardClaim``.
+
+    A listagem exibe ``user``, ``reward``, ``created_at``. Ajuste filtros, busca e campos nesta
+    classe para mudar a experiência da equipe no admin; regras reutilizáveis ficam na aplicação.
+    """
+
     list_display = ("user", "reward", "created_at")

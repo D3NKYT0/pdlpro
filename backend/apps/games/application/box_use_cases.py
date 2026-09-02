@@ -40,6 +40,11 @@ def _populate(box: Box) -> None:
 
 
 class ListBoxTypesUseCase(UseCase[UUID, dict]):
+    """Lista tipos ativos de caixa e as caixas do usuário com a quantidade de slots ainda fechados.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         types = []
         for row in BoxType.objects.filter(active=True).order_by("name"):
@@ -69,11 +74,25 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class BuyBoxInput:
+    """Dados de entrada de ``BuyBoxUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     box_type_id: UUID
 
 
 class BuyBoxUseCase(UseCase[BuyBoxInput, dict]):
+    """Cobra a caixa e gera seus slots de prêmios a partir do catálogo. Substitui caixas anteriores
+    do mesmo tipo pertencentes ao usuário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``BuyBoxInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work
@@ -103,11 +122,25 @@ class BuyBoxUseCase(UseCase[BuyBoxInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class OpenBoxInput:
+    """Dados de entrada de ``OpenBoxUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     box_id: UUID
 
 
 class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
+    """Consome fichas e sorteia um slot fechado da caixa do usuário, transfere o prêmio à bag e
+    remove a caixa quando esgotada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``OpenBoxInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -154,11 +187,25 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class TransferBagInput:
+    """Dados de entrada de ``TransferBagToInventoryUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     inventory_id: UUID
 
 
 class TransferBagToInventoryUseCase(UseCase[TransferBagInput, dict]):
+    """Transfere todos os itens da bag para um inventário pertencente ao usuário e limpa a bag
+    dentro da operação transacional.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``TransferBagInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, inventories: IInventoryRepository, unit_of_work: UnitOfWork) -> None:
         self._inventories = inventories
         self._unit_of_work = unit_of_work

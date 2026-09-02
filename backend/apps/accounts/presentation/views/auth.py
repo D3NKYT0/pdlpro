@@ -59,6 +59,12 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class CsrfView(InjectedAPIView):
+    """Disponibiliza o token CSRF necessário às requisições de escrita por cookie.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -68,6 +74,12 @@ class CsrfView(InjectedAPIView):
 
 
 class RegisterView(InjectedAPIView):
+    """Entrada HTTP para ``RegisterUserUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -100,6 +112,12 @@ class RegisterView(InjectedAPIView):
 
 
 class LoginView(InjectedAPIView):
+    """Entrada HTTP para ``AuthenticateUserUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -134,6 +152,12 @@ class LoginView(InjectedAPIView):
 
 
 class AuthCapabilitiesView(InjectedAPIView):
+    """Informa os métodos de autenticação disponíveis e os vínculos sociais da sessão.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -157,6 +181,12 @@ class AuthCapabilitiesView(InjectedAPIView):
 
 
 class OAuthBeginView(InjectedAPIView):
+    """Inicia a autenticação social e prepara o redirecionamento para o provedor.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -167,6 +197,12 @@ class OAuthBeginView(InjectedAPIView):
 
 
 class OAuthCompleteView(InjectedAPIView):
+    """Conclui a autenticação social e produz a sessão ou o desafio de segundo fator.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -182,6 +218,12 @@ class OAuthCompleteView(InjectedAPIView):
 
 
 class RefreshView(InjectedAPIView):
+    """Renova os tokens JWT a partir do refresh token e atualiza os cookies da sessão.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -205,6 +247,12 @@ class RefreshView(InjectedAPIView):
 
 
 class LogoutView(InjectedAPIView):
+    """Limpa os cookies de autenticação na resposta de encerramento de sessão.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Auth"])
@@ -214,6 +262,13 @@ class LogoutView(InjectedAPIView):
 
 
 class MeView(InjectedAPIView):
+    """Entrada HTTP para ``GetCurrentUserUseCase``, ``UpdateProfileUseCase``.
+
+    Implementa GET, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"], responses=UserSerializer)
@@ -232,6 +287,12 @@ class MeView(InjectedAPIView):
 
 
 class VerifyTwoFactorLoginView(InjectedAPIView):
+    """Entrada HTTP para ``VerifyTwoFactorLoginUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -245,6 +306,13 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
 
 
 class TwoFactorView(InjectedAPIView):
+    """Entrada HTTP para ``SetupTwoFactorUseCase``, ``ConfirmTwoFactorUseCase``,
+    ``DisableTwoFactorUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"])
@@ -267,6 +335,12 @@ class TwoFactorView(InjectedAPIView):
 
 
 class GamerProfileView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetGamerProfileUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"])
@@ -275,6 +349,12 @@ class GamerProfileView(ItemCatalogAPIView):
 
 
 class RequestEmailVerificationView(InjectedAPIView):
+    """Entrada HTTP para ``RequestEmailVerificationUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Auth"])
@@ -283,6 +363,12 @@ class RequestEmailVerificationView(InjectedAPIView):
 
 
 class VerifyEmailView(InjectedAPIView):
+    """Entrada HTTP para ``VerifyEmailUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -295,6 +381,12 @@ class VerifyEmailView(InjectedAPIView):
 
 
 class RequestPasswordResetView(InjectedAPIView):
+    """Entrada HTTP para ``RequestPasswordResetUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -309,6 +401,12 @@ class RequestPasswordResetView(InjectedAPIView):
 
 
 class ConfirmPasswordResetView(InjectedAPIView):
+    """Entrada HTTP para ``ConfirmPasswordResetUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
@@ -326,6 +424,12 @@ class ConfirmPasswordResetView(InjectedAPIView):
 
 
 class ClaimRewardView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ClaimRewardUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Perfil"])

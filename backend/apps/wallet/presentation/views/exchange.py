@@ -10,6 +10,15 @@ from common.views import InjectedAPIView
 
 
 class ExchangeSerializer(serializers.Serializer):
+    """Contrato de dados de ``ExchangeSerializer`` na API de wallet.
+
+    Campos declarados: ``request_key``, ``direction``, ``login``, ``character_id``,
+    ``quantity``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     request_key = serializers.UUIDField()
     direction = serializers.ChoiceField(choices=["to_game", "from_game"])
     login = serializers.CharField(max_length=45)
@@ -18,6 +27,13 @@ class ExchangeSerializer(serializers.Serializer):
 
 
 class GameExchangeView(InjectedAPIView):
+    """Entrada HTTP para ``ExchangeCoinsUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

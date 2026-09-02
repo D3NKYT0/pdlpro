@@ -22,6 +22,13 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class StaffPanelSettingsView(InjectedAPIView):
+    """Entrada HTTP para ``GetPanelSettingsUseCase``, ``UpdatePanelSettingsUseCase``.
+
+    Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -34,6 +41,13 @@ class StaffPanelSettingsView(InjectedAPIView):
 
 
 class StaffServicePricesView(InjectedAPIView):
+    """Entrada HTTP para ``ListStaffServicePricesUseCase``, ``UpsertStaffServicePricesUseCase``.
+
+    Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -47,6 +61,13 @@ class StaffServicePricesView(InjectedAPIView):
 
 
 class StaffCoinConfigView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetStaffCoinConfigUseCase``, ``UpdateStaffCoinConfigUseCase``.
+
+    Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -59,6 +80,13 @@ class StaffCoinConfigView(ItemCatalogAPIView):
 
 
 class StaffShopItemsView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListStaffShopItemsUseCase``, ``UpsertStaffShopItemUseCase``.
+
+    Implementa GET, POST, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -75,6 +103,13 @@ class StaffShopItemsView(ItemCatalogAPIView):
 
 
 class StaffNewsView(InjectedAPIView):
+    """Entrada HTTP para ``ListStaffNewsUseCase``, ``UpsertStaffNewsUseCase``.
+
+    Implementa GET, POST, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])
@@ -91,6 +126,13 @@ class StaffNewsView(InjectedAPIView):
 
 
 class StaffGamesView(InjectedAPIView):
+    """Entrada HTTP para ``ListStaffGamesUseCase``, ``ToggleStaffGameUseCase``.
+
+    Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff"])

@@ -12,6 +12,14 @@ from apps.payment.infrastructure.models import PedidoPagamento
 
 
 class DjangoPaymentOrderRepository(IPaymentOrderRepository):
+    """Adaptador Django de ``IPaymentOrderRepository`` para pedidos de pagamento, referências
+    externas e estado de liquidação.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _entity(self, row: PedidoPagamento) -> PaymentOrderEntity:
         return PaymentOrderEntity(
             id=row.id,

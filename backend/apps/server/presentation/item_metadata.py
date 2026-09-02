@@ -29,6 +29,13 @@ def with_item_metadata(value):
 
 
 class ItemCatalogAPIView(InjectedAPIView):
+    """Base de resposta HTTP que acrescenta metadados do catálogo aos itens retornados.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Usa as permissões herdadas da base ou definidas nos padrões do
+    DRF.
+    """
+
     def finalize_response(self, request, response, *args, **kwargs):
         if 200 <= response.status_code < 300 and hasattr(response, "data"):
             response.data = with_item_metadata(response.data)

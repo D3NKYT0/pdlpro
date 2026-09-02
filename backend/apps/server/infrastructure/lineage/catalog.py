@@ -7,26 +7,37 @@ from common.architecture.exceptions import DomainError
 
 
 class QueryDialectNotFoundError(DomainError):
+    """Falha de domínio: Dialeto de queries Lineage não encontrado.
+
+    A apresentação expõe o código ``LINEAGE_DIALECT_NOT_FOUND`` com status HTTP 500. Lance esta
+    exceção quando a condição ocorrer na regra de negócio.
+    """
+
     error_code = "LINEAGE_DIALECT_NOT_FOUND"
     status_code = 500
     message = "Dialeto de queries Lineage não encontrado."
 
 
 class QueryNotFoundError(DomainError):
+    """Falha de domínio: Query Lineage não encontrada no dialeto.
+
+    A apresentação expõe o código ``LINEAGE_QUERY_NOT_FOUND`` com status HTTP 500. Lance esta
+    exceção quando a condição ocorrer na regra de negócio.
+    """
+
     error_code = "LINEAGE_QUERY_NOT_FOUND"
     status_code = 500
     message = "Query Lineage não encontrada no dialeto."
 
 
 class LineageQueryCatalog:
-    """
-    Classe-mãe das queries do banco L2.
+    """Carrega consultas SQL nomeadas de um dialeto de servidor Lineage.
 
-    Lê arquivos .sql do dialeto (lucerav2, dreamv3, …). Cada statement começa com:
-
-        -- name: top_pvp
-
-    O gateway não contém SQL: só pede o nome e executa.
+    Use ``LineageQueryCatalog.load(dialeto)`` com um módulo configurado pelo servidor. Cada
+    consulta em um arquivo .sql começa com ``-- name: nome``; ``get(nome)`` ou ``catalog[nome]``
+    retorna o SQL para o gateway executar. A construção valida a presença das consultas REQUIRED
+    e informa as ausentes. O catálogo lê arquivos, mas não abre conexões nem executa SQL. Nunca
+    derive o diretório do dialeto diretamente de uma entrada HTTP.
     """
 
     ROOT = Path(__file__).resolve().parent / "queries"

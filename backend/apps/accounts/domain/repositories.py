@@ -7,6 +7,13 @@ from apps.accounts.domain.entities import UserEntity
 
 
 class IUserRepository(ABC):
+    """Porta de consulta, criação, credenciais e atualização de usuários do painel.
+
+    Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
+    assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
+    ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    """
+
     @abstractmethod
     def get_by_id(self, user_id: UUID) -> UserEntity | None:
         raise NotImplementedError

@@ -10,6 +10,14 @@ from common.validators import validate_ascii_username
 
 
 class UserManager(BaseUserManager["User"]):
+    """Manager do modelo de usuário com criação de contas e superusuários.
+
+    Prefira ``create_user`` e ``create_superuser`` a atribuir a senha diretamente ao modelo:
+    esses métodos aplicam a preparação da conta e o hash de senha. O fluxo público de cadastro
+    deve passar por RegisterUserUseCase para registrar também aceite legal e verificação de
+    e-mail.
+    """
+
     def create_user(self, username, email, password=None, **extra_fields):
         if not username:
             raise ValueError("Username é obrigatório")
@@ -30,7 +38,18 @@ class UserManager(BaseUserManager["User"]):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """Conta de acesso ao painel, com autenticação, papéis, 2FA, fichas e aceite legal. Use os
+    serviços de aplicação para operações de negócio, mantendo neste modelo as regras de
+    persistência e os relacionamentos.
+    """
+
     class Role(models.TextChoices):
+        """Valores aceitos para Role em User.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         PLAYER = "player", "Jogador"
         SUPPORTER = "supporter", "Apoiador"
         MODERATOR = "moderator", "Moderador"
@@ -84,6 +103,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class GamerProfile(BaseModel):
+    """Progresso de XP e nível do usuário no painel.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="gamer_profile")
     xp = models.PositiveIntegerField(default=0)
     level = models.PositiveIntegerField(default=1)
@@ -93,6 +119,13 @@ class GamerProfile(BaseModel):
 
 
 class WebAuthnCredential(BaseModel):
+    """Credencial pública de passkey registrada por um usuário para autenticação WebAuthn.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -114,6 +147,11 @@ class WebAuthnCredential(BaseModel):
 
 
 class Achievement(BaseModel):
+    """Definição de uma conquista que pode ser desbloqueada pelo jogador. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=80)
     description = models.CharField(max_length=200, blank=True)
@@ -123,6 +161,13 @@ class Achievement(BaseModel):
 
 
 class UserAchievement(BaseModel):
+    """Registro de uma conquista já desbloqueada por um usuário.
+
+    Relaciona os registros por ``user``, ``achievement``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="achievements")
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name="unlocks")
 
@@ -132,7 +177,19 @@ class UserAchievement(BaseModel):
 
 
 class RewardDefinition(BaseModel):
+    """Prêmio resgatável por nível ou conquista, com item e quantidade de entrega. Herda BaseModel:
+    use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação
+    para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     class Kind(models.TextChoices):
+        """Valores aceitos para Kind em RewardDefinition.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         LEVEL = "level", "Nível"
         ACHIEVEMENT = "achievement", "Conquista"
 
@@ -149,6 +206,13 @@ class RewardDefinition(BaseModel):
 
 
 class RewardClaim(BaseModel):
+    """Registro de que um usuário já resgatou uma recompensa definida.
+
+    Relaciona os registros por ``user``, ``reward``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reward_claims")
     reward = models.ForeignKey(RewardDefinition, on_delete=models.CASCADE, related_name="claims")
 

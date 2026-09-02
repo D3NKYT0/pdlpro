@@ -19,11 +19,25 @@ from common.permissions import IsStaffMember
 
 
 class CanViewCustomItems(BasePermission):
+    """Permissão DRF usada pelas consultas administrativas de itens customizados.
+
+    Declare em permission_classes nas views do catálogo customizado. Os critérios de usuário e
+    permissão específica ficam em ``has_permission``.
+    """
+
     def has_permission(self, request, view):
         return request.user.has_perm("server.view_customcatalogitem")
 
 
 class CustomItemSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``CustomCatalogItem`` no módulo staff.
+
+    Campos declarados: ``image``, ``icon_url``, ``conflicts_with_xml``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     image = serializers.ImageField(write_only=True)
     icon_url = serializers.SerializerMethodField()
     conflicts_with_xml = serializers.SerializerMethodField()
@@ -90,11 +104,25 @@ class CustomItemSerializer(serializers.ModelSerializer):
 
 
 class CustomItemQuery(serializers.Serializer):
+    """Contrato de dados de ``CustomItemQuery`` na API de staff.
+
+    Campos declarados: ``search``, ``page``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     search = serializers.CharField(default="", allow_blank=True, max_length=100)
     page = serializers.IntegerField(default=1, min_value=1, max_value=1000000)
 
 
 class CustomItemsView(APIView):
+    """Pesquisa e cria metadados de itens customizados no catálogo administrativo.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember, CanViewCustomItems].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember, CanViewCustomItems]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -128,6 +156,12 @@ class CustomItemsView(APIView):
 
 
 class CustomItemDetailView(CustomItemsView):
+    """Atualiza ou exclui um item customizado mediante as permissões exigidas para a ação.
+
+    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Usa as permissões
+    herdadas da base ou definidas nos padrões do DRF.
+    """
+
     def get(self, request, item_uuid):
         return Response(CustomItemSerializer(get_object_or_404(CustomCatalogItem, id=item_uuid)).data)
 

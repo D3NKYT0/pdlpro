@@ -11,6 +11,12 @@ from common.views import InjectedAPIView
 
 
 class WalletView(InjectedAPIView):
+    """Entrada HTTP para ``GetWalletUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Carteira"], responses=WalletSerializer)
@@ -20,6 +26,12 @@ class WalletView(InjectedAPIView):
 
 
 class WalletTransferView(InjectedAPIView):
+    """Entrada HTTP para ``TransferToPlayerUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Carteira"], request=TransferSerializer, responses=WalletSerializer)
@@ -39,6 +51,12 @@ class WalletTransferView(InjectedAPIView):
 
 
 class WalletTransactionsView(InjectedAPIView):
+    """Entrada HTTP para ``GetWalletUseCase``, ``IWalletRepository``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Carteira"])

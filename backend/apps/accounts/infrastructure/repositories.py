@@ -11,6 +11,14 @@ User = get_user_model()
 
 
 class DjangoUserRepository(IUserRepository):
+    """Adaptador Django de ``IUserRepository`` para consulta, criação, credenciais e atualização de
+    usuários do painel.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _to_entity(self, user) -> UserEntity:
         avatar_url = user.avatar.url if user.avatar else None
         return UserEntity(

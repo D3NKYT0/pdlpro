@@ -59,7 +59,12 @@ def parse_localized_decimal(value) -> str:
 
 
 class PDLMoneyWidget(forms.TextInput):
-    """Text input that presents decimals using the project's pt-BR convention."""
+    """Exibe valores decimais como texto no formato brasileiro com duas casas.
+
+    PDLAdminFormMixin o aplica a campos monetários e normaliza a entrada antes da validação. Se
+    usar o widget isoladamente, providencie a normalização no formulário: o widget formata a
+    exibição, mas não substitui DecimalField.
+    """
 
     def __init__(self, attrs=None):
         merged = {
@@ -84,7 +89,13 @@ class PDLMoneyWidget(forms.TextInput):
 
 
 class PDLAdminFormMixin:
-    """Inject PDL widget classes, hints and safe behavior into Django forms."""
+    """Padroniza widgets, máscaras, acessibilidade e recursos estáticos do admin.
+
+    Coloque antes de Form ou ModelForm na herança. Identifica campos monetários pelo tipo
+    DecimalField e pelo nome, aplica PDLMoneyWidget e normaliza a entrada pt-BR/en-US antes da
+    validação original. Campos ocultos são preservados; atributos explícitos são mantidos quando
+    o ajuste usa setdefault. PDLModelAdmin e os inlines compartilhados já aplicam este mixin.
+    """
 
     class Media:
         css = {"all": ("pdl_admin/css/forms.css",)}
@@ -304,6 +315,10 @@ class PDLAdminFormMixin:
 
 
 class PDLAdminModelForm(PDLAdminFormMixin, forms.ModelForm):
-    """Default ModelForm base for PDL administrative interfaces."""
+    """Base ModelForm com o sistema visual compartilhado do admin PDL.
+
+    Declare Meta.model e Meta.fields na subclasse. PDLModelAdmin já usa esta base por padrão;
+    formulários personalizados podem herdá-la diretamente.
+    """
 
     pass

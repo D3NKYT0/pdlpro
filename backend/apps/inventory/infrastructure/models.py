@@ -4,6 +4,13 @@ from common.models import BaseModel
 
 
 class Inventory(BaseModel):
+    """Inventário do painel por usuário e personagem, separado dos itens que ainda estão no jogo.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="inventories")
     character_name = models.CharField(max_length=35)
     account_name = models.CharField(max_length=45, blank=True)
@@ -18,6 +25,13 @@ class Inventory(BaseModel):
 
 
 class InventoryItem(BaseModel):
+    """Pilha de um tipo de item no inventário do painel, diferenciada também pelo encantamento.
+
+    Relaciona os registros por ``inventory``, ``user``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     inventory = models.ForeignKey(
         Inventory,
         on_delete=models.CASCADE,
@@ -44,6 +58,12 @@ class InventoryItem(BaseModel):
 
 
 class BlockedServerItem(BaseModel):
+    """Tipo de item do servidor bloqueado para as operações de inventário que consultam esta lista.
+    Herda BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços
+    de aplicação para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     item_id = models.PositiveIntegerField(unique=True)
     reason = models.CharField(max_length=200, blank=True)
 
@@ -53,6 +73,13 @@ class BlockedServerItem(BaseModel):
 
 
 class InventoryLog(BaseModel):
+    """Histórico de movimentação de itens, com origem, destino e ação executada.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="inventory_logs")
     action = models.CharField(max_length=40)
     item_id = models.PositiveIntegerField()

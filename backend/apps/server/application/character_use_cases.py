@@ -16,6 +16,13 @@ _NICK_MIN, _NICK_MAX = 2, 16
 
 @dataclass(frozen=True, slots=True)
 class CharacterServiceInput:
+    """Identifica usuário, conta e personagem para a execução de serviços no jogo.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     username: str
     login: str
@@ -23,6 +30,14 @@ class CharacterServiceInput:
 
 
 class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
+    """Recebe (CharacterServiceInput, novo_nome), verifica acesso e formato do nome, altera o
+    personagem e cobra o serviço. A alteração no jogo tem transação independente do débito no
+    painel.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[CharacterServiceInput,
+    str]``. O retorno é ``None``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -60,6 +75,13 @@ class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
 
 
 class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
+    """Recebe (CharacterServiceInput, sexo), verifica acesso, altera o personagem pelo gateway e
+    cobra o serviço configurado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[CharacterServiceInput,
+    str]``. O retorno é ``None``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -90,6 +112,13 @@ class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
 
 
 class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):
+    """Solicita o reposicionamento do personagem autorizado e aplica a cobrança do serviço
+    configurado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CharacterServiceInput``. O
+    retorno é ``None``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access
@@ -102,11 +131,24 @@ class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):
 
 @dataclass(frozen=True, slots=True)
 class PurchaseLinkSlotInput:
+    """Dados de entrada de ``PurchaseLinkSlotUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     quantity: int
 
 
 class ListServicePricesUseCase(UseCase[None, dict]):
+    """Lista preços dos serviços de personagem pela porta de configuração.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def __init__(self, prices: IServicePriceRepository) -> None:
         self._prices = prices
 
@@ -120,6 +162,12 @@ class ListServicePricesUseCase(UseCase[None, dict]):
 
 
 class PurchaseLinkSlotUseCase(UseCase[PurchaseLinkSlotInput, dict]):
+    """Compra um slot adicional de vínculo, debitando a carteira e aumentando o limite do usuário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PurchaseLinkSlotInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(
         self,
         prices: IServicePriceRepository,

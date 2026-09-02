@@ -11,6 +11,12 @@ from common.architecture.exceptions import EntityNotFoundError, ValidationDomain
 
 
 class GetGamerProfileUseCase(UseCase[UUID, dict]):
+    """Monta progresso, conquistas e recompensas do jogador. Pode criar o perfil e desbloquear
+    conquistas durante a consulta.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -64,11 +70,25 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ClaimRewardInput:
+    """Dados de entrada de ``ClaimRewardUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     reward_id: UUID
 
 
 class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
+    """Verifica nível ou conquista e resgate anterior, adiciona o prêmio à bag e registra o resgate
+    e XP.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ClaimRewardInput``. O retorno é
+    ``dict``.
+    """
+
     def execute(self, data: ClaimRewardInput) -> dict:
         from django.contrib.auth import get_user_model
 

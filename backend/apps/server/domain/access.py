@@ -7,6 +7,12 @@ from uuid import UUID
 
 @dataclass(frozen=True, slots=True)
 class AccessibleAccount:
+    """Conta disponível ao usuário segundo a política de vínculos do painel.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     login: str
     is_primary: bool
     linked: bool
@@ -14,6 +20,13 @@ class AccessibleAccount:
 
 @dataclass(frozen=True, slots=True)
 class PrimaryLoginState:
+    """Resultado da inspeção do login preferido para orientar criação ou vínculo da conta
+    principal.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     login: str
     status: str
 
@@ -26,6 +39,13 @@ def same_linked_user(linked_user_id: str | None, user_id: UUID | str) -> bool:
 
 
 class IAccountAccessService(ABC):
+    """Porta de consulta de contas acessíveis e capacidade de novos vínculos.
+
+    Use user_id do painel e username para avaliar a conta principal e as secundárias. Antes de
+    operar um login informado pelo cliente, consulte ``can_access``; a listagem de contas na UI
+    não substitui essa verificação.
+    """
+
     @abstractmethod
     def can_access(self, user_id: UUID, username: str, login: str) -> bool:
         raise NotImplementedError

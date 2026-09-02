@@ -7,6 +7,13 @@ from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
 
 
 class IInventoryRepository(ABC):
+    """Porta de inventários, pilhas de itens, bloqueios e histórico de movimentações.
+
+    Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
+    assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
+    ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    """
+
     @abstractmethod
     def get_or_create(self, user_id: UUID, character_name: str, account_name: str) -> InventoryEntity:
         raise NotImplementedError

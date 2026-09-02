@@ -30,6 +30,12 @@ def dump_listing(listing: CharacterListingEntity) -> dict:
 
 
 class PublicMarketplaceView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListPublicListingsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
 
     @extend_schema(tags=["Marketplace"])
@@ -39,6 +45,13 @@ class PublicMarketplaceView(ItemCatalogAPIView):
 
 
 class MyListingsView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListMyListingsUseCase``, ``CreateListingUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])
@@ -65,6 +78,12 @@ class MyListingsView(ItemCatalogAPIView):
 
 
 class PurchaseListingView(ItemCatalogAPIView):
+    """Entrada HTTP para ``PurchaseListingUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])
@@ -80,6 +99,12 @@ class PurchaseListingView(ItemCatalogAPIView):
 
 
 class CancelListingView(ItemCatalogAPIView):
+    """Entrada HTTP para ``CancelListingUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Marketplace"])

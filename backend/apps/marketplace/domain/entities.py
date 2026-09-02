@@ -8,6 +8,12 @@ from uuid import UUID
 
 @dataclass(frozen=True, slots=True)
 class CharacterListingEntity:
+    """Retrato de um anúncio de personagem com preço, vendedor, custódia e estado da venda.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     seller_id: UUID
     seller_username: str

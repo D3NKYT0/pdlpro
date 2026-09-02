@@ -28,6 +28,11 @@ CHALLENGE_PREFIX = "pdl:webauthn:"
 
 
 class WebAuthnError(Exception):
+    """Indica falha no fluxo de registro ou autenticação com passkey.
+
+    A apresentação converte a mensagem em resposta de validação ao cliente.
+    """
+
     pass
 
 

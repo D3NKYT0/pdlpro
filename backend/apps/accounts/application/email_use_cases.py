@@ -25,6 +25,12 @@ def _frontend_url(path: str) -> str:
 
 
 class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
+    """Envia link assinado para verificar o e-mail; se já estiver verificado, retorna
+    already_verified sem enviar novamente.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def __init__(self, users: IUserRepository, mailer: IMailer) -> None:
         self._users = users
         self._mailer = mailer
@@ -47,10 +53,22 @@ class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class VerifyEmailInput:
+    """Dados de entrada de ``VerifyEmailUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     token: str
 
 
 class VerifyEmailUseCase(UseCase[VerifyEmailInput, dict]):
+    """Valida assinatura e expiração do token e marca o e-mail do usuário como verificado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``VerifyEmailInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
         self._users = users
         self._unit_of_work = unit_of_work
@@ -70,10 +88,23 @@ class VerifyEmailUseCase(UseCase[VerifyEmailInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class RequestPasswordResetInput:
+    """Dados de entrada de ``RequestPasswordResetUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     email: str
 
 
 class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
+    """Envia um link assinado para redefinição de senha. Retorna sent=True também para e-mail
+    desconhecido, evitando revelar se há uma conta cadastrada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``RequestPasswordResetInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, users: IUserRepository, mailer: IMailer) -> None:
         self._users = users
         self._mailer = mailer
@@ -94,11 +125,24 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ConfirmPasswordResetInput:
+    """Dados de entrada de ``ConfirmPasswordResetUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     token: str
     password: str
 
 
 class ConfirmPasswordResetUseCase(UseCase[ConfirmPasswordResetInput, dict]):
+    """Valida o token de redefinição e o tamanho mínimo da senha e grava a nova senha pela porta de
+    usuários.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmPasswordResetInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
         self._users = users
         self._unit_of_work = unit_of_work

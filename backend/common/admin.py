@@ -16,7 +16,12 @@ def with_pdl_form_system(form_class):
 
 
 class PDLModelAdmin(admin.ModelAdmin):
-    """ModelAdmin that injects the PDL form system into generated/custom forms."""
+    """Base de administração que aplica os formulários visuais do PDL.
+
+    Herde em vez de ModelAdmin para receber PDLAdminModelForm e envolver formulários
+    personalizados com PDLAdminFormMixin. Também cobre formulários da listagem editável por meio
+    de get_changelist_form.
+    """
 
     form = PDLAdminModelForm
 
@@ -30,6 +35,12 @@ class PDLModelAdmin(admin.ModelAdmin):
 
 
 class PDLInlineFormMixin:
+    """Aplica o sistema visual PDL aos formulários de um inline do admin.
+
+    Use antes de TabularInline ou StackedInline na herança. ``get_formset`` envolve formulários
+    personalizados sem duplicar PDLAdminFormMixin.
+    """
+
     form = PDLAdminModelForm
 
     def get_formset(self, request, obj=None, **kwargs):
@@ -39,14 +50,30 @@ class PDLInlineFormMixin:
 
 
 class PDLTabularInline(PDLInlineFormMixin, admin.TabularInline):
+    """Base de inline tabular com formulários e recursos visuais do PDL.
+
+    Herde desta classe e defina ``model`` para editar relações em tabela dentro do admin,
+    preservando as máscaras e os widgets compartilhados.
+    """
+
     pass
 
 
 class PDLStackedInline(PDLInlineFormMixin, admin.StackedInline):
+    """Base de inline em blocos com formulários e recursos visuais do PDL.
+
+    Herde desta classe e defina ``model`` quando cada objeto relacionado precisar de mais espaço
+    que uma linha tabular no admin.
+    """
+
     pass
 
 
 class PDLForm(PDLAdminFormMixin, forms.Form):
-    """Reusable non-model form with PDL assets and widget enhancement."""
+    """Formulário sem modelo com widgets, máscaras e recursos visuais do PDL.
+
+    Herde para formulários administrativos que não persistem diretamente um modelo. Para edição
+    ORM, use PDLAdminModelForm.
+    """
 
     pass

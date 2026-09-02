@@ -12,7 +12,20 @@ def make_protocol() -> str:
 
 
 class Ticket(BaseModel):
+    """Chamado de atendimento com proprietário, responsável, prioridade e ciclo de resolução.
+
+    Relaciona os registros por ``user``, ``assigned_to``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     class Status(models.TextChoices):
+        """Valores aceitos para Status em Ticket.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         OPEN = "open", "Aberto"
         IN_PROGRESS = "in_progress", "Em atendimento"
         WAITING_USER = "waiting_user", "Aguardando jogador"
@@ -21,6 +34,12 @@ class Ticket(BaseModel):
         CLOSED = "closed", "Fechado"
 
     class Category(models.TextChoices):
+        """Valores aceitos para Category em Ticket.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         TECHNICAL = "technical", "Problema técnico"
         BILLING = "billing", "Pagamento e loja"
         ACCOUNT = "account", "Conta e segurança"
@@ -31,6 +50,12 @@ class Ticket(BaseModel):
         OTHER = "other", "Outro assunto"
 
     class Priority(models.TextChoices):
+        """Valores aceitos para Priority em Ticket.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         LOW = "low", "Baixa"
         NORMAL = "normal", "Normal"
         HIGH = "high", "Alta"
@@ -70,6 +95,13 @@ class Ticket(BaseModel):
 
 
 class TicketMessage(BaseModel):
+    """Mensagem de um chamado, usada também para registrar eventos e notas do atendimento.
+
+    Relaciona os registros por ``ticket``, ``author``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="messages")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     body = models.TextField()

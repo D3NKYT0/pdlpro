@@ -3,6 +3,14 @@ from rest_framework.response import Response
 
 
 class StandardPagination(PageNumberPagination):
+    """Paginação por número de página com o envelope padrão do painel.
+
+    Use como ``pagination_class`` em views genéricas ou chame ``paginate_queryset`` e
+    ``get_paginated_response`` em APIViews. Retorna count, total_pages, next, previous e
+    results; usa 20 itens por padrão e aceita ``page_size`` até 50. Os links preservam os
+    parâmetros da consulta.
+    """
+
     page_size = 20
     page_size_query_param = "page_size"
     max_page_size = 50

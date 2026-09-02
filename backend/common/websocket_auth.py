@@ -45,7 +45,12 @@ def get_user_from_access_token(token_key: str):
 
 
 class CookieJWTAuthMiddleware:
-    """Autentica o WebSocket com o cookie HttpOnly JWT ou Bearer."""
+    """Preenche scope['user'] a partir do JWT do WebSocket.
+
+    Envolva a aplicação ASGI/URLRouter com esta classe. O cookie de acesso tem prioridade sobre
+    Authorization Bearer; token ausente, inválido ou usuário inativo resulta em AnonymousUser. O
+    consumer ainda deve rejeitar conexões anônimas ou sem permissão para o recurso solicitado.
+    """
 
     def __init__(self, app):
         self.app = app

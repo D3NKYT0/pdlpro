@@ -6,6 +6,13 @@ from common.di.bootstrap import DependencyInjection
 
 
 class Command(BaseCommand):
+    """Comando Django ``prepare_game_exchange``.
+
+    Cria a tabela de recibos idempotentes no banco do jogo; não modifica personagens ou itens.
+    Execute ``python manage.py prepare_game_exchange --help`` para consultar opções antes de
+    rodar a rotina no ambiente desejado.
+    """
+
     help = "Cria a tabela de recibos idempotentes no banco do jogo; não modifica personagens ou itens."
 
     def handle(self, *args, **options):

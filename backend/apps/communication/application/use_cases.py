@@ -11,10 +11,23 @@ from common.architecture.exceptions import EntityNotFoundError
 
 @dataclass(frozen=True, slots=True)
 class ListNotificationsInput:
+    """Dados de entrada de ``ListNotificationsUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class ListNotificationsUseCase(UseCase[ListNotificationsInput, dict]):
+    """Lista notificações do usuário com a contagem de itens ainda não lidos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListNotificationsInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, notifications: INotificationRepository) -> None:
         self._notifications = notifications
 
@@ -27,11 +40,24 @@ class ListNotificationsUseCase(UseCase[ListNotificationsInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class MarkNotificationReadInput:
+    """Dados de entrada de ``MarkNotificationReadUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     notification_id: UUID | None = None
 
 
 class MarkNotificationReadUseCase(UseCase[MarkNotificationReadInput, dict]):
+    """Marca uma notificação do usuário como lida ou marca todas quando não há notification_id.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``MarkNotificationReadInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, notifications: INotificationRepository) -> None:
         self._notifications = notifications
 

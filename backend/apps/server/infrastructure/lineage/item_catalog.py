@@ -80,6 +80,12 @@ def _classify(kind: str, item_type: str, slots: list[str]) -> str:
 
 @dataclass(frozen=True, slots=True)
 class L2Item:
+    """Metadados de um tipo de item carregado do catálogo XML do Lineage.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: int
     name: str
     category: str
@@ -92,7 +98,15 @@ class L2Item:
 
 
 class LineageItemCatalog:
-    """Catálogo Interlude lido dos XML em backend/data/items."""
+    """Índice de metadados de itens lidos do catálogo XML do Lineage.
+
+    ``get`` consulta por ID inteiro; ``search`` busca por ID/prefixo numérico ou nome e respeita
+    o limite informado. ``name_for`` fornece um fallback quando o ID não existe;
+    ``is_tradeable`` retorna False para desconhecidos. O diretório padrão vem de
+    LINEAGE_ITEM_XML_DIR ou de backend/data/items. Nos fluxos do painel, use os helpers e
+    item_catalog_scope deste módulo para compartilhar o catálogo e aplicar a composição de itens
+    customizados.
+    """
 
     def __init__(self, items: dict[int, L2Item]) -> None:
         self._items = items

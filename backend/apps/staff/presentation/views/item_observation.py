@@ -23,15 +23,37 @@ logger = logging.getLogger(__name__)
 
 
 class CanObserveItems(BasePermission):
+    """Permissão DRF que controla o acesso à observação administrativa de itens.
+
+    Reutilize nas views de captura, comparação e organização das observações. ``has_permission``
+    concentra os critérios de acesso ao recurso.
+    """
+
     def has_permission(self, request, view):
         return request.user.has_perm("server.view_itemobservationsnapshot")
 
 
 class PageQuery(serializers.Serializer):
+    """Contrato de dados de ``PageQuery`` na API de staff.
+
+    Campos declarados: ``page``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     page = serializers.IntegerField(default=1, min_value=1, max_value=1000000)
 
 
 class ItemQuery(PageQuery):
+    """Contrato de dados de ``ItemQuery`` na API de staff.
+
+    Campos declarados: ``search``, ``minimum``, ``category``, ``favorites``, ``sort``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     search = serializers.CharField(default="", allow_blank=True, max_length=100)
     minimum = serializers.IntegerField(default=0, min_value=0, max_value=10**30 - 1)
     category = serializers.CharField(default="", allow_blank=True, max_length=100)
@@ -40,19 +62,51 @@ class ItemQuery(PageQuery):
 
 
 class CaptureInput(serializers.Serializer):
+    """Contrato de dados de ``CaptureInput`` na API de staff.
+
+    Campos declarados: ``notes``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     notes = serializers.CharField(default="", allow_blank=True, max_length=2000)
 
 
 class FavoriteInput(serializers.Serializer):
+    """Contrato de dados de ``FavoriteInput`` na API de staff.
+
+    Campos declarados: ``active``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     active = serializers.BooleanField()
 
 
 class ComparisonQuery(PageQuery):
+    """Contrato de dados de ``ComparisonQuery`` na API de staff.
+
+    Campos declarados: ``before``, ``after``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     before = serializers.UUIDField()
     after = serializers.UUIDField()
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``ItemObservationCategory`` no módulo staff.
+
+    Campos declarados: ``id``, ``name``, ``description``, ``item_ids``, ``order``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     class Meta:
         model = ItemObservationCategory
         fields = ("id", "name", "description", "item_ids", "order")
@@ -60,6 +114,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SnapshotSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``ItemObservationSnapshot`` no módulo staff.
+
+    Campos declarados: ``created_by``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     created_by = serializers.CharField(source="created_by.username", read_only=True, allow_null=True)
 
     class Meta:
@@ -92,6 +154,14 @@ def item_json(row):
 
 
 class ObservationView(InjectedAPIView):
+    """Base das consultas administrativas de itens, com verificação de permissões e tratamento de
+    indisponibilidade.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Controle de acesso declarado: [IsAuthenticated, IsStaffMember,
+    CanObserveItems].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember, CanObserveItems]
 
     def require(self, permission):
@@ -111,6 +181,12 @@ class ObservationView(InjectedAPIView):
 
 
 class ObservationAccessView(ObservationView):
+    """Informa quais ações de observação de itens o usuário pode executar.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas da
+    base ou definidas nos padrões do DRF.
+    """
+
     def get(self, request):
         return Response({key: request.user.has_perm(f"server.{permission}") for key, permission in {
             "capture": "capture_itemobservationsnapshot", "delete_snapshots": "delete_itemobservationsnapshot",
@@ -120,6 +196,13 @@ class ObservationAccessView(ObservationView):
 
 
 class ObservationLiveView(ObservationView):
+    """Entrada HTTP para ``ILineageGateway``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas da
+    base ou definidas nos padrões do DRF. Resolve a aplicação no escopo da requisição antes de
+    montar a resposta.
+    """
+
     def get(self, request):
         options = query(ItemQuery, request)
         data = self.safely(lambda: read_observation(self.resolve(ILineageGateway)))
@@ -152,6 +235,12 @@ class ObservationLiveView(ObservationView):
 
 
 class ObservationFavoriteView(ObservationView):
+    """Adiciona ou remove um item dos favoritos de observação.
+
+    Implementa PUT; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas da
+    base ou definidas nos padrões do DRF.
+    """
+
     def put(self, request, item_id):
         if not 0 < item_id <= 2147483647:
             raise serializers.ValidationError({"item_id": "ID de item inválido."})
@@ -167,6 +256,13 @@ class ObservationFavoriteView(ObservationView):
 
 
 class ObservationSnapshotsView(ObservationView):
+    """Entrada HTTP para ``ILineageGateway``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas
+    da base ou definidas nos padrões do DRF. Resolve a aplicação no escopo da requisição antes
+    de montar a resposta.
+    """
+
     def get(self, request):
         page = query(PageQuery, request)["page"]
         rows = ItemObservationSnapshot.objects.select_related("created_by")
@@ -182,6 +278,12 @@ class ObservationSnapshotsView(ObservationView):
 
 
 class ObservationSnapshotView(ObservationView):
+    """Consulta detalhes de uma captura persistida ou a exclui mediante permissão.
+
+    Implementa GET, DELETE; registre ``as_view()`` nas URLs do módulo. Usa as permissões
+    herdadas da base ou definidas nos padrões do DRF.
+    """
+
     def get(self, request, snapshot_id):
         snapshot = get_object_or_404(ItemObservationSnapshot, id=snapshot_id)
         page = query(PageQuery, request)["page"]
@@ -199,6 +301,12 @@ class ObservationSnapshotView(ObservationView):
 
 
 class ObservationComparisonView(ObservationView):
+    """Compara duas capturas de observação e pagina as diferenças encontradas.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas da
+    base ou definidas nos padrões do DRF.
+    """
+
     def get(self, request):
         options = query(ComparisonQuery, request)
         before = get_object_or_404(ItemObservationSnapshot, id=options["before"])
@@ -212,6 +320,12 @@ class ObservationComparisonView(ObservationView):
 
 
 class ObservationCategoriesView(ObservationView):
+    """Lista ou cria categorias para organizar capturas de observação.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas
+    da base ou definidas nos padrões do DRF.
+    """
+
     def get(self, request):
         return Response(CategorySerializer(ItemObservationCategory.objects.all(), many=True).data)
 
@@ -224,6 +338,12 @@ class ObservationCategoriesView(ObservationView):
 
 
 class ObservationCategoryView(ObservationView):
+    """Atualiza ou exclui uma categoria de observação mediante permissão.
+
+    Implementa PUT, DELETE; registre ``as_view()`` nas URLs do módulo. Usa as permissões
+    herdadas da base ou definidas nos padrões do DRF.
+    """
+
     def put(self, request, category_id):
         self.require("change_itemobservationcategory")
         serializer = CategorySerializer(get_object_or_404(ItemObservationCategory, id=category_id), data=request.data)

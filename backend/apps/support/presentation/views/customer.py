@@ -19,6 +19,13 @@ def error(message, code="INVALID_SUPPORT_REQUEST", http_status=status.HTTP_400_B
 
 
 class CustomerTicketListCreateView(APIView):
+    """Lista chamados do próprio usuário com contadores de estado e cria novos chamados com a
+    mensagem inicial.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Atendimento"])
@@ -61,6 +68,12 @@ class CustomerTicketListCreateView(APIView):
 
 
 class CustomerTicketDetailView(APIView):
+    """Consulta e responde a um chamado do próprio usuário e permite encerrá-lo ou reabri-lo.
+
+    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get_ticket(self, request, ticket_id):

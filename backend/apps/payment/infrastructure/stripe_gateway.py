@@ -13,6 +13,13 @@ logger = logging.getLogger(__name__)
 
 
 class StripeGateway(IPaymentGateway):
+    """Adaptador de IPaymentGateway para processamento de pagamentos Stripe.
+
+    Obtenha a instância pelo PaymentGatewayRegistry. Mantém a comunicação com o provedor e
+    converte os resultados para o contrato da aplicação. A liquidação da carteira e a validação
+    de webhooks ficam em serviços próprios.
+    """
+
     method_name = "stripe"
 
     def is_available(self) -> bool:

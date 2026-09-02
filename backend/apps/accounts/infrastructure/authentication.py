@@ -52,6 +52,13 @@ def _csrf_failed_reason(request) -> str | None:
 
 
 class CookieJWTAuthentication(JWTAuthentication):
+    """Autenticação DRF que aceita JWT pelo header ou pelo cookie de acesso.
+
+    Use na configuração de autenticação do DRF. O fluxo por cookie aplica a checagem CSRF para
+    métodos de escrita; mantenha a obtenção e envio do token CSRF no cliente ao usar sessão por
+    cookies.
+    """
+
     def authenticate(self, request):
         header = self.get_header(request)
         raw_token = None

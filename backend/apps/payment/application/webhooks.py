@@ -13,6 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookSignatureService:
+    """Valida a autenticidade de notificações antes de aplicar pagamentos.
+
+    ``mercado_pago_valid(request)`` confere HMAC e timestamp com tolerância de 300 segundos;
+    retorna False se faltarem segredo, headers ou identificador. ``stripe_event(payload,
+    signature)`` recebe os bytes originais do corpo e retorna o evento validado pelo SDK, ou
+    None. Não credita carteiras nem substitui a consulta de status ao provedor.
+    """
+
     def mercado_pago_valid(self, request) -> bool:
         x_signature = request.META.get("HTTP_X_SIGNATURE", "")
         x_request_id = request.META.get("HTTP_X_REQUEST_ID", "")

@@ -43,6 +43,12 @@ def dump_bid(bid: BidEntity) -> dict:
 
 
 class PublicAuctionListView(ItemCatalogAPIView):
+    """Entrada HTTP para ``CloseExpiredAuctionsUseCase``, ``ListOpenAuctionsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
 
     @extend_schema(tags=["Leilão"])
@@ -53,6 +59,13 @@ class PublicAuctionListView(ItemCatalogAPIView):
 
 
 class MyAuctionsView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListMyAuctionsUseCase``, ``CreateAuctionUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Leilão"])
@@ -80,6 +93,12 @@ class MyAuctionsView(ItemCatalogAPIView):
 
 
 class PlaceBidView(ItemCatalogAPIView):
+    """Entrada HTTP para ``PlaceBidUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Leilão"], request=PlaceBidSerializer)

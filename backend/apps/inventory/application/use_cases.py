@@ -14,12 +14,25 @@ from common.architecture.exceptions import AuthorizationError, ValidationDomainE
 
 @dataclass(frozen=True, slots=True)
 class InventoryActor:
+    """Contexto do usuário e do login Lineage usado nas operações de inventário.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     username: str
     login: str
 
 
 class SyncInventoriesUseCase(UseCase[InventoryActor, list[dict]]):
+    """Sincroniza os inventários do painel com os personagens da conta acessível ao usuário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``InventoryActor``. O retorno é
+    ``list[dict]``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -44,6 +57,13 @@ class SyncInventoriesUseCase(UseCase[InventoryActor, list[dict]]):
 
 @dataclass(frozen=True, slots=True)
 class WithdrawItemInput:
+    """Dados de entrada de ``WithdrawItemUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: InventoryActor
     char_id: int
     item_id: int
@@ -51,6 +71,13 @@ class WithdrawItemInput:
 
 
 class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
+    """Retira itens do personagem no jogo e os adiciona ao inventário do painel, aplicando
+    verificações de acesso e registrando a movimentação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``WithdrawItemInput``. O retorno é
+    ``InventoryItemEntity``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -99,6 +126,13 @@ class WithdrawItemUseCase(UseCase[WithdrawItemInput, InventoryItemEntity]):
 
 @dataclass(frozen=True, slots=True)
 class DepositItemInput:
+    """Dados de entrada de ``DepositItemUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     actor: InventoryActor
     inventory_id: UUID
     item_id: int
@@ -107,6 +141,13 @@ class DepositItemInput:
 
 
 class DepositItemUseCase(UseCase[DepositItemInput, None]):
+    """Remove itens do inventário do painel e os entrega ao personagem no jogo, aplicando as
+    verificações de acesso e registrando a movimentação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``DepositItemInput``. O retorno é
+    ``None``.
+    """
+
     def __init__(
         self,
         lineage: ILineageGateway,
@@ -145,6 +186,13 @@ class DepositItemUseCase(UseCase[DepositItemInput, None]):
 
 @dataclass(frozen=True, slots=True)
 class TradeItemInput:
+    """Dados de entrada de ``TradeItemUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     origin_inventory_id: UUID
     destination_inventory_id: UUID
@@ -154,6 +202,12 @@ class TradeItemInput:
 
 
 class TradeItemUseCase(UseCase[TradeItemInput, None]):
+    """Move itens entre inventários do painel e registra a transferência.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``TradeItemInput``. O retorno é
+    ``None``.
+    """
+
     def __init__(self, inventories: IInventoryRepository, unit_of_work: UnitOfWork) -> None:
         self._inventories = inventories
         self._unit_of_work = unit_of_work
@@ -183,6 +237,12 @@ class TradeItemUseCase(UseCase[TradeItemInput, None]):
 
 
 class ListGameItemsUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
+    """Verifica acesso ao login e consulta itens do personagem pelo gateway.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[InventoryActor, int]``. O
+    retorno é ``list[GameItem]``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access
@@ -196,6 +256,12 @@ class ListGameItemsUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
 
 
 class ListCharacterEquipmentUseCase(UseCase[tuple[InventoryActor, int], list[GameItem]]):
+    """Confirma que o personagem pertence à conta acessível e lista os itens equipados.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[InventoryActor, int]``. O
+    retorno é ``list[GameItem]``.
+    """
+
     def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
         self._lineage = lineage
         self._access = access

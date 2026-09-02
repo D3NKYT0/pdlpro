@@ -55,6 +55,13 @@ def actor_from(request) -> AccountActor:
 
 
 class LineageAccountsView(InjectedAPIView):
+    """Entrada HTTP para ``InspectPrimaryLoginUseCase``, ``ListAccessibleAccountsUseCase``,
+    ``GetLinkSlotsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])
@@ -73,6 +80,12 @@ class LineageAccountsView(InjectedAPIView):
 
 
 class RegisterGameAccountView(InjectedAPIView):
+    """Entrada HTTP para ``RegisterGameAccountUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=RegisterGameAccountSerializer)
@@ -90,6 +103,12 @@ class RegisterGameAccountView(InjectedAPIView):
 
 
 class LinkGameAccountView(InjectedAPIView):
+    """Entrada HTTP para ``LinkGameAccountUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=LinkGameAccountSerializer)
@@ -107,6 +126,12 @@ class LinkGameAccountView(InjectedAPIView):
 
 
 class UnlinkGameAccountView(InjectedAPIView):
+    """Entrada HTTP para ``UnlinkGameAccountUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=UnlinkGameAccountSerializer)
@@ -120,6 +145,12 @@ class UnlinkGameAccountView(InjectedAPIView):
 
 
 class CharactersView(InjectedAPIView):
+    """Entrada HTTP para ``ListCharactersUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])
@@ -132,6 +163,12 @@ class CharactersView(InjectedAPIView):
 
 
 class CharacterDetailView(InjectedAPIView):
+    """Entrada HTTP para ``GetCharacterUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])
@@ -144,6 +181,12 @@ class CharacterDetailView(InjectedAPIView):
 
 
 class UpdateGamePasswordView(InjectedAPIView):
+    """Entrada HTTP para ``UpdateGamePasswordUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=UpdateGamePasswordSerializer)
@@ -161,6 +204,12 @@ class UpdateGamePasswordView(InjectedAPIView):
 
 
 class ChangeNicknameView(InjectedAPIView):
+    """Entrada HTTP para ``ChangeNicknameUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=ChangeNicknameSerializer)
@@ -183,6 +232,12 @@ class ChangeNicknameView(InjectedAPIView):
 
 
 class ChangeSexView(InjectedAPIView):
+    """Entrada HTTP para ``ChangeSexUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=ChangeSexSerializer)
@@ -205,6 +260,12 @@ class ChangeSexView(InjectedAPIView):
 
 
 class UnstuckView(InjectedAPIView):
+    """Entrada HTTP para ``UnstuckCharacterUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=UnstuckSerializer)
@@ -224,6 +285,12 @@ class UnstuckView(InjectedAPIView):
 
 
 class RequestLinkByEmailView(InjectedAPIView):
+    """Entrada HTTP para ``RequestLinkByEmailUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])
@@ -236,6 +303,12 @@ class RequestLinkByEmailView(InjectedAPIView):
 
 
 class ConfirmLinkByEmailView(InjectedAPIView):
+    """Entrada HTTP para ``ConfirmLinkByEmailUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])
@@ -247,6 +320,12 @@ class ConfirmLinkByEmailView(InjectedAPIView):
 
 
 class PurchaseSlotView(InjectedAPIView):
+    """Entrada HTTP para ``PurchaseLinkSlotUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"], request=PurchaseSlotSerializer)
@@ -260,6 +339,12 @@ class PurchaseSlotView(InjectedAPIView):
 
 
 class ServicePricesView(InjectedAPIView):
+    """Entrada HTTP para ``ListServicePricesUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Conta Lineage"])

@@ -44,11 +44,23 @@ def _panel_defaults() -> dict:
 
 
 class GetPanelSettingsUseCase(UseCase[None, dict]):
+    """Retorna as configurações efetivas do painel, usando padrões quando não há configuração
+    persistida.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def execute(self, data: None = None) -> dict:
         return _panel_defaults()
 
 
 class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza a configuração ativa do painel e retorna os valores efetivos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
     def execute(self, data: dict) -> dict:
         row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
         if row is None:
@@ -75,6 +87,12 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
 
 
 class ListStaffServicePricesUseCase(UseCase[None, list[dict]]):
+    """Lista os preços administrativos dos serviços, incluindo os códigos previstos pelo painel.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[dict]``.
+    """
+
     def execute(self, data: None = None) -> list[dict]:
         existing = {row.code: row for row in ServicePrice.objects.all()}
         payload = []
@@ -96,6 +114,12 @@ class ListStaffServicePricesUseCase(UseCase[None, list[dict]]):
 
 
 class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
+    """Cria ou atualiza preços por código de serviço e retorna a lista resultante.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``list[dict]``. O retorno é
+    ``list[dict]``.
+    """
+
     def execute(self, data: list[dict]) -> list[dict]:
         if not data:
             raise ValidationDomainError("Informe ao menos um serviço.")
@@ -118,6 +142,13 @@ class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
 
 
 class GetStaffCoinConfigUseCase(UseCase[None, dict]):
+    """Obtém a configuração ativa de moedas, a mais recente ou os valores padrão quando não há
+    registro.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def execute(self, data: None = None) -> dict:
         row = CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
         if row is None:
@@ -142,6 +173,12 @@ class GetStaffCoinConfigUseCase(UseCase[None, dict]):
 
 
 class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
+    """Salva identificação da moeda, multiplicadores e taxa de retirada e retorna a configuração
+    atualizada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
     def execute(self, data: dict) -> dict:
         row = CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
         if row is None:
@@ -157,6 +194,12 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
 
 
 class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):
+    """Lista todos os produtos da loja para administração, inclusive os inativos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[dict]``.
+    """
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {
@@ -172,6 +215,11 @@ class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):
 
 
 class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza um produto da loja com identificação do item, preço, quantidade e ativação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
     def execute(self, data: dict) -> dict:
         item_id = int(data.get("item_id") or 0)
         if item_id <= 0:
@@ -201,6 +249,12 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
 
 
 class ListStaffNewsUseCase(UseCase[None, list[dict]]):
+    """Lista notícias para administração, incluindo rascunhos e estado de publicação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[dict]``.
+    """
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {
@@ -217,6 +271,11 @@ class ListStaffNewsUseCase(UseCase[None, list[dict]]):
 
 
 class UpsertStaffNewsUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza notícia, verifica os dados necessários e trata o slug antes de persistir.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
     def execute(self, data: dict) -> dict:
         title = str(data.get("title") or "").strip()
         body = str(data.get("body") or "").strip()
@@ -251,6 +310,12 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
 
 
 class ListStaffGamesUseCase(UseCase[None, list[dict]]):
+    """Lista todos os jogos e suas configurações para administração.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[dict]``.
+    """
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {
@@ -265,6 +330,11 @@ class ListStaffGamesUseCase(UseCase[None, list[dict]]):
 
 
 class ToggleStaffGameUseCase(UseCase[dict, dict]):
+    """Altera ativação e configurações de um jogo identificado por UUID ou código.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
     def execute(self, data: dict) -> dict:
         row = GameConfig.objects.filter(id=data.get("id")).first() if data.get("id") else None
         if row is None:

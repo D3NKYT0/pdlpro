@@ -14,20 +14,50 @@ from common.views import InjectedAPIView
 
 
 class PushKeysSerializer(serializers.Serializer):
+    """Contrato de dados de ``PushKeysSerializer`` na API de communication.
+
+    Campos declarados: ``auth``, ``p256dh``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     auth = serializers.CharField()
     p256dh = serializers.CharField()
 
 
 class SubscribePushSerializer(serializers.Serializer):
+    """Contrato de dados de ``SubscribePushSerializer`` na API de communication.
+
+    Campos declarados: ``endpoint``, ``keys``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     endpoint = serializers.URLField()
     keys = PushKeysSerializer()
 
 
 class UnsubscribePushSerializer(serializers.Serializer):
+    """Contrato de dados de ``UnsubscribePushSerializer`` na API de communication.
+
+    Campos declarados: ``endpoint``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     endpoint = serializers.URLField()
 
 
 class VapidPublicKeyView(InjectedAPIView):
+    """Entrada HTTP para ``GetVapidPublicKeyUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Push"])
@@ -36,6 +66,13 @@ class VapidPublicKeyView(InjectedAPIView):
 
 
 class PushSubscriptionView(InjectedAPIView):
+    """Entrada HTTP para ``SubscribePushUseCase``, ``UnsubscribePushUseCase``.
+
+    Implementa POST, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Push"], request=SubscribePushSerializer)

@@ -7,6 +7,11 @@ from common.models import BaseModel
 
 
 class GameConfig(BaseModel):
+    """Ativação e parâmetros específicos de um jogo identificado por código. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     code = models.CharField(max_length=40, unique=True)
     name = models.CharField(max_length=80)
     active = models.BooleanField(default=True)
@@ -18,6 +23,11 @@ class GameConfig(BaseModel):
 
 
 class Prize(BaseModel):
+    """Prêmio da roleta com peso de sorteio, raridade e item de entrega. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=120)
     item_id = models.PositiveIntegerField(default=0)
     enchant = models.PositiveIntegerField(default=0)
@@ -31,6 +41,13 @@ class Prize(BaseModel):
 
 
 class SpinHistory(BaseModel):
+    """Histórico dos giros da roleta e seus resultados.
+
+    Relaciona os registros por ``user``, ``prize``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="spins")
     prize = models.ForeignKey(Prize, on_delete=models.SET_NULL, null=True, blank=True)
     failed = models.BooleanField(default=False)
@@ -42,6 +59,13 @@ class SpinHistory(BaseModel):
 
 
 class Bag(BaseModel):
+    """Bolsa de prêmios do jogador antes da transferência para um inventário do painel.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_bag")
 
     class Meta:
@@ -50,6 +74,13 @@ class Bag(BaseModel):
 
 
 class BagItem(BaseModel):
+    """Pilha de prêmio acumulada na bag, com quantidade e encantamento.
+
+    Relaciona os registros por ``bag``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     bag = models.ForeignKey(Bag, on_delete=models.CASCADE, related_name="items")
     item_id = models.PositiveIntegerField()
     item_name = models.CharField(max_length=120)
@@ -62,6 +93,13 @@ class BagItem(BaseModel):
 
 
 class DailyBonusClaim(BaseModel):
+    """Registro do resgate diário do usuário usado para impedir repetição na mesma data.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="daily_bonus_claims")
     claimed_on = models.DateField()
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
@@ -72,6 +110,11 @@ class DailyBonusClaim(BaseModel):
 
 
 class CatalogItem(BaseModel):
+    """Item do catálogo de recompensas usado para compor caixas e prêmios. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=120)
     item_id = models.PositiveIntegerField()
     enchant = models.PositiveIntegerField(default=0)
@@ -88,6 +131,13 @@ class CatalogItem(BaseModel):
 
 
 class BoxType(BaseModel):
+    """Definição comercial de uma caixa e das regras de composição de seus prêmios.
+
+    Relaciona os registros por ``items``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=12, decimal_places=2)
     boosters_amount = models.PositiveIntegerField(default=5)
@@ -103,6 +153,13 @@ class BoxType(BaseModel):
 
 
 class Box(BaseModel):
+    """Caixa pertencente ao jogador com slots de recompensa ainda disponíveis.
+
+    Relaciona os registros por ``user``, ``box_type``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_boxes")
     box_type = models.ForeignKey(BoxType, on_delete=models.CASCADE, related_name="boxes")
 
@@ -112,6 +169,13 @@ class Box(BaseModel):
 
 
 class BoxSlot(BaseModel):
+    """Prêmio de uma caixa individual e indicação de que já foi aberto.
+
+    Relaciona os registros por ``box``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     box = models.ForeignKey(Box, on_delete=models.CASCADE, related_name="slots")
     item_id = models.PositiveIntegerField()
     item_name = models.CharField(max_length=120)
@@ -125,6 +189,13 @@ class BoxSlot(BaseModel):
 
 
 class DiceHistory(BaseModel):
+    """Histórico de apostas, resultados e pagamentos do jogo de dados.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="dice_plays")
     bet_type = models.CharField(max_length=20)
     bet_amount = models.PositiveIntegerField()
@@ -137,6 +208,13 @@ class DiceHistory(BaseModel):
 
 
 class SlotHistory(BaseModel):
+    """Histórico de rodadas e resultados do jogo de slots.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="slot_plays")
     reels = models.JSONField(default=list)
     won = models.BooleanField(default=False)
@@ -147,6 +225,13 @@ class SlotHistory(BaseModel):
 
 
 class FishingRod(BaseModel):
+    """Nível e experiência da vara de pesca do jogador.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="fishing_rod")
     level = models.PositiveIntegerField(default=1)
     xp = models.PositiveIntegerField(default=0)
@@ -156,6 +241,12 @@ class FishingRod(BaseModel):
 
 
 class Fish(BaseModel):
+    """Espécie disponível no minigame de pesca e seus requisitos e recompensas. Herda BaseModel:
+    use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação
+    para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     name = models.CharField(max_length=80)
     rarity = models.CharField(max_length=20, default="common")
     min_rod_level = models.PositiveIntegerField(default=1)
@@ -172,6 +263,13 @@ class Fish(BaseModel):
 
 
 class FishingCatch(BaseModel):
+    """Registro de uma tentativa de pesca e do peixe capturado quando houver.
+
+    Relaciona os registros por ``user``, ``fish``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="fishing_catches")
     fish = models.ForeignKey(Fish, on_delete=models.SET_NULL, null=True, blank=True)
     success = models.BooleanField(default=False)
@@ -182,6 +280,13 @@ class FishingCatch(BaseModel):
 
 
 class EconomyWeapon(BaseModel):
+    """Arma do jogador no minigame de economia, com nível e fragmentos de evolução.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="economy_weapon")
     level = models.PositiveIntegerField(default=0)
     fragments = models.PositiveIntegerField(default=0)
@@ -191,6 +296,12 @@ class EconomyWeapon(BaseModel):
 
 
 class Monster(BaseModel):
+    """Adversário configurado para combate, com disponibilidade e estado de derrota. Herda
+    BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de
+    aplicação para operações de negócio, mantendo neste modelo as regras de persistência e os
+    relacionamentos.
+    """
+
     name = models.CharField(max_length=80)
     level = models.PositiveIntegerField(default=1)
     required_weapon_level = models.PositiveIntegerField(default=0)
@@ -207,6 +318,13 @@ class Monster(BaseModel):
 
 
 class EconomyFightLog(BaseModel):
+    """Resultado de combate e recompensas obtidas no minigame de economia.
+
+    Relaciona os registros por ``user``, ``monster``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="economy_fights")
     monster = models.ForeignKey(Monster, on_delete=models.SET_NULL, null=True)
     won = models.BooleanField(default=False)
@@ -218,6 +336,11 @@ class EconomyFightLog(BaseModel):
 
 
 class BattlePassSeason(BaseModel):
+    """Temporada do passe de batalha, com período e preço de acesso premium. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=80)
     starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
@@ -229,6 +352,13 @@ class BattlePassSeason(BaseModel):
 
 
 class BattlePassLevel(BaseModel):
+    """Nível de uma temporada e requisito de experiência para desbloqueio.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="levels")
     level = models.PositiveIntegerField()
     required_xp = models.PositiveIntegerField(default=0)
@@ -240,6 +370,13 @@ class BattlePassLevel(BaseModel):
 
 
 class BattlePassReward(BaseModel):
+    """Recompensa associada a um nível do passe, com condições de acesso e item entregue.
+
+    Relaciona os registros por ``level_row``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     level_row = models.ForeignKey(BattlePassLevel, on_delete=models.CASCADE, related_name="rewards")
     is_premium = models.BooleanField(default=False)
     item_id = models.PositiveIntegerField(default=57)
@@ -253,6 +390,13 @@ class BattlePassReward(BaseModel):
 
 
 class UserBattlePassProgress(BaseModel):
+    """XP e acesso premium de um usuário em uma temporada do passe.
+
+    Relaciona os registros por ``user``, ``season``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="battle_passes")
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="progress")
     xp = models.PositiveIntegerField(default=0)
@@ -265,6 +409,13 @@ class UserBattlePassProgress(BaseModel):
 
 
 class UserBattlePassClaim(BaseModel):
+    """Registro de resgate de uma recompensa do passe pelo usuário.
+
+    Relaciona os registros por ``user``, ``reward``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="battle_pass_claims")
     reward = models.ForeignKey(BattlePassReward, on_delete=models.CASCADE, related_name="claims")
 
@@ -274,6 +425,13 @@ class UserBattlePassClaim(BaseModel):
 
 
 class BattlePassQuest(BaseModel):
+    """Missão configurada para gerar progresso no passe de batalha.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="quests")
     name = models.CharField(max_length=120)
     description = models.CharField(max_length=300, blank=True)
@@ -285,6 +443,13 @@ class BattlePassQuest(BaseModel):
 
 
 class BattlePassQuestClaim(BaseModel):
+    """Registro de resgate de missão do passe por um usuário.
+
+    Relaciona os registros por ``user``, ``quest``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     quest = models.ForeignKey(BattlePassQuest, on_delete=models.PROTECT)
     period_start = models.DateField()
@@ -294,6 +459,13 @@ class BattlePassQuestClaim(BaseModel):
 
 
 class BattlePassExchange(BaseModel):
+    """Troca configurada no conteúdo adicional do passe de batalha.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="exchanges")
     name = models.CharField(max_length=120)
     required_item_id = models.PositiveIntegerField()
@@ -305,6 +477,13 @@ class BattlePassExchange(BaseModel):
 
 
 class BattlePassMilestone(BaseModel):
+    """Marco de progresso configurado para uma temporada do passe.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(BattlePassSeason, on_delete=models.CASCADE, related_name="milestones")
     name = models.CharField(max_length=120)
     required_xp = models.PositiveIntegerField()
@@ -312,6 +491,13 @@ class BattlePassMilestone(BaseModel):
 
 
 class GameRewardLog(BaseModel):
+    """Histórico de recompensas dos jogos usado nas consultas e estatísticas.
+
+    Relaciona os registros por ``user``, ``season``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     season = models.ForeignKey(BattlePassSeason, on_delete=models.SET_NULL, null=True, blank=True)
     kind = models.CharField(max_length=30)
@@ -321,6 +507,11 @@ class GameRewardLog(BaseModel):
 
 
 class DailyBonusSeason(BaseModel):
+    """Temporada que organiza o calendário de recompensas diárias. Herda BaseModel: use ``id``
+    (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
+    de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=100)
     starts_on = models.DateField()
     ends_on = models.DateField()
@@ -328,6 +519,13 @@ class DailyBonusSeason(BaseModel):
 
 
 class DailyBonusDay(BaseModel):
+    """Configuração de recompensa para um dia da temporada de bônus.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(DailyBonusSeason, on_delete=models.CASCADE, related_name="days")
     day = models.PositiveIntegerField()
     rewards = models.JSONField(default=list)
@@ -338,6 +536,13 @@ class DailyBonusDay(BaseModel):
 
 
 class DailyBonusPoolEntry(BaseModel):
+    """Entrada do conjunto de possíveis recompensas de bônus diário.
+
+    Relaciona os registros por ``season``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     season = models.ForeignKey(DailyBonusSeason, on_delete=models.CASCADE, related_name="pool")
     name = models.CharField(max_length=100)
     weight = models.PositiveIntegerField(default=1)
@@ -345,6 +550,11 @@ class DailyBonusPoolEntry(BaseModel):
 
 
 class FishingBait(BaseModel):
+    """Tipo de isca com parâmetros de compra e efeito sobre a pesca. Herda BaseModel: use ``id``
+    (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
+    de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=250, blank=True)
     price = models.PositiveIntegerField(default=1)
@@ -353,6 +563,13 @@ class FishingBait(BaseModel):
 
 
 class UserFishingBait(BaseModel):
+    """Estoque de uma isca pertencente ao usuário.
+
+    Relaciona os registros por ``user``, ``bait``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bait = models.ForeignKey(FishingBait, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=0)

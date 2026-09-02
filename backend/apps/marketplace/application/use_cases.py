@@ -26,6 +26,12 @@ from common.architecture.exceptions import AuthorizationError
 
 
 class ListPublicListingsUseCase(UseCase[None, list[CharacterListingEntity]]):
+    """Lista os anúncios de personagens que ainda estão disponíveis para compra.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[CharacterListingEntity]``.
+    """
+
     def __init__(self, listings: ICharacterListingRepository) -> None:
         self._listings = listings
 
@@ -35,10 +41,23 @@ class ListPublicListingsUseCase(UseCase[None, list[CharacterListingEntity]]):
 
 @dataclass(frozen=True, slots=True)
 class ListMyListingsInput:
+    """Dados de entrada de ``ListMyListingsUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class ListMyListingsUseCase(UseCase[ListMyListingsInput, list[CharacterListingEntity]]):
+    """Lista anúncios pertencentes ao vendedor informado, incluindo seu estado atual.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListMyListingsInput``. O retorno
+    é ``list[CharacterListingEntity]``.
+    """
+
     def __init__(self, listings: ICharacterListingRepository) -> None:
         self._listings = listings
 
@@ -48,6 +67,14 @@ class ListMyListingsUseCase(UseCase[ListMyListingsInput, list[CharacterListingEn
 
 @dataclass(frozen=True, slots=True)
 class CreateListingInput:
+    """Dados de entrada de ``CreateListingUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada. Use Decimal para valores monetários, evitando conversão intermediária
+    por float.
+    """
+
     user_id: UUID
     username: str
     login: str
@@ -57,6 +84,13 @@ class CreateListingInput:
 
 
 class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
+    """Valida preço, acesso e personagem offline, captura seus equipamentos e transfere o
+    personagem à conta de custódia antes de criar o anúncio.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CreateListingInput``. O retorno
+    é ``CharacterListingEntity``.
+    """
+
     def __init__(
         self,
         listings: ICharacterListingRepository,
@@ -107,12 +141,27 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
 
 @dataclass(frozen=True, slots=True)
 class PurchaseListingInput:
+    """Dados de entrada de ``PurchaseListingUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     buyer_id: UUID
     buyer_username: str
     listing_id: UUID
 
 
 class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntity]):
+    """Valida anúncio, comprador, slots e custódia; debita o comprador, credita o vendedor,
+    transfere o personagem e marca a venda. O gateway do jogo não participa do rollback do
+    Django.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PurchaseListingInput``. O
+    retorno é ``CharacterListingEntity``.
+    """
+
     def __init__(
         self,
         listings: ICharacterListingRepository,
@@ -162,11 +211,25 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
 
 @dataclass(frozen=True, slots=True)
 class CancelListingInput:
+    """Dados de entrada de ``CancelListingUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     listing_id: UUID
 
 
 class CancelListingUseCase(UseCase[CancelListingInput, CharacterListingEntity]):
+    """Confirma o vendedor e a custódia, devolve o personagem à conta de origem e cancela o
+    anúncio.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CancelListingInput``. O retorno
+    é ``CharacterListingEntity``.
+    """
+
     def __init__(
         self,
         listings: ICharacterListingRepository,

@@ -41,6 +41,13 @@ from django.conf import settings
 
 
 class ServerProvider(AppProvider):
+    """Registra portas, adaptadores e casos de uso do módulo server.
+
+    O AppConfig inclui este provider no catálogo de DependencyInjection. Acrescente novos
+    registros em ``register`` e escolha o lifetime conforme o estado mantido pelo serviço; views
+    resolvem essas classes pelo container.
+    """
+
     def register(self, container: Container) -> None:
         if settings.LINEAGE_DB_ENABLED:
             # O catálogo é carregado no boot; alterações nos arquivos .sql exigem recarregar o processo.

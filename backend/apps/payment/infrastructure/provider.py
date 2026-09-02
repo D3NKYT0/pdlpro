@@ -22,6 +22,13 @@ from common.di.provider import AppProvider
 
 
 class PaymentProvider(AppProvider):
+    """Registra portas, adaptadores e casos de uso do módulo payment.
+
+    O AppConfig inclui este provider no catálogo de DependencyInjection. Acrescente novos
+    registros em ``register`` e escolha o lifetime conforme o estado mantido pelo serviço; views
+    resolvem essas classes pelo container.
+    """
+
     def register(self, container: Container) -> None:
         container.register(IPaymentOrderRepository, DjangoPaymentOrderRepository, lifetime=Lifetime.SCOPED)
         container.register_self(MockPaymentGateway, lifetime=Lifetime.SINGLETON)

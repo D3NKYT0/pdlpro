@@ -6,6 +6,12 @@ from common.forms import PDLAdminFormMixin
 
 
 class PDLUserLabelsMixin:
+    """Localiza os campos de usuário e configura seletores de grupos e permissões.
+
+    Combine com os formulários de autenticação do Django. Altera apenas campos presentes no
+    formulário e preserva as escolhas do seletor original.
+    """
+
     field_labels = {
         "username": "Usuário",
         "password": "Senha",
@@ -59,7 +65,11 @@ class PDLUserLabelsMixin:
 
 
 class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):
-    """Safe user editor that never exposes the encoded password as a text input."""
+    """Edita usuários com os rótulos e widgets administrativos do PDL.
+
+    Preserva o tratamento de senha de UserChangeForm, exibindo o resumo seguro em vez de
+    oferecer o hash como campo de texto editável. Usado por UserAdmin.
+    """
 
     class Meta(UserChangeForm.Meta):
         model = User
@@ -67,7 +77,11 @@ class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):
 
 
 class PDLUserCreationForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserCreationForm):
-    """User creation form with Django password validation and PDL styling."""
+    """Cria usuários no admin com validação de senha do Django e estilo PDL.
+
+    Declara os campos do modelo customizado em Meta. Para cadastro público, use
+    RegisterUserUseCase, que também trata termos e verificação de e-mail.
+    """
 
     class Meta(UserCreationForm.Meta):
         model = User

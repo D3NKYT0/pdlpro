@@ -32,6 +32,12 @@ def _configured_methods() -> list[str]:
 
 
 class GetPaymentCatalogUseCase(UseCase[None, dict]):
+    """Lista métodos disponíveis e pacotes ativos com preços e prévia de bônus.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def __init__(self, gateways: PaymentGatewayRegistry, bonus_policy: IPurchaseBonusPolicy) -> None:
         self._gateways = gateways
         self._bonus_policy = bonus_policy
@@ -64,12 +70,25 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
 
 @dataclass(frozen=True, slots=True)
 class PreviewBonusInput:
+    """Dados de entrada de ``PreviewPaymentBonusUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Use Decimal para valores monetários,
+    evitando conversão intermediária por float.
+    """
+
     amount: Decimal
     currency: str = "BRL"
     package_id: str = ""
 
 
 class PreviewPaymentBonusUseCase(UseCase[PreviewBonusInput, dict]):
+    """Converte valor ou pacote em moedas e calcula o bônus sem criar pedido.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PreviewBonusInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, bonus_policy: IPurchaseBonusPolicy) -> None:
         self._bonus_policy = bonus_policy
         self._pricing = CoinPricingService()
@@ -94,6 +113,14 @@ class PreviewPaymentBonusUseCase(UseCase[PreviewBonusInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class CreatePaymentOrderInput:
+    """Dados de entrada de ``CreatePaymentOrderUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada. Use Decimal para valores monetários, evitando conversão intermediária
+    por float.
+    """
+
     user_id: UUID
     amount: Decimal | None = None
     method: str = ""
@@ -102,6 +129,14 @@ class CreatePaymentOrderInput:
 
 
 class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEntity]):
+    """Cota a compra, escolhe o método e reutiliza um pedido compatível dentro da janela
+    configurada; se necessário, cria pedido e checkout externo. A chamada ao provedor não é
+    revertida pelo UnitOfWork do Django.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CreatePaymentOrderInput``. O
+    retorno é ``PaymentOrderEntity``.
+    """
+
     def __init__(
         self,
         orders: IPaymentOrderRepository,
@@ -172,10 +207,23 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
 
 @dataclass(frozen=True, slots=True)
 class ListPaymentOrdersInput:
+    """Dados de entrada de ``ListPaymentOrdersUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class ListPaymentOrdersUseCase(UseCase[ListPaymentOrdersInput, list[PaymentOrderEntity]]):
+    """Lista os pedidos de pagamento pertencentes ao UUID de usuário informado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListPaymentOrdersInput``. O
+    retorno é ``list[PaymentOrderEntity]``.
+    """
+
     def __init__(self, orders: IPaymentOrderRepository) -> None:
         self._orders = orders
 
@@ -185,11 +233,25 @@ class ListPaymentOrdersUseCase(UseCase[ListPaymentOrdersInput, list[PaymentOrder
 
 @dataclass(frozen=True, slots=True)
 class CancelPaymentOrderInput:
+    """Dados de entrada de ``CancelPaymentOrderUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     order_id: UUID
 
 
 class CancelPaymentOrderUseCase(UseCase[CancelPaymentOrderInput, PaymentOrderEntity]):
+    """Cancela localmente um pedido pending ou processing após verificar o proprietário. Não
+    solicita cancelamento ao provedor externo.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CancelPaymentOrderInput``. O
+    retorno é ``PaymentOrderEntity``.
+    """
+
     def __init__(self, orders: IPaymentOrderRepository, unit_of_work: UnitOfWork) -> None:
         self._orders = orders
         self._unit_of_work = unit_of_work
@@ -208,12 +270,28 @@ class CancelPaymentOrderUseCase(UseCase[CancelPaymentOrderInput, PaymentOrderEnt
 
 @dataclass(frozen=True, slots=True)
 class SettlePaymentInput:
+    """Dados de entrada de ``SettlePaymentUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     order_id: UUID
     user_id: UUID | None = None
     allow_methods: tuple[str, ...] | None = None
 
 
 class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
+    """Credita moedas e bônus e marca o pedido como confirmado no mesmo UnitOfWork. Um pedido já
+    confirmado é devolvido sem novo crédito nesta execução. Use somente após confirmação
+    confiável do provedor ou no fluxo mock; user_id opcional restringe o proprietário e
+    allow_methods restringe os métodos aceitos.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``SettlePaymentInput``. O retorno
+    é ``PaymentOrderEntity``.
+    """
+
     def __init__(
         self,
         orders: IPaymentOrderRepository,
@@ -263,11 +341,25 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
 
 @dataclass(frozen=True, slots=True)
 class ConfirmPaymentInput:
+    """Dados de entrada de ``ConfirmPaymentUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     order_id: UUID
     user_id: UUID | None = None
 
 
 class ConfirmPaymentUseCase(UseCase[ConfirmPaymentInput, PaymentOrderEntity]):
+    """Encaminha a confirmação manual para a liquidação, autorizando somente mock quando
+    PAYMENT_ALLOW_MOCK está ativo.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmPaymentInput``. O retorno
+    é ``PaymentOrderEntity``.
+    """
+
     def __init__(self, settle: SettlePaymentUseCase) -> None:
         self._settle = settle
 
@@ -280,6 +372,13 @@ class ConfirmPaymentUseCase(UseCase[ConfirmPaymentInput, PaymentOrderEntity]):
 
 @dataclass(frozen=True, slots=True)
 class ProcessPaymentInput:
+    """Dados de entrada de ``ProcessPaymentUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     order_id: UUID
     payload: dict
@@ -287,6 +386,13 @@ class ProcessPaymentInput:
 
 
 class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
+    """Envia os dados de pagamento ao gateway do pedido, salva os dados de checkout e liquida o
+    saldo se o resultado for aprovado. Verifica o proprietário antes da chamada externa.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ProcessPaymentInput``. O retorno
+    é ``dict``.
+    """
+
     def __init__(
         self,
         orders: IPaymentOrderRepository,
@@ -342,11 +448,25 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class GetPaymentStatusInput:
+    """Dados de entrada de ``GetPaymentStatusUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     order_id: UUID
 
 
 class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]):
+    """Consulta o gateway e sincroniza o pedido: uma aprovação pode creditar a carteira. Apesar do
+    nome de consulta, pode alterar pedido e saldo.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetPaymentStatusInput``. O
+    retorno é ``PaymentOrderEntity``.
+    """
+
     def __init__(
         self,
         orders: IPaymentOrderRepository,
@@ -388,6 +508,12 @@ class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]
 
 @dataclass(frozen=True, slots=True)
 class ApplyGatewayPaymentInput:
+    """Dados de entrada de ``ApplyGatewayPaymentUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     external_id: str = ""
     order_id: UUID | None = None
     approved: bool = False
@@ -395,6 +521,14 @@ class ApplyGatewayPaymentInput:
 
 
 class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderEntity | None]):
+    """Localiza o pedido por UUID ou identificador externo e liquida somente eventos aprovados.
+    Retorna None se não localizar; a validação da assinatura e da origem do evento deve ocorrer
+    antes desta chamada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ApplyGatewayPaymentInput``. O
+    retorno é ``PaymentOrderEntity | None``.
+    """
+
     def __init__(self, orders: IPaymentOrderRepository, settle: SettlePaymentUseCase) -> None:
         self._orders = orders
         self._settle = settle

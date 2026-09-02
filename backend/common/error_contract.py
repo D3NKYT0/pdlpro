@@ -56,6 +56,8 @@ _NON_IDENTIFIER = re.compile(r"[^A-Z0-9]+")
 
 
 def normalize_error_code(value: Any, *, fallback: str = "ERROR") -> str:
+    """Converte o código em identificador maiúsculo estável e aplica os aliases legados."""
+
     raw = str(value or "").strip().upper()
     normalized = _NON_IDENTIFIER.sub("_", raw).strip("_")
     if not normalized:
@@ -64,16 +66,22 @@ def normalize_error_code(value: Any, *, fallback: str = "ERROR") -> str:
 
 
 def status_error_code(status_code: int) -> str:
+    """Retorna o código padrão do status HTTP ou ERROR para status sem mapeamento."""
+
     return STATUS_ERROR_CODES.get(status_code, "ERROR")
 
 
 def status_error_message(status_code: int) -> str:
+    """Retorna uma mensagem pública padrão para o status HTTP informado."""
+
     return STATUS_ERROR_MESSAGES.get(
         status_code, "Não foi possível processar a solicitação."
     )
 
 
 def extract_error_code(data: Any) -> str | None:
+    """Procura error_code, error ou code em um mapping; retorna None se ausentes."""
+
     if not isinstance(data, Mapping):
         return None
     for key in ("error_code", "error", "code"):
@@ -101,6 +109,8 @@ def _first_message(value: Any) -> str | None:
 
 
 def extract_error_message(data: Any, *, status_code: int) -> str:
+    """Extrai a primeira mensagem do payload ou usa o texto padrão do status."""
+
     return _first_message(data) or status_error_message(status_code)
 
 
@@ -136,6 +146,13 @@ def build_error_payload(
     error_code: str | None = None,
     message: str | None = None,
 ) -> dict[str, Any]:
+    """Monta o envelope público de erro compartilhado pelo DRF e pelo middleware.
+
+    Aceita payloads heterogêneos e normaliza error_code, message e details. Inclui request_id
+    quando informado e mantém error em minúsculas para compatibilidade. Os dados recebidos podem
+    ser expostos ao cliente; o chamador deve fornecer somente mensagens e detalhes públicos.
+    """
+
     resolved_code = normalize_error_code(
         error_code or extract_error_code(data) or status_error_code(status_code)
     )

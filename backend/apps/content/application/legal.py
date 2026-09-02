@@ -39,6 +39,12 @@ DOCUMENTS = {
 
 @dataclass(frozen=True, slots=True)
 class LegalDocument:
+    """Documento legal identificado por slug, com título, conteúdo e versão de aceite.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     slug: str
     title: str
     body: str
@@ -46,6 +52,12 @@ class LegalDocument:
 
 
 class ListLegalDocumentsUseCase(UseCase[None, dict]):
+    """Lista slugs e títulos dos documentos legais junto da versão configurada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
     def execute(self, data: None = None) -> dict:
         version = getattr(settings, "LEGAL_DOCS_VERSION", "2026-08-31")
         return {
@@ -58,6 +70,12 @@ class ListLegalDocumentsUseCase(UseCase[None, dict]):
 
 
 class GetLegalDocumentUseCase(UseCase[str, LegalDocument]):
+    """Obtém o documento legal pelo slug normalizado, incluindo conteúdo e versão.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``str``. O retorno é
+    ``LegalDocument``.
+    """
+
     def execute(self, data: str) -> LegalDocument:
         slug = (data or "").strip().lower()
         item = DOCUMENTS.get(slug)

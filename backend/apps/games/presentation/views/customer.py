@@ -54,6 +54,13 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class RouletteView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetRouletteStateUseCase``, ``SpinRouletteUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -66,6 +73,12 @@ class RouletteView(ItemCatalogAPIView):
 
 
 class BuyTokensView(ItemCatalogAPIView):
+    """Entrada HTTP para ``BuyTokensUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"], request=BuyTokensSerializer)
@@ -80,6 +93,13 @@ class BuyTokensView(ItemCatalogAPIView):
 
 
 class DailyBonusView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetDailyBonusStateUseCase``, ``ClaimDailyBonusUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -97,6 +117,13 @@ class DailyBonusView(ItemCatalogAPIView):
 
 
 class BagView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetBagUseCase``, ``TransferBagToInventoryUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -115,6 +142,13 @@ class BagView(ItemCatalogAPIView):
 
 
 class BoxListView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListBoxTypesUseCase``, ``BuyBoxUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -133,6 +167,12 @@ class BoxListView(ItemCatalogAPIView):
 
 
 class OpenBoxView(ItemCatalogAPIView):
+    """Entrada HTTP para ``OpenBoxUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -141,6 +181,12 @@ class OpenBoxView(ItemCatalogAPIView):
 
 
 class MinigamesView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetMinigamesStateUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -149,6 +195,12 @@ class MinigamesView(ItemCatalogAPIView):
 
 
 class DiceView(ItemCatalogAPIView):
+    """Entrada HTTP para ``PlayDiceUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"], request=PlayDiceSerializer)
@@ -163,6 +215,12 @@ class DiceView(ItemCatalogAPIView):
 
 
 class SlotsView(ItemCatalogAPIView):
+    """Entrada HTTP para ``SpinSlotsUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -171,6 +229,13 @@ class SlotsView(ItemCatalogAPIView):
 
 
 class FishingView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetFishingStateUseCase``, ``CastLineUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -185,6 +250,12 @@ class FishingView(ItemCatalogAPIView):
 
 
 class EconomyView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetEconomyStateUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -193,6 +264,12 @@ class EconomyView(ItemCatalogAPIView):
 
 
 class FightMonsterView(ItemCatalogAPIView):
+    """Entrada HTTP para ``FightMonsterUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -205,6 +282,12 @@ class FightMonsterView(ItemCatalogAPIView):
 
 
 class EnchantWeaponView(ItemCatalogAPIView):
+    """Entrada HTTP para ``EnchantWeaponUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -213,6 +296,13 @@ class EnchantWeaponView(ItemCatalogAPIView):
 
 
 class BattlePassView(ItemCatalogAPIView):
+    """Entrada HTTP para ``GetBattlePassUseCase``, ``BuyBattlePassPremiumUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])
@@ -227,6 +317,12 @@ class BattlePassView(ItemCatalogAPIView):
 
 
 class ClaimBattlePassView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ClaimBattlePassRewardUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Jogos"])

@@ -5,7 +5,20 @@ from common.models import BaseModel
 
 
 class CharacterListing(BaseModel):
+    """Anúncio de venda de personagem e seus metadados capturados na entrada em custódia.
+
+    Relaciona os registros por ``seller``, ``buyer``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     class Status(models.TextChoices):
+        """Valores aceitos para Status em CharacterListing.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         FOR_SALE = "for_sale", "À venda"
         SOLD = "sold", "Vendido"
         CANCELLED = "cancelled", "Cancelado"

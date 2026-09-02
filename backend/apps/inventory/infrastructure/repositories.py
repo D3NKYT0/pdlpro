@@ -10,6 +10,14 @@ from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
 
 
 class DjangoInventoryRepository(IInventoryRepository):
+    """Adaptador Django de ``IInventoryRepository`` para inventários, pilhas de itens, bloqueios e
+    histórico de movimentações.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def _inventory(self, row: Inventory) -> InventoryEntity:
         return InventoryEntity(
             id=row.id,

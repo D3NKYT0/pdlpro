@@ -16,6 +16,13 @@ _SAFE_REQUEST_ID = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
 
 
 class RequestIdMiddleware:
+    """Propaga um identificador de correlação em toda requisição e resposta.
+
+    Aceita X-Request-ID com 1 a 128 caracteres alfanuméricos ou ``._:-``; quando ausente ou
+    inválido, gera um UUID hexadecimal. Disponibiliza ``request.request_id`` para logs e para o
+    contrato de erro da API.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -30,7 +37,12 @@ class RequestIdMiddleware:
 
 
 class DependencyInjectionMiddleware:
-    """Abre um container SCOPED por request para resolver use cases."""
+    """Abre um container filho por requisição e o expõe em request.container.
+
+    As views resolvem serviços SCOPED nesse filho, evitando compartilhar instâncias entre
+    requisições. Ao terminar, inclusive em caso de exceção, remove a referência do request; não
+    chama métodos de descarte dos serviços.
+    """
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -44,6 +56,14 @@ class DependencyInjectionMiddleware:
 
 
 class ApiErrorContractMiddleware:
+    """Uniformiza respostas de erro das rotas /api/ em JSON.
+
+    Aplica ``build_error_payload`` a respostas não streaming com status >= 400, inclusive erros
+    produzidos fora do DRF. Preserva status e request_id; ignora respostas de sucesso e rotas
+    externas à API. Deve trabalhar junto com RequestIdMiddleware e com o exception handler do
+    DRF.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 

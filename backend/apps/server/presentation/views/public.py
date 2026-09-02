@@ -16,6 +16,12 @@ from common.views import InjectedAPIView
 
 
 class ServerInfoView(InjectedAPIView):
+    """Entrada HTTP para ``GetServerInfoUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -26,6 +32,12 @@ class ServerInfoView(InjectedAPIView):
 
 
 class ServerStatusView(InjectedAPIView):
+    """Entrada HTTP para ``GetServerStatusUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -36,6 +48,12 @@ class ServerStatusView(InjectedAPIView):
 
 
 class RankingView(InjectedAPIView):
+    """Entrada HTTP para ``GetRankingUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -61,6 +79,12 @@ def dump_sql_row(row: dict) -> dict:
 
 
 class PublicLineageQueryView(InjectedAPIView):
+    """Entrada HTTP para ``RunPublicLineageQueryUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

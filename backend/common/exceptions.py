@@ -21,6 +21,13 @@ logger = logging.getLogger(__name__)
 
 
 def custom_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
+    """Converte DomainError e exceções DRF para o envelope de erro do painel.
+
+    Configure em REST_FRAMEWORK['EXCEPTION_HANDLER']. Exceções não tratadas são registradas com
+    request_id e produzem uma resposta 500 genérica; erros previstos preservam código, mensagem
+    e detalhes públicos.
+    """
+
     if isinstance(exc, DomainError):
         exc = PdlAPIException(
             exc.message,
@@ -86,6 +93,13 @@ def _get_exception_code(exc: Exception, status_code: int) -> str:
 
 
 class PdlAPIException(APIException):
+    """Exceção DRF com código estável, mensagem pública e detalhes estruturados.
+
+    Use na apresentação quando precisar personalizar status e ``error_code``. O código é
+    normalizado e o exception handler monta o envelope com request_id. Na aplicação e no
+    domínio, prefira ``DomainError`` e suas subclasses.
+    """
+
     status_code = 400
     default_detail = "Não foi possível processar a solicitação."
     default_code = "API_ERROR"

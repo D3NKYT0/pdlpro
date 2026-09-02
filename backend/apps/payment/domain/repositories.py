@@ -8,6 +8,13 @@ from apps.payment.domain.entities import PaymentOrderEntity
 
 
 class IPaymentOrderRepository(ABC):
+    """Porta de pedidos de pagamento, referências externas e estado de liquidação.
+
+    Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
+    assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
+    ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    """
+
     @abstractmethod
     def get_by_id(self, order_id: UUID) -> PaymentOrderEntity | None:
         raise NotImplementedError

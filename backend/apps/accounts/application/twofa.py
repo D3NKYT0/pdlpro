@@ -32,6 +32,12 @@ def _verify(secret: str, code: str) -> bool:
 
 
 class SetupTwoFactorUseCase(UseCase[UUID, dict]):
+    """Gera e salva um segredo TOTP e retorna a URI de provisionamento. O 2FA só é ativado depois
+    da confirmação do código.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -47,11 +53,24 @@ class SetupTwoFactorUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ConfirmTwoFactorInput:
+    """Dados de entrada de ``ConfirmTwoFactorUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     code: str
 
 
 class ConfirmTwoFactorUseCase(UseCase[ConfirmTwoFactorInput, dict]):
+    """Confere o código TOTP contra o segredo salvo e ativa o segundo fator.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmTwoFactorInput``. O
+    retorno é ``dict``.
+    """
+
     def execute(self, data: ConfirmTwoFactorInput) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -65,11 +84,24 @@ class ConfirmTwoFactorUseCase(UseCase[ConfirmTwoFactorInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class DisableTwoFactorInput:
+    """Dados de entrada de ``DisableTwoFactorUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     code: str
 
 
 class DisableTwoFactorUseCase(UseCase[DisableTwoFactorInput, dict]):
+    """Exige 2FA ativo e código válido para desativar o segundo fator e apagar o segredo TOTP.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``DisableTwoFactorInput``. O
+    retorno é ``dict``.
+    """
+
     def execute(self, data: DisableTwoFactorInput) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -84,11 +116,23 @@ class DisableTwoFactorUseCase(UseCase[DisableTwoFactorInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class VerifyTwoFactorLoginInput:
+    """Dados de entrada de ``VerifyTwoFactorLoginUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     challenge: str
     code: str
 
 
 class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, object]):
+    """Valida o desafio assinado e o código TOTP e retorna o usuário ORM para concluir o login.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``VerifyTwoFactorLoginInput``. O
+    retorno é ``object``.
+    """
+
     def execute(self, data: VerifyTwoFactorLoginInput) -> object:
         from django.contrib.auth import get_user_model
 

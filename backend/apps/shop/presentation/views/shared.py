@@ -18,6 +18,12 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class ShopCatalogView(ItemCatalogAPIView):
+    """Entrada HTTP para ``ListShopItemsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -28,6 +34,13 @@ class ShopCatalogView(ItemCatalogAPIView):
 
 
 class ShopCartView(ItemCatalogAPIView):
+    """Entrada HTTP para ``AddToCartUseCase``, ``GetCartUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"])
@@ -49,6 +62,13 @@ class ShopCartView(ItemCatalogAPIView):
 
 
 class ShopCartItemView(ItemCatalogAPIView):
+    """Entrada HTTP para ``UpdateCartItemUseCase``.
+
+    Implementa PATCH, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"], request=UpdateCartItemSerializer)
@@ -73,6 +93,12 @@ class ShopCartItemView(ItemCatalogAPIView):
 
 
 class ShopCheckoutView(ItemCatalogAPIView):
+    """Finaliza a compra pela rotina checkout e devolve o resultado da operação.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Loja"])

@@ -12,6 +12,12 @@ from common.views import InjectedAPIView
 
 
 class MercadoPagoWebhookView(InjectedAPIView):
+    """Entrada HTTP para ``MercadoPagoGateway``, ``ApplyGatewayPaymentUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -41,6 +47,12 @@ class MercadoPagoWebhookView(InjectedAPIView):
 
 
 class StripeWebhookView(InjectedAPIView):
+    """Entrada HTTP para ``ApplyGatewayPaymentUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

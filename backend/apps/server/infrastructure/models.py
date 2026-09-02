@@ -7,6 +7,13 @@ from common.models import BaseModel
 
 
 class ManagedLineageAccount(BaseModel):
+    """Referência local de uma conta Lineage vinculada, incluindo a indicação de conta principal.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lineage_accounts")
     login = models.CharField(max_length=45, db_index=True)
     is_primary = models.BooleanField(default=False)
@@ -21,6 +28,13 @@ class ManagedLineageAccount(BaseModel):
 
 
 class AccountLinkSlot(BaseModel):
+    """Capacidade adicional de vínculos de contas adquirida pelo usuário.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="link_slots")
     extra_slots = models.PositiveIntegerField(default=0)
 
@@ -30,6 +44,11 @@ class AccountLinkSlot(BaseModel):
 
 
 class ServicePrice(BaseModel):
+    """Preço e ativação de um serviço de personagem identificado por código. Herda BaseModel: use
+    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
+    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     code = models.CharField(max_length=40, unique=True)
     name = models.CharField(max_length=80)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -44,6 +63,12 @@ class ServicePrice(BaseModel):
 
 
 class IndexConfig(BaseModel):
+    """Configuração de apresentação do servidor e do painel selecionada pelos serviços de
+    configuração. Herda BaseModel: use ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos.
+    Use os serviços de aplicação para operações de negócio, mantendo neste modelo as regras de
+    persistência e os relacionamentos.
+    """
+
     public_id = models.UUIDField(default=uuid4, editable=False, unique=True)
     slogan = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)

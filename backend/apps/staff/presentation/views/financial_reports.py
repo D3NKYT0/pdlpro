@@ -18,6 +18,13 @@ from common.views import InjectedAPIView
 
 
 class FinancialReportView(InjectedAPIView):
+    """Entrada HTTP para ``GetFinancialReportUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
     report = "balances"
     filters_class = BalanceFiltersSerializer
@@ -42,21 +49,49 @@ class FinancialReportView(InjectedAPIView):
 
 @extend_schema(tags=["Staff / Financeiro"], parameters=[BalanceFiltersSerializer], responses=BalanceReportSerializer)
 class BalanceReportView(FinancialReportView):
+    """Expõe o relatório de saldos usando os filtros e a paginação da base financeira.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Usa as permissões herdadas da base ou definidas nos padrões do
+    DRF.
+    """
+
     pass
 
 
 @extend_schema(tags=["Staff / Financeiro"], parameters=[BalanceFiltersSerializer], responses=BalanceReportSerializer)
 class ReconciliationReportView(FinancialReportView):
+    """Especializa a consulta financeira para conciliação de saldos e movimentações.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Usa as permissões herdadas da base ou definidas nos padrões do
+    DRF.
+    """
+
     report = "reconciliation"
 
 
 @extend_schema(tags=["Staff / Financeiro"], parameters=[CashFlowFiltersSerializer], responses=CashFlowReportSerializer)
 class CashFlowReportView(FinancialReportView):
+    """Especializa a consulta financeira para o relatório de fluxo de caixa.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Usa as permissões herdadas da base ou definidas nos padrões do
+    DRF.
+    """
+
     report = "cash-flow"
     filters_class = CashFlowFiltersSerializer
 
 
 @extend_schema(tags=["Staff / Financeiro"], parameters=[PaymentFiltersSerializer], responses=PaymentReportSerializer)
 class PaymentReportView(FinancialReportView):
+    """Especializa a consulta financeira para o relatório de pagamentos.
+
+    Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
+    comportamento da view base. Usa as permissões herdadas da base ou definidas nos padrões do
+    DRF.
+    """
+
     report = "payments"
     filters_class = PaymentFiltersSerializer

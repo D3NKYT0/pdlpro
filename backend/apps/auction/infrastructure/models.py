@@ -5,7 +5,20 @@ from common.models import BaseModel
 
 
 class Auction(BaseModel):
+    """Oferta de itens em leilão com prazo, maior lance e estado de encerramento.
+
+    Relaciona os registros por ``seller``, ``highest_bidder``. Herda BaseModel: use ``id``
+    (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
+    de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     class Status(models.TextChoices):
+        """Valores aceitos para Status em Auction.
+
+        Use as constantes desta enumeração ao atribuir o campo; o primeiro valor de cada opção é
+        persistido e o rótulo é usado na apresentação.
+        """
+
         OPEN = "open", "Aberto"
         FINISHED = "finished", "Finalizado"
         CANCELLED = "cancelled", "Cancelado"
@@ -35,6 +48,13 @@ class Auction(BaseModel):
 
 
 class Bid(BaseModel):
+    """Lance de um participante com o personagem escolhido para receber os itens.
+
+    Relaciona os registros por ``auction``, ``bidder``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     bidder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="auction_bids")
     amount = models.DecimalField(max_digits=12, decimal_places=2)

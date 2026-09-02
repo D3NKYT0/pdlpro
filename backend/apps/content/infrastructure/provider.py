@@ -15,6 +15,13 @@ from common.di.provider import AppProvider
 
 
 class ContentProvider(AppProvider):
+    """Registra portas, adaptadores e casos de uso do módulo content.
+
+    O AppConfig inclui este provider no catálogo de DependencyInjection. Acrescente novos
+    registros em ``register`` e escolha o lifetime conforme o estado mantido pelo serviço; views
+    resolvem essas classes pelo container.
+    """
+
     def register(self, container: Container) -> None:
         for use_case in (
             ListNewsUseCase,

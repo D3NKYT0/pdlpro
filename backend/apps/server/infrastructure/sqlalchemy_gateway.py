@@ -33,7 +33,16 @@ UNSTUCK = (83400, 147940, -3404)
 
 
 class SqlAlchemyLineageGateway(ILineageGateway):
-    """Executa as queries do catálogo. O SQL mora nos .sql do dialeto, não aqui."""
+    """Implementa ILineageGateway usando o catálogo SQL do dialeto selecionado.
+
+    Recebe LineageQueryCatalog no construtor; cria o engine MySQL sob demanda com as
+    configurações LINEAGE_DB_*. O SQL fica nos arquivos do catálogo e os valores são passados
+    como parâmetros. As transações são independentes do ORM Django; um UnitOfWork do painel não
+    desfaz estas gravações.
+
+    O câmbio usa recibos duráveis no banco do jogo e exige tabelas InnoDB. Obtenha a porta pelo
+    ServerProvider para respeitar LINEAGE_DB_ENABLED.
+    """
 
     def __init__(
         self,

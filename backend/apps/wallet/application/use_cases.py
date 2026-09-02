@@ -12,10 +12,23 @@ from common.architecture.base import UnitOfWork, UseCase
 
 @dataclass(frozen=True, slots=True)
 class GetWalletInput:
+    """Dados de entrada de ``GetWalletUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class GetWalletUseCase(UseCase[GetWalletInput, WalletEntity]):
+    """Obtém a carteira do usuário e cria uma carteira vazia se ainda não existir.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetWalletInput``. O retorno é
+    ``WalletEntity``.
+    """
+
     def __init__(self, wallets: IWalletRepository) -> None:
         self._wallets = wallets
 
@@ -25,6 +38,14 @@ class GetWalletUseCase(UseCase[GetWalletInput, WalletEntity]):
 
 @dataclass(frozen=True, slots=True)
 class TransferToPlayerInput:
+    """Dados de entrada de ``TransferToPlayerUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada. Use Decimal para valores monetários, evitando conversão intermediária
+    por float.
+    """
+
     sender_id: UUID
     recipient_username: str
     amount: Decimal
@@ -32,6 +53,14 @@ class TransferToPlayerInput:
 
 
 class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
+    """Transfere saldo principal para outro usuário e devolve a carteira do remetente atualizada.
+    Exige valor positivo, destinatário existente, distinto do remetente, e saldo suficiente;
+    débito, crédito e extratos ficam no mesmo UnitOfWork.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``TransferToPlayerInput``. O
+    retorno é ``WalletEntity``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work
@@ -72,10 +101,23 @@ class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
 
 @dataclass(frozen=True, slots=True)
 class PreviewPurchaseBonusInput:
+    """Dados de entrada de ``PreviewPurchaseBonusUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Use Decimal para valores monetários,
+    evitando conversão intermediária por float.
+    """
+
     amount: Decimal
 
 
 class PreviewPurchaseBonusUseCase(UseCase[PreviewPurchaseBonusInput, BonusPreview]):
+    """Calcula o bônus para uma quantidade positiva de moedas, sem movimentar saldo.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PreviewPurchaseBonusInput``. O
+    retorno é ``BonusPreview``.
+    """
+
     def __init__(self, bonus_policy: IPurchaseBonusPolicy) -> None:
         self._bonus_policy = bonus_policy
 

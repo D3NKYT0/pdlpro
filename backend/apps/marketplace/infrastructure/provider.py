@@ -13,6 +13,13 @@ from common.di.provider import AppProvider
 
 
 class MarketplaceProvider(AppProvider):
+    """Registra portas, adaptadores e casos de uso do módulo marketplace.
+
+    O AppConfig inclui este provider no catálogo de DependencyInjection. Acrescente novos
+    registros em ``register`` e escolha o lifetime conforme o estado mantido pelo serviço; views
+    resolvem essas classes pelo container.
+    """
+
     def register(self, container: Container) -> None:
         container.register(ICharacterListingRepository, DjangoCharacterListingRepository, lifetime=Lifetime.SCOPED)
         for use_case in (

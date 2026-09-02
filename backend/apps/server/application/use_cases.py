@@ -33,10 +33,22 @@ PUBLIC_LINEAGE_QUERIES = frozenset(
 
 @dataclass(frozen=True, slots=True)
 class GetServerStatusInput:
+    """Dados de entrada de ``GetServerStatusUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     pass
 
 
 class GetServerInfoUseCase(UseCase[None, ServerInfo]):
+    """Monta as informações públicas do servidor a partir da configuração do painel.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``ServerInfo``.
+    """
+
     def execute(self, data: None = None) -> ServerInfo:
         module = str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or "")
         chronicle = str(getattr(settings, "SERVER_CHRONICLE", "") or "").strip()
@@ -92,6 +104,12 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
 
 
 class GetServerStatusUseCase(UseCase[GetServerStatusInput, ServerStatus]):
+    """Consulta disponibilidade e quantidade de jogadores pelo gateway do Lineage.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetServerStatusInput``. O
+    retorno é ``ServerStatus``.
+    """
+
     def __init__(self, lineage: ILineageGateway) -> None:
         self._lineage = lineage
 
@@ -101,11 +119,23 @@ class GetServerStatusUseCase(UseCase[GetServerStatusInput, ServerStatus]):
 
 @dataclass(frozen=True, slots=True)
 class GetRankingInput:
+    """Dados de entrada de ``GetRankingUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     kind: str
     limit: int = 10
 
 
 class GetRankingUseCase(UseCase[GetRankingInput, list[RankingEntry]]):
+    """Seleciona o ranking solicitado e consulta suas posições pelo gateway.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetRankingInput``. O retorno é
+    ``list[RankingEntry]``.
+    """
+
     def __init__(self, lineage: ILineageGateway) -> None:
         self._lineage = lineage
 
@@ -128,11 +158,24 @@ class GetRankingUseCase(UseCase[GetRankingInput, list[RankingEntry]]):
 
 @dataclass(frozen=True, slots=True)
 class RunPublicLineageQueryInput:
+    """Dados de entrada de ``RunPublicLineageQueryUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria.
+    """
+
     name: str
     params: dict | None = None
 
 
 class RunPublicLineageQueryUseCase(UseCase[RunPublicLineageQueryInput, list[dict]]):
+    """Executa uma consulta pública permitida por nome e parâmetros; não recebe SQL arbitrário do
+    cliente.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``RunPublicLineageQueryInput``. O
+    retorno é ``list[dict]``.
+    """
+
     def __init__(self, lineage: ILineageGateway) -> None:
         self._lineage = lineage
 

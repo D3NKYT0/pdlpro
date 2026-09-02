@@ -21,6 +21,13 @@ def _active(code: str) -> GameConfig:
 
 @dataclass(frozen=True, slots=True)
 class PlayDiceInput:
+    """Dados de entrada de ``PlayDiceUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     bet_type: str
     amount: int
@@ -28,6 +35,12 @@ class PlayDiceInput:
 
 
 class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
+    """Valida a aposta, sorteia o dado e atualiza fichas e histórico conforme o resultado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``PlayDiceInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -82,10 +95,23 @@ class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class SpinSlotsInput:
+    """Dados de entrada de ``SpinSlotsUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class SpinSlotsUseCase(UseCase[SpinSlotsInput, dict]):
+    """Cobra fichas, sorteia os símbolos e registra o resultado e o eventual pagamento da rodada.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``SpinSlotsInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -114,6 +140,11 @@ class SpinSlotsUseCase(UseCase[SpinSlotsInput, dict]):
 
 
 class GetMinigamesStateUseCase(UseCase[UUID, dict]):
+    """Retorna fichas e configurações públicas dos jogos de dados e slots.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 

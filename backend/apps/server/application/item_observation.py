@@ -15,6 +15,11 @@ from apps.server.infrastructure.lineage.item_catalog import item_display_name
 
 
 class ObservationUnavailable(Exception):
+    """Sinaliza que a captura de itens não está disponível na integração atual.
+
+    A apresentação deve traduzir essa condição para a resposta do recurso.
+    """
+
     pass
 
 

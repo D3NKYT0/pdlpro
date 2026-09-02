@@ -6,6 +6,15 @@ from common.validators import validate_ascii_username
 
 
 class UserPublicSerializer(serializers.Serializer):
+    """Contrato de dados de ``UserPublicSerializer`` na API de accounts.
+
+    Campos declarados: ``id``, ``username``, ``display_name``, ``role``, ``is_email_verified``,
+    ``fichas``, ``avatar_url``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     id = serializers.UUIDField()
     username = serializers.CharField()
     display_name = serializers.CharField()
@@ -16,6 +25,16 @@ class UserPublicSerializer(serializers.Serializer):
 
 
 class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
+    """Contrato de dados de ``UserSerializer`` na API de accounts.
+
+    Campos declarados: ``id``, ``username``, ``email``, ``display_name``, ``role``,
+    ``is_email_verified``, ``fichas``, ``is_2fa_enabled``, ``is_staff``, ``is_superuser``,
+    ``is_staff_member``, ``avatar``, ``bio``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     id = serializers.UUIDField(read_only=True)
     username = serializers.CharField(read_only=True)
     email = serializers.EmailField(read_only=True)
@@ -57,6 +76,15 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
 
 
 class RegisterSerializer(serializers.Serializer):
+    """Contrato de dados de ``RegisterSerializer`` na API de accounts.
+
+    Campos declarados: ``username``, ``email``, ``password``, ``display_name``,
+    ``accept_terms``, ``hcaptcha_token``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     username = serializers.CharField(max_length=16, validators=[validate_ascii_username])
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=8)
@@ -66,18 +94,42 @@ class RegisterSerializer(serializers.Serializer):
 
 
 class LoginSerializer(serializers.Serializer):
+    """Contrato de dados de ``LoginSerializer`` na API de accounts.
+
+    Campos declarados: ``login``, ``password``, ``hcaptcha_token``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     login = serializers.CharField()
     password = serializers.CharField(write_only=True)
     hcaptcha_token = serializers.CharField(required=False, allow_blank=True, write_only=True)
 
 
 class UpdateProfileSerializer(serializers.Serializer):
+    """Contrato de dados de ``UpdateProfileSerializer`` na API de accounts.
+
+    Campos declarados: ``display_name``, ``bio``, ``avatar``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
     avatar = serializers.ImageField(required=False)
 
 
 class PasskeyCredentialSerializer(serializers.ModelSerializer):
+    """Contrato DRF de ``WebAuthnCredential`` no módulo accounts.
+
+    Campos declarados: ``id``, ``nickname``, ``created_at``, ``last_used_at``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     class Meta:
         from apps.accounts.infrastructure.models import WebAuthnCredential
 
@@ -87,22 +139,54 @@ class PasskeyCredentialSerializer(serializers.ModelSerializer):
 
 
 class PasskeyBeginSerializer(serializers.Serializer):
+    """Contrato de dados de ``PasskeyBeginSerializer`` na API de accounts.
+
+    Campos declarados: ``login``, ``nickname``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     login = serializers.CharField(required=False, allow_blank=True)
     nickname = serializers.CharField(required=False, allow_blank=True, max_length=64)
 
 
 class PasskeyCompleteSerializer(serializers.Serializer):
+    """Contrato de dados de ``PasskeyCompleteSerializer`` na API de accounts.
+
+    Campos declarados: ``state``, ``credential``, ``nickname``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     state = serializers.CharField(max_length=128)
     credential = serializers.JSONField()
     nickname = serializers.CharField(required=False, allow_blank=True, max_length=64)
 
 
 class OAuthBeginSerializer(serializers.Serializer):
+    """Contrato de dados de ``OAuthBeginSerializer`` na API de accounts.
+
+    Campos declarados: ``provider``, ``mode``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     provider = serializers.ChoiceField(choices=["google", "discord"])
     mode = serializers.ChoiceField(choices=["login", "link"], default="login")
 
 
 class OAuthCompleteSerializer(serializers.Serializer):
+    """Contrato de dados de ``OAuthCompleteSerializer`` na API de accounts.
+
+    Campos declarados: ``provider``, ``code``, ``state``.
+
+    Na entrada, chame ``is_valid(raise_exception=True)`` antes de ler validated_data; na saída,
+    leia data. Respeite os campos read_only/write_only.
+    """
+
     provider = serializers.ChoiceField(choices=["google", "discord"])
     code = serializers.CharField()
     state = serializers.CharField()

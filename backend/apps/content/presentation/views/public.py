@@ -22,6 +22,12 @@ from common.views import InjectedAPIView
 
 
 class NewsListView(InjectedAPIView):
+    """Entrada HTTP para ``ListNewsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -37,6 +43,12 @@ class NewsListView(InjectedAPIView):
 
 
 class NewsDetailView(InjectedAPIView):
+    """Entrada HTTP para ``GetNewsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -49,6 +61,12 @@ class NewsDetailView(InjectedAPIView):
 
 
 class FaqListView(InjectedAPIView):
+    """Entrada HTTP para ``ListFaqUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -58,6 +76,12 @@ class FaqListView(InjectedAPIView):
 
 
 class DownloadListView(InjectedAPIView):
+    """Entrada HTTP para ``ListDownloadsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -73,6 +97,12 @@ def dump_wiki(item) -> dict:
 
 
 class WikiListView(InjectedAPIView):
+    """Entrada HTTP para ``SearchWikiUseCase``, ``ListWikiPagesUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -87,6 +117,12 @@ class WikiListView(InjectedAPIView):
 
 
 class WikiDetailView(InjectedAPIView):
+    """Entrada HTTP para ``GetWikiPageUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -96,6 +132,12 @@ class WikiDetailView(InjectedAPIView):
 
 
 class CalendarEventListView(InjectedAPIView):
+    """Entrada HTTP para ``ListCalendarEventsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -105,6 +147,12 @@ class CalendarEventListView(InjectedAPIView):
 
 
 class LegalListView(InjectedAPIView):
+    """Entrada HTTP para ``ListLegalDocumentsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -114,6 +162,12 @@ class LegalListView(InjectedAPIView):
 
 
 class LegalDetailView(InjectedAPIView):
+    """Entrada HTTP para ``GetLegalDocumentUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

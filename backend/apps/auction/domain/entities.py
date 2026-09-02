@@ -8,6 +8,12 @@ from uuid import UUID
 
 @dataclass(frozen=True, slots=True)
 class AuctionEntity:
+    """Estado de um leilão, incluindo vendedor, item, prazo e maior lance.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     seller_id: UUID
     seller_username: str
@@ -28,6 +34,12 @@ class AuctionEntity:
 
 @dataclass(frozen=True, slots=True)
 class BidEntity:
+    """Oferta registrada em um leilão com participante, valor e personagem de destino.
+
+    É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
+    abaixo ao montar ou consumir o resultado.
+    """
+
     id: UUID
     auction_id: UUID
     bidder_id: UUID

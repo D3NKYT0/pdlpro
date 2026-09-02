@@ -16,12 +16,17 @@ T = TypeVar("T")
 
 
 class Container:
-    """
-    Container de injeção de dependência com constructor injection.
+    """Resolve serviços por tipos anotados no construtor ou na factory.
 
-    - SINGLETON: uma instância por processo (vive no container raiz)
-    - SCOPED: uma instância por request (vive no container filho)
-    - TRANSIENT: nova instância a cada resolve
+    Registre portas com ``register(Porta, Adaptador)`` e classes concretas com
+    ``register_self(CasoDeUso)`` antes de chamar ``resolve(Tipo)``. Parâmetros com valor padrão
+    são deixados para o construtor; os obrigatórios precisam de anotações de tipo resolvíveis e
+    de registro, mesmo sendo concretos.
+
+    SINGLETON reutiliza a instância no container raiz; SCOPED reutiliza no container em que se
+    resolve; TRANSIENT cria a cada chamada. Abra escopos com ``create_scope()`` para isolar
+    requisições. Não injete serviços SCOPED em singletons: essa dependência ficaria retida além
+    do seu escopo. O container não fecha conexões nem executa finalizadores automaticamente.
     """
 
     def __init__(self, parent: Container | None = None) -> None:
@@ -39,6 +44,14 @@ class Container:
         instance: T | None = None,
         lifetime: Lifetime = Lifetime.TRANSIENT,
     ) -> Container:
+        """Registra uma porta e devolve o container para encadear configurações.
+
+        Forneça implementação, factory ou instância. Uma instância explícita força SINGLETON;
+        sem alternativa, a própria interface é usada como implementação. Configure os registros
+        antes das resoluções, pois substituir um descritor não limpa instâncias já armazenadas
+        em todos os escopos.
+        """
+
         if instance is not None:
             lifetime = Lifetime.SINGLETON
             self._instances[interface] = instance
@@ -57,17 +70,34 @@ class Container:
         *,
         lifetime: Lifetime = Lifetime.TRANSIENT,
     ) -> Container:
+        """Registra uma classe concreta para resolução pelo próprio tipo."""
+
         return self.register(implementation, implementation, lifetime=lifetime)
 
     def create_scope(self) -> Container:
+        """Cria um filho que herda os registros e mantém seu cache de serviços SCOPED.
+
+        O próprio tipo Container resolve para esse filho. Criar o escopo não abre transação de
+        banco nem cria antecipadamente as dependências.
+        """
+
         child = Container(parent=self)
         child.register(Container, instance=child)
         return child
 
     def is_registered(self, interface: type) -> bool:
+        """Informa se a porta possui registro neste container ou em algum pai."""
+
         return self._find(interface) is not None
 
     def resolve(self, interface: type[T]) -> T:
+        """Obtém a instância da porta, criando e injetando dependências se necessário.
+
+        Pode lançar UnregisteredServiceError, MissingAnnotationError ou CircularDependencyError
+        quando a configuração dos construtores é inválida. O lifetime determina em qual cache a
+        instância será reutilizada.
+        """
+
         descriptor = self._find(interface)
         if descriptor is None:
             raise UnregisteredServiceError(interface)

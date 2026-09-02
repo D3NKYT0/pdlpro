@@ -10,6 +10,14 @@ from apps.payment.infrastructure.stripe_gateway import StripeGateway
 
 
 class PaymentGatewayRegistry:
+    """Seleciona adaptadores de pagamento por nome do método.
+
+    ``get(method)`` exige um adaptador cadastrado e disponível; caso contrário, lança
+    PaymentMethodUnavailableError. ``available_methods(configured)`` filtra a lista configurada
+    e expõe somente metadados públicos. A política de métodos habilitados é aplicada pelos casos
+    de uso antes da seleção.
+    """
+
     def __init__(
         self,
         mock: MockPaymentGateway,
@@ -23,6 +31,8 @@ class PaymentGatewayRegistry:
         }
 
     def get(self, method: str) -> IPaymentGateway:
+        """Retorna o gateway disponível ou lança PaymentMethodUnavailableError."""
+
         gateway = self._gateways.get(method)
         if gateway is None:
             raise PaymentMethodUnavailableError(f"Método '{method}' não está habilitado.")
@@ -31,6 +41,8 @@ class PaymentGatewayRegistry:
         return gateway
 
     def available_methods(self, configured: list[str]) -> list[dict]:
+        """Filtra métodos configurados e retorna chaves públicas, moedas e opções de UI."""
+
         methods = []
         for name in configured:
             gateway = self._gateways.get(name)

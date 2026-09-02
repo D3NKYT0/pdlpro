@@ -30,6 +30,12 @@ def _monster_alive(monster: Monster) -> bool:
 
 
 class GetEconomyStateUseCase(UseCase[UUID, dict]):
+    """Monta fichas, arma e monstros com disponibilidade de combate; cria a arma inicial se
+    necessário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -61,11 +67,25 @@ class GetEconomyStateUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class FightMonsterInput:
+    """Dados de entrada de ``FightMonsterUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     monster_id: UUID
 
 
 class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
+    """Consome fichas para enfrentar um monstro disponível e registra combate, fragmentos, XP e
+    progresso resultantes.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``FightMonsterInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 
@@ -119,10 +139,24 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class EnchantWeaponInput:
+    """Dados de entrada de ``EnchantWeaponUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class EnchantWeaponUseCase(UseCase[EnchantWeaponInput, dict]):
+    """Consome fragmentos para tentar evoluir a arma e aplica o resultado do sorteio e eventuais
+    recompensas.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``EnchantWeaponInput``. O retorno
+    é ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 

@@ -28,6 +28,12 @@ def _config() -> GameConfig:
 
 
 class GetFishingStateUseCase(UseCase[UUID, dict]):
+    """Retorna configuração, vara, peixes ativos e capturas recentes; cria a vara inicial se
+    necessário.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -68,11 +74,25 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class CastLineInput:
+    """Dados de entrada de ``CastLineUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     bait_id: UUID | None = None
 
 
 class CastLineUseCase(UseCase[CastLineInput, dict]):
+    """Consome fichas e eventual isca, sorteia a captura, atualiza a vara e registra prêmios e
+    progresso.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CastLineInput``. O retorno é
+    ``dict``.
+    """
+
     def __init__(self, unit_of_work: UnitOfWork) -> None:
         self._unit_of_work = unit_of_work
 

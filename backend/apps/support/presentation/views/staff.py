@@ -18,6 +18,12 @@ User = get_user_model()
 
 
 class StaffTicketListView(APIView):
+    """Lista chamados para a equipe com filtros e indicadores de atendimento.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     @extend_schema(tags=["Staff - Atendimento"])
@@ -51,6 +57,12 @@ class StaffTicketListView(APIView):
 
 
 class StaffTicketDetailView(APIView):
+    """Permite à equipe responder, atribuir responsáveis e atualizar o estado de um chamado.
+
+    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember].
+    """
+
     permission_classes = [IsAuthenticated, IsStaffMember]
 
     def get_ticket(self, ticket_id):

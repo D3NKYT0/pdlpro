@@ -39,6 +39,12 @@ def _current_level(progress: UserBattlePassProgress) -> int:
 
 
 class GetBattlePassUseCase(UseCase[UUID, dict]):
+    """Monta a temporada ativa, o progresso e os níveis do passe; pode criar o progresso inicial do
+    jogador.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
+    """
+
     def execute(self, data: UUID) -> dict:
         from django.contrib.auth import get_user_model
 
@@ -96,11 +102,25 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
 
 @dataclass(frozen=True, slots=True)
 class ClaimBattlePassRewardInput:
+    """Dados de entrada de ``ClaimBattlePassRewardUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
     reward_id: UUID
 
 
 class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
+    """Valida temporada, nível, acesso premium e resgate anterior, entrega o item na bag e registra
+    o prêmio.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ClaimBattlePassRewardInput``. O
+    retorno é ``dict``.
+    """
+
     @transaction.atomic
     def execute(self, data: ClaimBattlePassRewardInput) -> dict:
         from django.contrib.auth import get_user_model
@@ -163,10 +183,24 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class BuyBattlePassPremiumInput:
+    """Dados de entrada de ``BuyBattlePassPremiumUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
     user_id: UUID
 
 
 class BuyBattlePassPremiumUseCase(UseCase[BuyBattlePassPremiumInput, dict]):
+    """Debita a carteira e habilita o passe premium da temporada ativa, aplicando o resgate
+    automático quando previsto.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``BuyBattlePassPremiumInput``. O
+    retorno é ``dict``.
+    """
+
     def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
         self._wallets = wallets
         self._unit_of_work = unit_of_work

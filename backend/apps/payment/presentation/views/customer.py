@@ -44,6 +44,12 @@ def dump_order(order: PaymentOrderEntity) -> dict:
 
 
 class PaymentCatalogView(InjectedAPIView):
+    """Entrada HTTP para ``GetPaymentCatalogUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])
@@ -53,6 +59,13 @@ class PaymentCatalogView(InjectedAPIView):
 
 
 class PaymentOrderListView(InjectedAPIView):
+    """Entrada HTTP para ``ListPaymentOrdersUseCase``, ``CreatePaymentOrderUseCase``.
+
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
+    resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])
@@ -78,6 +91,12 @@ class PaymentOrderListView(InjectedAPIView):
 
 
 class PreviewPaymentBonusView(InjectedAPIView):
+    """Entrada HTTP para ``PreviewPaymentBonusUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"], request=PreviewBonusSerializer)
@@ -97,6 +116,12 @@ class PreviewPaymentBonusView(InjectedAPIView):
 
 
 class CancelPaymentOrderView(InjectedAPIView):
+    """Entrada HTTP para ``CancelPaymentOrderUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])
@@ -108,6 +133,12 @@ class CancelPaymentOrderView(InjectedAPIView):
 
 
 class ConfirmPaymentOrderView(InjectedAPIView):
+    """Entrada HTTP para ``ConfirmPaymentUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])
@@ -119,6 +150,12 @@ class ConfirmPaymentOrderView(InjectedAPIView):
 
 
 class ProcessPaymentOrderView(InjectedAPIView):
+    """Entrada HTTP para ``ProcessPaymentUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])
@@ -144,6 +181,12 @@ class ProcessPaymentOrderView(InjectedAPIView):
 
 
 class PaymentOrderStatusView(InjectedAPIView):
+    """Entrada HTTP para ``GetPaymentStatusUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
     permission_classes = [IsAuthenticated]
 
     @extend_schema(tags=["Pagamento"])

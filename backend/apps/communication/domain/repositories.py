@@ -7,6 +7,13 @@ from apps.communication.domain.entities import NotificationEntity
 
 
 class INotificationRepository(ABC):
+    """Porta de notificações por usuário e marcação de leitura.
+
+    Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
+    assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
+    ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    """
+
     @abstractmethod
     def list_for_user(self, user_id: UUID) -> list[NotificationEntity]:
         raise NotImplementedError

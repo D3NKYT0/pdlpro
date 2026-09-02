@@ -7,6 +7,12 @@ from apps.server.infrastructure.lineage.item_catalog import DEFAULT_ITEM_ICON, g
 
 
 class ItemCatalogView(APIView):
+    """Expõe os metadados dos itens disponíveis no catálogo composto.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny].
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

@@ -5,6 +5,13 @@ from common.models import BaseModel
 
 
 class GameExchange(BaseModel):
+    """Registro de câmbio entre painel e jogo, identificado por chave de requisição para retomada.
+
+    Relaciona os registros por ``user``. Herda BaseModel: use ``id`` (UUID) nas APIs;
+    ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de negócio,
+    mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     request_key = models.UUIDField()
     direction = models.CharField(

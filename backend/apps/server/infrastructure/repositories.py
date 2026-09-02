@@ -10,6 +10,14 @@ from apps.server.infrastructure.models import AccountLinkSlot, ServicePrice
 
 
 class DjangoServicePriceRepository(IServicePriceRepository):
+    """Adaptador Django de ``IServicePriceRepository`` para preços e disponibilidade dos serviços
+    de personagem.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def get_price(self, code: str) -> Decimal:
         row = ServicePrice.objects.filter(code=code, active=True).first()
         if row is None:
@@ -19,6 +27,14 @@ class DjangoServicePriceRepository(IServicePriceRepository):
 
 
 class DjangoLinkSlotRepository(ILinkSlotRepository):
+    """Adaptador Django de ``ILinkSlotRepository`` para limites adicionais para vincular contas
+    Lineage.
+
+    Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
+    combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
+    UnitOfWork.
+    """
+
     def extra_slots(self, user_id: UUID) -> int:
         total = AccountLinkSlot.objects.filter(user__id=user_id).aggregate(total=Sum("extra_slots"))["total"]
         return int(total or 0)
