@@ -1,6 +1,6 @@
 # Como contribuir
 
-Obrigado pelo interesse no PDL PRO. Este é um projeto de licença proprietária; contribuições externas precisam ser combinadas com o mantenedor antes do início do trabalho.
+Obrigado pelo interesse no PDL PRO. Este é um projeto de código publicamente disponível sob uma [licença source-available](LICENSE): o uso é permitido, mas a comercialização do PDL por terceiros é proibida. Contribuições externas precisam ser combinadas com o mantenedor antes do início do trabalho.
 
 ## Antes de começar
 

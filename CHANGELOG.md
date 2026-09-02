@@ -14,7 +14,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   e totais de pagamentos separados por BRL/USD.
 - Documentação de desenvolvimento, configuração, API e implantação.
 - Guias de contribuição e segurança.
-- Licença proprietária explícita.
+- Licença source-available explícita, permitindo acesso, estudo, modificação para
+  uso próprio e redistribuição gratuita, com comercialização por terceiros
+  proibida.
 
 ### Removido
 

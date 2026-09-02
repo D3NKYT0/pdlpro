@@ -1,23 +1,98 @@
-PDL PRO PROPRIETARY LICENSE
+LICENÇA PDL SOURCE-AVAILABLE — USO PERMITIDO, COMERCIALIZAÇÃO PROIBIDA
+Versão 1.0
 
-Copyright (c) 2026 Daniel Amaral. All rights reserved.
+Copyright (c) 2026 Daniel Amaral. Todos os direitos reservados, exceto os
+expressamente concedidos por esta licença.
 
-This software and its source code are proprietary. No permission is granted to
-use, copy, modify, merge, publish, distribute, sublicense, sell, or create
-derivative works from this software, in whole or in part, without prior written
-authorization from the copyright holder.
+1. DEFINIÇÕES
 
-Access to or possession of the source code does not constitute a license or a
-transfer of any intellectual property rights.
+"Software" significa o PDL PRO, incluindo seu código-fonte, código compilado,
+documentação e arquivos distribuídos neste repositório.
 
-Third-party libraries and other components included with or used by this
-software remain subject to their respective licenses.
+"Titular" significa Daniel Amaral, detentor dos direitos autorais do Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING
-FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+"Comercializar o Software" significa vender, revender, alugar, sublicenciar,
+cobrar pelo acesso, incluir em produto ou pacote pago, ou oferecer o próprio
+Software ou suas funcionalidades principais como serviço pago a terceiros.
 
-For licensing inquiries, contact the copyright holder before using the
-software outside an expressly authorized environment.
+2. PERMISSÕES
+
+Sujeito ao cumprimento desta licença, qualquer pessoa pode:
+
+a) acessar, baixar, estudar e copiar o Software;
+b) instalar, executar e usar o Software em servidor próprio ou administrado
+   por ela;
+c) modificar o Software para uso próprio; e
+d) redistribuir gratuitamente o Software, original ou modificado, desde que:
+   i.   esta licença e os avisos de autoria sejam mantidos integralmente;
+   ii.  o código-fonte correspondente seja disponibilizado junto da cópia;
+   iii. as modificações sejam identificadas de forma clara; e
+   iv.  nenhum valor, vantagem econômica ou contraprestação seja exigido em
+       troca da cópia, do acesso ou da distribuição.
+
+As permissões são não exclusivas, mundiais, revogáveis nos casos previstos
+nesta licença e não transferem a titularidade do Software.
+
+3. COMERCIALIZAÇÃO PROIBIDA
+
+Sem autorização prévia e expressa do Titular, é proibido:
+
+a) vender ou revender o Software, modificado ou não;
+b) cobrar pelo download, pela cópia, pela licença ou pelo acesso ao código;
+c) incluir o Software em pack, painel, produto, assinatura ou serviço pago;
+d) oferecer hospedagem, SaaS ou acesso gerenciado quando o produto oferecido
+   for o próprio PDL ou suas funcionalidades principais;
+e) sublicenciar ou conceder a terceiros direitos comerciais sobre o Software;
+f) remover ou ocultar avisos de autoria, copyright ou licença; ou
+g) apresentar o Software, no todo ou em parte substancial, como criação de
+   outra pessoa ou projeto.
+
+Prestação de suporte, instalação, customização ou desenvolvimento envolvendo o
+Software mediante pagamento exige autorização prévia e expressa do Titular.
+
+4. USO EM SERVIDORES DE LINEAGE 2
+
+É permitido usar o Software para operar e administrar um servidor de Lineage 2.
+Receber doações ou pagamentos relacionados ao jogo ou à operação desse servidor
+não caracteriza, por si só, comercialização do PDL, desde que a cobrança não
+seja feita pela cópia, licença, acesso, hospedagem, suporte ou funcionalidades do
+próprio Software.
+
+5. MODIFICAÇÕES E CONTRIBUIÇÕES
+
+Modificações realizadas para uso próprio permanecem permitidas nos termos desta
+licença. A distribuição de modificações deve observar a alínea 2(d).
+
+Contribuições enviadas ao repositório poderão ser incorporadas e distribuídas
+como parte do Software sob esta mesma licença. O contribuidor declara possuir os
+direitos necessários sobre o material enviado.
+
+6. COMPONENTES DE TERCEIROS
+
+Bibliotecas, fontes, imagens e outros componentes de terceiros permanecem
+sujeitos às respectivas licenças. Esta licença não amplia, reduz ou substitui os
+direitos concedidos pelos titulares desses componentes.
+
+7. TÉRMINO
+
+Os direitos concedidos por esta licença terminam automaticamente em caso de
+violação. Se a violação for sanada integralmente em até 30 dias após sua
+identificação, os direitos serão restabelecidos uma única vez. Violações
+posteriores exigem autorização expressa do Titular para restabelecimento.
+
+8. AUSÊNCIA DE GARANTIA
+
+O SOFTWARE É FORNECIDO "NO ESTADO EM QUE SE ENCONTRA", SEM GARANTIAS DE QUALQUER
+NATUREZA, EXPRESSAS OU IMPLÍCITAS, INCLUINDO, SEM LIMITAÇÃO, GARANTIAS DE
+COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO VIOLAÇÃO. NA MÁXIMA
+EXTENSÃO PERMITIDA PELA LEI, O TITULAR NÃO SERÁ RESPONSÁVEL POR REIVINDICAÇÕES,
+DANOS, PERDAS OU OUTRAS RESPONSABILIDADES DECORRENTES DO SOFTWARE OU DE SEU USO.
+
+9. AUTORIZAÇÕES ADICIONAIS
+
+Qualquer uso não permitido por esta licença, inclusive comercialização,
+depende de autorização prévia e expressa do Titular.
+
+Esta é uma licença source-available. Ela permite acesso e determinados usos do
+código-fonte, mas não é uma licença de software livre nem uma licença open
+source aprovada pela Open Source Initiative, pois restringe a comercialização.

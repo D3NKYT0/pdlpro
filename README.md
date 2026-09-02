@@ -124,4 +124,8 @@ As consultas SQL são mantidas no backend e organizadas por dialeto em `backend/
 
 Copyright © 2026 Daniel Amaral. Todos os direitos reservados.
 
-Este projeto possui [licença proprietária](LICENSE). O acesso ao código-fonte não concede permissão para copiar, modificar, distribuir ou explorar o software sem autorização expressa do titular.
+O PDL PRO tem o código publicamente disponível sob uma [licença source-available](LICENSE). Você pode baixar, estudar, instalar, modificar para uso próprio e usar o painel em seu servidor de Lineage 2.
+
+O PDL e seu código **não podem ser comercializados por terceiros**. É proibido vender ou revender o sistema, cobrar pelo código, incluí-lo em packs ou produtos pagos e oferecer o próprio PDL como serviço pago sem autorização expressa do autor. A redistribuição gratuita é permitida nas condições descritas na licença.
+
+Receber doações ou pagamentos relacionados ao jogo não caracteriza, por si só, comercialização do PDL. Consulte o arquivo [LICENSE](LICENSE) para conhecer todas as permissões e restrições.
