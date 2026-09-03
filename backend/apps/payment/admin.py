@@ -28,3 +28,15 @@ class WebhookLogAdmin(PDLModelAdmin):
     """
 
     list_display = ("kind", "data_id", "created_at")
+    list_filter = ("kind", "created_at")
+    search_fields = ("kind", "data_id")
+    readonly_fields = ("id", "kind", "data_id", "payload", "created_at", "updated_at")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

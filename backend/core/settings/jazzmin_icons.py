@@ -113,6 +113,10 @@ JAZZMIN_ICONS_PDL = {
     "communication.notification": "fas fa-bell",
     "communication.pushsubscription": "fas fa-mobile-alt",
 
+    # Staff auditing.
+    "staff": "fas fa-user-shield",
+    "staff.auditlog": "fas fa-clipboard-check",
+
     # Pacotes visuais instaláveis.
     "themes": "fas fa-palette",
     "themes.themepackage": "fas fa-palette",

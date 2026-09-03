@@ -1,8 +1,25 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import { sentryVitePlugin } from '@sentry/vite-plugin'
+
+const sentrySourceMapsEnabled = Boolean(
+  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT,
+)
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    ...(sentrySourceMapsEnabled ? [sentryVitePlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      release: process.env.VITE_SENTRY_RELEASE ? { name: process.env.VITE_SENTRY_RELEASE } : undefined,
+      sourcemaps: { filesToDeleteAfterUpload: ['./dist/**/*.map'] },
+    })] : []),
+  ],
+  build: {
+    sourcemap: sentrySourceMapsEnabled ? 'hidden' : false,
+  },
   test: {
     environment: 'node',
     include: ['src/**/*.test.{ts,tsx}'],

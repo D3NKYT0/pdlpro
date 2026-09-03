@@ -76,6 +76,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | --- | --- |
 | [Implantação](operacao/implantacao.md) | Topologias, produção, proxy, atualização e rollback |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
+| [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
 | [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, sessão, assets e integrações |
 
 ### Projeto e histórico

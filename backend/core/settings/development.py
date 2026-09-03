@@ -2,6 +2,7 @@ from .base import *  # noqa: F403
 
 DEBUG = True
 OPENAPI_DOCS_PUBLIC = True
+LOGGING = get_logging_config(env, default_app_level="DEBUG")  # noqa: F405
 
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { request, resetHttpClient } from './http'
+import { ApiError, request, resetHttpClient } from './http'
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -42,5 +42,19 @@ describe('request session recovery', () => {
     await expect(request<{ username: string }>('/shared/me/')).resolves.toEqual({ username: 'hero' })
     const urls = fetchMock.mock.calls.map(([input]) => String(input))
     expect(urls.some((url) => url.endsWith('/auth/refresh/'))).toBe(true)
+  })
+
+  it('preserves the request ID returned by an API error for support correlation', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse({
+      message: 'Falhou',
+      error_code: 'FAILED',
+      request_id: 'trace-from-api',
+    }, 400)))
+
+    const error = await request('/customer/action/', { method: 'POST' }).catch((reason) => reason)
+
+    expect(error).toBeInstanceOf(ApiError)
+    if (!(error instanceof ApiError)) throw error
+    expect(error.requestId).toBe('trace-from-api')
   })
 })

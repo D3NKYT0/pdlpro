@@ -2,12 +2,20 @@ export class ApiError extends Error {
   status: number
   errorCode: string
   details: Record<string, unknown>
+  requestId: string | null
 
-  constructor(message: string, status: number, errorCode: string, details: Record<string, unknown> = {}) {
+  constructor(
+    message: string,
+    status: number,
+    errorCode: string,
+    details: Record<string, unknown> = {},
+    requestId: string | null = null,
+  ) {
     super(message)
     this.status = status
     this.errorCode = errorCode
     this.details = details
+    this.requestId = requestId
   }
 }
 
@@ -107,6 +115,7 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
       response.status,
       payload.error_code || 'ERROR',
       payload.details || {},
+      payload.request_id || response.headers.get('X-Request-ID'),
     )
   }
 

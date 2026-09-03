@@ -15,7 +15,9 @@ timeout = 60
 keepalive = 5
 
 loglevel = "info"
-accesslog = "-"
+# HTTP access events are emitted by ObservabilityMiddleware and by the edge proxy.
+# Keeping Gunicorn's access log disabled avoids duplicate records with different schemas.
+accesslog = None
 errorlog = "-"
 
 limit_request_line = 4094

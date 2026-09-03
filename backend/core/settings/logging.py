@@ -1,45 +1,45 @@
-def get_logging_config(env):
+def get_logging_config(
+    env, *, default_format="console", default_app_level=None, default_environment="development"
+):
+    log_level = env("LOG_LEVEL", default="INFO")
+    app_log_level = env("APP_LOG_LEVEL", default=default_app_level or log_level)
+    log_format = env("LOG_FORMAT", default=default_format)
+    formatter = "json" if log_format.lower() == "json" else "console"
     return {
         "version": 1,
         "disable_existing_loggers": False,
         "formatters": {
-            "verbose": {
-                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "console": {
+                "format": "[{asctime}] {levelname} [{name}:{lineno}] request_id={request_id} {message}",
                 "style": "{",
             },
-            "simple": {
-                "format": "{levelname} {asctime} {module} {message}",
-                "style": "{",
-            },
-            "rich": {
-                "format": "[{asctime}] {levelname} [{name}:{lineno}] {message}",
-                "style": "{",
+            "json": {
+                "()": "common.observability.JsonFormatter",
+                "service": env("SERVICE_NAME", default="pdl-backend"),
+                "environment": env("LOG_ENVIRONMENT", default=default_environment),
             },
         },
+        "filters": {"request_context": {"()": "common.observability.RequestContextFilter"}},
         "handlers": {
             "console": {
                 "class": "logging.StreamHandler",
-                "formatter": "rich",
-            },
-            "django.server": {
-                "level": "INFO",
-                "class": "logging.StreamHandler",
-                "formatter": "simple",
+                "formatter": formatter,
+                "filters": ["request_context"],
             },
         },
         "root": {
             "handlers": ["console"],
-            "level": "INFO",
+            "level": log_level,
         },
         "loggers": {
             "django": {
                 "handlers": ["console"],
-                "level": env("DJANGO_LOG_LEVEL", default="INFO"),
+                "level": env("DJANGO_LOG_LEVEL", default=log_level),
                 "propagate": False,
             },
             "django.server": {
-                "handlers": ["django.server"],
-                "level": "INFO",
+                "handlers": ["console"],
+                "level": env("DJANGO_LOG_LEVEL", default=log_level),
                 "propagate": False,
             },
             "django.db.backends": {
@@ -49,17 +49,17 @@ def get_logging_config(env):
             },
             "apps": {
                 "handlers": ["console"],
-                "level": "DEBUG",
+                "level": app_log_level,
                 "propagate": False,
             },
             "celery": {
                 "handlers": ["console"],
-                "level": "INFO",
+                "level": log_level,
                 "propagate": False,
             },
             "asgi": {
                 "handlers": ["console"],
-                "level": "DEBUG",
+                "level": log_level,
                 "propagate": False,
             },
         },

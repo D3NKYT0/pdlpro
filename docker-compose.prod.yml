@@ -14,8 +14,15 @@ x-backend-app-image: &backend-app-image
     context: ./backend
   pull_policy: never
 
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
 x-backend-environment: &backend-environment
   DJANGO_SETTINGS_MODULE: core.settings.production
+  LOG_ENVIRONMENT: production
   DEBUG: "false"
   GUNICORN_RELOAD: "false"
   REDIS_URL: redis://redis:6379/0
@@ -25,6 +32,7 @@ services:
   db:
     image: postgres:18-alpine
     restart: unless-stopped
+    logging: *default-logging
     environment:
       POSTGRES_DB: ${DB_NAME:?DB_NAME is required}
       POSTGRES_USER: ${DB_USER:?DB_USER is required}
@@ -44,6 +52,7 @@ services:
     image: redis:8-alpine
     command: redis-server --appendonly yes
     restart: unless-stopped
+    logging: *default-logging
     volumes:
       - redis_data:/data
     networks:
@@ -58,10 +67,12 @@ services:
     <<: *backend-app-image
     command: gunicorn core.wsgi:application -c gunicorn.conf.py
     restart: unless-stopped
+    logging: *default-logging
     env_file:
       - ./.env
     environment:
       <<: *backend-environment
+      SERVICE_NAME: pdl-api
       RUN_MIGRATIONS: "true"
       RUN_COLLECTSTATIC: "true"
     volumes:
@@ -81,10 +92,12 @@ services:
     <<: *backend-app-image
     command: daphne -b 0.0.0.0 -p 8001 core.asgi:application
     restart: unless-stopped
+    logging: *default-logging
     env_file:
       - ./.env
     environment:
       <<: *backend-environment
+      SERVICE_NAME: pdl-asgi
       RUN_MIGRATIONS: "false"
       RUN_COLLECTSTATIC: "false"
     volumes:
@@ -101,10 +114,12 @@ services:
     <<: *backend-app-image
     command: celery -A core worker -l info
     restart: unless-stopped
+    logging: *default-logging
     env_file:
       - ./.env
     environment:
       <<: *backend-environment
+      SERVICE_NAME: pdl-celery
       RUN_MIGRATIONS: "false"
       RUN_COLLECTSTATIC: "false"
     volumes:
@@ -121,7 +136,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.production
+      args:
+        VITE_SENTRY_DSN: ${VITE_SENTRY_DSN:-}
+        VITE_SENTRY_ENVIRONMENT: ${VITE_SENTRY_ENVIRONMENT:-production}
+        VITE_SENTRY_RELEASE: ${VITE_SENTRY_RELEASE:-}
+        VITE_SENTRY_TRACES_SAMPLE_RATE: ${VITE_SENTRY_TRACES_SAMPLE_RATE:-0.05}
     restart: unless-stopped
+    logging: *default-logging
     ports:
       - "${APP_BIND_ADDRESS:-0.0.0.0}:${APP_HTTP_PORT:-8080}:80"
     volumes:

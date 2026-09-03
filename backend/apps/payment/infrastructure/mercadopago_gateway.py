@@ -82,7 +82,15 @@ class MercadoPagoGateway(IPaymentGateway):
         sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
         response = sdk.payment().create(payment_data, RequestOptions(custom_headers={"x-idempotency-key": str(uuid.uuid4())}))
         if response.get("status", 500) >= 400:
-            logger.error("Mercado Pago recusou o pagamento %s: %s", order.id, response.get("response"))
+            logger.error(
+                "Mercado Pago recusou o pagamento",
+                extra={
+                    "event": "payment.gateway_rejected",
+                    "payment_order_id": str(order.id),
+                    "provider": "mercadopago",
+                    "provider_status": response.get("status"),
+                },
+            )
             message = self._error_message(response.get("response") or {})
             raise PaymentGatewayError(message)
         mp_payment = response.get("response") or {}
