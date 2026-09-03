@@ -10,7 +10,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | --- | --- |
 | Conhecer e experimentar | [Produto](produto/visao-geral.md) → [Docker](primeiros-passos/docker.md) → [Preview](desenvolvimento/preview.md) |
 | Contribuir com código | [Ambiente](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Apps](arquitetura/apps.md) → [Testes](desenvolvimento/testes.md) |
-| Trabalhar no frontend | [Frontend](desenvolvimento/frontend.md) → [API](api/README.md) → [Testes](desenvolvimento/testes.md) |
+| Trabalhar no frontend | [Frontend](desenvolvimento/frontend.md) → [Temas](funcionalidades/temas.md) → [Componentes](desenvolvimento/componentes.md) → [Testes](desenvolvimento/testes.md) |
 | Administrar um servidor | [Configuração](configuracao/ambiente.md) → [Lineage](integracoes/lineage.md) → [Implantação](operacao/implantacao.md) → [Backup](operacao/backup-e-restauracao.md) |
 
 ## Índice completo
@@ -29,7 +29,6 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Ambiente local](desenvolvimento/ambiente-local.md) | Python, frontend, execução nativa, Docker e migrações |
 | [Frontend](desenvolvimento/frontend.md) | Organização, serviços HTTP, sessão, cache, rotas e assets |
 | [Componentes e padrão visual](desenvolvimento/componentes.md) | Catálogo local, botões, campos, estados, hooks e composição de novas telas |
-| [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, Valorem, segurança, ativação e restauração do default |
 | [Interface do admin/backend](desenvolvimento/interface-admin.md) | Jazzmin, login, botões compartilhados, envio nativo e documentação HTTP |
 | [Testes e qualidade](desenvolvimento/testes.md) | Pytest, Vitest, isolamento, exemplos, cobertura e limites |
 | [Política de testes](desenvolvimento/politica-de-testes.md) | Testes obrigatórios para features e correções, critérios de review e CI |
@@ -67,6 +66,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 
 | Documento | O que explica |
 | --- | --- |
+| [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, renderer Valorem, segurança, ativação e restauração do default |
 | [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, bônus e pesca |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
 

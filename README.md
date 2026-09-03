@@ -26,6 +26,7 @@ O **PDL PRO 2.0** conecta a gestão do servidor à experiência dos jogadores: c
 | **Comunidade** | Notícias, wiki, calendário, notificações, apoiadores e suporte |
 | **Recompensas** | Passe de batalha, bônus diário, pesca, caixas e minigames |
 | **Equipe** | Configuração, relatórios financeiros, catálogo customizado e observação de itens |
+| **Aparência** | Temas globais instaláveis, Valorem completo e restauração do tema default |
 
 Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral do produto](docs/produto/visao-geral.md).
 
@@ -38,6 +39,7 @@ Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral d
 | Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) e [guia dos apps](docs/arquitetura/apps.md) |
 | Rodar ou escrever testes | [Testes e qualidade](docs/desenvolvimento/testes.md) |
 | Conectar meu servidor Lineage | [Integração e dialetos](docs/integracoes/lineage.md) |
+| Instalar ou desenvolver um tema | [Temas instaláveis](docs/funcionalidades/temas.md) |
 | Publicar e manter uma instalação | [Implantação](docs/operacao/implantacao.md) e [backup](docs/operacao/backup-e-restauracao.md) |
 
 ## Base técnica

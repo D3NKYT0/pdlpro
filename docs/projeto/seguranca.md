@@ -31,6 +31,7 @@ O mantenedor confirmará o recebimento quando possível, avaliará severidade e 
 - SQL configurável e acesso ao banco do jogo;
 - WebSockets, amizades, mensagens e Web Push;
 - upload ou exposição de arquivos de mídia;
+- instalação de temas, validação de ZIP/CSS, path traversal e XSS persistente;
 - vazamento de variáveis de ambiente, logs ou dados pessoais.
 
 ## Boas práticas para operadores
@@ -40,4 +41,6 @@ O mantenedor confirmará o recebimento quando possível, avaliará severidade e 
 - Restrinja hosts, origens CORS/CSRF/WebSocket e acesso de rede aos bancos.
 - Desative o método de pagamento `mock` e restrinja a documentação da API quando não forem necessários.
 - Aplique atualizações de dependências, faça backups testados e monitore os health checks.
+- Permita instalar/ativar temas somente a superadministradores, mantenha o limite de upload
+  no proxy e não contorne a validação para aceitar HTML, JavaScript ou URLs externas.
 - Rotacione imediatamente qualquer segredo que possa ter sido exposto.

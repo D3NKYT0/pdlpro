@@ -27,6 +27,21 @@ O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e
 assets comerciais são distribuídos fora do repositório e instalados pelo painel.
 
+O pacote de referência atual usa o identificador `valorem`, a versão `2.1.3` e o renderer
+`portal-v1`. Seu conteúdo de autoria pode permanecer em `frontend/theme-packages/valorem/`,
+também fora do Git. Para gerar o instalador no PowerShell, execute na raiz do repositório:
+
+```powershell
+Compress-Archive `
+  -Path frontend/theme-packages/valorem/theme.json,frontend/theme-packages/valorem/theme.css,frontend/theme-packages/valorem/images `
+  -DestinationPath frontend/theme-packages/valorem-pdl2.zip `
+  -CompressionLevel Optimal -Force
+```
+
+Inclua no ZIP somente os arquivos aceitos pelo contrato. Um README de autoria pode ficar ao lado
+do manifesto na pasta local, mas não deve ser empacotado porque arquivos Markdown não fazem
+parte do formato instalável.
+
 ## Contrato do pacote
 
 O ZIP contém seus arquivos diretamente na raiz:
@@ -63,6 +78,22 @@ Manifesto mínimo:
 `assets` mapeia o nome lógico usado pelo frontend para um arquivo do pacote. O caminho deve ser
 relativo e existir no ZIP. Não declare um asset para manter a versão do default.
 
+Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer. Os
+blocos aceitos pelo `portal-v1` são:
+
+| Bloco | Responsabilidade |
+| --- | --- |
+| `navigation` | De 1 a 12 links internos do cabeçalho |
+| `home.hero` | Título, descrição, countdown ISO 8601 e CTA |
+| `home.features` | De 1 a 12 recursos com assets declarados |
+| `home.ranking` | Abas de ranking ligadas aos dados reais do PDL |
+| `home.cta` e `home.news` | Conversão e listagem de notícias |
+| `footer` | Tagline e copyright |
+| `shells.auth`, `shells.panel`, `shells.admin` | Marca e contexto das telas internas |
+
+Rotas devem ser internas e iniciar com `/`. Propriedades desconhecidas são rejeitadas, de modo
+que erros de digitação não sejam silenciosamente ignorados.
+
 ## Estrutura e comportamento
 
 O campo opcional `presentation` seleciona um renderer confiável do PDL. O renderer `portal-v1`
@@ -71,7 +102,7 @@ com abas e dados reais, CTA e notícias. Ele também tematiza as páginas públi
 autenticação, painel do jogador e administração. Textos, rotas, itens, assets e os títulos dos
 shells `auth`, `panel` e `admin` são declarados pelo pacote.
 
-O Valorem 2.0 usa esse contrato para portar a experiência que existia nos templates Django de
+O pacote Valorem usa esse contrato para portar a experiência que existia nos templates Django de
 `PDL/SITE`: o HTML virou componentes React sem perder a composição, e o comportamento de
 `js/theme.js` virou hooks e eventos testáveis. Isso mantém navegação SPA, autenticação,
 acessibilidade e integração com as APIs do PDL 2.0.
@@ -135,7 +166,7 @@ cd backend
 python -m pytest apps/themes/tests
 
 cd ../frontend
-npm run test:run -- src/theme/ThemeProvider.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
+npm run test:run -- src/theme/ThemeProvider.test.tsx src/components/themes/PortalTheme.test.tsx src/components/auth/AuthPanel.test.tsx src/components/layout/PrivateLayout.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
 ```
 
 Homologue o catálogo de componentes, uma página pública, autenticação e painel em desktop e

@@ -20,7 +20,8 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 | `services/infra/` | HTTP, erros e recuperação da sessão |
 | `services/types.ts` | Tipos dos contratos de API |
 | `lib/` | Helpers de itens, autenticação e outras capacidades |
-| `theme/`, `styles/` | Assets, seleção visual e estilos |
+| `theme/`, `components/themes/` | Provider global, resolução de assets e renderers homologados |
+| `styles/`, `public/theme/` | Estilos estruturais e tema default embarcado |
 
 ## Executar e compilar
 
@@ -64,6 +65,15 @@ Valores monetários e quantidades grandes podem chegar como strings para preserv
 
 ## Personalização e testes visuais
 
-Use os componentes e hooks de tema existentes. O mecanismo antigo de temas Django em ZIP não faz parte do 2.0; um sistema futuro de temas não deve ser descrito como API já disponível.
+`ThemeProvider` consulta `/api/v1/public/theme/`, aplica `data-pdl-theme` no elemento
+`html`, carrega a folha instalada e configura os assets lógicos. O renderer opcional
+`portal-v1` troca o chrome público e os shells de autenticação, jogador e administração
+por componentes React confiáveis. Novas telas devem continuar usando a biblioteca de UI:
+`data-theme-surface` identifica o contexto e `data-theme-part` expõe partes estáveis ao CSS.
+
+Pacotes locais de desenvolvimento ficam em `frontend/theme-packages/`, que é ignorada
+pelo Git. Não importe arquivos dessa pasta no bundle: gere o ZIP e instale-o pela tela
+administrativa. O tema `default` em `public/theme/default` continua versionado e deve
+funcionar integralmente quando nenhum pacote está ativo. Veja o [contrato de temas](../funcionalidades/temas.md).
 
 A suíte atual usa Node e renderização estática em parte dos cenários. Para mudanças visuais, confira desktop e celular, navegação, formulários, modais e estados vazios. Veja [Testes e qualidade](testes.md) para as limitações e exemplos existentes.

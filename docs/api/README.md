@@ -31,6 +31,22 @@ A lista completa e os métodos aceitos devem ser consultados no Swagger/ReDoc ou
 
 - [Relatórios financeiros](relatorios-financeiros.md).
 - [Catálogo e administração de itens customizados](catalogo-de-itens.md).
+- [Temas instaláveis](../funcionalidades/temas.md).
+
+## Temas
+
+| Método e caminho | Acesso | Finalidade |
+|---|---|---|
+| `GET /api/v1/public/theme/` | Anônimo | Tema ativo, renderer, stylesheet e assets resolvidos |
+| `GET /api/v1/staff/themes/` | Superadministrador | Listar default e pacotes instalados |
+| `POST /api/v1/staff/themes/` | Superadministrador | Instalar o campo multipart `package` |
+| `POST /api/v1/staff/themes/<uuid>/activate/` | Superadministrador | Ativar uma versão instalada |
+| `POST /api/v1/staff/themes/default/activate/` | Superadministrador | Restaurar o default |
+| `DELETE /api/v1/staff/themes/<uuid>/` | Superadministrador | Remover um pacote inativo |
+
+A resposta pública usa `Cache-Control: public, max-age=0, must-revalidate`, pois a ativação
+deve aparecer sem recompilar a SPA. O limite, o manifesto e as regras de segurança do upload
+estão no guia especializado.
 
 ## Autenticação
 

@@ -16,6 +16,7 @@ Comece identificando ambiente, URL, revisão e operação que falhou. Registre h
 | Item desconhecido ou ícone padrão | Catálogo e URL resolvida pela API | Confira XML, custom, cache e assets |
 | Câmbio pendente | Estado do recibo e disponibilidade do jogo | Retome a mesma operação; não duplique a chave |
 | Vitest não encontra testes | Diretório e padrão de descoberta | Consulte [Testes](../desenvolvimento/testes.md) |
+| Tema não carrega ou fica sem imagens | Endpoint ativo, `/media/themes/` e manifesto | Confira proxy, volume e caminhos do pacote |
 
 ## Backend e proxy
 
@@ -50,6 +51,18 @@ Em produção, confirme HTTPS e `X-Forwarded-Proto` no proxy. Cookies seguros n�
 Confira o item em `/api/v1/public/items/catalog/` e abra a `icon_url` retornada. Alterações em XML exigem recarregar os processos do backend; customs ativos são consultados pelo catálogo composto. Novos JPGs estáticos precisam entrar no pacote de assets. Não corrija nomes ou ícones criando outro catálogo no frontend.
 
 Veja [Catálogo de itens](../integracoes/catalogo-de-itens.md) e [Ícones](../integracoes/icones.md).
+
+## Temas
+
+Consulte `/api/v1/public/theme/` e abra diretamente `stylesheet_url` e um asset retornado.
+Se a API responder Valorem, mas o arquivo retornar 404, confira o volume `media_files`, o proxy
+de `/media/` e a existência de `MEDIA_ROOT/themes/<storage_path>`. Em erro de permissão no upload,
+verifique se o processo Django escreve em `MEDIA_ROOT/themes`; o entrypoint do container cria e
+ajusta `/app/media/themes`, enquanto a execução nativa cria os diretórios pais no instalador.
+
+Um ZIP rejeitado deve ser corrigido na origem. Não remova as validações de extensão, caminho,
+CSS ou tamanho. IDs e versões não podem se repetir; um pacote ativo só pode ser removido depois
+da ativação de outra versão ou do default. Veja [Temas instaláveis](../funcionalidades/temas.md).
 
 ## Jogo e pagamentos
 

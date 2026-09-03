@@ -19,4 +19,9 @@ O comando de dados fictícios é protegido contra uso nas configurações normai
 
 Verificações automatizadas: `pytest`, `npm run test:run`, `npm run build`, `manage.py check` e `makemigrations --check --dry-run`. A inspeção visual usa o tema existente em desktop e celular, incluindo formulários, histórico, estados vazios, ações desabilitadas e bloqueio de recursos.
 
+Para homologar um tema, instale o ZIP pela rota **Painel > Administração > Temas** usando
+o superusuário fictício do preview. O pacote será gravado em `backend/media/preview/themes/`,
+fora do Git. Confira o tema ativo e depois restaure o default; não use o banco ou a mídia de
+preview como fonte de backup da instalação real.
+
 Para a suíte automatizada, consulte [Testes e qualidade](testes.md).

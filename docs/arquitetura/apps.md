@@ -22,6 +22,7 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py`, `application/financial_reports.py`, `presentation/views/` |
 | `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `models.py`, `services.py`, `views.py`, `middleware.py` |
 | `support` | Chamados, respostas e atribuição de atendimento | `models.py`, `presentation/views/customer.py`, `presentation/views/staff.py` |
+| `themes` | Instalação, validação, ativação e publicação de temas globais | `application/theme_packages.py`, `infrastructure/models.py`, `presentation/views.py` |
 
 ## Responsabilidade das classes
 
@@ -95,6 +96,9 @@ def consultar_carteira(user_id):
 - **Câmbio:** em `ExchangeCoinsUseCase`, reutilize `request_key` e os mesmos parâmetros para retomar uma operação `pending`. O recibo no banco do jogo permite reconhecer uma aplicação anterior. Não trate timeout como rejeição definitiva.
 - **Pagamento:** `SettlePaymentUseCase` efetua crédito e deve receber confirmação confiável. `ApplyGatewayPaymentUseCase` não valida assinatura. `GetPaymentStatusUseCase` também pode liquidar um pedido; o nome de consulta não significa ausência de escrita.
 - **Administração:** os casos de uso de `staff` pressupõem a autorização feita pela apresentação. Ao reutilizá-los fora de HTTP, aplique controle equivalente no chamador.
+- **Temas:** apenas superadministradores instalam, ativam ou removem pacotes. O app `themes`
+  valida o ZIP e publica arquivos em `MEDIA_ROOT`; o frontend executa somente renderers React
+  homologados. Não extraia o pacote diretamente nem aceite HTML ou JavaScript arbitrário.
 
 ## Ao adicionar uma operação
 

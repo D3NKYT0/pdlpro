@@ -29,6 +29,11 @@ O código está em [dev/ui.tsx](../../frontend/dev/ui.tsx). O catálogo é uma e
 | [Pagination](../../frontend/src/components/ui/Pagination.tsx) | Página atual, limites e bloqueio durante consulta; a tela busca os dados |
 | [EmptyState, LoadingState e ErrorNotice](../../frontend/src/components/ui/Feedback.tsx) | Vazio, carregamento anunciado e erro com tentativa explícita |
 
+Os componentes básicos publicam `data-theme-part` estável (`button`, `field`, `card`,
+`page-header`, `tabs`, `empty-state`, `loading-state` e `error-notice`). Temas podem usar
+esses seletores para alterar a aparência, mas não devem esconder estados, mudar semântica
+ou substituir a interação implementada pelo componente.
+
 ## Botões
 
 | Propriedade | Valores e finalidade |
@@ -110,7 +115,7 @@ Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `er
 
 1. Procure a peça nesta biblioteca e nos componentes do domínio.
 2. Se o contrato for o mesmo, acrescente uma propriedade ou composição à peça existente.
-3. Preserve o tema real em `public/theme/pages/panel.css`; regras comuns de interação ficam em `components/ui/ui.css`. Não copie texturas e regras de hover para uma página.
+3. Preserve o default em `public/theme/pages/panel.css`; regras comuns de interação ficam em `components/ui/ui.css`. Extensões de um pacote ficam no CSS instalável e usam o contrato de superfícies/partes. Não copie texturas e regras de hover para uma página.
 4. Atualize o catálogo com exemplos úteis, inclusive pendente, desabilitado e erro quando aplicável.
 5. Teste interação, teclado e acessibilidade. Confira desktop e celular com o tema carregado.
 

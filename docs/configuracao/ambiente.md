@@ -110,6 +110,11 @@ Parâmetros SMTP como host, porta, TLS, usuário e senha também precisam existi
 | `RUN_MIGRATIONS` | Executa migrações no entrypoint do container |
 | `RUN_COLLECTSTATIC` | Executa coleta de arquivos estáticos no entrypoint |
 
+Temas instalados não exigem uma variável própria. Eles usam `MEDIA_ROOT/themes/` e
+`MEDIA_URL`, definidos nos settings Django. Em produção, preserve e compartilhe esse diretório
+entre o backend e o proxy que atende `/media/`; `collectstatic` e o build do frontend não copiam
+os pacotes. Consulte [Temas instaláveis](../funcionalidades/temas.md).
+
 ## Produção
 
 No mínimo:

@@ -76,6 +76,7 @@ Não mantenha estado específico de usuário em singletons.
 | `staff` | Endpoints operacionais do sistema |
 | `programs` | Apoiadores, comissões, roadmap e ativação de recursos |
 | `support` | Chamados e atendimento ao jogador |
+| `themes` | Instalação segura, ativação e publicação de temas globais |
 
 `common/` contém capacidades transversais, como container de DI, middleware, paginação, permissões, contrato de erro e suporte a OpenAPI.
 
@@ -99,6 +100,18 @@ page/component ──> domain service ──> services/infra/http.ts ──> /ap
 ```
 
 `http.ts` centraliza `credentials: include`, token CSRF, renovação de sessão e conversão do contrato de erro em `ApiError`. `TanStack Query` mantém cache e estado assíncrono. Páginas protegidas passam por `RequireAuth`.
+
+O tema global segue um fluxo separado de apresentação:
+
+```text
+ThemeProvider ──> /api/v1/public/theme/ ──> CSS e assets em /media/themes/
+      │
+      └──> renderer homologado ──> superfícies public/auth/panel/admin
+```
+
+O backend valida o ZIP, publica os arquivos de forma atômica e expõe apenas metadados,
+rotas internas e caminhos locais. O frontend nunca executa HTML ou JavaScript fornecido
+pelo pacote. O `default` não é um registro de banco e permanece disponível como fallback.
 
 ## Como implementar uma mudança
 

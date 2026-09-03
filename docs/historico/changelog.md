@@ -10,6 +10,19 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Sistema global de temas instaláveis por ZIP, com API pública do tema ativo e
+  administração restrita a superusuários para instalar, ativar, restaurar e remover
+  pacotes.
+- Renderer declarativo `portal-v1`, com identidade visual aplicada à home, páginas
+  públicas internas, autenticação, painel do jogador e administração React.
+- Tema Valorem de referência, baseado no projeto `PDL/SITE`, com composição portada
+  para React, menu móvel, countdown, cards de sistemas, rankings interativos, CTA,
+  notícias, shells privados e assets próprios.
+- Contrato estável de superfícies e componentes temáticos por meio de
+  `data-theme-surface` e `data-theme-part`, abrangendo botões, cards, campos, abas,
+  cabeçalhos e estados de consulta.
+- Criação automática de `MEDIA_ROOT/themes` pelo deploy e pelo instalador, permitindo
+  o primeiro uso com volume de mídia vazio.
 - Testes de autorização, identidade, pagamentos, carteira, inventário, comércio,
   infraestrutura e atendimento no backend; contratos HTTP, sessão, rotas e
   interações de telas no frontend. [Resultados e limites](2026-09-02-testes.md).
@@ -36,6 +49,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Resolução dos assets declarados pelo tema instalado, precedência da folha de estilo
+  do pacote e conflito entre a navegação global e o chrome do renderer Valorem.
+- Responsividade das ações e formulários do shell de autenticação Valorem.
 - Autorização de personagem na consulta de inventário e sinal de saídas no extrato.
 - Limpeza da seleção ao trocar de conta no inventário e bloqueio de publicação
   duplicada de personagem no marketplace enquanto a requisição está pendente.
@@ -45,6 +61,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- O tema `default` passou a funcionar como fallback interno, imutável e restaurável;
+  pacotes e mídias de temas permanecem fora do Git e são persistidos no volume de
+  mídia da instalação.
+- HTML e comportamentos JavaScript específicos de temas passaram a ser executados por
+  componentes React homologados. O ZIP aceita CSS, manifesto e assets locais, mas
+  bloqueia HTML/JavaScript arbitrário e referências externas.
 - README principal focado na apresentação do produto e nos caminhos de leitura;
   explicações detalhadas e guias centralizados nas pastas de `docs/`.
 - Documento de arquitetura ampliado com dependências, DI e fluxo de implementação.

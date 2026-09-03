@@ -41,6 +41,10 @@ Nomes de branch recomendados: `feature/...`, `fix/...`, `docs/...` e `refactor/.
 - HTTP, CSRF, cookies e renovação de sessão permanecem em `services/infra/`.
 - Evite chamadas `fetch` diretas em páginas e componentes.
 - Estados de carregamento, vazio e erro devem ser explícitos.
+- Preserve o tema `default` e use `data-theme-surface`/`data-theme-part` ao ampliar pontos
+  de personalização; não acople telas diretamente a um pacote instalado.
+- Não versione `frontend/theme-packages/` nem `backend/media/`. Alterações no renderer ou
+  no manifesto exigem testes de contrato, interação e conferência em desktop/celular.
 
 ## Validação mínima
 

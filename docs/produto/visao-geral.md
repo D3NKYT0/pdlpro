@@ -34,9 +34,11 @@ em cPanel, CDN ou outro serviço, deixando o backend em infraestrutura separada.
 segundo cenário, o servidor web precisa encaminhar as rotas de API, WebSocket e mídia
 para o backend.
 
-O antigo sistema de temas baseado em templates Django e arquivos ZIP não faz parte
-do 2.0. Um novo sistema de temas está planejado para permitir a personalização de toda
-a interface — área pública, autenticação, painel do jogador e central da staff.
+O PDL 2.0 possui um sistema próprio de temas globais instaláveis por ZIP. Um renderer
+homologado controla estruturas e comportamentos React; o pacote fornece manifesto, CSS
+e assets locais. A cobertura inclui área pública, autenticação, painel do jogador e
+central da staff. O tema `default` é interno e imutável, enquanto o Valorem demonstra a
+portabilidade visual do `PDL/SITE`. Consulte [Temas instaláveis](../funcionalidades/temas.md).
 
 Não há migração automática do PDL 1.x. Uma mudança para o 2.0 deve ser tratada como
 uma nova implantação e testada em paralelo antes da liberação aos jogadores.
@@ -79,6 +81,7 @@ uma nova implantação e testada em paralelo antes da liberação aos jogadores.
 - Observação de itens e snapshots da economia do servidor.
 - Django Admin com Jazzmin para manutenção e operações específicas.
 - OpenAPI com Swagger UI e ReDoc.
+- Instalação, ativação e restauração de temas globais sem rebuild do frontend.
 
 Os módulos compatíveis podem ser desativados sem apagar seus dados. Ao desligar um
 recurso, suas rotas são bloqueadas e as telas correspondentes deixam de aparecer para

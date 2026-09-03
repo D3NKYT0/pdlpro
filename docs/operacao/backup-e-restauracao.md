@@ -6,7 +6,7 @@ Os scripts operacionais são Bash e usam Docker Compose. Execute a partir da rai
 
 ## O que o backup inclui
 
-`setup.sh backup` chama [scripts/backup.sh](../../scripts/backup.sh), que exporta **somente o PostgreSQL do painel**, no formato custom do `pg_dump`. O comando não inclui mídia, `.env`, XMLs externos, banco Lineage, filas Redis ou arquivos externos à base.
+`setup.sh backup` chama [scripts/backup.sh](../../scripts/backup.sh), que exporta **somente o PostgreSQL do painel**, no formato custom do `pg_dump`. O comando não inclui mídia, `.env`, XMLs externos, banco Lineage, filas Redis ou arquivos externos à base. Portanto, ele não copia os arquivos dos temas instalados.
 
 ```bash
 ./setup.sh backup
@@ -22,7 +22,7 @@ O helper operacional escolhe o Compose de produção quando detecta seu serviço
 | Dado | Como tratar |
 | --- | --- |
 | PostgreSQL do painel | Dump, checksum e restauração testada |
-| Mídia | Cópia separada do volume/diretório de mídia, incluindo customs e uploads |
+| Mídia | Cópia separada do volume/diretório de mídia, incluindo customs, uploads e `themes/` |
 | Configuração e segredos | Cópia protegida fora do Git, com acesso restrito |
 | XMLs externos | Versionamento ou cópia do diretório realmente configurado |
 | Banco Lineage | Política própria do servidor do jogo; o script do PDL não o exporta |
@@ -49,5 +49,10 @@ O comando usa `pg_restore --clean --if-exists` e pausa os serviços ativos `back
 3. Confirme versão, migrações, health check e autenticação no ambiente isolado.
 4. Confira amostras de usuários, pedidos, saldos, extratos, inventários e configurações.
 5. Registre revisão, data do backup, destino e resultado do ensaio.
+
+Os registros `ThemePackage` ficam no PostgreSQL, mas os arquivos ficam em
+`MEDIA_ROOT/themes/`. Banco e mídia precisam pertencer ao mesmo ponto de recuperação;
+restaurar apenas um deles pode deixar o tema ativo apontando para uma versão ausente. Se isso
+ocorrer, restaure a mídia correspondente ou ative o default antes de reabrir a instalação.
 
 Reverter o banco do painel sem reverter o jogo ou o provedor pode deixar operações externas posteriores ao backup sem correspondência local. Reconcilie recibos e pagamentos antes de reabrir escritas. Veja [Câmbio](../integracoes/cambio-painel-jogo.md) e [Pagamentos](../integracoes/pagamentos.md).

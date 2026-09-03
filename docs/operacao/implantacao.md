@@ -21,6 +21,10 @@ públicas para os domínios reais.
 
 As próximas seções detalham a implantação pelo Compose de produção. Para recuperar dados, consulte [Backup e restauração](backup-e-restauracao.md).
 
+Temas instalados não fazem parte de `frontend/dist`: CSS e assets são mídia dinâmica
+servida em `/media/themes/`. Em uma topologia separada, o frontend precisa alcançar esse
+caminho no mesmo domínio lógico da API ou por proxy compatível.
+
 ## Modos do Compose
 
 - `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
@@ -173,6 +177,8 @@ git pull --ff-only
 - Ajuste `server_name` e os limites de upload.
 - Termine TLS no proxy e preserve corretamente os cabeçalhos `X-Forwarded-*`.
 - Garanta upgrade de conexão em `/ws/`.
+- Encaminhe `/media/themes/` ao backend/Nginx de mídia e aceite uploads ZIP de até 32 MB
+  na rota administrativa, sem tornar `/app/media` gravável pelo processo do frontend.
 
 ### Dados e filas
 
@@ -181,6 +187,8 @@ git pull --ff-only
 - Execute worker Celery e Celery Beat separadamente se o fechamento automático de leilões estiver habilitado.
 - Defina política de retry, observabilidade e fila de falhas para tarefas críticas.
 - Faça backups automáticos de banco e mídia e teste a restauração.
+- Preserve o volume `media_files`: ele contém versões de temas instaladas e outros uploads.
+  O entrypoint cria `/app/media/themes` e ajusta sua permissão no primeiro deploy.
 
 ### Integrações
 
@@ -209,6 +217,8 @@ git pull --ff-only
 6. Verifique conectividade do Lineage com uma operação somente leitura.
 7. Faça transação de pagamento em sandbox antes de ativar o modo real.
 8. Confirme envio de e-mail, push, tarefa Celery e restauração de backup.
+9. Consulte `/api/v1/public/theme/`, instale um pacote de homologação, ative-o e restaure
+   o default; confira páginas públicas, login, jogador e administração em desktop/celular.
 
 ## Rollback
 
