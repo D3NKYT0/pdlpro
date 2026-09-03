@@ -11,7 +11,7 @@ export interface FieldProps extends ComponentPropsWithRef<'label'> {
  * Para dicas/erros, passe IDs nos conteúdos e aria-describedby no controle.
  */
 export function Field({ label, hint, error, className = '', children, ...props }: FieldProps) {
-  return <label {...props} className={`field ui-field ${className}`.trim()}>
+  return <label {...props} data-theme-part="field" className={`field ui-field ${className}`.trim()}>
     {label}{children}
     {hint && <small className="muted">{hint}</small>}
     {error && <small className="ui-field-error" role="alert">{error}</small>}

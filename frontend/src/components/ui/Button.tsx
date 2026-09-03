@@ -24,7 +24,7 @@ function buttonClasses({ variant = 'primary', size = 'md' }: ButtonAppearance, c
  * busy bloqueia interação e anuncia o envio. O hook de ação também deve impedir repetição.
  */
 export function Button({ variant, size, busy = false, busyLabel = 'Aguarde…', disabled, className, children, type = 'button', ...props }: ButtonProps) {
-  return <button {...props} type={type} className={buttonClasses({ variant, size }, className)} disabled={disabled || busy} aria-busy={busy || undefined}>
+  return <button {...props} type={type} data-theme-part="button" className={buttonClasses({ variant, size }, className)} disabled={disabled || busy} aria-busy={busy || undefined}>
     {busy ? <><LoaderCircle className="ui-button-spinner" aria-hidden="true" /><span className="ui-button-busy-label">{busyLabel}</span></> : children}
   </button>
 }
@@ -38,5 +38,5 @@ export function IconButton({ label, className = '', ...props }: Omit<ButtonProps
  * Não oferece busy/disabled: para executar operações, use Button.
  */
 export function ButtonLink({ variant, size, className, ...props }: ComponentPropsWithRef<typeof Link> & ButtonAppearance) {
-  return <Link {...props} className={buttonClasses({ variant, size }, className)} />
+  return <Link {...props} data-theme-part="button" className={buttonClasses({ variant, size }, className)} />
 }

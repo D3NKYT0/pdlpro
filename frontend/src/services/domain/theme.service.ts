@@ -47,6 +47,11 @@ export interface ThemePresentation {
     news: { title: string }
   }
   footer: { tagline: string; copyright: string }
+  shells?: {
+    auth: { kicker: string; brand: string }
+    panel: { kicker: string; brand: string }
+    admin: { kicker: string; brand: string }
+  }
 }
 
 export interface ApiTheme {

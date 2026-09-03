@@ -67,7 +67,9 @@ relativo e existir no ZIP. Não declare um asset para manter a versão do defaul
 
 O campo opcional `presentation` seleciona um renderer confiável do PDL. O renderer `portal-v1`
 entrega cabeçalho e rodapé próprios, menu móvel, hero com countdown, cards de recursos, rankings
-com abas e dados reais, CTA e notícias. Textos, rotas, itens e assets são declarados pelo pacote.
+com abas e dados reais, CTA e notícias. Ele também tematiza as páginas públicas internas,
+autenticação, painel do jogador e administração. Textos, rotas, itens, assets e os títulos dos
+shells `auth`, `panel` e `admin` são declarados pelo pacote.
 
 O Valorem 2.0 usa esse contrato para portar a experiência que existia nos templates Django de
 `PDL/SITE`: o HTML virou componentes React sem perder a composição, e o comportamento de
@@ -91,8 +93,11 @@ O seletor raiz recomendado é:
 }
 ```
 
-Seletores de contexto disponíveis: `html.pdl-public` e `html.pdl-panel`. O identificador do
-pacote também é aplicado como `data-pdl-theme` no elemento `html`.
+Seletores de contexto disponíveis: `html.pdl-public`, `html.pdl-panel`,
+`[data-theme-surface="public|auth|panel|admin"]` e os componentes compartilhados com
+`data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs` e estados de consulta). O
+identificador do pacote é aplicado como `data-pdl-theme` no elemento `html`; renderers também
+recebem `data-pdl-renderer`.
 
 ## Segurança e limites
 

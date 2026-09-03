@@ -22,7 +22,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   }, [menuOpen])
 
   return (
-    <div className="portal-shell">
+    <div className="portal-shell" data-theme-surface="public">
       <header className="site-header">
         <div className="site-header__inner container">
           <Link to="/" className="logo" aria-label="Página inicial">
@@ -125,7 +125,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
   const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
 
   return (
-    <div className="portal-home">
+    <div className="portal-home" data-theme-page="home">
       <section className="hero">
         <div className="hero__bg" aria-hidden="true" />
         <div className="hero__content">

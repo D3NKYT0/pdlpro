@@ -31,6 +31,7 @@ import { notificationApi, supportApi } from "../../services/api";
 import { themeImage } from "../../theme/assets";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/domain/programs.service";
+import { useTheme } from "../../theme/ThemeProvider";
 
 const links: Array<{
   to: string;
@@ -74,6 +75,12 @@ export function PrivateLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
+  const isPortal = theme.presentation?.renderer === "portal-v1";
+  const isAdmin = location.pathname.startsWith("/painel/admin");
+  const shellCopy = isPortal
+    ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)
+    : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
   const notices = useQuery({
     queryKey: ["notifications"],
@@ -104,7 +111,7 @@ export function PrivateLayout() {
   }, [menuOpen]);
 
   return (
-    <div className="panel-app">
+    <div className={`panel-app${isPortal ? " portal-panel-shell" : ""}${isPortal && isAdmin ? " is-admin-shell" : ""}`} data-theme-renderer={theme.presentation?.renderer} data-theme-surface={isAdmin ? "admin" : "panel"}>
       <div className="shell">
         <aside className="sidebar">
           <div className="panel-brand">
@@ -114,8 +121,8 @@ export function PrivateLayout() {
               alt=""
             />
             <div>
-              <span className="panel-kicker">Área do jogador</span>
-              <div className="brand">Painel</div>
+              <span className="panel-kicker">{shellCopy?.kicker ?? "Área do jogador"}</span>
+              <div className="brand">{shellCopy?.brand ?? "Painel"}</div>
             </div>
           </div>
           <button

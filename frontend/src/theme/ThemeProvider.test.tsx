@@ -14,6 +14,7 @@ const valorem: ApiTheme = {
   description: '', active: true, builtin: false, base_url: '/media/themes/valorem/',
   stylesheet_url: '/media/themes/valorem/theme.css',
   assets: { 'images/logo.png': '/media/themes/valorem/images/logo.png' },
+  presentation: { renderer: 'portal-v1' } as ApiTheme['presentation'],
 }
 
 function Consumer() {
@@ -27,6 +28,7 @@ afterEach(() => {
   document.querySelectorAll('link[data-pdl-installed-theme]').forEach((link) => link.remove())
   document.querySelectorAll('link[rel="icon"]').forEach((link) => link.remove())
   document.documentElement.removeAttribute('data-pdl-theme')
+  document.documentElement.removeAttribute('data-pdl-renderer')
   vi.restoreAllMocks()
 })
 
@@ -48,6 +50,7 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
+  expect(document.documentElement.dataset.pdlRenderer).toBe('portal-v1')
 })
 
 it('restaura o favicon original ao voltar para o tema default', async () => {
@@ -64,7 +67,7 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
     .mockResolvedValueOnce({
       ...themed,
       id: 'default', package_id: null, name: 'PDL Default', builtin: true,
-      base_url: '/theme/default/', stylesheet_url: null, assets: {},
+      base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null,
     })
 
   render(<ThemeProvider><Consumer /></ThemeProvider>)
@@ -77,4 +80,5 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
   await screen.findByText(/PDL Default/)
   expect(favicon.getAttribute('href')).toBe('/favicon-original.png')
   expect(document.querySelector('link[data-pdl-installed-theme]')).toBeNull()
+  expect(document.documentElement).not.toHaveAttribute('data-pdl-renderer')
 })

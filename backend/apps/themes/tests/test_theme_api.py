@@ -88,6 +88,11 @@ def test_declarative_presentation_is_validated_and_published(api, admin, tmp_pat
             "news": {"title": "NEWS"},
         },
         "footer": {"tagline": "A unique server", "copyright": "PDL"},
+        "shells": {
+            "auth": {"kicker": "ENTER THE REALM", "brand": "VALOREM"},
+            "panel": {"kicker": "WARRIOR'S SANCTUM", "brand": "VALOREM"},
+            "admin": {"kicker": "ROYAL COMMAND", "brand": "VALOREM ADMIN"},
+        },
     }
     api.force_authenticate(admin)
     installed = api.post(

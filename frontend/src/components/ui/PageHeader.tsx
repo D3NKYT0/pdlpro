@@ -14,7 +14,7 @@ export interface PageHeaderProps {
 
 /** Cabeçalho de página com hierarquia única e área de ações responsiva. */
 export function PageHeader({ title, eyebrow, description, leading, actions, className = '', descriptionClassName = 'muted' }: PageHeaderProps) {
-  return <Card as="header" className={`ui-page-header ${className}`.trim()}>
+  return <Card as="header" data-theme-part="page-header" className={`ui-page-header ${className}`.trim()}>
     <div>{leading}{eyebrow && <span className="panel-eyebrow">{eyebrow}</span>}<h1>{title}</h1>{description && <p className={descriptionClassName}>{description}</p>}</div>
     {actions}
   </Card>

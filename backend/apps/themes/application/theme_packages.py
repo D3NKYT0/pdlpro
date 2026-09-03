@@ -131,7 +131,9 @@ def _route(value, label: str) -> str:
 def _validate_presentation(value, assets: dict) -> None:
     """Valida a experiência declarativa executada pelos renderers confiáveis do frontend."""
 
-    presentation = _object(value, "presentation", {"renderer", "navigation", "home", "footer"})
+    presentation = _object(
+        value, "presentation", {"renderer", "navigation", "home", "footer"}, {"shells"}
+    )
     if presentation["renderer"] != "portal-v1":
         raise ValidationDomainError("O renderer solicitado pelo tema não é suportado.")
 
@@ -210,6 +212,15 @@ def _validate_presentation(value, assets: dict) -> None:
     footer = _object(presentation["footer"], "presentation.footer", {"tagline", "copyright"})
     _text(footer["tagline"], "presentation.footer.tagline", limit=300)
     _text(footer["copyright"], "presentation.footer.copyright", limit=200)
+
+    if "shells" in presentation:
+        shells = _object(presentation["shells"], "presentation.shells", {"auth", "panel", "admin"})
+        for shell_name in ("auth", "panel", "admin"):
+            shell = _object(
+                shells[shell_name], f"presentation.shells.{shell_name}", {"kicker", "brand"}
+            )
+            _text(shell["kicker"], f"presentation.shells.{shell_name}.kicker", limit=80)
+            _text(shell["brand"], f"presentation.shells.{shell_name}.brand", limit=80)
 
 
 def _validate_css(path: str, content: bytes, available: set[str]) -> None:

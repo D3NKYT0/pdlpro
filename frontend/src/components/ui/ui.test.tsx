@@ -18,6 +18,7 @@ it('link estilizado mantém navegação e semântica de link', async () => {
   render(<MemoryRouter><Routes><Route path="/" element={<ButtonLink to="/destino" variant="secondary" size="sm">Ver detalhes</ButtonLink>} /><Route path="/destino" element={<h1>Detalhes</h1>} /></Routes></MemoryRouter>)
   const link = screen.getByRole('link', { name: 'Ver detalhes' })
   expect(link).toHaveAttribute('href', '/destino')
+  expect(link).toHaveAttribute('data-theme-part', 'button')
   await userEvent.click(link)
   expect(screen.getByRole('heading', { name: 'Detalhes' })).toBeVisible()
 })
@@ -74,12 +75,14 @@ it('campo mantém associação nativa, ref, dica e erro', async () => {
   await userEvent.type(input, 'Hero')
   expect(input).toHaveValue('Hero')
   expect(ref.current?.tagName).toBe('LABEL')
+  expect(ref.current).toHaveAttribute('data-theme-part', 'field')
   expect(screen.getByRole('alert')).toHaveTextContent('Obrigatório')
 })
 it('estados de consulta distinguem vazio, carregamento e erro recuperável', async () => {
   const retry = vi.fn()
   render(<><EmptyState>Sem itens</EmptyState><LoadingState /><ErrorNotice error={new Error('Falha na consulta')} onRetry={retry} /></>)
   expect(screen.getByRole('status')).toHaveTextContent('Carregando informações')
+  expect(screen.getByRole('status')).toHaveAttribute('data-theme-part', 'loading-state')
   expect(screen.getByRole('alert')).toHaveTextContent('Falha na consulta')
   await userEvent.click(screen.getByRole('button', { name: 'Tentar novamente' }))
   expect(retry).toHaveBeenCalledTimes(1)
@@ -93,6 +96,7 @@ it('sem erro não cria alerta; erro desconhecido usa fallback', () => {
 it('cabeçalho compartilha título, descrição e ações', () => {
   render(<PageHeader title="Inventário" eyebrow="Jogador" description="Seus itens" actions={<Button>Atualizar</Button>} />)
   expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Inventário')
+  expect(screen.getByRole('banner')).toHaveAttribute('data-theme-part', 'page-header')
   expect(screen.getByRole('button', { name: 'Atualizar' })).toBeVisible()
 })
 it('abas funcionam com setas, Home/End e mantêm um ponto de tabulação', async () => {
@@ -105,6 +109,7 @@ it('abas funcionam com setas, Home/End e mantêm um ponto de tabulação', async
   await user.tab()
   await user.keyboard('{ArrowRight}')
   const second = screen.getByRole('tab', { name: 'Segunda' })
+  expect(second.parentElement).toHaveAttribute('data-theme-part', 'tabs')
   expect(second).toHaveFocus()
   expect(second).toHaveAttribute('aria-selected', 'true')
   expect(second).toHaveAttribute('aria-controls', 'example-panel-two')

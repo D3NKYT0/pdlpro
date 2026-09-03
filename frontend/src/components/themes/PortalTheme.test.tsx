@@ -32,6 +32,11 @@ const presentation: ThemePresentation = {
     news: { title: 'NEWS' },
   },
   footer: { tagline: 'The most unique server.', copyright: '© Valorem' },
+  shells: {
+    auth: { kicker: 'ENTER THE REALM', brand: 'VALOREM' },
+    panel: { kicker: "WARRIOR'S SANCTUM", brand: 'VALOREM' },
+    admin: { kicker: 'ROYAL COMMAND', brand: 'VALOREM ADMIN' },
+  },
 }
 
 function queryClient() {
@@ -76,6 +81,7 @@ it('entrega o chrome completo e o comportamento do menu móvel', () => {
     </MemoryRouter>,
   )
   fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
+  expect(screen.getByText('Conteúdo').closest('[data-theme-surface="public"]')).not.toBeNull()
   expect(screen.getByRole('navigation', { name: 'Navegação móvel' })).toBeVisible()
   expect(document.body.style.overflow).toBe('hidden')
   fireEvent.click(screen.getByRole('button', { name: 'Fechar menu' }))

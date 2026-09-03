@@ -40,6 +40,8 @@ function setFavicon(theme: ApiTheme) {
 async function applyTheme(theme: ApiTheme) {
   configureRuntimeTheme(theme.assets)
   document.documentElement.dataset.pdlTheme = theme.id
+  if (theme.presentation?.renderer) document.documentElement.dataset.pdlRenderer = theme.presentation.renderer
+  else delete document.documentElement.dataset.pdlRenderer
   activeThemeLink?.remove()
   activeThemeLink = null
   if (theme.stylesheet_url) {
