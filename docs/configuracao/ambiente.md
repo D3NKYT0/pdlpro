@@ -150,4 +150,11 @@ Não reutilize os valores de exemplo e não armazene o `.env` de produção no r
 | `DENKYNHO_LLM_API_KEY` | Bearer da API remota; vazio se o provedor não exigir |
 | `DENKYNHO_EMBEDDING_MODEL` | Identificador Hugging Face usado só quando os embeddings estão ligados |
 
-Os três modos (desligado, Ollama local, API remota) permanecem disponíveis em qualquer ambiente. Escolha conforme o hardware e a política de privacidade; não apague o Ollama só porque a VPS atual é pequena. MiniLM é independente: ligue-o se quiser busca semântica, mesmo com a geração desligada. Consulte [Ajuda e Denkynho](../funcionalidades/ajuda.md).
+Os três modos (desligado, Ollama local, API remota) permanecem disponíveis em qualquer ambiente. Escolha conforme o hardware e a política de privacidade; não apague o Ollama só porque a VPS atual é pequena. MiniLM é independente: ligue-o se quiser busca semântica, mesmo com a geração desligada.
+
+Em produção, `./setup.sh configure-production` acrescenta chaves ausentes do
+`.env.example` sem alterar valores já definidos. Use `--denkynho-provider remote`
+(com URL, modelo e chave) ou `--denkynho-provider ollama` para ligar a geração.
+Sem essas flags a geração permanece como estava. Consulte
+[Ajuda e Denkynho](../funcionalidades/ajuda.md) e
+[Implantação](../operacao/implantacao.md).

@@ -73,6 +73,75 @@ read_env_value() {
   awk -F= -v key="$key" '$1 == key { sub(/\r$/, ""); sub(/^[^=]*=/, ""); print; exit }' "$ENV_FILE"
 }
 
+env_has_key() {
+  local key="$1"
+  local file="${2:-$ENV_FILE}"
+  awk -F= -v key="$key" '
+    { sub(/\r$/, "") }
+    $1 == key { found = 1; exit }
+    END { exit !found }
+  ' "$file"
+}
+
+list_env_keys() {
+  local file="${1:-$ENV_FILE}"
+  awk -F= '
+    {
+      sub(/\r$/, "")
+      if ($0 ~ /^[A-Za-z_][A-Za-z0-9_]*=/) print $1
+    }
+  ' "$file"
+}
+
+set_env_value() {
+  local key="$1"
+  local value="$2"
+  local temporary_file
+
+  temporary_file="$(mktemp "${ENV_FILE}.tmp.XXXXXX")"
+  awk -v key="$key" -v value="$value" '
+    BEGIN { updated = 0 }
+    {
+      sub(/\r$/, "", $0)
+      if (index($0, key "=") == 1) {
+        if (!updated) {
+          print key "=" value
+          updated = 1
+        }
+        next
+      }
+      print
+    }
+    END {
+      if (!updated) print key "=" value
+    }
+  ' "$ENV_FILE" > "$temporary_file"
+  chmod 600 "$temporary_file"
+  mv -f -- "$temporary_file" "$ENV_FILE"
+}
+
+merge_missing_env_keys() {
+  local example="${ROOT_DIR}/.env.example"
+  local added=0
+  local line key
+
+  [[ -f "$example" && -f "$ENV_FILE" ]] || return 0
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
+    [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || continue
+    key="${line%%=*}"
+    env_has_key "$key" && continue
+    if [[ "$added" -eq 0 ]]; then
+      printf '\n# Variáveis adicionadas a partir de .env.example\n' >> "$ENV_FILE"
+    fi
+    printf '%s\n' "$line" >> "$ENV_FILE"
+    added=1
+  done < "$example"
+  if [[ "$added" -eq 1 ]]; then
+    info "Chaves ausentes do .env.example foram acrescentadas em $ENV_FILE"
+  fi
+}
+
 service_is_running() {
   local service="$1"
   [[ "$(operational_compose ps --status running --quiet "$service" 2>/dev/null)" != "" ]]

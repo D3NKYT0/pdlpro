@@ -91,6 +91,11 @@ DENKYNHO_LLM_TIMEOUT=120
 
 A URL pode ser a base (`…/v1`) ou o caminho completo `…/v1/chat/completions`. HTTP e HTTPS são aceitos; usuário/senha na URL são recusados. A chave vai só no cabeçalho `Authorization` e não entra em logs de falha. O adaptador pede `response_format: json_object`; se o provedor recusar com HTTP 400, tenta de novo sem esse campo. Pydantic valida o JSON. Fontes inventadas, texto vazio ou ofensivo e poses desconhecidas continuam recusados no backend. A chave fica no `.env` da API, nunca no frontend.
 
+Em um `.env` de produção já existente, use `./setup.sh configure-production` para
+acrescentar as chaves novas sem sobrescrever domínio e segredos. As flags
+`--denkynho-provider remote`, `--denkynho-api-url`, `--denkynho-api-key` e
+`--denkynho-model` ligam esse modo. Detalhes em [Implantação](../operacao/implantacao.md).
+
 ## Qwen dentro do Docker do projeto
 
 O arquivo [docker-compose.ollama.yml](../../docker-compose.ollama.yml) complementa o Compose de desenvolvimento ou de produção. Requer Docker com Compose v2 e containers Linux. Prepare o `.env` conforme o guia de ambiente correspondente.

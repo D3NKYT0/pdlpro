@@ -97,6 +97,28 @@ Em uma instalacao existente, a rotacao atualiza o role PostgreSQL, grava o novo
 `.env` e recria os servicos dependentes. Se alguma etapa falhar, o comando tenta
 restaurar tanto a senha anterior do banco quanto o arquivo de configuracao.
 
+O configurador nao apaga nem sobrescreve chaves que ja existem no `.env`,
+exceto as de producao que ele mesmo gerencia (`DEBUG`, hosts, URLs publicas,
+Django settings) e as flags do Denkynho que voce passar. Variaveis novas do
+`.env.example` sao acrescentadas no final. `DENKYNHO_EMBEDDINGS_ENABLED`, se
+ainda nao existir, entra como `false` para nao baixar MiniLM no primeiro chat.
+A geracao continua desligada ate voce passar `--denkynho-provider`.
+
+Para ligar uma API remota (Groq, OpenAI ou outro endpoint `/v1`) sem mexer
+no dominio nem nos segredos ja definidos:
+
+```bash
+./setup.sh configure-production --yes \
+  --denkynho-provider remote \
+  --denkynho-api-url https://api.groq.com/openai/v1 \
+  --denkynho-api-key gsk-... \
+  --denkynho-model openai/gpt-oss-20b
+```
+
+Ollama local: `--denkynho-provider ollama`. Para so acrescentar chaves
+ausentes, rode o comando sem flags do Denkynho. A chave da API nunca e
+impressa nos logs.
+
 O resultado relevante sera equivalente aos valores abaixo:
 
 ```dotenv
