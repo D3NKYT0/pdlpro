@@ -6,6 +6,14 @@ import { contentApi } from '../services/api'
 export function FaqPage() {
   const faq = useQuery({ queryKey: ['faq'], queryFn: contentApi.faq })
   const [open, setOpen] = useState(0)
+  const [category, setCategory] = useState('all')
+  const [search, setSearch] = useState('')
+  const categories = Array.from(new Map((faq.data ?? []).map(item => [item.category, item.category_label])).entries())
+  const normalizedSearch = search.trim().toLocaleLowerCase('pt-BR')
+  const visible = (faq.data ?? []).filter(item =>
+    (category === 'all' || item.category === category)
+    && (!normalizedSearch || `${item.question} ${item.short_answer} ${item.answer} ${item.keywords.join(' ')}`.toLocaleLowerCase('pt-BR').includes(normalizedSearch)),
+  )
 
   return (
     <div className="public-page">
@@ -15,11 +23,15 @@ export function FaqPage() {
         description="Dúvidas comuns da comunidade, reunidas num só lugar."
       />
       <div className="container">
+        {(faq.data ?? []).length ? <div className="public-faq-tools">
+          <label>Buscar no FAQ<input type="search" value={search} onChange={event => { setSearch(event.target.value); setOpen(0) }} placeholder="Ex.: senha, personagem, carteira" /></label>
+          <label>Assunto<select value={category} onChange={event => { setCategory(event.target.value); setOpen(0) }}><option value="all">Todos os assuntos</option>{categories.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+        </div> : null}
         {faq.isLoading ? (
           <PublicEmpty>Consultando a central de ajuda...</PublicEmpty>
-        ) : (faq.data ?? []).length ? (
+        ) : visible.length ? (
           <div className="public-accordion">
-            {(faq.data ?? []).map((item, index) => (
+            {visible.map((item, index) => (
               <article className={open === index ? 'is-open' : undefined} key={item.id}>
                 <button
                   type="button"
@@ -30,12 +42,12 @@ export function FaqPage() {
                   {item.question}
                   <i className="fa-solid fa-chevron-right public-chevron" aria-hidden="true" />
                 </button>
-                {open === index ? <div className="public-accordion-body">{item.answer}</div> : null}
+                {open === index ? <div className="public-accordion-body"><small>{item.category_label}</small><p>{item.answer}</p></div> : null}
               </article>
             ))}
           </div>
         ) : (
-          <PublicEmpty>Nenhuma pergunta publicada no momento.</PublicEmpty>
+          <PublicEmpty>{(faq.data ?? []).length ? 'Nenhuma pergunta corresponde aos filtros.' : 'Nenhuma pergunta publicada no momento.'}</PublicEmpty>
         )}
       </div>
     </div>

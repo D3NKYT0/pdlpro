@@ -10,11 +10,11 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { EmptyState, ErrorNotice, LoadingState } from '../components/ui/Feedback'
 import { Toggle } from '../components/ui/Toggle'
 import { useAsyncAction } from '../hooks/useAsyncAction'
-import { answerQuestion, helpArticles } from '../components/help/answers'
+import { answerQuestion, helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
 import { useReducedMotion } from '../components/help/useReducedMotion'
 
-type Message = { id: number; role: 'user' | 'assistant'; text: string; source?: string; pose?: string }
+type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; source?: string; related?: HelpArticle[]; pose?: string }
 const welcome: Message = { id: 0, role: 'assistant', text: 'Olá! Sou o Denkynho. Conte sua dúvida ou escolha uma pergunta abaixo. Vou procurar uma orientação na base de ajuda do PDL.', pose: '01-boas-vindas' }
 
 /** Central de ajuda autenticada. Conversa temporária, baseada apenas no FAQ publicado. */
@@ -30,6 +30,8 @@ export function HelpPage() {
   const [sleeping, setSleeping] = useState(false)
   const [validation, setValidation] = useState('')
   const [failed, setFailed] = useState(false)
+  const [topic, setTopic] = useState('all')
+  const [expanded, setExpanded] = useState<Set<number>>(new Set())
   const sequence = useRef(0)
   const mounted = useRef(true)
   const bottom = useRef<HTMLDivElement>(null)
@@ -69,6 +71,8 @@ export function HelpPage() {
     setDraft(''); setShown(0); setRevealing(animated ? reply : null)
   }
   function submit(event: FormEvent) { event.preventDefault(); void send() }
+  const categories = Array.from(new Map((faq.data ?? []).map(item => [item.category, item.category_label])).entries())
+  const suggestions = (faq.data ?? []).filter(item => topic === 'all' || item.category === topic).slice(0, 4)
   const last = messages[messages.length - 1]
   const pose = action.pending ? '03-pensando' : failed ? '07-triste' : sleeping ? '05-dormindo' : last.pose ?? '01-boas-vindas'
   return <div className="help-page">
@@ -83,18 +87,22 @@ export function HelpPage() {
         <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> Consultar o FAQ</ButtonLink>
       </Card>
       <Card as="section" className="help-chat" aria-label="Chat de ajuda">
-        <header className="help-chat-head"><div><h2>Vamos conversar</h2><p className="muted">Respostas da base de ajuda · conversa temporária</p></div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setMessages([welcome]); setDraft(''); setValidation(''); setSleeping(false); setFailed(false) }}>Nova conversa</Button></header>
+        <header className="help-chat-head"><div><h2>Vamos conversar</h2><p className="muted">Resposta rápida, orientação completa e assuntos relacionados</p></div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setMessages([welcome]); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setExpanded(new Set()) }}>Nova conversa</Button></header>
         <div className="help-messages" role="log" aria-label="Mensagens da conversa" aria-live="polite" aria-relevant="additions">
           {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>
             <strong>{message.role === 'user' ? 'Você' : 'Denkynho'}</strong>
             {revealing?.id === message.id ? <><p aria-hidden="true">{Array.from(message.text).slice(0, shown).join('') || '…'}</p><p className="help-sr">{message.text}</p></> : <p>{message.text}</p>}
+            {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>Ver orientação completa</Button>}
+            {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}
             {message.source && <small className="muted">Fonte: {message.source}</small>}
+            {message.related?.length ? <div className="help-related" aria-label="Assuntos relacionados"><small className="muted">Talvez você queira saber:</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}
           </article>)}<div ref={bottom} />
         </div>
         {faq.isLoading && <LoadingState>Carregando perguntas de ajuda…</LoadingState>}
         <ErrorNotice error={faq.error} onRetry={() => { void faq.refetch() }} />
         {faq.isSuccess && !faq.data.length && <EmptyState>Ainda não há perguntas publicadas. O atendimento da equipe está disponível.</EmptyState>}
-        {messages.length === 1 && Boolean(faq.data?.length) && <div className="help-suggestions" aria-label="Perguntas sugeridas">{faq.data!.slice(0, 4).map(item => <div className="help-suggestion" key={item.id}><span>{item.question}</span><Button aria-label={item.question} variant="secondary" size="sm" disabled={busy} onClick={() => { setDraft(item.question); void send(item.question) }}>Perguntar</Button></div>)}</div>}
+        {messages.length === 1 && Boolean(faq.data?.length) && <div className="help-topic"><Field label="Assunto"><select value={topic} onChange={event => setTopic(event.target.value)}><option value="all">Todos os assuntos</option>{categories.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></Field></div>}
+        {messages.length === 1 && suggestions.length > 0 && <div className="help-suggestions" aria-label="Perguntas sugeridas">{suggestions.map(item => <div className="help-suggestion" key={item.id}><span><small className="muted">{item.category_label}</small>{item.question}</span><Button aria-label={item.question} variant="secondary" size="sm" disabled={busy} onClick={() => { setDraft(item.question); void send(item.question) }}>Perguntar</Button></div>)}</div>}
         {action.pending && <LoadingState>Consultando a base de ajuda…</LoadingState>}
         <ErrorNotice error={failed && action.error} fallback="Não foi possível consultar a ajuda." />
         {revealing && <div className="help-reveal"><Button size="sm" variant="secondary" onClick={finish}>Mostrar resposta completa</Button></div>}

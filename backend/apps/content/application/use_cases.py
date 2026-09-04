@@ -80,15 +80,23 @@ class GetNewsUseCase(UseCase[GetNewsInput, NewsDTO]):
 
 
 class ListFaqUseCase(UseCase[None, list[dict]]):
-    """Lista perguntas e respostas marcadas como publicadas.
+    """Lista artigos publicados com as três camadas usadas pela central de ajuda.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
-    retorno é ``list[dict]``.
+    retorno inclui categoria, rótulo, resposta rápida, detalhes e palavras-chave.
     """
 
     def execute(self, data: None = None) -> list[dict]:
         return [
-            {"id": str(item.id), "question": item.question, "answer": item.answer}
+            {
+                "id": str(item.id),
+                "question": item.question,
+                "short_answer": item.short_answer,
+                "answer": item.answer,
+                "category": item.category,
+                "category_label": item.get_category_display(),
+                "keywords": [keyword.strip() for keyword in item.keywords.split(",") if keyword.strip()],
+            }
             for item in Faq.objects.filter(is_published=True)
         ]
 

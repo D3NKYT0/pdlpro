@@ -22,12 +22,13 @@ class NewsAdmin(PDLModelAdmin):
 class FaqAdmin(PDLModelAdmin):
     """Configura a administração Django de ``Faq``.
 
-    A listagem exibe ``question``, ``order``, ``is_published``. Ajuste filtros, busca e campos
-    nesta classe para mudar a experiência da equipe no admin; regras reutilizáveis ficam na
-    aplicação.
+    A listagem separa artigos por assunto e permite pesquisar nas respostas e palavras-chave.
+    A ordem e a publicação continuam controladas individualmente.
     """
 
-    list_display = ("question", "order", "is_published")
+    list_display = ("question", "category", "order", "is_published")
+    list_filter = ("category", "is_published")
+    search_fields = ("question", "short_answer", "answer", "keywords")
 
 
 @admin.register(DownloadLink)

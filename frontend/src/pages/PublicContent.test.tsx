@@ -24,7 +24,10 @@ function mount(page: ReactElement, url = '/', path = '*') {
 }
 
 it('FAQ abre e fecha respostas com estado acessível', async () => {
-  vi.mocked(contentApi.faq).mockResolvedValue([{ id: '1', question: 'Como jogar?', answer: 'Baixe o cliente.' }, { id: '2', question: 'Como doar?', answer: 'Use a carteira.' }])
+  vi.mocked(contentApi.faq).mockResolvedValue([
+    { id: '1', question: 'Como jogar?', short_answer: 'Baixe o cliente.', answer: 'Baixe o cliente.', category: 'getting_started', category_label: 'Primeiros passos', keywords: ['cliente'] },
+    { id: '2', question: 'Como doar?', short_answer: 'Use a carteira.', answer: 'Use a carteira.', category: 'economy', category_label: 'Carteira e inventário', keywords: ['saldo'] },
+  ])
   const user = mount(<FaqPage />)
   expect(await screen.findByText('Baixe o cliente.')).toBeTruthy()
   await user.click(screen.getByRole('button', { name: 'Como doar?' }))

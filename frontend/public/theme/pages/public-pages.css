@@ -212,6 +212,30 @@
   border: 1px solid #3d3223;
 }
 
+.public-faq-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(190px, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.public-faq-tools label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 700;
+}
+
+.public-faq-tools input,
+.public-faq-tools select {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.58);
+  border: 1px solid #3d3223;
+}
+
 .public-accordion article {
   border-bottom: 1px solid rgba(230, 199, 125, 0.1);
 }
@@ -249,6 +273,15 @@
   font-weight: 300;
   line-height: 1.7;
   text-align: left;
+}
+
+.public-accordion-body small {
+  color: #e6c77d;
+  font-weight: 700;
+}
+
+.public-accordion-body p {
+  margin: 8px 0 0;
 }
 
 .public-accordion .public-chevron {
@@ -385,6 +418,10 @@
 
   .public-grid,
   .public-grid.cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .public-faq-tools {
     grid-template-columns: 1fr;
   }
 

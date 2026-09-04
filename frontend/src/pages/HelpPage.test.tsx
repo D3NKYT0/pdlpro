@@ -7,7 +7,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
 import { resetHttpClient } from '../services/infra/http'
-const articles = [{ id: '1', question: 'Como recuperar minha senha?', answer: 'Use a recuperação na tela de login.' }]
+const articles = [{ id: '1', question: 'Como recuperar minha senha?', short_answer: 'Use a recuperação.', answer: 'Use a recuperação na tela de login.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['senha', 'reset'] }]
 const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
 let client: QueryClient
 let fetcher: ReturnType<typeof vi.fn>
@@ -25,11 +25,14 @@ it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   expect(String(fetcher.mock.calls[0][0])).toContain('/public/faq/')
   expect(screen.getByRole('link', { name: 'Atendimento da equipe' })).toHaveAttribute('href', '/painel/support')
   expect(screen.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
+  expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveValue('all')
 })
-it('envia sugestão, revela a resposta, mostra fonte e reinicia a conversa', async () => {
+it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   const log = screen.getByRole('log')
+  expect(within(log).getByText(articles[0].short_answer)).toBeVisible()
+  await user.click(within(log).getByRole('button', { name: 'Ver orientação completa' }))
   expect(within(log).getByText(articles[0].answer)).toBeVisible()
   expect(within(log).getByText(`Fonte: ${articles[0].question}`)).toBeVisible()
   expect(screen.getByRole('textbox', { name: 'Sua mensagem' })).toHaveValue('')
@@ -70,11 +73,13 @@ it('respeita movimento reduzido e exibe a resposta completa sem animação', asy
   vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
   const user = mount(); expect(screen.getByRole('checkbox', { name: 'Animar personagem' })).toBeDisabled()
   await user.click(await screen.findByRole('button', { name: articles[0].question }))
-  expect(await screen.findByText(articles[0].answer)).toBeVisible()
+  expect(await screen.findByText(articles[0].short_answer)).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Ver orientação completa' }))
+  expect(screen.getByText(articles[0].answer)).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Mostrar resposta completa' })).not.toBeInTheDocument()
 })
 it('descansa após inatividade, acorda ao enviar e termina a fala automaticamente', async () => {
-  fetcher.mockImplementation(() => Promise.resolve(response([{ ...articles[0], answer: 'Ok.' }])))
+  fetcher.mockImplementation(() => Promise.resolve(response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })

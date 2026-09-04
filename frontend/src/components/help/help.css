@@ -88,8 +88,28 @@
   min-width:0;
 }
 .help-suggestion>span {
+  display:grid;
+  gap:3px;
   overflow-wrap:anywhere;
   min-width:0;
+}
+.help-topic {
+  padding:0 24px 16px;
+  max-width:360px;
+}
+.help-related {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+}
+.help-related>small {
+  flex-basis:100%;
+}
+.help-details {
+  border-top:1px solid var(--panel-border);
+  padding-top:12px;
 }
 .help-compose {
   display:grid;
@@ -266,7 +286,7 @@
   .help-companion .panel-eyebrow {
     font-size:12px;
   }
-  .help-suggestions {
+  .help-suggestions,.help-topic {
     padding:0 16px 16px;
   }
 }

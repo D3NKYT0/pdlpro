@@ -32,13 +32,35 @@ class News(TitleSlugMixin, BaseModel):
 
 
 class Faq(BaseModel):
-    """Pergunta e resposta com ordenação e controle de publicação no FAQ. Herda BaseModel: use
-    ``id`` (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para
-    operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """Artigo do FAQ com resposta rápida, orientação completa e termos de busca.
+
+    ``category`` organiza as interfaces e ``keywords`` melhora a seleção conservadora feita
+    pelo assistente. A API expõe ``id`` (UUID); ``pk``/``seq_id`` permanecem internos.
     """
 
+    class Category(models.TextChoices):
+        GETTING_STARTED = "getting_started", "Primeiros passos"
+        ACCOUNT_SECURITY = "account_security", "Conta e segurança"
+        GAME_ACCOUNTS = "game_accounts", "Contas e personagens"
+        ECONOMY = "economy", "Carteira e inventário"
+        COMMERCE = "commerce", "Loja e comércio"
+        GAMES_REWARDS = "games_rewards", "Jogos e recompensas"
+        COMMUNITY = "community", "Conteúdo e comunidade"
+        SUPPORT = "support", "Ajuda e atendimento"
+
     question = models.CharField(max_length=250)
+    short_answer = models.CharField(
+        max_length=400,
+        blank=True,
+        help_text="Resposta rápida exibida primeiro pelo assistente; a resposta completa traz os detalhes.",
+    )
     answer = models.TextField()
+    category = models.CharField(max_length=40, choices=Category.choices, default=Category.GETTING_STARTED)
+    keywords = models.CharField(
+        max_length=500,
+        blank=True,
+        help_text="Termos alternativos separados por vírgulas usados para localizar esta orientação.",
+    )
     order = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=True)
 

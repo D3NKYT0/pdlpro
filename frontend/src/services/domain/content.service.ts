@@ -21,10 +21,20 @@ export interface ApiCalendarEvent {
   color: string
 }
 
+export interface ApiFaq {
+  id: string
+  question: string
+  short_answer: string
+  answer: string
+  category: string
+  category_label: string
+  keywords: string[]
+}
+
 export const contentApi = {
   news: () => request<ApiNews[]>('/public/news/'),
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
-  faq: () => request<Array<{ id: string; question: string; answer: string }>>('/public/faq/'),
+  faq: () => request<ApiFaq[]>('/public/faq/'),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),
   wikiPage: (slug: string) => request<ApiWikiPage>(`/public/wiki/${slug}/`),
