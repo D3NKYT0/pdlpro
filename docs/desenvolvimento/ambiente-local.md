@@ -124,3 +124,21 @@ Revise o arquivo de migração antes do commit. Algumas migrações do projeto t
 ## Solução de problemas
 
 Consulte o [guia de diagnóstico](../operacao/solucao-de-problemas.md) para falhas de conexão, sessão, Redis, ícones e integrações.
+
+### Inicialização pelo BAT no Windows
+
+Execute `start-dev.bat` na raiz. Antes de iniciar os servidores, ele chama
+`scripts/setup-python.bat`, cria `backend/.venv` se necessário, atualiza o pip,
+executa `pip install --upgrade -r backend/requirements.txt` e verifica conflitos
+com `pip check`. Essa sincronização acontece em toda inicialização, mesmo quando
+o arquivo de dependências não mudou. Uma falha interrompe a inicialização.
+
+As versões fixadas com `==` no `requirements.txt` são respeitadas. Para adotar
+uma versão mais recente da aplicação, atualize esse arquivo e valide a suíte;
+o BAT instalará essa versão na próxima execução. A preparação exige acesso ao
+índice de pacotes. Para preparar somente o Python, execute `scripts/setup-python.bat`.
+
+O teste isolado do bootstrap roda com
+`backend\.venv\Scripts\python.exe scripts\test_setup_python.py` no Windows.
+Ele cria um ambiente temporário, simula somente o pip e verifica criação,
+repetição da sincronização e interrupção em falhas, sem instalar pacotes pela rede.

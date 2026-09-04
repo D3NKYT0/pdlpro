@@ -2,35 +2,10 @@
 setlocal
 cd /d "%~dp0"
 
-if not exist "backend\.venv\Scripts\python.exe" (
-  echo Criando venv em backend\.venv...
-  py -3.14 -m venv backend\.venv 2>nul
-  if not exist "backend\.venv\Scripts\python.exe" (
-    python -m venv backend\.venv
-  )
-  if not exist "backend\.venv\Scripts\python.exe" (
-    echo Nao foi possivel criar o venv. Instale Python 3.14.
-    pause
-    exit /b 1
-  )
-)
-
-fc /b "backend\requirements.txt" "backend\.venv\.requirements-installed" >nul 2>&1
+call "%~dp0scripts\setup-python.bat"
 if errorlevel 1 (
-  echo Instalando dependencias do Python...
-  "backend\.venv\Scripts\python.exe" -m pip install --upgrade pip
-  if errorlevel 1 (
-    echo pip upgrade falhou.
-    pause
-    exit /b 1
-  )
-  "backend\.venv\Scripts\python.exe" -m pip install -r backend\requirements.txt
-  if errorlevel 1 (
-    echo pip install falhou.
-    pause
-    exit /b 1
-  )
-  copy /Y "backend\requirements.txt" "backend\.venv\.requirements-installed" >nul
+  pause
+  exit /b 1
 )
 
 if not exist "frontend\node_modules\" (
