@@ -1,3 +1,19 @@
+.help-companion-host { position:relative; min-height:0; }
+.help-companion-host .help-companion { height:100%; }
+.help-character-handle { position:relative; display:grid; place-items:center; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; border-radius:16px; }
+.help-character-handle:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
+.help-character-handle .denk-mascot { width:180px; pointer-events:none; }
+.help-character-badge { position:absolute; bottom:0; right:0; padding:0 8px; border-radius:12px; background:var(--panel-bg, #18202d); color:var(--panel-text, #fff); }
+.panel-app .help-page .help-companion-menu,.help-companion-menu { position:absolute; z-index:40; top:8px; left:calc(100% + 8px); width:min(340px, calc(100vw - 32px)); max-height:calc(100% - 16px); overflow:auto; display:flex; flex-direction:column; gap:12px; padding:16px; box-shadow:0 12px 40px #0005; }
+.help-companion-menu header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.help-companion-menu p { margin:0; }
+.help-companion-host.is-floating { position:fixed; z-index:121; width:80px; height:120px; }
+.panel-app .help-page .is-floating .help-companion,.is-floating .help-companion { display:block; padding:0; border:0; background:none; box-shadow:none; overflow:visible; }
+.is-floating .help-companion-intro,.is-floating .help-companion-status { display:none; }
+.is-floating .help-character-handle { touch-action:none; user-select:none; cursor:grab; }
+.is-floating .help-character-handle:active { cursor:grabbing; }
+.is-floating .help-character-handle .denk-mascot { width:80px; }
+.panel-app .help-page .is-floating .help-companion-menu,.is-floating .help-companion-menu { position:fixed; top:var(--companion-menu-top); left:var(--companion-menu-left); width:min(340px,var(--companion-menu-width)); max-height:var(--companion-menu-height); }
 .help-page {
   display:flex;
   flex-direction:column;

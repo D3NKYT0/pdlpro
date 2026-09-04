@@ -28,9 +28,11 @@ beforeEach(() => {
   vi.stubGlobal('Image', class { onload: null | (() => void) = null; onerror = null; set src(_: string) { Promise.resolve().then(() => this.onload?.()) } })
 })
 afterEach(() => { cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+async function openCompanion(user = userEvent.setup()) { if (!screen.queryByRole('dialog')) await user.click(screen.getByRole('button', { name: /Denkynho: / })) }
 function mount() { render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
 it('oferece atividades locais, bloqueia repetição e interrompe ao digitar', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
   for (const [name, pose] of [['Comer', '11-comendo'], ['Jogar', '12-jogando'], ['Rir', '06-rindo'], ['Comemorar', '02-sucesso']]) {
     await user.click(screen.getByRole('button', { name }))
     await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose))
@@ -40,12 +42,14 @@ it('oferece atividades locais, bloqueia repetição e interrompe ao digitar', as
   expect(fetcher).toHaveBeenCalledTimes(1)
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Oi')
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas'))
+  await openCompanion(user)
   expect(screen.getByRole('button', { name: 'Jogar' })).toBeDisabled()
 })
 it('faz atividades ao esperar, encerra a ação manual e dorme sem acumular timers', async () => {
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  await openCompanion()
   await user.click(screen.getByRole('button', { name: 'Comer' }))
   await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
@@ -53,6 +57,7 @@ it('faz atividades ao esperar, encerra a ação manual e dorme sem acumular time
     await act(async () => { await vi.advanceTimersByTimeAsync(delay) })
     expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
   }
+  await openCompanion()
   await user.click(screen.getByRole('button', { name: 'Jogar' }))
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando'))
   cleanup(); client.clear()
@@ -63,11 +68,13 @@ it('mantém atividades manuais estáticas e não inicia atividades automáticas 
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  await openCompanion()
   await user.click(screen.getByRole('button', { name: 'Jogar' }))
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando')
   expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')
   await act(async () => { await vi.advanceTimersByTimeAsync(34000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  await openCompanion()
   await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
   expect(screen.getByRole('button', { name: 'Eat' })).toBeEnabled()
 })
@@ -78,6 +85,7 @@ it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   expect(screen.getByText(/(Bom dia|Boa tarde|Boa noite), Daniel!/)).toBeVisible()
   expect(screen.getByText(/sessão de jogador/i)).toBeVisible()
   expect(screen.getByRole('link', { name: 'Atendimento da equipe' })).toHaveAttribute('href', '/painel/support')
+  await openCompanion()
   expect(screen.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
   expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveValue('all')
 })
@@ -114,6 +122,7 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
 })
 it('troca a interface e a personalidade para inglês e recarrega o FAQ localizado', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
   await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
   expect(await screen.findByRole('heading', { name: 'Help' })).toBeVisible()
   expect(screen.getByRole('textbox', { name: 'Your message' })).toHaveAttribute('placeholder', 'Type your question…')
@@ -124,7 +133,7 @@ it('troca a interface e a personalidade para inglês e recarrega o FAQ localizad
   expect(screen.getByText("Hi! I'm Denkynho. How can I help you on your PDL journey?")).toBeVisible()
 })
 it('continua uma orientação usando contexto sem consultar novamente o FAQ', async () => {
-  const user = mount(); await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  const user = mount(); await openCompanion(user); await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.click(await screen.findByRole('button', { name: articles[0].question }))
   expect(await screen.findByText(articles[0].short_answer)).toBeVisible()
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Mais detalhes')
@@ -164,6 +173,7 @@ it('bloqueia envio duplicado durante a consulta e mantém o rascunho na falha', 
 it('trata base vazia e mensagem sem correspondência sem inventar resposta', async () => {
   fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ language: 'pt', kind: 'unknown', engine: 'rapidfuzz', confidence: 0, related_ids: [], answer: { text: 'Não encontrei uma resposta segura para essa pergunta na nossa base.', pose: '09-confuso' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : response([])))
   const user = mount(); expect(await screen.findByText(/Ainda não há perguntas publicadas/)).toBeVisible()
+  await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Meu personagem sumiu')
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
@@ -178,7 +188,7 @@ it('permite tentar novamente após resposta inválida da base', async () => {
 })
 it('respeita movimento reduzido e exibe a resposta completa sem animação', async () => {
   vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
-  const user = mount(); expect(screen.getByRole('checkbox', { name: 'Animar personagem' })).toBeDisabled()
+  const user = mount(); await openCompanion(user); expect(screen.getByRole('checkbox', { name: 'Animar personagem' })).toBeDisabled()
   await user.click(await screen.findByRole('button', { name: articles[0].question }))
   expect(await screen.findByText(articles[0].short_answer)).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Ver orientação completa' }))
@@ -211,6 +221,7 @@ it('preserva o rascunho quando o assistente devolve um contrato inválido', asyn
 
 it('mantém a preferência de detalhes nas respostas do servidor', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.type(screen.getByRole('textbox'), 'Quero respostas detalhadas{Enter}')
   await screen.findByText(/Vou trazer a orientação completa/)
@@ -221,6 +232,7 @@ it('mantém a preferência de detalhes nas respostas do servidor', async () => {
 
 it('aceita reparação social do backend sem repetir fonte e resposta do FAQ anterior', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.click(screen.getByRole('button', { name: articles[0].question }))
   await screen.findByText(articles[0].short_answer)
@@ -235,6 +247,7 @@ it('aceita reparação social do backend sem repetir fonte e resposta do FAQ ant
 
 it('usa geração também para cumprimentos, mantém contexto e o limpa em nova conversa', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   const generated = { kind: 'social', language: 'pt', engine: 'ollama', mode: 'generative', context: 'signed-turn-1', answer: { text: 'Oi, Dani! Como foi seu dia?', pose: '02-sucesso' } }
   fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response(generated) : apiResponse(input)))
@@ -253,6 +266,7 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
   await user.type(screen.getByRole('textbox'), 'oi{Enter}')
   await screen.findByText(generated.answer.text)
   expect(calls().at(-1).context).toBe('')
+  await openCompanion()
   await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
   await user.type(screen.getByRole('textbox'), 'Hello{Enter}')
   await screen.findByText(generated.answer.text)
@@ -261,6 +275,7 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
 
 it('informa ajuda básica quando a geração falha e permite recuperar a conversa', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ ...assistantReply, mode: 'limited', context: '' }) : apiResponse(input)))
   await user.type(screen.getByRole('textbox'), 'senha{Enter}')

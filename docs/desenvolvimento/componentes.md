@@ -18,6 +18,8 @@ O código está em [dev/ui.tsx](../../frontend/dev/ui.tsx). O catálogo é uma e
 
 ## Biblioteca básica
 
+Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) combina o renderizador Denkynho com um menu de ações e dicas. No celular, sua alça nativa especializada permite arraste e movimentação por teclado; botões, campos e superfícies do menu continuam usando a biblioteca compartilhada. Consulte [Interação com o personagem](../funcionalidades/ajuda.md#interação-com-o-personagem).
+
 | Peça | Uso e contrato |
 | --- | --- |
 | [Button, ButtonLink e IconButton](../../frontend/src/components/ui/Button.tsx) | Ações, navegação interna e ações somente com ícone |

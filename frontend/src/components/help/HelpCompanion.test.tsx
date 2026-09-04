@@ -1,0 +1,95 @@
+// @vitest-environment jsdom
+import '@testing-library/jest-dom/vitest'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { afterEach, expect, it, vi } from 'vitest'
+import { HelpCompanion } from './HelpCompanion'
+
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+function mount(mobile = false) {
+  vi.stubGlobal('innerWidth', mobile ? 390 : 1200)
+  vi.stubGlobal('innerHeight', 844)
+  const chat = vi.fn()
+  const view = render(<HelpCompanion language="pt" status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion>)
+  return { ...view, chat, user: userEvent.setup(), trigger: screen.getByRole('button', { name: 'Denkynho: ações e dicas' }) }
+}
+it('abre por teclado, alterna dicas locais e fecha com Escape devolvendo foco', async () => {
+  const { user, trigger } = mount()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.tab(); await user.keyboard('{Enter}')
+  expect(trigger).toHaveAttribute('aria-expanded', 'true')
+  expect(screen.getByRole('button', { name: 'Fechar' })).toHaveFocus()
+  await user.click(screen.getByRole('button', { name: 'Me dê uma dica' }))
+  expect(screen.getByRole('status')).toHaveTextContent('Não envie senhas')
+  await user.click(screen.getByRole('button', { name: 'Me dê uma dica' }))
+  expect(screen.getByRole('status')).toHaveTextContent('Conte o que aconteceu')
+  await user.keyboard('{Escape}')
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(trigger).toHaveFocus()
+})
+it('fecha pelo botão, toque externo e encaminha a conversa sem enviar mensagem', async () => {
+  const { user, trigger, chat } = mount()
+  await user.click(trigger); await user.click(screen.getByRole('button', { name: 'Fechar' }))
+  expect(trigger).toHaveFocus()
+  await user.click(trigger); await user.click(document.body)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.click(trigger); await user.click(screen.getByRole('button', { name: 'Conversar' }))
+  expect(chat).toHaveBeenCalledTimes(1)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+})
+it('recolhe as ações no celular para mostrar a animação e mantém aberto no desktop', async () => {
+  const mobile = mount(true)
+  await mobile.user.click(mobile.trigger)
+  await mobile.user.click(screen.getByRole('button', { name: 'Comer' }))
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  mobile.unmount()
+  const desktop = mount()
+  await desktop.user.click(desktop.trigger)
+  await desktop.user.click(screen.getByRole('button', { name: 'Comer' }))
+  expect(screen.getByRole('dialog')).toBeVisible()
+})
+it('move por teclado, limita às bordas, reposiciona e acompanha teclado virtual e desktop', async () => {
+  const { user, trigger, container } = mount(true)
+  const host = container.firstElementChild as HTMLElement
+  trigger.focus(); await user.keyboard('{ArrowLeft}{ArrowUp}')
+  expect(host.style.left).toBe('282px'); expect(host.style.top).toBe('100px')
+  await user.keyboard('{ArrowLeft>30/}{ArrowUp>30/}')
+  expect(host.style.left).toBe('8px'); expect(host.style.top).toBe('8px')
+  await user.click(trigger); await user.click(screen.getByRole('button', { name: 'Reposicionar personagem' }))
+  expect(host.style.left).toBe('302px'); expect(host.style.top).toBe('120px')
+  const viewport = new EventTarget()
+  Object.assign(viewport, { width: 300, height: 210, offsetLeft: 0, offsetTop: 20 })
+  vi.stubGlobal('visualViewport', viewport)
+  act(() => { window.dispatchEvent(new Event('resize')) })
+  expect(host.style.left).toBe('212px'); expect(host.style.top).toBe('102px')
+  expect(host.style.getPropertyValue('--companion-menu-height')).toBe('194px')
+  vi.stubGlobal('innerWidth', 1200)
+  act(() => { window.dispatchEvent(new Event('resize')) })
+  expect(host).not.toHaveClass('is-floating')
+  expect(host.style.left).toBe('')
+})
+it('distingue arrastar de tocar, ignora outro ponteiro e limpa gesto cancelado', async () => {
+  class TestPointerEvent extends MouseEvent {
+    pointerId: number; isPrimary: boolean
+    constructor(type: string, init: PointerEventInit = {}) { super(type, init); this.pointerId = init.pointerId ?? 1; this.isPrimary = init.isPrimary ?? true }
+  }
+  vi.stubGlobal('PointerEvent', TestPointerEvent)
+  const { user, trigger, container } = mount(true)
+  const host = container.firstElementChild as HTMLElement
+  fireEvent.pointerDown(trigger, { pointerId: 1, clientX: 320, clientY: 140, button: 0 })
+  fireEvent.pointerMove(trigger, { pointerId: 2, clientX: 100, clientY: 100 })
+  expect(host.style.left).toBe('302px')
+  fireEvent.pointerMove(trigger, { pointerId: 1, clientX: 322, clientY: 141 })
+  expect(host.style.left).toBe('302px')
+  fireEvent.pointerMove(trigger, { pointerId: 1, clientX: -500, clientY: 2000 })
+  expect(host.style.left).toBe('8px'); expect(host.style.top).toBe('716px')
+  fireEvent.pointerUp(trigger); fireEvent.click(trigger)
+  fireEvent.lostPointerCapture(trigger)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.click(trigger)
+  expect(screen.getByRole('dialog')).toBeVisible()
+  fireEvent.pointerDown(trigger, { clientX: 10, clientY: 730 })
+  fireEvent.pointerCancel(trigger)
+  fireEvent.pointerMove(trigger, { clientX: 200, clientY: 300 })
+  expect(host.style.left).toBe('8px')
+})

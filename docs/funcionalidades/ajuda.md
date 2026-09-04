@@ -2,6 +2,14 @@
 
 [Índice](../README.md) · [Componentes](../desenvolvimento/componentes.md) · [Testes](../desenvolvimento/testes.md)
 
+## Interação com o personagem
+
+Clique ou toque no Denkynho para abrir ações, dicas rápidas, FAQ, idioma e animações. **Conversar** fecha o menu e leva o foco ao campo da mensagem, sem enviar nada. **Me dê uma dica** alterna orientações locais de uso e segurança; não consulta IA nem altera o histórico. O menu fecha pelo botão, por Escape ou por um toque fora dele. As atividades continuam respeitando os bloqueios da conversa.
+
+Em telas de até 900 px, o personagem fica flutuante, sem reservar uma coluna ou um cartão acima do chat. Arraste o próprio personagem para movê-lo; um movimento menor que 6 px continua sendo um toque. Também é possível movê-lo com as setas quando estiver focado e usar **Reposicionar personagem** no menu. A posição é temporária e limitada à área visível, inclusive após redimensionamento ou abertura do teclado virtual. O menu tem rolagem própria em telas pequenas e recolhe ao escolher uma atividade para deixar a animação visível.
+
+[HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) concentra a interação sem duplicar o renderizador ou seus timers. Sua alça usa um botão nativo especializado para arraste; as ações e superfícies internas reutilizam `Button`, `Card`, `Toggle` e `Field` do tema. [Os testes de interação](../../frontend/src/components/help/HelpCompanion.test.tsx) cobrem abertura, foco, dicas, fechamento, toque versus arraste, cancelamento, limites e redimensionamento; os testes da página preservam o contrato HTTP e os bloqueios das atividades.
+
 ## Acessar e conversar
 
 Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.

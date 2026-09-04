@@ -12,6 +12,7 @@ import { Toggle } from '../components/ui/Toggle'
 import { useAsyncAction } from '../hooks/useAsyncAction'
 import { helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
+import { HelpCompanion } from '../components/help/HelpCompanion'
 import { useReducedMotion } from '../components/help/useReducedMotion'
 import { denkynhoWelcome, type HelpLanguage } from '../components/help/personality'
 import { initialDialogueState, isLocalDialogueMessage, respondToMessage } from '../components/help/dialogue'
@@ -170,18 +171,18 @@ export function HelpPage() {
   return <div className="help-page">
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
-      <Card as="aside" className="help-companion" aria-label={labels.assistant}>
-        <div><span className="panel-eyebrow">{labels.companion}</span><h2>Denkynho</h2></div>
-        <Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />
-        <p className="muted">{action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : currentActivity?.status[language] ?? labels.ask}</p>
+      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : currentActivity?.status[language] ?? labels.ask}
+        mascot={<Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
+        {onActivity => <>
         <div className="help-activities" role="group" aria-label={language === 'pt' ? 'Atividades do Denkynho' : 'Denkynho activities'}>
-          {activities.map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => setActivityRequest({ pose: item.pose })}>{item[language]}</Button>)}
+          {activities.map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => { setActivityRequest({ pose: item.pose }); onActivity() }}>{item[language]}</Button>)}
         </div>
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">{labels.reduced}</small>}
         <Field label={labels.language}><select value={language} disabled={busy} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>
         <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>
-      </Card>
+        </>}
+      </HelpCompanion>
       <Card as="section" className="help-chat" aria-label={labels.chatLabel}>
         <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p>{limited && <p role="status">{language === 'pt' ? 'Estou no modo de ajuda básica. A conversa com IA local está indisponível no momento.' : 'Basic help mode is active. Local AI conversation is currently unavailable.'}</p>}</div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { session.current++; setContext(''); setLimited(false); setMessages([welcome(identity, language)]); setDialogue(initialDialogueState(language)); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set()) }}>{labels.fresh}</Button></header>
         <div className="help-messages" ref={thread} role="log" aria-label={labels.messages} aria-live="polite" aria-relevant="additions">
