@@ -174,6 +174,35 @@ def test_sdk_receives_bounded_timeout_schema_and_no_tools(chat, mocker):
     assert kwargs["format"]["properties"]["pose"]["enum"]
 
 
+def test_docker_endpoint_generates_reply_with_explicit_opt_in(chat, settings, mocker):
+    from ollama import Client
+
+    api, _, model = chat
+    settings.DENKYNHO_OLLAMA_DOCKER = True
+    settings.DENKYNHO_OLLAMA_URL = "http://ollama:11434"
+    init = mocker.patch("apps.content.infrastructure.local_model.Client", wraps=Client)
+    response = post(api, "quem é você?")
+    assert response.data["engine"] == "ollama"
+    assert init.call_args.kwargs["host"] == "http://ollama:11434"
+    model.assert_called_once()
+
+
+@pytest.mark.parametrize("enabled,url", [
+    (False, "http://ollama:11434"),
+    (True, "http://other:11434"),
+    (True, "http://ollama:80"),
+    (True, "http://ollama:11434/proxy"),
+    (True, "http://user:pass@ollama:11434"),
+    (True, "https://ollama:11434"),
+])
+def test_docker_opt_in_does_not_allow_arbitrary_servers(chat, settings, enabled, url):
+    api, _, model = chat
+    settings.DENKYNHO_OLLAMA_DOCKER = enabled
+    settings.DENKYNHO_OLLAMA_URL = url
+    assert post(api, "quem é você?").data["mode"] == "limited"
+    model.assert_not_called()
+
+
 def test_disabled_model_retains_help_without_calling_sdk(chat, settings):
     api, _, model = chat
     settings.DENKYNHO_LLM_ENABLED = False

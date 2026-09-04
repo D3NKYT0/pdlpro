@@ -1,0 +1,60 @@
+# Usar junto com docker-compose.yml OU docker-compose.prod.yml.
+# Consulte docs/funcionalidades/ajuda.md para inicialização e diagnóstico.
+networks:
+  ollama_net:
+    driver: bridge
+
+volumes:
+  ollama_models:
+
+services:
+  ollama:
+    image: ollama/ollama:0.33.3
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - ollama_net
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ollama_init:
+    image: ollama/ollama:0.33.3
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    # pull reaproveita os arquivos já presentes no volume.
+    command: ["pull", "${DENKYNHO_LLM_MODEL:-qwen3.5:4b}"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - ollama_net
+
+  backend:
+    environment:
+      DENKYNHO_LLM_ENABLED: "true"
+      DENKYNHO_OLLAMA_DOCKER: "true"
+      DENKYNHO_OLLAMA_URL: http://ollama:11434
+      DENKYNHO_LLM_MODEL: ${DENKYNHO_LLM_MODEL:-qwen3.5:4b}
+      DENKYNHO_LLM_TIMEOUT: "120"
+    depends_on:
+      ollama_init:
+        condition: service_completed_successfully
+    networks:
+      - pdl_net
+      - ollama_net

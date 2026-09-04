@@ -24,7 +24,7 @@ O modelo recebe o nome básico da conta e o papel calculado no backend. Não rec
 
 O servidor devolve um token assinado com até 12 mensagens recentes, limitado também a aproximadamente 6.000 caracteres de histórico. O token é legível, não é criptografado e fica apenas no estado desta tela; não vai para localStorage nem para uma tabela de conversas. Expira após 30 minutos e é vinculado ao usuário, papel e idioma. Token alterado, expirado ou de outra identidade é descartado. A preferência de nome é mantida separadamente no token durante a conversa, mesmo depois de os primeiros turnos saírem da janela. O modelo propõe a preferência; o backend só aceita um nome de até 30 caracteres presente literalmente na mensagem atual e aprovado pelo filtro. Não é memória permanente do perfil.
 
-**Nova conversa**, recarregar/sair da tela, trocar idioma ou identidade limpa o contexto do navegador. Respostas em trânsito de uma identidade anterior são descartadas. Mensagens recusadas pelo filtro não entram no histórico. O texto e o histórico recente são enviados ao backend e ao Ollama em loopback, sem envio a IA na nuvem; não envie senhas ou códigos. O PDL não registra transcrições no banco nem inclui prompts em logs de falha do modelo.
+**Nova conversa**, recarregar/sair da tela, trocar idioma ou identidade limpa o contexto do navegador. Respostas em trânsito de uma identidade anterior são descartadas. Mensagens recusadas pelo filtro não entram no histórico. O texto e o histórico recente são enviados ao backend e ao Ollama local (loopback ou rede Docker), sem envio a IA na nuvem; não envie senhas ou códigos. O PDL não registra transcrições no banco nem inclui prompts em logs de falha do modelo.
 
 ## Configurar e iniciar
 
@@ -41,11 +41,47 @@ DENKYNHO_LLM_TIMEOUT=120
 
 O `start-dev.bat` instala as dependências do Python e chama `manage.py start_denkynho`. O comando reutiliza um Ollama ativo ou procura o executável no PATH e em `%LOCALAPPDATA%/PDL/ollama/ollama.exe`. Quando inicia um processo, usa loopback, `OLLAMA_NO_CLOUD=1` e nenhuma janela extra. Não baixa modelos no boot. Instalações fora desses caminhos devem disponibilizar `ollama` no PATH. Falhas são informadas e o restante do PDL continua com ajuda básica.
 
-O adaptador aceita somente endereços de loopback HTTP, ignora proxies do ambiente e não segue redirecionamentos. Tags de nuvem e caminhos remotos são recusados. Na instalação local de desenvolvimento, o runtime portátil 0.33.3 foi verificado com o SHA-256 publicado pelo projeto e instalado em `%LOCALAPPDATA%/PDL/ollama`; os pesos ficam no armazenamento padrão do Ollama, fora do repositório.
+O adaptador aceita endereços de loopback HTTP e, com a configuração Docker explícita descrita abaixo, o serviço `http://ollama:11434`. Ignora proxies do ambiente e não segue redirecionamentos. Tags de nuvem e caminhos remotos são recusados. Na instalação local de desenvolvimento, o runtime portátil 0.33.3 foi verificado com o SHA-256 publicado pelo projeto e instalado em `%LOCALAPPDATA%/PDL/ollama`; os pesos ficam no armazenamento padrão do Ollama, fora do repositório.
 
 O modelo de 4 bilhões de parâmetros pode rodar em CPU, mas a velocidade depende do hardware e da carga; não promete resposta instantânea. O prazo configurado limita a espera pelo servidor de geração, sem retries automáticos. A primeira carga do modelo semântico e do gerador pode demorar mais.
 
 A saída usa [JSON estruturado do Ollama](https://docs.ollama.com/capabilities/structured-outputs). O runtime recebe o esquema sem os limites grandes de comprimento, que podem gerar gramática incompatível; o orçamento de tokens limita a geração e Pydantic aplica o limite de 2.000 caracteres depois.
+
+## Qwen dentro do Docker do projeto
+
+O arquivo [docker-compose.ollama.yml](../../docker-compose.ollama.yml) complementa o Compose de desenvolvimento ou de produção. Requer Docker com Compose v2 e containers Linux. Prepare o `.env` conforme o guia de ambiente correspondente.
+
+Na raiz do projeto, para desenvolvimento:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.ollama.yml --profile dev up -d --build
+```
+
+Para produção, use o arquivo de produção como base, sem o Compose de desenvolvimento:
+
+```bash
+docker compose -f docker-compose.prod.yml -f docker-compose.ollama.yml up -d --build
+```
+
+O serviço `ollama` executa o runtime 0.33.3 em CPU. `ollama_init` baixa `qwen3.5:4b` (aproximadamente 3,4 GB) e precisa terminar com sucesso antes de o backend iniciar. `DENKYNHO_LLM_MODEL` permite selecionar outra tag local; mantenha a mesma seleção nos comandos posteriores. A primeira execução precisa de internet para baixar imagens, pesos e embeddings. Downloads de pesos já presentes são reaproveitados.
+
+O backend usa `http://ollama:11434` pela rede `ollama_net`, com permissão explícita `DENKYNHO_OLLAMA_DOCKER=true`. Essa exceção aceita somente esse endereço; não libera servidores arbitrários. O Compose ativa a geração independentemente do valor nativo de `DENKYNHO_LLM_ENABLED`. A porta 11434 não é publicada no computador nem na internet. O acesso do navegador continua pela API autenticada do PDL, preservando filtro e autorização dos artigos. O runtime está com nuvem desativada.
+
+Os pesos ficam no volume Docker `ollama_models` (normalmente prefixado pelo nome do projeto), montado em `/root/.ollama`. Persistem ao recriar containers e executar `down`; `down -v` apaga volumes, incluindo banco e modelos, portanto não é um comando de atualização. O Docker não reutiliza automaticamente a instalação nativa em `C:\Users\danie\.ollama`; o `start-dev.bat` continua usando o Ollama nativo.
+
+Diagnóstico em desenvolvimento (em produção, substitua o primeiro arquivo por `docker-compose.prod.yml`):
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.ollama.yml ps -a
+docker compose -f docker-compose.yml -f docker-compose.ollama.yml logs --tail=100 ollama ollama_init backend
+docker compose -f docker-compose.yml -f docker-compose.ollama.yml exec ollama ollama list
+```
+
+Se o download falhar, confira os logs e repita o comando `up` depois de corrigir conexão ou tag. Após a subida, confirme na tela Ajuda uma resposta com `engine: ollama`. Se o runtime ficar indisponível durante o uso, o chat informa o modo limitado e tenta novamente nas mensagens seguintes. Os proxies Nginx reservam 180 segundos para esse endpoint; o SDK limita a chamada ao modelo a 120 segundos. Docker organiza a execução, mas não acelera a inferência em CPU. Aloque memória suficiente ao Docker e evite manter simultaneamente os modelos nativo e Docker carregados em máquinas com pouca RAM.
+
+Os testes de conversa cobrem o endereço Docker autorizado, sua rejeição sem permissão e o bloqueio de outros hosts, protocolos, portas, credenciais e caminhos. A subida real deve verificar download inicial, recriação com volume preservado, resposta autenticada e contingência com `ollama` parado.
+
+Validação da integração em 04/09/2026: os dois arquivos base combinados com o complemento passaram em `docker compose config`, preservando dependências, volume e ausência de porta pública. Passaram 836 testes do backend (85,60% de cobertura; adaptador Ollama com 100%), 699 do frontend, typecheck, build e verificações Django. O Ruff dos arquivos alterados passou; a análise global mantém 575 ocorrências preexistentes. Sem Docker Engine disponível no ambiente de desenvolvimento, a subida dos containers e o proxy Nginx em execução permanecem pendentes de homologação.
 
 ## Ajuda básica quando a geração está indisponível
 

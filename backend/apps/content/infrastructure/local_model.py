@@ -21,8 +21,10 @@ class OllamaConversationModel(ConversationModel):
 
     def generate(self, messages: list[dict[str, str]]) -> GeneratedReply:
         url = urlsplit(settings.DENKYNHO_OLLAMA_URL)
-        if url.scheme != "http" or url.hostname not in {"localhost", "127.0.0.1", "::1"} or url.username or url.password:
-            raise ValueError("Denkynho requires a loopback Ollama server")
+        docker_endpoint = settings.DENKYNHO_OLLAMA_DOCKER and settings.DENKYNHO_OLLAMA_URL == "http://ollama:11434"
+        loopback_endpoint = url.hostname in {"localhost", "127.0.0.1", "::1"}
+        if url.scheme != "http" or not (loopback_endpoint or docker_endpoint) or url.username or url.password:
+            raise ValueError("Denkynho requires loopback or the explicitly enabled Docker service")
         model = settings.DENKYNHO_LLM_MODEL
         if not model or "cloud" in model.lower() or "/" in model:
             raise ValueError("A local model tag is required")
