@@ -28,6 +28,7 @@ import { RegisterPage } from '../../pages/RegisterPage'
 import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
 import { SupportPage } from '../../pages/SupportPage'
+import { HelpPage } from '../../pages/HelpPage'
 import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
 import { WalletPage } from '../../pages/WalletPage'
 import { InfoPage } from '../../pages/InfoPage'
@@ -105,6 +106,7 @@ export function AppRoutes() {
             <Route path="/painel/progress" element={<ProgressPage />} />
             <Route path="/painel/notifications" element={<NotificationsPage />} />
             <Route path="/painel/support" element={<SupportPage />} />
+            <Route path="/painel/ajuda" element={<HelpPage />} />
             <Route path="/painel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />
             <Route path="/painel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
             <Route path="/painel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />

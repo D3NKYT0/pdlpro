@@ -10,6 +10,7 @@ import {
   Gavel,
   LayoutDashboard,
   Headphones,
+  MessageCircle,
   Handshake,
   Gift,
   LogOut,
@@ -54,6 +55,7 @@ const links: Array<{
   { to: "/painel/progress", label: "Progresso", icon: Trophy },
   { to: "/painel/notifications", label: "Avisos", icon: Bell },
   { to: "/painel/support", label: "Atendimento", icon: Headphones },
+  { to: "/painel/ajuda", label: "Ajuda", icon: MessageCircle },
 ];
 
 export function PrivateLayout() {

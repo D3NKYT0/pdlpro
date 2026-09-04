@@ -67,6 +67,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Documento | O que explica |
 | --- | --- |
 | [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, renderer Valorem, segurança, ativação e restauração do default |
+| [Ajuda e Denkynho](funcionalidades/ajuda.md) | Chat sobre o FAQ publicado, personagem animado, limites e atendimento |
 | [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, bônus e pesca |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
 

@@ -1,0 +1,303 @@
+.help-page {
+  display:grid;
+  gap:22px;
+}
+.help-workspace {
+  display:grid;
+  grid-template-columns:minmax(200px,.7fr) minmax(0,1.8fr);
+  gap:22px;
+  align-items:start;
+}
+.help-companion {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:14px;
+  position:sticky;
+  top:24px;
+  padding:24px;
+}
+.help-companion h2,.help-chat h2 {
+  margin:4px 0;
+}
+.help-companion p {
+  margin:0;
+}
+.help-chat {
+  min-width:0;
+  padding:0;
+  overflow:hidden;
+}
+.help-chat-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:22px;
+  border-bottom:1px solid var(--panel-border);
+}
+.help-chat-head p {
+  margin:4px 0 0;
+}
+.help-messages {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding:24px;
+  max-height:480px;
+  min-height:240px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.help-message {
+  max-width:90%;
+  padding:16px 18px;
+  background:var(--panel-gold-soft);
+  border:1px solid var(--panel-border);
+  border-radius:12px;
+  overflow-wrap:anywhere;
+}
+.help-message p {
+  margin:8px 0;
+  white-space:pre-wrap;
+  line-height:1.6;
+}
+.help-message strong {
+  color:var(--panel-gold-bright);
+}
+.help-message.from-user {
+  align-self:flex-end;
+  background:var(--panel-surface);
+}
+.help-message.from-assistant {
+  align-self:flex-start;
+}
+.help-suggestions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:0 24px 20px;
+}
+.help-suggestion {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  max-width:100%;
+  min-width:0;
+}
+.help-suggestion>span {
+  overflow-wrap:anywhere;
+  min-width:0;
+}
+.help-compose {
+  display:grid;
+  gap:12px;
+  padding:22px;
+  border-top:1px solid var(--panel-border);
+}
+.help-compose textarea {
+  resize:vertical;
+  min-height:88px;
+}
+.help-compose-actions {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.help-reveal {
+  padding:0 24px 12px;
+}
+.help-sr {
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+}
+.denk-mascot {
+  position:relative;
+  width:min(100%,260px);
+  aspect-ratio:2/3;
+  isolation:isolate;
+}
+.denk-transition {
+  position:absolute;
+  inset:0;
+}
+.denk-pose {
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-origin:50% 94%;
+}
+.denk-base {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.denk-face {
+  position:absolute;
+  pointer-events:none;
+}
+.denk-asset-error {
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:var(--panel-surface);
+  padding:8px;
+  font-size:14px;
+}
+.denk-transition.is-entering {
+  animation:denk-enter .43s ease both;
+}
+.denk-transition.is-leaving {
+  animation:denk-leave .43s ease both;
+}
+.denk-pose.is-moving {
+  animation:denk-breathe 3.5s ease-in-out infinite;
+}
+.denk-pose.pose-rindo.is-moving {
+  animation:denk-laugh .32s ease-in-out infinite alternate;
+}
+.denk-pose.pose-dormindo.is-moving {
+  animation:denk-sleep 5s ease-in-out infinite;
+}
+.denk-pose.pose-confuso.is-moving,.denk-pose.pose-pensando.is-moving {
+  animation:denk-think 3s ease-in-out infinite;
+}
+.denk-pose.pose-sucesso.is-moving {
+  animation:denk-cheer 1.8s ease-in-out infinite;
+}
+.denk-pose.pose-surpreso.is-moving {
+  animation:denk-cheer 2.4s ease-in-out infinite;
+}
+.denk-pose.pose-frustrado.is-moving {
+  animation:denk-think 1.8s ease-in-out infinite;
+}
+@keyframes denk-enter {
+  from {
+    opacity:0;
+    transform:translateX(12px) rotate(2deg) scale(.97);
+  }
+  to {
+    opacity:1;
+    transform:none;
+  }
+}
+@keyframes denk-leave {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity:0;
+    transform:translateX(-12px) rotate(-2deg) scale(.97);
+  }
+}
+@keyframes denk-breathe {
+  50% {
+    transform:translateY(-2px) rotate(.35deg);
+  }
+}
+@keyframes denk-sleep {
+  50% {
+    transform:scale(1.006,1.014);
+  }
+}
+@keyframes denk-laugh {
+  to {
+    transform:translateY(-2px) rotate(.5deg);
+  }
+}
+@keyframes denk-think {
+  50% {
+    transform:rotate(1deg);
+  }
+}
+@keyframes denk-cheer {
+  50% {
+    transform:translateY(-4px);
+  }
+}
+@media(max-width:900px) {
+  .help-workspace {
+    grid-template-columns:1fr;
+  }
+  .help-companion {
+    position:static;
+    display:grid;
+    grid-template-columns:140px minmax(0,1fr);
+    text-align:left;
+    gap:10px 18px;
+    align-items:center;
+  }
+  .help-companion .denk-mascot {
+    grid-column:1;
+    grid-row:1/6;
+    width:140px;
+  }
+  .help-companion>div:first-child {
+    grid-column:2;
+  }
+  .help-messages {
+    max-height:430px;
+  }
+}
+@media(max-width:480px) {
+  .help-companion {
+    grid-template-columns:100px minmax(0,1fr);
+    padding:16px;
+    gap:8px 12px;
+  }
+  .help-companion .denk-mascot {
+    width:100px;
+  }
+  .help-message {
+    max-width:100%;
+  }
+  .help-chat-head,.help-messages,.help-compose {
+    padding:16px;
+  }
+  .help-companion .panel-eyebrow {
+    font-size:12px;
+  }
+  .help-suggestions {
+    padding:0 16px 16px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .denk-pose.is-moving,.denk-transition.is-entering,.denk-transition.is-leaving {
+    animation:none;
+  }
+  .denk-transition.is-leaving {
+    display:none;
+  }
+}
+.panel-app .help-page .help-chat {
+  padding:0;
+}
+.panel-app .help-page .help-companion {
+  padding:24px;
+}
+.panel-app .help-page .help-chat h2,.panel-app .help-page .help-companion h2 {
+  margin:4px 0;
+}
+.panel-app .help-page .help-companion p {
+  margin:0;
+}
+.panel-app .help-page .help-suggestion {
+  flex:1 1 100%;
+}
+.help-suggestion .ui-button {
+  flex-shrink:0;
+}
+@media(max-width:480px) {
+  .panel-app .help-page .help-companion {
+    padding:16px;
+  }
+}

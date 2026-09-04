@@ -1,0 +1,229 @@
+[
+  {
+    "id": "01-boas-vindas",
+    "label": "Boas-vindas",
+    "src": "01-boas-vindas.png",
+    "openMouth": false,
+    "eyes": [
+      {
+        "src": "01-boas-vindas-piscar.png",
+        "box": [
+          71.25,
+          76.75,
+          107.75,
+          104.5
+        ]
+      },
+      {
+        "src": "01-boas-vindas-piscar-direito.png",
+        "box": [
+          104.25,
+          63.0,
+          146.5,
+          89.0
+        ]
+      }
+    ],
+    "mouth": {
+      "src": "01-boas-vindas-falar.png",
+      "box": [
+        96.5,
+        98.75,
+        139.75,
+        132.5
+      ]
+    }
+  },
+  {
+    "id": "02-sucesso",
+    "label": "Sucesso",
+    "src": "02-sucesso.png",
+    "openMouth": true,
+    "eyes": {
+      "src": "02-sucesso-olhos.png",
+      "box": [
+        100.75,
+        62.0,
+        166.5,
+        92.0
+      ]
+    },
+    "mouth": {
+      "src": "02-sucesso-boca.png",
+      "box": [
+        110.0,
+        88.25,
+        162.75,
+        121.5
+      ]
+    }
+  },
+  {
+    "id": "03-pensando",
+    "label": "Pensando",
+    "src": "03-pensando.png",
+    "openMouth": false,
+    "eyes": {
+      "src": "03-pensando-olhos.png",
+      "box": [
+        98.25,
+        62.0,
+        161.0,
+        95.0
+      ]
+    },
+    "mouth": {
+      "src": "03-pensando-boca.png",
+      "box": [
+        119.5,
+        90.25,
+        152.25,
+        112.0
+      ]
+    }
+  },
+  {
+    "id": "04-dica",
+    "label": "Dica",
+    "src": "04-dica.png",
+    "openMouth": true,
+    "eyes": {
+      "src": "04-dica-olhos.png",
+      "box": [
+        102.25,
+        57.0,
+        164.5,
+        82.25
+      ]
+    },
+    "mouth": {
+      "src": "04-dica-boca.png",
+      "box": [
+        115.75,
+        80.0,
+        158.0,
+        107.25
+      ]
+    }
+  },
+  {
+    "id": "05-dormindo",
+    "label": "Dormindo",
+    "src": "05-dormindo.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
+  },
+  {
+    "id": "06-rindo",
+    "label": "Rindo",
+    "src": "06-rindo.png",
+    "openMouth": true,
+    "eyes": null,
+    "mouth": {
+      "src": "06-rindo-boca.png",
+      "box": [
+        103.5,
+        97.25,
+        146.5,
+        130.5
+      ]
+    }
+  },
+  {
+    "id": "07-triste",
+    "label": "Triste",
+    "src": "07-triste.png",
+    "openMouth": false,
+    "eyes": {
+      "src": "07-triste-olhos.png",
+      "box": [
+        92.75,
+        72.25,
+        155.25,
+        98.25
+      ]
+    },
+    "mouth": {
+      "src": "07-triste-boca.png",
+      "box": [
+        113.0,
+        97.0,
+        141.5,
+        116.5
+      ]
+    }
+  },
+  {
+    "id": "08-surpreso",
+    "label": "Surpreso",
+    "src": "08-surpreso.png",
+    "openMouth": true,
+    "eyes": {
+      "src": "08-surpreso-olhos.png",
+      "box": [
+        90.25,
+        56.0,
+        150.75,
+        85.0
+      ]
+    },
+    "mouth": {
+      "src": "08-surpreso-boca.png",
+      "box": [
+        114.5,
+        81.25,
+        137.75,
+        107.5
+      ]
+    }
+  },
+  {
+    "id": "09-confuso",
+    "label": "Confuso",
+    "src": "09-confuso.png",
+    "openMouth": false,
+    "eyes": {
+      "src": "09-confuso-olhos.png",
+      "box": [
+        98.25,
+        63.0,
+        158.0,
+        95.75
+      ]
+    },
+    "mouth": {
+      "src": "09-confuso-boca.png",
+      "box": [
+        118.0,
+        90.5,
+        150.0,
+        113.25
+      ]
+    }
+  },
+  {
+    "id": "10-frustrado",
+    "label": "Frustrado",
+    "src": "10-frustrado.png",
+    "openMouth": false,
+    "eyes": {
+      "src": "10-frustrado-olhos.png",
+      "box": [
+        90.0,
+        68.0,
+        152.75,
+        101.5
+      ]
+    },
+    "mouth": {
+      "src": "10-frustrado-boca.png",
+      "box": [
+        111.25,
+        96.25,
+        141.25,
+        119.25
+      ]
+    }
+  }
+]

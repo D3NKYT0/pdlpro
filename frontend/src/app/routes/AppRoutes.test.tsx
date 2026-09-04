@@ -53,6 +53,7 @@ const pages = [
   ['/painel/progress', 'Seu progresso'],
   ['/painel/notifications', 'Avisos'],
   ['/painel/support', 'Como podemos ajudar?'],
+  ['/painel/ajuda', 'Ajuda'],
   ['/painel/shop', 'Loja do servidor'],
   ['/painel/marketplace', 'Marketplace'],
   ['/painel/auctions', 'Leilões'],
