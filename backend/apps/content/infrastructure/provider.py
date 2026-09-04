@@ -1,5 +1,9 @@
 from apps.content.application.assistant import AssistantReplyUseCase, SemanticMatcher
 from apps.content.application.chat import ChatReplyUseCase, ConversationModel
+from apps.content.application.denkynho import (
+    CareDenkynhoUseCase,
+    GetDenkynhoProfileUseCase,
+)
 from apps.content.application.legal import (
     GetLegalDocumentUseCase,
     ListLegalDocumentsUseCase,
@@ -40,6 +44,8 @@ class ContentProvider(AppProvider):
         )
         for use_case in (
             AssistantReplyUseCase,
+            GetDenkynhoProfileUseCase,
+            CareDenkynhoUseCase,
             ListNewsUseCase,
             GetNewsUseCase,
             ListFaqUseCase,

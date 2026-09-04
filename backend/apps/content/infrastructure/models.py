@@ -1,7 +1,12 @@
+from typing import ClassVar
+
+from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
-from common.models import BaseModel
+from common.models import BaseModel, InternalModel
+
 from .mixins import TitleSlugMixin
 
 
@@ -96,6 +101,78 @@ class Faq(BaseModel):
 
     def __str__(self) -> str:
         return self.question
+
+
+class DenkynhoProfile(BaseModel):
+    """Estado do Denkynho que pertence exclusivamente a uma conta autenticada.
+
+    Os atributos representam necessidades satisfeitas, de 0 a 100, e diminuem conforme o
+    tempo passa. ``experience`` e ``level`` pertencem ao mascote daquela conta — não alteram o
+    nível de personagem do jogo. As mutações devem passar por ``CareDenkynhoUseCase`` para
+    preservar o decaimento, os limites e a idempotência das ações.
+    """
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="denkynho_profile",
+    )
+    satiety = models.PositiveSmallIntegerField(
+        default=75,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    energy = models.PositiveSmallIntegerField(
+        default=75,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    happiness = models.PositiveSmallIntegerField(
+        default=75,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    hygiene = models.PositiveSmallIntegerField(
+        default=75,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    experience = models.PositiveIntegerField(default=0)
+    level = models.PositiveSmallIntegerField(default=1)
+    last_decay_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = "Perfil do Denkynho"
+        verbose_name_plural = "Perfis do Denkynho"
+
+
+class DenkynhoCareAction(InternalModel):
+    """Registro idempotente de um cuidado aplicado ao Denkynho.
+
+    A chave é única por perfil e impede que um duplo clique, reenvio ou retry de rede conceda
+    atributos e XP duas vezes. Não armazena texto de conversa nem dados do jogo.
+    """
+
+    class Action(models.TextChoices):
+        FEED = "feed", "Alimentar"
+        SLEEP = "sleep", "Dormir"
+        PLAY = "play", "Brincar"
+        CARE = "care", "Dar carinho"
+
+    profile = models.ForeignKey(
+        DenkynhoProfile,
+        on_delete=models.CASCADE,
+        related_name="care_actions",
+    )
+    idempotency_key = models.UUIDField()
+    action = models.CharField(max_length=12, choices=Action.choices)
+    xp_gained = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Cuidado do Denkynho"
+        verbose_name_plural = "Cuidados do Denkynho"
+        constraints: ClassVar[list[models.UniqueConstraint]] = [
+            models.UniqueConstraint(
+                fields=["profile", "idempotency_key"],
+                name="content_denkynho_care_idempotency",
+            ),
+        ]
 
 
 class DownloadLink(BaseModel):

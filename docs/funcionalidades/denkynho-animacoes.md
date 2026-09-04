@@ -9,10 +9,11 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 - [Comendo](../../frontend/public/mascot/denkynho/11-comendo-sequencia.png): 1448 × 1086; lanche, mordida, mastigação e pausa.
 - [Jogando](../../frontend/public/mascot/denkynho/12-jogando-sequencia.png): 1448 × 1086; braços, mãos, controle e reação facial.
 - [Rindo](../../frontend/public/mascot/denkynho/06-rindo-sequencia.png): 1491 × 1055; boca, cabeça, braços e tronco.
+- [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia.png): 1448 × 1086; respiração, coberta, sorriso e acomodação na cama.
 
 Os originais estáticos permanecem disponíveis para movimento reduzido e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 
-O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. A área de clipping impede que pés ou cabelo de quadros vizinhos apareçam. A ancoragem mantém os pés na mesma altura. As durações variam entre 140 e 600 ms para dar ritmo às ações, com repetição de quadros de mastigação e risada.
+O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. A área de clipping impede que pés, cama ou cabelo de quadros vizinhos apareçam. A ancoragem mantém a base da cama e os pés na mesma altura. As durações variam entre 140 e 800 ms para dar ritmo às ações, com repetição de quadros de mastigação, risada e respiração.
 
 ## Transições e espelhamento
 

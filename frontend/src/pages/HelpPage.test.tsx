@@ -12,11 +12,13 @@ vi.mock('../contexts/AuthContext', () => ({
 }))
 const articles = [{ id: '1', question: 'Como recuperar minha senha?', short_answer: 'Use a recuperação.', answer: 'Use a recuperação na tela de login.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['senha', 'reset'] }]
 const assistantReply = { language: 'pt', kind: 'knowledge', engine: 'sentence-transformers+rapidfuzz', confidence: 0.91, article_id: '1', answer: { text: articles[0].short_answer, details: articles[0].answer, source: articles[0].question, pose: '04-dica' } }
+const petProfile = { level: 1, experience: 0, experience_next: 100, attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 } }
 const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
 const apiResponse = (input: RequestInfo | URL) => {
   const url = String(input)
   if (url.includes('/auth/csrf/')) return response({ csrfToken: 'test-csrf' })
   if (url.includes('/assistant/reply/')) return response(assistantReply)
+  if (url.includes('/assistant/pet/')) return response(petProfile)
   return response(articles)
 }
 let client: QueryClient
@@ -30,36 +32,37 @@ beforeEach(() => {
 afterEach(() => { cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 async function openCompanion(user = userEvent.setup()) { if (!screen.queryByRole('dialog')) await user.click(screen.getByRole('button', { name: /Denkynho: / })) }
 function mount() { render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
-it('oferece atividades locais, bloqueia repetição e interrompe ao digitar', async () => {
+it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo clique', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
-  await openCompanion(user)
-  for (const [name, pose] of [['Comer', '11-comendo'], ['Jogar', '12-jogando'], ['Rir', '06-rindo'], ['Comemorar', '02-sucesso']]) {
-    await user.click(screen.getByRole('button', { name }))
-    await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose))
-    expect(screen.getByRole('button', { name })).toBeDisabled()
-    expect(screen.getByRole('button', { name })).toHaveAttribute('aria-pressed', 'true')
-  }
-  expect(fetcher).toHaveBeenCalledTimes(1)
-  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Oi')
-  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas'))
-  await openCompanion(user)
-  expect(screen.getByRole('button', { name: 'Jogar' })).toBeDisabled()
+  await openCompanion(user); await screen.findByText('Nível 1')
+  expect(screen.getByLabelText('Saciedade')).toHaveValue(75)
+  let resolveCare!: (value: Response) => void
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => String(input).includes('/assistant/pet/') && init?.method === 'POST'
+    ? new Promise<Response>(resolve => { resolveCare = resolve })
+    : Promise.resolve(apiResponse(input)))
+  const feed = screen.getByRole('button', { name: 'Alimentar' })
+  await user.dblClick(feed)
+  expect(feed).toBeDisabled()
+  expect(fetcher.mock.calls.filter(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')).toHaveLength(1)
+  const call = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')!
+  expect(JSON.parse((call[1] as RequestInit).body as string)).toEqual({ action: 'feed', idempotency_key: expect.stringMatching(/^[0-9a-f-]{36}$/) })
+  const updated = { ...petProfile, experience: 12, attributes: { ...petProfile.attributes, satiety: 100, happiness: 80 }, action: 'feed', xp_gained: 12, replayed: false }
+  resolveCare(response(updated))
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(updated) : apiResponse(input)))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo'))
+  expect(screen.getByLabelText('Saciedade')).toHaveValue(100)
 })
-it('faz atividades ao esperar, encerra a ação manual e dorme sem acumular timers', async () => {
-  mount(); await screen.findByRole('button', { name: articles[0].question })
+it('encerra a animação de cuidado e dorme após inatividade sem acumular timers', async () => {
+  mount(); await screen.findByRole('button', { name: articles[0].question }); await openCompanion(); await screen.findByText('Nível 1')
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   await openCompanion()
-  await user.click(screen.getByRole('button', { name: 'Comer' }))
+  await user.click(screen.getByRole('button', { name: 'Dormir' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo'))
   await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
-  for (const [delay, pose] of [[4000, '11-comendo'], [10000, '12-jogando'], [12000, '06-rindo'], [11000, '05-dormindo']] as const) {
-    await act(async () => { await vi.advanceTimersByTimeAsync(delay) })
-    expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
-  }
-  await openCompanion()
-  await user.click(screen.getByRole('button', { name: 'Jogar' }))
-  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando'))
+  await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   cleanup(); client.clear()
   expect(vi.getTimerCount()).toBe(0)
 })
@@ -69,14 +72,14 @@ it('mantém atividades manuais estáticas e não inicia atividades automáticas 
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   await openCompanion()
-  await user.click(screen.getByRole('button', { name: 'Jogar' }))
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando')
+  await user.click(screen.getByRole('button', { name: 'Brincar' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando'))
   expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')
   await act(async () => { await vi.advanceTimersByTimeAsync(34000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await openCompanion()
   await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
-  expect(screen.getByRole('button', { name: 'Eat' })).toBeEnabled()
+  expect(screen.getByRole('button', { name: 'Feed' })).toBeEnabled()
 })
 it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   mount(); expect(screen.getByText('Carregando perguntas de ajuda…')).toBeVisible()
@@ -100,7 +103,7 @@ it('bloqueia apelido ofensivo mesmo disfarçado e não o repete na conversa', as
   expect(screen.getByRole('alert')).toHaveTextContent('não pode ser usada no chat')
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '10-frustrado')
   expect(within(screen.getByRole('log')).queryByText(/r\.0\.l\.4/i)).not.toBeInTheDocument()
-  expect(fetcher).toHaveBeenCalledTimes(1)
+  expect(fetcher).toHaveBeenCalledTimes(2)
 })
 it('envia a mensagem com Enter e usa Shift+Enter para nova linha', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -112,7 +115,7 @@ it('envia a mensagem com Enter e usa Shift+Enter para nova linha', async () => {
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
   expect(input).toHaveValue('')
-  expect(fetcher).toHaveBeenCalledTimes(3)
+  expect(fetcher).toHaveBeenCalledTimes(4)
 })
 it('responde conversa simples com a personalidade sem consultar novamente o FAQ', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -121,7 +124,7 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso')
-  expect(fetcher).toHaveBeenCalledTimes(3)
+  expect(fetcher).toHaveBeenCalledTimes(4)
 })
 it('troca a interface e a personalidade para inglês e recarrega o FAQ localizado', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -143,7 +146,7 @@ it('continua uma orientação usando contexto sem consultar novamente o FAQ', as
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
   expect(await screen.findByText(articles[0].answer)).toBeVisible()
   expect(screen.getByText(/Isso esclareceu/)).toBeVisible()
-  expect(fetcher).toHaveBeenCalledTimes(4)
+  expect(fetcher).toHaveBeenCalledTimes(5)
 })
 it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
@@ -163,7 +166,7 @@ it('bloqueia envio duplicado durante a consulta e mantém o rascunho na falha', 
   fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? new Promise<Response>(r => { resolve = r }) : Promise.resolve(apiResponse(input)))
   const input = screen.getByRole('textbox', { name: 'Sua mensagem' }); await user.type(input, 'Minha senha')
   await user.dblClick(screen.getByRole('button', { name: 'Enviar mensagem' }))
-  expect(fetcher).toHaveBeenCalledTimes(3)
+  expect(fetcher).toHaveBeenCalledTimes(4)
   expect(input).toBeDisabled(); expect(screen.getByText('Consultando a base de ajuda…')).toBeVisible()
   resolve(response({ message: 'Consulta indisponível' }, 400))
   expect(await screen.findByRole('alert')).toHaveTextContent('Consulta indisponível')
@@ -174,7 +177,7 @@ it('bloqueia envio duplicado durante a consulta e mantém o rascunho na falha', 
   expect(screen.queryByRole('alert')).not.toBeInTheDocument()
 })
 it('trata base vazia e mensagem sem correspondência sem inventar resposta', async () => {
-  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ language: 'pt', kind: 'unknown', engine: 'rapidfuzz', confidence: 0, related_ids: [], answer: { text: 'Não encontrei uma resposta segura para essa pergunta na nossa base.', pose: '09-confuso' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : response([])))
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ language: 'pt', kind: 'unknown', engine: 'rapidfuzz', confidence: 0, related_ids: [], answer: { text: 'Não encontrei uma resposta segura para essa pergunta na nossa base.', pose: '09-confuso' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : String(input).includes('/assistant/pet/') ? response(petProfile) : response([])))
   const user = mount(); expect(await screen.findByText(/Ainda não há perguntas publicadas/)).toBeVisible()
   await openCompanion()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
@@ -199,7 +202,7 @@ it('respeita movimento reduzido e exibe a resposta completa sem animação', asy
   expect(screen.queryByRole('button', { name: 'Mostrar resposta completa' })).not.toBeInTheDocument()
 })
 it('descansa após inatividade, acorda ao enviar e termina a fala automaticamente', async () => {
-  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ ...assistantReply, answer: { text: 'Ok.', pose: '04-dica' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ ...assistantReply, answer: { text: 'Ok.', pose: '04-dica' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : String(input).includes('/assistant/pet/') ? response(petProfile) : response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })

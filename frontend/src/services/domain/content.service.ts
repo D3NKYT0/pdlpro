@@ -46,6 +46,26 @@ export interface ApiAssistantReply {
   answer: { text: string; details?: string | null; source?: string; pose: string }
 }
 
+export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'care'
+
+export interface ApiDenkynhoProfile {
+  level: number
+  experience: number
+  experience_next: number
+  attributes: {
+    satiety: number
+    energy: number
+    happiness: number
+    hygiene: number
+  }
+}
+
+export interface ApiDenkynhoCareResult extends ApiDenkynhoProfile {
+  action: DenkynhoAction
+  xp_gained: number
+  replayed: boolean
+}
+
 export const contentApi = {
   news: () => request<ApiNews[]>('/public/news/'),
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
@@ -54,6 +74,11 @@ export const contentApi = {
   assistantReply: (message: string, language: 'pt' | 'en', context?: string) => request<ApiAssistantReply>(
     '/shared/content/assistant/reply/',
     { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}) }) },
+  ),
+  denkynho: () => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/'),
+  careDenkynho: (action: DenkynhoAction, idempotencyKey: string) => request<ApiDenkynhoCareResult>(
+    '/shared/content/assistant/pet/',
+    { method: 'POST', body: JSON.stringify({ action, idempotency_key: idempotencyKey }) },
   ),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),

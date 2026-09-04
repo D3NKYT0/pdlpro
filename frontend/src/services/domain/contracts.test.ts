@@ -88,6 +88,8 @@ const contracts: Contract[] = [
   ['content.faqEnglish', () => contentApi.faq('en'), '/public/faq/?lang=en'],
   ['content.authenticatedFaq', () => contentApi.authenticatedFaq(), '/shared/content/faq/'],
   ['content.assistantReply', () => contentApi.assistantReply('Where is my account?', 'en'), '/shared/content/assistant/reply/', 'POST', { message: 'Where is my account?', language: 'en' }],
+  ['content.denkynho', () => contentApi.denkynho(), '/shared/content/assistant/pet/'],
+  ['content.careDenkynho', () => contentApi.careDenkynho('feed', 'b6e8f0b4-7f4c-4e8f-8ce2-604a7659198e'), '/shared/content/assistant/pet/', 'POST', { action: 'feed', idempotency_key: 'b6e8f0b4-7f4c-4e8f-8ce2-604a7659198e' }],
   ['content.downloads', () => contentApi.downloads(), '/public/downloads/'],
   ['content.wiki', () => contentApi.wiki(), '/public/wiki/'],
   ['content.search', () => contentApi.wiki('a & b'), '/public/wiki/?q=a%20%26%20b'],

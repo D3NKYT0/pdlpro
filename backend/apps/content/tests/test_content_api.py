@@ -1,5 +1,8 @@
-from django.utils import timezone
+from importlib import import_module
+from uuid import UUID
+
 import pytest
+from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import User
@@ -34,7 +37,8 @@ def test_initial_internal_catalog_respects_staff_and_superadmin_audiences(api):
 
 
 def test_denkynho_handbook_respects_field_limits():
-    from apps.content.migrations.0013_seed_denkynho_handbook import HANDBOOK
+    handbook = import_module("apps.content.migrations.0013_seed_denkynho_handbook")
+    HANDBOOK = handbook.HANDBOOK
 
     assert len(HANDBOOK) == 61
     assert {item[0] for item in HANDBOOK} == set(range(1, 62))
@@ -54,9 +58,8 @@ def test_denkynho_handbook_respects_field_limits():
 
 @pytest.mark.django_db
 def test_denkynho_handbook_is_seeded_and_hidden_from_faq_listings(api):
-    from uuid import UUID
-
-    from apps.content.migrations.0013_seed_denkynho_handbook import HANDBOOK, PREFIX
+    handbook_migration = import_module("apps.content.migrations.0013_seed_denkynho_handbook")
+    HANDBOOK, PREFIX = handbook_migration.HANDBOOK, handbook_migration.PREFIX
 
     ids = [UUID(f"{PREFIX}{item[0]:012d}") for item in HANDBOOK]
     handbook = list(Faq.objects.filter(id__in=ids))

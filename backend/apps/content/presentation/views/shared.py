@@ -8,6 +8,11 @@ from apps.content.application.assistant import (
     AssistantReplyUseCase,
 )
 from apps.content.application.chat import ChatInput, ChatReplyUseCase
+from apps.content.application.denkynho import (
+    CareDenkynhoInput,
+    CareDenkynhoUseCase,
+    GetDenkynhoProfileUseCase,
+)
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from apps.content.infrastructure.models import Faq
 from common.views import InjectedAPIView
@@ -65,3 +70,29 @@ class AssistantReplyView(InjectedAPIView):
         else:
             result = self.resolve(AssistantReplyUseCase).execute(AssistantReplyInput(audience=audience, **data))
         return Response(result)
+
+
+class DenkynhoCareSerializer(serializers.Serializer):
+    """Valida uma ação do tamagotchi e sua chave idempotente gerada no cliente."""
+
+    action = serializers.ChoiceField(choices=["feed", "sleep", "play", "care"])
+    idempotency_key = serializers.UUIDField()
+
+
+class DenkynhoProfileView(InjectedAPIView):
+    """Lê e cuida somente do Denkynho da sessão autenticada atual."""
+
+    permission_classes = (IsAuthenticated,)
+
+    @extend_schema(tags=["Conteúdo"])
+    def get(self, request):
+        return Response(self.resolve(GetDenkynhoProfileUseCase).execute(request.user.id))
+
+    @extend_schema(tags=["Conteúdo"], request=DenkynhoCareSerializer)
+    def post(self, request):
+        serializer = DenkynhoCareSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(self.resolve(CareDenkynhoUseCase).execute(CareDenkynhoInput(
+            user_id=request.user.id,
+            **serializer.validated_data,
+        )))

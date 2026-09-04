@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { BookOpen, Headphones, MessageCircle, Send } from 'lucide-react'
 import { contentApi } from '../services/api'
+import type { DenkynhoAction } from '../services/domain/content.service'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Field } from '../components/ui/Field'
@@ -24,29 +25,41 @@ import { moderateChatInput } from '../components/help/moderation'
 type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
 const welcome = (identity: HelpIdentity, language: HelpLanguage): Message => ({ id: 0, role: 'assistant', text: denkynhoWelcome(new Date(), identity, language), pose: '01-boas-vindas' })
 const activities = [
-  { pose: '11-comendo', pt: 'Comer', en: 'Eat', status: { pt: 'Fazendo uma pausa para um lanche.', en: 'Taking a snack break.' } },
-  { pose: '12-jogando', pt: 'Jogar', en: 'Play', status: { pt: 'Jogando uma partida enquanto espero você.', en: 'Playing a game while I wait for you.' } },
-  { pose: '06-rindo', pt: 'Rir', en: 'Laugh', status: { pt: 'Dando uma boa risada!', en: 'Having a good laugh!' } },
-  { pose: '02-sucesso', pt: 'Comemorar', en: 'Celebrate', status: { pt: 'Comemorando com você!', en: 'Celebrating with you!' } },
+  { action: 'feed', pose: '11-comendo', pt: 'Alimentar', en: 'Feed', status: { pt: 'Fazendo uma pausa para um lanche.', en: 'Taking a snack break.' } },
+  { action: 'sleep', pose: '05-dormindo', pt: 'Dormir', en: 'Sleep', status: { pt: 'Dormindo na caminha para recuperar energia.', en: 'Sleeping in bed to recover energy.' } },
+  { action: 'play', pose: '12-jogando', pt: 'Brincar', en: 'Play', status: { pt: 'Brincando para ficar mais alegre!', en: 'Playing to feel happier!' } },
+  { action: 'care', pose: '06-rindo', pt: 'Dar carinho', en: 'Give care', status: { pt: 'Recebendo carinho e ficando feliz!', en: 'Getting care and feeling happy!' } },
 ] as const
+
+function idempotencyKey() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, part => {
+    const value = Math.floor(Math.random() * 16)
+    return (part === 'x' ? value : value & 0x3 | 0x8).toString(16)
+  })
+}
 
 const copy = {
   pt: {
-    title: 'Ajuda', eyebrow: 'Converse com o Denkynho', description: 'Orientações para sua jornada no PDL.', support: 'Atendimento da equipe', companion: 'Seu companheiro no PDL', ask: 'Como posso ajudar você?', searching: 'Procurando uma orientação…', talking: 'Conversando com você…', sleeping: 'Descansando. Escreva para me chamar.', animate: 'Animar personagem', reduced: 'Movimento reduzido ativado no seu dispositivo.', faq: 'Consultar o FAQ', chat: 'Vamos conversar', context: 'O contexto vale enquanto esta conversa estiver aberta', fresh: 'Nova conversa', assistant: 'Seu assistente', chatLabel: 'Chat de ajuda', messages: 'Mensagens da conversa', you: 'Você', full: 'Ver orientação completa', source: 'Fonte', related: 'Talvez você queira saber:', topic: 'Assunto', all: 'Todos os assuntos', loading: 'Carregando perguntas de ajuda…', empty: 'Ainda não há perguntas publicadas. O atendimento da equipe está disponível.', consulting: 'Consultando a base de ajuda…', error: 'Não foi possível consultar a ajuda.', reveal: 'Mostrar resposta completa', message: 'Sua mensagem', placeholder: 'Escreva sua dúvida…', hint: 'Enter envia · Shift+Enter quebra a linha. Não envie senhas ou códigos.', thinking: 'Pensando…', send: 'Enviar mensagem', invalid: 'Escreva uma pergunta de até 1.000 caracteres.', blocked: 'Essa mensagem contém uma palavra que não pode ser usada no chat. Reformule de modo respeitoso.', language: 'Idioma',
+    title: 'Ajuda', eyebrow: 'Converse com o Denkynho', description: 'Orientações para sua jornada no PDL.', support: 'Atendimento da equipe', companion: 'Seu companheiro no PDL', ask: 'Como posso ajudar você?', searching: 'Procurando uma orientação…', talking: 'Conversando com você…', sleeping: 'Descansando na caminha. Faça carinho para acordá-lo.', caring: 'Cuidando do Denkynho…', animate: 'Animar personagem', reduced: 'Movimento reduzido ativado no seu dispositivo.', faq: 'Consultar o FAQ', chat: 'Vamos conversar', context: 'O contexto vale enquanto esta conversa estiver aberta', fresh: 'Nova conversa', assistant: 'Seu assistente', chatLabel: 'Chat de ajuda', messages: 'Mensagens da conversa', you: 'Você', full: 'Ver orientação completa', source: 'Fonte', related: 'Talvez você queira saber:', topic: 'Assunto', all: 'Todos os assuntos', loading: 'Carregando perguntas de ajuda…', empty: 'Ainda não há perguntas publicadas. O atendimento da equipe está disponível.', consulting: 'Consultando a base de ajuda…', error: 'Não foi possível consultar a ajuda.', petLoading: 'Carregando atributos do Denkynho…', petError: 'Não foi possível carregar os atributos do Denkynho.', pet: 'Seu Denkynho', level: 'Nível', xp: 'XP', attributes: 'Atributos', satiety: 'Saciedade', energy: 'Energia', happiness: 'Alegria', hygiene: 'Higiene', reveal: 'Mostrar resposta completa', message: 'Sua mensagem', placeholder: 'Escreva sua dúvida…', hint: 'Enter envia · Shift+Enter quebra a linha. Não envie senhas ou códigos.', thinking: 'Pensando…', send: 'Enviar mensagem', invalid: 'Escreva uma pergunta de até 1.000 caracteres.', blocked: 'Essa mensagem contém uma palavra que não pode ser usada no chat. Reformule de modo respeitoso.', language: 'Idioma',
   },
   en: {
-    title: 'Help', eyebrow: 'Chat with Denkynho', description: 'Guidance for your PDL journey.', support: 'Contact the team', companion: 'Your PDL companion', ask: 'How can I help you?', searching: 'Looking for guidance…', talking: 'Talking with you…', sleeping: 'Resting. Send a message to wake me up.', animate: 'Animate character', reduced: 'Reduced motion is enabled on your device.', faq: 'Browse the FAQ', chat: "Let's talk", context: 'Context is kept while this conversation remains open', fresh: 'New conversation', assistant: 'Your assistant', chatLabel: 'Help chat', messages: 'Conversation messages', you: 'You', full: 'View full guidance', source: 'Source', related: 'You may also want to know:', topic: 'Topic', all: 'All topics', loading: 'Loading help topics…', empty: 'No help topics are published yet. The support team is available.', consulting: 'Searching the help center…', error: 'The help center could not be reached.', reveal: 'Show full response', message: 'Your message', placeholder: 'Type your question…', hint: 'Enter sends · Shift+Enter adds a line. Never send passwords or codes.', thinking: 'Thinking…', send: 'Send message', invalid: 'Write a question with up to 1,000 characters.', blocked: 'This message contains language that cannot be used in chat. Please rephrase it respectfully.', language: 'Language',
+    title: 'Help', eyebrow: 'Chat with Denkynho', description: 'Guidance for your PDL journey.', support: 'Contact the team', companion: 'Your PDL companion', ask: 'How can I help you?', searching: 'Looking for guidance…', talking: 'Talking with you…', sleeping: 'Resting in bed. Give him care to wake him up.', caring: 'Taking care of Denkynho…', animate: 'Animate character', reduced: 'Reduced motion is enabled on your device.', faq: 'Browse the FAQ', chat: "Let's talk", context: 'Context is kept while this conversation remains open', fresh: 'New conversation', assistant: 'Your assistant', chatLabel: 'Help chat', messages: 'Conversation messages', you: 'You', full: 'View full guidance', source: 'Source', related: 'You may also want to know:', topic: 'Topic', all: 'All topics', loading: 'Loading help topics…', empty: 'No help topics are published yet. The support team is available.', consulting: 'Searching the help center…', error: 'The help center could not be reached.', petLoading: 'Loading Denkynho attributes…', petError: 'Denkynho attributes could not be loaded.', pet: 'Your Denkynho', level: 'Level', xp: 'XP', attributes: 'Attributes', satiety: 'Satiety', energy: 'Energy', happiness: 'Happiness', hygiene: 'Hygiene', reveal: 'Show full response', message: 'Your message', placeholder: 'Type your question…', hint: 'Enter sends · Shift+Enter adds a line. Never send passwords or codes.', thinking: 'Thinking…', send: 'Send message', invalid: 'Write a question with up to 1,000 characters.', blocked: 'This message contains language that cannot be used in chat. Please rephrase it respectfully.', language: 'Language',
   },
 } as const
 
 /** Conversa temporária com geração local e fallback explícito para a ajuda editorial. */
 export function HelpPage() {
   const { user } = useAuth()
+  const queryClient = useQueryClient()
   const identity = helpIdentity(user)
   const [language, setLanguage] = useState<HelpLanguage>('pt')
   const labels = copy[language]
   const faq = useQuery({ queryKey: ['help-faq', user?.id, language], queryFn: async () => helpArticles(await contentApi.authenticatedFaq(language)), retry: false })
   const action = useAsyncAction()
+  const petAction = useAsyncAction()
+  const petQueryKey = ['denkynho-pet', user?.id] as const
+  const pet = useQuery({ queryKey: petQueryKey, queryFn: contentApi.denkynho, enabled: Boolean(user), retry: false })
   const reduced = useReducedMotion()
   const [animations, setAnimations] = useState(true)
   const [draft, setDraft] = useState('')
@@ -58,7 +71,6 @@ export function HelpPage() {
   const [shown, setShown] = useState(0)
   const [sleeping, setSleeping] = useState(false)
   const [activity, setActivity] = useState<string | null>(null)
-  const [activityRequest, setActivityRequest] = useState<{ pose: string } | null>(null)
   const [validation, setValidation] = useState('')
   const [failed, setFailed] = useState(false)
   const [moderationBlocked, setModerationBlocked] = useState(false)
@@ -85,24 +97,19 @@ export function HelpPage() {
     // A mudança de identidade invalida também respostas ainda em trânsito.
   }, [user?.id, user?.role])
   useEffect(() => {
-    setSleeping(false)
-    setActivity(null)
-    if (busy) return
-    const timers: ReturnType<typeof setTimeout>[] = []
-    if (activityRequest && !draft) {
-      setActivity(activityRequest.pose)
-      timers.push(setTimeout(() => setActivity(null), 8000))
-    }
-    if (animated && !draft) {
-      for (const [delay, next] of [[12000, '11-comendo'], [22000, '12-jogando'], [34000, '06-rindo'], [39000, null]] as const) {
-        timers.push(setTimeout(() => setActivity(next), delay))
-      }
-    }
-    timers.push(setTimeout(() => { setActivity(null); setSleeping(true) }, 45000))
-    return () => timers.forEach(clearTimeout)
-  }, [busy, messages, draft, animated, activityRequest, language])
-  // A conversa interrompe uma ação manual sem retomá-la após a resposta.
-  useEffect(() => { setActivityRequest(null) }, [busy, messages, draft, language])
+    if (!activity) return
+    const timer = setTimeout(() => setActivity(null), 8000)
+    return () => clearTimeout(timer)
+  }, [activity])
+  useEffect(() => {
+    if (busy || petAction.pending || activity) return
+    const timer = setTimeout(() => setSleeping(true), 45000)
+    return () => clearTimeout(timer)
+  }, [busy, petAction.pending, messages, draft, activity])
+  // Conversar ou iniciar um cuidado interrompe o descanso e qualquer animação anterior.
+  useEffect(() => {
+    if (busy || petAction.pending || draft) { setActivity(null); setSleeping(false) }
+  }, [busy, petAction.pending, draft])
   const finish = useCallback(() => setRevealing(null), [])
   useEffect(() => {
     if (!revealing) return
@@ -156,6 +163,17 @@ export function HelpPage() {
     setMessages(previous => [...previous, { id: ++sequence.current, role: 'user', text: question }, reply])
     setDraft(''); setShown(0); setRevealing(animated ? reply : null)
   }
+  async function careFor(item: typeof activities[number], onActivity: () => void) {
+    if (!pet.data || petAction.pending || busy) return
+    const result = await petAction.run(async () => {
+      const updated = await contentApi.careDenkynho(item.action as DenkynhoAction, idempotencyKey())
+      queryClient.setQueryData(petQueryKey, updated)
+      await queryClient.invalidateQueries({ queryKey: petQueryKey })
+      return updated
+    })
+    if (!mounted.current || !result.ok) return
+    setSleeping(false); setActivity(item.pose); onActivity()
+  }
   function submit(event: FormEvent) { event.preventDefault(); void send() }
   function onDraftKey(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return
@@ -168,18 +186,32 @@ export function HelpPage() {
   const last = messages[messages.length - 1]
   const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? '01-boas-vindas' : sleeping ? '05-dormindo' : activity ?? last.pose ?? '01-boas-vindas'
   const currentActivity = activities.find(item => item.pose === pose)
+  const petAttributes = pet.data ? [
+    { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
+    { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },
+    { id: 'happiness', label: labels.happiness, value: pet.data.attributes.happiness },
+    { id: 'hygiene', label: labels.hygiene, value: pet.data.attributes.hygiene },
+  ] : []
   return <div className="help-page">
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
-      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : currentActivity?.status[language] ?? labels.ask}
+      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={petAction.pending ? labels.caring : action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : currentActivity?.status[language] ?? labels.ask}
         mascot={<Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
         {onActivity => <>
+        {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
+        {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>
+          <header><strong>{labels.level} {pet.data.level}</strong><small>{labels.xp} {pet.data.experience}/{pet.data.experience_next}</small></header>
+          <div className="denk-pet-attributes" aria-label={labels.attributes}>
+            {petAttributes.map(attribute => <div key={attribute.id}><span>{attribute.label}</span><progress aria-label={attribute.label} max={100} value={attribute.value}>{attribute.value}%</progress><b>{attribute.value}</b></div>)}
+          </div>
+        </section>}
+        <ErrorNotice error={pet.error ?? petAction.error} fallback={labels.petError} className="denk-pet-error" />
         <div className="help-activities" role="group" aria-label={language === 'pt' ? 'Atividades do Denkynho' : 'Denkynho activities'}>
-          {activities.map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => { setActivityRequest({ pose: item.pose }); onActivity() }}>{item[language]}</Button>)}
+          {activities.map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || petAction.pending || pet.isLoading || pet.isError || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => { void careFor(item, onActivity) }}>{item[language]}</Button>)}
         </div>
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">{labels.reduced}</small>}
-        <Field label={labels.language}><select value={language} disabled={busy} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>
+        <Field label={labels.language}><select value={language} disabled={busy || petAction.pending} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>
         <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>
         </>}
       </HelpCompanion>

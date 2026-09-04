@@ -11,6 +11,15 @@ export type ActivitySequence = {
 }
 
 export const activitySequences: Record<string, ActivitySequence> = {
+  '05-dormindo': {
+    src: '05-dormindo-cama-sequencia.png', size: [1448, 1086], split: 540, viewport: [380, 580],
+    anchors: [[181, 530], [543, 530], [905, 530], [1267, 530], [181, 1050], [543, 1050], [905, 1050], [1267, 1050]],
+    timeline: [
+      { frame: 0, duration: 700 }, { frame: 1, duration: 550 }, { frame: 2, duration: 550 },
+      { frame: 3, duration: 750 }, { frame: 4, duration: 550 }, { frame: 5, duration: 550 },
+      { frame: 6, duration: 600 }, { frame: 7, duration: 800 },
+    ],
+  },
   '11-comendo': {
     src: '11-comendo-sequencia.png', size: [1448, 1086], split: 530, viewport: [360, 540],
     anchors: [[226, 520], [548.5, 520], [868.5, 520], [1211, 520], [225, 1043], [543.5, 1043], [865.5, 1043], [1203, 1043]],
