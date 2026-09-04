@@ -46,6 +46,13 @@ it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   await act(async () => { vi.advanceTimersByTime(560) })
   expect(container.querySelectorAll('.denk-transition')).toHaveLength(1)
 })
+it('expõe uma animação de ociosidade própria, sem usar o atlas da cama', async () => {
+  const { container } = render(<Denkynho pose="01-boas-vindas" idle />); await settle()
+  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
+  expect(container.querySelector('.denk-pose')).toHaveClass('is-moving')
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/01-boas-vindas.png')
+})
 it('mantém a imagem anterior se o novo asset falhar', async () => {
   const { rerender } = render(<Denkynho pose="01-boas-vindas" />); await settle(); fail = true
   rerender(<Denkynho pose="07-triste" />); await settle()

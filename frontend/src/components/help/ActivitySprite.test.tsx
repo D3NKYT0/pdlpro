@@ -8,7 +8,7 @@ import { activitySequences } from './activitySequences'
 beforeEach(() => vi.useFakeTimers())
 afterEach(() => { cleanup(); vi.useRealTimers() })
 
-it.each(Object.keys(activitySequences))('reproduz o ciclo completo de %s com recortes distintos e volta ao início', async pose => {
+it.each(Object.keys(activitySequences))('reproduz o ciclo completo de %s dentro da própria célula e volta ao início', async pose => {
   const sequence = activitySequences[pose]
   const { container, unmount } = render(<ActivitySprite sequence={sequence} active />)
   const sprite = container.querySelector('svg')!
@@ -17,7 +17,16 @@ it.each(Object.keys(activitySequences))('reproduz o ciclo completo de %s com rec
   for (const tick of sequence.timeline) {
     expect(sprite).toHaveAttribute('data-frame', String(tick.frame))
     expect(sprite.querySelector('image')).toHaveAttribute('href', `/mascot/denkynho/${sequence.src}`)
-    expect(sprite.querySelector('rect')).toHaveAttribute('y', tick.frame < 4 ? '0' : String(sequence.split))
+    const [x, y, viewWidth, viewHeight] = sprite.getAttribute('viewBox')!.split(' ').map(Number)
+    const cellX = Math.floor(tick.frame % 4 * sequence.size[0] / 4)
+    const cellWidth = Math.floor((tick.frame % 4 + 1) * sequence.size[0] / 4) - cellX
+    const cellY = tick.frame < 4 ? 0 : sequence.split
+    const cellHeight = tick.frame < 4 ? sequence.split : sequence.size[1] - sequence.split
+    expect(x).toBeGreaterThanOrEqual(cellX)
+    expect(x + viewWidth).toBeLessThanOrEqual(cellX + cellWidth)
+    expect(y).toBeGreaterThanOrEqual(cellY)
+    expect(y + viewHeight).toBeLessThanOrEqual(cellY + cellHeight)
+    expect(sprite.querySelector('clipPath')).toBeNull()
     views.add(sprite.getAttribute('viewBox'))
     await act(async () => { await vi.advanceTimersByTimeAsync(tick.duration) })
   }

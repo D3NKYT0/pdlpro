@@ -1,9 +1,8 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ActivitySequence } from './activitySequences'
 
 /** Reproduz quadros do atlas já carregado; congela ao sair e libera o timer ao desmontar. */
 export function ActivitySprite({ sequence, active }: { sequence: ActivitySequence; active: boolean }) {
-  const clipId = useId()
   const [step, setStep] = useState(0)
   const current = sequence.timeline[step]
   useEffect(() => {
@@ -19,9 +18,14 @@ export function ActivitySprite({ sequence, active }: { sequence: ActivitySequenc
   const rowY = frame < 4 ? 0 : sequence.split
   const cellX = Math.floor(column * width / 4)
   const cellWidth = Math.floor((column + 1) * width / 4) - cellX
+  const cellHeight = frame < 4 ? sequence.split : height - sequence.split
+  // O viewBox é contido na célula atual, sem depender de clip-path com IDs do DOM.
+  const sourceWidth = Math.min(viewWidth, cellWidth)
+  const sourceHeight = Math.min(viewHeight, cellHeight)
+  const sourceX = Math.min(Math.max(anchorX - sourceWidth / 2, cellX), cellX + cellWidth - sourceWidth)
+  const sourceY = Math.min(Math.max(anchorY - sourceHeight + 10, rowY), rowY + cellHeight - sourceHeight)
   return <svg className="denk-sprite" aria-hidden="true" data-frame={frame}
-    viewBox={`${anchorX - viewWidth / 2} ${anchorY - viewHeight + 10} ${viewWidth} ${viewHeight}`}>
-    <defs><clipPath id={clipId}><rect x={cellX} y={rowY} width={cellWidth} height={frame < 4 ? sequence.split : height - sequence.split} /></clipPath></defs>
-    <image href={`/mascot/denkynho/${sequence.src}`} width={width} height={height} clipPath={`url(#${clipId})`} />
+    viewBox={`${sourceX} ${sourceY} ${sourceWidth} ${sourceHeight}`}>
+    <image href={`/mascot/denkynho/${sequence.src}`} width={width} height={height} />
   </svg>
 }

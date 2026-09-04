@@ -12,7 +12,7 @@ type Layer = { src: string; box: number[] }
 /** Mascote com sequências de ação, transição, piscada e fala controladas pela conversa.
  * Carrega as imagens da pose antes da troca e libera timers ao desmontar.
  */
-export function Denkynho({ pose, talking = false, mouthOpen = false, animated: animate = true }: { pose: string; talking?: boolean; mouthOpen?: boolean; animated?: boolean }) {
+export function Denkynho({ pose, idle = false, talking = false, mouthOpen = false, animated: animate = true }: { pose: string; idle?: boolean; talking?: boolean; mouthOpen?: boolean; animated?: boolean }) {
   const reduced = useReducedMotion()
   const animated = animate && !reduced
   const view = useMascotPose(pose, animated, talking)
@@ -46,7 +46,7 @@ export function Denkynho({ pose, talking = false, mouthOpen = false, animated: a
       </div>
     </div>
   }
-  return <div className="denk-mascot" role="img" aria-label={`Denkynho — ${view.current.pose.label}${talking ? ', falando' : ''}`} data-pose={view.current.pose.id} data-animated={animated}
+  return <div className="denk-mascot" role="img" aria-label={`Denkynho — ${view.current.pose.label}${talking ? ', falando' : ''}`} data-pose={view.current.pose.id} data-idle={idle} data-animated={animated}
     data-mirrored={view.current.mirrored} data-transition={animated ? view.transition ?? 'none' : 'none'}
     style={{ '--denk-transition-duration': `${view.transition ? transitionDurations[view.transition] : 0}ms` } as CSSProperties}>
     {animated && view.previous && character(view.previous, true)}{character(view.current)}

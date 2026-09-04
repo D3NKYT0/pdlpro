@@ -9,7 +9,7 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 - [Comendo](../../frontend/public/mascot/denkynho/11-comendo-sequencia.png): 1448 × 1086; lanche, mordida, mastigação e pausa.
 - [Jogando](../../frontend/public/mascot/denkynho/12-jogando-sequencia.png): 1448 × 1086; braços, mãos, controle e reação facial.
 - [Rindo](../../frontend/public/mascot/denkynho/06-rindo-sequencia.png): 1491 × 1055; boca, cabeça, braços e tronco.
-- [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia.png): 1448 × 1086; respiração, coberta, sorriso e acomodação na cama.
+- [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia-v2.png): 1448 × 1086; alterna os dois lados, respiração, coberta e `Z`/`Zz`/`Zzz`.
 
 Os originais estáticos permanecem disponíveis para movimento reduzido e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 

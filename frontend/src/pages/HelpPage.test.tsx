@@ -52,7 +52,7 @@ it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo'))
   expect(screen.getByLabelText('Saciedade')).toHaveValue(100)
 })
-it('encerra a animação de cuidado e dorme após inatividade sem acumular timers', async () => {
+it('reserva a cama para a ação Dormir e entra em ociosidade sem acumular timers', async () => {
   mount(); await screen.findByRole('button', { name: articles[0].question }); await openCompanion(); await screen.findByText('Nível 1')
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
@@ -62,7 +62,9 @@ it('encerra a animação de cuidado e dorme após inatividade sem acumular timer
   await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
+  expect(screen.getAllByText('Curtindo um momento tranquilo.')).toHaveLength(2)
   cleanup(); client.clear()
   expect(vi.getTimerCount()).toBe(0)
 })
@@ -201,14 +203,15 @@ it('respeita movimento reduzido e exibe a resposta completa sem animação', asy
   expect(screen.getByText(articles[0].answer)).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Mostrar resposta completa' })).not.toBeInTheDocument()
 })
-it('descansa após inatividade, acorda ao enviar e termina a fala automaticamente', async () => {
+it('não entra em ociosidade enquanto há rascunho e termina a fala automaticamente', async () => {
   fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ ...assistantReply, answer: { text: 'Ok.', pose: '04-dica' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : String(input).includes('/assistant/pet/') ? response(petProfile) : response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'senha')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
   await act(async () => { await vi.advanceTimersByTimeAsync(100) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '04-dica')

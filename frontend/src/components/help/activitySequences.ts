@@ -1,5 +1,5 @@
-/** Quadros desenhados e ancorados pelos pés; recortes impedem vazamento entre células.
- * As coordenadas pertencem ao PNG original, que não é redimensionado nem recortado em disco.
+/** Quadros desenhados e ancorados no atlas original.
+ * Cada viewport é limitado à sua célula para que nenhum quadro vizinho apareça no mascote.
  */
 export type ActivitySequence = {
   src: string
@@ -12,12 +12,12 @@ export type ActivitySequence = {
 
 export const activitySequences: Record<string, ActivitySequence> = {
   '05-dormindo': {
-    src: '05-dormindo-cama-sequencia.png', size: [1448, 1086], split: 540, viewport: [380, 580],
-    anchors: [[181, 530], [543, 530], [905, 530], [1267, 530], [181, 1050], [543, 1050], [905, 1050], [1267, 1050]],
+    src: '05-dormindo-cama-sequencia-v2.png', size: [1448, 1086], split: 543, viewport: [342, 525],
+    anchors: [[181, 510], [543, 510], [905, 510], [1267, 510], [181, 1053], [543, 1053], [905, 1053], [1267, 1053]],
     timeline: [
-      { frame: 0, duration: 700 }, { frame: 1, duration: 550 }, { frame: 2, duration: 550 },
-      { frame: 3, duration: 750 }, { frame: 4, duration: 550 }, { frame: 5, duration: 550 },
-      { frame: 6, duration: 600 }, { frame: 7, duration: 800 },
+      { frame: 0, duration: 750 }, { frame: 1, duration: 650 }, { frame: 2, duration: 700 },
+      { frame: 3, duration: 600 }, { frame: 4, duration: 750 }, { frame: 5, duration: 650 },
+      { frame: 6, duration: 700 }, { frame: 7, duration: 600 },
     ],
   },
   '11-comendo': {

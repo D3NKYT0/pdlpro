@@ -315,6 +315,9 @@
 .denk-pose.is-moving {
   animation:denk-breathe 3.5s ease-in-out infinite;
 }
+.denk-mascot[data-idle="true"] .denk-pose.is-moving {
+  animation:denk-idle 4.5s ease-in-out infinite;
+}
 .denk-pose.pose-rindo.is-moving {
   animation:denk-laugh .32s ease-in-out infinite alternate;
 }
@@ -383,6 +386,12 @@
   50% {
     transform:translateY(-2px) rotate(.35deg);
   }
+}
+@keyframes denk-idle {
+  0%,100% { transform:translateY(0) rotate(0); }
+  28% { transform:translateY(-2px) rotate(-.7deg); }
+  58% { transform:translateY(-1px) rotate(.7deg); }
+  82% { transform:translateY(-2px) rotate(-.35deg); }
 }
 @keyframes denk-sleep {
   50% {
