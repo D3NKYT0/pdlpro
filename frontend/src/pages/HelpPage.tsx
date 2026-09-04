@@ -102,7 +102,7 @@ export function HelpPage() {
         return { dialogue: respondToMessage(question, faq.data ?? [], dialogue) }
       }
       const server = await contentApi.assistantReply(question, language)
-      if (!server || !['knowledge', 'unknown', 'blocked'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
+      if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
       return { server }
     })
     if (!mounted.current) return

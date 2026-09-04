@@ -176,3 +176,17 @@ it('mantém a preferência de detalhes nas respostas do servidor', async () => {
   expect(await screen.findByText(articles[0].answer)).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Ver orientação completa' })).not.toBeInTheDocument()
 })
+
+it('aceita reparação social do backend sem repetir fonte e resposta do FAQ anterior', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.click(screen.getByRole('button', { name: articles[0].question }))
+  await screen.findByText(articles[0].short_answer)
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ kind: 'social', language: 'pt', engine: 'rapidfuzz', answer: { text: 'Desculpa, interpretei errado. Eu sou o Denkynho!', pose: '01-boas-vindas' } }) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'mas eu pedi pra vc me falar sobre voce{Enter}')
+  expect(await screen.findByText('Desculpa, interpretei errado. Eu sou o Denkynho!')).toBeVisible()
+  expect(screen.getAllByText(articles[0].short_answer)).toHaveLength(1)
+  expect(screen.getAllByText(`Fonte: ${articles[0].question}`)).toHaveLength(1)
+  const call = fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).at(-1)!
+  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt' })
+})

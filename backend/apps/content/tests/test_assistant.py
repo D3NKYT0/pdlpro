@@ -208,3 +208,63 @@ def test_staff_authorization_and_message_length(api, mocker):
     assert response.data['article_id'] == str(article.id)
     assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1001}).status_code == 400
     assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1000}).status_code == 200
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('message,language', [
+    ('me fale sobre voce', 'pt'),
+    ('mas eu pedi pra vc me falar sobre voce', 'pt'),
+    ('quero conhecer melhor você', 'pt'),
+    ('I asked you to tell me about yourself', 'en'),
+])
+def test_self_introduction_never_returns_game_characters(api, player, mocker, message, language):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=semantic_match('personagens'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': message, 'language': language})
+    assert response.data['kind'] == 'social'
+    assert 'Denkynho' in response.data['answer']['text']
+    assert 'article_id' not in response.data
+
+
+@pytest.mark.django_db
+def test_correction_requests_clarification_instead_of_repeating_faq(api, player, mocker):
+    mocked = mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                                side_effect=semantic_match('personagens'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'não foi isso que eu perguntei', 'language': 'pt'})
+    assert response.data['kind'] == 'unknown'
+    assert 'interpretei' in response.data['answer']['text']
+    mocked.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_semantic_self_description_competes_with_faq(api, player, mocker):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=semantic_match('me fale sobre voce'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'como você se descreveria?', 'language': 'pt'})
+    assert response.data['kind'] == 'social'
+    assert response.data['engine'] == 'sentence-transformers+rapidfuzz'
+    assert 'Denkynho' in response.data['answer']['text']
+
+
+@pytest.mark.django_db
+def test_game_character_question_still_uses_authorized_faq(api, player, mocker):
+    article = Faq.objects.create(question='Onde estão meus personagens?', answer='Abra Conta L2.')
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=semantic_match('Onde estão meus personagens?'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'me fale sobre meus personagens do jogo', 'language': 'pt'})
+    assert response.data['kind'] == 'knowledge'
+    assert response.data['article_id'] == str(article.id)
+
+
+@pytest.mark.django_db
+def test_weak_semantic_match_does_not_claim_a_faq_answer(api, player, mocker):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=lambda _self, _q, docs: [0.35] * len(docs))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'qual a receita de bolo de cenoura?', 'language': 'pt'})
+    assert response.data['kind'] == 'unknown'
+    assert 'article_id' not in response.data

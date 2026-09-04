@@ -36,8 +36,8 @@ export interface ApiFaq {
 
 export interface ApiAssistantReply {
   language: 'pt' | 'en'
-  kind: 'knowledge' | 'unknown' | 'blocked'
-  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation'
+  kind: 'knowledge' | 'unknown' | 'blocked' | 'social'
+  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation'
   confidence?: number
   article_id?: string
   related_ids?: string[]

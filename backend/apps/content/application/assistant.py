@@ -7,12 +7,17 @@ import unicodedata
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from common.architecture.base import UseCase
 from lingua import Language, LanguageDetectorBuilder
 from rapidfuzz.fuzz import WRatio
 
+from apps.content.application.conversation import (
+    correction_requested,
+    explicit_identity,
+    identity_reply,
+    social_articles,
+)
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
-from common.architecture.base import UseCase
-
 
 logger = logging.getLogger(__name__)
 SUPPORTED_LANGUAGES = {"pt", "en"}
@@ -94,9 +99,18 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
                 "answer": {"text": text, "pose": "10-frustrado"},
             }
 
+        query = normalize(data.message)
+        correction = correction_requested(query)
+        if explicit_identity(query):
+            return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": identity_reply(language, correction)}
+        if correction:
+            text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
+                    if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
+            return {"language": language, "kind": "unknown", "engine": "conversation", "related_ids": [], "answer": {"text": text, "pose": "09-confuso"}}
         articles = ListFaqUseCase().execute(
             ListFaqInput(audience=data.audience, language=language)
         )
+        articles += social_articles(language)
         documents = [f"{article['question']} {' '.join(article['keywords'])}" for article in articles]
         engine = "sentence-transformers+rapidfuzz"
         try:
@@ -114,11 +128,18 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
             lexical = WRatio(normalize(data.message), normalize(document)) / 100
             score = lexical if engine == "rapidfuzz" else max(0.0, semantic) * 0.82 + lexical * 0.18
             ranked.append((score, article))
-        ranked.sort(key=lambda item: item[0], reverse=True)
+        # Vários exemplos da mesma intenção não competem entre si pela margem.
+        grouped = {}
+        for score, article in ranked:
+            if article['id'] not in grouped or score > grouped[article['id']][0]:
+                grouped[article['id']] = (score, article)
+        ranked = sorted(grouped.values(), key=lambda item: item[0], reverse=True)
         best_score, best = ranked[0] if ranked else (0.0, None)
         second_score = ranked[1][0] if len(ranked) > 1 else 0.0
-        threshold = 0.58 if engine == "rapidfuzz" else 0.38
-        if best and best_score >= threshold and best_score - second_score >= 0.02:
+        threshold = 0.86 if engine == "rapidfuzz" else 0.50
+        if best and best_score >= threshold and best_score - second_score >= 0.06:
+            if best.get('kind') == 'social':
+                return {"language": language, "kind": "social", "engine": engine, "confidence": round(best_score, 4), "answer": identity_reply(language)}
             return {
                 "language": language,
                 "kind": "knowledge",
@@ -137,7 +158,7 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
             if language == "en"
             else "Encontrei assuntos relacionados, mas preciso de um pouco mais de detalhe para responder com segurança."
         )
-        related = [article["id"] for score, article in ranked[:3] if score >= 0.25]
+        related = [article["id"] for score, article in ranked[:3] if score >= 0.40 and article.get('kind') != 'social']
         return {
             "language": language,
             "kind": "unknown",

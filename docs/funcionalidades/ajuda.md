@@ -80,3 +80,19 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, idioma, filtro, personalidade, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica idioma, validação, anonimato, moderação, busca semântica simulada na fronteira do modelo, fallback explícito e autorização por audiência.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.
+
+## Correções de entendimento
+
+Pedidos de apresentação em PT/EN, inclusive abreviações como “vc”, são separados
+das perguntas sobre personagens do jogo. Exemplos sociais também concorrem com
+o FAQ no modelo multilíngue; exemplos da mesma intenção são agrupados antes da
+comparação de confiança. Uma correção como “mas eu pedi pra vc me falar sobre voce”
+recebe um reconhecimento do engano e uma apresentação do Denkynho. Uma rejeição
+sem novo assunto, como “não foi isso que eu perguntei”, pede esclarecimento.
+
+Respostas sociais vindas do servidor não exibem fonte de FAQ e limpam a referência
+ao artigo anterior. A busca semântica e o fallback lexical usam limites mais
+conservadores para evitar respostas sem relação com a pergunta. Os testes incluem
+as frases acima, PT/EN, perguntas legítimas sobre personagens e mensagens fora
+do domínio. O modelo real foi exercitado com dúvidas de senha e personagens,
+apresentações e uma pergunta de culinária, que deve ficar sem resposta no FAQ.
