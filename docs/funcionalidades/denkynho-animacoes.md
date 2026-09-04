@@ -13,7 +13,7 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 
 Os originais estáticos permanecem disponíveis para movimento reduzido e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 
-O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. A área de clipping impede que pés, cama ou cabelo de quadros vizinhos apareçam. A ancoragem mantém a base da cama e os pés na mesma altura. As durações variam entre 140 e 800 ms para dar ritmo às ações, com repetição de quadros de mastigação, risada e respiração.
+O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. O `viewBox` é limitado à célula atual, impedindo que pés, cama ou cabelo de quadros vizinhos apareçam. A ancoragem mantém a base da cama e os pés na mesma altura. As durações variam entre 140 e 800 ms para dar ritmo às ações, com repetição de quadros de mastigação, risada e respiração.
 
 ## Transições e espelhamento
 
