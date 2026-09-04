@@ -22,12 +22,12 @@ class NewsAdmin(PDLModelAdmin):
 class FaqAdmin(PDLModelAdmin):
     """Configura a administração Django de ``Faq``.
 
-    A listagem separa artigos por assunto e permite pesquisar nas respostas e palavras-chave.
+    A listagem separa artigos por assunto, audiência e consulta exclusiva do Denkynho.
     A ordem e a publicação continuam controladas individualmente.
     """
 
-    list_display = ("question", "category", "audience", "order", "is_published")
-    list_filter = ("category", "audience", "is_published")
+    list_display = ("question", "category", "audience", "assistant_only", "order", "is_published")
+    list_filter = ("category", "audience", "assistant_only", "is_published")
     search_fields = (
         "question", "short_answer", "answer", "keywords",
         "question_en", "short_answer_en", "answer_en", "keywords_en",

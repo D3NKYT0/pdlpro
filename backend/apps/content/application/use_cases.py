@@ -81,17 +81,23 @@ class GetNewsUseCase(UseCase[GetNewsInput, NewsDTO]):
 
 @dataclass(frozen=True, slots=True)
 class ListFaqInput:
-    """Maior audiência que a identidade autenticada pode consultar."""
+    """Maior audiência que a identidade autenticada pode consultar.
+
+    ``for_assistant`` inclui o handbook interno usado só pelo Denkynho. As listagens HTTP
+    omitem esses artigos para não misturá-los à página FAQ nem às sugestões da Ajuda.
+    """
 
     audience: str = Faq.Audience.PUBLIC
     language: str = "pt"
+    for_assistant: bool = False
 
 
 class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
     """Lista artigos publicados com as três camadas usadas pela central de ajuda.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
-    retorno inclui categoria, rótulo, resposta rápida, detalhes e palavras-chave.
+    retorno inclui categoria, rótulo, resposta rápida, detalhes e palavras-chave. Sem
+    ``for_assistant``, artigos exclusivos do assistente ficam de fora.
     """
 
     def execute(self, data: ListFaqInput | None = None) -> list[dict]:
@@ -102,10 +108,10 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
             Faq.Audience.STAFF: [Faq.Audience.PUBLIC, Faq.Audience.STAFF],
             Faq.Audience.SUPERADMIN: [Faq.Audience.PUBLIC, Faq.Audience.STAFF, Faq.Audience.SUPERADMIN],
         }.get(requested, [Faq.Audience.PUBLIC])
-        return [
-            self._dump(item, language)
-            for item in Faq.objects.filter(is_published=True, audience__in=allowed)
-        ]
+        rows = Faq.objects.filter(is_published=True, audience__in=allowed)
+        if not (data and data.for_assistant):
+            rows = rows.filter(assistant_only=False)
+        return [self._dump(item, language) for item in rows]
 
     @staticmethod
     def _dump(item: Faq, language: str) -> dict:

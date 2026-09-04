@@ -357,12 +357,21 @@
 }
 @media(max-width:900px) {
   .help-page {
-    height:auto;
-    overflow:visible;
+    gap:8px;
+    min-height:0;
+    overflow:hidden;
+  }
+  .help-page .help-hero {
+    padding:8px 10px;
+    gap:8px;
+  }
+  .help-page .help-hero .panel-eyebrow,
+  .help-page .help-hero p {
+    display:none;
   }
   .help-workspace {
     grid-template-columns:1fr;
-    flex:none;
+    min-height:0;
   }
   .help-companion {
     display:grid;
@@ -383,11 +392,52 @@
   .help-companion>:not(.denk-mascot) { grid-column:2; }
   .help-activities { justify-content:flex-start; }
   .help-chat {
-    height:auto;
-    min-height:min(68dvh, 620px);
+    min-height:0;
   }
   .help-messages {
-    max-height:min(52dvh, 480px);
+    max-height:none;
+    padding:10px 12px;
+  }
+  .help-chat-head {
+    padding:8px 12px;
+    gap:8px;
+  }
+  .help-chat-head p {
+    display:none;
+  }
+  .help-compose {
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:start;
+    gap:8px;
+    padding:8px 10px;
+  }
+  .help-compose-label,
+  .help-compose-hint,
+  .help-compose-send-label {
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+  }
+  .help-compose-field {
+    position:relative;
+    gap:4px;
+  }
+  .help-compose-actions {
+    position:relative;
+    gap:0;
+    flex-wrap:nowrap;
+    align-self:stretch;
+  }
+  .help-compose-actions .ui-button {
+    position:relative;
+    align-self:end;
+  }
+  .help-compose textarea {
+    min-height:40px;
+    height:40px;
+    padding:8px 10px;
   }
 }
 @media(max-width:480px) {
@@ -402,8 +452,8 @@
   .help-message {
     max-width:100%;
   }
-  .help-chat-head,.help-messages,.help-compose {
-    padding:14px;
+  .help-messages {
+    padding:10px;
   }
   .help-companion .panel-eyebrow {
     font-size:12px;
@@ -450,21 +500,34 @@
 .panel-app .help-page .help-companion p {
   margin:0;
 }
+html.pdl-panel:has(.help-page),
+html.pdl-panel:has(.help-page) body,
+html.pdl-panel:has(.help-page) #root {
+  height:100%;
+  max-height:100dvh;
+  overflow:hidden;
+}
+html.pdl-panel:has(.help-page) .panel-app,
+html.pdl-panel:has(.help-page) .shell {
+  height:100dvh;
+  max-height:100dvh;
+  min-height:0;
+  overflow:hidden;
+}
+html.pdl-panel:has(.help-page) .content {
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  height:auto;
+  overflow:hidden;
+  padding-bottom:0;
+}
+html.pdl-panel:has(.help-page) .help-page {
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+}
 @media(min-width:901px) {
-  html.pdl-panel:has(.help-page),
-  html.pdl-panel:has(.help-page) body,
-  html.pdl-panel:has(.help-page) #root {
-    height:100%;
-    max-height:100dvh;
-    overflow:hidden;
-  }
-  html.pdl-panel:has(.help-page) .panel-app,
-  html.pdl-panel:has(.help-page) .shell {
-    height:100dvh;
-    max-height:100dvh;
-    min-height:0;
-    overflow:hidden;
-  }
   html.pdl-panel:has(.help-page) .shell {
     padding-bottom:22px;
   }
@@ -472,18 +535,26 @@
     height:100%;
     min-height:0;
   }
-  html.pdl-panel:has(.help-page) .content {
-    display:flex;
-    flex-direction:column;
-    min-height:0;
-    height:auto;
-    overflow:hidden;
-    padding-bottom:0;
+}
+@media(max-width:900px) {
+  html.pdl-panel:has(.help-page) .shell {
+    grid-template-rows:auto minmax(0,1fr);
+    gap:8px;
+    padding:8px 10px;
   }
-  html.pdl-panel:has(.help-page) .help-page {
-    flex:1;
+  html.pdl-panel:has(.help-page) .sidebar {
+    height:68px;
     min-height:0;
-    overflow:hidden;
+    top:8px;
+  }
+  html.pdl-panel:has(.help-page) .content {
+    min-height:0;
+  }
+  html.pdl-panel:has(.help-page) .help-workspace {
+    min-height:0;
+  }
+  .panel-app .help-page .help-hero {
+    padding:8px 10px;
   }
 }
 @media(max-width:480px) {

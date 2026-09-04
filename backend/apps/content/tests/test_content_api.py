@@ -33,6 +33,50 @@ def test_initial_internal_catalog_respects_staff_and_superadmin_audiences(api):
     assert len(super_seeded) == 4
 
 
+def test_denkynho_handbook_respects_field_limits():
+    from apps.content.migrations.0013_seed_denkynho_handbook import HANDBOOK
+
+    assert len(HANDBOOK) == 61
+    assert {item[0] for item in HANDBOOK} == set(range(1, 62))
+    assert sum(item[1] == "public" for item in HANDBOOK) == 45
+    assert sum(item[1] == "staff" for item in HANDBOOK) == 13
+    assert sum(item[1] == "superadmin" for item in HANDBOOK) == 3
+    for item in HANDBOOK:
+        _, _, category, question, short_answer, answer, keywords, question_en, short_en, answer_en, keywords_en = item
+        assert category in {
+            "getting_started", "account_security", "game_accounts", "economy",
+            "commerce", "games_rewards", "community", "support",
+        }
+        assert 0 < len(question) <= 250 and 0 < len(short_answer) <= 400 and 0 < len(keywords) <= 500
+        assert 0 < len(question_en) <= 250 and 0 < len(short_en) <= 400 and 0 < len(keywords_en) <= 500
+        assert answer and answer_en
+
+
+@pytest.mark.django_db
+def test_denkynho_handbook_is_seeded_and_hidden_from_faq_listings(api):
+    from uuid import UUID
+
+    from apps.content.migrations.0013_seed_denkynho_handbook import HANDBOOK, PREFIX
+
+    ids = [UUID(f"{PREFIX}{item[0]:012d}") for item in HANDBOOK]
+    handbook = list(Faq.objects.filter(id__in=ids))
+    assert len(handbook) == len(HANDBOOK)
+    assert all(item.assistant_only and item.is_published and item.question_en and item.answer_en for item in handbook)
+
+    public_ids = {item["id"] for item in api.get("/api/v1/public/faq/").data}
+    assert not any(item_id.startswith("c0300000-") for item_id in public_ids)
+
+    player = User.objects.create_user("handbook-player", "handbook-player@example.com")
+    api.force_authenticate(player)
+    player_ids = {item["id"] for item in api.get("/api/v1/shared/content/faq/").data}
+    assert not any(item_id.startswith("c0300000-") for item_id in player_ids)
+
+    superadmin = User.objects.create_superuser("handbook-root", "handbook-root@example.com")
+    api.force_authenticate(superadmin)
+    staff_ids = {item["id"] for item in api.get("/api/v1/shared/content/faq/").data}
+    assert not any(item_id.startswith("c0300000-") for item_id in staff_ids)
+
+
 @pytest.fixture
 def api():
     return APIClient()

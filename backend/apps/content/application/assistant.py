@@ -108,7 +108,7 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
                     if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
             return {"language": language, "kind": "unknown", "engine": "conversation", "related_ids": [], "answer": {"text": text, "pose": "09-confuso"}}
         articles = ListFaqUseCase().execute(
-            ListFaqInput(audience=data.audience, language=language)
+            ListFaqInput(audience=data.audience, language=language, for_assistant=True)
         )
         articles += social_articles(language)
         documents = [f"{article['question']} {' '.join(article['keywords'])}" for article in articles]

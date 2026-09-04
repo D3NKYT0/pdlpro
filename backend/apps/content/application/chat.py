@@ -125,7 +125,7 @@ class ChatReplyUseCase:
             return self._fallback.execute(data)
         if not self._model.enabled():
             return {**self._fallback.execute(data), "mode": "limited", "context": ""}
-        articles = ListFaqUseCase().execute(ListFaqInput(data.audience, language))
+        articles = ListFaqUseCase().execute(ListFaqInput(data.audience, language, for_assistant=True))
         sources = self._sources(data.message, history, articles)
         safe_name = data.display_name[:60] if not blocked_term(data.display_name) else ""
         system = PERSONA + "\nIDIOMA: " + language + "\nIDENTIDADE: " + json.dumps({

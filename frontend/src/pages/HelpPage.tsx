@@ -207,8 +207,8 @@ export function HelpPage() {
           {revealing && <div className="help-reveal"><Button size="sm" variant="secondary" onClick={finish}>{labels.reveal}</Button></div>}
         </div>
         <form className="help-compose" onSubmit={submit}>
-          <Field label={labels.message} error={validation && <span id="help-validation">{validation}</span>}><textarea value={draft} onChange={event => { setDraft(event.target.value); if (validation) { setValidation(''); setModerationBlocked(false) } }} onKeyDown={onDraftKey} maxLength={1000} rows={2} placeholder={labels.placeholder} disabled={busy} enterKeyHint="send" aria-invalid={Boolean(validation)} aria-describedby={validation ? 'help-validation' : undefined} /></Field>
-          <div className="help-compose-actions"><small className="muted">{labels.hint}</small><Button type="submit" busy={action.pending} busyLabel={labels.thinking} disabled={busy || !draft.trim() || faq.isLoading}><Send aria-hidden="true" /> {labels.send}</Button></div>
+          <Field className="help-compose-field" label={<span className="help-compose-label">{labels.message}</span>} error={validation && <span id="help-validation">{validation}</span>}><textarea value={draft} onChange={event => { setDraft(event.target.value); if (validation) { setValidation(''); setModerationBlocked(false) } }} onKeyDown={onDraftKey} maxLength={1000} rows={2} placeholder={labels.placeholder} disabled={busy} enterKeyHint="send" aria-invalid={Boolean(validation)} aria-describedby={validation ? 'help-validation' : undefined} /></Field>
+          <div className="help-compose-actions"><small className="muted help-compose-hint">{labels.hint}</small><Button type="submit" size="sm" busy={action.pending} busyLabel={labels.thinking} disabled={busy || !draft.trim() || faq.isLoading}><Send aria-hidden="true" /> <span className="help-compose-send-label">{labels.send}</span></Button></div>
         </form>
       </Card>
     </div>

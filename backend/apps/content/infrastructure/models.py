@@ -35,7 +35,9 @@ class Faq(BaseModel):
     """Artigo do FAQ com resposta rápida, orientação completa e termos de busca.
 
     ``category`` organiza as interfaces e ``keywords`` melhora a seleção conservadora feita
-    pelo assistente. A API expõe ``id`` (UUID); ``pk``/``seq_id`` permanecem internos.
+    pelo assistente. Artigos com ``assistant_only`` alimentam só a consulta do Denkynho e
+    não entram na página FAQ nem nas sugestões. A API expõe ``id`` (UUID); ``pk``/``seq_id``
+    permanecem internos.
     """
 
     class Category(models.TextChoices):
@@ -79,6 +81,10 @@ class Faq(BaseModel):
         choices=Audience.choices,
         default=Audience.PUBLIC,
         help_text="Público mínimo autorizado a receber este artigo no assistente.",
+    )
+    assistant_only = models.BooleanField(
+        default=False,
+        help_text="Se marcado, o artigo fica só na consulta do Denkynho e não aparece na página FAQ nem nas sugestões.",
     )
     order = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=True)

@@ -12,7 +12,7 @@ Em telas de até 900 px, o personagem fica flutuante, sem reservar uma coluna ou
 
 ## Acessar e conversar
 
-Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
+Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop e no celular, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível; no celular o envio cabe em uma linha, com o rótulo e a dica só para leitores de tela. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
 O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. A pessoa pode conversar em português ou inglês. O frontend envia cada mensagem aceita ao endpoint autenticado `POST /api/v1/shared/content/assistant/reply/`. A mensagem é interpretada na requisição e não é gravada. O histórico e o apelido são temporários e desaparecem ao sair da tela ou recarregá-la.
 
@@ -22,7 +22,7 @@ A rota autenticada filtra o conhecimento no backend: jogadores recebem artigos p
 
 A camada de conversa foi inspirada na separação entre personalidade, memória e provedor do Ashley. O Denkynho usa o SDK **Ollama** e **Pydantic** para gerar e validar respostas, com um modelo local. O FAQ permanece como fonte editorial. Não há integração com Gemini, OpenAI ou outro serviço de geração na nuvem.
 
-Toda mensagem aceita pelo filtro do navegador vai ao endpoint autenticado com `conversation: true` e `context`, inclusive cumprimentos e correções. O backend verifica moderação e identidade, recupera o contexto assinado, seleciona até três artigos autorizados e pede uma resposta ao modelo. O resultado inclui texto, tipo, pose e, quando aplicável, uma referência válida ao FAQ. Fontes inventadas, JSON inválido, texto vazio ou ofensivo e poses desconhecidas são recusados.
+Toda mensagem aceita pelo filtro do navegador vai ao endpoint autenticado com `conversation: true` e `context`, inclusive cumprimentos e correções. O backend verifica moderação e identidade, recupera o contexto assinado, seleciona até três artigos autorizados — inclusive o handbook interno de passo a passo — e pede uma resposta ao modelo. O resultado inclui texto, tipo, pose e, quando aplicável, uma referência válida ao FAQ. Fontes inventadas, JSON inválido, texto vazio ou ofensivo e poses desconhecidas são recusados.
 
 O prompt de personalidade está em [chat.py](../../backend/apps/content/application/chat.py). Define um assistente simpático, curioso, com humor leve, respostas breves e transparência sobre ser virtual. Ele considera o histórico para resolver referências, mudar de assunto e reparar interpretações erradas. Risadas, tristeza, conquistas e preferências de nome ou de detalhe são interpretadas pelo modelo; não dependem de cadastrar cada frase. Não deve cobrar atenção de quem ficou ausente nem terminar toda fala com uma pergunta.
 
@@ -104,6 +104,12 @@ A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. P
 A migration `content.0004_seed_pdl_faq` publica 38 orientações em oito assuntos: primeiros passos; conta e segurança; contas e personagens; carteira e inventário; loja e comércio; jogos e recompensas; conteúdo e comunidade; ajuda e atendimento. O catálogo cobre os módulos disponíveis no PDL sem fixar preços, taxas, limites ou prazos configuráveis. IDs determinísticos permitem reaplicar a carga e removê-la no rollback sem atingir artigos criados pela administração.
 
 A migration `content.0009_seed_english_faq` acrescenta as versões em inglês dos 38 artigos públicos e quatro artigos internos. A página pública `/faq` permite trocar o idioma, buscar em pergunta, resposta e palavras-chave e filtrar por assunto. As rotas de FAQ aceitam `?lang=pt` ou `?lang=en`; a API também retorna `language`, `audience` e `audience_label`. O Django Admin permite editar as duas versões e publicar cada artigo para todos, para a equipe ou somente para superadministradores.
+
+## Handbook interno do Denkynho
+
+A migration `content.0013_seed_denkynho_handbook` publica 61 orientações de passo a passo marcadas como `assistant_only`. Elas alimentam só a consulta do assistente: não entram em `/faq`, nas sugestões da Ajuda nem nas APIs de listagem, mesmo para superadministradores. O Denkynho continua filtrando por papel: jogadores recebem os 45 artigos públicos do handbook; a equipe recebe também os 13 de staff; superadministradores recebem os 3 exclusivos de temas e permissões.
+
+O handbook descreve rotas reais do painel (`/painel/wallet`, `/painel/accounts`, `/painel/admin/atendimento` e correlatas), sem fixar preços, taxas ou prazos configuráveis. No Django Admin, o filtro **Somente assistente** separa esses artigos do FAQ listado. Para incluir um passo a passo novo, marque `assistant_only` e mantenha as versões em português e inglês.
 
 ## Moderação da conversa
 

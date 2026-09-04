@@ -132,6 +132,69 @@ def test_assistant_filters_internal_knowledge_before_matching(api, player, mocke
 
 
 @pytest.mark.django_db
+def test_assistant_consults_unlisted_handbook_hidden_from_faq(api, player, mocker):
+    article = Faq.objects.create(
+        question="Passo a passo handbook da carteira",
+        short_answer="Abra Carteira no painel.",
+        answer="Abra /painel/wallet e revise o saldo antes de qualquer operação.",
+        keywords="handbook-wallet-xyz",
+        assistant_only=True,
+    )
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("Passo a passo handbook da carteira"),
+    )
+    api.force_authenticate(player)
+
+    listed = api.get("/api/v1/shared/content/faq/")
+    assert str(article.id) not in {item["id"] for item in listed.data}
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "Passo a passo handbook da carteira", "language": "pt"},
+    )
+
+    assert response.status_code == 200
+    assert response.data["kind"] == "knowledge"
+    assert response.data["article_id"] == str(article.id)
+    assert response.data["answer"]["text"] == "Abra Carteira no painel."
+
+
+@pytest.mark.django_db
+def test_player_cannot_retrieve_staff_handbook_article(api, player, mocker):
+    article = Faq.objects.create(
+        question="Fila interna handbook-staff-xyz?",
+        short_answer="Abra a fila autorizada.",
+        answer="Use a fila da equipe.",
+        keywords="handbook-staff-xyz",
+        audience=Faq.Audience.STAFF,
+        assistant_only=True,
+    )
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("Fila interna handbook-staff-xyz"),
+    )
+    api.force_authenticate(player)
+    hidden = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "handbook-staff-xyz", "language": "pt"},
+    )
+    staff = User.objects.create_user("handbook-staff", "handbook-staff@example.com", role=User.Role.STAFF)
+    api.force_authenticate(staff)
+    visible = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "handbook-staff-xyz", "language": "pt"},
+    )
+
+    assert hidden.data.get("article_id") != str(article.id)
+    assert visible.data["article_id"] == str(article.id)
+
+
+@pytest.mark.django_db
 def test_assistant_exposes_rapidfuzz_fallback_when_model_fails(api, player, mocker):
     article = Faq.objects.create(
         question="Como recuperar senha?",

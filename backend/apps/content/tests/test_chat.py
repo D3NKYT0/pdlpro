@@ -73,6 +73,30 @@ def test_valid_source_is_attached_by_server(chat, mocker):
     assert response.data["article_id"] == str(article.id)
 
 
+def test_unlisted_handbook_reaches_model_sources_but_not_faq_listing(chat, mocker):
+    api, _, model = chat
+    article = Faq.objects.create(
+        question="Handbook carteira",
+        answer="Abra Carteira no painel.",
+        assistant_only=True,
+    )
+    listed = api.get("/api/v1/public/faq/")
+    assert "Handbook carteira" not in {item["question"] for item in listed.data}
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        side_effect=lambda _query, documents: [0.95 if "Handbook carteira" in document else 0.2 for document in documents],
+    )
+    model.return_value.message.content = json.dumps({
+        "text": "Abra Carteira no painel.", "kind": "knowledge",
+        "article_id": str(article.id), "pose": "04-dica",
+    })
+    response = post(api, "Como uso a carteira no handbook")
+    assert response.data["article_id"] == str(article.id)
+    sources = json.loads(model.call_args.kwargs["messages"][0]["content"].split("\nFONTES: ")[1])
+    assert any(item["id"] == str(article.id) for item in sources)
+
+
 @pytest.mark.parametrize("payload", [
     "not json", "{}", '{"text": "ignored", "kind": "social", "pose": "evil", "article_id": null}',
     json.dumps({"text": " ", "kind": "social", "pose": "04-dica", "article_id": None}),
