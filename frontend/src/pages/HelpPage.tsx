@@ -15,6 +15,7 @@ import { helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
 import { HelpCompanion } from '../components/help/HelpCompanion'
 import { useReducedMotion } from '../components/help/useReducedMotion'
+import { defaultDenkynhoEmotion, emotionLabel, emotionStatus, isDenkynhoEmotion } from '../components/help/emotions'
 import { denkynhoWelcome, type HelpLanguage } from '../components/help/personality'
 import { initialDialogueState, isLocalDialogueMessage, respondToMessage } from '../components/help/dialogue'
 import { speechFrame } from '../components/help/speech'
@@ -41,10 +42,10 @@ function idempotencyKey() {
 
 const copy = {
   pt: {
-    title: 'Ajuda', eyebrow: 'Converse com o Denkynho', description: 'Orientações para sua jornada no PDL.', support: 'Atendimento da equipe', companion: 'Seu companheiro no PDL', ask: 'Como posso ajudar você?', searching: 'Procurando uma orientação…', talking: 'Conversando com você…', idle: 'Curtindo um momento tranquilo.', caring: 'Cuidando do Denkynho…', animate: 'Animar personagem', reduced: 'Movimento reduzido ativado no seu dispositivo.', faq: 'Consultar o FAQ', chat: 'Vamos conversar', context: 'O contexto vale enquanto esta conversa estiver aberta', fresh: 'Nova conversa', assistant: 'Seu assistente', chatLabel: 'Chat de ajuda', messages: 'Mensagens da conversa', you: 'Você', full: 'Ver orientação completa', source: 'Fonte', related: 'Talvez você queira saber:', topic: 'Assunto', all: 'Todos os assuntos', loading: 'Carregando perguntas de ajuda…', empty: 'Ainda não há perguntas publicadas. O atendimento da equipe está disponível.', consulting: 'Consultando a base de ajuda…', error: 'Não foi possível consultar a ajuda.', petLoading: 'Carregando atributos do Denkynho…', petError: 'Não foi possível carregar os atributos do Denkynho.', pet: 'Seu Denkynho', level: 'Nível', xp: 'XP', attributes: 'Atributos', satiety: 'Saciedade', energy: 'Energia', happiness: 'Alegria', hygiene: 'Higiene', reveal: 'Mostrar resposta completa', message: 'Sua mensagem', placeholder: 'Escreva sua dúvida…', hint: 'Enter envia · Shift+Enter quebra a linha. Não envie senhas ou códigos.', thinking: 'Pensando…', send: 'Enviar mensagem', invalid: 'Escreva uma pergunta de até 1.000 caracteres.', blocked: 'Essa mensagem contém uma palavra que não pode ser usada no chat. Reformule de modo respeitoso.', language: 'Idioma',
+    title: 'Ajuda', eyebrow: 'Converse com o Denkynho', description: 'Orientações para sua jornada no PDL.', support: 'Atendimento da equipe', companion: 'Seu companheiro no PDL', ask: 'Como posso ajudar você?', searching: 'Procurando uma orientação…', talking: 'Conversando com você…', idle: 'Curtindo um momento tranquilo.', caring: 'Cuidando do Denkynho…', animate: 'Animar personagem', reduced: 'Movimento reduzido ativado no seu dispositivo.', faq: 'Consultar o FAQ', chat: 'Vamos conversar', context: 'O contexto vale enquanto esta conversa estiver aberta', fresh: 'Nova conversa', assistant: 'Seu assistente', chatLabel: 'Chat de ajuda', messages: 'Mensagens da conversa', you: 'Você', full: 'Ver orientação completa', source: 'Fonte', related: 'Talvez você queira saber:', topic: 'Assunto', all: 'Todos os assuntos', loading: 'Carregando perguntas de ajuda…', empty: 'Ainda não há perguntas publicadas. O atendimento da equipe está disponível.', consulting: 'Consultando a base de ajuda…', error: 'Não foi possível consultar a ajuda.', petLoading: 'Carregando atributos do Denkynho…', petError: 'Não foi possível carregar os atributos do Denkynho.', pet: 'Seu Denkynho', level: 'Nível', xp: 'XP', attributes: 'Atributos', satiety: 'Saciedade', energy: 'Energia', happiness: 'Alegria', hygiene: 'Higiene', emotion: 'Humor', empathy: 'Acompanha o que você sente', needsMood: 'De acordo com o cuidado', reveal: 'Mostrar resposta completa', message: 'Sua mensagem', placeholder: 'Escreva sua dúvida…', hint: 'Enter envia · Shift+Enter quebra a linha. Não envie senhas ou códigos.', thinking: 'Pensando…', send: 'Enviar mensagem', invalid: 'Escreva uma pergunta de até 1.000 caracteres.', blocked: 'Essa mensagem contém uma palavra que não pode ser usada no chat. Reformule de modo respeitoso.', language: 'Idioma',
   },
   en: {
-    title: 'Help', eyebrow: 'Chat with Denkynho', description: 'Guidance for your PDL journey.', support: 'Contact the team', companion: 'Your PDL companion', ask: 'How can I help you?', searching: 'Looking for guidance…', talking: 'Talking with you…', idle: 'Enjoying a quiet moment.', caring: 'Taking care of Denkynho…', animate: 'Animate character', reduced: 'Reduced motion is enabled on your device.', faq: 'Browse the FAQ', chat: "Let's talk", context: 'Context is kept while this conversation remains open', fresh: 'New conversation', assistant: 'Your assistant', chatLabel: 'Help chat', messages: 'Conversation messages', you: 'You', full: 'View full guidance', source: 'Source', related: 'You may also want to know:', topic: 'Topic', all: 'All topics', loading: 'Loading help topics…', empty: 'No help topics are published yet. The support team is available.', consulting: 'Searching the help center…', error: 'The help center could not be reached.', petLoading: 'Loading Denkynho attributes…', petError: 'Denkynho attributes could not be loaded.', pet: 'Your Denkynho', level: 'Level', xp: 'XP', attributes: 'Attributes', satiety: 'Satiety', energy: 'Energy', happiness: 'Happiness', hygiene: 'Hygiene', reveal: 'Show full response', message: 'Your message', placeholder: 'Type your question…', hint: 'Enter sends · Shift+Enter adds a line. Never send passwords or codes.', thinking: 'Thinking…', send: 'Send message', invalid: 'Write a question with up to 1,000 characters.', blocked: 'This message contains language that cannot be used in chat. Please rephrase it respectfully.', language: 'Language',
+    title: 'Help', eyebrow: 'Chat with Denkynho', description: 'Guidance for your PDL journey.', support: 'Contact the team', companion: 'Your PDL companion', ask: 'How can I help you?', searching: 'Looking for guidance…', talking: 'Talking with you…', idle: 'Enjoying a quiet moment.', caring: 'Taking care of Denkynho…', animate: 'Animate character', reduced: 'Reduced motion is enabled on your device.', faq: 'Browse the FAQ', chat: "Let's talk", context: 'Context is kept while this conversation remains open', fresh: 'New conversation', assistant: 'Your assistant', chatLabel: 'Help chat', messages: 'Conversation messages', you: 'You', full: 'View full guidance', source: 'Source', related: 'You may also want to know:', topic: 'Topic', all: 'All topics', loading: 'Loading help topics…', empty: 'No help topics are published yet. The support team is available.', consulting: 'Searching the help center…', error: 'The help center could not be reached.', petLoading: 'Loading Denkynho attributes…', petError: 'Denkynho attributes could not be loaded.', pet: 'Your Denkynho', level: 'Level', xp: 'XP', attributes: 'Attributes', satiety: 'Satiety', energy: 'Energy', happiness: 'Happiness', hygiene: 'Hygiene', emotion: 'Mood', empathy: 'Feeling with you', needsMood: 'According to his care', reveal: 'Show full response', message: 'Your message', placeholder: 'Type your question…', hint: 'Enter sends · Shift+Enter adds a line. Never send passwords or codes.', thinking: 'Thinking…', send: 'Send message', invalid: 'Write a question with up to 1,000 characters.', blocked: 'This message contains language that cannot be used in chat. Please rephrase it respectfully.', language: 'Language',
   },
 } as const
 
@@ -90,6 +91,12 @@ export function HelpPage() {
     setDraft(''); setValidation(''); setIdle(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
   }
   useEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
+  useEffect(() => {
+    const felt = pet.data?.emotion
+    if (!isDenkynhoEmotion(felt)) return
+    const id = felt.id
+    setDialogue(current => current.emotion === (id === 'calm' ? undefined : id) ? current : { ...current, emotion: id === 'calm' ? undefined : id })
+  }, [pet.data?.emotion])
   useEffect(() => {
     session.current++
     setContext(''); setLimited(false); setMessages([welcome(helpIdentity(user), language)])
@@ -139,6 +146,7 @@ export function HelpPage() {
       const server = await contentApi.assistantReply(question, language, context)
       if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
       if ((server.context !== undefined && typeof server.context !== 'string') || (server.mode !== undefined && !['generative', 'limited'].includes(server.mode))) throw new Error(labels.error)
+      if (server.emotion !== undefined && !isDenkynhoEmotion(server.emotion)) throw new Error(labels.error)
       return { server, dialogue: server.kind !== 'blocked' && server.mode !== 'generative' && isLocalDialogueMessage(question, dialogue) ? respondToMessage(question, faq.data ?? [], dialogue) : undefined }
     })
     if (!mounted.current || currentSession !== session.current) return
@@ -149,6 +157,8 @@ export function HelpPage() {
     }
     setContext(result.value.server.context ?? '')
     setLimited(result.value.server.mode !== 'generative')
+    const felt = isDenkynhoEmotion(result.value.server.emotion) ? result.value.server.emotion : undefined
+    if (felt) queryClient.setQueryData(petQueryKey, current => current ? { ...current, emotion: felt } : current)
     const resolved = result.value.dialogue ?? {
       answer: {
         ...result.value.server!.answer,
@@ -156,8 +166,9 @@ export function HelpPage() {
         details: dialogue.detailPreference === 'balanced' ? result.value.server!.answer.details ?? undefined : undefined,
         related: (result.value.server!.related_ids ?? []).map(id => faq.data?.find(item => item.id === id)).filter((item): item is HelpArticle => Boolean(item)),
       },
-      state: { ...dialogue, turn: dialogue.turn + 1, lastArticleId: result.value.server!.article_id, pendingChoiceIds: result.value.server!.related_ids ?? [] },
+      state: { ...dialogue, turn: dialogue.turn + 1, lastArticleId: result.value.server!.article_id, pendingChoiceIds: result.value.server!.related_ids ?? [], emotion: felt?.id ?? dialogue.emotion },
     }
+    if (felt && result.value.dialogue) resolved.state = { ...resolved.state, emotion: felt.id }
     const reply: Message = { id: ++sequence.current, role: 'assistant', ...resolved.answer }
     setDialogue(resolved.state)
     setMessages(previous => [...previous, { id: ++sequence.current, role: 'user', text: question }, reply])
@@ -184,8 +195,11 @@ export function HelpPage() {
   const categories = Array.from(new Map((faq.data ?? []).map(item => [item.category, item.category_label])).entries())
   const suggestions = (faq.data ?? []).filter(item => topic === 'all' || item.category === topic).slice(0, 4)
   const last = messages[messages.length - 1]
-  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? '01-boas-vindas' : activity ?? (idle ? '01-boas-vindas' : last.pose ?? '01-boas-vindas')
+  const emotion = isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion : defaultDenkynhoEmotion
+  const emotionPose = emotion.idle_pose
+  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : activity ?? ((idle || last.id === 0) ? emotionPose : last.pose ?? emotionPose)
   const currentActivity = activities.find(item => item.pose === pose)
+  const companionStatus = petAction.pending ? labels.caring : action.pending ? labels.searching : revealing ? labels.talking : currentActivity?.status[language] ?? (idle || emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
     { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },
@@ -195,12 +209,13 @@ export function HelpPage() {
   return <div className="help-page">
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
-      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={petAction.pending ? labels.caring : action.pending ? labels.searching : revealing ? labels.talking : currentActivity?.status[language] ?? (idle ? labels.idle : labels.ask)}
+      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
         mascot={<Denkynho pose={pose} idle={idle} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
         {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>
           <header><strong>{labels.level} {pet.data.level}</strong><small>{labels.xp} {pet.data.experience}/{pet.data.experience_next}</small></header>
+          <p className="denk-pet-emotion"><strong>{labels.emotion}: {emotionLabel(emotion.id, language)}</strong><small className="muted">{emotion.source === 'user' ? labels.empathy : labels.needsMood}</small></p>
           <div className="denk-pet-attributes" aria-label={labels.attributes}>
             {petAttributes.map(attribute => <div key={attribute.id}><span>{attribute.label}</span><progress aria-label={attribute.label} max={100} value={attribute.value}>{attribute.value}%</progress><b>{attribute.value}</b></div>)}
           </div>

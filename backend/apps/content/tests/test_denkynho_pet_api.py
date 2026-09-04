@@ -31,6 +31,7 @@ def test_denkynho_profile_is_created_for_the_authenticated_user_only():
         "experience": 0,
         "experience_next": 100,
         "attributes": {"satiety": 75, "energy": 75, "happiness": 75, "hygiene": 75},
+        "emotion": {"id": "calm", "pose": "01-boas-vindas", "idle_pose": "01-boas-vindas", "source": "default"},
     }
 
     DenkynhoProfile.objects.filter(user=owner).update(level=3, experience=21)
@@ -103,3 +104,43 @@ def test_pet_decays_over_elapsed_half_hours_and_reusing_key_for_another_action_c
     profile.refresh_from_db()
     assert profile.energy == 100
     assert profile.satiety == 67
+
+
+@pytest.mark.django_db
+def test_expired_empathy_falls_back_to_needs_on_read():
+    user = _user("denk-expired")
+    DenkynhoProfile.objects.create(
+        user=user,
+        empathy="sad",
+        empathy_expires_at=timezone.now() - timedelta(minutes=1),
+    )
+    api = APIClient()
+    api.force_authenticate(user)
+
+    state = api.get(PET_URL)
+    assert state.data["emotion"] == {
+        "id": "calm", "pose": "01-boas-vindas", "idle_pose": "01-boas-vindas", "source": "default",
+    }
+    profile = DenkynhoProfile.objects.get(user=user)
+    assert profile.empathy == ""
+    assert profile.empathy_expires_at is None
+
+
+@pytest.mark.django_db
+def test_pet_emotion_follows_urgent_needs_and_stays_private_to_the_owner():
+    hungry = _user("denk-hungry")
+    other = _user("denk-fed")
+    DenkynhoProfile.objects.filter(user=hungry).delete()
+    DenkynhoProfile.objects.create(user=hungry, satiety=8, energy=80, happiness=80, hygiene=80)
+    api = APIClient()
+
+    api.force_authenticate(hungry)
+    own = api.get(PET_URL)
+    assert own.status_code == 200
+    assert own.data["emotion"] == {"id": "sad", "pose": "07-triste", "idle_pose": "07-triste", "source": "needs"}
+
+    api.force_authenticate(other)
+    other_state = api.get(PET_URL)
+    assert other_state.data["emotion"]["id"] == "calm"
+    assert other_state.data["attributes"]["satiety"] == 75
+

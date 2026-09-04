@@ -291,3 +291,49 @@ def test_model_cannot_invent_a_preferred_name(chat, proposed, message):
     response = post(api, message)
     post(api, "oi", context=response.data["context"])
     assert '"nome_preferido_do_usuario": ""' in model.call_args.kwargs["messages"][0]["content"]
+
+
+def test_chat_mirrors_user_sadness_and_keeps_help_pose_for_knowledge(chat, mocker):
+    api, _, model = chat
+    model.return_value.message.content = json.dumps({
+        "text": "Sinto que o momento está difícil. Estou aqui com você.",
+        "kind": "social", "pose": "01-boas-vindas", "article_id": None,
+    })
+    social = post(api, "Hoje estou triste.")
+    assert social.status_code == 200
+    assert social.data["answer"]["pose"] == "07-triste"
+    assert social.data["emotion"] == {"id": "sad", "pose": "07-triste", "idle_pose": "07-triste", "source": "user"}
+    assert '"id": "sad"' in model.call_args.kwargs["messages"][0]["content"]
+
+    article = Faq.objects.create(question="Senha?", answer="Abra a recuperação no login.")
+    mocker.patch.object(SentenceTransformerMatcher, "similarities", return_value=[0.9])
+    model.return_value.message.content = json.dumps({
+        "text": "Abra a recuperação no login.", "kind": "knowledge",
+        "article_id": str(article.id), "pose": "04-dica",
+    })
+    knowledge = post(api, "Como recupero minha senha?", context=social.data["context"])
+    assert knowledge.data["answer"]["pose"] == "04-dica"
+    assert knowledge.data["emotion"]["id"] == "sad"
+
+    pet = api.get("/api/v1/shared/content/assistant/pet/")
+    assert pet.data["emotion"]["id"] == "sad"
+    assert pet.data["emotion"]["source"] == "user"
+
+
+def test_user_can_clear_empathy_and_blocked_messages_do_not_store_it(chat):
+    api, _, model = chat
+    model.return_value.message.content = json.dumps({
+        "text": "Poxa.", "kind": "social", "pose": "07-triste", "article_id": None,
+    })
+    post(api, "Estou triste")
+    model.return_value.message.content = json.dumps({
+        "text": "Que bom.", "kind": "social", "pose": "01-boas-vindas", "article_id": None,
+    })
+    cleared = post(api, "Já passou, estou bem.")
+    assert cleared.data["emotion"]["id"] == "calm"
+    assert cleared.data["answer"]["pose"] == "01-boas-vindas"
+
+    blocked = post(api, "me chame de r.0.l.4")
+    assert blocked.data["kind"] == "blocked"
+    pet = api.get("/api/v1/shared/content/assistant/pet/")
+    assert pet.data["emotion"]["id"] == "calm"

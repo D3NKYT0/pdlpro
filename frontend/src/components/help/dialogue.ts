@@ -1,6 +1,7 @@
 import { answerQuestion, type HelpAnswer, type HelpArticle } from './answers'
 import { matchPersonality, normalizeConversation, type HelpLanguage } from './personality'
 import { isSafePreferredName } from './moderation'
+import type { DenkynhoEmotionId } from './emotions'
 
 export type DetailPreference = 'balanced' | 'short' | 'detailed'
 
@@ -14,6 +15,7 @@ export interface DialogueState {
   attempts: number
   lastOfferTurn: number
   mood?: { pose: string; remaining: number }
+  emotion?: DenkynhoEmotionId
 }
 
 export interface DialogueResult {
@@ -59,6 +61,16 @@ function emotion(state: DialogueState, preferred: string): { pose: string; mood?
   return { pose: preferred, mood: expressive ? { pose: preferred, remaining: 2 } : undefined }
 }
 
+const poseFeeling: Record<string, DenkynhoEmotionId> = {
+  '02-sucesso': 'joyful',
+  '06-rindo': 'amused',
+  '07-triste': 'sad',
+  '05-dormindo': 'sleepy',
+  '08-surpreso': 'surprised',
+  '09-confuso': 'confused',
+  '10-frustrado': 'frustrated',
+}
+
 function articleAnswer(article: HelpArticle, state: DialogueState): HelpAnswer {
   const detailed = state.detailPreference === 'detailed'
   const text = detailed ? article.answer : article.short_answer || article.answer
@@ -87,7 +99,7 @@ function selectedChoice(message: string, state: DialogueState, articles: HelpArt
 export function isLocalDialogueMessage(message: string, state: DialogueState): boolean {
   const query = normalizeConversation(message)
   return Boolean(
-    matchPersonality(message, state.turn, state.language)
+    matchPersonality(message, state.turn, state.language, state.emotion)
     || shortPreference.test(query)
     || detailedPreference.test(query)
     || /^(me chamo|pode me chamar de|my name is|call me) /.test(query)
@@ -141,10 +153,10 @@ export function respondToMessage(message: string, articles: HelpArticle[], curre
     const choice = selectedChoice(message, current, articles)
     if (choice) return { answer: articleAnswer(choice, state), state: { ...state, lastArticleId: choice.id, pendingChoiceIds: [], attempts: 0, lastOfferTurn: state.turn }, kind: 'context' }
   }
-  const social = matchPersonality(message, current.turn, current.language)
+  const social = matchPersonality(message, current.turn, current.language, current.emotion)
   if (social) {
     const emotional = emotion(current, social.pose)
-    return { answer: { ...social, text: named(state, social.text), pose: emotional.pose }, state: { ...state, mood: emotional.mood }, kind: 'social' }
+    return { answer: { ...social, text: named(state, social.text), pose: emotional.pose }, state: { ...state, mood: emotional.mood, emotion: poseFeeling[emotional.pose] ?? current.emotion }, kind: 'social' }
   }
   const found = answerQuestion(message, articles)
   const article = found.source ? articles.find(item => item.question === found.source) : undefined

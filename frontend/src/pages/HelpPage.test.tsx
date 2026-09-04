@@ -301,3 +301,30 @@ it('recusa contexto inválido sem apagar o rascunho', async () => {
   expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível consultar a ajuda.')
   expect(screen.getByRole('textbox')).toHaveValue('senha')
 })
+
+it('mostra o humor segundo as necessidades e permanece empático depois da conversa', async () => {
+  const hungry = {
+    ...petProfile,
+    attributes: { ...petProfile.attributes, satiety: 8 },
+    emotion: { id: 'sad', pose: '07-triste', idle_pose: '07-triste', source: 'needs' },
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(hungry) : apiResponse(input)))
+  const user = mount()
+  await screen.findByRole('button', { name: articles[0].question })
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '07-triste'))
+  await openCompanion(user)
+  expect(screen.getByText('Humor: Triste')).toBeVisible()
+  expect(screen.getAllByText('Precisa de um pouco de cuidado.')).toHaveLength(2)
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  const empathic = {
+    kind: 'social', language: 'pt', engine: 'ollama', mode: 'generative', context: 'signed',
+    answer: { text: 'Estou aqui com você.', pose: '07-triste' },
+    emotion: { id: 'sad', pose: '07-triste', idle_pose: '07-triste', source: 'user' },
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response(empathic) : String(input).includes('/assistant/pet/') ? response(hungry) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'Hoje estou triste{Enter}')
+  expect(await screen.findByText('Estou aqui com você.')).toBeVisible()
+  await openCompanion(user)
+  expect(screen.getByText('Acompanha o que você sente')).toBeVisible()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '07-triste')
+})

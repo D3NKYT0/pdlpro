@@ -92,6 +92,15 @@
 .denk-pet-panel header strong {
   color:var(--panel-gold-bright);
 }
+.denk-pet-emotion {
+  display:grid;
+  gap:2px;
+  margin:0;
+  font-size:12px;
+}
+.denk-pet-emotion strong {
+  font-weight:600;
+}
 .denk-pet-attributes {
   display:grid;
   gap:6px;

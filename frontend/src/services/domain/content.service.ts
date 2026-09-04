@@ -44,6 +44,12 @@ export interface ApiAssistantReply {
   article_id?: string
   related_ids?: string[]
   answer: { text: string; details?: string | null; source?: string; pose: string }
+  emotion?: {
+    id: 'calm' | 'joyful' | 'amused' | 'sad' | 'sleepy' | 'surprised' | 'confused' | 'frustrated'
+    pose: string
+    idle_pose: string
+    source: 'user' | 'needs' | 'default'
+  }
 }
 
 export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'care'
@@ -57,6 +63,12 @@ export interface ApiDenkynhoProfile {
     energy: number
     happiness: number
     hygiene: number
+  }
+  emotion?: {
+    id: 'calm' | 'joyful' | 'amused' | 'sad' | 'sleepy' | 'surprised' | 'confused' | 'frustrated'
+    pose: string
+    idle_pose: string
+    source: 'user' | 'needs' | 'default'
   }
 }
 

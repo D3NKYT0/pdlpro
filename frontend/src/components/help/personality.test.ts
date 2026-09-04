@@ -22,6 +22,11 @@ describe('personalidade do Denkynho', () => {
     expect(matchPersonality(message)).toMatchObject({ pose, text: expect.stringContaining(excerpt) })
   })
 
+  it('responde como está de acordo com o sentimento do usuário', () => {
+    expect(matchPersonality('Como vai?', 0, 'pt', 'sad')).toMatchObject({ pose: '07-triste', text: expect.stringContaining('aqui com você') })
+    expect(matchPersonality('how are you', 0, 'en', 'sad')).toMatchObject({ pose: '07-triste', text: expect.stringContaining('here with you') })
+  })
+
   it.each(['', 'Como recupero minha senha?', 'Como funciona a carteira do PDL?', 'oi '.repeat(50)])('deixa perguntas de conhecimento para a próxima camada: %s', message => {
     expect(matchPersonality(message)).toBeUndefined()
   })

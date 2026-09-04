@@ -11,6 +11,11 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.application.progress import xp_for_level
+from apps.content.application.emotions import (
+    EMPATHY_TTL,
+    emotion_from_needs,
+    resolve_emotion,
+)
 from apps.content.infrastructure.models import DenkynhoCareAction, DenkynhoProfile
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ConflictError, ValidationDomainError
@@ -31,9 +36,42 @@ _SATURATED_MESSAGES = {
 }
 
 
-def _serialize(profile: DenkynhoProfile) -> dict:
+def _emotion_state(profile: DenkynhoProfile, now) -> dict:
+    """Calcula o humor visível a partir da empatia ainda válida ou das necessidades."""
+
+    needs = emotion_from_needs(profile.satiety, profile.energy, profile.happiness, profile.hygiene)
+    return resolve_emotion(
+        needs=needs,
+        empathy=profile.empathy,
+        empathy_expires_at=profile.empathy_expires_at,
+        now=now,
+    )
+
+
+def _apply_empathy(profile: DenkynhoProfile, affect: str | None, now) -> bool:
+    """Grava, limpa ou deixa expirar a empatia sem armazenar o texto da mensagem."""
+
+    if affect == "calm":
+        if not profile.empathy and profile.empathy_expires_at is None:
+            return False
+        profile.empathy = ""
+        profile.empathy_expires_at = None
+        return True
+    if affect:
+        profile.empathy = affect
+        profile.empathy_expires_at = now + EMPATHY_TTL
+        return True
+    if profile.empathy and (profile.empathy_expires_at is None or profile.empathy_expires_at <= now):
+        profile.empathy = ""
+        profile.empathy_expires_at = None
+        return True
+    return False
+
+
+def _serialize(profile: DenkynhoProfile, now=None) -> dict:
     """Expõe somente o estado necessário para desenhar o mascote autenticado."""
 
+    current = now or timezone.now()
     return {
         "level": profile.level,
         "experience": profile.experience,
@@ -44,6 +82,7 @@ def _serialize(profile: DenkynhoProfile) -> dict:
             "happiness": profile.happiness,
             "hygiene": profile.hygiene,
         },
+        "emotion": _emotion_state(profile, current),
     }
 
 
@@ -94,6 +133,33 @@ def _locked_profile(user) -> DenkynhoProfile:
     return DenkynhoProfile.objects.select_for_update().get(user=user)
 
 
+def _persist_living_state(profile: DenkynhoProfile, now, affect: str | None = None) -> bool:
+    """Aplica desgaste e empatia e grava somente quando algum desses estados mudou."""
+
+    decayed = _apply_decay(profile, now)
+    empathy_changed = _apply_empathy(profile, affect, now)
+    if not (decayed or empathy_changed):
+        return False
+    fields = ["updated_at"]
+    if decayed:
+        fields.extend([*list(_DECAY), "last_decay_at"])
+    if empathy_changed:
+        fields.extend(["empathy", "empathy_expires_at"])
+    profile.save(update_fields=fields)
+    return True
+
+
+def remember_user_affect(user_id: UUID, affect: str | None) -> dict:
+    """Atualiza a empatia do mascote da conta e devolve o humor visível atual."""
+
+    user = get_user_model().objects.get(id=user_id)
+    now = timezone.now()
+    with transaction.atomic():
+        profile = _locked_profile(user)
+        _persist_living_state(profile, now, affect)
+        return _emotion_state(profile, now)
+
+
 @dataclass(frozen=True, slots=True)
 class CareDenkynhoInput:
     """Dados validados para um cuidado idempotente do mascote da sessão."""
@@ -108,11 +174,11 @@ class GetDenkynhoProfileUseCase(UseCase[UUID, dict]):
 
     def execute(self, user_id: UUID) -> dict:
         user = get_user_model().objects.get(id=user_id)
+        now = timezone.now()
         with transaction.atomic():
             profile = _locked_profile(user)
-            if _apply_decay(profile, timezone.now()):
-                profile.save(update_fields=[*list(_DECAY), "last_decay_at", "updated_at"])
-            return _serialize(profile)
+            _persist_living_state(profile, now)
+            return _serialize(profile, now)
 
 
 class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
@@ -136,13 +202,18 @@ class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
                     "replayed": True,
                 }
 
-            _apply_decay(profile, timezone.now())
+            now = timezone.now()
+            _apply_decay(profile, now)
+            _apply_empathy(profile, None, now)
             _validate_action(profile, data.action)
             effects, experience = _EFFECTS[data.action]
             for attribute, change in effects.items():
                 setattr(profile, attribute, min(100, max(0, getattr(profile, attribute) + change)))
             _add_experience(profile, experience)
-            profile.save(update_fields=[*list(_DECAY), "experience", "level", "last_decay_at", "updated_at"])
+            profile.save(update_fields=[
+                *list(_DECAY), "experience", "level", "last_decay_at",
+                "empathy", "empathy_expires_at", "updated_at",
+            ])
             DenkynhoCareAction.objects.create(
                 profile=profile,
                 idempotency_key=data.idempotency_key,

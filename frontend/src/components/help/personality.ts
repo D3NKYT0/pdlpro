@@ -1,3 +1,5 @@
+import type { DenkynhoEmotionId } from './emotions'
+
 export interface PersonalityReply { text: string; pose: string }
 export type HelpLanguage = 'pt' | 'en'
 
@@ -121,10 +123,43 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   { matches: /^(i am tired|i feel tired|sleepy)$/, reply: [{ text: "Taking a break is part of the journey too. I'll be here when you return.", pose: '05-dormindo' }] },
 ]
 
+const askingHow = {
+  pt: /^(oi |ola |e ai )?(como (voce )?(vai|esta)|tudo (bem|bom)( com voce)?|voce esta bem|ta bem)$/,
+  en: /^(how are you|are you ok|are you well)$/,
+}
+const feelingPose: Record<DenkynhoEmotionId, string> = {
+  calm: '02-sucesso', joyful: '02-sucesso', amused: '06-rindo', sad: '07-triste',
+  sleepy: '05-dormindo', surprised: '08-surpreso', confused: '09-confuso', frustrated: '10-frustrado',
+}
+const howIFeel: Record<HelpLanguage, Partial<Record<DenkynhoEmotionId, string>>> = {
+  pt: {
+    joyful: 'Estou alegre com você! Podemos seguir com o que você quiser no PDL.',
+    amused: 'Estou rindo junto. Quando quiser, me conta a próxima dúvida.',
+    sad: 'Estou mais quieto porque percebi que você não está bem. Estou aqui com você.',
+    sleepy: 'Estou um pouco sonolento, mas posso ajudar mesmo assim.',
+    surprised: 'Ainda estou surpreso com o que você contou. Estou aqui para ajudar.',
+    confused: 'Estou tentando acompanhar você. Pode me contar de outro jeito?',
+    frustrated: 'Percebi sua frustração. Vamos com calma e eu procuro um caminho melhor.',
+  },
+  en: {
+    joyful: "I'm glad with you! We can keep going with whatever you need in PDL.",
+    amused: "I'm laughing along. Tell me the next question whenever you want.",
+    sad: "I'm quieter because I can tell you're not okay. I'm here with you.",
+    sleepy: "I'm a bit sleepy, but I can still help.",
+    surprised: "I'm still surprised by what you shared. I'm here to help.",
+    confused: "I'm trying to follow you. Could you tell me another way?",
+    frustrated: "I noticed your frustration. Let's slow down and I'll look for a better path.",
+  },
+}
+
 /** Responde somente a interações sociais curtas e bem reconhecidas. */
-export function matchPersonality(message: string, variant = 0, language: HelpLanguage = 'pt'): PersonalityReply | undefined {
+export function matchPersonality(message: string, variant = 0, language: HelpLanguage = 'pt', feeling?: DenkynhoEmotionId): PersonalityReply | undefined {
   const normalized = normalizeConversation(message)
   if (!normalized || normalized.length > 90) return undefined
+  if (feeling && feeling !== 'calm' && askingHow[language].test(normalized)) {
+    const text = howIFeel[language][feeling]
+    if (text) return { text, pose: feelingPose[feeling] }
+  }
   const choices = (language === 'en' ? englishReplies : replies).find(item => item.matches.test(normalized))?.reply
   return choices?.[Math.abs(variant) % choices.length]
 }

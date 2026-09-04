@@ -62,8 +62,17 @@ describe('motor de diálogo do Denkynho', () => {
   it('mantém uma emoção positiva na orientação seguinte e depois a reduz', () => {
     const success = respondToMessage('Consegui!', articles, initialDialogueState())
     expect(success.state.mood).toEqual({ pose: '02-sucesso', remaining: 2 })
+    expect(success.state.emotion).toBe('joyful')
     const next = respondToMessage(articles[2].question, articles, success.state)
     expect(next.answer.pose).toBe('02-sucesso')
+  })
+
+  it('responde como está de acordo com a tristeza do usuário', () => {
+    const sad = respondToMessage('Estou triste', articles, initialDialogueState())
+    expect(sad.state.emotion).toBe('sad')
+    const check = respondToMessage('Como vai?', articles, sad.state)
+    expect(check.answer.pose).toBe('07-triste')
+    expect(check.answer.text).toContain('aqui com você')
   })
 
   it('classifica mensagens que dispensam uma nova consulta ao FAQ', () => {

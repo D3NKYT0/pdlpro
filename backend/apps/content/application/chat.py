@@ -7,6 +7,7 @@ import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Literal
+from uuid import UUID
 
 from django.core import signing
 from pydantic import BaseModel, ConfigDict, Field
@@ -17,6 +18,12 @@ from apps.content.application.assistant import (
     SemanticMatcher,
     blocked_term,
     detect_language,
+)
+from apps.content.application.denkynho import remember_user_affect
+from apps.content.application.emotions import (
+    describe_emotion,
+    detect_user_affect,
+    pose_for_reply,
 )
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 
@@ -60,6 +67,7 @@ class ChatInput(AssistantReplyInput):
     """Identidade vem da sessão; context é um histórico assinado pelo backend."""
 
     user_id: str = ""
+    account_id: UUID | None = None
     display_name: str = ""
     context: str = ""
 
@@ -100,6 +108,10 @@ explicação do portal=04-dica; sono/cansaço=05-dormindo; piada=06-rindo;
 acolhimento de tristeza=07-triste; surpresa=08-surpreso; dúvida=09-confuso.
 10-frustrado só quando a fala expressar frustração, nunca em dica, pergunta de nome
 ou para repreender a pessoa. Não apresente cansaço ou emoções como sinais de saúde.
+EMOCAO descreve como você está agora. Origem user é empatia com o sentimento da
+pessoa; needs são fome, sono, higiene ou alegria do mascote. Se perguntarem como
+você está, responda com essa emoção, sem fingir euforia. A emoção ajusta o tom da
+fala social; orientações do portal usam pose 04-dica.
 """
 
 
@@ -121,16 +133,19 @@ class ChatReplyUseCase:
         owner = [data.user_id, str(data.audience), language]
         memory = self._memory(data.context, owner)
         history = memory["messages"]
-        if blocked_term(data.message):
-            return self._fallback.execute(data)
+        blocked = blocked_term(data.message)
+        affect = None if blocked else detect_user_affect(data.message)
+        emotion = self._emotion(data.account_id, affect)
+        if blocked:
+            return self._with_emotion(self._fallback.execute(data), emotion, affect)
         if not self._model.enabled():
-            return {**self._fallback.execute(data), "mode": "limited", "context": ""}
+            return {**self._with_emotion(self._fallback.execute(data), emotion, affect), "mode": "limited", "context": ""}
         articles = ListFaqUseCase().execute(ListFaqInput(data.audience, language, for_assistant=True))
         sources = self._sources(data.message, history, articles)
         safe_name = data.display_name[:60] if not blocked_term(data.display_name) else ""
         system = PERSONA + "\nIDIOMA: " + language + "\nIDENTIDADE: " + json.dumps({
             "nome_da_conta": safe_name, "audiencia": data.audience,
-        }, ensure_ascii=False) + "\nPREFERENCIAS: " + json.dumps({"nome_preferido_do_usuario": memory["name"]}, ensure_ascii=False) + "\nFONTES: " + json.dumps(sources, ensure_ascii=False)
+        }, ensure_ascii=False) + "\nPREFERENCIAS: " + json.dumps({"nome_preferido_do_usuario": memory["name"]}, ensure_ascii=False) + "\nEMOCAO: " + json.dumps(emotion, ensure_ascii=False) + "\nFONTES: " + json.dumps(sources, ensure_ascii=False)
         messages = [*history, {"role": "user", "content": data.message}]
         generated = None
         try:
@@ -147,10 +162,10 @@ class ChatReplyUseCase:
             logger.warning("Denkynho local generation failed (%s)", type(error).__name__)
             generated = None
         if generated is None:
-            return {**self._fallback.execute(data), "mode": "limited", "context": ""}
-        answer = {"text": generated.text.strip(), "pose": generated.pose}
+            return {**self._with_emotion(self._fallback.execute(data), emotion, affect), "mode": "limited", "context": ""}
+        answer = {"text": generated.text.strip(), "pose": pose_for_reply(generated.kind, generated.pose, emotion, affect)}
         result = {"language": language, "kind": generated.kind, "engine": "ollama",
-                  "mode": "generative", "answer": answer}
+                  "mode": "generative", "answer": answer, "emotion": emotion}
         if source:
             result["article_id"] = source["id"]
             answer["source"] = source["question"]
@@ -167,6 +182,26 @@ class ChatReplyUseCase:
         result["context"] = signing.dumps({"owner": owner, "messages": messages[-HISTORY_LIMIT:], "name": name},
                                           salt=CONTEXT_SALT, compress=True)
         return result
+
+    def _emotion(self, account_id: UUID | None, affect: str | None) -> dict:
+        """Lê e atualiza o humor do mascote da conta; sem conta, só aplica o sinal atual."""
+
+        if account_id is not None:
+            return remember_user_affect(account_id, affect)
+        if affect and affect != "calm":
+            return describe_emotion(affect, "user")
+        return describe_emotion("calm", "default")
+
+    def _with_emotion(self, result: dict, emotion: dict, affect: str | None) -> dict:
+        """Anexa o humor calculado e alinha a pose social sem alterar o texto já validado."""
+
+        answer = result.get("answer")
+        if isinstance(answer, dict) and "pose" in answer:
+            result = {
+                **result,
+                "answer": {**answer, "pose": pose_for_reply(str(result.get("kind", "")), answer["pose"], emotion, affect)},
+            }
+        return {**result, "emotion": emotion}
 
     def _memory(self, token: str, owner: list[str]) -> dict:
         if not token:

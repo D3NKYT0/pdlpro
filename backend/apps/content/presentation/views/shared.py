@@ -64,7 +64,8 @@ class AssistantReplyView(InjectedAPIView):
         context = data.pop("context")
         if conversational:
             result = self.resolve(ChatReplyUseCase).execute(ChatInput(
-                audience=audience, user_id=str(user.pk), display_name=user.display_name or user.username,
+                audience=audience, user_id=str(user.pk), account_id=user.id,
+                display_name=user.display_name or user.username,
                 context=context, **data,
             ))
         else:

@@ -108,8 +108,9 @@ class DenkynhoProfile(BaseModel):
 
     Os atributos representam necessidades satisfeitas, de 0 a 100, e diminuem conforme o
     tempo passa. ``experience`` e ``level`` pertencem ao mascote daquela conta — não alteram o
-    nível de personagem do jogo. As mutações devem passar por ``CareDenkynhoUseCase`` para
-    preservar o decaimento, os limites e a idempotência das ações.
+    nível de personagem do jogo. ``empathy`` guarda só o sentimento que o mascote está
+    acompanhando, sem o texto da conversa. As mutações de cuidado passam por
+    ``CareDenkynhoUseCase``; a empatia é atualizada ao conversar.
     """
 
     user = models.OneToOneField(
@@ -136,6 +137,17 @@ class DenkynhoProfile(BaseModel):
     experience = models.PositiveIntegerField(default=0)
     level = models.PositiveSmallIntegerField(default=1)
     last_decay_at = models.DateTimeField(default=timezone.now)
+    empathy = models.CharField(
+        max_length=16,
+        blank=True,
+        default="",
+        help_text="Sentimento do usuário que o mascote está acompanhando; vazio quando não há empatia ativa.",
+    )
+    empathy_expires_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Quando a empatia expira, o humor volta a ser calculado só pelas necessidades do mascote.",
+    )
 
     class Meta:
         verbose_name = "Perfil do Denkynho"
