@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import secrets
@@ -14,7 +15,6 @@ from django.core.cache import cache
 from django.utils import timezone
 
 from common.exceptions import PdlAPIException
-
 
 PROVIDERS = {
     "google": {
@@ -44,7 +44,7 @@ def callback_url(provider: str) -> str:
     return f"{settings.FRONTEND_URL.rstrip('/')}/auth/callback/{provider}"
 
 
-def begin_oauth(provider: str, mode: str, user) -> str:
+def begin_oauth(provider: str, mode: str, user, *, browser_key: str) -> str:
     config = PROVIDERS.get(provider)
     client_id, client_secret = _credentials(provider)
     if not config or not client_id or not client_secret:
@@ -57,7 +57,9 @@ def begin_oauth(provider: str, mode: str, user) -> str:
     state = secrets.token_urlsafe(32)
     cache.set(
         f"oauth-state:{state}",
-        {"provider": provider, "mode": mode, "user_id": str(user.id) if user.is_authenticated else ""},
+        {"provider": provider, "mode": mode, "user_id": str(user.id) if user.is_authenticated else "",
+         "browser": hashlib.sha256(browser_key.encode()).hexdigest(),
+         "auth_hash": user.get_session_auth_hash() if user.is_authenticated else ""},
         timeout=600,
     )
     params = {
@@ -124,12 +126,21 @@ def _unique_username(profile: dict, email: str) -> str:
     return candidate
 
 
-def complete_oauth(provider: str, code: str, state: str):
+def complete_oauth(provider: str, code: str, state: str, *, browser_key: str, user=None):
     state_key = f"oauth-state:{state}"
     stored = cache.get(state_key)
-    cache.delete(state_key)
-    if not stored or stored.get("provider") != provider:
+    if (not stored or stored.get("provider") != provider or not browser_key
+            or not secrets.compare_digest(stored.get("browser", ""), hashlib.sha256(browser_key.encode()).hexdigest())):
         raise PdlAPIException("A tentativa de login expirou. Tente novamente.", error_code="OAUTH_STATE_INVALID")
+    if stored.get("mode") == "link" and (
+        not getattr(user, "is_authenticated", False) or str(user.id) != stored.get("user_id")
+        or not secrets.compare_digest(user.get_session_auth_hash(), stored.get("auth_hash", ""))
+    ):
+        raise PdlAPIException("Entre novamente para conectar sua conta.", error_code="AUTHENTICATION_REQUIRED", status_code=401)
+    # add é atômico no cache: um callback não pode ser consumido simultaneamente.
+    if not cache.add(f"{state_key}:consumed", True, timeout=600):
+        raise PdlAPIException("A tentativa de login expirou. Tente novamente.", error_code="OAUTH_STATE_INVALID")
+    cache.delete(state_key)
 
     profile = _profile(provider, code)
     raw_uid = profile.get("sub") if provider == "google" else profile.get("id")
@@ -154,6 +165,11 @@ def complete_oauth(provider: str, code: str, state: str):
         user = social.user
     else:
         user = User.objects.filter(email__iexact=email).first()
+        if user and not user.is_email_verified:
+            raise PdlAPIException(
+                "Já existe um cadastro com este e-mail. Recupere o acesso e confirme o e-mail antes de conectar o provedor.",
+                error_code="OAUTH_ACCOUNT_UNVERIFIED", status_code=409,
+            )
         if not user:
             display_name = str(profile.get("name") or profile.get("global_name") or profile.get("username") or "")[:80]
             user = User.objects.create_user(
@@ -167,7 +183,7 @@ def complete_oauth(provider: str, code: str, state: str):
 
     if not user.is_active:
         raise PdlAPIException("Esta conta está desativada.", error_code="ACCOUNT_DISABLED", status_code=403)
-    if not user.is_email_verified:
+    if not user.is_email_verified and user.email.lower() == email:
         user.is_email_verified = True
         user.save(update_fields=["is_email_verified", "updated_at"])
     SocialAccount.objects.update_or_create(

@@ -2,6 +2,7 @@ from .base import *  # noqa: F403
 from .monitoring import configure_error_monitoring
 
 DEBUG = False
+REST_FRAMEWORK["NUM_PROXIES"] = env.int("TRUSTED_PROXY_COUNT", default=2)
 LOGGING = get_logging_config(env, default_format="json", default_environment="production")  # noqa: F405
 SENTRY_ENABLED = configure_error_monitoring(env)  # noqa: F405
 

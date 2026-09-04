@@ -97,3 +97,11 @@ it('erro do provedor retorna ao login', async () => {
   expect(await screen.findByRole('heading', { name: '/login' })).toBeVisible()
   expect(toast.error).toHaveBeenCalledWith('Expirado')
 })
+
+it.each(['OAUTH_STATE_INVALID', 'OAUTH_ACCOUNT_UNVERIFIED'])('callback rejeitado por segurança %s não restaura sessão', async code => {
+  vi.mocked(authApi.completeOAuth).mockRejectedValue(new ApiError('Recupere o acesso para continuar.', 409, code))
+  mount(<OAuthCallbackPage />, '/callback/google?code=c&state=s', '/callback/:provider')
+  expect(await screen.findByRole('heading', { name: '/login' })).toBeVisible()
+  expect(refreshUser).not.toHaveBeenCalled()
+  expect(toast.error).toHaveBeenCalledWith('Recupere o acesso para continuar.')
+})

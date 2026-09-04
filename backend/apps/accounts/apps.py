@@ -1,4 +1,11 @@
 from django.apps import AppConfig
+from django.contrib.admin.apps import AdminConfig
+
+
+class MFAAdminConfig(AdminConfig):
+    """Seleciona o admin com MFA e preserva o registro automático dos ModelAdmins."""
+
+    default_site = "apps.accounts.admin_site.MFAAdminSite"
 
 
 class AccountsConfig(AppConfig):

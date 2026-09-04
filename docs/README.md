@@ -109,3 +109,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Testes frontend | [vite.config.ts](../frontend/vite.config.ts) |
 
 Ao mudar comportamento, atualize o guia correspondente no mesmo trabalho. Exemplos e registros datados descrevem o contexto informado; a implementação e uma nova execução determinam o comportamento do checkout atual.
+
+## Proteções de autenticação e transações
+
+Consulte [Segurança de contas e operações](operacao/seguranca.md) para migração, revogação de sessões, OAuth, proxies e conciliação de serviços pagos.

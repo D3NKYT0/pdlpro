@@ -185,6 +185,7 @@ class ChangeNicknameSerializer(serializers.Serializer):
     login = serializers.CharField()
     char_id = serializers.IntegerField()
     name = serializers.CharField(max_length=16)
+    request_key = serializers.UUIDField(required=False)
 
 
 class ChangeSexSerializer(serializers.Serializer):
@@ -199,6 +200,7 @@ class ChangeSexSerializer(serializers.Serializer):
     login = serializers.CharField()
     char_id = serializers.IntegerField()
     sex = serializers.ChoiceField(choices=["M", "F"])
+    request_key = serializers.UUIDField(required=False)
 
 
 class UnstuckSerializer(serializers.Serializer):

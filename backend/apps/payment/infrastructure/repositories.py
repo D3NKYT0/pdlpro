@@ -48,6 +48,11 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         row = PedidoPagamento.objects.select_related("user").filter(external_id=external_id).first()
         return self._entity(row) if row else None
 
+    def get_for_update(self, order_id: UUID) -> PaymentOrderEntity | None:
+        """Serializa liquidação/cancelamento bloqueando só o pedido, sem bloquear o usuário."""
+        row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).filter(id=order_id).first()
+        return self._entity(row) if row else None
+
     def list_by_user(self, user_id: UUID) -> list[PaymentOrderEntity]:
         rows = PedidoPagamento.objects.select_related("user").filter(user__id=user_id)
         return [self._entity(row) for row in rows]
@@ -117,7 +122,9 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         gateway_data: dict | None = None,
         status: str | None = None,
     ) -> PaymentOrderEntity:
-        row = PedidoPagamento.objects.select_related("user").get(id=order_id)
+        row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
+        if row.status not in {"pending", "processing"}:
+            return self._entity(row)
         row.external_id = external_id
         row.checkout_url = checkout_url
         if client_secret:
@@ -133,19 +140,23 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         return self._entity(row)
 
     def mark_cancelled(self, order_id: UUID) -> PaymentOrderEntity:
-        row = PedidoPagamento.objects.select_related("user").select_for_update().get(id=order_id)
+        row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
+        if row.status not in {"pending", "processing"}:
+            return self._entity(row)
         row.status = PedidoPagamento.Status.CANCELLED
         row.save(update_fields=["status", "updated_at"])
         return self._entity(row)
 
     def mark_failed(self, order_id: UUID) -> PaymentOrderEntity:
-        row = PedidoPagamento.objects.select_related("user").select_for_update().get(id=order_id)
+        row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
+        if row.status not in {"pending", "processing"}:
+            return self._entity(row)
         row.status = PedidoPagamento.Status.FAILED
         row.save(update_fields=["status", "updated_at"])
         return self._entity(row)
 
     def mark_confirmed(self, order_id: UUID, *, bonus_applied: Decimal, total_credited: Decimal) -> PaymentOrderEntity:
-        row = PedidoPagamento.objects.select_related("user").select_for_update().get(id=order_id)
+        row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
         row.status = PedidoPagamento.Status.CONFIRMED
         row.bonus_applied = bonus_applied
         row.total_credited = total_credited

@@ -37,6 +37,7 @@ JAZZMIN_ICONS_PDL = {
     "server": "fas fa-server",
     "server.managedlineageaccount": "fas fa-gamepad",
     "server.serviceprice": "fas fa-tags",
+    "server.characterserviceoperation": "fas fa-receipt",
 
     # Wallet and virtual currency.
     "wallet": "fas fa-wallet",

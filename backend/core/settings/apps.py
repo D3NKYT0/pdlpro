@@ -1,7 +1,7 @@
 DJANGO_APPS = [
     "daphne",
     "jazzmin",
-    "django.contrib.admin",
+    "apps.accounts.apps.MFAAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",

@@ -20,6 +20,11 @@ class IPaymentOrderRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def get_for_update(self, order_id: UUID) -> PaymentOrderEntity | None:
+        """Lê e bloqueia o pedido até o fim do UnitOfWork, antes de decidir uma transição."""
+        raise NotImplementedError
+
+    @abstractmethod
     def get_by_external_id(self, external_id: str) -> PaymentOrderEntity | None:
         raise NotImplementedError
 

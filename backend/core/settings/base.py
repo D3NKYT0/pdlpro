@@ -133,12 +133,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-REST_FRAMEWORK = get_rest_framework_settings()
+REST_FRAMEWORK = get_rest_framework_settings(TRUSTED_PROXY_COUNT)
 SPECTACULAR_SETTINGS = get_spectacular_settings(API_VERSION)
 LOGGING = get_logging_config(env)
 globals().update(get_celery_settings(env))
 
 SIMPLE_JWT = {
+    "CHECK_REVOKE_TOKEN": True,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env.int("ACCESS_TOKEN_MINUTES", default=15)),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=env.int("REFRESH_TOKEN_DAYS", default=7)),
     "ROTATE_REFRESH_TOKENS": True,
@@ -147,6 +148,8 @@ SIMPLE_JWT = {
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
 }
+
+PASSWORD_RESET_TIMEOUT = 3600
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ["X-Request-ID"]

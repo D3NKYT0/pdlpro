@@ -1,8 +1,9 @@
 from common.swagger import OPENAPI_DESCRIPTION, OPENAPI_TITLE, pdl_swagger_tags
 
 
-def get_rest_framework_settings():
+def get_rest_framework_settings(trusted_proxy_count=0):
     return {
+        "NUM_PROXIES": trusted_proxy_count,
         "DEFAULT_AUTHENTICATION_CLASSES": [
             "apps.accounts.infrastructure.authentication.CookieJWTAuthentication",
         ],

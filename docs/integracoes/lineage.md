@@ -60,3 +60,7 @@ antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mis
 Teste primeiro em um schema de desenvolvimento com a mesma estrutura do servidor. O rollback do Django não desfaz chamadas SQLAlchemy ao jogo. Confirme o algoritmo de senhas, a fila de entrega e a propriedade dos personagens antes de liberar escritas. Para transferências de moedas, siga [o protocolo de câmbio](cambio-painel-jogo.md).
 
 Consulte também [as variáveis de conexão](../configuracao/ambiente.md), [o catálogo de itens](catalogo-de-itens.md) e [a observação de itens](../funcionalidades/observacao-de-itens.md).
+
+## Propriedade e serviços pagos
+
+Nome igual ao login não concede acesso: a conta deve possuir vínculo confirmado no gateway. Nickname e sexo reservam saldo antes da chamada externa e aceitam `request_key` para repetição segura. Resultados incertos exigem [conciliação de serviços](../operacao/seguranca.md#serviços-pagos-do-personagem).

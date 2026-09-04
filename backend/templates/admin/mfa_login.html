@@ -1,0 +1,18 @@
+{% extends "registration/base.html" %}
+{% load i18n %}
+{% block extrahead %}{{ block.super }}{% include "pdl_ui/_button_assets.html" %}{% endblock %}
+{% block content %}
+<p class="login-box-msg">Acesso administrativo</p>
+<form action="{{ app_path }}" method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for field in form %}
+  <div class="mb-3">
+    {{ field.label_tag }} {{ field }} {{ field.errors }}
+  </div>
+  {% endfor %}
+  <p>Preencha o código do autenticador se o segundo fator estiver ativado.</p>
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
+</form>
+{% endblock %}

@@ -243,3 +243,14 @@ describe('contratos dos serviços de domínio', () => {
   })
   it('reconhece o desafio 2FA', () => expect(isTwoFactorChallenge({ requires_2fa: true, challenge: 'token' })).toBe(true))
 })
+
+it('serviços pagos enviam a chave de repetição no contrato HTTP', async () => {
+  await lineageApi.changeNickname('hero', 7, 'NewHero', '11111111-1111-4111-8111-111111111111')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/nickname/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, name: 'NewHero', request_key: '11111111-1111-4111-8111-111111111111' }),
+  })
+  await lineageApi.changeSex('hero', 7, 'F', '22222222-2222-4222-8222-222222222222')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/sex/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, sex: 'F', request_key: '22222222-2222-4222-8222-222222222222' }),
+  })
+})

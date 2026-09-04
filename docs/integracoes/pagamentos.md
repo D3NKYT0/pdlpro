@@ -40,3 +40,7 @@ Para Mercado Pago, o serviço confere a assinatura HMAC e o timestamp. Para Stri
 Em um ambiente de testes do provedor, verifique criação/reutilização de pedido, processamento aprovado e rejeitado, consulta pendente, webhook válido e inválido, repetição e acesso por outro usuário. Confirme pedido, carteira e extrato; não se limite ao texto de sucesso da tela.
 
 Os testes em [payment/tests](../../backend/apps/payment/tests/) e nos fluxos de comércio usam isolamento e simulações. A suíte local não comprova recebimento, estorno nem entrega de um webhook externo real. Registre a homologação com ambiente, revisão e resultados, sem incluir tokens ou dados sensíveis.
+
+## Segurança e concorrência
+
+A liquidação bloqueia o pedido antes de decidir o crédito. Respostas tardias de status não reabrem pedidos encerrados. Consulte [Segurança de contas e operações](../operacao/seguranca.md) para os testes PostgreSQL e o procedimento de atualização.

@@ -38,8 +38,8 @@ def get_user_from_access_token(token_key: str):
 
     try:
         access_token = AccessToken(token_key)
-        user_id = access_token.payload.get("user_id")
-        return User.objects.get(id=user_id, is_active=True)
+        from rest_framework_simplejwt.authentication import JWTAuthentication
+        return JWTAuthentication().get_user(access_token)
     except Exception:
         return AnonymousUser()
 

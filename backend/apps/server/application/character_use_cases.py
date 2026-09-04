@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal
 from uuid import UUID
 
+from apps.server.application.paid_services import execute_paid_service
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRepository
@@ -27,12 +27,14 @@ class CharacterServiceInput:
     username: str
     login: str
     char_id: int
+    request_key: UUID | None = None
 
 
 class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
-    """Recebe (CharacterServiceInput, novo_nome), verifica acesso e formato do nome, altera o
-    personagem e cobra o serviço. A alteração no jogo tem transação independente do débito no
-    painel.
+    """Verifica acesso e nome, reserva o saldo e então altera o personagem.
+
+    A reserva é durável antes da chamada ao jogo. Respostas incertas exigem conciliação;
+    repetir a chave não reaplica a operação nem cobra novamente.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[CharacterServiceInput,
     str]``. O retorno é ``None``.
@@ -59,24 +61,19 @@ class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         if not cleaned.isalnum() or not (_NICK_MIN <= len(cleaned) <= _NICK_MAX):
             raise ValidationDomainError("Nick inválido. Use 2 a 16 letras ou números.")
         price = self._prices.get_price("CHANGE_NICKNAME")
-        with self._unit_of_work:
-            self._lineage.change_nickname(actor.login, actor.char_id, cleaned)
-            self._charge(actor.user_id, price, f"Troca de nick ({cleaned})")
+        execute_paid_service(actor, service="CHANGE_NICKNAME", value=cleaned, price=price,
+                             lineage=self._lineage, access=self._access, wallets=self._wallets)
 
     def _assert_access(self, actor: CharacterServiceInput) -> None:
         if not self._access.can_access(actor.user_id, actor.username, actor.login):
             raise AuthorizationError()
 
-    def _charge(self, user_id: UUID, amount: Decimal, description: str) -> None:
-        if amount <= 0:
-            return
-        wallet = self._wallets.get_or_create(user_id)
-        self._wallets.debit(wallet.id, amount, destination="service", description=description)
 
 
 class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
-    """Recebe (CharacterServiceInput, sexo), verifica acesso, altera o personagem pelo gateway e
-    cobra o serviço configurado.
+    """Verifica acesso e sexo, reserva o saldo e então chama o gateway.
+
+    Repetições são deduplicadas; uma resposta incerta mantém a reserva para conciliação.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``tuple[CharacterServiceInput,
     str]``. O retorno é ``None``.
@@ -104,11 +101,8 @@ class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         if sex_label.upper() not in {"M", "F"}:
             raise ValidationDomainError("Sexo deve ser M ou F.")
         price = self._prices.get_price("CHANGE_SEX")
-        with self._unit_of_work:
-            self._lineage.change_sex(actor.login, actor.char_id, sex)
-            wallet = self._wallets.get_or_create(actor.user_id)
-            if price > 0:
-                self._wallets.debit(wallet.id, price, destination="service", description="Troca de sexo")
+        execute_paid_service(actor, service="CHANGE_SEX", value=str(sex), price=price,
+                             lineage=self._lineage, access=self._access, wallets=self._wallets)
 
 
 class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):

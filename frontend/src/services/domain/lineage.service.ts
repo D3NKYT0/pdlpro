@@ -103,15 +103,15 @@ export const lineageApi = {
       `/customer/server/characters/${charId}/?login=${encodeURIComponent(login)}`,
     ),
   servicePrices: () => request<ApiServicePrices>('/customer/server/services/'),
-  changeNickname: (login: string, char_id: number, name: string) =>
+  changeNickname: (login: string, char_id: number, name: string, request_key?: string) =>
     request('/customer/server/characters/nickname/', {
       method: 'POST',
-      body: JSON.stringify({ login, char_id, name }),
+      body: JSON.stringify({ login, char_id, name, request_key }),
     }),
-  changeSex: (login: string, char_id: number, sex: 'M' | 'F') =>
+  changeSex: (login: string, char_id: number, sex: 'M' | 'F', request_key?: string) =>
     request('/customer/server/characters/sex/', {
       method: 'POST',
-      body: JSON.stringify({ login, char_id, sex }),
+      body: JSON.stringify({ login, char_id, sex, request_key }),
     }),
   unstuck: (login: string, char_id: number) =>
     request('/customer/server/characters/unstuck/', {

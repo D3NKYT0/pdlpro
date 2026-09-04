@@ -7,7 +7,16 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.core.cache import cache
 
-from apps.accounts.application.oauth import begin_oauth, complete_oauth
+from apps.accounts.application.oauth import begin_oauth as _begin_oauth
+from apps.accounts.application.oauth import complete_oauth as _complete_oauth
+
+
+def begin_oauth(provider, mode, user):
+    return _begin_oauth(provider, mode, user, browser_key="test-browser")
+
+
+def complete_oauth(provider, code, state, user=None):
+    return _complete_oauth(provider, code, state, browser_key="test-browser", user=user)
 from common.exceptions import PdlAPIException
 
 pytestmark = pytest.mark.django_db
@@ -79,7 +88,7 @@ def test_unconfigured_provider_rejected(settings):
 
 
 def test_existing_verified_email_reuses_user(mocker):
-    user = get_user_model().objects.create_user(username="existing", email="hero@test.dev")
+    user = get_user_model().objects.create_user(username="existing", email="hero@test.dev", is_email_verified=True)
     mocker.patch("apps.accounts.application.oauth._profile", return_value={"sub": "uid", "email": "HERO@test.dev", "email_verified": True})
     result, linked = complete_oauth("google", "code", begin())
     assert result.pk == user.pk
@@ -92,7 +101,7 @@ def test_link_cannot_take_external_identity_from_another_user(mocker):
     SocialAccount.objects.create(user=users[0], provider="google", uid="uid")
     mocker.patch("apps.accounts.application.oauth._profile", return_value={"sub": "uid", "email": "owner@test.dev", "email_verified": True})
     with pytest.raises(PdlAPIException):
-        complete_oauth("google", "code", begin(mode="link", user=users[1]))
+        complete_oauth("google", "code", begin(mode="link", user=users[1]), user=users[1])
     assert SocialAccount.objects.get(uid="uid").user == users[0]
 
 

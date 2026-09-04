@@ -1,7 +1,30 @@
 from django.contrib import admin
 
-from apps.server.infrastructure.models import IndexConfig, ManagedLineageAccount, ServicePrice
+from apps.server.infrastructure.models import (
+    IndexConfig,
+    ManagedLineageAccount,
+    ServicePrice,
+)
+from apps.server.infrastructure.service_models import CharacterServiceOperation
 from common.admin import PDLModelAdmin
+
+
+@admin.register(CharacterServiceOperation)
+class CharacterServiceOperationAdmin(PDLModelAdmin):
+    """Consulta reservas e resultados; conciliação usa o comando auditável, sem edição livre."""
+
+    list_display = ("id", "user", "login", "character_id", "service", "amount", "status")
+    list_filter = ("status", "service")
+    search_fields = ("login", "user__username")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(ManagedLineageAccount)

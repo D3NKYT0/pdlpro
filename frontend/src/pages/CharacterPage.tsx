@@ -1,8 +1,9 @@
+import { useAsyncAction } from '../hooks/useAsyncAction'
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
 import { Button } from '../components/ui/Button'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -116,6 +117,13 @@ export function CharacterPage() {
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
   const [submitting, setSubmitting] = useState<'nick' | 'sex' | 'unstuck' | null>(null)
+  const action = useAsyncAction()
+  const operation = useRef<{ payload: string; key: string } | null>(null)
+  function requestKey(service: string, value: string) {
+    const payload = JSON.stringify([login, id, service, value])
+    if (operation.current?.payload !== payload) operation.current = { payload, key: crypto.randomUUID() }
+    return operation.current.key
+  }
   const char = (characters.data ?? []).find((item) => Number(item.char_id) === id)
   const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
@@ -128,44 +136,45 @@ export function CharacterPage() {
 
   async function onChangeNickname(event: FormEvent) {
     event.preventDefault()
-    setSubmitting('nick')
-    try {
-      await lineageApi.changeNickname(login, id, nickname)
-      toast.success('Nickname alterado')
-      setNickname('')
-      await refreshCharacter()
-    } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível alterar o nickname'))
-    } finally {
-      setSubmitting(null)
-    }
+    const result = await action.run(async () => {
+      setSubmitting('nick')
+      try {
+        await lineageApi.changeNickname(login, id, nickname, requestKey('nickname', nickname))
+        toast.success('Nickname alterado')
+        setNickname('')
+        operation.current = null
+        await refreshCharacter()
+        await queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível alterar o nickname'))
   }
 
   async function onChangeSex(event: FormEvent) {
     event.preventDefault()
     if (sex !== 'M' && sex !== 'F') return
-    setSubmitting('sex')
-    try {
-      await lineageApi.changeSex(login, id, sex)
-      toast.success('Sexo alterado')
-      await refreshCharacter()
-    } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível alterar o sexo'))
-    } finally {
-      setSubmitting(null)
-    }
+    const result = await action.run(async () => {
+      setSubmitting('sex')
+      try {
+        await lineageApi.changeSex(login, id, sex, requestKey('sex', sex))
+        operation.current = null
+        toast.success('Sexo alterado')
+        await refreshCharacter()
+        await queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível alterar o sexo'))
   }
 
   async function onUnstuck() {
-    setSubmitting('unstuck')
-    try {
-      await lineageApi.unstuck(login, id)
-      toast.success('Personagem destravado')
-    } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível destravar'))
-    } finally {
-      setSubmitting(null)
-    }
+    const result = await action.run(async () => {
+      setSubmitting('unstuck')
+      try {
+        await lineageApi.unstuck(login, id)
+        toast.success('Personagem destravado')
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível destravar'))
   }
 
   return (

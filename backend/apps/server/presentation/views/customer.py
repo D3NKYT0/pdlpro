@@ -224,6 +224,7 @@ class ChangeNicknameView(InjectedAPIView):
                     username=request.user.username,
                     login=data["login"],
                     char_id=data["char_id"],
+                    request_key=data.get("request_key"),
                 ),
                 data["name"],
             )
@@ -252,6 +253,7 @@ class ChangeSexView(InjectedAPIView):
                     username=request.user.username,
                     login=data["login"],
                     char_id=data["char_id"],
+                    request_key=data.get("request_key"),
                 ),
                 data["sex"],
             )

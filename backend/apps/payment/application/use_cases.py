@@ -258,7 +258,7 @@ class CancelPaymentOrderUseCase(UseCase[CancelPaymentOrderInput, PaymentOrderEnt
 
     def execute(self, data: CancelPaymentOrderInput) -> PaymentOrderEntity:
         with self._unit_of_work:
-            order = self._orders.get_by_id(data.order_id)
+            order = self._orders.get_for_update(data.order_id)
             if order is None:
                 raise PaymentOrderNotFoundError()
             if order.user_id != data.user_id:
@@ -306,7 +306,7 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
 
     def execute(self, data: SettlePaymentInput) -> PaymentOrderEntity:
         with self._unit_of_work:
-            order = self._orders.get_by_id(data.order_id)
+            order = self._orders.get_for_update(data.order_id)
             if order is None:
                 raise PaymentOrderNotFoundError()
             if data.user_id is not None and order.user_id != data.user_id:

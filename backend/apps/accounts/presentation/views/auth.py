@@ -1,12 +1,37 @@
+import secrets
+
+from django.contrib.auth import get_user_model
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import AnonRateThrottle
+from rest_framework_simplejwt.exceptions import TokenError
 
+from apps.accounts.application.captcha import (
+    captcha_required,
+    clear_failures,
+    register_failure,
+    verify_hcaptcha,
+)
+from apps.accounts.application.email_use_cases import (
+    ConfirmPasswordResetInput,
+    ConfirmPasswordResetUseCase,
+    RequestEmailVerificationUseCase,
+    RequestPasswordResetInput,
+    RequestPasswordResetUseCase,
+    VerifyEmailInput,
+    VerifyEmailUseCase,
+)
+from apps.accounts.application.oauth import begin_oauth, complete_oauth
+from apps.accounts.application.progress_use_cases import (
+    ClaimRewardInput,
+    ClaimRewardUseCase,
+    GetGamerProfileUseCase,
+)
+from apps.accounts.application.sessions import revoke_refresh, rotate_refresh
 from apps.accounts.application.twofa import (
     ConfirmTwoFactorInput,
     ConfirmTwoFactorUseCase,
@@ -16,19 +41,6 @@ from apps.accounts.application.twofa import (
     VerifyTwoFactorLoginInput,
     VerifyTwoFactorLoginUseCase,
     make_login_challenge,
-)
-from apps.accounts.application.captcha import captcha_required, clear_failures, register_failure, verify_hcaptcha
-from apps.accounts.application.oauth import begin_oauth, complete_oauth
-from apps.accounts.domain.exceptions import InvalidCredentialsError
-from apps.accounts.application.progress_use_cases import ClaimRewardInput, ClaimRewardUseCase, GetGamerProfileUseCase
-from apps.accounts.application.email_use_cases import (
-    ConfirmPasswordResetInput,
-    ConfirmPasswordResetUseCase,
-    RequestEmailVerificationUseCase,
-    RequestPasswordResetInput,
-    RequestPasswordResetUseCase,
-    VerifyEmailInput,
-    VerifyEmailUseCase,
 )
 from apps.accounts.application.use_cases import (
     AuthenticateUserInput,
@@ -40,7 +52,9 @@ from apps.accounts.application.use_cases import (
     UpdateProfileInput,
     UpdateProfileUseCase,
 )
+from apps.accounts.domain.exceptions import InvalidCredentialsError
 from apps.accounts.infrastructure.authentication import (
+    _csrf_failed_reason,
     build_auth_response,
     clear_auth_cookies,
     get_refresh_cookie_name,
@@ -54,8 +68,8 @@ from apps.accounts.presentation.serializers import (
     UpdateProfileSerializer,
     UserSerializer,
 )
-from common.views import InjectedAPIView
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
+from common.views import InjectedAPIView
 
 
 class CsrfView(InjectedAPIView):
@@ -161,8 +175,8 @@ class AuthCapabilitiesView(InjectedAPIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        from django.conf import settings
         from allauth.socialaccount.models import SocialAccount
+        from django.conf import settings
 
         connected = []
         if request.user.is_authenticated:
@@ -193,7 +207,10 @@ class OAuthBeginView(InjectedAPIView):
         serializer = OAuthBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        return Response({"authorization_url": begin_oauth(data["provider"], data["mode"], request.user)})
+        browser_key = request.session.setdefault("oauth_browser", secrets.token_urlsafe(32))
+        return Response({"authorization_url": begin_oauth(
+            data["provider"], data["mode"], request.user, browser_key=browser_key,
+        )})
 
 
 class OAuthCompleteView(InjectedAPIView):
@@ -209,7 +226,10 @@ class OAuthCompleteView(InjectedAPIView):
         serializer = OAuthCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        user, linked = complete_oauth(data["provider"], data["code"], data["state"])
+        user, linked = complete_oauth(
+            data["provider"], data["code"], data["state"],
+            browser_key=request.session.get("oauth_browser", ""), user=request.user,
+        )
         if linked:
             return Response({"linked": True})
         if user.is_2fa_enabled:
@@ -230,14 +250,16 @@ class RefreshView(InjectedAPIView):
     @extend_schema(tags=["Auth"])
     def post(self, request):
         raw = request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name())
+        if not request.data.get("refresh") and raw and _csrf_failed_reason(request):
+            return Response({"message": "Validação CSRF necessária."}, status=status.HTTP_403_FORBIDDEN)
         if not raw:
             return Response(
                 {"error_code": "AUTHENTICATION_REQUIRED", "message": "Refresh token ausente."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         try:
-            refresh = RefreshToken(raw)
-        except TokenError:
+            refresh = rotate_refresh(raw)
+        except (TokenError, AuthenticationFailed, get_user_model().DoesNotExist, ValueError, TypeError, KeyError):
             return Response(
                 {"error_code": "AUTHENTICATION_FAILED", "message": "Refresh token inválido."},
                 status=status.HTTP_401_UNAUTHORIZED,
@@ -257,6 +279,7 @@ class LogoutView(InjectedAPIView):
 
     @extend_schema(tags=["Auth"])
     def post(self, request):
+        revoke_refresh(request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name()), request.user)
         response = Response({"ok": True})
         return clear_auth_cookies(response)
 

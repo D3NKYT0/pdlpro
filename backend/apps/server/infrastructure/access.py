@@ -4,7 +4,11 @@ from uuid import UUID
 
 from django.conf import settings
 
-from apps.server.domain.access import AccessibleAccount, IAccountAccessService, same_linked_user
+from apps.server.domain.access import (
+    AccessibleAccount,
+    IAccountAccessService,
+    same_linked_user,
+)
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import ILinkSlotRepository
 from apps.server.infrastructure.models import ManagedLineageAccount
@@ -23,14 +27,9 @@ class DjangoAccountAccessService(IAccountAccessService):
         self._slots = slots
 
     def can_access(self, user_id: UUID, username: str, login: str) -> bool:
-        if ManagedLineageAccount.objects.filter(user__id=user_id, login__iexact=login).exists():
-            return True
         account = self._lineage.get_account(login)
-        if account and same_linked_user(account.linked_user_id, user_id):
-            return True
-        if login.lower() != username.lower():
-            return False
-        return account is None or not account.linked_user_id or same_linked_user(account.linked_user_id, user_id)
+        # A referência local e a coincidência de nomes não comprovam propriedade.
+        return bool(account and same_linked_user(account.linked_user_id, user_id))
 
     def list_accounts(self, user_id: UUID, username: str) -> list[AccessibleAccount]:
         seen: dict[str, AccessibleAccount] = {}
