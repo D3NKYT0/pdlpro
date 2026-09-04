@@ -68,6 +68,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | --- | --- |
 | [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, renderer Valorem, segurança, ativação e restauração do default |
 | [Ajuda e Denkynho](funcionalidades/ajuda.md) | Chat sobre o FAQ publicado, personagem animado, limites e atendimento |
+| [Animações do Denkynho](funcionalidades/denkynho-animacoes.md) | Sequências de comer, jogar e rir, assets, reprodução e prompts |
 | [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, bônus e pesca |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
 
@@ -78,7 +79,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Implantação](operacao/implantacao.md) | Topologias, produção, proxy, atualização e rollback |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
 | [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
-| [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, sessão, assets e integrações |
+| [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, sessão, assets, disco no Docker e integrações |
 
 ### Projeto e histórico
 

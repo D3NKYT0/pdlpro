@@ -109,7 +109,7 @@ Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `er
 
 [TicketMessages](../../frontend/src/components/support/TicketMessages.tsx) e [TicketStatus](../../frontend/src/components/support/TicketStatus.tsx) compartilham a apresentação do atendimento. `staff` permite exibir notas internas recebidas da API; o modo padrão as filtra. Isso não substitui a autorização e a filtragem no servidor.
 
-[Denkynho](../../frontend/src/components/help/Denkynho.tsx) compõe as camadas PNG do mascote com pose, fala, piscadas e movimento reduzido. A página de Ajuda controla os estados; consulte [Ajuda e Denkynho](../funcionalidades/ajuda.md) para o contrato e os cenários de teste.
+[Denkynho](../../frontend/src/components/help/Denkynho.tsx) compõe as camadas PNG do mascote com pose, fala, piscadas e movimento reduzido. Comer, jogar e rir usam `ActivitySprite`, com sequências de quadros pré-carregadas, recortes e ancoragem pelos pés; as demais poses preservam o comportamento anterior. A página de Ajuda controla os estados; consulte [Ajuda e Denkynho](../funcionalidades/ajuda.md) para o contrato e os cenários de teste.
 
 [formatters.ts](../../frontend/src/lib/formatters.ts) centraliza BRL e data/hora em português. Datas usam o fuso do navegador e têm fallback para dados inválidos. Não use a formatação BRL para USD, fichas ou moedas do jogo. Cálculos e precisão financeira pertencem ao domínio.
 

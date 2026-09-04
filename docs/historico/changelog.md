@@ -8,7 +8,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
-Nenhuma alteração pendente de publicação.
+### Corrigido
+
+- O `requirements.txt` do backend passa a instalar PyTorch CPU. O wheel padrão do
+  PyPI no Linux puxava CUDA 13 e esgotava o disco no `docker compose` de produção.
 
 ## [2.1.0] - 2026-09-02
 

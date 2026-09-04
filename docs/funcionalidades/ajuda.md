@@ -105,7 +105,7 @@ Mensagens recusadas no navegador não são adicionadas ao histórico, não consu
 
 ## Animações
 
-O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe `pose`, `talking`, `mouthOpen` e `animated`. Os assets PNG transparentes ficam em `frontend/public/mascot/denkynho/`. O manifesto [poses.json](../../frontend/src/components/help/poses.json) relaciona dez poses e os recortes dos olhos e da boca. A base de 512 × 768 ocupa todo o quadro; as coordenadas dos recortes usam o espaço lógico de 256 × 384 e são convertidas em porcentagem.
+O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe `pose`, `talking`, `mouthOpen` e `animated`. Os assets PNG transparentes ficam em `frontend/public/mascot/denkynho/`. O manifesto [poses.json](../../frontend/src/components/help/poses.json) relaciona doze poses e os recortes dos olhos e da boca. As bases originais são de 512 × 768; comendo e jogando usam 1024 × 1536, na mesma proporção 2:3. As coordenadas dos recortes usam o espaço lógico de 256 × 384 e são convertidas em porcentagem. As novas poses não reutilizam recortes faciais das anteriores.
 
 | Estado da conversa | Comportamento |
 | --- | --- |
@@ -116,6 +116,22 @@ O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe 
 | Falha de consulta | Pose triste e rascunho preservado |
 | 45 segundos sem interação | Dorme; digitar ou enviar desperta o personagem |
 
+### Atividades do personagem
+
+Na lateral da Ajuda, **Comer**, **Jogar**, **Rir** e **Comemorar** iniciam uma atividade visual por oito segundos, inclusive para acordá-lo. A ação selecionada fica bloqueada contra repetição; outra atividade pode substituí-la. São ações exclusivamente locais: não enviam mensagens, não chamam a API e não iniciam jogos reais.
+
+Sem rascunho e com animações habilitadas, o personagem faz um lanche aos 12 segundos, joga aos 22, ri aos 34 e volta à pose de conversa aos 39. Aos 45 segundos, dorme. Digitar, enviar, reiniciar a conversa ou trocar o idioma cancela a atividade manual; respostas em andamento, falhas e moderação têm prioridade. Os botões ficam bloqueados durante a conversa, com rascunho ou com erro/moderação. Todos os timers são liberados ao desmontar a tela.
+
+Com **Animar personagem** desligado ou movimento reduzido no dispositivo, não há atividades automáticas, reprodução de quadros ou movimentos CSS. Ainda é possível escolher manualmente uma pose estática. A fala continua apenas visual, sem áudio. Comer, jogar e rir têm sequências desenhadas de oito quadros cada; comemorar mantém a pose e o movimento anteriores. Os botões são os componentes compartilhados do tema, com quebra de linha no celular.
+
+As sequências mostram o lanche subindo, a mordida e a mastigação; mãos e controle mudando de posição durante a partida; e boca, cabeça e braços mudando na risada. [ActivitySprite](../../frontend/src/components/help/ActivitySprite.tsx) reproduz os quadros com durações próprias e ancoragem pelos pés, sem balançar a imagem inteira como substituto da ação. [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) define os recortes e o ritmo. O atlas inteiro é carregado antes da troca; falhas preservam a imagem anterior. Na transição de saída, o quadro congela até desaparecer. Durante a fala, os recortes de boca originais têm prioridade; ao terminar, a ação recomeça. A preferência de movimento reduzido também é respeitada ao usar `Denkynho` fora da página.
+
+Os testes de [ActivitySprite](../../frontend/src/components/help/ActivitySprite.test.tsx) percorrem todos os quadros e o retorno ao início, verificam os recortes visíveis, pausa e limpeza de timers. Os testes de Denkynho cobrem espera e falha do atlas, retomada, prioridade da fala e mudança de movimento reduzido. Consulte [Assets e sequências do Denkynho](denkynho-animacoes.md) para arquivos, coordenadas e prompts de geração.
+
+Cenários automatizados: seleção das quatro atividades sem HTTP, bloqueio de repetição, interrupção por digitação, sequência temporal, retorno após oito segundos, despertar manual, limpeza de timers, movimento reduzido, tradução dos controles e carregamento das novas poses sem recortes faciais incompatíveis. Consulte [HelpPage.test.tsx](../../frontend/src/pages/HelpPage.test.tsx) e [Denkynho.test.tsx](../../frontend/src/components/help/Denkynho.test.tsx).
+
+Assets criados com a ferramenta integrada de geração de imagens, usando a pose de boas-vindas como referência de identidade. Prompts: preservar rosto, cabelo, proporções, camisa preta, gravata azul e acabamento 3D; criar uma pose de corpo inteiro comendo um sanduíche e outra segurando um controle de videogame, em proporção 2:3, sem texto, cenário ou marca d'água. Uma edição posterior removeu o fundo quadriculado gerado e produziu canal alpha real. Arquivos finais: [11-comendo.png](../../frontend/public/mascot/denkynho/11-comendo.png) e [12-jogando.png](../../frontend/public/mascot/denkynho/12-jogando.png).
+
 O componente também aceita as demais poses do manifesto para futuras respostas e interações. Pré-carrega as camadas antes da transição; se um arquivo falhar, mantém a pose anterior e informa o problema. Libera timers e callbacks ao desmontar. A fala é visual e não reproduz áudio. **Animar personagem** desliga os movimentos e mostra as respostas completas. A preferência do sistema por movimento reduzido tem precedência.
 
 ## Limites e extensão
@@ -124,7 +140,7 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 - Uma falha não apaga o rascunho nem adiciona uma resposta de sucesso.
 - Respostas são texto simples, sem execução de HTML recebido.
 - O chat usa apenas a identidade básica da sessão; não consulta personagens, pagamentos, saldos ou outras informações particulares.
-- O modelo de embeddings é baixado pelo Sentence Transformers no primeiro uso e mantido em memória pelo processo. Configure `DENKYNHO_EMBEDDING_MODEL` para usar outro modelo compatível; não coloque modelos nem segredos no frontend.
+- O modelo de embeddings é baixado pelo Sentence Transformers no primeiro uso e mantido em memória pelo processo. O backend instala PyTorch CPU (`torch==…+cpu`); o wheel padrão do PyPI no Linux traria CUDA e esgotaria o disco do Docker. Configure `DENKYNHO_EMBEDDING_MODEL` para usar outro modelo compatível; não coloque modelos nem segredos no frontend.
 
 ## Validação
 

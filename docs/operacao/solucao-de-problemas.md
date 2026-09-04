@@ -17,6 +17,7 @@ Comece identificando ambiente, URL, revisão e operação que falhou. Registre h
 | Câmbio pendente | Estado do recibo e disponibilidade do jogo | Retome a mesma operação; não duplique a chave |
 | Vitest não encontra testes | Diretório e padrão de descoberta | Consulte [Testes](../desenvolvimento/testes.md) |
 | Tema não carrega ou fica sem imagens | Endpoint ativo, `/media/themes/` e manifesto | Confira proxy, volume e caminhos do pacote |
+| `No space left on device` no `pip install` do backend | Disco da VPS e cache do BuildKit | Veja [espaço em disco no build](#espaço-em-disco-no-build-docker) |
 
 ## Backend e proxy
 
@@ -35,6 +36,37 @@ docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web ba
 ```
 
 Confira `/api/v1/system/health/` no endereço utilizado pelo cliente. Em desenvolvimento nativo, o backend costuma estar em `http://127.0.0.1:8000`; no Compose, o acesso pelo Nginx é `http://localhost`. Uma resposta de health não comprova todas as integrações externas. Um `502` pode vir do proxy sem passar pelo contrato de erros do Django; examine o upstream e seus logs.
+
+## Espaço em disco no build Docker
+
+O `pip install` do backend no Linux **não** deve baixar o PyTorch com CUDA. Esse
+wheel puxa `cuda-toolkit`, pacotes `nvidia-*` e `triton` e costuma ocupar vários
+gigabytes no overlay e no cache do BuildKit, o que termina em
+`[Errno 28] No space left on device` na linha `pip install -r requirements.txt`.
+
+O [requirements.txt](../../backend/requirements.txt) aponta o índice CPU do PyTorch
+(`https://download.pytorch.org/whl/cpu`) e pinna `torch==…+cpu` fora do macOS.
+A inferência do Denkynho continua no serviço Ollama; o backend só usa embeddings
+em CPU.
+
+Se o build já falhou, o cache CUDA permanece no disco. Libere espaço **antes**
+de reconstruir, sem apagar volumes de dados:
+
+```bash
+df -h
+docker system df
+docker builder prune -af
+docker image prune -f
+df -h
+```
+
+`docker builder prune -af` remove o cache de pip/BuildKit da tentativa anterior.
+Não use `docker compose down -v` nem `docker volume prune` como rotina de
+atualização: isso apaga PostgreSQL, Redis, mídia e modelos do Ollama.
+
+Depois, atualize o código com o torch CPU e suba de novo. Confira se o log do
+`pip install` lista `torch-…+cpu` e **não** lista `nvidia-cudnn`, `cuda-toolkit`
+ou `nvidia-cublas`.
 
 ## Redis e execução nativa
 

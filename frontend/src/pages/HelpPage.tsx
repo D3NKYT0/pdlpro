@@ -22,6 +22,12 @@ import { moderateChatInput } from '../components/help/moderation'
 
 type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
 const welcome = (identity: HelpIdentity, language: HelpLanguage): Message => ({ id: 0, role: 'assistant', text: denkynhoWelcome(new Date(), identity, language), pose: '01-boas-vindas' })
+const activities = [
+  { pose: '11-comendo', pt: 'Comer', en: 'Eat', status: { pt: 'Fazendo uma pausa para um lanche.', en: 'Taking a snack break.' } },
+  { pose: '12-jogando', pt: 'Jogar', en: 'Play', status: { pt: 'Jogando uma partida enquanto espero você.', en: 'Playing a game while I wait for you.' } },
+  { pose: '06-rindo', pt: 'Rir', en: 'Laugh', status: { pt: 'Dando uma boa risada!', en: 'Having a good laugh!' } },
+  { pose: '02-sucesso', pt: 'Comemorar', en: 'Celebrate', status: { pt: 'Comemorando com você!', en: 'Celebrating with you!' } },
+] as const
 
 const copy = {
   pt: {
@@ -50,6 +56,8 @@ export function HelpPage() {
   const [revealing, setRevealing] = useState<Message | null>(null)
   const [shown, setShown] = useState(0)
   const [sleeping, setSleeping] = useState(false)
+  const [activity, setActivity] = useState<string | null>(null)
+  const [activityRequest, setActivityRequest] = useState<{ pose: string } | null>(null)
   const [validation, setValidation] = useState('')
   const [failed, setFailed] = useState(false)
   const [moderationBlocked, setModerationBlocked] = useState(false)
@@ -77,10 +85,23 @@ export function HelpPage() {
   }, [user?.id, user?.role])
   useEffect(() => {
     setSleeping(false)
+    setActivity(null)
     if (busy) return
-    const timer = setTimeout(() => setSleeping(true), 45000)
-    return () => clearTimeout(timer)
-  }, [busy, messages, draft])
+    const timers: ReturnType<typeof setTimeout>[] = []
+    if (activityRequest && !draft) {
+      setActivity(activityRequest.pose)
+      timers.push(setTimeout(() => setActivity(null), 8000))
+    }
+    if (animated && !draft) {
+      for (const [delay, next] of [[12000, '11-comendo'], [22000, '12-jogando'], [34000, '06-rindo'], [39000, null]] as const) {
+        timers.push(setTimeout(() => setActivity(next), delay))
+      }
+    }
+    timers.push(setTimeout(() => { setActivity(null); setSleeping(true) }, 45000))
+    return () => timers.forEach(clearTimeout)
+  }, [busy, messages, draft, animated, activityRequest, language])
+  // A conversa interrompe uma ação manual sem retomá-la após a resposta.
+  useEffect(() => { setActivityRequest(null) }, [busy, messages, draft, language])
   const finish = useCallback(() => setRevealing(null), [])
   useEffect(() => {
     if (!revealing) return
@@ -144,14 +165,18 @@ export function HelpPage() {
   const categories = Array.from(new Map((faq.data ?? []).map(item => [item.category, item.category_label])).entries())
   const suggestions = (faq.data ?? []).filter(item => topic === 'all' || item.category === topic).slice(0, 4)
   const last = messages[messages.length - 1]
-  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : sleeping ? '05-dormindo' : last.pose ?? '01-boas-vindas'
+  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? '01-boas-vindas' : sleeping ? '05-dormindo' : activity ?? last.pose ?? '01-boas-vindas'
+  const currentActivity = activities.find(item => item.pose === pose)
   return <div className="help-page">
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
       <Card as="aside" className="help-companion" aria-label={labels.assistant}>
         <div><span className="panel-eyebrow">{labels.companion}</span><h2>Denkynho</h2></div>
         <Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />
-        <p className="muted">{action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : labels.ask}</p>
+        <p className="muted">{action.pending ? labels.searching : revealing ? labels.talking : sleeping ? labels.sleeping : currentActivity?.status[language] ?? labels.ask}</p>
+        <div className="help-activities" role="group" aria-label={language === 'pt' ? 'Atividades do Denkynho' : 'Denkynho activities'}>
+          {activities.map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => setActivityRequest({ pose: item.pose })}>{item[language]}</Button>)}
+        </div>
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">{labels.reduced}</small>}
         <Field label={labels.language}><select value={language} disabled={busy} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>

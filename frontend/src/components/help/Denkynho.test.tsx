@@ -10,6 +10,28 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); vi.clearAllTimers(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals() })
 const settle = async () => { await act(async () => { await Promise.resolve() }) }
+it.each(['11-comendo', '12-jogando', '06-rindo'])('reproduz quadros diferentes de %s e para ao desativar', async pose => {
+  const { container, rerender, unmount } = render(<Denkynho pose={pose} />); await settle()
+  const sprite = () => container.querySelector('.denk-sprite')
+  expect(sprite()).toHaveAttribute('data-frame', '0')
+  const firstView = sprite()?.getAttribute('viewBox')
+  await act(async () => { await vi.advanceTimersByTimeAsync(600) })
+  expect(sprite()).not.toHaveAttribute('data-frame', '0')
+  expect(sprite()?.getAttribute('viewBox')).not.toBe(firstView)
+  rerender(<Denkynho pose={pose} animated={false} />); await settle()
+  expect(sprite()).toBeNull()
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/${pose}.png`)
+  await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+  expect(sprite()).toBeNull()
+  unmount(); expect(vi.getTimerCount()).toBe(0)
+})
+it.each(['11-comendo', '12-jogando'])('carrega %s sem sobrepor recortes faciais de outra pose', async pose => {
+  const { container } = render(<Denkynho pose={pose} talking mouthOpen />); await settle()
+  await act(async () => { vi.advanceTimersByTime(2800) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/${pose}.png`)
+  expect(container.querySelector('.denk-face')).toBeNull()
+})
 it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   const { rerender, container } = render(<Denkynho pose="01-boas-vindas" />); await settle()
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Boas-vindas')
@@ -29,6 +51,50 @@ it('mantém a imagem anterior se o novo asset falhar', async () => {
   rerender(<Denkynho pose="07-triste" />); await settle()
   expect(screen.getByText(/Não foi possível carregar/)).toBeVisible()
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+})
+it('aguarda o atlas completo e preserva a pose anterior quando ele falha', async () => {
+  const { rerender, container } = render(<Denkynho pose="01-boas-vindas" />); await settle()
+  let atlas: { onload: null | (() => void); onerror: null | (() => void) } | undefined
+  vi.stubGlobal('Image', class {
+    onload: null | (() => void) = null
+    onerror: null | (() => void) = null
+    set src(value: string) {
+      if (value.includes('-sequencia')) atlas = this
+      else Promise.resolve().then(() => this.onload?.())
+    }
+  })
+  rerender(<Denkynho pose="11-comendo" />); await settle()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  await act(async () => { atlas!.onerror?.() })
+  expect(screen.getByText(/Não foi possível carregar/)).toBeVisible()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  rerender(<Denkynho pose="12-jogando" />); await settle()
+  await act(async () => { atlas!.onload?.() })
+  expect(screen.queryByText(/Não foi possível carregar/)).toBeNull()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando')
+  expect(container.querySelector('.denk-sprite')).toHaveAttribute('data-frame', '0')
+})
+it('prioriza a fala e recomeça o ciclo de risada ao terminar de falar', async () => {
+  const { container, rerender } = render(<Denkynho pose="06-rindo" />); await settle()
+  rerender(<Denkynho pose="06-rindo" talking mouthOpen={false} />); await settle()
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(container.querySelector('.denk-face')).toHaveAttribute('src', expect.stringContaining('06-rindo-boca'))
+  rerender(<Denkynho pose="06-rindo" />); await settle()
+  expect(container.querySelector('.denk-sprite')).toHaveAttribute('data-frame', '0')
+})
+it('respeita mudança de movimento reduzido mesmo quando usado sem a página de Ajuda', async () => {
+  const media = { matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() }
+  vi.stubGlobal('matchMedia', () => media)
+  const { container, unmount } = render(<Denkynho pose="11-comendo" />); await settle()
+  expect(container.querySelector('.denk-sprite')).not.toBeNull()
+  const update = media.addEventListener.mock.calls[0][1]
+  await act(async () => { media.matches = true; update() })
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')
+  unmount()
+  expect(media.removeEventListener).toHaveBeenCalledWith('change', update)
+  expect(vi.getTimerCount()).toBe(0)
 })
 it('desativa movimentos e cancela carregamento e timers ao desmontar', async () => {
   const { rerender, container, unmount } = render(<Denkynho pose="inexistente" animated={false} talking mouthOpen />); await settle()

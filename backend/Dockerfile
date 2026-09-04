@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+# requirements.txt pinna torch CPU; o wheel padrão do PyPI no Linux puxa CUDA.
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt && \
     apt-mark manual curl gosu libpq5 >/dev/null && \

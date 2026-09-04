@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import poses from './poses.json'
+import { ActivitySprite } from './ActivitySprite'
+import { activitySequences } from './activitySequences'
+import { useReducedMotion } from './useReducedMotion'
 import './help.css'
 
 const asset = (name: string) => `/mascot/denkynho/${name}`
 type Pose = (typeof poses)[number]
 type Layer = { src: string; box: number[] }
 
-/** Mascote em camadas, com transição, piscada e fala controladas pela conversa.
+/** Mascote com sequências de ação, transição, piscada e fala controladas pela conversa.
  * Carrega as imagens da pose antes da troca e libera timers ao desmontar.
  */
-export function Denkynho({ pose, talking = false, mouthOpen = false, animated = true }: { pose: string; talking?: boolean; mouthOpen?: boolean; animated?: boolean }) {
+export function Denkynho({ pose, talking = false, mouthOpen = false, animated: animate = true }: { pose: string; talking?: boolean; mouthOpen?: boolean; animated?: boolean }) {
+  const reduced = useReducedMotion()
+  const animated = animate && !reduced
   const [view, setView] = useState<{ current: Pose; previous?: Pose }>({ current: poses[0] })
   const [blink, setBlink] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -18,7 +23,8 @@ export function Denkynho({ pose, talking = false, mouthOpen = false, animated = 
     let cancelled = false
     let transition: ReturnType<typeof setTimeout>
     const eyes = Array.isArray(next.eyes) ? next.eyes : next.eyes ? [next.eyes] : []
-    const names = [next.src, ...eyes.map(item => item.src), ...(next.mouth ? [next.mouth.src] : [])]
+    const sequence = animated ? activitySequences[next.id] : undefined
+    const names = [next.src, ...eyes.map(item => item.src), ...(next.mouth ? [next.mouth.src] : []), ...(sequence ? [sequence.src] : [])]
     const images = names.map(name => new Image())
     Promise.all(images.map((image, index) => new Promise<void>((resolve, reject) => {
       image.onload = () => resolve(); image.onerror = () => reject(new Error('Imagem indisponível')); image.src = asset(names[index])
@@ -45,11 +51,14 @@ export function Denkynho({ pose, talking = false, mouthOpen = false, animated = 
   }
   function character(item: Pose, outgoing = false) {
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
+    const sequence = animated && !talking ? activitySequences[item.id] : undefined
     return <div key={item.id} className={`denk-transition ${outgoing ? 'is-leaving' : view.previous ? 'is-entering' : ''}`}>
-      <div className={`denk-pose pose-${item.id.slice(3)}${animated ? ' is-moving' : ''}`}>
+      <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence ? ' is-moving' : ''}`}>
+        {sequence ? <ActivitySprite sequence={sequence} active={!outgoing} /> : <>
         <img className="denk-base" alt="" src={asset(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
         {!outgoing && animated && talking && item.mouth && (item.openMouth ? !mouthOpen : mouthOpen) && layer(item.mouth)}
+        </>}
       </div>
     </div>
   }

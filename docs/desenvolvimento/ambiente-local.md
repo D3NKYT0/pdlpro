@@ -86,6 +86,9 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+O `requirements.txt` já aponta o índice CPU do PyTorch. No Linux, o wheel padrão
+do PyPI instala CUDA e pode esgotar o disco; não remova o pino `torch==…+cpu`.
+
 No modo development, cache e channel layer ficam em memória. Para executar Celery nativamente, disponibilize Redis em `127.0.0.1:6379`, ajuste `REDIS_URL` e inicie processos separados:
 
 ```powershell

@@ -225,5 +225,7 @@
         119.25
       ]
     }
-  }
+  },
+  { "id": "11-comendo", "label": "Comendo", "src": "11-comendo.png", "openMouth": false, "eyes": null, "mouth": null },
+  { "id": "12-jogando", "label": "Jogando", "src": "12-jogando.png", "openMouth": false, "eyes": null, "mouth": null }
 ]

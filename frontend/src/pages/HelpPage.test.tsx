@@ -29,6 +29,48 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 function mount() { render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
+it('oferece atividades locais, bloqueia repetição e interrompe ao digitar', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  for (const [name, pose] of [['Comer', '11-comendo'], ['Jogar', '12-jogando'], ['Rir', '06-rindo'], ['Comemorar', '02-sucesso']]) {
+    await user.click(screen.getByRole('button', { name }))
+    await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose))
+    expect(screen.getByRole('button', { name })).toBeDisabled()
+    expect(screen.getByRole('button', { name })).toHaveAttribute('aria-pressed', 'true')
+  }
+  expect(fetcher).toHaveBeenCalledTimes(1)
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Oi')
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas'))
+  expect(screen.getByRole('button', { name: 'Jogar' })).toBeDisabled()
+})
+it('faz atividades ao esperar, encerra a ação manual e dorme sem acumular timers', async () => {
+  mount(); await screen.findByRole('button', { name: articles[0].question })
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  await user.click(screen.getByRole('button', { name: 'Comer' }))
+  await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  for (const [delay, pose] of [[4000, '11-comendo'], [10000, '12-jogando'], [12000, '06-rindo'], [11000, '05-dormindo']] as const) {
+    await act(async () => { await vi.advanceTimersByTimeAsync(delay) })
+    expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
+  }
+  await user.click(screen.getByRole('button', { name: 'Jogar' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando'))
+  cleanup(); client.clear()
+  expect(vi.getTimerCount()).toBe(0)
+})
+it('mantém atividades manuais estáticas e não inicia atividades automáticas com movimento reduzido', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
+  mount(); await screen.findByRole('button', { name: articles[0].question })
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  await user.click(screen.getByRole('button', { name: 'Jogar' }))
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '12-jogando')
+  expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')
+  await act(async () => { await vi.advanceTimersByTimeAsync(34000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  expect(screen.getByRole('button', { name: 'Eat' })).toBeEnabled()
+})
 it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   mount(); expect(screen.getByText('Carregando perguntas de ajuda…')).toBeVisible()
   expect(await screen.findByRole('button', { name: articles[0].question })).toBeVisible()

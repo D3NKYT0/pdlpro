@@ -1,3 +1,6 @@
+# O wheel padrão do PyPI no Linux instala CUDA 13 (cuda-toolkit, nvidia-*, triton)
+# e esgota o disco da VPS no build Docker. As wheels CPU ficam neste índice.
+--extra-index-url https://download.pytorch.org/whl/cpu
 asgiref==3.12.1
 celery==5.6.3
 channels==4.3.2
@@ -44,5 +47,7 @@ sentry-sdk==2.68.1
 sentence-transformers==6.0.1
 SQLAlchemy==2.0.52
 stripe==15.6.1
+torch==2.14.0+cpu; sys_platform != "darwin"
+torch==2.14.0; sys_platform == "darwin"
 whitenoise==6.12.0
 webauthn==3.0.0

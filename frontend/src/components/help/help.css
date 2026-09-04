@@ -52,6 +52,12 @@
 .help-companion p {
   margin:0;
 }
+.help-activities {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+}
 .help-chat {
   min-width:0;
   min-height:0;
@@ -231,6 +237,12 @@
 .denk-pose.pose-rindo.is-moving {
   animation:denk-laugh .32s ease-in-out infinite alternate;
 }
+.denk-sprite {
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 .denk-pose.pose-dormindo.is-moving {
   animation:denk-sleep 5s ease-in-out infinite;
 }
@@ -309,12 +321,14 @@
   }
   .help-companion .denk-mascot {
     grid-column:1;
-    grid-row:1/6;
+    grid-row:1/8;
     width:140px;
   }
   .help-companion>div:first-child {
     grid-column:2;
   }
+  .help-companion>:not(.denk-mascot) { grid-column:2; }
+  .help-activities { justify-content:flex-start; }
   .help-chat {
     height:auto;
     min-height:min(68dvh, 620px);

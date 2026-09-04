@@ -116,7 +116,11 @@ RUN_COLLECTSTATIC=true
 OPENAPI_DOCS_PUBLIC=false
 ```
 
-Inicie a aplicação:
+Inicie a aplicação. Reserve disco para imagens, cache de build e, se usar
+Ollama, os pesos do modelo. Um `pip install` com PyTorch CUDA esgota VPS
+pequenas; o backend pinna a wheel CPU. Se o build falhar com
+`No space left on device`, siga [espaço em disco no build](solucao-de-problemas.md#espaço-em-disco-no-build-docker)
+antes de repetir o `up --build`.
 
 ```bash
 ./setup.sh install --production
