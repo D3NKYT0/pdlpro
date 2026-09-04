@@ -43,7 +43,7 @@ it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Dica, falando')
   expect(container.querySelectorAll('.denk-transition')).toHaveLength(2)
   expect(container.querySelector('.denk-face')).toHaveAttribute('src', expect.stringContaining('04-dica-boca'))
-  await act(async () => { vi.advanceTimersByTime(430) })
+  await act(async () => { vi.advanceTimersByTime(560) })
   expect(container.querySelectorAll('.denk-transition')).toHaveLength(1)
 })
 it('mantém a imagem anterior se o novo asset falhar', async () => {

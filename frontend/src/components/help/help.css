@@ -199,6 +199,13 @@
 .denk-transition {
   position:absolute;
   inset:0;
+  transform-origin:50% 96%;
+  backface-visibility:hidden;
+}
+.denk-facing {
+  width:100%;
+  height:100%;
+  transform-origin:center;
 }
 .denk-pose {
   position:relative;
@@ -226,10 +233,19 @@
   font-size:14px;
 }
 .denk-transition.is-entering {
-  animation:denk-enter .43s ease both;
+  animation:denk-enter var(--denk-transition-duration) cubic-bezier(.22,.7,.25,1) both;
 }
 .denk-transition.is-leaving {
-  animation:denk-leave .43s ease both;
+  animation:denk-leave var(--denk-transition-duration) ease-in-out both;
+}
+.denk-mascot[data-transition="turn"] .is-entering { animation-name:denk-turn-in; }
+.denk-mascot[data-transition="turn"] .is-leaving { animation-name:denk-turn-out; }
+.denk-mascot[data-transition="rest"] .is-entering { animation-name:denk-rest-in; }
+.denk-mascot[data-transition="rest"] .is-leaving { animation-name:denk-rest-out; }
+.denk-mascot[data-transition="wake"] .is-entering { animation-name:denk-wake-in; }
+.denk-mascot[data-transition="wake"] .is-leaving { animation-name:denk-wake-out; }
+.denk-mascot:not([data-transition="none"]) .denk-pose.is-moving {
+  animation-play-state:paused;
 }
 .denk-pose.is-moving {
   animation:denk-breathe 3.5s ease-in-out infinite;
@@ -259,23 +275,44 @@
   animation:denk-think 1.8s ease-in-out infinite;
 }
 @keyframes denk-enter {
-  from {
-    opacity:0;
-    transform:translateX(12px) rotate(2deg) scale(.97);
-  }
-  to {
-    opacity:1;
-    transform:none;
-  }
+  0%,25% { opacity:0; transform:translate(8px,4px) rotate(2deg) scale(.98); }
+  65% { opacity:1; transform:translate(-1px,-2px) rotate(-.5deg) scale(1.01); }
+  100% { opacity:1; transform:none; }
 }
 @keyframes denk-leave {
-  from {
-    opacity:1;
-  }
-  to {
-    opacity:0;
-    transform:translateX(-12px) rotate(-2deg) scale(.97);
-  }
+  0% { opacity:1; transform:none; }
+  18% { opacity:1; transform:translateY(2px) rotate(-1deg); }
+  55%,100% { opacity:0; transform:translate(-8px,3px) rotate(-2deg) scale(.98); }
+}
+@keyframes denk-turn-out {
+  0% { opacity:1; transform:none; }
+  18% { opacity:1; transform:perspective(600px) rotateY(-12deg) translateY(2px); }
+  55%,100% { opacity:0; transform:perspective(600px) rotateY(80deg); }
+}
+@keyframes denk-turn-in {
+  0%,25% { opacity:0; transform:perspective(600px) rotateY(-80deg); }
+  70% { opacity:1; transform:perspective(600px) rotateY(6deg) translateY(-1px); }
+  100% { opacity:1; transform:none; }
+}
+@keyframes denk-rest-out {
+  0% { opacity:1; transform:none; }
+  25% { opacity:1; transform:translateY(5px) rotate(2deg) scaleY(.98); }
+  65%,100% { opacity:0; transform:translateY(16px) rotate(4deg) scaleY(.92); }
+}
+@keyframes denk-rest-in {
+  0%,25% { opacity:0; transform:translateY(-12px) scale(1.04); }
+  75% { opacity:1; transform:translateY(2px) scale(.99); }
+  100% { opacity:1; transform:none; }
+}
+@keyframes denk-wake-out {
+  0% { opacity:1; transform:none; }
+  25% { opacity:1; transform:translateY(-4px) scaleY(1.03); }
+  60%,100% { opacity:0; transform:translateY(-12px) scale(.98); }
+}
+@keyframes denk-wake-in {
+  0%,25% { opacity:0; transform:translateY(14px) scaleY(.94); }
+  65% { opacity:1; transform:translateY(-3px) scaleY(1.02); }
+  100% { opacity:1; transform:none; }
 }
 @keyframes denk-breathe {
   50% {

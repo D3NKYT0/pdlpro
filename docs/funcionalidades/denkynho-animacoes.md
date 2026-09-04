@@ -14,6 +14,25 @@ Os originais estáticos permanecem disponíveis para movimento reduzido e fala. 
 
 O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. A área de clipping impede que pés ou cabelo de quadros vizinhos apareçam. A ancoragem mantém os pés na mesma altura. As durações variam entre 140 e 600 ms para dar ritmo às ações, com repetição de quadros de mastigação e risada.
 
+## Transições e espelhamento
+
+[useMascotPose](../../frontend/src/components/help/useMascotPose.ts) coordena o carregamento e as trocas. A primeira pose carregada aparece sem transição de uma imagem provisória. As demais usam tempos compartilhados entre o estado React e o CSS:
+
+- Mudança de postura: 560 ms, com pequena antecipação, deslocamento e acomodação.
+- Virada: 720 ms, com rotação em perspectiva na saída e entrada quando a orientação muda.
+- Deitar: 800 ms, com descida e acomodação.
+- Acordar: 760 ms, com subida e leve extensão.
+
+São transformações dos sprites 2D, não interpolação de um esqueleto 3D. O atlas de ação congela no quadro atual ao sair. A próxima sequência só começa depois que a entrada termina. Isso evita combinar a troca de postura com uma mordida ou risada já no meio do ciclo.
+
+Comer, jogar, rir e comemorar alternam a orientação nas visitas seguintes à mesma ação; a primeira visita mantém o lado atual. O histórico de lados dura enquanto o componente estiver montado. Poses de conversa e sono preservam a orientação. A fala não dispara espelhamento, e mudar apenas boca, piscada ou a opção de animação não conta como uma nova visita.
+
+A camada `denk-facing` espelha o conjunto completo — corpo, olhos, boca, mãos, lanche e controle — sem modificar os PNGs. Ela é separada da camada de transição e da reprodução do atlas, evitando que uma transformação sobrescreva outra. Desligar animações ou ativar movimento reduzido cancela a transição e preserva a orientação estática, sem uma virada súbita adicional.
+
+Cliques rápidos em atividades substituem apenas o próximo pedido, com no máximo dois personagens durante a transição. Conversa, processamento, erros e sono têm prioridade e podem interromper a fila de lazer. Falhas de carregamento mantêm a pose e o lado anteriores, sem consumir uma visita. Timers e callbacks antigos são cancelados ao trocar de pedido ou desmontar.
+
+[Denkynho.transitions.test.tsx](../../frontend/src/components/help/Denkynho.transitions.test.tsx) verifica virada, espelhamento conjunto, quadros congelados, início do próximo ciclo, deitar/acordar, interrupção pela fala, fila mais recente, movimento desligado e liberação de timers.
+
 ## Prompts finais
 
 Referências de identidade: `11-comendo.png`, `12-jogando.png` e `06-rindo.png`, respectivamente. Os prompts abaixo foram usados na ferramenta integrada; os nomes dos arquivos finais acima são os consumidos pelo projeto.
@@ -43,4 +62,3 @@ Use case: background-extraction. Edit the provided 8-frame sprite sheet ONLY to 
 ```
 
 A saída final foi conferida como RGBA e inspecionada no tema do painel. O atlas de jogo já veio com transparência. A remoção do fundo de risada alterou as dimensões, refletidas no manifesto de reprodução.
-
