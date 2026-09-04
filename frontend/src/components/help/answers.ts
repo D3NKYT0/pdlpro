@@ -1,6 +1,8 @@
+import { matchPersonality, normalizeConversation } from './personality'
+
 export interface HelpArticle { id: string; question: string; short_answer: string; answer: string; category: string; category_label: string; keywords: string[] }
 export interface HelpAnswer { text: string; details?: string; source?: string; related?: HelpArticle[]; pose: string }
-const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
+const normalize = normalizeConversation
 const ignored = new Set(['como', 'onde', 'qual', 'quais', 'para', 'pelo', 'pela', 'meu', 'minha', 'uma', 'com', 'que', 'por', 'posso', 'faco', 'sobre', 'preciso', 'ajuda'])
 
 /** Valida a fronteira da base pública antes de exibir respostas no chat. */
@@ -12,7 +14,8 @@ export function helpArticles(data: unknown): HelpArticle[] {
 /** Busca conservadora no FAQ publicado. Nunca inventa uma resposta quando há dúvida. */
 export function answerQuestion(question: string, articles: HelpArticle[]): HelpAnswer {
   const query = normalize(question)
-  if (/^(oi|ola|bom dia|boa tarde|boa noite)$/.test(query)) return { text: 'Olá! Sou o Denkynho. Posso ajudar você a encontrar as orientações publicadas pelo PDL. Qual é a sua dúvida?', pose: '01-boas-vindas' }
+  const social = matchPersonality(question)
+  if (social) return social
   const exact = articles.find(item => normalize(item.question) === query)
   const words = [...new Set(query.split(' ').filter(word => word.length >= 3 && !ignored.has(word)))]
   const ranked = articles.map(item => {

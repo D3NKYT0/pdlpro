@@ -13,9 +13,10 @@ import { useAsyncAction } from '../hooks/useAsyncAction'
 import { answerQuestion, helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
 import { useReducedMotion } from '../components/help/useReducedMotion'
+import { DENKYNHO_WELCOME, matchPersonality } from '../components/help/personality'
 
 type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; source?: string; related?: HelpArticle[]; pose?: string }
-const welcome: Message = { id: 0, role: 'assistant', text: 'Olá! Sou o Denkynho. Conte sua dúvida ou escolha uma pergunta abaixo. Vou procurar uma orientação na base de ajuda do PDL.', pose: '01-boas-vindas' }
+const welcome: Message = { id: 0, role: 'assistant', text: DENKYNHO_WELCOME, pose: '01-boas-vindas' }
 
 /** Central de ajuda autenticada. Conversa temporária, baseada apenas no FAQ publicado. */
 export function HelpPage() {
@@ -60,7 +61,9 @@ export function HelpPage() {
     if (!question || question.length > 1000) { setValidation('Escreva uma pergunta de até 1.000 caracteres.'); return }
     if (busy) return
     setValidation(''); setSleeping(false); setFailed(false)
+    const social = matchPersonality(question)
     const result = await action.run(async () => {
+      if (social) return social
       const data = helpArticles(await contentApi.faq())
       return answerQuestion(question, data)
     })

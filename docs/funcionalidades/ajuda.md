@@ -6,7 +6,23 @@
 
 Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Escreva uma dúvida, filtre as sugestões por assunto ou escolha uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
-O Denkynho consulta as perguntas publicadas do FAQ usando o serviço existente, `GET /api/v1/public/faq/`. A seleção da orientação acontece no navegador: a pergunta digitada não é enviada a um provedor de IA nem gravada no backend. O histórico é temporário e desaparece ao sair da tela ou recarregá-la. Esta versão é uma interface de conversa sobre a base publicada, não um modelo generativo ou um atendimento humano.
+O Denkynho responde primeiro pela camada local de personalidade. Quando a mensagem não é uma interação social conhecida, consulta as perguntas publicadas do FAQ usando o serviço existente, `GET /api/v1/public/faq/`. A seleção acontece no navegador: a pergunta digitada não é enviada a um provedor de IA nem gravada no backend. O histórico é temporário e desaparece ao sair da tela ou recarregá-la. Esta versão usa respostas definidas e a base publicada, não um modelo generativo ou um atendimento humano.
+
+## Personalidade e padrão de fala
+
+O Denkynho é um companheiro virtual jovem, gentil, curioso e seguro. Fala em português brasileiro, chama a pessoa de **você**, usa frases curtas e claras e faz referências leves a jornada e aventura. A resposta normalmente acolhe a fala, responde diretamente e convida para um próximo passo. Humor é leve e apropriado ao universo do PDL.
+
+Ele se apresenta como assistente virtual e nunca afirma ser humano, acessar uma conta, conhecer dados particulares ou executar uma operação. Não inventa status, preço ou regra. Diante de tristeza, acolhe sem fazer diagnóstico; diante de agressão, mantém um limite respeitoso; quando não entende, pede outras palavras ou oferece as sugestões. A voz evita excesso de bordões, intimidade forçada, ironia e linguagem técnica desnecessária.
+
+[personality.ts](../../frontend/src/components/help/personality.ts) centraliza as boas-vindas, a normalização e as intenções sociais. A camada reconhece mensagens curtas e completas para não interceptar dúvidas de conhecimento. As intenções cobertas são:
+
+- cumprimento e “como vai?”;
+- agradecimento, pedido de desculpa e despedida;
+- nome, identidade, origem, capacidades e natureza virtual;
+- alegria, tristeza, cansaço e confusão;
+- sono, piada e limite para fala desrespeitosa.
+
+Cada intenção define o texto e a pose correspondente. Conversas simples são respondidas sem uma nova requisição ao FAQ. Perguntas como “Como recupero minha senha?” continuam na camada de conhecimento.
 
 Cada artigo tem assunto, resposta rápida, orientação completa e palavras-chave. A busca remove acentos e considera termos significativos do título e das palavras-chave. Só seleciona uma resposta por correspondência exata ou por uma correspondência completa e sem ambiguidade. A primeira camada responde de forma curta; a segunda abre os detalhes; a terceira sugere até três artigos relacionados. Consultas sem relação com a base encaminham o usuário ao FAQ ou ao atendimento; nenhuma resposta é inventada.
 
@@ -24,7 +40,7 @@ O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe 
 
 | Estado da conversa | Comportamento |
 | --- | --- |
-| Boas-vindas | Sorriso, respiração e piscadas |
+| Boas-vindas e conversa social | Pose definida pela intenção, fala, respiração e piscadas |
 | Consultando | Pose pensando |
 | Resposta publicada | Pose de dica e boca acompanhando o texto |
 | Sem correspondência | Pose confusa |
@@ -43,6 +59,6 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 
 ## Validação
 
-Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem carregamento, assuntos, sugestões, resposta rápida, orientação completa, fonte, nova conversa, consulta repetida, erro preservando rascunho, nova tentativa, dados inválidos, base vazia, movimento reduzido, inatividade e conclusão da fala. `FaqPage.test.tsx` cobre busca, filtro e acordeão. Os testes do componente verificam piscada, boca, transição, falha de asset e limpeza; os testes de respostas verificam palavras-chave, camadas, relacionados, ambiguidade e validação. O backend verifica o contrato público e os 38 artigos da migration.
+Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem personalidade sem nova consulta HTTP, carregamento, assuntos, sugestões, resposta rápida, orientação completa, fonte, nova conversa, consulta repetida, erro preservando rascunho, nova tentativa, dados inválidos, base vazia, movimento reduzido, inatividade e conclusão da fala. `personality.test.ts` fixa o padrão de voz, as poses, as intenções e a separação entre conversa e conhecimento. `FaqPage.test.tsx` cobre busca, filtro e acordeão. Os testes do componente verificam piscada, boca, transição, falha de asset e limpeza; os testes de respostas verificam palavras-chave, camadas, relacionados, ambiguidade e validação. O backend verifica o contrato público e os 38 artigos da migration.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.

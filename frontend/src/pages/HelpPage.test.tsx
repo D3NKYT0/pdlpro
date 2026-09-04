@@ -27,6 +27,15 @@ it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   expect(screen.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
   expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveValue('all')
 })
+it('responde conversa simples com a personalidade sem consultar novamente o FAQ', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Olá, como vai?')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
+  expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso')
+  expect(fetcher).toHaveBeenCalledTimes(1)
+})
 it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
