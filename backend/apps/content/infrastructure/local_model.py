@@ -1,4 +1,4 @@
-"""Adaptador do SDK Ollama: geração local sem ferramentas ou serviços de nuvem."""
+"""Adaptador do SDK Ollama: geração local em loopback ou no serviço Docker explícito."""
 
 from urllib.parse import urlsplit
 

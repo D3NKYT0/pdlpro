@@ -37,7 +37,7 @@ export interface ApiFaq {
 export interface ApiAssistantReply {
   language: 'pt' | 'en'
   kind: 'knowledge' | 'unknown' | 'blocked' | 'social'
-  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation' | 'ollama'
+  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation' | 'ollama' | 'remote'
   mode?: 'generative' | 'limited'
   context?: string
   confidence?: number

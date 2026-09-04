@@ -13,6 +13,7 @@ from apps.content.infrastructure.semantic import SentenceTransformerMatcher
 def chat(settings, mocker, db):
     Faq.objects.all().delete()
     settings.DENKYNHO_LLM_ENABLED = True
+    settings.DENKYNHO_LLM_PROVIDER = "ollama"
     settings.DENKYNHO_LLM_MODEL = "qwen3:4b-instruct"
     user = User.objects.create_user("chat-user", "chat@example.com", password="Strong-pass-123")
     api = APIClient()
@@ -232,6 +233,134 @@ def test_disabled_model_retains_help_without_calling_sdk(chat, settings):
     settings.DENKYNHO_LLM_ENABLED = False
     assert post(api, "quem é você?").data["mode"] == "limited"
     model.assert_not_called()
+
+
+def test_unknown_provider_keeps_help_without_calling_sdks(chat, settings, mocker):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "gemini"
+    remote = mocker.patch("apps.content.infrastructure.remote_model.httpx.Client")
+    assert post(api, "quem é você?").data["mode"] == "limited"
+    model.assert_not_called()
+    remote.assert_not_called()
+
+
+def _remote_client(mocker, payload, status=200):
+    response = mocker.Mock()
+    response.status_code = status
+    response.json.return_value = payload
+    if status >= 400:
+        import httpx
+
+        request = httpx.Request("POST", "https://api.example.com/v1/chat/completions")
+        response.raise_for_status.side_effect = httpx.HTTPStatusError("error", request=request, response=response)
+    else:
+        response.raise_for_status = mocker.Mock()
+    client = mocker.Mock()
+    client.post.return_value = response
+    client.__enter__ = mocker.Mock(return_value=client)
+    client.__exit__ = mocker.Mock(return_value=False)
+    return client, mocker.patch("apps.content.infrastructure.remote_model.httpx.Client", return_value=client)
+
+
+def test_remote_provider_generates_without_calling_ollama(chat, settings, mocker):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    settings.DENKYNHO_LLM_API_URL = "https://api.example.com/v1"
+    settings.DENKYNHO_LLM_API_KEY = "secret-key"
+    settings.DENKYNHO_LLM_MODEL = "gpt-4o-mini"
+    reply = {"text": "Sou o Denkynho na API remota.", "kind": "social", "pose": "01-boas-vindas", "article_id": None}
+    client, init = _remote_client(mocker, {"choices": [{"message": {"content": json.dumps(reply)}}]})
+    response = post(api, "quem é você?")
+    assert response.data["engine"] == "remote"
+    assert response.data["mode"] == "generative"
+    assert response.data["answer"]["text"] == reply["text"]
+    model.assert_not_called()
+    assert init.call_args.kwargs["trust_env"] is False
+    assert init.call_args.kwargs["follow_redirects"] is False
+    assert init.call_args.kwargs["timeout"] == 120
+    assert client.post.call_args.args[0] == "https://api.example.com/v1/chat/completions"
+    assert client.post.call_args.kwargs["headers"]["Authorization"] == "Bearer secret-key"
+    assert client.post.call_args.kwargs["json"]["model"] == "gpt-4o-mini"
+    assert "tools" not in client.post.call_args.kwargs["json"]
+
+
+def test_remote_provider_accepts_fenced_json_and_full_completions_url(chat, settings, mocker):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    settings.DENKYNHO_LLM_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+    settings.DENKYNHO_LLM_API_KEY = "key"
+    settings.DENKYNHO_LLM_MODEL = "openai/gpt-4o-mini"
+    reply = {"text": "Oi!", "kind": "social", "pose": "01-boas-vindas", "article_id": None}
+    client, _ = _remote_client(mocker, {"choices": [{"message": {"content": "```json\n" + json.dumps(reply) + "\n```"}}]})
+    response = post(api, "oi")
+    assert response.data["engine"] == "remote"
+    assert response.data["answer"]["text"] == "Oi!"
+    model.assert_not_called()
+    assert client.post.call_args.args[0] == "https://openrouter.ai/api/v1/chat/completions"
+
+
+@pytest.mark.parametrize("url", ["ftp://api.example.com/v1", "https://user:pass@api.example.com/v1", ""])
+def test_remote_provider_rejects_invalid_endpoints_without_http(chat, settings, mocker, url):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    settings.DENKYNHO_LLM_API_URL = url
+    settings.DENKYNHO_LLM_API_KEY = "secret-key"
+    settings.DENKYNHO_LLM_MODEL = "gpt-4o-mini"
+    remote = mocker.patch("apps.content.infrastructure.remote_model.httpx.Client")
+    assert post(api, "quem é você?").data["mode"] == "limited"
+    model.assert_not_called()
+    remote.assert_not_called()
+
+
+def test_remote_timeout_falls_back_without_logging_secrets(chat, settings, mocker, caplog):
+    import httpx
+
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    settings.DENKYNHO_LLM_API_URL = "https://api.example.com/v1"
+    settings.DENKYNHO_LLM_API_KEY = "super-secret-token"
+    settings.DENKYNHO_LLM_MODEL = "gpt-4o-mini"
+    client, _ = _remote_client(mocker, {})
+    client.post.side_effect = httpx.TimeoutException("super-secret-token in request")
+    response = post(api, "quem é você?")
+    assert response.data["mode"] == "limited"
+    assert "super-secret-token" not in caplog.text
+    model.assert_not_called()
+
+
+def test_remote_retries_without_json_object_after_http_400(chat, settings, mocker):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    settings.DENKYNHO_LLM_API_URL = "https://api.example.com/v1"
+    settings.DENKYNHO_LLM_API_KEY = "key"
+    settings.DENKYNHO_LLM_MODEL = "local-model"
+    reply = {"text": "Ok.", "kind": "social", "pose": "01-boas-vindas", "article_id": None}
+    bad = mocker.Mock(status_code=400)
+    good = mocker.Mock(status_code=200)
+    good.json.return_value = {"choices": [{"message": {"content": json.dumps(reply)}}]}
+    good.raise_for_status = mocker.Mock()
+    client = mocker.Mock()
+    client.post.side_effect = [bad, good]
+    client.__enter__ = mocker.Mock(return_value=client)
+    client.__exit__ = mocker.Mock(return_value=False)
+    mocker.patch("apps.content.infrastructure.remote_model.httpx.Client", return_value=client)
+    response = post(api, "oi")
+    assert response.data["engine"] == "remote"
+    assert client.post.call_count == 2
+    assert "response_format" in client.post.call_args_list[0].kwargs["json"]
+    assert "response_format" not in client.post.call_args_list[1].kwargs["json"]
+    model.assert_not_called()
+
+
+def test_disabled_embeddings_skip_retrieval_and_still_generate(chat, settings, mocker):
+    api, _, model = chat
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    Faq.objects.create(question="Known?", answer="Known.")
+    mocked = mocker.patch.object(SentenceTransformerMatcher, "similarities")
+    response = post(api, "oi")
+    assert response.data["mode"] == "generative"
+    mocked.assert_not_called()
+    assert model.call_args.kwargs["messages"][0]["content"].endswith("FONTES: []")
 
 
 def test_large_unicode_history_remains_accepted_by_http_contract(chat):

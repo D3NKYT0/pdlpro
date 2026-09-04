@@ -37,6 +37,11 @@ LEET = str.maketrans(
 class SemanticMatcher(ABC):
     """Porta para comparar uma mensagem com textos usando embeddings multilíngues."""
 
+    def available(self) -> bool:
+        """Informa se esta implantação pode carregar o modelo de embeddings."""
+
+        return True
+
     @abstractmethod
     def similarities(self, query: str, documents: list[str]) -> list[float]:
         """Devolve uma similaridade entre zero e um para cada documento."""
@@ -113,14 +118,19 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         articles += social_articles(language)
         documents = [f"{article['question']} {' '.join(article['keywords'])}" for article in articles]
         engine = "sentence-transformers+rapidfuzz"
-        try:
-            semantic_scores = self._semantic_matcher.similarities(data.message, documents)
-            if len(semantic_scores) != len(documents) or any(not math.isfinite(score) for score in semantic_scores):
-                raise ValueError("semantic matcher returned an invalid score count")
-        except Exception:
-            logger.exception("Denkynho semantic matching failed; using RapidFuzz only")
+        semantic_scores: list[float]
+        if not self._semantic_matcher.available():
             semantic_scores = [0.0] * len(documents)
             engine = "rapidfuzz"
+        else:
+            try:
+                semantic_scores = self._semantic_matcher.similarities(data.message, documents)
+                if len(semantic_scores) != len(documents) or any(not math.isfinite(score) for score in semantic_scores):
+                    raise ValueError("semantic matcher returned an invalid score count")
+            except Exception:
+                logger.exception("Denkynho semantic matching failed; using RapidFuzz only")
+                semantic_scores = [0.0] * len(documents)
+                engine = "rapidfuzz"
 
         ranked = []
         for article, semantic in zip(articles, semantic_scores, strict=True):

@@ -134,3 +134,20 @@ RUN_COLLECTSTATIC=true
 ```
 
 Não reutilize os valores de exemplo e não armazene o `.env` de produção no repositório.
+
+## Denkynho
+
+| Variável | Descrição |
+|---|---|
+| `DENKYNHO_LLM_ENABLED` | Liga a geração. `false` = só FAQ. Padrão `false` |
+| `DENKYNHO_LLM_PROVIDER` | `ollama` (local) ou `remote` (API OpenAI-compatível). Padrão `ollama` |
+| `DENKYNHO_EMBEDDINGS_ENABLED` | Liga o MiniLM no worker. Padrão `true` em desenvolvimento e `false` em produção |
+| `DENKYNHO_OLLAMA_URL` | Endereço do Ollama; só loopback ou `http://ollama:11434` com o Compose opcional |
+| `DENKYNHO_OLLAMA_DOCKER` | Autoriza o hostname Docker `ollama`; não libera outros servidores no modo local |
+| `DENKYNHO_LLM_MODEL` | Tag local do Ollama, ou id do modelo remoto (`gpt-4o-mini`, `openai/gpt-4o-mini`, …) |
+| `DENKYNHO_LLM_TIMEOUT` | Tempo máximo, em segundos, da chamada ao modelo |
+| `DENKYNHO_LLM_API_URL` | Base `…/v1` ou URL completa `…/chat/completions` no modo `remote` |
+| `DENKYNHO_LLM_API_KEY` | Bearer da API remota; vazio se o provedor não exigir |
+| `DENKYNHO_EMBEDDING_MODEL` | Identificador Hugging Face usado só quando os embeddings estão ligados |
+
+Os três modos (desligado, Ollama local, API remota) permanecem disponíveis em qualquer ambiente. Escolha conforme o hardware e a política de privacidade; não apague o Ollama só porque a VPS atual é pequena. MiniLM é independente: ligue-o se quiser busca semântica, mesmo com a geração desligada. Consulte [Ajuda e Denkynho](../funcionalidades/ajuda.md).

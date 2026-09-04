@@ -219,6 +219,29 @@ def test_assistant_exposes_rapidfuzz_fallback_when_model_fails(api, player, mock
     assert response.data["article_id"] == str(article.id)
 
 
+@pytest.mark.django_db
+def test_disabled_embeddings_use_rapidfuzz_without_loading_model(api, player, settings, mocker):
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    article = Faq.objects.create(
+        question="Como recuperar senha?",
+        short_answer="Use a recuperação.",
+        answer="Use a recuperação.",
+        keywords="senha",
+    )
+    mocked = mocker.patch.object(SentenceTransformerMatcher, "similarities")
+    api.force_authenticate(player)
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "Como recuperar senha?", "language": "pt"},
+    )
+
+    assert response.status_code == 200
+    assert response.data["engine"] == "rapidfuzz"
+    assert response.data["article_id"] == str(article.id)
+    mocked.assert_not_called()
+
+
 def test_semantic_adapter_encodes_locally_and_reuses_model(mocker):
     import sys
     from types import SimpleNamespace
@@ -232,8 +255,22 @@ def test_semantic_adapter_encodes_locally_and_reuses_model(mocker):
     assert matcher.similarities('password', ['reset', 'auction']) == [0.8, 0.0]
     assert matcher.similarities('password', ['reset', 'auction']) == [0.8, 0.0]
     assert matcher.similarities('empty', []) == []
-    constructor.assert_called_once()
+    constructor.assert_called_once_with('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
     model.encode.assert_called_with(['password', 'reset', 'auction'], normalize_embeddings=True, convert_to_numpy=True)
+
+
+def test_disabled_embeddings_do_not_construct_sentence_transformer(settings, mocker):
+    import sys
+    from types import SimpleNamespace
+
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    constructor = mocker.Mock()
+    mocker.patch.dict(sys.modules, {'sentence_transformers': SimpleNamespace(SentenceTransformer=constructor)})
+    matcher = SentenceTransformerMatcher()
+    assert matcher.available() is False
+    with pytest.raises(RuntimeError, match="disabled"):
+        matcher.similarities('password', ['reset'])
+    constructor.assert_not_called()
 
 
 @pytest.mark.django_db

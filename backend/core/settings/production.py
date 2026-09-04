@@ -27,3 +27,7 @@ REST_AUTH.update(  # noqa: F405
         "JWT_AUTH_SAMESITE": "Lax",
     }
 )
+
+# MiniLM continua disponível; o padrão desligado evita baixar Hugging Face no
+# primeiro chat. A geração local ou remota liga-se por DENKYNHO_LLM_ENABLED.
+DENKYNHO_EMBEDDINGS_ENABLED = env.bool("DENKYNHO_EMBEDDINGS_ENABLED", default=False)  # noqa: F405

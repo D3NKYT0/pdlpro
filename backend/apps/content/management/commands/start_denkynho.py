@@ -19,7 +19,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not settings.DENKYNHO_LLM_ENABLED:
-            self.stdout.write("Denkynho: ajuda básica (modelo local desabilitado).")
+            self.stdout.write("Denkynho: ajuda básica (geração desabilitada).")
+            return
+        if settings.DENKYNHO_LLM_PROVIDER == "remote":
+            self.stdout.write("Denkynho: usando API remota. Ollama local não será iniciado.")
+            return
+        if settings.DENKYNHO_LLM_PROVIDER != "ollama":
+            self.stdout.write("Denkynho: ajuda básica (provedor de geração desconhecido).")
             return
         if settings.DENKYNHO_OLLAMA_URL != "http://127.0.0.1:11434":
             raise CommandError("Boot automático requer http://127.0.0.1:11434; inicie outros endpoints localmente.")

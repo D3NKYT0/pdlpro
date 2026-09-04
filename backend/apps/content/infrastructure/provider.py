@@ -22,7 +22,7 @@ from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
 
-from .local_model import OllamaConversationModel
+from .configured_model import ConfiguredConversationModel
 from .semantic import SentenceTransformerMatcher
 
 
@@ -35,7 +35,7 @@ class ContentProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
-        container.register(ConversationModel, OllamaConversationModel, lifetime=Lifetime.SINGLETON)
+        container.register(ConversationModel, ConfiguredConversationModel, lifetime=Lifetime.SINGLETON)
         container.register_self(ChatReplyUseCase, lifetime=Lifetime.TRANSIENT)
         container.register(
             SemanticMatcher,

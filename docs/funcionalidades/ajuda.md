@@ -18,9 +18,17 @@ O Denkynho reconhece o usuário da sessão e informa se está conversando com jo
 
 A rota autenticada filtra o conhecimento no backend: jogadores recebem artigos públicos; moderadores, staff e administradores recebem também artigos da equipe; superadministradores recebem todos os níveis. A interface apenas apresenta o resultado autorizado. A API pública `GET /api/v1/public/faq/` continua retornando exclusivamente artigos públicos, mesmo quando chamada por uma pessoa autenticada.
 
-## Conversa com modelo local
+## Conversa com modelo
 
-A camada de conversa foi inspirada na separação entre personalidade, memória e provedor do Ashley. O Denkynho usa o SDK **Ollama** e **Pydantic** para gerar e validar respostas, com um modelo local. O FAQ permanece como fonte editorial. Não há integração com Gemini, OpenAI ou outro serviço de geração na nuvem.
+A camada de conversa foi inspirada na separação entre personalidade, memória e provedor do Ashley. O Denkynho usa **Pydantic** para validar respostas e um de três modos de geração, escolhido na implantação:
+
+| Modo | Configuração | Uso |
+| --- | --- | --- |
+| Desligado | `DENKYNHO_LLM_ENABLED=false` | Ajuda básica (FAQ + RapidFuzz). Padrão. |
+| Local | `DENKYNHO_LLM_ENABLED=true` e `DENKYNHO_LLM_PROVIDER=ollama` | SDK **Ollama** em loopback ou no Compose opcional. |
+| Remoto | `DENKYNHO_LLM_ENABLED=true` e `DENKYNHO_LLM_PROVIDER=remote` | API HTTP compatível com OpenAI (`/chat/completions`). |
+
+O FAQ permanece como fonte editorial. A VPS fraca não remove o Ollama: quem tiver CPU e RAM usa o modo local; quem não tiver usa a API remota ou deixa desligado. MiniLM (`DENKYNHO_EMBEDDINGS_ENABLED`) é independente da geração.
 
 Toda mensagem aceita pelo filtro do navegador vai ao endpoint autenticado com `conversation: true` e `context`, inclusive cumprimentos e correções. O backend verifica moderação e identidade, recupera o contexto assinado, seleciona até três artigos autorizados — inclusive o handbook interno de passo a passo — e pede uma resposta ao modelo. O resultado inclui texto, tipo, pose e, quando aplicável, uma referência válida ao FAQ. Fontes inventadas, JSON inválido, texto vazio ou ofensivo e poses desconhecidas são recusados.
 
@@ -32,9 +40,21 @@ O modelo recebe o nome básico da conta e o papel calculado no backend. Não rec
 
 O servidor devolve um token assinado com até 12 mensagens recentes, limitado também a aproximadamente 6.000 caracteres de histórico. O token é legível, não é criptografado e fica apenas no estado desta tela; não vai para localStorage nem para uma tabela de conversas. Expira após 30 minutos e é vinculado ao usuário, papel e idioma. Token alterado, expirado ou de outra identidade é descartado. A preferência de nome é mantida separadamente no token durante a conversa, mesmo depois de os primeiros turnos saírem da janela. O modelo propõe a preferência; o backend só aceita um nome de até 30 caracteres presente literalmente na mensagem atual e aprovado pelo filtro. Não é memória permanente do perfil.
 
-**Nova conversa**, recarregar/sair da tela, trocar idioma ou identidade limpa o contexto do navegador. Respostas em trânsito de uma identidade anterior são descartadas. Mensagens recusadas pelo filtro não entram no histórico. O texto e o histórico recente são enviados ao backend e ao Ollama local (loopback ou rede Docker), sem envio a IA na nuvem; não envie senhas ou códigos. O PDL não registra transcrições no banco nem inclui prompts em logs de falha do modelo.
+**Nova conversa**, recarregar/sair da tela, trocar idioma ou identidade limpa o contexto do navegador. Respostas em trânsito de uma identidade anterior são descartadas. Mensagens recusadas pelo filtro não entram no histórico. O texto e o histórico recente vão ao backend e, se a geração estiver ligada, ao Ollama local ou à API remota configurada; não envie senhas ou códigos. O PDL não registra transcrições no banco nem inclui prompts em logs de falha do modelo.
 
 ## Configurar e iniciar
+
+Há três escolhas. Nenhuma delas é removida porque a VPS de produção seja pequena.
+
+### Sem geração
+
+```dotenv
+DENKYNHO_LLM_ENABLED=false
+```
+
+A Ajuda responde com FAQ, RapidFuzz e o repertório social. `start_denkynho` não inicia Ollama.
+
+### Ollama local
 
 1. Instale [Ollama](https://docs.ollama.com/windows) no computador que executa o backend.
 2. Baixe o modelo: `ollama pull qwen3.5:4b`.
@@ -42,18 +62,34 @@ O servidor devolve um token assinado com até 12 mensagens recentes, limitado ta
 
 ```dotenv
 DENKYNHO_LLM_ENABLED=true
+DENKYNHO_LLM_PROVIDER=ollama
 DENKYNHO_OLLAMA_URL=http://127.0.0.1:11434
 DENKYNHO_LLM_MODEL=qwen3.5:4b
 DENKYNHO_LLM_TIMEOUT=120
 ```
 
-O `start-dev.bat` instala as dependências do Python e chama `manage.py start_denkynho`. O comando reutiliza um Ollama ativo ou procura o executável no PATH e em `%LOCALAPPDATA%/PDL/ollama/ollama.exe`. Quando inicia um processo, usa loopback, `OLLAMA_NO_CLOUD=1` e nenhuma janela extra. Não baixa modelos no boot. Instalações fora desses caminhos devem disponibilizar `ollama` no PATH. Falhas são informadas e o restante do PDL continua com ajuda básica.
+O `start-dev.bat` instala as dependências do Python e chama `manage.py start_denkynho`. O comando reutiliza um Ollama ativo ou procura o executável no PATH e em `%LOCALAPPDATA%/PDL/ollama/ollama.exe`. Quando inicia um processo, usa loopback, `OLLAMA_NO_CLOUD=1` e nenhuma janela extra. Não baixa modelos no boot. Instalações fora desses caminhos devem disponibilizar `ollama` no PATH. Falhas são informadas e o restante do PDL continua com ajuda básica. Com `DENKYNHO_LLM_PROVIDER=remote` o comando não inicia Ollama.
 
-O adaptador aceita endereços de loopback HTTP e, com a configuração Docker explícita descrita abaixo, o serviço `http://ollama:11434`. Ignora proxies do ambiente e não segue redirecionamentos. Tags de nuvem e caminhos remotos são recusados. Na instalação local de desenvolvimento, o runtime portátil 0.33.3 foi verificado com o SHA-256 publicado pelo projeto e instalado em `%LOCALAPPDATA%/PDL/ollama`; os pesos ficam no armazenamento padrão do Ollama, fora do repositório.
+O adaptador local aceita endereços de loopback HTTP e, com a configuração Docker explícita descrita abaixo, o serviço `http://ollama:11434`. Ignora proxies do ambiente e não segue redirecionamentos. Tags de nuvem e caminhos remotos são recusados neste modo. Na instalação local de desenvolvimento, o runtime portátil 0.33.3 foi verificado com o SHA-256 publicado pelo projeto e instalado em `%LOCALAPPDATA%/PDL/ollama`; os pesos ficam no armazenamento padrão do Ollama, fora do repositório.
 
 O modelo de 4 bilhões de parâmetros pode rodar em CPU, mas a velocidade depende do hardware e da carga; não promete resposta instantânea. O prazo configurado limita a espera pelo servidor de geração, sem retries automáticos. A primeira carga do modelo semântico e do gerador pode demorar mais.
 
 A saída usa [JSON estruturado do Ollama](https://docs.ollama.com/capabilities/structured-outputs). O runtime recebe o esquema sem os limites grandes de comprimento, que podem gerar gramática incompatível; o orçamento de tokens limita a geração e Pydantic aplica o limite de 2.000 caracteres depois.
+
+### API remota
+
+Use um endpoint compatível com OpenAI Chat Completions (OpenAI, Groq, OpenRouter, vLLM, Ollama em outro host em `/v1`, etc.):
+
+```dotenv
+DENKYNHO_LLM_ENABLED=true
+DENKYNHO_LLM_PROVIDER=remote
+DENKYNHO_LLM_API_URL=https://api.openai.com/v1
+DENKYNHO_LLM_API_KEY=sk-...
+DENKYNHO_LLM_MODEL=gpt-4o-mini
+DENKYNHO_LLM_TIMEOUT=120
+```
+
+A URL pode ser a base (`…/v1`) ou o caminho completo `…/v1/chat/completions`. HTTP e HTTPS são aceitos; usuário/senha na URL são recusados. A chave vai só no cabeçalho `Authorization` e não entra em logs de falha. O adaptador pede `response_format: json_object`; se o provedor recusar com HTTP 400, tenta de novo sem esse campo. Pydantic valida o JSON. Fontes inventadas, texto vazio ou ofensivo e poses desconhecidas continuam recusados no backend. A chave fica no `.env` da API, nunca no frontend.
 
 ## Qwen dentro do Docker do projeto
 
@@ -70,6 +106,8 @@ Para produção, use o arquivo de produção como base, sem o Compose de desenvo
 ```bash
 docker compose -f docker-compose.prod.yml -f docker-compose.ollama.yml up -d --build
 ```
+
+Não é obrigatório combinar o overlay Ollama com produção. Se a VPS não tiver CPU e memória para o Qwen 4B, use `DENKYNHO_LLM_PROVIDER=remote` ou deixe a geração desligada. O overlay continua disponível para quem quiser Ollama no mesmo Compose.
 
 O serviço `ollama` executa o runtime 0.33.3 em CPU. `ollama_init` baixa `qwen3.5:4b` (aproximadamente 3,4 GB) e precisa terminar com sucesso antes de o backend iniciar. `DENKYNHO_LLM_MODEL` permite selecionar outra tag local; mantenha a mesma seleção nos comandos posteriores. A primeira execução precisa de internet para baixar imagens, pesos e embeddings. Downloads de pesos já presentes são reaproveitados.
 
@@ -93,7 +131,7 @@ Validação da integração em 04/09/2026: os dois arquivos base combinados com 
 
 ## Ajuda básica quando a geração está indisponível
 
-Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta em `mode: limited`, com aviso visível na tela. A consulta usa **Lingua**, **Sentence Transformers** e **RapidFuzz**, e as interações sociais usam o repertório editorial existente. Este modo é limitado e não é apresentado como conversa generativa. As mensagens seguintes tentam novamente o modelo; uma resposta válida remove o aviso.
+Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta em `mode: limited`, com aviso visível na tela. A consulta usa **Lingua** e **RapidFuzz**. **Sentence Transformers** entra só quando `DENKYNHO_EMBEDDINGS_ENABLED` está ativo; em produção o padrão é desligado para não baixar MiniLM no primeiro chat, mas pode ser ligado. As interações sociais usam o repertório editorial existente. Este modo é limitado e não é apresentado como conversa generativa. As mensagens seguintes tentam novamente o modelo; uma resposta válida remove o aviso.
 
 A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. Perguntas com correspondência segura recebem resposta curta, detalhes e fonte; as demais pedem esclarecimento. [dialogue.ts](../../frontend/src/components/help/dialogue.ts) e [personality.ts](../../frontend/src/components/help/personality.ts) mantêm o repertório de contingência e as boas-vindas.
 
@@ -160,7 +198,7 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 - Uma falha não apaga o rascunho nem adiciona uma resposta de sucesso.
 - Respostas são texto simples, sem execução de HTML recebido.
 - O chat usa apenas a identidade básica da sessão; não consulta personagens, pagamentos, saldos ou outras informações particulares.
-- O modelo de embeddings é baixado pelo Sentence Transformers no primeiro uso e mantido em memória pelo processo. O backend instala PyTorch CPU (`torch==…+cpu`); o wheel padrão do PyPI no Linux traria CUDA e esgotaria o disco do Docker. Configure `DENKYNHO_EMBEDDING_MODEL` para usar outro modelo compatível; não coloque modelos nem segredos no frontend.
+- O modelo de embeddings é baixado pelo Sentence Transformers no primeiro uso e mantido em memória pelo processo, somente quando `DENKYNHO_EMBEDDINGS_ENABLED` está ativo. Em `core.settings.production` o padrão é `false`. O backend instala PyTorch CPU (`torch==…+cpu`); o wheel padrão do PyPI no Linux traria CUDA e esgotaria o disco do Docker. Configure `DENKYNHO_EMBEDDING_MODEL` para usar outro modelo compatível; não coloque modelos nem segredos no frontend.
 
 ## Validação
 
@@ -172,7 +210,7 @@ A revisão visual usa a página real e o catálogo com tema carregado em desktop
 
 Teste uma sequência em PT e EN: apresentação → correção do assunto → nome preferido → pergunta sobre esse nome → dúvida de senha. Verifique continuidade, resposta relacionada ao turno atual, expressão compatível e fonte apenas na orientação factual. Teste também tema ausente do FAQ, tentativas de forjar cargo, apelido ofensivo, modelo desligado e nova conversa.
 
-Os testes de `test_chat.py` simulam somente o SDK e o modelo de embeddings. Cobrem histórico, isolamento por identidade/papel/idioma, assinatura/expiração, limites, fontes autorizadas, moderação, erros e contrato do Ollama. `test_start_denkynho.py` cobre inicialização e a migração de privacidade. A UI testa HTTP, contexto entre turnos, reinício, idioma, modo limitado, recuperação e respostas inválidas, além das interações e animações existentes.
+Os testes de `test_chat.py` simulam somente o SDK Ollama, a API remota e o modelo de embeddings. Cobrem histórico, isolamento por identidade/papel/idioma, assinatura/expiração, limites, fontes autorizadas, moderação, erros, contrato do Ollama e da API remota. `test_start_denkynho.py` cobre inicialização local, provedor remoto sem boot do Ollama e as migrações de privacidade. A UI testa HTTP, contexto entre turnos, reinício, idioma, modo limitado, recuperação, `engine: remote` e respostas inválidas, além das interações e animações existentes.
 
 ### Verificação local em 04/09/2026
 

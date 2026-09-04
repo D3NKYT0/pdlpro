@@ -48,6 +48,8 @@ services:
   backend:
     environment:
       DENKYNHO_LLM_ENABLED: "true"
+      DENKYNHO_LLM_PROVIDER: ollama
+      DENKYNHO_EMBEDDINGS_ENABLED: "true"
       DENKYNHO_OLLAMA_DOCKER: "true"
       DENKYNHO_OLLAMA_URL: http://ollama:11434
       DENKYNHO_LLM_MODEL: ${DENKYNHO_LLM_MODEL:-qwen3.5:4b}

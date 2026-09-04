@@ -47,7 +47,12 @@ class GeneratedReply(BaseModel):
 
 
 class ConversationModel(ABC):
-    """Porta de geração local; implementações devem limitar tempo e validar a saída."""
+    """Porta de geração; implementações devem limitar tempo e validar a saída."""
+
+    def engine(self) -> str:
+        """Identificador do adaptador ativo no contrato HTTP."""
+
+        return "ollama"
 
     @abstractmethod
     def enabled(self) -> bool:
@@ -59,7 +64,7 @@ class ConversationModel(ABC):
 
 
 class ConversationUnavailable(RuntimeError):
-    """O servidor local não conseguiu gerar uma resposta válida no prazo."""
+    """O provedor configurado não conseguiu gerar uma resposta válida no prazo."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -159,12 +164,12 @@ class ChatReplyUseCase:
                 raise ValueError("Unexpected source")
         except (ConversationUnavailable, ValueError) as error:
             # Exceções de SDK podem incluir prompt/URL: registre somente a classe.
-            logger.warning("Denkynho local generation failed (%s)", type(error).__name__)
+            logger.warning("Denkynho generation failed (%s)", type(error).__name__)
             generated = None
         if generated is None:
             return {**self._with_emotion(self._fallback.execute(data), emotion, affect), "mode": "limited", "context": ""}
         answer = {"text": generated.text.strip(), "pose": pose_for_reply(generated.kind, generated.pose, emotion, affect)}
-        result = {"language": language, "kind": generated.kind, "engine": "ollama",
+        result = {"language": language, "kind": generated.kind, "engine": self._model.engine(),
                   "mode": "generative", "answer": answer, "emotion": emotion}
         if source:
             result["article_id"] = source["id"]
@@ -220,6 +225,8 @@ class ChatReplyUseCase:
         # A pergunta anterior ajuda a resolver "e depois?", sem dominar o turno atual.
         previous = next((item["content"] for item in reversed(history) if item["role"] == "user"), "")
         query = message + ("\n" + previous if previous else "")
+        if not self._matcher.available():
+            return []
         try:
             scores = self._matcher.similarities(query, [f"{a['question']} {' '.join(a['keywords'])}" for a in articles])
             if len(scores) != len(articles) or any(not math.isfinite(score) for score in scores):

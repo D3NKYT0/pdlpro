@@ -72,6 +72,16 @@ def test_disabled_or_remote_config_never_starts_process(runtime, settings):
     process.assert_not_called()
 
 
+def test_remote_provider_does_not_boot_ollama(runtime, settings):
+    client, process = runtime
+    settings.DENKYNHO_LLM_PROVIDER = "remote"
+    output = StringIO()
+    call_command("start_denkynho", stdout=output)
+    assert "API remota" in output.getvalue()
+    client.assert_not_called()
+    process.assert_not_called()
+
+
 @pytest.mark.django_db
 def test_privacy_migration_preserves_custom_articles_and_reverses_both_languages():
     from django.apps import apps
@@ -89,5 +99,30 @@ def test_privacy_migration_preserves_custom_articles_and_reverses_both_languages
     article.refresh_from_db()
     assert "modelo local" in article.answer
     assert "local model" in article.answer_en
+    custom.refresh_from_db()
+    assert custom.answer == "Custom answer" and custom.answer_en == "English"
+
+
+@pytest.mark.django_db
+def test_provider_privacy_migration_updates_faq_and_handbook_only():
+    from django.apps import apps
+
+    from apps.content.infrastructure.models import Faq
+
+    migration = import_module("apps.content.migrations.0016_conversation_provider_privacy")
+    article = Faq.objects.get(id=migration.ARTICLE_ID)
+    handbook = Faq.objects.get(id=migration.HANDBOOK_ID)
+    custom = Faq.objects.create(question="Custom", answer="Custom answer", answer_en="English")
+    migration.restore_privacy(apps, None)
+    article.refresh_from_db()
+    handbook.refresh_from_db()
+    assert "sem envio para uma IA na nuvem" in article.answer
+    assert "not cloud AI" in handbook.answer_en
+    migration.update_privacy(apps, None)
+    article.refresh_from_db()
+    handbook.refresh_from_db()
+    assert "API remota" in article.answer
+    assert "remote API" in article.answer_en
+    assert "API remota" in handbook.answer
     custom.refresh_from_db()
     assert custom.answer == "Custom answer" and custom.answer_en == "English"

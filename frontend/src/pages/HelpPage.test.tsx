@@ -282,6 +282,15 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
   expect(calls().at(-1)).toMatchObject({ language: 'en', context: '' })
 })
 
+it('aceita geração pela API remota no mesmo contrato da conversa', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  const generated = { kind: 'social', language: 'pt', engine: 'remote', mode: 'generative', context: 'signed-remote', answer: { text: 'Oi pela API remota!', pose: '01-boas-vindas' } }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response(generated) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'Oi{Enter}')
+  expect(await screen.findByText(generated.answer.text)).toBeVisible()
+  expect(screen.queryByText(/ajuda básica/)).not.toBeInTheDocument()
+})
+
 it('informa ajuda básica quando a geração falha e permite recuperar a conversa', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion()

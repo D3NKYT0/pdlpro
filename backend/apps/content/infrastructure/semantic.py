@@ -15,18 +15,18 @@ class SentenceTransformerMatcher(SemanticMatcher):
         self._model: Any | None = None
         self._lock = Lock()
 
+    def available(self) -> bool:
+        return settings.DENKYNHO_EMBEDDINGS_ENABLED
+
     def _get_model(self) -> Any:
+        if not self.available():
+            raise RuntimeError("Denkynho embeddings are disabled")
         if self._model is None:
             with self._lock:
                 if self._model is None:
                     from sentence_transformers import SentenceTransformer
 
-                    model_name = getattr(
-                        settings,
-                        "DENKYNHO_EMBEDDING_MODEL",
-                        "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-                    )
-                    self._model = SentenceTransformer(model_name)
+                    self._model = SentenceTransformer(settings.DENKYNHO_EMBEDDING_MODEL)
         return self._model
 
     def similarities(self, query: str, documents: list[str]) -> list[float]:

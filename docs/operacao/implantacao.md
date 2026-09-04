@@ -30,6 +30,9 @@ caminho no mesmo domínio lógico da API ou por proxy compatível.
 - `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
 - `docker-compose.prod.yml`: produção, com frontend compilado, Django em settings
   de produção e Nginx interno atrás do proxy reverso HTTPS.
+- `docker-compose.ollama.yml`: complemento opcional com Qwen local. Use quando a
+  máquina aguentar o modelo; caso contrário, configure a API remota ou deixe a
+  geração desligada. O overlay não é removido da implantação.
 
 O domínio padrão da produção é `pdl.denky.dev.br`, mas pode ser alterado pela
 variável `DOMAIN`.
@@ -201,6 +204,9 @@ git pull --ff-only
 - Ative Mercado Pago/Stripe somente após testes de pagamento, duplicidade, cancelamento e estorno.
 - Configure backend SMTP real e monitore rejeições.
 - Proteja a chave VAPID privada como segredo.
+- Escolha o modo do Denkynho: Ollama local, API remota (`DENKYNHO_LLM_API_KEY` no
+  cofre) ou geração desligada. `DENKYNHO_EMBEDDINGS_ENABLED` é independente; o
+  padrão de produção evita baixar MiniLM no primeiro chat, mas pode ser ligado.
 
 ### Segurança e observabilidade
 

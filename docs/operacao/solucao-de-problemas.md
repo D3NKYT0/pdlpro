@@ -46,8 +46,21 @@ gigabytes no overlay e no cache do BuildKit, o que termina em
 
 O [requirements.txt](../../backend/requirements.txt) aponta o índice CPU do PyTorch
 (`https://download.pytorch.org/whl/cpu`) e pinna `torch==…+cpu` fora do macOS.
-A inferência do Denkynho continua no serviço Ollama; o backend só usa embeddings
-em CPU.
+A inferência do Denkynho pode ser Ollama local, API remota ou desligada. O
+backend só usa embeddings em CPU quando `DENKYNHO_EMBEDDINGS_ENABLED` está
+ativo.
+
+## Chat da Ajuda baixa modelo do Hugging Face
+
+Se o log mostrar `sentence_transformers` ou
+`huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`,
+o worker está carregando embeddings no primeiro chat. Isso é independente da
+LLM. Para evitar o download, use `DENKYNHO_EMBEDDINGS_ENABLED=false`. Para
+conversar com geração numa VPS sem GPU, configure `DENKYNHO_LLM_PROVIDER=remote`
+em vez de remover o suporte ao Ollama.
+
+Os `401` em `/api/v1/auth/capabilities/` e `/api/v1/shared/me/` no boot da
+página, seguidos de `csrf`, `refresh` e `200`, são o fluxo normal de sessão.
 
 Se o build já falhou, o cache CUDA permanece no disco. Libere espaço **antes**
 de reconstruir, sem apagar volumes de dados:
