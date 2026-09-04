@@ -21,6 +21,7 @@ factory_boy==3.3.3
 Faker==40.15.0
 flower==2.0.1
 gunicorn==26.0.0
+lingua-language-detector==2.2.0
 mercadopago==2.4.0
 pillow==12.3.0
 psycopg2-binary==2.9.12
@@ -34,9 +35,11 @@ pytest-django==4.12.0
 pytest-mock==3.15.1
 python-dotenv==1.2.2
 qrcode==8.2
+rapidfuzz==3.14.6
 redis==7.4.0
 ruff==0.15.12
 sentry-sdk==2.68.1
+sentence-transformers==6.0.1
 SQLAlchemy==2.0.46
 stripe==15.1.0
 whitenoise==6.11.0

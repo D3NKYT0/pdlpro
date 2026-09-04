@@ -1,4 +1,5 @@
 from apps.content.application.legal import GetLegalDocumentUseCase, ListLegalDocumentsUseCase
+from apps.content.application.assistant import AssistantReplyUseCase, SemanticMatcher
 from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageUseCase,
@@ -13,6 +14,8 @@ from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
 
+from .semantic import SentenceTransformerMatcher
+
 
 class ContentProvider(AppProvider):
     """Registra portas, adaptadores e casos de uso do módulo content.
@@ -23,7 +26,13 @@ class ContentProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(
+            SemanticMatcher,
+            SentenceTransformerMatcher,
+            lifetime=Lifetime.SINGLETON,
+        )
         for use_case in (
+            AssistantReplyUseCase,
             ListNewsUseCase,
             GetNewsUseCase,
             ListFaqUseCase,

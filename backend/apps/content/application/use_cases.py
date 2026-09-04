@@ -84,6 +84,7 @@ class ListFaqInput:
     """Maior audiência que a identidade autenticada pode consultar."""
 
     audience: str = Faq.Audience.PUBLIC
+    language: str = "pt"
 
 
 class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
@@ -95,25 +96,48 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
 
     def execute(self, data: ListFaqInput | None = None) -> list[dict]:
         requested = data.audience if data else Faq.Audience.PUBLIC
+        language = data.language if data and data.language == "en" else "pt"
         allowed = {
             Faq.Audience.PUBLIC: [Faq.Audience.PUBLIC],
             Faq.Audience.STAFF: [Faq.Audience.PUBLIC, Faq.Audience.STAFF],
             Faq.Audience.SUPERADMIN: [Faq.Audience.PUBLIC, Faq.Audience.STAFF, Faq.Audience.SUPERADMIN],
         }.get(requested, [Faq.Audience.PUBLIC])
         return [
-            {
-                "id": str(item.id),
-                "question": item.question,
-                "short_answer": item.short_answer,
-                "answer": item.answer,
-                "category": item.category,
-                "category_label": item.get_category_display(),
-                "keywords": [keyword.strip() for keyword in item.keywords.split(",") if keyword.strip()],
-                "audience": item.audience,
-                "audience_label": item.get_audience_display(),
-            }
+            self._dump(item, language)
             for item in Faq.objects.filter(is_published=True, audience__in=allowed)
         ]
+
+    @staticmethod
+    def _dump(item: Faq, language: str) -> dict:
+        english = language == "en" and item.question_en and item.answer_en
+        keywords = item.keywords_en if english else item.keywords
+        category_labels = {
+            "getting_started": "Getting started",
+            "account_security": "Account and security",
+            "game_accounts": "Game accounts and characters",
+            "economy": "Wallet and inventory",
+            "commerce": "Shop and commerce",
+            "games_rewards": "Games and rewards",
+            "community": "Community and content",
+            "support": "Support and policies",
+        }
+        audience_labels = {
+            Faq.Audience.PUBLIC: "All users",
+            Faq.Audience.STAFF: "Staff",
+            Faq.Audience.SUPERADMIN: "Superadministrators",
+        }
+        return {
+            "id": str(item.id),
+            "question": item.question_en if english else item.question,
+            "short_answer": item.short_answer_en if english else item.short_answer,
+            "answer": item.answer_en if english else item.answer,
+            "category": item.category,
+            "category_label": category_labels.get(item.category, item.get_category_display()) if english else item.get_category_display(),
+            "keywords": [keyword.strip() for keyword in keywords.split(",") if keyword.strip()],
+            "audience": item.audience,
+            "audience_label": audience_labels.get(item.audience, item.get_audience_display()) if english else item.get_audience_display(),
+            "language": "en" if english else "pt",
+        }
 
 
 class ListDownloadsUseCase(UseCase[None, list[dict]]):

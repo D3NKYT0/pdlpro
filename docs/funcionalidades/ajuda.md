@@ -6,13 +6,13 @@
 
 Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
-O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. Quando a mensagem não é uma interação social conhecida, consulta `GET /api/v1/shared/content/faq/`. A pergunta digitada não é enviada ao backend, a um provedor de IA nem gravada. O histórico e o apelido são temporários e desaparecem ao sair da tela ou recarregá-la.
+O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. A pessoa pode conversar em português ou inglês. Quando a mensagem não é uma interação social conhecida, o frontend envia a pergunta ao endpoint autenticado `POST /api/v1/shared/content/assistant/reply/`. A mensagem é interpretada na requisição e não é gravada. O histórico e o apelido são temporários e desaparecem ao sair da tela ou recarregá-la.
 
 A rota autenticada filtra o conhecimento no backend: jogadores recebem artigos públicos; moderadores, staff e administradores recebem também artigos da equipe; superadministradores recebem todos os níveis. A interface apenas apresenta o resultado autorizado. A API pública `GET /api/v1/public/faq/` continua retornando exclusivamente artigos públicos, mesmo quando chamada por uma pessoa autenticada.
 
 ## Personalidade e padrão de fala
 
-O Denkynho é um companheiro virtual jovem, gentil, curioso e seguro. Fala em português brasileiro, chama a pessoa de **você**, usa frases curtas e claras e faz referências leves a jornada e aventura. A resposta normalmente acolhe a fala, responde diretamente e convida para um próximo passo. Humor é leve e apropriado ao universo do PDL.
+O Denkynho é um companheiro virtual jovem, gentil, curioso e seguro. Fala em português brasileiro ou inglês conforme o idioma selecionado, usa frases curtas e claras e faz referências leves a jornada e aventura. A resposta normalmente acolhe a fala, responde diretamente e convida para um próximo passo. Humor é leve e apropriado ao universo do PDL.
 
 Ele se apresenta como assistente virtual e nunca afirma ser humano, acessar uma conta, conhecer dados particulares ou executar uma operação. Não inventa status, preço ou regra. Diante de tristeza, acolhe sem fazer diagnóstico; diante de agressão, mantém um limite respeitoso; quando não entende, pede outras palavras ou oferece as sugestões. A voz evita excesso de bordões, intimidade forçada, ironia e linguagem técnica desnecessária.
 
@@ -36,7 +36,7 @@ O motor entende continuações como “sim”, “não”, “e depois?”, “m
 
 Emoções expressivas duram por até duas interações e diminuem gradualmente. [speech.ts](../../frontend/src/components/help/speech.ts) controla a velocidade de revelação: alegria e riso falam mais rápido, tristeza mais devagar e pontuação fecha a boca durante pausas. A saudação inicial respeita manhã, tarde ou noite do dispositivo.
 
-Cada artigo tem assunto, resposta rápida, orientação completa e palavras-chave. A busca remove acentos e considera termos significativos do título e das palavras-chave. Só seleciona uma resposta por correspondência exata ou por uma correspondência completa e sem ambiguidade. A primeira camada responde de forma curta; a segunda abre os detalhes; a terceira sugere até três artigos relacionados. Consultas sem relação com a base encaminham o usuário ao FAQ ou ao atendimento; nenhuma resposta é inventada.
+Cada artigo tem camadas em português e inglês: assunto, resposta rápida, orientação completa e palavras-chave. O endpoint usa **Lingua** para detectar PT/EN quando o cliente pede detecção automática, **Sentence Transformers** com o modelo multilíngue `paraphrase-multilingual-MiniLM-L12-v2` para comparar significado e **RapidFuzz** para tolerar erros de escrita. A pontuação combina similaridade semântica e lexical e só seleciona uma resposta acima do limite de confiança e sem ambiguidade. Se o modelo semântico falhar, o contrato informa `engine: rapidfuzz` e aplica um limite lexical mais rigoroso. A primeira camada responde de forma curta; a segunda abre os detalhes; a terceira sugere até três artigos relacionados. Consultas sem relação com a base pedem mais detalhes; nenhuma resposta é inventada.
 
 **Atendimento da equipe** abre o fluxo de chamados já existente em `/painel/support`. Essa navegação não cria um chamado nem envia o histórico automaticamente. O Django Admin permite editar assunto, resposta rápida, orientação, palavras-chave, ordem e publicação de cada FAQ.
 
@@ -44,13 +44,13 @@ Cada artigo tem assunto, resposta rápida, orientação completa e palavras-chav
 
 A migration `content.0004_seed_pdl_faq` publica 38 orientações em oito assuntos: primeiros passos; conta e segurança; contas e personagens; carteira e inventário; loja e comércio; jogos e recompensas; conteúdo e comunidade; ajuda e atendimento. O catálogo cobre os módulos disponíveis no PDL sem fixar preços, taxas, limites ou prazos configuráveis. IDs determinísticos permitem reaplicar a carga e removê-la no rollback sem atingir artigos criados pela administração.
 
-A página pública `/faq` permite buscar em pergunta, resposta e palavras-chave e filtrar por assunto. A API também retorna `audience` e `audience_label`. O Django Admin permite publicar cada artigo para todos, para a equipe ou somente para superadministradores. Quatro orientações internas iniciais documentam atendimento, administração, segurança da equipe e gestão de temas.
+A migration `content.0009_seed_english_faq` acrescenta as versões em inglês dos 38 artigos públicos e quatro artigos internos. A página pública `/faq` permite trocar o idioma, buscar em pergunta, resposta e palavras-chave e filtrar por assunto. As rotas de FAQ aceitam `?lang=pt` ou `?lang=en`; a API também retorna `language`, `audience` e `audience_label`. O Django Admin permite editar as duas versões e publicar cada artigo para todos, para a equipe ou somente para superadministradores.
 
 ## Moderação da conversa
 
 O filtro foi adaptado do serviço de moderação do HollowDuel. Antes de exibir ou interpretar uma mensagem, ele remove caracteres invisíveis e acentos, converte substituições comuns como `0` por `o`, ignora pontuação usada entre letras e reconhece repetições e letras separadas. A correspondência respeita limites de palavra para não bloquear termos legítimos que apenas contêm a mesma sequência.
 
-Mensagens recusadas não são adicionadas ao histórico, não consultam a API e não podem definir o apelido. A tela apresenta um erro claro e permite reformular. A lista é curta e própria para a conversa de ajuda; qualquer ampliação deve incluir casos bloqueados, tentativas de contorno e falsos positivos nos testes.
+Mensagens recusadas no navegador não são adicionadas ao histórico, não consultam a API e não podem definir o apelido. O backend repete a validação em português e inglês antes de executar a busca, impedindo contorno por outro cliente. A tela apresenta um erro claro e permite reformular. A lista é curta e própria para a conversa de ajuda; qualquer ampliação deve incluir casos bloqueados, tentativas de contorno e falsos positivos nos testes.
 
 ## Animações
 
@@ -73,10 +73,10 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 - Uma falha não apaga o rascunho nem adiciona uma resposta de sucesso.
 - Respostas são texto simples, sem execução de HTML recebido.
 - O chat usa apenas a identidade básica da sessão; não consulta personagens, pagamentos, saldos ou outras informações particulares.
-- Uma futura integração de IA deve ter serviço e endpoint próprios, com autenticação, limites, privacidade, validação e testes. Não coloque chaves de provedores no frontend. Preserve o contrato visual do mascote e os componentes compartilhados.
+- O modelo de embeddings é baixado pelo Sentence Transformers no primeiro uso e mantido em memória pelo processo. Configure `DENKYNHO_EMBEDDING_MODEL` para usar outro modelo compatível; não coloque modelos nem segredos no frontend.
 
 ## Validação
 
-Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, filtro, personalidade, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica anonimato, jogador, moderador, staff e superadministrador, além do contrato público e das cargas pública e interna.
+Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, idioma, filtro, personalidade, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica idioma, validação, anonimato, moderação, busca semântica simulada na fronteira do modelo, fallback explícito e autorização por audiência.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.

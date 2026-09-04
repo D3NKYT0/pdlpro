@@ -6,6 +6,7 @@ const leet: Record<string, string> = { '0': 'o', '1': 'i', '3': 'e', '4': 'a', '
 const blockedTerms = [
   'rola', 'caralho', 'cacete', 'porra', 'merda', 'buceta', 'xoxota', 'piroca', 'pau',
   'puta', 'puto', 'viado', 'veado', 'bicha', 'foder', 'foda', 'cu', 'nazista',
+  'dick', 'cock', 'pussy', 'motherfucker', 'nigger', 'cunt',
 ]
 
 export interface ModerationResult {

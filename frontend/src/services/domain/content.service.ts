@@ -31,13 +31,28 @@ export interface ApiFaq {
   keywords: string[]
   audience: 'public' | 'staff' | 'superadmin'
   audience_label: string
+  language?: 'pt' | 'en'
+}
+
+export interface ApiAssistantReply {
+  language: 'pt' | 'en'
+  kind: 'knowledge' | 'unknown' | 'blocked'
+  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation'
+  confidence?: number
+  article_id?: string
+  related_ids?: string[]
+  answer: { text: string; details?: string | null; source?: string; pose: string }
 }
 
 export const contentApi = {
   news: () => request<ApiNews[]>('/public/news/'),
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
-  faq: () => request<ApiFaq[]>('/public/faq/'),
-  authenticatedFaq: () => request<ApiFaq[]>('/shared/content/faq/'),
+  faq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/public/faq/${language === 'en' ? '?lang=en' : ''}`),
+  authenticatedFaq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/shared/content/faq/${language === 'en' ? '?lang=en' : ''}`),
+  assistantReply: (message: string, language: 'pt' | 'en') => request<ApiAssistantReply>(
+    '/shared/content/assistant/reply/',
+    { method: 'POST', body: JSON.stringify({ message, language }) },
+  ),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),
   wikiPage: (slug: string) => request<ApiWikiPage>(`/public/wiki/${slug}/`),

@@ -1,9 +1,17 @@
 export interface PersonalityReply { text: string; pose: string }
+export type HelpLanguage = 'pt' | 'en'
 
 interface WelcomeIdentity { suggestedName?: string; roleLabel: string }
 
-export function denkynhoWelcome(date = new Date(), identity?: WelcomeIdentity): string {
+export function denkynhoWelcome(date = new Date(), identity?: WelcomeIdentity, language: HelpLanguage = 'pt'): string {
   const hour = date.getHours()
+  if (language === 'en') {
+    const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
+    const recognized = identity?.suggestedName ? `, ${identity.suggestedName}` : ''
+    const role = identity?.roleLabel === 'superadministrador' ? 'superadministrator' : identity?.roleLabel === 'equipe' ? 'staff member' : 'player'
+    const preference = identity?.suggestedName ? `May I call you ${identity.suggestedName}, or do you prefer another name?` : 'What would you like me to call you?'
+    return `${greeting}${recognized}! I recognized your ${role} session. I'm Denkynho, your PDL companion. ${preference}`
+  }
   const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite'
   if (identity) {
     const recognized = identity.suggestedName ? `, ${identity.suggestedName}` : ''
@@ -103,10 +111,20 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   },
 ]
 
+const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
+  { matches: /^(hi|hello|hey|good morning|good afternoon|good evening)( denkynho)?$/, reply: [{ text: "Hi! I'm Denkynho. How can I help you on your PDL journey?", pose: '01-boas-vindas' }] },
+  { matches: /^(how are you|are you ok|are you well)$/, reply: [{ text: "I'm doing great and ready to help! How is your journey going?", pose: '02-sucesso' }] },
+  { matches: /^(thanks|thank you|thank you very much)$/, reply: [{ text: "You're welcome! You can count on me whenever another question comes up.", pose: '02-sucesso' }] },
+  { matches: /^(bye|goodbye|see you|see you later)$/, reply: [{ text: 'See you next time! Have a great journey.', pose: '01-boas-vindas' }] },
+  { matches: /^(who are you|what is your name)$/, reply: [{ text: "I'm Denkynho, the PDL 2.0 virtual assistant. I help you find clear and safe guidance.", pose: '04-dica' }] },
+  { matches: /^(i am sad|i feel sad)$/, reply: [{ text: "I'm sorry this moment feels difficult. If it is about PDL, tell me what happened and I will look for guidance.", pose: '07-triste' }] },
+  { matches: /^(i am tired|i feel tired|sleepy)$/, reply: [{ text: "Taking a break is part of the journey too. I'll be here when you return.", pose: '05-dormindo' }] },
+]
+
 /** Responde somente a interações sociais curtas e bem reconhecidas. */
-export function matchPersonality(message: string, variant = 0): PersonalityReply | undefined {
+export function matchPersonality(message: string, variant = 0, language: HelpLanguage = 'pt'): PersonalityReply | undefined {
   const normalized = normalizeConversation(message)
   if (!normalized || normalized.length > 90) return undefined
-  const choices = replies.find(item => item.matches.test(normalized))?.reply
+  const choices = (language === 'en' ? englishReplies : replies).find(item => item.matches.test(normalized))?.reply
   return choices?.[Math.abs(variant) % choices.length]
 }

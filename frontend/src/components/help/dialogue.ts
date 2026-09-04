@@ -1,11 +1,12 @@
 import { answerQuestion, type HelpAnswer, type HelpArticle } from './answers'
-import { matchPersonality, normalizeConversation } from './personality'
+import { matchPersonality, normalizeConversation, type HelpLanguage } from './personality'
 import { isSafePreferredName } from './moderation'
 
 export type DetailPreference = 'balanced' | 'short' | 'detailed'
 
 export interface DialogueState {
   turn: number
+  language: HelpLanguage
   detailPreference: DetailPreference
   name?: string
   lastArticleId?: string
@@ -21,18 +22,19 @@ export interface DialogueResult {
   kind: 'social' | 'context' | 'knowledge'
 }
 
-export const initialDialogueState = (): DialogueState => ({
+export const initialDialogueState = (language: HelpLanguage = 'pt'): DialogueState => ({
   turn: 0,
+  language,
   detailPreference: 'balanced',
   pendingChoiceIds: [],
   attempts: 0,
   lastOfferTurn: -3,
 })
 
-const detailRequests = /^(explique melhor|quero mais detalhes|mais detalhes|como assim|e depois|o que faco depois|pode explicar)$/
-const failures = /^(nao funcionou|nao deu certo|deu erro|continua dando erro|nao achei|nao encontrei|ja tentei|tentei isso)$/
-const shortPreference = /^(prefiro respostas curtas|responda curto|seja breve|resposta curta)$/
-const detailedPreference = /^(prefiro respostas detalhadas|quero respostas detalhadas|pode detalhar|explique tudo)$/
+const detailRequests = /^(explique melhor|quero mais detalhes|mais detalhes|como assim|e depois|o que faco depois|pode explicar|explain further|more details|what next|can you explain)$/
+const failures = /^(nao funcionou|nao deu certo|deu erro|continua dando erro|nao achei|nao encontrei|ja tentei|tentei isso|it did not work|it failed|still not working|i already tried)$/
+const shortPreference = /^(prefiro respostas curtas|responda curto|seja breve|resposta curta|keep it short|short answers|be brief)$/
+const detailedPreference = /^(prefiro respostas detalhadas|quero respostas detalhadas|pode detalhar|explique tudo|detailed answers|give me details|explain everything)$/
 
 const followUps: Record<string, string> = {
   getting_started: 'Quer que eu indique qual página abrir primeiro?',
@@ -66,7 +68,7 @@ function articleAnswer(article: HelpArticle, state: DialogueState): HelpAnswer {
   return {
     text: named(state, text),
     details,
-    followUp: canOffer ? followUps[article.category] : undefined,
+    followUp: canOffer ? (state.language === 'en' ? 'Would you like me to explain the next step?' : followUps[article.category]) : undefined,
     source: article.question,
     pose: emotional.pose,
   }
@@ -75,7 +77,7 @@ function articleAnswer(article: HelpArticle, state: DialogueState): HelpAnswer {
 function selectedChoice(message: string, state: DialogueState, articles: HelpArticle[]): HelpArticle | undefined {
   const choices = state.pendingChoiceIds.map(id => articles.find(article => article.id === id)).filter((article): article is HelpArticle => Boolean(article))
   const query = normalizeConversation(message)
-  const index = /^(1|primeira|primeiro|opcao 1)$/.test(query) ? 0 : /^(2|segunda|segundo|opcao 2)$/.test(query) ? 1 : /^(3|terceira|terceiro|opcao 3)$/.test(query) ? 2 : -1
+  const index = /^(1|primeira|primeiro|opcao 1|first|option 1)$/.test(query) ? 0 : /^(2|segunda|segundo|opcao 2|second|option 2)$/.test(query) ? 1 : /^(3|terceira|terceiro|opcao 3|third|option 3)$/.test(query) ? 2 : -1
   if (index >= 0) return choices[index]
   const matched = answerQuestion(message, choices)
   return matched.source ? choices.find(article => article.question === matched.source) : undefined
@@ -85,13 +87,13 @@ function selectedChoice(message: string, state: DialogueState, articles: HelpArt
 export function isLocalDialogueMessage(message: string, state: DialogueState): boolean {
   const query = normalizeConversation(message)
   return Boolean(
-    matchPersonality(message, state.turn)
+    matchPersonality(message, state.turn, state.language)
     || shortPreference.test(query)
     || detailedPreference.test(query)
-    || /^(me chamo|pode me chamar de) /.test(query)
+    || /^(me chamo|pode me chamar de|my name is|call me) /.test(query)
     || (state.lastArticleId && (detailRequests.test(query) || failures.test(query)))
-    || (state.lastArticleId && state.lastOfferTurn === state.turn && /^(sim|quero|pode ser|por favor|nao|agora nao|nao obrigado|nao obrigada)$/.test(query))
-    || (state.pendingChoiceIds.length && /^(1|2|3|primeira|primeiro|segunda|segundo|terceira|terceiro|opcao [123])$/.test(query)),
+    || (state.lastArticleId && state.lastOfferTurn === state.turn && /^(sim|quero|pode ser|por favor|nao|agora nao|nao obrigado|nao obrigada|yes|please|no|not now|no thanks)$/.test(query))
+    || (state.pendingChoiceIds.length && /^(1|2|3|primeira|primeiro|segunda|segundo|terceira|terceiro|opcao [123]|first|second|third|option [123])$/.test(query)),
   )
 }
 
@@ -99,47 +101,47 @@ export function isLocalDialogueMessage(message: string, state: DialogueState): b
 export function respondToMessage(message: string, articles: HelpArticle[], current: DialogueState): DialogueResult {
   const state: DialogueState = { ...current, turn: current.turn + 1, pendingChoiceIds: [...current.pendingChoiceIds] }
   const query = normalizeConversation(message)
-  const nameMatch = message.trim().match(/^(?:me chamo|pode me chamar de)\s+([\p{L}][\p{L}' -]{0,29})[.!?]?$/iu)
+  const nameMatch = message.trim().match(/^(?:me chamo|pode me chamar de|my name is|call me)\s+([\p{L}][\p{L}' -]{0,29})[.!?]?$/iu)
   if (nameMatch) {
     const name = nameMatch[1].trim().replace(/\s+/g, ' ')
     if (!isSafePreferredName(name)) {
       return {
-        answer: { text: 'Esse apelido não pode ser usado aqui. Escolha um nome respeitoso e eu vou lembrar dele nesta conversa.', pose: '10-frustrado' },
+        answer: { text: current.language === 'en' ? 'That nickname cannot be used here. Choose a respectful name and I will remember it during this conversation.' : 'Esse apelido não pode ser usado aqui. Escolha um nome respeitoso e eu vou lembrar dele nesta conversa.', pose: '10-frustrado' },
         state,
         kind: 'context',
       }
     }
-    return { answer: { text: `Prazer, ${name}! Vou lembrar seu nome durante esta conversa. Como posso ajudar?`, pose: '01-boas-vindas' }, state: { ...state, name }, kind: 'context' }
+    const text = current.language === 'en' ? `Nice to meet you, ${name}! I will remember your name during this conversation. How can I help?` : `Prazer, ${name}! Vou lembrar seu nome durante esta conversa. Como posso ajudar?`
+    return { answer: { text, pose: '01-boas-vindas' }, state: { ...state, name }, kind: 'context' }
   }
   if (shortPreference.test(query) || detailedPreference.test(query)) {
     const detailPreference: DetailPreference = shortPreference.test(query) ? 'short' : 'detailed'
     return {
-      answer: { text: detailPreference === 'short' ? 'Combinado! Vou responder de forma mais direta nesta conversa.' : 'Combinado! Vou trazer a orientação completa nas próximas respostas.', pose: '02-sucesso' },
+      answer: { text: current.language === 'en' ? (detailPreference === 'short' ? 'Got it! I will keep my answers brief in this conversation.' : 'Got it! I will include complete guidance in my next answers.') : (detailPreference === 'short' ? 'Combinado! Vou responder de forma mais direta nesta conversa.' : 'Combinado! Vou trazer a orientação completa nas próximas respostas.'), pose: '02-sucesso' },
       state: { ...state, detailPreference, mood: { pose: '02-sucesso', remaining: 2 } }, kind: 'context',
     }
   }
   const lastArticle = articles.find(article => article.id === current.lastArticleId)
   if (lastArticle && detailRequests.test(query)) {
-    return { answer: { text: named(state, lastArticle.answer), source: lastArticle.question, followUp: 'Isso esclareceu ou você encontrou algum erro?', pose: '04-dica' }, state: { ...state, detailPreference: 'detailed', lastOfferTurn: state.turn }, kind: 'context' }
+    return { answer: { text: named(state, lastArticle.answer), source: lastArticle.question, followUp: current.language === 'en' ? 'Did that make sense, or did you encounter an error?' : 'Isso esclareceu ou você encontrou algum erro?', pose: '04-dica' }, state: { ...state, detailPreference: 'detailed', lastOfferTurn: state.turn }, kind: 'context' }
   }
-  if (lastArticle && /^(sim|quero|pode ser|por favor)$/.test(query) && current.lastOfferTurn === current.turn) {
-    return { answer: { text: named(state, lastArticle.answer), source: lastArticle.question, followUp: 'Se não funcionar, diga “não funcionou” e tentamos outro caminho.', pose: '04-dica' }, state: { ...state, detailPreference: 'detailed', lastOfferTurn: state.turn }, kind: 'context' }
+  if (lastArticle && /^(sim|quero|pode ser|por favor|yes|please)$/.test(query) && current.lastOfferTurn === current.turn) {
+    return { answer: { text: named(state, lastArticle.answer), source: lastArticle.question, followUp: current.language === 'en' ? 'If it does not work, say “it did not work” and we will try another path.' : 'Se não funcionar, diga “não funcionou” e tentamos outro caminho.', pose: '04-dica' }, state: { ...state, detailPreference: 'detailed', lastOfferTurn: state.turn }, kind: 'context' }
   }
-  if (/^(nao|agora nao|nao obrigado|nao obrigada)$/.test(query) && current.lastOfferTurn === current.turn) {
-    return { answer: { text: 'Tudo bem! Seguimos no seu ritmo. Quando quiser continuar, é só me chamar.', pose: '01-boas-vindas' }, state, kind: 'context' }
+  if (/^(nao|agora nao|nao obrigado|nao obrigada|no|not now|no thanks)$/.test(query) && current.lastOfferTurn === current.turn) {
+    return { answer: { text: current.language === 'en' ? 'All right! We can go at your pace. Call me whenever you want to continue.' : 'Tudo bem! Seguimos no seu ritmo. Quando quiser continuar, é só me chamar.', pose: '01-boas-vindas' }, state, kind: 'context' }
   }
   if (lastArticle && failures.test(query)) {
     const attempts = current.attempts + 1
-    const text = attempts >= 2
-      ? 'Entendi. Como a orientação já foi tentada, o melhor próximo passo é abrir um chamado para a equipe analisar o caso da sua conta.'
-      : 'Entendi. Confira novamente os requisitos mostrados na tela e tente atualizar a página. Se o erro continuar, não repita operações de pagamento, saldo ou itens.'
-    return { answer: { text: named(state, text), source: lastArticle.question, followUp: attempts >= 2 ? 'Abra Atendimento e descreva o erro sem enviar senhas ou códigos.' : 'Quer tentar mais uma vez ou prefere falar com a equipe?', pose: '10-frustrado' }, state: { ...state, attempts, lastOfferTurn: state.turn, mood: { pose: '10-frustrado', remaining: 1 } }, kind: 'context' }
+    const text = current.language === 'en' ? (attempts >= 2 ? 'Since you already tried the guidance, the next step is to open a support ticket so the team can review your account.' : 'Check the requirements shown on screen and refresh the page. If the error continues, do not repeat payments, balance transfers, or item operations.') : (attempts >= 2 ? 'Entendi. Como a orientação já foi tentada, o melhor próximo passo é abrir um chamado para a equipe analisar o caso da sua conta.' : 'Entendi. Confira novamente os requisitos mostrados na tela e tente atualizar a página. Se o erro continuar, não repita operações de pagamento, saldo ou itens.')
+    const followUp = current.language === 'en' ? (attempts >= 2 ? 'Open Support and describe the error without sending passwords or codes.' : 'Would you like to try once more or talk to the team?') : (attempts >= 2 ? 'Abra Atendimento e descreva o erro sem enviar senhas ou códigos.' : 'Quer tentar mais uma vez ou prefere falar com a equipe?')
+    return { answer: { text: named(state, text), source: lastArticle.question, followUp, pose: '10-frustrado' }, state: { ...state, attempts, lastOfferTurn: state.turn, mood: { pose: '10-frustrado', remaining: 1 } }, kind: 'context' }
   }
   if (current.pendingChoiceIds.length) {
     const choice = selectedChoice(message, current, articles)
     if (choice) return { answer: articleAnswer(choice, state), state: { ...state, lastArticleId: choice.id, pendingChoiceIds: [], attempts: 0, lastOfferTurn: state.turn }, kind: 'context' }
   }
-  const social = matchPersonality(message, current.turn)
+  const social = matchPersonality(message, current.turn, current.language)
   if (social) {
     const emotional = emotion(current, social.pose)
     return { answer: { ...social, text: named(state, social.text), pose: emotional.pose }, state: { ...state, mood: emotional.mood }, kind: 'social' }

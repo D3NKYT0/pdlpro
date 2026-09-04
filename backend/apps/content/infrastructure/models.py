@@ -60,11 +60,19 @@ class Faq(BaseModel):
         help_text="Resposta rápida exibida primeiro pelo assistente; a resposta completa traz os detalhes.",
     )
     answer = models.TextField()
+    question_en = models.CharField(max_length=250, blank=True)
+    short_answer_en = models.CharField(max_length=400, blank=True)
+    answer_en = models.TextField(blank=True)
     category = models.CharField(max_length=40, choices=Category.choices, default=Category.GETTING_STARTED)
     keywords = models.CharField(
         max_length=500,
         blank=True,
         help_text="Termos alternativos separados por vírgulas usados para localizar esta orientação.",
+    )
+    keywords_en = models.CharField(
+        max_length=500,
+        blank=True,
+        help_text="English alternative terms separated by commas.",
     )
     audience = models.CharField(
         max_length=16,

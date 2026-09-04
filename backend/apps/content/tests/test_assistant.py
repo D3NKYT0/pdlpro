@@ -1,0 +1,210 @@
+import pytest
+from rest_framework.test import APIClient
+
+from apps.accounts.infrastructure.models import User
+from apps.content.application.assistant import detect_language
+from apps.content.infrastructure.models import Faq
+from apps.content.infrastructure.semantic import SentenceTransformerMatcher
+
+
+@pytest.fixture
+def api():
+    return APIClient()
+
+
+@pytest.fixture
+def player():
+    return User.objects.create_user("denky-player", "denky@example.com", password="Strong-pass-123")
+
+
+def semantic_match(question_fragment: str):
+    def scores(_matcher, _query, documents):
+        return [0.92 if question_fragment in document else 0.08 for document in documents]
+
+    return scores
+
+
+def test_lingua_detects_supported_languages_and_respects_selection():
+    assert detect_language("Como posso recuperar minha senha?") == "pt"
+    assert detect_language("How can I recover my password?") == "en"
+    assert detect_language("Hello", preferred="pt") == "pt"
+
+
+@pytest.mark.django_db
+def test_assistant_requires_authentication(api):
+    response = api.post("/api/v1/shared/content/assistant/reply/", {"message": "senha"})
+    assert response.status_code in {401, 403}
+
+
+@pytest.mark.django_db
+def test_assistant_validates_message_and_language(api, player):
+    api.force_authenticate(player)
+    empty = api.post("/api/v1/shared/content/assistant/reply/", {"message": ""})
+    invalid_language = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "hello", "language": "fr"},
+    )
+    assert empty.status_code == 400
+    assert invalid_language.status_code == 400
+
+
+@pytest.mark.django_db
+def test_assistant_uses_multilingual_semantics_and_localized_answer(api, player, mocker):
+    Faq.objects.create(
+        question="Como recuperar minha senha?",
+        short_answer="Use a recuperação.",
+        answer="Abra a recuperação na entrada.",
+        keywords="senha,reset",
+        question_en="How do I recover my password?",
+        short_answer_en="Use password recovery.",
+        answer_en="Open password recovery on the sign-in page.",
+        keywords_en="password,reset",
+    )
+    mocked = mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("recover my password"),
+    )
+    api.force_authenticate(player)
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "I forgot my credentials and cannot get in", "language": "en"},
+    )
+
+    assert response.status_code == 200
+    assert response.data["kind"] == "knowledge"
+    assert response.data["language"] == "en"
+    assert response.data["engine"] == "sentence-transformers+rapidfuzz"
+    assert response.data["answer"]["text"] == "Use password recovery."
+    mocked.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_assistant_moderates_obfuscated_terms_in_both_languages(api, player):
+    api.force_authenticate(player)
+    portuguese = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "me chame de r.0.l.4", "language": "pt"},
+    )
+    english = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "call me d.1.c.k", "language": "en"},
+    )
+    assert portuguese.data["kind"] == "blocked"
+    assert english.data["kind"] == "blocked"
+    assert "d.1.c.k" not in english.data["answer"]["text"]
+
+
+@pytest.mark.django_db
+def test_assistant_filters_internal_knowledge_before_matching(api, player, mocker):
+    internal = Faq.objects.create(
+        question="Segredo operacional único?",
+        answer="Informação interna.",
+        question_en="Unique operational secret?",
+        answer_en="Internal information.",
+        keywords_en="ultraviolet-secret",
+        audience=Faq.Audience.SUPERADMIN,
+    )
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("Unique operational secret"),
+    )
+    api.force_authenticate(player)
+    hidden = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "ultraviolet-secret", "language": "en"},
+    )
+
+    superadmin = User.objects.create_superuser("denky-root", "root@example.com")
+    api.force_authenticate(superadmin)
+    visible = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "ultraviolet-secret", "language": "en"},
+    )
+
+    assert hidden.data.get("article_id") != str(internal.id)
+    assert visible.data["article_id"] == str(internal.id)
+    assert visible.data["answer"]["text"] == "Internal information."
+
+
+@pytest.mark.django_db
+def test_assistant_exposes_rapidfuzz_fallback_when_model_fails(api, player, mocker):
+    article = Faq.objects.create(
+        question="Como recuperar senha?",
+        short_answer="Use a recuperação.",
+        answer="Use a recuperação.",
+        keywords="senha",
+    )
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        side_effect=RuntimeError("model unavailable"),
+    )
+    api.force_authenticate(player)
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "Como recuperar senha?", "language": "pt"},
+    )
+
+    assert response.status_code == 200
+    assert response.data["engine"] == "rapidfuzz"
+    assert response.data["article_id"] == str(article.id)
+
+
+def test_semantic_adapter_encodes_locally_and_reuses_model(mocker):
+    import sys
+    from types import SimpleNamespace
+
+    import numpy as np
+    model = mocker.Mock()
+    model.encode.return_value = np.array([[1., 0.], [0.8, 0.6], [0., 1.]])
+    constructor = mocker.Mock(return_value=model)
+    mocker.patch.dict(sys.modules, {'sentence_transformers': SimpleNamespace(SentenceTransformer=constructor)})
+    matcher = SentenceTransformerMatcher()
+    assert matcher.similarities('password', ['reset', 'auction']) == [0.8, 0.0]
+    assert matcher.similarities('password', ['reset', 'auction']) == [0.8, 0.0]
+    assert matcher.similarities('empty', []) == []
+    constructor.assert_called_once()
+    model.encode.assert_called_with(['password', 'reset', 'auction'], normalize_embeddings=True, convert_to_numpy=True)
+
+
+@pytest.mark.django_db
+def test_semantic_privacy_migration_updates_only_seeded_article():
+    from importlib import import_module
+    from django.apps import apps
+
+    migration = import_module('apps.content.migrations.0010_update_semantic_privacy')
+    custom = Faq.objects.create(question='Meu FAQ', answer='Texto próprio')
+    migration.update_privacy(apps, None)
+    assert 'enviadas ao servidor' in Faq.objects.get(id=migration.ARTICLE_ID).answer
+    custom.refresh_from_db()
+    assert custom.answer == 'Texto próprio'
+    migration.restore_privacy(apps, None)
+    assert 'permanecem no navegador' in Faq.objects.get(id=migration.ARTICLE_ID).answer
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('scores', [[], [float('nan')]])
+def test_invalid_model_response_uses_explicit_fallback(api, player, mocker, scores):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', return_value=scores)
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'unknown topic', 'language': 'en'})
+    assert response.status_code == 200
+    assert response.data['engine'] == 'rapidfuzz'
+
+
+@pytest.mark.django_db
+def test_staff_authorization_and_message_length(api, mocker):
+    staff = User.objects.create_user('denky-staff', 'staff-denky@example.com', role=User.Role.STAFF)
+    article = Faq.objects.create(question='Staff queue guide', answer='Staff guidance', audience=Faq.Audience.STAFF)
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True, side_effect=semantic_match('Staff queue guide'))
+    api.force_authenticate(staff)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'Staff queue guide', 'language': 'en'})
+    assert response.data['article_id'] == str(article.id)
+    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1001}).status_code == 400
+    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1000}).status_code == 200

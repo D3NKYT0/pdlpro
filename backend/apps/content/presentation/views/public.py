@@ -73,7 +73,8 @@ class FaqListView(InjectedAPIView):
 
     @extend_schema(tags=["Conteúdo"])
     def get(self, request):
-        return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput()))
+        language = "en" if request.query_params.get("lang") == "en" else "pt"
+        return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(language=language)))
 
 
 class DownloadListView(InjectedAPIView):

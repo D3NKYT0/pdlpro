@@ -11,12 +11,19 @@ vi.mock('../contexts/AuthContext', () => ({
   useAuth: () => ({ user: { id: 'user-1', username: 'daniel', display_name: 'Daniel', role: 'player', email: 'd@example.com', bio: '', is_email_verified: true, fichas: 0, avatar_url: null } }),
 }))
 const articles = [{ id: '1', question: 'Como recuperar minha senha?', short_answer: 'Use a recuperação.', answer: 'Use a recuperação na tela de login.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['senha', 'reset'] }]
+const assistantReply = { language: 'pt', kind: 'knowledge', engine: 'sentence-transformers+rapidfuzz', confidence: 0.91, article_id: '1', answer: { text: articles[0].short_answer, details: articles[0].answer, source: articles[0].question, pose: '04-dica' } }
 const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
+const apiResponse = (input: RequestInfo | URL) => {
+  const url = String(input)
+  if (url.includes('/auth/csrf/')) return response({ csrfToken: 'test-csrf' })
+  if (url.includes('/assistant/reply/')) return response(assistantReply)
+  return response(articles)
+}
 let client: QueryClient
 let fetcher: ReturnType<typeof vi.fn>
 beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: Infinity } } })
-  fetcher = vi.fn().mockImplementation(() => Promise.resolve(response(articles)))
+  fetcher = vi.fn().mockImplementation((input: RequestInfo | URL) => Promise.resolve(apiResponse(input)))
   vi.stubGlobal('fetch', fetcher)
   vi.stubGlobal('Image', class { onload: null | (() => void) = null; onerror = null; set src(_: string) { Promise.resolve().then(() => this.onload?.()) } })
 })
@@ -63,6 +70,17 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso')
   expect(fetcher).toHaveBeenCalledTimes(1)
 })
+it('troca a interface e a personalidade para inglês e recarrega o FAQ localizado', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  expect(await screen.findByRole('heading', { name: 'Help' })).toBeVisible()
+  expect(screen.getByRole('textbox', { name: 'Your message' })).toHaveAttribute('placeholder', 'Type your question…')
+  expect(fetcher.mock.calls.some(call => String(call[0]).includes('/shared/content/faq/?lang=en'))).toBe(true)
+  await user.type(screen.getByRole('textbox', { name: 'Your message' }), 'Hello')
+  await user.click(screen.getByRole('button', { name: 'Send message' }))
+  await user.click(await screen.findByRole('button', { name: 'Show full response' }))
+  expect(screen.getByText("Hi! I'm Denkynho. How can I help you on your PDL journey?")).toBeVisible()
+})
 it('continua uma orientação usando contexto sem consultar novamente o FAQ', async () => {
   const user = mount(); await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.click(await screen.findByRole('button', { name: articles[0].question }))
@@ -71,7 +89,7 @@ it('continua uma orientação usando contexto sem consultar novamente o FAQ', as
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
   expect(await screen.findByText(articles[0].answer)).toBeVisible()
   expect(screen.getByText(/Isso esclareceu/)).toBeVisible()
-  expect(fetcher).toHaveBeenCalledTimes(2)
+  expect(fetcher).toHaveBeenCalledTimes(3)
 })
 it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
@@ -88,20 +106,21 @@ it('envia sugestão, revela a fala, abre a orientação completa e reinicia a co
 it('bloqueia envio duplicado durante a consulta e mantém o rascunho na falha', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   let resolve!: (r: Response) => void
-  fetcher.mockImplementationOnce(() => new Promise<Response>(r => { resolve = r }))
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? new Promise<Response>(r => { resolve = r }) : Promise.resolve(apiResponse(input)))
   const input = screen.getByRole('textbox', { name: 'Sua mensagem' }); await user.type(input, 'Minha senha')
   await user.dblClick(screen.getByRole('button', { name: 'Enviar mensagem' }))
-  expect(fetcher).toHaveBeenCalledTimes(2)
+  expect(fetcher).toHaveBeenCalledTimes(3)
   expect(input).toBeDisabled(); expect(screen.getByText('Consultando a base de ajuda…')).toBeVisible()
   resolve(response({ message: 'Consulta indisponível' }, 400))
   expect(await screen.findByRole('alert')).toHaveTextContent('Consulta indisponível')
   expect(input).toHaveValue('Minha senha'); expect(input).toBeEnabled()
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(apiResponse(input)))
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   expect(screen.queryByRole('alert')).not.toBeInTheDocument()
 })
 it('trata base vazia e mensagem sem correspondência sem inventar resposta', async () => {
-  fetcher.mockImplementation(() => Promise.resolve(response([])))
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ language: 'pt', kind: 'unknown', engine: 'rapidfuzz', confidence: 0, related_ids: [], answer: { text: 'Não encontrei uma resposta segura para essa pergunta na nossa base.', pose: '09-confuso' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : response([])))
   const user = mount(); expect(await screen.findByText(/Ainda não há perguntas publicadas/)).toBeVisible()
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Meu personagem sumiu')
@@ -125,7 +144,7 @@ it('respeita movimento reduzido e exibe a resposta completa sem animação', asy
   expect(screen.queryByRole('button', { name: 'Mostrar resposta completa' })).not.toBeInTheDocument()
 })
 it('descansa após inatividade, acorda ao enviar e termina a fala automaticamente', async () => {
-  fetcher.mockImplementation(() => Promise.resolve(response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/') ? Promise.resolve(response({ ...assistantReply, answer: { text: 'Ok.', pose: '04-dica' } })) : Promise.resolve(String(input).includes('/auth/csrf/') ? response({ csrfToken: 'test-csrf' }) : response([{ ...articles[0], short_answer: 'Ok.', answer: 'Ok.' }])))
   mount(); await screen.findByRole('button', { name: articles[0].question })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
@@ -137,4 +156,23 @@ it('descansa após inatividade, acorda ao enviar e termina a fala automaticament
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '04-dica')
   expect(screen.getByText('Ok.')).toBeVisible()
   await waitFor(() => expect(screen.queryByRole('button', { name: 'Mostrar resposta completa' })).not.toBeInTheDocument())
+})
+
+it('preserva o rascunho quando o assistente devolve um contrato inválido', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ invalid: true }) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'recuperar senha')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível consultar a ajuda.')
+  expect(screen.getByRole('textbox')).toHaveValue('recuperar senha')
+})
+
+it('mantém a preferência de detalhes nas respostas do servidor', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.type(screen.getByRole('textbox'), 'Quero respostas detalhadas{Enter}')
+  await screen.findByText(/Vou trazer a orientação completa/)
+  await user.type(screen.getByRole('textbox'), 'recuperar senha{Enter}')
+  expect(await screen.findByText(articles[0].answer)).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Ver orientação completa' })).not.toBeInTheDocument()
 })

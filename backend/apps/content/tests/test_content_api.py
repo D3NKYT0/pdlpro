@@ -86,7 +86,31 @@ def test_calendar_and_faq(api):
         "keywords": ["apoio", "moedas"],
         "audience": "public",
         "audience_label": "Todos os usuários",
+        "language": "pt",
     }
+
+
+@pytest.mark.django_db
+def test_faq_returns_english_layers_when_requested(api):
+    Faq.objects.create(
+        question="Como recuperar senha?",
+        short_answer="Use a recuperação.",
+        answer="Abra a recuperação.",
+        keywords="senha",
+        question_en="How do I recover my password?",
+        short_answer_en="Use password recovery.",
+        answer_en="Open password recovery on the sign-in page.",
+        keywords_en="password,reset",
+        category=Faq.Category.ACCOUNT_SECURITY,
+    )
+
+    response = api.get("/api/v1/public/faq/?lang=en")
+    article = next(item for item in response.data if item["question"] == "How do I recover my password?")
+
+    assert response.status_code == 200
+    assert article["question"] == "How do I recover my password?"
+    assert article["language"] == "en"
+    assert article["category_label"] == "Account and security"
 
 
 @pytest.mark.django_db

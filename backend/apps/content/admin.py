@@ -28,7 +28,10 @@ class FaqAdmin(PDLModelAdmin):
 
     list_display = ("question", "category", "audience", "order", "is_published")
     list_filter = ("category", "audience", "is_published")
-    search_fields = ("question", "short_answer", "answer", "keywords")
+    search_fields = (
+        "question", "short_answer", "answer", "keywords",
+        "question_en", "short_answer_en", "answer_en", "keywords_en",
+    )
 
 
 @admin.register(DownloadLink)

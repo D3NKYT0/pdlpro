@@ -74,3 +74,10 @@ describe('motor de diálogo do Denkynho', () => {
     expect(isLocalDialogueMessage('Como deposito itens?', state)).toBe(false)
   })
 })
+
+it('aceita escolhas ordinais em inglês e preserva o idioma no contexto', () => {
+  const state = { ...initialDialogueState('en'), pendingChoiceIds: ['portal', 'l2'] }
+  const result = respondToMessage('second', articles, state)
+  expect(result.state.lastArticleId).toBe('l2')
+  expect(result.answer.followUp).toContain('Would you like')
+})
