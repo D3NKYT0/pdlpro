@@ -22,7 +22,17 @@ Ele se apresenta como assistente virtual e nunca afirma ser humano, acessar uma 
 - alegria, tristeza, cansaço e confusão;
 - sono, piada e limite para fala desrespeitosa.
 
-Cada intenção define o texto e a pose correspondente. Conversas simples são respondidas sem uma nova requisição ao FAQ. Perguntas como “Como recupero minha senha?” continuam na camada de conhecimento.
+Cada intenção define duas ou mais formulações quando a variação ajuda a evitar repetição, sem mudar o tom ou a informação. Conversas simples são respondidas sem uma nova requisição ao FAQ. Perguntas como “Como recupero minha senha?” continuam na camada de conhecimento.
+
+## Continuidade da conversa
+
+[dialogue.ts](../../frontend/src/components/help/dialogue.ts) mantém um estado imutável enquanto a tela está aberta. Ele registra o artigo e assunto atuais, opções de esclarecimento, número de tentativas, preferência de detalhe, nome informado e emoção recente. **Nova conversa** recria esse estado; nenhuma dessas informações é persistida ou enviada ao backend.
+
+O motor entende continuações como “sim”, “não”, “e depois?”, “mais detalhes”, “não achei”, “deu erro” e “já tentei”. Quando mais de um artigo corresponde, pergunta qual caminho representa a dúvida e aceita a escolha pelo texto ou por “primeira”, “segunda” e “terceira”. Depois de uma tentativa que falhou, oferece uma revisão segura; na repetição, encaminha ao atendimento sem sugerir que pagamentos, saldos ou itens sejam repetidos.
+
+“Prefiro respostas curtas” oculta a segunda camada nas respostas seguintes. “Quero respostas detalhadas” apresenta diretamente o artigo completo. “Pode me chamar de …” guarda um nome de até 30 caracteres apenas nesta conversa e o usa com moderação. Perguntas de continuidade aparecem com intervalo mínimo para não terminar toda resposta com uma nova pergunta.
+
+Emoções expressivas duram por até duas interações e diminuem gradualmente. [speech.ts](../../frontend/src/components/help/speech.ts) controla a velocidade de revelação: alegria e riso falam mais rápido, tristeza mais devagar e pontuação fecha a boca durante pausas. A saudação inicial respeita manhã, tarde ou noite do dispositivo.
 
 Cada artigo tem assunto, resposta rápida, orientação completa e palavras-chave. A busca remove acentos e considera termos significativos do título e das palavras-chave. Só seleciona uma resposta por correspondência exata ou por uma correspondência completa e sem ambiguidade. A primeira camada responde de forma curta; a segunda abre os detalhes; a terceira sugere até três artigos relacionados. Consultas sem relação com a base encaminham o usuário ao FAQ ou ao atendimento; nenhuma resposta é inventada.
 
@@ -42,7 +52,7 @@ O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe 
 | --- | --- |
 | Boas-vindas e conversa social | Pose definida pela intenção, fala, respiração e piscadas |
 | Consultando | Pose pensando |
-| Resposta publicada | Pose de dica e boca acompanhando o texto |
+| Resposta publicada | Pose de dica ou continuidade da emoção recente; boca acompanha ritmo e pontuação |
 | Sem correspondência | Pose confusa |
 | Falha de consulta | Pose triste e rascunho preservado |
 | 45 segundos sem interação | Dorme; digitar ou enviar desperta o personagem |
@@ -59,6 +69,6 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 
 ## Validação
 
-Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem personalidade sem nova consulta HTTP, carregamento, assuntos, sugestões, resposta rápida, orientação completa, fonte, nova conversa, consulta repetida, erro preservando rascunho, nova tentativa, dados inválidos, base vazia, movimento reduzido, inatividade e conclusão da fala. `personality.test.ts` fixa o padrão de voz, as poses, as intenções e a separação entre conversa e conhecimento. `FaqPage.test.tsx` cobre busca, filtro e acordeão. Os testes do componente verificam piscada, boca, transição, falha de asset e limpeza; os testes de respostas verificam palavras-chave, camadas, relacionados, ambiguidade e validação. O backend verifica o contrato público e os 38 artigos da migration.
+Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem personalidade e continuidade sem nova consulta HTTP, carregamento, assuntos, sugestões, resposta rápida, orientação completa, fonte, nova conversa, consulta repetida, erro preservando rascunho, nova tentativa, dados inválidos, base vazia, movimento reduzido, inatividade e conclusão da fala. `personality.test.ts` fixa o padrão de voz, variações, período do dia, poses, intenções e a separação entre conversa e conhecimento. `dialogue.test.ts` cobre nome, preferências, referências, esclarecimento, tentativas e continuidade emocional; `speech.test.ts` cobre ritmo e pausas. `FaqPage.test.tsx` cobre busca, filtro e acordeão. O backend verifica o contrato público e os 38 artigos da migration.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.

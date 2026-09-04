@@ -111,6 +111,10 @@
   border-top:1px solid var(--panel-border);
   padding-top:12px;
 }
+.help-follow-up {
+  color:var(--panel-gold-bright);
+  font-weight:600;
+}
 .help-compose {
   display:grid;
   gap:12px;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DENKYNHO_WELCOME, matchPersonality } from './personality'
+import { denkynhoWelcome, DENKYNHO_WELCOME, matchPersonality } from './personality'
 
 describe('personalidade do Denkynho', () => {
   it.each([
@@ -30,5 +30,16 @@ describe('personalidade do Denkynho', () => {
     expect(DENKYNHO_WELCOME).toContain('companheiro')
     expect(DENKYNHO_WELCOME).toContain('PDL')
     expect(DENKYNHO_WELCOME).toContain('juntos')
+  })
+
+  it('cumprimenta de acordo com o período local', () => {
+    expect(denkynhoWelcome(new Date(2026, 0, 1, 8))).toMatch(/^Bom dia/)
+    expect(denkynhoWelcome(new Date(2026, 0, 1, 14))).toMatch(/^Boa tarde/)
+    expect(denkynhoWelcome(new Date(2026, 0, 1, 21))).toMatch(/^Boa noite/)
+  })
+
+  it('varia a formulação sem mudar a intenção', () => {
+    expect(matchPersonality('Oi', 0)?.text).not.toBe(matchPersonality('Oi', 1)?.text)
+    expect(matchPersonality('Oi', 0)?.pose).toBe(matchPersonality('Oi', 1)?.pose)
   })
 })

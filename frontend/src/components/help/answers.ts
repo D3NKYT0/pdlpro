@@ -1,7 +1,7 @@
 import { matchPersonality, normalizeConversation } from './personality'
 
 export interface HelpArticle { id: string; question: string; short_answer: string; answer: string; category: string; category_label: string; keywords: string[] }
-export interface HelpAnswer { text: string; details?: string; source?: string; related?: HelpArticle[]; pose: string }
+export interface HelpAnswer { text: string; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose: string }
 const normalize = normalizeConversation
 const ignored = new Set(['como', 'onde', 'qual', 'quais', 'para', 'pelo', 'pela', 'meu', 'minha', 'uma', 'com', 'que', 'por', 'posso', 'faco', 'sobre', 'preciso', 'ajuda'])
 

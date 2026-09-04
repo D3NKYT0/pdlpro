@@ -36,6 +36,16 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso')
   expect(fetcher).toHaveBeenCalledTimes(1)
 })
+it('continua uma orientação usando contexto sem consultar novamente o FAQ', async () => {
+  const user = mount(); await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.click(await screen.findByRole('button', { name: articles[0].question }))
+  expect(await screen.findByText(articles[0].short_answer)).toBeVisible()
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Mais detalhes')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(await screen.findByText(articles[0].answer)).toBeVisible()
+  expect(screen.getByText(/Isso esclareceu/)).toBeVisible()
+  expect(fetcher).toHaveBeenCalledTimes(2)
+})
 it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))

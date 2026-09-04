@@ -10,13 +10,15 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { EmptyState, ErrorNotice, LoadingState } from '../components/ui/Feedback'
 import { Toggle } from '../components/ui/Toggle'
 import { useAsyncAction } from '../hooks/useAsyncAction'
-import { answerQuestion, helpArticles, type HelpArticle } from '../components/help/answers'
+import { helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
 import { useReducedMotion } from '../components/help/useReducedMotion'
-import { DENKYNHO_WELCOME, matchPersonality } from '../components/help/personality'
+import { denkynhoWelcome } from '../components/help/personality'
+import { initialDialogueState, isLocalDialogueMessage, respondToMessage } from '../components/help/dialogue'
+import { speechFrame } from '../components/help/speech'
 
-type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; source?: string; related?: HelpArticle[]; pose?: string }
-const welcome: Message = { id: 0, role: 'assistant', text: DENKYNHO_WELCOME, pose: '01-boas-vindas' }
+type Message = { id: number; role: 'user' | 'assistant'; text: string; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
+const welcome = (): Message => ({ id: 0, role: 'assistant', text: denkynhoWelcome(), pose: '01-boas-vindas' })
 
 /** Central de ajuda autenticada. Conversa temporária, baseada apenas no FAQ publicado. */
 export function HelpPage() {
@@ -25,7 +27,8 @@ export function HelpPage() {
   const reduced = useReducedMotion()
   const [animations, setAnimations] = useState(true)
   const [draft, setDraft] = useState('')
-  const [messages, setMessages] = useState<Message[]>([welcome])
+  const [messages, setMessages] = useState<Message[]>(() => [welcome()])
+  const [dialogue, setDialogue] = useState(initialDialogueState)
   const [revealing, setRevealing] = useState<Message | null>(null)
   const [shown, setShown] = useState(0)
   const [sleeping, setSleeping] = useState(false)
@@ -51,8 +54,8 @@ export function HelpPage() {
     if (!animated) { finish(); return }
     const chars = Array.from(revealing.text)
     if (shown >= chars.length) { finish(); return }
-    const delay = /[.!?,;:]/.test(chars[Math.max(0, shown - 1)]) ? 220 : 35
-    const timer = setTimeout(() => setShown(count => Math.min(chars.length, count + 3)), delay)
+    const frame = speechFrame(revealing.text, shown, revealing.pose)
+    const timer = setTimeout(() => setShown(count => Math.min(chars.length, count + frame.step)), frame.delay)
     return () => clearTimeout(timer)
   }, [revealing, shown, animated, finish])
   useEffect(() => { bottom.current?.scrollIntoView?.({ block: 'nearest' }) }, [messages, revealing])
@@ -61,15 +64,16 @@ export function HelpPage() {
     if (!question || question.length > 1000) { setValidation('Escreva uma pergunta de até 1.000 caracteres.'); return }
     if (busy) return
     setValidation(''); setSleeping(false); setFailed(false)
-    const social = matchPersonality(question)
+    const local = isLocalDialogueMessage(question, dialogue)
     const result = await action.run(async () => {
-      if (social) return social
-      const data = helpArticles(await contentApi.faq())
-      return answerQuestion(question, data)
+      const data = local ? (faq.data ?? []) : helpArticles(await contentApi.faq())
+      if (local) await new Promise(resolve => setTimeout(resolve, 160))
+      return respondToMessage(question, data, dialogue)
     })
     if (!mounted.current) return
     if (!result.ok) { if (!result.skipped) setFailed(true); return }
-    const reply: Message = { id: ++sequence.current, role: 'assistant', ...result.value }
+    const reply: Message = { id: ++sequence.current, role: 'assistant', ...result.value.answer }
+    setDialogue(result.value.state)
     setMessages(previous => [...previous, { id: ++sequence.current, role: 'user', text: question }, reply])
     setDraft(''); setShown(0); setRevealing(animated ? reply : null)
   }
@@ -83,20 +87,21 @@ export function HelpPage() {
     <div className="help-workspace">
       <Card as="aside" className="help-companion" aria-label="Seu assistente">
         <div><span className="panel-eyebrow">Seu companheiro no PDL</span><h2>Denkynho</h2></div>
-        <Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={shown % 6 >= 3} />
+        <Denkynho pose={pose} animated={animated} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />
         <p className="muted">{action.pending ? 'Procurando uma orientação…' : revealing ? 'Conversando com você…' : sleeping ? 'Descansando. Escreva para me chamar.' : 'Como posso ajudar você?'}</p>
         <Toggle label="Animar personagem" checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">Movimento reduzido ativado no seu dispositivo.</small>}
         <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> Consultar o FAQ</ButtonLink>
       </Card>
       <Card as="section" className="help-chat" aria-label="Chat de ajuda">
-        <header className="help-chat-head"><div><h2>Vamos conversar</h2><p className="muted">Resposta rápida, orientação completa e assuntos relacionados</p></div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setMessages([welcome]); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setExpanded(new Set()) }}>Nova conversa</Button></header>
+        <header className="help-chat-head"><div><h2>Vamos conversar</h2><p className="muted">O Denkynho lembra o contexto enquanto esta conversa estiver aberta</p></div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setMessages([welcome()]); setDialogue(initialDialogueState()); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setExpanded(new Set()) }}>Nova conversa</Button></header>
         <div className="help-messages" role="log" aria-label="Mensagens da conversa" aria-live="polite" aria-relevant="additions">
           {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>
             <strong>{message.role === 'user' ? 'Você' : 'Denkynho'}</strong>
             {revealing?.id === message.id ? <><p aria-hidden="true">{Array.from(message.text).slice(0, shown).join('') || '…'}</p><p className="help-sr">{message.text}</p></> : <p>{message.text}</p>}
             {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>Ver orientação completa</Button>}
             {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}
+            {message.followUp && <p className="help-follow-up">{message.followUp}</p>}
             {message.source && <small className="muted">Fonte: {message.source}</small>}
             {message.related?.length ? <div className="help-related" aria-label="Assuntos relacionados"><small className="muted">Talvez você queira saber:</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}
           </article>)}<div ref={bottom} />
@@ -111,7 +116,7 @@ export function HelpPage() {
         {revealing && <div className="help-reveal"><Button size="sm" variant="secondary" onClick={finish}>Mostrar resposta completa</Button></div>}
         <form className="help-compose" onSubmit={submit}>
           <Field label="Sua mensagem" error={validation && <span id="help-validation">{validation}</span>}><textarea value={draft} onChange={event => setDraft(event.target.value)} maxLength={1000} rows={3} placeholder="Escreva sua dúvida…" disabled={busy} aria-invalid={Boolean(validation)} aria-describedby={validation ? 'help-validation' : undefined} /></Field>
-          <div className="help-compose-actions"><small className="muted">Não envie senhas ou códigos de acesso.</small><Button type="submit" busy={action.pending} busyLabel="Consultando…" disabled={busy || !draft.trim() || faq.isLoading}><Send aria-hidden="true" /> Enviar mensagem</Button></div>
+          <div className="help-compose-actions"><small className="muted">Você pode dizer “prefiro respostas curtas” ou “pode me chamar de…”. Não envie senhas ou códigos.</small><Button type="submit" busy={action.pending} busyLabel="Pensando…" disabled={busy || !draft.trim() || faq.isLoading}><Send aria-hidden="true" /> Enviar mensagem</Button></div>
         </form>
       </Card>
     </div>
