@@ -46,3 +46,6 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.InMemoryStorage"},
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
+
+# Testes de geração habilitam explicitamente e simulam apenas o SDK externo.
+DENKYNHO_LLM_ENABLED = False

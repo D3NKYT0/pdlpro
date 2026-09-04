@@ -3,7 +3,11 @@ from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.content.application.assistant import AssistantReplyInput, AssistantReplyUseCase
+from apps.content.application.assistant import (
+    AssistantReplyInput,
+    AssistantReplyUseCase,
+)
+from apps.content.application.chat import ChatInput, ChatReplyUseCase
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from apps.content.infrastructure.models import Faq
 from common.views import InjectedAPIView
@@ -12,7 +16,7 @@ from common.views import InjectedAPIView
 class AuthenticatedFaqListView(InjectedAPIView):
     """Entrega ajuda pública e interna conforme a identidade autenticada da requisição."""
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     @extend_schema(tags=["Conteúdo"])
     def get(self, request):
@@ -30,12 +34,14 @@ class AuthenticatedFaqListView(InjectedAPIView):
 class AssistantReplySerializer(serializers.Serializer):
     message = serializers.CharField(max_length=1000, trim_whitespace=True, allow_blank=False)
     language = serializers.ChoiceField(choices=["auto", "pt", "en"], default="auto")
+    conversation = serializers.BooleanField(default=False)
+    context = serializers.CharField(max_length=60000, allow_blank=True, default="")
 
 
 class AssistantReplyView(InjectedAPIView):
     """Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo autorizado."""
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     @extend_schema(tags=["Conteúdo"], request=AssistantReplySerializer)
     def post(self, request):
@@ -48,7 +54,14 @@ class AssistantReplyView(InjectedAPIView):
             audience = Faq.Audience.STAFF
         else:
             audience = Faq.Audience.PUBLIC
-        result = self.resolve(AssistantReplyUseCase).execute(
-            AssistantReplyInput(audience=audience, **serializer.validated_data)
-        )
+        data = dict(serializer.validated_data)
+        conversational = data.pop("conversation")
+        context = data.pop("context")
+        if conversational:
+            result = self.resolve(ChatReplyUseCase).execute(ChatInput(
+                audience=audience, user_id=str(user.pk), display_name=user.display_name or user.username,
+                context=context, **data,
+            ))
+        else:
+            result = self.resolve(AssistantReplyUseCase).execute(AssistantReplyInput(audience=audience, **data))
         return Response(result)

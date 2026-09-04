@@ -248,3 +248,8 @@ WEBSOCKET_ALLOWED_ORIGINS = env.list(
     "WEBSOCKET_ALLOWED_ORIGINS",
     default=["http://localhost:3000", "http://127.0.0.1:3000"],
 )
+
+DENKYNHO_LLM_ENABLED = env.bool("DENKYNHO_LLM_ENABLED", default=False)
+DENKYNHO_OLLAMA_URL = env("DENKYNHO_OLLAMA_URL", default="http://127.0.0.1:11434")
+DENKYNHO_LLM_MODEL = env("DENKYNHO_LLM_MODEL", default="qwen3.5:4b")
+DENKYNHO_LLM_TIMEOUT = env.float("DENKYNHO_LLM_TIMEOUT", default=120)

@@ -37,7 +37,9 @@ export interface ApiFaq {
 export interface ApiAssistantReply {
   language: 'pt' | 'en'
   kind: 'knowledge' | 'unknown' | 'blocked' | 'social'
-  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation'
+  engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation' | 'ollama'
+  mode?: 'generative' | 'limited'
+  context?: string
   confidence?: number
   article_id?: string
   related_ids?: string[]
@@ -49,9 +51,9 @@ export const contentApi = {
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
   faq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/public/faq/${language === 'en' ? '?lang=en' : ''}`),
   authenticatedFaq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/shared/content/faq/${language === 'en' ? '?lang=en' : ''}`),
-  assistantReply: (message: string, language: 'pt' | 'en') => request<ApiAssistantReply>(
+  assistantReply: (message: string, language: 'pt' | 'en', context?: string) => request<ApiAssistantReply>(
     '/shared/content/assistant/reply/',
-    { method: 'POST', body: JSON.stringify({ message, language }) },
+    { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}) }) },
   ),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),

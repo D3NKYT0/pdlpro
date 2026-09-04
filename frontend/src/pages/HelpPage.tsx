@@ -32,7 +32,7 @@ const copy = {
   },
 } as const
 
-/** Central de ajuda autenticada. Conversa temporária, baseada apenas no FAQ publicado. */
+/** Conversa temporária com geração local e fallback explícito para a ajuda editorial. */
 export function HelpPage() {
   const { user } = useAuth()
   const identity = helpIdentity(user)
@@ -45,6 +45,8 @@ export function HelpPage() {
   const [draft, setDraft] = useState('')
   const [messages, setMessages] = useState<Message[]>(() => [welcome(identity, language)])
   const [dialogue, setDialogue] = useState(() => initialDialogueState(language))
+  const [context, setContext] = useState('')
+  const [limited, setLimited] = useState(false)
   const [revealing, setRevealing] = useState<Message | null>(null)
   const [shown, setShown] = useState(0)
   const [sleeping, setSleeping] = useState(false)
@@ -55,16 +57,24 @@ export function HelpPage() {
   const [expanded, setExpanded] = useState<Set<number>>(new Set())
   const sequence = useRef(0)
   const mounted = useRef(true)
+  const session = useRef(0)
   const thread = useRef<HTMLDivElement>(null)
   const animated = animations && !reduced
   const busy = action.pending || Boolean(revealing)
   function changeLanguage(next: HelpLanguage) {
     setLanguage(next)
+    setContext(''); setLimited(false); session.current++
     setMessages([welcome(identity, next)])
     setDialogue(initialDialogueState(next))
     setDraft(''); setValidation(''); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
   }
   useEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
+  useEffect(() => {
+    session.current++
+    setContext(''); setLimited(false); setMessages([welcome(helpIdentity(user), language)])
+    setDialogue(initialDialogueState(language)); setRevealing(null); setDraft('')
+    // A mudança de identidade invalida também respostas ainda em trânsito.
+  }, [user?.id, user?.role])
   useEffect(() => {
     setSleeping(false)
     if (busy) return
@@ -95,22 +105,21 @@ export function HelpPage() {
     }
     if (busy) return
     setValidation(''); setSleeping(false); setFailed(false); setModerationBlocked(false)
-    const local = isLocalDialogueMessage(question, dialogue)
+    const currentSession = session.current
     const result = await action.run(async () => {
-      if (local) {
-        await new Promise(resolve => setTimeout(resolve, 160))
-        return { dialogue: respondToMessage(question, faq.data ?? [], dialogue) }
-      }
-      const server = await contentApi.assistantReply(question, language)
+      const server = await contentApi.assistantReply(question, language, context)
       if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
-      return { server }
+      if ((server.context !== undefined && typeof server.context !== 'string') || (server.mode !== undefined && !['generative', 'limited'].includes(server.mode))) throw new Error(labels.error)
+      return { server, dialogue: server.kind !== 'blocked' && server.mode !== 'generative' && isLocalDialogueMessage(question, dialogue) ? respondToMessage(question, faq.data ?? [], dialogue) : undefined }
     })
-    if (!mounted.current) return
+    if (!mounted.current || currentSession !== session.current) return
     if (!result.ok) { if (!result.skipped) setFailed(true); return }
     if (result.value.server?.kind === 'blocked') {
       setValidation(result.value.server.answer.text); setModerationBlocked(true)
       return
     }
+    setContext(result.value.server.context ?? '')
+    setLimited(result.value.server.mode !== 'generative')
     const resolved = result.value.dialogue ?? {
       answer: {
         ...result.value.server!.answer,
@@ -149,7 +158,7 @@ export function HelpPage() {
         <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>
       </Card>
       <Card as="section" className="help-chat" aria-label={labels.chatLabel}>
-        <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p></div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setMessages([welcome(identity, language)]); setDialogue(initialDialogueState(language)); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set()) }}>{labels.fresh}</Button></header>
+        <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p>{limited && <p role="status">{language === 'pt' ? 'Estou no modo de ajuda básica. A conversa com IA local está indisponível no momento.' : 'Basic help mode is active. Local AI conversation is currently unavailable.'}</p>}</div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { session.current++; setContext(''); setLimited(false); setMessages([welcome(identity, language)]); setDialogue(initialDialogueState(language)); setDraft(''); setValidation(''); setSleeping(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set()) }}>{labels.fresh}</Button></header>
         <div className="help-messages" ref={thread} role="log" aria-label={labels.messages} aria-live="polite" aria-relevant="additions">
           {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>
             <strong>{message.role === 'user' ? labels.you : 'Denkynho'}</strong>

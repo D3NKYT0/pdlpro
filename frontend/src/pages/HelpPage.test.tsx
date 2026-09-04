@@ -59,7 +59,7 @@ it('envia a mensagem com Enter e usa Shift+Enter para nova linha', async () => {
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
   expect(input).toHaveValue('')
-  expect(fetcher).toHaveBeenCalledTimes(1)
+  expect(fetcher).toHaveBeenCalledTimes(3)
 })
 it('responde conversa simples com a personalidade sem consultar novamente o FAQ', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -68,7 +68,7 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso')
-  expect(fetcher).toHaveBeenCalledTimes(1)
+  expect(fetcher).toHaveBeenCalledTimes(3)
 })
 it('troca a interface e a personalidade para inglês e recarrega o FAQ localizado', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -89,7 +89,7 @@ it('continua uma orientação usando contexto sem consultar novamente o FAQ', as
   await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
   expect(await screen.findByText(articles[0].answer)).toBeVisible()
   expect(screen.getByText(/Isso esclareceu/)).toBeVisible()
-  expect(fetcher).toHaveBeenCalledTimes(3)
+  expect(fetcher).toHaveBeenCalledTimes(4)
 })
 it('envia sugestão, revela a fala, abre a orientação completa e reinicia a conversa', async () => {
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
@@ -188,5 +188,50 @@ it('aceita reparação social do backend sem repetir fonte e resposta do FAQ ant
   expect(screen.getAllByText(articles[0].short_answer)).toHaveLength(1)
   expect(screen.getAllByText(`Fonte: ${articles[0].question}`)).toHaveLength(1)
   const call = fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).at(-1)!
-  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt' })
+  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '' })
+})
+
+it('usa geração também para cumprimentos, mantém contexto e o limpa em nova conversa', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  const generated = { kind: 'social', language: 'pt', engine: 'ollama', mode: 'generative', context: 'signed-turn-1', answer: { text: 'Oi, Dani! Como foi seu dia?', pose: '02-sucesso' } }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response(generated) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'Oi{Enter}')
+  expect(await screen.findByText(generated.answer.text)).toBeVisible()
+  expect(screen.queryByText(/ajuda básica/)).not.toBeInTheDocument()
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '02-sucesso'))
+  await user.type(screen.getByRole('textbox'), 'estou cansado{Enter}')
+  await waitFor(() => expect(screen.getAllByText(generated.answer.text)).toHaveLength(2))
+  const calls = () => fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).map(call => JSON.parse(call[1].body))
+  expect(calls()).toEqual([
+    { message: 'Oi', language: 'pt', conversation: true, context: '' },
+    { message: 'estou cansado', language: 'pt', conversation: true, context: 'signed-turn-1' },
+  ])
+  await user.click(screen.getByRole('button', { name: 'Nova conversa' }))
+  await user.type(screen.getByRole('textbox'), 'oi{Enter}')
+  await screen.findByText(generated.answer.text)
+  expect(calls().at(-1).context).toBe('')
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  await user.type(screen.getByRole('textbox'), 'Hello{Enter}')
+  await screen.findByText(generated.answer.text)
+  expect(calls().at(-1)).toMatchObject({ language: 'en', context: '' })
+})
+
+it('informa ajuda básica quando a geração falha e permite recuperar a conversa', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ ...assistantReply, mode: 'limited', context: '' }) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'senha{Enter}')
+  expect(await screen.findByText(/Estou no modo de ajuda básica/)).toBeVisible()
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ ...assistantReply, engine: 'ollama', mode: 'generative', context: 'ok' }) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'senha{Enter}')
+  await waitFor(() => expect(screen.queryByText(/Estou no modo de ajuda básica/)).not.toBeInTheDocument())
+})
+
+it('recusa contexto inválido sem apagar o rascunho', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({ ...assistantReply, context: 123 }) : apiResponse(input)))
+  await user.type(screen.getByRole('textbox'), 'senha{Enter}')
+  expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível consultar a ajuda.')
+  expect(screen.getByRole('textbox')).toHaveValue('senha')
 })

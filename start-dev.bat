@@ -8,6 +8,11 @@ if errorlevel 1 (
   exit /b 1
 )
 
+pushd backend
+.venv\Scripts\python.exe manage.py start_denkynho --settings=core.settings.development
+if errorlevel 1 echo Denkynho iniciara no modo de ajuda basica. Confira o aviso acima.
+popd
+
 if not exist "frontend\node_modules\" (
   echo Instalando dependencias do frontend...
   pushd frontend

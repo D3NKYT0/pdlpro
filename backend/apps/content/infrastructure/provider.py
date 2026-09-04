@@ -1,5 +1,9 @@
-from apps.content.application.legal import GetLegalDocumentUseCase, ListLegalDocumentsUseCase
 from apps.content.application.assistant import AssistantReplyUseCase, SemanticMatcher
+from apps.content.application.chat import ChatReplyUseCase, ConversationModel
+from apps.content.application.legal import (
+    GetLegalDocumentUseCase,
+    ListLegalDocumentsUseCase,
+)
 from apps.content.application.use_cases import (
     GetNewsUseCase,
     GetWikiPageUseCase,
@@ -14,6 +18,7 @@ from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
 
+from .local_model import OllamaConversationModel
 from .semantic import SentenceTransformerMatcher
 
 
@@ -26,6 +31,8 @@ class ContentProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(ConversationModel, OllamaConversationModel, lifetime=Lifetime.SINGLETON)
+        container.register_self(ChatReplyUseCase, lifetime=Lifetime.TRANSIENT)
         container.register(
             SemanticMatcher,
             SentenceTransformerMatcher,
