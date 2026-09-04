@@ -48,6 +48,11 @@ class Faq(BaseModel):
         COMMUNITY = "community", "Conteúdo e comunidade"
         SUPPORT = "support", "Ajuda e atendimento"
 
+    class Audience(models.TextChoices):
+        PUBLIC = "public", "Todos os usuários"
+        STAFF = "staff", "Equipe"
+        SUPERADMIN = "superadmin", "Superadministradores"
+
     question = models.CharField(max_length=250)
     short_answer = models.CharField(
         max_length=400,
@@ -60,6 +65,12 @@ class Faq(BaseModel):
         max_length=500,
         blank=True,
         help_text="Termos alternativos separados por vírgulas usados para localizar esta orientação.",
+    )
+    audience = models.CharField(
+        max_length=16,
+        choices=Audience.choices,
+        default=Audience.PUBLIC,
+        help_text="Público mínimo autorizado a receber este artigo no assistente.",
     )
     order = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=True)

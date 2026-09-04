@@ -26,8 +26,8 @@ class FaqAdmin(PDLModelAdmin):
     A ordem e a publicação continuam controladas individualmente.
     """
 
-    list_display = ("question", "category", "order", "is_published")
-    list_filter = ("category", "is_published")
+    list_display = ("question", "category", "audience", "order", "is_published")
+    list_filter = ("category", "audience", "is_published")
     search_fields = ("question", "short_answer", "answer", "keywords")
 
 

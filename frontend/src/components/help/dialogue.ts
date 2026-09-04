@@ -1,5 +1,6 @@
 import { answerQuestion, type HelpAnswer, type HelpArticle } from './answers'
 import { matchPersonality, normalizeConversation } from './personality'
+import { isSafePreferredName } from './moderation'
 
 export type DetailPreference = 'balanced' | 'short' | 'detailed'
 
@@ -101,6 +102,13 @@ export function respondToMessage(message: string, articles: HelpArticle[], curre
   const nameMatch = message.trim().match(/^(?:me chamo|pode me chamar de)\s+([\p{L}][\p{L}' -]{0,29})[.!?]?$/iu)
   if (nameMatch) {
     const name = nameMatch[1].trim().replace(/\s+/g, ' ')
+    if (!isSafePreferredName(name)) {
+      return {
+        answer: { text: 'Esse apelido não pode ser usado aqui. Escolha um nome respeitoso e eu vou lembrar dele nesta conversa.', pose: '10-frustrado' },
+        state,
+        kind: 'context',
+      }
+    }
     return { answer: { text: `Prazer, ${name}! Vou lembrar seu nome durante esta conversa. Como posso ajudar?`, pose: '01-boas-vindas' }, state: { ...state, name }, kind: 'context' }
   }
   if (shortPreference.test(query) || detailedPreference.test(query)) {

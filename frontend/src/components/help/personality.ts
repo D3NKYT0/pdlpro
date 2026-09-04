@@ -1,8 +1,15 @@
 export interface PersonalityReply { text: string; pose: string }
 
-export function denkynhoWelcome(date = new Date()): string {
+interface WelcomeIdentity { suggestedName?: string; roleLabel: string }
+
+export function denkynhoWelcome(date = new Date(), identity?: WelcomeIdentity): string {
   const hour = date.getHours()
   const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite'
+  if (identity) {
+    const recognized = identity.suggestedName ? `, ${identity.suggestedName}` : ''
+    const preference = identity.suggestedName ? `Posso chamar você de ${identity.suggestedName} ou prefere outro nome?` : 'Como você prefere que eu chame você?'
+    return `${greeting}${recognized}! Reconheci sua sessão de ${identity.roleLabel}. Eu sou o Denkynho, seu companheiro no PDL. ${preference}`
+  }
   return `${greeting}! Eu sou o Denkynho, seu companheiro no PDL. Conte sua dúvida ou escolha uma pergunta abaixo. Vamos encontrar o caminho juntos!`
 }
 

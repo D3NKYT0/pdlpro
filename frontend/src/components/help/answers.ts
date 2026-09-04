@@ -1,13 +1,13 @@
 import { matchPersonality, normalizeConversation } from './personality'
 
-export interface HelpArticle { id: string; question: string; short_answer: string; answer: string; category: string; category_label: string; keywords: string[] }
+export interface HelpArticle { id: string; question: string; short_answer: string; answer: string; category: string; category_label: string; keywords: string[]; audience?: 'public' | 'staff' | 'superadmin'; audience_label?: string }
 export interface HelpAnswer { text: string; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose: string }
 const normalize = normalizeConversation
 const ignored = new Set(['como', 'onde', 'qual', 'quais', 'para', 'pelo', 'pela', 'meu', 'minha', 'uma', 'com', 'que', 'por', 'posso', 'faco', 'sobre', 'preciso', 'ajuda'])
 
 /** Valida a fronteira da base pública antes de exibir respostas no chat. */
 export function helpArticles(data: unknown): HelpArticle[] {
-  if (!Array.isArray(data) || data.some(item => !item || typeof item.id !== 'string' || typeof item.question !== 'string' || typeof item.short_answer !== 'string' || typeof item.answer !== 'string' || typeof item.category !== 'string' || typeof item.category_label !== 'string' || !Array.isArray(item.keywords) || item.keywords.some((keyword: unknown) => typeof keyword !== 'string') || !item.question.trim() || !item.answer.trim() || !item.category.trim() || !item.category_label.trim())) throw new Error('A base de ajuda retornou uma resposta inválida.')
+  if (!Array.isArray(data) || data.some(item => !item || typeof item.id !== 'string' || typeof item.question !== 'string' || typeof item.short_answer !== 'string' || typeof item.answer !== 'string' || typeof item.category !== 'string' || typeof item.category_label !== 'string' || !Array.isArray(item.keywords) || item.keywords.some((keyword: unknown) => typeof keyword !== 'string') || (item.audience !== undefined && !['public', 'staff', 'superadmin'].includes(item.audience)) || (item.audience_label !== undefined && typeof item.audience_label !== 'string') || !item.question.trim() || !item.answer.trim() || !item.category.trim() || !item.category_label.trim())) throw new Error('A base de ajuda retornou uma resposta inválida.')
   return data
 }
 

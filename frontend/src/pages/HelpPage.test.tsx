@@ -7,6 +7,9 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
 import { resetHttpClient } from '../services/infra/http'
+vi.mock('../contexts/AuthContext', () => ({
+  useAuth: () => ({ user: { id: 'user-1', username: 'daniel', display_name: 'Daniel', role: 'player', email: 'd@example.com', bio: '', is_email_verified: true, fichas: 0, avatar_url: null } }),
+}))
 const articles = [{ id: '1', question: 'Como recuperar minha senha?', short_answer: 'Use a recuperação.', answer: 'Use a recuperação na tela de login.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['senha', 'reset'] }]
 const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
 let client: QueryClient
@@ -22,10 +25,34 @@ function mount() { render(<QueryClientProvider client={client}><MemoryRouter><He
 it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   mount(); expect(screen.getByText('Carregando perguntas de ajuda…')).toBeVisible()
   expect(await screen.findByRole('button', { name: articles[0].question })).toBeVisible()
-  expect(String(fetcher.mock.calls[0][0])).toContain('/public/faq/')
+  expect(String(fetcher.mock.calls[0][0])).toContain('/shared/content/faq/')
+  expect(screen.getByText(/(Bom dia|Boa tarde|Boa noite), Daniel!/)).toBeVisible()
+  expect(screen.getByText(/sessão de jogador/i)).toBeVisible()
   expect(screen.getByRole('link', { name: 'Atendimento da equipe' })).toHaveAttribute('href', '/painel/support')
   expect(screen.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
   expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveValue('all')
+})
+it('bloqueia apelido ofensivo mesmo disfarçado e não o repete na conversa', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  const input = screen.getByRole('textbox', { name: 'Sua mensagem' })
+  await user.type(input, 'Pode me chamar de r.0.l.4')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(screen.getByRole('alert')).toHaveTextContent('não pode ser usada no chat')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '10-frustrado')
+  expect(within(screen.getByRole('log')).queryByText(/r\.0\.l\.4/i)).not.toBeInTheDocument()
+  expect(fetcher).toHaveBeenCalledTimes(1)
+})
+it('envia a mensagem com Enter e usa Shift+Enter para nova linha', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  const input = screen.getByRole('textbox', { name: 'Sua mensagem' })
+  await user.type(input, 'primeira{Shift>}{Enter}{/Shift}segunda')
+  expect(input).toHaveValue('primeira\nsegunda')
+  await user.clear(input)
+  await user.type(input, 'Olá, como vai?{Enter}')
+  await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
+  expect(screen.getByText(/Estou bem e com energia/)).toBeVisible()
+  expect(input).toHaveValue('')
+  expect(fetcher).toHaveBeenCalledTimes(1)
 })
 it('responde conversa simples com a personalidade sem consultar novamente o FAQ', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })

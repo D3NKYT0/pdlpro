@@ -4,9 +4,11 @@
 
 ## Acessar e conversar
 
-Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Escreva uma dúvida, filtre as sugestões por assunto ou escolha uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
+Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
-O Denkynho responde primeiro pela camada local de personalidade. Quando a mensagem não é uma interação social conhecida, consulta as perguntas publicadas do FAQ usando o serviço existente, `GET /api/v1/public/faq/`. A seleção acontece no navegador: a pergunta digitada não é enviada a um provedor de IA nem gravada no backend. O histórico é temporário e desaparece ao sair da tela ou recarregá-la. Esta versão usa respostas definidas e a base publicada, não um modelo generativo ou um atendimento humano.
+O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. Quando a mensagem não é uma interação social conhecida, consulta `GET /api/v1/shared/content/faq/`. A pergunta digitada não é enviada ao backend, a um provedor de IA nem gravada. O histórico e o apelido são temporários e desaparecem ao sair da tela ou recarregá-la.
+
+A rota autenticada filtra o conhecimento no backend: jogadores recebem artigos públicos; moderadores, staff e administradores recebem também artigos da equipe; superadministradores recebem todos os níveis. A interface apenas apresenta o resultado autorizado. A API pública `GET /api/v1/public/faq/` continua retornando exclusivamente artigos públicos, mesmo quando chamada por uma pessoa autenticada.
 
 ## Personalidade e padrão de fala
 
@@ -30,7 +32,7 @@ Cada intenção define duas ou mais formulações quando a variação ajuda a ev
 
 O motor entende continuações como “sim”, “não”, “e depois?”, “mais detalhes”, “não achei”, “deu erro” e “já tentei”. Quando mais de um artigo corresponde, pergunta qual caminho representa a dúvida e aceita a escolha pelo texto ou por “primeira”, “segunda” e “terceira”. Depois de uma tentativa que falhou, oferece uma revisão segura; na repetição, encaminha ao atendimento sem sugerir que pagamentos, saldos ou itens sejam repetidos.
 
-“Prefiro respostas curtas” oculta a segunda camada nas respostas seguintes. “Quero respostas detalhadas” apresenta diretamente o artigo completo. “Pode me chamar de …” guarda um nome de até 30 caracteres apenas nesta conversa e o usa com moderação. Perguntas de continuidade aparecem com intervalo mínimo para não terminar toda resposta com uma nova pergunta.
+“Prefiro respostas curtas” oculta a segunda camada nas respostas seguintes. “Quero respostas detalhadas” apresenta diretamente o artigo completo. “Pode me chamar de …” guarda um nome de até 30 caracteres apenas nesta conversa e o usa com moderação. Apelidos recusados nunca entram no estado nem são repetidos pelo personagem. Perguntas de continuidade aparecem com intervalo mínimo para não terminar toda resposta com uma nova pergunta.
 
 Emoções expressivas duram por até duas interações e diminuem gradualmente. [speech.ts](../../frontend/src/components/help/speech.ts) controla a velocidade de revelação: alegria e riso falam mais rápido, tristeza mais devagar e pontuação fecha a boca durante pausas. A saudação inicial respeita manhã, tarde ou noite do dispositivo.
 
@@ -42,7 +44,13 @@ Cada artigo tem assunto, resposta rápida, orientação completa e palavras-chav
 
 A migration `content.0004_seed_pdl_faq` publica 38 orientações em oito assuntos: primeiros passos; conta e segurança; contas e personagens; carteira e inventário; loja e comércio; jogos e recompensas; conteúdo e comunidade; ajuda e atendimento. O catálogo cobre os módulos disponíveis no PDL sem fixar preços, taxas, limites ou prazos configuráveis. IDs determinísticos permitem reaplicar a carga e removê-la no rollback sem atingir artigos criados pela administração.
 
-A página pública `/faq` permite buscar em pergunta, resposta e palavras-chave e filtrar por assunto. A API pública retorna `id`, `question`, `short_answer`, `answer`, `category`, `category_label` e `keywords`. Registros antigos recebem o assunto Primeiros passos e continuam válidos; preencha a resposta curta e as palavras-chave no admin para melhorar a conversa.
+A página pública `/faq` permite buscar em pergunta, resposta e palavras-chave e filtrar por assunto. A API também retorna `audience` e `audience_label`. O Django Admin permite publicar cada artigo para todos, para a equipe ou somente para superadministradores. Quatro orientações internas iniciais documentam atendimento, administração, segurança da equipe e gestão de temas.
+
+## Moderação da conversa
+
+O filtro foi adaptado do serviço de moderação do HollowDuel. Antes de exibir ou interpretar uma mensagem, ele remove caracteres invisíveis e acentos, converte substituições comuns como `0` por `o`, ignora pontuação usada entre letras e reconhece repetições e letras separadas. A correspondência respeita limites de palavra para não bloquear termos legítimos que apenas contêm a mesma sequência.
+
+Mensagens recusadas não são adicionadas ao histórico, não consultam a API e não podem definir o apelido. A tela apresenta um erro claro e permite reformular. A lista é curta e própria para a conversa de ajuda; qualquer ampliação deve incluir casos bloqueados, tentativas de contorno e falsos positivos nos testes.
 
 ## Animações
 
@@ -64,11 +72,11 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 - Mensagens de até 1.000 caracteres; consultas repetidas ficam bloqueadas durante envio e revelação.
 - Uma falha não apaga o rascunho nem adiciona uma resposta de sucesso.
 - Respostas são texto simples, sem execução de HTML recebido.
-- O chat não consulta contas, personagens, pagamentos ou informações particulares.
+- O chat usa apenas a identidade básica da sessão; não consulta personagens, pagamentos, saldos ou outras informações particulares.
 - Uma futura integração de IA deve ter serviço e endpoint próprios, com autenticação, limites, privacidade, validação e testes. Não coloque chaves de provedores no frontend. Preserve o contrato visual do mascote e os componentes compartilhados.
 
 ## Validação
 
-Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem personalidade e continuidade sem nova consulta HTTP, carregamento, assuntos, sugestões, resposta rápida, orientação completa, fonte, nova conversa, consulta repetida, erro preservando rascunho, nova tentativa, dados inválidos, base vazia, movimento reduzido, inatividade e conclusão da fala. `personality.test.ts` fixa o padrão de voz, variações, período do dia, poses, intenções e a separação entre conversa e conhecimento. `dialogue.test.ts` cobre nome, preferências, referências, esclarecimento, tentativas e continuidade emocional; `speech.test.ts` cobre ritmo e pausas. `FaqPage.test.tsx` cobre busca, filtro e acordeão. O backend verifica o contrato público e os 38 artigos da migration.
+Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, filtro, personalidade, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica anonimato, jogador, moderador, staff e superadministrador, além do contrato público e das cargas pública e interna.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.

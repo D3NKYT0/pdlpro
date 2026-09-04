@@ -79,14 +79,27 @@ class GetNewsUseCase(UseCase[GetNewsInput, NewsDTO]):
         )
 
 
-class ListFaqUseCase(UseCase[None, list[dict]]):
+@dataclass(frozen=True, slots=True)
+class ListFaqInput:
+    """Maior audiência que a identidade autenticada pode consultar."""
+
+    audience: str = Faq.Audience.PUBLIC
+
+
+class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
     """Lista artigos publicados com as três camadas usadas pela central de ajuda.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
     retorno inclui categoria, rótulo, resposta rápida, detalhes e palavras-chave.
     """
 
-    def execute(self, data: None = None) -> list[dict]:
+    def execute(self, data: ListFaqInput | None = None) -> list[dict]:
+        requested = data.audience if data else Faq.Audience.PUBLIC
+        allowed = {
+            Faq.Audience.PUBLIC: [Faq.Audience.PUBLIC],
+            Faq.Audience.STAFF: [Faq.Audience.PUBLIC, Faq.Audience.STAFF],
+            Faq.Audience.SUPERADMIN: [Faq.Audience.PUBLIC, Faq.Audience.STAFF, Faq.Audience.SUPERADMIN],
+        }.get(requested, [Faq.Audience.PUBLIC])
         return [
             {
                 "id": str(item.id),
@@ -96,8 +109,10 @@ class ListFaqUseCase(UseCase[None, list[dict]]):
                 "category": item.category,
                 "category_label": item.get_category_display(),
                 "keywords": [keyword.strip() for keyword in item.keywords.split(",") if keyword.strip()],
+                "audience": item.audience,
+                "audience_label": item.get_audience_display(),
             }
-            for item in Faq.objects.filter(is_published=True)
+            for item in Faq.objects.filter(is_published=True, audience__in=allowed)
         ]
 
 

@@ -21,6 +21,13 @@ describe('motor de diálogo do Denkynho', () => {
     expect(initialDialogueState().name).toBeUndefined()
   })
 
+  it('recusa apelido impróprio sem gravar nem repetir o termo', () => {
+    const result = respondToMessage('Pode me chamar de rola', articles, initialDialogueState())
+    expect(result.state.name).toBeUndefined()
+    expect(result.answer.text).not.toContain('rola')
+    expect(result.answer.text).toContain('não pode ser usado')
+  })
+
   it('aplica preferências curta e detalhada às respostas seguintes', () => {
     const short = respondToMessage('Prefiro respostas curtas', articles, initialDialogueState())
     const shortAnswer = respondToMessage(articles[2].question, articles, short.state)

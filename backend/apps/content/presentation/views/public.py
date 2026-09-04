@@ -13,6 +13,7 @@ from apps.content.application.use_cases import (
     ListCalendarEventsUseCase,
     ListDownloadsUseCase,
     ListFaqUseCase,
+    ListFaqInput,
     ListNewsUseCase,
     ListWikiPagesUseCase,
     SearchWikiInput,
@@ -72,7 +73,7 @@ class FaqListView(InjectedAPIView):
 
     @extend_schema(tags=["Conteúdo"])
     def get(self, request):
-        return Response(self.resolve(ListFaqUseCase).execute(None))
+        return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput()))
 
 
 class DownloadListView(InjectedAPIView):

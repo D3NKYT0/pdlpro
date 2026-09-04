@@ -29,12 +29,15 @@ export interface ApiFaq {
   category: string
   category_label: string
   keywords: string[]
+  audience: 'public' | 'staff' | 'superadmin'
+  audience_label: string
 }
 
 export const contentApi = {
   news: () => request<ApiNews[]>('/public/news/'),
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
   faq: () => request<ApiFaq[]>('/public/faq/'),
+  authenticatedFaq: () => request<ApiFaq[]>('/shared/content/faq/'),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),
   wikiPage: (slug: string) => request<ApiWikiPage>(`/public/wiki/${slug}/`),

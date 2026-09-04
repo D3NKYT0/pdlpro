@@ -2,6 +2,7 @@ from django.utils import timezone
 import pytest
 from rest_framework.test import APIClient
 
+from apps.accounts.infrastructure.models import User
 from apps.content.infrastructure.models import CalendarEvent, Faq, WikiPage
 
 
@@ -15,6 +16,21 @@ def test_initial_faq_catalog_is_published_in_response_layers(api):
         "commerce", "games_rewards", "community", "support",
     }
     assert all(item["short_answer"] and item["answer"] and item["keywords"] for item in seeded)
+
+
+@pytest.mark.django_db
+def test_initial_internal_catalog_respects_staff_and_superadmin_audiences(api):
+    staff = User.objects.create_user("helper", "helper@example.com", role=User.Role.STAFF)
+    api.force_authenticate(user=staff)
+    staff_response = api.get("/api/v1/shared/content/faq/")
+    staff_seeded = {item["id"] for item in staff_response.data if item["id"].startswith("c0200000-")}
+    assert len(staff_seeded) == 3
+
+    superadmin = User.objects.create_superuser("roothelper", "roothelper@example.com")
+    api.force_authenticate(user=superadmin)
+    super_response = api.get("/api/v1/shared/content/faq/")
+    super_seeded = {item["id"] for item in super_response.data if item["id"].startswith("c0200000-")}
+    assert len(super_seeded) == 4
 
 
 @pytest.fixture
@@ -68,7 +84,67 @@ def test_calendar_and_faq(api):
         "category": "economy",
         "category_label": "Carteira e inventário",
         "keywords": ["apoio", "moedas"],
+        "audience": "public",
+        "audience_label": "Todos os usuários",
     }
+
+
+@pytest.mark.django_db
+def test_public_faq_never_exposes_internal_articles(api):
+    Faq.objects.create(question="Público", answer="Todos", audience=Faq.Audience.PUBLIC)
+    Faq.objects.create(question="Equipe", answer="Interno", audience=Faq.Audience.STAFF)
+    Faq.objects.create(question="Superadmin", answer="Restrito", audience=Faq.Audience.SUPERADMIN)
+
+    response = api.get("/api/v1/public/faq/")
+
+    assert response.status_code == 200
+    questions = {item["question"] for item in response.data}
+    assert "Público" in questions
+    assert "Equipe" not in questions
+    assert "Superadmin" not in questions
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    ("user_fields", "visible", "hidden"),
+    [
+        ({"role": User.Role.PLAYER}, {"Público"}, {"Equipe", "Superadmin"}),
+        ({"role": User.Role.MODERATOR}, {"Público", "Equipe"}, {"Superadmin"}),
+        ({"role": User.Role.STAFF}, {"Público", "Equipe"}, {"Superadmin"}),
+        (
+            {"role": User.Role.ADMIN, "is_staff": True, "is_superuser": True},
+            {"Público", "Equipe", "Superadmin"},
+            set(),
+        ),
+    ],
+)
+def test_authenticated_faq_filters_articles_by_trusted_role(api, user_fields, visible, hidden):
+    for question, audience in (
+        ("Público", Faq.Audience.PUBLIC),
+        ("Equipe", Faq.Audience.STAFF),
+        ("Superadmin", Faq.Audience.SUPERADMIN),
+    ):
+        Faq.objects.create(question=question, answer=question, audience=audience)
+    user = User.objects.create_user(
+        username=f"user{User.objects.count()}",
+        email=f"user{User.objects.count()}@example.com",
+        password="Strong-pass-123",
+        **user_fields,
+    )
+    api.force_authenticate(user=user)
+
+    response = api.get("/api/v1/shared/content/faq/")
+
+    assert response.status_code == 200
+    questions = {item["question"] for item in response.data}
+    assert visible <= questions
+    assert not (hidden & questions)
+
+
+@pytest.mark.django_db
+def test_authenticated_faq_rejects_anonymous_user(api):
+    response = api.get("/api/v1/shared/content/faq/")
+    assert response.status_code in {401, 403}
 
 
 @pytest.mark.django_db
