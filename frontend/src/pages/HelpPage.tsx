@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 import { programsApi } from '../services/domain/programs.service'
 import { getHelpContext, getHelpActionsForText, supportTicketPrefill } from '../components/help/contextual'
 import { PetProgress } from '../components/help/PetProgress'
-import { Button, ButtonLink } from '../components/ui/Button'
+import { Button, ButtonLink, IconButton } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Field } from '../components/ui/Field'
 import { PageHeader } from '../components/ui/PageHeader'
@@ -27,6 +27,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { helpIdentity, type HelpIdentity } from '../components/help/identity'
 import { moderateChatInput } from '../components/help/moderation'
 import { HelpPreferences } from '../components/help/HelpPreferences'
+import { DenkynhoActivityIcon } from '../components/help/DenkynhoActivityIcon'
 import { thinkingPhrase } from '../components/help/thinking'
 import { loadHelpPreferences, storeHelpPreferences, type HelpPreferences as Preferences } from '../components/help/preferences'
 type Message = { id: number; role: 'user' | 'assistant'; text: string; status?: 'sending' | 'failed'; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
@@ -290,7 +291,7 @@ export function HelpPage() {
         </section>}
         <ErrorNotice error={pet.error ?? petAction.error} fallback={labels.petError} className="denk-pet-error" />
         <div className="help-activities" role="group" aria-label={language === 'pt' ? 'Atividades do Denkynho' : 'Denkynho activities'}>
-          {activities.filter(item => item.action !== 'dance' || pet.data?.available_actions?.includes('dance')).map(item => <Button key={item.pose} size="sm" variant="secondary" disabled={busy || petAction.pending || pet.isLoading || pet.isError || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => { void careFor(item, onActivity) }}>{item[language]}</Button>)}
+          {activities.filter(item => item.action !== 'dance' || pet.data?.available_actions?.includes('dance')).map(item => <IconButton key={item.pose} label={item[language]} size="sm" variant="secondary" className="denk-activity-button" disabled={busy || petAction.pending || pet.isLoading || pet.isError || Boolean(draft) || failed || moderationBlocked || activity === item.pose} aria-pressed={activity === item.pose} onClick={() => { void careFor(item, onActivity) }}><DenkynhoActivityIcon action={item.action} /></IconButton>)}
         </div>
         {pet.data?.unlocks && <PetProgress key={user?.id} profile={pet.data} language={language} careResult={careResult} disabled={busy || petAction.pending} onProfileChange={updated => queryClient.setQueryData(petQueryKey, updated)} />}
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />

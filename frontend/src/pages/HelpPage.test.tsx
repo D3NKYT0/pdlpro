@@ -80,6 +80,7 @@ it('caminha no atlas próprio e aplica o custo de energia confirmado pela API', 
     return Promise.resolve(response(walked ? updated : petProfile))
   })
   await user.click(screen.getByRole('button', { name: 'Caminhar' }))
+  expect(screen.getByRole('button', { name: 'Caminhar' }).querySelector('[data-activity-icon="walk"]')).toBeTruthy()
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '16-andando'))
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Caminhando')
   const request = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')!

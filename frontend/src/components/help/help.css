@@ -79,6 +79,16 @@
   justify-content:center;
   gap:6px;
 }
+.help-activities .denk-activity-button.ui-button--sm {
+  height:66px;
+  padding:7px;
+}
+.denk-activity-button svg {
+  width:52px;
+  height:52px;
+  flex:none;
+  filter:drop-shadow(0 1px 1px #0005);
+}
 .denk-pet-panel {
   display:grid;
   gap:8px;
