@@ -12,7 +12,7 @@
   .loading .l-logo .circle img {
     width: 200px;
   }
-  footer .c-link {
+  footer:not(.site-footer) .c-link {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -21,10 +21,10 @@
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  footer .c-link a:not(:last-child) {
+  footer:not(.site-footer) .c-link a:not(:last-child) {
     margin-bottom: 20px;
   }
-  footer .c-link a {
+  footer:not(.site-footer) .c-link a {
     margin: 0;
   }
   .c .c-link {
@@ -82,10 +82,10 @@
     width: 300px;
   }
   .h {
-    padding-top: 240px;
+    padding-top: 120px;
   }
   .h .h-logo {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
   }
   .h .h-logo .letters {
     width: 300px;

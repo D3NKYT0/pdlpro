@@ -63,15 +63,38 @@ it('exibe pilares autênticos do Lineage com destinos reais', async () => {
   expect(screen.queryByText(/servidor mais atualizado, moderno e estável/i)).not.toBeInTheDocument()
 })
 
-it('usa arte de castelos do tema nos cards de destaque', async () => {
+it('usa artes próprias do PDL nos destaques e mantém o guardião central', async () => {
   mount()
   await screen.findByRole('link', { name: /Crônica e Rates/i })
 
   const cards = [...document.querySelectorAll('.home-features .f-list a > div')].map((node) => node.getAttribute('style') ?? '')
   expect(cards).toHaveLength(3)
-  expect(cards[0]).toContain('castles/aden.jpg')
-  expect(cards[1]).toContain('castles/goddard.jpg')
-  expect(cards[2]).toContain('castles/rune.jpg')
+  expect(cards[0]).toContain('home/chronicle-rates-v2.webp')
+  expect(cards[1]).toContain('home/castle-siege-v2.webp')
+  expect(cards[2]).toContain('home/hall-of-fame-v2.webp')
+  expect(document.querySelector('.home-features .character img')).toHaveAttribute(
+    'src',
+    expect.stringContaining('home/aden-guardian-v2.webp'),
+  )
+})
+
+it('aplica cenários próprios às demais alas da página inicial', async () => {
+  mount()
+  await screen.findByRole('heading', { name: /Guias, crônica e o que move Aden/i })
+
+  expect(document.querySelector('.home-wiki')?.getAttribute('style')).toContain('home/archive-v2.webp')
+  expect(document.querySelector('.home-clans')?.getAttribute('style')).toContain('home/clans-v2.webp')
+  expect(document.querySelector('.home-rankings')?.getAttribute('style')).toContain('home/rankings-v2.webp')
+  expect(document.querySelector('.trailer-section')?.getAttribute('style')).toContain('home/cinematic-v2.webp')
+})
+
+it('mantém o atalho de scroll do hero apontando para os pilares', async () => {
+  mount()
+  await screen.findByRole('link', { name: /Baixe o Jogo/i })
+
+  const scrollCue = document.querySelector('.h-scroll a')
+  expect(scrollCue).toHaveAttribute('href', '#features')
+  expect(document.querySelector('#features')).toBeTruthy()
 })
 
 it('mostra guias e crônica autênticos quando wiki e notícias estão vazios', async () => {
@@ -88,6 +111,8 @@ it('mostra guias e crônica autênticos quando wiki e notícias estão vazios', 
 
   expect(screen.getByRole('link', { name: /Notícias do reino/i })).toHaveAttribute('href', '/news')
   expect(screen.getByRole('link', { name: /Roadmap e próximos passos/i })).toHaveAttribute('href', '/roadmap')
+  expect(screen.getByText('Crônica')).toBeVisible()
+  expect(screen.getByText('Temporada')).toBeVisible()
 
   expect(screen.queryByText('Guias do jogo')).not.toBeInTheDocument()
   expect(screen.queryByText('Classes e raças')).not.toBeInTheDocument()

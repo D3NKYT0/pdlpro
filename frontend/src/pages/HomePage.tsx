@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
@@ -17,13 +18,13 @@ const wikiLinks = [
 const chronicleCards = [
   {
     to: '/news',
-    image: 'castles/giran.jpg',
+    image: 'home/archive-v2.webp',
     kicker: 'Crônica',
     title: 'Notícias do reino',
   },
   {
     to: '/roadmap',
-    image: 'castles/oren.jpg',
+    image: 'home/cinematic-v2.webp',
     kicker: 'Temporada',
     title: 'Roadmap e próximos passos',
   },
@@ -49,23 +50,27 @@ function clanInitial(name: string) {
 const features = [
   {
     to: '/informacoes#rates',
-    image: 'castles/aden.jpg',
+    image: 'home/chronicle-rates-v2.webp',
     title: 'Crônica e Rates',
     blurb: 'Progressão, economia e o ritmo do reino',
   },
   {
     to: '/informacoes#pvp',
-    image: 'castles/goddard.jpg',
+    image: 'home/castle-siege-v2.webp',
     title: 'Guerra de Castelos',
     blurb: 'Siege, clãs e o domínio de Aden',
   },
   {
     to: '/rankings',
-    image: 'castles/rune.jpg',
+    image: 'home/hall-of-fame-v2.webp',
     title: 'Hall da Fama',
     blurb: 'PvP, olimpíada e os melhores clãs',
   },
 ]
+
+function sectionArt(image: string) {
+  return { '--section-art': `url(${themeImage(image)})` } as CSSProperties
+}
 
 function DefaultHomePage() {
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
@@ -118,6 +123,9 @@ function DefaultHomePage() {
           </span>
           <h1>Crônica, castelos e a glória que definem o Lineage</h1>
         </div>
+        <div className="character" aria-hidden="true">
+          <img src={themeImage('home/aden-guardian-v2.webp')} alt="" />
+        </div>
         <div className="f-list container">
           {features.map((item, index) => (
             <Link className={`f${index + 1}`} key={item.title} to={item.to}>
@@ -133,7 +141,7 @@ function DefaultHomePage() {
         </div>
       </section>
 
-      <section className="w home-wiki">
+      <section className="w home-wiki" style={sectionArt('home/archive-v2.webp')}>
         <div className="w-title title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
@@ -178,7 +186,7 @@ function DefaultHomePage() {
         </div>
       </section>
 
-      <section className="home-clans" id="top-clans">
+      <section className="home-clans" id="top-clans" style={sectionArt('home/clans-v2.webp')}>
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
@@ -246,7 +254,7 @@ function DefaultHomePage() {
         )}
       </section>
 
-      <section className="home-rankings">
+      <section className="home-rankings" style={sectionArt('home/rankings-v2.webp')}>
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
@@ -309,7 +317,7 @@ function DefaultHomePage() {
         </div>
       </div>
 
-      <section className="trailer-section">
+      <section className="trailer-section" style={sectionArt('home/cinematic-v2.webp')}>
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />

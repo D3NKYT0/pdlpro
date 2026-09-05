@@ -2,11 +2,9 @@
 .hero-description {
     color: rgba(255, 255, 255, 0.8);
     font-size: 1.2rem;
-    margin: 1rem 0 2rem;
+    margin: 0.75rem auto 1.25rem;
     text-align: center;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Clans Section */

@@ -538,7 +538,7 @@ nav ul li a {
   background-position-y: 100px;
   height: 975px;
   width: 100%;
-  padding-top: 280px;
+  padding-top: 160px;
   text-align: center;
 }
 
@@ -553,7 +553,7 @@ nav ul li a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 38px;
+  margin-bottom: 28px;
 }
 
 .h .h-logo .letters {
@@ -648,8 +648,8 @@ nav ul li a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 80px;
+  margin-top: 36px;
+  margin-bottom: 40px;
 }
 
 .h .h-link a:nth-child(1) {
@@ -1033,11 +1033,15 @@ nav ul li a {
 }
 
 .w .w-list a div div span {
-  padding: 5px 20px 5px 20px;
-  color: #5184cf;
-  border: 1px solid #325d9d;
-  background-color: rgba(0, 0, 0, 0.562);
-  font-size: 14px;
+  display: inline-block;
+  padding: 6px 14px;
+  color: #c5a161;
+  border: 1px solid rgba(197, 161, 97, 0.42);
+  background: rgba(8, 6, 4, 0.72);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .w .w-list a div div p {
@@ -1102,142 +1106,12 @@ nav ul li a {
           transform: translateY(-15px);
 }
 
-footer {
+/* Footer legado: o shell público usa .site-footer em layout.css. */
+footer:not(.site-footer) {
   background-color: #111111;
   text-align: center;
   padding-top: 65px;
   padding-bottom: 100px;
-}
-
-footer .copyright {
-  margin-top: 50px;
-}
-
-footer .copyright .c-link {
-  padding: 25px 0px 25px 0px;
-  border-top: 1px solid rgba(128, 128, 128, 0.08);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.08);
-  margin-bottom: 50px;
-}
-
-footer .copyright .c-link a {
-  color: rgba(255, 255, 255, 0.664);
-  font-size: 18px;
-  font-weight: 300;
-  margin: 0px 50px 0px 50px;
-}
-
-footer .copyright .c-link a:hover {
-  color: white;
-}
-
-footer .copyright .c-text img {
-  width: 200px;
-  margin-bottom: 30px;
-}
-
-footer .copyright .c-text p {
-  color: white;
-  font-weight: 300;
-  margin-bottom: 15px;
-}
-
-footer .copyright .c-text span {
-  color: rgba(128, 128, 128, 0.5);
-  font-weight: 300;
-  width: 80%;
-  margin: 0 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-footer .language {
-  position: relative;
-  color: white;
-  background-color: #202020;
-  width: 241px;
-  height: 60px;
-  margin: 0 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 0px 20px 0px 20px;
-  border: 1px solid #333333;
-  cursor: pointer;
-}
-
-footer .language:hover {
-  background-color: #333333;
-}
-
-footer .language:hover .language-dropdown {
-  max-height: 400px;
-  visibility: visible;
-  -webkit-transition: 1.5s;
-  transition: 1.5s;
-}
-
-footer .language:hover span .cursor {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-
-footer .language span {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  font-size: 18px;
-  font-weight: 200;
-  cursor: pointer;
-}
-
-footer .language span span {
-  width: auto;
-}
-
-footer .language .language-dropdown {
-  position: absolute;
-  width: 101%;
-  max-height: 0;
-  visibility: hidden;
-  bottom: 100%;
-  -webkit-transition: .6s;
-  transition: .6s;
-  overflow: hidden;
-  left: -1px;
-  background-color: #202020;
-  border: 1px solid #333333;
-  height: auto;
-  text-align: left;
-  padding-left: 20px;
-}
-
-footer .language .language-dropdown li {
-  margin: 18px 0px 18px 0px;
-  color: white;
-  font-size: 18px;
-}
-
-footer .language .language-dropdown li a {
-  color: rgba(128, 128, 128, 0.705);
-}
-
-footer .language .language-dropdown li a:hover {
-  color: white;
 }
 
 .container {
