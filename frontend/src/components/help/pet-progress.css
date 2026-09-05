@@ -4,7 +4,31 @@
 .denk-wardrobe>div { justify-items:start; padding:8px 0; }
 .denk-care-gains { padding:10px; border-radius:8px; background:var(--panel-surface); color:var(--panel-gold-bright); }
 .denk-mascot .denk-cosmetics { position:absolute; inset:0; pointer-events:none; }
-.denk-cosmetics .denk-pin { position:absolute; top:47%; left:58%; width:10%; color:#f9d572; filter:drop-shadow(0 1px 1px #342109); }
+.denk-cosmetics .denk-pin {
+  position:absolute;
+  top:44.5%;
+  left:58.8%;
+  width:5.8%;
+  height:auto;
+  overflow:visible;
+  transform:translate(-50%,-50%) rotate(-14deg);
+  filter:drop-shadow(0 1px 1px #1a1208cc);
+}
+.pose-sucesso .denk-pin { top:38.5%; left:68.2%; }
+.pose-pensando .denk-pin { top:38%; left:61.6%; }
+.pose-dica .denk-pin { top:35%; left:65.9%; }
+.pose-rindo .denk-pin { top:35.5%; left:61.2%; }
+.pose-triste .denk-pin { top:37.5%; left:60.4%; }
+.pose-surpreso .denk-pin { top:33.5%; left:59.6%; }
+.pose-confuso .denk-pin { top:37%; left:59.2%; }
+.pose-frustrado .denk-pin { top:33%; left:56.9%; }
+.pose-dormindo .denk-pin,
+.pose-comendo .denk-pin,
+.pose-jogando .denk-pin,
+.pose-dancando .denk-pin,
+.pose-carinho .denk-pin,
+.pose-banho .denk-pin,
+.pose-andando .denk-pin { display:none; }
 .denk-mascot.is-celebrating:after { content:'✦'; position:absolute; color:#f9d572; top:12%; left:8%; font-size:28px; }
 .denk-mascot[data-animated=true].is-celebrating:after { animation:denk-spark 900ms ease-in-out 3; }
 .denk-mascot[data-animated=true].is-dancing:not(:has(.denk-sprite)) .denk-facing { animation:denk-dance 850ms ease-in-out infinite; transform-origin:50% 95%; }

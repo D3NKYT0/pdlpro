@@ -22,10 +22,16 @@ it('exibe peças equipadas e dança distinta, preservando representação estát
   expect(screen.getByRole('img')).toHaveClass('is-dancing', 'is-celebrating')
   rerender(<Denkynho pose="02-sucesso" appearance={appearance} dancing animated={false} />); await settle()
   expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')
-  expect(container.querySelector('.denk-cosmetics')).toBeInTheDocument()
+  expect(container.querySelector('[data-cosmetic="star-pin"]')).toBeTruthy()
+  expect(container.querySelector('.pose-sucesso [data-cosmetic="star-pin"]')).toBeTruthy()
   rerender(<Denkynho pose="02-sucesso" appearance={{ accessory: 'invalid', outfit: '', object: '' }} talking />); await settle()
-  expect(container.querySelector('.denk-cosmetics svg')).toBeNull()
+  expect(container.querySelector('[data-cosmetic="star-pin"]')).toBeNull()
   expect(screen.getByRole('img')).toHaveAttribute('data-gesture', 'true')
+})
+it('ancora o broche na pose em pé de boas-vindas', async () => {
+  const { container } = render(<Denkynho pose="01-boas-vindas" appearance={{ accessory: 'star-pin', outfit: '', object: '' }} animated={false} />)
+  await settle()
+  expect(container.querySelector('.pose-boas-vindas [data-cosmetic="star-pin"]')).toBeTruthy()
 })
 it.each(['11-comendo', '12-jogando', '06-rindo', '13-dancando', '14-carinho', '15-banho', '16-andando', '03-pensando', '09-confuso'])('reproduz quadros diferentes de %s e para ao desativar', async pose => {
   const { container, rerender, unmount } = render(<Denkynho pose={pose} />); await settle()

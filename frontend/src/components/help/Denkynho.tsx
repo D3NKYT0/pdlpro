@@ -6,7 +6,7 @@ import { useReducedMotion } from './useReducedMotion'
 import { transitionDurations, useMascotPose } from './useMascotPose'
 import './help.css'
 import './pet-progress.css'
-import { Star } from 'lucide-react'
+import { DenkynhoStarPin } from './DenkynhoStarPin'
 import type { DenkynhoAppearance } from '../../services/domain/content.service'
 
 import { SceneBackdrop } from './SceneBackdrop'
@@ -48,7 +48,7 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
         <img className="denk-base" alt="" src={asset(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
         {!outgoing && animated && talking && item.mouth && (item.openMouth ? !mouthOpen : mouthOpen) && layer(item.mouth)}
-        {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <Star className="denk-pin" fill="currentColor" />}</span>}
+        {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <DenkynhoStarPin />}</span>}
         </>}
       </div>
       </div>

@@ -11,5 +11,7 @@ it.each(['feed', 'sleep', 'play', 'bath', 'walk', 'dance'] as const)('renderiza 
   expect(icon?.getAttribute('aria-hidden')).toBe('true')
   expect(icon?.getAttribute('width')).toBe('44')
   expect(icon?.getAttribute('height')).toBe('44')
-  expect(icon?.querySelectorAll('path, circle').length).toBeGreaterThanOrEqual(4)
+  expect(icon?.getAttribute('shape-rendering')).toBe('geometricPrecision')
+  expect(icon?.querySelectorAll('linearGradient').length).toBeGreaterThanOrEqual(1)
+  expect(icon?.querySelectorAll('path, circle, ellipse, rect').length).toBeGreaterThanOrEqual(8)
 })
