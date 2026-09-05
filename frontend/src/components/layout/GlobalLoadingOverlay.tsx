@@ -3,6 +3,7 @@ import { useIsFetching } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { themeImage } from '../../theme/assets'
+import { PdlSymbol } from '../PdlSymbol'
 
 type LoaderPhase = 'visible' | 'leaving' | 'hidden'
 
@@ -142,7 +143,7 @@ export function GlobalLoadingOverlay() {
       <div className="global-loader__glow" aria-hidden="true" />
       <div className="global-loader__content">
         <div className="global-loader__crest">
-          <img src={themeImage('logo-circle.png')} alt="" />
+          <PdlSymbol />
         </div>
         <img className="global-loader__wordmark" src={themeImage('logo.png')} alt="PDL PRO" />
         <span>Preparando sua jornada</span>

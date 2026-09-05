@@ -12,6 +12,7 @@ import { Toggle } from '../src/components/ui/Toggle'
 import { Tabs } from '../src/components/ui/Tabs'
 import { Pagination } from '../src/components/ui/Pagination'
 import { useAsyncAction } from '../src/hooks/useAsyncAction'
+import { PdlSymbol } from '../src/components/PdlSymbol'
 import '../src/styles/global.css'
 import './ui.css'
 
@@ -30,6 +31,10 @@ function Showcase() {
     <Tabs id="showcase" label="Catálogo" className="game-tabs" value={tab} onChange={setTab} items={[{ id: 'components', label: 'Componentes' }, { id: 'guidelines', label: 'Como usar' }]} />
     <section id="showcase-panel-components" role="tabpanel" aria-labelledby="showcase-tab-components" hidden={tab !== 'components'}>
       <div className="ui-showcase-grid">
+        <Card className="ui-showcase-brand">
+          <PdlSymbol className="ui-showcase-brand-mark" />
+          <div><span className="panel-eyebrow">Identidade PDL</span><h2>Emblema da jornada</h2><p className="muted">Escudo, lâmina, coroa e ramos de linhagem em um símbolo sem iniciais.</p></div>
+        </Card>
         <Card className="ui-showcase-buttons">
           <h2>Botões do painel</h2><p className="muted">As mesmas texturas do projeto, com opções para cada ação.</p>
           <div className="ui-showcase-actions">

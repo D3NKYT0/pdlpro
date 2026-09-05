@@ -29,11 +29,11 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import { canAccessStaff } from "../../lib/staff";
 import { notificationApi, supportApi, contentApi } from "../../services/api";
-import { themeImage } from "../../theme/assets";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/domain/programs.service";
 import { useTheme } from "../../theme/ThemeProvider";
 import { ContextualHelp } from "../help/ContextualHelp";
+import { PdlSymbol } from "../PdlSymbol";
 
 const links: Array<{
   to: string;
@@ -124,11 +124,7 @@ export function PrivateLayout() {
       <div className="shell">
         <aside className="sidebar">
           <div className="panel-brand">
-            <img
-              className="panel-brand-mark"
-              src={themeImage("logo-circle.png")}
-              alt=""
-            />
+            <PdlSymbol className="panel-brand-mark" />
             <div>
               <span className="panel-kicker">{shellCopy?.kicker ?? "Área do jogador"}</span>
               <div className="brand">{shellCopy?.brand ?? "Painel"}</div>

@@ -216,6 +216,15 @@ div {
   z-index: -1;
 }
 
+.video video {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+}
+
 nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -345,6 +354,13 @@ nav ul span::before {
   position: absolute;
   top: 15%;
   right: 0;
+}
+
+nav .site-brand-mark {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(197, 161, 97, 0.28));
 }
 
 nav ul li:not(:last-child) {
@@ -537,7 +553,7 @@ nav ul li a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 130px;
+  margin-bottom: 38px;
 }
 
 .h .h-logo .letters {
@@ -545,11 +561,81 @@ nav ul li a {
   z-index: 2;
 }
 
-.h .h-logo .circle {
+.pdl-emblem-stage {
+  position: relative;
+  width: 244px;
+  height: 244px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 22px rgba(197, 161, 97, 0.2));
+}
+
+.pdl-emblem-stage::after {
+  content: '';
   position: absolute;
-  top: -120px;
-  -webkit-animation: circle 9s infinite linear;
-          animation: circle 9s infinite linear;
+  inset: 35px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 173, 93, .12), transparent 68%);
+}
+
+.pdl-emblem-symbol {
+  position: relative;
+  z-index: 2;
+  width: 184px;
+  height: 184px;
+  object-fit: contain;
+}
+
+.pdl-emblem-orbit {
+  position: absolute;
+  z-index: 1;
+  inset: 5px;
+  border: 1px solid rgba(216, 178, 98, .22);
+  border-top-color: #d9b665;
+  border-right-color: rgba(216, 178, 98, .52);
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(197, 161, 97, .08), inset 0 0 16px rgba(197, 161, 97, .05);
+  animation: pdlEmblemOrbit 11s linear infinite;
+}
+
+.pdl-emblem-orbit::before,
+.pdl-emblem-orbit::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -5px;
+  border: 1px solid #d7b263;
+  background: #171109;
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(217, 182, 101, .4);
+}
+
+.pdl-emblem-orbit::before { left: -5px; }
+.pdl-emblem-orbit::after { right: -5px; }
+
+.pdl-emblem-orbit--inner {
+  inset: 20px;
+  border-style: dashed;
+  border-color: rgba(216, 178, 98, .34);
+  animation-duration: 17s;
+  animation-direction: reverse;
+}
+
+.pdl-emblem-orbit--inner::before,
+.pdl-emblem-orbit--inner::after {
+  width: 5px;
+  height: 5px;
+  margin-top: -3px;
+}
+
+@keyframes pdlEmblemOrbit {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdl-emblem-orbit { animation: none; }
 }
 
 .h .h-link {
@@ -1166,9 +1252,6 @@ footer .language .language-dropdown li a:hover {
 }
 
 @media (min-width: 1921px) {
-  .video video {
-    width: 100%;
-  }
   .w {
     background-size: cover;
   }

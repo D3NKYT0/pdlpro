@@ -704,3 +704,115 @@
     width: 100%;
     height: 100%;
 }
+
+/* Features: pilares autênticos do Lineage (castelos do tema) */
+.home-features .character {
+  display: none;
+}
+
+.home-features .f-list {
+  margin-top: 72px;
+}
+
+.home-features .f-list a div {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-features .f-list a div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 6, 4, 0.28) 0%, rgba(8, 6, 4, 0.55) 42%, rgba(0, 0, 0, 0.92) 100%),
+    linear-gradient(90deg, rgba(8, 6, 4, 0.22), transparent 35%, transparent 65%, rgba(8, 6, 4, 0.22));
+  pointer-events: none;
+}
+
+.home-features .f-list a div span {
+  position: relative;
+  z-index: 1;
+  padding-top: 48px;
+  gap: 6px;
+}
+
+.home-features .f-list a div span p {
+  margin-bottom: 0;
+  font-family: Cambria, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.home-features .f-list a div span em {
+  display: block;
+  max-width: 90%;
+  margin: 0 0 12px;
+  color: rgba(230, 199, 125, 0.82);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.home-features .f-list a:hover div span em {
+  color: rgba(255, 220, 150, 0.95);
+}
+
+@media (max-width: 980px) {
+  .home-features .f-list {
+    margin-top: 40px;
+  }
+
+  .home-features .f-list a div span em {
+    font-size: 13px;
+  }
+}
+
+/* Wiki + crônica: fundo e cards com identidade de Aden */
+.home-wiki {
+  background:
+    linear-gradient(180deg, rgba(8, 6, 4, 0.72) 0%, rgba(8, 6, 4, 0.55) 40%, rgba(8, 6, 4, 0.88) 100%),
+    url(/theme/default/images/castles/giran.jpg) center 28% / cover no-repeat;
+}
+
+.home-wiki .w-list {
+  margin-top: 96px;
+}
+
+.home-wiki .wiki div span {
+  font-family: Cambria, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.home-wiki .update > div {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-wiki .update > div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(8, 6, 4, 0.15) 0%, rgba(8, 6, 4, 0.45) 45%, rgba(0, 0, 0, 0.92) 100%);
+  pointer-events: none;
+}
+
+.home-wiki .update > div > div {
+  position: relative;
+  z-index: 1;
+}
+
+.home-wiki .update > div > div span {
+  color: #e6c77d;
+  border-color: rgba(230, 199, 125, 0.45);
+}
+
+@media (max-width: 980px) {
+  .home-wiki .w-list {
+    margin-top: 48px;
+  }
+}

@@ -29,6 +29,360 @@ footer {
     z-index: 2;
 }
 
+/* Navegação pública: shell compacto, emblema próprio e foco dourado discreto. */
+html.pdl-public .main-content {
+    padding-top: 82px;
+}
+
+html.pdl-public .site-nav {
+    height: 82px;
+    background:
+        linear-gradient(180deg, rgba(12, 10, 7, 0.96), rgba(5, 5, 4, 0.92)),
+        radial-gradient(circle at 14% 0%, rgba(197, 161, 97, 0.12), transparent 34%);
+    border-bottom: 1px solid rgba(197, 161, 97, 0.18);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(14px) saturate(115%);
+    transition: height .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+
+html.pdl-public .site-nav.scrolled {
+    height: 72px;
+    background-color: rgba(5, 5, 4, 0.97);
+    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.48);
+}
+
+html.pdl-public .site-nav-shell {
+    width: min(1500px, 100%);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+html.pdl-public .site-nav-brand {
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-right: 20px;
+    border-right: 1px solid rgba(197, 161, 97, 0.18);
+}
+
+html.pdl-public .site-nav .site-brand-mark {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    transition: filter .25s ease, transform .25s ease;
+}
+
+html.pdl-public .site-nav-brand:hover .site-brand-mark {
+    filter: drop-shadow(0 0 14px rgba(226, 189, 112, 0.48));
+    transform: translateY(-1px);
+}
+
+html.pdl-public .site-brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+html.pdl-public .site-brand-copy strong {
+    color: #ead092;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: .16em;
+}
+
+html.pdl-public .site-brand-copy small {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, .38);
+    font-size: 9px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+}
+
+html.pdl-public .site-nav-drawer {
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+html.pdl-public .site-nav-drawer-head {
+    display: none;
+}
+
+html.pdl-public .site-nav-drawer ul {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    padding: 0;
+}
+
+html.pdl-public .site-nav-drawer ul li,
+html.pdl-public .site-nav-drawer ul li:not(:last-child) {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+html.pdl-public .site-nav-drawer ul li::before {
+    display: none;
+}
+
+html.pdl-public .site-nav-drawer ul li a {
+    position: relative;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px 0;
+    color: rgba(255, 255, 255, .52);
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    text-shadow: none;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+html.pdl-public .site-nav-drawer ul li a::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    bottom: 0;
+    left: 12px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d9b665, transparent);
+    box-shadow: 0 0 12px rgba(217, 182, 101, .48);
+    opacity: 0;
+    transform: scaleX(.35);
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+html.pdl-public .site-nav-drawer ul li:hover a,
+html.pdl-public .site-nav-drawer ul li.active a {
+    color: #f4e5c3;
+    background: linear-gradient(180deg, transparent 34%, rgba(197, 161, 97, .08));
+    text-shadow: 0 0 14px rgba(197, 161, 97, .24);
+}
+
+html.pdl-public .site-nav-drawer ul li:hover a::after,
+html.pdl-public .site-nav-drawer ul li.active a::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+html.pdl-public .site-nav-actions {
+    height: 100%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 0 0 auto;
+}
+
+html.pdl-public .site-nav-actions .user {
+    height: 48px;
+    margin: 0;
+    padding: 0 22px;
+    gap: 10px;
+    border: 1px solid rgba(197, 161, 97, .18);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .025), transparent),
+        rgba(17, 14, 10, .58);
+    color: rgba(234, 220, 190, .76);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: .02em;
+    box-shadow: inset 0 0 0 1px rgba(255, 244, 211, .018);
+    clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px);
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+html.pdl-public .site-nav-actions .user svg {
+    width: 21px;
+    height: 21px;
+    margin: 0;
+    color: #caa55f;
+    stroke-width: 1.45;
+    filter: drop-shadow(0 0 7px rgba(197, 161, 97, .18));
+}
+
+html.pdl-public .site-nav-actions .user:hover {
+    color: #f5e7c8;
+    border-color: rgba(222, 187, 111, .46);
+    background-color: rgba(197, 161, 97, .08);
+    text-shadow: 0 0 12px rgba(197, 161, 97, .28);
+    transform: translateY(-1px);
+}
+
+html.pdl-public .site-nav-actions .download {
+    width: 190px;
+    height: 56px;
+    margin: 0;
+    padding: 0 10px 0 28px;
+    border: 0;
+    background: url('/theme/default/images/button/3.png') center / 100% 100% no-repeat;
+    color: rgba(255, 247, 226, .82);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: .03em;
+    text-transform: none;
+    box-shadow: none;
+    transition: color .2s ease, filter .2s ease, transform .2s ease;
+}
+
+html.pdl-public .site-nav-actions .download:hover {
+    color: #fff;
+    text-shadow: 0 0 14px rgba(255, 174, 66, .72);
+    filter: brightness(1.28);
+    transform: translateY(-2px);
+}
+
+html.pdl-public .site-nav .open,
+html.pdl-public .site-nav .close {
+    border: 1px solid rgba(197, 161, 97, .24);
+    background: rgba(197, 161, 97, .06) !important;
+    color: #d7b66d;
+}
+
+html.pdl-public .site-nav-backdrop {
+    display: none;
+}
+
+@media (max-width: 1320px) {
+    html.pdl-public .site-brand-copy { display: none; }
+    html.pdl-public .site-nav-brand { padding-right: 14px; }
+    html.pdl-public .site-nav-drawer ul li a { padding-inline: 9px; font-size: 13px; }
+}
+
+@media (max-width: 1100px) {
+    html.pdl-public .main-content { padding-top: 72px; }
+    html.pdl-public .site-nav,
+    html.pdl-public .site-nav.scrolled { height: 72px; }
+    html.pdl-public .site-nav-shell { padding: 0 14px; gap: 10px; }
+    html.pdl-public .site-nav-brand { height: 52px; padding-right: 12px; }
+    html.pdl-public .site-nav .site-brand-mark { width: 46px; height: 46px; }
+    html.pdl-public .site-nav-actions .user span { display: none; }
+    html.pdl-public .site-nav-actions .user { width: 42px; height: 42px; padding: 0; justify-content: center; }
+    html.pdl-public .site-nav .open {
+        width: 42px;
+        height: 42px;
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        font-size: 17px;
+    }
+    html.pdl-public .site-nav-drawer {
+        position: fixed;
+        z-index: 1002;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(350px, 88vw);
+        height: 100vh;
+        padding: 22px 18px 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        background: linear-gradient(165deg, #17130d, #090806 62%);
+        border-right: 1px solid rgba(197, 161, 97, .3);
+        box-shadow: 28px 0 70px rgba(0, 0, 0, .58);
+        transform: translateX(-105%);
+        visibility: hidden;
+        transition: transform .28s ease, visibility .28s ease;
+    }
+    html.pdl-public .site-nav-drawer.is-open { transform: translateX(0); visibility: visible; }
+    html.pdl-public .site-nav-drawer-head {
+        height: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 2px 20px;
+        border-bottom: 1px solid rgba(197, 161, 97, .16);
+        color: #d8bd82;
+        font-family: 'Cinzel', serif;
+        font-size: 11px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+    }
+    html.pdl-public .site-nav-drawer-head .site-brand-mark { width: 42px; height: 42px; }
+    html.pdl-public .site-nav .close {
+        position: static;
+        width: 38px;
+        height: 38px !important;
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        font-size: 16px;
+    }
+    html.pdl-public .site-nav-drawer ul {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 18px -4px 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 4px;
+        background: none;
+        backdrop-filter: none;
+        transition: none;
+    }
+    html.pdl-public .site-nav-drawer ul li,
+    html.pdl-public .site-nav-drawer ul li:not(:last-child) { height: auto; margin: 0; padding: 0; }
+    html.pdl-public .site-nav-drawer ul li a {
+        width: 100%;
+        height: 46px;
+        padding: 0 16px;
+        border-left: 2px solid transparent;
+        font-size: 14px;
+    }
+    html.pdl-public .site-nav-drawer ul li a::after { display: none; }
+    html.pdl-public .site-nav-drawer ul li:hover a,
+    html.pdl-public .site-nav-drawer ul li.active a {
+        border-left-color: #d9b665;
+        background: linear-gradient(90deg, rgba(197, 161, 97, .14), transparent 88%);
+    }
+    html.pdl-public .site-nav-backdrop {
+        position: fixed;
+        z-index: 1001;
+        inset: 0;
+        display: block;
+        border: 0;
+        background: rgba(0, 0, 0, .66);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity .28s ease, visibility .28s ease;
+    }
+    html.pdl-public .site-nav-backdrop.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+}
+
+@media (max-width: 520px) {
+    html.pdl-public .site-nav-actions .download { display: none; }
+    html.pdl-public .site-nav-actions .user { padding: 0 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.pdl-public .site-nav,
+    html.pdl-public .site-nav .site-brand-mark,
+    html.pdl-public .site-nav-drawer,
+    html.pdl-public .site-nav-backdrop,
+    html.pdl-public .site-nav-drawer ul li a::after { transition: none; }
+}
+
 /* Clan/trailer landing blocks live in /theme/pages/home-extras.css */
 
 /* Online Section Styles */

@@ -128,7 +128,8 @@ body.global-loading {
   width: 126px;
   height: 126px;
   object-fit: contain;
-  animation: globalLoaderSpin 6s linear infinite;
+  filter: drop-shadow(0 0 18px rgba(212, 173, 98, 0.32));
+  animation: globalLoaderMark 2.6s ease-in-out infinite;
 }
 
 .global-loader__wordmark {
@@ -165,8 +166,9 @@ body.global-loading {
   animation: globalLoaderProgress 1.25s ease-in-out infinite;
 }
 
-@keyframes globalLoaderSpin {
-  to { transform: rotate(360deg); }
+@keyframes globalLoaderMark {
+  0%, 100% { opacity: 0.72; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.04); }
 }
 
 @keyframes globalLoaderDiamond {

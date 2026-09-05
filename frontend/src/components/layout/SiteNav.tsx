@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { CircleUserRound } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { themeImage } from '../../theme/assets'
+import { PdlSymbol } from '../PdlSymbol'
 
 const links = [
   { to: '/', label: 'Início', end: true },
@@ -35,42 +36,63 @@ export function SiteNav() {
     setMenuOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
+
   return (
-    <nav className={scrolled ? 'scrolled' : undefined}>
-      <button type="button" className="open" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
-        <i className="fa-solid fa-bars" />
-      </button>
-
-      <ul className={menuOpen ? 'active' : undefined}>
-        <button type="button" className="close" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>
-          <i className="fa-solid fa-xmark" />
-        </button>
-        <span>
-          <img src={themeImage('icons/nav-icon.png')} alt="" />
-        </span>
-        {links.map((link) => (
-          <li key={link.to} className={navActive(pathname, link.to, link.end) ? 'active' : undefined}>
-            <Link to={link.to}>{link.label}</Link>
-          </li>
-        ))}
-      </ul>
-
-      <div>
-        {user ? (
-          <Link className="user" to="/painel">
-            <img src={themeImage('icons/user.png')} alt="" />
-            <span>Minha Conta</span>
-          </Link>
-        ) : (
-          <Link className="user" to="/login">
-            <img src={themeImage('icons/user.png')} alt="" />
-            <span>Entrar</span>
-          </Link>
-        )}
-        <Link className="download" to="/downloads">
-          Download
+    <nav className={`site-nav${scrolled ? ' scrolled' : ''}`} aria-label="Navegação principal">
+      <div className="site-nav-shell">
+        <Link className="site-nav-brand" to="/" aria-label="PDL PRO — Início">
+          <PdlSymbol className="site-brand-mark" />
+          <span className="site-brand-copy"><strong>PDL PRO</strong><small>Lineage</small></span>
         </Link>
+
+        <button type="button" className="open" aria-label="Abrir menu" aria-expanded={menuOpen} aria-controls="site-navigation-drawer" onClick={() => setMenuOpen(true)}>
+          <i className="fa-solid fa-bars" aria-hidden="true" />
+        </button>
+
+        <div className={`site-nav-drawer${menuOpen ? ' is-open' : ''}`} id="site-navigation-drawer">
+          <div className="site-nav-drawer-head">
+            <PdlSymbol className="site-brand-mark" />
+            <span>Explore o reino</span>
+            <button type="button" className="close" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>
+              <i className="fa-solid fa-xmark" aria-hidden="true" />
+            </button>
+          </div>
+          <ul>
+            {links.map((link) => {
+              const active = navActive(pathname, link.to, link.end)
+              return (
+                <li key={link.to} className={active ? 'active' : undefined}>
+                  <Link to={link.to} aria-current={active ? 'page' : undefined}>{link.label}</Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+
+        <div className="site-nav-actions">
+          {user ? (
+            <Link className="user" to="/painel">
+              <CircleUserRound aria-hidden="true" />
+              <span>Minha Conta</span>
+            </Link>
+          ) : (
+            <Link className="user" to="/login">
+              <CircleUserRound aria-hidden="true" />
+              <span>Entrar</span>
+            </Link>
+          )}
+          <Link className="download" to="/downloads">Download</Link>
+        </div>
       </div>
+      <button className={`site-nav-backdrop${menuOpen ? ' is-open' : ''}`} type="button" aria-hidden="true" tabIndex={-1} onClick={() => setMenuOpen(false)} />
     </nav>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { themeAsset, themeImage } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
+import { PdlHeroEmblem } from '../PdlSymbol'
 
 type AuthPanelProps = {
   title: string
@@ -42,8 +43,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
         <div className="auth-split">
           <div className="auth-brand">
             <div className="h-logo">
-              <img className="letters" src={themeImage('logo.png')} alt="PDL" />
-              <img className="circle" src={themeImage('logo-circle.png')} alt="" />
+              <PdlHeroEmblem />
             </div>
             <h1>{title}</h1>
             <p className="hero-description">{lead || defaultLead}</p>

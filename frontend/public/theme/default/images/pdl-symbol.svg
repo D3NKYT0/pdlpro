@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <defs>
+    <!-- Gold / bronze materials -->
+    <linearGradient id="g-gold" x1="36" y1="24" x2="220" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8DC"/>
+      <stop offset=".12" stop-color="#F2D58A"/>
+      <stop offset=".32" stop-color="#C8963C"/>
+      <stop offset=".52" stop-color="#7A4A18"/>
+      <stop offset=".72" stop-color="#B8782C"/>
+      <stop offset=".88" stop-color="#E8C878"/>
+      <stop offset="1" stop-color="#FFF0C0"/>
+    </linearGradient>
+    <linearGradient id="g-gold-dark" x1="60" y1="50" x2="196" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6C070"/>
+      <stop offset=".4" stop-color="#6A3C14"/>
+      <stop offset=".75" stop-color="#9A6024"/>
+      <stop offset="1" stop-color="#D4A858"/>
+    </linearGradient>
+    <linearGradient id="g-blade" x1="128" y1="56" x2="128" y2="196" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFAEC"/>
+      <stop offset=".08" stop-color="#F0D890"/>
+      <stop offset=".28" stop-color="#C8A050"/>
+      <stop offset=".48" stop-color="#8A5820"/>
+      <stop offset=".68" stop-color="#5A3010"/>
+      <stop offset=".86" stop-color="#A87030"/>
+      <stop offset="1" stop-color="#E8C878"/>
+    </linearGradient>
+    <linearGradient id="g-blade-shine" x1="118" y1="64" x2="140" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".9"/>
+      <stop offset=".18" stop-color="#FFF4C8" stop-opacity=".55"/>
+      <stop offset=".45" stop-color="#E0B860" stop-opacity=".15"/>
+      <stop offset=".7" stop-color="#402010" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#FFF0B0" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="g-plate" x1="80" y1="48" x2="176" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A2014"/>
+      <stop offset=".25" stop-color="#12100C"/>
+      <stop offset=".55" stop-color="#080706"/>
+      <stop offset=".8" stop-color="#1A140E"/>
+      <stop offset="1" stop-color="#0A0806"/>
+    </linearGradient>
+    <linearGradient id="g-plate-edge" x1="90" y1="50" x2="166" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF2C0"/>
+      <stop offset=".2" stop-color="#E0B860"/>
+      <stop offset=".5" stop-color="#8A5420"/>
+      <stop offset=".78" stop-color="#4A280C"/>
+      <stop offset="1" stop-color="#D4A858"/>
+    </linearGradient>
+    <linearGradient id="g-leaf" x1="70" y1="90" x2="186" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0B8"/>
+      <stop offset=".35" stop-color="#C8963C"/>
+      <stop offset=".7" stop-color="#6A3C14"/>
+      <stop offset="1" stop-color="#B8782C"/>
+    </linearGradient>
+    <radialGradient id="g-gem" cx="0" cy="0" r="1" gradientTransform="translate(128 54) rotate(90) scale(8 10)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".25" stop-color="#FFF0B0"/>
+      <stop offset=".65" stop-color="#C8963C"/>
+      <stop offset="1" stop-color="#5A3010"/>
+    </radialGradient>
+    <radialGradient id="g-gem-guard" cx="0" cy="0" r="1" gradientTransform="translate(128 140) rotate(90) scale(5 6)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".3" stop-color="#F0D890"/>
+      <stop offset=".75" stop-color="#A87030"/>
+      <stop offset="1" stop-color="#402010"/>
+    </radialGradient>
+    <radialGradient id="g-aura" cx="0" cy="0" r="1" gradientTransform="translate(128 128) scale(118)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8C070" stop-opacity=".4"/>
+      <stop offset=".4" stop-color="#A87030" stop-opacity=".16"/>
+      <stop offset=".75" stop-color="#402010" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g-hotspot" cx="0" cy="0" r="1" gradientTransform="translate(104 88) scale(58 72)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".35"/>
+      <stop offset=".35" stop-color="#FFE8A0" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g-ao" cx="0" cy="0" r="1" gradientTransform="translate(128 148) scale(70 78)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#000" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#000" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".45"/>
+    </radialGradient>
+
+    <!-- Lighting / material filters -->
+    <filter id="f-emboss" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="3.5" specularConstant="1.1" specularExponent="18" lighting-color="#FFF8E0" result="spec">
+        <fePointLight x="-40" y="-60" z="90"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClip"/>
+      <feComposite in="SourceGraphic" in2="specClip" operator="arithmetic" k1="0" k2="1" k3="0.85" k4="0" result="lit"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="2.4" flood-color="#000" flood-opacity=".55"/>
+    </filter>
+    <filter id="f-metal-ring" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".9" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="2.2" specularConstant="1.35" specularExponent="28" lighting-color="#FFFBE8" result="spec">
+        <fePointLight x="-30" y="-80" z="110"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClip"/>
+      <feComposite in="SourceGraphic" in2="specClip" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+    <filter id="f-soft-glow" x="-45%" y="-45%" width="190%" height="190%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feColorMatrix in="b" values="1 0 0 0 .9  0 1 0 0 .7  0 0 1 0 .25  0 0 0 .55 0" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="f-blade" x="-20%" y="-15%" width="140%" height="130%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".7" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="4" specularConstant="1.4" specularExponent="36" lighting-color="#FFFFFF" result="spec">
+        <fePointLight x="20" y="-40" z="70"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClip"/>
+      <feComposite in="SourceGraphic" in2="specClip" operator="arithmetic" k1="0" k2="1" k3="1.1" k4="0"/>
+    </filter>
+    <filter id="f-leaf" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".6" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant=".9" specularExponent="16" lighting-color="#FFF4C8" result="spec">
+        <fePointLight x="-20" y="-30" z="50"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClip"/>
+      <feComposite in="SourceGraphic" in2="specClip" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0"/>
+      <feDropShadow dx="0" dy="1" stdDeviation=".8" flood-color="#000" flood-opacity=".4"/>
+    </filter>
+  </defs>
+
+  <!-- Soft ambient -->
+  <circle cx="128" cy="128" r="120" fill="url(#g-aura)"/>
+
+  <!-- Outer star seal (solid metal, embossed) -->
+  <g filter="url(#f-soft-glow)">
+    <path d="M128 8l15 15 20-8 8 20 21 1 1 21 20 8-8 20 15 15-15 15 8 20-20 8-1 21-21 1-8 20-20-8-15 15-15-15-20 8-8-20-21-1-1-21-20-8 8-20-15-15 15-15-8-20 20-8 1-21 21-1 8-20 20 8 15-15Z"
+      fill="#1A1008" stroke="url(#g-gold)" stroke-width="3.2"/>
+    <path d="M128 14l13 13 17-7 7 17 18 1 1 18 17 7-7 17 13 13-13 13 7 17-17 7-1 18-18 1-7 17-17-7-13 13-13-13-17 7-7-17-18-1-1-18-17-7 7-17-13-13 13-13-7-17 17-7 1-18 18-1 7-17 17 7 13-13Z"
+      fill="none" stroke="#4A280C" stroke-width="1.4" opacity=".7"/>
+    <path d="M128 18l11 11 15-6 6 15 16 1 1 16 15 6-6 15 11 11-11 11 6 15-15 6-1 16-16 1-6 15-15-6-11 11-11-11-15 6-6-15-16-1-1-16-15-6 6-15-11-11 11-11-6-15 15-6 1-16 16-1 6-15 15 6 11-11Z"
+      fill="none" stroke="#FFF4C8" stroke-width=".55" opacity=".28"/>
+  </g>
+
+  <!-- Concentric rings as raised metal bands -->
+  <g filter="url(#f-metal-ring)">
+    <circle cx="128" cy="128" r="91" fill="none" stroke="url(#g-gold)" stroke-width="5"/>
+    <circle cx="128" cy="128" r="91" fill="none" stroke="#FFF8DC" stroke-width="1.1" opacity=".35" transform="translate(0 -1.2)"/>
+    <circle cx="128" cy="128" r="91" fill="none" stroke="#3A200C" stroke-width="1.2" opacity=".55" transform="translate(0 1.4)"/>
+    <circle cx="128" cy="128" r="85" fill="none" stroke="#0A0806" stroke-width="2.4"/>
+    <circle cx="128" cy="128" r="82.5" fill="none" stroke="url(#g-gold-dark)" stroke-width="1.6"/>
+    <circle cx="128" cy="128" r="78" fill="none" stroke="#C8963C" stroke-width=".9" stroke-dasharray="1.4 4.8" opacity=".85"/>
+    <circle cx="128" cy="128" r="74.5" fill="none" stroke="#4A280C" stroke-width=".7" opacity=".6"/>
+  </g>
+
+  <!-- Cardinal metal studs -->
+  <g filter="url(#f-emboss)">
+    <path d="M128 26v12M128 218v12M26 128h12M218 128h12" stroke="url(#g-gold)" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="m54 54 11 11M191 191l11 11M202 54l-11 11M65 191l-11 11" stroke="url(#g-gold-dark)" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="128" cy="22" r="5.2" fill="url(#g-gem)" stroke="#FFF8DC" stroke-width=".7"/>
+    <circle cx="234" cy="128" r="5.2" fill="url(#g-gem)" stroke="#FFF8DC" stroke-width=".7"/>
+    <circle cx="128" cy="234" r="5.2" fill="url(#g-gem)" stroke="#FFF8DC" stroke-width=".7"/>
+    <circle cx="22" cy="128" r="5.2" fill="url(#g-gem)" stroke="#FFF8DC" stroke-width=".7"/>
+    <path d="m128 18 4.5 6-4.5 6-4.5-6 4.5-6Z" fill="#FFF8DC" opacity=".55"/>
+    <path d="m234 128-6 4.5-6-4.5 6-4.5 6 4.5Z" fill="#FFF8DC" opacity=".45"/>
+  </g>
+
+  <!-- Heraldic relief -->
+  <g filter="url(#f-emboss)">
+    <!-- Shield plate -->
+    <path d="M128 44 92 64 68 98l8 70 52 54 52-54 8-70-24-34-36-20Z" fill="url(#g-plate)" stroke="url(#g-plate-edge)" stroke-width="3"/>
+    <path d="M128 50 98 67 76 98l7 64 45 47 45-47 7-64-22-31-30-15Z" fill="none" stroke="#E8C878" stroke-opacity=".22" stroke-width="1.1"/>
+    <path d="M128 56 104 72 84 99l6 56 38 40 38-40 6-56-20-27-24-12Z" fill="url(#g-hotspot)" opacity=".85"/>
+    <path d="M128 148c-28-8-42-28-48-52 8 4 20 8 48 8s40-4 48-8c-6 24-20 44-48 52Z" fill="url(#g-ao)"/>
+
+    <!-- Engraved arcs on plate -->
+    <path d="M96 106c12-24 22-36 32-42 10 6 20 18 32 42" stroke="#C8963C" stroke-opacity=".4" stroke-width="1.1" fill="none"/>
+    <path d="M102 152c9 18 17 28 26 36 9-8 17-18 26-36" stroke="#8A5420" stroke-opacity=".45" stroke-width="1" fill="none"/>
+    <path d="M110 94h36M108 112h40M112 130h32" stroke="#FFF0B0" stroke-opacity=".08" stroke-width=".8"/>
+
+    <!-- Crest / crown -->
+    <path d="M100 84c6-14 15-24 28-32 13 8 22 18 28 32l-12-5-6 10-10-13-10 13-6-10-12 5Z"
+      fill="#5A3010" stroke="url(#g-gold)" stroke-width="1.9"/>
+    <path d="M110 82c5-9 10-15 18-20 8 5 13 11 18 20l-8-3-4 7-6-9-6 9-4-7-8 3Z"
+      fill="#E8C878" fill-opacity=".32"/>
+    <circle cx="128" cy="54" r="5.5" fill="url(#g-gem)" stroke="#FFF8DC" stroke-width=".9"/>
+    <path d="M125 51.5h3.2v2.2H125z" fill="#FFF" opacity=".55"/>
+
+    <!-- Blade body -->
+    <g filter="url(#f-blade)">
+      <path d="m128 60 10 18-5.5 80-4.5 16-4.5-16L118 78 128 60Z" fill="url(#g-blade)" stroke="#F2D58A" stroke-width="1.3"/>
+      <path d="m128 66 5 12-3 72-2 10-2-10-3-72 5-12Z" fill="url(#g-blade-shine)"/>
+      <path d="M128 70v92" stroke="#FFFFFF" stroke-width="1.35" opacity=".65"/>
+      <path d="M131.8 78v78" stroke="#3A200C" stroke-width=".7" opacity=".4"/>
+      <path d="M124.4 78v78" stroke="#FFF8DC" stroke-width=".45" opacity=".3"/>
+      <!-- Tip facet -->
+      <path d="m128 60 4 8-4 5-4-5 4-8Z" fill="#FFF8DC" opacity=".55"/>
+    </g>
+
+    <!-- Crossguard -->
+    <path d="m98 132 30 12 30-12-7 15-23 10-23-10-7-15Z" fill="#6A3C14" stroke="url(#g-gold)" stroke-width="1.6"/>
+    <path d="m106 136 22 8 22-8-5 9-17 7-17-7-5-9Z" fill="#E8C878" fill-opacity=".38"/>
+    <path d="m104 134 24 9 24-9" stroke="#FFF4C8" stroke-width=".7" opacity=".35"/>
+    <circle cx="128" cy="140" r="4" fill="url(#g-gem-guard)" stroke="#FFF8DC" stroke-width=".75"/>
+    <path d="M126.2 138.2h2.4v1.6h-2.4z" fill="#FFF" opacity=".5"/>
+
+    <!-- Grip / pommel -->
+    <path d="M128 150v36" stroke="url(#g-gold)" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M128 150v36" stroke="#FFF4C8" stroke-width="1.3" opacity=".35"/>
+    <path d="M116 186h24" stroke="url(#g-gold)" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M120 191h16" stroke="url(#g-gold-dark)" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M116 186h24" stroke="#FFF8DC" stroke-width=".7" opacity=".3"/>
+  </g>
+
+  <!-- Laurel wreath — solid sculpted leaves -->
+  <g filter="url(#f-leaf)">
+    <!-- Stems -->
+    <path d="M88 116c12-18 24-28 40-34" stroke="url(#g-leaf)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M168 116c-12-18-24-28-40-34" stroke="url(#g-leaf)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M88 124c9 22 20 36 40 48" stroke="#6A3C14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M168 124c-9 22-20 36-40 48" stroke="#6A3C14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+    <!-- Left leaves (upper) -->
+    <path d="M86 114c-4-10 0-18 8-22 4 6 8 12 12 16-7 2-14 4-20 6Z" fill="url(#g-leaf)" stroke="#F2D58A" stroke-width=".55"/>
+    <path d="M93 104c-3-9 1-15 9-18 3 5 7 10 10 14-6 2-13 3-19 4Z" fill="#C8963C" stroke="#E8C878" stroke-width=".5"/>
+    <path d="M101 95c-2-8 2-14 9-16 2 5 5 9 8 12-5 2-11 3-17 4Z" fill="#E8C878" stroke="#FFF4C8" stroke-width=".45"/>
+    <!-- Left leaves (lower) -->
+    <path d="M89 130c-7 5-11 12-10 18 6-1 12 0 17 2-3-6-5-12-7-20Z" fill="#8A5420" stroke="#C8963C" stroke-width=".5"/>
+    <path d="M97 144c-6 6-9 13-8 18 5-1 11 0 15 2-3-6-5-12-7-20Z" fill="#6A3C14" stroke="#A87030" stroke-width=".5"/>
+    <path d="M107 158c-5 6-7 12-6 16 4 0 9 1 12 2-2-5-4-11-6-18Z" fill="#8A5420" stroke="#C8963C" stroke-width=".45"/>
+    <!-- Leaf midribs left -->
+    <path d="M90 108c4 4 8 8 12 10M94 138c3 5 6 10 8 14" stroke="#FFF4C8" stroke-opacity=".25" stroke-width=".6" fill="none"/>
+
+    <!-- Right leaves (upper) -->
+    <path d="M170 114c4-10 0-18-8-22-4 6-8 12-12 16 7 2 14 4 20 6Z" fill="url(#g-leaf)" stroke="#F2D58A" stroke-width=".55"/>
+    <path d="M163 104c3-9-1-15-9-18-3 5-7 10-10 14 6 2 13 3 19 4Z" fill="#C8963C" stroke="#E8C878" stroke-width=".5"/>
+    <path d="M155 95c2-8-2-14-9-16-2 5-5 9-8 12 5 2 11 3 17 4Z" fill="#E8C878" stroke="#FFF4C8" stroke-width=".45"/>
+    <!-- Right leaves (lower) -->
+    <path d="M167 130c7 5 11 12 10 18-6-1-12 0-17 2 3-6 5-12 7-20Z" fill="#8A5420" stroke="#C8963C" stroke-width=".5"/>
+    <path d="M159 144c6 6 9 13 8 18-5-1-11 0-15 2 3-6 5-12 7-20Z" fill="#6A3C14" stroke="#A87030" stroke-width=".5"/>
+    <path d="M149 158c5 6 7 12 6 16-4 0-9 1-12 2 2-5 4-11 6-18Z" fill="#8A5420" stroke="#C8963C" stroke-width=".45"/>
+    <path d="M166 108c-4 4-8 8-12 10M162 138c-3 5-6 10-8 14" stroke="#FFF4C8" stroke-opacity=".25" stroke-width=".6" fill="none"/>
+  </g>
+
+  <!-- Global specular wash (key light from top-left) -->
+  <ellipse cx="106" cy="86" rx="42" ry="56" fill="url(#g-hotspot)" opacity=".55" pointer-events="none"/>
+  <path d="M90 72c18-22 36-30 52-32" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity=".22" pointer-events="none"/>
+  <path d="M98 96c10-8 22-12 34-12" stroke="#FFF8DC" stroke-width=".8" stroke-linecap="round" opacity=".12" pointer-events="none"/>
+</svg>

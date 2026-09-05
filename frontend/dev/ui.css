@@ -2,6 +2,9 @@
 html.pdl-panel .ui-showcase > .game-tabs { margin: 24px 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .ui-showcase-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .ui-showcase-buttons { grid-column: 1 / -1; }
+.ui-showcase-brand { grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; }
+.ui-showcase-brand-mark { width: 72px; height: 72px; flex: 0 0 auto; filter: drop-shadow(0 0 16px rgba(197, 161, 97, .28)); }
+.ui-showcase-brand h2, .ui-showcase-brand p { margin: 0; }
 .ui-showcase .ui-showcase-result { margin-top: 24px; margin-bottom: 0; color: var(--panel-muted); }
 .ui-showcase h2 { margin-top: 0; }
 .ui-showcase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }

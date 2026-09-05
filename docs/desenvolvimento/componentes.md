@@ -28,6 +28,7 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 | [Field](../../frontend/src/components/ui/Field.tsx) | Label, controle nativo, dica e erro; preserva ref, atributos e validação HTML |
 | [Card](../../frontend/src/components/ui/Card.tsx) | Superfície do tema; `as` seleciona `section`, `article`, `aside`, `div` ou `header` |
 | [PageHeader](../../frontend/src/components/ui/PageHeader.tsx) | Título h1, descrição, identificação da seção e ações |
+| [PdlSymbol](../../frontend/src/components/PdlSymbol.tsx) | Emblema vetorial decorativo do PDL, sem iniciais; reutilizado pelos shells e carregamentos |
 | [Tabs](../../frontend/src/components/ui/Tabs.tsx) | Abas controladas, setas, Home/End e associação aos painéis |
 | [Toggle](../../frontend/src/components/ui/Toggle.tsx) | Checkbox nativo, nome acessível e bloqueio durante envio |
 | [Pagination](../../frontend/src/components/ui/Pagination.tsx) | Página atual, limites e bloqueio durante consulta; a tela busca os dados |

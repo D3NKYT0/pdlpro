@@ -115,8 +115,8 @@ html.pdl-panel .panel-brand-mark {
   width: 48px;
   height: 48px;
   object-fit: contain;
-  opacity: 0.78;
-  filter: sepia(0.25) drop-shadow(0 0 12px rgba(197, 161, 97, 0.18));
+  opacity: 0.96;
+  filter: drop-shadow(0 0 12px rgba(197, 161, 97, 0.24));
 }
 
 html.pdl-panel .panel-kicker,

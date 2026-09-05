@@ -85,7 +85,7 @@
     padding-top: 240px;
   }
   .h .h-logo {
-    margin-bottom: 90px;
+    margin-bottom: 30px;
   }
   .h .h-logo .letters {
     width: 300px;
@@ -93,6 +93,14 @@
   .h .h-logo .circle {
     width: 230px;
     top: -90px;
+  }
+  .pdl-emblem-stage {
+    width: 198px;
+    height: 198px;
+  }
+  .pdl-emblem-symbol {
+    width: 150px;
+    height: 150px;
   }
   .h .h-link {
     -webkit-box-orient: vertical;

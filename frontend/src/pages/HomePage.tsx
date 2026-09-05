@@ -4,13 +4,29 @@ import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
+import { PdlHeroEmblem } from '../components/PdlSymbol'
 
 const wikiLinks = [
-  { to: '/wiki', label: 'Guias do jogo' },
-  { to: '/wiki', label: 'Comandos' },
-  { to: '/wiki', label: 'Classes e raças' },
-  { to: '/faq', label: 'Ajuda no Jogo' },
-  { to: '/calendar', label: 'Guia de Eventos' },
+  { to: '/informacoes#rates', label: 'Rates e progressão' },
+  { to: '/informacoes#enchant', label: 'Encantamento' },
+  { to: '/informacoes#pvp', label: 'Siege e castelos' },
+  { to: '/informacoes#comecar', label: 'Primeiros passos' },
+  { to: '/faq', label: 'Perguntas frequentes' },
+]
+
+const chronicleCards = [
+  {
+    to: '/news',
+    image: 'castles/giran.jpg',
+    kicker: 'Crônica',
+    title: 'Notícias do reino',
+  },
+  {
+    to: '/roadmap',
+    image: 'castles/oren.jpg',
+    kicker: 'Temporada',
+    title: 'Roadmap e próximos passos',
+  },
 ]
 
 const rankingLinks = [
@@ -31,9 +47,24 @@ function clanInitial(name: string) {
 }
 
 const features = [
-  { to: '/informacoes#pvp', image: 'features/1.jpg', title: 'PvP e Castelos' },
-  { to: '/informacoes#features', image: 'features/2.jpg', title: 'Missões Personalizadas' },
-  { to: '/calendar', image: 'features/3.jpg', title: 'Eventos e Recompensas' },
+  {
+    to: '/informacoes#rates',
+    image: 'castles/aden.jpg',
+    title: 'Crônica e Rates',
+    blurb: 'Progressão, economia e o ritmo do reino',
+  },
+  {
+    to: '/informacoes#pvp',
+    image: 'castles/goddard.jpg',
+    title: 'Guerra de Castelos',
+    blurb: 'Siege, clãs e o domínio de Aden',
+  },
+  {
+    to: '/rankings',
+    image: 'castles/rune.jpg',
+    title: 'Hall da Fama',
+    blurb: 'PvP, olimpíada e os melhores clãs',
+  },
 ]
 
 function DefaultHomePage() {
@@ -49,6 +80,14 @@ function DefaultHomePage() {
   const wikiItems = wiki.data?.length
     ? wiki.data.slice(0, 5).map((page) => ({ to: `/wiki/${page.slug}`, label: page.title }))
     : wikiLinks
+  const updateCards = (news.data ?? []).length
+    ? (news.data ?? []).slice(0, 2).map((item, index) => ({
+        to: `/news/${item.slug}`,
+        image: chronicleCards[index % chronicleCards.length].image,
+        kicker: 'Atualização',
+        title: item.title,
+      }))
+    : chronicleCards
 
   return (
     <>
@@ -57,10 +96,7 @@ function DefaultHomePage() {
       </div>
 
       <section className="h">
-        <div className="h-logo">
-          <img className="letters" src={themeImage('logo.png')} alt="PDL" />
-          <img className="circle" src={themeImage('logo-circle.png')} alt="" />
-        </div>
+        <div className="h-logo"><PdlHeroEmblem /></div>
         <h1>{serverName}</h1>
         <p className="hero-description">"{serverDescription}"</p>
         <div className="h-link">
@@ -74,38 +110,36 @@ function DefaultHomePage() {
         </div>
       </section>
 
-      <section className="f" id="features">
+      <section className="f home-features" id="features">
         <div className="f-title title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Aproveite o melhor do Lineage
+            No mundo de Aden
           </span>
-          <h1>O servidor mais atualizado, moderno e estável para jogar Lineage</h1>
+          <h1>Crônica, castelos e a glória que definem o Lineage</h1>
         </div>
         <div className="f-list container">
           {features.map((item, index) => (
             <Link className={`f${index + 1}`} key={item.title} to={item.to}>
-              <div style={{ background: `url(${themeImage(item.image)}) top / cover no-repeat` }}>
+              <div style={{ background: `url(${themeImage(item.image)}) center / cover no-repeat` }}>
                 <span>
                   <p>{item.title}</p>
+                  <em>{item.blurb}</em>
                   <img src={themeImage('features/icon.png')} alt="" />
                 </span>
               </div>
             </Link>
           ))}
         </div>
-        <div className="character">
-          <img src={themeImage('features/character.png')} alt="" />
-        </div>
       </section>
 
-      <section className="w">
+      <section className="w home-wiki">
         <div className="w-title title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Wiki
+            Arquivos do reino
           </span>
-          <h1>Wiki e Atualizações do Lineage</h1>
+          <h1>Guias, crônica e o que move Aden</h1>
         </div>
         <div className="w-list container">
           <span className="line">
@@ -114,8 +148,8 @@ function DefaultHomePage() {
           <div className="wiki">
             <div>
               <span>
-                Wiki
-                <Link to="/wiki">
+                Guias
+                <Link to="/wiki" aria-label="Abrir wiki completa">
                   <img src={themeImage('icons/more.png')} alt="" />
                 </Link>
               </span>
@@ -131,11 +165,11 @@ function DefaultHomePage() {
               </ul>
             </div>
           </div>
-          {(news.data ?? []).slice(0, 2).map((item) => (
-            <Link key={item.id} to={`/news/${item.slug}`} className="update">
-              <div style={{ background: `url(${themeImage('bg/3.jpg')}) top / cover no-repeat` }}>
+          {updateCards.map((item) => (
+            <Link key={`${item.to}-${item.title}`} to={item.to} className="update">
+              <div style={{ background: `url(${themeImage(item.image)}) center / cover no-repeat` }}>
                 <div>
-                  <span>Atualização</span>
+                  <span>{item.kicker}</span>
                   <p>{item.title}</p>
                 </div>
               </div>

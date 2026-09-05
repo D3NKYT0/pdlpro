@@ -100,9 +100,10 @@ it('mostra o mini-mascote fora da Ajuda e o oculta na conversa', () => {
 
 it('preserva o shell original quando o tema default está ativo', () => {
   themeMock.current.presentation = null
-  renderAt('/painel/admin')
+  const { container } = renderAt('/painel/admin')
   const surface = screen.getByRole('heading', { name: 'Conteúdo privado' }).closest('[data-theme-surface]')
   expect(surface).not.toHaveClass('portal-panel-shell', 'is-admin-shell')
   expect(screen.getByText('Área do jogador')).toBeVisible()
   expect(screen.getByText('Painel', { selector: '.brand' })).toBeVisible()
+  expect(container.querySelector('.panel-brand-mark')).toHaveAttribute('src', '/theme/pdl-symbol.svg')
 })
