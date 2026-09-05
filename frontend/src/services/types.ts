@@ -12,6 +12,7 @@ export interface ApiUser {
   is_staff?: boolean
   is_superuser?: boolean
   is_staff_member?: boolean
+  has_usable_password?: boolean
 }
 
 export interface ApiServerInfo {

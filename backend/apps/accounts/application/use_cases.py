@@ -167,3 +167,49 @@ class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
                 bio=data.bio,
                 avatar=data.avatar,
             )
+
+
+@dataclass(frozen=True, slots=True)
+class CompleteCredentialsInput:
+    """Dados de entrada de ``CompleteCredentialsUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta os campos abaixo, mas não valida
+    permissões nem regras de negócio por conta própria. Os dados de identidade do ator devem vir
+    da sessão autenticada.
+    """
+
+    user_id: UUID
+    username: str
+    password: str
+    accept_terms: bool = False
+
+
+class CompleteCredentialsUseCase(UseCase[CompleteCredentialsInput, UserEntity]):
+    """Define login e senha para contas criadas por OAuth ainda sem credenciais locais.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CompleteCredentialsInput``. O
+    retorno é ``UserEntity``.
+    """
+
+    def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
+        self._users = users
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: CompleteCredentialsInput) -> UserEntity:
+        user = self._users.get_by_id(data.user_id)
+        if user is None:
+            raise UserNotFoundError()
+        if self._users.has_usable_password(data.user_id):
+            raise ValidationDomainError("Esta conta já possui login e senha definidos.")
+        if not data.accept_terms:
+            raise ValidationDomainError("Aceite os termos de uso e a política de privacidade.")
+        username = data.username.strip()
+        if len(username) < 3 or len(username) > 16:
+            raise ValidationDomainError("O usuário deve ter entre 3 e 16 caracteres.")
+        if username.lower() != user.username.lower() and self._users.exists_username(username):
+            raise UsernameTakenError()
+        with self._unit_of_work:
+            if username.lower() != user.username.lower():
+                user = self._users.update_username(data.user_id, username)
+            self._users.set_password(data.user_id, data.password)
+            return self._users.accept_terms(data.user_id, getattr(settings, "LEGAL_DOCS_VERSION", "2026-08-31"))

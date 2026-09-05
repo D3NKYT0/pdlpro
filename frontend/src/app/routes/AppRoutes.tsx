@@ -25,6 +25,7 @@ import { ProfilePage } from '../../pages/ProfilePage'
 import { ProgressPage } from '../../pages/ProgressPage'
 import { RankingsPage } from '../../pages/RankingsPage'
 import { RegisterPage } from '../../pages/RegisterPage'
+import { CompleteAccountPage } from '../../pages/CompleteAccountPage'
 import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
 import { SupportPage } from '../../pages/SupportPage'
@@ -68,6 +69,7 @@ export function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/complete-account" element={<CompleteAccountPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />

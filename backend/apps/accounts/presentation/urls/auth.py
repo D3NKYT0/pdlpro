@@ -2,6 +2,7 @@ from django.urls import path
 
 from apps.accounts.presentation.views.auth import (
     ConfirmPasswordResetView,
+    CompleteCredentialsView,
     CsrfView,
     LoginView,
     LogoutView,
@@ -28,6 +29,7 @@ urlpatterns = [
     path("csrf/", CsrfView.as_view(), name="auth-csrf"),
     path("capabilities/", AuthCapabilitiesView.as_view(), name="auth-capabilities"),
     path("register/", RegisterView.as_view(), name="auth-register"),
+    path("complete-credentials/", CompleteCredentialsView.as_view(), name="auth-complete-credentials"),
     path("login/", LoginView.as_view(), name="auth-login"),
     path("oauth/begin/", OAuthBeginView.as_view(), name="auth-oauth-begin"),
     path("oauth/complete/", OAuthCompleteView.as_view(), name="auth-oauth-complete"),

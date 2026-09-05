@@ -12,7 +12,7 @@ afterEach(cleanup)
 
 function Location() {
   const location = useLocation()
-  return <output>{location.pathname}{location.search}</output>
+  return <output role="status">{location.pathname}{location.search}</output>
 }
 function mount(staff = false) {
   return render(<MemoryRouter initialEntries={['/private?tab=history']}><Routes>
@@ -36,9 +36,14 @@ describe('proteção de rotas', () => {
     expect(screen.getByRole('status').textContent).toBe('/login?next=%2Fprivate%3Ftab%3Dhistory')
   })
   it('libera usuário autenticado', () => {
-    Object.assign(session, { user: { username: 'hero' }, loading: false })
+    Object.assign(session, { user: { username: 'hero', has_usable_password: true }, loading: false })
     mount()
     expect(screen.getByRole('heading').textContent).toBe('Conteúdo privado')
+  })
+  it('encaminha conta social sem senha para concluir credenciais', () => {
+    Object.assign(session, { user: { username: 'oauth', has_usable_password: false }, loading: false })
+    mount()
+    expect(screen.getByRole('status').textContent).toBe('/complete-account')
   })
   it.each([null, { role: 'player' }])('impede acesso administrativo de %j', user => {
     Object.assign(session, { user, loading: false })

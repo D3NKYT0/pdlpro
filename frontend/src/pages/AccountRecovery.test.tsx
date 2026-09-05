@@ -75,7 +75,8 @@ it('verificação sem token não chama o backend', () => {
   expect(authApi.verifyEmail).not.toHaveBeenCalled()
 })
 it.each([
-  [{ username: 'hero' }, '/painel', null],
+  [{ username: 'hero', has_usable_password: true }, '/painel', null],
+  [{ username: 'oauth', has_usable_password: false }, '/complete-account', null],
   [{ linked: true }, '/painel/security', null],
   [{ requires_2fa: true, challenge: 'challenge' }, '/login', 'challenge'],
 ] as const)('callback OAuth respeita resultado %j', async (response, destination, challenge) => {

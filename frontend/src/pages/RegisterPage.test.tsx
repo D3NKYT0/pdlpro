@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -10,7 +10,9 @@ import { authApi, ApiError } from '../services/api'
 import { RegisterPage } from './RegisterPage'
 
 const session = vi.hoisted(() => ({ register: vi.fn() }))
+const oauth = vi.hoisted(() => ({ beginOAuth: vi.fn() }))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
+vi.mock('../lib/oauth', () => ({ beginOAuth: oauth.beginOAuth }))
 vi.mock('../services/domain/auth.service', async original => ({ ...await original<object>(), authApi: { capabilities: vi.fn() } }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify, onExpire }: { onVerify: (token: string) => void; onExpire: () => void }) => <><button type="button" onClick={() => onVerify('captcha')}>Resolver</button><button type="button" onClick={onExpire}>Expirar</button></> }))
@@ -51,4 +53,21 @@ it('CAPTCHA habilita envio e expiração volta a bloquear', async () => {
   await user.click(screen.getByRole('button', { name: 'Expirar' }))
   expect(submit).toBeDisabled()
   expect(session.register).not.toHaveBeenCalled()
+})
+it('provedores sociais desabilitados sem credenciais e iniciam OAuth quando disponíveis', async () => {
+  mount()
+  await waitFor(() => expect(authApi.capabilities).toHaveBeenCalled())
+  expect(screen.getByRole('button', { name: 'Google' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: 'Discord' })).toBeDisabled()
+
+  const capabilities = await authApi.capabilities()
+  vi.mocked(authApi.capabilities).mockResolvedValue({ ...capabilities, google: true, discord: true })
+  client.clear()
+  cleanup()
+  const enabled = mount()
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Google' })).toBeEnabled())
+  await enabled.click(screen.getByRole('button', { name: 'Google' }))
+  expect(oauth.beginOAuth).toHaveBeenCalledWith('google', 'login')
+  await enabled.click(screen.getByRole('button', { name: 'Discord' }))
+  expect(oauth.beginOAuth).toHaveBeenCalledWith('discord', 'login')
 })

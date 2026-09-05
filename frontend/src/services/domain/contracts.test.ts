@@ -36,6 +36,7 @@ const contracts: Contract[] = [
   ['auth.progress', () => authApi.progress(), '/shared/me/progress/'],
   ['auth.reward', () => authApi.claimReward('reward'), '/shared/me/rewards/reward/claim/', 'POST'],
   ['auth.register', () => authApi.register({ username: 'hero', email: 'a@b.dev', password: 'secret', accept_terms: true }), '/auth/register/', 'POST', { username: 'hero', email: 'a@b.dev', password: 'secret', accept_terms: true }],
+  ['auth.completeCredentials', () => authApi.completeCredentials({ username: 'hero', password: 'secret', accept_terms: true }), '/auth/complete-credentials/', 'POST', { username: 'hero', password: 'secret', accept_terms: true }],
   ['auth.beginOAuth', () => authApi.beginOAuth('google', 'link'), '/auth/oauth/begin/', 'POST', { provider: 'google', mode: 'link' }],
   ['auth.completeOAuth', () => authApi.completeOAuth('discord', 'code', 'state'), '/auth/oauth/complete/', 'POST', { provider: 'discord', code: 'code', state: 'state' }],
   ['auth.requestVerification', () => authApi.requestEmailVerification(), '/auth/email/verify/request/', 'POST'],

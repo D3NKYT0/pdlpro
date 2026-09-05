@@ -35,6 +35,7 @@ class DjangoUserRepository(IUserRepository):
             is_staff=bool(user.is_staff),
             is_superuser=bool(user.is_superuser),
             is_staff_member=bool(user.is_staff_member),
+            has_usable_password=user.has_usable_password(),
         )
 
     def get_by_id(self, user_id: UUID) -> UserEntity | None:
@@ -105,6 +106,16 @@ class DjangoUserRepository(IUserRepository):
         user = User.objects.get(id=user_id)
         user.set_password(password)
         user.save(update_fields=["password", "updated_at"])
+
+    def has_usable_password(self, user_id: UUID) -> bool:
+        user = User.objects.filter(id=user_id).first()
+        return bool(user and user.has_usable_password())
+
+    def update_username(self, user_id: UUID, username: str) -> UserEntity:
+        user = User.objects.get(id=user_id)
+        user.username = username
+        user.save(update_fields=["username", "updated_at"])
+        return self._to_entity(user)
 
     def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
         from django.utils import timezone

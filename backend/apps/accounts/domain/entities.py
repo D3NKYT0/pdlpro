@@ -25,3 +25,4 @@ class UserEntity:
     is_staff: bool = False
     is_superuser: bool = False
     is_staff_member: bool = False
+    has_usable_password: bool = True

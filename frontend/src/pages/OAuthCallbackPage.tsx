@@ -37,7 +37,12 @@ export function OAuthCallbackPage() {
       }
       await refreshUser()
       toast.success(`Entrada com ${provider === 'google' ? 'Google' : 'Discord'} concluída.`)
-      navigate('/painel', { replace: true })
+      navigate(
+        'has_usable_password' in result && result.has_usable_password === false
+          ? '/complete-account'
+          : '/painel',
+        { replace: true },
+      )
     }).catch((error) => {
       toast.error(apiErrorMessage(error, 'Não foi possível concluir a autenticação.'))
       navigate('/login', { replace: true })

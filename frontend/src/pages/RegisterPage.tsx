@@ -4,8 +4,10 @@ import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
+import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
 
 export function RegisterPage() {
@@ -32,7 +34,7 @@ export function RegisterPage() {
   return (
     <AuthPanel
       title="Crie sua conta mestre"
-      lead="Preencha os campos abaixo para se juntar à aventura."
+      lead="Cadastre-se com usuário e senha ou continue com Google ou Discord."
     >
       <form className="auth-form" onSubmit={onSubmit}>
         <AuthField label="Usuário">
@@ -58,6 +60,30 @@ export function RegisterPage() {
           <Link to="/login">Entrar no Reino</Link>
         </div>
       </form>
+      <div className="auth-divider"><span>ou continue com</span></div>
+      <div className="auth-methods">
+        <button
+          type="button"
+          className="auth-method"
+          disabled={!capabilities.data?.google}
+          onClick={() => void beginOAuth('google', 'login')}
+          title={!capabilities.data?.google ? 'Configure as credenciais Google no ambiente' : undefined}
+        >
+          <GoogleIcon /> Google
+        </button>
+        <button
+          type="button"
+          className="auth-method"
+          disabled={!capabilities.data?.discord}
+          onClick={() => void beginOAuth('discord', 'login')}
+          title={!capabilities.data?.discord ? 'Configure as credenciais Discord no ambiente' : undefined}
+        >
+          <DiscordIcon /> Discord
+        </button>
+      </div>
+      <p className="auth-security-note">
+        <i className="fa-solid fa-shield-halved" /> Sem conta prévia, Google e Discord criam a conta mestra automaticamente com e-mail verificado.
+      </p>
     </AuthPanel>
   )
 }

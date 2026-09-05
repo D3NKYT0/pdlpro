@@ -33,7 +33,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
 
     Campos declarados: ``id``, ``username``, ``email``, ``display_name``, ``role``,
     ``is_email_verified``, ``fichas``, ``is_2fa_enabled``, ``is_staff``, ``is_superuser``,
-    ``is_staff_member``, ``avatar``, ``bio``.
+    ``is_staff_member``, ``has_usable_password``, ``avatar``, ``bio``.
     """
 
     id = serializers.UUIDField(read_only=True)
@@ -47,6 +47,7 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     is_staff = serializers.BooleanField(read_only=True)
     is_superuser = serializers.BooleanField(read_only=True)
     is_staff_member = serializers.BooleanField(read_only=True)
+    has_usable_password = serializers.BooleanField(read_only=True)
     avatar = serializers.ImageField(read_only=True, allow_null=True)
     bio = serializers.CharField(required=False, allow_blank=True)
 
@@ -66,12 +67,14 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "is_staff": instance.is_staff,
                 "is_superuser": instance.is_superuser,
                 "is_staff_member": instance.is_staff_member,
+                "has_usable_password": instance.has_usable_password,
             }
         data = super().to_representation(instance)
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None
         data["is_staff"] = bool(getattr(instance, "is_staff", False))
         data["is_superuser"] = bool(getattr(instance, "is_superuser", False))
         data["is_staff_member"] = bool(getattr(instance, "is_staff_member", False))
+        data["has_usable_password"] = bool(instance.has_usable_password())
         data.pop("avatar", None)
         return data
 
@@ -192,3 +195,17 @@ class OAuthCompleteSerializer(serializers.Serializer):
     provider = serializers.ChoiceField(choices=["google", "discord"])
     code = serializers.CharField()
     state = serializers.CharField()
+
+
+class CompleteCredentialsSerializer(serializers.Serializer):
+    """Valida login, senha e aceite legal para concluir o cadastro após OAuth.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
+
+    Campos declarados: ``username``, ``password``, ``accept_terms``.
+    """
+
+    username = serializers.CharField(max_length=16, validators=[validate_ascii_username])
+    password = serializers.CharField(write_only=True, min_length=8)
+    accept_terms = serializers.BooleanField()

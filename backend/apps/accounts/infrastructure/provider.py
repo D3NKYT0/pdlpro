@@ -13,6 +13,7 @@ from apps.accounts.application.twofa import (
 )
 from apps.accounts.application.use_cases import (
     AuthenticateUserUseCase,
+    CompleteCredentialsUseCase,
     GetCurrentUserUseCase,
     RegisterUserUseCase,
     UpdateProfileUseCase,
@@ -38,6 +39,7 @@ class AccountsProvider(AppProvider):
         container.register(IUserRepository, DjangoUserRepository, lifetime=Lifetime.SCOPED)
         container.register(IMailer, DjangoMailer, lifetime=Lifetime.SINGLETON)
         container.register_self(RegisterUserUseCase, lifetime=Lifetime.TRANSIENT)
+        container.register_self(CompleteCredentialsUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(AuthenticateUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(GetCurrentUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(UpdateProfileUseCase, lifetime=Lifetime.TRANSIENT)

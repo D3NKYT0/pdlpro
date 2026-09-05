@@ -51,6 +51,8 @@ export const authApi = {
     accept_terms: boolean
     hcaptcha_token?: string
   }) => request<ApiUser>('/auth/register/', { method: 'POST', body: JSON.stringify(payload) }),
+  completeCredentials: (payload: { username: string; password: string; accept_terms: boolean }) =>
+    request<ApiUser>('/auth/complete-credentials/', { method: 'POST', body: JSON.stringify(payload) }),
   beginOAuth: (provider: 'google' | 'discord', mode: 'login' | 'link') =>
     request<{ authorization_url: string }>('/auth/oauth/begin/', {
       method: 'POST',

@@ -9,5 +9,8 @@ export function RequireAuth() {
     const next = `${location.pathname}${location.search}`
     return <Navigate to={`/login?next=${encodeURIComponent(next)}`} replace />
   }
+  if (user.has_usable_password === false && location.pathname !== '/complete-account') {
+    return <Navigate to="/complete-account" replace />
+  }
   return <Outlet />
 }

@@ -45,6 +45,8 @@ from apps.accounts.application.twofa import (
 from apps.accounts.application.use_cases import (
     AuthenticateUserInput,
     AuthenticateUserUseCase,
+    CompleteCredentialsInput,
+    CompleteCredentialsUseCase,
     GetCurrentUserInput,
     GetCurrentUserUseCase,
     RegisterUserInput,
@@ -61,6 +63,7 @@ from apps.accounts.infrastructure.authentication import (
     set_auth_cookies,
 )
 from apps.accounts.presentation.serializers import (
+    CompleteCredentialsSerializer,
     LoginSerializer,
     OAuthBeginSerializer,
     OAuthCompleteSerializer,
@@ -235,6 +238,32 @@ class OAuthCompleteView(InjectedAPIView):
         if user.is_2fa_enabled:
             return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
         return build_auth_response(request, user)
+
+
+class CompleteCredentialsView(InjectedAPIView):
+    """Entrada HTTP para ``CompleteCredentialsUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(tags=["Auth"], request=CompleteCredentialsSerializer, responses=UserSerializer)
+    def post(self, request):
+        serializer = CompleteCredentialsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        user = self.resolve(CompleteCredentialsUseCase).execute(
+            CompleteCredentialsInput(
+                user_id=request.user.id,
+                username=data["username"],
+                password=data["password"],
+                accept_terms=data["accept_terms"],
+            )
+        )
+        orm_user = get_user_model().objects.get(id=user.id)
+        return build_auth_response(request, orm_user)
 
 
 class RefreshView(InjectedAPIView):

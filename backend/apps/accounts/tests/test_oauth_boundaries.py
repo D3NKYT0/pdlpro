@@ -6,9 +6,11 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.core.cache import cache
+from rest_framework.test import APIClient
 
 from apps.accounts.application.oauth import begin_oauth as _begin_oauth
 from apps.accounts.application.oauth import complete_oauth as _complete_oauth
+from common.exceptions import PdlAPIException
 
 
 def begin_oauth(provider, mode, user):
@@ -17,9 +19,14 @@ def begin_oauth(provider, mode, user):
 
 def complete_oauth(provider, code, state, user=None):
     return _complete_oauth(provider, code, state, browser_key="test-browser", user=user)
-from common.exceptions import PdlAPIException
+
 
 pytestmark = pytest.mark.django_db
+
+
+@pytest.fixture
+def api():
+    return APIClient()
 
 
 @pytest.fixture(autouse=True)
@@ -48,10 +55,54 @@ def test_verified_profile_creates_user_and_consumes_state(provider, mocker):
     assert user.email == "hero@test.dev"
     assert user.is_email_verified
     assert not user.has_usable_password()
+    assert user.terms_accepted_at is None
     assert SocialAccount.objects.get(provider=provider, uid="uid").user == user
     with pytest.raises(PdlAPIException):
         complete_oauth(provider, "code", state)
     fetch.assert_called_once()
+
+
+def test_oauth_user_must_complete_local_credentials(api, mocker):
+    profile = {"sub": "uid", "id": "uid", "email": "oauth@test.dev", "email_verified": True, "verified": True, "name": "OAuth"}
+    mocker.patch("apps.accounts.application.oauth._profile", return_value=profile)
+    state = begin("google")
+    user, _ = complete_oauth("google", "code", state)
+    api.force_authenticate(user=user)
+
+    denied = api.post(
+        "/api/v1/auth/complete-credentials/",
+        {"username": "jogador", "password": "Secret123!", "accept_terms": False},
+        format="json",
+    )
+    assert denied.status_code == 400
+
+    taken = get_user_model().objects.create_user(username="taken", email="taken@test.dev", password="Secret123!")
+    conflict = api.post(
+        "/api/v1/auth/complete-credentials/",
+        {"username": taken.username, "password": "Secret123!", "accept_terms": True},
+        format="json",
+    )
+    assert conflict.status_code == 409
+
+    response = api.post(
+        "/api/v1/auth/complete-credentials/",
+        {"username": "mestreoauth", "password": "Secret123!", "accept_terms": True},
+        format="json",
+    )
+    assert response.status_code == 200, response.data
+    assert response.data["username"] == "mestreoauth"
+    assert response.data["has_usable_password"] is True
+    user.refresh_from_db()
+    assert user.has_usable_password()
+    assert user.check_password("Secret123!")
+    assert user.terms_and_privacy_version
+
+    again = api.post(
+        "/api/v1/auth/complete-credentials/",
+        {"username": "mestreoauth", "password": "OutraSenha1!", "accept_terms": True},
+        format="json",
+    )
+    assert again.status_code == 400
 
 
 @pytest.mark.parametrize("profile", [

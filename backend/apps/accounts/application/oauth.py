@@ -12,7 +12,6 @@ from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.utils import timezone
 
 from common.exceptions import PdlAPIException
 
@@ -178,7 +177,6 @@ def complete_oauth(provider: str, code: str, state: str, *, browser_key: str, us
                 display_name=display_name,
                 password=None,
                 is_email_verified=True,
-                terms_accepted_at=timezone.now(),
             )
 
     if not user.is_active:

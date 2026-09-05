@@ -66,5 +66,13 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def has_usable_password(self, user_id: UUID) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def update_username(self, user_id: UUID, username: str) -> UserEntity:
+        raise NotImplementedError
+
+    @abstractmethod
     def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
         raise NotImplementedError
