@@ -26,7 +26,7 @@ def test_denkynho_profile_is_created_for_the_authenticated_user_only():
     api.force_authenticate(owner)
     own = api.get(PET_URL)
     assert own.status_code == 200
-    assert own.data == {
+    assert {key: own.data[key] for key in ("level", "experience", "experience_next", "attributes", "emotion")} == {
         "level": 1,
         "experience": 0,
         "experience_next": 100,
@@ -143,4 +143,3 @@ def test_pet_emotion_follows_urgent_needs_and_stays_private_to_the_owner():
     other_state = api.get(PET_URL)
     assert other_state.data["emotion"]["id"] == "calm"
     assert other_state.data["attributes"]["satiety"] == 75
-

@@ -7,7 +7,6 @@ import unicodedata
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from common.architecture.base import UseCase
 from lingua import Language, LanguageDetectorBuilder
 from rapidfuzz.fuzz import WRatio
 
@@ -18,6 +17,7 @@ from apps.content.application.conversation import (
     social_articles,
 )
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
+from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
 SUPPORTED_LANGUAGES = {"pt", "en"}
@@ -55,6 +55,22 @@ def normalize(text: str) -> str:
         if not unicodedata.combining(char) and char not in "\u200b\u200c\u200d\u2060\ufeff"
     )
     return " ".join(re.findall(r"[a-z0-9]+", value.casefold()))
+
+
+def lexical_similarity(query: str, document: str) -> float:
+    """Compara texto normalizado para FAQ e fontes do chat quando não há embeddings."""
+
+    return WRatio(normalize(query), normalize(document)) / 100
+
+
+def valid_preferred_name(value: str) -> bool:
+    """Aceita um nome curto ou vazio para esquecer a preferência, sem instruções ou ofensas."""
+
+    return not value or bool(
+        len(value) <= 30
+        and not blocked_term(value)
+        and re.fullmatch(r"[^\W\d_]+(?:[ '\-][^\W\d_]+)*", value)
+    )
 
 
 def detect_language(text: str, preferred: str = "auto") -> str:
@@ -135,7 +151,7 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         ranked = []
         for article, semantic in zip(articles, semantic_scores, strict=True):
             document = f"{article['question']} {' '.join(article['keywords'])}"
-            lexical = WRatio(normalize(data.message), normalize(document)) / 100
+            lexical = lexical_similarity(data.message, document)
             score = lexical if engine == "rapidfuzz" else max(0.0, semantic) * 0.82 + lexical * 0.18
             ranked.append((score, article))
         # Vários exemplos da mesma intenção não competem entre si pela margem.

@@ -3,7 +3,6 @@
 import json
 import logging
 import math
-import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Literal
@@ -18,6 +17,8 @@ from apps.content.application.assistant import (
     SemanticMatcher,
     blocked_term,
     detect_language,
+    lexical_similarity,
+    valid_preferred_name,
 )
 from apps.content.application.denkynho import remember_user_affect
 from apps.content.application.emotions import (
@@ -75,6 +76,7 @@ class ChatInput(AssistantReplyInput):
     account_id: UUID | None = None
     display_name: str = ""
     context: str = ""
+    preferences: dict[str, str] | None = None
 
 
 PERSONA = """Você é Denkynho, mascote e assistente virtual do PDL 2.0, criado por Denky.
@@ -86,9 +88,14 @@ retome assuntos e reconheça enganos sem repetir a resposta anterior. Uma corre�
 tem prioridade sobre o assunto anterior. Não transforme conversa social em FAQ.
 Responda ao pedido atual mesmo que antes a pessoa tenha mencionado cansaço ou tristeza;
 a emoção ajusta o tom, mas não impede uma resposta nem obriga a encerrar a conversa.
-Prefira 1 a 3 frases curtas e concretas, sem metáforas vagas, bordões repetidos nem uma pergunta no fim
+No tamanho balanced, prefira 1 a 3 frases curtas e concretas. Em brief, vá direto à resposta;
+em detailed, explique passos e exemplos relevantes sem ultrapassar o limite de texto.
+Evite metáforas vagas, bordões repetidos e uma pergunta no fim
 de toda resposta. Risadas pedem reação breve; tristeza pede acolhimento sem diagnóstico;
 alegria pede celebração. Não cobre atenção de quem ficou ausente.
+Compare sua fala com as respostas anteriores: varie a abertura e não repita apresentações,
+o nome da pessoa, convites para conversar ou celebrações em todo turno. Se a pergunta se
+repetir, reconheça isso brevemente e tente esclarecer o ponto que faltou.
 Respeite preferência de nome e de tamanho das respostas declarada na conversa.
 O nome preferido pertence ao USUÁRIO: "meu nome/apelido" em mensagens dele se refere
 a ele, nunca a você. Sua identidade continua Denkynho. Use PREFERENCIAS quando houver.
@@ -137,6 +144,11 @@ class ChatReplyUseCase:
         language = detect_language(data.message, data.language)
         owner = [data.user_id, str(data.audience), language]
         memory = self._memory(data.context, owner)
+        preferences = data.preferences or {}
+        if "preferred_name" in preferences and valid_preferred_name(preferences["preferred_name"]):
+            memory["name"] = preferences["preferred_name"]
+        if preferences.get("detail") in {"brief", "balanced", "detailed"}:
+            memory["detail"] = preferences["detail"]
         history = memory["messages"]
         blocked = blocked_term(data.message)
         affect = None if blocked else detect_user_affect(data.message)
@@ -144,13 +156,13 @@ class ChatReplyUseCase:
         if blocked:
             return self._with_emotion(self._fallback.execute(data), emotion, affect)
         if not self._model.enabled():
-            return {**self._with_emotion(self._fallback.execute(data), emotion, affect), "mode": "limited", "context": ""}
+            return self._limited(data, emotion, affect, owner, memory)
         articles = ListFaqUseCase().execute(ListFaqInput(data.audience, language, for_assistant=True))
         sources = self._sources(data.message, history, articles)
         safe_name = data.display_name[:60] if not blocked_term(data.display_name) else ""
         system = PERSONA + "\nIDIOMA: " + language + "\nIDENTIDADE: " + json.dumps({
             "nome_da_conta": safe_name, "audiencia": data.audience,
-        }, ensure_ascii=False) + "\nPREFERENCIAS: " + json.dumps({"nome_preferido_do_usuario": memory["name"]}, ensure_ascii=False) + "\nEMOCAO: " + json.dumps(emotion, ensure_ascii=False) + "\nFONTES: " + json.dumps(sources, ensure_ascii=False)
+        }, ensure_ascii=False) + "\nPREFERENCIAS: " + json.dumps({"nome_preferido_do_usuario": memory["name"], "detail": memory["detail"]}, ensure_ascii=False) + "\nEMOCAO: " + json.dumps(emotion, ensure_ascii=False) + "\nFONTES: " + json.dumps(sources, ensure_ascii=False)
         messages = [*history, {"role": "user", "content": data.message}]
         generated = None
         try:
@@ -167,26 +179,43 @@ class ChatReplyUseCase:
             logger.warning("Denkynho generation failed (%s)", type(error).__name__)
             generated = None
         if generated is None:
-            return {**self._with_emotion(self._fallback.execute(data), emotion, affect), "mode": "limited", "context": ""}
+            return self._limited(data, emotion, affect, owner, memory)
         answer = {"text": generated.text.strip(), "pose": pose_for_reply(generated.kind, generated.pose, emotion, affect)}
         result = {"language": language, "kind": generated.kind, "engine": self._model.engine(),
                   "mode": "generative", "answer": answer, "emotion": emotion}
         if source:
             result["article_id"] = source["id"]
             answer["source"] = source["question"]
-        messages.append({"role": "assistant", "content": answer["text"]})
-        messages = messages[-HISTORY_LIMIT:]
-        while len(messages) > 2 and sum(len(item["content"]) for item in messages) > 6000:
-            messages = messages[2:]
         name = memory["name"]
         proposed = generated.preferred_name
         if proposed == "":
             name = ""
-        elif proposed and proposed.casefold() in data.message.casefold() and not blocked_term(proposed) and re.fullmatch(r"[^\W\d_]+(?:[ '\-][^\W\d_]+)*", proposed):
+        elif proposed and proposed.casefold() in data.message.casefold() and valid_preferred_name(proposed):
             name = proposed
-        result["context"] = signing.dumps({"owner": owner, "messages": messages[-HISTORY_LIMIT:], "name": name},
-                                          salt=CONTEXT_SALT, compress=True)
+        result["context"] = self._context(owner, messages, answer["text"], name, memory["detail"])
         return result
+
+    def _limited(self, data: ChatInput, emotion: dict, affect: str | None, owner: list[str], memory: dict) -> dict:
+        """Mantém turnos e preferências válidos durante indisponibilidade, sem gravar transcrições."""
+
+        result = self._with_emotion(self._fallback.execute(data), emotion, affect)
+        messages = [*memory["messages"], {"role": "user", "content": data.message}]
+        return {
+            **result,
+            "mode": "limited",
+            "context": self._context(owner, messages, result["answer"]["text"], memory["name"], memory["detail"]),
+        }
+
+    def _context(self, owner: list[str], messages: list[dict[str, str]], answer: str, name: str, detail: str) -> str:
+        """Assina uma janela limitada de turnos, com a mesma política em geração e ajuda básica."""
+
+        bounded = [*messages, {"role": "assistant", "content": answer[:2000]}][-HISTORY_LIMIT:]
+        while len(bounded) > 2 and sum(len(item["content"]) for item in bounded) > 6000:
+            bounded = bounded[2:]
+        return signing.dumps(
+            {"owner": owner, "messages": bounded, "name": name, "detail": detail},
+            salt=CONTEXT_SALT, compress=True,
+        )
 
     def _emotion(self, account_id: UUID | None, affect: str | None) -> dict:
         """Lê e atualiza o humor do mascote da conta; sem conta, só aplica o sinal atual."""
@@ -210,14 +239,14 @@ class ChatReplyUseCase:
 
     def _memory(self, token: str, owner: list[str]) -> dict:
         if not token:
-            return {"messages": [], "name": ""}
+            return {"messages": [], "name": "", "detail": "balanced"}
         try:
             value = signing.loads(token, salt=CONTEXT_SALT, max_age=1800)
             if value["owner"] == owner:
-                return {"messages": value["messages"], "name": value.get("name", "")}
+                return {"messages": value["messages"], "name": value.get("name", ""), "detail": value.get("detail", "balanced")}
         except (signing.BadSignature, KeyError, TypeError):
             pass
-        return {"messages": [], "name": ""}
+        return {"messages": [], "name": "", "detail": "balanced"}
 
     def _sources(self, message: str, history: list[dict[str, str]], articles: list[dict]) -> list[dict]:
         if not articles:
@@ -225,15 +254,21 @@ class ChatReplyUseCase:
         # A pergunta anterior ajuda a resolver "e depois?", sem dominar o turno atual.
         previous = next((item["content"] for item in reversed(history) if item["role"] == "user"), "")
         query = message + ("\n" + previous if previous else "")
-        if not self._matcher.available():
-            return []
-        try:
-            scores = self._matcher.similarities(query, [f"{a['question']} {' '.join(a['keywords'])}" for a in articles])
-            if len(scores) != len(articles) or any(not math.isfinite(score) for score in scores):
-                raise ValueError("Invalid retrieval scores")
-        except (RuntimeError, ValueError, OSError, ImportError) as error:
-            logger.warning("Denkynho retrieval unavailable (%s)", type(error).__name__)
-            return []
+        documents = [f"{a['question']} {' '.join(a['keywords'])}" for a in articles]
+        scores = None
+        if self._matcher.available():
+            try:
+                scores = self._matcher.similarities(query, documents)
+                if len(scores) != len(articles) or any(not math.isfinite(score) for score in scores):
+                    raise ValueError("Invalid retrieval scores")
+            except (RuntimeError, ValueError, OSError, ImportError) as error:
+                logger.warning("Denkynho retrieval unavailable (%s)", type(error).__name__)
+                scores = None
+        threshold = 0.50
+        if scores is None:
+            # O texto atual domina a busca lexical para não reabrir assuntos anteriores.
+            scores = [lexical_similarity(message, document) for document in documents]
+            threshold = 0.86
         ranked = sorted(zip(scores, articles, strict=True), key=lambda item: item[0], reverse=True)
         return [{"id": a["id"], "question": a["question"], "answer": a["answer"][:1400]}
-                for score, a in ranked[:3] if score >= 0.50]
+                for score, a in ranked[:3] if score >= threshold]

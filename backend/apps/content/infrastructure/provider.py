@@ -18,6 +18,7 @@ from apps.content.application.use_cases import (
     ListWikiPagesUseCase,
     SearchWikiUseCase,
 )
+from apps.content.application.wardrobe import EquipDenkynhoUseCase
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
@@ -46,6 +47,7 @@ class ContentProvider(AppProvider):
             AssistantReplyUseCase,
             GetDenkynhoProfileUseCase,
             CareDenkynhoUseCase,
+            EquipDenkynhoUseCase,
             ListNewsUseCase,
             GetNewsUseCase,
             ListFaqUseCase,

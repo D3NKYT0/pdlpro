@@ -136,6 +136,7 @@ class DenkynhoProfile(BaseModel):
     )
     experience = models.PositiveIntegerField(default=0)
     level = models.PositiveSmallIntegerField(default=1)
+    appearance = models.JSONField(default=dict, blank=True, help_text="Peças cosméticas liberadas e equipadas pelo usuário.")
     last_decay_at = models.DateTimeField(default=timezone.now)
     empathy = models.CharField(
         max_length=16,
@@ -166,6 +167,7 @@ class DenkynhoCareAction(InternalModel):
         SLEEP = "sleep", "Dormir"
         PLAY = "play", "Brincar"
         CARE = "care", "Dar carinho"
+        DANCE = "dance", "Dançar juntos"
 
     profile = models.ForeignKey(
         DenkynhoProfile,

@@ -1,6 +1,11 @@
 import { request } from '../infra/http'
 import type { ApiNews } from '../types'
 
+export interface AssistantPreferences {
+  preferred_name?: string
+  detail?: 'brief' | 'balanced' | 'detailed'
+}
+
 export interface ApiWikiPage {
   id: string
   slug: string
@@ -52,9 +57,14 @@ export interface ApiAssistantReply {
   }
 }
 
-export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'care'
+export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'care' | 'dance'
+export interface DenkynhoAppearance { accessory: string; outfit: string; object: string }
+export interface DenkynhoUnlock { id: string; slot: keyof DenkynhoAppearance | 'interaction'; label: { pt: string; en: string }; level: number; unlocked: boolean }
 
 export interface ApiDenkynhoProfile {
+  appearance?: DenkynhoAppearance
+  unlocks?: DenkynhoUnlock[]
+  available_actions?: DenkynhoAction[]
   level: number
   experience: number
   experience_next: number
@@ -73,6 +83,9 @@ export interface ApiDenkynhoProfile {
 }
 
 export interface ApiDenkynhoCareResult extends ApiDenkynhoProfile {
+  level_up?: boolean
+  unlocked?: string[]
+  attributes_gained?: Partial<ApiDenkynhoProfile['attributes']>
   action: DenkynhoAction
   xp_gained: number
   replayed: boolean
@@ -83,11 +96,12 @@ export const contentApi = {
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
   faq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/public/faq/${language === 'en' ? '?lang=en' : ''}`),
   authenticatedFaq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/shared/content/faq/${language === 'en' ? '?lang=en' : ''}`),
-  assistantReply: (message: string, language: 'pt' | 'en', context?: string) => request<ApiAssistantReply>(
+  assistantReply: (message: string, language: 'pt' | 'en', context?: string, preferences?: AssistantPreferences) => request<ApiAssistantReply>(
     '/shared/content/assistant/reply/',
-    { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}) }) },
+    { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}), ...(preferences ? { preferences } : {}) }) },
   ),
   denkynho: () => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/'),
+  equipDenkynho: (slot: keyof DenkynhoAppearance, itemId: string) => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/wardrobe/', { method: 'PATCH', body: JSON.stringify({ slot, item_id: itemId }) }),
   careDenkynho: (action: DenkynhoAction, idempotencyKey: string) => request<ApiDenkynhoCareResult>(
     '/shared/content/assistant/pet/',
     { method: 'POST', body: JSON.stringify({ action, idempotency_key: idempotencyKey }) },

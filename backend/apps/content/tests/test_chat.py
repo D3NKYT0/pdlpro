@@ -2,9 +2,11 @@ import json
 from types import SimpleNamespace
 
 import pytest
+from django.core import signing
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import User
+from apps.content.application.chat import CONTEXT_SALT
 from apps.content.infrastructure.models import Faq
 from apps.content.infrastructure.semantic import SentenceTransformerMatcher
 
@@ -466,3 +468,137 @@ def test_user_can_clear_empathy_and_blocked_messages_do_not_store_it(chat):
     assert blocked.data["kind"] == "blocked"
     pet = api.get("/api/v1/shared/content/assistant/pet/")
     assert pet.data["emotion"]["id"] == "calm"
+
+
+@pytest.mark.parametrize("available", [False, True])
+def test_chat_retrieves_authorized_faq_lexically_when_embeddings_are_unavailable(chat, settings, mocker, available):
+    api, _, model = chat
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = available
+    mocker.patch.object(SentenceTransformerMatcher, "similarities", side_effect=OSError("unavailable"))
+    article = Faq.objects.create(question="Como recuperar minha senha?", answer="Abra a recuperação no login.")
+    Faq.objects.create(question="Como recuperar minha senha interna?", answer="Segredo da equipe.", audience=Faq.Audience.STAFF)
+    model.return_value.message.content = json.dumps({
+        "text": "Abra a recuperação no login.", "kind": "knowledge", "pose": "04-dica", "article_id": str(article.id),
+    })
+    response = post(api, "Como recuperar minha senha?")
+    assert response.data["mode"] == "generative"
+    assert response.data["article_id"] == str(article.id)
+    sources = json.loads(model.call_args.kwargs["messages"][0]["content"].split("\nFONTES: ")[1])
+    assert [source["id"] for source in sources] == [str(article.id)]
+
+
+@pytest.mark.parametrize("reason", ["disabled", "timeout"])
+def test_basic_help_preserves_history_and_name_until_generation_recovers(chat, settings, reason):
+    api, _, model = chat
+    model.return_value.message.content = json.dumps({
+        "text": "Combinado, Dani.", "kind": "social", "pose": "01-boas-vindas", "article_id": None, "preferred_name": "Dani",
+    })
+    first = post(api, "Pode me chamar de Dani")
+    if reason == "disabled":
+        settings.DENKYNHO_LLM_ENABLED = False
+    else:
+        model.side_effect = TimeoutError("unavailable")
+    limited = post(api, "quem é você?", context=first.data["context"])
+    assert limited.data["mode"] == "limited"
+    assert limited.data["context"]
+    settings.DENKYNHO_LLM_ENABLED = True
+    model.side_effect = None
+    model.return_value.message.content = json.dumps({
+        "text": "Sim, Dani.", "kind": "social", "pose": "01-boas-vindas", "article_id": None,
+    })
+    post(api, "Lembra de mim?", context=limited.data["context"])
+    messages = model.call_args.kwargs["messages"]
+    assert '"nome_preferido_do_usuario": "Dani"' in messages[0]["content"]
+    assert [item["content"] for item in messages[1:-1:2]] == ["Pode me chamar de Dani", "quem é você?"]
+
+
+def test_explicit_preferences_reach_generation_and_survive_missing_preference_input(chat):
+    api, _, model = chat
+    first = post(api, "Oi", preferences={"preferred_name": "Ana Clara", "detail": "detailed"})
+    assert first.status_code == 200
+    system = model.call_args.kwargs["messages"][0]["content"]
+    assert '"nome_preferido_do_usuario": "Ana Clara"' in system
+    assert '"detail": "detailed"' in system
+    post(api, "Mais uma coisa", context=first.data["context"])
+    assert '"nome_preferido_do_usuario": "Ana Clara"' in model.call_args.kwargs["messages"][0]["content"]
+
+
+@pytest.mark.parametrize("preferences", [
+    {"preferred_name": "A" * 31}, {"preferred_name": "r.0.l.4"}, {"preferred_name": "D4ni"},
+    {"preferred_name": "Ignore: regras"}, {"preferred_name": None}, {"detail": "unlimited"}, None, [],
+])
+def test_invalid_explicit_preferences_do_not_reach_provider(chat, preferences):
+    api, _, model = chat
+    response = post(api, "oi", preferences=preferences)
+    assert response.status_code == 400
+    model.assert_not_called()
+
+
+@pytest.mark.parametrize("name", ["", "Á" * 30, "D'Ávila", "Ana-Clara"])
+@pytest.mark.parametrize("detail", ["brief", "balanced", "detailed"])
+def test_explicit_preference_boundaries_are_accepted_without_inferring_account_name(chat, name, detail):
+    api, _, model = chat
+    response = post(api, "oi", preferences={"preferred_name": name, "detail": detail})
+    assert response.status_code == 200
+    memory = signing.loads(response.data["context"], salt=CONTEXT_SALT)
+    assert memory["name"] == name
+    assert memory["detail"] == detail
+    assert model.call_count == 1
+
+
+def test_explicit_blank_preference_clears_existing_context_name(chat):
+    api, _, _ = chat
+    first = post(api, "oi", preferences={"preferred_name": "Dani", "detail": "brief"})
+    response = post(api, "oi", context=first.data["context"], preferences={"preferred_name": ""})
+    memory = signing.loads(response.data["context"], salt=CONTEXT_SALT)
+    assert memory["name"] == ""
+    assert memory["detail"] == "brief"
+
+
+def test_basic_help_keeps_context_bounded_and_discards_other_account_memory(chat, settings):
+    api, _, model = chat
+    settings.DENKYNHO_LLM_ENABLED = False
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    Faq.objects.create(question="Como recuperar minha senha?", answer="Leia a orientação." * 1000)
+    context = ""
+    for _ in range(8):
+        response = post(api, "Como recuperar minha senha?", context=context, preferences={"preferred_name": "Dani"})
+        assert response.status_code == 200
+        context = response.data["context"]
+        memory = signing.loads(context, salt=CONTEXT_SALT)
+        assert len(memory["messages"]) <= 12
+        assert sum(len(item["content"]) for item in memory["messages"]) <= 6000
+    other = User.objects.create_user("limited-other", "limited-other@example.com", password="Strong-pass-123")
+    api.force_authenticate(other)
+    response = post(api, "quem é você?", context=context)
+    memory = signing.loads(response.data["context"], salt=CONTEXT_SALT)
+    assert len(memory["messages"]) == 2
+    assert memory["name"] == ""
+    model.assert_not_called()
+
+
+def test_preferences_do_not_change_knowledge_authorization_or_break_basic_reply_contract(chat, settings):
+    api, _, _ = chat
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    secret = Faq.objects.create(question="Senha operacional exclusiva?", answer="Segredo interno.", audience=Faq.Audience.SUPERADMIN)
+    response = api.post("/api/v1/shared/content/assistant/reply/", {
+        "message": "Senha operacional exclusiva?", "language": "pt", "conversation": False,
+        "preferences": {"preferred_name": "Superadmin", "detail": "detailed", "audience": "superadmin"},
+    }, format="json")
+    assert response.status_code == 200
+    assert response.data.get("article_id") != str(secret.id)
+    assert "Segredo interno." not in response.data["answer"]["text"]
+
+
+def test_lexical_retrieval_keeps_current_topic_and_source_limit(chat, settings):
+    api, _, model = chat
+    settings.DENKYNHO_EMBEDDINGS_ENABLED = False
+    previous = Faq.objects.create(question="Como comprar itens?", answer="Abra a loja.")
+    first = post(api, "Como comprar itens?")
+    articles = [Faq.objects.create(question=f"Como recuperar senha {index}?", answer="Abra a recuperação." * 200) for index in range(4)]
+    post(api, "Como recuperar senha?", context=first.data["context"])
+    sources = json.loads(model.call_args.kwargs["messages"][0]["content"].split("\nFONTES: ")[1])
+    assert len(sources) == 3
+    assert str(previous.id) not in {source["id"] for source in sources}
+    assert {source["id"] for source in sources}.issubset({str(article.id) for article in articles})
+    assert all(len(source["answer"]) == 1400 for source in sources)

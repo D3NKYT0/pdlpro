@@ -20,6 +20,8 @@ O código está em [dev/ui.tsx](../../frontend/dev/ui.tsx). O catálogo é uma e
 
 Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) combina o renderizador Denkynho com um menu de ações e dicas. No celular, sua alça nativa especializada permite arraste e movimentação por teclado; botões, campos e superfícies do menu continuam usando a biblioteca compartilhada. Consulte [Interação com o personagem](../funcionalidades/ajuda.md#interação-com-o-personagem).
 
+[ContextualHelp](../../frontend/src/components/help/ContextualHelp.tsx) compõe orientação local no shell do painel; `contextual.ts` centraliza rotas, dicas e destinos autorizados. [HelpPreferences](../../frontend/src/components/help/HelpPreferences.tsx) concentra escolha e consentimento para preferências locais. [PetProgress](../../frontend/src/components/help/PetProgress.tsx) apresenta ganhos confirmados, desbloqueios e armário com `useAsyncAction`. Todos compõem os controles compartilhados. A demonstração `/denkynho.html`, disponível só em desenvolvimento, permite revisar a página de Ajuda e esses componentes com o tema real e dados simulados.
+
 | Peça | Uso e contrato |
 | --- | --- |
 | [Button, ButtonLink e IconButton](../../frontend/src/components/ui/Button.tsx) | Ações, navegação interna e ações somente com ícone |

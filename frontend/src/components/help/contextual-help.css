@@ -1,0 +1,10 @@
+.contextual-help { margin-bottom: 16px; }
+.contextual-help-panel { margin-top: 10px; }
+.contextual-help-panel header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.contextual-help-panel h2 { margin: 0; font-size: 1.15rem; }
+.contextual-help-panel p { line-height: 1.5; overflow-wrap: anywhere; }
+.contextual-help-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+@media (max-width: 900px) {
+  .contextual-help { margin-bottom: 12px; }
+  .contextual-help-panel header { align-items: flex-start; }
+}

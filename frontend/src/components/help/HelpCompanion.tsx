@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import type { HelpLanguage } from './personality'
+import './companion-controls.css'
 
 const tips = {
   pt: ['Não envie senhas ou códigos de acesso no chat.', 'Conte o que aconteceu e em qual tela você está para facilitar a orientação.', 'O FAQ reúne orientações; para problemas que precisam da equipe, use Atendimento da equipe.'],
@@ -20,6 +21,7 @@ const clamp = (point: { x: number; y: number }) => {
 /** Disclosure do mascote; no celular, o próprio personagem é uma alça arrastável limitada à área visível. */
 export function HelpCompanion({ language, mascot, status, children, onChat }: { language: HelpLanguage; mascot: ReactNode; status: string; children: (onActivity: () => void) => ReactNode; onChat: () => void }) {
   const [open, setOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
   const [tip, setTip] = useState(-1)
   const [mobile, setMobile] = useState(window.innerWidth <= 900)
   const [position, setPosition] = useState(() => clamp({ x: window.innerWidth - 88, y: 120 }))
@@ -27,10 +29,17 @@ export function HelpCompanion({ language, mascot, status, children, onChat }: { 
   const root = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
   const closeButton = useRef<HTMLButtonElement>(null)
+  const restoreButton = useRef<HTMLButtonElement>(null)
+  const restoreFocus = useRef(false)
   const drag = useRef<{ id: number; x: number; y: number; origin: typeof position; moved: boolean } | null>(null)
   const suppressClick = useRef(false)
   const id = useId()
   const pt = language === 'pt'
+  useEffect(() => {
+    if (!restoreFocus.current) return
+    ;(mobile && collapsed ? restoreButton : trigger).current?.focus()
+    restoreFocus.current = false
+  }, [collapsed, mobile])
   useEffect(() => {
     const resize = () => { setMobile(window.innerWidth <= 900); setPosition(clamp); setArea(bounds()) }
     window.addEventListener('resize', resize)
@@ -39,14 +48,17 @@ export function HelpCompanion({ language, mascot, status, children, onChat }: { 
     return () => { window.removeEventListener('resize', resize); window.visualViewport?.removeEventListener('resize', resize); window.visualViewport?.removeEventListener('scroll', resize) }
   }, [])
   useEffect(() => {
-    if (!open) return
+    if (!open || (mobile && collapsed)) return
     closeButton.current?.focus()
     const outside = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(false) }
     const escape = (event: globalThis.KeyboardEvent) => { if (event.key === 'Escape') { setOpen(false); trigger.current?.focus() } }
     document.addEventListener('pointerdown', outside)
     document.addEventListener('keydown', escape)
     return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape) }
-  }, [open])
+  }, [open, mobile, collapsed])
+  if (mobile && collapsed) return <div className="help-companion-compact" ref={root}>
+    <Button ref={restoreButton} size="sm" variant="secondary" onClick={() => { setOpen(false); restoreFocus.current = true; setCollapsed(false) }}>{pt ? 'Mostrar personagem' : 'Show character'}</Button>
+  </div>
   return <div ref={root} className={`help-companion-host${mobile ? ' is-floating' : ''}`} style={{ ...(mobile ? { left: position.x, top: position.y } : {}), '--companion-menu-top': `${area.top + 8}px`, '--companion-menu-left': `${area.left + 8}px`, '--companion-menu-width': `${Math.max(0, area.width - 16)}px`, '--companion-menu-height': `${Math.max(0, area.height - 16)}px` } as CSSProperties}>
     <Card as="aside" className="help-companion" aria-label={pt ? 'Seu assistente' : 'Your assistant'}>
       <div className="help-companion-intro"><span className="panel-eyebrow">{pt ? 'Seu companheiro no PDL' : 'Your PDL companion'}</span><h2>Denkynho</h2></div>
@@ -84,7 +96,10 @@ export function HelpCompanion({ language, mascot, status, children, onChat }: { 
       {children(() => { if (mobile) setOpen(false) })}
       <div className="help-activities"><Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % tips[language].length)}>{pt ? 'Me dê uma dica' : 'Give me a tip'}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{pt ? 'Conversar' : 'Chat'}</Button></div>
       {tip >= 0 && <p role="status">{tips[language][tip]}</p>}
-      {mobile && <Button size="sm" variant="ghost" onClick={() => setPosition(clamp({ x: bounds().left + bounds().width - 88, y: bounds().top + 120 }))}>{pt ? 'Reposicionar personagem' : 'Reset character position'}</Button>}
+      {mobile && <div className="help-activities">
+        <Button size="sm" variant="ghost" onClick={() => setPosition(clamp({ x: bounds().left + bounds().width - 88, y: bounds().top + 120 }))}>{pt ? 'Reposicionar personagem' : 'Reset character position'}</Button>
+        <Button size="sm" variant="secondary" onClick={() => { drag.current = null; setOpen(false); restoreFocus.current = true; setCollapsed(true) }}>{pt ? 'Recolher personagem' : 'Hide character'}</Button>
+      </div>}
     </Card>}
   </div>
 }

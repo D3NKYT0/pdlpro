@@ -16,6 +16,7 @@ from apps.content.application.emotions import (
     emotion_from_needs,
     resolve_emotion,
 )
+from apps.content.domain.wardrobe import UNLOCKS, wardrobe_state
 from apps.content.infrastructure.models import DenkynhoCareAction, DenkynhoProfile
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ConflictError, ValidationDomainError
@@ -27,12 +28,14 @@ _EFFECTS = {
     DenkynhoCareAction.Action.SLEEP: ({"energy": 35}, 10),
     DenkynhoCareAction.Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
     DenkynhoCareAction.Action.CARE: ({"hygiene": 30, "happiness": 6}, 12),
+    DenkynhoCareAction.Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
 }
 _SATURATED_MESSAGES = {
     DenkynhoCareAction.Action.FEED: "O Denkynho já está satisfeito.",
     DenkynhoCareAction.Action.SLEEP: "O Denkynho já descansou bastante.",
     DenkynhoCareAction.Action.PLAY: "O Denkynho já está muito feliz para brincar agora.",
     DenkynhoCareAction.Action.CARE: "O Denkynho já está bem cuidado.",
+    DenkynhoCareAction.Action.DANCE: "O Denkynho já está muito feliz para dançar agora.",
 }
 
 
@@ -83,6 +86,7 @@ def _serialize(profile: DenkynhoProfile, now=None) -> dict:
             "hygiene": profile.hygiene,
         },
         "emotion": _emotion_state(profile, current),
+        **wardrobe_state(profile),
     }
 
 
@@ -111,16 +115,22 @@ def _add_experience(profile: DenkynhoProfile, amount: int) -> None:
 def _validate_action(profile: DenkynhoProfile, action: str) -> None:
     """Evita XP sem cuidado efetivo e bloqueia brincadeira quando faltam necessidades básicas."""
 
-    if action == DenkynhoCareAction.Action.PLAY:
-        if profile.energy < 12:
+    if action not in _EFFECTS:
+        raise ValidationDomainError("Este cuidado não existe.")
+    if action == DenkynhoCareAction.Action.DANCE and profile.level < 3:
+        raise ValidationDomainError("Dançar juntos é liberado no nível 3.")
+    if action in {DenkynhoCareAction.Action.PLAY, DenkynhoCareAction.Action.DANCE}:
+        effects, _ = _EFFECTS[action]
+        if profile.energy < -effects["energy"]:
             raise ValidationDomainError("O Denkynho precisa descansar antes de brincar.")
-        if profile.satiety < 8:
+        if profile.satiety < -effects["satiety"]:
             raise ValidationDomainError("O Denkynho precisa comer antes de brincar.")
     target = {
         DenkynhoCareAction.Action.FEED: "satiety",
         DenkynhoCareAction.Action.SLEEP: "energy",
         DenkynhoCareAction.Action.PLAY: "happiness",
         DenkynhoCareAction.Action.CARE: "hygiene",
+        DenkynhoCareAction.Action.DANCE: "happiness",
     }[action]
     if getattr(profile, target) >= 100:
         raise ValidationDomainError(_SATURATED_MESSAGES[action])
@@ -200,12 +210,17 @@ class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
                     "action": previous.action,
                     "xp_gained": previous.xp_gained,
                     "replayed": True,
+                    "level_up": False,
+                    "unlocked": [],
+                    "attributes_gained": {},
                 }
 
             now = timezone.now()
             _apply_decay(profile, now)
             _apply_empathy(profile, None, now)
             _validate_action(profile, data.action)
+            previous_level = profile.level
+            previous_attributes = {attribute: getattr(profile, attribute) for attribute in _DECAY}
             effects, experience = _EFFECTS[data.action]
             for attribute, change in effects.items():
                 setattr(profile, attribute, min(100, max(0, getattr(profile, attribute) + change)))
@@ -225,4 +240,10 @@ class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
                 "action": data.action,
                 "xp_gained": experience,
                 "replayed": False,
+                "level_up": profile.level > previous_level,
+                "unlocked": [item["id"] for item in UNLOCKS if previous_level < item["level"] <= profile.level],
+                "attributes_gained": {
+                    attribute: getattr(profile, attribute) - previous_attributes[attribute]
+                    for attribute in _DECAY if getattr(profile, attribute) != previous_attributes[attribute]
+                },
             }

@@ -12,9 +12,44 @@ Em telas de até 900 px, o personagem fica flutuante, sem reservar uma coluna ou
 
 ## Acessar e conversar
 
+### Melhorias de conversa e navegação
+
+A pergunta aparece imediatamente com o estado **Preparando sua resposta**. É possível escrever o próximo rascunho durante a consulta e a revelação visual; o envio continua bloqueado até o turno terminar. Uma falha marca a pergunta e oferece **Reenviar mensagem**, sem duplicá-la no histórico ou apagar um rascunho novo. Se nenhum novo texto tiver sido escrito, a pergunta retorna ao campo. O histórico só acompanha a resposta automaticamente quando a pessoa está perto do fim da rolagem.
+
+O painel oferece **Denkynho: ajuda nesta tela** com orientações locais e a opção de levar o assunto para Ajuda. A pergunta sugerida preenche o campo e exige envio manual. O parâmetro `from` aceita apenas rotas conhecidas; links de módulos aguardam a consulta de recursos, respeitam recursos desativados e acesso à equipe. Caminhos relativos conhecidos em uma resposta podem virar botões de navegação; endereços externos, inventados e destinos não autorizados são ignorados. Nenhum botão executa operações da conta.
+
+No celular, **Recolher personagem** libera espaço e deixa **Mostrar personagem** disponível, com foco de teclado preservado. O estado recolhido vale só durante a visita. Os controles continuam disponíveis por rolagem própria no menu.
+
+### Preferências opcionais
+
+No menu do mascote, **Do seu jeito** permite escolher nome e respostas curtas, equilibradas ou detalhadas. **Aplicar preferências** vale só para a conversa, a menos que **Lembrar minhas preferências** esteja marcado. Com essa opção, somente nome, idioma e tamanho das respostas ficam no `localStorage` deste navegador, em uma chave separada por conta. Não são sincronizados entre dispositivos. O histórico e o token de contexto nunca são gravados ali.
+
+**Apagar preferências** remove essas escolhas, restaura o tamanho equilibrado e limpa o nome do contexto temporário. Desmarcar a opção de lembrar e aplicar também remove o registro. Valores corrompidos são ignorados; indisponibilidade do armazenamento é informada. Trocar de conta carrega apenas suas próprias escolhas. A API aceita `preferences: {preferred_name?: string, detail?: "brief" | "balanced" | "detailed"}`; valida o nome, limita-o a 30 caracteres e não confunde preferências com permissões.
+
+O contexto assinado preserva nome, tamanho da resposta e uma janela de turnos mesmo quando a geração falha ou está desligada. Na recuperação, o modelo recebe os turnos recentes da ajuda básica. Assinatura, expiração de 30 minutos e vínculo ao usuário, papel e idioma continuam obrigatórios. Na busca de fontes do chat, embeddings desativados, inválidos ou indisponíveis acionam a comparação lexical compartilhada com o FAQ, sempre sobre os artigos autorizados.
+
+### Evolução e armário
+
+Cuidados exibem o XP e as alterações reais dos atributos. Uma subida de nível confirmada pela API provoca comemoração; repetir uma solicitação idempotente não repete a comemoração nem concede XP extra. Após perda de rede, a tentativa do mesmo cuidado reutiliza a chave anterior.
+
+| Nível | Desbloqueio |
+| --- | --- |
+| 2 | Broche de estrela |
+| 3 | Dançar juntos: nova atividade que consome energia e saciedade e aumenta alegria e XP |
+| 4 | Lenço dourado |
+| 5 | Lanterna de aventura |
+
+O armário permite usar ou retirar peças gratuitamente, com persistência no perfil do mascote. `GET /api/v1/shared/content/assistant/pet/wardrobe/` consulta o catálogo; `PATCH` recebe `{slot, item_id}` para `accessory`, `outfit` ou `object`. `item_id: ""` retira uma peça. Peças desconhecidas, do espaço errado ou acima do nível são recusadas. A sessão determina o dono do perfil; os cosméticos não concedem itens nem benefícios no servidor de jogo. A migração `content.0017` acrescenta a aparência persistente e a ação de dança.
+
+Os cosméticos são camadas vetoriais/CSS nas poses estáticas, incluindo conversa e dança; os atlas de comer, brincar, rir e dormir preservam sua arte original. Dança, pequenos gestos durante a fala e a comemoração respeitam **Animar personagem** e movimento reduzido. Falas de cuidado variam, e o prompt pede ao modelo para evitar repetir aberturas e bordões do histórico.
+
+Para revisão local sem credenciais nem operações reais, `npm run dev` disponibiliza `/denkynho.html`: monta a página real e o tema do painel com uma fronteira HTTP demonstrativa. Essa entrada não integra o build de produção. Ela simula respostas e evolução; não substitui os testes da API ou a homologação com o provedor configurado.
+
+Testes adicionais: `HelpPage.experience.test.tsx`, `HelpPreferences.test.tsx`, `ContextualHelp.test.tsx`, `PetProgress.test.tsx`, `test_chat.py` e `test_denkynho_wardrobe_api.py`. Cobrem envio imediato, rascunho seguinte, recuperação, preferências por conta, navegação autorizada, equipar/retirar, desbloqueios, insuficiência, idempotência e rollback.
+
 Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop e no celular, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível; no celular o envio cabe em uma linha, com o rótulo e a dica só para leitores de tela. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
-O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. A pessoa pode conversar em português ou inglês. O frontend envia cada mensagem aceita ao endpoint autenticado `POST /api/v1/shared/content/assistant/reply/`. A mensagem é interpretada na requisição e não é gravada. O histórico e o apelido são temporários e desaparecem ao sair da tela ou recarregá-la.
+O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. A pessoa pode conversar em português ou inglês. O frontend envia cada mensagem aceita ao endpoint autenticado `POST /api/v1/shared/content/assistant/reply/`. A mensagem é interpretada na requisição e não é gravada. O histórico é temporário e desaparece ao sair da tela ou recarregá-la. O apelido também é temporário, exceto quando a pessoa o salva explicitamente nas preferências descritas acima.
 
 A rota autenticada filtra o conhecimento no backend: jogadores recebem artigos públicos; moderadores, staff e administradores recebem também artigos da equipe; superadministradores recebem todos os níveis. A interface apenas apresenta o resultado autorizado. A API pública `GET /api/v1/public/faq/` continua retornando exclusivamente artigos públicos, mesmo quando chamada por uma pessoa autenticada.
 
@@ -179,7 +214,7 @@ Na lateral da Ajuda, **Alimentar**, **Dormir**, **Brincar** e **Dar carinho** cu
 
 O humor existe para o companheiro acompanhar a pessoa, não só para ilustrar uma resposta. Se a mensagem declara um sentimento — tristeza, cansaço, alegria, confusão, frustração — o mascote assume essa empatia por 15 minutos. O servidor grava só o identificador curto (`sad`, `sleepy`, …), sem o texto da conversa. Quando a empatia expira ou a pessoa diz que já está bem, o humor volta às necessidades do mascote: fome, sono, higiene baixa ou alegria baixa. A cama continua exclusiva do cuidado **Dormir**; ociosidade com sono usa a pose em pé.
 
-O frontend lê e atualiza o mascote pelo endpoint autenticado `GET`/`POST /api/v1/shared/content/assistant/pet/` e recebe o mesmo `emotion` em cada resposta de `assistant/reply/`. A pose ociosa segue `idle_pose`; a fala social usa a pose empática; uma orientação do FAQ mantém a pose de dica enquanto ele fala. O painel mostra o humor e se ele está acompanhando você ou reagindo ao cuidado. Todo cuidado envia uma chave UUID de idempotência; duplo clique, retry de rede ou reenvio da mesma chave devolve o mesmo resultado, sem aplicar XP e atributos duas vezes. Um cuidado sem efeito é recusado — por exemplo, alimentar quando já está satisfeito — e brincar exige energia e saciedade mínimas. Os botões ficam bloqueados enquanto o cuidado, a conversa, um rascunho, falha ou moderação estiverem ativos. A consulta é sempre da sessão atual: não há ID de perfil na rota que permita ler o estado de outra conta.
+O frontend lê e atualiza o mascote pelo endpoint autenticado `GET`/`POST /api/v1/shared/content/assistant/pet/` e recebe o mesmo `emotion` em cada resposta de `assistant/reply/`. A pose ociosa segue `idle_pose`; a fala social usa a pose empática; uma orientação do FAQ mantém a pose de dica enquanto ele fala. O painel mostra o humor e se ele está acompanhando você ou reagindo ao cuidado. Todo cuidado envia uma chave UUID de idempotência; duplo clique, retry de rede ou reenvio da mesma chave devolve o mesmo resultado, sem aplicar XP e atributos duas vezes. Um cuidado sem efeito é recusado — por exemplo, alimentar quando já está satisfeito — e brincar exige energia e saciedade mínimas. Os botões de cuidado ficam bloqueados enquanto o cuidado, a conversa, um rascunho, falha da conversa ou moderação estiverem ativos. Uma falha de cuidado permite tentar novamente. A consulta é sempre da sessão atual: não há ID de perfil na rota que permita ler o estado de outra conta.
 
 Depois de 45 segundos sem conversa, cuidado ou rascunho, ele entra em ociosidade na pose do humor atual, sem usar a cama. A cama com travesseiro e coberta azul fica exclusiva do cuidado manual **Dormir**. Digitar, enviar ou iniciar um cuidado interrompe a ociosidade; respostas em andamento, falhas e moderação têm prioridade. Cada atividade solicitada permanece por oito segundos e todos os timers são liberados ao desmontar a tela.
 

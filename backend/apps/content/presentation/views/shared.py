@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from apps.content.application.assistant import (
     AssistantReplyInput,
     AssistantReplyUseCase,
+    valid_preferred_name,
 )
 from apps.content.application.chat import ChatInput, ChatReplyUseCase
 from apps.content.application.denkynho import (
@@ -36,11 +37,24 @@ class AuthenticatedFaqListView(InjectedAPIView):
         return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(audience=audience, language=language)))
 
 
+class AssistantPreferencesSerializer(serializers.Serializer):
+    """Valida preferências explícitas da conversa sem gravá-las no perfil da conta."""
+
+    preferred_name = serializers.CharField(max_length=30, allow_blank=True, required=False)
+    detail = serializers.ChoiceField(choices=["brief", "balanced", "detailed"], required=False)
+
+    def validate_preferred_name(self, value):
+        if not valid_preferred_name(value):
+            raise serializers.ValidationError("Use um nome de até 30 letras, sem termos ofensivos.")
+        return value
+
+
 class AssistantReplySerializer(serializers.Serializer):
     message = serializers.CharField(max_length=1000, trim_whitespace=True, allow_blank=False)
     language = serializers.ChoiceField(choices=["auto", "pt", "en"], default="auto")
     conversation = serializers.BooleanField(default=False)
     context = serializers.CharField(max_length=60000, allow_blank=True, default="")
+    preferences = AssistantPreferencesSerializer(required=False)
 
 
 class AssistantReplyView(InjectedAPIView):
@@ -62,11 +76,12 @@ class AssistantReplyView(InjectedAPIView):
         data = dict(serializer.validated_data)
         conversational = data.pop("conversation")
         context = data.pop("context")
+        preferences = data.pop("preferences", None)
         if conversational:
             result = self.resolve(ChatReplyUseCase).execute(ChatInput(
                 audience=audience, user_id=str(user.pk), account_id=user.id,
                 display_name=user.display_name or user.username,
-                context=context, **data,
+                context=context, preferences=preferences, **data,
             ))
         else:
             result = self.resolve(AssistantReplyUseCase).execute(AssistantReplyInput(audience=audience, **data))
@@ -76,7 +91,7 @@ class AssistantReplyView(InjectedAPIView):
 class DenkynhoCareSerializer(serializers.Serializer):
     """Valida uma ação do tamagotchi e sua chave idempotente gerada no cliente."""
 
-    action = serializers.ChoiceField(choices=["feed", "sleep", "play", "care"])
+    action = serializers.ChoiceField(choices=["feed", "sleep", "play", "care", "dance"])
     idempotency_key = serializers.UUIDField()
 
 

@@ -1,0 +1,6 @@
+.help-companion-compact {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+}
+.help-workspace:has(> .help-companion-compact) { grid-template-rows:auto minmax(0,1fr); }

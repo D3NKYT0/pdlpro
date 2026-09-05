@@ -33,6 +33,7 @@ import { themeImage } from "../../theme/assets";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/domain/programs.service";
 import { useTheme } from "../../theme/ThemeProvider";
+import { ContextualHelp } from "../help/ContextualHelp";
 
 const links: Array<{
   to: string;
@@ -228,6 +229,7 @@ export function PrivateLayout() {
           onClick={() => setMenuOpen(false)}
         />
         <main className="content">
+          <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} />
           <Outlet />
         </main>
       </div>
