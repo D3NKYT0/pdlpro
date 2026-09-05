@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it, vi } from 'vitest'
 import { HelpCompanion } from './HelpCompanion'
@@ -10,7 +10,7 @@ function mount(mobile = false) {
   vi.stubGlobal('innerWidth', mobile ? 390 : 1200)
   vi.stubGlobal('innerHeight', 844)
   const chat = vi.fn()
-  const view = render(<HelpCompanion language="pt" status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion>)
+  const view = render(<HelpCompanion faqLink={<a href="/faq">Consultar o FAQ</a>} language="pt" status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion>)
   return { ...view, chat, user: userEvent.setup(), trigger: screen.getByRole('button', { name: 'Denkynho: ações e dicas' }) }
 }
 it('abre por teclado, alterna dicas locais e fecha com Escape devolvendo foco', async () => {
@@ -121,4 +121,16 @@ it('preserva o recolhimento apenas nesta visita e exibe o personagem ao voltar p
   mobile.unmount()
   mount(true)
   expect(screen.getByText('Personagem')).toBeVisible()
+})
+
+it('reúne FAQ, dica e conversa em um grupo acessível', async () => {
+  const { user, trigger, chat } = mount()
+  await user.click(trigger)
+  const actions = within(screen.getByRole('group', { name: 'Ajuda rápida' }))
+  expect(actions.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
+  await user.click(actions.getByRole('button', { name: 'Me dê uma dica' }))
+  expect(screen.getByRole('status')).toHaveTextContent('Não envie senhas')
+  await user.click(actions.getByRole('button', { name: 'Conversar' }))
+  expect(chat).toHaveBeenCalledTimes(1)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 })

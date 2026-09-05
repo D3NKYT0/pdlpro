@@ -4,7 +4,7 @@
 .help-character-handle:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
 .help-character-handle .denk-mascot { width:180px; pointer-events:none; }
 .help-character-badge { position:absolute; bottom:0; right:0; padding:0 8px; border-radius:12px; background:var(--panel-bg, #18202d); color:var(--panel-text, #fff); }
-.panel-app .help-page .help-companion-menu,.help-companion-menu { position:absolute; z-index:40; top:8px; left:calc(100% + 8px); width:min(340px, calc(100vw - 32px)); max-height:calc(100% - 16px); overflow:auto; display:flex; flex-direction:column; gap:12px; padding:16px; box-shadow:0 12px 40px #0005; }
+.panel-app .help-page .help-companion-menu,.help-companion-menu { position:absolute; z-index:40; top:8px; left:calc(100% + 8px); width:min(480px, calc(100vw - 32px)); max-height:calc(100% - 16px); overflow:auto; display:flex; flex-direction:column; gap:12px; padding:16px; box-shadow:0 12px 40px #0005; }
 .help-companion-menu header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .help-companion-menu p { margin:0; }
 .help-preferences { display:grid; gap:10px; padding-top:12px; border-top:1px solid var(--panel-border); }
@@ -17,7 +17,7 @@
 .is-floating .help-character-handle { touch-action:none; user-select:none; cursor:grab; }
 .is-floating .help-character-handle:active { cursor:grabbing; }
 .is-floating .help-character-handle .denk-mascot { width:80px; }
-.panel-app .help-page .is-floating .help-companion-menu,.is-floating .help-companion-menu { position:fixed; top:var(--companion-menu-top); left:var(--companion-menu-left); width:min(340px,var(--companion-menu-width)); max-height:var(--companion-menu-height); }
+.panel-app .help-page .is-floating .help-companion-menu,.is-floating .help-companion-menu { position:fixed; top:var(--companion-menu-top); left:var(--companion-menu-left); width:min(480px,var(--companion-menu-width)); max-height:var(--companion-menu-height); }
 .help-page {
   display:flex;
   flex-direction:column;
@@ -73,6 +73,7 @@
   margin:0;
 }
 .help-activities {
+  flex-shrink:0;
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
@@ -633,3 +634,15 @@ html.pdl-panel:has(.help-page) .help-page {
     padding:14px;
   }
 }
+
+.help-activities > .ui-button { flex-shrink:0; }
+
+.help-companion-menu > * { flex-shrink:0; }
+.help-companion-menu > .ui-button { align-self:center; flex-shrink:0; }
+.help-companion-menu .help-activities:not([role=group]) { justify-content:center; }
+.help-activities[role=group] { flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; }
+
+.help-preference-actions,.help-companion-footer { display:flex; align-items:center; justify-content:flex-start; flex-wrap:wrap; gap:8px; }
+.help-preference-actions { padding-top:4px; }
+.help-companion-footer { gap:6px; border-top:1px solid var(--panel-border); padding-top:14px; margin-top:2px; }
+.help-preference-actions > .ui-button,.help-companion-footer > .ui-button { flex-shrink:0; }

@@ -51,11 +51,34 @@ it('seleciona cenários pela prévia, respeita níveis e envia o slot scene', as
   const fetcher = vi.fn((url: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(response(String(url).includes('/csrf/') ? { csrfToken: 'test' } : { ...state, appearance: { ...state.appearance, scene: 'garden' } })))
   vi.stubGlobal('fetch', fetcher)
   render(<PetProgress profile={state} language="pt" onProfileChange={changed} />)
+  expect(screen.queryByRole('button', { name: 'Usar Biblioteca aconchegante' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Próximo cenário' }))
   expect(screen.getByRole('button', { name: 'Usar Biblioteca aconchegante' })).toBeDisabled()
+  expect(screen.queryByText('Fonte, flores e um cantinho ao sol.')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Cenário anterior' }))
   expect(screen.getByText('Fonte, flores e um cantinho ao sol.')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Usar Jardim encantado' }))
   await waitFor(() => expect(changed).toHaveBeenCalled())
   const request = fetcher.mock.calls.find(([url]) => String(url).includes('/wardrobe/'))!
   expect(request[1]?.method).toBe('PATCH')
   expect(JSON.parse(request[1]?.body as string)).toEqual({ slot: 'scene', item_id: 'garden' })
+})
+
+it('inicia no fundo equipado, circula pelas prévias sem salvar e aceita catálogo vazio', async () => {
+  const user = userEvent.setup(), changed = vi.fn()
+  const state: ApiDenkynhoProfile = { ...profile, appearance: { ...profile.appearance!, scene: 'camp' }, unlocks: [
+    { id: 'garden', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Jardim', en: 'Garden' } },
+    { id: 'camp', slot: 'scene', level: 5, unlocked: true, label: { pt: 'Acampamento', en: 'Camp' } },
+  ] }
+  const { rerender } = render(<PetProgress profile={state} language="en" onProfileChange={changed} />)
+  expect(screen.getByRole('button', { name: 'Remove Camp' })).toHaveAttribute('aria-pressed', 'true')
+  await user.click(screen.getByRole('button', { name: 'Next scene' }))
+  expect(screen.getByRole('button', { name: 'Equip Garden' })).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Previous scene' }))
+  expect(screen.getByRole('button', { name: 'Remove Camp' })).toBeVisible()
+  expect(changed).not.toHaveBeenCalled()
+  rerender(<PetProgress profile={{ ...state, unlocks: state.unlocks!.slice(0, 1) }} language="en" onProfileChange={changed} />)
+  expect(screen.getByRole('button', { name: 'Next scene' })).toBeDisabled()
+  rerender(<PetProgress profile={{ ...state, unlocks: [] }} language="en" onProfileChange={changed} />)
+  expect(screen.queryByRole('group', { name: 'Browse scenes' })).not.toBeInTheDocument()
 })

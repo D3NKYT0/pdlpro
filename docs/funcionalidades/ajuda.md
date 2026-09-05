@@ -271,3 +271,9 @@ Arte original gerada com a ferramenta ImageGen em 04/09/2026, arquivos em `front
 - `garden.png`: jardim encantado ao pôr do sol, piso de pedra com musgo, flores azuis, banco de madeira, vasos de barro, fonte redonda e arco com hera; verde, mel e azul suave.
 - `study.png`: biblioteca acolhedora, piso de madeira, estantes curvas, mesa com livros e globo iluminado à esquerda, poltrona com manta azul e samambaia à direita, janela em arco; madeira, âmbar e azul escuro.
 - `camp.png`: acampamento na floresta ao anoitecer, clareira, barraca à esquerda com mochila e cobertor, fogueira de pedras e lanterna à direita, pinheiros, montanhas e estrelas; azul marinho, verde e âmbar.
+
+O cenário acompanha a proporção vertical 2:3 do personagem. No desktop, a área chega a 280 × 420 px, com coluna de até 300 px e margens internas menores. No celular, fundo e área arrastável medem 80 × 120 px. A revisão responsiva deve conferir essas dimensões no navegador, ausência de faixa descoberta e personagem inteiro.
+
+No menu, as ações de preferências ficam junto aos campos. O rodapé de ajuda rápida reúne FAQ, dica e conversa, com divisória e alinhamento à esquerda. Os controles mantêm sua altura e quebram linha apenas quando a largura disponível exige.
+
+Os fundos aparecem em um carrossel com uma prévia por vez. As setas percorrem o catálogo em ciclo e começam pelo fundo equipado. Navegar apenas muda a prévia; a seleção só é salva pelo botão Usar/Retirar. Cenários bloqueados continuam mostrando o nível necessário.

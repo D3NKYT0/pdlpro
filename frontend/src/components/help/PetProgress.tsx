@@ -1,6 +1,8 @@
+import { useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { contentApi, type ApiDenkynhoCareResult, type ApiDenkynhoProfile, type DenkynhoAppearance } from '../../services/domain/content.service'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
-import { Button } from '../ui/Button'
+import { Button, IconButton } from '../ui/Button'
 import { ErrorNotice } from '../ui/Feedback'
 import type { HelpLanguage } from './personality'
 import './pet-progress.css'
@@ -12,6 +14,10 @@ export function PetProgress({ profile, language, careResult, disabled = false, o
 }) {
   const action = useAsyncAction()
   const pt = language === 'pt'
+  const backgrounds = profile.unlocks?.filter(item => item.slot === 'scene') ?? []
+  const [sceneIndex, setSceneIndex] = useState(() => Math.max(0, backgrounds.findIndex(item => item.id === profile.appearance?.scene)))
+  const index = Math.min(sceneIndex, Math.max(0, backgrounds.length - 1))
+  const visibleItems = [...backgrounds.slice(index, index + 1), ...(profile.unlocks?.filter(item => item.slot !== 'scene') ?? [])]
   const gains = careResult && !careResult.replayed ? careResult : null
   async function equip(slot: keyof DenkynhoAppearance, itemId: string) {
     await action.run(async () => {
@@ -31,8 +37,13 @@ export function PetProgress({ profile, language, careResult, disabled = false, o
     <p>{profile.unlocks?.find(item => !item.unlocked) ? (() => { const item = profile.unlocks!.find(item => !item.unlocked)!; return `${item.label[language]} · ${pt ? 'Nível' : 'Level'} ${item.level}` })() : pt ? 'Todos os desbloqueios disponíveis conquistados.' : 'All available unlocks earned.'}</p>
     <progress aria-label={pt ? 'Progresso para o próximo nível' : 'Progress toward next level'} value={profile.experience} max={profile.experience_next} />
     <h3>{pt ? 'Cenários e acessórios' : 'Scenes and accessories'}</h3>
+    {backgrounds.length > 0 && <div className="denk-scene-navigation" role="group" aria-label={pt ? 'Navegar pelos cenários' : 'Browse scenes'}>
+      <IconButton label={pt ? 'Cenário anterior' : 'Previous scene'} size="sm" variant="secondary" disabled={backgrounds.length < 2} onClick={() => setSceneIndex((index - 1 + backgrounds.length) % backgrounds.length)}><ChevronLeft aria-hidden="true" /></IconButton>
+      <span aria-live="polite">{pt ? 'Cenário' : 'Scene'} {index + 1} / {backgrounds.length}</span>
+      <IconButton label={pt ? 'Próximo cenário' : 'Next scene'} size="sm" variant="secondary" disabled={backgrounds.length < 2} onClick={() => setSceneIndex((index + 1) % backgrounds.length)}><ChevronRight aria-hidden="true" /></IconButton>
+    </div>}
     <div className="denk-wardrobe">
-      {profile.unlocks?.map(item => <div key={item.id} className={item.slot === 'scene' ? 'denk-scene-option' : undefined}>
+      {visibleItems.map(item => <div key={item.id} className={item.slot === 'scene' ? 'denk-scene-option' : undefined}>
         {item.slot === 'scene' && knownScene(item.id) && <><img src={scenes[knownScene(item.id)!].src} alt="" loading="lazy" /><small>{scenes[knownScene(item.id)!][language]}</small></>}
         <span>{item.label[language]} <small>· {pt ? 'Nível' : 'Level'} {item.level}</small></span>
         {item.slot === 'interaction' ? <small>{item.unlocked ? (pt ? 'Disponível nas atividades' : 'Available in activities') : (pt ? 'Bloqueado' : 'Locked')}</small> : <Button size="sm" variant="secondary" disabled={disabled || action.pending || !item.unlocked} aria-pressed={profile.appearance?.[item.slot] === item.id} onClick={() => void equip(item.slot as keyof DenkynhoAppearance, profile.appearance?.[item.slot as keyof DenkynhoAppearance] === item.id ? '' : item.id)}>{profile.appearance?.[item.slot] === item.id ? (pt ? 'Retirar' : 'Remove') : (pt ? 'Usar' : 'Equip')} {item.label[language]}</Button>}

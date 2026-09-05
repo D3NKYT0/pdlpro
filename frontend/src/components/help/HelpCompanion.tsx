@@ -19,7 +19,7 @@ const clamp = (point: { x: number; y: number }) => {
 }
 
 /** Disclosure do mascote; no celular, o próprio personagem é uma alça arrastável limitada à área visível. */
-export function HelpCompanion({ language, mascot, status, children, onChat }: { language: HelpLanguage; mascot: ReactNode; status: string; children: (onActivity: () => void) => ReactNode; onChat: () => void }) {
+export function HelpCompanion({ language, mascot, status, children, onChat, faqLink }: { language: HelpLanguage; mascot: ReactNode; status: string; children: (onActivity: () => void) => ReactNode; onChat: () => void; faqLink?: ReactNode }) {
   const [open, setOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const [tip, setTip] = useState(-1)
@@ -94,7 +94,7 @@ export function HelpCompanion({ language, mascot, status, children, onChat }: { 
       <header><strong>Denkynho</strong><Button ref={closeButton} size="sm" variant="ghost" onClick={() => { setOpen(false); trigger.current?.focus() }}>{pt ? 'Fechar' : 'Close'}</Button></header>
       <p className="muted">{status}</p>
       {children(() => { if (mobile) setOpen(false) })}
-      <div className="help-activities"><Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % tips[language].length)}>{pt ? 'Me dê uma dica' : 'Give me a tip'}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{pt ? 'Conversar' : 'Chat'}</Button></div>
+      <div className="help-companion-footer" role="group" aria-label={pt ? 'Ajuda rápida' : 'Quick help'}>{faqLink}<Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % tips[language].length)}>{pt ? 'Me dê uma dica' : 'Give me a tip'}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{pt ? 'Conversar' : 'Chat'}</Button></div>
       {tip >= 0 && <p role="status">{tips[language][tip]}</p>}
       {mobile && <div className="help-activities">
         <Button size="sm" variant="ghost" onClick={() => setPosition(clamp({ x: bounds().left + bounds().width - 88, y: bounds().top + 120 }))}>{pt ? 'Reposicionar personagem' : 'Reset character position'}</Button>

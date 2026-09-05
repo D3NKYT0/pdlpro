@@ -13,12 +13,24 @@
 @keyframes denk-nod { 0%,100% { rotate:0deg; } 40% { rotate:1.5deg; } 70% { rotate:-1deg; } }
 @keyframes denk-spark { 0%,100% { opacity:.35; scale:.8; } 50% { opacity:1; scale:1.15; } }
 @media (prefers-reduced-motion:reduce) { .denk-mascot.is-dancing .denk-facing,.denk-mascot[data-gesture=true] .denk-pose,.denk-mascot.is-celebrating:after { animation:none!important; } }
-.denk-mascot.has-scene { aspect-ratio:1; border-radius:16px; overflow:hidden; background:var(--panel-surface,#242a28); isolation:isolate; }
-.help-character-handle .denk-mascot.has-scene { width:180px; max-width:100%; }
+.denk-mascot.has-scene { aspect-ratio:2/3; border-radius:16px; overflow:hidden; background:var(--panel-surface,#242a28); isolation:isolate; }
+.help-character-handle .denk-mascot.has-scene { max-width:100%; }
 .denk-scene { position:absolute; inset:0; pointer-events:none; }
 .denk-scene img { width:100%; height:100%; object-fit:cover; }
-.denk-mascot.has-scene > .denk-transition { inset:18% 26% 10%; width:48%; height:72%; }
+.denk-mascot.has-scene > .denk-transition { inset:0; width:100%; height:100%; }
 .denk-wardrobe .denk-scene-option { border-bottom:1px solid var(--panel-border); padding-bottom:12px; }
 .denk-scene-option > img { width:100%; max-width:220px; aspect-ratio:2; object-fit:cover; border-radius:8px; }
 .denk-progress h3 { margin:8px 0 0; font-size:inherit; }
 @media(max-width:900px) { .is-floating .help-character-handle .denk-mascot.has-scene { width:80px; } }
+
+@media(min-width:901px) {
+  .help-workspace:has(.denk-mascot) { grid-template-columns:minmax(232px,300px) minmax(0,1fr); }
+  .help-companion:has(.denk-mascot) { gap:6px; }
+  .panel-app .help-page .help-companion:has(.denk-mascot) { padding:8px; }
+  .help-character-handle:has(.denk-mascot) { max-width:100%; }
+  .help-companion .help-character-handle .denk-mascot { width:clamp(200px,22vw,280px); max-width:100%; }
+}
+
+.denk-scene-navigation { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+.denk-wardrobe > .denk-scene-option { justify-items:center; text-align:center; }

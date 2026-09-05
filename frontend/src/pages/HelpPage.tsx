@@ -253,7 +253,7 @@ export function HelpPage() {
   return <div className="help-page">
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
-      <HelpCompanion language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
+      <HelpCompanion faqLink={<ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>} language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
         mascot={<Denkynho pose={pose} idle={idle} animated={animated} appearance={pet.data?.appearance} celebration={Boolean(activity && careResult?.level_up && !careResult.replayed)} dancing={activity === "02-sucesso" && careResult?.action === "dance"} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
@@ -279,7 +279,6 @@ export function HelpPage() {
           // Explicit erasure must also forget the name in the temporary signed context.
           if (!next.preferred_name) setContext('')
         }} />}
-        <ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>
         </>}
       </HelpCompanion>
       <Card as="section" className="help-chat" aria-label={labels.chatLabel}>
