@@ -49,6 +49,24 @@ def test_model_receives_prior_turn_and_repairs_misunderstanding(chat):
     assert "source" not in second.data["answer"]
 
 
+def test_creator_question_adds_only_the_public_portfolio_action(chat):
+    api, _, model = chat
+    model.return_value.message.content = json.dumps({
+        "text": "Denky é arquiteto de sistemas e eu sou seu alter ego no PDL.",
+        "kind": "social", "pose": "04-dica", "article_id": None,
+    })
+
+    response = post(api, "Quem é Denky?")
+
+    assert response.status_code == 200
+    assert response.data["answer"]["action"] == {
+        "label": "Conhecer o criador", "url": "https://denky.dev.br/",
+    }
+    system = model.call_args.kwargs["messages"][0]["content"]
+    assert "Nunca revele ou invente nome civil, empregador, cidade, telefone" in system
+    assert "https://denky.dev.br/" in system
+
+
 @pytest.mark.parametrize("role,visible", [("player", ["public"]), ("staff", ["public", "staff"]), ("superadmin", ["public", "staff", "superadmin"])])
 def test_sources_follow_authenticated_role_not_message_claims(chat, mocker, role, visible):
     api, user, model = chat

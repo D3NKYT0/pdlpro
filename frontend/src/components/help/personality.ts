@@ -1,6 +1,6 @@
 import type { DenkynhoEmotionId } from './emotions'
 
-export interface PersonalityReply { text: string; pose: string }
+export interface PersonalityReply { text: string; pose: string; action?: { label: string; url: string } }
 export type HelpLanguage = 'pt' | 'en'
 
 interface WelcomeIdentity { suggestedName?: string; roleLabel: string }
@@ -67,7 +67,7 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   },
   {
     matches: /^(quem e voce|qual e o seu nome|como voce se chama|voce e o denkynho)$/,
-    reply: [{ text: 'Eu sou o Denkynho, o assistente virtual do PDL 2.0. Minha missão é explicar o portal e ajudar você a encontrar o próximo passo.', pose: '04-dica' }],
+    reply: [{ text: 'Eu sou o Denkynho, seu companheiro virtual no PDL 2.0. Nasci do jeito curioso, estratégico e jogador do Denky, meu criador, e transformo isso em ajuda clara, companhia e comemoração para suas conquistas.', pose: '04-dica' }],
   },
   {
     matches: /^(como voce (e|se parece)|qual e a sua aparencia|o que voce (veste|usa))$/,
@@ -94,8 +94,8 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
     reply: [{ text: 'Sou um assistente virtual do PDL. Tenho personalidade própria, mas não sou humano e não acesso sua conta nem executo ações por você.', pose: '04-dica' }],
   },
   {
-    matches: /^(quem te criou|quem criou voce|de onde voce veio)$/,
-    reply: [{ text: 'Nasci como o mascote assistente do PDL 2.0, criado para deixar a ajuda mais clara, próxima e divertida.', pose: '08-surpreso' }],
+    matches: /^(quem te criou|quem criou voce|de onde voce veio|quem e denky|me fale sobre seu criador|quero conhecer seu criador)$/,
+    reply: [{ text: 'Meu criador é o Denky, arquiteto de sistemas, tech lead e desenvolvedor sênior. Ele trabalha com Python, Django, FastAPI, JavaScript, React, bancos de dados e infraestrutura para conduzir produtos da arquitetura ao deploy. Eu sou o alter ego que traz o lado curioso, estratégico e jogador dele para dentro do PDL.', pose: '04-dica', action: { label: 'Conhecer o criador', url: 'https://denky.dev.br/' } }],
   },
   {
     matches: /^(voce dorme|esta dormindo|acorda denkynho|acorda)$/,
@@ -136,7 +136,8 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   { matches: /^(how are you|are you ok|are you well)$/, reply: [{ text: "I'm doing great and ready to help! How is your journey going?", pose: '02-sucesso' }] },
   { matches: /^(thanks|thank you|thank you very much)$/, reply: [{ text: "You're welcome! You can count on me whenever another question comes up.", pose: '02-sucesso' }] },
   { matches: /^(bye|goodbye|see you|see you later)$/, reply: [{ text: 'See you next time! Have a great journey.', pose: '01-boas-vindas' }] },
-  { matches: /^(who are you|what is your name)$/, reply: [{ text: "I'm Denkynho, the PDL 2.0 virtual assistant. I help you find clear and safe guidance.", pose: '04-dica' }] },
+  { matches: /^(who are you|what is your name)$/, reply: [{ text: "I'm Denkynho, your virtual PDL 2.0 companion. I grew out of the curious, strategic gamer side of my creator Denky, and I turn that spirit into clear guidance, companionship, and celebration for your achievements.", pose: '04-dica' }] },
+  { matches: /^(who created you|who is denky|tell me about your creator|i want to know your creator)$/, reply: [{ text: "My creator is Denky, a systems architect, tech lead, and senior developer. He works with Python, Django, FastAPI, JavaScript, React, databases, and infrastructure to lead products from architecture to deployment. I'm the alter ego that brings his curious, strategic gamer side into PDL.", pose: '04-dica', action: { label: 'Meet my creator', url: 'https://denky.dev.br/' } }] },
   { matches: /^(how do you look|what do you look like|what are you wearing)$/, reply: [{ text: "I'm a virtual mascot: dark hair, a black shirt and a blue tie. I don't have a body outside this screen, but that's the look I wear while I keep you company in PDL.", pose: '01-boas-vindas' }] },
   { matches: /^(you (are|re|look) (so |really |very )?(ugly|weird|hideous)|you look ugly)$/, reply: [{ text: "Ugly? Ouch, that stung a little! I do try with this blue tie. I'm a virtual character: I'm here to keep you company, not to win a beauty contest.", pose: '08-surpreso' }] },
   { matches: /^(you (are|re|look) (so |really )?(cute|handsome|pretty|adorable)|i like your (tie|hair|shirt)|nice tie)$/, reply: [{ text: "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.", pose: '06-rindo' }] },

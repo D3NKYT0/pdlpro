@@ -43,3 +43,14 @@ def test_identity_correction_keeps_the_editorial_prefix():
     assert 'Denkynho' in reply['text']
     tease = identity_reply('pt', correction=True, intent='appearance_tease')
     assert not tease['text'].startswith('Desculpa')
+
+
+def test_creator_biography_uses_public_professional_facts_and_portfolio():
+    assert self_directed_intent('quem e denky') == 'creator'
+    assert self_directed_intent('tell me about your creator') == 'creator'
+    reply = self_talk_reply('quero conhecer seu criador', 'pt')
+    assert reply['pose'] == '04-dica'
+    assert 'arquiteto de sistemas' in reply['text']
+    assert 'alter ego' in reply['text']
+    assert reply['action'] == {'label': 'Conhecer o criador', 'url': 'https://denky.dev.br/'}
+    assert 'Daniel' not in reply['text']

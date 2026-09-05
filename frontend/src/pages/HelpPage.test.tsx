@@ -319,6 +319,35 @@ it('aceita reparação social do backend sem repetir fonte e resposta do FAQ ant
   expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '', screen: '/painel/ajuda' })
 })
 
+it('mostra a biografia profissional do criador e abre somente o portfólio público', async () => {
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({
+    kind: 'social', language: 'pt', engine: 'rapidfuzz', mode: 'limited',
+    answer: { text: 'Meu criador é o Denky, arquiteto de sistemas e tech lead. Eu sou o alter ego jogador dele.', pose: '04-dica', action: { label: 'Conhecer o criador', url: 'https://denky.dev.br/' } },
+  }) : apiResponse(input)))
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Quem é Denky?{Enter}')
+  expect(await screen.findByText(/Eu sou o alter ego/)).toBeVisible()
+  const portfolio = screen.getByRole('link', { name: 'Conhecer o criador' })
+  expect(portfolio).toHaveAttribute('href', 'https://denky.dev.br/')
+  expect(portfolio).toHaveAttribute('target', '_blank')
+  expect(portfolio).toHaveAttribute('rel', 'noopener noreferrer')
+})
+
+it('recusa links externos diferentes do portfólio público e preserva a pergunta', async () => {
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/reply/') ? response({
+    kind: 'social', language: 'pt', engine: 'ollama', mode: 'generative',
+    answer: { text: 'Saiba mais sobre o criador.', pose: '04-dica', action: { label: 'Abrir site', url: 'https://example.com/' } },
+  }) : apiResponse(input)))
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Quem criou você?')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível consultar a ajuda.')
+  expect(screen.getByRole('textbox', { name: 'Sua mensagem' })).toHaveValue('Quem criou você?')
+  expect(screen.queryByRole('link', { name: 'Abrir site' })).not.toBeInTheDocument()
+})
+
 it('usa geração também para cumprimentos, mantém contexto e o limpa em nova conversa', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion()

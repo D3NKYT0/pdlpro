@@ -7,6 +7,10 @@ IDENTITY_EXAMPLES = {
     'pt': ('me fale sobre voce', 'fale um pouco sobre voce', 'quem e voce', 'quero conhecer melhor voce', 'me conte sobre voce', 'se apresente'),
     'en': ('tell me about yourself', 'who are you', 'introduce yourself', 'i want to know more about you'),
 }
+CREATOR_EXAMPLES = {
+    'pt': ('quem te criou', 'quem criou voce', 'quem e denky', 'me fale sobre seu criador', 'quero conhecer seu criador'),
+    'en': ('who created you', 'who is denky', 'tell me about your creator', 'i want to know your creator'),
+}
 APPEARANCE_EXAMPLES = {
     'pt': ('como voce e', 'como voce se parece', 'qual e a sua aparencia', 'o que voce veste'),
     'en': ('how do you look', 'what do you look like', 'describe your appearance', 'what are you wearing'),
@@ -20,8 +24,16 @@ APPEARANCE_COMPLIMENT_EXAMPLES = {
     'en': ('you are cute', 'you look nice', 'i like your tie', 'nice tie'),
 }
 IDENTITY_TEXT = {
-    'pt': 'Eu sou o Denkynho, o assistente virtual do PDL 2.0! Gosto de explicar as coisas com calma, dar uma força quando surge uma dúvida e comemorar suas conquistas. Posso conversar com você e orientar sobre o portal. Sou um personagem virtual: não tenho uma vida fora daqui e não executo ações na sua conta.',
-    'en': "I'm Denkynho, the PDL 2.0 virtual assistant! I like explaining things patiently, helping with questions, and celebrating your achievements. I can chat with you and guide you around the portal. I'm a virtual character: I don't have a life outside this app or perform actions on your account.",
+    'pt': 'Eu sou o Denkynho, seu companheiro virtual no PDL 2.0. Nasci do jeito de pensar do Denky, meu criador: curioso, mão na massa e acostumado a enxergar a jornada inteira, da arquitetura ao mundo em produção. Transformo isso em ajuda clara, companhia e comemoração para cada conquista. Sou um personagem virtual e não acesso nem executo ações na sua conta.',
+    'en': "I'm Denkynho, your virtual companion in PDL 2.0. I grew out of how my creator Denky thinks: curious, hands-on, and used to seeing the whole journey from architecture to production. I turn that spirit into clear guidance, companionship, and a celebration for every achievement. I'm a virtual character and cannot access or perform actions on your account.",
+}
+CREATOR_TEXT = {
+    'pt': 'Meu criador é o Denky, profissional de tecnologia que atua como arquiteto de sistemas, tech lead e desenvolvedor sênior. Ele combina Python, Django, FastAPI, JavaScript e React com bancos de dados, infraestrutura Linux, redes e virtualização para construir e conduzir produtos da arquitetura ao deploy. Eu sou o alter ego que traz esse lado curioso, estratégico e jogador para dentro do PDL. Se quiser conhecê-lo melhor, visite o portfólio.',
+    'en': 'My creator is Denky, a technology professional working as a systems architect, tech lead, and senior developer. He combines Python, Django, FastAPI, JavaScript, and React with databases, Linux infrastructure, networking, and virtualization to lead products from architecture to deployment. I am the alter ego that brings his curious, strategic, gamer side into PDL. Visit his portfolio if you would like to know him better.',
+}
+CREATOR_PORTFOLIO_ACTION = {
+    'pt': {'label': 'Conhecer o criador', 'url': 'https://denky.dev.br/'},
+    'en': {'label': 'Meet my creator', 'url': 'https://denky.dev.br/'},
 }
 APPEARANCE_TEXT = {
     'pt': 'Sou um mascote virtual: cabelo escuro, camisa preta e gravata azul. Não tenho um corpo fora da tela, mas essa é a cara com a qual te acompanho no PDL.',
@@ -58,12 +70,14 @@ _LOOKS_QUESTION = re.compile(
 )
 _REPLIES = {
     'identity': (IDENTITY_TEXT, '01-boas-vindas'),
+    'creator': (CREATOR_TEXT, '04-dica'),
     'appearance': (APPEARANCE_TEXT, '01-boas-vindas'),
     'appearance_tease': (APPEARANCE_TEASE_TEXT, '08-surpreso'),
     'appearance_compliment': (APPEARANCE_COMPLIMENT_TEXT, '06-rindo'),
 }
 _SOCIAL_EXAMPLES = {
     'identity': IDENTITY_EXAMPLES,
+    'creator': CREATOR_EXAMPLES,
     'appearance': APPEARANCE_EXAMPLES,
     'appearance_tease': APPEARANCE_TEASE_EXAMPLES,
     'appearance_compliment': APPEARANCE_COMPLIMENT_EXAMPLES,
@@ -86,6 +100,8 @@ def self_directed_intent(query: str) -> str | None:
     query = expand_address(query)
     if _ACCOUNT.search(query):
         return None
+    if re.search(r'\b(quem (te|o )?criou|quem e denky|seu criador|your creator|who created you|who is denky)\b', query):
+        return 'creator'
     if _LOOKS_TEASE.search(query):
         return 'appearance_tease'
     if _LOOKS_COMPLIMENT.search(query) or _LOOKS_ITEM.search(query):
@@ -112,7 +128,10 @@ def identity_reply(language: str, correction: bool = False, intent: str = 'ident
     if correction and intent == 'identity':
         prefix = ('Desculpa, interpretei errado. Você queria saber sobre mim. ' if language == 'pt'
                   else 'Sorry, I misunderstood. You wanted to know about me. ')
-    return {'text': prefix + texts[language], 'pose': pose}
+    reply = {'text': prefix + texts[language], 'pose': pose}
+    if intent == 'creator':
+        reply['action'] = CREATOR_PORTFOLIO_ACTION[language]
+    return reply
 
 
 def self_talk_reply(query: str, language: str, correction: bool = False) -> dict | None:

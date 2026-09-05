@@ -48,7 +48,7 @@ export interface ApiAssistantReply {
   confidence?: number
   article_id?: string
   related_ids?: string[]
-  answer: { text: string; details?: string | null; source?: string; pose: string }
+  answer: { text: string; details?: string | null; source?: string; pose: string; action?: { label: string; url: string } }
   emotion?: {
     id: 'calm' | 'joyful' | 'amused' | 'sad' | 'sleepy' | 'surprised' | 'confused' | 'frustrated'
     pose: string

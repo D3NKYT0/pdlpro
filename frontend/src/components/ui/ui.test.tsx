@@ -4,7 +4,7 @@ import { createRef, useState } from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it, vi } from 'vitest'
-import { Button, ButtonLink, IconButton } from './Button'
+import { Button, ButtonLink, ExternalButtonLink, IconButton } from './Button'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Field } from './Field'
 import { EmptyState, ErrorNotice, LoadingState } from './Feedback'
@@ -21,6 +21,14 @@ it('link estilizado mantém navegação e semântica de link', async () => {
   expect(link).toHaveAttribute('data-theme-part', 'button')
   await userEvent.click(link)
   expect(screen.getByRole('heading', { name: 'Detalhes' })).toBeVisible()
+})
+it('link externo estilizado isola a nova aba por padrão', () => {
+  render(<ExternalButtonLink href="https://denky.dev.br/">Conhecer o criador</ExternalButtonLink>)
+  const link = screen.getByRole('link', { name: 'Conhecer o criador' })
+  expect(link).toHaveAttribute('href', 'https://denky.dev.br/')
+  expect(link).toHaveAttribute('target', '_blank')
+  expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+  expect(link).toHaveAttribute('data-theme-part', 'button')
 })
 it('ação somente com ícone tem nome, teclado e anúncio de envio', async () => {
   const click = vi.fn()

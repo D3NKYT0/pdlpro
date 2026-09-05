@@ -40,3 +40,8 @@ export function IconButton({ label, className = '', ...props }: Omit<ButtonProps
 export function ButtonLink({ variant, size, className, ...props }: ComponentPropsWithRef<typeof Link> & ButtonAppearance) {
   return <Link {...props} data-theme-part="button" className={buttonClasses({ variant, size }, className)} />
 }
+
+/** Link externo com a aparência compartilhada de botão e isolamento da nova aba. */
+export function ExternalButtonLink({ variant, size, className, target = '_blank', rel = 'noopener noreferrer', ...props }: ComponentPropsWithRef<'a'> & ButtonAppearance) {
+  return <a {...props} target={target} rel={rel} data-theme-part="button" className={buttonClasses({ variant, size }, className)} />
+}

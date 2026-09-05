@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Button, ButtonLink, IconButton } from '../src/components/ui/Button'
+import { Button, ButtonLink, ExternalButtonLink, IconButton } from '../src/components/ui/Button'
 import { BrowserRouter } from 'react-router-dom'
 import { ArrowRight, Check, Download, Pencil, Plus, RefreshCw, Save, ShieldAlert, Trash2 } from 'lucide-react'
 import { Card } from '../src/components/ui/Card'
@@ -48,7 +48,7 @@ function Showcase() {
             <IconButton label="Excluir item" variant="danger" onClick={() => setLastAction('Exclusão demonstrativa selecionada.')}><Trash2 aria-hidden="true" /></IconButton>
           </div>
           <h3>Estados e navegação</h3>
-          <div className="ui-showcase-actions"><Button disabled>Indisponível</Button><Button busy busyLabel="Salvando...">Salvar</Button><IconButton label="Atualizar lista" variant="secondary" busy><RefreshCw aria-hidden="true" /></IconButton><ButtonLink variant="secondary" to="#showcase-panel-guidelines" onClick={() => setTab('guidelines')}>Como usar <ArrowRight aria-hidden="true" /></ButtonLink></div>
+          <div className="ui-showcase-actions"><Button disabled>Indisponível</Button><Button busy busyLabel="Salvando...">Salvar</Button><IconButton label="Atualizar lista" variant="secondary" busy><RefreshCw aria-hidden="true" /></IconButton><ButtonLink variant="secondary" to="#showcase-panel-guidelines" onClick={() => setTab('guidelines')}>Como usar <ArrowRight aria-hidden="true" /></ButtonLink><ExternalButtonLink href="https://denky.dev.br/">Site externo <ArrowRight aria-hidden="true" /></ExternalButtonLink></div>
           <p className="ui-showcase-result" role="status">{lastAction}</p>
         </Card>
         <form className="card" onSubmit={event => { event.preventDefault(); void action.run(async () => { setSaved(false); await new Promise(resolve => setTimeout(resolve, 700)); setSaved(true) }) }}>
@@ -58,7 +58,7 @@ function Showcase() {
         <Card><h2>Validação e navegação</h2><Field label="E-mail" error={<span id="email-error">Informe um e-mail válido.</span>}><input defaultValue="incompleto" aria-invalid="true" aria-describedby="email-error" /></Field><Pagination page={page} pages={3} onChange={setPage} /><p className="muted">Use Tab para navegar, Espaço nos controles e setas nas abas.</p></Card>
       </div>
     </section>
-    <Card id="showcase-panel-guidelines" role="tabpanel" aria-labelledby="showcase-tab-guidelines" hidden={tab !== 'guidelines'}><h2>Reaproveitar primeiro</h2><p>Importe componentes de src/components/ui e componha a tela com as regras do seu domínio.</p><p>Button usa type="button" por padrão. Para salvar um formulário, informe type="submit". Use busy e busyLabel durante ações assíncronas.</p><p>Guias completos em docs/desenvolvimento/componentes.md e docs/arquitetura/reutilizacao.md.</p></Card>
+    <Card id="showcase-panel-guidelines" role="tabpanel" aria-labelledby="showcase-tab-guidelines" hidden={tab !== 'guidelines'}><h2>Reaproveitar primeiro</h2><p>Importe componentes de src/components/ui e componha a tela com as regras do seu domínio.</p><p>Button usa type="button" por padrão. Para salvar um formulário, informe type="submit". Use busy e busyLabel durante ações assíncronas. ButtonLink navega dentro do painel; ExternalButtonLink abre um destino público em uma nova aba isolada.</p><p>Guias completos em docs/desenvolvimento/componentes.md e docs/arquitetura/reutilizacao.md.</p></Card>
   </main>
 }
 

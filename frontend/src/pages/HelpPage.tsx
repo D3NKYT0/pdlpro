@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 import { programsApi } from '../services/domain/programs.service'
 import { getHelpContext, getHelpActionsForText, supportTicketPrefill } from '../components/help/contextual'
 import { PetProgress } from '../components/help/PetProgress'
-import { Button, ButtonLink, IconButton } from '../components/ui/Button'
+import { Button, ButtonLink, ExternalButtonLink, IconButton } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Field } from '../components/ui/Field'
 import { PageHeader } from '../components/ui/PageHeader'
@@ -30,7 +30,7 @@ import { HelpPreferences } from '../components/help/HelpPreferences'
 import { DenkynhoActivityIcon } from '../components/help/DenkynhoActivityIcon'
 import { thinkingPhrase } from '../components/help/thinking'
 import { loadHelpPreferences, storeHelpPreferences, type HelpPreferences as Preferences } from '../components/help/preferences'
-type Message = { id: number; role: 'user' | 'assistant'; text: string; status?: 'sending' | 'failed'; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
+type Message = { id: number; role: 'user' | 'assistant'; text: string; status?: 'sending' | 'failed'; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string; action?: { label: string; url: string } }
 const welcome = (identity: HelpIdentity, language: HelpLanguage, preferences?: Preferences | null): Message => ({ id: 0, role: 'assistant', text: preferences?.preferred_name ? (language === 'pt' ? `Olá, ${preferences.preferred_name}! Sou o Denkynho. Vamos continuar sua jornada no PDL?` : `Hi, ${preferences.preferred_name}! I'm Denkynho. Let's continue your PDL journey.`) : denkynhoWelcome(new Date(), identity, language), pose: '01-boas-vindas' })
 const dialogueWithPreferences = (language: HelpLanguage, preferences: Preferences | null) => ({ ...initialDialogueState(language), ...(preferences ? { name: preferences.preferred_name || undefined, detailPreference: preferences.detail === 'brief' ? 'short' as const : preferences.detail } : {}) })
 const activities = [
@@ -195,7 +195,7 @@ export function HelpPage() {
         ? previous.map(message => message.id === messageId ? { ...message, status: 'sending' } : message)
         : [...previous, { id: messageId, role: 'user', text: question, status: 'sending' }])
       const server = await contentApi.assistantReply(question, language, context, preferences && (!context || preferencesDirty.current) ? { preferred_name: preferences.preferred_name, detail: preferences.detail } : undefined, screenContext?.path ?? '/painel/ajuda')
-      if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
+      if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.answer.action !== undefined && (server.answer.action?.url !== 'https://denky.dev.br/' || typeof server.answer.action?.label !== 'string')) || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
       if ((server.context !== undefined && typeof server.context !== 'string') || (server.mode !== undefined && !['generative', 'limited'].includes(server.mode))) throw new Error(labels.error)
       if (server.emotion !== undefined && !isDenkynhoEmotion(server.emotion)) throw new Error(labels.error)
       return { server, dialogue: server.kind !== 'blocked' && server.mode !== 'generative' && isLocalDialogueMessage(question, dialogue) ? respondToMessage(question, faq.data ?? [], dialogue) : undefined }
@@ -321,6 +321,7 @@ export function HelpPage() {
             {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>{labels.full}</Button>}
             {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}
             {message.followUp && <p className="help-follow-up">{message.followUp}</p>}
+            {message.action && message.id !== revealing?.id && <div className="help-activities"><ExternalButtonLink href={message.action.url} size="sm" variant="secondary">{message.action.label}</ExternalButtonLink></div>}
             {message.role === 'assistant' && message.id !== revealing?.id && <div className="help-activities">{getHelpActionsForText(`${message.text} ${message.details ?? ''}`, user, resources.isSuccess ? resources.data : undefined, language).map(item => <ButtonLink key={item.to} size="sm" variant="secondary" to={item.to}>{item.label}</ButtonLink>)}</div>}
             {message.source && <small className="muted">{labels.source}: {message.source}</small>}
             {message.related?.length ? <div className="help-related" aria-label={labels.related}><small className="muted">{labels.related}</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}

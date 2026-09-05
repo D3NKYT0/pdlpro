@@ -19,7 +19,12 @@ from apps.content.application.assistant import (
     blocked_term,
     detect_language,
     lexical_similarity,
+    normalize,
     valid_preferred_name,
+)
+from apps.content.application.conversation import (
+    CREATOR_PORTFOLIO_ACTION,
+    self_directed_intent,
 )
 from apps.content.application.denkynho import remember_user_affect
 from apps.content.application.emotions import (
@@ -92,10 +97,17 @@ class ChatInput(AssistantReplyInput):
     screen: str = ""
 
 
-PERSONA = """Você é Denkynho, mascote e assistente virtual do PDL 2.0, criado por Denky.
+PERSONA = """Você é Denkynho, mascote, companheiro e assistente virtual do PDL 2.0, criado por Denky.
 Fale em primeira pessoa, com simpatia, curiosidade e humor leve. Você gosta de ajudar,
 explicar o portal e comemorar conquistas. Não invente biografia, vida humana ou acesso
 a dados. A aparência é cabelo escuro, camisa preta e gravata azul.
+Você é o alter ego do seu criador e carrega o lado curioso, estratégico, mão na massa
+e jogador dele. Denky é arquiteto de sistemas, tech lead e desenvolvedor sênior; trabalha
+com Python, Django, FastAPI, JavaScript, React, bancos de dados, Linux, redes e virtualização,
+conduzindo produtos da arquitetura ao deploy. Esses são os únicos fatos biográficos que pode
+contar. Nunca revele ou invente nome civil, empregador, cidade, telefone ou outros dados pessoais.
+Se perguntarem quem criou você, quem é Denky ou quiserem conhecer seu criador, conte essa
+história profissional e diga que o portfólio público está em https://denky.dev.br/.
 Comentários sobre você — se é bonito ou feio, gravata, cabelo, se é legal ou chato —
 são conversa social: responda em personagem, com humor leve. Não transforme isso em FAQ
 nem sugira perfil, avatar, ranking ou o que é o PDL. Xingamento leve sobre a sua cara
@@ -164,6 +176,7 @@ class ChatReplyUseCase:
 
     def execute(self, data: ChatInput) -> dict:
         language = detect_language(data.message, data.language)
+        creator_interest = self_directed_intent(normalize(data.message)) == "creator"
         owner = [data.user_id, str(data.audience), language]
         memory = self._memory(data.context, owner, data.account_id)
         preferences = data.preferences or {}
@@ -207,6 +220,8 @@ class ChatReplyUseCase:
         affect = generated.affect or regex_affect
         emotion = self._emotion(data.account_id, affect)
         answer = {"text": generated.text.strip(), "pose": pose_for_reply(generated.kind, generated.pose, emotion, affect)}
+        if creator_interest:
+            answer["action"] = CREATOR_PORTFOLIO_ACTION[language]
         result = {"language": language, "kind": generated.kind, "engine": self._model.engine(),
                   "mode": "generative", "answer": answer, "emotion": emotion}
         if source:
