@@ -9,5 +9,7 @@ it.each(['feed', 'sleep', 'play', 'bath', 'walk', 'dance'] as const)('renderiza 
   const { container } = render(<DenkynhoActivityIcon action={action} />)
   const icon = container.querySelector(`[data-activity-icon="${action}"]`)
   expect(icon?.getAttribute('aria-hidden')).toBe('true')
+  expect(icon?.getAttribute('width')).toBe('44')
+  expect(icon?.getAttribute('height')).toBe('44')
   expect(icon?.querySelectorAll('path, circle').length).toBeGreaterThanOrEqual(4)
 })

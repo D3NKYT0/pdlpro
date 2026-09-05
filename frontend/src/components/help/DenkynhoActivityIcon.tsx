@@ -3,8 +3,8 @@ import type { DenkynhoAction } from '../../services/domain/content.service'
 type ActivityAction = Exclude<DenkynhoAction, 'care'>
 
 const common = {
-  width: 52,
-  height: 52,
+  width: 44,
+  height: 44,
   viewBox: '0 0 64 64',
   fill: 'none',
   xmlns: 'http://www.w3.org/2000/svg',

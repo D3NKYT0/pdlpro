@@ -79,13 +79,13 @@
   justify-content:center;
   gap:6px;
 }
-.help-activities .denk-activity-button.ui-button--sm {
-  height:66px;
-  padding:7px;
+html.pdl-panel .help-activities .denk-activity-button.btn.ui-button--icon.ui-button--sm {
+  height:60px;
+  padding:8px;
 }
-.denk-activity-button svg {
-  width:52px;
-  height:52px;
+html.pdl-panel .help-activities .denk-activity-button.btn svg {
+  width:44px;
+  height:44px;
   flex:none;
   filter:drop-shadow(0 1px 1px #0005);
 }
