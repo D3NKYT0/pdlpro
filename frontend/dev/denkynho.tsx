@@ -21,7 +21,7 @@ let profile = {
   level: 5, experience: 95, experience_next: 500,
   attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
   appearance: { accessory: 'star-pin', outfit: '', object: '', scene: 'garden' },
-  unlocks, available_actions: ['feed', 'sleep', 'play', 'bath', 'dance'],
+  unlocks, available_actions: ['feed', 'sleep', 'play', 'bath', 'walk', 'dance'],
   emotion: { id: 'calm', pose: '01-boas-vindas', idle_pose: '01-boas-vindas', source: 'default' },
   preferences: { preferred_name: '', detail: 'balanced' },
   cue: null, daily_visit: true, visit_xp: 8,
@@ -45,14 +45,19 @@ window.fetch = async (input, init) => {
     const body = init?.body ? JSON.parse(String(init.body)) : {}
     if (init?.method === 'PATCH') profile = { ...profile, preferences: { preferred_name: body.preferred_name ?? '', detail: body.detail ?? 'balanced' } }
     let attributesGained: Record<string, number> = { happiness: 5 }
+    let xpGained = 12
     if (init?.method === 'POST') {
       if (body.action === 'bath') {
         const hygiene = Math.min(100, profile.attributes.hygiene + 30)
         attributesGained = { hygiene: hygiene - profile.attributes.hygiene, happiness: 6 }
         profile = { ...profile, experience: profile.experience + 12, attributes: { ...profile.attributes, hygiene, happiness: Math.min(100, profile.attributes.happiness + 6) } }
+      } else if (body.action === 'walk') {
+        attributesGained = { energy: -5, happiness: 8 }
+        xpGained = 8
+        profile = { ...profile, experience: profile.experience + 8, attributes: { ...profile.attributes, energy: profile.attributes.energy - 5, happiness: Math.min(100, profile.attributes.happiness + 8) } }
       } else profile = { ...profile, experience: profile.experience + 12 }
     }
-    data = { ...profile, ...(init?.method === 'POST' ? { action: body.action, xp_gained: 12, replayed: false, attributes_gained: attributesGained } : {}) }
+    data = { ...profile, ...(init?.method === 'POST' ? { action: body.action, xp_gained: xpGained, replayed: false, attributes_gained: attributesGained } : {}) }
   }
   return new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } })
 }

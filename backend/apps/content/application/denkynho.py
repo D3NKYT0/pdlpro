@@ -32,6 +32,7 @@ _EFFECTS = {
     DenkynhoCareAction.Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
     DenkynhoCareAction.Action.CARE: ({"hygiene": 30, "happiness": 6}, 12),
     DenkynhoCareAction.Action.BATH: ({"hygiene": 30, "happiness": 6}, 12),
+    DenkynhoCareAction.Action.WALK: ({"energy": -5, "happiness": 8}, 8),
     DenkynhoCareAction.Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
 }
 _SATURATED_MESSAGES = {
@@ -139,6 +140,10 @@ def _validate_action(profile: DenkynhoProfile, action: str) -> None:
         raise ValidationDomainError("Este cuidado não existe.")
     if action == DenkynhoCareAction.Action.DANCE and profile.level < 3:
         raise ValidationDomainError("Dançar juntos é liberado no nível 3.")
+    if action == DenkynhoCareAction.Action.WALK:
+        if profile.energy < 5:
+            raise ValidationDomainError("O Denkynho precisa descansar antes de caminhar.")
+        return
     if action in {DenkynhoCareAction.Action.PLAY, DenkynhoCareAction.Action.DANCE}:
         effects, _ = _EFFECTS[action]
         if profile.energy < -effects["energy"]:

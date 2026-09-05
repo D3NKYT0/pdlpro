@@ -230,5 +230,6 @@
   { "id": "12-jogando", "label": "Jogando", "src": "12-jogando.png", "openMouth": false, "eyes": null, "mouth": null },
   { "id": "13-dancando", "label": "Dançando", "src": "13-dancando.png", "openMouth": false, "eyes": null, "mouth": null },
   { "id": "14-carinho", "label": "Carinho", "src": "14-carinho.png", "openMouth": false, "eyes": null, "mouth": null },
-  { "id": "15-banho", "label": "Tomando banho", "src": "15-banho.png", "openMouth": false, "eyes": null, "mouth": null }
+  { "id": "15-banho", "label": "Tomando banho", "src": "15-banho.png", "openMouth": false, "eyes": null, "mouth": null },
+  { "id": "16-andando", "label": "Caminhando", "src": "16-andando.png", "openMouth": false, "eyes": null, "mouth": null }
 ]

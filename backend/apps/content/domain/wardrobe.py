@@ -29,5 +29,5 @@ def wardrobe_state(profile) -> dict:
             for slot in APPEARANCE_SLOTS
         }},
         "unlocks": [{**item, "unlocked": item["level"] <= profile.level} for item in UNLOCKS],
-        "available_actions": ["feed", "sleep", "play", "bath", *(["dance"] if "dance" in unlocked else [])],
+        "available_actions": ["feed", "sleep", "play", "bath", "walk", *(["dance"] if "dance" in unlocked else [])],
     }

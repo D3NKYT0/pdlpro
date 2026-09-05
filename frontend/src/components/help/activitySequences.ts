@@ -88,3 +88,8 @@ activitySequences['15-banho'] = gridSheet('15-banho-sequencia.png', [
   { frame: 3, duration: 260 }, { frame: 4, duration: 300 }, { frame: 5, duration: 220 },
   { frame: 6, duration: 360 }, { frame: 7, duration: 440 },
 ])
+activitySequences['16-andando'] = gridSheet('16-andando-sequencia.png', [
+  { frame: 0, duration: 150 }, { frame: 1, duration: 120 }, { frame: 2, duration: 120 },
+  { frame: 3, duration: 140 }, { frame: 4, duration: 150 }, { frame: 5, duration: 120 },
+  { frame: 6, duration: 120 }, { frame: 7, duration: 140 },
+])

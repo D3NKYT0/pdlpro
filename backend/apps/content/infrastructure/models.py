@@ -194,6 +194,7 @@ class DenkynhoCareAction(InternalModel):
         PLAY = "play", "Brincar"
         CARE = "care", "Dar carinho"
         BATH = "bath", "Dar banho"
+        WALK = "walk", "Caminhar"
         DANCE = "dance", "Dançar juntos"
 
     profile = models.ForeignKey(

@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='denkynhocareaction',
             name='action',
-            field=models.CharField(choices=[('feed', 'Alimentar'), ('sleep', 'Dormir'), ('play', 'Brincar'), ('care', 'Dar carinho'), ('bath', 'Dar banho'), ('dance', 'Dançar juntos')], max_length=12),
+            field=models.CharField(choices=[('feed', 'Alimentar'), ('sleep', 'Dormir'), ('play', 'Brincar'), ('care', 'Dar carinho'), ('bath', 'Dar banho'), ('walk', 'Caminhar'), ('dance', 'Dançar juntos')], max_length=12),
         ),
     ]

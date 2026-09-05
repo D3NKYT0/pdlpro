@@ -18,6 +18,7 @@ FILES = (
     "13-dancando-sequencia.png",
     "14-carinho-sequencia.png",
     "15-banho-sequencia.png",
+    "16-andando-sequencia.png",
     "13-dancando.png",
     "14-carinho.png",
     "03-pensando-sequencia.png",

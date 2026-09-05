@@ -85,6 +85,44 @@ def test_bath_increases_hygiene_with_cap_and_is_idempotent():
 
 
 @pytest.mark.django_db
+def test_walk_consumes_energy_adds_happiness_and_is_idempotent():
+    user = _user("denk-walk")
+    profile = DenkynhoProfile.objects.create(user=user, energy=9, happiness=96)
+    api = APIClient()
+    api.force_authenticate(user)
+    request_id = str(uuid4())
+
+    first = api.post(PET_URL, {"action": "walk", "idempotency_key": request_id}, format="json")
+    second = api.post(PET_URL, {"action": "walk", "idempotency_key": request_id}, format="json")
+
+    assert first.status_code == second.status_code == 200
+    assert first.data["attributes"]["energy"] == 4
+    assert first.data["attributes"]["happiness"] == 100
+    assert first.data["attributes_gained"] == {"energy": -5, "happiness": 4}
+    assert first.data["xp_gained"] == 8
+    assert second.data["replayed"] is True
+    profile.refresh_from_db()
+    assert (profile.energy, profile.happiness, profile.experience) == (4, 100, 8)
+    assert DenkynhoCareAction.objects.filter(profile=profile, action="walk").count() == 1
+
+
+@pytest.mark.django_db
+def test_walk_rejects_insufficient_energy_without_granting_experience():
+    user = _user("denk-walk-tired")
+    profile = DenkynhoProfile.objects.create(user=user, energy=4)
+    api = APIClient()
+    api.force_authenticate(user)
+
+    result = api.post(PET_URL, {"action": "walk", "idempotency_key": str(uuid4())}, format="json")
+
+    assert result.status_code == 400
+    assert "descansar" in result.data["message"]
+    profile.refresh_from_db()
+    assert profile.experience == 0
+    assert not DenkynhoCareAction.objects.filter(profile=profile).exists()
+
+
+@pytest.mark.django_db
 def test_pet_actions_validate_contract_limits_and_basic_needs():
     user = _user("denk-limits")
     profile = DenkynhoProfile.objects.create(user=user, satiety=7, energy=11, happiness=60, hygiene=100)
