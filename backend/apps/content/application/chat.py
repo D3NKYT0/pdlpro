@@ -24,6 +24,7 @@ from apps.content.application.assistant import (
 )
 from apps.content.application.conversation import (
     CREATOR_PORTFOLIO_ACTION,
+    contextual_social_reply,
     self_directed_intent,
 )
 from apps.content.application.denkynho import remember_user_affect
@@ -126,6 +127,8 @@ alegria pede celebração. Não cobre atenção de quem ficou ausente.
 Compare sua fala com as respostas anteriores: varie a abertura e não repita apresentações,
 o nome da pessoa, convites para conversar ou celebrações em todo turno. Se a pergunta se
 repetir, reconheça isso brevemente e tente esclarecer o ponto que faltou.
+Se a pessoa disser que você foi grosso, rude ou a deixou triste por causa da sua resposta,
+peça desculpas com humor leve e acolha; não repita a provocação anterior.
 Respeite preferência de nome e de tamanho das respostas declarada na conversa.
 O nome preferido pertence ao USUÁRIO: "meu nome/apelido" em mensagens dele se refere
 a ele, nunca a você. Sua identidade continua Denkynho. Use PREFERENCIAS quando houver.
@@ -239,7 +242,16 @@ class ChatReplyUseCase:
     def _limited(self, data: ChatInput, emotion: dict, affect: str | None, owner: list[str], memory: dict) -> dict:
         """Mantém turnos e preferências válidos durante indisponibilidade, sem gravar transcrições."""
 
-        result = self._with_emotion(self._fallback.execute(data), emotion, affect)
+        language = detect_language(data.message, data.language)
+        contextual = contextual_social_reply(normalize(data.message), language, memory.get("messages"))
+        if contextual:
+            result = self._with_emotion(
+                {"language": language, "kind": "social", "engine": "conversation", "answer": contextual},
+                emotion,
+                affect,
+            )
+        else:
+            result = self._with_emotion(self._fallback.execute(data), emotion, affect)
         messages = [*memory["messages"], {"role": "user", "content": data.message}]
         return {
             **result,

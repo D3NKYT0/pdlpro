@@ -47,6 +47,12 @@ APPEARANCE_COMPLIMENT_TEXT = {
     'pt': 'Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL.',
     'en': "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.",
 }
+HURT_REACTION_TEXT = {
+    'pt': 'Desculpa se soei grosso! Foi brincadeira de mascote e não quis te deixar triste. Estou aqui com você — podemos seguir com calma.',
+    'en': "Sorry if I sounded rude! That was mascot teasing and I didn't mean to make you sad. I'm here with you — we can take it easy.",
+}
+# Provocação/elogio só valem com intenção explícita; paráfrases semânticas podem reabrir o turno errado.
+_EXPLICIT_SOCIAL = frozenset({'appearance_tease', 'appearance_compliment'})
 _ACCOUNT = re.compile(
     r'\b(meu|minha|meus|minhas|my|jogo|game|conta|account|personagem|personagens|character|characters'
     r'|perfil|avatar|senha|password|saldo|carteira|wallet)\b'
@@ -67,6 +73,10 @@ _LOOKS_QUESTION = re.compile(
     r'\b((como|qual) (e )?a? ?(sua |your )?(aparencia|cara|visual)|como voce (e|se parece)'
     r'|o que voce (veste|usa|tem na cara)|how do you look|what do you look like'
     r'|what are you wearing|describe (your )?(look|appearance))\b'
+)
+_HURT_REACTION = re.compile(
+    r'\b(grosso|grossa|rude|mal educad[oa]|foi mal da sua|me (deixou|deixaram) (triste|chatead[oa]|magoad[oa])'
+    r'|me magoou|fiquei triste|that (was|felt) (rude|mean)|you (were|sounded) (rude|mean)|made me sad)\b'
 )
 _REPLIES = {
     'identity': (IDENTITY_TEXT, '01-boas-vindas'),
@@ -140,6 +150,44 @@ def self_talk_reply(query: str, language: str, correction: bool = False) -> dict
     if intent is None:
         return None
     return identity_reply(language, correction, intent)
+
+
+def hurt_reaction_reply(query: str, language: str) -> dict | None:
+    """Reconhece que a fala anterior do mascote magoou; não repete provocação nem vira FAQ."""
+    query = expand_address(query)
+    if _ACCOUNT.search(query) or self_directed_intent(query):
+        return None
+    if not _HURT_REACTION.search(query):
+        return None
+    return {'text': HURT_REACTION_TEXT[language], 'pose': '07-triste'}
+
+
+def allows_semantic_social(query: str, intent: str) -> bool:
+    """Provocaçao e elogio exigem intenção explícita; identidade aceita paráfrase semântica."""
+    if intent not in _EXPLICIT_SOCIAL:
+        return True
+    return self_directed_intent(query) == intent
+
+
+def contextual_social_reply(query: str, language: str, history: list[dict] | None = None) -> dict | None:
+    """Usa o turno recente só para empatia; não reabre a última resposta social automaticamente."""
+    about_self = self_talk_reply(query, language)
+    if about_self:
+        return about_self
+    hurt = hurt_reaction_reply(query, language)
+    if hurt:
+        return hurt
+    if not history:
+        return None
+    last_assistant = next((item.get('content', '') for item in reversed(history) if item.get('role') == 'assistant'), '')
+    if not last_assistant:
+        return None
+    # Se a pessoa só diz que ficou triste logo após uma provocação do mascote, acolhe sem repetir o texto.
+    if APPEARANCE_TEASE_TEXT['pt'] in last_assistant or APPEARANCE_TEASE_TEXT['en'] in last_assistant:
+        soft = expand_address(query)
+        if re.search(r'\b(triste|chatead[oa]|magoad[oa]|sad|hurt|mean|rude|grosso)\b', soft):
+            return {'text': HURT_REACTION_TEXT[language], 'pose': '07-triste'}
+    return None
 
 
 def social_articles(language: str) -> list[dict]:

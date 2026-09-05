@@ -18,6 +18,7 @@ describe('personalidade do Denkynho', () => {
     ['Conte uma piada', '06-rindo', 'inventário'],
     ['Consegui!', '02-sucesso', 'ótima notícia'],
     ['Estou triste', '07-triste', 'momento está difícil'],
+    ['grosso me deixou triste kk', '07-triste', 'Desculpa se soei grosso'],
     ['Estou cansada', '05-dormindo', 'pausa'],
     ['Não entendi', '09-confuso', 'outras palavras'],
     ['Foi mal', '01-boas-vindas', 'Está tudo bem'],

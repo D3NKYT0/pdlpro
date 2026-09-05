@@ -110,8 +110,12 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
     reply: [{ text: 'Que ótima notícia! Fico feliz por você. Vamos guardar essa vitória e seguir para a próxima aventura!', pose: '02-sucesso' }],
   },
   {
-    matches: /^(estou triste|to triste|estou chateado|estou chateada|estou desanimado|estou desanimada)$/,
+    matches: /^(estou triste|to triste|estou chateado|estou chateada|estou desanimado|estou desanimada|fiquei triste|me deixou triste)$/,
     reply: [{ text: 'Poxa, sinto que o momento está difícil. Se for algo no PDL, conte o que aconteceu e vou procurar uma orientação para você.', pose: '07-triste' }],
+  },
+  {
+    matches: /^(grosso( me deixou triste)?|foi grosso|voce (foi grosso|me deixou triste)|que grosso|me deixou triste|foi mal da sua parte)( kk+| haha+| rsrs+)?$/,
+    reply: [{ text: 'Desculpa se soei grosso! Foi brincadeira de mascote e não quis te deixar triste. Estou aqui com você — podemos seguir com calma.', pose: '07-triste' }],
   },
   {
     matches: /^(estou cansado|estou cansada|to cansado|to cansada|que sono)$/,
@@ -141,7 +145,7 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   { matches: /^(how do you look|what do you look like|what are you wearing)$/, reply: [{ text: "I'm a virtual mascot: dark hair, a black shirt and a blue tie. I don't have a body outside this screen, but that's the look I wear while I keep you company in PDL.", pose: '01-boas-vindas' }] },
   { matches: /^(you (are|re|look) (so |really |very )?(ugly|weird|hideous)|you look ugly)$/, reply: [{ text: "Ugly? Ouch, that stung a little! I do try with this blue tie. I'm a virtual character: I'm here to keep you company, not to win a beauty contest.", pose: '08-surpreso' }] },
   { matches: /^(you (are|re|look) (so |really )?(cute|handsome|pretty|adorable)|i like your (tie|hair|shirt)|nice tie)$/, reply: [{ text: "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.", pose: '06-rindo' }] },
-  { matches: /^(i am sad|i feel sad)$/, reply: [{ text: "I'm sorry this moment feels difficult. If it is about PDL, tell me what happened and I will look for guidance.", pose: '07-triste' }] },
+  { matches: /^(i am sad|i feel sad|you made me sad|that was rude|you were rude)$/, reply: [{ text: "Sorry if I sounded rude! That was mascot teasing and I didn't mean to make you sad. I'm here with you — we can take it easy.", pose: '07-triste' }] },
   { matches: /^(i am tired|i feel tired|sleepy)$/, reply: [{ text: "Taking a break is part of the journey too. I'll be here when you return.", pose: '05-dormindo' }] },
 ]
 

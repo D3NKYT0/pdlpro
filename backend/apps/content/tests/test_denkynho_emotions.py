@@ -14,6 +14,7 @@ from apps.content.application.emotions import (
 
 def test_detects_user_feelings_in_portuguese_and_english_without_false_positives():
     assert detect_user_affect("Hoje estou triste e não sei o que fazer.") == "sad"
+    assert detect_user_affect("grosso me deixou triste kk") == "sad"
     assert detect_user_affect("I am tired, I need a break.") == "sleepy"
     assert detect_user_affect("Consegui!") == "joyful"
     assert detect_user_affect("não consegui recuperar a senha") == "frustrated"

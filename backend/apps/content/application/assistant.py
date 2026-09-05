@@ -11,7 +11,9 @@ from lingua import Language, LanguageDetectorBuilder
 from rapidfuzz.fuzz import WRatio
 
 from apps.content.application.conversation import (
+    allows_semantic_social,
     correction_requested,
+    hurt_reaction_reply,
     identity_reply,
     self_talk_reply,
     social_articles,
@@ -125,6 +127,9 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         about_self = self_talk_reply(query, language, correction)
         if about_self:
             return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": about_self}
+        hurt = hurt_reaction_reply(query, language)
+        if hurt:
+            return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": hurt}
         if correction:
             text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
                     if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
@@ -161,6 +166,10 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
             if article['id'] not in grouped or score > grouped[article['id']][0]:
                 grouped[article['id']] = (score, article)
         ranked = sorted(grouped.values(), key=lambda item: item[0], reverse=True)
+        ranked = [
+            (score, article) for score, article in ranked
+            if article.get('kind') != 'social' or allows_semantic_social(query, article.get('intent', 'identity'))
+        ]
         best_score, best = ranked[0] if ranked else (0.0, None)
         second_score = ranked[1][0] if len(ranked) > 1 else 0.0
         threshold = 0.86 if engine == "rapidfuzz" else 0.50

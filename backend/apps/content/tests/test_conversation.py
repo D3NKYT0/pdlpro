@@ -1,5 +1,9 @@
 from apps.content.application.conversation import (
+    APPEARANCE_TEASE_TEXT,
+    allows_semantic_social,
+    contextual_social_reply,
     expand_address,
+    hurt_reaction_reply,
     identity_reply,
     self_directed_intent,
     self_talk_reply,
@@ -43,6 +47,25 @@ def test_identity_correction_keeps_the_editorial_prefix():
     assert 'Denkynho' in reply['text']
     tease = identity_reply('pt', correction=True, intent='appearance_tease')
     assert not tease['text'].startswith('Desculpa')
+
+
+def test_hurt_reaction_after_tease_does_not_repeat_the_joke():
+    assert hurt_reaction_reply('grosso me deixou triste kk', 'pt')['pose'] == '07-triste'
+    assert 'Desculpa' in hurt_reaction_reply('grosso me deixou triste kk', 'pt')['text']
+    assert 'revista' not in hurt_reaction_reply('grosso me deixou triste kk', 'pt')['text']
+    history = [
+        {'role': 'user', 'content': 'vc e feio'},
+        {'role': 'assistant', 'content': APPEARANCE_TEASE_TEXT['pt']},
+    ]
+    follow = contextual_social_reply('grosso me deixou triste kk', 'pt', history)
+    assert follow['pose'] == '07-triste'
+    assert follow['text'] != APPEARANCE_TEASE_TEXT['pt']
+
+
+def test_risky_social_intents_need_explicit_match():
+    assert allows_semantic_social('voce e feio', 'appearance_tease')
+    assert not allows_semantic_social('grosso me deixou triste kk', 'appearance_tease')
+    assert allows_semantic_social('como voce se descreveria', 'identity')
 
 
 def test_creator_biography_uses_public_professional_facts_and_portfolio():

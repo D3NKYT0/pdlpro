@@ -304,6 +304,38 @@ it('responde provocação sobre o mascote sem sugerir FAQ de perfil ou ranking',
   expect(screen.queryByText(/Encontrei assuntos relacionados/)).not.toBeInTheDocument()
 })
 
+it('pede desculpas quando a provocação magoa e não repete a mesma fala', async () => {
+  const tease = 'Feio? Ai, essa doeu um pouquinho! Eu me esforço com esta gravata azul. Sou um personagem virtual: minha missão é te acompanhar, não aparecer na capa de uma revista.'
+  let turn = 0
+  fetcher.mockImplementation((input: RequestInfo | URL) => {
+    const url = String(input)
+    if (url.includes('/assistant/reply/')) {
+      turn += 1
+      if (turn === 1) {
+        return Promise.resolve(response({
+          language: 'pt', kind: 'social', mode: 'limited', engine: 'rapidfuzz',
+          answer: { text: tease, pose: '08-surpreso' }, context: 'signed-tease',
+        }))
+      }
+      return Promise.resolve(response({
+        language: 'pt', kind: 'social', mode: 'limited', engine: 'rapidfuzz',
+        answer: { text: tease, pose: '08-surpreso' }, context: 'signed-tease-2',
+      }))
+    }
+    return Promise.resolve(apiResponse(input))
+  })
+  const user = mount()
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'vc é feio{Enter}')
+  expect(await screen.findByText(/gravata azul/)).toBeVisible()
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'grosso me deixou triste kk{Enter}')
+  expect(await screen.findByText(/Desculpa se soei grosso/)).toBeVisible()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '07-triste')
+  expect(screen.getAllByText(/capa de uma revista/)).toHaveLength(1)
+})
+
 it('aceita reparação social do backend sem repetir fonte e resposta do FAQ anterior', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion()

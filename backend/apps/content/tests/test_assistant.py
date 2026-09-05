@@ -380,6 +380,20 @@ def test_talk_about_the_mascot_does_not_become_faq(api, player, mocker, message,
 
 
 @pytest.mark.django_db
+def test_reaction_to_tease_does_not_repeat_appearance_joke(api, player, mocker):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=semantic_match('voce e feio'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {
+        'message': 'grosso me deixou triste kk', 'language': 'pt',
+    })
+    assert response.data['kind'] == 'social'
+    assert 'Desculpa' in response.data['answer']['text']
+    assert 'revista' not in response.data['answer']['text']
+    assert response.data['answer']['pose'] == '07-triste'
+
+
+@pytest.mark.django_db
 def test_weak_semantic_match_does_not_claim_a_faq_answer(api, player, mocker):
     mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
                         side_effect=lambda _self, _q, docs: [0.35] * len(docs))

@@ -34,7 +34,7 @@ _AFFECTS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("frustrated", re.compile(r"\bnao consegui\b|\bque raiva\b|\bnao aguento\b|\bso frustrating\b|\bthis is frustrating\b")),
     ("frustrated", re.compile(r"\b(estou|to|i am|i m|im|i feel)\s+(muito\s+)?(irritad[oa]|nervos[oa]|angry|frustrated|mad)\b")),
     ("sad", re.compile(r"\b(estou|to|i am|i m|im|i feel)\s+(muito\s+)?(triste|chatead[oa]|desanimad[oa]|pra baixo|sad|down|unhappy)\b")),
-    ("sad", re.compile(r"\bque tristeza\b|\bestou mal\b")),
+    ("sad", re.compile(r"\bque tristeza\b|\bestou mal\b|\bme deixou triste\b|\bfiquei triste\b|\bmade me sad\b")),
     ("sleepy", re.compile(r"\b(estou|to|i am|i m|im|i feel)\s+(muito\s+)?(cansad[oa]|exaust[oa]|com sono|tired|exhausted|sleepy)\b")),
     ("sleepy", re.compile(r"\bque sono\b|\bpreciso dormir\b")),
     ("confused", re.compile(r"\bnao entendi\b|\bestou confus[oa]\b|\bfiquei confus[oa]\b|\bi don t understand\b|\bi am confused\b|\bi m confused\b")),
