@@ -4,6 +4,7 @@ import { Button } from '../ui/Button'
 import { ErrorNotice } from '../ui/Feedback'
 import type { HelpLanguage } from './personality'
 import './pet-progress.css'
+import { knownScene, scenes } from './scenes'
 
 /** Shows server-confirmed care gains and equips only unlocked cosmetic items. */
 export function PetProgress({ profile, language, careResult, disabled = false, onProfileChange }: {
@@ -29,8 +30,10 @@ export function PetProgress({ profile, language, careResult, disabled = false, o
     <strong>{pt ? 'Seu próximo desbloqueio' : 'Your next unlock'}</strong>
     <p>{profile.unlocks?.find(item => !item.unlocked) ? (() => { const item = profile.unlocks!.find(item => !item.unlocked)!; return `${item.label[language]} · ${pt ? 'Nível' : 'Level'} ${item.level}` })() : pt ? 'Todos os desbloqueios disponíveis conquistados.' : 'All available unlocks earned.'}</p>
     <progress aria-label={pt ? 'Progresso para o próximo nível' : 'Progress toward next level'} value={profile.experience} max={profile.experience_next} />
+    <h3>{pt ? 'Cenários e acessórios' : 'Scenes and accessories'}</h3>
     <div className="denk-wardrobe">
-      {profile.unlocks?.map(item => <div key={item.id}>
+      {profile.unlocks?.map(item => <div key={item.id} className={item.slot === 'scene' ? 'denk-scene-option' : undefined}>
+        {item.slot === 'scene' && knownScene(item.id) && <><img src={scenes[knownScene(item.id)!].src} alt="" loading="lazy" /><small>{scenes[knownScene(item.id)!][language]}</small></>}
         <span>{item.label[language]} <small>· {pt ? 'Nível' : 'Level'} {item.level}</small></span>
         {item.slot === 'interaction' ? <small>{item.unlocked ? (pt ? 'Disponível nas atividades' : 'Available in activities') : (pt ? 'Bloqueado' : 'Locked')}</small> : <Button size="sm" variant="secondary" disabled={disabled || action.pending || !item.unlocked} aria-pressed={profile.appearance?.[item.slot] === item.id} onClick={() => void equip(item.slot as keyof DenkynhoAppearance, profile.appearance?.[item.slot as keyof DenkynhoAppearance] === item.id ? '' : item.id)}>{profile.appearance?.[item.slot] === item.id ? (pt ? 'Retirar' : 'Remove') : (pt ? 'Usar' : 'Equip')} {item.label[language]}</Button>}
       </div>)}

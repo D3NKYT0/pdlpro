@@ -11,12 +11,13 @@ import '../src/styles/global.css'
 if (!import.meta.env.DEV) throw new Error('Development preview only')
 const article = { id: 'demo', question: 'Como encontro minhas contas?', short_answer: 'Abra suas contas no painel.', answer: 'Abra /painel/accounts para consultar suas contas vinculadas.', category: 'game_accounts', category_label: 'Contas e personagens', keywords: ['conta'], audience: 'public', audience_label: 'Todos' }
 const unlocks = [
+  { id: 'garden', slot: 'scene', level: 1, label: { pt: 'Jardim encantado', en: 'Enchanted garden' } },
   { id: 'star-pin', slot: 'accessory', level: 2, label: { pt: 'Broche de estrela', en: 'Star pin' } },
   { id: 'dance', slot: 'interaction', level: 3, label: { pt: 'Dançar juntos', en: 'Dance together' } },
-  { id: 'golden-scarf', slot: 'outfit', level: 4, label: { pt: 'Lenço dourado', en: 'Golden scarf' } },
-  { id: 'lantern', slot: 'object', level: 5, label: { pt: 'Lanterna de aventura', en: 'Adventure lantern' } },
+  { id: 'study', slot: 'scene', level: 4, label: { pt: 'Biblioteca aconchegante', en: 'Cozy library' } },
+  { id: 'camp', slot: 'scene', level: 5, label: { pt: 'Acampamento noturno', en: 'Night campsite' } },
 ].map(item => ({ ...item, unlocked: true }))
-let profile = { level: 5, experience: 95, experience_next: 500, attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 }, appearance: { accessory: 'star-pin', outfit: 'golden-scarf', object: 'lantern' }, unlocks, available_actions: ['feed', 'sleep', 'play', 'care', 'dance'] }
+let profile = { level: 5, experience: 95, experience_next: 500, attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 }, appearance: { accessory: 'star-pin', outfit: '', object: '', scene: 'garden' }, unlocks, available_actions: ['feed', 'sleep', 'play', 'care', 'dance'] }
 const nativeFetch = window.fetch.bind(window)
 window.fetch = async (input, init) => {
   const url = String(input)

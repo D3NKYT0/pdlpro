@@ -11,12 +11,13 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.clearAllTimers(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals() })
 const settle = async () => { await act(async () => { await Promise.resolve() }) }
 it('exibe peças equipadas e dança distinta, preservando representação estática com movimento reduzido', async () => {
-  const appearance = { accessory: 'star-pin', outfit: 'golden-scarf', object: 'lantern' }
+  const appearance = { accessory: 'star-pin', outfit: 'golden-scarf', object: 'lantern', scene: 'garden' }
   const { container, rerender } = render(<Denkynho pose="02-sucesso" appearance={appearance} dancing celebration />)
   await settle()
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Dançando')
-  expect(container.querySelectorAll('.denk-cosmetics svg')).toHaveLength(2)
-  expect(container.querySelector('.denk-scarf')).toBeInTheDocument()
+  expect(container.querySelectorAll('.denk-cosmetics svg')).toHaveLength(1)
+  expect(container.querySelector('.denk-scarf')).toBeNull()
+  expect(container.querySelector('.denk-scene img')).toHaveAttribute('src', '/mascot/denkynho/scenes/garden.png')
   expect(screen.getByRole('img')).toHaveClass('is-dancing', 'is-celebrating')
   rerender(<Denkynho pose="02-sucesso" appearance={appearance} dancing animated={false} />); await settle()
   expect(screen.getByRole('img')).toHaveAttribute('data-animated', 'false')

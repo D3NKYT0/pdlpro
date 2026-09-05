@@ -41,3 +41,21 @@ it('preserva a aparência no erro e recusa resposta inválida', async () => {
   await user.click(screen.getByRole('button', { name: 'Equip Star pin' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('Locked')
 })
+
+it('seleciona cenários pela prévia, respeita níveis e envia o slot scene', async () => {
+  const changed = vi.fn(), user = userEvent.setup()
+  const state: ApiDenkynhoProfile = { ...profile, unlocks: [
+    { id: 'garden', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Jardim encantado', en: 'Enchanted garden' } },
+    { id: 'study', slot: 'scene', level: 4, unlocked: false, label: { pt: 'Biblioteca aconchegante', en: 'Cozy library' } },
+  ] }
+  const fetcher = vi.fn((url: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(response(String(url).includes('/csrf/') ? { csrfToken: 'test' } : { ...state, appearance: { ...state.appearance, scene: 'garden' } })))
+  vi.stubGlobal('fetch', fetcher)
+  render(<PetProgress profile={state} language="pt" onProfileChange={changed} />)
+  expect(screen.getByRole('button', { name: 'Usar Biblioteca aconchegante' })).toBeDisabled()
+  expect(screen.getByText('Fonte, flores e um cantinho ao sol.')).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Usar Jardim encantado' }))
+  await waitFor(() => expect(changed).toHaveBeenCalled())
+  const request = fetcher.mock.calls.find(([url]) => String(url).includes('/wardrobe/'))!
+  expect(request[1]?.method).toBe('PATCH')
+  expect(JSON.parse(request[1]?.body as string)).toEqual({ slot: 'scene', item_id: 'garden' })
+})

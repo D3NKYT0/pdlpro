@@ -31,9 +31,9 @@ def test_wardrobe_requires_authentication_and_lists_unlock_levels(owner):
     assert anonymous.patch(WARDROBE_URL, {"slot": "accessory", "item_id": "star-pin"}, format="json").status_code in {401, 403}
     anonymous.force_authenticate(owner)
     profile = anonymous.get(WARDROBE_URL).data
-    assert profile["appearance"] == {"accessory": "", "outfit": "", "object": ""}
+    assert profile["appearance"] == {"accessory": "", "outfit": "", "object": "", "scene": "garden"}
     assert [(item["id"], item["level"], item["unlocked"]) for item in profile["unlocks"]] == [
-        ("star-pin", 2, False), ("dance", 3, False), ("golden-scarf", 4, False), ("lantern", 5, False),
+        ("garden", 1, True), ("star-pin", 2, False), ("dance", 3, False), ("study", 4, False), ("camp", 5, False),
     ]
     assert "dance" not in profile["available_actions"]
 
@@ -46,19 +46,19 @@ def test_equipping_is_free_repeatable_and_always_owned_by_session(owner, api, fl
     other = User.objects.create_user("wardrobe-other", "wardrobe-other@example.com", password="test-pass")
     other_profile = DenkynhoProfile.objects.create(user=other, level=5, appearance={"object": "lantern"})
     profile = DenkynhoProfile.objects.create(user=owner, level=5, experience=29)
-    for slot, item in [("accessory", "star-pin"), ("outfit", "golden-scarf"), ("object", "lantern")]:
+    for slot, item in [("accessory", "star-pin"), ("scene", "study"), ("scene", "camp")]:
         payload = {"slot": slot, "item_id": item, "user_id": str(other.id)}
         first = api.patch(WARDROBE_URL, payload, format="json")
         second = api.patch(WARDROBE_URL, payload, format="json")
         assert first.status_code == second.status_code == 200
         assert second.data["appearance"][slot] == item
         assert second.data["experience"] == 29
-    assert api.get(PET_URL).data["appearance"] == {"accessory": "star-pin", "outfit": "golden-scarf", "object": "lantern"}
+    assert api.get(PET_URL).data["appearance"] == {"accessory": "star-pin", "outfit": "", "object": "", "scene": "camp"}
     removed = api.patch(WARDROBE_URL, {"slot": "accessory", "item_id": ""}, format="json")
     assert removed.data["appearance"]["accessory"] == ""
     profile.refresh_from_db()
     other_profile.refresh_from_db()
-    assert profile.appearance["outfit"] == "golden-scarf"
+    assert profile.appearance["scene"] == "camp"
     assert other_profile.appearance == {"object": "lantern"}
     assert DenkynhoCareAction.objects.count() == 0
 
@@ -153,12 +153,39 @@ def test_wardrobe_rolls_back_failed_persistence_and_rejects_invalid_use_case_slo
 
 def test_invalid_stored_appearance_is_not_exposed(owner, api):
     profile = DenkynhoProfile.objects.create(user=owner, level=2, appearance={"accessory": "lantern", "outfit": "star-pin", "object": "unknown"})
-    assert api.get(PET_URL).data["appearance"] == {"accessory": "", "outfit": "", "object": ""}
+    assert api.get(PET_URL).data["appearance"] == {"accessory": "", "outfit": "", "object": "", "scene": "garden"}
     profile.appearance = ["invalid"]
     profile.save()
-    assert api.get(PET_URL).data["appearance"] == {"accessory": "", "outfit": "", "object": ""}
+    assert api.get(PET_URL).data["appearance"] == {"accessory": "", "outfit": "", "object": "", "scene": "garden"}
 
 
 def test_unknown_care_is_rejected_at_application_boundary(owner):
     with pytest.raises(ValidationDomainError):
         CareDenkynhoUseCase().execute(CareDenkynhoInput(owner.id, "unknown", uuid4()))
+
+
+def test_retired_scarf_and_loose_lantern_become_scenes_without_changing_progress(owner, api):
+    profile = DenkynhoProfile.objects.create(user=owner, level=5, experience=29, appearance={"outfit": "golden-scarf"})
+    state = api.get(PET_URL).data
+    assert state["appearance"]["scene"] == "study"
+    assert "golden-scarf" not in [item["id"] for item in state["unlocks"]]
+    assert api.patch(WARDROBE_URL, {"slot": "outfit", "item_id": "golden-scarf"}, format="json").status_code == 400
+    profile.appearance = {"object": "lantern", "outfit": "golden-scarf"}
+    profile.save()
+    assert api.get(PET_URL).data["appearance"]["scene"] == "camp"
+    changed = api.patch(WARDROBE_URL, {"slot": "scene", "item_id": "garden"}, format="json")
+    assert changed.status_code == 200
+    assert changed.data["appearance"]["scene"] == "garden"
+    assert changed.data["experience"] == 29
+    profile.refresh_from_db()
+    assert profile.appearance.get("outfit", "") == ""
+    assert not DenkynhoCareAction.objects.exists()
+
+
+def test_scenes_respect_level_and_can_be_removed_and_reselected(owner, api):
+    assert api.get(PET_URL).data["appearance"]["scene"] == "garden"
+    for scene in ["study", "camp", "https://evil.test/image.png"]:
+        assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": scene}, format="json").status_code == 400
+    assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": ""}, format="json").data["appearance"]["scene"] == ""
+    assert api.get(PET_URL).data["appearance"]["scene"] == ""
+    assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": "garden"}, format="json").data["appearance"]["scene"] == "garden"

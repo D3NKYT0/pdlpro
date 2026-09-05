@@ -6,8 +6,11 @@ import { useReducedMotion } from './useReducedMotion'
 import { transitionDurations, useMascotPose } from './useMascotPose'
 import './help.css'
 import './pet-progress.css'
-import { Star, Lamp } from 'lucide-react'
+import { Star } from 'lucide-react'
 import type { DenkynhoAppearance } from '../../services/domain/content.service'
+
+import { SceneBackdrop } from './SceneBackdrop'
+import { knownScene } from './scenes'
 
 const asset = (name: string) => `/mascot/denkynho/${name}`
 type Layer = { src: string; box: number[] }
@@ -16,6 +19,7 @@ type Layer = { src: string; box: number[] }
  * Carrega as imagens da pose antes da troca e libera timers ao desmontar.
  */
 export function Denkynho({ pose, idle = false, talking = false, mouthOpen = false, animated: animate = true, appearance, celebration = false, dancing = false }: { pose: string; idle?: boolean; talking?: boolean; mouthOpen?: boolean; animated?: boolean; appearance?: DenkynhoAppearance; celebration?: boolean; dancing?: boolean }) {
+  const scene = knownScene(appearance?.scene)
   const reduced = useReducedMotion()
   const animated = animate && !reduced
   const view = useMascotPose(pose, animated, talking)
@@ -44,15 +48,16 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
         <img className="denk-base" alt="" src={asset(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
         {!outgoing && animated && talking && item.mouth && (item.openMouth ? !mouthOpen : mouthOpen) && layer(item.mouth)}
-        {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <Star className="denk-pin" fill="currentColor" />}{appearance.outfit === 'golden-scarf' && <span className="denk-scarf" />}{appearance.object === 'lantern' && <Lamp className="denk-lantern" />}</span>}
+        {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <Star className="denk-pin" fill="currentColor" />}</span>}
         </>}
       </div>
       </div>
     </div>
   }
-  return <div className={`denk-mascot${celebration ? ' is-celebrating' : ''}${dancing ? ' is-dancing' : ''}`} role="img" aria-label={`Denkynho — ${dancing ? 'Dançando' : view.current.pose.label}${talking ? ', falando' : ''}`} data-gesture={talking && !view.previous} data-pose={view.current.pose.id} data-idle={idle} data-animated={animated}
+  return <div className={`denk-mascot${scene ? ' has-scene' : ''}${celebration ? ' is-celebrating' : ''}${dancing ? ' is-dancing' : ''}`} role="img" aria-label={`Denkynho — ${dancing ? 'Dançando' : view.current.pose.label}${talking ? ', falando' : ''}`} data-gesture={talking && !view.previous} data-pose={view.current.pose.id} data-idle={idle} data-animated={animated}
     data-mirrored={view.current.mirrored} data-transition={animated ? view.transition ?? 'none' : 'none'}
     style={{ '--denk-transition-duration': `${view.transition ? transitionDurations[view.transition] : 0}ms` } as CSSProperties}>
+    {scene && <SceneBackdrop scene={scene} />}
     {animated && view.previous && character(view.previous, true)}{character(view.current)}
     {view.failed && <span className="denk-asset-error">Não foi possível carregar esta animação.</span>}
   </div>

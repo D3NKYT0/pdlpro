@@ -36,10 +36,10 @@ Cuidados exibem o XP e as alterações reais dos atributos. Uma subida de nível
 | --- | --- |
 | 2 | Broche de estrela |
 | 3 | Dançar juntos: nova atividade que consome energia e saciedade e aumenta alegria e XP |
-| 4 | Lenço dourado |
-| 5 | Lanterna de aventura |
+| 4 | Biblioteca aconchegante |
+| 5 | Acampamento noturno |
 
-O armário permite usar ou retirar peças gratuitamente, com persistência no perfil do mascote. `GET /api/v1/shared/content/assistant/pet/wardrobe/` consulta o catálogo; `PATCH` recebe `{slot, item_id}` para `accessory`, `outfit` ou `object`. `item_id: ""` retira uma peça. Peças desconhecidas, do espaço errado ou acima do nível são recusadas. A sessão determina o dono do perfil; os cosméticos não concedem itens nem benefícios no servidor de jogo. A migração `content.0017` acrescenta a aparência persistente e a ação de dança.
+O armário permite usar ou retirar peças gratuitamente, com persistência no perfil do mascote. `GET /api/v1/shared/content/assistant/pet/wardrobe/` consulta o catálogo; `PATCH` recebe `{slot, item_id}` para `accessory` ou `scene`. `item_id: ""` retira uma peça. Peças desconhecidas, do espaço errado ou acima do nível são recusadas. A sessão determina o dono do perfil; os cosméticos não concedem itens nem benefícios no servidor de jogo. A migração `content.0017` acrescenta a aparência persistente e a ação de dança.
 
 Os cosméticos são camadas vetoriais/CSS nas poses estáticas, incluindo conversa e dança; os atlas de comer, brincar, rir e dormir preservam sua arte original. Dança, pequenos gestos durante a fala e a comemoração respeitam **Animar personagem** e movimento reduzido. Falas de cuidado variam, e o prompt pede ao modelo para evitar repetir aberturas e bordões do histórico.
 
@@ -257,3 +257,17 @@ Os testes de `test_chat.py` simulam somente o SDK Ollama, a API remota e o model
 Com Qwen 3.5 4B em CPU (i5-10500T, 24 GB de RAM), o fluxo completo respondeu a “Pode me chamar de Dani. Hoje estou cansado.” com pose de sono, lembrou “Seu apelido é Dani, como você pediu.” com pose neutra e atendeu “mas eu pedi pra vc me falar sobre voce” com apresentação própria. Os três resultados vieram com `engine: ollama`, `kind: social`, sem fonte de FAQ. A execução inicial levou aproximadamente 97 segundos, incluindo carga das bibliotecas/modelos; as duas seguintes levaram 38 e 18 segundos. Uma pergunta em inglês sobre senha recebeu a orientação e o ID correto do FAQ, com pose de dica, em 47 segundos. Esses exemplos não garantem qualidade ou latência para todas as perguntas.
 
 Passaram 829 testes do backend (85,57% de cobertura), 699 do frontend (71% de statements), typecheck, build, verificações Django e auditoria de dependências. A suíte do frontend foi executada com `npm run test:coverage -- --maxWorkers=1` para evitar disputa de memória com o modelo; o paralelismo padrão havia causado timeouts. O Ruff dos arquivos alterados passou; a verificação global ainda aponta 575 ocorrências preexistentes em outras partes do projeto. A auditoria de repetição não encontrou grupos candidatos.
+
+### Cenários do Denkynho
+
+O jardim encantado está disponível desde o nível 1. A biblioteca (nível 4) e o acampamento (nível 5) acrescentam livros, plantas, barraca, fogueira e lanterna ao ambiente. O armário apresenta prévias e permite selecionar ou retirar o cenário sem custo. O fundo permanece parado durante as poses e a dança; o broche acompanha o personagem.
+
+O lenço foi retirado. Perfis antigos com lenço passam a exibir a biblioteca; com lanterna, o acampamento tem prioridade. Essa compatibilidade é aplicada na leitura e persistida na próxima troca, preservando XP e nível. Uma seleção explicitamente vazia mantém o personagem sem cenário. A API aceita `slot: "scene"` e `item_id: "garden"`, `"study"`, `"camp"` ou `""`; níveis e propriedade são verificados no servidor.
+
+As imagens são pré-carregadas; enquanto uma troca não conclui ou falha, o cenário anterior permanece. Testes cobrem compatibilidade, níveis, remoção, isolamento entre contas, repetição, HTTP, prévias e carregamentos fora de ordem.
+
+Arte original gerada com a ferramenta ImageGen em 04/09/2026, arquivos em `frontend/public/mascot/denkynho/scenes/`. Direção comum: ambiente quadrado em 3D estilizado, perspectiva frontal, centro livre para o mascote, objetos nas laterais e ao fundo, sem pessoas, texto ou marca d’água. Prompts de ambiente:
+
+- `garden.png`: jardim encantado ao pôr do sol, piso de pedra com musgo, flores azuis, banco de madeira, vasos de barro, fonte redonda e arco com hera; verde, mel e azul suave.
+- `study.png`: biblioteca acolhedora, piso de madeira, estantes curvas, mesa com livros e globo iluminado à esquerda, poltrona com manta azul e samambaia à direita, janela em arco; madeira, âmbar e azul escuro.
+- `camp.png`: acampamento na floresta ao anoitecer, clareira, barraca à esquerda com mochila e cobertor, fogueira de pedras e lanterna à direita, pinheiros, montanhas e estrelas; azul marinho, verde e âmbar.
