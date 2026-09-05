@@ -5,6 +5,7 @@ from apps.content.application.conversation import (
     expand_address,
     hurt_reaction_reply,
     identity_reply,
+    laugh_reaction_reply,
     self_directed_intent,
     self_talk_reply,
 )
@@ -62,10 +63,22 @@ def test_hurt_reaction_after_tease_does_not_repeat_the_joke():
     assert follow['text'] != APPEARANCE_TEASE_TEXT['pt']
 
 
+def test_laugh_after_tease_acknowledges_without_repeating():
+    history = [
+        {'role': 'user', 'content': 'vc e feio'},
+        {'role': 'assistant', 'content': APPEARANCE_TEASE_TEXT['pt']},
+    ]
+    follow = contextual_social_reply('kkk boa essa', 'pt', history)
+    assert follow['pose'] == '06-rindo'
+    assert 'riu' in follow['text']
+    assert laugh_reaction_reply('kkkk', 'pt')['pose'] == '06-rindo'
+
+
 def test_risky_social_intents_need_explicit_match():
     assert allows_semantic_social('voce e feio', 'appearance_tease')
     assert not allows_semantic_social('grosso me deixou triste kk', 'appearance_tease')
     assert allows_semantic_social('como voce se descreveria', 'identity')
+    assert not allows_semantic_social('como deposito itens', 'affection')
 
 
 def test_creator_biography_uses_public_professional_facts_and_portfolio():
@@ -77,3 +90,28 @@ def test_creator_biography_uses_public_professional_facts_and_portfolio():
     assert 'alter ego' in reply['text']
     assert reply['action'] == {'label': 'Conhecer o criador', 'url': 'https://denky.dev.br/'}
     assert 'Daniel' not in reply['text']
+
+
+def test_expanded_self_talk_covers_common_social_cases():
+    cases = [
+        ('te amo', 'affection', '06-rindo', 'carinho'),
+        ('senti sua falta', 'missed', '01-boas-vindas', 'te ver de novo'),
+        ('me anima', 'encourage', '02-sucesso', 'passo de cada vez'),
+        ('somos amigos', 'friendship', '02-sucesso', 'companheiro de jornada'),
+        ('quantos anos voce tem', 'age', '04-dica', 'Não tenho idade'),
+        ('qual sua cor favorita', 'favorites', '06-rindo', 'azul da gravata'),
+        ('voce me ve', 'limits', '04-dica', 'não te vejo'),
+        ('voce sabe meu saldo', 'limits', '04-dica', 'não leio saldo'),
+        ('so quero conversar', 'just_chat', '01-boas-vindas', 'só conversar'),
+        ('voce e demais', 'praise', '02-sucesso', 'Fico feliz'),
+        ('i missed you', 'missed', '01-boas-vindas', 'Good to see'),
+        ('cheer me up', 'encourage', '02-sucesso', 'One step'),
+    ]
+    for message, intent, pose, excerpt in cases:
+        language = 'en' if message[0].isascii() and message.startswith(('i ', 'cheer')) else 'pt'
+        if message.startswith(('i missed', 'cheer')):
+            language = 'en'
+        assert self_directed_intent(message) == intent, message
+        reply = self_talk_reply(message, language)
+        assert reply['pose'] == pose, message
+        assert excerpt in reply['text'], message

@@ -15,6 +15,7 @@ from apps.content.application.conversation import (
     correction_requested,
     hurt_reaction_reply,
     identity_reply,
+    laugh_reaction_reply,
     self_talk_reply,
     social_articles,
 )
@@ -130,6 +131,9 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         hurt = hurt_reaction_reply(query, language)
         if hurt:
             return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": hurt}
+        laugh = laugh_reaction_reply(query, language)
+        if laugh:
+            return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": laugh}
         if correction:
             text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
                     if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")

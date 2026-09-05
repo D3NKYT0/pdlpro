@@ -23,6 +23,42 @@ APPEARANCE_COMPLIMENT_EXAMPLES = {
     'pt': ('voce e bonito', 'voce e fofo', 'gosto da sua gravata', 'sua gravata e legal'),
     'en': ('you are cute', 'you look nice', 'i like your tie', 'nice tie'),
 }
+AFFECTION_EXAMPLES = {
+    'pt': ('te amo', 'gosto de voce', 'voce e legal', 'voce e querido'),
+    'en': ('i love you', 'i like you', 'you are nice', 'you are kind'),
+}
+MISSED_EXAMPLES = {
+    'pt': ('sentir sua falta', 'estava com saudade', 'senti sua falta', 'voltei'),
+    'en': ('i missed you', 'i was missing you', 'i am back', 'missed you'),
+}
+ENCOURAGE_EXAMPLES = {
+    'pt': ('me anima', 'me motiva', 'preciso de incentivo', 'me da uma forca'),
+    'en': ('cheer me up', 'motivate me', 'i need encouragement', 'give me a boost'),
+}
+FRIENDSHIP_EXAMPLES = {
+    'pt': ('somos amigos', 'quero ser seu amigo', 'voce e meu amigo'),
+    'en': ('we are friends', 'be my friend', 'you are my friend'),
+}
+AGE_EXAMPLES = {
+    'pt': ('quantos anos voce tem', 'voce tem quantos anos', 'qual sua idade'),
+    'en': ('how old are you', 'what is your age', 'how old is denkynho'),
+}
+FAVORITES_EXAMPLES = {
+    'pt': ('qual sua cor favorita', 'do que voce gosta', 'o que voce gosta'),
+    'en': ('what is your favorite color', 'what do you like', 'what do you enjoy'),
+}
+LIMITS_EXAMPLES = {
+    'pt': ('voce me ve', 'voce me conhece', 'voce sabe meu saldo', 'voce me escuta'),
+    'en': ('can you see me', 'do you know me', 'do you know my balance', 'can you hear me'),
+}
+JUST_CHAT_EXAMPLES = {
+    'pt': ('so quero conversar', 'nao quero ajuda agora', 'vamos so conversar'),
+    'en': ('i just want to chat', 'i do not want help now', 'lets just talk'),
+}
+PRAISE_EXAMPLES = {
+    'pt': ('voce e demais', 'manda bem', 'voce e top', 'arrasa'),
+    'en': ('you rock', 'well done', 'you are awesome', 'nice job'),
+}
 IDENTITY_TEXT = {
     'pt': 'Eu sou o Denkynho, seu companheiro virtual no PDL 2.0. Nasci do jeito de pensar do Denky, meu criador: curioso, mão na massa e acostumado a enxergar a jornada inteira, da arquitetura ao mundo em produção. Transformo isso em ajuda clara, companhia e comemoração para cada conquista. Sou um personagem virtual e não acesso nem executo ações na sua conta.',
     'en': "I'm Denkynho, your virtual companion in PDL 2.0. I grew out of how my creator Denky thinks: curious, hands-on, and used to seeing the whole journey from architecture to production. I turn that spirit into clear guidance, companionship, and a celebration for every achievement. I'm a virtual character and cannot access or perform actions on your account.",
@@ -47,12 +83,55 @@ APPEARANCE_COMPLIMENT_TEXT = {
     'pt': 'Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL.',
     'en': "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.",
 }
+AFFECTION_TEXT = {
+    'pt': 'Que carinho! Eu também gosto de te acompanhar. Sou um companheiro virtual, então guarde esse afeto com leveza — estou aqui quando quiser conversar ou tirar uma dúvida.',
+    'en': "That's sweet! I like keeping you company too. I'm a virtual companion, so take that affection lightly — I'm here whenever you want to chat or ask something.",
+}
+MISSED_TEXT = {
+    'pt': 'Que bom te ver de novo! Eu fico por aqui entre uma aventura e outra. Sem cobrança por ausência: quando voltar, seguimos juntos.',
+    'en': "Good to see you again! I hang around between adventures. No guilt for being away: when you're back, we continue together.",
+}
+ENCOURAGE_TEXT = {
+    'pt': 'Respira fundo: você já chegou até aqui. Um passo de cada vez no PDL — e eu fico do seu lado para apontar o próximo caminho quando precisar.',
+    'en': "Take a breath: you've already made it this far. One step at a time in PDL — and I'll stay with you to point out the next path when you need it.",
+}
+FRIENDSHIP_TEXT = {
+    'pt': 'Pode contar comigo como companheiro de jornada! Não substituo amigos de verdade, mas estou aqui para conversar, orientar e comemorar suas conquistas.',
+    'en': "You can count on me as a journey companion! I don't replace real friends, but I'm here to chat, guide you, and celebrate your wins.",
+}
+AGE_TEXT = {
+    'pt': 'Não tenho idade como uma pessoa. Sou um personagem virtual do PDL: apareço quando você abre a Ajuda e descanso quando a conversa acaba.',
+    'en': "I don't have an age like a person. I'm a virtual PDL character: I show up when you open Help and rest when the chat ends.",
+}
+FAVORITES_TEXT = {
+    'pt': 'Minha marca é o azul da gravata! Gosto de explicar com calma, rir de uma piada leve e comemorar quando algo dá certo na sua jornada.',
+    'en': "My signature is the blue of my tie! I like explaining calmly, sharing a light joke, and celebrating when something goes right on your journey.",
+}
+LIMITS_TEXT = {
+    'pt': 'Eu te reconheço pela sessão do painel, mas não te vejo, não te escuto e não leio saldo, senha ou personagem. Só conversamos com o que você escreve aqui.',
+    'en': "I recognize your dashboard session, but I can't see you, hear you, or read balances, passwords, or characters. We only chat with what you write here.",
+}
+JUST_CHAT_TEXT = {
+    'pt': 'Combinado! Podemos só conversar. Se em algum momento quiser uma orientação do portal, é só pedir com outras palavras.',
+    'en': "Deal! We can just chat. If you want portal guidance later, just ask in other words.",
+}
+PRAISE_TEXT = {
+    'pt': 'Valeu! Fico feliz em ajudar. Quando surgir outra dúvida ou quiser só um oi, estou por aqui.',
+    'en': "Thanks! I'm glad to help. When another question comes up or you just want to say hi, I'm here.",
+}
 HURT_REACTION_TEXT = {
     'pt': 'Desculpa se soei grosso! Foi brincadeira de mascote e não quis te deixar triste. Estou aqui com você — podemos seguir com calma.',
     'en': "Sorry if I sounded rude! That was mascot teasing and I didn't mean to make you sad. I'm here with you — we can take it easy.",
 }
-# Provocação/elogio só valem com intenção explícita; paráfrases semânticas podem reabrir o turno errado.
-_EXPLICIT_SOCIAL = frozenset({'appearance_tease', 'appearance_compliment'})
+LAUGH_REACTION_TEXT = {
+    'pt': 'Hehe, que bom que riu comigo! Brincadeira de mascote à parte, quando quiser seguimos com o que precisar no PDL.',
+    'en': "Hehe, glad that made you laugh! Mascot teasing aside, we can get back to whatever you need in PDL whenever you want.",
+}
+# Só intenções com regex/exemplos explícitos entram por similaridade fraca; evita reabrir provocação.
+_EXPLICIT_SOCIAL = frozenset({
+    'appearance_tease', 'appearance_compliment', 'affection', 'missed', 'encourage',
+    'friendship', 'age', 'favorites', 'limits', 'just_chat', 'praise',
+})
 _ACCOUNT = re.compile(
     r'\b(meu|minha|meus|minhas|my|jogo|game|conta|account|personagem|personagens|character|characters'
     r'|perfil|avatar|senha|password|saldo|carteira|wallet)\b'
@@ -74,9 +153,44 @@ _LOOKS_QUESTION = re.compile(
     r'|o que voce (veste|usa|tem na cara)|how do you look|what do you look like'
     r'|what are you wearing|describe (your )?(look|appearance))\b'
 )
+_AFFECTION = re.compile(
+    r'\b(te amo|amo voce|gosto (muito )?de voce|i love you|i like you)\b'
+    r'|\b(voce|tu|denkynho|you).{0,16}\b(legal|querido|querida|bacana|gente boa|nice|kind|sweet)\b'
+)
+_MISSED = re.compile(
+    r'\b(senti?r? sua falta|estava com saudade|saudades|voltei|i missed you|missed you|i am back|i m back)\b'
+)
+_ENCOURAGE = re.compile(
+    r'\b(me anima|me motiva|me da uma forca|preciso de (incentivo|motivacao)|cheer me up|motivate me'
+    r'|give me a boost|i need encouragement)\b'
+)
+_FRIENDSHIP = re.compile(
+    r'\b(somos amigos|quero ser seu amigo|voce e meu amigo|be my friend|we are friends|you are my friend)\b'
+)
+_AGE = re.compile(
+    r'\b(quantos anos (voce |tu )?tem|voce tem quantos anos|qual (e )?sua idade|how old (are you|is denkynho)|what is your age)\b'
+)
+_FAVORITES = re.compile(
+    r'\b(qual (e )?sua cor favorita|do que voce gosta|o que voce gosta|what (is )?your favorite color'
+    r'|what do you (like|enjoy))\b'
+)
+_LIMITS = re.compile(
+    r'\b(voce me (ve|escuta|ouve|conhece)|voce sabe (quem eu sou|meu saldo|minha senha)'
+    r'|can you (see|hear) me|do you know (me|my balance|my password))\b'
+)
+_JUST_CHAT = re.compile(
+    r'\b(so quero conversar|vamos so conversar|nao quero ajuda( agora)?|i just want to (chat|talk)'
+    r'|lets just (chat|talk)|i do not want help( now)?)\b'
+)
+_PRAISE = re.compile(
+    r'\b(voce e (demais|top|fera)|manda bem|arrasa|you rock|you are awesome|well done|nice job)\b'
+)
 _HURT_REACTION = re.compile(
     r'\b(grosso|grossa|rude|mal educad[oa]|foi mal da sua|me (deixou|deixaram) (triste|chatead[oa]|magoad[oa])'
     r'|me magoou|fiquei triste|that (was|felt) (rude|mean)|you (were|sounded) (rude|mean)|made me sad)\b'
+)
+_LAUGH_REACTION = re.compile(
+    r'\b(kkk+|haha+|rsrs+|lol|lmao|boa essa|foi engra(c|cad)o|que engra(c|cad)o|funny)\b'
 )
 _REPLIES = {
     'identity': (IDENTITY_TEXT, '01-boas-vindas'),
@@ -84,6 +198,15 @@ _REPLIES = {
     'appearance': (APPEARANCE_TEXT, '01-boas-vindas'),
     'appearance_tease': (APPEARANCE_TEASE_TEXT, '08-surpreso'),
     'appearance_compliment': (APPEARANCE_COMPLIMENT_TEXT, '06-rindo'),
+    'affection': (AFFECTION_TEXT, '06-rindo'),
+    'missed': (MISSED_TEXT, '01-boas-vindas'),
+    'encourage': (ENCOURAGE_TEXT, '02-sucesso'),
+    'friendship': (FRIENDSHIP_TEXT, '02-sucesso'),
+    'age': (AGE_TEXT, '04-dica'),
+    'favorites': (FAVORITES_TEXT, '06-rindo'),
+    'limits': (LIMITS_TEXT, '04-dica'),
+    'just_chat': (JUST_CHAT_TEXT, '01-boas-vindas'),
+    'praise': (PRAISE_TEXT, '02-sucesso'),
 }
 _SOCIAL_EXAMPLES = {
     'identity': IDENTITY_EXAMPLES,
@@ -91,6 +214,15 @@ _SOCIAL_EXAMPLES = {
     'appearance': APPEARANCE_EXAMPLES,
     'appearance_tease': APPEARANCE_TEASE_EXAMPLES,
     'appearance_compliment': APPEARANCE_COMPLIMENT_EXAMPLES,
+    'affection': AFFECTION_EXAMPLES,
+    'missed': MISSED_EXAMPLES,
+    'encourage': ENCOURAGE_EXAMPLES,
+    'friendship': FRIENDSHIP_EXAMPLES,
+    'age': AGE_EXAMPLES,
+    'favorites': FAVORITES_EXAMPLES,
+    'limits': LIMITS_EXAMPLES,
+    'just_chat': JUST_CHAT_EXAMPLES,
+    'praise': PRAISE_EXAMPLES,
 }
 
 
@@ -108,7 +240,7 @@ def expand_address(query: str) -> str:
 def self_directed_intent(query: str) -> str | None:
     """Classifica fala sobre o mascote; None quando o assunto é a conta ou o portal."""
     query = expand_address(query)
-    if _ACCOUNT.search(query):
+    if _ACCOUNT.search(query) and not _LIMITS.search(query):
         return None
     if re.search(r'\b(quem (te|o )?criou|quem e denky|seu criador|your creator|who created you|who is denky)\b', query):
         return 'creator'
@@ -118,6 +250,24 @@ def self_directed_intent(query: str) -> str | None:
         return 'appearance_compliment'
     if _LOOKS_QUESTION.search(query):
         return 'appearance'
+    if _AFFECTION.search(query):
+        return 'affection'
+    if _MISSED.search(query):
+        return 'missed'
+    if _ENCOURAGE.search(query):
+        return 'encourage'
+    if _FRIENDSHIP.search(query):
+        return 'friendship'
+    if _AGE.search(query):
+        return 'age'
+    if _FAVORITES.search(query):
+        return 'favorites'
+    if _LIMITS.search(query):
+        return 'limits'
+    if _JUST_CHAT.search(query):
+        return 'just_chat'
+    if _PRAISE.search(query):
+        return 'praise'
     if re.search(r'\b(sobre (voce|si mesmo)|about yourself|conhecer (melhor )?voce)\b', query):
         return 'identity'
     for intent, examples in _SOCIAL_EXAMPLES.items():
@@ -162,8 +312,23 @@ def hurt_reaction_reply(query: str, language: str) -> dict | None:
     return {'text': HURT_REACTION_TEXT[language], 'pose': '07-triste'}
 
 
+def laugh_reaction_reply(query: str, language: str) -> dict | None:
+    """Reconhece risada ou aprovação da brincadeira, sem reabrir a provocação."""
+    query = expand_address(query)
+    if _ACCOUNT.search(query) or self_directed_intent(query) or _HURT_REACTION.search(query):
+        return None
+    if not _LAUGH_REACTION.search(query):
+        return None
+    # Risada isolada demais ("kk") sem contexto claro fica para o repertório local / emoção.
+    if re.fullmatch(r'(k{2,}|ha(ha)+|rs{2,}|lol|lmao)', query):
+        return {'text': LAUGH_REACTION_TEXT[language], 'pose': '06-rindo'}
+    if re.search(r'\b(boa essa|foi engra|que engra|funny)\b', query):
+        return {'text': LAUGH_REACTION_TEXT[language], 'pose': '06-rindo'}
+    return None
+
+
 def allows_semantic_social(query: str, intent: str) -> bool:
-    """Provocaçao e elogio exigem intenção explícita; identidade aceita paráfrase semântica."""
+    """Provocaçao e papo casual exigem intenção explícita; identidade aceita paráfrase semântica."""
     if intent not in _EXPLICIT_SOCIAL:
         return True
     return self_directed_intent(query) == intent
@@ -177,16 +342,20 @@ def contextual_social_reply(query: str, language: str, history: list[dict] | Non
     hurt = hurt_reaction_reply(query, language)
     if hurt:
         return hurt
-    if not history:
-        return None
-    last_assistant = next((item.get('content', '') for item in reversed(history) if item.get('role') == 'assistant'), '')
-    if not last_assistant:
-        return None
-    # Se a pessoa só diz que ficou triste logo após uma provocação do mascote, acolhe sem repetir o texto.
-    if APPEARANCE_TEASE_TEXT['pt'] in last_assistant or APPEARANCE_TEASE_TEXT['en'] in last_assistant:
-        soft = expand_address(query)
-        if re.search(r'\b(triste|chatead[oa]|magoad[oa]|sad|hurt|mean|rude|grosso)\b', soft):
-            return {'text': HURT_REACTION_TEXT[language], 'pose': '07-triste'}
+    soft = expand_address(query)
+    last_assistant = ''
+    if history:
+        last_assistant = next((item.get('content', '') for item in reversed(history) if item.get('role') == 'assistant'), '')
+    teased = bool(last_assistant) and (
+        APPEARANCE_TEASE_TEXT['pt'] in last_assistant or APPEARANCE_TEASE_TEXT['en'] in last_assistant
+    )
+    if teased and re.search(r'\b(triste|chatead[oa]|magoad[oa]|sad|hurt|mean|rude|grosso)\b', soft):
+        return {'text': HURT_REACTION_TEXT[language], 'pose': '07-triste'}
+    if teased and _LAUGH_REACTION.search(soft):
+        return {'text': LAUGH_REACTION_TEXT[language], 'pose': '06-rindo'}
+    laugh = laugh_reaction_reply(query, language)
+    if laugh:
+        return laugh
     return None
 
 

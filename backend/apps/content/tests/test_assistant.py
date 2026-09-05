@@ -394,6 +394,25 @@ def test_reaction_to_tease_does_not_repeat_appearance_joke(api, player, mocker):
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize('message,excerpt,pose', [
+    ('te amo', 'carinho', '06-rindo'),
+    ('me anima', 'passo de cada vez', '02-sucesso'),
+    ('voce me ve', 'não te vejo', '04-dica'),
+    ('so quero conversar', 'só conversar', '01-boas-vindas'),
+    ('kkkk', 'riu comigo', '06-rindo'),
+])
+def test_common_social_cases_stay_out_of_faq(api, player, mocker, message, excerpt, pose):
+    mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
+                        side_effect=semantic_match('perfil e avatar'))
+    api.force_authenticate(player)
+    response = api.post('/api/v1/shared/content/assistant/reply/', {'message': message, 'language': 'pt'})
+    assert response.data['kind'] == 'social'
+    assert excerpt in response.data['answer']['text']
+    assert response.data['answer']['pose'] == pose
+    assert 'article_id' not in response.data
+
+
+@pytest.mark.django_db
 def test_weak_semantic_match_does_not_claim_a_faq_answer(api, player, mocker):
     mocker.patch.object(SentenceTransformerMatcher, 'similarities', autospec=True,
                         side_effect=lambda _self, _q, docs: [0.35] * len(docs))

@@ -86,6 +86,46 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
     reply: [{ text: 'Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL.', pose: '06-rindo' }],
   },
   {
+    matches: /^(te amo|amo voce|gosto( muito)? de voce|voce e (legal|querido|querida|bacana|gente boa))$/,
+    reply: [{ text: 'Que carinho! Eu também gosto de te acompanhar. Sou um companheiro virtual, então guarde esse afeto com leveza — estou aqui quando quiser conversar ou tirar uma dúvida.', pose: '06-rindo' }],
+  },
+  {
+    matches: /^(senti sua falta|sentir sua falta|estava com saudade|saudades|voltei)$/,
+    reply: [{ text: 'Que bom te ver de novo! Eu fico por aqui entre uma aventura e outra. Sem cobrança por ausência: quando voltar, seguimos juntos.', pose: '01-boas-vindas' }],
+  },
+  {
+    matches: /^(me anima|me motiva|me da uma forca|preciso de (incentivo|motivacao))$/,
+    reply: [{ text: 'Respira fundo: você já chegou até aqui. Um passo de cada vez no PDL — e eu fico do seu lado para apontar o próximo caminho quando precisar.', pose: '02-sucesso' }],
+  },
+  {
+    matches: /^(somos amigos|quero ser seu amigo|voce e meu amigo)$/,
+    reply: [{ text: 'Pode contar comigo como companheiro de jornada! Não substituo amigos de verdade, mas estou aqui para conversar, orientar e comemorar suas conquistas.', pose: '02-sucesso' }],
+  },
+  {
+    matches: /^(quantos anos (voce )?tem|voce tem quantos anos|qual (e )?sua idade)$/,
+    reply: [{ text: 'Não tenho idade como uma pessoa. Sou um personagem virtual do PDL: apareço quando você abre a Ajuda e descanso quando a conversa acaba.', pose: '04-dica' }],
+  },
+  {
+    matches: /^(qual (e )?sua cor favorita|do que voce gosta|o que voce gosta)$/,
+    reply: [{ text: 'Minha marca é o azul da gravata! Gosto de explicar com calma, rir de uma piada leve e comemorar quando algo dá certo na sua jornada.', pose: '06-rindo' }],
+  },
+  {
+    matches: /^(voce me (ve|escuta|ouve|conhece)|voce sabe (quem eu sou|meu saldo|minha senha))$/,
+    reply: [{ text: 'Eu te reconheço pela sessão do painel, mas não te vejo, não te escuto e não leio saldo, senha ou personagem. Só conversamos com o que você escreve aqui.', pose: '04-dica' }],
+  },
+  {
+    matches: /^(so quero conversar|vamos so conversar|nao quero ajuda( agora)?)$/,
+    reply: [{ text: 'Combinado! Podemos só conversar. Se em algum momento quiser uma orientação do portal, é só pedir com outras palavras.', pose: '01-boas-vindas' }],
+  },
+  {
+    matches: /^(voce e (demais|top|fera)|manda bem|arrasa)$/,
+    reply: [{ text: 'Valeu! Fico feliz em ajudar. Quando surgir outra dúvida ou quiser só um oi, estou por aqui.', pose: '02-sucesso' }],
+  },
+  {
+    matches: /^(kkk+|haha+|rsrs+|boa essa|foi engra(c|cad)o|que engra(c|cad)o)$/,
+    reply: [{ text: 'Hehe, que bom que riu comigo! Brincadeira de mascote à parte, quando quiser seguimos com o que precisar no PDL.', pose: '06-rindo' }],
+  },
+  {
     matches: /^(o que voce faz|como voce pode me ajudar|voce pode me ajudar|para que voce serve)$/,
     reply: [{ text: 'Posso conversar com você e procurar orientações sobre contas, personagens, carteira, comércio, jogos, recompensas e os outros recursos do PDL.', pose: '04-dica' }],
   },
@@ -145,6 +185,16 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   { matches: /^(how do you look|what do you look like|what are you wearing)$/, reply: [{ text: "I'm a virtual mascot: dark hair, a black shirt and a blue tie. I don't have a body outside this screen, but that's the look I wear while I keep you company in PDL.", pose: '01-boas-vindas' }] },
   { matches: /^(you (are|re|look) (so |really |very )?(ugly|weird|hideous)|you look ugly)$/, reply: [{ text: "Ugly? Ouch, that stung a little! I do try with this blue tie. I'm a virtual character: I'm here to keep you company, not to win a beauty contest.", pose: '08-surpreso' }] },
   { matches: /^(you (are|re|look) (so |really )?(cute|handsome|pretty|adorable)|i like your (tie|hair|shirt)|nice tie)$/, reply: [{ text: "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.", pose: '06-rindo' }] },
+  { matches: /^(i love you|i like you|you are (nice|kind|sweet))$/, reply: [{ text: "That's sweet! I like keeping you company too. I'm a virtual companion, so take that affection lightly — I'm here whenever you want to chat or ask something.", pose: '06-rindo' }] },
+  { matches: /^(i missed you|missed you|i am back|i m back)$/, reply: [{ text: "Good to see you again! I hang around between adventures. No guilt for being away: when you're back, we continue together.", pose: '01-boas-vindas' }] },
+  { matches: /^(cheer me up|motivate me|give me a boost|i need encouragement)$/, reply: [{ text: "Take a breath: you've already made it this far. One step at a time in PDL — and I'll stay with you to point out the next path when you need it.", pose: '02-sucesso' }] },
+  { matches: /^(we are friends|be my friend|you are my friend)$/, reply: [{ text: "You can count on me as a journey companion! I don't replace real friends, but I'm here to chat, guide you, and celebrate your wins.", pose: '02-sucesso' }] },
+  { matches: /^(how old are you|what is your age|how old is denkynho)$/, reply: [{ text: "I don't have an age like a person. I'm a virtual PDL character: I show up when you open Help and rest when the chat ends.", pose: '04-dica' }] },
+  { matches: /^(what is your favorite color|what do you like|what do you enjoy)$/, reply: [{ text: "My signature is the blue of my tie! I like explaining calmly, sharing a light joke, and celebrating when something goes right on your journey.", pose: '06-rindo' }] },
+  { matches: /^(can you (see|hear) me|do you know (me|my balance|my password))$/, reply: [{ text: "I recognize your dashboard session, but I can't see you, hear you, or read balances, passwords, or characters. We only chat with what you write here.", pose: '04-dica' }] },
+  { matches: /^(i just want to (chat|talk)|lets just (chat|talk)|i do not want help( now)?)$/, reply: [{ text: "Deal! We can just chat. If you want portal guidance later, just ask in other words.", pose: '01-boas-vindas' }] },
+  { matches: /^(you rock|you are awesome|well done|nice job)$/, reply: [{ text: "Thanks! I'm glad to help. When another question comes up or you just want to say hi, I'm here.", pose: '02-sucesso' }] },
+  { matches: /^(haha+|lol|lmao|that was funny|funny)$/, reply: [{ text: "Hehe, glad that made you laugh! Mascot teasing aside, we can get back to whatever you need in PDL whenever you want.", pose: '06-rindo' }] },
   { matches: /^(i am sad|i feel sad|you made me sad|that was rude|you were rude)$/, reply: [{ text: "Sorry if I sounded rude! That was mascot teasing and I didn't mean to make you sad. I'm here with you — we can take it easy.", pose: '07-triste' }] },
   { matches: /^(i am tired|i feel tired|sleepy)$/, reply: [{ text: "Taking a break is part of the journey too. I'll be here when you return.", pose: '05-dormindo' }] },
 ]

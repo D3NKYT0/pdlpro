@@ -12,6 +12,16 @@ describe('personalidade do Denkynho', () => {
     ['vc é feio', '08-surpreso', 'gravata azul'],
     ['Você é fofo', '06-rindo', 'camisa preta'],
     ['Gosto da sua gravata', '06-rindo', 'minha marca'],
+    ['Te amo', '06-rindo', 'carinho'],
+    ['Senti sua falta', '01-boas-vindas', 'te ver de novo'],
+    ['Me anima', '02-sucesso', 'passo de cada vez'],
+    ['Somos amigos', '02-sucesso', 'companheiro de jornada'],
+    ['Quantos anos você tem?', '04-dica', 'Não tenho idade'],
+    ['Qual sua cor favorita?', '06-rindo', 'azul da gravata'],
+    ['Você me vê?', '04-dica', 'não te vejo'],
+    ['Só quero conversar', '01-boas-vindas', 'só conversar'],
+    ['Você é demais', '02-sucesso', 'Fico feliz'],
+    ['kkkk', '06-rindo', 'riu comigo'],
     ['Você é uma inteligência artificial?', '04-dica', 'não sou humano'],
     ['Quem te criou?', '04-dica', 'arquiteto de sistemas'],
     ['Você dorme?', '06-rindo', 'cochilos'],
@@ -36,9 +46,12 @@ describe('personalidade do Denkynho', () => {
     expect(matchPersonality(message)).toBeUndefined()
   })
 
-  it('responde em inglês a comentários sobre a aparência', () => {
+  it('responde em inglês a comentários sociais variados', () => {
     expect(matchPersonality("you're ugly", 0, 'en')).toMatchObject({ pose: '08-surpreso', text: expect.stringContaining('blue tie') })
     expect(matchPersonality('how do you look', 0, 'en')).toMatchObject({ pose: '01-boas-vindas', text: expect.stringContaining('dark hair') })
+    expect(matchPersonality('i missed you', 0, 'en')).toMatchObject({ pose: '01-boas-vindas', text: expect.stringContaining('Good to see') })
+    expect(matchPersonality('cheer me up', 0, 'en')).toMatchObject({ pose: '02-sucesso', text: expect.stringContaining('One step') })
+    expect(matchPersonality('can you see me', 0, 'en')).toMatchObject({ pose: '04-dica', text: expect.stringContaining("can't see you") })
   })
 
   it('apresenta o criador sem dados privados e oferece o portfólio público', () => {
