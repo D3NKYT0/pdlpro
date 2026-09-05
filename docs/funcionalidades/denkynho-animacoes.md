@@ -68,3 +68,9 @@ Use case: background-extraction. Edit the provided 8-frame sprite sheet ONLY to 
 ```
 
 A saída final foi conferida como RGBA e inspecionada no tema do painel. O atlas de jogo já veio com transparência. A remoção do fundo de risada alterou as dimensões, refletidas no manifesto de reprodução.
+
+## Extração com chroma verde
+
+As poses de dança, carinho, espera, confusão e comemoração saem do gerador em RGB com margem clara ou xadrez. [extract_denkynho_alpha.py](../../scripts/extract_denkynho_alpha.py) trata **verde saturado** como chave (não aparece no cabelo, na roupa preta nem na pele). Em geral, papel branco só some num anel de 1px junto do fundo **externo** (ligado à margem da imagem) — um flood indiscriminado pelo branco ou pelos buracos internos engoliria dentes, olhos e o pano do carinho. A sequência de carinho usa uma exceção explícita: nela, o papel/xadrez claro conectado à margem também é removido por completo, enquanto a pose estática continua no modo conservador para preservar o pano branco real. O xadrez interno, preso entre braço e cabeça, também vira alpha. O halo cinza da silhueta perde opacidade sem redesenhar o personagem.
+
+Em gerações novas, peça fundo **chroma verde sólido** (`#00FF00` / `#00C853`), sem xadrez desenhado, e rode o script. Não use branco como chave.
