@@ -31,58 +31,16 @@
     -webkit-transform: scale(0.9);
             transform: scale(0.9);
   }
-  .w .container {
-    width: 100%;
-  }
-  .w .w-list {
-    overflow-x: scroll;
-    padding-left: 20px;
-    padding-bottom: 30px;
-  }
-  .w .w-list .line {
-    width: 300px;
-  }
-  .w .w-list .wiki {
-    width: 300px;
-    margin-right: 20px;
-  }
-  .w .w-list .wiki div {
-    width: 300px;
-  }
-  .w .w-list .wiki div ul li a {
-    font-size: 17px;
-  }
-  .w .w-list a {
-    width: 300px;
-    margin-right: 20px;
-  }
-  .w .w-list a div {
-    width: 300px;
-  }
-  .f .title span {
-    font-size: 16px;
-  }
-  .f .title h1 {
-    font-size: 40px;
-    line-height: 40px;
-  }
-  .f .container {
-    width: 100%;
-  }
-  .f .f-list {
-    overflow-x: scroll;
-    padding-left: 20px;
-    padding-bottom: 30px;
-  }
-  .f .f-list a {
-    width: 300px;
-    margin-right: 20px;
-  }
-  .f .f-list a div {
-    width: 300px;
-  }
   .h {
-    padding-top: 120px;
+    height: auto;
+    min-height: 0;
+    padding: 96px 18px 56px;
+    box-sizing: border-box;
+  }
+  .h h1 {
+    font-size: clamp(1.75rem, 7.5vw, 2.35rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
   }
   .h .h-logo {
     margin-bottom: 22px;
@@ -95,24 +53,37 @@
     top: -90px;
   }
   .pdl-emblem-stage {
-    width: 198px;
-    height: 198px;
+    width: 168px;
+    height: 168px;
   }
   .pdl-emblem-symbol {
-    width: 150px;
-    height: 150px;
+    width: 126px;
+    height: 126px;
   }
   .h .h-link {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-transform: scale(0.9) !important;
-            transform: scale(0.9) !important;
-    margin-bottom: 30px;
+    -webkit-transform: none;
+            transform: none;
+    gap: 12px;
+    margin: 28px 0 24px;
+    width: 100%;
   }
   .h .h-link a {
-    margin-bottom: 20px;
+    width: min(100%, 320px);
+    max-width: 100%;
+    height: 72px;
+    margin: 0;
+    font-size: 17px;
+    background-size: 100% 100%;
+  }
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 34ch;
+    padding: 0 8px;
   }
   nav .open {
     margin-left: 15px;

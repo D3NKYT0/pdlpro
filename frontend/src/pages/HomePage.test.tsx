@@ -2,6 +2,7 @@
 import '@testing-library/jest-dom/vitest'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { contentApi, serverApi } from '../services/api'
@@ -88,6 +89,23 @@ it('aplica cenários próprios às demais alas da página inicial', async () => 
   expect(document.querySelector('.trailer-section')?.getAttribute('style')).toContain('home/cinematic-v2.webp')
 })
 
+it('carrega o iframe do trailer só após o clique no facade', async () => {
+  const user = userEvent.setup()
+  mount()
+  await screen.findByRole('heading', { name: /Trailer Oficial/i })
+
+  expect(document.querySelector('.trailer-frame-inner iframe')).toBeNull()
+  const play = screen.getByRole('button', { name: /Reproduzir trailer oficial/i })
+  expect(play).toBeVisible()
+
+  await user.click(play)
+
+  const iframe = document.querySelector('.trailer-frame-inner iframe')
+  expect(iframe).toHaveAttribute('src', expect.stringContaining('youtube-nocookie.com/embed/Mm19W1PKMFQ'))
+  expect(iframe).toHaveAttribute('title', 'Trailer oficial')
+  expect(screen.queryByRole('button', { name: /Reproduzir trailer oficial/i })).not.toBeInTheDocument()
+})
+
 it('mantém o atalho de scroll do hero apontando para os pilares', async () => {
   mount()
   await screen.findByRole('link', { name: /Baixe o Jogo/i })
@@ -95,6 +113,17 @@ it('mantém o atalho de scroll do hero apontando para os pilares', async () => {
   const scrollCue = document.querySelector('.h-scroll a')
   expect(scrollCue).toHaveAttribute('href', '#features')
   expect(document.querySelector('#features')).toBeTruthy()
+})
+
+it('expõe pilares e arquivos como listas empilháveis no mobile', async () => {
+  mount()
+  await screen.findByRole('link', { name: /Crônica e Rates/i })
+
+  expect(document.querySelector('.home-features .f-list')).toBeTruthy()
+  expect(document.querySelectorAll('.home-features .f-list > a')).toHaveLength(3)
+  expect(document.querySelector('.home-wiki .w-list')).toBeTruthy()
+  expect(document.querySelector('.home-wiki .w-list .wiki')).toBeTruthy()
+  expect(document.querySelectorAll('.home-wiki .w-list a.update')).toHaveLength(2)
 })
 
 it('mostra guias e crônica autênticos quando wiki e notícias estão vazios', async () => {

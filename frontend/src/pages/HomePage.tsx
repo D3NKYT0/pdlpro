@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
@@ -79,6 +79,7 @@ function DefaultHomePage() {
   const clans = useQuery({ queryKey: ['rankings', 'clans'], queryFn: () => serverApi.rankings('clans') })
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
   const trailerId = (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
+  const [trailerPlaying, setTrailerPlaying] = useState(false)
   const serverName = (import.meta.env.VITE_SERVER_NAME as string | undefined) || 'Inicie sua Jornada em Lineage Agora!'
   const serverDescription =
     (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined) || 'Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna.'
@@ -327,12 +328,30 @@ function DefaultHomePage() {
         </div>
         <div className="trailer-frame container">
           <div className="trailer-frame-inner">
-            <iframe
-              src={`https://www.youtube.com/embed/${trailerId}`}
-              title="Trailer oficial"
-              allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
+            {trailerPlaying ? (
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${trailerId}?autoplay=1`}
+                title="Trailer oficial"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            ) : (
+              <button
+                type="button"
+                className="trailer-facade"
+                onClick={() => setTrailerPlaying(true)}
+                aria-label="Reproduzir trailer oficial"
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/${trailerId}/hqdefault.jpg`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="trailer-facade-play" aria-hidden="true" />
+              </button>
+            )}
           </div>
         </div>
         <p className="trailer-description">Assista ao trailer e mergulhe no mundo épico do nosso servidor.</p>

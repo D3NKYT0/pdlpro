@@ -451,11 +451,63 @@
   overflow: hidden;
 }
 
-.trailer-frame-inner iframe {
+.trailer-frame-inner iframe,
+.trailer-facade {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 0;
+}
+
+.trailer-facade {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  background: #000;
+  color: inherit;
+}
+
+.trailer-facade img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trailer-facade-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 68px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(12, 10, 8, 0.72);
+  border: 1px solid rgba(212, 173, 98, 0.55);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.trailer-facade-play::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 9px 0 9px 16px;
+  border-color: transparent transparent transparent #e6c77d;
+}
+
+.trailer-facade:hover .trailer-facade-play,
+.trailer-facade:focus-visible .trailer-facade-play {
+  background: rgba(190, 129, 48, 0.88);
+  border-color: rgba(230, 199, 125, 0.9);
+  transform: scale(1.04);
+}
+
+.trailer-facade:focus-visible {
+  outline: 2px solid #d4ad62;
+  outline-offset: 3px;
 }
 
 .trailer-section .trailer-description {
@@ -790,25 +842,6 @@
   color: rgba(255, 220, 150, 0.95);
 }
 
-@media (max-width: 980px) {
-  .home-features .character {
-    inset: 205px 0 0;
-    opacity: 0.72;
-  }
-
-  .home-features .character img {
-    width: min(460px, 68vw);
-  }
-
-  .home-features .f-list {
-    margin-top: 40px;
-  }
-
-  .home-features .f-list a div span em {
-    font-size: 13px;
-  }
-}
-
 /* Wiki + crônica: fundo e cards com identidade de Aden */
 .home-wiki {
   background:
@@ -864,26 +897,163 @@
 }
 
 @media (max-width: 980px) {
+  .home-features .character {
+    inset: 205px 0 0;
+    opacity: 0.72;
+  }
+
+  .home-features .character img {
+    width: min(460px, 68vw);
+  }
+
+  .home-features .f-list {
+    margin-top: 40px;
+  }
+
+  .home-features .f-list a div span em {
+    font-size: 13px;
+  }
+
   .home-wiki .w-list {
     margin-top: 48px;
   }
 }
 
-@media (max-width: 600px) {
+/* Index mobile: empilha pilares e arquivos — sem carrossel horizontal */
+@media (max-width: 768px) {
+  .video {
+    height: 100%;
+    min-height: 100dvh;
+  }
+
+  .f.home-features {
+    height: auto;
+    min-height: 0;
+    padding: 72px 0 56px;
+    overflow: hidden;
+  }
+
+  .home-features .f-title.container,
+  .home-wiki .w-title.container {
+    width: min(100% - 32px, 1175px);
+  }
+
+  .home-features .f-title span,
+  .home-wiki .w-title span,
+  .home-clans .title span,
+  .home-rankings .title span,
+  .trailer-section .title span {
+    font-size: 16px;
+  }
+
+  .home-features .f-title h1,
+  .home-wiki .w-title h1 {
+    font-size: clamp(1.7rem, 7vw, 2.35rem);
+    line-height: 1.2;
+    letter-spacing: -1px;
+    padding: 0 4px;
+  }
+
   .home-features .character {
-    inset: 220px 0 0;
-    opacity: 0.46;
+    display: none;
   }
 
-  .home-features .character img {
-    width: 390px;
-    max-width: 96vw;
+  .home-features .f-list.container,
+  .home-wiki .w-list.container {
+    width: min(100% - 32px, 1175px);
+    margin-top: 28px;
+    padding: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
   }
 
+  .home-features .f-list a,
+  .home-features .f-list a div {
+    width: 100%;
+    margin: 0;
+    height: auto;
+    min-height: 168px;
+  }
+
+  .home-features .f-list a div span {
+    padding: 28px 16px 22px;
+  }
+
+  .home-features .f-list a div span em {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .w.home-wiki {
+    height: auto;
+    min-height: 0;
+    padding: 72px 0 56px;
+    overflow: hidden;
+  }
+
+  .home-wiki .w-list .line {
+    display: none;
+  }
+
+  .home-wiki .w-list .wiki,
+  .home-wiki .w-list .wiki div,
+  .home-wiki .w-list a.update,
+  .home-wiki .w-list a.update > div {
+    width: 100%;
+    margin: 0;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .home-wiki .w-list .wiki div ul li a {
+    font-size: 16px;
+  }
+
+  .home-wiki .w-list a.update > div > div {
+    padding-top: 132px;
+    padding-bottom: 22px;
+  }
+
+  .home-wiki .w-list a.update > div > div p {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    white-space: normal;
+  }
+
+  .c {
+    height: auto;
+    min-height: 0;
+    padding: 72px 20px 64px;
+  }
+
+  .c .title h1 {
+    width: 100%;
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    line-height: 1.2;
+  }
+
+  .c .c-link a {
+    width: min(100%, 280px);
+    height: 84px;
+    background-size: contain;
+    background-position: center;
+  }
+}
+
+@media (max-width: 600px) {
   .home-clans,
   .home-rankings,
   .trailer-section,
   .home-wiki {
     background-position: 62% center;
+  }
+
+  .home-features .f-list a:hover,
+  .home-wiki .w-list a.update:hover {
+    transform: none;
   }
 }
