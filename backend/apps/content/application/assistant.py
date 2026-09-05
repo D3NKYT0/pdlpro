@@ -12,8 +12,8 @@ from rapidfuzz.fuzz import WRatio
 
 from apps.content.application.conversation import (
     correction_requested,
-    explicit_identity,
     identity_reply,
+    self_talk_reply,
     social_articles,
 )
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
@@ -122,8 +122,9 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
 
         query = normalize(data.message)
         correction = correction_requested(query)
-        if explicit_identity(query):
-            return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": identity_reply(language, correction)}
+        about_self = self_talk_reply(query, language, correction)
+        if about_self:
+            return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": about_self}
         if correction:
             text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
                     if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
@@ -165,7 +166,9 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         threshold = 0.86 if engine == "rapidfuzz" else 0.50
         if best and best_score >= threshold and best_score - second_score >= 0.06:
             if best.get('kind') == 'social':
-                return {"language": language, "kind": "social", "engine": engine, "confidence": round(best_score, 4), "answer": identity_reply(language)}
+                intent = best.get('intent', 'identity')
+                return {"language": language, "kind": "social", "engine": engine, "confidence": round(best_score, 4),
+                        "answer": identity_reply(language, intent=intent)}
             return {
                 "language": language,
                 "kind": "knowledge",

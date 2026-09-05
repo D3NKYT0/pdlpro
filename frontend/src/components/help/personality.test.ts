@@ -8,6 +8,10 @@ describe('personalidade do Denkynho', () => {
     ['Muito obrigada', '02-sucesso', 'Pode contar comigo'],
     ['Até mais', '01-boas-vindas', 'Até a próxima'],
     ['Quem é você?', '04-dica', 'assistente virtual do PDL 2.0'],
+    ['Como você se parece?', '01-boas-vindas', 'cabelo escuro'],
+    ['vc é feio', '08-surpreso', 'gravata azul'],
+    ['Você é fofo', '06-rindo', 'camisa preta'],
+    ['Gosto da sua gravata', '06-rindo', 'minha marca'],
     ['Você é uma inteligência artificial?', '04-dica', 'não sou humano'],
     ['Quem te criou?', '08-surpreso', 'mascote assistente'],
     ['Você dorme?', '06-rindo', 'cochilos'],
@@ -27,8 +31,13 @@ describe('personalidade do Denkynho', () => {
     expect(matchPersonality('how are you', 0, 'en', 'sad')).toMatchObject({ pose: '07-triste', text: expect.stringContaining('here with you') })
   })
 
-  it.each(['', 'Como recupero minha senha?', 'Como funciona a carteira do PDL?', 'oi '.repeat(50)])('deixa perguntas de conhecimento para a próxima camada: %s', message => {
+  it.each(['', 'Como recupero minha senha?', 'Como funciona a carteira do PDL?', 'oi '.repeat(50), 'Onde altero meu perfil e avatar?'])('deixa perguntas de conhecimento para a próxima camada: %s', message => {
     expect(matchPersonality(message)).toBeUndefined()
+  })
+
+  it('responde em inglês a comentários sobre a aparência', () => {
+    expect(matchPersonality("you're ugly", 0, 'en')).toMatchObject({ pose: '08-surpreso', text: expect.stringContaining('blue tie') })
+    expect(matchPersonality('how do you look', 0, 'en')).toMatchObject({ pose: '01-boas-vindas', text: expect.stringContaining('dark hair') })
   })
 
   it('mantém as marcas centrais da voz nas boas-vindas', () => {

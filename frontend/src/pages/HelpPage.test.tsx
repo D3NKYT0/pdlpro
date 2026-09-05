@@ -274,6 +274,36 @@ it('mantém a preferência de detalhes nas respostas do servidor', async () => {
   expect(screen.queryByRole('button', { name: 'Ver orientação completa' })).not.toBeInTheDocument()
 })
 
+it('responde provocação sobre o mascote sem sugerir FAQ de perfil ou ranking', async () => {
+  const related = [
+    { id: 'pdl', question: 'O que é o PDL 2.0?', short_answer: 'É o portal.', answer: 'É o portal da comunidade.', category: 'getting_started', category_label: 'Primeiros passos', keywords: ['portal'] },
+    { id: 'avatar', question: 'Onde altero meu perfil e avatar?', short_answer: 'Abra Meu perfil.', answer: 'Em Meu perfil você altera os dados públicos.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['avatar'] },
+    { id: 'rank', question: 'Onde vejo meu progresso e os rankings?', short_answer: 'Use Progresso.', answer: 'Progresso reúne os dados do perfil.', category: 'games_rewards', category_label: 'Jogos', keywords: ['ranking'] },
+  ]
+  fetcher.mockImplementation((input: RequestInfo | URL) => {
+    const url = String(input)
+    if (url.includes('/assistant/reply/')) return Promise.resolve(response({
+      language: 'pt', kind: 'unknown', mode: 'limited', engine: 'rapidfuzz', confidence: 0.42,
+      related_ids: related.map(item => item.id),
+      answer: { text: 'Encontrei assuntos relacionados, mas preciso de um pouco mais de detalhe para responder com segurança.', pose: '09-confuso' },
+    }))
+    if (url.includes('/auth/csrf/')) return Promise.resolve(response({ csrfToken: 'test-csrf' }))
+    if (url.includes('/assistant/pet/')) return Promise.resolve(response(petProfile))
+    return Promise.resolve(response([...articles, ...related]))
+  })
+  const user = mount()
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion()
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'vc é feio{Enter}')
+  expect(await screen.findByText(/gravata azul/)).toBeVisible()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '08-surpreso')
+  const log = screen.getByRole('log')
+  expect(screen.queryByText('Talvez você queira saber:')).not.toBeInTheDocument()
+  expect(within(log).queryByRole('button', { name: 'Onde altero meu perfil e avatar?' })).not.toBeInTheDocument()
+  expect(screen.queryByText(/Encontrei assuntos relacionados/)).not.toBeInTheDocument()
+})
+
 it('aceita reparação social do backend sem repetir fonte e resposta do FAQ anterior', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion()

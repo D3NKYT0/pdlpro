@@ -78,6 +78,7 @@ describe('motor de diálogo do Denkynho', () => {
   it('classifica mensagens que dispensam uma nova consulta ao FAQ', () => {
     const state = { ...initialDialogueState(), lastArticleId: 'wallet', pendingChoiceIds: ['portal', 'l2'] }
     expect(isLocalDialogueMessage('Como vai?', state)).toBe(true)
+    expect(isLocalDialogueMessage('vc é feio', state)).toBe(true)
     expect(isLocalDialogueMessage('Mais detalhes', state)).toBe(true)
     expect(isLocalDialogueMessage('segunda', state)).toBe(true)
     expect(isLocalDialogueMessage('Como deposito itens?', state)).toBe(false)

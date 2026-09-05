@@ -31,6 +31,8 @@ export const normalizeConversation = (text: string) => text
   .replace(/[\u0300-\u036f]/g, '')
   .toLowerCase()
   .replace(/[^a-z0-9 ]/g, ' ')
+  .replace(/\b(vc|vce|ce)\b/g, 'voce')
+  .replace(/\bur\b/g, 'you are')
   .replace(/\s+/g, ' ')
   .trim()
 
@@ -66,6 +68,22 @@ const replies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   {
     matches: /^(quem e voce|qual e o seu nome|como voce se chama|voce e o denkynho)$/,
     reply: [{ text: 'Eu sou o Denkynho, o assistente virtual do PDL 2.0. Minha missão é explicar o portal e ajudar você a encontrar o próximo passo.', pose: '04-dica' }],
+  },
+  {
+    matches: /^(como voce (e|se parece)|qual e a sua aparencia|o que voce (veste|usa))$/,
+    reply: [{ text: 'Sou um mascote virtual: cabelo escuro, camisa preta e gravata azul. Não tenho um corpo fora da tela, mas essa é a cara com a qual te acompanho no PDL.', pose: '01-boas-vindas' }],
+  },
+  {
+    matches: /^(voce|tu|denkynho) (e|eh|parece|ta|esta) (muito |super |tao |bem |um pouco |meio )?(feio|feia|feinho|esquisito|esquisita|estranho|estranha|ridiculo|ridicula|horrivel)$/,
+    reply: [{ text: 'Feio? Ai, essa doeu um pouquinho! Eu me esforço com esta gravata azul. Sou um personagem virtual: minha missão é te acompanhar, não aparecer na capa de uma revista.', pose: '08-surpreso' }],
+  },
+  {
+    matches: /^(voce|tu|denkynho) (e|eh|parece|ta|esta) (muito |super |tao |bem )?(bonito|bonita|lindo|linda|fofo|fofa|gato|gata|elegante)$/,
+    reply: [{ text: 'Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL.', pose: '06-rindo' }],
+  },
+  {
+    matches: /^(gosto d[ao]s? sua (gravata|cabelo|camisa)|sua (gravata|camisa|cabelo) e (legal|linda|bonita|bonito)|que (gravata|cabelo) (legal|lindo|bonito))$/,
+    reply: [{ text: 'Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL.', pose: '06-rindo' }],
   },
   {
     matches: /^(o que voce faz|como voce pode me ajudar|voce pode me ajudar|para que voce serve)$/,
@@ -119,6 +137,9 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
   { matches: /^(thanks|thank you|thank you very much)$/, reply: [{ text: "You're welcome! You can count on me whenever another question comes up.", pose: '02-sucesso' }] },
   { matches: /^(bye|goodbye|see you|see you later)$/, reply: [{ text: 'See you next time! Have a great journey.', pose: '01-boas-vindas' }] },
   { matches: /^(who are you|what is your name)$/, reply: [{ text: "I'm Denkynho, the PDL 2.0 virtual assistant. I help you find clear and safe guidance.", pose: '04-dica' }] },
+  { matches: /^(how do you look|what do you look like|what are you wearing)$/, reply: [{ text: "I'm a virtual mascot: dark hair, a black shirt and a blue tie. I don't have a body outside this screen, but that's the look I wear while I keep you company in PDL.", pose: '01-boas-vindas' }] },
+  { matches: /^(you (are|re|look) (so |really |very )?(ugly|weird|hideous)|you look ugly)$/, reply: [{ text: "Ugly? Ouch, that stung a little! I do try with this blue tie. I'm a virtual character: I'm here to keep you company, not to win a beauty contest.", pose: '08-surpreso' }] },
+  { matches: /^(you (are|re|look) (so |really )?(cute|handsome|pretty|adorable)|i like your (tie|hair|shirt)|nice tie)$/, reply: [{ text: "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL.", pose: '06-rindo' }] },
   { matches: /^(i am sad|i feel sad)$/, reply: [{ text: "I'm sorry this moment feels difficult. If it is about PDL, tell me what happened and I will look for guidance.", pose: '07-triste' }] },
   { matches: /^(i am tired|i feel tired|sleepy)$/, reply: [{ text: "Taking a break is part of the journey too. I'll be here when you return.", pose: '05-dormindo' }] },
 ]

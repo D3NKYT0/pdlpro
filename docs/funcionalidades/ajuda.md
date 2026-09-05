@@ -67,7 +67,7 @@ O FAQ permanece como fonte editorial. A VPS fraca não remove o Ollama: quem tiv
 
 Toda mensagem aceita pelo filtro do navegador vai ao endpoint autenticado com `conversation: true`, `context` e a rota conhecida, inclusive cumprimentos e correções. O backend verifica moderação e identidade, recupera o contexto assinado, seleciona até três artigos autorizados — inclusive o handbook interno de passo a passo — e pede uma resposta ao modelo. O resultado inclui texto, tipo, pose e, quando aplicável, uma referência válida ao FAQ. Fontes inventadas, JSON inválido, texto vazio ou ofensivo e poses desconhecidas são recusados. Um `affect` opcional do modelo, quando a geração está ligada, informa empatia implícita; se vier inválido, é ignorado e o regex da mensagem continua como fallback.
 
-O prompt de personalidade está em [chat.py](../../backend/apps/content/application/chat.py). Define um assistente simpático, curioso, com humor leve, respostas breves e transparência sobre ser virtual. Ele considera o histórico para resolver referências, mudar de assunto e reparar interpretações erradas. O humor atual entra no prompt como `EMOCAO`: origem `user` é empatia; `needs` são as necessidades do mascote. Risadas, tristeza, conquistas e preferências de nome ou de detalhe são interpretadas pelo modelo; não dependem de cadastrar cada frase. Não deve cobrar atenção de quem ficou ausente nem terminar toda fala com uma pergunta.
+O prompt de personalidade está em [chat.py](../../backend/apps/content/application/chat.py). Define um assistente simpático, curioso, com humor leve, respostas breves e transparência sobre ser virtual. Ele considera o histórico para resolver referências, mudar de assunto e reparar interpretações erradas. Comentários sobre o próprio mascote — quem ele é, como se parece, gravata, elogio ou provocação leve — ficam na conversa social: não viram FAQ de perfil, avatar ou ranking. O humor atual entra no prompt como `EMOCAO`: origem `user` é empatia; `needs` são as necessidades do mascote. Risadas, tristeza, conquistas e preferências de nome ou de detalhe são interpretadas pelo modelo; não dependem de cadastrar cada frase. Não deve cobrar atenção de quem ficou ausente nem terminar toda fala com uma pergunta.
 
 O modelo recebe o nome básico da conta e o papel calculado no backend. Não recebe e-mail, credenciais, saldos ou acesso a ferramentas. Artigos de staff/superadmin são filtrados antes da busca e antes de construir o prompt. Alegar um cargo na mensagem não altera permissões. O texto gerado ainda pode conter imprecisões: mantenha o FAQ atualizado e encaminhe situações individuais ao Atendimento.
 
@@ -87,7 +87,7 @@ Há três escolhas. Nenhuma delas é removida porque a VPS de produção seja pe
 DENKYNHO_LLM_ENABLED=false
 ```
 
-A Ajuda responde com FAQ, RapidFuzz e o repertório social. `start_denkynho` não inicia Ollama.
+A Ajuda responde com FAQ, RapidFuzz e o repertório social, inclusive apresentação, aparência e provocações leves dirigidas ao mascote. `start_denkynho` não inicia Ollama.
 
 ### Ollama local
 
@@ -171,7 +171,7 @@ Validação da integração em 04/09/2026: os dois arquivos base combinados com 
 
 ## Ajuda básica quando a geração está indisponível
 
-Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta em `mode: limited`, com aviso visível na tela. A consulta usa **Lingua** e **RapidFuzz**. **Sentence Transformers** entra só quando `DENKYNHO_EMBEDDINGS_ENABLED` está ativo; em produção o padrão é desligado para não baixar MiniLM no primeiro chat, mas pode ser ligado. As interações sociais usam o repertório editorial existente. Este modo é limitado e não é apresentado como conversa generativa. As mensagens seguintes tentam novamente o modelo; uma resposta válida remove o aviso.
+Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta em `mode: limited`, com aviso visível na tela. A consulta usa **Lingua** e **RapidFuzz**. **Sentence Transformers** entra só quando `DENKYNHO_EMBEDDINGS_ENABLED` está ativo; em produção o padrão é desligado para não baixar MiniLM no primeiro chat, mas pode ser ligado. As interações sociais usam o repertório editorial existente, com respostas próprias quando a pessoa fala do Denkynho. Este modo é limitado e não é apresentado como conversa generativa. As mensagens seguintes tentam novamente o modelo; uma resposta válida remove o aviso.
 
 A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. Perguntas com correspondência segura recebem resposta curta, detalhes e fonte; as demais pedem esclarecimento. [dialogue.ts](../../frontend/src/components/help/dialogue.ts) e [personality.ts](../../frontend/src/components/help/personality.ts) mantêm o repertório de contingência e as boas-vindas.
 
@@ -243,7 +243,7 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 
 ## Validação
 
-Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, idioma, filtro, personalidade, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica idioma, validação, anonimato, moderação, busca semântica simulada na fronteira do modelo, fallback explícito e autorização por audiência.
+Os testes de `HelpPage.test.tsx` usam Testing Library e simulam apenas HTTP e carregamento de imagens. Cobrem sessão reconhecida, idioma, filtro, personalidade, fala sobre o mascote sem virar FAQ, continuidade, envio pelo teclado, carregamento, sugestões, respostas, repetição, erro, base vazia, movimento reduzido, inatividade e fala. `moderation.test.ts` cobre caracteres invisíveis, leet, separadores, repetição e falsos positivos; `identity.test.ts` cobre jogador, equipe, superadministrador e nome de conta recusado. O backend verifica idioma, validação, anonimato, moderação, busca semântica simulada na fronteira do modelo, fala sobre o próprio assistente, fallback explícito e autorização por audiência. `test_conversation.py` cobre apresentação, aparência e provocação leve.
 
 A revisão visual usa a página real e o catálogo com tema carregado em desktop e celular. Execute os comandos completos de [Testes e qualidade](../desenvolvimento/testes.md) antes de entregar mudanças.
 
