@@ -40,7 +40,7 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
   function character(character: typeof view.current, outgoing = false) {
     const item = character.pose
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
-    const sequence = animated && !talking ? activitySequences[item.id] : undefined
+    const sequence = animated && !talking ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
     return <div key={character.key} className={`denk-transition ${outgoing ? 'is-leaving' : animated && view.previous ? 'is-entering' : ''}`}>
       <div className="denk-facing" data-mirrored={character.mirrored} style={{ transform: character.mirrored ? 'scaleX(-1)' : 'scaleX(1)' }}>
       <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence ? ' is-moving' : ''}`}>

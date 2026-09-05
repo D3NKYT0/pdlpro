@@ -27,8 +27,8 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
-function mount() {
-  render(<QueryClientProvider client={client}><MemoryRouter><SupportPage /></MemoryRouter></QueryClientProvider>)
+function mount(path = '/') {
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><SupportPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 it('seleciona chamado e apresenta mensagem da equipe', async () => {
@@ -92,4 +92,10 @@ it('filtra chamados finalizados sem misturar a lista de ativos', async () => {
   expect(within(inbox).queryByText(ticket.subject)).not.toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: 'Todos' }))
   expect(within(inbox).getByText(ticket.subject)).toBeVisible()
+})
+it('abre o formulário com assunto da tela e não envia o histórico do chat', async () => {
+  mount('/painel/support?subject=Ajuda:%20Carteira&from=%2Fpainel%2Fwallet')
+  expect(await screen.findByRole('textbox', { name: 'Assunto' })).toHaveValue('Ajuda: Carteira')
+  expect(screen.getByRole('textbox', { name: 'Detalhes' })).toHaveValue('Estou na tela Carteira (/painel/wallet) e preciso de ajuda da equipe.')
+  expect(supportApi.create).not.toHaveBeenCalled()
 })

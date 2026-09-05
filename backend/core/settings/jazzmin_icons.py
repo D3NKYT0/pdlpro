@@ -60,6 +60,7 @@ JAZZMIN_ICONS_PDL = {
     "content.downloadlink": "fas fa-download",
     "content.wikipage": "fas fa-book-open",
     "content.calendarevent": "fas fa-calendar-alt",
+    "content.denkynhohandbook": "fas fa-book",
 
     # Payments.
     "payment": "fas fa-credit-card",

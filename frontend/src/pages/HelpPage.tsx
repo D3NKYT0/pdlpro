@@ -6,7 +6,7 @@ import { contentApi } from '../services/api'
 import type { DenkynhoAction, ApiDenkynhoCareResult } from '../services/domain/content.service'
 import { useLocation } from 'react-router-dom'
 import { programsApi } from '../services/domain/programs.service'
-import { getHelpContext, getHelpActionsForText } from '../components/help/contextual'
+import { getHelpContext, getHelpActionsForText, supportTicketPrefill } from '../components/help/contextual'
 import { PetProgress } from '../components/help/PetProgress'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -27,6 +27,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { helpIdentity, type HelpIdentity } from '../components/help/identity'
 import { moderateChatInput } from '../components/help/moderation'
 import { HelpPreferences } from '../components/help/HelpPreferences'
+import { thinkingPhrase } from '../components/help/thinking'
 import { loadHelpPreferences, storeHelpPreferences, type HelpPreferences as Preferences } from '../components/help/preferences'
 type Message = { id: number; role: 'user' | 'assistant'; text: string; status?: 'sending' | 'failed'; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string }
 const welcome = (identity: HelpIdentity, language: HelpLanguage, preferences?: Preferences | null): Message => ({ id: 0, role: 'assistant', text: preferences?.preferred_name ? (language === 'pt' ? `Olá, ${preferences.preferred_name}! Sou o Denkynho. Vamos continuar sua jornada no PDL?` : `Hi, ${preferences.preferred_name}! I'm Denkynho. Let's continue your PDL journey.`) : denkynhoWelcome(new Date(), identity, language), pose: '01-boas-vindas' })
@@ -35,8 +36,8 @@ const activities = [
   { action: 'feed', pose: '11-comendo', pt: 'Alimentar', en: 'Feed', status: { pt: 'Fazendo uma pausa para um lanche.', en: 'Taking a snack break.' } },
   { action: 'sleep', pose: '05-dormindo', pt: 'Dormir', en: 'Sleep', status: { pt: 'Dormindo na caminha para recuperar energia.', en: 'Sleeping in bed to recover energy.' } },
   { action: 'play', pose: '12-jogando', pt: 'Brincar', en: 'Play', status: { pt: 'Brincando para ficar mais alegre!', en: 'Playing to feel happier!' } },
-  { action: 'care', pose: '06-rindo', pt: 'Dar carinho', en: 'Give care', status: { pt: 'Recebendo carinho e ficando feliz!', en: 'Getting care and feeling happy!' } },
-  { action: 'dance', pose: '02-sucesso', pt: 'Dançar juntos', en: 'Dance together', status: { pt: 'Dançando com você!', en: 'Dancing with you!' } },
+  { action: 'care', pose: '14-carinho', pt: 'Dar carinho', en: 'Give care', status: { pt: 'Recebendo carinho e ficando feliz!', en: 'Getting care and feeling happy!' } },
+  { action: 'dance', pose: '13-dancando', pt: 'Dançar juntos', en: 'Dance together', status: { pt: 'Dançando com você!', en: 'Dancing with you!' } },
 ] as const
 function idempotencyKey() {
   if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
@@ -80,6 +81,7 @@ export function HelpPage() {
   const [shown, setShown] = useState(0)
   const [idle, setIdle] = useState(false)
   const [activity, setActivity] = useState<string | null>(null)
+  const [thinkFor, setThinkFor] = useState(0)
   const [careResult, setCareResult] = useState<ApiDenkynhoCareResult | null>(null)
   const careRetry = useRef<{ action: DenkynhoAction; key: string } | null>(null)
   const [validation, setValidation] = useState('')
@@ -93,6 +95,7 @@ export function HelpPage() {
   const thread = useRef<HTMLDivElement>(null)
   const followLatest = useRef(true)
   const preferencesDirty = useRef(true)
+  const hydratedPrefs = useRef(false)
   const animated = animations && !reduced
   const busy = action.pending || Boolean(revealing)
   function changeLanguage(next: HelpLanguage) {
@@ -124,7 +127,25 @@ export function HelpPage() {
     setValidation(''); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
     // A mudança de identidade invalida também respostas ainda em trânsito.
     setCareResult(null); setActivity(null); careRetry.current = null
+    hydratedPrefs.current = false
   }, [user?.id, user?.role])
+  useEffect(() => {
+    const stored = pet.data?.preferences
+    if (!stored || hydratedPrefs.current) return
+    hydratedPrefs.current = true
+    const saved = loadHelpPreferences(user?.id)
+    setPreferences({
+      preferred_name: stored.preferred_name || saved?.preferred_name || '',
+      detail: stored.detail || saved?.detail || 'balanced',
+      language: saved?.language ?? language,
+      remember: Boolean(saved?.remember || stored.preferred_name),
+    })
+  }, [pet.data?.preferences, user?.id, language])
+  useEffect(() => {
+    if (!action.pending) { setThinkFor(0); return }
+    const timer = setInterval(() => setThinkFor(current => current + 2800), 2800)
+    return () => clearInterval(timer)
+  }, [action.pending])
   useEffect(() => {
     if (!activity) return
     const timer = setTimeout(() => setActivity(null), 8000)
@@ -171,7 +192,7 @@ export function HelpPage() {
       setMessages(previous => previous.some(message => message.id === messageId)
         ? previous.map(message => message.id === messageId ? { ...message, status: 'sending' } : message)
         : [...previous, { id: messageId, role: 'user', text: question, status: 'sending' }])
-      const server = await contentApi.assistantReply(question, language, context, preferences && (!context || preferencesDirty.current) ? { preferred_name: preferences.preferred_name, detail: preferences.detail } : undefined)
+      const server = await contentApi.assistantReply(question, language, context, preferences && (!context || preferencesDirty.current) ? { preferred_name: preferences.preferred_name, detail: preferences.detail } : undefined, screenContext?.path ?? '/painel/ajuda')
       if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
       if ((server.context !== undefined && typeof server.context !== 'string') || (server.mode !== undefined && !['generative', 'limited'].includes(server.mode))) throw new Error(labels.error)
       if (server.emotion !== undefined && !isDenkynhoEmotion(server.emotion)) throw new Error(labels.error)
@@ -241,9 +262,10 @@ export function HelpPage() {
   const last = messages[messages.length - 1]
   const emotion = isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion : defaultDenkynhoEmotion
   const emotionPose = emotion.idle_pose
-  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : activity ?? ((idle || last.id === 0) ? emotionPose : last.pose ?? emotionPose)
+  const celebrating = Boolean(activity && careResult?.level_up && !careResult.replayed)
+  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? ((idle || last.id === 0) ? emotionPose : last.pose ?? emotionPose)
   const currentActivity = activities.find(item => item.pose === pose)
-  const companionStatus = petAction.pending ? labels.caring : action.pending ? labels.searching : revealing ? labels.talking : currentActivity?.status[language] ?? (idle || emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
+  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : currentActivity?.status[language] ?? (idle || emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
     { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },
@@ -251,15 +273,16 @@ export function HelpPage() {
     { id: 'hygiene', label: labels.hygiene, value: pet.data.attributes.hygiene },
   ] : []
   return <div className="help-page">
-    <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to="/painel/support" variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
+    <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to={supportTicketPrefill(screenContext?.path, language)?.to ?? '/painel/support'} variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
       <HelpCompanion faqLink={<ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>} language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
-        mascot={<Denkynho pose={pose} idle={idle} animated={animated} appearance={pet.data?.appearance} celebration={Boolean(activity && careResult?.level_up && !careResult.replayed)} dancing={activity === "02-sucesso" && careResult?.action === "dance"} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
+        mascot={<Denkynho pose={pose} idle={idle} animated={animated} appearance={pet.data?.appearance} celebration={celebrating} dancing={activity === '13-dancando'} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
         {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>
           <header><strong>{labels.level} {pet.data.level}</strong><small>{labels.xp} {pet.data.experience}/{pet.data.experience_next}</small></header>
           <p className="denk-pet-emotion"><strong>{labels.emotion}: {emotionLabel(emotion.id, language)}</strong><small className="muted">{emotion.source === 'user' ? labels.empathy : labels.needsMood}</small></p>
+          {pet.data.daily_visit && (pet.data.visit_xp ?? 0) > 0 && <p role="status">{language === 'pt' ? `Obrigado pela visita! +${pet.data.visit_xp} XP` : `Thanks for visiting! +${pet.data.visit_xp} XP`}</p>}
           <div className="denk-pet-attributes" aria-label={labels.attributes}>
             {petAttributes.map(attribute => <div key={attribute.id}><span>{attribute.label}</span><progress aria-label={attribute.label} max={100} value={attribute.value}>{attribute.value}%</progress><b>{attribute.value}</b></div>)}
           </div>
@@ -272,7 +295,10 @@ export function HelpPage() {
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">{labels.reduced}</small>}
         <Field label={labels.language}><select value={language} disabled={busy || petAction.pending} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>
-        {user && <HelpPreferences key={`${user.id}-${language}`} userId={user.id} language={language} value={preferences} disabled={busy || petAction.pending} onApply={next => {
+        {user && <HelpPreferences key={`${user.id}-${language}`} userId={user.id} language={language} value={preferences} disabled={busy || petAction.pending} persist={async next => {
+          const updated = await contentApi.updateDenkynhoPreferences({ preferred_name: next.preferred_name, detail: next.detail })
+          queryClient.setQueryData(petQueryKey, current => current ? { ...current, ...updated, preferences: updated.preferences ?? { preferred_name: next.preferred_name, detail: next.detail } } : updated)
+        }} onApply={next => {
           preferencesDirty.current = true
           setPreferences(next)
           setDialogue(current => ({ ...current, name: next.preferred_name || undefined, detailPreference: next.detail === 'brief' ? 'short' : next.detail }))
@@ -288,7 +314,7 @@ export function HelpPage() {
           {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>
             <strong>{message.role === 'user' ? labels.you : 'Denkynho'}</strong>
             {revealing?.id === message.id ? <><p aria-hidden="true">{Array.from(message.text).slice(0, shown).join('') || '…'}</p><p className="help-sr">{message.text}</p></> : <p>{message.text}</p>}
-            {message.status === 'sending' && <small className="muted">{language === 'pt' ? 'Preparando sua resposta…' : 'Preparing your response…'}</small>}
+            {message.status === 'sending' && <small className="muted">{thinkingPhrase(thinkFor, language)}</small>}
             {message.status === 'failed' && <div className="help-message-retry"><small>{language === 'pt' ? 'Não foi possível responder.' : 'Could not get a reply.'}</small><Button size="sm" variant="secondary" disabled={busy} onClick={() => void send(message.text, message.id)}>{language === 'pt' ? 'Reenviar mensagem' : 'Retry message'}</Button></div>}
             {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>{labels.full}</Button>}
             {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}

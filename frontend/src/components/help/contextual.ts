@@ -142,6 +142,18 @@ export function getHelpContext(path: string | null | undefined, user: HelpIdenti
   }
 }
 
+/** Monta um chamado com assunto da tela atual; nunca inclui o histórico do chat. */
+export function supportTicketPrefill(path: string | null | undefined, language: HelpLanguage = 'pt'): { to: string; label: string } | null {
+  const context = getHelpContext(path, null, undefined, language)
+  if (!context) return null
+  const subject = language === 'pt' ? `Ajuda: ${context.title}` : `Help: ${context.title}`
+  const params = new URLSearchParams({ subject, from: context.path })
+  return {
+    to: `/painel/support?${params.toString()}`,
+    label: language === 'pt' ? 'Abrir chamado sobre esta tela' : 'Open a ticket about this screen',
+  }
+}
+
 /** Turns only standalone, known relative paths in an answer into navigation links.
  * Never follows external URLs, query strings, fragments or links to individual records.
  */

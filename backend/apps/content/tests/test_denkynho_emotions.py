@@ -3,8 +3,10 @@ from datetime import timedelta
 from django.utils import timezone
 
 from apps.content.application.emotions import (
+    care_cue,
     detect_user_affect,
     emotion_from_needs,
+    model_affect,
     pose_for_reply,
     resolve_emotion,
 )
@@ -48,3 +50,15 @@ def test_reply_pose_mirrors_the_user_socially_and_keeps_tips_when_helping():
     assert pose_for_reply("social", "06-rindo", emotion, None) == "07-triste"
     assert pose_for_reply("blocked", "10-frustrado", emotion, "sad") == "10-frustrado"
     assert pose_for_reply("social", "01-boas-vindas", emotion, "calm") == "01-boas-vindas"
+
+
+def test_care_cue_picks_the_lowest_need_and_ignores_balanced_attributes():
+    assert care_cue(8, 80, 80, 80) == {
+        "id": "satiety",
+        "message": {"pt": "O Denkynho está com fome.", "en": "Denkynho is hungry."},
+    }
+    assert care_cue(80, 10, 80, 80)["id"] == "energy"
+    assert care_cue(75, 75, 75, 75) is None
+    assert model_affect("sad") == "sad"
+    assert model_affect("grumpy") is None
+    assert model_affect(None) is None

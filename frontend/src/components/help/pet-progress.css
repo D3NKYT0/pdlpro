@@ -7,7 +7,7 @@
 .denk-cosmetics .denk-pin { position:absolute; top:47%; left:58%; width:10%; color:#f9d572; filter:drop-shadow(0 1px 1px #342109); }
 .denk-mascot.is-celebrating:after { content:'✦'; position:absolute; color:#f9d572; top:12%; left:8%; font-size:28px; }
 .denk-mascot[data-animated=true].is-celebrating:after { animation:denk-spark 900ms ease-in-out 3; }
-.denk-mascot[data-animated=true].is-dancing .denk-facing { animation:denk-dance 850ms ease-in-out infinite; transform-origin:50% 95%; }
+.denk-mascot[data-animated=true].is-dancing:not(:has(.denk-sprite)) .denk-facing { animation:denk-dance 850ms ease-in-out infinite; transform-origin:50% 95%; }
 .denk-mascot[data-animated=true][data-gesture=true] .denk-pose { animation:denk-nod 1400ms ease-in-out infinite; transform-origin:50% 80%; }
 @keyframes denk-dance { 0%,100% { rotate:-5deg; translate:-3% 0; } 25% { translate:0 -3%; } 50% { rotate:5deg; translate:3% 0; } 75% { translate:0 -3%; } }
 @keyframes denk-nod { 0%,100% { rotate:0deg; } 40% { rotate:1.5deg; } 70% { rotate:-1deg; } }

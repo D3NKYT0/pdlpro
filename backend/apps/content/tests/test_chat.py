@@ -602,3 +602,39 @@ def test_lexical_retrieval_keeps_current_topic_and_source_limit(chat, settings):
     assert str(previous.id) not in {source["id"] for source in sources}
     assert {source["id"] for source in sources}.issubset({str(article.id) for article in articles})
     assert all(len(source["answer"]) == 1400 for source in sources)
+
+
+def test_known_screen_reaches_the_prompt_and_unknown_paths_are_dropped(chat):
+    api, _, model = chat
+    post(api, "Onde estou?", screen="/painel/wallet")
+    system = model.call_args.kwargs["messages"][0]["content"]
+    tela = json.loads(system.split("\nTELA: ")[1].split("\nFONTES: ")[0])
+    assert tela == {"path": "/painel/wallet", "title": "Carteira"}
+    post(api, "Onde estou?", screen="https://evil.test/painel/wallet")
+    tela = json.loads(model.call_args.kwargs["messages"][0]["content"].split("\nTELA: ")[1].split("\nFONTES: ")[0])
+    assert tela == {}
+
+
+def test_model_affect_updates_empathy_when_regex_misses_the_tone(chat):
+    api, user, model = chat
+    model.return_value.message.content = json.dumps({
+        "text": "Sinto muito que o dia tenha pesado. Estou aqui.",
+        "kind": "social", "pose": "07-triste", "article_id": None, "affect": "sad",
+    })
+    response = post(api, "hoje o dia pesou bastante e nada fluiu")
+    assert response.status_code == 200
+    assert response.data["emotion"]["id"] == "sad"
+    assert response.data["emotion"]["source"] == "user"
+    assert response.data["answer"]["pose"] == "07-triste"
+    from apps.content.infrastructure.models import DenkynhoProfile
+    assert DenkynhoProfile.objects.get(user=user).empathy == "sad"
+
+
+def test_stored_profile_preferences_fill_an_empty_conversation(chat):
+    api, user, model = chat
+    from apps.content.infrastructure.models import DenkynhoProfile
+    DenkynhoProfile.objects.create(user=user, preferred_name="Lia", detail="brief")
+    post(api, "Oi")
+    system = model.call_args.kwargs["messages"][0]["content"]
+    assert '"nome_preferido_do_usuario": "Lia"' in system
+    assert '"detail": "brief"' in system

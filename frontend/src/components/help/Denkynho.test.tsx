@@ -15,7 +15,8 @@ it('exibe peças equipadas e dança distinta, preservando representação estát
   const { container, rerender } = render(<Denkynho pose="02-sucesso" appearance={appearance} dancing celebration />)
   await settle()
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Dançando')
-  expect(container.querySelectorAll('.denk-cosmetics svg')).toHaveLength(1)
+  expect(container.querySelector('.denk-sprite')).toHaveAttribute('data-frame', '0')
+  expect(container.querySelector('.denk-cosmetics')).toBeNull()
   expect(container.querySelector('.denk-scarf')).toBeNull()
   expect(container.querySelector('.denk-scene img')).toHaveAttribute('src', '/mascot/denkynho/scenes/garden.png')
   expect(screen.getByRole('img')).toHaveClass('is-dancing', 'is-celebrating')
@@ -26,7 +27,7 @@ it('exibe peças equipadas e dança distinta, preservando representação estát
   expect(container.querySelector('.denk-cosmetics svg')).toBeNull()
   expect(screen.getByRole('img')).toHaveAttribute('data-gesture', 'true')
 })
-it.each(['11-comendo', '12-jogando', '06-rindo'])('reproduz quadros diferentes de %s e para ao desativar', async pose => {
+it.each(['11-comendo', '12-jogando', '06-rindo', '13-dancando', '14-carinho', '03-pensando', '09-confuso'])('reproduz quadros diferentes de %s e para ao desativar', async pose => {
   const { container, rerender, unmount } = render(<Denkynho pose={pose} />); await settle()
   const sprite = () => container.querySelector('.denk-sprite')
   expect(sprite()).toHaveAttribute('data-frame', '0')
@@ -41,7 +42,7 @@ it.each(['11-comendo', '12-jogando', '06-rindo'])('reproduz quadros diferentes d
   expect(sprite()).toBeNull()
   unmount(); expect(vi.getTimerCount()).toBe(0)
 })
-it.each(['11-comendo', '12-jogando'])('carrega %s sem sobrepor recortes faciais de outra pose', async pose => {
+it.each(['11-comendo', '12-jogando', '13-dancando', '14-carinho'])('carrega %s sem sobrepor recortes faciais de outra pose', async pose => {
   const { container } = render(<Denkynho pose={pose} talking mouthOpen />); await settle()
   await act(async () => { vi.advanceTimersByTime(2800) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
@@ -61,6 +62,15 @@ it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   expect(container.querySelector('.denk-face')).toHaveAttribute('src', expect.stringContaining('04-dica-boca'))
   await act(async () => { vi.advanceTimersByTime(560) })
   expect(container.querySelectorAll('.denk-transition')).toHaveLength(1)
+})
+it('reproduz a comemoração só no atlas de sucesso e mantém a pose estática no idle', async () => {
+  const { container, rerender } = render(<Denkynho pose="02-sucesso" celebration />)
+  await settle()
+  expect(container.querySelector('.denk-sprite')).toHaveAttribute('data-frame', '0')
+  rerender(<Denkynho pose="02-sucesso" />)
+  await settle()
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/02-sucesso.png')
 })
 it('expõe uma animação de ociosidade própria, sem usar o atlas da cama', async () => {
   const { container } = render(<Denkynho pose="01-boas-vindas" idle />); await settle()

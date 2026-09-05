@@ -51,3 +51,35 @@ export const activitySequences: Record<string, ActivitySequence> = {
     ],
   },
 }
+
+function gridSheet(src: string, timeline: ActivitySequence['timeline']): ActivitySequence {
+  return {
+    src, size: [1536, 1024], split: 512, viewport: [340, 500],
+    anchors: [0, 1, 2, 3, 4, 5, 6, 7].map(frame => [192 + (frame % 4) * 384, frame < 4 ? 500 : 1012]),
+    timeline,
+  }
+}
+
+const sheetBeat: ActivitySequence['timeline'] = [
+  { frame: 0, duration: 280 }, { frame: 1, duration: 160 }, { frame: 2, duration: 180 },
+  { frame: 3, duration: 180 }, { frame: 4, duration: 180 }, { frame: 5, duration: 200 },
+  { frame: 6, duration: 220 }, { frame: 7, duration: 420 },
+]
+
+activitySequences['02-sucesso'] = gridSheet('02-sucesso-sequencia.png', sheetBeat)
+activitySequences['03-pensando'] = gridSheet('03-pensando-sequencia.png', [
+  { frame: 0, duration: 420 }, { frame: 1, duration: 280 }, { frame: 2, duration: 280 },
+  { frame: 3, duration: 320 }, { frame: 4, duration: 260 }, { frame: 5, duration: 240 },
+  { frame: 6, duration: 280 }, { frame: 7, duration: 480 },
+])
+activitySequences['09-confuso'] = gridSheet('09-confuso-sequencia.png', sheetBeat)
+activitySequences['13-dancando'] = gridSheet('13-dancando-sequencia.png', [
+  { frame: 0, duration: 220 }, { frame: 1, duration: 160 }, { frame: 2, duration: 160 },
+  { frame: 3, duration: 180 }, { frame: 4, duration: 160 }, { frame: 5, duration: 180 },
+  { frame: 6, duration: 180 }, { frame: 7, duration: 280 },
+])
+activitySequences['14-carinho'] = gridSheet('14-carinho-sequencia.png', [
+  { frame: 0, duration: 320 }, { frame: 1, duration: 200 }, { frame: 2, duration: 240 },
+  { frame: 3, duration: 280 }, { frame: 4, duration: 240 }, { frame: 5, duration: 220 },
+  { frame: 6, duration: 260 }, { frame: 7, duration: 420 },
+])

@@ -38,3 +38,19 @@ it('gera somente destinos conhecidos, autorizados e disponíveis a partir da res
   expect(getHelpActionsForText('/painel/accounts /painel/support /painel/security /painel', null, [], 'en')).toHaveLength(3)
   expect(getHelpContext('/painel/admin/temas', { role: 'admin' }, [], 'en')?.title).toBe('Administration')
 })
+it('mostra o mascote, o aviso de necessidade e o chamado pré-preenchido sem enviar o chat', async () => {
+  const user = userEvent.setup()
+  const hungry = {
+    level: 1, experience: 0, experience_next: 100,
+    attributes: { satiety: 8, energy: 80, happiness: 80, hygiene: 80 },
+    emotion: { id: 'sad' as const, pose: '07-triste', idle_pose: '07-triste', source: 'needs' as const },
+    cue: { id: 'satiety', message: { pt: 'O Denkynho está com fome.', en: 'Denkynho is hungry.' } },
+    daily_visit: true, visit_xp: 8,
+  }
+  render(<MemoryRouter><ContextualHelp path="/painel/wallet" resources={[]} pet={hungry} /></MemoryRouter>)
+  expect(screen.getByRole('button', { name: 'O Denkynho está com fome.' })).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'O Denkynho está com fome.' }))
+  expect(screen.getByText('Obrigado pela visita! +8 XP')).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Abrir chamado sobre esta tela' })).toHaveAttribute('href', expect.stringContaining('/painel/support?subject='))
+  expect(screen.getByRole('link', { name: 'Abrir chamado sobre esta tela' }).getAttribute('href')).toContain('from=%2Fpainel%2Fwallet')
+})

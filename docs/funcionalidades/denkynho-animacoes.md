@@ -10,6 +10,11 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 - [Jogando](../../frontend/public/mascot/denkynho/12-jogando-sequencia.png): 1448 × 1086; braços, mãos, controle e reação facial.
 - [Rindo](../../frontend/public/mascot/denkynho/06-rindo-sequencia.png): 1491 × 1055; boca, cabeça, braços e tronco.
 - [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia-v2.png): 1448 × 1086; alterna os dois lados, respiração, coberta e `Z`/`Zz`/`Zzz`.
+- [Dançando](../../frontend/public/mascot/denkynho/13-dancando-sequencia.png): 1536 × 1024; oito quadros de corpo inteiro, sem balanço CSS como substituto.
+- [Carinho](../../frontend/public/mascot/denkynho/14-carinho-sequencia.png): 1536 × 1024; gesto próprio, sem reusar a risada.
+- [Pensando](../../frontend/public/mascot/denkynho/03-pensando-sequencia.png): 1536 × 1024; espera viva da consulta.
+- [Confuso](../../frontend/public/mascot/denkynho/09-confuso-sequencia.png): 1536 × 1024; sem correspondência.
+- [Comemorar](../../frontend/public/mascot/denkynho/02-sucesso-sequencia.png): 1536 × 1024; só entra com `celebration` na subida de nível.
 
 Os originais estáticos permanecem disponíveis para movimento reduzido e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 
@@ -26,7 +31,7 @@ O gerador não entregou células perfeitamente alinhadas nem a resolução solic
 
 São transformações dos sprites 2D, não interpolação de um esqueleto 3D. O atlas de ação congela no quadro atual ao sair. A próxima sequência só começa depois que a entrada termina. Isso evita combinar a troca de postura com uma mordida ou risada já no meio do ciclo.
 
-Comer, jogar, rir e comemorar alternam a orientação nas visitas seguintes à mesma ação; a primeira visita mantém o lado atual. O histórico de lados dura enquanto o componente estiver montado. Poses de conversa e sono preservam a orientação. A fala não dispara espelhamento, e mudar apenas boca, piscada ou a opção de animação não conta como uma nova visita.
+Comer, jogar, rir, dançar, dar carinho e comemorar alternam a orientação nas visitas seguintes à mesma ação; a primeira visita mantém o lado atual. O histórico de lados dura enquanto o componente estiver montado. Poses de conversa e sono preservam a orientação. A fala não dispara espelhamento, e mudar apenas boca, piscada ou a opção de animação não conta como uma nova visita.
 
 A camada `denk-facing` espelha o conjunto completo — corpo, olhos, boca, mãos, lanche e controle — sem modificar os PNGs. Ela é separada da camada de transição e da reprodução do atlas, evitando que uma transformação sobrescreva outra. Desligar animações ou ativar movimento reduzido cancela a transição e preserva a orientação estática, sem uma virada súbita adicional.
 

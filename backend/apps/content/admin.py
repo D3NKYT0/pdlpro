@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from apps.content.infrastructure.models import CalendarEvent, DownloadLink, Faq, News, WikiPage
+from apps.content.infrastructure.models import (
+    CalendarEvent,
+    DenkynhoHandbook,
+    DownloadLink,
+    Faq,
+    News,
+    WikiPage,
+)
 from common.admin import PDLModelAdmin
 
 
@@ -32,6 +39,45 @@ class FaqAdmin(PDLModelAdmin):
         "question", "short_answer", "answer", "keywords",
         "question_en", "short_answer_en", "answer_en", "keywords_en",
     )
+    fieldsets = (
+        ("Publicação", {
+            "fields": ("is_published", "audience", "assistant_only", "category", "order"),
+            "description": "Marque Somente assistente para um passo a passo do Denkynho. Não é necessária uma migration: o artigo entra na consulta no próximo salvamento.",
+        }),
+        ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
+        ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+    )
+
+
+@admin.register(DenkynhoHandbook)
+class DenkynhoHandbookAdmin(PDLModelAdmin):
+    """Formulário editorial dos passo a passo internos do Denkynho.
+
+    Novos artigos nascem com ``assistant_only`` e não entram no FAQ público. A equipe
+    publica em português e inglês por aqui, sem uma migration de conteúdo.
+    """
+
+    list_display = ("question", "category", "audience", "order", "is_published")
+    list_filter = ("category", "audience", "is_published")
+    search_fields = (
+        "question", "short_answer", "answer", "keywords",
+        "question_en", "short_answer_en", "answer_en", "keywords_en",
+    )
+    fieldsets = (
+        ("Destino", {
+            "fields": ("is_published", "audience", "category", "order"),
+            "description": "Este artigo fica só na consulta do Denkynho. Jogadores recebem audiência Todos; a equipe e os superadministradores usam os níveis correspondentes.",
+        }),
+        ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
+        ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(assistant_only=True)
+
+    def save_model(self, request, obj, form, change):
+        obj.assistant_only = True
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(DownloadLink)

@@ -52,6 +52,15 @@ it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo'))
   expect(screen.getByLabelText('Saciedade')).toHaveValue(100)
 })
+it('reproduz carinho no atlas próprio sem reusar a pose de risada', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user); await screen.findByText('Nível 1')
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => String(input).includes('/assistant/pet/') && init?.method === 'POST'
+    ? Promise.resolve(response({ ...petProfile, experience: 8, action: 'care', xp_gained: 8, replayed: false }))
+    : Promise.resolve(apiResponse(input)))
+  await user.click(screen.getByRole('button', { name: 'Dar carinho' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '14-carinho'))
+})
 it('reserva a cama para a ação Dormir e entra em ociosidade sem acumular timers', async () => {
   mount(); await screen.findByRole('button', { name: articles[0].question }); await openCompanion(); await screen.findByText('Nível 1')
   vi.useFakeTimers({ shouldAdvanceTime: true })
@@ -251,7 +260,7 @@ it('aceita reparação social do backend sem repetir fonte e resposta do FAQ ant
   expect(screen.getAllByText(articles[0].short_answer)).toHaveLength(1)
   expect(screen.getAllByText(`Fonte: ${articles[0].question}`)).toHaveLength(1)
   const call = fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).at(-1)!
-  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '' })
+  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '', screen: '/painel/ajuda' })
 })
 
 it('usa geração também para cumprimentos, mantém contexto e o limpa em nova conversa', async () => {
@@ -268,8 +277,8 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
   await waitFor(() => expect(screen.getAllByText(generated.answer.text)).toHaveLength(2))
   const calls = () => fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).map(call => JSON.parse(call[1].body))
   expect(calls()).toEqual([
-    { message: 'Oi', language: 'pt', conversation: true, context: '' },
-    { message: 'estou cansado', language: 'pt', conversation: true, context: 'signed-turn-1' },
+    { message: 'Oi', language: 'pt', conversation: true, context: '', screen: '/painel/ajuda' },
+    { message: 'estou cansado', language: 'pt', conversation: true, context: 'signed-turn-1', screen: '/painel/ajuda' },
   ])
   await user.click(screen.getByRole('button', { name: 'Nova conversa' }))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'oi{Enter}')

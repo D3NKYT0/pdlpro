@@ -143,3 +143,55 @@ def test_pet_emotion_follows_urgent_needs_and_stays_private_to_the_owner():
     other_state = api.get(PET_URL)
     assert other_state.data["emotion"]["id"] == "calm"
     assert other_state.data["attributes"]["satiety"] == 75
+
+
+@pytest.mark.django_db
+def test_daily_visit_grants_experience_once_per_day():
+    user = _user("denk-visit")
+    profile = DenkynhoProfile.objects.create(user=user, last_visit_on=timezone.localdate() - timedelta(days=1))
+    api = APIClient()
+    api.force_authenticate(user)
+
+    first = api.get(PET_URL)
+    second = api.get(PET_URL)
+
+    assert first.status_code == second.status_code == 200
+    assert first.data["daily_visit"] is True
+    assert first.data["visit_xp"] == 8
+    assert first.data["experience"] == 8
+    assert second.data["daily_visit"] is False
+    assert second.data["visit_xp"] == 0
+    assert second.data["experience"] == 8
+    profile.refresh_from_db()
+    assert profile.last_visit_on == timezone.localdate()
+
+
+@pytest.mark.django_db
+def test_preferences_persist_on_the_profile_without_storing_chat():
+    user = _user("denk-prefs")
+    api = APIClient()
+    api.force_authenticate(user)
+
+    assert api.patch(PET_URL, {"preferred_name": "Dani", "detail": "detailed"}, format="json").status_code == 200
+    saved = api.get(PET_URL)
+    assert saved.data["preferences"] == {"preferred_name": "Dani", "detail": "detailed"}
+
+    invalid = api.patch(PET_URL, {"preferred_name": "r.0.l.4", "detail": "detailed"}, format="json")
+    assert invalid.status_code == 400
+    erased = api.patch(PET_URL, {"preferred_name": "", "detail": "balanced"}, format="json")
+    assert erased.status_code == 200
+    assert erased.data["preferences"] == {"preferred_name": "", "detail": "balanced"}
+    assert "text" not in erased.data
+
+
+@pytest.mark.django_db
+def test_hungry_profile_exposes_a_care_cue():
+    user = _user("denk-cue")
+    DenkynhoProfile.objects.filter(user=user).delete()
+    DenkynhoProfile.objects.create(user=user, satiety=8, energy=80, happiness=80, hygiene=80)
+    api = APIClient()
+    api.force_authenticate(user)
+
+    state = api.get(PET_URL)
+    assert state.data["cue"]["id"] == "satiety"
+    assert "fome" in state.data["cue"]["message"]["pt"]

@@ -25,6 +25,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react'
+import { getHelpContext } from '../components/help/contextual'
 import { supportApi } from '../services/api'
 import type { ApiSupportTicket } from '../services/types'
 
@@ -44,20 +45,36 @@ export function SupportPage() {
   const [params, setParams] = useSearchParams()
   const list = useQuery({ queryKey: ['support-tickets'], queryFn: supportApi.list })
   const selectedId = params.get('ticket') ?? ''
+  const prefillSubject = params.get('subject') ?? ''
+  const prefillFrom = params.get('from')
   const detail = useQuery({
     queryKey: ['support-ticket', selectedId],
     queryFn: () => supportApi.detail(selectedId),
     enabled: Boolean(selectedId),
   })
-  const [creating, setCreating] = useState(false)
-  const [subject, setSubject] = useState('')
-  const [description, setDescription] = useState('')
+  const [creating, setCreating] = useState(() => Boolean(prefillSubject || prefillFrom))
+  const [subject, setSubject] = useState(() => {
+    if (prefillSubject) return prefillSubject.slice(0, 160)
+    const screen = getHelpContext(prefillFrom)
+    return screen ? `Ajuda: ${screen.title}` : ''
+  })
+  const [description, setDescription] = useState(() => {
+    const screen = getHelpContext(prefillFrom)
+    return screen ? `Estou na tela ${screen.title} (${screen.path}) e preciso de ajuda da equipe.` : ''
+  })
   const [category, setCategory] = useState('')
   const [priority, setPriority] = useState('normal')
   const [reply, setReply] = useState('')
   const [filter, setFilter] = useState<'active' | 'all' | 'closed'>('active')
   const [pending, setPending] = useState(false)
 
+  useEffect(() => {
+    if (!params.get('subject') && !params.get('from')) return
+    const next = new URLSearchParams(params)
+    next.delete('subject')
+    next.delete('from')
+    setParams(next, { replace: true })
+  }, [params, setParams])
   useEffect(() => {
     if (!selectedId && list.data?.results.length && !creating) {
       setParams({ ticket: list.data.results[0].id }, { replace: true })

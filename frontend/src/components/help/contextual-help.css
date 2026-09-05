@@ -4,6 +4,8 @@
 .contextual-help-panel h2 { margin: 0; font-size: 1.15rem; }
 .contextual-help-panel p { line-height: 1.5; overflow-wrap: anywhere; }
 .contextual-help-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.contextual-help-face { width: 36px; height: auto; border-radius: 8px; pointer-events: none; }
+.contextual-help-cue { min-width: 1.1rem; padding: 0 6px; border-radius: 999px; background: var(--panel-danger, #b54747); color: #fff; font-size: 0.8rem; line-height: 1.4; }
 @media (max-width: 900px) {
   .contextual-help { margin-bottom: 12px; }
   .contextual-help-panel header { align-items: flex-start; }

@@ -80,6 +80,10 @@ export interface ApiDenkynhoProfile {
     idle_pose: string
     source: 'user' | 'needs' | 'default'
   }
+  preferences?: { preferred_name: string; detail: 'brief' | 'balanced' | 'detailed' }
+  cue?: { id: string; message: { pt: string; en: string } } | null
+  daily_visit?: boolean
+  visit_xp?: number
 }
 
 export interface ApiDenkynhoCareResult extends ApiDenkynhoProfile {
@@ -96,11 +100,12 @@ export const contentApi = {
   newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
   faq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/public/faq/${language === 'en' ? '?lang=en' : ''}`),
   authenticatedFaq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/shared/content/faq/${language === 'en' ? '?lang=en' : ''}`),
-  assistantReply: (message: string, language: 'pt' | 'en', context?: string, preferences?: AssistantPreferences) => request<ApiAssistantReply>(
+  assistantReply: (message: string, language: 'pt' | 'en', context?: string, preferences?: AssistantPreferences, screen?: string) => request<ApiAssistantReply>(
     '/shared/content/assistant/reply/',
-    { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}), ...(preferences ? { preferences } : {}) }) },
+    { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}), ...(preferences ? { preferences } : {}), ...(screen ? { screen } : {}) }) },
   ),
   denkynho: () => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/'),
+  updateDenkynhoPreferences: (preferences: { preferred_name: string; detail: AssistantPreferences['detail'] }) => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/', { method: 'PATCH', body: JSON.stringify(preferences) }),
   equipDenkynho: (slot: keyof DenkynhoAppearance, itemId: string) => request<ApiDenkynhoProfile>('/shared/content/assistant/pet/wardrobe/', { method: 'PATCH', body: JSON.stringify({ slot, item_id: itemId }) }),
   careDenkynho: (action: DenkynhoAction, idempotencyKey: string) => request<ApiDenkynhoCareResult>(
     '/shared/content/assistant/pet/',

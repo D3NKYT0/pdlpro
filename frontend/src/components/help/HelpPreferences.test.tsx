@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it, vi } from 'vitest'
 import { HelpPreferences } from './HelpPreferences'
@@ -21,6 +21,28 @@ it('aplica sem persistir, salva somente com consentimento e apaga as escolhas', 
   await user.click(screen.getByRole('button', { name: 'Apagar preferências' }))
   expect(loadHelpPreferences('one')).toBeNull()
   expect(apply).toHaveBeenLastCalledWith(defaultHelpPreferences)
+})
+it('grava nome e tamanho na conta com consentimento e limpa o perfil ao apagar', async () => {
+  const persist = vi.fn().mockResolvedValue(undefined), apply = vi.fn(), user = userEvent.setup()
+  render(<HelpPreferences userId="one" language="pt" value={null} disabled={false} persist={persist} onApply={apply} />)
+  await user.type(screen.getByRole('textbox'), 'Dani')
+  await user.selectOptions(screen.getByRole('combobox'), 'detailed')
+  await user.click(screen.getByRole('checkbox'))
+  await user.click(screen.getByRole('button', { name: 'Aplicar preferências' }))
+  await waitFor(() => expect(persist).toHaveBeenCalledWith(expect.objectContaining({ preferred_name: 'Dani', detail: 'detailed', remember: true })))
+  expect(apply).toHaveBeenCalled()
+  persist.mockClear()
+  await user.click(screen.getByRole('button', { name: 'Apagar preferências' }))
+  await waitFor(() => expect(persist).toHaveBeenCalledWith(expect.objectContaining({ preferred_name: '', detail: 'balanced' })))
+})
+it('informa falha da conta e não aplica a conversa', async () => {
+  const persist = vi.fn().mockRejectedValue(new Error('network')), apply = vi.fn(), user = userEvent.setup()
+  render(<HelpPreferences userId="one" language="pt" value={null} disabled={false} persist={persist} onApply={apply} />)
+  await user.click(screen.getByRole('checkbox'))
+  await user.click(screen.getByRole('button', { name: 'Aplicar preferências' }))
+  expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível guardar as preferências na sua conta')
+  expect(apply).not.toHaveBeenCalled()
+  expect(loadHelpPreferences('one')).toBeNull()
 })
 it('recusa nome inválido, respeita bloqueio e informa armazenamento indisponível', async () => {
   const apply = vi.fn(), user = userEvent.setup()

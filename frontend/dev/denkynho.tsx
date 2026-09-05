@@ -17,7 +17,15 @@ const unlocks = [
   { id: 'study', slot: 'scene', level: 4, label: { pt: 'Biblioteca aconchegante', en: 'Cozy library' } },
   { id: 'camp', slot: 'scene', level: 5, label: { pt: 'Acampamento noturno', en: 'Night campsite' } },
 ].map(item => ({ ...item, unlocked: true }))
-let profile = { level: 5, experience: 95, experience_next: 500, attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 }, appearance: { accessory: 'star-pin', outfit: '', object: '', scene: 'garden' }, unlocks, available_actions: ['feed', 'sleep', 'play', 'care', 'dance'] }
+let profile = {
+  level: 5, experience: 95, experience_next: 500,
+  attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
+  appearance: { accessory: 'star-pin', outfit: '', object: '', scene: 'garden' },
+  unlocks, available_actions: ['feed', 'sleep', 'play', 'care', 'dance'],
+  emotion: { id: 'calm', pose: '01-boas-vindas', idle_pose: '01-boas-vindas', source: 'default' },
+  preferences: { preferred_name: '', detail: 'balanced' },
+  cue: null, daily_visit: true, visit_xp: 8,
+}
 const nativeFetch = window.fetch.bind(window)
 window.fetch = async (input, init) => {
   const url = String(input)
@@ -29,9 +37,13 @@ window.fetch = async (input, init) => {
   else if (url.includes('/assistant/reply/')) {
     await new Promise(resolve => setTimeout(resolve, 1200))
     data = { language: 'pt', kind: 'knowledge', engine: 'remote', mode: 'generative', context: 'preview', answer: { text: 'Vamos encontrar suas contas! Abra /painel/accounts e escolha a conta L2 vinculada ao seu perfil.', source: article.question, pose: '04-dica' } }
-  } else if (url.includes('/assistant/pet/')) {
+  } else if (url.includes('/assistant/pet/wardrobe/')) {
     const body = init?.body ? JSON.parse(String(init.body)) : {}
     if (init?.method === 'PATCH') profile = { ...profile, appearance: { ...profile.appearance, [body.slot]: body.item_id } }
+    data = profile
+  } else if (url.includes('/assistant/pet/')) {
+    const body = init?.body ? JSON.parse(String(init.body)) : {}
+    if (init?.method === 'PATCH') profile = { ...profile, preferences: { preferred_name: body.preferred_name ?? '', detail: body.detail ?? 'balanced' } }
     if (init?.method === 'POST') profile = { ...profile, experience: profile.experience + 12 }
     data = { ...profile, ...(init?.method === 'POST' ? { action: body.action, xp_gained: 12, replayed: false, attributes_gained: { happiness: 5 } } : {}) }
   }

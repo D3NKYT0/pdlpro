@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { canAccessStaff } from "../../lib/staff";
-import { notificationApi, supportApi } from "../../services/api";
+import { notificationApi, supportApi, contentApi } from "../../services/api";
 import { themeImage } from "../../theme/assets";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/domain/programs.service";
@@ -95,6 +95,12 @@ export function PrivateLayout() {
     queryKey: ["support-tickets"],
     queryFn: supportApi.list,
     enabled: Boolean(user),
+  });
+  const pet = useQuery({
+    queryKey: ["denkynho-pet", user?.id],
+    queryFn: contentApi.denkynho,
+    enabled: Boolean(user),
+    staleTime: 15000,
   });
   const waitingSupport = support.data?.summary.waiting_user ?? 0;
 
@@ -229,7 +235,9 @@ export function PrivateLayout() {
           onClick={() => setMenuOpen(false)}
         />
         <main className="content">
-          <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} />
+          {!location.pathname.startsWith("/painel/ajuda") ? (
+            <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
+          ) : null}
           <Outlet />
         </main>
       </div>

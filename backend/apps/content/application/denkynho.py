@@ -11,8 +11,10 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.application.progress import xp_for_level
+from apps.content.application.assistant import valid_preferred_name
 from apps.content.application.emotions import (
     EMPATHY_TTL,
+    care_cue,
     emotion_from_needs,
     resolve_emotion,
 )
@@ -22,6 +24,7 @@ from common.architecture.base import UseCase
 from common.architecture.exceptions import ConflictError, ValidationDomainError
 
 _DECAY_INTERVAL = timedelta(minutes=30)
+_DAILY_VISIT_XP = 8
 _DECAY = {"satiety": 4, "energy": 3, "happiness": 2, "hygiene": 2}
 _EFFECTS = {
     DenkynhoCareAction.Action.FEED: ({"satiety": 32, "happiness": 5}, 12),
@@ -71,7 +74,7 @@ def _apply_empathy(profile: DenkynhoProfile, affect: str | None, now) -> bool:
     return False
 
 
-def _serialize(profile: DenkynhoProfile, now=None) -> dict:
+def _serialize(profile: DenkynhoProfile, now=None, visit_xp: int = 0) -> dict:
     """Expõe somente o estado necessário para desenhar o mascote autenticado."""
 
     current = now or timezone.now()
@@ -86,6 +89,10 @@ def _serialize(profile: DenkynhoProfile, now=None) -> dict:
             "hygiene": profile.hygiene,
         },
         "emotion": _emotion_state(profile, current),
+        "preferences": {"preferred_name": profile.preferred_name, "detail": profile.detail},
+        "cue": care_cue(profile.satiety, profile.energy, profile.happiness, profile.hygiene),
+        "daily_visit": visit_xp > 0,
+        "visit_xp": visit_xp,
         **wardrobe_state(profile),
     }
 
@@ -101,6 +108,17 @@ def _apply_decay(profile: DenkynhoProfile, now) -> bool:
         setattr(profile, attribute, max(0, getattr(profile, attribute) - amount * periods))
     profile.last_decay_at += _DECAY_INTERVAL * periods
     return True
+
+
+def _apply_daily_visit(profile: DenkynhoProfile, now) -> int:
+    """Concede um bônus leve na primeira visita do dia, sem streak punitiva."""
+
+    today = timezone.localdate(now)
+    if profile.last_visit_on == today:
+        return 0
+    _add_experience(profile, _DAILY_VISIT_XP)
+    profile.last_visit_on = today
+    return _DAILY_VISIT_XP
 
 
 def _add_experience(profile: DenkynhoProfile, amount: int) -> None:
@@ -187,7 +205,46 @@ class GetDenkynhoProfileUseCase(UseCase[UUID, dict]):
         now = timezone.now()
         with transaction.atomic():
             profile = _locked_profile(user)
+            visit_xp = _apply_daily_visit(profile, now)
+            decayed = _apply_decay(profile, now)
+            empathy_changed = _apply_empathy(profile, None, now)
+            if visit_xp or decayed or empathy_changed:
+                fields = ["updated_at"]
+                if visit_xp:
+                    fields.extend(["experience", "level", "last_visit_on"])
+                if decayed:
+                    fields.extend([*list(_DECAY), "last_decay_at"])
+                if empathy_changed:
+                    fields.extend(["empathy", "empathy_expires_at"])
+                profile.save(update_fields=fields)
+            return _serialize(profile, now, visit_xp=visit_xp)
+
+
+@dataclass(frozen=True, slots=True)
+class UpdateDenkynhoPreferencesInput:
+    """Nome e tamanho das respostas persistidos no mascote, sem histórico de chat."""
+
+    user_id: UUID
+    preferred_name: str
+    detail: str
+
+
+class UpdateDenkynhoPreferencesUseCase(UseCase[UpdateDenkynhoPreferencesInput, dict]):
+    """Grava preferências explícitas da conta; vazio esquece o apelido."""
+
+    def execute(self, data: UpdateDenkynhoPreferencesInput) -> dict:
+        if data.detail not in {"brief", "balanced", "detailed"}:
+            raise ValidationDomainError("Escolha respostas curtas, equilibradas ou detalhadas.")
+        if not valid_preferred_name(data.preferred_name):
+            raise ValidationDomainError("Use um nome de até 30 letras, sem termos ofensivos.")
+        user = get_user_model().objects.get(id=data.user_id)
+        now = timezone.now()
+        with transaction.atomic():
+            profile = _locked_profile(user)
             _persist_living_state(profile, now)
+            profile.preferred_name = data.preferred_name
+            profile.detail = data.detail
+            profile.save(update_fields=["preferred_name", "detail", "updated_at"])
             return _serialize(profile, now)
 
 

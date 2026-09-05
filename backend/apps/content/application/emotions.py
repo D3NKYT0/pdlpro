@@ -115,6 +115,30 @@ def resolve_emotion(
     return describe_emotion("calm", "default")
 
 
+def care_cue(satiety: int, energy: int, happiness: int, hygiene: int) -> dict | None:
+    """Aviso discreto da necessidade mais urgente, sem texto de conversa."""
+
+    checks = (
+        ("energy", energy, 20, "O Denkynho está com sono.", "Denkynho is sleepy."),
+        ("satiety", satiety, 20, "O Denkynho está com fome.", "Denkynho is hungry."),
+        ("hygiene", hygiene, 20, "O Denkynho precisa de um carinho.", "Denkynho needs some care."),
+        ("happiness", happiness, 25, "O Denkynho está sentindo sua falta.", "Denkynho is missing you."),
+    )
+    low = [(name, value, pt, en) for name, value, limit, pt, en in checks if value < limit]
+    if not low:
+        return None
+    name, _, pt, en = min(low, key=lambda item: item[1])
+    return {"id": name, "message": {"pt": pt, "en": en}}
+
+
+def model_affect(value: str | None) -> EmotionId | None:
+    """Aceita só identificadores curtos de empatia devolvidos pelo modelo."""
+
+    if value in CATALOG:
+        return value  # type: ignore[return-value]
+    return None
+
+
 def pose_for_reply(kind: str, preferred: str, emotion: dict[str, str], affect: str | None) -> str:
     """A fala social acompanha o usuário; orientação do portal mantém a pose de ajuda."""
 

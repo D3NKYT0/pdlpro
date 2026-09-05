@@ -103,14 +103,24 @@ class Faq(BaseModel):
         return self.question
 
 
+class DenkynhoHandbook(Faq):
+    """Proxy editorial para passo a passo do Denkynho, sem migration de conteúdo."""
+
+    class Meta:
+        proxy = True
+        verbose_name = "Passo a passo do Denkynho"
+        verbose_name_plural = "Passos a passo do Denkynho"
+
+
 class DenkynhoProfile(BaseModel):
     """Estado do Denkynho que pertence exclusivamente a uma conta autenticada.
 
     Os atributos representam necessidades satisfeitas, de 0 a 100, e diminuem conforme o
     tempo passa. ``experience`` e ``level`` pertencem ao mascote daquela conta — não alteram o
     nível de personagem do jogo. ``empathy`` guarda só o sentimento que o mascote está
-    acompanhando, sem o texto da conversa. As mutações de cuidado passam por
-    ``CareDenkynhoUseCase``; a empatia é atualizada ao conversar.
+    acompanhando, sem o texto da conversa. ``preferred_name`` e ``detail`` são escolhas
+    explícitas da conversa, também sem transcrição. As mutações de cuidado passam por
+    ``CareDenkynhoUseCase``; a empatia é atualizada ao conversar; a visita diária ocorre na leitura.
     """
 
     user = models.OneToOneField(
@@ -148,6 +158,22 @@ class DenkynhoProfile(BaseModel):
         null=True,
         blank=True,
         help_text="Quando a empatia expira, o humor volta a ser calculado só pelas necessidades do mascote.",
+    )
+    preferred_name = models.CharField(
+        max_length=30,
+        blank=True,
+        default="",
+        help_text="Apelido opcional da conversa; não armazena o histórico.",
+    )
+    detail = models.CharField(
+        max_length=10,
+        blank=False,
+        default="balanced",
+        help_text="Tamanho preferido das respostas: brief, balanced ou detailed.",
+    )
+    last_visit_on = models.DateField(
+        default=timezone.localdate,
+        help_text="Último dia em que o mascote registrou uma visita; o bônus diário não se acumula.",
     )
 
     class Meta:

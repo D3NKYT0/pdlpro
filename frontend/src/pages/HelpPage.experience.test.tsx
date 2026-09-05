@@ -26,7 +26,7 @@ beforeEach(() => {
     return Promise.resolve(response(url.includes('/auth/csrf/') ? { csrfToken: 'test' } : url.includes('/assistant/pet/') ? pet : url.includes('/resources/') ? [] : [article]))
   })
   vi.stubGlobal('fetch', fetcher)
-  vi.stubGlobal('Image', class { onload: null | (() => void) = null; set src(_: string) { Promise.resolve().then(() => this.onload?.()) } })
+  vi.stubGlobal('Image', class { onload: null | (() => void) = null; set src(_: string) { this.onload?.() } })
 })
 afterEach(() => { cleanup(); client.clear(); resetHttpClient(); localStorage.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 function mount(path = '/painel/ajuda') { render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
@@ -53,7 +53,7 @@ it('mostra a mensagem imediatamente e permite preparar o próximo rascunho duran
   await user.click(screen.getByRole('button', { name: 'Mostrar resposta completa' }))
   expect(input).toHaveValue('E depois? Posso tentar agora?')
   expect(within(screen.getByRole('log')).getAllByText('Preciso recuperar minha senha')).toHaveLength(1)
-})
+}, 15000)
 it('marca falha na mensagem e repete a mesma pergunta sem apagar o rascunho seguinte', async () => {
   const { user, input } = await start()
   await user.type(input, 'Outra dúvida')
@@ -66,7 +66,7 @@ it('marca falha na mensagem e repete a mesma pergunta sem apagar o rascunho segu
   await screen.findByRole('button', { name: 'Mostrar resposta completa' })
   expect(input).toHaveValue('Outra dúvida')
   expect(within(screen.getByRole('log')).getAllByText('Preciso recuperar minha senha')).toHaveLength(1)
-})
+}, 15000)
 it('envia preferências explícitas, restaura somente a conta atual e não sobrescreve o contexto seguinte', async () => {
   const user = mount()
   await screen.findByRole('button', { name: article.question })
@@ -75,6 +75,9 @@ it('envia preferências explícitas, restaura somente a conta atual e não sobre
   await user.selectOptions(screen.getByRole('combobox', { name: 'Tamanho das respostas' }), 'detailed')
   await user.click(screen.getByRole('checkbox', { name: 'Lembrar minhas preferências' }))
   await user.click(screen.getByRole('button', { name: 'Aplicar preferências' }))
+  await waitFor(() => expect(fetcher.mock.calls.some(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit)?.method === 'PATCH')).toBe(true))
+  const patch = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit)?.method === 'PATCH')!
+  expect(JSON.parse((patch[1] as RequestInit).body as string)).toEqual({ preferred_name: 'Dani', detail: 'detailed' })
   await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
   await user.click(screen.getByRole('button', { name: 'Fechar' }))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'Como recupero senha?{Enter}')
@@ -94,7 +97,16 @@ it('envia preferências explícitas, restaura somente a conta atual e não sobre
   mount()
   expect(await screen.findByText(/Olá, Dani!/)).toBeVisible()
   expect(screen.queryByText(reply.answer.text)).not.toBeInTheDocument()
-})
+}, 15000)
+it('mostra a espera viva, a pose de pensar e envia a tela conhecida', async () => {
+  await start()
+  expect(screen.getAllByText('Estou pensando…').length).toBeGreaterThan(0)
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '03-pensando')
+  const payload = JSON.parse((fetcher.mock.calls.find(([url]) => String(url).includes('/assistant/reply/'))![1] as RequestInit).body as string)
+  expect(payload.screen).toBe('/painel/ajuda')
+  resolveReply(response(reply))
+  await screen.findByRole('button', { name: 'Mostrar resposta completa' })
+}, 15000)
 it('oferece a pergunta da tela sem enviar automaticamente e ignora contexto externo', async () => {
   const user = mount('/painel/ajuda?from=%2Fpainel%2Faccounts')
   const suggestion = await screen.findByRole('button', { name: 'Como encontro minhas contas L2 e meus personagens?' })

@@ -19,8 +19,17 @@ const themeMock = vi.hoisted(() => ({
 
 vi.mock('@tanstack/react-query', () => ({
   useQuery: ({ queryKey }: { queryKey: string[] }) => {
-    if (queryKey[0] === 'resources') return { data: [] }
+    if (queryKey[0] === 'resources') return { data: [], isPending: false, error: null }
     if (queryKey[0] === 'support-tickets') return { data: { summary: { waiting_user: 0 } } }
+    if (queryKey[0] === 'denkynho-pet') return {
+      data: {
+        level: 1, experience: 0, experience_next: 100,
+        attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
+        emotion: { id: 'calm', pose: '01-boas-vindas', idle_pose: '01-boas-vindas', source: 'default' },
+        cue: null,
+      },
+      isPending: false,
+    }
     return { data: { unread: 0 } }
   },
 }))
@@ -79,6 +88,14 @@ it('distingue visualmente a administração dentro do mesmo renderer', () => {
   expect(surface).toHaveClass('is-admin-shell')
   expect(screen.getByText('ROYAL COMMAND')).toBeVisible()
   expect(screen.getByText('VALOREM ADMIN')).toBeVisible()
+})
+
+it('mostra o mini-mascote fora da Ajuda e o oculta na conversa', () => {
+  renderAt('/painel/profile')
+  expect(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' })).toBeVisible()
+  cleanup()
+  renderAt('/painel/ajuda')
+  expect(screen.queryByRole('button', { name: 'Denkynho: ajuda nesta tela' })).not.toBeInTheDocument()
 })
 
 it('preserva o shell original quando o tema default está ativo', () => {

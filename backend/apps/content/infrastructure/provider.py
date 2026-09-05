@@ -3,6 +3,7 @@ from apps.content.application.chat import ChatReplyUseCase, ConversationModel
 from apps.content.application.denkynho import (
     CareDenkynhoUseCase,
     GetDenkynhoProfileUseCase,
+    UpdateDenkynhoPreferencesUseCase,
 )
 from apps.content.application.legal import (
     GetLegalDocumentUseCase,
@@ -47,6 +48,7 @@ class ContentProvider(AppProvider):
             AssistantReplyUseCase,
             GetDenkynhoProfileUseCase,
             CareDenkynhoUseCase,
+            UpdateDenkynhoPreferencesUseCase,
             EquipDenkynhoUseCase,
             ListNewsUseCase,
             GetNewsUseCase,
