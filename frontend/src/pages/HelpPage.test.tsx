@@ -52,14 +52,22 @@ it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo'))
   expect(screen.getByLabelText('Saciedade')).toHaveValue(100)
 })
-it('reproduz carinho no atlas próprio sem reusar a pose de risada', async () => {
+it('dá banho, aumenta a higiene confirmada pela API e reproduz o atlas próprio', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion(user); await screen.findByText('Nível 1')
-  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => String(input).includes('/assistant/pet/') && init?.method === 'POST'
-    ? Promise.resolve(response({ ...petProfile, experience: 8, action: 'care', xp_gained: 8, replayed: false }))
-    : Promise.resolve(apiResponse(input)))
-  await user.click(screen.getByRole('button', { name: 'Dar carinho' }))
-  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '14-carinho'))
+  const updated = { ...petProfile, experience: 12, attributes: { ...petProfile.attributes, hygiene: 100 }, attributes_gained: { hygiene: 25 }, action: 'bath', xp_gained: 12, replayed: false }
+  let bathed = false
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+    if (!String(input).includes('/assistant/pet/')) return Promise.resolve(apiResponse(input))
+    if (init?.method === 'POST') { bathed = true; return Promise.resolve(response(updated)) }
+    return Promise.resolve(response(bathed ? updated : petProfile))
+  })
+  await user.click(screen.getByRole('button', { name: 'Dar banho' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '15-banho'))
+  expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Tomando banho')
+  const request = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')!
+  expect(JSON.parse((request[1] as RequestInit).body as string)).toMatchObject({ action: 'bath' })
+  expect(screen.getByLabelText('Higiene')).toHaveValue(100)
 })
 it('reserva a cama para a ação Dormir e entra em ociosidade sem acumular timers', async () => {
   mount(); await screen.findByRole('button', { name: articles[0].question }); await openCompanion(); await screen.findByText('Nível 1')

@@ -58,6 +58,10 @@ def test_care_cue_picks_the_lowest_need_and_ignores_balanced_attributes():
         "message": {"pt": "O Denkynho está com fome.", "en": "Denkynho is hungry."},
     }
     assert care_cue(80, 10, 80, 80)["id"] == "energy"
+    assert care_cue(80, 80, 80, 10)["message"] == {
+        "pt": "O Denkynho precisa de um banho.",
+        "en": "Denkynho needs a bath.",
+    }
     assert care_cue(75, 75, 75, 75) is None
     assert model_affect("sad") == "sad"
     assert model_affect("grumpy") is None

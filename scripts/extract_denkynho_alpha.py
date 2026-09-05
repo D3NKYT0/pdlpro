@@ -4,7 +4,8 @@ O gerador entrega RGB com margem clara ou xadrez. Verde saturado não aparece no
 cabelo, na roupa preta nem na pele; por isso é a chave. Papel branco normalmente
 só some num anel junto do fundo externo, para não apagar dentes, olhos e o pano
 do carinho. A sequência de carinho, que não tem pano branco real, remove também
-o papel conectado à margem. O xadrez interno vira alpha.
+o papel conectado à margem. O banho usa uma chave neutra mais restrita para
+preservar espuma, gotas e brilhos coloridos. O xadrez interno vira alpha.
 """
 
 from pathlib import Path
@@ -16,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1] / "frontend" / "public" / "mascot" / 
 FILES = (
     "13-dancando-sequencia.png",
     "14-carinho-sequencia.png",
+    "15-banho-sequencia.png",
     "13-dancando.png",
     "14-carinho.png",
     "03-pensando-sequencia.png",
@@ -27,6 +29,7 @@ FILES = (
 # atrás do braço e do pente. Nela não há objeto branco encostando na margem; já
 # a pose estática contém um pano branco real e precisa do modo conservador.
 PAPER_BACKGROUND_FILES = {"14-carinho-sequencia.png"}
+STRICT_PAPER_BACKGROUND_FILES = {"15-banho-sequencia.png"}
 
 GREEN_EXCESS = 28
 GREEN_FLOOR = 70
@@ -60,6 +63,15 @@ def paper_strength(pixels: np.ndarray) -> np.ndarray:
     chroma = np.maximum(np.maximum(red, green), blue) - np.minimum(np.minimum(red, green), blue)
     strength = np.clip((luma - PAPER_LUMA) / 70.0, 0, 1)
     return np.where((luma >= PAPER_LUMA) & (chroma <= PAPER_CHROMA), strength, 0)
+
+
+def strict_paper_mask(pixels: np.ndarray) -> np.ndarray:
+    """Papel/xadrez quase neutro, sem alcançar espuma, água ou brilhos coloridos."""
+
+    values = pixels.astype(np.int16)
+    chroma = values.max(axis=2) - values.min(axis=2)
+    luma = values.mean(axis=2)
+    return (luma >= 205) & (chroma <= 6)
 
 
 def checkerboard_mask(pixels: np.ndarray) -> np.ndarray:
@@ -105,13 +117,15 @@ def flood_background(
     alpha: np.ndarray,
     *,
     remove_connected_paper: bool = False,
+    remove_strict_paper: bool = False,
 ) -> np.ndarray:
     """Verde e xadrez andam livremente; papel branco só num anel junto do fundo externo."""
 
     green = chroma_green_strength(pixels) >= FLOOD_STRENGTH
     paper = paper_strength(pixels) >= FLOOD_STRENGTH
     checker = checkerboard_mask(pixels)
-    walkable = green | checker | (paper if remove_connected_paper else False)
+    strict_paper = strict_paper_mask(pixels)
+    walkable = green | checker | (paper if remove_connected_paper else False) | (strict_paper if remove_strict_paper else False)
     transparent = alpha == 0
     passable = walkable | transparent
     next_to_open = _adjacent8(transparent, outside=True)
@@ -155,6 +169,7 @@ def extract(path: Path) -> None:
         rgb,
         alpha,
         remove_connected_paper=path.name in PAPER_BACKGROUND_FILES,
+        remove_strict_paper=path.name in STRICT_PAPER_BACKGROUND_FILES,
     )
     green_strength = chroma_green_strength(rgb)
     rgb, new_alpha = despill_fringe(rgb, np.where(background, 0, alpha), background)

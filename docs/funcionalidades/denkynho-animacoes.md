@@ -12,6 +12,7 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 - [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia-v2.png): 1448 × 1086; alterna os dois lados, respiração, coberta e `Z`/`Zz`/`Zzz`.
 - [Dançando](../../frontend/public/mascot/denkynho/13-dancando-sequencia.png): 1536 × 1024; oito quadros de corpo inteiro, sem balanço CSS como substituto.
 - [Carinho](../../frontend/public/mascot/denkynho/14-carinho-sequencia.png): 1536 × 1024; gesto próprio, sem reusar a risada.
+- [Banho](../../frontend/public/mascot/denkynho/15-banho-sequencia.png): 1536 × 1024; esponja, espuma, água, toalha e brilho de limpeza.
 - [Pensando](../../frontend/public/mascot/denkynho/03-pensando-sequencia.png): 1536 × 1024; espera viva da consulta.
 - [Confuso](../../frontend/public/mascot/denkynho/09-confuso-sequencia.png): 1536 × 1024; sem correspondência.
 - [Comemorar](../../frontend/public/mascot/denkynho/02-sucesso-sequencia.png): 1536 × 1024; só entra com `celebration` na subida de nível.
@@ -31,7 +32,7 @@ O gerador não entregou células perfeitamente alinhadas nem a resolução solic
 
 São transformações dos sprites 2D, não interpolação de um esqueleto 3D. O atlas de ação congela no quadro atual ao sair. A próxima sequência só começa depois que a entrada termina. Isso evita combinar a troca de postura com uma mordida ou risada já no meio do ciclo.
 
-Comer, jogar, rir, dançar, dar carinho e comemorar alternam a orientação nas visitas seguintes à mesma ação; a primeira visita mantém o lado atual. O histórico de lados dura enquanto o componente estiver montado. Poses de conversa e sono preservam a orientação. A fala não dispara espelhamento, e mudar apenas boca, piscada ou a opção de animação não conta como uma nova visita.
+Comer, jogar, rir, dançar, dar carinho, tomar banho e comemorar alternam a orientação nas visitas seguintes à mesma ação; a primeira visita mantém o lado atual. O histórico de lados dura enquanto o componente estiver montado. Poses de conversa e sono preservam a orientação. A fala não dispara espelhamento, e mudar apenas boca, piscada ou a opção de animação não conta como uma nova visita.
 
 A camada `denk-facing` espelha o conjunto completo — corpo, olhos, boca, mãos, lanche e controle — sem modificar os PNGs. Ela é separada da camada de transição e da reprodução do atlas, evitando que uma transformação sobrescreva outra. Desligar animações ou ativar movimento reduzido cancela a transição e preserva a orientação estática, sem uma virada súbita adicional.
 
@@ -42,6 +43,12 @@ Cliques rápidos em atividades substituem apenas o próximo pedido, com no máxi
 ## Prompts finais
 
 Referências de identidade: `11-comendo.png`, `12-jogando.png` e `06-rindo.png`, respectivamente. Os prompts abaixo foram usados na ferramenta integrada; os nomes dos arquivos finais acima são os consumidos pelo projeto.
+
+### Banho
+
+```text
+Use case: stylized-concept. Production 2D frame-animation sprite sheet for the PDL PRO web mascot. Use the supplied carinho atlas as the exact identity, proportions, clothing, rendering style and 4 × 2 layout reference. Create exactly eight full-body frames of a cheerful, family-friendly bath while Denkynho remains fully clothed: sponge and folded towel ready; wet sponge with droplets; scrub one sleeve with foam; scrub the other sleeve; wipe cheek with towel; shake off droplets; sparkling-clean delighted pose; relaxed smile holding the towel. Preserve black hair, black rolled-sleeve shirt, blue striped tie, dark trousers and black shoes. Landscape 1536 × 1024, cells 384 × 512, fixed camera, identical scale and feet baseline, one character per cell, generous gutters. Genuine transparent alpha; no bathtub, shower enclosure, nudity, clipping, borders, labels, text, numbers or watermark.
+```
 
 ### Comer
 
@@ -71,6 +78,6 @@ A saída final foi conferida como RGBA e inspecionada no tema do painel. O atlas
 
 ## Extração com chroma verde
 
-As poses de dança, carinho, espera, confusão e comemoração saem do gerador em RGB com margem clara ou xadrez. [extract_denkynho_alpha.py](../../scripts/extract_denkynho_alpha.py) trata **verde saturado** como chave (não aparece no cabelo, na roupa preta nem na pele). Em geral, papel branco só some num anel de 1px junto do fundo **externo** (ligado à margem da imagem) — um flood indiscriminado pelo branco ou pelos buracos internos engoliria dentes, olhos e o pano do carinho. A sequência de carinho usa uma exceção explícita: nela, o papel/xadrez claro conectado à margem também é removido por completo, enquanto a pose estática continua no modo conservador para preservar o pano branco real. O xadrez interno, preso entre braço e cabeça, também vira alpha. O halo cinza da silhueta perde opacidade sem redesenhar o personagem.
+As poses de dança, carinho, banho, espera, confusão e comemoração saem do gerador em RGB com margem clara ou xadrez. [extract_denkynho_alpha.py](../../scripts/extract_denkynho_alpha.py) trata **verde saturado** como chave (não aparece no cabelo, na roupa preta nem na pele). Em geral, papel branco só some num anel de 1px junto do fundo **externo** (ligado à margem da imagem) — um flood indiscriminado pelo branco ou pelos buracos internos engoliria dentes, olhos, espuma e toalhas. A sequência de carinho usa uma exceção explícita para o papel conectado à margem. O banho usa uma chave quase neutra e mais restrita, preservando espuma, gotas e brilhos coloridos. O xadrez interno também vira alpha. O halo cinza da silhueta perde opacidade sem redesenhar o personagem.
 
 Em gerações novas, peça fundo **chroma verde sólido** (`#00FF00` / `#00C853`), sem xadrez desenhado, e rode o script. Não use branco como chave.

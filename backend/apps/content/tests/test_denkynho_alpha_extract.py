@@ -7,6 +7,7 @@ import numpy as np
 from PIL import Image
 
 SCRIPT = Path(__file__).resolve().parents[4] / "scripts" / "extract_denkynho_alpha.py"
+ASSETS = SCRIPT.parents[1] / "frontend" / "public" / "mascot" / "denkynho"
 
 
 def _load():
@@ -82,3 +83,31 @@ def test_carinho_sequence_removes_connected_fake_paper_background(tmp_path):
     assert result[8, 15, 3] == 0
     assert result[12, 16, 3] == 0
     assert result[20, 20, 3] == 255
+
+
+def test_bath_sequence_removes_neutral_checker_without_erasing_blue_foam(tmp_path):
+    extract = _load()
+    image = np.zeros((32, 32, 4), dtype=np.uint8)
+    image[:, :] = (232, 233, 232, 255)
+    image[::8, :] = (248, 248, 248, 255)
+    image[8:24, 8:24] = (24, 24, 24, 255)
+    image[10:18, 18:25] = (238, 246, 252, 255)
+    path = tmp_path / "15-banho-sequencia.png"
+    Image.fromarray(image, "RGBA").save(path)
+
+    extract.extract(path)
+
+    result = np.asarray(Image.open(path).convert("RGBA"))
+    assert result[0, 0, 3] == 0
+    assert result[12, 20, 3] == 255
+
+
+def test_bath_production_assets_are_transparent_and_have_eight_distinct_frames():
+    sequence = Image.open(ASSETS / "15-banho-sequencia.png").convert("RGBA")
+    static = Image.open(ASSETS / "15-banho.png").convert("RGBA")
+    assert sequence.size == (1536, 1024)
+    assert static.size == (1024, 1536)
+    assert all(sequence.getpixel(point)[3] == 0 for point in ((0, 0), (1535, 0), (0, 1023), (1535, 1023)))
+    frames = [sequence.crop((column * 384, row * 512, (column + 1) * 384, (row + 1) * 512)) for row in range(2) for column in range(4)]
+    assert len({frame.tobytes() for frame in frames}) == 8
+    assert static.getbbox() is not None

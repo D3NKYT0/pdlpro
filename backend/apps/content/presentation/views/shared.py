@@ -99,7 +99,7 @@ class AssistantReplyView(InjectedAPIView):
 class DenkynhoCareSerializer(serializers.Serializer):
     """Valida uma ação do tamagotchi e sua chave idempotente gerada no cliente."""
 
-    action = serializers.ChoiceField(choices=["feed", "sleep", "play", "care", "dance"])
+    action = serializers.ChoiceField(choices=["feed", "sleep", "play", "bath", "care", "dance"])
     idempotency_key = serializers.UUIDField()
 
 

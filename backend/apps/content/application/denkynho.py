@@ -31,6 +31,7 @@ _EFFECTS = {
     DenkynhoCareAction.Action.SLEEP: ({"energy": 35}, 10),
     DenkynhoCareAction.Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
     DenkynhoCareAction.Action.CARE: ({"hygiene": 30, "happiness": 6}, 12),
+    DenkynhoCareAction.Action.BATH: ({"hygiene": 30, "happiness": 6}, 12),
     DenkynhoCareAction.Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
 }
 _SATURATED_MESSAGES = {
@@ -38,6 +39,7 @@ _SATURATED_MESSAGES = {
     DenkynhoCareAction.Action.SLEEP: "O Denkynho já descansou bastante.",
     DenkynhoCareAction.Action.PLAY: "O Denkynho já está muito feliz para brincar agora.",
     DenkynhoCareAction.Action.CARE: "O Denkynho já está bem cuidado.",
+    DenkynhoCareAction.Action.BATH: "O Denkynho já está limpo.",
     DenkynhoCareAction.Action.DANCE: "O Denkynho já está muito feliz para dançar agora.",
 }
 
@@ -148,6 +150,7 @@ def _validate_action(profile: DenkynhoProfile, action: str) -> None:
         DenkynhoCareAction.Action.SLEEP: "energy",
         DenkynhoCareAction.Action.PLAY: "happiness",
         DenkynhoCareAction.Action.CARE: "hygiene",
+        DenkynhoCareAction.Action.BATH: "hygiene",
         DenkynhoCareAction.Action.DANCE: "happiness",
     }[action]
     if getattr(profile, target) >= 100:

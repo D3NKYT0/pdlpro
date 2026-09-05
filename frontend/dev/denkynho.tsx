@@ -21,7 +21,7 @@ let profile = {
   level: 5, experience: 95, experience_next: 500,
   attributes: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
   appearance: { accessory: 'star-pin', outfit: '', object: '', scene: 'garden' },
-  unlocks, available_actions: ['feed', 'sleep', 'play', 'care', 'dance'],
+  unlocks, available_actions: ['feed', 'sleep', 'play', 'bath', 'dance'],
   emotion: { id: 'calm', pose: '01-boas-vindas', idle_pose: '01-boas-vindas', source: 'default' },
   preferences: { preferred_name: '', detail: 'balanced' },
   cue: null, daily_visit: true, visit_xp: 8,
@@ -44,8 +44,15 @@ window.fetch = async (input, init) => {
   } else if (url.includes('/assistant/pet/')) {
     const body = init?.body ? JSON.parse(String(init.body)) : {}
     if (init?.method === 'PATCH') profile = { ...profile, preferences: { preferred_name: body.preferred_name ?? '', detail: body.detail ?? 'balanced' } }
-    if (init?.method === 'POST') profile = { ...profile, experience: profile.experience + 12 }
-    data = { ...profile, ...(init?.method === 'POST' ? { action: body.action, xp_gained: 12, replayed: false, attributes_gained: { happiness: 5 } } : {}) }
+    let attributesGained: Record<string, number> = { happiness: 5 }
+    if (init?.method === 'POST') {
+      if (body.action === 'bath') {
+        const hygiene = Math.min(100, profile.attributes.hygiene + 30)
+        attributesGained = { hygiene: hygiene - profile.attributes.hygiene, happiness: 6 }
+        profile = { ...profile, experience: profile.experience + 12, attributes: { ...profile.attributes, hygiene, happiness: Math.min(100, profile.attributes.happiness + 6) } }
+      } else profile = { ...profile, experience: profile.experience + 12 }
+    }
+    data = { ...profile, ...(init?.method === 'POST' ? { action: body.action, xp_gained: 12, replayed: false, attributes_gained: attributesGained } : {}) }
   }
   return new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } })
 }

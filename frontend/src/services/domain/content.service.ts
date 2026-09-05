@@ -57,7 +57,7 @@ export interface ApiAssistantReply {
   }
 }
 
-export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'care' | 'dance'
+export type DenkynhoAction = 'feed' | 'sleep' | 'play' | 'bath' | 'care' | 'dance'
 export interface DenkynhoAppearance { scene?: string; accessory: string; outfit: string; object: string }
 export interface DenkynhoUnlock { id: string; slot: keyof DenkynhoAppearance | 'interaction'; label: { pt: string; en: string }; level: number; unlocked: boolean }
 

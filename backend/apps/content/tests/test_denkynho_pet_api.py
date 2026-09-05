@@ -63,6 +63,28 @@ def test_feed_updates_bounded_attributes_and_experience_once_per_idempotency_key
 
 
 @pytest.mark.django_db
+def test_bath_increases_hygiene_with_cap_and_is_idempotent():
+    user = _user("denk-bath")
+    profile = DenkynhoProfile.objects.create(user=user, hygiene=82)
+    api = APIClient()
+    api.force_authenticate(user)
+    request_id = str(uuid4())
+
+    first = api.post(PET_URL, {"action": "bath", "idempotency_key": request_id}, format="json")
+    second = api.post(PET_URL, {"action": "bath", "idempotency_key": request_id}, format="json")
+
+    assert first.status_code == second.status_code == 200
+    assert first.data["attributes"]["hygiene"] == 100
+    assert first.data["attributes_gained"] == {"hygiene": 18, "happiness": 6}
+    assert first.data["replayed"] is False
+    assert second.data["replayed"] is True
+    profile.refresh_from_db()
+    assert profile.hygiene == 100
+    assert profile.experience == 12
+    assert DenkynhoCareAction.objects.filter(profile=profile, action="bath").count() == 1
+
+
+@pytest.mark.django_db
 def test_pet_actions_validate_contract_limits_and_basic_needs():
     user = _user("denk-limits")
     profile = DenkynhoProfile.objects.create(user=user, satiety=7, energy=11, happiness=60, hygiene=100)

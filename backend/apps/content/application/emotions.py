@@ -121,7 +121,7 @@ def care_cue(satiety: int, energy: int, happiness: int, hygiene: int) -> dict | 
     checks = (
         ("energy", energy, 20, "O Denkynho está com sono.", "Denkynho is sleepy."),
         ("satiety", satiety, 20, "O Denkynho está com fome.", "Denkynho is hungry."),
-        ("hygiene", hygiene, 20, "O Denkynho precisa de um carinho.", "Denkynho needs some care."),
+        ("hygiene", hygiene, 20, "O Denkynho precisa de um banho.", "Denkynho needs a bath."),
         ("happiness", happiness, 25, "O Denkynho está sentindo sua falta.", "Denkynho is missing you."),
     )
     low = [(name, value, pt, en) for name, value, limit, pt, en in checks if value < limit]
