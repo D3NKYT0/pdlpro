@@ -92,6 +92,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Validação de 02/09/2026](historico/2026-09-02-validacao.md) | Registro histórico de programas e recompensas; não é garantia de homologação atual |
 | [Ampliação dos testes em 02/09/2026](historico/2026-09-02-testes.md) | Cenários adicionados, resultados, cobertura, correções e lacunas restantes |
 | [Reutilização em 02/09/2026](historico/2026-09-02-reutilizacao.md) | Biblioteca visual, políticas consolidadas, botões, testes e validação no navegador |
+| [Evolução do Denkynho em 04/09/2026](historico/2026-09-04-denkynho-evolucao.md) | Conversa, preferências, ajuda contextual, armário e validação |
 | [Changelog](historico/changelog.md) | Alterações entre versões |
 | [Licença completa](../LICENSE) | Texto que rege o uso e a redistribuição |
 
