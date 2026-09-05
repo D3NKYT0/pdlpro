@@ -13,5 +13,5 @@
     "noEmit": true,
     "strict": true
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "dev/quietProxyLogger.ts"]
 }

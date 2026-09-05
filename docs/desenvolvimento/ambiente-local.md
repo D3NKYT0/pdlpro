@@ -106,7 +106,7 @@ npm ci
 npm run dev
 ```
 
-O Vite abre em <http://localhost:3000> e encaminha `/api` e `/admin` para o backend local na porta `8000`.
+O Vite abre em <http://localhost:3000> e encaminha `/api` e `/admin` para o backend local na porta `8000`. Sem o Django no ar, o terminal avisa uma vez que o destino do proxy recusou a conexão; as recusas seguintes ficam silenciosas até o backend voltar. Para dados reais, inicie o `runserver` no outro terminal.
 
 ## Testes e verificações
 

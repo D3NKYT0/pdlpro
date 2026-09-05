@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
+import { quietBackendProxyPlugin } from './dev/quietProxyLogger.ts'
 
 const sentrySourceMapsEnabled = Boolean(
   process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT,
@@ -8,6 +9,7 @@ const sentrySourceMapsEnabled = Boolean(
 
 export default defineConfig({
   plugins: [
+    quietBackendProxyPlugin(),
     react(),
     ...(sentrySourceMapsEnabled ? [sentryVitePlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -22,7 +24,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}', 'dev/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
