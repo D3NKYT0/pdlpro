@@ -374,6 +374,8 @@ it('envia sugestão, revela a fala, abre a orientação completa e reinicia a co
   const user = mount(); await user.click(await screen.findByRole('button', { name: articles[0].question }))
   await user.click(await screen.findByRole('button', { name: 'Mostrar resposta completa' }))
   const log = screen.getByRole('log')
+  expect(log.querySelector('[data-speaker="assistant"]')).toBeTruthy()
+  expect(log.querySelector('[data-speaker="user"]')).toBeTruthy()
   expect(within(log).getByText(articles[0].short_answer)).toBeVisible()
   await user.click(within(log).getByRole('button', { name: 'Ver orientação completa' }))
   expect(within(log).getByText(articles[0].answer)).toBeVisible()

@@ -375,39 +375,69 @@
     "label": "Observando com binóculos",
     "src": "17-observando.png",
     "openMouth": false,
-    "eyes": null,
-    "mouth": null
+    "eyes": {
+      "src": "17-observando-olhos.png",
+      "box": [0, 0, 256, 384]
+    },
+    "mouth": {
+      "src": "17-observando-boca.png",
+      "box": [0, 0, 256, 384]
+    }
   },
   {
     "id": "18-regando",
     "label": "Regando plantas",
     "src": "18-regando.png",
     "openMouth": false,
-    "eyes": null,
-    "mouth": null
+    "eyes": {
+      "src": "18-regando-olhos.png",
+      "box": [0, 0, 256, 384]
+    },
+    "mouth": {
+      "src": "18-regando-boca.png",
+      "box": [0, 0, 256, 384]
+    }
   },
   {
     "id": "19-pescando",
     "label": "Pescando",
     "src": "19-pescando.png",
     "openMouth": false,
-    "eyes": null,
-    "mouth": null
+    "eyes": {
+      "src": "19-pescando-olhos.png",
+      "box": [0, 0, 256, 384]
+    },
+    "mouth": {
+      "src": "19-pescando-boca.png",
+      "box": [0, 0, 256, 384]
+    }
   },
   {
     "id": "20-sentado-banco",
     "label": "Sentado no banco",
     "src": "20-sentado-banco.png",
     "openMouth": false,
-    "eyes": null,
-    "mouth": null
+    "eyes": {
+      "src": "20-sentado-banco-olhos.png",
+      "box": [0, 0, 256, 384]
+    },
+    "mouth": {
+      "src": "20-sentado-banco-boca.png",
+      "box": [0, 0, 256, 384]
+    }
   },
   {
     "id": "21-assistindo-tv",
     "label": "Assistindo TV",
     "src": "21-assistindo-tv.png",
     "openMouth": false,
-    "eyes": null,
-    "mouth": null
+    "eyes": {
+      "src": "21-assistindo-tv-olhos.png",
+      "box": [0, 0, 256, 384]
+    },
+    "mouth": {
+      "src": "21-assistindo-tv-boca.png",
+      "box": [0, 0, 256, 384]
+    }
   }
 ]

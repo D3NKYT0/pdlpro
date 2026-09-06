@@ -72,7 +72,8 @@ it('envia preferências explícitas, restaura somente a conta atual e não sobre
   await screen.findByRole('button', { name: article.question })
   await user.click(screen.getByRole('button', { name: 'Denkynho: ações e dicas' }))
   await user.type(screen.getByRole('textbox', { name: 'Como devo chamar você?' }), 'Dani')
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Tamanho das respostas' }), 'detailed')
+  await user.click(screen.getByRole('combobox', { name: 'Tamanho das respostas' }))
+  await user.click(screen.getByRole('option', { name: 'Detalhadas' }))
   await user.click(screen.getByRole('checkbox', { name: 'Lembrar minhas preferências' }))
   await user.click(screen.getByRole('button', { name: 'Aplicar preferências' }))
   await waitFor(() => expect(fetcher.mock.calls.some(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit)?.method === 'PATCH')).toBe(true))
@@ -101,6 +102,7 @@ it('envia preferências explícitas, restaura somente a conta atual e não sobre
 it('mostra a espera viva, a pose de pensar e envia a tela conhecida', async () => {
   await start()
   expect(screen.getAllByText('Estou pensando…').length).toBeGreaterThan(0)
+  expect(within(screen.getByRole('log')).queryByText('Estou pensando…')).not.toBeInTheDocument()
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '03-pensando')
   const payload = JSON.parse((fetcher.mock.calls.find(([url]) => String(url).includes('/assistant/reply/'))![1] as RequestInit).body as string)
   expect(payload.screen).toBe('/painel/ajuda')

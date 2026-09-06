@@ -13,6 +13,12 @@ function mount(mobile = false) {
   const view = render(<HelpCompanion faqLink={<a href="/faq">Consultar o FAQ</a>} language="pt" status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion>)
   return { ...view, chat, user: userEvent.setup(), trigger: screen.getByRole('button', { name: 'Denkynho: ações e dicas' }) }
 }
+it('mostra o status em balão de fala', () => {
+  const { container } = mount()
+  const bubble = container.querySelector('.help-companion-status [data-speaker="status"]')
+  expect(bubble).toBeTruthy()
+  expect(bubble).toHaveTextContent('Pronto')
+})
 it('abre por teclado, alterna dicas locais e fecha com Escape devolvendo foco', async () => {
   const { user, trigger } = mount()
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

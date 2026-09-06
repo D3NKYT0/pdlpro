@@ -43,12 +43,12 @@ export function Denkynho({ pose, idle = false, still = false, talking = false, m
   function character(character: typeof view.current, outgoing = false) {
     const item = character.pose
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
-    // Idle em pé / still: sem atlas. Sequência só em ações complexas (comer, jogar, etc.).
+    // Idle em pé / still: sem atlas (só pose estática + balanço CSS). Sequência em ações complexas.
     const sequence = animated && !talking && !idle && !still ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
     const showStar = appearance?.accessory === 'star-pin' && starPinVisible(item.id, Boolean(sequence))
     return <div key={character.key} className={`denk-transition ${outgoing ? 'is-leaving' : animated && view.previous ? 'is-entering' : ''}`}>
       <div className="denk-facing" data-mirrored={character.mirrored} style={{ transform: character.mirrored ? 'scaleX(-1)' : 'scaleX(1)' }}>
-      <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence && !still ? ' is-moving' : ''}`}>
+      <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence ? ' is-moving' : ''}`}>
         {sequence ? <ActivitySprite sequence={sequence} active={!outgoing && !view.previous} /> : <>
         <img className="denk-base" alt="" src={denkynhoPose(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}

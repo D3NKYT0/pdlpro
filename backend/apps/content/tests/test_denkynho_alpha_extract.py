@@ -130,17 +130,21 @@ def test_walking_production_assets_keep_opaque_white_eyes_in_every_frame():
 
 
 def test_new_ambient_sprites_have_portrait_size_and_real_transparency():
-    names = (
-        "17-observando.png",
-        "18-regando.png",
-        "19-pescando.png",
-        "20-sentado-banco.png",
-        "21-assistindo-tv.png",
+    stems = (
+        "17-observando",
+        "18-regando",
+        "19-pescando",
+        "20-sentado-banco",
+        "21-assistindo-tv",
     )
-    for name in names:
-        image = Image.open(ASSETS / "poses" / name).convert("RGBA")
-        alpha = image.getchannel("A")
-        assert image.size == (1024, 1536)
-        assert alpha.getextrema()[0] == 0
-        assert alpha.getextrema()[1] >= 250
-        assert image.getbbox() is not None
+    for stem in stems:
+        base = Image.open(ASSETS / "poses" / f"{stem}.png").convert("RGBA")
+        base_alpha = np.asarray(base.getchannel("A"))
+        for suffix in ("", "-olhos", "-boca"):
+            image = Image.open(ASSETS / "poses" / f"{stem}{suffix}.png").convert("RGBA")
+            alpha = image.getchannel("A")
+            assert image.size == (1024, 1536)
+            assert alpha.getextrema()[0] == 0
+            assert alpha.getextrema()[1] >= 250
+            assert image.getbbox() is not None
+            assert np.array_equal(np.asarray(alpha), base_alpha)

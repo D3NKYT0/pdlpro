@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import type { HelpLanguage } from './personality'
+import { SpeechBubble } from './SpeechBubble'
 import './companion-controls.css'
 
 const tips = {
@@ -94,11 +95,11 @@ export function HelpCompanion({ language, mascot, status, children, onChat, faqL
           setPosition(point => clamp({ x: point.x + (event.key === 'ArrowLeft' ? -20 : event.key === 'ArrowRight' ? 20 : 0), y: point.y + (event.key === 'ArrowUp' ? -20 : event.key === 'ArrowDown' ? 20 : 0) }))
         }}>{mascot}<span className="help-character-badge" aria-hidden="true">•••</span></button>
       <small id={`${id}-hint`} className={mobile ? 'help-sr' : 'muted'}>{pt ? (mobile ? 'Toque para ações. Arraste ou use as setas para mover.' : 'Clique em mim para ações e dicas.') : (mobile ? 'Tap for actions. Drag or use arrow keys to move.' : 'Click me for actions and tips.')}</small>
-      <p className="muted help-companion-status">{status}</p>
+      <div className="help-companion-status" aria-live="polite"><SpeechBubble speaker="status">{status}</SpeechBubble></div>
     </Card>
     {open && <Card className="help-companion-menu" role="dialog" aria-label={pt ? 'Ações e dicas do Denkynho' : 'Denkynho actions and tips'} id={id}>
       <header><strong>Denkynho</strong><Button ref={closeButton} size="sm" variant="ghost" onClick={() => { setOpen(false); trigger.current?.focus() }}>{pt ? 'Fechar' : 'Close'}</Button></header>
-      <p className="muted">{status}</p>
+      <SpeechBubble speaker="status">{status}</SpeechBubble>
       {children(() => { if (mobile) setOpen(false) })}
       <div className="help-companion-footer" role="group" aria-label={pt ? 'Ajuda rápida' : 'Quick help'}>{faqLink}<Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % tips[language].length)}>{pt ? 'Me dê uma dica' : 'Give me a tip'}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{pt ? 'Conversar' : 'Chat'}</Button></div>
       {tip >= 0 && <p role="status">{tips[language][tip]}</p>}

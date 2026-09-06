@@ -217,29 +217,8 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   scrollbar-width:thin;
   scrollbar-color:rgba(197, 161, 97, 0.45) transparent;
 }
-.help-message {
-  max-width:90%;
-  padding:12px 16px;
-  background:var(--panel-gold-soft);
-  border:1px solid var(--panel-border);
-  border-radius:12px;
-  overflow-wrap:anywhere;
-}
-.help-message p {
-  margin:6px 0;
-  white-space:pre-wrap;
-  line-height:1.55;
-}
-.help-message strong {
-  color:var(--panel-gold-bright);
-}
-.help-message.from-user {
-  align-self:flex-end;
-  background:var(--panel-surface);
-}
-.help-message.from-assistant {
-  align-self:flex-start;
-}
+.help-message.from-user { align-self:flex-end; }
+.help-message.from-assistant { align-self:flex-start; }
 .help-suggestions {
   display:flex;
   flex-wrap:wrap;

@@ -19,6 +19,7 @@ import { useAsyncAction } from '../hooks/useAsyncAction'
 import { helpArticles, type HelpArticle } from '../components/help/answers'
 import { Denkynho } from '../components/help/Denkynho'
 import { HelpCompanion } from '../components/help/HelpCompanion'
+import { SpeechBubble } from '../components/help/SpeechBubble'
 import { useReducedMotion } from '../components/help/useReducedMotion'
 import { defaultDenkynhoEmotion, emotionLabel, emotionStatus, isDenkynhoEmotion } from '../components/help/emotions'
 import { denkynhoWelcome, type HelpLanguage } from '../components/help/personality'
@@ -391,19 +392,23 @@ export function HelpPage() {
         <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p>{limited && <p role="status">{language === 'pt' ? 'Estou no modo de ajuda básica. A conversa com IA está indisponível no momento.' : 'Basic help mode is active. AI conversation is currently unavailable.'}</p>}</div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { session.current++; setContext(''); setLimited(false); setMessages([welcome(identity, language, preferences)]); setDialogue(dialogueWithPreferences(language, preferences)); setDraft(''); setValidation(''); setAmbient(null); setFailed(false); setModerationBlocked(false); setExpanded(new Set()); followLatest.current = true }}>{labels.fresh}</Button></header>
         <div className="help-messages" ref={thread} onScroll={event => { const node = event.currentTarget; followLatest.current = node.scrollHeight - node.scrollTop - node.clientHeight < 64 }} role="log" aria-label={labels.messages} aria-live="polite" aria-relevant="additions">
           {screenContext && messages.length === 1 && <section className="help-context"><strong>{screenContext.title}</strong><p>{screenContext.tip}</p><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setDraft(screenContext.suggestion); thread.current?.parentElement?.querySelector('textarea')?.focus() }}>{screenContext.suggestion}</Button><div className="help-activities">{screenContext.actions.map(item => <ButtonLink key={item.to} size="sm" variant="secondary" to={item.to}>{item.label}</ButtonLink>)}</div></section>}
-          {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>
-            <strong>{message.role === 'user' ? labels.you : 'Denkynho'}</strong>
-            {revealing?.id === message.id ? <><p aria-hidden="true">{Array.from(message.text).slice(0, shown).join('') || '…'}</p><p className="help-sr">{message.text}</p></> : <p>{message.text}</p>}
-            {message.status === 'sending' && <small className="muted">{thinkingPhrase(thinkFor, language)}</small>}
-            {message.status === 'failed' && <div className="help-message-retry"><small>{language === 'pt' ? 'Não foi possível responder.' : 'Could not get a reply.'}</small><Button size="sm" variant="secondary" disabled={busy} onClick={() => void send(message.text, message.id)}>{language === 'pt' ? 'Reenviar mensagem' : 'Retry message'}</Button></div>}
-            {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>{labels.full}</Button>}
-            {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}
-            {message.followUp && <p className="help-follow-up">{message.followUp}</p>}
-            {message.action && message.id !== revealing?.id && <div className="help-activities"><ExternalButtonLink href={message.action.url} size="sm" variant="secondary">{message.action.label}</ExternalButtonLink></div>}
-            {message.role === 'assistant' && message.id !== revealing?.id && <div className="help-activities">{getHelpActionsForText(`${message.text} ${message.details ?? ''}`, user, resources.isSuccess ? resources.data : undefined, language).map(item => <ButtonLink key={item.to} size="sm" variant="secondary" to={item.to}>{item.label}</ButtonLink>)}</div>}
-            {message.source && <small className="muted">{labels.source}: {message.source}</small>}
-            {message.related?.length ? <div className="help-related" aria-label={labels.related}><small className="muted">{labels.related}</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}
-          </article>)}
+          {messages.map(message => {
+            const assistant = message.role === 'assistant'
+            const revealingThis = revealing?.id === message.id
+            return <article key={message.id} className={`help-message from-${message.role}`}>
+              <SpeechBubble speaker={assistant ? 'assistant' : 'user'} name={assistant ? 'Denkynho' : labels.you} className={revealingThis ? 'is-revealing' : undefined}>
+                {revealingThis ? <><p aria-hidden="true">{Array.from(message.text).slice(0, shown).join('') || '…'}</p><p className="help-sr">{message.text}</p></> : <p>{message.text}</p>}
+                {message.status === 'failed' && <div className="help-message-retry"><small>{language === 'pt' ? 'Não foi possível responder.' : 'Could not get a reply.'}</small><Button size="sm" variant="secondary" disabled={busy} onClick={() => void send(message.text, message.id)}>{language === 'pt' ? 'Reenviar mensagem' : 'Retry message'}</Button></div>}
+                {message.details && <Button size="sm" variant="secondary" onClick={() => setExpanded(current => new Set(current).add(message.id))} disabled={expanded.has(message.id)}>{labels.full}</Button>}
+                {message.details && expanded.has(message.id) && <p className="help-details">{message.details}</p>}
+                {message.followUp && <p className="help-follow-up">{message.followUp}</p>}
+                {message.action && message.id !== revealing?.id && <div className="help-activities"><ExternalButtonLink href={message.action.url} size="sm" variant="secondary">{message.action.label}</ExternalButtonLink></div>}
+                {assistant && message.id !== revealing?.id && <div className="help-activities">{getHelpActionsForText(`${message.text} ${message.details ?? ''}`, user, resources.isSuccess ? resources.data : undefined, language).map(item => <ButtonLink key={item.to} size="sm" variant="secondary" to={item.to}>{item.label}</ButtonLink>)}</div>}
+                {message.source && <small className="muted">{labels.source}: {message.source}</small>}
+                {message.related?.length ? <div className="help-related" aria-label={labels.related}><small className="muted">{labels.related}</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}
+              </SpeechBubble>
+            </article>
+          })}
           {messages.length === 1 && Boolean(faq.data?.length) && <div className="help-topic"><Field label={labels.topic}><Select value={topic} onChange={setTopic} options={[{ value: 'all', label: labels.all }, ...categories.map(([value, label]) => ({ value, label }))]} /></Field></div>}
           {messages.length === 1 && suggestions.length > 0 && <div className="help-suggestions" aria-label="Perguntas sugeridas">{suggestions.map(item => <Button key={item.id} variant="secondary" size="sm" disabled={busy} onClick={() => void send(item.question)}>{item.question}{item.audience && item.audience !== 'public' ? ` · ${item.audience_label}` : ''}</Button>)}</div>}
         </div>

@@ -30,6 +30,8 @@ As sequências foram criadas pela ferramenta integrada de geração de imagens, 
 
 Os originais estáticos em `poses/` permanecem disponíveis para movimento reduzido, ociosidade (sono em pé) e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 
+As atividades ambientes adicionais usam bases estáticas 1024 × 1536 e dois overlays RGBA registrados no mesmo espaço da pose: `-olhos.png` para a piscada e `-boca.png` para a fala. São elas [observando com binóculos](../../frontend/public/mascot/denkynho/poses/17-observando.png), [regando plantas](../../frontend/public/mascot/denkynho/poses/18-regando.png), [pescando](../../frontend/public/mascot/denkynho/poses/19-pescando.png), [sentado no banco](../../frontend/public/mascot/denkynho/poses/20-sentado-banco.png) e [assistindo TV](../../frontend/public/mascot/denkynho/poses/21-assistindo-tv.png). O alfa dos overlays reaproveita exatamente a silhueta da base para impedir fundo opaco ou halo durante a troca.
+
 O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. O `viewBox` é limitado à célula atual, impedindo que pés, cama ou cabelo de quadros vizinhos apareçam. A ancoragem mantém a base da cama e os pés na mesma altura. As durações variam entre 140 e 800 ms para dar ritmo às ações, com repetição de quadros de mastigação, risada e respiração.
 
 ## Transições e espelhamento
@@ -54,6 +56,12 @@ Cliques rápidos em atividades substituem apenas o próximo pedido, com no máxi
 ## Prompts finais
 
 Referências de identidade: `11-comendo.png`, `12-jogando.png` e `06-rindo.png`, respectivamente. Os prompts abaixo foram usados na ferramenta integrada; os nomes dos arquivos finais acima são os consumidos pelo projeto.
+
+### Vida ambiente: poses e overlays
+
+As cinco bases foram geradas no modo integrado de criação de imagem, usando `01-boas-vindas.png` como referência exata. Prompt comum: preservar o mesmo Denkynho, rosto, cabelo preto, proporções chibi, camisa preta de mangas dobradas, gravata azul listrada, calça e sapatos escuros, acabamento 3D polido, corpo e objetos completos, composição vertical 2:3, fundo realmente transparente, sem texto, marca d'água ou cenário. A ação variou entre: observar com binóculos; regar uma planta com regador; pescar com vara e peixe; sentar relaxado em banco de jardim; e assistir a uma pequena TV sentado no chão.
+
+Para cada base foram feitas duas edições precisas, sem mudar pose, roupa, objeto, câmera ou escala: “fechar naturalmente os dois olhos para um quadro de piscada” e “manter os olhos abertos e abrir levemente a boca para um quadro de fala”. Como essas edições retornaram fundo preto opaco, o canal alfa final foi substituído pela máscara da base correspondente, preservando registro e transparência.
 
 ### Banho
 
