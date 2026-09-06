@@ -233,9 +233,8 @@ export function canPerformCare(action: DenkynhoAction, needs: AmbientNeeds, canD
   const target = action === 'feed' ? 'satiety'
     : action === 'sleep' ? 'energy'
       : action === 'bath' ? 'hygiene'
-        : action === 'walk' ? null
-          : 'happiness'
-  if (target && needs[target] >= 100) return false
+        : 'happiness'
+  if (needs[target] >= 100) return false
   return true
 }
 
@@ -514,7 +513,7 @@ export function startAmbient(ctx: AmbientContext): AmbientState {
 
 /** Inicia a vida ambient com um plano fixo (testes e demos). */
 export function startAmbientPlan(plan: AmbientActivity[], ctx: AmbientContext): AmbientState {
-  const safe = plan.length ? plan : ['chat']
+  const safe: AmbientActivity[] = plan.length ? plan : ['chat']
   return beginActivity(safe[0]!, safe, 0, ctx)
 }
 
