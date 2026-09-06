@@ -369,5 +369,45 @@
         137.25
       ]
     }
+  },
+  {
+    "id": "17-observando",
+    "label": "Observando com binóculos",
+    "src": "17-observando.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
+  },
+  {
+    "id": "18-regando",
+    "label": "Regando plantas",
+    "src": "18-regando.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
+  },
+  {
+    "id": "19-pescando",
+    "label": "Pescando",
+    "src": "19-pescando.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
+  },
+  {
+    "id": "20-sentado-banco",
+    "label": "Sentado no banco",
+    "src": "20-sentado-banco.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
+  },
+  {
+    "id": "21-assistindo-tv",
+    "label": "Assistindo TV",
+    "src": "21-assistindo-tv.png",
+    "openMouth": false,
+    "eyes": null,
+    "mouth": null
   }
 ]

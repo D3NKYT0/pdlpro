@@ -70,7 +70,21 @@ describe('vida ambient', () => {
 
     state = advanceAmbient(state, base())
     expect(state.phase).toBe('linger')
-    expect(ambientPose(state)).toBe('03-pensando')
+    expect(state.still).toBe(true)
+    expect(ambientPose(state)).toBe('01-boas-vindas')
+  })
+
+  it('pausa e pensamento ficam estáticos; lanche usa sequência', () => {
+    let pause = startAmbientPlan(['pause'], base())
+    expect(pause.still).toBe(true)
+    pause = advanceAmbient(pause, base())
+    expect(pause.phase).toBe('linger')
+    expect(pause.still).toBe(true)
+
+    let snack = startAmbientPlan(['snack'], base({ needs: { satiety: 20, energy: 80, happiness: 80, hygiene: 80 } }))
+    snack = advanceAmbient(snack, base())
+    expect(snack.phase).toBe('act')
+    expect(snack.still).toBe(false)
   })
 
   it('cochila em pé quando cansado (nap) e dorme na cama no sleep', () => {
@@ -101,6 +115,23 @@ describe('vida ambient', () => {
       state = advanceAmbient(state, base())
     }
     expect(state.phase).toBe('linger')
+  })
+
+  it.each([
+    ['observe', '17-observando', 'garden'],
+    ['water', '18-regando', 'garden'],
+    ['fish', '19-pescando', 'camp'],
+    ['bench', '20-sentado-banco', 'garden'],
+    ['tv', '21-assistindo-tv', 'living-room'],
+  ] as const)('usa o sprite e o cenário da atividade %s', (activity, pose, scene) => {
+    let state = startAmbientPlan([activity], base())
+    for (let step = 0; step < 5 && state.phase !== 'act'; step += 1) {
+      state = advanceAmbient(state, base())
+    }
+    expect(state.phase).toBe('act')
+    expect(state.pose).toBe(pose)
+    expect(state.scene).toBe(scene)
+    expect(state.careAction).toBeNull()
   })
 
   it('usa falas tristes quando o humor pede', () => {

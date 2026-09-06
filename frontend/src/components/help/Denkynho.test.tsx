@@ -56,6 +56,12 @@ it.each(['11-comendo', '12-jogando', '13-dancando', '14-carinho', '15-banho', '1
   const face = container.querySelector('.denk-face')
   if (face) expect(face.getAttribute('src')).toContain(`/mascot/denkynho/poses/${pose}-`)
 })
+it.each(['17-observando', '18-regando', '19-pescando', '20-sentado-banco', '21-assistindo-tv'])('carrega a nova pose estática %s', async pose => {
+  const { container } = render(<Denkynho pose={pose} />); await settle()
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/poses/${pose}.png`)
+})
 it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   const { rerender, container } = render(<Denkynho pose="01-boas-vindas" />); await settle()
   expect(screen.getByRole('img')).toHaveAccessibleName('Denkynho — Boas-vindas')
@@ -86,6 +92,13 @@ it('expõe a ociosidade no sprite dormindo em pé, sem usar o atlas da cama', as
   expect(container.querySelector('.denk-pose')).toHaveClass('is-moving')
   expect(container.querySelector('.denk-sprite')).toBeNull()
   expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
+})
+it('com still não usa atlas nem balanço, mesmo em pose que tem sequência', async () => {
+  const { container } = render(<Denkynho pose="03-pensando" still />); await settle()
+  expect(screen.getByRole('img')).toHaveAttribute('data-still', 'true')
+  expect(container.querySelector('.denk-sprite')).toBeNull()
+  expect(container.querySelector('.is-moving')).toBeNull()
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/03-pensando.png')
 })
 it('prioriza sceneOverride sobre a cena do armário', async () => {
   const { container, rerender } = render(<Denkynho pose="01-boas-vindas" appearance={{ accessory: '', outfit: '', object: '', scene: 'garden' }} animated={false} />)

@@ -356,7 +356,7 @@ export function HelpPage() {
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to={supportTicketPrefill(screenContext?.path, language)?.to ?? '/painel/support'} variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
       <HelpCompanion faqLink={<ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>} language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
-        mascot={<Denkynho pose={pose} idle={standingSleep} animated={animated} appearance={pet.data?.appearance} sceneOverride={ambient?.scene} celebration={celebrating} dancing={activity === '13-dancando' || Boolean(ambient?.dancing)} talking={Boolean(revealing) || ambientTalking} mouthOpen={revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientMouth} />}>
+        mascot={<Denkynho pose={pose} idle={standingSleep} still={Boolean(ambient?.still)} animated={animated} appearance={pet.data?.appearance} sceneOverride={ambient?.scene} celebration={celebrating} dancing={activity === '13-dancando' || Boolean(ambient?.dancing)} talking={Boolean(revealing) || ambientTalking} mouthOpen={revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientMouth} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
         {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>

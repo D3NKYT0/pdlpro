@@ -137,7 +137,9 @@ it('após ociosidade fala de verdade, vive e pode dormir em pé; a cama manual c
   expect(screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)).not.toHaveLength(0)
   const chatLine = screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)[0]!.textContent!
   await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(chatLine, '01-boas-vindas', true) + 50) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '03-pensando')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getByRole('img')).toHaveAttribute('data-still', 'true')
+  expect(document.querySelector('.denk-sprite')).toBeNull()
   await act(async () => { await vi.advanceTimersByTimeAsync(7000) })
   expect(screen.getAllByText(/sono|Energia|descansar|quarto|Boa noite/i)).not.toHaveLength(0)
   const sleepLine = screen.getAllByText(/sono|Energia|descansar|quarto|Boa noite/i)[0]!.textContent!

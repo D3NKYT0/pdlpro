@@ -20,7 +20,7 @@ type Layer = { src: string; box: number[] }
  * `sceneOverride` é só visual (rotina de standby); não grava o armário.
  * Carrega as imagens da pose antes da troca e libera timers ao desmontar.
  */
-export function Denkynho({ pose, idle = false, talking = false, mouthOpen = false, animated: animate = true, appearance, sceneOverride, celebration = false, dancing = false }: { pose: string; idle?: boolean; talking?: boolean; mouthOpen?: boolean; animated?: boolean; appearance?: DenkynhoAppearance; sceneOverride?: SceneId; celebration?: boolean; dancing?: boolean }) {
+export function Denkynho({ pose, idle = false, still = false, talking = false, mouthOpen = false, animated: animate = true, appearance, sceneOverride, celebration = false, dancing = false }: { pose: string; idle?: boolean; still?: boolean; talking?: boolean; mouthOpen?: boolean; animated?: boolean; appearance?: DenkynhoAppearance; sceneOverride?: SceneId; celebration?: boolean; dancing?: boolean }) {
   const scene = sceneOverride ?? knownScene(appearance?.scene)
   const reduced = useReducedMotion()
   const animated = animate && !reduced
@@ -42,11 +42,11 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
   function character(character: typeof view.current, outgoing = false) {
     const item = character.pose
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
-    // Idle em pé: sem atlas. Cama = cuidado Dormir ou rotina de standby no quarto.
-    const sequence = animated && !talking && !idle ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
+    // Idle em pé / still: sem atlas. Sequência só em ações complexas (comer, jogar, etc.).
+    const sequence = animated && !talking && !idle && !still ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
     return <div key={character.key} className={`denk-transition ${outgoing ? 'is-leaving' : animated && view.previous ? 'is-entering' : ''}`}>
       <div className="denk-facing" data-mirrored={character.mirrored} style={{ transform: character.mirrored ? 'scaleX(-1)' : 'scaleX(1)' }}>
-      <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence ? ' is-moving' : ''}`}>
+      <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence && !still ? ' is-moving' : ''}`}>
         {sequence ? <ActivitySprite sequence={sequence} active={!outgoing && !view.previous} /> : <>
         <img className="denk-base" alt="" src={denkynhoPose(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
@@ -57,7 +57,7 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
       </div>
     </div>
   }
-  return <div className={`denk-mascot${scene ? ' has-scene' : ''}${celebration ? ' is-celebrating' : ''}${dancing ? ' is-dancing' : ''}`} role="img" aria-label={`Denkynho — ${dancing ? 'Dançando' : view.current.pose.label}${talking ? ', falando' : ''}`} data-gesture={talking && !view.previous} data-pose={view.current.pose.id} data-idle={idle} data-animated={animated}
+  return <div className={`denk-mascot${scene ? ' has-scene' : ''}${celebration ? ' is-celebrating' : ''}${dancing ? ' is-dancing' : ''}`} role="img" aria-label={`Denkynho — ${dancing ? 'Dançando' : view.current.pose.label}${talking ? ', falando' : ''}`} data-gesture={talking && !view.previous} data-pose={view.current.pose.id} data-idle={idle} data-still={still} data-animated={animated}
     data-mirrored={view.current.mirrored} data-transition={animated ? view.transition ?? 'none' : 'none'}
     style={{ '--denk-transition-duration': `${view.transition ? transitionDurations[view.transition] : 0}ms` } as CSSProperties}>
     {scene && <SceneBackdrop scene={scene} />}

@@ -103,8 +103,8 @@ def test_bath_sequence_removes_neutral_checker_without_erasing_blue_foam(tmp_pat
 
 
 def test_bath_production_assets_are_transparent_and_have_eight_distinct_frames():
-    sequence = Image.open(ASSETS / "15-banho-sequencia.png").convert("RGBA")
-    static = Image.open(ASSETS / "15-banho.png").convert("RGBA")
+    sequence = Image.open(ASSETS / "sequences" / "15-banho-sequencia.png").convert("RGBA")
+    static = Image.open(ASSETS / "poses" / "15-banho.png").convert("RGBA")
     assert sequence.size == (1536, 1024)
     assert static.size == (1024, 1536)
     assert all(sequence.getpixel(point)[3] == 0 for point in ((0, 0), (1535, 0), (0, 1023), (1535, 1023)))
@@ -114,8 +114,8 @@ def test_bath_production_assets_are_transparent_and_have_eight_distinct_frames()
 
 
 def test_walking_production_assets_keep_opaque_white_eyes_in_every_frame():
-    sequence = Image.open(ASSETS / "16-andando-sequencia.png").convert("RGBA")
-    static = Image.open(ASSETS / "16-andando.png").convert("RGBA")
+    sequence = Image.open(ASSETS / "sequences" / "16-andando-sequencia.png").convert("RGBA")
+    static = Image.open(ASSETS / "poses" / "16-andando.png").convert("RGBA")
     pixels = np.asarray(sequence)
     assert sequence.size == (1536, 1024)
     assert static.size == (1024, 1536)
@@ -127,3 +127,20 @@ def test_walking_production_assets_keep_opaque_white_eyes_in_every_frame():
             face = pixels[row * 512:row * 512 + 190, column * 384:(column + 1) * 384]
             opaque_white = (face[:, :, :3].min(axis=2) > 210) & (face[:, :, 3] == 255)
             assert opaque_white.sum() >= 50
+
+
+def test_new_ambient_sprites_have_portrait_size_and_real_transparency():
+    names = (
+        "17-observando.png",
+        "18-regando.png",
+        "19-pescando.png",
+        "20-sentado-banco.png",
+        "21-assistindo-tv.png",
+    )
+    for name in names:
+        image = Image.open(ASSETS / "poses" / name).convert("RGBA")
+        alpha = image.getchannel("A")
+        assert image.size == (1024, 1536)
+        assert alpha.getextrema()[0] == 0
+        assert alpha.getextrema()[1] >= 250
+        assert image.getbbox() is not None

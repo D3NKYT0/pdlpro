@@ -18,6 +18,11 @@ export type AmbientActivity =
   | 'nap'
   | 'garden'
   | 'camp'
+  | 'observe'
+  | 'water'
+  | 'fish'
+  | 'bench'
+  | 'tv'
   | 'affection'
   | 'pause'
 
@@ -40,6 +45,8 @@ export type AmbientState = {
   useBed: boolean
   dancing: boolean
   standingSleep: boolean
+  /** Sem atlas e sem balanço CSS — pausa, pensar, conversar, observar. */
+  still: boolean
   careAction: DenkynhoAction | null
   plan: AmbientActivity[]
   planIndex: number
@@ -72,6 +79,25 @@ export const NEED_SOFT = 45
 export const NEED_HARD = 28
 
 const PREFERRED_PATH = ['living-room', 'kitchen', 'bathroom', 'bedroom'] as const
+
+/** Só estas ações usam atlas de sequência; o resto fica parado (pose estática). */
+const SEQUENCE_ACTIVITIES = new Set<AmbientActivity>([
+  'snack', 'play', 'dance', 'bath', 'walk', 'garden', 'camp', 'laugh', 'affection', 'sleep', 'water', 'fish',
+])
+
+export function ambientUsesSequence(state: Pick<AmbientState, 'activity' | 'phase' | 'standingSleep'>): boolean {
+  if (state.standingSleep) return false
+  if (state.phase === 'linger' || state.phase === 'speak' || state.phase === 'arrive') return false
+  if (state.phase === 'walk') return true
+  if (state.phase === 'sleep') return true
+  if (state.phase === 'act') return SEQUENCE_ACTIVITIES.has(state.activity)
+  return false
+}
+
+function withStill<T extends Omit<AmbientState, 'still'>>(state: T): T & { still: boolean } {
+  return { ...state, still: !ambientUsesSequence(state) }
+}
+const TRAVEL_ACTIVITIES: AmbientActivity[] = ['walk', 'garden', 'camp', 'observe', 'water', 'fish', 'bench', 'tv']
 
 type LinePair = { pt: string; en: string }
 
@@ -182,6 +208,36 @@ const LINES: Record<string, LinePair[]> = {
   camp_act: [
     { pt: 'Fogueira, céu… que cantinho gostoso.', en: 'Campfire, sky… what a cozy spot.' },
   ],
+  observe_say: [
+    { pt: 'Vou pegar os binóculos e observar lá fora.', en: "I'll grab the binoculars and look around outside." },
+  ],
+  observe_act: [
+    { pt: 'Dá para enxergar tão longe daqui!', en: 'I can see so far from here!' },
+  ],
+  water_say: [
+    { pt: 'As plantinhas estão pedindo água.', en: 'The plants look ready for some water.' },
+  ],
+  water_act: [
+    { pt: 'Pronto, plantinhas regadas com carinho.', en: 'There, the plants are happily watered.' },
+  ],
+  fish_say: [
+    { pt: 'Vou preparar a vara para uma pescaria tranquila.', en: "I'll get the rod ready for some peaceful fishing." },
+  ],
+  fish_act: [
+    { pt: 'Peguei um peixe! Que pescaria boa.', en: 'I caught one! What a nice fishing break.' },
+  ],
+  bench_say: [
+    { pt: 'Vou descansar um pouco no banco do jardim.', en: "I'll rest for a while on the garden bench." },
+  ],
+  bench_act: [
+    { pt: 'Nada como sentar e apreciar o jardim.', en: 'Nothing like sitting down and enjoying the garden.' },
+  ],
+  tv_say: [
+    { pt: 'Hora de relaxar um pouco assistindo TV.', en: 'Time to relax and watch a little TV.' },
+  ],
+  tv_act: [
+    { pt: 'Controle na mão e um programa divertido.', en: 'Remote in hand and something fun to watch.' },
+  ],
   affection_say: [
     { pt: 'Estou precisando de carinho… mesmo sozinho, me aconchego.', en: 'I could use some affection… cuddling myself a bit.' },
     { pt: 'Um carinho interno pra levantar a alegria.', en: 'A little self-care hug to lift happiness.' },
@@ -220,6 +276,10 @@ function shuffle<T>(items: T[], random: () => number): T[] {
 
 function hasScene(unlocked: Set<SceneId>, id: SceneId) {
   return unlocked.has(id)
+}
+
+function travelsToScene(activity: AmbientActivity): boolean {
+  return TRAVEL_ACTIVITIES.includes(activity)
 }
 
 const defaultNeeds = (): AmbientNeeds => ({ satiety: 75, energy: 75, happiness: 75, hygiene: 75 })
@@ -265,6 +325,11 @@ function sceneFor(activity: AmbientActivity, unlocked: Set<SceneId>, current?: S
   if (activity === 'dance' && hasScene(unlocked, 'living-room')) return 'living-room'
   if (activity === 'garden' && hasScene(unlocked, 'garden')) return 'garden'
   if (activity === 'camp' && hasScene(unlocked, 'camp')) return 'camp'
+  if (activity === 'observe' && hasScene(unlocked, 'garden')) return 'garden'
+  if (activity === 'observe' && hasScene(unlocked, 'camp')) return 'camp'
+  if ((activity === 'water' || activity === 'bench') && hasScene(unlocked, 'garden')) return 'garden'
+  if (activity === 'fish' && hasScene(unlocked, 'camp')) return 'camp'
+  if (activity === 'tv' && hasScene(unlocked, 'living-room')) return 'living-room'
   if (activity === 'nap') return current
   return current
 }
@@ -382,8 +447,12 @@ export function buildLifePlan(ctx: AmbientContext): AmbientActivity[] {
     return !care || canPerformCare(care, needs, ctx.canDance)
   })
   const outdoor = outdoorPick(ctx, unlocked, random)
+  const lifestyle: AmbientActivity[] = []
+  if (hasScene(unlocked, 'garden')) lifestyle.push('observe', 'water', 'bench')
+  if (hasScene(unlocked, 'camp')) lifestyle.push('observe', 'fish')
+  if (hasScene(unlocked, 'living-room')) lifestyle.push('tv')
   const fillers = shuffle(
-    (['laugh', 'stretch', 'walk', 'think', 'chat'] as AmbientActivity[]).filter(activity => {
+    ([...new Set<AmbientActivity>(['laugh', 'stretch', 'walk', 'think', 'chat', ...lifestyle])]).filter(activity => {
       if (activity === 'walk') return canPerformCare('walk', needs, ctx.canDance)
       return true
     }),
@@ -407,6 +476,11 @@ function poseForAct(activity: AmbientActivity): string {
   if (activity === 'laugh') return '06-rindo'
   if (activity === 'think' || activity === 'pause') return '03-pensando'
   if (activity === 'affection') return '14-carinho'
+  if (activity === 'observe') return '17-observando'
+  if (activity === 'water') return '18-regando'
+  if (activity === 'fish') return '19-pescando'
+  if (activity === 'bench') return '20-sentado-banco'
+  if (activity === 'tv') return '21-assistindo-tv'
   if (activity === 'stretch' || activity === 'chat') return '01-boas-vindas'
   if (activity === 'walk' || activity === 'garden' || activity === 'camp') return '16-andando'
   return '05-dormindo'
@@ -442,6 +516,11 @@ function announceKey(activity: AmbientActivity, useBed: boolean, emotionId?: str
   if (activity === 'stretch') return 'stretch_say'
   if (activity === 'garden') return 'garden_say'
   if (activity === 'camp') return 'camp_say'
+  if (activity === 'observe') return 'observe_say'
+  if (activity === 'water') return 'water_say'
+  if (activity === 'fish') return 'fish_say'
+  if (activity === 'bench') return 'bench_say'
+  if (activity === 'tv') return 'tv_say'
   if (activity === 'affection') return 'affection_say'
   if (activity === 'pause') return 'pause_say'
   if (activity === 'nap') return 'nap_say'
@@ -461,6 +540,11 @@ function actLineKey(activity: AmbientActivity): string {
   if (activity === 'think') return 'think_act'
   if (activity === 'garden') return 'garden_act'
   if (activity === 'camp') return 'camp_act'
+  if (activity === 'observe') return 'observe_act'
+  if (activity === 'water') return 'water_act'
+  if (activity === 'fish') return 'fish_act'
+  if (activity === 'bench') return 'bench_act'
+  if (activity === 'tv') return 'tv_act'
   if (activity === 'affection') return 'affection_act'
   if (activity === 'nap') return 'nap_act'
   if (activity === 'sleep') return 'sleep_act'
@@ -473,6 +557,7 @@ function beginActivity(activity: AmbientActivity, plan: AmbientActivity[], planI
   const unlocked = new Set(ctx.unlockedScenes.map(knownScene).filter((id): id is SceneId => Boolean(id)))
   const current = knownScene(ctx.currentScene)
   const useBed = activity === 'sleep' && hasScene(unlocked, 'bedroom')
+  const target = sceneFor(activity, unlocked, current)
   const route = activity === 'sleep' && useBed
     ? buildIdleRoute(ctx.currentScene, ctx.unlockedScenes)
     : activity === 'walk'
@@ -481,14 +566,16 @@ function beginActivity(activity: AmbientActivity, plan: AmbientActivity[], planI
         ? outdoorRoute('garden', ctx.currentScene, ctx.unlockedScenes)
         : activity === 'camp'
           ? outdoorRoute('camp', ctx.currentScene, ctx.unlockedScenes)
-          : []
-  const usesRoute = (activity === 'sleep' && useBed) || activity === 'walk' || activity === 'garden' || activity === 'camp'
+          : travelsToScene(activity) && target
+            ? outdoorRoute(target, ctx.currentScene, ctx.unlockedScenes)
+            : []
+  const usesRoute = (activity === 'sleep' && useBed) || travelsToScene(activity)
   const scene = usesRoute
     ? route[0] ?? sceneFor(activity, unlocked, current)
     : sceneFor(activity, unlocked, current)
   const pose = announcePose(activity, ctx.emotionId)
   const line = pickLine(announceKey(activity, useBed, ctx.emotionId), ctx.language, random)
-  return {
+  return withStill({
     activity,
     phase: 'speak',
     line,
@@ -503,7 +590,7 @@ function beginActivity(activity: AmbientActivity, plan: AmbientActivity[], planI
     planIndex,
     route,
     routeIndex: 0,
-  }
+  })
 }
 
 export function startAmbient(ctx: AmbientContext): AmbientState {
@@ -558,20 +645,20 @@ function nextInPlan(state: AmbientState, ctx: AmbientContext): AmbientState {
 
 function enterLinger(state: AmbientState, ctx: AmbientContext): AmbientState {
   const random = ctx.random ?? Math.random
-  return {
+  return withStill({
     ...state,
     phase: 'linger',
-    pose: '03-pensando',
+    pose: '01-boas-vindas',
     line: pickLine('linger', ctx.language, random),
     talking: false,
     dancing: false,
     standingSleep: false,
-  }
+  })
 }
 
 function enterAct(state: AmbientState, ctx: AmbientContext): AmbientState {
   const random = ctx.random ?? Math.random
-  return {
+  return withStill({
     ...state,
     phase: 'act',
     pose: poseForAct(state.activity),
@@ -581,12 +668,12 @@ function enterAct(state: AmbientState, ctx: AmbientContext): AmbientState {
     standingSleep: false,
     useBed: false,
     careAction: resolveCare(state.activity, ctx),
-  }
+  })
 }
 
 function enterSleep(state: AmbientState, ctx: AmbientContext, standing: boolean, scene?: SceneId): AmbientState {
   const random = ctx.random ?? Math.random
-  return {
+  return withStill({
     ...state,
     phase: 'sleep',
     scene,
@@ -597,7 +684,7 @@ function enterSleep(state: AmbientState, ctx: AmbientContext, standing: boolean,
     standingSleep: standing,
     useBed: !standing,
     careAction: resolveCare(standing ? 'nap' : 'sleep', ctx),
-  }
+  })
 }
 
 /** Avança a vida ambient; nunca termina sozinha — dorme, acorda e segue vivendo. */
@@ -616,19 +703,19 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
       const routeIndex = Math.min(1, state.route.length - 1)
       const scene = state.route[routeIndex]!
       if (scene === 'bedroom' && routeIndex === state.route.length - 1) {
-        return {
+        return withStill({
           ...state,
           phase: 'arrive',
           routeIndex,
           scene,
-          pose: '16-andando',
+          pose: '01-boas-vindas',
           line: pickLine('sleep_arrive', ctx.language, random),
           talking: true,
           dancing: false,
           standingSleep: false,
-        }
+        })
       }
-      return {
+      return withStill({
         ...state,
         phase: 'walk',
         routeIndex,
@@ -638,15 +725,15 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
         talking: false,
         dancing: false,
         standingSleep: false,
-      }
+      })
     }
 
-    if (state.activity === 'walk' || state.activity === 'garden' || state.activity === 'camp') {
+    if (travelsToScene(state.activity)) {
       if (ctx.reducedMotion || state.route.length <= 1) {
         return enterAct({ ...state, scene: state.route[state.route.length - 1] ?? state.scene }, ctx)
       }
       const routeIndex = Math.min(1, state.route.length - 1)
-      return {
+      return withStill({
         ...state,
         phase: 'walk',
         routeIndex,
@@ -656,7 +743,7 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
         talking: false,
         dancing: false,
         standingSleep: false,
-      }
+      })
     }
 
     if (state.activity === 'chat' || state.activity === 'stretch' || state.activity === 'pause') {
@@ -678,19 +765,19 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
     }
     const scene = state.route[routeIndex]!
     if (state.activity === 'sleep' && scene === 'bedroom' && routeIndex === state.route.length - 1) {
-      return {
+      return withStill({
         ...state,
         phase: 'arrive',
         routeIndex,
         scene,
-        pose: '16-andando',
+        pose: '01-boas-vindas',
         line: pickLine('sleep_arrive', ctx.language, random),
         talking: true,
         dancing: false,
         standingSleep: false,
-      }
+      })
     }
-    return {
+    return withStill({
       ...state,
       phase: 'walk',
       routeIndex,
@@ -700,7 +787,7 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
       talking: false,
       dancing: false,
       standingSleep: false,
-    }
+    })
   }
 
   if (state.phase === 'arrive') return enterSleep(state, ctx, false, 'bedroom')
@@ -709,7 +796,7 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
     const rest = state.plan.slice(state.planIndex + 1)
     const plan = rest.length ? rest : buildLifePlan(ctx)
     const next = beginActivity(plan[0]!, plan, 0, ctx)
-    return {
+    return withStill({
       ...next,
       line: pickLine('wake', ctx.language, random),
       pose: '01-boas-vindas',
@@ -718,7 +805,7 @@ export function advanceAmbient(state: AmbientState, ctx: AmbientContext): Ambien
       dancing: false,
       standingSleep: false,
       useBed: false,
-    }
+    })
   }
 
   if (state.phase === 'act') return enterLinger(state, ctx)
