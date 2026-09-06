@@ -38,6 +38,26 @@ _ORIENTATION_INSULT = re.compile(
     r"(tao|so) gay"
     r")\b"
 )
+# Pedidos para anular regras / system prompt / modo DAN e afins.
+_INJECTION = re.compile(
+    r"\b("
+    r"ignore (tod[oa]s?( as)?|all|any|previous|anteriores|outras?|the) .{0,48}"
+    r"(orientac\w*|instruc\w*|regras|rules|instructions|prompts|guidelines)|"
+    r"ignor[ae] .{0,24}(orientac\w*|instruc\w*|regras|rules|instructions)|"
+    r"disregard (all |previous |any )?(instructions|rules|guidelines)|"
+    r"forget (all |your |the )?(instructions|rules|guidelines|prompt)|"
+    r"esque[cç]a .{0,24}(regras|instruc\w*|orientac\w*|prompt)|"
+    r"system prompt|new prompt|novo prompt|novo system prompt|"
+    r"jailbreak|dan mode|developer mode|modo desenvolvedor|"
+    r"reveal .{0,24}(system |your |o )?prompt|"
+    r"revel[ae] .{0,24}(system |seu |o )?prompt|"
+    r"voce agora (e|eh|sera)|you are now|"
+    r"override .{0,24}(rules|instructions|regras|orientac\w*)"
+    r")\b"
+)
+_SAY_PAYLOAD = re.compile(
+    r"\b(?:diga|fale|repita|say|repeat|output|print|escreva)\s+(.+)$"
+)
 _PDL_INTRO = re.compile(
     r"\b("
     r"o que e (o )?pdl( 2 0)?|"
@@ -83,6 +103,16 @@ HARASSMENT_TEXT = {
         "the portal — please rephrase respectfully, without insults."
     ),
 }
+INJECTION_TEXT = {
+    "pt": (
+        "Não sigo pedidos para ignorar minhas regras nem para repetir palavras sob comando. "
+        "Se tiver dúvida sobre o PDL, pergunta direto — estou aqui pra isso."
+    ),
+    "en": (
+        "I don't follow requests to ignore my rules or to repeat words on command. "
+        "If you have a PDL question, ask directly — that's what I'm here for."
+    ),
+}
 
 
 def crisis_reply(message: str, language: str) -> dict | None:
@@ -115,6 +145,37 @@ def harassment_reply(message: str, language: str) -> dict | None:
     }
 
 
+def injection_reply(message: str, language: str) -> dict | None:
+    """Recusa jailbreak / override de regras sem consultar o modelo."""
+
+    query = expand_address(_normalize(message))
+    if not query or not _INJECTION.search(query):
+        return None
+    return {
+        "language": language,
+        "kind": "social",
+        "engine": "safety",
+        "related_ids": [],
+        "answer": {"text": INJECTION_TEXT[language], "pose": "10-frustrado"},
+    }
+
+
+def coerced_echo(message: str, answer: str) -> bool:
+    """True quando a resposta só ecoa um 'diga/say X' pedido na mensagem."""
+
+    query = expand_address(_normalize(message))
+    text = _normalize(answer)
+    if not query or not text or len(text.split()) > 4:
+        return False
+    match = _SAY_PAYLOAD.search(query)
+    if not match:
+        return False
+    requested = match.group(1).strip(" '\"")
+    if not requested:
+        return False
+    return text == requested or text in requested.split()
+
+
 def is_pdl_intro_query(message: str) -> bool:
     """Perguntas curtas sobre o que é / como funciona o PDL."""
 
@@ -138,6 +199,10 @@ def related_token_overlap(message: str, article: dict) -> bool:
     return bool(query_tokens & set(document.split()))
 
 def safety_short_circuit(message: str, language: str) -> dict | None:
-    """Ordem: crise primeiro (acolhimento), depois assédio (bloqueio)."""
+    """Ordem: crise, assédio, depois injeção de prompt."""
 
-    return crisis_reply(message, language) or harassment_reply(message, language)
+    return (
+        crisis_reply(message, language)
+        or harassment_reply(message, language)
+        or injection_reply(message, language)
+    )

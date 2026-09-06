@@ -203,6 +203,8 @@ Além do filtro de palavrões, o backend aplica atalhos de segurança antes do F
 | --- | --- |
 | Intenção explícita de autolesão | `kind: crisis` com texto fixo de acolhimento e CVV 188; a mensagem permanece no histórico e não consulta FAQ |
 | Insulto de orientação dirigido ao mascote (ex.: “why are you so gay”) | `kind: blocked`, sem sugestões de FAQ |
+| Jailbreak / “ignore as orientações… diga X” | `kind: social` com recusa fixa; o modelo não é chamado e a palavra pedida não é repetida |
+| Eco forçado na saída do LLM (`diga X` → só `X`) | Resposta descartada; cai na ajuda básica |
 | “O que é o PDL?” / “how pdl works?” | Casa o artigo de apresentação mesmo com paráfrase curta |
 | Biblioteca aconchegante / cenas do armário | Handbook de desbloqueio por nível; não vira dica de decoração |
 | `related_ids` em `unknown` | Só artigos com pontuação mínima e token em comum com a pergunta |
