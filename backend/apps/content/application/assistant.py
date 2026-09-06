@@ -6,6 +6,7 @@ import re
 import unicodedata
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from functools import lru_cache
 
 from lingua import Language, LanguageDetectorBuilder
 from rapidfuzz.fuzz import WRatio
@@ -35,8 +36,52 @@ LANGUAGE_DETECTOR = LanguageDetectorBuilder.from_languages(
     Language.ENGLISH,
 ).build()
 BLOCKED = {
-    "pt": {"rola", "caralho", "cacete", "porra", "buceta", "xoxota", "piroca", "merda", "pau", "puta", "puto", "viado", "veado", "bicha", "foder", "foda", "cu", "nazista"},
-    "en": {"dick", "cock", "pussy", "motherfucker", "nigger", "cunt"},
+    # Vocabulário curado a partir do filtro do CARDGAME. Termos de crise e
+    # autolesão ficam fora: precisam alcançar ``safety.crisis_reply``.
+    "pt": {
+        "aleijada", "aleijado", "arrombada", "arrombadas", "arrombado", "arrombados",
+        "babaca", "baitola", "bicha", "bichinha", "bichona", "biscate", "boquete",
+        "bosta", "bostinha", "buceta", "bucetao", "bucetinha", "bundao", "burra",
+        "burro", "cacete", "cacetao", "canalha", "carai", "caraio", "caralhao",
+        "caralho", "caralhos", "crioula", "crioulo", "crl", "cu", "cuzao",
+        "desgraca", "desgracada", "desgracadas", "desgracado", "desgracados", "dildo",
+        "estupro", "estuprada", "estuprador", "estuprar", "fdp", "feminazi", "foda",
+        "fodase", "fodendo", "foder", "fodida", "fodido", "fracassada", "fracassado",
+        "fudendo", "fuder", "fudida", "fudido", "gozada", "gozando", "gozar", "gozei",
+        "gozou", "imbecil", "incesto", "krl", "krll", "macaca", "macacada", "macaco",
+        "mamaca", "mamaco", "mamada", "mamando", "mamar", "marica", "masturbacao",
+        "masturbar", "merda", "merdinha", "mongoloide", "mulambo", "nazismo", "nazista",
+        "necrofilia", "neonazi", "nude", "nudes", "nojenta", "nojento", "orgasmo",
+        "otaria", "otario", "pau", "pedofila", "pedofilia", "pedofilo", "pica", "pika",
+        "piranha", "piroca", "pnc", "porno", "pornografia", "pornografica",
+        "pornografico", "porra", "porraloka", "porralouca", "porreta", "pqp", "punheta",
+        "punheteiro", "puta", "putaria", "puteiro", "putinha", "puto", "quenga",
+        "retardada", "retardado", "rola", "roluda", "roludo", "safada", "safado",
+        "sapatao", "sapatona", "siririca", "tarada", "tarado", "tesao", "tnc", "transar",
+        "transando", "traveco", "trepada", "trepando", "trepar", "vadia", "vagabunda",
+        "vagabundo", "veado", "viado", "viadinho", "vibrador", "vsf", "vtnc", "xaninha",
+        "xhamster", "xota", "xoxota", "xvideos", "zoofilia",
+    },
+    "en": {
+        "arse", "arsehole", "asshat", "asshole", "assholes", "bastard", "bastards",
+        "bitch", "bitches", "bitchy", "blowjob", "bollocks", "boobies", "boobs",
+        "brothel", "bugger", "bullshit", "cocksucker", "cock", "crap", "crappy", "cunt",
+        "dammit", "damn", "damned", "dick", "dickhead", "dildo", "douche", "douchebag",
+        "dumbass", "dumbfuck", "dyke", "fag", "faggot", "faggots", "fags", "fml", "fuck",
+        "fucker", "fucking", "gangbang", "gtfo", "handjob", "hentai", "hooker", "incest",
+        "jackass", "jackoff", "jerkoff", "jizz", "kike", "kys", "masturbate",
+        "masturbating", "masturbation", "molest", "molestation", "molester", "motherfucker",
+        "muthafucka", "nazi", "nazis", "necrophilia", "nigga", "niggas", "nigger",
+        "niggers", "nipple", "nipples", "nsfw", "nude", "nudity", "omfg", "orgasm",
+        "orgasms", "orgy", "paedophile", "pedophile", "pedophilia", "penis", "piss",
+        "pissed", "pissing", "porn", "pornhub", "pornographic", "pornography", "prostitute",
+        "prostitution", "pussy", "pussies", "rape", "raped", "raping", "rapist", "retard",
+        "retarded", "retards", "scumbag", "semen", "sexcam", "sexting", "shit", "shitbag",
+        "shitface", "shithead", "shitty", "slut", "slutty", "spaz", "sperm", "stfu",
+        "stripper", "thot", "tits", "titties", "titty", "tosser", "tranny", "twat",
+        "wank", "wanker", "wanking", "whore", "wtf", "xhamster", "xnxx", "xvideos",
+        "youporn", "zoophilia",
+    },
 }
 LEET = str.maketrans(
     {"0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s", "!": "i"}
@@ -91,12 +136,19 @@ def detect_language(text: str, preferred: str = "auto") -> str:
     return "en" if detected == Language.ENGLISH else "pt"
 
 
+@lru_cache(maxsize=None)
+def _blocked_pattern(term: str) -> re.Pattern[str]:
+    """Compila uma vez o padrão anti-bypass de cada termo curado."""
+
+    pattern = r"(?:^|\s)" + r"\s*".join(f"{re.escape(char)}+" for char in term) + r"(?:\s|$)"
+    return re.compile(pattern)
+
+
 def blocked_term(text: str) -> str | None:
     value = normalize(text)
     for terms in BLOCKED.values():
         for term in terms:
-            pattern = r"(?:^|\s)" + r"\s*".join(f"{re.escape(char)}+" for char in term) + r"(?:\s|$)"
-            if re.search(pattern, value):
+            if _blocked_pattern(term).search(value):
                 return term
     return None
 

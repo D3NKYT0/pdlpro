@@ -2,7 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import User
-from apps.content.application.assistant import detect_language
+from apps.content.application.assistant import blocked_term, detect_language
 from apps.content.infrastructure.models import Faq
 from apps.content.infrastructure.semantic import SentenceTransformerMatcher
 
@@ -28,6 +28,11 @@ def test_lingua_detects_supported_languages_and_respects_selection():
     assert detect_language("Como posso recuperar minha senha?") == "pt"
     assert detect_language("How can I recover my password?") == "en"
     assert detect_language("Hello", preferred="pt") == "pt"
+
+
+@pytest.mark.parametrize("message", ["canal", "cultura", "Carambola", "Rolamento", "classificar"])
+def test_expanded_moderation_preserves_legitimate_words(message):
+    assert blocked_term(message) is None
 
 
 @pytest.mark.django_db
@@ -95,6 +100,36 @@ def test_assistant_moderates_obfuscated_terms_in_both_languages(api, player):
     assert portuguese.data["kind"] == "blocked"
     assert english.data["kind"] == "blocked"
     assert "d.1.c.k" not in english.data["answer"]["text"]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    ("message", "language"),
+    [
+        ("fdp", "pt"),
+        ("f.d.p", "pt"),
+        ("arrombado", "pt"),
+        ("vagabunda", "pt"),
+        ("fudido", "pt"),
+        ("caralhos", "pt"),
+        ("pornografia", "pt"),
+        ("punheta", "pt"),
+        ("shit", "en"),
+        ("bitch", "en"),
+        ("nigga", "en"),
+    ],
+)
+def test_assistant_moderates_expanded_cardgame_vocabulary(api, player, message, language):
+    api.force_authenticate(player)
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": message, "language": language},
+    )
+
+    assert response.status_code == 200
+    assert response.data["kind"] == "blocked"
+    assert response.data["engine"] == "moderation"
 
 
 @pytest.mark.django_db

@@ -104,24 +104,90 @@ it('caminha no atlas próprio e aplica o custo de energia confirmado pela API', 
   expect(JSON.parse((request[1] as RequestInit).body as string)).toMatchObject({ action: 'walk' })
   expect(screen.getByLabelText('Energia')).toHaveValue(70)
 })
-it('reserva a cama para a ação Dormir e dorme em pé na ociosidade sem acumular timers', async () => {
-  mount(); await screen.findByRole('button', { name: articles[0].question }); await openCompanion(); await screen.findByText('Nível 1')
+it('após ociosidade fala, dorme em pé sem quarto e libera timers; a cama fica no Dormir', async () => {
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
-  await openCompanion()
+  render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await screen.findByText('Nível 1')
   await user.click(screen.getByRole('button', { name: 'Dormir' }))
   await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo'))
   expect(document.querySelector('.denk-sprite')).toBeTruthy()
   await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getAllByText(/Estou com sono/)).not.toHaveLength(0)
+  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
   expect(document.querySelector('.denk-sprite')).toBeNull()
   expect(document.querySelector('.denk-transition:not(.is-leaving) .denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
-  expect(screen.getAllByText('Curtindo um momento tranquilo.')).toHaveLength(2)
+  expect(screen.getAllByText('Dormindo tranquilamente.')).not.toHaveLength(0)
   cleanup(); client.clear()
   expect(vi.getTimerCount()).toBe(0)
+})
+it('caminha pelos cômodos desbloqueados até dormir na cama e cancela ao digitar', async () => {
+  const house = {
+    ...petProfile,
+    appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
+    unlocks: [
+      { id: 'living-room', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Sala', en: 'Living room' } },
+      { id: 'kitchen', slot: 'scene', level: 2, unlocked: true, label: { pt: 'Cozinha', en: 'Kitchen' } },
+      { id: 'bedroom', slot: 'scene', level: 3, unlocked: true, label: { pt: 'Quarto', en: 'Bedroom' } },
+    ],
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(house) : apiResponse(input)))
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await screen.findByText('Nível 1')
+  await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getAllByText(/Vou até o quarto/)).not.toHaveLength(0)
+  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '16-andando')
+  await waitFor(() => expect(document.querySelector('[data-scene="kitchen"]')).toBeTruthy())
+  await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '16-andando')
+  await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())
+  await act(async () => { await vi.advanceTimersByTimeAsync(2000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
+  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
+  expect(document.querySelector('.denk-sprite')).toBeTruthy()
+  await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'oi')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
+  await waitFor(() => expect(document.querySelector('[data-scene="living-room"]')).toBeTruthy())
+  expect(fetcher.mock.calls.some(([, init]) => (init as RequestInit | undefined)?.method === 'PATCH')).toBe(false)
+})
+it('com movimento reduzido pula a caminhada e dorme sem atlas de andança', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
+  const house = {
+    ...petProfile,
+    appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
+    unlocks: [
+      { id: 'living-room', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Sala', en: 'Living room' } },
+      { id: 'bedroom', slot: 'scene', level: 3, unlocked: true, label: { pt: 'Quarto', en: 'Bedroom' } },
+    ],
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(house) : apiResponse(input)))
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await screen.findByText('Nível 1')
+  await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
+  expect(document.querySelector('[data-pose="16-andando"]')).toBeNull()
+  await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())
 })
 it('mantém atividades manuais estáticas e não inicia atividades automáticas com movimento reduzido', async () => {
   vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))

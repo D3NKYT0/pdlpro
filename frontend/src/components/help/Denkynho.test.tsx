@@ -87,6 +87,14 @@ it('expõe a ociosidade no sprite dormindo em pé, sem usar o atlas da cama', as
   expect(container.querySelector('.denk-sprite')).toBeNull()
   expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
 })
+it('prioriza sceneOverride sobre a cena do armário', async () => {
+  const { container, rerender } = render(<Denkynho pose="01-boas-vindas" appearance={{ accessory: '', outfit: '', object: '', scene: 'garden' }} animated={false} />)
+  await settle()
+  expect(container.querySelector('[data-scene="garden"]')).toBeTruthy()
+  rerender(<Denkynho pose="05-dormindo" appearance={{ accessory: '', outfit: '', object: '', scene: 'garden' }} sceneOverride="bedroom" animated={false} />)
+  await settle()
+  expect(container.querySelector('[data-scene="bedroom"]')).toBeTruthy()
+})
 it('mantém a imagem anterior se o novo asset falhar', async () => {
   const { rerender } = render(<Denkynho pose="01-boas-vindas" />); await settle(); fail = true
   rerender(<Denkynho pose="07-triste" />); await settle()

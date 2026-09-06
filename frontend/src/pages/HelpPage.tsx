@@ -31,6 +31,15 @@ import { HelpPreferences } from '../components/help/HelpPreferences'
 import { DenkynhoActivityIcon } from '../components/help/DenkynhoActivityIcon'
 import { thinkingPhrase } from '../components/help/thinking'
 import { loadHelpPreferences, storeHelpPreferences, type HelpPreferences as Preferences } from '../components/help/preferences'
+import {
+  advanceAmbient,
+  ambientDuration,
+  ambientPose,
+  buildIdleRoute,
+  IDLE_TRIGGER_MS,
+  startAmbient,
+  type AmbientState,
+} from '../components/help/idleRoutine'
 type Message = { id: number; role: 'user' | 'assistant'; text: string; status?: 'sending' | 'failed'; details?: string; followUp?: string; source?: string; related?: HelpArticle[]; pose?: string; action?: { label: string; url: string } }
 /** Alinhado a ``MESSAGE_MAX_LENGTH`` no backend — evita colagens que o modelo ecoa. */
 const MAX_CHAT_MESSAGE_LENGTH = 400
@@ -85,7 +94,7 @@ export function HelpPage() {
   const [limited, setLimited] = useState(false)
   const [revealing, setRevealing] = useState<Message | null>(null)
   const [shown, setShown] = useState(0)
-  const [idle, setIdle] = useState(false)
+  const [ambient, setAmbient] = useState<AmbientState | null>(null)
   const [activity, setActivity] = useState<string | null>(null)
   const [thinkFor, setThinkFor] = useState(0)
   const [careResult, setCareResult] = useState<ApiDenkynhoCareResult | null>(null)
@@ -114,7 +123,7 @@ export function HelpPage() {
       setPreferences(updated)
       if (updated.remember && user?.id) storeHelpPreferences(user.id, updated)
     }
-    setDraft(''); setValidation(''); setIdle(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
+    setDraft(''); setValidation(''); setAmbient(null); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
   }
   useEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
   useEffect(() => {
@@ -129,7 +138,7 @@ export function HelpPage() {
     setPreferences(saved); setLanguage(nextLanguage)
     session.current++
     setContext(''); setLimited(false); setMessages([welcome(helpIdentity(user), nextLanguage, saved)])
-    setDialogue(dialogueWithPreferences(nextLanguage, saved)); setRevealing(null); setDraft(''); setIdle(false)
+    setDialogue(dialogueWithPreferences(nextLanguage, saved)); setRevealing(null); setDraft(''); setAmbient(null)
     setValidation(''); setFailed(false); setModerationBlocked(false); setExpanded(new Set())
     // A mudança de identidade invalida também respostas ainda em trânsito.
     setCareResult(null); setActivity(null); careRetry.current = null
@@ -158,13 +167,23 @@ export function HelpPage() {
     return () => clearTimeout(timer)
   }, [activity])
   useEffect(() => {
-    if (busy || petAction.pending || activity || draft || idle) return
-    const timer = setTimeout(() => setIdle(true), 45000)
+    if (busy || petAction.pending || activity || draft || ambient) return
+    const timer = setTimeout(() => {
+      const unlocked = (pet.data?.unlocks ?? []).filter(item => item.slot === 'scene' && item.unlocked).map(item => item.id)
+      setAmbient(startAmbient(buildIdleRoute(pet.data?.appearance?.scene, unlocked), language))
+    }, IDLE_TRIGGER_MS)
     return () => clearTimeout(timer)
-  }, [busy, petAction.pending, messages, draft, activity, idle])
-  // Conversar ou iniciar um cuidado encerra a ociosidade e qualquer animação anterior.
+  }, [busy, petAction.pending, messages, draft, activity, ambient, pet.data?.appearance?.scene, pet.data?.unlocks, language])
   useEffect(() => {
-    if (busy || petAction.pending || draft) { setActivity(null); setIdle(false) }
+    if (!ambient || ambient.phase === 'sleep') return
+    const timer = setTimeout(() => {
+      setAmbient(current => (current ? advanceAmbient(current, language, !animated) : null))
+    }, ambientDuration(ambient.phase))
+    return () => clearTimeout(timer)
+  }, [ambient, language, animated])
+  // Conversar ou iniciar um cuidado encerra a rotina ambient e qualquer animação anterior.
+  useEffect(() => {
+    if (busy || petAction.pending || draft) { setActivity(null); setAmbient(null) }
   }, [busy, petAction.pending, draft])
   const finish = useCallback(() => setRevealing(null), [])
   useEffect(() => {
@@ -185,11 +204,11 @@ export function HelpPage() {
     if (!question || question.length > MAX_CHAT_MESSAGE_LENGTH) { setValidation(labels.invalid); return }
     if (!moderateChatInput(question).allowed) {
       setValidation(labels.blocked)
-      setModerationBlocked(true); setIdle(false)
+      setModerationBlocked(true); setAmbient(null)
       return
     }
     if (busy) return
-    setValidation(''); setIdle(false); setFailed(false); setModerationBlocked(false)
+    setValidation(''); setAmbient(null); setFailed(false); setModerationBlocked(false)
     const currentSession = session.current
     const messageId = retryId ?? messages.findLast(message => message.role === 'user' && message.status === 'failed' && message.text === question)?.id ?? ++sequence.current
     const result = await action.run(async () => {
@@ -254,7 +273,7 @@ export function HelpPage() {
     if (!mounted.current || currentSession !== session.current || !result.ok) return
     careRetry.current = null
     setCareResult(result.value)
-    setIdle(false); setActivity(item.pose); onActivity()
+    setAmbient(null); setActivity(item.pose); onActivity()
   }
   function submit(event: FormEvent) { event.preventDefault(); void send() }
   function onDraftKey(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -269,9 +288,11 @@ export function HelpPage() {
   const emotion = isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion : defaultDenkynhoEmotion
   const emotionPose = emotion.idle_pose
   const celebrating = Boolean(activity && careResult?.level_up && !careResult.replayed)
-  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? (idle ? '05-dormindo' : last.id === 0 ? emotionPose : last.pose ?? emotionPose)
+  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? (ambient ? ambientPose(ambient) : last.id === 0 ? emotionPose : last.pose ?? emotionPose)
   const currentActivity = activities.find(item => item.pose === pose)
-  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : idle ? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.idle) : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
+  const standingSleep = ambient?.phase === 'sleep' && !ambient.useBed
+  const ambientTalking = ambient?.phase === 'speak'
+  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : ambient ? ambient.line : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
     { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },
@@ -282,7 +303,7 @@ export function HelpPage() {
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to={supportTicketPrefill(screenContext?.path, language)?.to ?? '/painel/support'} variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
       <HelpCompanion faqLink={<ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>} language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
-        mascot={<Denkynho pose={pose} idle={idle} animated={animated} appearance={pet.data?.appearance} celebration={celebrating} dancing={activity === '13-dancando'} talking={Boolean(revealing)} mouthOpen={speechFrame(revealing?.text ?? '', shown, revealing?.pose).mouthOpen} />}>
+        mascot={<Denkynho pose={pose} idle={standingSleep} animated={animated} appearance={pet.data?.appearance} sceneOverride={ambient?.scene} celebration={celebrating} dancing={activity === '13-dancando'} talking={Boolean(revealing) || ambientTalking} mouthOpen={revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientTalking} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
         {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>
@@ -314,7 +335,7 @@ export function HelpPage() {
         </>}
       </HelpCompanion>
       <Card as="section" className="help-chat" aria-label={labels.chatLabel}>
-        <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p>{limited && <p role="status">{language === 'pt' ? 'Estou no modo de ajuda básica. A conversa com IA está indisponível no momento.' : 'Basic help mode is active. AI conversation is currently unavailable.'}</p>}</div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { session.current++; setContext(''); setLimited(false); setMessages([welcome(identity, language, preferences)]); setDialogue(dialogueWithPreferences(language, preferences)); setDraft(''); setValidation(''); setIdle(false); setFailed(false); setModerationBlocked(false); setExpanded(new Set()); followLatest.current = true }}>{labels.fresh}</Button></header>
+        <header className="help-chat-head"><div><h2>{labels.chat}</h2><p className="muted">{labels.context}</p>{limited && <p role="status">{language === 'pt' ? 'Estou no modo de ajuda básica. A conversa com IA está indisponível no momento.' : 'Basic help mode is active. AI conversation is currently unavailable.'}</p>}</div><Button size="sm" variant="secondary" disabled={busy} onClick={() => { session.current++; setContext(''); setLimited(false); setMessages([welcome(identity, language, preferences)]); setDialogue(dialogueWithPreferences(language, preferences)); setDraft(''); setValidation(''); setAmbient(null); setFailed(false); setModerationBlocked(false); setExpanded(new Set()); followLatest.current = true }}>{labels.fresh}</Button></header>
         <div className="help-messages" ref={thread} onScroll={event => { const node = event.currentTarget; followLatest.current = node.scrollHeight - node.scrollTop - node.clientHeight < 64 }} role="log" aria-label={labels.messages} aria-live="polite" aria-relevant="additions">
           {screenContext && messages.length === 1 && <section className="help-context"><strong>{screenContext.title}</strong><p>{screenContext.tip}</p><Button size="sm" variant="secondary" disabled={busy} onClick={() => { setDraft(screenContext.suggestion); thread.current?.parentElement?.querySelector('textarea')?.focus() }}>{screenContext.suggestion}</Button><div className="help-activities">{screenContext.actions.map(item => <ButtonLink key={item.to} size="sm" variant="secondary" to={item.to}>{item.label}</ButtonLink>)}</div></section>}
           {messages.map(message => <article key={message.id} className={`help-message from-${message.role}`}>

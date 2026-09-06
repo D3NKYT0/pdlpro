@@ -6,6 +6,13 @@ describe('filtro da conversa do Denkynho', () => {
     expect(moderateChatInput(`Pode me chamar de ${value}`).allowed).toBe(false)
   })
 
+  it.each([
+    'fdp', 'f.d.p', 'arrombado', 'vagabunda', 'fudido', 'caralhos',
+    'pornografia', 'punheta', 'shit', 'bitch', 'nigga',
+  ])('bloqueia o vocabulário ampliado do filtro: %s', value => {
+    expect(moderateChatInput(`Mensagem com ${value}`).allowed).toBe(false)
+  })
+
   it.each(['Dani', "D'Ávila", 'Rosa', 'Carambola', 'Rolamento'])('preserva nomes e palavras legítimas: %s', value => {
     expect(moderateChatInput(value).allowed).toBe(true)
   })
