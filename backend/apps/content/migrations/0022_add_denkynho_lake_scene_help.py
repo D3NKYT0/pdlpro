@@ -1,3 +1,4 @@
+from typing import ClassVar
 from uuid import UUID
 
 from django.db import migrations
@@ -57,5 +58,5 @@ def remove_lake_help(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [("content", "0021_update_denkynho_message_limit_help")]
-    operations = [migrations.RunPython(add_lake_help, remove_lake_help)]
+    dependencies: ClassVar = [("content", "0021_update_denkynho_message_limit_help")]
+    operations: ClassVar = [migrations.RunPython(add_lake_help, remove_lake_help)]
