@@ -7,6 +7,21 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
 import { resetHttpClient } from '../services/infra/http'
+import type { AmbientActivity } from '../components/help/idleRoutine'
+import { estimateSpeechMs } from '../components/help/idleRoutine'
+const ambientPlan = vi.hoisted(() => ({ current: null as AmbientActivity[] | null }))
+vi.mock('../components/help/idleRoutine', async importOriginal => {
+  const actual = await importOriginal<typeof import('../components/help/idleRoutine')>()
+  return {
+    ...actual,
+    startAmbient: (ctx: import('../components/help/idleRoutine').AmbientContext) => {
+      const withSeed = { ...ctx, random: ctx.random ?? (() => 0) }
+      return ambientPlan.current
+        ? actual.startAmbientPlan(ambientPlan.current, withSeed)
+        : actual.startAmbient(withSeed)
+    },
+  }
+})
 vi.mock('../contexts/AuthContext', () => ({
   useAuth: () => ({ user: { id: 'user-1', username: 'daniel', display_name: 'Daniel', role: 'player', email: 'd@example.com', bio: '', is_email_verified: true, fichas: 0, avatar_url: null } }),
 }))
@@ -29,7 +44,7 @@ beforeEach(() => {
   vi.stubGlobal('fetch', fetcher)
   vi.stubGlobal('Image', class { onload: null | (() => void) = null; onerror = null; set src(_: string) { Promise.resolve().then(() => this.onload?.()) } })
 })
-afterEach(() => { cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+afterEach(() => { ambientPlan.current = null; cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 async function openCompanion(user = userEvent.setup()) { if (!screen.queryByRole('dialog')) await user.click(screen.getByRole('button', { name: /Denkynho: / })) }
 function mount() { render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
 it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo clique', async () => {
@@ -104,7 +119,8 @@ it('caminha no atlas próprio e aplica o custo de energia confirmado pela API', 
   expect(JSON.parse((request[1] as RequestInit).body as string)).toMatchObject({ action: 'walk' })
   expect(screen.getByLabelText('Energia')).toHaveValue(70)
 })
-it('após ociosidade fala, dorme em pé sem quarto e libera timers; a cama fica no Dormir', async () => {
+it('após ociosidade fala de verdade, vive e pode dormir em pé; a cama manual continua no Dormir', async () => {
+  ambientPlan.current = ['chat', 'sleep']
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
@@ -118,17 +134,23 @@ it('após ociosidade fala, dorme em pé sem quarto e libera timers; a cama fica 
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
+  expect(screen.getByRole('img')).toHaveAccessibleName(/falando/)
+  expect(screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)).not.toHaveLength(0)
+  const chatLine = screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)[0]!.textContent!
+  await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(chatLine, '01-boas-vindas', true) + 50) })
   expect(screen.getAllByText(/Estou com sono/)).not.toHaveLength(0)
-  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
+  const sleepLine = screen.getAllByText(/Estou com sono/)[0]!.textContent!
+  await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(sleepLine, '01-boas-vindas', true) + 50) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
   expect(document.querySelector('.denk-sprite')).toBeNull()
   expect(document.querySelector('.denk-transition:not(.is-leaving) .denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
-  expect(screen.getAllByText('Dormindo tranquilamente.')).not.toHaveLength(0)
+  expect(screen.getAllByText(/Dormindo tranquilamente/)).not.toHaveLength(0)
   cleanup(); client.clear()
   expect(vi.getTimerCount()).toBe(0)
 })
-it('caminha pelos cômodos desbloqueados até dormir na cama e cancela ao digitar', async () => {
+it('vive com lanche e caminhada, fala com a boca, e cancela ao digitar sem gravar cena', async () => {
+  ambientPlan.current = ['snack', 'walk']
   const house = {
     ...petProfile,
     appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
@@ -146,26 +168,21 @@ it('caminha pelos cômodos desbloqueados até dormir na cama e cancela ao digita
   await openCompanion(user)
   await screen.findByText('Nível 1')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
-  expect(screen.getAllByText(/Vou até o quarto/)).not.toHaveLength(0)
-  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '16-andando')
+  expect(screen.getByRole('img')).toHaveAccessibleName(/falando/)
+  expect(screen.getAllByText(/lanchinho|cozinha|snack|kitchen/i)).not.toHaveLength(0)
+  const say = screen.getAllByText(/lanchinho|cozinha|snack|kitchen/i)[0]!.textContent!
+  await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(say, '01-boas-vindas', true) + 50) })
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo')
   await waitFor(() => expect(document.querySelector('[data-scene="kitchen"]')).toBeTruthy())
-  await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '16-andando')
-  await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())
-  await act(async () => { await vi.advanceTimersByTimeAsync(2000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
-  expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
-  expect(document.querySelector('.denk-sprite')).toBeTruthy()
-  await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())
+  await act(async () => { await vi.advanceTimersByTimeAsync(6000) })
+  expect(screen.getAllByText(/voltinha|Caminhar|stroll|walk/i)).not.toHaveLength(0)
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'oi')
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
   await waitFor(() => expect(document.querySelector('[data-scene="living-room"]')).toBeTruthy())
   expect(fetcher.mock.calls.some(([, init]) => (init as RequestInit | undefined)?.method === 'PATCH')).toBe(false)
 })
-it('com movimento reduzido pula a caminhada e dorme sem atlas de andança', async () => {
+it('com movimento reduzido fala e dorme no quarto sem atlas de andança', async () => {
+  ambientPlan.current = ['sleep']
   vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
   const house = {
     ...petProfile,
@@ -184,7 +201,9 @@ it('com movimento reduzido pula a caminhada e dorme sem atlas de andança', asyn
   await screen.findByText('Nível 1')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
-  await act(async () => { await vi.advanceTimersByTimeAsync(4000) })
+  expect(screen.getAllByText(/Estou com sono|Vou até o quarto/)).not.toHaveLength(0)
+  const line = screen.getAllByText(/Estou com sono|Vou até o quarto/)[0]!.textContent!
+  await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(line, '01-boas-vindas', false) + 50) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(document.querySelector('[data-pose="16-andando"]')).toBeNull()
   await waitFor(() => expect(document.querySelector('[data-scene="bedroom"]')).toBeTruthy())

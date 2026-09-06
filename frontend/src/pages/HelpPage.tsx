@@ -35,7 +35,6 @@ import {
   advanceAmbient,
   ambientDuration,
   ambientPose,
-  buildIdleRoute,
   IDLE_TRIGGER_MS,
   startAmbient,
   type AmbientState,
@@ -95,6 +94,7 @@ export function HelpPage() {
   const [revealing, setRevealing] = useState<Message | null>(null)
   const [shown, setShown] = useState(0)
   const [ambient, setAmbient] = useState<AmbientState | null>(null)
+  const [ambientSpeech, setAmbientSpeech] = useState(0)
   const [activity, setActivity] = useState<string | null>(null)
   const [thinkFor, setThinkFor] = useState(0)
   const [careResult, setCareResult] = useState<ApiDenkynhoCareResult | null>(null)
@@ -170,20 +170,44 @@ export function HelpPage() {
     if (busy || petAction.pending || activity || draft || ambient) return
     const timer = setTimeout(() => {
       const unlocked = (pet.data?.unlocks ?? []).filter(item => item.slot === 'scene' && item.unlocked).map(item => item.id)
-      setAmbient(startAmbient(buildIdleRoute(pet.data?.appearance?.scene, unlocked), language))
+      setAmbient(startAmbient({
+        language,
+        currentScene: pet.data?.appearance?.scene,
+        unlockedScenes: unlocked,
+        canDance: Boolean(pet.data?.available_actions?.includes('dance')),
+        reducedMotion: !animated,
+      }))
+      setAmbientSpeech(0)
     }, IDLE_TRIGGER_MS)
     return () => clearTimeout(timer)
-  }, [busy, petAction.pending, messages, draft, activity, ambient, pet.data?.appearance?.scene, pet.data?.unlocks, language])
+  }, [busy, petAction.pending, messages, draft, activity, ambient, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions, language, animated])
   useEffect(() => {
-    if (!ambient || ambient.phase === 'sleep') return
+    if (!ambient) return
+    const ctx = {
+      language,
+      currentScene: pet.data?.appearance?.scene,
+      unlockedScenes: (pet.data?.unlocks ?? []).filter(item => item.slot === 'scene' && item.unlocked).map(item => item.id),
+      canDance: Boolean(pet.data?.available_actions?.includes('dance')),
+      reducedMotion: !animated,
+    }
     const timer = setTimeout(() => {
-      setAmbient(current => (current ? advanceAmbient(current, language, !animated) : null))
-    }, ambientDuration(ambient.phase))
+      setAmbient(current => (current ? advanceAmbient(current, ctx) : null))
+    }, ambientDuration(ambient, animated))
     return () => clearTimeout(timer)
-  }, [ambient, language, animated])
+  }, [ambient, language, animated, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions])
+  useEffect(() => { setAmbientSpeech(0) }, [ambient?.activity, ambient?.phase, ambient?.line])
+  useEffect(() => {
+    if (!ambient?.talking) { setAmbientSpeech(0); return }
+    if (!animated) { setAmbientSpeech(Array.from(ambient.line).length); return }
+    const chars = Array.from(ambient.line)
+    if (ambientSpeech >= chars.length) return
+    const frame = speechFrame(ambient.line, ambientSpeech, ambient.pose)
+    const timer = setTimeout(() => setAmbientSpeech(count => Math.min(chars.length, count + frame.step)), frame.delay)
+    return () => clearTimeout(timer)
+  }, [ambient, ambientSpeech, animated])
   // Conversar ou iniciar um cuidado encerra a rotina ambient e qualquer animação anterior.
   useEffect(() => {
-    if (busy || petAction.pending || draft) { setActivity(null); setAmbient(null) }
+    if (busy || petAction.pending || draft) { setActivity(null); setAmbient(null); setAmbientSpeech(0) }
   }, [busy, petAction.pending, draft])
   const finish = useCallback(() => setRevealing(null), [])
   useEffect(() => {
@@ -290,9 +314,10 @@ export function HelpPage() {
   const celebrating = Boolean(activity && careResult?.level_up && !careResult.replayed)
   const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? (ambient ? ambientPose(ambient) : last.id === 0 ? emotionPose : last.pose ?? emotionPose)
   const currentActivity = activities.find(item => item.pose === pose)
-  const standingSleep = ambient?.phase === 'sleep' && !ambient.useBed
-  const ambientTalking = ambient?.phase === 'speak'
+  const standingSleep = Boolean(ambient?.standingSleep)
+  const ambientTalking = Boolean(ambient?.talking)
   const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : ambient ? ambient.line : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
+  const ambientMouth = ambientTalking ? speechFrame(ambient!.line, ambientSpeech, ambient!.pose).mouthOpen : false
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
     { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },
@@ -303,7 +328,7 @@ export function HelpPage() {
     <PageHeader className="help-hero" title={labels.title} eyebrow={<><MessageCircle aria-hidden="true" /> {labels.eyebrow}</>} description={labels.description} actions={<ButtonLink to={supportTicketPrefill(screenContext?.path, language)?.to ?? '/painel/support'} variant="secondary" size="sm"><Headphones aria-hidden="true" /> {labels.support}</ButtonLink>} />
     <div className="help-workspace">
       <HelpCompanion faqLink={<ButtonLink to="/faq" variant="secondary" size="sm"><BookOpen aria-hidden="true" /> {labels.faq}</ButtonLink>} language={language} onChat={() => thread.current?.parentElement?.querySelector('textarea')?.focus()} status={companionStatus}
-        mascot={<Denkynho pose={pose} idle={standingSleep} animated={animated} appearance={pet.data?.appearance} sceneOverride={ambient?.scene} celebration={celebrating} dancing={activity === '13-dancando'} talking={Boolean(revealing) || ambientTalking} mouthOpen={revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientTalking} />}>
+        mascot={<Denkynho pose={pose} idle={standingSleep} animated={animated} appearance={pet.data?.appearance} sceneOverride={ambient?.scene} celebration={celebrating} dancing={activity === '13-dancando' || Boolean(ambient?.dancing)} talking={Boolean(revealing) || ambientTalking} mouthOpen={revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientMouth} />}>
         {onActivity => <>
         {pet.isLoading && <LoadingState className="denk-pet-loading">{labels.petLoading}</LoadingState>}
         {pet.data && <section className="denk-pet-panel" aria-label={labels.pet}>

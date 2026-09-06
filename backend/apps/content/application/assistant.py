@@ -6,7 +6,7 @@ import re
 import unicodedata
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 
 from lingua import Language, LanguageDetectorBuilder
 from rapidfuzz.fuzz import WRatio
@@ -136,7 +136,7 @@ def detect_language(text: str, preferred: str = "auto") -> str:
     return "en" if detected == Language.ENGLISH else "pt"
 
 
-@lru_cache(maxsize=None)
+@cache
 def _blocked_pattern(term: str) -> re.Pattern[str]:
     """Compila uma vez o padrão anti-bypass de cada termo curado."""
 
