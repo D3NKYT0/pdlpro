@@ -377,11 +377,11 @@
     "openMouth": false,
     "eyes": {
       "src": "17-observando-olhos.png",
-      "box": [0, 0, 256, 384]
+      "box": [64, 32, 176, 112]
     },
     "mouth": {
       "src": "17-observando-boca.png",
-      "box": [0, 0, 256, 384]
+      "box": [80, 72, 160, 120]
     }
   },
   {
@@ -391,11 +391,11 @@
     "openMouth": false,
     "eyes": {
       "src": "18-regando-olhos.png",
-      "box": [0, 0, 256, 384]
+      "box": [64, 32, 176, 104]
     },
     "mouth": {
       "src": "18-regando-boca.png",
-      "box": [0, 0, 256, 384]
+      "box": [100, 76, 145, 112]
     }
   },
   {
@@ -405,11 +405,11 @@
     "openMouth": false,
     "eyes": {
       "src": "19-pescando-olhos.png",
-      "box": [0, 0, 256, 384]
+      "box": [88, 36, 188, 104]
     },
     "mouth": {
       "src": "19-pescando-boca.png",
-      "box": [0, 0, 256, 384]
+      "box": [112, 76, 176, 116]
     }
   },
   {
@@ -419,11 +419,11 @@
     "openMouth": false,
     "eyes": {
       "src": "20-sentado-banco-olhos.png",
-      "box": [0, 0, 256, 384]
+      "box": [64, 32, 176, 100]
     },
     "mouth": {
       "src": "20-sentado-banco-boca.png",
-      "box": [0, 0, 256, 384]
+      "box": [88, 76, 160, 116]
     }
   },
   {
@@ -433,11 +433,11 @@
     "openMouth": false,
     "eyes": {
       "src": "21-assistindo-tv-olhos.png",
-      "box": [0, 0, 256, 384]
+      "box": [80, 44, 184, 108]
     },
     "mouth": {
       "src": "21-assistindo-tv-boca.png",
-      "box": [0, 0, 256, 384]
+      "box": [104, 84, 168, 124]
     }
   }
 ]

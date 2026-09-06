@@ -130,21 +130,23 @@ def test_walking_production_assets_keep_opaque_white_eyes_in_every_frame():
 
 
 def test_new_ambient_sprites_have_portrait_size_and_real_transparency():
-    stems = (
-        "17-observando",
-        "18-regando",
-        "19-pescando",
-        "20-sentado-banco",
-        "21-assistindo-tv",
+    poses = (
+        ("17-observando", (256, 128, 704, 448), (320, 288, 640, 480)),
+        ("18-regando", (256, 128, 704, 416), (400, 304, 580, 448)),
+        ("19-pescando", (352, 144, 752, 416), (448, 304, 704, 464)),
+        ("20-sentado-banco", (256, 128, 704, 400), (352, 304, 640, 464)),
+        ("21-assistindo-tv", (320, 176, 736, 432), (416, 336, 672, 496)),
     )
-    for stem in stems:
+    for stem, eyes_box, mouth_box in poses:
         base = Image.open(ASSETS / "poses" / f"{stem}.png").convert("RGBA")
-        base_alpha = np.asarray(base.getchannel("A"))
-        for suffix in ("", "-olhos", "-boca"):
+        assert base.size == (1024, 1536)
+        assert base.getchannel("A").getextrema()[0] == 0
+        assert base.getchannel("A").getextrema()[1] >= 250
+        for suffix, box in (("-olhos", eyes_box), ("-boca", mouth_box)):
             image = Image.open(ASSETS / "poses" / f"{stem}{suffix}.png").convert("RGBA")
             alpha = image.getchannel("A")
-            assert image.size == (1024, 1536)
+            assert image.size == (box[2] - box[0], box[3] - box[1])
             assert alpha.getextrema()[0] == 0
             assert alpha.getextrema()[1] >= 250
             assert image.getbbox() is not None
-            assert np.array_equal(np.asarray(alpha), base_alpha)
+            assert np.array_equal(np.asarray(alpha), np.asarray(base.getchannel("A").crop(box)))
