@@ -38,7 +38,11 @@ class PublicMarketplaceView(ItemCatalogAPIView):
 
     permission_classes = [AllowAny]
 
-    @extend_schema(tags=["Marketplace"])
+    @extend_schema(
+        tags=["Marketplace"],
+        summary="Listar anúncios públicos",
+        description="Lista os anúncios de personagens disponíveis publicamente no marketplace.",
+    )
     def get(self, request):
         listings = self.resolve(ListPublicListingsUseCase).execute(None)
         return Response([dump_listing(listing) for listing in listings])
@@ -54,12 +58,21 @@ class MyListingsView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Marketplace"])
+    @extend_schema(
+        tags=["Marketplace"],
+        summary="Listar meus anúncios",
+        description="Lista os anúncios de personagens criados pelo usuário autenticado.",
+    )
     def get(self, request):
         listings = self.resolve(ListMyListingsUseCase).execute(ListMyListingsInput(user_id=request.user.id))
         return Response([dump_listing(listing) for listing in listings])
 
-    @extend_schema(tags=["Marketplace"], request=CreateListingSerializer)
+    @extend_schema(
+        tags=["Marketplace"],
+        summary="Criar anúncio",
+        description="Cria um anúncio de personagem no marketplace para o usuário autenticado.",
+        request=CreateListingSerializer,
+    )
     def post(self, request):
         serializer = CreateListingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -86,7 +99,11 @@ class PurchaseListingView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Marketplace"])
+    @extend_schema(
+        tags=["Marketplace"],
+        summary="Comprar anúncio",
+        description="Compra o anúncio de personagem informado em nome do usuário autenticado.",
+    )
     def post(self, request, listing_id):
         listing = self.resolve(PurchaseListingUseCase).execute(
             PurchaseListingInput(
@@ -107,7 +124,11 @@ class CancelListingView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Marketplace"])
+    @extend_schema(
+        tags=["Marketplace"],
+        summary="Cancelar anúncio",
+        description="Cancela o anúncio de personagem informado pertencente ao usuário autenticado.",
+    )
     def post(self, request, listing_id):
         listing = self.resolve(CancelListingUseCase).execute(
             CancelListingInput(user_id=request.user.id, listing_id=listing_id)

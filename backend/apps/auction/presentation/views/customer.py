@@ -51,7 +51,11 @@ class PublicAuctionListView(ItemCatalogAPIView):
 
     permission_classes = [AllowAny]
 
-    @extend_schema(tags=["Leilão"])
+    @extend_schema(
+        tags=["Leilão"],
+        summary="Listar leilões abertos",
+        description="Encerra leilões expirados e retorna a lista pública de leilões ainda abertos.",
+    )
     def get(self, request):
         self.resolve(CloseExpiredAuctionsUseCase).execute(None)
         auctions = self.resolve(ListOpenAuctionsUseCase).execute(None)
@@ -68,12 +72,21 @@ class MyAuctionsView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Leilão"])
+    @extend_schema(
+        tags=["Leilão"],
+        summary="Listar meus leilões",
+        description="Lista os leilões criados pelo usuário autenticado.",
+    )
     def get(self, request):
         auctions = self.resolve(ListMyAuctionsUseCase).execute(ListMyAuctionsInput(user_id=request.user.id))
         return Response([dump_auction(auction) for auction in auctions])
 
-    @extend_schema(tags=["Leilão"], request=CreateAuctionSerializer)
+    @extend_schema(
+        tags=["Leilão"],
+        summary="Criar leilão",
+        description="Cria um novo leilão a partir de um item do inventário do usuário autenticado.",
+        request=CreateAuctionSerializer,
+    )
     def post(self, request):
         serializer = CreateAuctionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -101,7 +114,12 @@ class PlaceBidView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Leilão"], request=PlaceBidSerializer)
+    @extend_schema(
+        tags=["Leilão"],
+        summary="Dar lance",
+        description="Registra um lance no leilão informado para o usuário autenticado.",
+        request=PlaceBidSerializer,
+    )
     def post(self, request, auction_id):
         serializer = PlaceBidSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

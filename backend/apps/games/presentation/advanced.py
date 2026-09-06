@@ -1,5 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -61,9 +62,20 @@ class BattleDetailsView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Detalhes do passe de batalha",
+        description="Retorna o conteúdo adicional do passe de batalha disponível para o jogador autenticado.",
+    )
     def get(self, request):
         return Response(battle_details(request.user))
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Ação do passe de batalha",
+        description="Executa uma ação validada no conteúdo adicional do passe (missão, troca, marco ou resgate automático).",
+        request=BattleActionSerializer,
+    )
     def post(self, request):
         serializer = BattleActionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -79,6 +91,11 @@ class DailyDetailsView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Detalhes do bônus diário",
+        description="Retorna o calendário e os detalhes do bônus diário do jogador autenticado.",
+    )
     def get(self, request):
         return Response(daily_details(request.user))
 
@@ -105,6 +122,11 @@ class FishingDetailsView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Detalhes da pesca",
+        description="Lista iscas ativas, estoque do jogador e coleção de peixes capturados.",
+    )
     def get(self, request):
         stock = dict(
             UserFishingBait.objects.filter(user=request.user).values_list(
@@ -142,6 +164,12 @@ class FishingDetailsView(APIView):
             }
         )
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Comprar iscas",
+        description="Compra iscas de pesca para o jogador autenticado com a quantidade informada.",
+        request=BaitPurchaseSerializer,
+    )
     def post(self, request):
         serializer = BaitPurchaseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -157,6 +185,11 @@ class GameStatisticsView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estatísticas de jogos",
+        description="Retorna as estatísticas do tipo solicitado para o jogador autenticado.",
+    )
     def get(self, request, kind):
         return Response(game_statistics(request.user, kind))
 
@@ -292,16 +325,31 @@ class StaffGameContentView(APIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
+    @extend_schema(
+        tags=["Staff - Conteúdo de jogos"],
+        summary="Listar conteúdo de jogos",
+        description="Lista as entradas de configuração do tipo de conteúdo informado.",
+    )
     def get(self, request, kind):
         cls = config_serializer(kind)
         return Response(cls(cls.Meta.model.objects.all(), many=True).data)
 
+    @extend_schema(
+        tags=["Staff - Conteúdo de jogos"],
+        summary="Criar conteúdo de jogos",
+        description="Cria uma nova entrada de configuração para o tipo de conteúdo informado.",
+    )
     def post(self, request, kind):
         serializer = config_serializer(kind)(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
 
+    @extend_schema(
+        tags=["Staff - Conteúdo de jogos"],
+        summary="Atualizar conteúdo de jogos",
+        description="Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.",
+    )
     def patch(self, request, kind, entry_id):
         cls = config_serializer(kind)
         serializer = cls(

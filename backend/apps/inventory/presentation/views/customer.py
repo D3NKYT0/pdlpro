@@ -45,7 +45,11 @@ class InventoryDashboardView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"])
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Painel de inventários",
+        description="Sincroniza e retorna os inventários dos personagens acessíveis ao usuário autenticado.",
+    )
     def get(self, request):
         login = request.query_params.get("login") or request.user.username
         rows = self.resolve(SyncInventoriesUseCase).execute(inventory_actor(request, login))
@@ -74,7 +78,11 @@ class CharacterItemsView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"])
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Itens do personagem",
+        description="Lista os itens do personagem informado, indicando quais são negociáveis.",
+    )
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
         items = self.resolve(ListGameItemsUseCase).execute((inventory_actor(request, login), char_id))
@@ -95,7 +103,11 @@ class CharacterEquipmentView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"])
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Equipamentos do personagem",
+        description="Lista os equipamentos atualmente vestidos pelo personagem informado.",
+    )
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
         items = self.resolve(ListCharacterEquipmentUseCase).execute((inventory_actor(request, login), char_id))
@@ -111,7 +123,12 @@ class WithdrawItemView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"], request=WithdrawSerializer)
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Retirar item",
+        description="Retira um item do personagem no jogo para o inventário do painel.",
+        request=WithdrawSerializer,
+    )
     def post(self, request):
         serializer = WithdrawSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -136,7 +153,12 @@ class DepositItemView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"], request=DepositSerializer)
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Depositar item",
+        description="Deposita um item do inventário do painel de volta ao personagem no jogo.",
+        request=DepositSerializer,
+    )
     def post(self, request):
         serializer = DepositSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -162,7 +184,12 @@ class TradeItemView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Inventário"], request=TradeSerializer)
+    @extend_schema(
+        tags=["Inventário"],
+        summary="Transferir item entre inventários",
+        description="Transfere um item entre inventários do painel pertencentes ao usuário autenticado.",
+        request=TradeSerializer,
+    )
     def post(self, request):
         serializer = TradeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

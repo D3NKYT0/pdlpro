@@ -32,7 +32,11 @@ class ActiveThemeView(APIView):
 
     permission_classes = [AllowAny]
 
-    @extend_schema(tags=["Temas"])
+    @extend_schema(
+        tags=["Temas"],
+        summary="Tema ativo",
+        description="Expõe apenas os caminhos e metadados necessários para montar o tema ativo.",
+    )
     def get(self, request):
         response = Response(get_active_theme())
         patch_cache_control(response, public=True, max_age=0, must_revalidate=True)
@@ -45,11 +49,20 @@ class StaffThemeListInstallView(APIView):
     permission_classes = [IsAuthenticated, IsSuperAdmin]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
-    @extend_schema(tags=["Staff"])
+    @extend_schema(
+        tags=["Staff"],
+        summary="Listar temas",
+        description="Lista os pacotes de tema instalados; alteração visual global é exclusiva de superadministradores.",
+    )
     def get(self, request):
         return Response(list_themes())
 
-    @extend_schema(tags=["Staff"], request=ThemeUploadSerializer)
+    @extend_schema(
+        tags=["Staff"],
+        summary="Instalar tema",
+        description="Instala um pacote .zip de tema; alteração visual global é exclusiva de superadministradores.",
+        request=ThemeUploadSerializer,
+    )
     def post(self, request):
         serializer = ThemeUploadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -63,7 +76,11 @@ class StaffThemeActivateView(APIView):
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
 
-    @extend_schema(tags=["Staff"])
+    @extend_schema(
+        tags=["Staff"],
+        summary="Ativar tema",
+        description="Ativa uma versão instalada ou restaura explicitamente o tema default.",
+    )
     def post(self, request, package_id=None):
         return Response(activate_theme(str(package_id) if package_id else None))
 
@@ -73,7 +90,11 @@ class StaffThemeDetailView(APIView):
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
 
-    @extend_schema(tags=["Staff"])
+    @extend_schema(
+        tags=["Staff"],
+        summary="Excluir tema",
+        description="Remove um pacote inativo; o tema default não possui endpoint de exclusão.",
+    )
     def delete(self, request, package_id):
         delete_theme(str(package_id))
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -19,7 +19,12 @@ class WalletView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Carteira"], responses=WalletSerializer)
+    @extend_schema(
+        tags=["Carteira"],
+        summary="Consultar carteira",
+        description="Retorna o saldo e os dados da carteira do usuário autenticado.",
+        responses=WalletSerializer,
+    )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))
         return Response(WalletSerializer(wallet).data)
@@ -34,7 +39,13 @@ class WalletTransferView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Carteira"], request=TransferSerializer, responses=WalletSerializer)
+    @extend_schema(
+        tags=["Carteira"],
+        summary="Transferir para jogador",
+        description="Transfere moedas da carteira do usuário autenticado para outro jogador.",
+        request=TransferSerializer,
+        responses=WalletSerializer,
+    )
     def post(self, request):
         serializer = TransferSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -59,7 +70,11 @@ class WalletTransactionsView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Carteira"])
+    @extend_schema(
+        tags=["Carteira"],
+        summary="Listar transações",
+        description="Lista o histórico de transações da carteira do usuário autenticado.",
+    )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))
         rows = self.resolve(IWalletRepository).list_transactions(wallet.id)

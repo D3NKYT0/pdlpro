@@ -26,7 +26,11 @@ class StaffTicketListView(APIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
-    @extend_schema(tags=["Staff - Atendimento"])
+    @extend_schema(
+        tags=["Staff - Atendimento"],
+        summary="Listar chamados (staff)",
+        description="Lista chamados para a equipe com filtros e indicadores de atendimento.",
+    )
     def get(self, request):
         tickets = Ticket.objects.select_related("user", "assigned_to")
         status_filter = request.query_params.get("status", "")
@@ -68,14 +72,22 @@ class StaffTicketDetailView(APIView):
     def get_ticket(self, ticket_id):
         return Ticket.objects.filter(id=ticket_id).select_related("user", "assigned_to").first()
 
-    @extend_schema(tags=["Staff - Atendimento"])
+    @extend_schema(
+        tags=["Staff - Atendimento"],
+        summary="Detalhe do chamado (staff)",
+        description="Consulta o chamado informado com mensagens e metadados administrativos.",
+    )
     def get(self, request, ticket_id):
         ticket = self.get_ticket(ticket_id)
         if not ticket:
             return error("Chamado não encontrado.", "TICKET_NOT_FOUND", status.HTTP_404_NOT_FOUND)
         return Response(serialize_ticket(ticket, detail=True, staff=True))
 
-    @extend_schema(tags=["Staff - Atendimento"])
+    @extend_schema(
+        tags=["Staff - Atendimento"],
+        summary="Responder chamado (staff)",
+        description="Permite à equipe responder um chamado, inclusive com notas internas.",
+    )
     @transaction.atomic
     def post(self, request, ticket_id):
         ticket = self.get_ticket(ticket_id)
@@ -108,7 +120,11 @@ class StaffTicketDetailView(APIView):
         ticket.save(update_fields=["assigned_to", "status", "first_response_at", "last_activity_at", "updated_at"])
         return Response(serialize_ticket(ticket, detail=True, staff=True), status=status.HTTP_201_CREATED)
 
-    @extend_schema(tags=["Staff - Atendimento"])
+    @extend_schema(
+        tags=["Staff - Atendimento"],
+        summary="Atualizar chamado (staff)",
+        description="Permite à equipe atribuir responsáveis e atualizar o estado de um chamado.",
+    )
     @transaction.atomic
     def patch(self, request, ticket_id):
         ticket = self.get_ticket(ticket_id)

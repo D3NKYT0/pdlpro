@@ -22,7 +22,11 @@ class NotificationListView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Notificações"])
+    @extend_schema(
+        tags=["Notificações"],
+        summary="Listar notificações",
+        description="Lista as notificações do usuário autenticado e o total de não lidas.",
+    )
     def get(self, request):
         payload = self.resolve(ListNotificationsUseCase).execute(ListNotificationsInput(user_id=request.user.id))
         results = []
@@ -42,7 +46,11 @@ class MarkAllNotificationsReadView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Notificações"])
+    @extend_schema(
+        tags=["Notificações"],
+        summary="Marcar todas como lidas",
+        description="Marca todas as notificações do usuário autenticado como lidas.",
+    )
     def post(self, request):
         return Response(
             self.resolve(MarkNotificationReadUseCase).execute(
@@ -60,7 +68,11 @@ class MarkNotificationReadView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Notificações"])
+    @extend_schema(
+        tags=["Notificações"],
+        summary="Marcar notificação como lida",
+        description="Marca a notificação informada como lida para o usuário autenticado.",
+    )
     def post(self, request, notification_id):
         return Response(
             self.resolve(MarkNotificationReadUseCase).execute(

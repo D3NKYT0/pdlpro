@@ -13,6 +13,7 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 - A propriedade de contas Lineage vem do vínculo do gateway. Coincidência de nome e registro local não autorizam operações. Contas antigas devem ser vinculadas com a senha do jogo ou confirmação por e-mail.
 - O Django Admin exige o código TOTP quando o usuário habilitou 2FA. Sessões administrativas sem a prova do segundo fator atual precisam autenticar novamente. O layout preserva CSRF e os assets compartilhados.
 - Refresh tokens são rotacionados e consumidos uma única vez, com bloqueio por usuário. Logout revoga o refresh apresentado; access tokens já emitidos expiram em até 15 minutos por padrão. Redefinir a senha invalida também os access tokens imediatamente nas novas requisições, incluindo autenticação WebSocket.
+- Access e refresh não são expostos no JSON de autenticação; ficam somente nos cookies `HttpOnly`.
 - O link de recuperação usa token vinculado à senha e validade de uma hora. O consumo e a alteração de senha são serializados: repetir o link, inclusive simultaneamente, é rejeitado.
 - OAuth mantém estado descartável associado à sessão do navegador. Cookies de sessão devem acompanhar início e callback. Vincular um provedor exige o mesmo usuário autenticado e a mesma credencial de sessão.
 - Um login social não assume automaticamente cadastro com e-mail ainda não verificado. O proprietário deve recuperar o acesso, verificar o e-mail e então conectar o provedor. Contas sociais com e-mail diferente não verificam o e-mail local.
@@ -22,6 +23,12 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 `REST_FRAMEWORK.NUM_PROXIES` usa `TRUSTED_PROXY_COUNT`: a identidade vem da direita da cadeia, descartando o prefixo que o cliente pode inventar. Produção assume dois proxies (externo HTTPS e Nginx interno); o Compose de desenvolvimento assume um. Sem proxy, configure zero. Ajuste o valor à topologia real, não ao cabeçalho recebido.
 
 Somente os proxies confiáveis devem alcançar o backend/Nginx interno; mantenha a restrição de rede descrita na implantação. O proxy deve acrescentar o endereço real do remetente. Adicionar proxies exige revisar a contagem. Uma contagem incorreta pode agrupar visitantes na mesma cota ou confiar em dados enviados pelo cliente.
+
+O DRF aplica limites globais e escopos separados para login (10/minuto) e cadastro (10/hora).
+O Nginx absorve rajadas da API em 20 requisições/segundo por IP, com burst de 40; ele complementa
+o limite persistido no cache da aplicação. Em produção, a chave usa o último endereço acrescentado
+ao `X-Forwarded-For`; somente o proxy externo confiável deve alcançar essa porta. Schema e interfaces OpenAPI exigem staff quando
+`OPENAPI_DOCS_PUBLIC=false`. Django e Nginx emitem a CSP; mantenha suas listas de origens iguais.
 
 ## Serviços pagos do personagem
 

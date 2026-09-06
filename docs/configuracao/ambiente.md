@@ -63,9 +63,15 @@ Os settings aceitam as seguintes opções, ainda que nem todas apareçam habilit
 | `CSRF_TRUSTED_ORIGINS` | Origens confiáveis para CSRF |
 | `WEBSOCKET_ALLOWED_ORIGINS` | Origens aceitas pelo ASGI/WebSocket |
 | `TRUSTED_PROXY_COUNT` | Quantidade esperada de proxies confiáveis |
+| `OPENAPI_DOCS_PUBLIC` | `true` libera schema, Swagger e ReDoc; `false` restringe à equipe |
 | `SITE_ID` | Site do `django.contrib.sites` |
 
 `core.settings.development` libera CORS e usa cookies não seguros para facilitar o uso local. `core.settings.production` ativa cookies seguros e HSTS; ele deve ficar atrás de HTTPS corretamente configurado.
+
+Os tokens de sessão são entregues somente em cookies `HttpOnly`; respostas de autenticação não
+incluem access ou refresh no JSON. Login e cadastro usam, respectivamente, os limites dedicados
+de 10/minuto e 10/hora. A CSP é definida em `core.settings.base`, recebe
+`upgrade-insecure-requests` em produção e deve permanecer alinhada às configurações Nginx.
 
 ## Pagamentos
 

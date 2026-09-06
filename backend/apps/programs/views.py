@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -34,6 +35,16 @@ class SupporterView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Consultar painel do apoiador",
+        description=(
+            "Retorna o perfil de apoiador do usuário autenticado, saldo disponível, "
+            "cupons vinculados, comissões e histórico de repasses. Se ainda não houver "
+            "cadastro, devolve perfil nulo e listas vazias."
+        ),
+        responses=SupporterSerializer,
+    )
     def get(self, request):
         row = Supporter.objects.filter(user=request.user).first()
         if not row:
@@ -74,6 +85,16 @@ class SupporterView(APIView):
             }
         )
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Inscrever ou atualizar apoiador",
+        description=(
+            "Cria ou atualiza a inscrição de apoiador do usuário autenticado. "
+            "Novas inscrições e reenvios após rejeição ficam com status pendente."
+        ),
+        request=SupporterSerializer,
+        responses=SupporterSerializer,
+    )
     def post(self, request):
         with transaction.atomic():
             # Serialize first-time applications on the user row, too.
@@ -99,6 +120,15 @@ class RequestPayoutView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Solicitar repasse de comissões",
+        description=(
+            "Solicita o repasse das comissões disponíveis do apoiador autenticado. "
+            "Retorna o pedido de payout criado."
+        ),
+        responses=PayoutSerializer,
+    )
     def post(self, request):
         return Response(
             PayoutSerializer(request_commission(request.user)).data, status=201
@@ -114,6 +144,15 @@ class StaffSupporterView(APIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Listar apoiadores e repasses (staff)",
+        description=(
+            "Lista todos os cadastros de apoiadores e os pedidos de repasse recentes "
+            "para revisão pela equipe."
+        ),
+        responses=SupporterSerializer(many=True),
+    )
     def get(self, request):
         return Response(
             {
@@ -127,6 +166,16 @@ class StaffSupporterView(APIView):
             }
         )
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Revisar cadastro de apoiador",
+        description=(
+            "Atualiza status e condições de um cadastro de apoiador. Aprovação pode "
+            "elevar o papel do usuário para supporter; rejeição pode rebaixá-lo a player."
+        ),
+        request=SupporterReviewSerializer,
+        responses=SupporterSerializer,
+    )
     def patch(self, request, entry_id):
         serializer = SupporterReviewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -157,6 +206,16 @@ class StaffPayoutView(APIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
+    @extend_schema(
+        tags=["Apoiadores"],
+        summary="Revisar pedido de repasse",
+        description=(
+            "Atualiza o status e a nota de um pedido de repasse de comissões "
+            "identificado por entry_id."
+        ),
+        request=PayoutReviewSerializer,
+        responses=PayoutSerializer,
+    )
     def patch(self, request, entry_id):
         get_object_or_404(CommissionPayout, id=entry_id)
         serializer = PayoutReviewSerializer(data=request.data)
@@ -181,6 +240,15 @@ class RoadmapView(APIView):
 
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["Roadmap"],
+        summary="Listar roadmap publicado",
+        description=(
+            "Retorna as entradas publicadas do roadmap. Com entry_id, devolve apenas "
+            "aquela entrada; sem ele, lista todas as publicadas."
+        ),
+        responses=RoadmapSerializer(many=True),
+    )
     def get(self, request, entry_id=None):
         rows = RoadmapEntry.objects.filter(published=True)
         if entry_id:
@@ -199,15 +267,35 @@ class StaffRoadmapView(APIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
+    @extend_schema(
+        tags=["Roadmap"],
+        summary="Listar roadmap (staff)",
+        description="Lista todas as entradas do roadmap, inclusive as não publicadas.",
+        responses=RoadmapSerializer(many=True),
+    )
     def get(self, request):
         return Response(RoadmapSerializer(RoadmapEntry.objects.all(), many=True).data)
 
+    @extend_schema(
+        tags=["Roadmap"],
+        summary="Criar entrada do roadmap",
+        description="Cria uma nova entrada no roadmap com os dados enviados.",
+        request=RoadmapSerializer,
+        responses=RoadmapSerializer,
+    )
     def post(self, request):
         serializer = RoadmapSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
 
+    @extend_schema(
+        tags=["Roadmap"],
+        summary="Atualizar entrada do roadmap",
+        description="Atualiza parcialmente a entrada do roadmap identificada por entry_id.",
+        request=RoadmapSerializer,
+        responses=RoadmapSerializer,
+    )
     def patch(self, request, entry_id):
         serializer = RoadmapSerializer(
             get_object_or_404(RoadmapEntry, id=entry_id),
@@ -218,6 +306,11 @@ class StaffRoadmapView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+    @extend_schema(
+        tags=["Roadmap"],
+        summary="Excluir entrada do roadmap",
+        description="Remove a entrada do roadmap identificada por entry_id.",
+    )
     def delete(self, request, entry_id):
         get_object_or_404(RoadmapEntry, id=entry_id).delete()
         return Response(status=204)
@@ -232,6 +325,12 @@ class ResourceView(APIView):
 
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["Recursos"],
+        summary="Listar recursos do sistema",
+        description="Retorna todos os recursos do sistema e o respectivo estado de ativação.",
+        responses=ResourceSerializer(many=True),
+    )
     def get(self, request):
         return Response(
             ResourceSerializer(SystemResource.objects.all(), many=True).data
@@ -247,6 +346,22 @@ class StaffResourceView(ResourceView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
+    @extend_schema(
+        tags=["Recursos"],
+        summary="Listar recursos (staff)",
+        description="Lista os recursos do sistema para administração pela equipe.",
+        responses=ResourceSerializer(many=True),
+    )
+    def get(self, request):
+        return super().get(request)
+
+    @extend_schema(
+        tags=["Recursos"],
+        summary="Atualizar recurso do sistema",
+        description="Atualiza parcialmente o recurso do sistema identificado por entry_id.",
+        request=ResourceSerializer,
+        responses=ResourceSerializer,
+    )
     def patch(self, request, entry_id):
         serializer = ResourceSerializer(
             get_object_or_404(SystemResource, id=entry_id),

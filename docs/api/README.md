@@ -14,6 +14,10 @@
 
 O Swagger e o ReDoc usam o mesmo visual ouro/escuro do frontend e do Jazzmin. Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, use `http://localhost` por meio do Nginx.
 
+Quando `OPENAPI_DOCS_PUBLIC=false`, schema, Swagger e ReDoc exigem uma conta da equipe. A
+autenticação pode vir dos cookies JWT do painel ou da sessão do Django Admin. Em produção, o
+valor recomendado é `false`.
+
 ## Namespaces
 
 | Prefixo | Acesso | Conteúdo |
@@ -68,11 +72,30 @@ Fluxo do frontend:
 4. Ao receber `401`, o cliente tenta `POST /api/v1/auth/refresh/` uma vez.
 5. `POST /api/v1/auth/logout/` encerra a sessão no navegador.
 
+Login, cadastro, conclusão de 2FA, passkey e OAuth devolvem somente os dados funcionais da
+operação. Access e refresh tokens não são incluídos no JSON: permanecem exclusivamente nos
+cookies `HttpOnly`. O refresh bem-sucedido responde `{"ok": true}` e substitui os cookies.
+
 Quando 2FA está habilitado, o login retorna um desafio; conclua-o em `POST /api/v1/auth/2fa/verify/` antes de considerar a sessão autenticada.
 
 ## CSRF
 
 Métodos `POST`, `PUT`, `PATCH` e `DELETE` exigem token CSRF quando usam autenticação por cookie. Não desabilite essa proteção para contornar erros de origem. Ajuste `CSRF_TRUSTED_ORIGINS`, use HTTPS e mantenha frontend e API sob origens conhecidas.
+
+## Limitação de requisições
+
+A aplicação limita visitantes a 1.000 requisições por hora e usuários autenticados a 10.000 por
+hora. Login usa o escopo dedicado de 10 tentativas por minuto e cadastro, 10 tentativas por
+hora, identificados pelo endereço calculado pelo DRF e pela configuração de proxies confiáveis.
+O Nginx acrescenta uma proteção de rajada de 20 requisições por segundo por IP, com burst de
+40, nas rotas de API. Exceder qualquer camada retorna HTTP 429.
+
+## Política de conteúdo
+
+As respostas incluem `Content-Security-Policy`. A política bloqueia objetos e incorporação do
+painel por terceiros, restringe scripts, estilos e frames às origens usadas pelo produto e, em
+produção, promove recursos HTTP para HTTPS. Ao adicionar um SDK ou origem externa, atualize a
+política do Django e as duas configurações Nginx no mesmo conjunto de alterações.
 
 ## Paginação
 

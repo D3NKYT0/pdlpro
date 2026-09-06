@@ -47,7 +47,13 @@ class FinancialReportView(InjectedAPIView):
         return response
 
 
-@extend_schema(tags=["Staff / Financeiro"], parameters=[BalanceFiltersSerializer], responses=BalanceReportSerializer)
+@extend_schema(
+    tags=["Staff / Financeiro"],
+    summary="Relatório de saldos",
+    description="Expõe o relatório de saldos usando os filtros e a paginação da base financeira.",
+    parameters=[BalanceFiltersSerializer],
+    responses=BalanceReportSerializer,
+)
 class BalanceReportView(FinancialReportView):
     """Expõe o relatório de saldos usando os filtros e a paginação da base financeira.
 
@@ -59,7 +65,13 @@ class BalanceReportView(FinancialReportView):
     pass
 
 
-@extend_schema(tags=["Staff / Financeiro"], parameters=[BalanceFiltersSerializer], responses=BalanceReportSerializer)
+@extend_schema(
+    tags=["Staff / Financeiro"],
+    summary="Relatório de conciliação",
+    description="Especializa a consulta financeira para conciliação de saldos e movimentações.",
+    parameters=[BalanceFiltersSerializer],
+    responses=BalanceReportSerializer,
+)
 class ReconciliationReportView(FinancialReportView):
     """Especializa a consulta financeira para conciliação de saldos e movimentações.
 
@@ -71,7 +83,13 @@ class ReconciliationReportView(FinancialReportView):
     report = "reconciliation"
 
 
-@extend_schema(tags=["Staff / Financeiro"], parameters=[CashFlowFiltersSerializer], responses=CashFlowReportSerializer)
+@extend_schema(
+    tags=["Staff / Financeiro"],
+    summary="Relatório de fluxo de caixa",
+    description="Especializa a consulta financeira para o relatório de fluxo de caixa.",
+    parameters=[CashFlowFiltersSerializer],
+    responses=CashFlowReportSerializer,
+)
 class CashFlowReportView(FinancialReportView):
     """Especializa a consulta financeira para o relatório de fluxo de caixa.
 
@@ -84,7 +102,13 @@ class CashFlowReportView(FinancialReportView):
     filters_class = CashFlowFiltersSerializer
 
 
-@extend_schema(tags=["Staff / Financeiro"], parameters=[PaymentFiltersSerializer], responses=PaymentReportSerializer)
+@extend_schema(
+    tags=["Staff / Financeiro"],
+    summary="Relatório de pagamentos",
+    description="Especializa a consulta financeira para o relatório de pagamentos.",
+    parameters=[PaymentFiltersSerializer],
+    responses=PaymentReportSerializer,
+)
 class PaymentReportView(FinancialReportView):
     """Especializa a consulta financeira para o relatório de pagamentos.
 

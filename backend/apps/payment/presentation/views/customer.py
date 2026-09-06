@@ -52,7 +52,11 @@ class PaymentCatalogView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Catálogo de pagamento",
+        description="Retorna pacotes, métodos e regras disponíveis para criação de pedidos de pagamento.",
+    )
     def get(self, request):
         catalog = self.resolve(GetPaymentCatalogUseCase).execute()
         return Response(catalog)
@@ -68,12 +72,21 @@ class PaymentOrderListView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Listar pedidos de pagamento",
+        description="Lista os pedidos de pagamento do usuário autenticado.",
+    )
     def get(self, request):
         orders = self.resolve(ListPaymentOrdersUseCase).execute(ListPaymentOrdersInput(user_id=request.user.id))
         return Response([dump_order(order) for order in orders])
 
-    @extend_schema(tags=["Pagamento"], request=CreatePaymentOrderSerializer)
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Criar pedido de pagamento",
+        description="Cria um novo pedido de pagamento para o usuário autenticado.",
+        request=CreatePaymentOrderSerializer,
+    )
     def post(self, request):
         serializer = CreatePaymentOrderSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -99,7 +112,12 @@ class PreviewPaymentBonusView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"], request=PreviewBonusSerializer)
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Prévia de bônus",
+        description="Calcula a prévia de bônus e créditos para o valor ou pacote informado.",
+        request=PreviewBonusSerializer,
+    )
     def post(self, request):
         serializer = PreviewBonusSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -124,7 +142,11 @@ class CancelPaymentOrderView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Cancelar pedido",
+        description="Cancela o pedido de pagamento informado pertencente ao usuário autenticado.",
+    )
     def post(self, request, order_id):
         order = self.resolve(CancelPaymentOrderUseCase).execute(
             CancelPaymentOrderInput(user_id=request.user.id, order_id=order_id)
@@ -141,7 +163,11 @@ class ConfirmPaymentOrderView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Confirmar pagamento",
+        description="Confirma o pagamento do pedido informado para o usuário autenticado.",
+    )
     def post(self, request, order_id):
         order = self.resolve(ConfirmPaymentUseCase).execute(
             ConfirmPaymentInput(order_id=order_id, user_id=request.user.id)
@@ -158,7 +184,11 @@ class ProcessPaymentOrderView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Processar pagamento",
+        description="Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto.",
+    )
     def post(self, request, order_id):
         outcome = self.resolve(ProcessPaymentUseCase).execute(
             ProcessPaymentInput(
@@ -189,7 +219,11 @@ class PaymentOrderStatusView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Pagamento"])
+    @extend_schema(
+        tags=["Pagamento"],
+        summary="Status do pedido",
+        description="Consulta o status atual do pedido de pagamento informado.",
+    )
     def get(self, request, order_id: UUID):
         order = self.resolve(GetPaymentStatusUseCase).execute(
             GetPaymentStatusInput(user_id=request.user.id, order_id=order_id)

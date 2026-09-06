@@ -63,11 +63,19 @@ class RouletteView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado da roleta",
+        description="Retorna o estado atual da roleta para o jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetRouletteStateUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Girar a roleta",
+        description="Executa um giro da roleta e devolve o resultado para o jogador autenticado.",
+    )
     def post(self, request):
         return Response(self.resolve(SpinRouletteUseCase).execute(SpinRouletteInput(user_id=request.user.id)))
 
@@ -81,7 +89,12 @@ class BuyTokensView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"], request=BuyTokensSerializer)
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Comprar fichas",
+        description="Compra a quantidade informada de fichas para uso nos jogos do painel.",
+        request=BuyTokensSerializer,
+    )
     def post(self, request):
         serializer = BuyTokensSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -102,11 +115,19 @@ class DailyBonusView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado do bônus diário",
+        description="Retorna o estado do bônus diário disponível para o jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetDailyBonusStateUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Resgatar bônus diário",
+        description="Resgata o bônus diário ativo, priorizando a temporada diária quando existir.",
+    )
     def post(self, request):
         from apps.games.application.advanced import daily_season, claim_daily_season
         if daily_season():
@@ -126,11 +147,20 @@ class BagView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Consultar bolsa",
+        description="Lista o conteúdo da bolsa de jogos do jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetBagUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"], request=TransferBagSerializer)
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Transferir bolsa",
+        description="Transfere o conteúdo da bolsa para o inventário de personagem informado.",
+        request=TransferBagSerializer,
+    )
     def post(self, request):
         serializer = TransferBagSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -151,11 +181,20 @@ class BoxListView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Listar caixas",
+        description="Lista os tipos de caixas disponíveis para compra pelo jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(ListBoxTypesUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"], request=BuyBoxSerializer)
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Comprar caixa",
+        description="Compra uma caixa do tipo informado para o jogador autenticado.",
+        request=BuyBoxSerializer,
+    )
     def post(self, request):
         serializer = BuyBoxSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -175,7 +214,11 @@ class OpenBoxView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Abrir caixa",
+        description="Abre a caixa identificada e devolve as recompensas obtidas.",
+    )
     def post(self, request, box_id):
         return Response(self.resolve(OpenBoxUseCase).execute(OpenBoxInput(user_id=request.user.id, box_id=box_id)))
 
@@ -189,7 +232,11 @@ class MinigamesView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado dos minijogos",
+        description="Retorna o estado consolidado dos minijogos disponíveis para o jogador.",
+    )
     def get(self, request):
         return Response(self.resolve(GetMinigamesStateUseCase).execute(request.user.id))
 
@@ -203,7 +250,12 @@ class DiceView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"], request=PlayDiceSerializer)
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Jogar dados",
+        description="Executa uma jogada de dados com os parâmetros informados e devolve o resultado.",
+        request=PlayDiceSerializer,
+    )
     def post(self, request):
         serializer = PlayDiceSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -223,7 +275,11 @@ class SlotsView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Girar caça-níqueis",
+        description="Executa um giro no caça-níqueis e devolve o resultado para o jogador autenticado.",
+    )
     def post(self, request):
         return Response(self.resolve(SpinSlotsUseCase).execute(SpinSlotsInput(user_id=request.user.id)))
 
@@ -238,11 +294,19 @@ class FishingView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado da pesca",
+        description="Retorna o estado atual do minijogo de pesca para o jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetFishingStateUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Lançar linha",
+        description="Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura.",
+    )
     def post(self, request):
         from rest_framework import serializers
         bait_id = serializers.UUIDField(allow_null=True).run_validation(request.data.get("bait_id"))
@@ -258,7 +322,11 @@ class EconomyView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado da economia",
+        description="Retorna o estado do minijogo de economia para o jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetEconomyStateUseCase).execute(request.user.id))
 
@@ -272,7 +340,11 @@ class FightMonsterView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Combater monstro",
+        description="Inicia um combate contra o monstro informado e devolve o resultado.",
+    )
     def post(self, request, monster_id):
         return Response(
             self.resolve(FightMonsterUseCase).execute(
@@ -290,7 +362,11 @@ class EnchantWeaponView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Encantar arma",
+        description="Tenta encantar a arma do jogador no minijogo de economia e devolve o resultado.",
+    )
     def post(self, request):
         return Response(self.resolve(EnchantWeaponUseCase).execute(EnchantWeaponInput(user_id=request.user.id)))
 
@@ -305,11 +381,19 @@ class BattlePassView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Estado do passe de batalha",
+        description="Retorna o progresso e as recompensas do passe de batalha do jogador autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetBattlePassUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Comprar passe premium",
+        description="Adquire o passe de batalha premium para o jogador autenticado.",
+    )
     def post(self, request):
         return Response(
             self.resolve(BuyBattlePassPremiumUseCase).execute(BuyBattlePassPremiumInput(user_id=request.user.id))
@@ -325,7 +409,11 @@ class ClaimBattlePassView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Jogos"])
+    @extend_schema(
+        tags=["Jogos"],
+        summary="Resgatar recompensa do passe",
+        description="Resgata a recompensa do passe de batalha identificada pelo ID informado.",
+    )
     def post(self, request, reward_id):
         return Response(
             self.resolve(ClaimBattlePassRewardUseCase).execute(

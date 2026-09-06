@@ -162,6 +162,20 @@ CSRF_TRUSTED_ORIGINS = env.list(
     default=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost"],
 )
 
+CONTENT_SECURITY_POLICY = (
+    "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; "
+    "form-action 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
+    "https://js.stripe.com https://sdk.mercadopago.com https://hcaptcha.com "
+    "https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
+    "https://fonts.googleapis.com https://cdnjs.cloudflare.com https://hcaptcha.com "
+    "https://*.hcaptcha.com; font-src 'self' data: https://fonts.gstatic.com "
+    "https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' "
+    "https: ws: wss:; frame-src 'self' https://*.stripe.com https://*.mercadopago.com "
+    "https://*.mercadopago.com.br https://www.youtube-nocookie.com https://hcaptcha.com "
+    "https://*.hcaptcha.com; media-src 'self' blob:; worker-src 'self' blob:; "
+    "manifest-src 'self';"
+)
+
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_PDL
 JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS_PDL
 

@@ -4,6 +4,7 @@ import re
 from urllib.parse import parse_qs, urlparse
 
 import pytest
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.cache import cache
@@ -36,6 +37,13 @@ def login(client, username="audituser", password="AuditPassword42"):
     return client.post(
         "/api/v1/auth/login/", {"login": username, "password": password}, format="json"
     )
+
+
+def auth_tokens(response):
+    return {
+        "access": response.cookies[settings.REST_AUTH["JWT_AUTH_COOKIE"]].value,
+        "refresh": response.cookies[settings.REST_AUTH["JWT_AUTH_REFRESH_COOKIE"]].value,
+    }
 
 
 def reset_token(user):
@@ -89,13 +97,13 @@ def test_password_reset_token_is_consumed_by_password_change():
 def test_stolen_refresh_is_rejected_after_logout_and_password_reset():
     user = create()
     victim = APIClient()
-    stolen_refresh = login(victim).data["refresh"]
+    stolen_refresh = auth_tokens(login(victim))["refresh"]
     assert victim.post("/api/v1/auth/logout/", {}, format="json").status_code == 200
     first_replay = APIClient().post(
         "/api/v1/auth/refresh/", {"refresh": stolen_refresh}, format="json"
     )
     assert first_replay.status_code == 401
-    active = login(APIClient()).data
+    active = auth_tokens(login(APIClient()))
     token = reset_token(user)
     assert (
         APIClient()
@@ -190,13 +198,15 @@ def test_oauth_callback_rejects_state_from_another_browser(mocker):
 
 def test_refresh_rotates_once_and_rejects_invalid_disabled_or_missing_users():
     user = create()
-    data = login(APIClient()).data
+    data = auth_tokens(login(APIClient()))
     client = APIClient()
     rotated = client.post(
         "/api/v1/auth/refresh/", {"refresh": data["refresh"]}, format="json"
     )
     assert rotated.status_code == 200
-    assert rotated.data["refresh"] != data["refresh"]
+    rotated_tokens = auth_tokens(rotated)
+    assert rotated.data == {"ok": True}
+    assert rotated_tokens["refresh"] != data["refresh"]
     assert (
         APIClient()
         .post("/api/v1/auth/refresh/", {"refresh": data["refresh"]}, format="json")
@@ -208,7 +218,7 @@ def test_refresh_rotates_once_and_rejects_invalid_disabled_or_missing_users():
     assert (
         APIClient()
         .post(
-            "/api/v1/auth/refresh/", {"refresh": rotated.data["refresh"]}, format="json"
+            "/api/v1/auth/refresh/", {"refresh": rotated_tokens["refresh"]}, format="json"
         )
         .status_code
         == 401
@@ -229,7 +239,7 @@ def test_logout_cannot_revoke_another_users_refresh():
     create("other")
     owner = APIClient()
     login(owner)
-    other_token = login(APIClient(), username="other").data["refresh"]
+    other_token = auth_tokens(login(APIClient(), username="other"))["refresh"]
     assert (
         owner.post(
             "/api/v1/auth/logout/", {"refresh": other_token}, format="json"

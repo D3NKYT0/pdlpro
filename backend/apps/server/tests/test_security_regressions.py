@@ -4,8 +4,8 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from rest_framework.test import APIClient, APIRequestFactory
-from rest_framework.throttling import AnonRateThrottle
 
+from apps.accounts.presentation.throttling import LoginRateThrottle
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.models import ManagedLineageAccount
 from apps.server.infrastructure.null_gateway import NullLineageGateway
@@ -107,7 +107,7 @@ def test_paid_game_service_preserves_character_when_balance_is_insufficient(
 
 
 @pytest.mark.django_db
-def test_forwarded_header_changes_cannot_bypass_exhausted_anonymous_throttle(
+def test_forwarded_header_changes_cannot_bypass_exhausted_login_throttle(
     isolated_gateway,
 ):
     from apps.accounts.presentation.views.auth import LoginView
@@ -120,7 +120,7 @@ def test_forwarded_header_changes_cannot_bypass_exhausted_anonymous_throttle(
         "/api/v1/auth/login/", HTTP_X_FORWARDED_FOR=xff, REMOTE_ADDR="10.0.0.3"
     )
     request.user = AnonymousUser()
-    throttle = AnonRateThrottle()
+    throttle = LoginRateThrottle()
     key = throttle.get_cache_key(request, LoginView())
     now = throttle.timer()
     cache.set(key, [now] * throttle.num_requests, throttle.duration)

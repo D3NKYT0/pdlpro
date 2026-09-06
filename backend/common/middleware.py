@@ -43,6 +43,22 @@ class RequestIdMiddleware:
             reset_request_id(token)
 
 
+class SecurityHeadersMiddleware:
+    """Aplica a política CSP também quando o Django é acessado sem o proxy Nginx."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        from django.conf import settings
+
+        response = self.get_response(request)
+        response.setdefault(
+            "Content-Security-Policy", settings.CONTENT_SECURITY_POLICY
+        )
+        return response
+
+
 class ObservabilityMiddleware:
     """Record structured HTTP access events and persistent staff write audits.
 

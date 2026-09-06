@@ -204,6 +204,9 @@ git pull --ff-only
 - Sirva `frontend/dist` por Nginx, CDN ou storage estático; não use Vite em produção.
 - Configure fallback da SPA para `index.html`.
 - Ajuste `server_name` e os limites de upload.
+- Preserve o `limit_req` da API e dimensione sua zona somente após observar tráfego legítimo.
+- Preserve a CSP do proxy alinhada a `CONTENT_SECURITY_POLICY` do Django; teste pagamentos,
+  CAPTCHA, fontes e vídeo ao acrescentar ou remover uma origem.
 - Termine TLS no proxy e preserve corretamente os cabeçalhos `X-Forwarded-*`.
 - Garanta upgrade de conexão em `/ws/`.
 - Encaminhe `/media/themes/` ao backend/Nginx de mídia e aceite uploads ZIP de até 32 MB
@@ -237,6 +240,7 @@ git pull --ff-only
 - Monitore latência, erros 5xx, fila Celery, conexões e espaço em disco.
 - Use `X-Request-ID` para correlação entre proxy e aplicação.
 - Restrinja ou proteja admin e documentação OpenAPI conforme o ambiente.
+- Confirme que `OPENAPI_DOCS_PUBLIC=false` devolve 401 ao visitante e permite acesso à equipe.
 - Aplique atualizações de segurança e siga [SECURITY.md](../projeto/seguranca.md).
 
 ## Verificação após implantação

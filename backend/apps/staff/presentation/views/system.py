@@ -16,7 +16,11 @@ class HealthView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Sistema"])
+    @extend_schema(
+        tags=["Sistema"],
+        summary="Health check",
+        description="Disponibiliza a resposta de health check do sistema.",
+    )
     def get(self, request):
         return Response({"status": "ok"})
 
@@ -31,6 +35,10 @@ class VersionView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Sistema"])
+    @extend_schema(
+        tags=["Sistema"],
+        summary="Versão da API",
+        description="Disponibiliza os metadados de versão do sistema.",
+    )
     def get(self, request):
         return Response({"product": "PDL PRO", "api_version": API_VERSION})

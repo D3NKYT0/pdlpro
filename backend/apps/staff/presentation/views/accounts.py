@@ -17,7 +17,11 @@ class StaffInspectGameAccountView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
-    @extend_schema(tags=["Staff"])
+    @extend_schema(
+        tags=["Staff"],
+        summary="Inspecionar conta de jogo",
+        description="Consulta os dados administrativos da conta de jogo informada pelo login.",
+    )
     def get(self, request):
         return Response(self.resolve(InspectGameAccountUseCase).execute(request.query_params.get("login") or ""))
 
@@ -32,6 +36,10 @@ class StaffUnlinkGameAccountView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
-    @extend_schema(tags=["Staff"])
+    @extend_schema(
+        tags=["Staff"],
+        summary="Forçar desvínculo de conta",
+        description="Remove forçadamente o vínculo da conta de jogo informada pelo login.",
+    )
     def post(self, request):
         return Response(self.resolve(ForceUnlinkGameAccountUseCase).execute(request.data.get("login") or ""))

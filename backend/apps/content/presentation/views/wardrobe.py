@@ -21,11 +21,20 @@ class DenkynhoWardrobeView(InjectedAPIView):
 
     permission_classes = (IsAuthenticated,)
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Consultar guarda-roupa",
+        description="Consulta os desbloqueios e a aparência atual do mascote da própria conta.",
+    )
     def get(self, request):
         return Response(self.resolve(GetDenkynhoProfileUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Conteúdo"], request=DenkynhoWardrobeSerializer)
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Equipar peça no Denkynho",
+        description="Equipa ou remove uma peça no guarda-roupa do mascote da própria conta.",
+        request=DenkynhoWardrobeSerializer,
+    )
     def patch(self, request):
         serializer = DenkynhoWardrobeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -1,8 +1,9 @@
 from decimal import Decimal
 
 import pytest
-from django.test import override_settings
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from django.test import override_settings
 from rest_framework.test import APIClient
 
 User = get_user_model()
@@ -34,6 +35,8 @@ def test_register_and_me(api):
     )
     assert response.status_code == 200
     assert response.data["username"] == "knight"
+    assert "access" not in response.data
+    assert "refresh" not in response.data
     me = api.get("/api/v1/shared/me/")
     assert me.status_code == 200
     assert me.data["username"] == "knight"
@@ -97,6 +100,8 @@ def test_login(api, user):
     )
     assert response.status_code == 200
     assert response.data["username"] == "hero"
+    assert "access" not in response.data
+    assert "refresh" not in response.data
 
 
 @pytest.mark.django_db
@@ -109,6 +114,85 @@ def test_login_requires_captcha_after_repeated_failures(api, user):
     blocked = api.post("/api/v1/auth/login/", {"login": "hero", "password": "Secret123"}, format="json")
     assert blocked.status_code == 400
     assert blocked.data["details"]["captcha_required"] is True
+
+
+@pytest.mark.django_db
+def test_login_uses_dedicated_rate_limit(api, user, settings):
+    rates = {
+        **settings.REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"],
+        "anon": "1000/hour",
+        "login": "2/minute",
+    }
+    cache.clear()
+    try:
+        with override_settings(
+            REST_FRAMEWORK={
+                **settings.REST_FRAMEWORK,
+                "DEFAULT_THROTTLE_RATES": rates,
+            }
+        ):
+            for _ in range(2):
+                response = api.post(
+                    "/api/v1/auth/login/",
+                    {"login": "hero", "password": "wrong-password"},
+                    format="json",
+                    REMOTE_ADDR="198.51.100.21",
+                )
+                assert response.status_code == 401
+            limited = api.post(
+                "/api/v1/auth/login/",
+                {"login": "hero", "password": "wrong-password"},
+                format="json",
+                REMOTE_ADDR="198.51.100.21",
+            )
+            assert limited.status_code == 429
+            assert limited.data["error_code"] == "RATE_LIMIT_EXCEEDED"
+    finally:
+        cache.clear()
+
+
+@pytest.mark.django_db
+def test_register_uses_dedicated_rate_limit(settings):
+    rates = {
+        **settings.REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"],
+        "anon": "1000/hour",
+        "register": "1/hour",
+    }
+    cache.clear()
+    try:
+        with override_settings(
+            REST_FRAMEWORK={
+                **settings.REST_FRAMEWORK,
+                "DEFAULT_THROTTLE_RATES": rates,
+            }
+        ):
+            first = APIClient().post(
+                "/api/v1/auth/register/",
+                {
+                    "username": "firstrateuser",
+                    "email": "first-rate@pdl.dev",
+                    "password": "Secret123",
+                    "accept_terms": True,
+                },
+                format="json",
+                REMOTE_ADDR="198.51.100.22",
+            )
+            assert first.status_code == 200
+            limited = APIClient().post(
+                "/api/v1/auth/register/",
+                {
+                    "username": "secondrateuser",
+                    "email": "second-rate@pdl.dev",
+                    "password": "Secret123",
+                    "accept_terms": True,
+                },
+                format="json",
+                REMOTE_ADDR="198.51.100.22",
+            )
+            assert limited.status_code == 429
+            assert limited.data["error_code"] == "RATE_LIMIT_EXCEEDED"
+    finally:
+        cache.clear()
 
 
 @pytest.mark.django_db
@@ -139,6 +223,8 @@ def test_login_cookies_outlive_access_token(api, user):
         format="json",
     )
     assert response.status_code == 200
+    assert "access" not in response.data
+    assert "refresh" not in response.data
     access_name = django_settings.REST_AUTH["JWT_AUTH_COOKIE"]
     refresh_name = django_settings.REST_AUTH["JWT_AUTH_REFRESH_COOKIE"]
     expected_age = int(django_settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
@@ -164,6 +250,7 @@ def test_refresh_restores_session_without_access_cookie(api, user):
     assert blocked.status_code == 401
     refreshed = api.post("/api/v1/auth/refresh/", {}, format="json")
     assert refreshed.status_code == 200, refreshed.data
+    assert refreshed.data == {"ok": True}
     me = api.get("/api/v1/shared/me/")
     assert me.status_code == 200
     assert me.data["username"] == "hero"

@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -25,6 +26,12 @@ class PasskeyListView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        responses=PasskeyCredentialSerializer(many=True),
+        summary="Listar passkeys",
+        description="Retorna as credenciais passkey registradas pelo usuário autenticado.",
+    )
     def get(self, request):
         rows = WebAuthnCredential.objects.filter(user=request.user)
         return Response(PasskeyCredentialSerializer(rows, many=True).data)
@@ -39,6 +46,12 @@ class PasskeyRegisterBeginView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        request=PasskeyBeginSerializer,
+        summary="Iniciar registro de passkey",
+        description="Gera o desafio WebAuthn para criar uma nova credencial passkey na conta autenticada.",
+    )
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -54,6 +67,13 @@ class PasskeyRegisterCompleteView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        request=PasskeyCompleteSerializer,
+        responses=PasskeyCredentialSerializer,
+        summary="Concluir registro de passkey",
+        description="Valida a resposta WebAuthn e persiste a nova credencial passkey do usuário.",
+    )
     def post(self, request):
         serializer = PasskeyCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -75,6 +95,12 @@ class PasskeyLoginBeginView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        request=PasskeyBeginSerializer,
+        summary="Iniciar login com passkey",
+        description="Gera o desafio WebAuthn para autenticar o usuário com uma passkey existente.",
+    )
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -92,6 +118,12 @@ class PasskeyLoginCompleteView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        request=PasskeyCompleteSerializer,
+        summary="Concluir login com passkey",
+        description="Valida a asserção WebAuthn e inicia a sessão ou o desafio de segundo fator.",
+    )
     def post(self, request):
         serializer = PasskeyCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -114,6 +146,11 @@ class PasskeyDeleteView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Passkeys"],
+        summary="Excluir passkey",
+        description="Remove uma credencial passkey pertencente ao usuário autenticado.",
+    )
     def delete(self, request, credential_id):
         deleted, _ = WebAuthnCredential.objects.filter(id=credential_id, user=request.user).delete()
         return Response(status=status.HTTP_204_NO_CONTENT if deleted else status.HTTP_404_NOT_FOUND)

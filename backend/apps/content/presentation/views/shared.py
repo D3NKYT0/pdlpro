@@ -27,7 +27,11 @@ class AuthenticatedFaqListView(InjectedAPIView):
 
     permission_classes = (IsAuthenticated,)
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Listar FAQ autenticado",
+        description="Entrega ajuda pública e interna conforme a identidade autenticada da requisição.",
+    )
     def get(self, request):
         user = request.user
         if user.is_superuser:
@@ -69,7 +73,12 @@ class AssistantReplyView(InjectedAPIView):
 
     permission_classes = (IsAuthenticated,)
 
-    @extend_schema(tags=["Conteúdo"], request=AssistantReplySerializer)
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Responder com o assistente",
+        description="Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo autorizado.",
+        request=AssistantReplySerializer,
+    )
     def post(self, request):
         serializer = AssistantReplySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -120,11 +129,20 @@ class DenkynhoProfileView(InjectedAPIView):
 
     permission_classes = (IsAuthenticated,)
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Perfil do Denkynho",
+        description="Retorna o perfil do Denkynho vinculado à sessão autenticada atual.",
+    )
     def get(self, request):
         return Response(self.resolve(GetDenkynhoProfileUseCase).execute(request.user.id))
 
-    @extend_schema(tags=["Conteúdo"], request=DenkynhoPreferencesSerializer)
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Atualizar preferências do Denkynho",
+        description="Atualiza apelido e nível de detalhe persistidos no mascote da conta autenticada.",
+        request=DenkynhoPreferencesSerializer,
+    )
     def patch(self, request):
         serializer = DenkynhoPreferencesSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -133,7 +151,12 @@ class DenkynhoProfileView(InjectedAPIView):
             **serializer.validated_data,
         )))
 
-    @extend_schema(tags=["Conteúdo"], request=DenkynhoCareSerializer)
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Cuidar do Denkynho",
+        description="Executa uma ação de cuidado no Denkynho da sessão autenticada atual.",
+        request=DenkynhoCareSerializer,
+    )
     def post(self, request):
         serializer = DenkynhoCareSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

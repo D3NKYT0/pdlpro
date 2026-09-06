@@ -71,6 +71,10 @@ from apps.accounts.presentation.serializers import (
     UpdateProfileSerializer,
     UserSerializer,
 )
+from apps.accounts.presentation.throttling import (
+    LoginRateThrottle,
+    RegisterRateThrottle,
+)
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from common.views import InjectedAPIView
 
@@ -85,7 +89,11 @@ class CsrfView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Obter token CSRF",
+        description="Retorna o token CSRF necessário para requisições de escrita autenticadas por cookie.",
+    )
     def get(self, request):
         return Response({"csrfToken": get_token(request)})
 
@@ -99,9 +107,15 @@ class RegisterView(InjectedAPIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = (RegisterRateThrottle,)
 
-    @extend_schema(tags=["Auth"], request=RegisterSerializer, responses=UserSerializer)
+    @extend_schema(
+        tags=["Auth"],
+        request=RegisterSerializer,
+        responses=UserSerializer,
+        summary="Registrar conta",
+        description="Cria uma nova conta de usuário e inicia a sessão com cookies de autenticação.",
+    )
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -137,9 +151,15 @@ class LoginView(InjectedAPIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = (LoginRateThrottle,)
 
-    @extend_schema(tags=["Auth"], request=LoginSerializer, responses=UserSerializer)
+    @extend_schema(
+        tags=["Auth"],
+        request=LoginSerializer,
+        responses=UserSerializer,
+        summary="Entrar",
+        description="Autentica com login e senha, podendo exigir CAPTCHA ou desafio de segundo fator.",
+    )
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -177,6 +197,11 @@ class AuthCapabilitiesView(InjectedAPIView):
 
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["Auth"],
+        summary="Capacidades de autenticação",
+        description="Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores OAuth e vínculos sociais da sessão.",
+    )
     def get(self, request):
         from allauth.socialaccount.models import SocialAccount
         from django.conf import settings
@@ -206,6 +231,12 @@ class OAuthBeginView(InjectedAPIView):
 
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["Auth"],
+        request=OAuthBeginSerializer,
+        summary="Iniciar OAuth",
+        description="Gera a URL de autorização do provedor social para login ou vínculo de conta.",
+    )
     def post(self, request):
         serializer = OAuthBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -225,6 +256,12 @@ class OAuthCompleteView(InjectedAPIView):
 
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["Auth"],
+        request=OAuthCompleteSerializer,
+        summary="Concluir OAuth",
+        description="Troca o código do provedor por sessão autenticada, vínculo de conta ou desafio 2FA.",
+    )
     def post(self, request):
         serializer = OAuthCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -249,7 +286,13 @@ class CompleteCredentialsView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Auth"], request=CompleteCredentialsSerializer, responses=UserSerializer)
+    @extend_schema(
+        tags=["Auth"],
+        request=CompleteCredentialsSerializer,
+        responses=UserSerializer,
+        summary="Completar credenciais",
+        description="Define username e senha para contas criadas via OAuth que ainda não possuem credenciais locais.",
+    )
     def post(self, request):
         serializer = CompleteCredentialsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -276,7 +319,11 @@ class RefreshView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Renovar sessão",
+        description="Rotaciona o refresh token e atualiza os cookies JWT da sessão.",
+    )
     def post(self, request):
         raw = request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name())
         if not request.data.get("refresh") and raw and _csrf_failed_reason(request):
@@ -306,7 +353,11 @@ class LogoutView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Sair",
+        description="Revoga o refresh token e remove os cookies de autenticação da resposta.",
+    )
     def post(self, request):
         revoke_refresh(request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name()), request.user)
         response = Response({"ok": True})
@@ -323,12 +374,23 @@ class MeView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Perfil"], responses=UserSerializer)
+    @extend_schema(
+        tags=["Perfil"],
+        responses=UserSerializer,
+        summary="Obter perfil",
+        description="Retorna os dados do usuário autenticado na sessão atual.",
+    )
     def get(self, request):
         user = self.resolve(GetCurrentUserUseCase).execute(GetCurrentUserInput(user_id=request.user.id))
         return Response(UserSerializer(user).data)
 
-    @extend_schema(tags=["Perfil"], request=UpdateProfileSerializer, responses=UserSerializer)
+    @extend_schema(
+        tags=["Perfil"],
+        request=UpdateProfileSerializer,
+        responses=UserSerializer,
+        summary="Atualizar perfil",
+        description="Atualiza campos do perfil do usuário autenticado e devolve o estado atualizado.",
+    )
     def patch(self, request):
         serializer = UpdateProfileSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -349,7 +411,11 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Verificar 2FA no login",
+        description="Valida o código de segundo fator do desafio de login e inicia a sessão.",
+    )
     def post(self, request):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
             VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
@@ -367,7 +433,11 @@ class TwoFactorView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Perfil"])
+    @extend_schema(
+        tags=["Perfil"],
+        summary="Gerenciar 2FA",
+        description="Configura, confirma ou desativa a autenticação de dois fatores da conta.",
+    )
     def post(self, request):
         action = request.data.get("action") or "setup"
         if action == "setup":
@@ -395,7 +465,11 @@ class GamerProfileView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Perfil"])
+    @extend_schema(
+        tags=["Perfil"],
+        summary="Perfil gamer",
+        description="Retorna progresso, recompensas e dados de jogo do usuário autenticado.",
+    )
     def get(self, request):
         return Response(self.resolve(GetGamerProfileUseCase).execute(request.user.id))
 
@@ -409,7 +483,11 @@ class RequestEmailVerificationView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Solicitar verificação de e-mail",
+        description="Dispara o envio do e-mail com o link de verificação da conta autenticada.",
+    )
     def post(self, request):
         return Response(self.resolve(RequestEmailVerificationUseCase).execute(request.user.id))
 
@@ -425,7 +503,11 @@ class VerifyEmailView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Verificar e-mail",
+        description="Confirma o endereço de e-mail a partir do token recebido na mensagem de verificação.",
+    )
     def post(self, request):
         return Response(
             self.resolve(VerifyEmailUseCase).execute(VerifyEmailInput(token=request.data.get("token", "")))
@@ -443,7 +525,11 @@ class RequestPasswordResetView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Solicitar redefinição de senha",
+        description="Envia o e-mail com o token para redefinir a senha da conta associada ao endereço informado.",
+    )
     def post(self, request):
         return Response(
             self.resolve(RequestPasswordResetUseCase).execute(
@@ -463,7 +549,11 @@ class ConfirmPasswordResetView(InjectedAPIView):
     authentication_classes = []
     throttle_classes = [AnonRateThrottle]
 
-    @extend_schema(tags=["Auth"])
+    @extend_schema(
+        tags=["Auth"],
+        summary="Confirmar redefinição de senha",
+        description="Define a nova senha usando o token de redefinição recebido por e-mail.",
+    )
     def post(self, request):
         return Response(
             self.resolve(ConfirmPasswordResetUseCase).execute(
@@ -484,7 +574,11 @@ class ClaimRewardView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Perfil"])
+    @extend_schema(
+        tags=["Perfil"],
+        summary="Resgatar recompensa",
+        description="Resgata uma recompensa de progresso disponível para o usuário autenticado.",
+    )
     def post(self, request, reward_id):
         return Response(
             self.resolve(ClaimRewardUseCase).execute(ClaimRewardInput(user_id=request.user.id, reward_id=reward_id))

@@ -64,7 +64,11 @@ class LineageAccountsView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Contas Lineage vinculadas",
+        description="Retorna contas acessíveis, slots de vínculo e o estado do login principal.",
+    )
     def get(self, request):
         actor = actor_from(request)
         primary = self.resolve(InspectPrimaryLoginUseCase).execute(actor)
@@ -88,7 +92,12 @@ class RegisterGameAccountView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=RegisterGameAccountSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Registrar conta de jogo",
+        description="Cria uma nova conta de jogo e a vincula ao usuário autenticado.",
+        request=RegisterGameAccountSerializer,
+    )
     def post(self, request):
         serializer = RegisterGameAccountSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -111,7 +120,12 @@ class LinkGameAccountView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=LinkGameAccountSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Vincular conta de jogo",
+        description="Vincula uma conta de jogo existente ao usuário autenticado mediante senha.",
+        request=LinkGameAccountSerializer,
+    )
     def post(self, request):
         serializer = LinkGameAccountSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -134,7 +148,12 @@ class UnlinkGameAccountView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=UnlinkGameAccountSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Desvincular conta de jogo",
+        description="Remove o vínculo da conta de jogo informada com o usuário autenticado.",
+        request=UnlinkGameAccountSerializer,
+    )
     def post(self, request):
         serializer = UnlinkGameAccountSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -153,7 +172,11 @@ class CharactersView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Listar personagens",
+        description="Lista os personagens da conta de jogo acessível ao usuário autenticado.",
+    )
     def get(self, request):
         login = request.query_params.get("login") or request.user.username
         chars = self.resolve(ListCharactersUseCase).execute(
@@ -171,7 +194,11 @@ class CharacterDetailView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Detalhe do personagem",
+        description="Retorna os dados do personagem informado na conta acessível ao usuário.",
+    )
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
         char = self.resolve(GetCharacterUseCase).execute(
@@ -189,7 +216,12 @@ class UpdateGamePasswordView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=UpdateGamePasswordSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Alterar senha do jogo",
+        description="Atualiza a senha da conta de jogo vinculada ao usuário autenticado.",
+        request=UpdateGamePasswordSerializer,
+    )
     def post(self, request):
         serializer = UpdateGamePasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -212,7 +244,12 @@ class ChangeNicknameView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=ChangeNicknameSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Alterar nick do personagem",
+        description="Altera o nick do personagem informado cobrando o serviço correspondente.",
+        request=ChangeNicknameSerializer,
+    )
     def post(self, request):
         serializer = ChangeNicknameSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -241,7 +278,12 @@ class ChangeSexView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=ChangeSexSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Alterar sexo do personagem",
+        description="Altera o sexo do personagem informado cobrando o serviço correspondente.",
+        request=ChangeSexSerializer,
+    )
     def post(self, request):
         serializer = ChangeSexSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -270,7 +312,12 @@ class UnstuckView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=UnstuckSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Destravar personagem",
+        description="Move o personagem preso para um local seguro no servidor de jogo.",
+        request=UnstuckSerializer,
+    )
     def post(self, request):
         serializer = UnstuckSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -295,7 +342,11 @@ class RequestLinkByEmailView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Solicitar vínculo por e-mail",
+        description="Inicia o fluxo de vínculo de conta de jogo mediante confirmação por e-mail.",
+    )
     def post(self, request):
         return Response(
             self.resolve(RequestLinkByEmailUseCase).execute(
@@ -313,7 +364,11 @@ class ConfirmLinkByEmailView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Confirmar vínculo por e-mail",
+        description="Confirma o vínculo da conta de jogo com o token recebido por e-mail.",
+    )
     def post(self, request):
         account = self.resolve(ConfirmLinkByEmailUseCase).execute(
             ConfirmLinkByEmailInput(actor=actor_from(request), token=request.data.get("token", ""))
@@ -330,7 +385,12 @@ class PurchaseSlotView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"], request=PurchaseSlotSerializer)
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Comprar slot de vínculo",
+        description="Adquire slots adicionais de vínculo de contas de jogo para o usuário autenticado.",
+        request=PurchaseSlotSerializer,
+    )
     def post(self, request):
         serializer = PurchaseSlotSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -349,6 +409,10 @@ class ServicePricesView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Conta Lineage"])
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary="Preços dos serviços",
+        description="Lista os preços dos serviços de personagem disponíveis no painel.",
+    )
     def get(self, request):
         return Response(self.resolve(ListServicePricesUseCase).execute())

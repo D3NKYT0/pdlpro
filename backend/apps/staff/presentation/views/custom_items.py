@@ -6,6 +6,7 @@ from django.db import IntegrityError, transaction
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
@@ -130,6 +131,13 @@ class CustomItemsView(APIView):
         if not request.user.has_perm(f"server.{action}_customcatalogitem"):
             raise PermissionDenied("Você não tem permissão para esta ação.")
 
+    @extend_schema(
+        tags=["Staff - Itens customizados"],
+        summary="Listar itens customizados",
+        description="Pesquisa e pagina itens customizados do catálogo administrativo com filtros opcionais.",
+        parameters=[CustomItemQuery],
+        responses=CustomItemSerializer(many=True),
+    )
     def get(self, request):
         options = CustomItemQuery(data=request.query_params)
         options.is_valid(raise_exception=True)
@@ -147,6 +155,13 @@ class CustomItemsView(APIView):
             "categories": [{"value": key, "label": label} for key, label in ITEM_CATEGORIES],
             "grades": [{"value": key, "label": label} for key, label in ITEM_GRADES]})
 
+    @extend_schema(
+        tags=["Staff - Itens customizados"],
+        summary="Criar item customizado",
+        description="Cadastra um novo item customizado no catálogo administrativo.",
+        request=CustomItemSerializer,
+        responses={201: CustomItemSerializer},
+    )
     def post(self, request):
         self.require(request, "add")
         serializer = CustomItemSerializer(data=request.data)
@@ -162,12 +177,31 @@ class CustomItemDetailView(CustomItemsView):
     herdadas da base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Itens customizados"],
+        summary="Detalhe do item customizado",
+        description="Retorna os metadados de um item customizado identificado pelo UUID.",
+        responses=CustomItemSerializer,
+    )
     def get(self, request, item_uuid):
         return Response(CustomItemSerializer(get_object_or_404(CustomCatalogItem, id=item_uuid)).data)
 
+    @extend_schema(
+        tags=["Staff - Itens customizados"],
+        summary="Método não permitido",
+        description="Endpoint de detalhe não aceita POST; use PATCH para atualizar o item.",
+        responses={405: None},
+    )
     def post(self, request, item_uuid):
         return Response(status=405)
 
+    @extend_schema(
+        tags=["Staff - Itens customizados"],
+        summary="Atualizar item customizado",
+        description="Atualiza parcialmente os metadados de um item customizado existente.",
+        request=CustomItemSerializer,
+        responses=CustomItemSerializer,
+    )
     def patch(self, request, item_uuid):
         self.require(request, "change")
         serializer = CustomItemSerializer(get_object_or_404(CustomCatalogItem, id=item_uuid), data=request.data, partial=True)

@@ -21,7 +21,11 @@ class MercadoPagoWebhookView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Webhooks"])
+    @extend_schema(
+        tags=["Webhooks"],
+        summary="Webhook Mercado Pago",
+        description="Recebe eventos do Mercado Pago, valida a assinatura e credita pagamentos aprovados.",
+    )
     def post(self, request):
         if not WebhookSignatureService().mercado_pago_valid(request):
             return Response({"detail": "Assinatura inválida."}, status=400)
@@ -56,7 +60,11 @@ class StripeWebhookView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Webhooks"])
+    @extend_schema(
+        tags=["Webhooks"],
+        summary="Webhook Stripe",
+        description="Recebe eventos do Stripe, valida a assinatura e credita pagamentos concluídos.",
+    )
     def post(self, request):
         event = WebhookSignatureService().stripe_event(
             request.body, request.META.get("HTTP_STRIPE_SIGNATURE", "")

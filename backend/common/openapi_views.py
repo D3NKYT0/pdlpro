@@ -4,8 +4,30 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import BasePermission
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+
+from apps.accounts.infrastructure.authentication import CookieJWTAuthentication
+
+
+class PublicOrStaffDocsPermission(BasePermission):
+    """Expõe a documentação publicamente somente quando a instalação permitir.
+
+    Com ``OPENAPI_DOCS_PUBLIC`` desligado, exige uma conta autenticada da equipe. Isso mantém o
+    schema e as duas interfaces sob a mesma política, inclusive quando acessadas por uma sessão
+    do Django Admin.
+    """
+
+    def has_permission(self, request, view) -> bool:
+        if settings.OPENAPI_DOCS_PUBLIC:
+            return True
+        user = getattr(request, "user", None)
+        return bool(
+            user
+            and user.is_authenticated
+            and (user.is_staff or getattr(user, "is_staff_member", False))
+        )
 
 
 def docs_chrome_context():
@@ -25,32 +47,34 @@ class DocsChromeMixin:
 
 
 class PdlSpectacularAPIView(SpectacularAPIView):
-    """Publica o schema OpenAPI com acesso anônimo e limitação de requisições.
+    """Publica o schema OpenAPI conforme a política da instalação e com rate limit.
 
     Registre ``as_view()`` nas URLs de documentação. Usa os throttles de usuário e de visitante
     configurados no DRF.
     """
 
-    permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    authentication_classes = (CookieJWTAuthentication, SessionAuthentication)
+    permission_classes = (PublicOrStaffDocsPermission,)
+    throttle_classes = (AnonRateThrottle, UserRateThrottle)
 
 
 class PdlSpectacularSwaggerView(DocsChromeMixin, SpectacularSwaggerView):
-    """Renderiza a interface Swagger pública com o contexto visual do painel.
+    """Renderiza a interface Swagger conforme a política de acesso da instalação.
 
     Configure a URL do schema em ``as_view(url_name=...)``. Acrescenta título do projeto e
     endereço do frontend ao contexto usado pelo template.
     """
 
-    permission_classes = [AllowAny]
-
+    authentication_classes = (CookieJWTAuthentication, SessionAuthentication)
+    permission_classes = (PublicOrStaffDocsPermission,)
 
 
 class PdlSpectacularRedocView(DocsChromeMixin, SpectacularRedocView):
-    """Renderiza a interface ReDoc pública com o contexto visual do painel.
+    """Renderiza a interface ReDoc conforme a política de acesso da instalação.
 
     Configure a URL do schema em ``as_view(url_name=...)``. Compartilha com o Swagger o título
     do projeto e o link de retorno ao frontend.
     """
 
-    permission_classes = [AllowAny]
+    authentication_classes = (CookieJWTAuthentication, SessionAuthentication)
+    permission_classes = (PublicOrStaffDocsPermission,)

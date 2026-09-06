@@ -60,7 +60,11 @@ class VapidPublicKeyView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Push"])
+    @extend_schema(
+        tags=["Push"],
+        summary="Chave pública VAPID",
+        description="Retorna a chave pública VAPID usada para assinar notificações Web Push.",
+    )
     def get(self, request):
         return Response(self.resolve(GetVapidPublicKeyUseCase).execute())
 
@@ -75,7 +79,12 @@ class PushSubscriptionView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Push"], request=SubscribePushSerializer)
+    @extend_schema(
+        tags=["Push"],
+        summary="Assinar push",
+        description="Registra a assinatura Web Push do navegador para o usuário autenticado.",
+        request=SubscribePushSerializer,
+    )
     def post(self, request):
         serializer = SubscribePushSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -91,7 +100,12 @@ class PushSubscriptionView(InjectedAPIView):
             )
         )
 
-    @extend_schema(tags=["Push"], request=UnsubscribePushSerializer)
+    @extend_schema(
+        tags=["Push"],
+        summary="Cancelar assinatura push",
+        description="Remove a assinatura Web Push do endpoint informado para o usuário autenticado.",
+        request=UnsubscribePushSerializer,
+    )
     def delete(self, request):
         serializer = UnsubscribePushSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -2,6 +2,7 @@ import logging
 
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import BasePermission, IsAuthenticated
@@ -187,6 +188,11 @@ class ObservationAccessView(ObservationView):
     base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Permissões de observação",
+        description="Informa quais ações de observação de itens o usuário autenticado pode executar.",
+    )
     def get(self, request):
         return Response({key: request.user.has_perm(f"server.{permission}") for key, permission in {
             "capture": "capture_itemobservationsnapshot", "delete_snapshots": "delete_itemobservationsnapshot",
@@ -203,6 +209,12 @@ class ObservationLiveView(ObservationView):
     montar a resposta.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Observação ao vivo",
+        description="Consulta a distribuição atual de itens no servidor L2 com filtros e paginação.",
+        parameters=[ItemQuery],
+    )
     def get(self, request):
         options = query(ItemQuery, request)
         data = self.safely(lambda: read_observation(self.resolve(ILineageGateway)))
@@ -241,6 +253,12 @@ class ObservationFavoriteView(ObservationView):
     base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Atualizar favorito",
+        description="Adiciona ou remove o item informado dos favoritos de observação do usuário.",
+        request=FavoriteInput,
+    )
     def put(self, request, item_id):
         if not 0 < item_id <= 2147483647:
             raise serializers.ValidationError({"item_id": "ID de item inválido."})
@@ -263,11 +281,25 @@ class ObservationSnapshotsView(ObservationView):
     de montar a resposta.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Listar capturas",
+        description="Lista as capturas persistidas de observação de itens com paginação.",
+        parameters=[PageQuery],
+        responses=SnapshotSerializer(many=True),
+    )
     def get(self, request):
         page = query(PageQuery, request)["page"]
         rows = ItemObservationSnapshot.objects.select_related("created_by")
         return Response(paginate(rows, page, lambda row: SnapshotSerializer(row).data))
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Criar captura",
+        description="Captura o estado atual da observação de itens e persiste um novo snapshot.",
+        request=CaptureInput,
+        responses={201: SnapshotSerializer},
+    )
     def post(self, request):
         self.require("capture_itemobservationsnapshot")
         serializer = CaptureInput(data=request.data)
@@ -284,6 +316,13 @@ class ObservationSnapshotView(ObservationView):
     herdadas da base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Detalhe da captura",
+        description="Retorna os metadados e os detalhes paginados de uma captura de observação.",
+        parameters=[PageQuery],
+        responses=SnapshotSerializer,
+    )
     def get(self, request, snapshot_id):
         snapshot = get_object_or_404(ItemObservationSnapshot, id=snapshot_id)
         page = query(PageQuery, request)["page"]
@@ -294,6 +333,12 @@ class ObservationSnapshotView(ObservationView):
         return Response({"snapshot": SnapshotSerializer(snapshot).data,
                          **paginate(snapshot.details.all(), page, serialize)})
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Excluir captura",
+        description="Remove permanentemente a captura de observação identificada pelo ID.",
+        responses={204: None},
+    )
     def delete(self, request, snapshot_id):
         self.require("delete_itemobservationsnapshot")
         get_object_or_404(ItemObservationSnapshot, id=snapshot_id).delete()
@@ -307,6 +352,13 @@ class ObservationComparisonView(ObservationView):
     base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Comparar capturas",
+        description="Compara duas capturas de observação e pagina as diferenças encontradas entre elas.",
+        parameters=[ComparisonQuery],
+        responses=SnapshotSerializer,
+    )
     def get(self, request):
         options = query(ComparisonQuery, request)
         before = get_object_or_404(ItemObservationSnapshot, id=options["before"])
@@ -326,9 +378,22 @@ class ObservationCategoriesView(ObservationView):
     da base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Listar categorias",
+        description="Lista as categorias usadas para organizar a observação de itens.",
+        responses=CategorySerializer(many=True),
+    )
     def get(self, request):
         return Response(CategorySerializer(ItemObservationCategory.objects.all(), many=True).data)
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Criar categoria",
+        description="Cria uma nova categoria para organizar itens na observação administrativa.",
+        request=CategorySerializer,
+        responses={201: CategorySerializer},
+    )
     def post(self, request):
         self.require("add_itemobservationcategory")
         serializer = CategorySerializer(data=request.data)
@@ -344,6 +409,13 @@ class ObservationCategoryView(ObservationView):
     herdadas da base ou definidas nos padrões do DRF.
     """
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Atualizar categoria",
+        description="Atualiza os dados de uma categoria de observação existente.",
+        request=CategorySerializer,
+        responses=CategorySerializer,
+    )
     def put(self, request, category_id):
         self.require("change_itemobservationcategory")
         serializer = CategorySerializer(get_object_or_404(ItemObservationCategory, id=category_id), data=request.data)
@@ -351,6 +423,12 @@ class ObservationCategoryView(ObservationView):
         serializer.save()
         return Response(serializer.data)
 
+    @extend_schema(
+        tags=["Staff - Observação de itens"],
+        summary="Excluir categoria",
+        description="Remove permanentemente a categoria de observação identificada pelo ID.",
+        responses={204: None},
+    )
     def delete(self, request, category_id):
         self.require("delete_itemobservationcategory")
         get_object_or_404(ItemObservationCategory, id=category_id).delete()

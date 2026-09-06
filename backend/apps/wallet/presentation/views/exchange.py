@@ -1,4 +1,5 @@
 from django.conf import settings
+from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -37,6 +38,15 @@ class GameExchangeView(InjectedAPIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Carteira"],
+        summary="Consultar câmbio com o jogo",
+        description=(
+            "Retorna se o câmbio está disponível, o motivo de indisponibilidade quando "
+            "houver, a configuração da moeda ativa e o histórico recente de trocas do "
+            "usuário autenticado."
+        ),
+    )
     def get(self, request):
         config = CoinConfig.objects.filter(active=True).first()
         enabled = False
@@ -66,6 +76,15 @@ class GameExchangeView(InjectedAPIView):
             }
         )
 
+    @extend_schema(
+        tags=["Carteira"],
+        summary="Executar câmbio de moedas",
+        description=(
+            "Transfere moedas entre a carteira do portal e o personagem no jogo "
+            "(to_game ou from_game). Exige request_key para idempotência."
+        ),
+        request=ExchangeSerializer,
+    )
     def post(self, request):
         serializer = ExchangeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

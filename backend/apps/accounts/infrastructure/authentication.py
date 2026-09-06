@@ -114,11 +114,6 @@ def set_auth_cookies(request, response: Response, *, refresh: RefreshToken) -> R
         **_cookie_kwargs(request, max_age=cookie_age),
     )
     get_token(request)
-    response.data = {
-        **(response.data or {}),
-        "access": access,
-        "refresh": str(refresh),
-    }
     return response
 
 

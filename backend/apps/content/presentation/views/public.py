@@ -32,7 +32,11 @@ class NewsListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Listar notícias",
+        description="Lista as notícias públicas publicadas no portal.",
+    )
     def get(self, request):
         items = self.resolve(ListNewsUseCase).execute(None)
         payload = []
@@ -53,7 +57,11 @@ class NewsDetailView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Detalhe da notícia",
+        description="Retorna o conteúdo completo da notícia identificada pelo slug.",
+    )
     def get(self, request, slug: str):
         news = self.resolve(GetNewsUseCase).execute(GetNewsInput(slug=slug))
         payload = asdict(news)
@@ -71,7 +79,11 @@ class FaqListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Listar FAQ público",
+        description="Lista as perguntas frequentes públicas no idioma solicitado.",
+    )
     def get(self, request):
         language = "en" if request.query_params.get("lang") == "en" else "pt"
         return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(language=language)))
@@ -87,7 +99,11 @@ class DownloadListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Conteúdo"])
+    @extend_schema(
+        tags=["Conteúdo"],
+        summary="Listar downloads",
+        description="Lista os arquivos e links de download disponíveis publicamente.",
+    )
     def get(self, request):
         return Response(self.resolve(ListDownloadsUseCase).execute(None))
 
@@ -108,7 +124,11 @@ class WikiListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Wiki"])
+    @extend_schema(
+        tags=["Wiki"],
+        summary="Listar ou buscar wiki",
+        description="Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado.",
+    )
     def get(self, request):
         query = request.query_params.get("q", "").strip()
         if query:
@@ -128,7 +148,11 @@ class WikiDetailView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Wiki"])
+    @extend_schema(
+        tags=["Wiki"],
+        summary="Detalhe da página wiki",
+        description="Retorna o conteúdo da página da wiki identificada pelo slug.",
+    )
     def get(self, request, slug: str):
         return Response(dump_wiki(self.resolve(GetWikiPageUseCase).execute(GetWikiPageInput(slug=slug))))
 
@@ -143,7 +167,11 @@ class CalendarEventListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Calendário"])
+    @extend_schema(
+        tags=["Calendário"],
+        summary="Listar eventos do calendário",
+        description="Lista os eventos públicos do calendário do servidor.",
+    )
     def get(self, request):
         return Response(self.resolve(ListCalendarEventsUseCase).execute(None))
 
@@ -158,7 +186,11 @@ class LegalListView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Legal"])
+    @extend_schema(
+        tags=["Legal"],
+        summary="Listar documentos legais",
+        description="Lista os documentos legais públicos disponíveis no portal.",
+    )
     def get(self, request):
         return Response(self.resolve(ListLegalDocumentsUseCase).execute())
 
@@ -173,6 +205,10 @@ class LegalDetailView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Legal"])
+    @extend_schema(
+        tags=["Legal"],
+        summary="Detalhe do documento legal",
+        description="Retorna o conteúdo do documento legal identificado pelo slug.",
+    )
     def get(self, request, slug: str):
         return Response(asdict(self.resolve(GetLegalDocumentUseCase).execute(slug)))

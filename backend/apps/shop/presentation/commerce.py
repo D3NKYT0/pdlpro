@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
@@ -174,6 +175,15 @@ class CommerceView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        tags=["Comércio"],
+        summary="Consultar seção do comércio",
+        description=(
+            "Consulta a seção informada no path: pacotes ativos (packages), histórico "
+            "de compras (purchases) ou cotação atual do carrinho (quote)."
+        ),
+        responses=PackageSerializer(many=True),
+    )
     def get(self, request, section):
         if section == "packages":
             return Response(
@@ -205,6 +215,16 @@ class CommerceView(APIView):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         return Response(quote(cart, request.user)[0])
 
+    @extend_schema(
+        tags=["Comércio"],
+        summary="Atualizar carrinho do comércio",
+        description=(
+            "Atualiza a seção informada: pacotes no carrinho (packages, via "
+            "CartPackageSerializer) ou opções de compra (options, via "
+            "CartOptionsSerializer). Retorna a cotação atualizada."
+        ),
+        request=CartPackageSerializer,
+    )
     @transaction.atomic
     def post(self, request, section):
         if section not in ("packages", "options"):
@@ -253,10 +273,29 @@ class StaffCommerceView(APIView):
             else (PromotionCode, PromoSerializer)
         )
 
+    @extend_schema(
+        tags=["Comércio"],
+        summary="Listar pacotes ou promoções (staff)",
+        description=(
+            "Lista pacotes (packages) ou códigos promocionais (promos) conforme a "
+            "seção do path. Respostas tipadas com PackageSerializer ou PromoSerializer."
+        ),
+        responses=PackageSerializer(many=True),
+    )
     def get(self, request, section):
         model, serializer = self.config(section)
         return Response(serializer(model.objects.all(), many=True).data)
 
+    @extend_schema(
+        tags=["Comércio"],
+        summary="Criar pacote ou promoção (staff)",
+        description=(
+            "Cria um pacote (packages, PackageSerializer) ou um código promocional "
+            "(promos, PromoSerializer) conforme a seção do path."
+        ),
+        request=PackageSerializer,
+        responses=PackageSerializer,
+    )
     def post(self, request, section):
         _, cls = self.config(section)
         serializer = cls(data=request.data)
@@ -264,6 +303,16 @@ class StaffCommerceView(APIView):
         serializer.save()
         return Response(serializer.data, status=201)
 
+    @extend_schema(
+        tags=["Comércio"],
+        summary="Atualizar pacote ou promoção (staff)",
+        description=(
+            "Atualiza parcialmente um pacote ou promoção identificado por entry_id, "
+            "conforme a seção (packages/promos)."
+        ),
+        request=PackageSerializer,
+        responses=PackageSerializer,
+    )
     def patch(self, request, section, entry_id):
         model, cls = self.config(section)
         serializer = cls(

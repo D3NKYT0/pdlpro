@@ -25,7 +25,12 @@ class ShopCatalogView(ItemCatalogAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Loja"], responses=ShopItemSerializer(many=True))
+    @extend_schema(
+        tags=["Loja"],
+        summary="Catálogo da loja",
+        description="Lista os itens disponíveis para compra na loja do portal.",
+        responses=ShopItemSerializer(many=True),
+    )
     def get(self, request):
         items = self.resolve(ListShopItemsUseCase).execute(None)
         return Response(ShopItemSerializer(items, many=True).data)
@@ -41,11 +46,20 @@ class ShopCartView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Loja"])
+    @extend_schema(
+        tags=["Loja"],
+        summary="Consultar carrinho",
+        description="Retorna o carrinho atual do usuário autenticado na loja.",
+    )
     def get(self, request):
         return Response(self.resolve(GetCartUseCase).execute(GetCartInput(user_id=request.user.id)))
 
-    @extend_schema(tags=["Loja"], request=AddToCartSerializer)
+    @extend_schema(
+        tags=["Loja"],
+        summary="Adicionar ao carrinho",
+        description="Adiciona um item ao carrinho da loja do usuário autenticado.",
+        request=AddToCartSerializer,
+    )
     def post(self, request):
         serializer = AddToCartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -69,7 +83,12 @@ class ShopCartItemView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Loja"], request=UpdateCartItemSerializer)
+    @extend_schema(
+        tags=["Loja"],
+        summary="Atualizar item do carrinho",
+        description="Atualiza a quantidade de um item já presente no carrinho da loja.",
+        request=UpdateCartItemSerializer,
+    )
     def patch(self, request, cart_item_id):
         serializer = UpdateCartItemSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -82,7 +101,11 @@ class ShopCartItemView(ItemCatalogAPIView):
         )
         return Response(result)
 
-    @extend_schema(tags=["Loja"])
+    @extend_schema(
+        tags=["Loja"],
+        summary="Remover item do carrinho",
+        description="Remove o item informado do carrinho da loja do usuário autenticado.",
+    )
     def delete(self, request, cart_item_id):
         result = self.resolve(UpdateCartItemUseCase).execute(
             UpdateCartItemInput(user_id=request.user.id, cart_item_id=cart_item_id, quantity=0)
@@ -99,7 +122,11 @@ class ShopCheckoutView(ItemCatalogAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Loja"])
+    @extend_schema(
+        tags=["Loja"],
+        summary="Finalizar compra",
+        description="Finaliza a compra pela rotina checkout e devolve o resultado da operação.",
+    )
     def post(self, request):
         from rest_framework import serializers
         from apps.shop.application.commerce import checkout

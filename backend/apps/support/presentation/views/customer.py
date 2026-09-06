@@ -28,7 +28,11 @@ class CustomerTicketListCreateView(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Atendimento"])
+    @extend_schema(
+        tags=["Atendimento"],
+        summary="Listar meus chamados",
+        description="Lista os chamados do próprio usuário com contadores de estado.",
+    )
     def get(self, request):
         tickets = Ticket.objects.filter(user=request.user).select_related("assigned_to")
         return Response({
@@ -40,7 +44,11 @@ class CustomerTicketListCreateView(APIView):
             },
         })
 
-    @extend_schema(tags=["Atendimento"])
+    @extend_schema(
+        tags=["Atendimento"],
+        summary="Criar chamado",
+        description="Cria um novo chamado do usuário autenticado com a mensagem inicial.",
+    )
     @transaction.atomic
     def post(self, request):
         subject = str(request.data.get("subject", "")).strip()
@@ -79,14 +87,22 @@ class CustomerTicketDetailView(APIView):
     def get_ticket(self, request, ticket_id):
         return Ticket.objects.filter(id=ticket_id, user=request.user).select_related("assigned_to", "user").first()
 
-    @extend_schema(tags=["Atendimento"])
+    @extend_schema(
+        tags=["Atendimento"],
+        summary="Detalhe do chamado",
+        description="Consulta o chamado do próprio usuário com mensagens e metadados.",
+    )
     def get(self, request, ticket_id):
         ticket = self.get_ticket(request, ticket_id)
         if not ticket:
             return error("Chamado não encontrado.", "TICKET_NOT_FOUND", status.HTTP_404_NOT_FOUND)
         return Response(serialize_ticket(ticket, detail=True))
 
-    @extend_schema(tags=["Atendimento"])
+    @extend_schema(
+        tags=["Atendimento"],
+        summary="Responder chamado",
+        description="Envia uma mensagem do jogador no chamado e notifica o atendente quando houver.",
+    )
     @transaction.atomic
     def post(self, request, ticket_id):
         ticket = self.get_ticket(request, ticket_id)
@@ -111,7 +127,11 @@ class CustomerTicketDetailView(APIView):
             )
         return Response(serialize_ticket(ticket, detail=True), status=status.HTTP_201_CREATED)
 
-    @extend_schema(tags=["Atendimento"])
+    @extend_schema(
+        tags=["Atendimento"],
+        summary="Encerrar ou reabrir chamado",
+        description="Permite ao jogador encerrar ou reabrir o próprio chamado conforme a ação informada.",
+    )
     @transaction.atomic
     def patch(self, request, ticket_id):
         ticket = self.get_ticket(request, ticket_id)

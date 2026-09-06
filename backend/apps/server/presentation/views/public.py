@@ -25,7 +25,12 @@ class ServerInfoView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Servidor"], responses=ServerInfoSerializer)
+    @extend_schema(
+        tags=["Servidor"],
+        summary="Informações do servidor",
+        description="Retorna as informações públicas de configuração e apresentação do servidor.",
+        responses=ServerInfoSerializer,
+    )
     def get(self, request):
         info = self.resolve(GetServerInfoUseCase).execute()
         return Response(ServerInfoSerializer(info).data)
@@ -41,7 +46,12 @@ class ServerStatusView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Servidor"], responses=ServerStatusSerializer)
+    @extend_schema(
+        tags=["Servidor"],
+        summary="Status do servidor",
+        description="Retorna o status online, contagens e disponibilidade atual do servidor.",
+        responses=ServerStatusSerializer,
+    )
     def get(self, request):
         status = self.resolve(GetServerStatusUseCase).execute(GetServerStatusInput())
         return Response(ServerStatusSerializer(status).data)
@@ -57,7 +67,12 @@ class RankingView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Servidor"], responses=RankingEntrySerializer(many=True))
+    @extend_schema(
+        tags=["Servidor"],
+        summary="Ranking público",
+        description="Retorna o ranking público do tipo informado, limitado pelo parâmetro limit.",
+        responses=RankingEntrySerializer(many=True),
+    )
     def get(self, request, kind: str):
         limit = int(request.query_params.get("limit", 10))
         entries = self.resolve(GetRankingUseCase).execute(GetRankingInput(kind=kind, limit=min(limit, 50)))
@@ -88,7 +103,11 @@ class PublicLineageQueryView(InjectedAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @extend_schema(tags=["Servidor"])
+    @extend_schema(
+        tags=["Servidor"],
+        summary="Consulta pública Lineage",
+        description="Executa uma consulta pública nomeada no banco Lineage e devolve as linhas resultantes.",
+    )
     def get(self, request, name: str):
         params = {key: value for key, value in request.query_params.items()}
         rows = self.resolve(RunPublicLineageQueryUseCase).execute(
