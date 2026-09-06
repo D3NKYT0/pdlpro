@@ -125,7 +125,7 @@ def test_walk_rejects_insufficient_energy_without_granting_experience():
 @pytest.mark.django_db
 def test_pet_actions_validate_contract_limits_and_basic_needs():
     user = _user("denk-limits")
-    profile = DenkynhoProfile.objects.create(user=user, satiety=7, energy=11, happiness=60, hygiene=100)
+    profile = DenkynhoProfile.objects.create(user=user, satiety=7, energy=11, happiness=100, hygiene=100)
     api = APIClient()
     api.force_authenticate(user)
 
@@ -140,6 +140,22 @@ def test_pet_actions_validate_contract_limits_and_basic_needs():
     profile.refresh_from_db()
     assert profile.experience == 0
     assert DenkynhoCareAction.objects.filter(profile=profile).count() == 0
+
+
+@pytest.mark.django_db
+def test_care_raises_happiness_with_own_pose_effect():
+    user = _user("denk-care")
+    profile = DenkynhoProfile.objects.create(user=user, happiness=40, hygiene=40)
+    api = APIClient()
+    api.force_authenticate(user)
+    response = api.post(PET_URL, {"action": "care", "idempotency_key": str(uuid4())}, format="json")
+    assert response.status_code == 200
+    assert response.data["action"] == "care"
+    assert response.data["xp_gained"] == 12
+    assert response.data["attributes"]["happiness"] == 58
+    assert response.data["attributes"]["hygiene"] == 40
+    profile.refresh_from_db()
+    assert profile.happiness == 58
 
 
 @pytest.mark.django_db

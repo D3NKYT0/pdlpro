@@ -69,6 +69,23 @@ it('dá banho, aumenta a higiene confirmada pela API e reproduz o atlas próprio
   expect(JSON.parse((request[1] as RequestInit).body as string)).toMatchObject({ action: 'bath' })
   expect(screen.getByLabelText('Higiene')).toHaveValue(100)
 })
+it('dá carinho, aumenta a alegria e reproduz o atlas 14-carinho', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user); await screen.findByText('Nível 1')
+  const updated = { ...petProfile, experience: 12, attributes: { ...petProfile.attributes, happiness: 93 }, attributes_gained: { happiness: 18 }, action: 'care', xp_gained: 12, replayed: false }
+  let cared = false
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+    if (!String(input).includes('/assistant/pet/')) return Promise.resolve(apiResponse(input))
+    if (init?.method === 'POST') { cared = true; return Promise.resolve(response(updated)) }
+    return Promise.resolve(response(cared ? updated : petProfile))
+  })
+  expect(screen.getByRole('button', { name: 'Dar carinho' }).querySelector('[data-activity-icon="care"]')).toBeTruthy()
+  await user.click(screen.getByRole('button', { name: 'Dar carinho' }))
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '14-carinho'))
+  const request = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')!
+  expect(JSON.parse((request[1] as RequestInit).body as string)).toMatchObject({ action: 'care' })
+  expect(screen.getByLabelText('Alegria')).toHaveValue(93)
+})
 it('caminha no atlas próprio e aplica o custo de energia confirmado pela API', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion(user); await screen.findByText('Nível 1')

@@ -36,6 +36,7 @@ def test_wardrobe_requires_authentication_and_lists_unlock_levels(owner):
         ("garden", 1, True), ("star-pin", 2, False), ("dance", 3, False), ("study", 4, False), ("camp", 5, False),
     ]
     assert "dance" not in profile["available_actions"]
+    assert profile["available_actions"] == ["feed", "sleep", "play", "care", "bath", "walk"]
 
 
 @pytest.mark.parametrize("flags", [{}, {"is_staff": True}, {"is_superuser": True}])

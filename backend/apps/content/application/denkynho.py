@@ -30,7 +30,7 @@ _EFFECTS = {
     DenkynhoCareAction.Action.FEED: ({"satiety": 32, "happiness": 5}, 12),
     DenkynhoCareAction.Action.SLEEP: ({"energy": 35}, 10),
     DenkynhoCareAction.Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
-    DenkynhoCareAction.Action.CARE: ({"hygiene": 30, "happiness": 6}, 12),
+    DenkynhoCareAction.Action.CARE: ({"happiness": 18}, 12),
     DenkynhoCareAction.Action.BATH: ({"hygiene": 30, "happiness": 6}, 12),
     DenkynhoCareAction.Action.WALK: ({"energy": -5, "happiness": 8}, 8),
     DenkynhoCareAction.Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
@@ -154,7 +154,7 @@ def _validate_action(profile: DenkynhoProfile, action: str) -> None:
         DenkynhoCareAction.Action.FEED: "satiety",
         DenkynhoCareAction.Action.SLEEP: "energy",
         DenkynhoCareAction.Action.PLAY: "happiness",
-        DenkynhoCareAction.Action.CARE: "hygiene",
+        DenkynhoCareAction.Action.CARE: "happiness",
         DenkynhoCareAction.Action.BATH: "hygiene",
         DenkynhoCareAction.Action.DANCE: "happiness",
     }[action]

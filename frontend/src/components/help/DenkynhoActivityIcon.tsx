@@ -1,7 +1,5 @@
 import type { DenkynhoAction } from '../../services/domain/content.service'
 
-type ActivityAction = Exclude<DenkynhoAction, 'care'>
-
 const common = {
   width: 44,
   height: 44,
@@ -16,7 +14,7 @@ const common = {
 } as const
 
 /** Ilustrações vetoriais das ações; o nome acessível fica no IconButton. */
-export function DenkynhoActivityIcon({ action }: { action: ActivityAction }) {
+export function DenkynhoActivityIcon({ action }: { action: DenkynhoAction }) {
   if (action === 'feed') return <svg {...common} data-activity-icon={action}>
     <defs>
       <linearGradient id="feed-bowl" x1="13" y1="31" x2="46" y2="57" gradientUnits="userSpaceOnUse"><stop stopColor="#FF7966" /><stop offset=".48" stopColor="#D93635" /><stop offset="1" stopColor="#8E1E2C" /></linearGradient>
@@ -62,6 +60,20 @@ export function DenkynhoActivityIcon({ action }: { action: ActivityAction }) {
     <circle cx="34" cy="34" r="2" fill="#A9E9FF" stroke="#24316A" strokeWidth="1.2" />
     <path d="M27 23c1 4 9 4 10 0M27 42l-4 7M37 42l4 7" stroke="#24224E" strokeWidth="2.5" />
     <path d="M10 42c2 2 4 2 6 0M48 43c2 2 4 2 6 0" stroke="#AEB5FF" strokeWidth="2" />
+  </svg>
+
+  if (action === 'care') return <svg {...common} data-activity-icon={action}>
+    <defs>
+      <linearGradient id="care-heart" x1="18" y1="14" x2="46" y2="48" gradientUnits="userSpaceOnUse"><stop stopColor="#FF9AB8" /><stop offset=".45" stopColor="#F04578" /><stop offset="1" stopColor="#A01848" /></linearGradient>
+      <linearGradient id="care-glow" x1="22" y1="18" x2="40" y2="36" gradientUnits="userSpaceOnUse"><stop stopColor="#FFF" stopOpacity=".75" /><stop offset="1" stopColor="#FFF" stopOpacity="0" /></linearGradient>
+    </defs>
+    <ellipse cx="32" cy="57" rx="20" ry="3" fill="#130E0C" opacity=".28" />
+    <path d="M32 50c-11-8-18-15-18-24 0-7 5-12 11-12 4 0 6 2 7 4 1-2 3-4 7-4 6 0 11 5 11 12 0 9-7 16-18 24Z" fill="url(#care-heart)" stroke="#5A1230" strokeWidth="3" />
+    <path d="M22 24c4-4 9-3 11 1" stroke="url(#care-glow)" strokeWidth="3.5" />
+    <path d="M28 34c2 2 6 2 8 0" stroke="#FFD0E0" strokeWidth="2.5" opacity=".9" />
+    <path d="m44 12 2 4 4 1-4 2-2 4-2-4-4-2 4-1 2-4Z" fill="#FFF09A" stroke="#D89A25" strokeWidth="1.5" />
+    <path d="m14 18 1.5 3 3 1-3 1.5-1.5 3-1.5-3-3-1.5 3-1 1.5-3Z" fill="#FFE074" stroke="#C98A1E" strokeWidth="1.2" />
+    <circle cx="48" cy="34" r="2" fill="#FFD0E0" /><circle cx="16" cy="36" r="1.8" fill="#FFD0E0" />
   </svg>
 
   if (action === 'bath') return <svg {...common} data-activity-icon={action}>

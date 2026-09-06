@@ -5,7 +5,7 @@ import { DenkynhoActivityIcon } from './DenkynhoActivityIcon'
 
 afterEach(cleanup)
 
-it.each(['feed', 'sleep', 'play', 'bath', 'walk', 'dance'] as const)('renderiza o SVG detalhado e decorativo de %s', action => {
+it.each(['feed', 'sleep', 'play', 'care', 'bath', 'walk', 'dance'] as const)('renderiza o SVG detalhado e decorativo de %s', action => {
   const { container } = render(<DenkynhoActivityIcon action={action} />)
   const icon = container.querySelector(`[data-activity-icon="${action}"]`)
   expect(icon?.getAttribute('aria-hidden')).toBe('true')

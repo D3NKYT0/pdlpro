@@ -37,6 +37,7 @@ const activities = [
   { action: 'feed', pose: '11-comendo', pt: 'Alimentar', en: 'Feed', status: { pt: 'Fazendo uma pausa para um lanche.', en: 'Taking a snack break.' } },
   { action: 'sleep', pose: '05-dormindo', pt: 'Dormir', en: 'Sleep', status: { pt: 'Dormindo na caminha para recuperar energia.', en: 'Sleeping in bed to recover energy.' } },
   { action: 'play', pose: '12-jogando', pt: 'Brincar', en: 'Play', status: { pt: 'Brincando para ficar mais alegre!', en: 'Playing to feel happier!' } },
+  { action: 'care', pose: '14-carinho', pt: 'Dar carinho', en: 'Give affection', status: { pt: 'Recebendo carinho e ficando mais alegre!', en: 'Getting affection and feeling happier!' } },
   { action: 'bath', pose: '15-banho', pt: 'Dar banho', en: 'Bathe', status: { pt: 'Tomando banho para aumentar a higiene!', en: 'Taking a bath to improve hygiene!' } },
   { action: 'walk', pose: '16-andando', pt: 'Caminhar', en: 'Walk', status: { pt: 'Caminhando para se exercitar!', en: 'Walking for a little exercise!' } },
   { action: 'dance', pose: '13-dancando', pt: 'Dançar juntos', en: 'Dance together', status: { pt: 'Dançando com você!', en: 'Dancing with you!' } },
