@@ -449,11 +449,11 @@ HANDBOOK = [
         41, "public", "support",
         "Como conversar com o Denkynho na Ajuda",
         "Abra Ajuda, escreva a dúvida e envie com Enter; Shift+Enter quebra a linha.",
-        "1) Abra /painel/ajuda. 2) Escreva até 1.000 caracteres. 3) Enter envia; Shift+Enter quebra a linha. 4) Você pode filtrar sugestões por assunto ou tocar numa pergunta. 5) Nova conversa limpa o histórico desta tela. Clique no Denkynho para dicas, idioma, animações e FAQ público. Conversar só foca o campo, sem enviar. Não envie senhas. O contexto vale enquanto a conversa estiver aberta e some ao recarregar.",
+        "1) Abra /painel/ajuda. 2) Escreva até 400 caracteres. 3) Enter envia; Shift+Enter quebra a linha. 4) Você pode filtrar sugestões por assunto ou tocar numa pergunta. 5) Nova conversa limpa o histórico desta tela. Clique no Denkynho para dicas, idioma, animações e FAQ público. Conversar só foca o campo, sem enviar. Não envie senhas. O contexto vale enquanto a conversa estiver aberta e some ao recarregar.",
         "ajuda,denkynho,chat,como perguntar,assistente,conversar",
         "How to chat with Denkynho in Help",
         "Open Help, type the question, and send with Enter; Shift+Enter adds a line.",
-        "1) Open /painel/ajuda. 2) Write up to 1,000 characters. 3) Enter sends; Shift+Enter adds a line. 4) You can filter suggestions by topic or tap a question. 5) New conversation clears this screen’s history. Click Denkynho for tips, language, animations, and the public FAQ. Chat only focuses the field, without sending. Never send passwords. Context lasts while this conversation stays open and disappears on reload.",
+        "1) Open /painel/ajuda. 2) Write up to 400 characters. 3) Enter sends; Shift+Enter adds a line. 4) You can filter suggestions by topic or tap a question. 5) New conversation clears this screen’s history. Click Denkynho for tips, language, animations, and the public FAQ. Chat only focuses the field, without sending. Never send passwords. Context lasts while this conversation stays open and disappears on reload.",
         "help,denkynho,chat,ask,assistant",
     ),
     (

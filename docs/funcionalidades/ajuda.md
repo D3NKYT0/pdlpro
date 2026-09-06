@@ -213,7 +213,7 @@ Além do filtro de palavrões, o backend aplica atalhos de segurança antes do F
 
 ## Animações
 
-O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe `pose`, `talking`, `mouthOpen`, `animated` e `celebration`. Os assets PNG transparentes ficam em `frontend/public/mascot/denkynho/poses/` (bases e overlays) e `frontend/public/mascot/denkynho/sequences/` (atlas). O manifesto [poses.json](../../frontend/src/components/help/poses.json) relaciona as poses, inclusive dança, carinho, banho e caminhada, e os recortes dos olhos e da boca. As bases originais são de 512 × 768; comendo, jogando, dançando, carinho, banho e caminhada usam 1024 × 1536, na mesma proporção 2:3. As coordenadas dos recortes usam o espaço lógico de 256 × 384 e são convertidas em porcentagem. As novas poses não reutilizam recortes faciais das anteriores.
+O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe `pose`, `talking`, `mouthOpen`, `animated` e `celebration`. Os assets PNG transparentes ficam em `frontend/public/mascot/denkynho/poses/` (bases e overlays) e `frontend/public/mascot/denkynho/sequences/` (atlas). O manifesto [poses.json](../../frontend/src/components/help/poses.json) relaciona as poses, inclusive dança, carinho, banho e caminhada, e os recortes dos olhos e da boca. As bases originais são de 512 × 768; comendo, jogando, dançando, carinho, banho e caminhada usam 1024 × 1536, na mesma proporção 2:3. As coordenadas dos recortes usam o espaço lógico de 256 × 384 e são convertidas em porcentagem. Poses de cuidado com olhos abertos têm overlays próprios de piscada e boca em `poses/`; sono em pé e carinho (olhos já fechados) só ganham boca quando falam.
 
 | Estado da conversa | Comportamento |
 | --- | --- |
@@ -251,7 +251,7 @@ O componente também aceita as demais poses do manifesto para futuras respostas 
 
 ## Limites e extensão
 
-- Mensagens de até 1.000 caracteres; consultas repetidas ficam bloqueadas durante envio e revelação.
+- Mensagens de até 400 caracteres; consultas repetidas ficam bloqueadas durante envio e revelação.
 - Uma falha não apaga o rascunho nem adiciona uma resposta de sucesso.
 - Respostas são texto simples, sem execução de HTML recebido.
 - O chat usa apenas a identidade básica da sessão; não consulta personagens, pagamentos, saldos ou outras informações particulares.

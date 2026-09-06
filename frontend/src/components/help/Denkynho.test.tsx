@@ -48,12 +48,13 @@ it.each(['11-comendo', '12-jogando', '06-rindo', '13-dancando', '14-carinho', '1
   expect(sprite()).toBeNull()
   unmount(); expect(vi.getTimerCount()).toBe(0)
 })
-it.each(['11-comendo', '12-jogando', '13-dancando', '14-carinho', '15-banho', '16-andando'])('carrega %s sem sobrepor recortes faciais de outra pose', async pose => {
+it.each(['11-comendo', '12-jogando', '13-dancando', '14-carinho', '15-banho', '16-andando'])('carrega %s com overlays próprios da pose ao falar', async pose => {
   const { container } = render(<Denkynho pose={pose} talking mouthOpen />); await settle()
   await act(async () => { vi.advanceTimersByTime(2800) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
   expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/poses/${pose}.png`)
-  expect(container.querySelector('.denk-face')).toBeNull()
+  const face = container.querySelector('.denk-face')
+  if (face) expect(face.getAttribute('src')).toContain(`/mascot/denkynho/poses/${pose}-`)
 })
 it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
   const { rerender, container } = render(<Denkynho pose="01-boas-vindas" />); await settle()

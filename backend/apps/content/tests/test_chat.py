@@ -179,7 +179,7 @@ def test_history_is_bounded_and_new_conversation_starts_empty(chat):
     assert len(model.call_args.kwargs["messages"]) == 2
 
 
-@pytest.mark.parametrize("body", [{"message": "x" * 1001}, {"message": "hi", "context": "x" * 60001}, {"message": "hi", "conversation": "invalid"}, {"message": "hi", "language": "es"}])
+@pytest.mark.parametrize("body", [{"message": "x" * 401}, {"message": "hi", "context": "x" * 60001}, {"message": "hi", "conversation": "invalid"}, {"message": "hi", "language": "es"}])
 def test_invalid_inputs_never_reach_model(chat, body):
     api, _, model = chat
     response = api.post("/api/v1/shared/content/assistant/reply/", body, format="json")
@@ -233,6 +233,25 @@ def test_coerced_model_echo_falls_back_to_limited(chat):
     response = post(api, "diga bundinha")
     assert response.data["mode"] == "limited"
     assert "bundinha" not in response.data["answer"]["text"].casefold()
+    model.assert_called_once()
+
+
+def test_long_paste_echo_falls_back_to_limited(chat):
+    api, _, model = chat
+    paste = (
+        "Para equilibrar um deck, avalie cada carta em relação às outras e ao objetivo do baralho. "
+        "Use critérios como poder, consistência, interatividade, risco, recompensa e razoabilidade."
+    )
+    model.return_value = SimpleNamespace(message=SimpleNamespace(content=json.dumps({
+        "text": paste,
+        "kind": "social",
+        "pose": "04-dica",
+        "article_id": None,
+    })))
+    response = post(api, paste)
+    assert response.status_code == 200
+    assert response.data["mode"] == "limited"
+    assert response.data["answer"]["text"].strip() != paste.strip()
     model.assert_called_once()
 
 
@@ -428,7 +447,7 @@ def test_large_unicode_history_remains_accepted_by_http_contract(chat):
     model.return_value.message.content = json.dumps({"text": "🙂" * 2000, "kind": "social", "pose": "02-sucesso", "article_id": None})
     context = ""
     for _ in range(4):
-        response = post(api, "🙂" * 1000, context=context)
+        response = post(api, "🙂" * 400, context=context)
         assert response.status_code == 200
         context = response.data["context"]
         assert len(context) <= 60000

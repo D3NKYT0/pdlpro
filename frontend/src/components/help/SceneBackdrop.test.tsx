@@ -24,5 +24,9 @@ it('waits for artwork, preserves the previous scene on failure and cancels stale
 })
 it('accepts only local scene identifiers', () => {
   expect(knownScene('garden')).toBe('garden')
+  expect(knownScene('living-room')).toBe('living-room')
+  expect(knownScene('bedroom')).toBe('bedroom')
+  expect(knownScene('bathroom')).toBe('bathroom')
+  expect(knownScene('kitchen')).toBe('kitchen')
   for (const value of [undefined, '', 'constructor', 'https://example.com/a.png']) expect(knownScene(value)).toBeUndefined()
 })

@@ -8,7 +8,7 @@ from apps.content.application.assistant import (
     AssistantReplyUseCase,
     valid_preferred_name,
 )
-from apps.content.application.chat import ChatInput, ChatReplyUseCase
+from apps.content.application.chat import MESSAGE_MAX_LENGTH, ChatInput, ChatReplyUseCase
 from apps.content.application.denkynho import (
     CareDenkynhoInput,
     CareDenkynhoUseCase,
@@ -57,7 +57,7 @@ class AssistantPreferencesSerializer(serializers.Serializer):
 
 
 class AssistantReplySerializer(serializers.Serializer):
-    message = serializers.CharField(max_length=1000, trim_whitespace=True, allow_blank=False)
+    message = serializers.CharField(max_length=MESSAGE_MAX_LENGTH, trim_whitespace=True, allow_blank=False)
     language = serializers.ChoiceField(choices=["auto", "pt", "en"], default="auto")
     conversation = serializers.BooleanField(default=False)
     context = serializers.CharField(max_length=60000, allow_blank=True, default="")

@@ -2,9 +2,13 @@
 
 UNLOCKS = (
     {"id": "garden", "slot": "scene", "label": {"pt": "Jardim encantado", "en": "Enchanted garden"}, "level": 1},
+    {"id": "living-room", "slot": "scene", "label": {"pt": "Sala aconchegante", "en": "Cozy living room"}, "level": 1},
     {"id": "star-pin", "slot": "accessory", "label": {"pt": "Broche de estrela", "en": "Star pin"}, "level": 2},
+    {"id": "bedroom", "slot": "scene", "label": {"pt": "Quarto estrelado", "en": "Starry bedroom"}, "level": 2},
     {"id": "dance", "slot": "interaction", "label": {"pt": "Dançar juntos", "en": "Dance together"}, "level": 3},
+    {"id": "bathroom", "slot": "scene", "label": {"pt": "Banheiro luminoso", "en": "Bright bathroom"}, "level": 3},
     {"id": "study", "slot": "scene", "label": {"pt": "Biblioteca aconchegante", "en": "Cozy library"}, "level": 4},
+    {"id": "kitchen", "slot": "scene", "label": {"pt": "Cozinha quentinha", "en": "Warm kitchen"}, "level": 4},
     {"id": "camp", "slot": "scene", "label": {"pt": "Acampamento noturno", "en": "Night campsite"}, "level": 5},
 )
 APPEARANCE_SLOTS = ("accessory", "scene")

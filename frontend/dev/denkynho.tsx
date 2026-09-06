@@ -12,9 +12,13 @@ if (!import.meta.env.DEV) throw new Error('Development preview only')
 const article = { id: 'demo', question: 'Como encontro minhas contas?', short_answer: 'Abra suas contas no painel.', answer: 'Abra /painel/accounts para consultar suas contas vinculadas.', category: 'game_accounts', category_label: 'Contas e personagens', keywords: ['conta'], audience: 'public', audience_label: 'Todos' }
 const unlocks = [
   { id: 'garden', slot: 'scene', level: 1, label: { pt: 'Jardim encantado', en: 'Enchanted garden' } },
+  { id: 'living-room', slot: 'scene', level: 1, label: { pt: 'Sala aconchegante', en: 'Cozy living room' } },
   { id: 'star-pin', slot: 'accessory', level: 2, label: { pt: 'Broche de estrela', en: 'Star pin' } },
+  { id: 'bedroom', slot: 'scene', level: 2, label: { pt: 'Quarto estrelado', en: 'Starry bedroom' } },
   { id: 'dance', slot: 'interaction', level: 3, label: { pt: 'Dançar juntos', en: 'Dance together' } },
+  { id: 'bathroom', slot: 'scene', level: 3, label: { pt: 'Banheiro luminoso', en: 'Bright bathroom' } },
   { id: 'study', slot: 'scene', level: 4, label: { pt: 'Biblioteca aconchegante', en: 'Cozy library' } },
+  { id: 'kitchen', slot: 'scene', level: 4, label: { pt: 'Cozinha quentinha', en: 'Warm kitchen' } },
   { id: 'camp', slot: 'scene', level: 5, label: { pt: 'Acampamento noturno', en: 'Night campsite' } },
 ].map(item => ({ ...item, unlocked: true }))
 let profile = {

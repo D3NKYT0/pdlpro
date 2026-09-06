@@ -306,8 +306,8 @@ def test_staff_authorization_and_message_length(api, mocker):
     api.force_authenticate(staff)
     response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'Staff queue guide', 'language': 'en'})
     assert response.data['article_id'] == str(article.id)
-    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1001}).status_code == 400
-    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 1000}).status_code == 200
+    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 401}).status_code == 400
+    assert api.post('/api/v1/shared/content/assistant/reply/', {'message': 'x' * 400}).status_code == 200
 
 
 @pytest.mark.django_db

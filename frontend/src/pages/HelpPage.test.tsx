@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -162,6 +162,15 @@ it('bloqueia apelido ofensivo mesmo disfarçado e não o repete na conversa', as
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '10-frustrado')
   expect(within(screen.getByRole('log')).queryByText(/r\.0\.l\.4/i)).not.toBeInTheDocument()
   expect(fetcher).toHaveBeenCalledTimes(2)
+})
+it('rejeita mensagem acima de 400 caracteres sem chamar a API', async () => {
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  const input = screen.getByRole('textbox', { name: 'Sua mensagem' })
+  expect(input).toHaveAttribute('maxLength', '400')
+  fireEvent.change(input, { target: { value: 'x'.repeat(401) } })
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(screen.getByText(/até 400 caracteres/)).toBeVisible()
+  expect(fetcher.mock.calls.some(([url]) => String(url).includes('/assistant/reply/'))).toBe(false)
 })
 it('exibe resposta de crise no histórico sem virar erro de moderação', async () => {
   const crisis = {

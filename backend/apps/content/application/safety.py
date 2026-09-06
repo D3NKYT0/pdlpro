@@ -161,11 +161,20 @@ def injection_reply(message: str, language: str) -> dict | None:
 
 
 def coerced_echo(message: str, answer: str) -> bool:
-    """True quando a resposta só ecoa um 'diga/say X' pedido na mensagem."""
+    """True quando a resposta ecoa a mensagem ou um 'diga/say X' pedido nela."""
 
     query = expand_address(_normalize(message))
     text = _normalize(answer)
-    if not query or not text or len(text.split()) > 4:
+    if not query or not text:
+        return False
+    # Colagem longa devolvida quase intacta (não confundir com cumprimento curto).
+    if len(query) >= 80 and len(text) >= 80:
+        if text == query:
+            return True
+        shorter, longer = (text, query) if len(text) <= len(query) else (query, text)
+        if shorter in longer and len(shorter) / len(longer) >= 0.7:
+            return True
+    if len(text.split()) > 4:
         return False
     match = _SAY_PAYLOAD.search(query)
     if not match:

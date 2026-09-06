@@ -33,7 +33,10 @@ def test_wardrobe_requires_authentication_and_lists_unlock_levels(owner):
     profile = anonymous.get(WARDROBE_URL).data
     assert profile["appearance"] == {"accessory": "", "outfit": "", "object": "", "scene": "garden"}
     assert [(item["id"], item["level"], item["unlocked"]) for item in profile["unlocks"]] == [
-        ("garden", 1, True), ("star-pin", 2, False), ("dance", 3, False), ("study", 4, False), ("camp", 5, False),
+        ("garden", 1, True), ("living-room", 1, True),
+        ("star-pin", 2, False), ("bedroom", 2, False),
+        ("dance", 3, False), ("bathroom", 3, False),
+        ("study", 4, False), ("kitchen", 4, False), ("camp", 5, False),
     ]
     assert "dance" not in profile["available_actions"]
     assert profile["available_actions"] == ["feed", "sleep", "play", "care", "bath", "walk"]
@@ -47,7 +50,10 @@ def test_equipping_is_free_repeatable_and_always_owned_by_session(owner, api, fl
     other = User.objects.create_user("wardrobe-other", "wardrobe-other@example.com", password="test-pass")
     other_profile = DenkynhoProfile.objects.create(user=other, level=5, appearance={"object": "lantern"})
     profile = DenkynhoProfile.objects.create(user=owner, level=5, experience=29)
-    for slot, item in [("accessory", "star-pin"), ("scene", "study"), ("scene", "camp")]:
+    for slot, item in [
+        ("accessory", "star-pin"), ("scene", "living-room"), ("scene", "bedroom"),
+        ("scene", "bathroom"), ("scene", "study"), ("scene", "kitchen"), ("scene", "camp"),
+    ]:
         payload = {"slot": slot, "item_id": item, "user_id": str(other.id)}
         first = api.patch(WARDROBE_URL, payload, format="json")
         second = api.patch(WARDROBE_URL, payload, format="json")
@@ -87,7 +93,7 @@ def test_level_up_exposes_new_unlocks_and_replay_does_not_reannounce(owner, api)
     assert first.data["level"] == 2
     assert first.data["experience"] == 7
     assert first.data["level_up"] is True
-    assert first.data["unlocked"] == ["star-pin"]
+    assert first.data["unlocked"] == ["star-pin", "bedroom"]
     assert first.data["attributes_gained"] == {"satiety": 10, "happiness": 5}
     second = api.post(PET_URL, payload, format="json")
     assert second.data["replayed"] is True
@@ -185,7 +191,8 @@ def test_retired_scarf_and_loose_lantern_become_scenes_without_changing_progress
 
 def test_scenes_respect_level_and_can_be_removed_and_reselected(owner, api):
     assert api.get(PET_URL).data["appearance"]["scene"] == "garden"
-    for scene in ["study", "camp", "https://evil.test/image.png"]:
+    assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": "living-room"}, format="json").data["appearance"]["scene"] == "living-room"
+    for scene in ["bedroom", "bathroom", "study", "kitchen", "camp", "https://evil.test/image.png"]:
         assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": scene}, format="json").status_code == 400
     assert api.patch(WARDROBE_URL, {"slot": "scene", "item_id": ""}, format="json").data["appearance"]["scene"] == ""
     assert api.get(PET_URL).data["appearance"]["scene"] == ""
