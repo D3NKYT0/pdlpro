@@ -142,7 +142,7 @@ def model_affect(value: str | None) -> EmotionId | None:
 def pose_for_reply(kind: str, preferred: str, emotion: dict[str, str], affect: str | None) -> str:
     """A fala social acompanha o usuário; orientação do portal mantém a pose de ajuda."""
 
-    if kind == "blocked":
+    if kind in {"blocked", "crisis"}:
         return preferred
     if affect == "calm":
         return preferred

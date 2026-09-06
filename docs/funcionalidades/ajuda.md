@@ -197,6 +197,18 @@ O filtro foi adaptado do serviço de moderação do HollowDuel. Antes de exibir 
 
 Mensagens recusadas no navegador não são adicionadas ao histórico, não consultam a API e não podem definir o apelido. O backend repete a validação em português e inglês antes de executar a busca, impedindo contorno por outro cliente. A tela apresenta um erro claro e permite reformular. A lista é curta e própria para a conversa de ajuda; qualquer ampliação deve incluir casos bloqueados, tentativas de contorno e falsos positivos nos testes.
 
+Além do filtro de palavrões, o backend aplica atalhos de segurança antes do FAQ e do modelo:
+
+| Sinal | Comportamento |
+| --- | --- |
+| Intenção explícita de autolesão | `kind: crisis` com texto fixo de acolhimento e CVV 188; a mensagem permanece no histórico e não consulta FAQ |
+| Insulto de orientação dirigido ao mascote (ex.: “why are you so gay”) | `kind: blocked`, sem sugestões de FAQ |
+| “O que é o PDL?” / “how pdl works?” | Casa o artigo de apresentação mesmo com paráfrase curta |
+| Biblioteca aconchegante / cenas do armário | Handbook de desbloqueio por nível; não vira dica de decoração |
+| `related_ids` em `unknown` | Só artigos com pontuação mínima e token em comum com a pergunta |
+
+`safety.py` concentra crise, assédio e o atalho de apresentação. Ampliar padrões exige testes em `test_assistant.py` / `test_chat.py` e, no frontend, aceite de `kind: crisis` em `HelpPage.tsx`.
+
 ## Animações
 
 O componente [Denkynho](../../frontend/src/components/help/Denkynho.tsx) recebe `pose`, `talking`, `mouthOpen`, `animated` e `celebration`. Os assets PNG transparentes ficam em `frontend/public/mascot/denkynho/`. O manifesto [poses.json](../../frontend/src/components/help/poses.json) relaciona as poses, inclusive dança, carinho, banho e caminhada, e os recortes dos olhos e da boca. As bases originais são de 512 × 768; comendo, jogando, dançando, carinho, banho e caminhada usam 1024 × 1536, na mesma proporção 2:3. As coordenadas dos recortes usam o espaço lógico de 256 × 384 e são convertidas em porcentagem. As novas poses não reutilizam recortes faciais das anteriores.

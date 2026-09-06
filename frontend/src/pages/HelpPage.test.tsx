@@ -142,6 +142,23 @@ it('bloqueia apelido ofensivo mesmo disfarçado e não o repete na conversa', as
   expect(within(screen.getByRole('log')).queryByText(/r\.0\.l\.4/i)).not.toBeInTheDocument()
   expect(fetcher).toHaveBeenCalledTimes(2)
 })
+it('exibe resposta de crise no histórico sem virar erro de moderação', async () => {
+  const crisis = {
+    language: 'pt', kind: 'crisis', engine: 'safety', mode: 'limited', related_ids: [],
+    answer: { text: 'Ligue para o CVV no 188, 24 horas.', pose: '07-triste' },
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL) => String(input).includes('/assistant/reply/')
+    ? Promise.resolve(response(crisis))
+    : Promise.resolve(apiResponse(input)))
+  const user = mount(); await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await user.click(screen.getByRole('checkbox', { name: 'Animar personagem' }))
+  await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'preciso de apoio urgente')
+  await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
+  expect(await screen.findByText(/CVV no 188/)).toBeVisible()
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('data-pose', '07-triste'))
+})
 it('envia a mensagem com Enter e usa Shift+Enter para nova linha', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   const input = screen.getByRole('textbox', { name: 'Sua mensagem' })

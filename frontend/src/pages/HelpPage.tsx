@@ -195,10 +195,10 @@ export function HelpPage() {
         ? previous.map(message => message.id === messageId ? { ...message, status: 'sending' } : message)
         : [...previous, { id: messageId, role: 'user', text: question, status: 'sending' }])
       const server = await contentApi.assistantReply(question, language, context, preferences && (!context || preferencesDirty.current) ? { preferred_name: preferences.preferred_name, detail: preferences.detail } : undefined, screenContext?.path ?? '/painel/ajuda')
-      if (!server || !['knowledge', 'unknown', 'blocked', 'social'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.answer.action !== undefined && (server.answer.action?.url !== 'https://denky.dev.br/' || typeof server.answer.action?.label !== 'string')) || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
+      if (!server || !['knowledge', 'unknown', 'blocked', 'social', 'crisis'].includes(server.kind) || typeof server.answer?.text !== 'string' || typeof server.answer?.pose !== 'string' || (server.answer.action !== undefined && (server.answer.action?.url !== 'https://denky.dev.br/' || typeof server.answer.action?.label !== 'string')) || (server.related_ids !== undefined && (!Array.isArray(server.related_ids) || server.related_ids.some(id => typeof id !== 'string')))) throw new Error(labels.error)
       if ((server.context !== undefined && typeof server.context !== 'string') || (server.mode !== undefined && !['generative', 'limited'].includes(server.mode))) throw new Error(labels.error)
       if (server.emotion !== undefined && !isDenkynhoEmotion(server.emotion)) throw new Error(labels.error)
-      return { server, dialogue: server.kind !== 'blocked' && server.mode !== 'generative' && isLocalDialogueMessage(question, dialogue) ? respondToMessage(question, faq.data ?? [], dialogue) : undefined }
+      return { server, dialogue: server.kind !== 'blocked' && server.kind !== 'crisis' && server.mode !== 'generative' && isLocalDialogueMessage(question, dialogue) ? respondToMessage(question, faq.data ?? [], dialogue) : undefined }
     })
     if (!mounted.current || currentSession !== session.current) return
     if (!result.ok) {

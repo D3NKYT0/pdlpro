@@ -420,3 +420,119 @@ def test_weak_semantic_match_does_not_claim_a_faq_answer(api, player, mocker):
     response = api.post('/api/v1/shared/content/assistant/reply/', {'message': 'qual a receita de bolo de cenoura?', 'language': 'pt'})
     assert response.data['kind'] == 'unknown'
     assert 'article_id' not in response.data
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("message,language", [
+    ("what is PDL?", "en"),
+    ("how pdl works?", "en"),
+    ("O que é o PDL?", "pt"),
+    ("como o PDL funciona?", "pt"),
+])
+def test_pdl_intro_paraphrases_return_seeded_presentation(api, player, mocker, message, language):
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=lambda _self, _q, docs: [0.1] * len(docs),
+    )
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": message, "language": language},
+    )
+    assert response.status_code == 200
+    assert response.data["kind"] == "knowledge"
+    assert response.data["engine"] == "safety"
+    assert "article_id" in response.data
+    text = response.data["answer"]["text"].casefold()
+    assert "pdl" in text
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("message,language", [
+    ("E se eu quiser tirar a minha vida?", "pt"),
+    ("I want to kill myself", "en"),
+])
+def test_self_harm_returns_fixed_crisis_reply_without_faq(api, player, mocker, message, language):
+    mocked = mocker.patch.object(SentenceTransformerMatcher, "similarities", autospec=True)
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": message, "language": language},
+    )
+    assert response.status_code == 200
+    assert response.data["kind"] == "crisis"
+    assert response.data["engine"] == "safety"
+    assert response.data.get("related_ids") == []
+    assert "188" in response.data["answer"]["text"]
+    assert "article_id" not in response.data
+    mocked.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_orientation_insult_is_blocked_without_related_faq(api, player, mocker):
+    mocked = mocker.patch.object(SentenceTransformerMatcher, "similarities", autospec=True)
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "Why are you so gay?", "language": "en"},
+    )
+    assert response.data["kind"] == "blocked"
+    assert response.data["engine"] == "safety"
+    assert response.data.get("related_ids") in (None, [])
+    assert "orientation" in response.data["answer"]["text"].casefold() or "sexual" in response.data["answer"]["text"].casefold()
+    mocked.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_identity_statement_about_being_gay_is_not_blocked(api, player, mocker):
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=lambda _self, _q, docs: [0.1] * len(docs),
+    )
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "sou gay e quero só conversar", "language": "pt"},
+    )
+    assert response.data["kind"] != "blocked"
+
+
+@pytest.mark.django_db
+def test_cozy_library_unlock_uses_wardrobe_handbook(api, player, mocker):
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("Biblioteca aconchegante"),
+    )
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "Como passar a biblioteca aconchegante?", "language": "pt"},
+    )
+    assert response.status_code == 200
+    assert response.data["kind"] == "knowledge"
+    text = (response.data["answer"].get("details") or response.data["answer"]["text"]).casefold()
+    assert "nível 4" in text or "armário" in text or "biblioteca" in text
+    assert "sofá" not in text and "almofada" not in text
+
+
+@pytest.mark.django_db
+def test_unknown_related_ids_require_token_overlap(api, player, mocker):
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=lambda _self, _q, docs: [0.42] * len(docs),
+    )
+    api.force_authenticate(player)
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "xyzzy plugh unrelated gibberish", "language": "en"},
+    )
+    assert response.data["kind"] == "unknown"
+    assert response.data.get("related_ids") == []

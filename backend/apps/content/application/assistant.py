@@ -19,6 +19,12 @@ from apps.content.application.conversation import (
     self_talk_reply,
     social_articles,
 )
+from apps.content.application.safety import (
+    is_pdl_intro_article,
+    is_pdl_intro_query,
+    related_token_overlap,
+    safety_short_circuit,
+)
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from common.architecture.base import UseCase
 
@@ -120,8 +126,12 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
                 "language": language,
                 "kind": "blocked",
                 "engine": "moderation",
+                "related_ids": [],
                 "answer": {"text": text, "pose": "10-frustrado"},
             }
+        safe = safety_short_circuit(data.message, language)
+        if safe:
+            return safe
 
         query = normalize(data.message)
         correction = correction_requested(query)
@@ -141,6 +151,22 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         articles = ListFaqUseCase().execute(
             ListFaqInput(audience=data.audience, language=language, for_assistant=True)
         )
+        if is_pdl_intro_query(data.message):
+            intro = next((article for article in articles if is_pdl_intro_article(article)), None)
+            if intro:
+                return {
+                    "language": language,
+                    "kind": "knowledge",
+                    "engine": "safety",
+                    "confidence": 1.0,
+                    "article_id": intro["id"],
+                    "answer": {
+                        "text": intro["short_answer"] or intro["answer"],
+                        "details": intro["answer"] if intro["short_answer"] != intro["answer"] else None,
+                        "source": intro["question"],
+                        "pose": "04-dica",
+                    },
+                }
         articles += social_articles(language)
         documents = [f"{article['question']} {' '.join(article['keywords'])}" for article in articles]
         engine = "sentence-transformers+rapidfuzz"
@@ -200,7 +226,14 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
             if language == "en"
             else "Encontrei assuntos relacionados, mas preciso de um pouco mais de detalhe para responder com segurança."
         )
-        related = [article["id"] for score, article in ranked[:3] if score >= 0.40 and article.get('kind') != 'social']
+        related_floor = 0.55 if engine == "rapidfuzz" else 0.45
+        related = [
+            article["id"]
+            for score, article in ranked[:3]
+            if score >= related_floor
+            and article.get("kind") != "social"
+            and related_token_overlap(data.message, article)
+        ]
         return {
             "language": language,
             "kind": "unknown",

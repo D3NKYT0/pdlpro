@@ -196,6 +196,18 @@ def test_unauthenticated_or_moderated_input_never_reaches_model(chat):
     model.assert_not_called()
 
 
+def test_crisis_and_harassment_short_circuit_before_model(chat):
+    api, _, model = chat
+    crisis = post(api, "E se eu quiser tirar a minha vida?")
+    assert crisis.data["kind"] == "crisis"
+    assert "188" in crisis.data["answer"]["text"]
+    assert crisis.data.get("context")
+    insult = post(api, "Why are you so gay?")
+    assert insult.data["kind"] == "blocked"
+    assert insult.data["engine"] == "safety"
+    model.assert_not_called()
+
+
 @pytest.mark.parametrize("url,model_name", [("https://cloud.example", "qwen3:4b-instruct"), ("http://user:pass@localhost", "qwen3:4b-instruct"), ("http://localhost:11434", "qwen3:cloud"), ("http://localhost:11434", "remote/model")])
 def test_local_adapter_rejects_external_endpoints_and_cloud_models(chat, settings, url, model_name):
     api, _, model = chat
