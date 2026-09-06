@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { ActivitySprite } from './ActivitySprite'
 import { activitySequences } from './activitySequences'
+import { denkynhoPose } from './assets'
 import { useReducedMotion } from './useReducedMotion'
 import { transitionDurations, useMascotPose } from './useMascotPose'
 import './help.css'
@@ -12,17 +13,17 @@ import type { DenkynhoAppearance } from '../../services/domain/content.service'
 import { SceneBackdrop } from './SceneBackdrop'
 import { knownScene } from './scenes'
 
-const asset = (name: string) => `/mascot/denkynho/${name}`
 type Layer = { src: string; box: number[] }
 
 /** Mascote com sequências de ação, transição, piscada e fala controladas pela conversa.
+ * Poses estáticas (+ overlay) vêm de `poses/`; atlas animados de `sequences/`.
  * Carrega as imagens da pose antes da troca e libera timers ao desmontar.
  */
 export function Denkynho({ pose, idle = false, talking = false, mouthOpen = false, animated: animate = true, appearance, celebration = false, dancing = false }: { pose: string; idle?: boolean; talking?: boolean; mouthOpen?: boolean; animated?: boolean; appearance?: DenkynhoAppearance; celebration?: boolean; dancing?: boolean }) {
   const scene = knownScene(appearance?.scene)
   const reduced = useReducedMotion()
   const animated = animate && !reduced
-  const view = useMascotPose(pose, animated, talking)
+  const view = useMascotPose(pose, animated, talking, idle)
   const [blink, setBlink] = useState(false)
   useEffect(() => {
     setBlink(false)
@@ -35,17 +36,18 @@ export function Denkynho({ pose, idle = false, talking = false, mouthOpen = fals
   }, [animated])
   function layer(item: Layer) {
     const [x, y, right, bottom] = item.box
-    return <img key={item.src} className="denk-face" alt="" src={asset(item.src)} style={{ left: `${x / 256 * 100}%`, top: `${y / 384 * 100}%`, width: `${(right - x) / 256 * 100}%`, height: `${(bottom - y) / 384 * 100}%` }} />
+    return <img key={item.src} className="denk-face" alt="" src={denkynhoPose(item.src)} style={{ left: `${x / 256 * 100}%`, top: `${y / 384 * 100}%`, width: `${(right - x) / 256 * 100}%`, height: `${(bottom - y) / 384 * 100}%` }} />
   }
   function character(character: typeof view.current, outgoing = false) {
     const item = character.pose
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
-    const sequence = animated && !talking ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
+    // Ociosidade usa a pose estática em pé; o atlas da cama fica só no cuidado Dormir.
+    const sequence = animated && !talking && !idle ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
     return <div key={character.key} className={`denk-transition ${outgoing ? 'is-leaving' : animated && view.previous ? 'is-entering' : ''}`}>
       <div className="denk-facing" data-mirrored={character.mirrored} style={{ transform: character.mirrored ? 'scaleX(-1)' : 'scaleX(1)' }}>
       <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence ? ' is-moving' : ''}`}>
         {sequence ? <ActivitySprite sequence={sequence} active={!outgoing && !view.previous} /> : <>
-        <img className="denk-base" alt="" src={asset(item.src)} />
+        <img className="denk-base" alt="" src={denkynhoPose(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
         {!outgoing && animated && talking && item.mouth && (item.openMouth ? !mouthOpen : mouthOpen) && layer(item.mouth)}
         {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <DenkynhoStarPin />}</span>}

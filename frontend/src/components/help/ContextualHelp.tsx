@@ -6,6 +6,7 @@ import { ErrorNotice, LoadingState } from '../ui/Feedback'
 import { getHelpContext, supportTicketPrefill, type HelpIdentity, type HelpResources } from './contextual'
 import type { HelpLanguage } from './personality'
 import type { ApiDenkynhoProfile } from '../../services/domain/content.service'
+import { denkynhoPose } from './assets'
 import poses from './poses.json'
 import './contextual-help.css'
 
@@ -31,7 +32,7 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
   const close = () => { setOpenPath(null); trigger.current?.focus() }
   return <div className="contextual-help" onKeyDown={event => { if (open && event.key === 'Escape') { event.stopPropagation(); close() } }}>
     <Button ref={trigger} size="sm" variant="secondary" aria-expanded={open} aria-controls={open ? id : undefined} onClick={() => setOpenPath(open ? null : path)}>
-      {pet ? <img className="contextual-help-face" src={`/mascot/denkynho/${pose.src}`} alt="" /> : <MessageCircle aria-hidden="true" />}
+      {pet ? <img className="contextual-help-face" src={denkynhoPose(pose.src)} alt="" /> : <MessageCircle aria-hidden="true" />}
       {cue && <b className="contextual-help-cue" aria-hidden="true">!</b>}
       {triggerLabel}
     </Button>

@@ -25,7 +25,7 @@ it('espelha a próxima visita à ação como um conjunto, sem virar durante o ci
   expect(screen.getByRole('img')).toHaveAttribute('data-transition', 'turn')
   const incoming = container.querySelector('.is-entering .denk-facing')!
   expect(incoming).toHaveStyle({ transform: 'scaleX(-1)' })
-  expect(incoming.querySelector('image')).toHaveAttribute('href', '/mascot/denkynho/11-comendo-sequencia.png')
+  expect(incoming.querySelector('image')).toHaveAttribute('href', '/mascot/denkynho/sequences/11-comendo-sequencia.png')
   expect(container.querySelector('.is-leaving .denk-facing')).toHaveStyle({ transform: 'scaleX(1)' })
   await advance(719)
   expect(incoming.querySelector('svg')).toHaveAttribute('data-frame', '0')
@@ -80,7 +80,7 @@ it('não espelha durante a fala e mantém boca e olhos dentro da mesma orientaç
   rerender(<Denkynho pose="02-sucesso" talking mouthOpen={false} />); await settle()
   const facing = container.querySelector('.denk-facing')!
   expect(facing).toHaveStyle({ transform: 'scaleX(-1)' })
-  expect(facing.querySelector('.denk-face')).toHaveAttribute('src', '/mascot/denkynho/02-sucesso-boca.png')
+  expect(facing.querySelector('.denk-face')).toHaveAttribute('src', '/mascot/denkynho/poses/02-sucesso-boca.png')
   expect(screen.getByRole('img')).toHaveAttribute('data-transition', 'none')
   rerender(<Denkynho pose="02-sucesso" talking mouthOpen />); await settle()
   expect(facing.querySelector('.denk-face')).toBeNull()

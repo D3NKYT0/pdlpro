@@ -267,9 +267,9 @@ export function HelpPage() {
   const emotion = isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion : defaultDenkynhoEmotion
   const emotionPose = emotion.idle_pose
   const celebrating = Boolean(activity && careResult?.level_up && !careResult.replayed)
-  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? ((idle || last.id === 0) ? emotionPose : last.pose ?? emotionPose)
+  const pose = action.pending ? '03-pensando' : moderationBlocked ? '10-frustrado' : failed ? '07-triste' : revealing ? last.pose ?? emotionPose : celebrating ? '02-sucesso' : activity ?? (idle ? '05-dormindo' : last.id === 0 ? emotionPose : last.pose ?? emotionPose)
   const currentActivity = activities.find(item => item.pose === pose)
-  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : currentActivity?.status[language] ?? (idle || emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
+  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : idle ? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.idle) : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },
     { id: 'energy', label: labels.energy, value: pet.data.attributes.energy },

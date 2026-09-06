@@ -4,21 +4,29 @@
 
 ## Arquivos e reprodução
 
+A arte fica em duas pastas, conforme o caso de uso:
+
+- [`poses/`](../../frontend/public/mascot/denkynho/poses/): bases estáticas e overlays (olhos, boca). Usadas na conversa, ociosidade, movimento reduzido e fala.
+- [`sequences/`](../../frontend/public/mascot/denkynho/sequences/): atlas de animação por quadros. Usados nas ações de cuidado e nas espera/comemoração animadas.
+- [`scenes/`](../../frontend/public/mascot/denkynho/scenes/): cenários de fundo.
+
+Os caminhos públicos saem de [assets.ts](../../frontend/src/components/help/assets.ts) (`denkynhoPose` / `denkynhoSequence`).
+
 As sequências foram criadas pela ferramenta integrada de geração de imagens, sem CLI ou provedor de vídeo. Cada PNG RGBA contém oito quadros desenhados; a reprodução é uma animação 2D por quadros, não um modelo 3D articulado nem vídeo interpolado.
 
-- [Comendo](../../frontend/public/mascot/denkynho/11-comendo-sequencia.png): 1448 × 1086; lanche, mordida, mastigação e pausa.
-- [Jogando](../../frontend/public/mascot/denkynho/12-jogando-sequencia.png): 1448 × 1086; braços, mãos, controle e reação facial.
-- [Rindo](../../frontend/public/mascot/denkynho/06-rindo-sequencia.png): 1491 × 1055; boca, cabeça, braços e tronco.
-- [Dormindo na cama](../../frontend/public/mascot/denkynho/05-dormindo-cama-sequencia-v2.png): 1448 × 1086; alterna os dois lados, respiração, coberta e `Z`/`Zz`/`Zzz`.
-- [Dançando](../../frontend/public/mascot/denkynho/13-dancando-sequencia.png): 1536 × 1024; oito quadros de corpo inteiro, sem balanço CSS como substituto.
-- [Carinho](../../frontend/public/mascot/denkynho/14-carinho-sequencia.png): 1536 × 1024; gesto próprio, sem reusar a risada.
-- [Banho](../../frontend/public/mascot/denkynho/15-banho-sequencia.png): 1536 × 1024; esponja, espuma, água, toalha e brilho de limpeza.
-- [Caminhando](../../frontend/public/mascot/denkynho/16-andando-sequencia.png): 1536 × 1024; ciclo de oito passos com pernas e braços alternados.
-- [Pensando](../../frontend/public/mascot/denkynho/03-pensando-sequencia.png): 1536 × 1024; espera viva da consulta.
-- [Confuso](../../frontend/public/mascot/denkynho/09-confuso-sequencia.png): 1536 × 1024; sem correspondência.
-- [Comemorar](../../frontend/public/mascot/denkynho/02-sucesso-sequencia.png): 1536 × 1024; só entra com `celebration` na subida de nível.
+- [Comendo](../../frontend/public/mascot/denkynho/sequences/11-comendo-sequencia.png): 1448 × 1086; lanche, mordida, mastigação e pausa.
+- [Jogando](../../frontend/public/mascot/denkynho/sequences/12-jogando-sequencia.png): 1448 × 1086; braços, mãos, controle e reação facial.
+- [Rindo](../../frontend/public/mascot/denkynho/sequences/06-rindo-sequencia.png): 1491 × 1055; boca, cabeça, braços e tronco.
+- [Dormindo na cama](../../frontend/public/mascot/denkynho/sequences/05-dormindo-cama-sequencia-v2.png): 1448 × 1086; alterna os dois lados, respiração, coberta e `Z`/`Zz`/`Zzz`.
+- [Dançando](../../frontend/public/mascot/denkynho/sequences/13-dancando-sequencia.png): 1536 × 1024; oito quadros de corpo inteiro, sem balanço CSS como substituto.
+- [Carinho](../../frontend/public/mascot/denkynho/sequences/14-carinho-sequencia.png): 1536 × 1024; gesto próprio, sem reusar a risada.
+- [Banho](../../frontend/public/mascot/denkynho/sequences/15-banho-sequencia.png): 1536 × 1024; esponja, espuma, água, toalha e brilho de limpeza.
+- [Caminhando](../../frontend/public/mascot/denkynho/sequences/16-andando-sequencia.png): 1536 × 1024; ciclo de oito passos com pernas e braços alternados.
+- [Pensando](../../frontend/public/mascot/denkynho/sequences/03-pensando-sequencia.png): 1536 × 1024; espera viva da consulta.
+- [Confuso](../../frontend/public/mascot/denkynho/sequences/09-confuso-sequencia.png): 1536 × 1024; sem correspondência.
+- [Comemorar](../../frontend/public/mascot/denkynho/sequences/02-sucesso-sequencia.png): 1536 × 1024; só entra com `celebration` na subida de nível.
 
-Os originais estáticos permanecem disponíveis para movimento reduzido e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
+Os originais estáticos em `poses/` permanecem disponíveis para movimento reduzido, ociosidade (sono em pé) e fala. Não aplique recortes faciais de uma pose estática sobre os quadros do atlas.
 
 O gerador não entregou células perfeitamente alinhadas nem a resolução solicitada. Por isso, [activitySequences.ts](../../frontend/src/components/help/activitySequences.ts) registra as dimensões reais, a separação entre linhas e uma âncora por quadro. O SVG apenas exibe o recorte do PNG: não redesenha o mascote. O `viewBox` é limitado à célula atual, impedindo que pés, cama ou cabelo de quadros vizinhos apareçam. A ancoragem mantém a base da cama e os pés na mesma altura. As durações variam entre 140 e 800 ms para dar ritmo às ações, com repetição de quadros de mastigação, risada e respiração.
 

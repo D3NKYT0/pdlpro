@@ -43,7 +43,7 @@ it.each(['11-comendo', '12-jogando', '06-rindo', '13-dancando', '14-carinho', '1
   expect(sprite()?.getAttribute('viewBox')).not.toBe(firstView)
   rerender(<Denkynho pose={pose} animated={false} />); await settle()
   expect(sprite()).toBeNull()
-  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/${pose}.png`)
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/poses/${pose}.png`)
   await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
   expect(sprite()).toBeNull()
   unmount(); expect(vi.getTimerCount()).toBe(0)
@@ -52,7 +52,7 @@ it.each(['11-comendo', '12-jogando', '13-dancando', '14-carinho', '15-banho', '1
   const { container } = render(<Denkynho pose={pose} talking mouthOpen />); await settle()
   await act(async () => { vi.advanceTimersByTime(2800) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', pose)
-  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/${pose}.png`)
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', `/mascot/denkynho/poses/${pose}.png`)
   expect(container.querySelector('.denk-face')).toBeNull()
 })
 it('carrega a pose antes de transicionar, pisca e anima a boca', async () => {
@@ -76,14 +76,15 @@ it('reproduz a comemoração só no atlas de sucesso e mantém a pose estática 
   rerender(<Denkynho pose="02-sucesso" />)
   await settle()
   expect(container.querySelector('.denk-sprite')).toBeNull()
-  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/02-sucesso.png')
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/02-sucesso.png')
 })
-it('expõe uma animação de ociosidade própria, sem usar o atlas da cama', async () => {
-  const { container } = render(<Denkynho pose="01-boas-vindas" idle />); await settle()
+it('expõe a ociosidade no sprite dormindo em pé, sem usar o atlas da cama', async () => {
+  const { container } = render(<Denkynho pose="05-dormindo" idle />); await settle()
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(container.querySelector('.denk-pose')).toHaveClass('is-moving')
   expect(container.querySelector('.denk-sprite')).toBeNull()
-  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/01-boas-vindas.png')
+  expect(container.querySelector('.denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
 })
 it('mantém a imagem anterior se o novo asset falhar', async () => {
   const { rerender } = render(<Denkynho pose="01-boas-vindas" />); await settle(); fail = true

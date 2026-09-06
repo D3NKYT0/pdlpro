@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { ActivitySequence } from './activitySequences'
+import { denkynhoSequence } from './assets'
 
 /** Reproduz quadros do atlas já carregado; congela ao sair e libera o timer ao desmontar. */
 export function ActivitySprite({ sequence, active }: { sequence: ActivitySequence; active: boolean }) {
@@ -26,6 +27,6 @@ export function ActivitySprite({ sequence, active }: { sequence: ActivitySequenc
   const sourceY = Math.min(Math.max(anchorY - sourceHeight + 10, rowY), rowY + cellHeight - sourceHeight)
   return <svg className="denk-sprite" aria-hidden="true" data-frame={frame}
     viewBox={`${sourceX} ${sourceY} ${sourceWidth} ${sourceHeight}`}>
-    <image href={`/mascot/denkynho/${sequence.src}`} width={width} height={height} />
+    <image href={denkynhoSequence(sequence.src)} width={width} height={height} />
   </svg>
 }

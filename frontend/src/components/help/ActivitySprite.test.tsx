@@ -16,7 +16,7 @@ it.each(Object.keys(activitySequences))('reproduz o ciclo completo de %s dentro 
   const views = new Set<string | null>()
   for (const tick of sequence.timeline) {
     expect(sprite).toHaveAttribute('data-frame', String(tick.frame))
-    expect(sprite.querySelector('image')).toHaveAttribute('href', `/mascot/denkynho/${sequence.src}`)
+    expect(sprite.querySelector('image')).toHaveAttribute('href', `/mascot/denkynho/sequences/${sequence.src}`)
     const [x, y, viewWidth, viewHeight] = sprite.getAttribute('viewBox')!.split(' ').map(Number)
     const cellX = Math.floor(tick.frame % 4 * sequence.size[0] / 4)
     const cellWidth = Math.floor((tick.frame % 4 + 1) * sequence.size[0] / 4) - cellX
