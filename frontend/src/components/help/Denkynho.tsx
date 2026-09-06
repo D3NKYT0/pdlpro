@@ -9,6 +9,7 @@ import './help.css'
 import './pet-progress.css'
 import { DenkynhoStarPin } from './DenkynhoStarPin'
 import type { DenkynhoAppearance } from '../../services/domain/content.service'
+import { starPinVisible } from './starPin'
 
 import { SceneBackdrop } from './SceneBackdrop'
 import { knownScene, type SceneId } from './scenes'
@@ -44,6 +45,7 @@ export function Denkynho({ pose, idle = false, still = false, talking = false, m
     const eyes = Array.isArray(item.eyes) ? item.eyes : item.eyes ? [item.eyes] : []
     // Idle em pé / still: sem atlas. Sequência só em ações complexas (comer, jogar, etc.).
     const sequence = animated && !talking && !idle && !still ? (item.id === '02-sucesso' ? (celebration ? activitySequences['02-sucesso'] : undefined) : activitySequences[item.id]) : undefined
+    const showStar = appearance?.accessory === 'star-pin' && starPinVisible(item.id, Boolean(sequence))
     return <div key={character.key} className={`denk-transition ${outgoing ? 'is-leaving' : animated && view.previous ? 'is-entering' : ''}`}>
       <div className="denk-facing" data-mirrored={character.mirrored} style={{ transform: character.mirrored ? 'scaleX(-1)' : 'scaleX(1)' }}>
       <div className={`denk-pose pose-${item.id.slice(3)}${animated && !sequence && !still ? ' is-moving' : ''}`}>
@@ -51,7 +53,7 @@ export function Denkynho({ pose, idle = false, still = false, talking = false, m
         <img className="denk-base" alt="" src={denkynhoPose(item.src)} />
         {!outgoing && animated && blink && eyes.map(layer)}
         {!outgoing && animated && talking && item.mouth && (item.openMouth ? !mouthOpen : mouthOpen) && layer(item.mouth)}
-        {appearance && <span className="denk-cosmetics" aria-hidden="true">{appearance.accessory === 'star-pin' && <DenkynhoStarPin />}</span>}
+        {showStar && <span className="denk-cosmetics" aria-hidden="true"><DenkynhoStarPin /></span>}
         </>}
       </div>
       </div>

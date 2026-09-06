@@ -28,6 +28,18 @@ it('exibe peças equipadas e dança distinta, preservando representação estát
   expect(container.querySelector('[data-cosmetic="star-pin"]')).toBeNull()
   expect(screen.getByRole('img')).toHaveAttribute('data-gesture', 'true')
 })
+it('ancora o broche no peito e esconde quando a mão cobre (pensar/frustrado)', async () => {
+  const pin = { accessory: 'star-pin', outfit: '', object: '' }
+  const { container, rerender } = render(<Denkynho pose="01-boas-vindas" appearance={pin} animated={false} />)
+  await settle()
+  expect(container.querySelector('.pose-boas-vindas [data-cosmetic="star-pin"]')).toBeTruthy()
+  rerender(<Denkynho pose="03-pensando" appearance={pin} animated={false} still />); await settle()
+  expect(container.querySelector('[data-cosmetic="star-pin"]')).toBeNull()
+  rerender(<Denkynho pose="10-frustrado" appearance={pin} animated={false} />); await settle()
+  expect(container.querySelector('[data-cosmetic="star-pin"]')).toBeNull()
+  rerender(<Denkynho pose="04-dica" appearance={pin} animated={false} />); await settle()
+  expect(container.querySelector('.pose-dica [data-cosmetic="star-pin"]')).toBeTruthy()
+})
 it('ancora o broche na pose em pé de boas-vindas', async () => {
   const { container } = render(<Denkynho pose="01-boas-vindas" appearance={{ accessory: 'star-pin', outfit: '', object: '' }} animated={false} />)
   await settle()
