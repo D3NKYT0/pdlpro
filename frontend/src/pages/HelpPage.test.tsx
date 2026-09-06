@@ -133,34 +133,45 @@ it('após ociosidade fala de verdade, vive e pode dormir em pé; a cama manual c
   await act(async () => { await vi.advanceTimersByTimeAsync(8000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
-  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   expect(screen.getByRole('img')).toHaveAccessibleName(/falando/)
   expect(screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)).not.toHaveLength(0)
   const chatLine = screen.getAllByText(/Ainda estou por aqui|plantão|silêncio gostoso/i)[0]!.textContent!
   await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(chatLine, '01-boas-vindas', true) + 50) })
-  expect(screen.getAllByText(/Estou com sono/)).not.toHaveLength(0)
-  const sleepLine = screen.getAllByText(/Estou com sono/)[0]!.textContent!
+  expect(screen.getByRole('img')).toHaveAttribute('data-pose', '03-pensando')
+  await act(async () => { await vi.advanceTimersByTimeAsync(7000) })
+  expect(screen.getAllByText(/sono|Energia|descansar|quarto|Boa noite/i)).not.toHaveLength(0)
+  const sleepLine = screen.getAllByText(/sono|Energia|descansar|quarto|Boa noite/i)[0]!.textContent!
   await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(sleepLine, '01-boas-vindas', true) + 50) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'true')
   expect(document.querySelector('.denk-sprite')).toBeNull()
   expect(document.querySelector('.denk-transition:not(.is-leaving) .denk-base')).toHaveAttribute('src', '/mascot/denkynho/poses/05-dormindo.png')
-  expect(screen.getAllByText(/Dormindo tranquilamente/)).not.toHaveLength(0)
+  expect(screen.getAllByText(/Cochilando em pé|Dormindo|Zzz/i)).not.toHaveLength(0)
   cleanup(); client.clear()
   expect(vi.getTimerCount()).toBe(0)
 })
-it('vive com lanche e caminhada, fala com a boca, e cancela ao digitar sem gravar cena', async () => {
-  ambientPlan.current = ['snack', 'walk']
+it('vive com lanche que rende pontos, fala com a boca, e cancela ao digitar sem gravar cena', async () => {
+  ambientPlan.current = ['snack']
   const house = {
     ...petProfile,
+    attributes: { satiety: 20, energy: 75, happiness: 75, hygiene: 75 },
     appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
     unlocks: [
       { id: 'living-room', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Sala', en: 'Living room' } },
       { id: 'kitchen', slot: 'scene', level: 2, unlocked: true, label: { pt: 'Cozinha', en: 'Kitchen' } },
-      { id: 'bedroom', slot: 'scene', level: 3, unlocked: true, label: { pt: 'Quarto', en: 'Bedroom' } },
+      { id: 'garden', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Jardim', en: 'Garden' } },
     ],
   }
-  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(house) : apiResponse(input)))
+  const fed = { ...house, experience: 12, attributes: { ...house.attributes, satiety: 52, happiness: 80 }, action: 'feed', xp_gained: 12, replayed: false }
+  let fedOnce = false
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+    if (String(input).includes('/assistant/pet/') && init?.method === 'POST') {
+      fedOnce = true
+      return Promise.resolve(response(fed))
+    }
+    if (String(input).includes('/assistant/pet/')) return Promise.resolve(response(fedOnce ? fed : house))
+    return Promise.resolve(apiResponse(input))
+  })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
@@ -169,30 +180,69 @@ it('vive com lanche e caminhada, fala com a boca, e cancela ao digitar sem grava
   await screen.findByText('Nível 1')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
   expect(screen.getByRole('img')).toHaveAccessibleName(/falando/)
-  expect(screen.getAllByText(/lanchinho|cozinha|snack|kitchen/i)).not.toHaveLength(0)
-  const say = screen.getAllByText(/lanchinho|cozinha|snack|kitchen/i)[0]!.textContent!
+  expect(screen.getAllByText(/saciedade|lanchinho|fome|snack|hungry|kitchen/i)).not.toHaveLength(0)
+  const say = screen.getAllByText(/saciedade|lanchinho|fome|snack|hungry|kitchen/i)[0]!.textContent!
   await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(say, '01-boas-vindas', true) + 50) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '11-comendo')
   await waitFor(() => expect(document.querySelector('[data-scene="kitchen"]')).toBeTruthy())
-  await act(async () => { await vi.advanceTimersByTimeAsync(6000) })
-  expect(screen.getAllByText(/voltinha|Caminhar|stroll|walk/i)).not.toHaveLength(0)
+  await waitFor(() => expect(fetcher.mock.calls.some(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')).toBe(true))
+  const care = fetcher.mock.calls.find(([url, init]) => String(url).includes('/assistant/pet/') && (init as RequestInit | undefined)?.method === 'POST')!
+  expect(JSON.parse((care[1] as RequestInit).body as string)).toMatchObject({ action: 'feed' })
+  await waitFor(() => expect(screen.getByLabelText('Saciedade')).toHaveValue(52))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'oi')
   expect(screen.getByRole('img')).toHaveAttribute('data-idle', 'false')
   await waitFor(() => expect(document.querySelector('[data-scene="living-room"]')).toBeTruthy())
   expect(fetcher.mock.calls.some(([, init]) => (init as RequestInit | undefined)?.method === 'PATCH')).toBe(false)
+})
+it('passa um tempo no jardim quando o plano pede ar livre', async () => {
+  ambientPlan.current = ['garden']
+  const house = {
+    ...petProfile,
+    appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
+    unlocks: [
+      { id: 'living-room', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Sala', en: 'Living room' } },
+      { id: 'garden', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Jardim', en: 'Garden' } },
+    ],
+  }
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+    if (String(input).includes('/assistant/pet/') && init?.method === 'POST') {
+      return Promise.resolve(response({ ...house, experience: 8, attributes: { ...house.attributes, energy: 70, happiness: 83 }, action: 'walk', xp_gained: 8, replayed: false }))
+    }
+    if (String(input).includes('/assistant/pet/')) return Promise.resolve(response(house))
+    return Promise.resolve(apiResponse(input))
+  })
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+  render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
+  await screen.findByRole('button', { name: articles[0].question })
+  await openCompanion(user)
+  await screen.findByText('Nível 1')
+  await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
+  expect(screen.getAllByText(/jardim|garden|flores|flowers/i)).not.toHaveLength(0)
+  const say = screen.getAllByText(/jardim|garden|flores|flowers/i)[0]!.textContent!
+  await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(say, '01-boas-vindas', true) + 50) })
+  await act(async () => { await vi.advanceTimersByTimeAsync(5000) })
+  await waitFor(() => expect(document.querySelector('[data-scene="garden"]')).toBeTruthy())
 })
 it('com movimento reduzido fala e dorme no quarto sem atlas de andança', async () => {
   ambientPlan.current = ['sleep']
   vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
   const house = {
     ...petProfile,
+    attributes: { satiety: 75, energy: 20, happiness: 75, hygiene: 75 },
     appearance: { accessory: '', outfit: '', object: '', scene: 'living-room' },
     unlocks: [
       { id: 'living-room', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Sala', en: 'Living room' } },
       { id: 'bedroom', slot: 'scene', level: 3, unlocked: true, label: { pt: 'Quarto', en: 'Bedroom' } },
     ],
   }
-  fetcher.mockImplementation((input: RequestInfo | URL) => Promise.resolve(String(input).includes('/assistant/pet/') ? response(house) : apiResponse(input)))
+  fetcher.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+    if (String(input).includes('/assistant/pet/') && init?.method === 'POST') {
+      return Promise.resolve(response({ ...house, experience: 10, attributes: { ...house.attributes, energy: 55 }, action: 'sleep', xp_gained: 10, replayed: false }))
+    }
+    if (String(input).includes('/assistant/pet/')) return Promise.resolve(response(house))
+    return Promise.resolve(apiResponse(input))
+  })
   vi.useFakeTimers({ shouldAdvanceTime: true })
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
   render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>)
@@ -201,8 +251,8 @@ it('com movimento reduzido fala e dorme no quarto sem atlas de andança', async 
   await screen.findByText('Nível 1')
   await act(async () => { await vi.advanceTimersByTimeAsync(45000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
-  expect(screen.getAllByText(/Estou com sono|Vou até o quarto/)).not.toHaveLength(0)
-  const line = screen.getAllByText(/Estou com sono|Vou até o quarto/)[0]!.textContent!
+  expect(screen.getAllByText(/sono|Energia|quarto|Boa noite|sleepy|bed|night/i)).not.toHaveLength(0)
+  const line = screen.getAllByText(/sono|Energia|quarto|Boa noite|sleepy|bed|night/i)[0]!.textContent!
   await act(async () => { await vi.advanceTimersByTimeAsync(estimateSpeechMs(line, '01-boas-vindas', false) + 50) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '05-dormindo')
   expect(document.querySelector('[data-pose="16-andando"]')).toBeNull()

@@ -99,6 +99,8 @@ export function HelpPage() {
   const [thinkFor, setThinkFor] = useState(0)
   const [careResult, setCareResult] = useState<ApiDenkynhoCareResult | null>(null)
   const careRetry = useRef<{ action: DenkynhoAction; key: string } | null>(null)
+  const ambientCareKey = useRef<string | null>(null)
+  const ambientSelfCare = useRef(false)
   const [validation, setValidation] = useState('')
   const [failed, setFailed] = useState(false)
   const [moderationBlocked, setModerationBlocked] = useState(false)
@@ -176,11 +178,14 @@ export function HelpPage() {
         unlockedScenes: unlocked,
         canDance: Boolean(pet.data?.available_actions?.includes('dance')),
         reducedMotion: !animated,
+        needs: pet.data?.attributes,
+        emotionId: isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion.id : undefined,
       }))
       setAmbientSpeech(0)
+      ambientCareKey.current = null
     }, IDLE_TRIGGER_MS)
     return () => clearTimeout(timer)
-  }, [busy, petAction.pending, messages, draft, activity, ambient, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions, language, animated])
+  }, [busy, petAction.pending, messages, draft, activity, ambient, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions, pet.data?.attributes, pet.data?.emotion, language, animated])
   useEffect(() => {
     if (!ambient) return
     const ctx = {
@@ -189,12 +194,14 @@ export function HelpPage() {
       unlockedScenes: (pet.data?.unlocks ?? []).filter(item => item.slot === 'scene' && item.unlocked).map(item => item.id),
       canDance: Boolean(pet.data?.available_actions?.includes('dance')),
       reducedMotion: !animated,
+      needs: pet.data?.attributes,
+      emotionId: isDenkynhoEmotion(pet.data?.emotion) ? pet.data.emotion.id : undefined,
     }
     const timer = setTimeout(() => {
       setAmbient(current => (current ? advanceAmbient(current, ctx) : null))
     }, ambientDuration(ambient, animated))
     return () => clearTimeout(timer)
-  }, [ambient, language, animated, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions])
+  }, [ambient, language, animated, pet.data?.appearance?.scene, pet.data?.unlocks, pet.data?.available_actions, pet.data?.attributes, pet.data?.emotion])
   useEffect(() => { setAmbientSpeech(0) }, [ambient?.activity, ambient?.phase, ambient?.line])
   useEffect(() => {
     if (!ambient?.talking) { setAmbientSpeech(0); return }
@@ -205,9 +212,30 @@ export function HelpPage() {
     const timer = setTimeout(() => setAmbientSpeech(count => Math.min(chars.length, count + frame.step)), frame.delay)
     return () => clearTimeout(timer)
   }, [ambient, ambientSpeech, animated])
-  // Conversar ou iniciar um cuidado encerra a rotina ambient e qualquer animação anterior.
   useEffect(() => {
-    if (busy || petAction.pending || draft) { setActivity(null); setAmbient(null); setAmbientSpeech(0) }
+    if (!ambient?.careAction) return
+    if (ambient.phase !== 'act' && ambient.phase !== 'sleep') return
+    const key = `${ambient.planIndex}:${ambient.activity}:${ambient.careAction}`
+    if (ambientCareKey.current === key || petAction.pending) return
+    ambientCareKey.current = key
+    ambientSelfCare.current = true
+    const actionName = ambient.careAction
+    const currentSession = session.current
+    void petAction.run(async () => {
+      const updated = await contentApi.careDenkynho(actionName, idempotencyKey())
+      if (!mounted.current || currentSession !== session.current) return updated
+      queryClient.setQueryData(petQueryKey, updated)
+      await queryClient.invalidateQueries({ queryKey: petQueryKey })
+      return updated
+    }).then(result => {
+      ambientSelfCare.current = false
+      if (result.ok && mounted.current && currentSession === session.current) setCareResult(result.value)
+    })
+  }, [ambient?.phase, ambient?.activity, ambient?.careAction, ambient?.planIndex, petAction, queryClient, petQueryKey])
+  // Conversar cancela a vida ambient. Cuidado ambient não cancela; o cuidado manual limpa no careFor.
+  useEffect(() => {
+    if (busy || draft) { setActivity(null); setAmbient(null); setAmbientSpeech(0); ambientCareKey.current = null }
+    else if (petAction.pending && !ambientSelfCare.current) { setActivity(null); setAmbient(null); setAmbientSpeech(0); ambientCareKey.current = null }
   }, [busy, petAction.pending, draft])
   const finish = useCallback(() => setRevealing(null), [])
   useEffect(() => {
@@ -297,7 +325,7 @@ export function HelpPage() {
     if (!mounted.current || currentSession !== session.current || !result.ok) return
     careRetry.current = null
     setCareResult(result.value)
-    setAmbient(null); setActivity(item.pose); onActivity()
+    setAmbient(null); setAmbientSpeech(0); ambientCareKey.current = null; setActivity(item.pose); onActivity()
   }
   function submit(event: FormEvent) { event.preventDefault(); void send() }
   function onDraftKey(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -316,7 +344,7 @@ export function HelpPage() {
   const currentActivity = activities.find(item => item.pose === pose)
   const standingSleep = Boolean(ambient?.standingSleep)
   const ambientTalking = Boolean(ambient?.talking)
-  const companionStatus = petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : ambient ? ambient.line : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
+  const companionStatus = ambient ? ambient.line : petAction.pending ? labels.caring : action.pending ? thinkingPhrase(thinkFor, language) : revealing ? labels.talking : currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask)
   const ambientMouth = ambientTalking ? speechFrame(ambient!.line, ambientSpeech, ambient!.pose).mouthOpen : false
   const petAttributes = pet.data ? [
     { id: 'satiety', label: labels.satiety, value: pet.data.attributes.satiety },

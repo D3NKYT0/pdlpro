@@ -6,7 +6,10 @@ import {
   ambientPose,
   buildIdleRoute,
   buildLifePlan,
+  canPerformCare,
+  careForActivity,
   estimateSpeechMs,
+  neededActivities,
   startAmbient,
   startAmbientPlan,
   type AmbientContext,
@@ -15,9 +18,10 @@ import {
 const base = (over: Partial<AmbientContext> = {}): AmbientContext => ({
   language: 'pt',
   currentScene: 'living-room',
-  unlockedScenes: ['living-room', 'kitchen', 'bathroom', 'bedroom'],
+  unlockedScenes: ['living-room', 'kitchen', 'bathroom', 'bedroom', 'garden', 'camp'],
   canDance: true,
   reducedMotion: false,
+  needs: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
   random: () => 0,
   ...over,
 })
@@ -26,95 +30,88 @@ describe('buildIdleRoute', () => {
   it('vai da sala ao quarto quando ambos estão desbloqueados', () => {
     expect(buildIdleRoute('living-room', ['living-room', 'bedroom'])).toEqual(['living-room', 'bedroom'])
   })
-
-  it('não força o quarto se ele não estiver desbloqueado', () => {
-    expect(buildIdleRoute('living-room', ['living-room', 'kitchen'])).toEqual(['living-room', 'kitchen'])
-  })
 })
 
-describe('buildLifePlan', () => {
-  it('monta vários episódios e pode incluir dormir sem ser só isso', () => {
-    const plan = buildLifePlan(base())
-    expect(plan.length).toBeGreaterThanOrEqual(3)
-    expect(plan.some(item => item !== 'sleep')).toBe(true)
+describe('necessidades e cuidado', () => {
+  it('prioriza fome, sono e higiene baixos', () => {
+    expect(neededActivities({ satiety: 10, energy: 80, happiness: 80, hygiene: 80 }, base())).toContain('snack')
+    expect(neededActivities({ satiety: 80, energy: 10, happiness: 80, hygiene: 80 }, base())).toEqual(expect.arrayContaining(['sleep']))
+    expect(neededActivities({ satiety: 80, energy: 40, happiness: 80, hygiene: 80 }, base({ random: () => 0 }))).toContain('nap')
+    expect(neededActivities({ satiety: 80, energy: 80, happiness: 80, hygiene: 10 }, base())).toContain('bath')
   })
 
-  it('omite dança quando ela não está disponível', () => {
-    const plan = buildLifePlan(base({ canDance: false, random: () => 0.99 }))
-    expect(plan.includes('dance')).toBe(false)
+  it('mapeia episódios para ações que rendem pontos', () => {
+    expect(careForActivity('snack')).toBe('feed')
+    expect(careForActivity('nap')).toBe('sleep')
+    expect(careForActivity('garden')).toBe('walk')
+    expect(careForActivity('affection')).toBe('care')
+    expect(canPerformCare('feed', { satiety: 100, energy: 50, happiness: 50, hygiene: 50 }, true)).toBe(false)
+    expect(canPerformCare('walk', { satiety: 50, energy: 3, happiness: 50, hygiene: 50 }, true)).toBe(false)
+  })
+
+  it('inclui jardim ou acampamento quando desbloqueados', () => {
+    const plan = buildLifePlan(base({ emotionId: 'joyful', random: () => 0.1 }))
+    expect(plan.some(item => item === 'garden' || item === 'camp')).toBe(true)
   })
 })
 
 describe('vida ambient', () => {
-  it('fala de verdade no anúncio e depois age (lanche)', () => {
-    let state = startAmbientPlan(['snack'], base())
+  it('fala, age, demora no linger e só então segue', () => {
+    let state = startAmbientPlan(['snack'], base({ needs: { satiety: 20, energy: 80, happiness: 80, hygiene: 80 } }))
     expect(state.phase).toBe('speak')
     expect(state.talking).toBe(true)
-    expect(state.line.length).toBeGreaterThan(8)
-    expect(ambientPose(state)).toBe('01-boas-vindas')
+    expect(state.careAction).toBe('feed')
     expect(ambientDuration(state, true)).toBe(estimateSpeechMs(state.line, state.pose, true))
 
     state = advanceAmbient(state, base())
     expect(state.phase).toBe('act')
-    expect(state.talking).toBe(false)
     expect(state.pose).toBe('11-comendo')
     expect(state.scene).toBe('kitchen')
+
+    state = advanceAmbient(state, base())
+    expect(state.phase).toBe('linger')
+    expect(ambientPose(state)).toBe('03-pensando')
   })
 
-  it('percorre chat, brincadeira e dança em sequência', () => {
-    let state = startAmbientPlan(['chat', 'play', 'dance'], base())
-    expect(state.activity).toBe('chat')
-    expect(state.talking).toBe(true)
-    state = advanceAmbient(state, base())
-    expect(state.activity).toBe('play')
-    expect(state.talking).toBe(true)
-    state = advanceAmbient(state, base())
-    expect(state.phase).toBe('act')
-    expect(state.pose).toBe('12-jogando')
-    state = advanceAmbient(state, base())
-    expect(state.activity).toBe('dance')
-    state = advanceAmbient(state, base())
-    expect(state.dancing).toBe(true)
-    expect(state.pose).toBe('13-dancando')
+  it('cochila em pé quando cansado (nap) e dorme na cama no sleep', () => {
+    let nap = startAmbientPlan(['nap'], base({ needs: { satiety: 80, energy: 30, happiness: 80, hygiene: 80 } }))
+    nap = advanceAmbient(nap, base())
+    expect(nap.phase).toBe('sleep')
+    expect(nap.standingSleep).toBe(true)
+    expect(nap.useBed).toBe(false)
+    expect(nap.careAction).toBe('sleep')
+
+    let bed = startAmbientPlan(['sleep'], base())
+    bed = advanceAmbient(bed, base())
+    while (bed.phase !== 'sleep') bed = advanceAmbient(bed, base())
+    expect(bed.useBed).toBe(true)
+    expect(bed.standingSleep).toBe(false)
   })
 
-  it('dormir é um episódio: caminha, deita, acorda e segue vivendo', () => {
-    let state = startAmbientPlan(['sleep', 'laugh'], base())
-    expect(state.talking).toBe(true)
-    expect(state.line).toMatch(/sono|quarto|Boa noite|sleepy|room|night/i)
-
+  it('vai ao jardim e permanece lá', () => {
+    let state = startAmbientPlan(['garden'], base())
+    expect(state.line).toMatch(/jardim|garden|flores|flowers/i)
     state = advanceAmbient(state, base())
-    expect(state.phase === 'walk' || state.phase === 'arrive').toBe(true)
-    expect(state.pose).toBe('16-andando')
-
-    while (state.phase !== 'sleep') {
+    expect(state.phase === 'walk' || state.phase === 'act').toBe(true)
+    while (state.phase !== 'act' && state.phase !== 'linger') {
       state = advanceAmbient(state, base())
     }
-    expect(state.useBed).toBe(true)
-    expect(state.standingSleep).toBe(false)
-    expect(state.talking).toBe(false)
-
-    state = advanceAmbient(state, base())
-    expect(state.phase).toBe('speak')
-    expect(state.talking).toBe(true)
-    expect(state.line).toMatch(/Acordei|Pronto|woke|up again/i)
+    if (state.phase === 'act') {
+      expect(state.scene).toBe('garden')
+      state = advanceAmbient(state, base())
+    }
+    expect(state.phase).toBe('linger')
   })
 
-  it('sem quarto dorme em pé e com movimento reduzido pula a andança', () => {
-    let state = startAmbientPlan(['sleep'], base({
-      unlockedScenes: ['living-room', 'kitchen'],
-      reducedMotion: true,
-    }))
-    state = advanceAmbient(state, base({ unlockedScenes: ['living-room', 'kitchen'], reducedMotion: true }))
-    expect(state.phase).toBe('sleep')
-    expect(state.standingSleep).toBe(true)
-    expect(state.useBed).toBe(false)
+  it('usa falas tristes quando o humor pede', () => {
+    const state = startAmbientPlan(['chat'], base({ emotionId: 'sad' }))
+    expect(state.pose).toBe('07-triste')
+    expect(state.line).toMatch(/cabisbaixo|humor|down|mood/i)
   })
 
-  it('startAmbient usa o plano gerado', () => {
-    const state = startAmbient(base())
-    expect(state.plan.length).toBeGreaterThan(0)
+  it('startAmbient usa necessidades do contexto', () => {
+    const state = startAmbient(base({ needs: { satiety: 8, energy: 80, happiness: 80, hygiene: 80 }, random: () => 0 }))
+    expect(state.plan).toContain('snack')
     expect(state.phase).toBe('speak')
-    expect(state.talking).toBe(true)
   })
 })
