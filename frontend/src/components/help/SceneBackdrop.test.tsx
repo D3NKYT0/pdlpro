@@ -25,6 +25,7 @@ it('waits for artwork, preserves the previous scene on failure and cancels stale
 it('accepts only local scene identifiers', () => {
   expect(knownScene('garden')).toBe('garden')
   expect(knownScene('living-room')).toBe('living-room')
+  expect(knownScene('lake')).toBe('lake')
   expect(knownScene('bedroom')).toBe('bedroom')
   expect(knownScene('bathroom')).toBe('bathroom')
   expect(knownScene('kitchen')).toBe('kitchen')

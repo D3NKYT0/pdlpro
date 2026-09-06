@@ -10,7 +10,7 @@ A arte fica em duas pastas, conforme o caso de uso:
 - [`sequences/`](../../frontend/public/mascot/denkynho/sequences/): atlas de animação por quadros. Usados nas ações de cuidado e nas espera/comemoração animadas.
 - [`scenes/`](../../frontend/public/mascot/denkynho/scenes/): cenários de fundo.
 
-Os cenários formam a casa e os passeios do Denkynho. Jardim encantado e Sala aconchegante estão disponíveis no nível 1; o Quarto estrelado chega no nível 2; o Banheiro luminoso no nível 3; Biblioteca aconchegante e Cozinha quentinha no nível 4; e o Acampamento noturno no nível 5. As artes quadradas deixam o piso central livre para sobrepor o personagem e são carregadas apenas a partir do catálogo local validado.
+Os cenários formam a casa e os passeios do Denkynho. Jardim encantado, Sala aconchegante e Lago sereno estão disponíveis no nível 1; o Quarto estrelado chega no nível 2; o Banheiro luminoso no nível 3; Biblioteca aconchegante e Cozinha quentinha no nível 4; e o Acampamento noturno no nível 5. O lago tem uma doca central livre e é usado pela pose de pesca. As artes quadradas deixam a área central livre para sobrepor o personagem e são carregadas apenas a partir do catálogo local validado.
 
 Os caminhos públicos saem de [assets.ts](../../frontend/src/components/help/assets.ts) (`denkynhoPose` / `denkynhoSequence`).
 

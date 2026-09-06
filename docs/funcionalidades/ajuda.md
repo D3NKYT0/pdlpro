@@ -36,6 +36,7 @@ Cuidados exibem o XP e as alterações reais dos atributos. Uma subida de nível
 
 | Nível | Desbloqueio |
 | --- | --- |
+| 1 | Jardim encantado, Sala aconchegante e Lago sereno |
 | 2 | Broche de estrela |
 | 3 | Dançar juntos: nova atividade que consome energia e saciedade e aumenta alegria e XP |
 | 4 | Biblioteca aconchegante |
@@ -277,15 +278,16 @@ Passaram 829 testes do backend (85,57% de cobertura), 699 do frontend (71% de st
 
 ### Cenários do Denkynho
 
-O jardim encantado está disponível desde o nível 1. A biblioteca (nível 4) e o acampamento (nível 5) acrescentam livros, plantas, barraca, fogueira e lanterna ao ambiente. O armário apresenta prévias e permite selecionar ou retirar o cenário sem custo. O fundo permanece parado durante as poses e a dança; o broche acompanha o personagem.
+Jardim encantado, Sala aconchegante e Lago sereno estão disponíveis desde o nível 1. O lago traz uma doca livre diante da água e é o destino preferencial da atividade de pesca. A biblioteca (nível 4) e o acampamento (nível 5) acrescentam livros, plantas, barraca, fogueira e lanterna ao ambiente. O armário apresenta prévias e permite selecionar ou retirar o cenário sem custo. O fundo permanece parado durante as poses e a dança; o broche acompanha o personagem.
 
-O lenço foi retirado. Perfis antigos com lenço passam a exibir a biblioteca; com lanterna, o acampamento tem prioridade. Essa compatibilidade é aplicada na leitura e persistida na próxima troca, preservando XP e nível. Uma seleção explicitamente vazia mantém o personagem sem cenário. A API aceita `slot: "scene"` e `item_id: "garden"`, `"study"`, `"camp"` ou `""`; níveis e propriedade são verificados no servidor.
+O lenço foi retirado. Perfis antigos com lenço passam a exibir a biblioteca; com lanterna, o acampamento tem prioridade. Essa compatibilidade é aplicada na leitura e persistida na próxima troca, preservando XP e nível. Uma seleção explicitamente vazia mantém o personagem sem cenário. A API aceita `slot: "scene"` e um identificador local do catálogo, incluindo `"garden"`, `"lake"`, `"study"`, `"camp"` ou `""`; níveis e propriedade são verificados no servidor.
 
 As imagens são pré-carregadas; enquanto uma troca não conclui ou falha, o cenário anterior permanece. Testes cobrem compatibilidade, níveis, remoção, isolamento entre contas, repetição, HTTP, prévias e carregamentos fora de ordem.
 
 Arte original gerada com a ferramenta ImageGen em 04/09/2026, arquivos em `frontend/public/mascot/denkynho/scenes/`. Direção comum: ambiente quadrado em 3D estilizado, perspectiva frontal, centro livre para o mascote, objetos nas laterais e ao fundo, sem pessoas, texto ou marca d’água. Prompts de ambiente:
 
 - `garden.png`: jardim encantado ao pôr do sol, piso de pedra com musgo, flores azuis, banco de madeira, vasos de barro, fonte redonda e arco com hera; verde, mel e azul suave.
+- `lake.png`: lago sereno ao fim da tarde, doca de madeira livre no primeiro plano, água azul com reflexos, margem arborizada, pedras, flores e montanhas; azul, verde e dourado.
 - `study.png`: biblioteca acolhedora, piso de madeira, estantes curvas, mesa com livros e globo iluminado à esquerda, poltrona com manta azul e samambaia à direita, janela em arco; madeira, âmbar e azul escuro.
 - `camp.png`: acampamento na floresta ao anoitecer, clareira, barraca à esquerda com mochila e cobertor, fogueira de pedras e lanterna à direita, pinheiros, montanhas e estrelas; azul marinho, verde e âmbar.
 

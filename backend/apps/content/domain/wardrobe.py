@@ -3,6 +3,7 @@
 UNLOCKS = (
     {"id": "garden", "slot": "scene", "label": {"pt": "Jardim encantado", "en": "Enchanted garden"}, "level": 1},
     {"id": "living-room", "slot": "scene", "label": {"pt": "Sala aconchegante", "en": "Cozy living room"}, "level": 1},
+    {"id": "lake", "slot": "scene", "label": {"pt": "Lago sereno", "en": "Peaceful lake"}, "level": 1},
     {"id": "star-pin", "slot": "accessory", "label": {"pt": "Broche de estrela", "en": "Star pin"}, "level": 2},
     {"id": "bedroom", "slot": "scene", "label": {"pt": "Quarto estrelado", "en": "Starry bedroom"}, "level": 2},
     {"id": "dance", "slot": "interaction", "label": {"pt": "Dançar juntos", "en": "Dance together"}, "level": 3},

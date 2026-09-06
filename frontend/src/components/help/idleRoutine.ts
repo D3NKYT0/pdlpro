@@ -328,6 +328,7 @@ function sceneFor(activity: AmbientActivity, unlocked: Set<SceneId>, current?: S
   if (activity === 'observe' && hasScene(unlocked, 'garden')) return 'garden'
   if (activity === 'observe' && hasScene(unlocked, 'camp')) return 'camp'
   if ((activity === 'water' || activity === 'bench') && hasScene(unlocked, 'garden')) return 'garden'
+  if (activity === 'fish' && hasScene(unlocked, 'lake')) return 'lake'
   if (activity === 'fish' && hasScene(unlocked, 'camp')) return 'camp'
   if (activity === 'tv' && hasScene(unlocked, 'living-room')) return 'living-room'
   if (activity === 'nap') return current
@@ -449,7 +450,8 @@ export function buildLifePlan(ctx: AmbientContext): AmbientActivity[] {
   const outdoor = outdoorPick(ctx, unlocked, random)
   const lifestyle: AmbientActivity[] = []
   if (hasScene(unlocked, 'garden')) lifestyle.push('observe', 'water', 'bench')
-  if (hasScene(unlocked, 'camp')) lifestyle.push('observe', 'fish')
+  if (hasScene(unlocked, 'camp')) lifestyle.push('observe')
+  if (hasScene(unlocked, 'lake') || hasScene(unlocked, 'camp')) lifestyle.push('fish')
   if (hasScene(unlocked, 'living-room')) lifestyle.push('tv')
   const fillers = shuffle(
     ([...new Set<AmbientActivity>(['laugh', 'stretch', 'walk', 'think', 'chat', ...lifestyle])]).filter(activity => {

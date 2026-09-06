@@ -150,3 +150,11 @@ def test_new_ambient_sprites_have_portrait_size_and_real_transparency():
             assert alpha.getextrema()[1] >= 250
             assert image.getbbox() is not None
             assert np.array_equal(np.asarray(alpha), np.asarray(base.getchannel("A").crop(box)))
+
+
+def test_lake_scene_matches_the_square_environment_contract():
+    image = Image.open(ASSETS / "scenes" / "lake.png").convert("RGB")
+    pixels = np.asarray(image)
+    assert image.size == (1254, 1254)
+    assert pixels.std() > 20
+    assert len(np.unique(pixels[::64, ::64].reshape(-1, 3), axis=0)) > 100

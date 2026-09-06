@@ -18,7 +18,7 @@ import {
 const base = (over: Partial<AmbientContext> = {}): AmbientContext => ({
   language: 'pt',
   currentScene: 'living-room',
-  unlockedScenes: ['living-room', 'kitchen', 'bathroom', 'bedroom', 'garden', 'camp'],
+  unlockedScenes: ['living-room', 'kitchen', 'bathroom', 'bedroom', 'garden', 'lake', 'camp'],
   canDance: true,
   reducedMotion: false,
   needs: { satiety: 75, energy: 75, happiness: 75, hygiene: 75 },
@@ -120,7 +120,7 @@ describe('vida ambient', () => {
   it.each([
     ['observe', '17-observando', 'garden'],
     ['water', '18-regando', 'garden'],
-    ['fish', '19-pescando', 'camp'],
+    ['fish', '19-pescando', 'lake'],
     ['bench', '20-sentado-banco', 'garden'],
     ['tv', '21-assistindo-tv', 'living-room'],
   ] as const)('usa o sprite e o cenário da atividade %s', (activity, pose, scene) => {
@@ -132,6 +132,13 @@ describe('vida ambient', () => {
     expect(state.pose).toBe(pose)
     expect(state.scene).toBe(scene)
     expect(state.careAction).toBeNull()
+  })
+
+  it('prefere o lago para pescar e mantém o acampamento como fallback', () => {
+    let state = startAmbientPlan(['fish'], base({ unlockedScenes: ['living-room', 'camp'] }))
+    for (let step = 0; step < 5 && state.phase !== 'act'; step += 1) state = advanceAmbient(state, base({ unlockedScenes: ['living-room', 'camp'] }))
+    expect(state.phase).toBe('act')
+    expect(state.scene).toBe('camp')
   })
 
   it('usa falas tristes quando o humor pede', () => {

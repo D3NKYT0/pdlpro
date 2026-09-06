@@ -68,6 +68,7 @@ def test_denkynho_handbook_is_seeded_and_hidden_from_faq_listings(api):
 
     wardrobe = Faq.objects.get(id=UUID("c0300000-0000-4000-8000-000000000062"))
     assert wardrobe.assistant_only and "biblioteca aconchegante" in wardrobe.question.casefold()
+    assert "lago sereno" in wardrobe.answer.casefold()
 
     public_ids = {item["id"] for item in api.get("/api/v1/public/faq/").data}
     assert not any(item_id.startswith("c0300000-") for item_id in public_ids)
