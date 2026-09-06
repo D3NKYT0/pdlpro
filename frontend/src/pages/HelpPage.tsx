@@ -13,6 +13,7 @@ import { Card } from '../components/ui/Card'
 import { Field } from '../components/ui/Field'
 import { PageHeader } from '../components/ui/PageHeader'
 import { EmptyState, ErrorNotice, LoadingState } from '../components/ui/Feedback'
+import { Select } from '../components/ui/Select'
 import { Toggle } from '../components/ui/Toggle'
 import { useAsyncAction } from '../hooks/useAsyncAction'
 import { helpArticles, type HelpArticle } from '../components/help/answers'
@@ -297,7 +298,7 @@ export function HelpPage() {
         {pet.data?.unlocks && <PetProgress key={user?.id} profile={pet.data} language={language} careResult={careResult} disabled={busy || petAction.pending} onProfileChange={updated => queryClient.setQueryData(petQueryKey, updated)} />}
         <Toggle label={labels.animate} checked={animated} disabled={reduced} onChange={event => setAnimations(event.target.checked)} />
         {reduced && <small className="muted">{labels.reduced}</small>}
-        <Field label={labels.language}><select value={language} disabled={busy || petAction.pending} onChange={event => changeLanguage(event.target.value as HelpLanguage)}><option value="pt">Português</option><option value="en">English</option></select></Field>
+        <Field label={labels.language}><Select value={language} disabled={busy || petAction.pending} onChange={value => changeLanguage(value as HelpLanguage)} options={[{ value: 'pt', label: 'Português' }, { value: 'en', label: 'English' }]} /></Field>
         {user && <HelpPreferences key={`${user.id}-${language}`} userId={user.id} language={language} value={preferences} disabled={busy || petAction.pending} persist={async next => {
           const updated = await contentApi.updateDenkynhoPreferences({ preferred_name: next.preferred_name, detail: next.detail })
           queryClient.setQueryData(petQueryKey, current => current ? { ...current, ...updated, preferences: updated.preferences ?? { preferred_name: next.preferred_name, detail: next.detail } } : updated)
@@ -327,7 +328,7 @@ export function HelpPage() {
             {message.source && <small className="muted">{labels.source}: {message.source}</small>}
             {message.related?.length ? <div className="help-related" aria-label={labels.related}><small className="muted">{labels.related}</small>{message.related.map(item => <Button key={item.id} size="sm" variant="secondary" disabled={busy} onClick={() => void send(item.question)}>{item.question}</Button>)}</div> : null}
           </article>)}
-          {messages.length === 1 && Boolean(faq.data?.length) && <div className="help-topic"><Field label={labels.topic}><select value={topic} onChange={event => setTopic(event.target.value)}><option value="all">{labels.all}</option>{categories.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></Field></div>}
+          {messages.length === 1 && Boolean(faq.data?.length) && <div className="help-topic"><Field label={labels.topic}><Select value={topic} onChange={setTopic} options={[{ value: 'all', label: labels.all }, ...categories.map(([value, label]) => ({ value, label }))]} /></Field></div>}
           {messages.length === 1 && suggestions.length > 0 && <div className="help-suggestions" aria-label="Perguntas sugeridas">{suggestions.map(item => <Button key={item.id} variant="secondary" size="sm" disabled={busy} onClick={() => void send(item.question)}>{item.question}{item.audience && item.audience !== 'public' ? ` · ${item.audience_label}` : ''}</Button>)}</div>}
         </div>
         <div className="help-chat-status">

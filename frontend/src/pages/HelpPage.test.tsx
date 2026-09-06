@@ -132,7 +132,8 @@ it('mantém atividades manuais estáticas e não inicia atividades automáticas 
   await act(async () => { await vi.advanceTimersByTimeAsync(34000) })
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '01-boas-vindas')
   await openCompanion()
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  await user.click(screen.getByRole('combobox', { name: 'Idioma' }))
+  await user.click(screen.getByRole('option', { name: 'English' }))
   expect(screen.getByRole('button', { name: 'Feed' })).toBeEnabled()
 })
 it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
@@ -147,7 +148,7 @@ it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   expect(screen.getByText(/Enter envia/)).toBeInTheDocument()
   await openCompanion()
   expect(screen.getByRole('link', { name: 'Consultar o FAQ' })).toHaveAttribute('href', '/faq')
-  expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveValue('all')
+  expect(screen.getByRole('combobox', { name: 'Assunto' })).toHaveTextContent('Todos os assuntos')
 })
 it('bloqueia apelido ofensivo mesmo disfarçado e não o repete na conversa', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
@@ -200,7 +201,8 @@ it('responde conversa simples com a personalidade sem consultar novamente o FAQ'
 it('troca a interface e a personalidade para inglês e recarrega o FAQ localizado', async () => {
   const user = mount(); await screen.findByRole('button', { name: articles[0].question })
   await openCompanion()
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  await user.click(screen.getByRole('combobox', { name: 'Idioma' }))
+  await user.click(screen.getByRole('option', { name: 'English' }))
   expect(await screen.findByRole('heading', { name: 'Help' })).toBeVisible()
   expect(screen.getByRole('textbox', { name: 'Your message' })).toHaveAttribute('placeholder', 'Type your question…')
   expect(fetcher.mock.calls.some(call => String(call[0]).includes('/shared/content/faq/?lang=en'))).toBe(true)
@@ -436,7 +438,8 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
   await screen.findByText(generated.answer.text)
   expect(calls().at(-1).context).toBe('')
   await openCompanion()
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en')
+  await user.click(screen.getByRole('combobox', { name: 'Idioma' }))
+  await user.click(screen.getByRole('option', { name: 'English' }))
   await user.type(screen.getByRole('textbox', { name: 'Your message' }), 'Hello{Enter}')
   await screen.findByText(generated.answer.text)
   expect(calls().at(-1)).toMatchObject({ language: 'en', context: '' })

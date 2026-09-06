@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
+import { Select } from '../ui/Select'
 import { Toggle } from '../ui/Toggle'
 import { defaultHelpPreferences, storeHelpPreferences, validHelpPreferences, type HelpPreferences as Preferences } from './preferences'
 import type { HelpLanguage } from './personality'
@@ -32,7 +33,7 @@ export function HelpPreferences({ userId, language, value, disabled, persist, on
   return <section className="help-preferences" aria-label={pt ? 'Preferências da conversa' : 'Conversation preferences'}>
     <strong>{pt ? 'Do seu jeito' : 'Your preferences'}</strong>
     <Field label={pt ? 'Como devo chamar você?' : 'What should I call you?'}><input value={draft.preferred_name} maxLength={30} disabled={blocked} onChange={event => { setDraft({ ...draft, preferred_name: event.target.value }); setError(''); setNotice('') }} /></Field>
-    <Field label={pt ? 'Tamanho das respostas' : 'Response length'}><select value={draft.detail} disabled={blocked} onChange={event => setDraft({ ...draft, detail: event.target.value as Preferences['detail'] })}><option value="brief">{pt ? 'Curtas' : 'Brief'}</option><option value="balanced">{pt ? 'Equilibradas' : 'Balanced'}</option><option value="detailed">{pt ? 'Detalhadas' : 'Detailed'}</option></select></Field>
+    <Field label={pt ? 'Tamanho das respostas' : 'Response length'}><Select value={draft.detail} disabled={blocked} onChange={value => setDraft({ ...draft, detail: value as Preferences['detail'] })} options={[{ value: 'brief', label: pt ? 'Curtas' : 'Brief' }, { value: 'balanced', label: pt ? 'Equilibradas' : 'Balanced' }, { value: 'detailed', label: pt ? 'Detalhadas' : 'Detailed' }]} /></Field>
     <Toggle label={pt ? 'Lembrar minhas preferências' : 'Remember my preferences'} checked={draft.remember} disabled={blocked} onChange={event => setDraft({ ...draft, remember: event.target.checked })} />
     <small className="muted">{pt ? 'O nome e o tamanho das respostas podem ficar na sua conta. O idioma fica neste navegador. O histórico não é salvo.' : 'Name and response length can be stored on your account. Language stays in this browser. Chat history is not saved.'}</small>
     <div className="help-preference-actions"><Button size="sm" disabled={blocked} busy={pending} onClick={() => void apply(draft)}>{pt ? 'Aplicar preferências' : 'Apply preferences'}</Button><Button size="sm" variant="secondary" disabled={blocked} onClick={() => void apply({ ...defaultHelpPreferences, language })}>{pt ? 'Apagar preferências' : 'Erase preferences'}</Button></div>

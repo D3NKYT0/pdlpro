@@ -179,6 +179,43 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   min-height:0;
   overflow-y:auto;
   overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(197, 161, 97, 0.45) transparent;
+}
+.help-messages::-webkit-scrollbar,
+.help-companion::-webkit-scrollbar,
+.help-companion-menu::-webkit-scrollbar,
+.help-activities[role=group]::-webkit-scrollbar {
+  width:8px;
+  height:8px;
+}
+.help-messages::-webkit-scrollbar-track,
+.help-companion::-webkit-scrollbar-track,
+.help-companion-menu::-webkit-scrollbar-track,
+.help-activities[role=group]::-webkit-scrollbar-track {
+  background:transparent;
+}
+.help-messages::-webkit-scrollbar-thumb,
+.help-companion::-webkit-scrollbar-thumb,
+.help-companion-menu::-webkit-scrollbar-thumb,
+.help-activities[role=group]::-webkit-scrollbar-thumb {
+  background:linear-gradient(180deg, rgba(210, 170, 86, 0.55), rgba(117, 85, 34, 0.7));
+  border:2px solid transparent;
+  background-clip:padding-box;
+  border-radius:999px;
+}
+.help-messages::-webkit-scrollbar-thumb:hover,
+.help-companion::-webkit-scrollbar-thumb:hover,
+.help-companion-menu::-webkit-scrollbar-thumb:hover,
+.help-activities[role=group]::-webkit-scrollbar-thumb:hover {
+  background:linear-gradient(180deg, rgba(230, 199, 125, 0.75), rgba(156, 121, 55, 0.85));
+  background-clip:padding-box;
+}
+.help-companion,
+.help-companion-menu,
+.help-activities[role=group] {
+  scrollbar-width:thin;
+  scrollbar-color:rgba(197, 161, 97, 0.45) transparent;
 }
 .help-message {
   max-width:90%;
@@ -213,6 +250,10 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 }
 .help-topic .field {
   margin-bottom:0;
+}
+.help-page .ui-select,
+.help-companion-menu .ui-select {
+  width:100%;
 }
 .help-related {
   display:flex;

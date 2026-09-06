@@ -1,6 +1,6 @@
 .ui-button:disabled { opacity: .55; cursor: not-allowed; }
 .ui-button[aria-busy="true"] { cursor: progress; }
-.ui-button:focus-visible, .ui-field :is(input, select, textarea):focus-visible, .ui-toggle input:focus-visible + span {
+.ui-button:focus-visible, .ui-field :is(input, select, textarea):focus-visible, .ui-select-trigger:focus-visible, .ui-toggle input:focus-visible + span {
   outline: 2px solid var(--gold); outline-offset: 3px;
 }
 .btn.ui-button.danger { color: rgba(235, 145, 127, 0.82); }
@@ -19,9 +19,75 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 @media (prefers-reduced-motion: reduce) { .ui-button-spinner { animation: none; } }
 .ui-field textarea { background: #0f0d0a; border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font: inherit; resize: vertical; }
 .ui-field { min-width: 0; }
-.ui-field :is(input, select, textarea) { min-width: 0; max-width: 100%; }
+.ui-field :is(input, select, textarea, .ui-select) { min-width: 0; max-width: 100%; }
 .ui-field-error { color: var(--danger); }
-.ui-field :is(input, select, textarea):disabled { opacity: .6; cursor: not-allowed; }
+.ui-field :is(input, select, textarea):disabled,
+.ui-field .ui-select-trigger:disabled { opacity: .6; cursor: not-allowed; }
+
+.ui-select { position: relative; width: 100%; }
+.ui-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 45px;
+  padding: 10px 38px 10px 13px;
+  border: 1px solid rgba(197, 161, 97, 0.27);
+  border-radius: 2px;
+  outline: none;
+  background-color: rgba(6, 6, 5, 0.7);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23C5A161' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ui-select-trigger:hover { border-color: rgba(197, 161, 97, 0.46); }
+.ui-select-trigger:focus-visible,
+.ui-select-trigger[aria-expanded="true"] {
+  border-color: var(--panel-gold, #c5a161);
+  background-color: rgba(8, 7, 5, 0.9);
+  box-shadow: 0 0 0 3px rgba(197, 161, 97, 0.09);
+}
+.ui-select-list {
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  overflow: auto;
+  border: 1px solid rgba(197, 161, 97, 0.42);
+  border-radius: 2px;
+  background: #12100c;
+  box-shadow: 0 12px 28px #000a, inset 0 0 0 1px rgba(197, 161, 97, 0.12);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(197, 161, 97, 0.45) transparent;
+  outline: none;
+}
+.ui-select-list::-webkit-scrollbar { width: 8px; }
+.ui-select-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(210, 170, 86, 0.55), rgba(117, 85, 34, 0.7));
+  border-radius: 999px;
+}
+.ui-select-list [role="option"] {
+  padding: 10px 12px;
+  border-radius: 2px;
+  color: #f5efe3;
+  cursor: pointer;
+}
+.ui-select-list [role="option"].is-active {
+  background: rgba(197, 161, 97, 0.28);
+  color: #f3d79a;
+}
+.ui-select-list [role="option"][aria-selected="true"] {
+  color: #e6c77d;
+}
+.ui-select-list [role="option"][aria-selected="true"].is-active {
+  background: rgba(197, 161, 97, 0.38);
+  color: #f8e2a8;
+}
 .ui-page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .ui-page-header > div { min-width: 0; }
 .ui-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 32px 20px; text-align: center; color: var(--muted); }

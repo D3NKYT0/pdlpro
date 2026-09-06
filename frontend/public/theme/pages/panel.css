@@ -3832,6 +3832,12 @@ html.pdl-panel textarea {
   transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
+html.pdl-panel .field select option,
+html.pdl-panel select option {
+  background-color: #12100c;
+  color: #f5efe3;
+}
+
 html.pdl-panel .field input:hover,
 html.pdl-panel .field select:hover,
 html.pdl-panel input:hover,

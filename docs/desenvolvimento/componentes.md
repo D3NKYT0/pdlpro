@@ -26,6 +26,7 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 | --- | --- |
 | [Button, ButtonLink e IconButton](../../frontend/src/components/ui/Button.tsx) | Ações, navegação interna e ações somente com ícone |
 | [Field](../../frontend/src/components/ui/Field.tsx) | Label, controle nativo, dica e erro; preserva ref, atributos e validação HTML |
+| [Select](../../frontend/src/components/ui/Select.tsx) | Lista customizada no tema do painel; evita o menu nativo do SO e o hover azul |
 | [Card](../../frontend/src/components/ui/Card.tsx) | Superfície do tema; `as` seleciona `section`, `article`, `aside`, `div` ou `header` |
 | [PageHeader](../../frontend/src/components/ui/PageHeader.tsx) | Título h1, descrição, identificação da seção e ações |
 | [PdlSymbol](../../frontend/src/components/PdlSymbol.tsx) | Emblema vetorial decorativo do PDL, sem iniciais; reutilizado pelos shells e carregamentos |
@@ -35,7 +36,7 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 | [EmptyState, LoadingState e ErrorNotice](../../frontend/src/components/ui/Feedback.tsx) | Vazio, carregamento anunciado e erro com tentativa explícita |
 
 Os componentes básicos publicam `data-theme-part` estável (`button`, `field`, `card`,
-`page-header`, `tabs`, `empty-state`, `loading-state` e `error-notice`). Temas podem usar
+`page-header`, `tabs`, `select`, `empty-state`, `loading-state` e `error-notice`). Temas podem usar
 esses seletores para alterar a aparência, mas não devem esconder estados, mudar semântica
 ou substituir a interação implementada pelo componente.
 
@@ -78,10 +79,12 @@ Este exemplo completo aceita a operação como dependência. Em uma tela real, o
 import { useId, useState, type FormEvent } from 'react'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
+import { Select } from '../../components/ui/Select'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 
 export function NameForm({ onSave }: { onSave: (name: string) => Promise<void> }) {
   const [name, setName] = useState('')
+  const [topic, setTopic] = useState('all')
   const hintId = useId()
   const action = useFeedbackAction()
 
@@ -95,10 +98,18 @@ export function NameForm({ onSave }: { onSave: (name: string) => Promise<void> }
       <input value={name} onChange={event => setName(event.target.value)}
         required disabled={action.pending} aria-describedby={hintId} />
     </Field>
+    <Field label="Assunto">
+      <Select value={topic} onChange={setTopic} options={[
+        { value: 'all', label: 'Todos os assuntos' },
+        { value: 'support', label: 'Ajuda e atendimento' },
+      ]} />
+    </Field>
     <Button type="submit" busy={action.pending} busyLabel="Salvando...">Salvar</Button>
   </form>
 }
 ```
+
+Use `Select` (não `<select>` nativo) quando o menu aberto precisar seguir o tema: a lista é um listbox no painel, com hover dourado, e não o popup do SO.
 
 [useAsyncAction](../../frontend/src/hooks/useAsyncAction.ts) centraliza `pending`, `error` e bloqueio síncrono de chamadas repetidas. Retorna `{ ok: true, value }` ou `{ ok: false, error }`; chamadas ignoradas também têm `skipped: true`. Não cancela a operação ao desmontar a tela. [useFeedbackAction](../../frontend/src/hooks/useFeedbackAction.ts) acrescenta o toast de falha, preservando a mensagem pública de `ApiError` ou usando o fallback. O callback continua responsável pela mensagem de sucesso.
 

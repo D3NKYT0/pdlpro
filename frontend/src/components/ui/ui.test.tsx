@@ -12,6 +12,7 @@ import { PageHeader } from './PageHeader'
 import { Tabs } from './Tabs'
 import { Toggle } from './Toggle'
 import { Pagination } from './Pagination'
+import { Select } from './Select'
 
 afterEach(cleanup)
 it('link estilizado mantém navegação e semântica de link', async () => {
@@ -137,4 +138,19 @@ it('toggle usa checkbox nativo e bloqueia alterações durante envio', async () 
   expect(change).toHaveBeenCalledTimes(1)
   rerender(<Toggle label="Disponível" checked busy onChange={change} />)
   expect(screen.getByRole('checkbox', { name: 'Disponível' })).toBeDisabled()
+})
+it('select customizado lista itens no tema e escolhe por clique', async () => {
+  function Example() {
+    const [value, setValue] = useState('all')
+    return <Field label="Assunto"><Select value={value} onChange={setValue} options={[{ value: 'all', label: 'Todos os assuntos' }, { value: 'getting_started', label: 'Primeiros passos' }, { value: 'support', label: 'Ajuda e atendimento' }]} /></Field>
+  }
+  const user = userEvent.setup()
+  render(<Example />)
+  const trigger = screen.getByRole('combobox', { name: 'Assunto' })
+  expect(trigger.closest('[data-theme-part="select"]')).toBeTruthy()
+  await user.click(trigger)
+  expect(screen.getByRole('option', { name: 'Primeiros passos' })).toBeVisible()
+  await user.click(screen.getByRole('option', { name: 'Primeiros passos' }))
+  expect(trigger).toHaveTextContent('Primeiros passos')
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 })

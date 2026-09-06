@@ -50,7 +50,13 @@ export function HelpCompanion({ language, mascot, status, children, onChat, faqL
   useEffect(() => {
     if (!open || (mobile && collapsed)) return
     closeButton.current?.focus()
-    const outside = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(false) }
+    const outside = (event: PointerEvent) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (root.current?.contains(target)) return
+      if (target instanceof Element && target.closest('[data-ui-select-list]')) return
+      setOpen(false)
+    }
     const escape = (event: globalThis.KeyboardEvent) => { if (event.key === 'Escape') { setOpen(false); trigger.current?.focus() } }
     document.addEventListener('pointerdown', outside)
     document.addEventListener('keydown', escape)

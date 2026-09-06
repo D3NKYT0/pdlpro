@@ -6,6 +6,7 @@ import { ArrowRight, Check, Download, Pencil, Plus, RefreshCw, Save, ShieldAlert
 import { Card } from '../src/components/ui/Card'
 import { usePanelTheme } from '../src/theme/usePanelTheme'
 import { Field } from '../src/components/ui/Field'
+import { Select } from '../src/components/ui/Select'
 import { PageHeader } from '../src/components/ui/PageHeader'
 import { EmptyState, ErrorNotice, LoadingState } from '../src/components/ui/Feedback'
 import { Toggle } from '../src/components/ui/Toggle'
@@ -22,6 +23,7 @@ function Showcase() {
   const [tab, setTab] = useState('components')
   const [enabled, setEnabled] = useState(true)
   const [page, setPage] = useState(1)
+  const [topic, setTopic] = useState('all')
   const [saved, setSaved] = useState(false)
   const [failed, setFailed] = useState(true)
   const [lastAction, setLastAction] = useState('Escolha uma ação para experimentar.')
@@ -57,7 +59,7 @@ function Showcase() {
           <p className="ui-showcase-result" role="status">{lastAction}</p>
         </Card>
         <form className="card" onSubmit={event => { event.preventDefault(); void action.run(async () => { setSaved(false); await new Promise(resolve => setTimeout(resolve, 700)); setSaved(true) }) }}>
-          <h2>Formulário</h2><Field label="Nome" hint="Exibido aos jogadores."><input placeholder="Nome do servidor" required /></Field><Field label="Descrição"><textarea rows={2} placeholder="Conte sobre seu servidor" /></Field><Toggle label="Disponível aos jogadores" checked={enabled} onChange={event => setEnabled(event.target.checked)} /><div className="ui-showcase-actions"><Button type="submit" busy={action.pending} busyLabel="Salvando...">Salvar exemplo</Button></div>{saved && <p role="status">Exemplo salvo localmente.</p>}
+          <h2>Formulário</h2><Field label="Nome" hint="Exibido aos jogadores."><input placeholder="Nome do servidor" required /></Field><Field label="Assunto"><Select value={topic} onChange={setTopic} options={[{ value: 'all', label: 'Todos os assuntos' }, { value: 'getting_started', label: 'Primeiros passos' }, { value: 'support', label: 'Ajuda e atendimento' }]} /></Field><Field label="Descrição"><textarea rows={2} placeholder="Conte sobre seu servidor" /></Field><Toggle label="Disponível aos jogadores" checked={enabled} onChange={event => setEnabled(event.target.checked)} /><div className="ui-showcase-actions"><Button type="submit" busy={action.pending} busyLabel="Salvando...">Salvar exemplo</Button></div>{saved && <p role="status">Exemplo salvo localmente.</p>}
         </form>
         <Card><h2>Consultas</h2><LoadingState /><EmptyState>Nenhum registro encontrado.</EmptyState><ErrorNotice error={failed ? new Error('Não foi possível carregar os dados.') : null} onRetry={() => setFailed(false)} /></Card>
         <Card><h2>Validação e navegação</h2><Field label="E-mail" error={<span id="email-error">Informe um e-mail válido.</span>}><input defaultValue="incompleto" aria-invalid="true" aria-describedby="email-error" /></Field><Pagination page={page} pages={3} onChange={setPage} /><p className="muted">Use Tab para navegar, Espaço nos controles e setas nas abas.</p></Card>
