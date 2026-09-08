@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from apps.wallet.infrastructure.models import CoinConfig, CoinPackage, CoinPurchaseBonus, Wallet, WalletTransaction
+from apps.wallet.infrastructure.models import (
+    CoinConfig,
+    CoinPackage,
+    CoinPurchaseBonus,
+    CoinPurchasePromo,
+    Wallet,
+    WalletTransaction,
+)
 from common.admin import PDLModelAdmin
 
 
@@ -63,3 +70,17 @@ class CoinPurchaseBonusAdmin(PDLModelAdmin):
     """
 
     list_display = ("description", "min_amount", "max_amount", "percent", "active", "order")
+
+
+@admin.register(CoinPurchasePromo)
+class CoinPurchasePromoAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``CoinPurchasePromo``.
+
+    A listagem exibe ``title``, ``percent``, ``active``, ``starts_at``, ``ends_at``. Ajuste
+    filtros, busca e campos nesta classe para mudar a experiência da equipe no admin; regras
+    reutilizáveis ficam na aplicação.
+    """
+
+    list_display = ("title", "percent", "active", "starts_at", "ends_at", "updated_at")
+    list_filter = ("active",)
+    search_fields = ("title", "description")

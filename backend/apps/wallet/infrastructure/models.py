@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models, transaction
+from django.utils import timezone
 
 from common.models import BaseModel
 
@@ -102,6 +103,58 @@ class CoinPurchaseBonus(BaseModel):
 
     def __str__(self) -> str:
         return self.description
+
+
+class CoinPurchasePromo(BaseModel):
+    """Campanha promocional de recarga: percentual mínimo de bônus em moedas e copy do banner.
+
+    Quando vigente, eleva o piso do bônus de compra sem alterar o valor cobrado no gateway.
+    No máximo uma campanha fica ``active=True`` por vez. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos.
+    """
+
+    percent = models.DecimalField(max_digits=5, decimal_places=2)
+    title = models.CharField(max_length=120)
+    description = models.CharField(max_length=240, blank=True)
+    active = models.BooleanField(default=True)
+    starts_at = models.DateTimeField(null=True, blank=True)
+    ends_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Promoção de recarga"
+        verbose_name_plural = "Promoções de recarga"
+        ordering = ["-updated_at"]
+
+    def __str__(self) -> str:
+        return f"{self.title} ({self.percent}%)"
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if self.active:
+                CoinPurchasePromo.objects.exclude(pk=self.pk).update(active=False)
+            super().save(*args, **kwargs)
+
+    def is_currently_active(self, *, at=None) -> bool:
+        """Indica se a campanha está marcada ativa e dentro da janela de vigência."""
+
+        if not self.active:
+            return False
+        moment = at or timezone.now()
+        if self.starts_at and self.starts_at > moment:
+            return False
+        if self.ends_at and self.ends_at <= moment:
+            return False
+        return True
+
+    @classmethod
+    def current(cls, *, at=None):
+        """Retorna a campanha ativa vigente no instante, ou ``None``."""
+
+        moment = at or timezone.now()
+        for promo in cls.objects.filter(active=True).order_by("-updated_at"):
+            if promo.is_currently_active(at=moment):
+                return promo
+        return None
 
 
 class CoinPackage(BaseModel):

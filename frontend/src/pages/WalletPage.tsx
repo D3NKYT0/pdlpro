@@ -371,6 +371,20 @@ export function WalletPage() {
             </form>
           </div>
 
+          {catalog.data?.promo ? (
+            <aside className="wallet-promo-banner" aria-label={catalog.data.promo.title}>
+              <div className="wallet-promo-banner-copy">
+                <span className="panel-eyebrow">Promoção</span>
+                <strong>{catalog.data.promo.title}</strong>
+                {catalog.data.promo.description ? <small>{catalog.data.promo.description}</small> : null}
+              </div>
+              <div className="wallet-promo-banner-offer">
+                <b>{Number(catalog.data.promo.percent)}%</b>
+                <span>OFF</span>
+              </div>
+            </aside>
+          ) : null}
+
           <div className="wallet-checkout">
             {order?.method === 'mercadopago' && !order.pix_qr_code ? (
               <Field>

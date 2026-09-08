@@ -17,7 +17,7 @@ beforeEach(() => {
   vi.mocked(walletApi.me).mockResolvedValue({ balance: '50.00', bonus_balance: '5.00' } as any)
   vi.mocked(walletApi.transactions).mockResolvedValue({ results: [] })
   vi.mocked(paymentApi.list).mockResolvedValue([])
-  vi.mocked(paymentApi.catalog).mockResolvedValue({ methods: [], packages: [] } as any)
+  vi.mocked(paymentApi.catalog).mockResolvedValue({ methods: [], packages: [], promo: null } as any)
 })
 afterEach(cleanup)
 function mount() {
@@ -25,6 +25,27 @@ function mount() {
   render(<QueryClientProvider client={client}><MemoryRouter><WalletPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+
+it('mostra banner promocional quando o catálogo traz promo ativa', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    methods: [],
+    packages: [],
+    allow_custom_amount: true,
+    promo: { percent: '20.00', title: 'Recarga em promoção', description: '20% a mais de moedas' },
+  } as any)
+  mount()
+  expect(await screen.findByLabelText('Recarga em promoção')).toBeTruthy()
+  expect(screen.getByText('20%')).toBeTruthy()
+  expect(screen.getByText('OFF')).toBeTruthy()
+  expect(screen.getByText('20% a mais de moedas')).toBeTruthy()
+})
+
+it('omite banner promocional quando o catálogo não traz promo', async () => {
+  mount()
+  await screen.findByText('Prefere outro valor?')
+  expect(screen.queryByText('OFF')).toBeNull()
+  expect(screen.queryByLabelText('Recarga em promoção')).toBeNull()
+})
 
 it.each([['SAIDA', '−12.34 moedas'], ['ENTRADA', '+12.34 moedas'], ['debit', '−12.34 moedas']])('mostra sinal correto para movimento %s', async (kind, expected) => {
   vi.mocked(walletApi.transactions).mockResolvedValue({ results: [{ id: 'tx', kind, amount: '12.34', description: 'Movimento' }] } as any)

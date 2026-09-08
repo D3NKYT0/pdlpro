@@ -114,11 +114,18 @@ export interface ApiCoinPackage {
   total_coins: string
 }
 
+export interface ApiWalletPromo {
+  percent: string
+  title: string
+  description: string
+}
+
 export interface ApiPaymentCatalog {
   currency: string
   methods: Array<{ id: string; public_key: string; currencies: string[]; auto_confirm?: boolean }>
   packages: ApiCoinPackage[]
   allow_custom_amount: boolean
+  promo: ApiWalletPromo | null
 }
 
 export interface ApiBonusPreview {

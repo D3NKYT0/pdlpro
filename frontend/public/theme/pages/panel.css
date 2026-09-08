@@ -4495,6 +4495,60 @@ html.pdl-panel .wallet-custom-purchase {
   background: rgba(5, 5, 4, 0.34);
 }
 
+html.pdl-panel .wallet-promo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 16px;
+  padding: 18px 20px;
+  border: 1px solid rgba(197, 161, 97, 0.28);
+  background:
+    linear-gradient(105deg, rgba(197, 161, 97, 0.14), transparent 42%),
+    rgba(8, 7, 5, 0.55);
+}
+
+html.pdl-panel .wallet-promo-banner-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+html.pdl-panel .wallet-promo-banner-copy strong {
+  color: rgba(255, 248, 230, 0.92);
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+html.pdl-panel .wallet-promo-banner-copy small {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+html.pdl-panel .wallet-promo-banner-offer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  gap: 8px;
+  color: #e7c784;
+}
+
+html.pdl-panel .wallet-promo-banner-offer b {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+html.pdl-panel .wallet-promo-banner-offer span {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 html.pdl-panel .wallet-custom-copy {
   display: flex;
   align-items: center;
@@ -4851,6 +4905,12 @@ html.pdl-panel .wallet-empty-state small {
   html.pdl-panel .wallet-custom-purchase,
   html.pdl-panel .wallet-side-column {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  html.pdl-panel .wallet-promo-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
   }
 }
 

@@ -46,6 +46,7 @@ JAZZMIN_ICONS_PDL = {
     "wallet.coinconfig": "fas fa-cog",
     "wallet.coinpackage": "fas fa-coins",
     "wallet.coinpurchasebonus": "fas fa-percent",
+    "wallet.coinpurchasepromo": "fas fa-bullhorn",
 
     # Store and purchases.
     "shop": "fas fa-store",

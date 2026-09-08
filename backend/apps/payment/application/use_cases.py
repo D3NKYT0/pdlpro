@@ -19,7 +19,7 @@ from apps.payment.domain.repositories import IPaymentOrderRepository
 from apps.payment.infrastructure.registry import PaymentGatewayRegistry
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
-from apps.wallet.infrastructure.models import CoinPackage
+from apps.wallet.infrastructure.models import CoinPackage, CoinPurchasePromo
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 
@@ -29,6 +29,17 @@ def _configured_methods() -> list[str]:
     if not getattr(settings, "PAYMENT_ALLOW_MOCK", False):
         methods = [method for method in methods if method != "mock"]
     return methods
+
+
+def _catalog_promo() -> dict | None:
+    promo = CoinPurchasePromo.current()
+    if promo is None:
+        return None
+    return {
+        "percent": str(promo.percent),
+        "title": promo.title,
+        "description": promo.description,
+    }
 
 
 class GetPaymentCatalogUseCase(UseCase[None, dict]):
@@ -65,6 +76,7 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
             "methods": methods,
             "packages": packages,
             "allow_custom_amount": True,
+            "promo": _catalog_promo(),
         }
 
 

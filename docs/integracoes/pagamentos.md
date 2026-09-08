@@ -19,6 +19,16 @@
 
 Os tipos e limites estão em [application/use_cases.py](../../backend/apps/payment/application/use_cases.py). `amount` pertence à moeda indicada por `currency`; `coins` representa saldo do painel. Não some valores de BRL e USD nem confunda bônus com saldo principal.
 
+## Promoção de recarga
+
+Campanhas de banner na carteira usam o modelo `CoinPurchasePromo` (admin Jazzmin: **Promoções de recarga**). Campos: percentual, título, descrição, ativo e vigência opcional (`starts_at` / `ends_at`). No máximo uma campanha fica marcada como ativa.
+
+- O catálogo `GET /api/v1/customer/payments/catalog/` devolve `promo` com `percent`, `title` e `description` quando a campanha está vigente; caso contrário `promo` é `null`.
+- O efeito econômico é **bônus de moedas** via `IPurchaseBonusPolicy`: a promo eleva o piso do percentual (`max` entre faixa `CoinPurchaseBonus` e a campanha). O valor cobrado no gateway (`amount`) não muda.
+- A liquidação já existente credita o bônus em `bonus_balance` com a descrição da campanha ou da faixa, conforme o percentual efetivo.
+
+Configure a campanha no admin, confira o banner em `/painel/wallet` e valide o crédito com o método mock em ambiente de teste.
+
 ## Configuração
 
 Use `PAYMENT_METHODS` para selecionar métodos expostos e configure as chaves e segredos de webhook conforme [Variáveis de ambiente](../configuracao/ambiente.md). As flags de ativação dos provedores controlam disponibilidade do processamento real. O mock é exclusivo de desenvolvimento e testes; `core.settings.test` o habilita explicitamente.

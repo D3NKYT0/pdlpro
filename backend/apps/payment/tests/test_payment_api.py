@@ -1,10 +1,13 @@
 import pytest
+from datetime import timedelta
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework.test import APIClient
 
-from apps.wallet.infrastructure.models import CoinPurchaseBonus
+from apps.wallet.infrastructure.bonus import DjangoPurchaseBonusPolicy
+from apps.wallet.infrastructure.models import CoinPurchaseBonus, CoinPurchasePromo
 
 User = get_user_model()
 
@@ -56,6 +59,7 @@ def test_payment_catalog_and_package_credits_coins(api, player):
     api.force_authenticate(user=player)
     catalog = api.get("/api/v1/customer/payments/catalog/")
     assert catalog.status_code == 200
+    assert catalog.data["promo"] is None
     assert any(row["code"] == "test_plus" for row in catalog.data["packages"])
     assert any(method["id"] == "mock" for method in catalog.data["methods"])
     created = api.post(
@@ -70,6 +74,97 @@ def test_payment_catalog_and_package_credits_coins(api, player):
     assert confirmed.status_code == 200
     wallet = api.get("/api/v1/shared/wallet/")
     assert wallet.data["balance"] == "120.00"
+
+
+@pytest.mark.django_db
+def test_payment_catalog_exposes_active_promo(api, player):
+    CoinPurchasePromo.objects.create(
+        percent=Decimal("15.00"),
+        title="Recarga em promoção",
+        description="15% a mais de moedas",
+        active=True,
+    )
+    api.force_authenticate(user=player)
+    catalog = api.get("/api/v1/customer/payments/catalog/")
+    assert catalog.status_code == 200
+    assert catalog.data["promo"] == {
+        "percent": "15.00",
+        "title": "Recarga em promoção",
+        "description": "15% a mais de moedas",
+    }
+
+
+@pytest.mark.django_db
+def test_payment_catalog_hides_expired_promo(api, player):
+    CoinPurchasePromo.objects.create(
+        percent=Decimal("15.00"),
+        title="Expirada",
+        description="Já passou",
+        active=True,
+        ends_at=timezone.now() - timedelta(hours=1),
+    )
+    api.force_authenticate(user=player)
+    catalog = api.get("/api/v1/customer/payments/catalog/")
+    assert catalog.status_code == 200
+    assert catalog.data["promo"] is None
+
+
+@pytest.mark.django_db
+def test_confirm_payment_applies_promo_bonus_without_tier(api, player):
+    CoinPurchasePromo.objects.create(
+        percent=Decimal("20.00"),
+        title="Campanha 20%",
+        description="Bônus promo 20%",
+        active=True,
+    )
+    api.force_authenticate(user=player)
+    created = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
+    assert created.status_code == 200, created.data
+    confirmed = api.post(f"/api/v1/customer/payments/{created.data['id']}/confirm/", format="json")
+    assert confirmed.status_code == 200, confirmed.data
+    assert confirmed.data["bonus_applied"] == "10.00"
+    wallet = api.get("/api/v1/shared/wallet/")
+    assert wallet.data["balance"] == "50.00"
+    assert wallet.data["bonus_balance"] == "10.00"
+
+
+@pytest.mark.django_db
+def test_bonus_policy_uses_max_of_tier_and_promo():
+    CoinPurchaseBonus.objects.create(
+        min_amount=Decimal("10.00"),
+        percent=Decimal("10.00"),
+        description="Faixa 10%",
+        active=True,
+    )
+    CoinPurchasePromo.objects.create(
+        percent=Decimal("25.00"),
+        title="Campanha",
+        description="Promo 25%",
+        active=True,
+    )
+    preview = DjangoPurchaseBonusPolicy().preview(Decimal("50.00"))
+    assert preview.percent == Decimal("25.00")
+    assert preview.bonus == Decimal("12.50")
+    assert preview.description == "Promo 25%"
+
+    CoinPurchasePromo.objects.all().update(active=False)
+    CoinPurchasePromo.objects.create(
+        percent=Decimal("10.00"),
+        title="Campanha menor",
+        description="Promo 10%",
+        active=True,
+    )
+    CoinPurchaseBonus.objects.all().delete()
+    CoinPurchaseBonus.objects.create(
+        min_amount=Decimal("10.00"),
+        percent=Decimal("30.00"),
+        description="Faixa 30%",
+        active=True,
+    )
+    preview = DjangoPurchaseBonusPolicy().preview(Decimal("50.00"))
+    assert preview.percent == Decimal("30.00")
+    assert preview.bonus == Decimal("15.00")
+    assert preview.description == "Faixa 30%"
 
 
 @pytest.mark.django_db
