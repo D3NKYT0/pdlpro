@@ -108,7 +108,7 @@ class CustomerTicketDetailView(APIView):
         ticket = self.get_ticket(request, ticket_id)
         if not ticket:
             return error("Chamado não encontrado.", "TICKET_NOT_FOUND", status.HTTP_404_NOT_FOUND)
-        if ticket.status == Ticket.Status.CLOSED:
+        if ticket.status in {Ticket.Status.CLOSED, Ticket.Status.RESOLVED}:
             return error("Reabra o chamado antes de enviar uma mensagem.")
         body = str(request.data.get("body", "")).strip()
         if len(body) < 2:

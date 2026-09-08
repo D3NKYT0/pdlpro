@@ -383,53 +383,60 @@ export function AdminGameContentPage() {
         </Card>
       )}
       {query.isPending && <Loading />}
-      <div className="program-grid">
-        {query.data?.map((row) => (
-          <Card as="article" className="program-section" key={row.id}>
-            <h3>{rowLabel(row)}</h3>
-            <div className="program-page">
-              {config.fields
-                .filter(
-                  (f) =>
-                    f.type !== "rewards" &&
-                    f.key !== "name" &&
-                    f.type !== "textarea",
-                )
-                .map((f) => (
-                  <small className="muted" key={f.key}>
-                    {f.label}:{" "}
-                    {f.source
-                      ? rows(f.source).find((s) => s.id === row[f.key])
-                        ? rowLabel(
-                            rows(f.source).find((s) => s.id === row[f.key])!,
-                          )
-                        : "—"
-                      : f.type === "checkbox"
-                        ? row[f.key]
-                          ? "Sim"
-                          : "Não"
-                        : f.type === "datetime-local"
-                          ? new Date(String(row[f.key])).toLocaleString("pt-BR")
-                          : f.type === "date"
-                            ? new Date(
-                                `${row[f.key]}T12:00:00`,
-                              ).toLocaleDateString("pt-BR")
-                            : f.options
-                              ? f.options.find(
-                                  ([key]) => key === row[f.key],
-                                )?.[1] || String(row[f.key])
-                              : String(row[f.key] ?? "—")}
-                  </small>
+      <div className="program-grid program-record-grid">
+        {query.data?.map((row) => {
+          const metaFields = config.fields.filter(
+            (f) =>
+              f.type !== "rewards" &&
+              f.key !== "name" &&
+              f.type !== "textarea" &&
+              f.key !== "active",
+          )
+          const activeField = config.fields.find((f) => f.key === "active" && f.type === "checkbox")
+          const isActive = activeField ? Boolean(row.active) : undefined
+          return (
+            <Card as="article" className={`program-section program-record${isActive === false ? " is-inactive" : isActive ? " is-active" : ""}`} key={row.id}>
+              <header className="program-record-head">
+                <div>
+                  <h3>{rowLabel(row)}</h3>
+                  {isActive !== undefined ? (
+                    <span className={`program-status ${isActive ? "status-available" : "status-pending"}`}>
+                      {isActive ? "Ativo" : "Inativo"}
+                    </span>
+                  ) : null}
+                </div>
+                <Button type="button" size="sm" variant="secondary" onClick={() => open(row)}>
+                  <Pencil size={16} />
+                  Editar
+                </Button>
+              </header>
+              <dl className="program-record-meta">
+                {metaFields.map((f) => (
+                  <div key={f.key}>
+                    <dt>{f.label}</dt>
+                    <dd>
+                      {f.source
+                        ? rows(f.source).find((s) => s.id === row[f.key])
+                          ? rowLabel(rows(f.source).find((s) => s.id === row[f.key])!)
+                          : "—"
+                        : f.type === "checkbox"
+                          ? row[f.key]
+                            ? "Sim"
+                            : "Não"
+                          : f.type === "datetime-local"
+                            ? new Date(String(row[f.key])).toLocaleString("pt-BR")
+                            : f.type === "date"
+                              ? new Date(`${row[f.key]}T12:00:00`).toLocaleDateString("pt-BR")
+                              : f.options
+                                ? f.options.find(([key]) => key === row[f.key])?.[1] || String(row[f.key])
+                                : String(row[f.key] ?? "—")}
+                    </dd>
+                  </div>
                 ))}
-            </div>
-            <div className="program-actions">
-              <Button type="submit" className="ghost" onClick={() => open(row)}>
-                <Pencil size={16} />
-                Editar
-              </Button>
-            </div>
-          </Card>
-        ))}
+              </dl>
+            </Card>
+          )
+        })}
       </div>
       {query.data?.length === 0 && (
         <Empty>

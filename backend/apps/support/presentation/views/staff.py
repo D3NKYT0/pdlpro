@@ -93,6 +93,8 @@ class StaffTicketDetailView(APIView):
         ticket = self.get_ticket(ticket_id)
         if not ticket:
             return error("Chamado não encontrado.", "TICKET_NOT_FOUND", status.HTTP_404_NOT_FOUND)
+        if ticket.status in {Ticket.Status.CLOSED, Ticket.Status.RESOLVED}:
+            return error("Reabra o chamado antes de enviar uma mensagem.")
         body = str(request.data.get("body", "")).strip()
         if len(body) < 2:
             return error("Escreva uma resposta.")
@@ -146,6 +148,10 @@ class StaffTicketDetailView(APIView):
             elif new_status == Ticket.Status.CLOSED:
                 ticket.closed_at = timezone.now()
                 update_fields.append("closed_at")
+            else:
+                ticket.resolved_at = None
+                ticket.closed_at = None
+                update_fields.extend(["resolved_at", "closed_at"])
         if "priority" in request.data:
             priority = request.data.get("priority")
             if priority not in Ticket.Priority.values:

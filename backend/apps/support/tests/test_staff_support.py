@@ -87,3 +87,35 @@ def test_assign_and_unassign_staff(support):
 def test_regular_player_cannot_be_assigned(support):
     client, ticket, _ = support
     assert client.patch(f"/api/v1/staff/support/{ticket.id}/", {"assigned_to": str(ticket.user.id)}, format="json").status_code == 400
+
+
+@pytest.mark.parametrize("status", ["closed", "resolved"])
+def test_staff_cannot_reply_until_ticket_is_reopened(support, status):
+    client, ticket, _ = support
+    url = f"/api/v1/staff/support/{ticket.id}/"
+    assert client.patch(url, {"status": status}, format="json").status_code == 200
+    blocked = client.post(url, {"body": "Ainda estamos analisando"}, format="json")
+    assert blocked.status_code == 400
+    assert blocked.data["message"] == "Reabra o chamado antes de enviar uma mensagem."
+    assert TicketMessage.objects.filter(ticket=ticket, is_internal=False).count() == 0
+    assert client.patch(url, {"status": "open"}, format="json").status_code == 200
+    ticket.refresh_from_db()
+    assert ticket.status == "open"
+    assert ticket.closed_at is None
+    assert ticket.resolved_at is None
+    allowed = client.post(url, {"body": "Retomamos o atendimento"}, format="json")
+    assert allowed.status_code == 201
+    assert allowed.data["status"] == "waiting_user"
+
+
+def test_staff_reopen_clears_terminal_timestamps(support):
+    client, ticket, _ = support
+    url = f"/api/v1/staff/support/{ticket.id}/"
+    assert client.patch(url, {"status": "closed"}, format="json").status_code == 200
+    ticket.refresh_from_db()
+    assert ticket.closed_at is not None
+    assert client.patch(url, {"status": "in_progress"}, format="json").status_code == 200
+    ticket.refresh_from_db()
+    assert ticket.status == "in_progress"
+    assert ticket.closed_at is None
+    assert ticket.resolved_at is None

@@ -78,7 +78,7 @@ export function AdminSupportPage() {
 
   async function submitReply(event: FormEvent) {
     event.preventDefault()
-    if (!selectedId || !reply.trim()) return
+    if (!selectedId || !reply.trim() || !selected || ['closed', 'resolved'].includes(selected.status)) return
     setPending(true)
     try {
       await staffSupportApi.reply(selectedId, reply, internal)
@@ -92,6 +92,8 @@ export function AdminSupportPage() {
       setPending(false)
     }
   }
+
+  const ticketClosed = selected ? ['closed', 'resolved'].includes(selected.status) : false
 
   function TicketRow({ ticket }: { ticket: ApiSupportTicket }) {
     return (
@@ -162,11 +164,22 @@ export function AdminSupportPage() {
                 <span><b>Categoria</b>{selected.category_label}</span><span><b>Aberto em</b>{formatDateTime(selected.created_at, 'short')}</span><span><b>SLA inicial</b>{selected.sla_breached ? 'Vencido' : formatDateTime(selected.sla_due_at, 'short')}</span>
               </div>
               <TicketMessages messages={selected.messages ?? []} staff />
-              <form className={`support-reply staff-reply${internal ? ' internal' : ''}`} onSubmit={submitReply}>
-                <div className="staff-reply-mode"><button type="button" className={!internal ? 'active' : ''} onClick={() => setInternal(false)}>Resposta ao jogador</button><button type="button" className={internal ? 'active' : ''} onClick={() => setInternal(true)}>Nota interna</button></div>
-                <label><span>{internal ? 'Somente a equipe verá esta nota' : 'O jogador receberá uma notificação'}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={4} placeholder={internal ? 'Contexto para outros atendentes...' : 'Escreva uma resposta clara e objetiva...'} required /></label>
-                <Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : internal ? 'Adicionar nota' : 'Enviar resposta'}</Button>
-              </form>
+              {ticketClosed ? (
+                <div className="support-closed-note">
+                  <CheckCircle2 />
+                  <div>
+                    <strong>Este atendimento foi finalizado</strong>
+                    <span>Reabra o chamado para enviar respostas ou notas internas.</span>
+                  </div>
+                  <Button className="ghost compact" type="button" disabled={pending} onClick={() => void update({ status: 'open' })}>Reabrir</Button>
+                </div>
+              ) : (
+                <form className={`support-reply staff-reply${internal ? ' internal' : ''}`} onSubmit={submitReply}>
+                  <div className="staff-reply-mode"><button type="button" className={!internal ? 'active' : ''} onClick={() => setInternal(false)}>Resposta ao jogador</button><button type="button" className={internal ? 'active' : ''} onClick={() => setInternal(true)}>Nota interna</button></div>
+                  <label><span>{internal ? 'Somente a equipe verá esta nota' : 'O jogador receberá uma notificação'}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={4} placeholder={internal ? 'Contexto para outros atendentes...' : 'Escreva uma resposta clara e objetiva...'} required /></label>
+                  <Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : internal ? 'Adicionar nota' : 'Enviar resposta'}</Button>
+                </form>
+              )}
             </>
           ) : <div className="support-empty"><MessageSquareText /><h2>Selecione um chamado</h2><p>Os casos urgentes e fora do SLA aparecem primeiro.</p></div>}
         </main>

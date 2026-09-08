@@ -49,12 +49,13 @@ it.each([false, true])('envia resposta; preserva mensagem quando falha=%s', asyn
   if (fail) expect(toast.error).toHaveBeenCalledWith('Falha no envio')
   else await waitFor(() => expect(supportApi.detail).toHaveBeenCalledTimes(2))
 })
-it.each(['open', 'closed'])('permite ação apropriada no chamado %s', async status => {
+it.each(['open', 'closed', 'resolved'])('permite ação apropriada no chamado %s', async status => {
   vi.mocked(supportApi.detail).mockResolvedValue({ ...ticket, status })
   const user = mount()
-  await user.click(await screen.findByRole('button', { name: status === 'closed' ? 'Reabrir' : 'Encerrar' }))
-  expect(supportApi.action).toHaveBeenCalledWith('ticket', status === 'closed' ? 'reopen' : 'close')
-  if (status === 'closed') expect(screen.queryByRole('textbox', { name: 'Responder à equipe' })).not.toBeInTheDocument()
+  const closedLike = status === 'closed' || status === 'resolved'
+  await user.click(await screen.findByRole('button', { name: closedLike ? 'Reabrir' : 'Encerrar' }))
+  expect(supportApi.action).toHaveBeenCalledWith('ticket', closedLike ? 'reopen' : 'close')
+  if (closedLike) expect(screen.queryByRole('textbox', { name: 'Responder à equipe' })).not.toBeInTheDocument()
 })
 it('falha ao encerrar mantém o chamado disponível', async () => {
   vi.mocked(supportApi.action).mockRejectedValue(new ApiError('Atualização recusada', 409, 'CONFLICT'))

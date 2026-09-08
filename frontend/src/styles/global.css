@@ -411,9 +411,10 @@ button, input, select { font: inherit; }
 .support-reply textarea { min-height: 72px; }
 .support-reply .btn { margin-bottom: 1px; }
 .support-closed-note { display: flex; align-items: center; gap: 12px; margin: 18px 24px 22px; padding: 14px; border: 1px solid rgba(105,189,135,.2); border-radius: 11px; background: rgba(63,157,94,.08); }
-.support-closed-note svg { color: #69bd87; }
-.support-closed-note div { display: grid; }
+.support-closed-note svg { color: #69bd87; flex-shrink: 0; }
+.support-closed-note div { display: grid; flex: 1; min-width: 0; }
 .support-closed-note span { color: var(--muted); font-size: .76rem; }
+.support-closed-note .ui-button { margin-left: auto; flex-shrink: 0; }
 .support-empty, .support-empty-mini { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); }
 .support-empty { min-height: 520px; padding: 40px; }
 .support-empty > svg { width: 38px; height: 38px; color: #b49352; }

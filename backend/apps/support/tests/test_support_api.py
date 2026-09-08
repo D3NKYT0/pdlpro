@@ -125,6 +125,25 @@ def test_player_can_close_and_reopen_ticket(api, player):
     assert closed.data["status"] == "closed"
     blocked_reply = api.post(f"/api/v1/customer/support/{ticket.id}/", {"body": "Ainda preciso de ajuda"}, format="json")
     assert blocked_reply.status_code == 400
+    assert blocked_reply.data["message"] == "Reabra o chamado antes de enviar uma mensagem."
     reopened = api.patch(f"/api/v1/customer/support/{ticket.id}/", {"action": "reopen"}, format="json")
     assert reopened.status_code == 200
     assert reopened.data["status"] == "open"
+
+
+@pytest.mark.django_db
+def test_player_cannot_reply_to_resolved_ticket_until_reopen(api, player):
+    ticket = Ticket.objects.create(
+        user=player,
+        subject="Dúvida sobre personagem",
+        description="Preciso confirmar uma informação do meu personagem antes de continuar.",
+        status=Ticket.Status.RESOLVED,
+    )
+    api.force_authenticate(player)
+    blocked = api.post(f"/api/v1/customer/support/{ticket.id}/", {"body": "Ainda preciso de ajuda"}, format="json")
+    assert blocked.status_code == 400
+    assert blocked.data["message"] == "Reabra o chamado antes de enviar uma mensagem."
+    reopened = api.patch(f"/api/v1/customer/support/{ticket.id}/", {"action": "reopen"}, format="json")
+    assert reopened.status_code == 200
+    allowed = api.post(f"/api/v1/customer/support/{ticket.id}/", {"body": "Ainda preciso de ajuda"}, format="json")
+    assert allowed.status_code == 201

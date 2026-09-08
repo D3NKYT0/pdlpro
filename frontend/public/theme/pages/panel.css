@@ -1371,7 +1371,7 @@ html.pdl-panel .admin-accounts-danger:disabled {
 }
 
 html.pdl-panel .admin-coins-form { display: grid; gap: 20px; }
-html.pdl-panel .admin-coin-identity .account-form-fields { align-items: end; }
+html.pdl-panel .admin-coin-identity .account-form-fields { align-items: start; }
 html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
 html.pdl-panel .admin-coin-metric { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 13px; margin: 0; padding: 17px; }
 html.pdl-panel .admin-coin-metric-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.25); background: rgba(197,161,97,.07); }

@@ -223,7 +223,7 @@ export function SupportPage() {
               <div className="support-main-head support-conversation-head">
                 <button className="support-mobile-back" type="button" onClick={() => setParams({})}><ArrowLeft /></button>
                 <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> Aberto em {formatDateTime(detail.data.created_at, 'short')}</span><span>Atendente: {detail.data.assigned_to}</span></div></div>
-                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(detail.data.status === 'closed' ? 'reopen' : 'close')}>{detail.data.status === 'closed' ? 'Reabrir' : 'Encerrar'}</Button>
+                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(['closed', 'resolved'].includes(detail.data.status) ? 'reopen' : 'close')}>{['closed', 'resolved'].includes(detail.data.status) ? 'Reabrir' : 'Encerrar'}</Button>
               </div>
               {detail.data.status === 'waiting_user' ? <div className="support-action-banner"><CircleAlert /><div><strong>A equipe precisa da sua resposta</strong><span>Confira a última mensagem abaixo para o atendimento continuar.</span></div></div> : null}
               <TicketMessages messages={detail.data.messages ?? []} />
