@@ -16,7 +16,8 @@ correspondente do default.
 Somente um superadministrador pode alterar a aparência global:
 
 1. Abra **Painel > Administração > Temas**.
-2. Selecione um ZIP PDL 2.0 de até 32 MB.
+2. Na coluna de instalação, selecione um ZIP PDL 2.0 de até 32 MB. A coluna ao lado resume o
+   contrato dos temas compatíveis.
 3. Instale o pacote. A instalação não o ativa automaticamente.
 4. Confira nome, autor e versão e pressione **Ativar**.
 

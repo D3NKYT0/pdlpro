@@ -63,17 +63,32 @@ export function AdminThemesPage() {
       <Card className="admin-config-section theme-installer">
         <header>
           <span><Upload aria-hidden="true" /></span>
-          <div><span className="panel-eyebrow">Pacote PDL 2.0</span><h2>Instalar tema</h2><p>O ZIP aceita CSS, imagens e fontes locais; scripts e templates executáveis são bloqueados.</p></div>
+          <div><span className="panel-eyebrow">Pacote PDL 2.0</span><h2>Instalar tema</h2><p>Envie um ZIP validado. A instalação não ativa o tema automaticamente.</p></div>
         </header>
-        <form onSubmit={install}>
-          <Field label="Arquivo do tema" hint="Use um .zip compatível com o schema PDL 2.0, com até 32 MB.">
-            <input name="package" type="file" accept=".zip,application/zip" required disabled={action.pending} onChange={(event) => setPackageFile(event.target.files?.[0] ?? null)} />
-          </Field>
-          <Button type="submit" busy={action.pending} busyLabel="Validando e instalando…" disabled={!packageFile}>
-            <PackageOpen aria-hidden="true" /> Instalar pacote
-          </Button>
-        </form>
-        <p className="theme-security-note"><ShieldCheck aria-hidden="true" /> Instalação e ativação são exclusivas de superadministradores e preservam o tema default.</p>
+        <div className="theme-installer-layout">
+          <form className="theme-installer-form" onSubmit={install}>
+            <Field label="Arquivo do tema" hint="ZIP de até 32 MB, schema PDL 2.0.">
+              <input name="package" type="file" accept=".zip,application/zip" required disabled={action.pending} onChange={(event) => setPackageFile(event.target.files?.[0] ?? null)} />
+            </Field>
+            <Button type="submit" busy={action.pending} busyLabel="Validando e instalando…" disabled={!packageFile}>
+              <PackageOpen aria-hidden="true" /> Instalar pacote
+            </Button>
+            <p className="theme-security-note"><ShieldCheck aria-hidden="true" /> Somente superadministradores. O tema default nunca é sobrescrito.</p>
+          </form>
+          <aside className="theme-compat" aria-labelledby="theme-compat-title">
+            <span className="panel-eyebrow">Contrato</span>
+            <h3 id="theme-compat-title">Temas compatíveis</h3>
+            <p>Pacotes no formato instalável do PDL 2.0, com manifesto na raiz do ZIP.</p>
+            <ul>
+              <li><strong>schemaVersion</strong> 1 e <strong>pdlVersion</strong> 2 em <code>theme.json</code></li>
+              <li>Arquivos na raiz: <code>theme.json</code>, <code>theme.css</code>, pastas <code>images/</code> e <code>fonts/</code></li>
+              <li>Aceitos: CSS, imagens e fontes locais referenciadas em <code>assets</code></li>
+              <li>Bloqueados: scripts, HTML executável, Markdown e path traversal</li>
+              <li>Renderer homologado opcional: <code>portal-v1</code> (navigation, home, shells)</li>
+              <li>Instalar ≠ ativar: ative no catálogo depois da validação</li>
+            </ul>
+          </aside>
+        </div>
       </Card>
 
       <section aria-labelledby="installed-themes-title">

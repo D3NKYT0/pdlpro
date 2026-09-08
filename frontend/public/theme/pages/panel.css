@@ -7344,10 +7344,68 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 }
 /* Administração de temas: estrutura compartilhada, personalizável pelos tokens do pacote ativo. */
-html.pdl-panel .theme-installer form { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
-html.pdl-panel .theme-installer form .ui-field { flex: 1 1 340px; }
-html.pdl-panel .theme-installer input[type="file"] { width: 100%; min-height: 45px; padding: 8px; color: var(--panel-muted); background: rgba(8,7,5,.72); border: 1px solid var(--panel-border); }
-html.pdl-panel .theme-installer input[type="file"]::file-selector-button { margin-right: 12px; padding: 7px 12px; color: var(--panel-text); background: rgba(197,161,97,.12); border: 1px solid var(--panel-border); cursor: pointer; }
+html.pdl-panel .theme-installer-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+  gap: 18px 22px;
+  align-items: start;
+}
+html.pdl-panel .theme-installer-form {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+html.pdl-panel .theme-installer-form .ui-button {
+  justify-self: start;
+}
+html.pdl-panel .theme-installer input[type="file"] {
+  width: 100%;
+  min-height: 45px;
+  padding: 8px;
+  color: var(--panel-muted);
+  background: rgba(8,7,5,.72);
+  border: 1px solid var(--panel-border);
+}
+html.pdl-panel .theme-installer input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 12px;
+  color: var(--panel-text);
+  background: rgba(197,161,97,.12);
+  border: 1px solid var(--panel-border);
+  cursor: pointer;
+}
+html.pdl-panel .theme-compat {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 14px 16px;
+  border: 1px solid rgba(197,161,97,.18);
+  background: rgba(8,7,5,.45);
+}
+html.pdl-panel .theme-compat h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--panel-gold-bright);
+}
+html.pdl-panel .theme-compat > p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+html.pdl-panel .theme-compat ul {
+  margin: 2px 0 0;
+  padding: 0 0 0 1.1rem;
+  display: grid;
+  gap: 7px;
+  color: rgba(247,242,232,.82);
+  font-size: 12px;
+  line-height: 1.4;
+}
+html.pdl-panel .theme-compat code {
+  color: var(--panel-gold-bright);
+  font-size: 0.92em;
+}
 html.pdl-panel .theme-security-note { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .theme-security-note svg { width: 17px; color: #7eaa83; }
 html.pdl-panel .theme-list-heading { display: flex; align-items: end; justify-content: space-between; margin: 28px 0 14px; }
@@ -7364,7 +7422,7 @@ html.pdl-panel .theme-package-copy small { color: rgba(255,255,255,.42); }
 html.pdl-panel .theme-package-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.12); }
 html.pdl-panel .theme-active-badge { display: inline-flex; align-items: center; gap: 6px; color: #9ac49f; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 html.pdl-panel .theme-active-badge svg { width: 16px; }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  html.pdl-panel .theme-installer-layout { grid-template-columns: 1fr; }
   html.pdl-panel .theme-package-grid { grid-template-columns: 1fr; }
-  html.pdl-panel .theme-installer form { align-items: stretch; flex-direction: column; }
 }

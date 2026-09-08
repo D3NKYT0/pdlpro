@@ -33,6 +33,14 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); client?.clear(); vi.restoreAllMocks() })
 
+it('mostra o contrato de temas compatíveis ao lado da instalação', async () => {
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Temas compatíveis' })).toBeVisible()
+  expect(screen.getByText(/schemaVersion/)).toBeVisible()
+  expect(screen.getByText(/portal-v1/)).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Instalar pacote' })).toBeDisabled()
+})
+
 it('lista, instala e impede envio repetido enquanto valida o ZIP', async () => {
   let finish!: (value: ApiTheme) => void
   const pending = new Promise<ApiTheme>((resolve) => { finish = resolve })
