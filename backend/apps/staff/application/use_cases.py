@@ -11,7 +11,7 @@ from apps.server.application.use_cases import GetServerInfoUseCase
 from apps.server.infrastructure.models import IndexConfig, ServicePrice
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.shop.infrastructure.models import ShopItem
-from apps.wallet.infrastructure.models import CoinConfig
+from apps.wallet.infrastructure.models import CoinConfig, CoinPurchasePromo
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -47,6 +47,10 @@ def _panel_defaults() -> dict:
 
 
 def _parse_coming_soon_at(raw) -> object | None:
+    return _parse_optional_datetime(raw, field="coming_soon_at")
+
+
+def _parse_optional_datetime(raw, *, field: str) -> object | None:
     from django.utils import timezone
     from django.utils.dateparse import parse_datetime
 
@@ -55,7 +59,7 @@ def _parse_coming_soon_at(raw) -> object | None:
     text = str(raw).strip().replace("Z", "+00:00")
     parsed = parse_datetime(text)
     if parsed is None:
-        raise ValidationDomainError("coming_soon_at precisa usar data e hora ISO 8601.")
+        raise ValidationDomainError(f"{field} precisa usar data e hora ISO 8601.")
     if timezone.is_naive(parsed):
         parsed = timezone.make_aware(parsed, timezone.get_current_timezone())
     return parsed
@@ -219,6 +223,70 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
         row.active = True
         row.save()
         return GetStaffCoinConfigUseCase().execute()
+
+
+def _wallet_promo_payload(row: CoinPurchasePromo | None) -> dict:
+    if row is None:
+        return {
+            "id": None,
+            "percent": "10.00",
+            "title": "Promoção de recarga",
+            "description": "",
+            "active": False,
+            "starts_at": None,
+            "ends_at": None,
+            "currently_active": False,
+        }
+    return {
+        "id": str(row.id),
+        "percent": str(row.percent),
+        "title": row.title,
+        "description": row.description,
+        "active": row.active,
+        "starts_at": row.starts_at.isoformat() if row.starts_at else None,
+        "ends_at": row.ends_at.isoformat() if row.ends_at else None,
+        "currently_active": row.is_currently_active(),
+    }
+
+
+class GetStaffWalletPromoUseCase(UseCase[None, dict]):
+    """Obtém a promoção de recarga ativa, a mais recente ou valores padrão sem campanha.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``dict``.
+    """
+
+    def execute(self, data: None = None) -> dict:
+        row = CoinPurchasePromo.objects.filter(active=True).first() or CoinPurchasePromo.objects.order_by("-updated_at").first()
+        return _wallet_promo_payload(row)
+
+
+class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza a campanha de banner/bônus de recarga da carteira.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
+    def execute(self, data: dict) -> dict:
+        row = CoinPurchasePromo.objects.filter(active=True).first() or CoinPurchasePromo.objects.order_by("-updated_at").first()
+        if row is None:
+            row = CoinPurchasePromo(title="Promoção de recarga", percent=Decimal("10.00"), active=False)
+        title = str(data.get("title") or "").strip()
+        if not title:
+            raise ValidationDomainError("Informe o título da promoção.")
+        percent = Decimal(str(data.get("percent") if data.get("percent") is not None else row.percent or "0"))
+        if percent < 0 or percent > 100:
+            raise ValidationDomainError("O percentual da promoção deve estar entre 0 e 100.")
+        row.title = title
+        row.description = str(data.get("description") or "")
+        row.percent = percent
+        row.active = bool(data.get("active", row.active))
+        row.starts_at = _parse_optional_datetime(data.get("starts_at"), field="starts_at")
+        row.ends_at = _parse_optional_datetime(data.get("ends_at"), field="ends_at")
+        if row.starts_at and row.ends_at and row.ends_at <= row.starts_at:
+            raise ValidationDomainError("A data final deve ser posterior ao início da promoção.")
+        row.save()
+        return _wallet_promo_payload(row)
 
 
 class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):

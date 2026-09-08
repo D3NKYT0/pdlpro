@@ -113,6 +113,27 @@ def test_staff_can_update_coins_shop_and_news(api, staff):
     assert coins.data["name"] == "Gold Bar"
     assert coins.data["coin_id"] == 3470
 
+    promo = api.put(
+        "/api/v1/staff/wallet-promo/",
+        {
+            "percent": "20.00",
+            "title": "Recarga em promoção",
+            "description": "20% a mais de moedas",
+            "active": True,
+            "starts_at": None,
+            "ends_at": None,
+        },
+        format="json",
+    )
+    assert promo.status_code == 200, promo.data
+    assert promo.data["percent"] == "20.00"
+    assert promo.data["title"] == "Recarga em promoção"
+    assert promo.data["active"] is True
+    assert promo.data["currently_active"] is True
+    catalog = api.get("/api/v1/customer/payments/catalog/")
+    assert catalog.status_code == 200
+    assert catalog.data["promo"]["percent"] == "20.00"
+
     created = api.post(
         "/api/v1/staff/shop/",
         {"name": "Espada", "item_id": 1, "price": "50.00", "quantity": 2, "active": True},

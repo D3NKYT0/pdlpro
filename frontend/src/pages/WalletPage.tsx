@@ -249,7 +249,6 @@ export function WalletPage() {
 
   return (
     <div className="wallet-page">
-      <div className="program-actions"><Link className="btn ghost" to="/painel/wallet/jogo">Transferir moedas entre carteira e jogo ↗</Link></div>
       <Card className="wallet-hero">
         <div className="wallet-hero-copy">
           <span className="panel-eyebrow">Tesouraria do jogador</span>
@@ -264,16 +263,22 @@ export function WalletPage() {
           </div>
         </div>
 
-        <div className="wallet-balance-card">
-          <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
-          <div>
-            <small>Saldo disponível</small>
-            <strong>{wallet.data?.balance ?? '0.00'} <span>moedas</span></strong>
-          </div>
-          <div className="wallet-bonus-chip">
-            <Sparkles aria-hidden="true" />
-            <span>Bônus</span>
-            <b>{wallet.data?.bonus_balance ?? '0.00'}</b>
+        <div className="wallet-hero-aside">
+          <div className="wallet-balance-card">
+            <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
+            <div className="wallet-balance-copy">
+              <small>Saldo disponível</small>
+              <strong>{wallet.data?.balance ?? '0.00'} <span>moedas</span></strong>
+            </div>
+            <Link className="wallet-game-exchange" to="/painel/wallet/jogo">
+              <ArrowUpRight aria-hidden="true" />
+              Transferir moedas entre carteira e jogo
+            </Link>
+            <div className="wallet-bonus-chip">
+              <Sparkles aria-hidden="true" />
+              <span>Bônus</span>
+              <b>{wallet.data?.bonus_balance ?? '0.00'}</b>
+            </div>
           </div>
         </div>
       </Card>

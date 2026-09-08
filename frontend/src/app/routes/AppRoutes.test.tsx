@@ -71,6 +71,7 @@ const pages = [
   ['/painel/admin/contas', 'Contas Lineage'],
   ['/painel/admin/servicos', 'Serviços'],
   ['/painel/admin/moedas', 'Moedas'],
+  ['/painel/admin/carteira', 'Configuração da carteira'],
   ['/painel/admin/loja', 'Loja'],
   ['/painel/admin/noticias', 'Notícias'],
   ['/painel/admin/jogos', 'Módulos de jogos'],

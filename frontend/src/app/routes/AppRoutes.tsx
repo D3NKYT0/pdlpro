@@ -59,6 +59,7 @@ import { AdminResourcesPage, AdminRoadmapPage, AdminSupportersPage } from '../..
 import { AdminCommercePage } from '../../pages/admin/AdminCommercePage'
 import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
 import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
+import { AdminWalletPage } from '../../pages/admin/AdminWalletPage'
 
 export function AppRoutes() {
   return (
@@ -127,6 +128,7 @@ export function AppRoutes() {
               <Route path="/painel/admin/contas" element={<AdminAccountsPage />} />
               <Route path="/painel/admin/servicos" element={<AdminServicesPage />} />
               <Route path="/painel/admin/moedas" element={<AdminCoinsPage />} />
+              <Route path="/painel/admin/carteira" element={<AdminWalletPage />} />
               <Route path="/painel/admin/loja" element={<AdminShopPage />} />
               <Route path="/painel/admin/noticias" element={<AdminNewsPage />} />
               <Route path="/painel/admin/jogos" element={<AdminGamesPage />} />

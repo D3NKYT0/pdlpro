@@ -4004,9 +4004,16 @@ html.pdl-panel .wallet-hero::after {
 }
 
 html.pdl-panel .wallet-hero-copy,
+html.pdl-panel .wallet-hero-aside,
 html.pdl-panel .wallet-balance-card {
   position: relative;
   z-index: 1;
+}
+
+html.pdl-panel .wallet-hero-aside {
+  display: grid;
+  justify-self: end;
+  width: min(100%, 520px);
 }
 
 html.pdl-panel .wallet-hero-copy {
@@ -4073,9 +4080,9 @@ html.pdl-panel .wallet-trust-row svg {
 
 html.pdl-panel .wallet-balance-card {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
+  grid-template-columns: 54px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 15px;
+  gap: 12px 15px;
   min-width: 0;
   padding: 23px 24px;
   border: 1px solid rgba(230, 199, 125, 0.25);
@@ -4084,6 +4091,48 @@ html.pdl-panel .wallet-balance-card {
     rgba(5, 5, 4, 0.72);
   box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), inset 0 0 28px rgba(197, 161, 97, 0.025);
   backdrop-filter: blur(12px);
+}
+
+html.pdl-panel .wallet-balance-copy {
+  min-width: 0;
+}
+
+html.pdl-panel .wallet-game-exchange {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 160px;
+  padding: 10px 12px;
+  border: 1px solid rgba(230, 199, 125, 0.25);
+  background:
+    linear-gradient(135deg, rgba(197, 161, 97, 0.13), rgba(5, 5, 4, 0.72) 48%),
+    rgba(5, 5, 4, 0.72);
+  box-shadow: inset 0 0 18px rgba(197, 161, 97, 0.025);
+  color: var(--panel-gold-bright);
+  font-family: Cambria, serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-align: left;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+html.pdl-panel .wallet-game-exchange:hover,
+html.pdl-panel .wallet-game-exchange:focus-visible {
+  border-color: rgba(230, 199, 125, 0.48);
+  background:
+    linear-gradient(135deg, rgba(197, 161, 97, 0.2), rgba(5, 5, 4, 0.78) 48%),
+    rgba(5, 5, 4, 0.78);
+  color: #fff1c9;
+  outline: none;
+}
+
+html.pdl-panel .wallet-game-exchange svg {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.6;
 }
 
 html.pdl-panel .wallet-balance-card::before,
@@ -4893,9 +4942,11 @@ html.pdl-panel .wallet-empty-state small {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  html.pdl-panel .wallet-hero-aside,
   html.pdl-panel .wallet-balance-card {
     width: 100%;
     max-width: 520px;
+    justify-self: start;
   }
 
   html.pdl-panel .pay-packs {
@@ -4946,6 +4997,12 @@ html.pdl-panel .wallet-empty-state small {
   html.pdl-panel .wallet-balance-card {
     grid-template-columns: 44px minmax(0, 1fr);
     padding: 19px;
+  }
+
+  html.pdl-panel .wallet-game-exchange {
+    grid-column: 2;
+    max-width: none;
+    justify-self: start;
   }
 
   html.pdl-panel .wallet-balance-icon {

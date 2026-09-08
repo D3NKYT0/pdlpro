@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.staff.application.use_cases import (
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
+    GetStaffWalletPromoUseCase,
     ListStaffGamesUseCase,
     ListStaffNewsUseCase,
     ListStaffServicePricesUseCase,
@@ -12,6 +13,7 @@ from apps.staff.application.use_cases import (
     ToggleStaffGameUseCase,
     UpdatePanelSettingsUseCase,
     UpdateStaffCoinConfigUseCase,
+    UpdateStaffWalletPromoUseCase,
     UpsertStaffNewsUseCase,
     UpsertStaffServicePricesUseCase,
     UpsertStaffShopItemUseCase,
@@ -101,6 +103,33 @@ class StaffCoinConfigView(ItemCatalogAPIView):
     )
     def put(self, request):
         return Response(self.resolve(UpdateStaffCoinConfigUseCase).execute(request.data or {}))
+
+
+class StaffWalletPromoView(InjectedAPIView):
+    """Entrada HTTP para ``GetStaffWalletPromoUseCase``, ``UpdateStaffWalletPromoUseCase``.
+
+    Implementa GET, PUT; registre ``as_view()`` nas URLs do módulo. Controle de acesso
+    declarado: [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição
+    antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary="Consultar promoção de recarga",
+        description="Retorna a campanha promocional da carteira usada no banner e no bônus de moedas.",
+    )
+    def get(self, request):
+        return Response(self.resolve(GetStaffWalletPromoUseCase).execute())
+
+    @extend_schema(
+        tags=["Staff"],
+        summary="Atualizar promoção de recarga",
+        description="Cria ou atualiza a campanha promocional da carteira.",
+    )
+    def put(self, request):
+        return Response(self.resolve(UpdateStaffWalletPromoUseCase).execute(request.data or {}))
 
 
 class StaffShopItemsView(ItemCatalogAPIView):

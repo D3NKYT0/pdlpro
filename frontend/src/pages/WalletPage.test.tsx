@@ -26,6 +26,15 @@ function mount() {
   return userEvent.setup()
 }
 
+it('coloca o atalho de troca com o jogo ao lado do saldo', async () => {
+  mount()
+  const link = await screen.findByRole('link', { name: 'Transferir moedas entre carteira e jogo' })
+  expect(link.getAttribute('href')).toBe('/painel/wallet/jogo')
+  expect(link.classList.contains('wallet-game-exchange')).toBe(true)
+  expect(link.closest('.wallet-balance-card')).toBeTruthy()
+  expect(link.closest('.wallet-balance-card')?.querySelector('.wallet-balance-copy')).toBeTruthy()
+})
+
 it('mostra banner promocional quando o catálogo traz promo ativa', async () => {
   vi.mocked(paymentApi.catalog).mockResolvedValue({
     methods: [],

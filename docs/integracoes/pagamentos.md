@@ -21,13 +21,14 @@ Os tipos e limites estão em [application/use_cases.py](../../backend/apps/payme
 
 ## Promoção de recarga
 
-Campanhas de banner na carteira usam o modelo `CoinPurchasePromo` (admin Jazzmin: **Promoções de recarga**). Campos: percentual, título, descrição, ativo e vigência opcional (`starts_at` / `ends_at`). No máximo uma campanha fica marcada como ativa.
+Campanhas de banner na carteira usam o modelo `CoinPurchasePromo`. Configure em `/painel/admin/carteira` (também disponível no Jazzmin: **Promoções de recarga**). Campos: percentual, título, descrição, ativo e vigência opcional (`starts_at` / `ends_at`). No máximo uma campanha fica marcada como ativa.
 
+- Staff: `GET/PUT /api/v1/staff/wallet-promo/`.
 - O catálogo `GET /api/v1/customer/payments/catalog/` devolve `promo` com `percent`, `title` e `description` quando a campanha está vigente; caso contrário `promo` é `null`.
 - O efeito econômico é **bônus de moedas** via `IPurchaseBonusPolicy`: a promo eleva o piso do percentual (`max` entre faixa `CoinPurchaseBonus` e a campanha). O valor cobrado no gateway (`amount`) não muda.
 - A liquidação já existente credita o bônus em `bonus_balance` com a descrição da campanha ou da faixa, conforme o percentual efetivo.
 
-Configure a campanha no admin, confira o banner em `/painel/wallet` e valide o crédito com o método mock em ambiente de teste.
+Configure a campanha em `/painel/admin/carteira`, confira o banner em `/painel/wallet` e valide o crédito com o método mock em ambiente de teste.
 
 ## Configuração
 

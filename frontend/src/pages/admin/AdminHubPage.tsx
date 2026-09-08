@@ -16,6 +16,7 @@ import {
   SlidersHorizontal,
   Palette,
   Unlink,
+  WalletCards,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -51,6 +52,7 @@ const categories: Category[] = [
       { to: '/painel/admin/financeiro/saldos', title: 'Relatórios financeiros', description: 'Saldos, fluxo de caixa, pedidos e reconciliação de carteiras', icon: ChartNoAxesCombined },
       { to: '/painel/admin/moedas', title: 'Moedas', description: 'Moeda ativa, multiplicador e taxa', icon: Coins },
       { to: '/painel/admin/loja', title: 'Loja', description: 'Itens vendidos no painel', icon: ShoppingBag },
+      { to: '/painel/admin/carteira', title: 'Configuração da carteira', description: 'Banner promocional e bônus mínimo nas recargas', icon: WalletCards },
     ],
   },
   {

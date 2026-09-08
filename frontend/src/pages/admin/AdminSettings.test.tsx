@@ -9,6 +9,7 @@ import type { ReactElement } from 'react'
 import toast from 'react-hot-toast'
 import { ApiError, staffApi } from '../../services/api'
 import { AdminCoinsPage } from './AdminCoinsPage'
+import { AdminWalletPage } from './AdminWalletPage'
 import { AdminServicesPage } from './AdminServicesPage'
 import { AdminGamesPage } from './AdminGamesPage'
 import { AdminShopPage } from './AdminShopPage'
@@ -26,12 +27,22 @@ vi.mock('../../components/ui/RichText', () => ({
   isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
 }))
 vi.mock('../../lib/item-icons', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
-vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
 
 beforeEach(() => {
   vi.resetAllMocks()
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
   vi.mocked(staffApi.coins).mockResolvedValue({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '5.00', withdraw_fee_percent: '0.00' } as any)
+  vi.mocked(staffApi.walletPromo).mockResolvedValue({
+    id: null,
+    percent: '10.00',
+    title: 'Promoção de recarga',
+    description: '',
+    active: false,
+    starts_at: null,
+    ends_at: null,
+    currently_active: false,
+  })
   vi.mocked(staffApi.services).mockResolvedValue([{ code: 'UNSTUCK', name: 'Destravar', price: '5.00', active: true }])
   vi.mocked(staffApi.games).mockResolvedValue([{ id: 'dice', code: 'dice', name: 'Dados', active: true, settings: {} }])
   vi.mocked(staffApi.shop).mockResolvedValue([{ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 1, active: true }])
@@ -67,6 +78,27 @@ it('moedas mantém precisão decimal na configuração', async () => {
   await user.type(input, '6.25')
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
   expect(staffApi.saveCoins).toHaveBeenCalledWith({ name: 'Adena', coin_id: 57, multiplier: '1.00', usd_multiplier: '6.25', withdraw_fee_percent: '0.00', active: true })
+})
+
+it('carteira salva promoção de recarga ativa', async () => {
+  const user = mount(<AdminWalletPage />)
+  const percent = await screen.findByRole('spinbutton', { name: /Percentual de bônus/ })
+  await waitFor(() => expect(percent).toHaveValue(10))
+  await user.clear(percent)
+  await user.type(percent, '20')
+  await user.clear(screen.getByLabelText('Título'))
+  await user.type(screen.getByLabelText('Título'), 'Campanha 20%')
+  await user.click(screen.getByRole('checkbox', { name: 'Campanha ativa' }))
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  expect(staffApi.saveWalletPromo).toHaveBeenCalledWith({
+    percent: '20',
+    title: 'Campanha 20%',
+    description: '',
+    active: true,
+    starts_at: null,
+    ends_at: null,
+  })
+  expect(toast.success).toHaveBeenCalledWith('Promoção da carteira atualizada')
 })
 
 it.each([false, true])('serviços salva preço e disponibilidade; erro=%s', async fail => {

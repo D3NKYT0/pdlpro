@@ -16,6 +16,7 @@ describe('AdminHubPage', () => {
     expect(html).not.toMatch(/data-tone="programs"[\s\S]*Controle de recursos[\s\S]*data-tone="support"/)
     expect(html).toMatch(/data-tone="content"[\s\S]*Roadmap/)
     expect(html).not.toMatch(/data-tone="programs"[\s\S]*Roadmap[\s\S]*data-tone="support"/)
+    expect(html).toMatch(/data-tone="finance"[\s\S]*Configuração da carteira/)
     expect(html).toMatch(/data-tone="server"[\s\S]*Painel e servidor/)
     expect(html).not.toMatch(/data-tone="system"[\s\S]*Painel e servidor[\s\S]*data-tone="finance"/)
   })

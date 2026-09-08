@@ -25,4 +25,5 @@ export type {
   ApiStaffNews,
   ApiStaffService,
   ApiStaffShopItem,
+  ApiStaffWalletPromo,
 } from './domain/staff.service'
