@@ -177,15 +177,15 @@
 
 .launch-gate__tableau.is-held {
   /* Medidas do furo interno da moldura em dynasty-couple-hold.png (1536×1024). */
-  --frame-left: 29.753%;
-  --frame-top: 31.836%;
-  --frame-width: 45.898%;
-  --frame-height: 47.461%;
-  /* Cabe no viewport; prioriza altura para não gerar rolagem na página. */
+  --frame-left: 29.102%;
+  --frame-top: 35.938%;
+  --frame-width: 45.378%;
+  --frame-height: 47.266%;
+  /* Cabe no viewport mantendo aspect da arte (evita distorcer o encaixe da moldura). */
   width: min(100vw, calc(100dvh * 1536 / 1024));
   max-width: 100%;
-  max-height: 100dvh;
   aspect-ratio: 1536 / 1024;
+  height: auto;
   padding-top: 0;
   place-items: stretch;
 }
@@ -1023,22 +1023,59 @@
     padding: 36px 18px;
   }
 
-  .launch-gate__panel {
-    gap: 16px;
-    padding: 24px 18px;
+  .launch-gate.is-open .launch-gate__stage {
+    width: min(100%, 980px);
+    height: 100%;
+    padding: 28px 16px;
+  }
+
+  .launch-gate__heroes {
+    display: none;
   }
 
   .launch-gate__tableau.is-held {
-    width: min(100vw, calc(100dvh * 1536 / 1024));
+    width: min(100%, 44rem);
+    aspect-ratio: auto;
+    height: auto;
+    place-items: center;
   }
 
   .launch-gate__tableau.is-held .launch-gate__panel {
-    padding: 14px 12px;
-    gap: 12px;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(100%, 44rem);
+    height: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 24px 18px;
+    gap: 16px;
+    border-color: rgba(255, 214, 140, 0.42);
+    border-radius: 8px;
   }
 
-  .launch-gate.is-open .launch-gate__stage {
-    padding: 0;
+  .launch-gate__tableau.is-held .launch-gate__title {
+    max-width: 14ch;
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__subtitle {
+    max-width: 34ch;
+    font-size: clamp(0.95rem, 3.4vw, 1.1rem);
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__finale {
+    min-height: 72px;
+  }
+
+  .launch-gate.is-open .launch-gate__panel-corner,
+  .launch-gate.is-open .launch-gate__panel-rim {
+    opacity: 1;
+  }
+
+  .launch-gate__panel {
+    gap: 16px;
+    padding: 24px 18px;
   }
 
   .launch-gate__countdown {

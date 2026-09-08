@@ -281,7 +281,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
             <div className="launch-gate__heroes" aria-hidden="true">
               <img
                 className="launch-gate__heroes-img"
-                src={`${themeImage('bg/dynasty-couple-hold.png')}?v=4`}
+                src={`${themeImage('bg/dynasty-couple-hold.png')}?v=6`}
                 alt=""
               />
             </div>

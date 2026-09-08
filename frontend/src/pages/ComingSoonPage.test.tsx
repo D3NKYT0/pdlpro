@@ -113,7 +113,7 @@ it('anuncia o fim da contagem com efeitos de abertura', () => {
   expect(container.querySelector('.launch-gate__fireworks')).not.toBeNull()
   expect(container.querySelector('.launch-gate__heroes-img')).toHaveAttribute(
     'src',
-    '/theme/default/images/bg/dynasty-couple-hold.png?v=4',
+    '/theme/default/images/bg/dynasty-couple-hold.png?v=6',
   )
   expect(container.querySelector('.launch-gate__tableau.is-held')).not.toBeNull()
   expect(container.querySelectorAll('.launch-gate__shell').length).toBeGreaterThan(3)
