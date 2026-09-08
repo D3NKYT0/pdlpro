@@ -154,33 +154,222 @@
 }
 
 .launch-gate__panel {
+  position: relative;
+  isolation: isolate;
   display: grid;
   align-content: center;
   justify-items: center;
   gap: 18px;
   width: min(100%, 44rem);
-  padding: clamp(28px, 4.5vw, 44px) clamp(22px, 4vw, 48px);
-  border: 1px solid rgba(212, 162, 74, 0.28);
-  border-radius: 6px;
+  padding: clamp(34px, 5vw, 52px) clamp(26px, 4.5vw, 56px);
+  border: 1px solid rgba(212, 162, 74, 0.34);
+  border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(12, 9, 6, 0.72), rgba(7, 5, 4, 0.78)),
-    radial-gradient(ellipse at 50% 0%, rgba(212, 162, 74, 0.14), transparent 62%);
+    linear-gradient(180deg, rgba(18, 13, 8, 0.78) 0%, rgba(8, 6, 4, 0.86) 100%),
+    radial-gradient(ellipse at 50% 12%, rgba(212, 162, 74, 0.18), transparent 58%);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.08),
-    0 24px 64px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    inset 0 1px 0 rgba(246, 236, 212, 0.12),
+    inset 0 0 0 1px rgba(212, 162, 74, 0.08),
+    0 28px 70px rgba(0, 0, 0, 0.52),
+    0 0 48px rgba(212, 162, 74, 0.1);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  overflow: hidden;
+}
+
+.launch-gate__panel > :not([aria-hidden='true']) {
+  position: relative;
+  z-index: 1;
+}
+
+.launch-gate__panel-glow {
+  position: absolute;
+  inset: -28% -18%;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(212, 162, 74, 0.22), transparent 58%),
+    radial-gradient(ellipse at 20% 80%, rgba(120, 68, 22, 0.18), transparent 48%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 196, 110, 0.12), transparent 42%);
+  filter: blur(18px);
+  animation: launch-panel-glow 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.launch-gate__panel-texture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: rgba(8, 6, 4, 0.55);
+  background-position: center 40%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.55;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.launch-gate__panel-texture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(212, 162, 74, 0.1), transparent 55%),
+    linear-gradient(180deg, rgba(246, 236, 212, 0.04), transparent 28%, rgba(0, 0, 0, 0.28) 100%);
+  pointer-events: none;
+}
+
+.launch-gate__panel-rim {
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--panel-angle, 0deg),
+    transparent 0deg,
+    rgba(255, 214, 140, 0.05) 40deg,
+    rgba(255, 224, 160, 0.85) 78deg,
+    rgba(212, 162, 74, 0.35) 110deg,
+    transparent 150deg,
+    transparent 220deg,
+    rgba(255, 196, 110, 0.55) 268deg,
+    transparent 310deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: launch-panel-rim 5.5s linear infinite;
+  pointer-events: none;
+}
+
+.launch-gate__panel-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 236, 190, 0.07) 46%,
+    rgba(255, 244, 210, 0.16) 50%,
+    rgba(255, 236, 190, 0.07) 54%,
+    transparent 72%
+  );
+  transform: translateX(-120%);
+  animation: launch-panel-sheen 6.5s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+
+.launch-gate__panel-corner {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(255, 214, 140, 0.78);
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(212, 162, 74, 0.45));
+}
+
+.launch-gate__panel-corner.is-tl {
+  top: 10px;
+  left: 10px;
+  border-width: 2px 0 0 2px;
+}
+
+.launch-gate__panel-corner.is-tr {
+  top: 10px;
+  right: 10px;
+  border-width: 2px 2px 0 0;
+}
+
+.launch-gate__panel-corner.is-bl {
+  bottom: 10px;
+  left: 10px;
+  border-width: 0 0 2px 2px;
+}
+
+.launch-gate__panel-corner.is-br {
+  bottom: 10px;
+  right: 10px;
+  border-width: 0 2px 2px 0;
+}
+
+.launch-gate__panel-ornament {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(220px, 56%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 162, 74, 0.15) 18%,
+    rgba(255, 214, 140, 0.75) 50%,
+    rgba(212, 162, 74, 0.15) 82%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.launch-gate__panel-ornament::before,
+.launch-gate__panel-ornament::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(255, 214, 140, 0.7);
+  background: rgba(212, 162, 74, 0.35);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 0 0 10px rgba(212, 162, 74, 0.45);
+}
+
+.launch-gate__panel-ornament::before { left: 18%; }
+.launch-gate__panel-ornament::after { left: 82%; }
+
+.launch-gate__panel-ornament.is-top {
+  margin-bottom: -4px;
+}
+
+.launch-gate__panel-ornament.is-bottom {
+  margin-top: 2px;
 }
 
 .launch-gate.is-open .launch-gate__panel {
   background:
-    linear-gradient(180deg, rgba(12, 9, 6, 0.78), rgba(7, 5, 4, 0.84)),
-    radial-gradient(ellipse at 50% 0%, rgba(255, 196, 110, 0.16), transparent 62%);
-  border-color: rgba(255, 214, 140, 0.34);
+    linear-gradient(180deg, rgba(18, 13, 8, 0.82) 0%, rgba(8, 6, 4, 0.9) 100%),
+    radial-gradient(ellipse at 50% 10%, rgba(255, 196, 110, 0.22), transparent 58%);
+  border-color: rgba(255, 214, 140, 0.42);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.1),
-    0 28px 72px rgba(0, 0, 0, 0.55),
-    0 0 40px rgba(212, 162, 74, 0.12);
+    inset 0 1px 0 rgba(246, 236, 212, 0.14),
+    inset 0 0 0 1px rgba(255, 214, 140, 0.1),
+    0 32px 80px rgba(0, 0, 0, 0.58),
+    0 0 56px rgba(212, 162, 74, 0.2);
+  animation: launch-panel-breathe 3.6s ease-in-out infinite;
+}
+
+.launch-gate.is-open .launch-gate__panel-glow {
+  opacity: 1;
+  animation-duration: 4.2s;
+}
+
+.launch-gate.is-open .launch-gate__panel-texture {
+  opacity: 0.68;
+  mix-blend-mode: soft-light;
+}
+
+.launch-gate.is-open .launch-gate__panel-rim {
+  animation-duration: 3.8s;
+}
+
+.launch-gate.is-open .launch-gate__panel-corner {
+  border-color: rgba(255, 230, 170, 0.92);
+  filter: drop-shadow(0 0 10px rgba(255, 214, 140, 0.65));
 }
 
 .launch-gate__actions {
@@ -529,6 +718,45 @@
   animation: launch-cta-pulse 2.2s ease-in-out infinite;
 }
 
+@property --panel-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes launch-panel-rim {
+  to { --panel-angle: 360deg; }
+}
+
+@keyframes launch-panel-sheen {
+  0%, 18% { transform: translateX(-120%); opacity: 0; }
+  28% { opacity: 1; }
+  48% { transform: translateX(120%); opacity: 0; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes launch-panel-glow {
+  from { opacity: 0.55; transform: scale(0.96); }
+  to { opacity: 0.95; transform: scale(1.04); }
+}
+
+@keyframes launch-panel-breathe {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(246, 236, 212, 0.14),
+      inset 0 0 0 1px rgba(255, 214, 140, 0.1),
+      0 32px 80px rgba(0, 0, 0, 0.58),
+      0 0 48px rgba(212, 162, 74, 0.16);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(246, 236, 212, 0.18),
+      inset 0 0 0 1px rgba(255, 214, 140, 0.16),
+      0 34px 86px rgba(0, 0, 0, 0.6),
+      0 0 72px rgba(255, 196, 110, 0.28);
+  }
+}
+
 @keyframes launch-drift {
   from { transform: scale(1.06) translate3d(0, 0, 0); }
   to { transform: scale(1.12) translate3d(-1.4%, 1.2%, 0); }
@@ -724,12 +952,18 @@
   .launch-gate__shell,
   .launch-gate__shell-core,
   .launch-gate__fw-spark,
+  .launch-gate__panel,
+  .launch-gate.is-open .launch-gate__panel,
+  .launch-gate__panel-glow,
+  .launch-gate__panel-rim,
+  .launch-gate__panel-sheen,
   .launch-gate__actions.is-emphasis .btn.ui-button:not(.ghost) {
     animation: none !important;
   }
 
   .launch-gate__spark,
-  .launch-gate__fireworks {
+  .launch-gate__fireworks,
+  .launch-gate__panel-sheen {
     display: none;
   }
 }

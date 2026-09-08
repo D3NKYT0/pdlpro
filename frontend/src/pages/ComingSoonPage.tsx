@@ -212,6 +212,20 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
 
       <main className="launch-gate__stage">
         <div className="launch-gate__panel">
+          <span className="launch-gate__panel-glow" aria-hidden="true" />
+          <span
+            className="launch-gate__panel-texture"
+            aria-hidden="true"
+            style={{ backgroundImage: `url(${themeImage('bg/1.png')})` }}
+          />
+          <span className="launch-gate__panel-rim" aria-hidden="true" />
+          <span className="launch-gate__panel-sheen" aria-hidden="true" />
+          <span className="launch-gate__panel-corner is-tl" aria-hidden="true" />
+          <span className="launch-gate__panel-corner is-tr" aria-hidden="true" />
+          <span className="launch-gate__panel-corner is-bl" aria-hidden="true" />
+          <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
+          <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
+
           <p className="launch-gate__kicker">{finished ? 'Servidor aberto' : 'Em breve'}</p>
           <h1 className="launch-gate__title">{title}</h1>
           <p className="launch-gate__subtitle">
@@ -245,6 +259,8 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
               Downloads
             </ButtonLink>
           </div>
+
+          <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
         </div>
       </main>
     </div>

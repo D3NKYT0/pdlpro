@@ -47,6 +47,12 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(screen.getByRole('link', { name: 'Downloads' })).toHaveAttribute('href', '/downloads')
   expect(screen.getByRole('link', { name: 'Downloads' })).toHaveClass('launch-gate__secondary')
   expect(document.querySelector('.launch-gate__panel')).not.toBeNull()
+  expect(document.querySelector('.launch-gate__panel-rim')).not.toBeNull()
+  expect(document.querySelector('.launch-gate__panel-texture')).not.toBeNull()
+  expect(document.querySelector('.launch-gate__panel-texture')).toHaveStyle({
+    backgroundImage: 'url("/theme/default/images/bg/1.png")',
+  })
+  expect(document.querySelectorAll('.launch-gate__panel-corner')).toHaveLength(4)
   expect(screen.queryByText('Crônica e Rates')).not.toBeInTheDocument()
 })
 
