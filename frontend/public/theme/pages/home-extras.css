@@ -400,11 +400,11 @@
 }
 
 .home-cta-links a:first-child {
-  background: url(/theme/default/images/button/1.png) top no-repeat;
+  background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) top no-repeat;
 }
 
 .home-cta-links a:last-child {
-  background: url(/theme/default/images/button/2.png) top no-repeat;
+  background: var(--theme-button-secondary, url(/theme/default/images/button/2.png)) top no-repeat;
 }
 
 .home-cta-links a:hover {

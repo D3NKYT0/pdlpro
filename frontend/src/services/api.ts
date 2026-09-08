@@ -16,7 +16,7 @@ export { gamesApi } from './domain/games.service'
 export { staffApi } from './domain/staff.service'
 export { supportApi, staffSupportApi } from './domain/support.service'
 export { themeApi } from './domain/theme.service'
-export type { ApiTheme } from './domain/theme.service'
+export type { ApiTheme, ThemeLayout, ThemePresentation, ThemeHomeSection } from './domain/theme.service'
 export type {
   ApiPanelSettings,
   ApiStaffCoin,

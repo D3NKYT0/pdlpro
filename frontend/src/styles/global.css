@@ -10,6 +10,13 @@
   --ok: #6fbf73;
   --border: rgba(212, 175, 55, 0.22);
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --public-header-height: 78px;
+  --public-container-width: 1175px;
+  --theme-button-primary: url(/theme/default/images/button/1.png);
+  --theme-button-secondary: url(/theme/default/images/button/2.png);
+  --theme-art-bg-2: url(/theme/default/images/bg/2.jpg);
+  --theme-art-bg-3: url(/theme/default/images/bg/3.jpg);
+  --theme-art-bg-4: url(/theme/default/images/bg/4.jpg);
   line-height: 1.5;
 }
 

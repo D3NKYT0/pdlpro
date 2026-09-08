@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { contentApi, serverApi } from '../../services/api'
-import type { ThemePresentation } from '../../services/domain/theme.service'
+import type { ThemeHomeSection, ThemePresentation } from '../../services/domain/theme.service'
 import { themeAsset } from '../../theme/assets'
+
+const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
 
 function activeRoute(pathname: string, target: string) {
   return target === '/' ? pathname === '/' : pathname === target || pathname.startsWith(`${target}/`)
@@ -111,6 +113,7 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 
 export function PortalHomePage({ presentation }: { presentation: ThemePresentation }) {
   const { hero, features, ranking, cta, news: newsContent } = presentation.home
+  const sections = presentation.home.sections ?? DEFAULT_HOME_SECTIONS
   const countdown = useCountdown(hero.countdownAt)
   const [activeTab, setActiveTab] = useState(ranking.tabs[0]?.id ?? '')
   const selectedTab = useMemo(
@@ -120,13 +123,17 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
   const rankings = useQuery({
     queryKey: ['theme-home-ranking', selectedTab?.kind],
     queryFn: () => serverApi.rankings(selectedTab?.kind ?? 'pvp', 5),
-    enabled: Boolean(selectedTab),
+    enabled: Boolean(selectedTab) && sections.includes('ranking'),
   })
-  const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
+  const news = useQuery({
+    queryKey: ['news'],
+    queryFn: contentApi.news,
+    enabled: sections.includes('news'),
+  })
 
-  return (
-    <div className="portal-home" data-theme-page="home">
-      <section className="hero">
+  const sectionNodes: Record<ThemeHomeSection, ReactNode> = {
+    hero: (
+      <section className="hero" key="hero">
         <div className="hero__bg" aria-hidden="true" />
         <div className="hero__content">
           <h1 className="hero__title">{hero.title}</h1>
@@ -147,8 +154,9 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
           <Link className="btn-gem btn-gem--lg" to={hero.actionTo}>{hero.actionLabel}</Link>
         </div>
       </section>
-
-      <section className="section" id="features">
+    ),
+    features: (
+      <section className="section" id="features" key="features">
         <div className="container">
           <SectionHeading title={features.title} subtitle={features.subtitle} />
           <div className="features-grid">
@@ -163,8 +171,9 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
           <div className="section__action"><Link className="btn-gem" to={features.actionTo}>{features.actionLabel}</Link></div>
         </div>
       </section>
-
-      <section className="section" id="rating">
+    ),
+    ranking: (
+      <section className="section" id="rating" key="ranking">
         <div className="container">
           <SectionHeading title={ranking.title} subtitle={ranking.subtitle} />
           <div className="rating-tabs" role="tablist" aria-label={ranking.title}>
@@ -195,8 +204,9 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
           <div className="section__action"><Link className="btn-gem" to={ranking.actionTo}>{ranking.actionLabel}</Link></div>
         </div>
       </section>
-
-      <section className="section section--cta">
+    ),
+    cta: (
+      <section className="section section--cta" key="cta">
         <div className="cta-banner" style={{ backgroundImage: `url(${themeAsset('images/cta-banner.jpg')})` }}>
           <div className="cta-banner__content">
             <h2 className="cta-banner__title">{cta.title}</h2>
@@ -205,23 +215,28 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
           </div>
         </div>
       </section>
-
-      {(news.data ?? []).length ? (
-        <section className="section" id="news">
-          <div className="container">
-            <SectionHeading title={newsContent.title} />
-            <div className="news-list">
-              {(news.data ?? []).slice(0, 3).map((item) => (
-                <Link className="news-item" key={item.id} to={`/news/${item.slug}`}>
-                  <h3 className="news-item__title">{item.title}</h3>
-                  <p className="news-item__meta">{new Date(item.published_at).toLocaleDateString('pt-BR')}</p>
-                  <p>{item.excerpt || item.title}</p>
-                </Link>
-              ))}
-            </div>
+    ),
+    news: (news.data ?? []).length ? (
+      <section className="section" id="news" key="news">
+        <div className="container">
+          <SectionHeading title={newsContent.title} />
+          <div className="news-list">
+            {(news.data ?? []).slice(0, 3).map((item) => (
+              <Link className="news-item" key={item.id} to={`/news/${item.slug}`}>
+                <h3 className="news-item__title">{item.title}</h3>
+                <p className="news-item__meta">{new Date(item.published_at).toLocaleDateString('pt-BR')}</p>
+                <p>{item.excerpt || item.title}</p>
+              </Link>
+            ))}
           </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
+    ) : null,
+  }
+
+  return (
+    <div className="portal-home" data-theme-page="home">
+      {sections.map((name) => sectionNodes[name])}
     </div>
   )
 }

@@ -12,7 +12,14 @@ body::before {
 .main-content {
     position: relative;
     z-index: 1;
-    padding-top: 80px;
+    padding-top: var(--public-header-height, 80px);
+}
+
+html.pdl-public .container,
+.portal-shell .container {
+    width: min(100%, var(--public-container-width, 1175px));
+    margin-left: auto;
+    margin-right: auto;
 }
 
 nav {

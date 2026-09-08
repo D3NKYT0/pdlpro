@@ -17,6 +17,8 @@ export interface ThemeRankingTab {
   kind: 'pvp' | 'pk' | 'clans' | 'level' | 'adena' | 'online'
 }
 
+export type ThemeHomeSection = 'hero' | 'features' | 'ranking' | 'cta' | 'news'
+
 export interface ThemePresentation {
   renderer: 'portal-v1'
   navigation: ThemeNavigationItem[]
@@ -45,12 +47,30 @@ export interface ThemePresentation {
     }
     cta: { title: string; description: string; actionLabel: string; actionTo: string }
     news: { title: string }
+    /** Ordem e visibilidade das seções da home; omitido = ordem padrão completa. */
+    sections?: ThemeHomeSection[]
   }
   footer: { tagline: string; copyright: string }
   shells?: {
     auth: { kicker: string; brand: string }
     panel: { kicker: string; brand: string }
     admin: { kicker: string; brand: string }
+  }
+}
+
+export interface ThemeLayout {
+  panel?: {
+    sidebarWidth?: number
+    density?: 'compact' | 'comfortable' | 'spacious'
+    radius?: number
+  }
+  public?: {
+    headerHeight?: number
+    containerWidth?: number
+  }
+  surfaces?: {
+    buttonPrimary?: string
+    buttonSecondary?: string
   }
 }
 
@@ -67,6 +87,7 @@ export interface ApiTheme {
   stylesheet_url: string | null
   assets: Record<string, string>
   presentation?: ThemePresentation | null
+  layout?: ThemeLayout | null
 }
 
 export const themeApi = {

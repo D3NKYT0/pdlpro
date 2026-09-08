@@ -45,6 +45,8 @@ function queryClient() {
 
 beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-02T00:00:00Z').getTime())
+  vi.mocked(serverApi.rankings).mockReset()
+  vi.mocked(contentApi.news).mockReset()
   vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Equinox', value: 1240 }])
   vi.mocked(contentApi.news).mockResolvedValue([])
 })
@@ -86,4 +88,23 @@ it('entrega o chrome completo e o comportamento do menu móvel', () => {
   expect(document.body.style.overflow).toBe('hidden')
   fireEvent.click(screen.getByRole('button', { name: 'Fechar menu' }))
   expect(screen.queryByRole('navigation', { name: 'Navegação móvel' })).toBeNull()
+})
+
+it('respeita ordem e omissão de seções declaradas no presentation', async () => {
+  render(
+    <QueryClientProvider client={queryClient()}>
+      <MemoryRouter>
+        <PortalHomePage presentation={{
+          ...presentation,
+          home: { ...presentation.home, sections: ['cta', 'hero'] },
+        }} />
+      </MemoryRouter>
+    </QueryClientProvider>,
+  )
+  expect(screen.getByText('Ready for Battle?')).toBeInTheDocument()
+  expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
+  expect(screen.queryByText('Unique Systems')).not.toBeInTheDocument()
+  expect(screen.queryByText('RATING')).not.toBeInTheDocument()
+  expect(serverApi.rankings).not.toHaveBeenCalled()
+  await waitFor(() => expect(contentApi.news).not.toHaveBeenCalled())
 })

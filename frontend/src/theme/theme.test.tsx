@@ -4,9 +4,14 @@ import { afterEach, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { usePanelTheme } from './usePanelTheme'
 import { useDefaultTheme } from './useDefaultTheme'
-import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, themeAsset, themeImage } from './assets'
+import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage } from './assets'
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  configureRuntimeTheme({})
+  document.documentElement.style.cssText = ''
+  document.documentElement.removeAttribute('data-panel-density')
+})
 it('monta tema privado e limpa estilos ao sair', () => {
   const { unmount, rerender } = renderHook(usePanelTheme)
   expect(document.documentElement.classList.contains('pdl-panel')).toBe(true)
@@ -30,4 +35,20 @@ it('monta tema público e remove recursos na desmontagem', () => {
 it('normaliza barra inicial nos caminhos de assets', () => {
   expect(themeAsset('/css/main.css')).toBe('/theme/default/css/main.css')
   expect(themeImage('/bg/5.jpg')).toBe('/theme/default/images/bg/5.jpg')
+})
+it('aplica superfícies e densidade a partir do layout do pacote', () => {
+  configureRuntimeTheme({
+    'images/button/1.png': '/media/themes/demo/btn-a.png',
+    'images/bg/3.jpg': '/media/themes/demo/art-3.jpg',
+  })
+  applyThemeSurfaceVars({
+    panel: { sidebarWidth: 240, density: 'spacious', radius: 4 },
+    surfaces: { buttonPrimary: 'images/button/1.png' },
+  })
+  const style = document.documentElement.style
+  expect(document.documentElement.dataset.panelDensity).toBe('spacious')
+  expect(style.getPropertyValue('--panel-sidebar-width')).toBe('240px')
+  expect(style.getPropertyValue('--panel-shell-gap')).toBe('36px')
+  expect(style.getPropertyValue('--theme-button-primary')).toContain('btn-a.png')
+  expect(style.getPropertyValue('--theme-art-bg-3')).toContain('art-3.jpg')
 })

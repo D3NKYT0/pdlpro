@@ -29,6 +29,8 @@ afterEach(() => {
   document.querySelectorAll('link[rel="icon"]').forEach((link) => link.remove())
   document.documentElement.removeAttribute('data-pdl-theme')
   document.documentElement.removeAttribute('data-pdl-renderer')
+  document.documentElement.removeAttribute('data-panel-density')
+  document.documentElement.style.cssText = ''
   vi.restoreAllMocks()
 })
 
@@ -36,11 +38,13 @@ it('aplica o default preservado retornado pela API', async () => {
   vi.mocked(themeApi.active).mockResolvedValue({
     id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL',
     description: '', active: true, builtin: true, base_url: '/theme/default/',
-    stylesheet_url: null, assets: {},
+    stylesheet_url: null, assets: {}, layout: null,
   })
   render(<ThemeProvider><Consumer /></ThemeProvider>)
   expect(await screen.findByText(/PDL Default/)).toHaveTextContent('/theme/default/images/logo.png')
   expect(document.documentElement.dataset.pdlTheme).toBe('default')
+  expect(document.documentElement.dataset.panelDensity).toBe('comfortable')
+  expect(document.documentElement.style.getPropertyValue('--theme-button-primary')).toContain('/theme/default/images/button/1.png')
 })
 
 it('carrega CSS e resolve somente os assets declarados pelo pacote', async () => {
@@ -51,6 +55,35 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
   expect(document.documentElement.dataset.pdlRenderer).toBe('portal-v1')
+})
+
+it('injeta knobs de layout como CSS variables', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue({
+    ...valorem,
+    assets: {
+      ...valorem.assets,
+      'images/button/1.png': '/media/themes/valorem/images/button-a.png',
+      'images/button/2.png': '/media/themes/valorem/images/button-b.png',
+    },
+    layout: {
+      panel: { sidebarWidth: 300, density: 'compact', radius: 8 },
+      public: { headerHeight: 64, containerWidth: 1100 },
+      surfaces: {
+        buttonPrimary: 'images/button/1.png',
+        buttonSecondary: 'images/button/2.png',
+      },
+    },
+  })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
+  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  await screen.findByText(/Valorem/)
+  expect(document.documentElement.dataset.panelDensity).toBe('compact')
+  expect(document.documentElement.style.getPropertyValue('--panel-sidebar-width')).toBe('300px')
+  expect(document.documentElement.style.getPropertyValue('--panel-radius')).toBe('8px')
+  expect(document.documentElement.style.getPropertyValue('--public-header-height')).toBe('64px')
+  expect(document.documentElement.style.getPropertyValue('--public-container-width')).toBe('1100px')
+  expect(document.documentElement.style.getPropertyValue('--theme-button-primary')).toContain('button-a.png')
 })
 
 it('restaura o favicon original ao voltar para o tema default', async () => {
@@ -67,7 +100,7 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
     .mockResolvedValueOnce({
       ...themed,
       id: 'default', package_id: null, name: 'PDL Default', builtin: true,
-      base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null,
+      base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null, layout: null,
     })
 
   render(<ThemeProvider><Consumer /></ThemeProvider>)

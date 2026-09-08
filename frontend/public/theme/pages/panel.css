@@ -6,6 +6,18 @@ html.pdl-panel {
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
+  --panel-sidebar-width: 264px;
+  --panel-shell-gap: 28px;
+  --panel-shell-pad-y: 22px;
+  --panel-shell-pad-x: 28px;
+  --panel-shell-pad-bottom: 42px;
+  --panel-sidebar-gap: 18px;
+  --panel-radius: 3px;
+  --theme-button-primary: url(/theme/default/images/button/1.png);
+  --theme-button-secondary: url(/theme/default/images/button/2.png);
+  --theme-art-bg-2: url(/theme/default/images/bg/2.jpg);
+  --theme-art-bg-3: url(/theme/default/images/bg/3.jpg);
+  --theme-art-bg-4: url(/theme/default/images/bg/4.jpg);
   color: var(--panel-text);
   font-family: 'Source Sans Pro', sans-serif;
   color-scheme: dark;
@@ -50,26 +62,26 @@ html.pdl-panel .panel-app {
 
 html.pdl-panel .shell {
   display: grid;
-  grid-template-columns: 264px minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: var(--panel-sidebar-width) minmax(0, 1fr);
+  gap: var(--panel-shell-gap);
   width: 100%;
   min-height: 100vh;
-  padding: 22px 28px 42px;
+  padding: var(--panel-shell-pad-y) var(--panel-shell-pad-x) var(--panel-shell-pad-bottom);
 }
 
 html.pdl-panel .sidebar {
   position: sticky;
-  top: 22px;
+  top: var(--panel-shell-pad-y);
   display: flex;
   align-self: start;
   flex-direction: column;
-  gap: 18px;
-  height: calc(100vh - 44px);
+  gap: var(--panel-sidebar-gap);
+  height: calc(100vh - (var(--panel-shell-pad-y) * 2));
   min-height: 610px;
   padding: 24px 16px 18px;
   overflow: hidden;
   border: 1px solid var(--panel-border);
-  border-radius: 3px;
+  border-radius: var(--panel-radius);
   background:
     linear-gradient(145deg, rgba(197, 161, 97, 0.08), transparent 34%),
     var(--panel-surface);
@@ -81,7 +93,7 @@ html.pdl-panel .sidebar-drawer {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--panel-sidebar-gap);
   min-width: 0;
   min-height: 0;
 }
@@ -408,7 +420,7 @@ html.pdl-panel .card {
   position: relative;
   padding: clamp(20px, 2.4vw, 28px);
   border: 1px solid var(--panel-border);
-  border-radius: 3px;
+  border-radius: var(--panel-radius);
   background:
     linear-gradient(145deg, rgba(197, 161, 97, 0.065), transparent 32%),
     linear-gradient(180deg, rgba(31, 26, 19, 0.95), rgba(17, 14, 11, 0.96));
@@ -482,7 +494,7 @@ html.pdl-panel .account-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.88) 58%, rgba(22, 16, 10, 0.72)),
-    url(/theme/default/images/bg/3.jpg) center 38% / cover no-repeat;
+    var(--theme-art-bg-3) center 38% / cover no-repeat;
 }
 
 html.pdl-panel .account-hero::after {
@@ -1748,7 +1760,7 @@ html.pdl-panel .inventory-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.9) 62%, rgba(22, 16, 10, 0.68)),
-    url(/theme/default/images/bg/2.jpg) center 42% / cover no-repeat;
+    var(--theme-art-bg-2) center 42% / cover no-repeat;
 }
 
 html.pdl-panel .inventory-hero > div,
@@ -2630,7 +2642,7 @@ html.pdl-panel .marketplace-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(10, 9, 8, 0.98), rgba(17, 13, 10, 0.84) 64%, rgba(20, 14, 9, 0.62)),
-    url(/theme/default/images/bg/4.jpg) center 42% / cover no-repeat;
+    var(--theme-art-bg-4) center 42% / cover no-repeat;
 }
 
 html.pdl-panel .marketplace-hero > * {
@@ -3282,7 +3294,7 @@ html.pdl-panel .marketplace-auth-card {
 html.pdl-panel .auction-hero {
   background:
     linear-gradient(90deg, rgba(10, 9, 8, 0.98), rgba(17, 13, 10, 0.84) 64%, rgba(20, 14, 9, 0.62)),
-    url(/theme/default/images/bg/3.jpg) center 46% / cover no-repeat;
+    var(--theme-art-bg-3) center 46% / cover no-repeat;
 }
 
 html.pdl-panel .marketplace-status.open {
@@ -3620,7 +3632,7 @@ html.pdl-panel .panel-welcome {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(12, 11, 9, 0.98) 0%, rgba(17, 14, 11, 0.91) 52%, rgba(17, 13, 9, 0.58) 100%),
-    url(/theme/default/images/bg/3.jpg) center 38% / cover no-repeat;
+    var(--theme-art-bg-3) center 38% / cover no-repeat;
 }
 
 html.pdl-panel .panel-welcome::after {
@@ -3763,7 +3775,7 @@ html.pdl-panel .btn {
   padding: 0 20px;
   border: 0;
   border-radius: 0;
-  background: url(/theme/default/images/button/1.png) center / 100% 100% no-repeat;
+  background: var(--theme-button-primary) center / 100% 100% no-repeat;
   color: #fff;
   font-family: inherit;
   font-size: 14px;
@@ -3779,7 +3791,7 @@ html.pdl-panel .btn svg {
 }
 
 html.pdl-panel .btn.ghost {
-  background-image: url(/theme/default/images/button/2.png);
+  background-image: var(--theme-button-secondary);
   color: rgba(255, 255, 255, 0.86);
 }
 
@@ -3907,7 +3919,7 @@ html.pdl-panel .wallet-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(9, 9, 7, 0.98), rgba(17, 13, 9, 0.87) 56%, rgba(23, 16, 9, 0.76)),
-    url(/theme/default/images/bg/3.jpg) center 43% / cover no-repeat;
+    var(--theme-art-bg-3) center 43% / cover no-repeat;
 }
 
 html.pdl-panel .wallet-hero::after {
@@ -4834,7 +4846,7 @@ html.pdl-panel .profile-progress-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(11, 10, 8, 0.97), rgba(18, 14, 10, 0.72)),
-    url(/theme/default/images/bg/4.jpg) center 38% / cover no-repeat;
+    var(--theme-art-bg-4) center 38% / cover no-repeat;
 }
 
 html.pdl-panel .profile-progress-hero::after {
@@ -5453,7 +5465,7 @@ html.pdl-panel .games-hero {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(11, 10, 8, 0.97), rgba(18, 14, 10, 0.78)),
-    url(/theme/default/images/bg/2.jpg) center 42% / cover no-repeat;
+    var(--theme-art-bg-2) center 42% / cover no-repeat;
 }
 
 html.pdl-panel .games-hero::after {

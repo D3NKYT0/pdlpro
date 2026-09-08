@@ -54,7 +54,7 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Tema original preservado do PDL PRO.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
-        "presentation": None,
+        "presentation": None, "layout": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]
@@ -208,3 +208,140 @@ def test_invalid_or_unsafe_package_is_rejected(api, admin, tmp_path, settings, a
     assert message.lower() in response.data["message"].lower()
     assert ThemePackage.objects.count() == 0
     assert not any((tmp_path / "themes").glob(".*")) if (tmp_path / "themes").exists() else True
+
+
+@pytest.mark.django_db
+def test_layout_block_is_validated_and_published(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    layout = {
+        "panel": {"sidebarWidth": 288, "density": "compact", "radius": 6},
+        "public": {"headerHeight": 72, "containerWidth": 1200},
+        "surfaces": {
+            "buttonPrimary": "images/logo.png",
+            "buttonSecondary": "images/logo.png",
+        },
+    }
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "valorem.zip", theme_zip(manifest_overrides={"layout": layout}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["layout"] == layout
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "layout",
+    [
+        {"panel": {"sidebarWidth": 100}},
+        {"panel": {"density": "huge"}},
+        {"surfaces": {"buttonPrimary": "images/missing.png"}},
+        {"unknown": True},
+    ],
+)
+def test_layout_rejects_invalid_knobs(api, admin, tmp_path, settings, layout):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "bad.zip", theme_zip(manifest_overrides={"layout": layout}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert response.status_code == 400
+    assert ThemePackage.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_presentation_sections_order_is_published(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    presentation = {
+        "renderer": "portal-v1",
+        "navigation": [{"label": "HOME", "to": "/"}],
+        "home": {
+            "hero": {
+                "title": "Welcome", "description": "Valorem", "countdownLabel": "OPENING IN",
+                "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT", "actionTo": "/downloads",
+            },
+            "features": {
+                "title": "Systems", "subtitle": "Exclusive mechanics", "actionLabel": "SEE ALL",
+                "actionTo": "/informacoes", "items": [
+                    {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
+                ],
+            },
+            "ranking": {
+                "title": "Rating", "subtitle": "Server information", "actionLabel": "FULL RATING",
+                "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "TOP PVP", "kind": "pvp"}],
+            },
+            "cta": {
+                "title": "Ready?", "description": "Join now", "actionLabel": "CREATE ACCOUNT",
+                "actionTo": "/register",
+            },
+            "news": {"title": "NEWS"},
+            "sections": ["cta", "hero", "features"],
+        },
+        "footer": {"tagline": "A unique server", "copyright": "PDL"},
+    }
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "valorem.zip", theme_zip(manifest_overrides={"presentation": presentation}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["presentation"]["home"]["sections"] == ["cta", "hero", "features"]
+
+
+@pytest.mark.django_db
+def test_presentation_rejects_duplicate_or_unknown_sections(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "bad.zip",
+            theme_zip(manifest_overrides={
+                "presentation": {
+                    "renderer": "portal-v1",
+                    "navigation": [{"label": "HOME", "to": "/"}],
+                    "home": {
+                        "hero": {
+                            "title": "Welcome", "description": "Valorem", "countdownLabel": "OPENING IN",
+                            "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT",
+                            "actionTo": "/downloads",
+                        },
+                        "features": {
+                            "title": "Systems", "subtitle": "Exclusive", "actionLabel": "SEE ALL",
+                            "actionTo": "/informacoes",
+                            "items": [{"title": "Economy", "description": "Balanced", "asset": "images/logo.png"}],
+                        },
+                        "ranking": {
+                            "title": "Rating", "subtitle": "Info", "actionLabel": "FULL",
+                            "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "TOP PVP", "kind": "pvp"}],
+                        },
+                        "cta": {
+                            "title": "Ready?", "description": "Join", "actionLabel": "CREATE",
+                            "actionTo": "/register",
+                        },
+                        "news": {"title": "NEWS"},
+                        "sections": ["hero", "hero"],
+                    },
+                    "footer": {"tagline": "tag", "copyright": "c"},
+                },
+            }),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert response.status_code == 400
+    assert ThemePackage.objects.count() == 0

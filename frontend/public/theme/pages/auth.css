@@ -138,7 +138,7 @@
   font-size: 16px;
   line-height: 18px;
   font-weight: 300;
-  background: url(/theme/default/images/button/1.png) center / 100% 100% no-repeat;
+  background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) center / 100% 100% no-repeat;
   border: 0;
   cursor: pointer;
   font-family: inherit;
@@ -146,7 +146,7 @@
 
 .h.auth-hero .h-link a:nth-child(2),
 .h.auth-hero .h-link button + a {
-  background-image: url(/theme/default/images/button/2.png);
+  background-image: var(--theme-button-secondary, url(/theme/default/images/button/2.png));
 }
 
 .h.auth-hero .h-link button:hover,
@@ -293,7 +293,7 @@ html.pdl-public .cta-buttons .theme-btn-gold {
   color: #fff !important;
   font-size: 21px;
   font-weight: 300;
-  background: url(/theme/default/images/button/1.png) top no-repeat;
+  background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) top no-repeat;
 }
 
 html.pdl-public .info-actions .theme-btn-outline,
@@ -305,7 +305,7 @@ html.pdl-public .cta-buttons .theme-btn-outline,
   color: #fff !important;
   font-size: 21px;
   font-weight: 300;
-  background: url(/theme/default/images/button/2.png) top no-repeat;
+  background: var(--theme-button-secondary, url(/theme/default/images/button/2.png)) top no-repeat;
   border: 0;
 }
 

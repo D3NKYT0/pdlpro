@@ -67,7 +67,7 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
 
     allowed = {
         "schemaVersion", "pdlVersion", "id", "name", "version", "author",
-        "description", "entrypoint", "assets", "presentation",
+        "description", "entrypoint", "assets", "presentation", "layout",
     }
     unknown = sorted(set(manifest) - allowed)
     if unknown:
@@ -98,6 +98,8 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
         raise ValidationDomainError("assets precisa ser um objeto de caminhos lógicos.")
     if "presentation" in manifest:
         _validate_presentation(manifest["presentation"], manifest["assets"])
+    if "layout" in manifest:
+        _validate_layout(manifest["layout"], manifest["assets"])
     return manifest
 
 
@@ -128,6 +130,55 @@ def _route(value, label: str) -> str:
     return route
 
 
+def _int_range(value, label: str, minimum: int, maximum: int) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValidationDomainError(f"{label} precisa ser um inteiro.")
+    if value < minimum or value > maximum:
+        raise ValidationDomainError(f"{label} precisa estar entre {minimum} e {maximum}.")
+    return value
+
+
+HOME_SECTIONS = ("hero", "features", "ranking", "cta", "news")
+PANEL_DENSITIES = ("compact", "comfortable", "spacious")
+
+
+def _validate_layout(value, assets: dict) -> None:
+    """Valida knobs estruturais injetados como CSS variables pelo frontend."""
+
+    layout = _object(value, "layout", set(), {"panel", "public", "surfaces"})
+    if "panel" in layout:
+        panel = _object(
+            layout["panel"], "layout.panel", set(), {"sidebarWidth", "density", "radius"},
+        )
+        if "sidebarWidth" in panel:
+            _int_range(panel["sidebarWidth"], "layout.panel.sidebarWidth", 200, 360)
+        if "density" in panel:
+            if panel["density"] not in PANEL_DENSITIES:
+                raise ValidationDomainError("layout.panel.density precisa ser compact, comfortable ou spacious.")
+        if "radius" in panel:
+            _int_range(panel["radius"], "layout.panel.radius", 0, 24)
+    if "public" in layout:
+        public = _object(
+            layout["public"], "layout.public", set(), {"headerHeight", "containerWidth"},
+        )
+        if "headerHeight" in public:
+            _int_range(public["headerHeight"], "layout.public.headerHeight", 48, 160)
+        if "containerWidth" in public:
+            _int_range(public["containerWidth"], "layout.public.containerWidth", 720, 1600)
+    if "surfaces" in layout:
+        surfaces = _object(
+            layout["surfaces"], "layout.surfaces", set(), {"buttonPrimary", "buttonSecondary"},
+        )
+        for key in ("buttonPrimary", "buttonSecondary"):
+            if key not in surfaces:
+                continue
+            asset = _text(surfaces[key], f"layout.surfaces.{key}", limit=160)
+            if asset not in assets:
+                raise ValidationDomainError(
+                    f"layout.surfaces.{key} precisa declarar o asset em assets.",
+                )
+
+
 def _validate_presentation(value, assets: dict) -> None:
     """Valida a experiência declarativa executada pelos renderers confiáveis do frontend."""
 
@@ -148,6 +199,7 @@ def _validate_presentation(value, assets: dict) -> None:
     home = _object(
         presentation["home"], "presentation.home",
         {"hero", "features", "ranking", "cta", "news"},
+        {"sections"},
     )
     hero = _object(
         home["hero"], "presentation.home.hero",
@@ -208,6 +260,22 @@ def _validate_presentation(value, assets: dict) -> None:
         else:
             section = _object(section, "presentation.home.news", {"title"})
         _text(section["title"], f"presentation.home.{section_name}.title", limit=120)
+
+    if "sections" in home:
+        sections = home["sections"]
+        if not isinstance(sections, list) or not sections:
+            raise ValidationDomainError("presentation.home.sections precisa ser uma lista não vazia.")
+        if len(sections) > len(HOME_SECTIONS):
+            raise ValidationDomainError("presentation.home.sections possui entradas demais.")
+        seen: set[str] = set()
+        for index, name in enumerate(sections):
+            if name not in HOME_SECTIONS:
+                raise ValidationDomainError(
+                    f"presentation.home.sections[{index}] precisa ser uma seção conhecida.",
+                )
+            if name in seen:
+                raise ValidationDomainError("presentation.home.sections não pode repetir seções.")
+            seen.add(name)
 
     footer = _object(presentation["footer"], "presentation.footer", {"tagline", "copyright"})
     _text(footer["tagline"], "presentation.footer.tagline", limit=300)
@@ -312,7 +380,7 @@ def serialize_theme(theme: ThemePackage | None = None) -> dict:
             "id": "default", "package_id": None, "name": "PDL Default", "version": "2.0.0",
             "author": "PDL", "description": "Tema original preservado do PDL PRO.",
             "active": True, "builtin": True, "base_url": "/theme/default/",
-            "stylesheet_url": None, "assets": {}, "presentation": None,
+            "stylesheet_url": None, "assets": {}, "presentation": None, "layout": None,
         }
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
     assets = {
@@ -324,6 +392,7 @@ def serialize_theme(theme: ThemePackage | None = None) -> dict:
         "active": theme.is_active, "builtin": False, "base_url": base_url,
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
         "presentation": theme.manifest.get("presentation"),
+        "layout": theme.manifest.get("layout"),
     }
 
 

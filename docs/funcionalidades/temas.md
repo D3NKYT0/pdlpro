@@ -88,11 +88,47 @@ blocos aceitos pelo `portal-v1` são:
 | `home.features` | De 1 a 12 recursos com assets declarados |
 | `home.ranking` | Abas de ranking ligadas aos dados reais do PDL |
 | `home.cta` e `home.news` | Conversão e listagem de notícias |
+| `home.sections` | Opcional: ordem e visibilidade (`hero`, `features`, `ranking`, `cta`, `news`) |
 | `footer` | Tagline e copyright |
 | `shells.auth`, `shells.panel`, `shells.admin` | Marca e contexto das telas internas |
 
 Rotas devem ser internas e iniciar com `/`. Propriedades desconhecidas são rejeitadas, de modo
 que erros de digitação não sejam silenciosamente ignorados.
+
+## Layout estrutural
+
+O bloco opcional top-level `layout` declara knobs validados que o `ThemeProvider` injeta como
+CSS variables no `html`. Pacotes sem `layout` preservam os defaults atuais.
+
+| Campo | Faixa / valores | CSS variável |
+| --- | --- | --- |
+| `panel.sidebarWidth` | 200–360 (px) | `--panel-sidebar-width` |
+| `panel.density` | `compact` \| `comfortable` \| `spacious` | escala de gap/padding (`--panel-shell-*`) |
+| `panel.radius` | 0–24 (px) | `--panel-radius` |
+| `public.headerHeight` | 48–160 (px) | `--public-header-height` |
+| `public.containerWidth` | 720–1600 (px) | `--public-container-width` |
+| `surfaces.buttonPrimary` | caminho lógico em `assets` | `--theme-button-primary` |
+| `surfaces.buttonSecondary` | caminho lógico em `assets` | `--theme-button-secondary` |
+
+Exemplo:
+
+```json
+{
+  "layout": {
+    "panel": { "sidebarWidth": 288, "density": "compact", "radius": 6 },
+    "public": { "headerHeight": 72, "containerWidth": 1200 },
+    "surfaces": {
+      "buttonPrimary": "images/button/1.png",
+      "buttonSecondary": "images/button/2.png"
+    }
+  }
+}
+```
+
+O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
+de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
+`assets`, mesmo sem `layout`. Variantes de chrome do painel (`topnav`) ficam para um bump futuro
+do renderer; nesta versão o shell permanece sidebar.
 
 ## Estrutura e comportamento
 
@@ -100,7 +136,8 @@ O campo opcional `presentation` seleciona um renderer confiável do PDL. O rende
 entrega cabeçalho e rodapé próprios, menu móvel, hero com countdown, cards de recursos, rankings
 com abas e dados reais, CTA e notícias. Ele também tematiza as páginas públicas internas,
 autenticação, painel do jogador e administração. Textos, rotas, itens, assets e os títulos dos
-shells `auth`, `panel` e `admin` são declarados pelo pacote.
+shells `auth`, `panel` e `admin` são declarados pelo pacote. Com `home.sections`, o pacote
+controla ordem e quais blocos da home aparecem.
 
 O pacote Valorem usa esse contrato para portar a experiência que existia nos templates Django de
 `PDL/SITE`: o HTML virou componentes React sem perder a composição, e o comportamento de
@@ -121,14 +158,16 @@ O seletor raiz recomendado é:
   --text: #f4f1e9;
   --muted: #aaa298;
   --border: rgba(212, 175, 97, .25);
+  --panel-sidebar-width: 288px;
+  --panel-radius: 6px;
 }
 ```
 
 Seletores de contexto disponíveis: `html.pdl-public`, `html.pdl-panel`,
-`[data-theme-surface="public|auth|panel|admin"]` e os componentes compartilhados com
-`data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs` e estados de consulta). O
-identificador do pacote é aplicado como `data-pdl-theme` no elemento `html`; renderers também
-recebem `data-pdl-renderer`.
+`[data-theme-surface="public|auth|panel|admin"]`, `html[data-panel-density]` e os componentes
+compartilhados com `data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs` e estados
+de consulta). O identificador do pacote é aplicado como `data-pdl-theme` no elemento `html`;
+renderers também recebem `data-pdl-renderer`.
 
 ## Segurança e limites
 
@@ -166,7 +205,7 @@ cd backend
 python -m pytest apps/themes/tests
 
 cd ../frontend
-npm run test:run -- src/theme/ThemeProvider.test.tsx src/components/themes/PortalTheme.test.tsx src/components/auth/AuthPanel.test.tsx src/components/layout/PrivateLayout.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
+npm run test:run -- src/theme/ThemeProvider.test.tsx src/theme/theme.test.tsx src/components/themes/PortalTheme.test.tsx src/components/auth/AuthPanel.test.tsx src/components/layout/PrivateLayout.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
 ```
 
 Homologue o catálogo de componentes, uma página pública, autenticação e painel em desktop e

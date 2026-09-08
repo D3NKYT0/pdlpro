@@ -1,11 +1,11 @@
 import { createContext, Fragment, useContext, useEffect, useState, type ReactNode } from 'react'
 import { themeApi, type ApiTheme } from '../services/api'
-import { configureRuntimeTheme } from './assets'
+import { applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
 
 const DEFAULT_THEME: ApiTheme = {
   id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL',
   description: 'Tema original preservado do PDL PRO.', active: true, builtin: true,
-  base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null,
+  base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null, layout: null,
 }
 
 const ThemeContext = createContext<ApiTheme>(DEFAULT_THEME)
@@ -39,6 +39,7 @@ function setFavicon(theme: ApiTheme) {
 
 async function applyTheme(theme: ApiTheme) {
   configureRuntimeTheme(theme.assets)
+  applyThemeSurfaceVars(theme.layout)
   document.documentElement.dataset.pdlTheme = theme.id
   if (theme.presentation?.renderer) document.documentElement.dataset.pdlRenderer = theme.presentation.renderer
   else delete document.documentElement.dataset.pdlRenderer
