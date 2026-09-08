@@ -1018,15 +1018,11 @@
   50% { filter: brightness(1.28); transform: translateY(-2px); text-shadow: 0 0 16px orange; }
 }
 
-@media (max-width: 640px) {
-  .launch-gate__stage {
-    padding: 36px 18px;
-  }
-
+@media (max-width: 1200px) {
   .launch-gate.is-open .launch-gate__stage {
     width: min(100%, 980px);
     height: 100%;
-    padding: 28px 16px;
+    padding: 28px clamp(16px, 3vw, 32px);
   }
 
   .launch-gate__heroes {
@@ -1048,7 +1044,7 @@
     height: auto;
     max-width: 100%;
     margin: 0;
-    padding: 24px 18px;
+    padding: clamp(24px, 3vw, 40px) clamp(18px, 3vw, 36px);
     gap: 16px;
     border-color: rgba(255, 214, 140, 0.42);
     border-radius: 8px;
@@ -1056,12 +1052,12 @@
 
   .launch-gate__tableau.is-held .launch-gate__title {
     max-width: 14ch;
-    font-size: clamp(2.2rem, 10vw, 3.4rem);
+    font-size: clamp(2.2rem, 6vw, 4rem);
   }
 
   .launch-gate__tableau.is-held .launch-gate__subtitle {
     max-width: 34ch;
-    font-size: clamp(0.95rem, 3.4vw, 1.1rem);
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
   }
 
   .launch-gate__tableau.is-held .launch-gate__finale {
@@ -1071,6 +1067,28 @@
   .launch-gate.is-open .launch-gate__panel-corner,
   .launch-gate.is-open .launch-gate__panel-rim {
     opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .launch-gate__stage {
+    padding: 36px 18px;
+  }
+
+  .launch-gate.is-open .launch-gate__stage {
+    padding: 28px 16px;
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__panel {
+    padding: 24px 18px;
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__title {
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__subtitle {
+    font-size: clamp(0.95rem, 3.4vw, 1.1rem);
   }
 
   .launch-gate__panel {
