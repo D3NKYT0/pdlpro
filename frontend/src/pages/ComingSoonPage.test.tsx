@@ -111,6 +111,10 @@ it('anuncia o fim da contagem com efeitos de abertura', () => {
   )
   expect(container.querySelector('.launch-gate.is-open')).not.toBeNull()
   expect(container.querySelector('.launch-gate__fireworks')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__heroes-img')).toHaveAttribute(
+    'src',
+    '/theme/default/images/bg/dynasty-couple-dance.png',
+  )
   expect(container.querySelectorAll('.launch-gate__shell').length).toBeGreaterThan(3)
   expect(container.querySelector('.launch-gate__bg--open.is-active')).not.toBeNull()
   expect(container.querySelector('.launch-gate__bg--waiting.is-active')).toBeNull()
@@ -119,4 +123,13 @@ it('anuncia o fim da contagem com efeitos de abertura', () => {
   expect(screen.getByText(/As portas se abriram/)).toBeVisible()
   expect(screen.queryByLabelText('Contagem regressiva do lançamento')).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Entrar' }).closest('.launch-gate__actions')).toHaveClass('is-emphasis')
+})
+
+it('não mostra o casal Dynasty enquanto a contagem está ativa', () => {
+  const { container } = render(
+    <MemoryRouter>
+      <ComingSoonPage info={info} />
+    </MemoryRouter>,
+  )
+  expect(container.querySelector('.launch-gate__heroes')).toBeNull()
 })

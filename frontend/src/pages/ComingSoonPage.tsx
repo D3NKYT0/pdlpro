@@ -210,6 +210,16 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         {finished ? <LaunchFireworks /> : null}
       </div>
 
+      {finished ? (
+        <div className="launch-gate__heroes" aria-hidden="true">
+          <img
+            className="launch-gate__heroes-img"
+            src={themeImage('bg/dynasty-couple-dance.png')}
+            alt=""
+          />
+        </div>
+      ) : null}
+
       <main className="launch-gate__stage">
         <div className="launch-gate__panel">
           <span className="launch-gate__panel-glow" aria-hidden="true" />

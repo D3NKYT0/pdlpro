@@ -144,13 +144,32 @@
 
 .launch-gate__stage {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   place-items: center;
   width: min(920px, 100%);
   padding: 48px clamp(18px, 5vw, 64px);
   text-align: center;
   animation: launch-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.launch-gate__heroes {
+  position: absolute;
+  left: 50%;
+  bottom: max(-4vh, -28px);
+  z-index: 1;
+  width: min(980px, 118vw);
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: launch-heroes-in 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.launch-gate__heroes-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
+  animation: launch-heroes-sway 5.5s ease-in-out 1.2s infinite alternate;
 }
 
 .launch-gate__panel {
@@ -342,25 +361,34 @@
 
 .launch-gate.is-open .launch-gate__panel {
   background:
-    linear-gradient(180deg, rgba(18, 13, 8, 0.82) 0%, rgba(8, 6, 4, 0.9) 100%),
-    radial-gradient(ellipse at 50% 10%, rgba(255, 196, 110, 0.22), transparent 58%);
-  border-color: rgba(255, 214, 140, 0.42);
+    linear-gradient(180deg, rgba(18, 13, 8, 0.42) 0%, rgba(8, 6, 4, 0.52) 100%),
+    radial-gradient(ellipse at 50% 10%, rgba(255, 196, 110, 0.14), transparent 58%);
+  border-color: rgba(255, 214, 140, 0.38);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.14),
-    inset 0 0 0 1px rgba(255, 214, 140, 0.1),
-    0 32px 80px rgba(0, 0, 0, 0.58),
-    0 0 56px rgba(212, 162, 74, 0.2);
+    inset 0 1px 0 rgba(246, 236, 212, 0.12),
+    inset 0 0 0 1px rgba(255, 214, 140, 0.08),
+    0 28px 64px rgba(0, 0, 0, 0.4),
+    0 0 48px rgba(212, 162, 74, 0.14);
+  backdrop-filter: blur(8px) saturate(1.08);
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
   animation: launch-panel-breathe 3.6s ease-in-out infinite;
 }
 
 .launch-gate.is-open .launch-gate__panel-glow {
-  opacity: 1;
+  opacity: 0.72;
   animation-duration: 4.2s;
 }
 
 .launch-gate.is-open .launch-gate__panel-texture {
-  opacity: 0.68;
+  opacity: 0.28;
   mix-blend-mode: soft-light;
+  background-color: rgba(8, 6, 4, 0.2);
+}
+
+.launch-gate.is-open .launch-gate__panel-texture::after {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(212, 162, 74, 0.08), transparent 55%),
+    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.14) 100%);
 }
 
 .launch-gate.is-open .launch-gate__panel-rim {
@@ -743,18 +771,34 @@
 @keyframes launch-panel-breathe {
   0%, 100% {
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.14),
-      inset 0 0 0 1px rgba(255, 214, 140, 0.1),
-      0 32px 80px rgba(0, 0, 0, 0.58),
-      0 0 48px rgba(212, 162, 74, 0.16);
+      inset 0 1px 0 rgba(246, 236, 212, 0.12),
+      inset 0 0 0 1px rgba(255, 214, 140, 0.08),
+      0 28px 64px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(212, 162, 74, 0.12);
   }
   50% {
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.18),
-      inset 0 0 0 1px rgba(255, 214, 140, 0.16),
-      0 34px 86px rgba(0, 0, 0, 0.6),
-      0 0 72px rgba(255, 196, 110, 0.28);
+      inset 0 1px 0 rgba(246, 236, 212, 0.16),
+      inset 0 0 0 1px rgba(255, 214, 140, 0.12),
+      0 30px 72px rgba(0, 0, 0, 0.45),
+      0 0 58px rgba(255, 196, 110, 0.22);
   }
+}
+
+@keyframes launch-heroes-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(42px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes launch-heroes-sway {
+  from { transform: translate3d(0, 0, 0) rotate(-0.4deg); }
+  to { transform: translate3d(0, -6px, 0) rotate(0.4deg); }
 }
 
 @keyframes launch-drift {
@@ -902,6 +946,15 @@
     padding: 24px 18px;
   }
 
+  .launch-gate__heroes {
+    bottom: max(-2vh, -12px);
+    width: min(720px, 140vw);
+  }
+
+  .launch-gate.is-open .launch-gate__stage {
+    padding-bottom: 28vh;
+  }
+
   .launch-gate__countdown {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -957,6 +1010,8 @@
   .launch-gate__panel-glow,
   .launch-gate__panel-rim,
   .launch-gate__panel-sheen,
+  .launch-gate__heroes,
+  .launch-gate__heroes-img,
   .launch-gate__actions.is-emphasis .btn.ui-button:not(.ghost) {
     animation: none !important;
   }
