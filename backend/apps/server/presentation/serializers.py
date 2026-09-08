@@ -8,7 +8,8 @@ class ServerInfoSerializer(serializers.Serializer):
     ``many=True`` representa uma coleção.
 
     Campos declarados: ``name``, ``description``, ``chronicle``, ``rates``, ``enchant``,
-    ``max_level``, ``features``, ``notes``, ``coming_soon``.
+    ``max_level``, ``features``, ``notes``, ``coming_soon``, ``coming_soon_title``,
+    ``coming_soon_subtitle``, ``coming_soon_at``.
     """
 
     name = serializers.CharField()
@@ -20,6 +21,9 @@ class ServerInfoSerializer(serializers.Serializer):
     features = serializers.ListField(child=serializers.CharField())
     notes = serializers.DictField(child=serializers.CharField())
     coming_soon = serializers.BooleanField()
+    coming_soon_title = serializers.CharField(allow_blank=True)
+    coming_soon_subtitle = serializers.CharField(allow_blank=True)
+    coming_soon_at = serializers.CharField(allow_null=True, required=False)
 
 
 class ServerStatusSerializer(serializers.Serializer):

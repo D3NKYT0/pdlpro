@@ -15,7 +15,7 @@ vi.mock('../services/domain/content.service', () => ({
   contentApi: { news: vi.fn(), wiki: vi.fn() },
 }))
 vi.mock('../services/domain/server.service', () => ({
-  serverApi: { status: vi.fn(), rankings: vi.fn(), info: vi.fn() },
+  serverApi: { status: vi.fn(), rankings: vi.fn() },
 }))
 
 function mount() {
@@ -32,17 +32,6 @@ function mount() {
 beforeEach(() => {
   vi.mocked(serverApi.status).mockResolvedValue({ players_online: 12, game_online: true, login_online: true } as never)
   vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Dawn', value: 9800 }])
-  vi.mocked(serverApi.info).mockResolvedValue({
-    name: 'PDL',
-    description: 'Reino de testes',
-    chronicle: 'Interlude',
-    rates: {},
-    enchant: {},
-    max_level: 80,
-    features: [],
-    notes: {},
-    coming_soon: false,
-  } as never)
   vi.mocked(contentApi.news).mockResolvedValue([])
   vi.mocked(contentApi.wiki).mockResolvedValue([])
 })
@@ -173,26 +162,4 @@ it('prioriza páginas e notícias publicadas na seção de crônica', async () =
   expect(screen.getByRole('link', { name: /Patch do castelo/i })).toHaveAttribute('href', '/news/patch-80')
   expect(screen.queryByRole('link', { name: /Rates e progressão/i })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: /Notícias do reino/i })).not.toBeInTheDocument()
-})
-
-it('substitui a home pela página de lançamento quando Coming Soon está ativo', async () => {
-  vi.mocked(serverApi.info).mockResolvedValue({
-    name: 'Imperium',
-    description: 'Abertura em preparação',
-    chronicle: 'Interlude',
-    rates: {},
-    enchant: {},
-    max_level: 80,
-    features: [],
-    notes: {},
-    coming_soon: true,
-  } as never)
-
-  mount()
-
-  expect(await screen.findByRole('heading', { name: 'Imperium' })).toBeVisible()
-  expect(screen.getByText('Em breve')).toBeVisible()
-  expect(screen.getByText('Abertura em preparação')).toBeVisible()
-  expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute('href', '/login')
-  expect(screen.queryByRole('heading', { name: /Crônica, castelos e a glória/i })).not.toBeInTheDocument()
 })

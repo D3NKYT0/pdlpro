@@ -82,6 +82,9 @@ class IndexConfig(BaseModel):
     notes = models.JSONField(default=dict, blank=True)
     coming_soon = models.BooleanField(default=False)
     staff_only_login = models.BooleanField(default=False)
+    coming_soon_title = models.CharField(max_length=200, blank=True, default="Em breve")
+    coming_soon_subtitle = models.CharField(max_length=300, blank=True)
+    coming_soon_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Configuração do painel"

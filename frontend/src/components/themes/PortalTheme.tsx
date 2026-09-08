@@ -111,15 +111,9 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
   )
 }
 
-export function PortalHomePage({
-  presentation,
-  comingSoon = false,
-}: {
-  presentation: ThemePresentation
-  comingSoon?: boolean
-}) {
+export function PortalHomePage({ presentation }: { presentation: ThemePresentation }) {
   const { hero, features, ranking, cta, news: newsContent } = presentation.home
-  const sections = comingSoon ? (['hero'] as ThemeHomeSection[]) : (presentation.home.sections ?? DEFAULT_HOME_SECTIONS)
+  const sections = presentation.home.sections ?? DEFAULT_HOME_SECTIONS
   const countdown = useCountdown(hero.countdownAt)
   const [activeTab, setActiveTab] = useState(ranking.tabs[0]?.id ?? '')
   const selectedTab = useMemo(

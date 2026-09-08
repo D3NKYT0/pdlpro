@@ -39,8 +39,26 @@ def _panel_defaults() -> dict:
         "notes": info.notes,
         "coming_soon": bool(row.coming_soon) if row else False,
         "staff_only_login": bool(row.staff_only_login) if row else False,
+        "coming_soon_title": (row.coming_soon_title if row else "") or "Em breve",
+        "coming_soon_subtitle": (row.coming_soon_subtitle if row else "") or "",
+        "coming_soon_at": info.coming_soon_at,
         "is_active": True,
     }
+
+
+def _parse_coming_soon_at(raw) -> object | None:
+    from django.utils import timezone
+    from django.utils.dateparse import parse_datetime
+
+    if raw in (None, ""):
+        return None
+    text = str(raw).strip().replace("Z", "+00:00")
+    parsed = parse_datetime(text)
+    if parsed is None:
+        raise ValidationDomainError("coming_soon_at precisa usar data e hora ISO 8601.")
+    if timezone.is_naive(parsed):
+        parsed = timezone.make_aware(parsed, timezone.get_current_timezone())
+    return parsed
 
 
 class GetPanelSettingsUseCase(UseCase[None, dict]):
@@ -81,6 +99,16 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.coming_soon = bool(data.get("coming_soon"))
         if "staff_only_login" in data:
             row.staff_only_login = bool(data.get("staff_only_login"))
+        if "coming_soon_title" in data:
+            row.coming_soon_title = str(data.get("coming_soon_title") or "").strip()[:200]
+        if "coming_soon_subtitle" in data:
+            row.coming_soon_subtitle = str(data.get("coming_soon_subtitle") or "").strip()[:300]
+        if "coming_soon_at" in data:
+            row.coming_soon_at = _parse_coming_soon_at(data.get("coming_soon_at"))
+        if row.coming_soon and row.coming_soon_at is None:
+            raise ValidationDomainError("Defina a data e hora do lançamento para ativar o Coming Soon.")
+        if not row.coming_soon_title:
+            row.coming_soon_title = "Em breve"
         row.is_active = True
         row.save()
         return _panel_defaults()

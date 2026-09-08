@@ -34,6 +34,9 @@ class ServerInfo:
     features: list[str]
     notes: dict[str, str]
     coming_soon: bool = False
+    coming_soon_title: str = ""
+    coming_soon_subtitle: str = ""
+    coming_soon_at: str | None = None
 
 
 @dataclass(frozen=True, slots=True)

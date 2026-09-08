@@ -29,7 +29,22 @@ beforeEach(() => {
   vi.mocked(staffApi.games).mockResolvedValue([{ id: 'dice', code: 'dice', name: 'Dados', active: true, settings: {} }])
   vi.mocked(staffApi.shop).mockResolvedValue([{ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 1, active: true }])
   vi.mocked(staffApi.news).mockResolvedValue([])
-  vi.mocked(staffApi.panel).mockResolvedValue({ name: 'PDL', slogan: 'Reino', description: 'Servidor', chronicle: 'Interlude', rates: { xp: 'x10' }, enchant: {}, notes: {}, features: [], max_level: 80, coming_soon: false, staff_only_login: false } as any)
+  vi.mocked(staffApi.panel).mockResolvedValue({
+    name: 'PDL',
+    slogan: 'Reino',
+    description: 'Servidor',
+    chronicle: 'Interlude',
+    rates: { xp: 'x10' },
+    enchant: {},
+    notes: {},
+    features: [],
+    max_level: 80,
+    coming_soon: false,
+    staff_only_login: false,
+    coming_soon_title: 'Em breve',
+    coming_soon_subtitle: '',
+    coming_soon_at: null,
+  } as any)
 })
 afterEach(() => { cleanup(); vi.restoreAllMocks() })
 function mount(page: ReactElement) {
@@ -107,9 +122,19 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
   expect(restricted).toBeDisabled()
   await user.click(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ }))
   await user.click(restricted)
+  await user.clear(screen.getByLabelText('Título'))
+  await user.type(screen.getByLabelText('Título'), 'Abertura do reino')
+  await user.type(screen.getByLabelText(/Data e hora do lançamento/), '2027-01-03T18:00')
   await user.type(screen.getByRole('textbox', { name: /Recursos/ }), ' PvP \n\n Eventos ')
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
-  expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({ features: ['PvP', 'Eventos'], coming_soon: true, staff_only_login: true, max_level: 80 }))
+  expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({
+    features: ['PvP', 'Eventos'],
+    coming_soon: true,
+    staff_only_login: true,
+    max_level: 80,
+    coming_soon_title: 'Abertura do reino',
+    coming_soon_at: expect.stringMatching(/^2027-01-03T/),
+  }))
 })
 
 it.each([false, true])('desvinculação exige confirmação, confirmada=%s', async confirm => {

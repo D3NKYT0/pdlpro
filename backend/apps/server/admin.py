@@ -61,9 +61,20 @@ class IndexConfigAdmin(PDLModelAdmin):
     regras reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "chronicle", "coming_soon", "is_active", "updated_at")
+    list_display = ("name", "chronicle", "coming_soon", "coming_soon_at", "is_active", "updated_at")
     fieldsets = (
         ("Identidade", {"fields": ("name", "slogan", "description", "chronicle", "is_active")}),
         ("Rates", {"fields": ("rates", "enchant", "max_level", "features", "notes")}),
-        ("Acesso", {"fields": ("coming_soon", "staff_only_login")}),
+        (
+            "Coming Soon",
+            {
+                "fields": (
+                    "coming_soon",
+                    "staff_only_login",
+                    "coming_soon_title",
+                    "coming_soon_subtitle",
+                    "coming_soon_at",
+                )
+            },
+        ),
     )

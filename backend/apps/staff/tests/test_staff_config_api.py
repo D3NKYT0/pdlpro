@@ -49,15 +49,24 @@ def test_staff_can_update_panel_and_services(api, staff):
             "max_level": 85,
             "features": ["Siege", "Olympiad"],
             "notes": {"pvp": "PvP livre", "start": "Crie a conta"},
-            "coming_soon": False,
+            "coming_soon": True,
+            "coming_soon_title": "Abertura Imperium",
+            "coming_soon_subtitle": "Contagem oficial",
+            "coming_soon_at": "2027-01-03T18:00:00Z",
+            "staff_only_login": False,
         },
         format="json",
     )
     assert saved.status_code == 200, saved.data
     assert saved.data["name"] == "Imperium"
+    assert saved.data["coming_soon"] is True
+    assert saved.data["coming_soon_title"] == "Abertura Imperium"
+    assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
     public = api.get("/api/v1/public/server/info/")
     assert public.data["name"] == "Imperium"
     assert public.data["rates"]["xp"] == "x10"
+    assert public.data["coming_soon"] is True
+    assert public.data["coming_soon_title"] == "Abertura Imperium"
 
     prices = api.put(
         "/api/v1/staff/services/",
@@ -67,6 +76,23 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert prices.status_code == 200
     nick = next(item for item in prices.data if item["code"] == "CHANGE_NICKNAME")
     assert nick["price"] == "25.00"
+
+
+@pytest.mark.django_db
+def test_coming_soon_requires_launch_datetime(api, staff):
+    api.force_authenticate(user=staff)
+    response = api.put(
+        "/api/v1/staff/panel/",
+        {
+            "name": "Imperium",
+            "coming_soon": True,
+            "coming_soon_title": "Em breve",
+            "coming_soon_at": None,
+        },
+        format="json",
+    )
+    assert response.status_code == 400
+    assert "lançamento" in response.data["message"].lower()
 
 
 @pytest.mark.django_db

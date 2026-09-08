@@ -16,6 +16,16 @@ CHRONICLE_BY_MODULE = {
     "lucerav2": "Interlude",
 }
 
+
+def _coming_soon_at_iso(value) -> str | None:
+    if value is None:
+        return None
+    iso = value.isoformat()
+    if iso.endswith("+00:00"):
+        return f"{iso[:-6]}Z"
+    return iso
+
+
 PUBLIC_LINEAGE_QUERIES = frozenset(
     {
         "olympiad_ranking",
@@ -82,6 +92,9 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
                 "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
             },
             coming_soon=False,
+            coming_soon_title="",
+            coming_soon_subtitle="",
+            coming_soon_at=None,
         )
         from apps.server.infrastructure.models import IndexConfig
 
@@ -92,6 +105,8 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         enchant = {**info.enchant, **{key: str(value) for key, value in (row.enchant or {}).items() if value}}
         notes = {**info.notes, **{key: str(value) for key, value in (row.notes or {}).items() if value}}
         overlay_features = [str(item).strip() for item in (row.features or []) if str(item).strip()]
+        title = str(row.coming_soon_title or "").strip()
+        subtitle = str(row.coming_soon_subtitle or "").strip()
         return ServerInfo(
             name=row.name or info.name,
             description=row.description or info.description,
@@ -102,6 +117,9 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             features=overlay_features or info.features,
             notes=notes,
             coming_soon=bool(row.coming_soon),
+            coming_soon_title=title or (row.name or info.name or "Em breve"),
+            coming_soon_subtitle=subtitle or (row.description or info.description or ""),
+            coming_soon_at=_coming_soon_at_iso(row.coming_soon_at),
         )
 
 

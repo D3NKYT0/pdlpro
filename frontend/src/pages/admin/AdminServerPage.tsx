@@ -3,10 +3,25 @@ import { apiErrorMessage } from '../../lib/errors'
 import { Field } from '../../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
+import { CalendarClock, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
+
+function toDatetimeLocal(iso: string | null | undefined) {
+  if (!iso) return ''
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return ''
+  const pad = (value: number) => String(value).padStart(2, '0')
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+function fromDatetimeLocal(value: string) {
+  if (!value.trim()) return null
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toISOString()
+}
 
 export function AdminServerPage() {
   const queryClient = useQueryClient()
@@ -28,6 +43,9 @@ export function AdminServerPage() {
   const [start, setStart] = useState('')
   const [comingSoon, setComingSoon] = useState(false)
   const [staffOnly, setStaffOnly] = useState(false)
+  const [comingSoonTitle, setComingSoonTitle] = useState('Em breve')
+  const [comingSoonSubtitle, setComingSoonSubtitle] = useState('')
+  const [comingSoonAt, setComingSoonAt] = useState('')
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
@@ -50,6 +68,9 @@ export function AdminServerPage() {
     setStart(data.notes.start || '')
     setComingSoon(data.coming_soon)
     setStaffOnly(data.staff_only_login)
+    setComingSoonTitle(data.coming_soon_title || 'Em breve')
+    setComingSoonSubtitle(data.coming_soon_subtitle || '')
+    setComingSoonAt(toDatetimeLocal(data.coming_soon_at))
   }, [panel.data])
 
   async function onSubmit(event: FormEvent) {
@@ -68,6 +89,9 @@ export function AdminServerPage() {
         notes: { pvp, start },
         coming_soon: comingSoon,
         staff_only_login: staffOnly,
+        coming_soon_title: comingSoonTitle,
+        coming_soon_subtitle: comingSoonSubtitle,
+        coming_soon_at: fromDatetimeLocal(comingSoonAt),
       })
       toast.success('Configuração do servidor salva')
       await queryClient.invalidateQueries({ queryKey: ['staff-panel'] })
@@ -142,6 +166,47 @@ export function AdminServerPage() {
               <b>{staffOnly && comingSoon ? 'Ativo' : 'Inativo'}</b>
             </label>
           </div>
+        </Card>
+
+        <Card className={`admin-config-section${!comingSoon ? ' is-disabled' : ''}`}>
+          <header>
+            <span><CalendarClock /></span>
+            <div>
+              <span className="panel-eyebrow">Lançamento</span>
+              <h2>Página Coming Soon</h2>
+              <p>Título, subtítulo e data usados na contagem regressiva pública.</p>
+            </div>
+          </header>
+          <div className="account-form-fields">
+            <Field>
+              Título
+              <input
+                value={comingSoonTitle}
+                disabled={!comingSoon}
+                onChange={(e) => setComingSoonTitle(e.target.value)}
+                required={comingSoon}
+              />
+            </Field>
+            <Field>
+              Data e hora do lançamento
+              <input
+                type="datetime-local"
+                value={comingSoonAt}
+                disabled={!comingSoon}
+                onChange={(e) => setComingSoonAt(e.target.value)}
+                required={comingSoon}
+              />
+            </Field>
+          </div>
+          <Field>
+            Subtítulo
+            <textarea
+              value={comingSoonSubtitle}
+              disabled={!comingSoon}
+              onChange={(e) => setComingSoonSubtitle(e.target.value)}
+              rows={2}
+            />
+          </Field>
         </Card>
 
         <Card as="div" className="admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></Card>

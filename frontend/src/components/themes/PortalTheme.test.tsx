@@ -105,18 +105,3 @@ it('respeita ordem e omissão de seções declaradas no presentation', async () 
   expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
   expect(screen.queryByText('Unique Systems')).not.toBeInTheDocument()
 })
-
-it('no Coming Soon exibe só o hero com countdown', () => {
-  render(
-    <QueryClientProvider client={queryClient()}>
-      <MemoryRouter>
-        <PortalHomePage presentation={presentation} comingSoon />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
-  expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
-  expect(screen.getByLabelText('SERVER IS OPENING IN')).toBeInTheDocument()
-  expect(screen.queryByText('Unique Systems')).not.toBeInTheDocument()
-  expect(screen.queryByText('RATING')).not.toBeInTheDocument()
-  expect(serverApi.rankings).not.toHaveBeenCalled()
-})

@@ -6,7 +6,6 @@ import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
-import { ComingSoonPage } from './ComingSoonPage'
 
 const wikiLinks = [
   { to: '/informacoes#rates', label: 'Rates e progressão' },
@@ -382,18 +381,8 @@ function DefaultHomePage() {
 
 export function HomePage() {
   const theme = useTheme()
-  const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
-  const comingSoon = Boolean(info.data?.coming_soon)
-
-  if (info.isPending) {
-    return null
-  }
-
   if (theme.presentation?.renderer === 'portal-v1') {
-    return <PortalHomePage presentation={theme.presentation} comingSoon={comingSoon} />
-  }
-  if (comingSoon) {
-    return <ComingSoonPage info={info.data} />
+    return <PortalHomePage presentation={theme.presentation} />
   }
   return <DefaultHomePage />
 }

@@ -13,6 +13,9 @@ export interface ApiPanelSettings {
   notes: Record<string, string>
   coming_soon: boolean
   staff_only_login: boolean
+  coming_soon_title: string
+  coming_soon_subtitle: string
+  coming_soon_at: string | null
   is_active: boolean
 }
 
