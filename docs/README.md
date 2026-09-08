@@ -67,6 +67,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Documento | O que explica |
 | --- | --- |
 | [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, renderer Valorem, segurança, ativação e restauração do default |
+| [Coming Soon](funcionalidades/coming-soon.md) | Página de lançamento, countdown do tema e login restrito à staff |
 | [Identidade visual da página inicial](funcionalidades/identidade-visual-da-home.md) | Artes próprias, personagem central, mapa de uso e regras de manutenção |
 | [Ajuda e Denkynho](funcionalidades/ajuda.md) | Chat sobre o FAQ publicado, personagem animado, limites e atendimento |
 | [Animações do Denkynho](funcionalidades/denkynho-animacoes.md) | Sequências de comer, jogar e rir, assets, reprodução e prompts |

@@ -99,6 +99,9 @@ class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
         user = self._users.get_by_login(data.login.strip())
         if user is None or not self._users.check_password(user.id, data.password):
             raise InvalidCredentialsError()
+        from apps.server.application.access import assert_login_allowed_during_coming_soon
+
+        assert_login_allowed_during_coming_soon(user)
         return user
 
 

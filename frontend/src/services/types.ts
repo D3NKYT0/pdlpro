@@ -24,6 +24,7 @@ export interface ApiServerInfo {
   max_level: number
   features: string[]
   notes: Record<string, string>
+  coming_soon: boolean
 }
 
 export interface ApiServerStatus {

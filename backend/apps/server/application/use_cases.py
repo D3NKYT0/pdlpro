@@ -81,6 +81,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
                 "pvp": str(getattr(settings, "SERVER_PVP_NOTE", "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.")),
                 "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
             },
+            coming_soon=False,
         )
         from apps.server.infrastructure.models import IndexConfig
 
@@ -100,6 +101,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             max_level=int(row.max_level or info.max_level),
             features=overlay_features or info.features,
             notes=notes,
+            coming_soon=bool(row.coming_soon),
         )
 
 

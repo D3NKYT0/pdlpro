@@ -105,6 +105,29 @@ def test_login(api, user):
 
 
 @pytest.mark.django_db
+def test_login_blocked_for_players_during_coming_soon_staff_only(api, user):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(name="Imperium", coming_soon=True, staff_only_login=True, is_active=True)
+    blocked = api.post(
+        "/api/v1/auth/login/",
+        {"login": "hero", "password": "Secret123"},
+        format="json",
+    )
+    assert blocked.status_code == 403
+    assert blocked.data["error_code"] == "COMING_SOON_LOGIN_RESTRICTED"
+
+    staff = User.objects.create_user(username="gm", email="gm@pdl.dev", password="Secret123", is_staff=True)
+    allowed = api.post(
+        "/api/v1/auth/login/",
+        {"login": "gm", "password": "Secret123"},
+        format="json",
+    )
+    assert allowed.status_code == 200
+    assert allowed.data["username"] == "gm"
+
+
+@pytest.mark.django_db
 @override_settings(HCAPTCHA_ENABLED=True, HCAPTCHA_SITE_KEY="test-site", HCAPTCHA_SECRET_KEY="test-secret")
 def test_login_requires_captcha_after_repeated_failures(api, user):
     for _ in range(3):

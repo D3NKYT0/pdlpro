@@ -518,3 +518,71 @@ button, input, select { font: inherit; }
   .staff-ticket-context span:nth-child(2) { display: none; }
   .staff-reply { display: grid; }
 }
+
+.coming-soon {
+  position: relative;
+  min-height: calc(100vh - var(--public-header-height, 78px));
+  display: grid;
+  place-items: center;
+  padding: 48px 20px;
+  overflow: hidden;
+}
+
+.coming-soon__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.coming-soon__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.35);
+}
+
+.coming-soon__inner {
+  position: relative;
+  z-index: 1;
+  width: min(640px, 100%);
+  text-align: center;
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+.coming-soon__mark {
+  width: 88px;
+  height: auto;
+}
+
+.coming-soon__eyebrow,
+.coming-soon__status {
+  margin: 0;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+
+.coming-soon h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.coming-soon__lead {
+  margin: 0;
+  max-width: 42ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.coming-soon__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+}

@@ -8,7 +8,7 @@ class ServerInfoSerializer(serializers.Serializer):
     ``many=True`` representa uma coleção.
 
     Campos declarados: ``name``, ``description``, ``chronicle``, ``rates``, ``enchant``,
-    ``max_level``, ``features``, ``notes``.
+    ``max_level``, ``features``, ``notes``, ``coming_soon``.
     """
 
     name = serializers.CharField()
@@ -19,6 +19,7 @@ class ServerInfoSerializer(serializers.Serializer):
     max_level = serializers.IntegerField()
     features = serializers.ListField(child=serializers.CharField())
     notes = serializers.DictField(child=serializers.CharField())
+    coming_soon = serializers.BooleanField()
 
 
 class ServerStatusSerializer(serializers.Serializer):

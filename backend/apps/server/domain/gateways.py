@@ -33,6 +33,7 @@ class ServerInfo:
     max_level: int
     features: list[str]
     notes: dict[str, str]
+    coming_soon: bool = False
 
 
 @dataclass(frozen=True, slots=True)

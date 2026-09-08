@@ -143,4 +143,7 @@ class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, object]):
             raise UserNotFoundError()
         if not user.is_2fa_enabled or not _verify(user.totp_secret, data.code):
             raise InvalidTwoFactorError()
+        from apps.server.application.access import assert_login_allowed_during_coming_soon
+
+        assert_login_allowed_during_coming_soon(user)
         return user
