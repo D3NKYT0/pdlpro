@@ -18,7 +18,19 @@ A pergunta aparece imediatamente com o estado de espera viva: pose **pensando** 
 
 Ao falar de si, o Denkynho se apresenta como o alter ego virtual do Denky e relaciona sua curiosidade, visão estratégica e espírito jogador à missão de acompanhar a comunidade. Perguntas sobre o criador recebem apenas uma síntese profissional pública — arquitetura de sistemas, liderança técnica, desenvolvimento e tecnologias — sem nome civil, empregador, localização, telefone ou outros dados pessoais. A resposta oferece **Conhecer o criador**, sempre apontando para `https://denky.dev.br/` em nova aba; nenhuma URL produzida pelo modelo é transformada nesse botão.
 
-Fora de `/painel/ajuda`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a ajuda contextual da tela; um selo discreto avisa necessidades (**o Denkynho está com fome**) e a primeira visita do dia pode mostrar um pouco de XP, sem streak punitiva. **Conversar sobre esta tela** leva o assunto para Ajuda. A pergunta sugerida preenche o campo e exige envio manual. Cada consulta envia a rota conhecida em `screen` (por exemplo, `você está em Carteira`). O parâmetro `from` aceita apenas rotas conhecidas; links de módulos aguardam a consulta de recursos, respeitam recursos desativados e acesso à equipe. Caminhos relativos conhecidos em uma resposta podem virar botões de navegação; endereços externos, inventados e destinos não autorizados são ignorados. Nenhum botão executa operações da conta. **Abrir chamado sobre esta tela** pré-preenche o assunto e a tela de origem, sem enviar o histórico do chat.
+Fora de `/painel/ajuda`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a
+ajuda contextual da tela em um painel com visual próprio (fundo teal/dourado, distinto do chrome do
+painel), fechamento pelo botão vermelho com **X**, barras de necessidade, atalhos para o cantinho
+do mascote e, quando há aviso de necessidade, um atalho de cuidado correspondente. Um selo discreto
+avisa necessidades (**o Denkynho está com fome**) e a primeira visita do dia pode mostrar um pouco
+de XP, sem streak punitiva. **Conversar sobre esta tela** leva o assunto para Ajuda. A pergunta
+sugerida preenche o campo e exige envio manual. Cada consulta envia a rota conhecida em `screen`
+(por exemplo, `você está em Carteira`). O parâmetro `from` aceita apenas rotas conhecidas; links de
+módulos aguardam a consulta de recursos, respeitam recursos desativados e acesso à equipe.
+Caminhos relativos conhecidos em uma resposta podem virar botões de navegação; endereços externos,
+inventados e destinos não autorizados são ignorados. Nenhum botão executa operações da conta.
+**Abrir chamado sobre esta tela** pré-preenche o assunto e a tela de origem, sem enviar o histórico
+do chat.
 
 No celular, **Recolher personagem** libera espaço e deixa **Mostrar personagem** disponível, com foco de teclado preservado. O estado recolhido vale só durante a visita. Os controles continuam disponíveis por rolagem própria no menu.
 
