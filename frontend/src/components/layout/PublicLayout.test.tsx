@@ -55,6 +55,7 @@ it('substitui o chrome público pela página de lançamento na home', async () =
   mount('/')
   expect(await screen.findByRole('heading', { name: 'Lançamento Imperium' })).toBeVisible()
   expect(screen.getByLabelText('Contagem regressiva do lançamento')).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Entrar' })).toBeVisible()
   expect(screen.queryByText('Site nav')).not.toBeInTheDocument()
   expect(screen.queryByText('Home normal')).not.toBeInTheDocument()
 })

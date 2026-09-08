@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { ButtonLink } from '../components/ui/Button'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage } from '../theme/assets'
 import './coming-soon.css'
@@ -40,8 +40,42 @@ const UNITS = [
   ['secs', 'Seg'],
 ] as const
 
+function LaunchParticles({ count = 42 }: { count?: number }) {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: count }, (_, index) => ({
+        id: index,
+        left: `${(index * 37) % 100}%`,
+        delay: `${(index % 12) * 0.55}s`,
+        duration: `${8 + (index % 7)}s`,
+        size: `${2 + (index % 4)}px`,
+        drift: `${((index % 5) - 2) * 18}px`,
+      })),
+    [count],
+  )
+
+  return (
+    <div className="launch-gate__particles" aria-hidden="true">
+      {particles.map((particle) => (
+        <span
+          key={particle.id}
+          className="launch-gate__spark"
+          style={{
+            left: particle.left,
+            width: particle.size,
+            height: particle.size,
+            animationDelay: particle.delay,
+            animationDuration: particle.duration,
+            ['--spark-drift' as string]: particle.drift,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
-  const title = info.coming_soon_title?.trim() || info.name || 'Em breve'
+  const title = info.coming_soon_title?.trim() || info.name?.trim() || 'Em breve'
   const subtitle =
     info.coming_soon_subtitle?.trim() ||
     info.description ||
@@ -51,21 +85,15 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   return (
     <div className="launch-gate" data-theme-page="coming-soon">
       <div className="launch-gate__sky" aria-hidden="true">
-        <img src={themeImage('bg/5.jpg')} alt="" />
+        <img className="launch-gate__bg" src={themeImage('bg/coming-soon.png')} alt="" />
+        <span className="launch-gate__rays" />
         <span className="launch-gate__glow launch-gate__glow--a" />
         <span className="launch-gate__glow launch-gate__glow--b" />
+        <span className="launch-gate__glow launch-gate__glow--c" />
         <span className="launch-gate__haze" />
+        <span className="launch-gate__vignette" />
+        <LaunchParticles />
       </div>
-
-      <header className="launch-gate__top">
-        <Link className="launch-gate__brand" to="/login">
-          {info.name || 'PDL'}
-        </Link>
-        <nav className="launch-gate__links" aria-label="Acesso">
-          <Link to="/login">Entrar</Link>
-          <Link to="/downloads">Downloads</Link>
-        </nav>
-      </header>
 
       <main className="launch-gate__stage">
         <p className="launch-gate__kicker">Abertura do servidor</p>
@@ -89,6 +117,15 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
             ))}
           </div>
         )}
+
+        <div className="launch-gate__actions">
+          <ButtonLink to="/login" size="lg">
+            Entrar
+          </ButtonLink>
+          <ButtonLink to="/downloads" variant="secondary" size="lg">
+            Downloads
+          </ButtonLink>
+        </div>
       </main>
     </div>
   )
