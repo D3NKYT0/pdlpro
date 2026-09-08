@@ -103,7 +103,6 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
         </section> : null}
 
         <section className="contextual-help-guide">
-          {context && <p className="contextual-help-tip">{context.tip}</p>}
           {context && <p className="muted contextual-help-ask"><span>{pt ? 'Pergunte:' : 'Ask:'}</span> {context.suggestion}</p>}
           {loading && <LoadingState>{pt ? 'Verificando recursos disponíveis…' : 'Checking available features…'}</LoadingState>}
           <ErrorNotice error={Boolean(error)} fallback={pt ? 'Não foi possível verificar os recursos. Os atalhos de módulos ficam ocultos até a próxima consulta.' : 'Could not check available features. Module shortcuts stay hidden until the next check.'} />
@@ -113,6 +112,11 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
             {!loading && context?.actions.filter(action => action.to !== context.path).map(action => <ButtonLink key={action.to} size="sm" variant="secondary" to={action.to}>{action.label}</ButtonLink>)}
           </div>
         </section>
+
+        {context ? <section className="contextual-help-daily" aria-label={pt ? 'Dica do dia' : 'Tip of the day'}>
+          <p className="contextual-help-kicker">{pt ? 'Dica do dia' : 'Tip of the day'}</p>
+          <p className="contextual-help-tip">{context.tip}</p>
+        </section> : null}
       </div>
     </Card>}
   </div>

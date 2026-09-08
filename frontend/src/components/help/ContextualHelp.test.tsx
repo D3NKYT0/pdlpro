@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, expect, it } from 'vitest'
 import { ContextualHelp } from './ContextualHelp'
-import { getHelpActionsForText, getHelpContext } from './contextual'
+import { getHelpActionsForText, getHelpContext, dailyTipIndex } from './contextual'
 afterEach(cleanup)
 it('orienta na tela, encaminha o contexto e fecha com Escape sem enviar mensagem', async () => {
   const user = userEvent.setup()
@@ -58,4 +58,18 @@ it('mostra o mascote, o aviso de necessidade e o chamado pré-preenchido sem env
   expect(screen.getByRole('link', { name: 'Abrir chamado sobre esta tela' })).toHaveAttribute('href', expect.stringContaining('/painel/support?subject='))
   expect(screen.getByRole('link', { name: 'Abrir chamado sobre esta tela' }).getAttribute('href')).toContain('from=%2Fpainel%2Fwallet')
   expect(screen.getByRole('button', { name: 'Fechar ajuda da tela' })).toBeVisible()
+  const tip = getHelpContext('/painel/wallet', null, [])?.tip
+  expect(tip).toBeTruthy()
+  expect(screen.getByRole('region', { name: 'Dica do dia' })).toHaveTextContent(tip!)
+})
+it('escolhe a dica do dia pela tela e pelo dia do calendário', () => {
+  const dayA = getHelpContext('/painel/wallet', null, [], 'pt', new Date('2026-01-01T12:00:00Z'))
+  const dayB = getHelpContext('/painel/wallet', null, [], 'pt', new Date('2026-01-02T12:00:00Z'))
+  const other = getHelpContext('/painel/shop', null, [], 'pt', new Date('2026-01-01T12:00:00Z'))
+  expect(dayA?.tip).toBeTruthy()
+  expect(dayB?.tip).toBeTruthy()
+  expect(dayA?.tip).not.toBe(dayB?.tip)
+  expect(other?.tip).toBeTruthy()
+  expect(other?.tip).not.toBe(dayA?.tip)
+  expect(dailyTipIndex(3, '/painel/wallet', new Date('2026-01-01T12:00:00Z'))).toBe(dailyTipIndex(3, '/painel/wallet', new Date('2026-01-01T23:00:00Z')))
 })

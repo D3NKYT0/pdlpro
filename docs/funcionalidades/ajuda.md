@@ -21,7 +21,9 @@ Ao falar de si, o Denkynho se apresenta como o alter ego virtual do Denky e rela
 Fora de `/painel/ajuda`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a
 ajuda contextual da tela em um painel com visual próprio (fundo teal/dourado, distinto do chrome do
 painel), fechamento pelo botão vermelho com **X**, barras de necessidade, atalhos para o cantinho
-do mascote e, quando há aviso de necessidade, um atalho de cuidado correspondente. Um selo discreto
+do mascote e, quando há aviso de necessidade, um atalho de cuidado correspondente. A última coluna
+mostra a **Dica do dia** da tela atual (pool editorial por rota; a escolha muda com o dia do
+calendário e permanece estável no mesmo dia). Um selo discreto
 avisa necessidades (**o Denkynho está com fome**) e a primeira visita do dia pode mostrar um pouco
 de XP, sem streak punitiva. **Conversar sobre esta tela** leva o assunto para Ajuda. A pergunta
 sugerida preenche o campo e exige envio manual. Cada consulta envia a rota conhecida em `screen`
