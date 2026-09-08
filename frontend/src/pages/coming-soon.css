@@ -3,16 +3,22 @@
   --launch-muted: #c2b08a;
   --launch-ember: #d4a24a;
   --launch-deep: #070504;
-  position: relative;
+  position: fixed;
+  inset: 0;
   isolation: isolate;
-  min-height: 100vh;
-  min-height: 100dvh;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: grid;
   place-items: center;
   overflow: hidden;
   color: var(--launch-ink);
   background: var(--launch-deep);
   font-family: 'Outfit', 'Source Sans Pro', sans-serif;
+}
+
+.launch-gate.is-open {
+  overflow: hidden;
 }
 
 .launch-gate__sky {
@@ -147,29 +153,102 @@
   z-index: 2;
   display: grid;
   place-items: center;
-  width: min(920px, 100%);
+  width: min(980px, 100%);
   padding: 48px clamp(18px, 5vw, 64px);
   text-align: center;
   animation: launch-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.launch-gate.is-open .launch-gate__stage {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  place-items: center;
+}
+
+.launch-gate__tableau {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 44rem);
+}
+
+.launch-gate__tableau.is-held {
+  /* Medidas do furo interno da moldura em dynasty-couple-hold.png (1536×1024). */
+  --frame-left: 29.753%;
+  --frame-top: 31.836%;
+  --frame-width: 45.898%;
+  --frame-height: 47.461%;
+  /* Cabe no viewport; prioriza altura para não gerar rolagem na página. */
+  width: min(100vw, calc(100dvh * 1536 / 1024));
+  max-width: 100%;
+  max-height: 100dvh;
+  aspect-ratio: 1536 / 1024;
+  padding-top: 0;
+  place-items: stretch;
+}
+
 .launch-gate__heroes {
   position: absolute;
-  left: 50%;
-  bottom: max(-4vh, -28px);
-  z-index: 1;
-  width: min(980px, 118vw);
-  transform: translateX(-50%);
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  max-width: none;
+  transform: none;
   pointer-events: none;
-  animation: launch-heroes-in 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  animation: launch-heroes-in 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
 .launch-gate__heroes-img {
   display: block;
   width: 100%;
-  height: auto;
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
+  height: 100%;
+  object-fit: fill;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.48));
   animation: launch-heroes-sway 5.5s ease-in-out 1.2s infinite alternate;
+}
+
+.launch-gate__tableau.is-held .launch-gate__panel {
+  position: absolute;
+  left: var(--frame-left);
+  top: var(--frame-top);
+  z-index: 1;
+  width: var(--frame-width);
+  height: var(--frame-height);
+  max-width: none;
+  margin: 0;
+  padding: clamp(14px, 1.8vw, 28px) clamp(14px, 1.8vw, 32px);
+  gap: clamp(8px, 1.2vw, 14px);
+  border-color: transparent;
+  border-radius: 2px;
+  overflow: hidden;
+  align-content: center;
+}
+
+.launch-gate__tableau.is-held .launch-gate__title {
+  max-width: 12ch;
+  font-size: clamp(1.8rem, 4.2vw, 3.4rem);
+}
+
+.launch-gate__tableau.is-held .launch-gate__subtitle {
+  max-width: 28ch;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+}
+
+.launch-gate__tableau.is-held .launch-gate__finale {
+  min-height: 0;
+  margin-top: 0;
+}
+
+.launch-gate__tableau.is-held .launch-gate__finale-ring {
+  width: 72px;
+  height: 72px;
+}
+
+.launch-gate__tableau.is-held .launch-gate__actions {
+  margin-top: 2px;
 }
 
 .launch-gate__panel {
@@ -361,34 +440,37 @@
 
 .launch-gate.is-open .launch-gate__panel {
   background:
-    linear-gradient(180deg, rgba(18, 13, 8, 0.42) 0%, rgba(8, 6, 4, 0.52) 100%),
+    linear-gradient(180deg, rgba(18, 13, 8, 0.72) 0%, rgba(8, 6, 4, 0.8) 100%),
     radial-gradient(ellipse at 50% 10%, rgba(255, 196, 110, 0.14), transparent 58%);
-  border-color: rgba(255, 214, 140, 0.38);
+  border-color: transparent;
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.12),
-    inset 0 0 0 1px rgba(255, 214, 140, 0.08),
-    0 28px 64px rgba(0, 0, 0, 0.4),
-    0 0 48px rgba(212, 162, 74, 0.14);
+    inset 0 1px 0 rgba(246, 236, 212, 0.1),
+    0 18px 40px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(8px) saturate(1.08);
   -webkit-backdrop-filter: blur(8px) saturate(1.08);
   animation: launch-panel-breathe 3.6s ease-in-out infinite;
 }
 
+.launch-gate.is-open .launch-gate__panel-corner,
+.launch-gate.is-open .launch-gate__panel-rim {
+  opacity: 0;
+}
+
 .launch-gate.is-open .launch-gate__panel-glow {
-  opacity: 0.72;
+  opacity: 0.55;
   animation-duration: 4.2s;
 }
 
 .launch-gate.is-open .launch-gate__panel-texture {
-  opacity: 0.28;
+  opacity: 0.32;
   mix-blend-mode: soft-light;
-  background-color: rgba(8, 6, 4, 0.2);
+  background-color: rgba(8, 6, 4, 0.22);
 }
 
 .launch-gate.is-open .launch-gate__panel-texture::after {
   background:
     radial-gradient(ellipse at 50% 30%, rgba(212, 162, 74, 0.08), transparent 55%),
-    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.14) 100%);
+    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.18) 100%);
 }
 
 .launch-gate.is-open .launch-gate__panel-rim {
@@ -788,17 +870,17 @@
 @keyframes launch-heroes-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(42px) scale(0.94);
+    transform: translateY(28px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes launch-heroes-sway {
-  from { transform: translate3d(0, 0, 0) rotate(-0.4deg); }
-  to { transform: translate3d(0, -6px, 0) rotate(0.4deg); }
+  from { transform: translate3d(0, 3px, 0); }
+  to { transform: translate3d(0, -3px, 0); }
 }
 
 @keyframes launch-drift {
@@ -946,13 +1028,17 @@
     padding: 24px 18px;
   }
 
-  .launch-gate__heroes {
-    bottom: max(-2vh, -12px);
-    width: min(720px, 140vw);
+  .launch-gate__tableau.is-held {
+    width: min(100vw, calc(100dvh * 1536 / 1024));
+  }
+
+  .launch-gate__tableau.is-held .launch-gate__panel {
+    padding: 14px 12px;
+    gap: 12px;
   }
 
   .launch-gate.is-open .launch-gate__stage {
-    padding-bottom: 28vh;
+    padding: 0;
   }
 
   .launch-gate__countdown {

@@ -32,9 +32,10 @@ No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `
 
 Quando a data chega, a contagem some e a página entra no estado de abertura: troca o fundo
 para a arte de comemoração com fogos (`bg/coming-soon-open.png`), fogos de artifício animados
-em loop, casal humano em Dynasty (`bg/dynasty-couple-dance.png`) na base do portal atrás do
-painel semi-transparente, anel luminoso, kicker “Servidor aberto”, mensagem “O momento chegou”
-e ênfase no botão Entrar. O Coming Soon continua ativo até a equipe desligar o modo no painel.
+em loop, casal humano em Dynasty (`bg/dynasty-couple-hold.png`) segurando uma moldura dourada onde o
+painel HTML encaixa com precisão (coordenadas `--frame-*`), anel luminoso, kicker “Servidor
+aberto”, mensagem “O momento chegou” e ênfase no botão Entrar. O Coming Soon continua ativo
+até a equipe desligar o modo no painel.
 
 Contrato público em `GET /api/v1/public/server/info/`:
 

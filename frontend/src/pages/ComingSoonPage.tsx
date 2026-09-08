@@ -187,6 +187,19 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const finished = countdown.finished && Boolean(info.coming_soon_at)
   const ticking = useSecondTick(countdown.secs, !finished)
 
+  useEffect(() => {
+    const html = document.documentElement
+    const body = document.body
+    const prevHtmlOverflow = html.style.overflow
+    const prevBodyOverflow = body.style.overflow
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+    return () => {
+      html.style.overflow = prevHtmlOverflow
+      body.style.overflow = prevBodyOverflow
+    }
+  }, [])
+
   return (
     <div className={`launch-gate${finished ? ' is-open' : ''}`} data-theme-page="coming-soon">
       <div className="launch-gate__sky" aria-hidden="true">
@@ -210,67 +223,69 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         {finished ? <LaunchFireworks /> : null}
       </div>
 
-      {finished ? (
-        <div className="launch-gate__heroes" aria-hidden="true">
-          <img
-            className="launch-gate__heroes-img"
-            src={themeImage('bg/dynasty-couple-dance.png')}
-            alt=""
-          />
-        </div>
-      ) : null}
-
       <main className="launch-gate__stage">
-        <div className="launch-gate__panel">
-          <span className="launch-gate__panel-glow" aria-hidden="true" />
-          <span
-            className="launch-gate__panel-texture"
-            aria-hidden="true"
-            style={{ backgroundImage: `url(${themeImage('bg/1.png')})` }}
-          />
-          <span className="launch-gate__panel-rim" aria-hidden="true" />
-          <span className="launch-gate__panel-sheen" aria-hidden="true" />
-          <span className="launch-gate__panel-corner is-tl" aria-hidden="true" />
-          <span className="launch-gate__panel-corner is-tr" aria-hidden="true" />
-          <span className="launch-gate__panel-corner is-bl" aria-hidden="true" />
-          <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
-          <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
+        <div className={`launch-gate__tableau${finished ? ' is-held' : ''}`}>
+          <div className="launch-gate__panel">
+            <span className="launch-gate__panel-glow" aria-hidden="true" />
+            <span
+              className="launch-gate__panel-texture"
+              aria-hidden="true"
+              style={{ backgroundImage: `url(${themeImage('bg/1.png')})` }}
+            />
+            <span className="launch-gate__panel-rim" aria-hidden="true" />
+            <span className="launch-gate__panel-sheen" aria-hidden="true" />
+            <span className="launch-gate__panel-corner is-tl" aria-hidden="true" />
+            <span className="launch-gate__panel-corner is-tr" aria-hidden="true" />
+            <span className="launch-gate__panel-corner is-bl" aria-hidden="true" />
+            <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
+            <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
 
-          <p className="launch-gate__kicker">{finished ? 'Servidor aberto' : 'Em breve'}</p>
-          <h1 className="launch-gate__title">{title}</h1>
-          <p className="launch-gate__subtitle">
-            {finished ? 'As portas se abriram. Entre e comece sua jornada.' : subtitle}
-          </p>
+            <p className="launch-gate__kicker">{finished ? 'Servidor aberto' : 'Em breve'}</p>
+            <h1 className="launch-gate__title">{title}</h1>
+            <p className="launch-gate__subtitle">
+              {finished ? 'As portas se abriram. Entre e comece sua jornada.' : subtitle}
+            </p>
 
-          {finished ? (
-            <div className="launch-gate__finale" role="status">
-              <span className="launch-gate__finale-ring" aria-hidden="true" />
-              <p className="launch-gate__ready">O momento chegou</p>
-            </div>
-          ) : (
-            <div className="launch-gate__countdown" aria-label="Contagem regressiva do lançamento">
-              {UNITS.map(([key, label], index) => (
-                <div key={key} className="launch-gate__unit">
-                  {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
-                  <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
-                    <span className="launch-gate__value">{countdown[key]}</span>
-                    <span className="launch-gate__label">{label}</span>
+            {finished ? (
+              <div className="launch-gate__finale" role="status">
+                <span className="launch-gate__finale-ring" aria-hidden="true" />
+                <p className="launch-gate__ready">O momento chegou</p>
+              </div>
+            ) : (
+              <div className="launch-gate__countdown" aria-label="Contagem regressiva do lançamento">
+                {UNITS.map(([key, label], index) => (
+                  <div key={key} className="launch-gate__unit">
+                    {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
+                    <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
+                      <span className="launch-gate__value">{countdown[key]}</span>
+                      <span className="launch-gate__label">{label}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
 
-          <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
-            <ButtonLink to="/login" size="lg">
-              Entrar
-            </ButtonLink>
-            <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
-              Downloads
-            </ButtonLink>
+            <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
+              <ButtonLink to="/login" size="lg">
+                Entrar
+              </ButtonLink>
+              <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
+                Downloads
+              </ButtonLink>
+            </div>
+
+            <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
           </div>
 
-          <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
+          {finished ? (
+            <div className="launch-gate__heroes" aria-hidden="true">
+              <img
+                className="launch-gate__heroes-img"
+                src={`${themeImage('bg/dynasty-couple-hold.png')}?v=4`}
+                alt=""
+              />
+            </div>
+          ) : null}
         </div>
       </main>
     </div>
