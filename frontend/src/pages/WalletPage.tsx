@@ -2,7 +2,7 @@ import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
 import { Button } from '../components/ui/Button'
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
@@ -25,7 +25,7 @@ import toast from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
 import { paymentApi, walletApi } from '../services/api'
-import type { ApiPaymentOrder } from '../services/types'
+import type { ApiPaymentOrder, ApiWalletPromo } from '../services/types'
 
 function formatMoney(value: string, currency: 'BRL' | 'USD') {
   const amount = Number(value)
@@ -52,6 +52,63 @@ function getOrderStatus(status: string) {
       ? 'is-danger'
       : 'is-pending'
   return { label: orderStatusLabels[normalized] ?? status, modifier }
+}
+
+function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
+  const bannerRef = useRef<HTMLElement>(null)
+  const frameRef = useRef(0)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  useEffect(() => () => cancelAnimationFrame(frameRef.current), [])
+
+  function onMouseMove(event: MouseEvent<HTMLElement>) {
+    const node = bannerRef.current
+    if (!node) return
+    const rect = node.getBoundingClientRect()
+    if (!rect.width || !rect.height) return
+    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+    const y = ((event.clientY - rect.top) / rect.height) * 2 - 1
+    cancelAnimationFrame(frameRef.current)
+    frameRef.current = requestAnimationFrame(() => {
+      setTilt({
+        x: Math.max(-1, Math.min(1, x)),
+        y: Math.max(-1, Math.min(1, y)),
+      })
+    })
+  }
+
+  function onMouseLeave() {
+    cancelAnimationFrame(frameRef.current)
+    setTilt({ x: 0, y: 0 })
+  }
+
+  const style = {
+    '--promo-mx': tilt.x.toFixed(3),
+    '--promo-my': tilt.y.toFixed(3),
+  } as CSSProperties
+
+  return (
+    <aside
+      ref={bannerRef}
+      className="wallet-promo-banner"
+      aria-label={promo.title}
+      style={style}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      <div className="wallet-promo-banner-art" aria-hidden="true" />
+      <div className="wallet-promo-banner-shade" aria-hidden="true" />
+      <div className="wallet-promo-banner-copy">
+        <span className="panel-eyebrow">Promoção</span>
+        <strong>{promo.title}</strong>
+        {promo.description ? <small>{promo.description}</small> : null}
+        <div className="wallet-promo-banner-offer" aria-hidden="true">
+          <b>{Number(promo.percent)}%</b>
+          <span>OFF</span>
+        </div>
+      </div>
+    </aside>
+  )
 }
 
 function getTransactionPresentation(kind: string, amount: string) {
@@ -376,19 +433,7 @@ export function WalletPage() {
             </form>
           </div>
 
-          {catalog.data?.promo ? (
-            <aside className="wallet-promo-banner" aria-label={catalog.data.promo.title}>
-              <div className="wallet-promo-banner-copy">
-                <span className="panel-eyebrow">Promoção</span>
-                <strong>{catalog.data.promo.title}</strong>
-                {catalog.data.promo.description ? <small>{catalog.data.promo.description}</small> : null}
-              </div>
-              <div className="wallet-promo-banner-offer">
-                <b>{Number(catalog.data.promo.percent)}%</b>
-                <span>OFF</span>
-              </div>
-            </aside>
-          ) : null}
+          {catalog.data?.promo ? <WalletPromoBanner promo={catalog.data.promo} /> : null}
 
           <div className="wallet-checkout">
             {order?.method === 'mercadopago' && !order.pix_qr_code ? (

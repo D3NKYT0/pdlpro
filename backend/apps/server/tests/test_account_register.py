@@ -83,6 +83,31 @@ def test_register_claims_unlinked_existing_login_with_password(api):
 
 
 @pytest.mark.django_db
+def test_list_accounts_drops_orphan_local_link_when_game_account_missing(api):
+    player = User.objects.create_user(username="denky", email="denky@pdl.dev", password="Secret123")
+    ManagedLineageAccount.objects.create(user=player, login="denky", is_primary=True)
+
+    api.force_authenticate(user=player)
+    listed = api.get("/api/v1/customer/server/accounts/")
+    assert listed.status_code == 200
+    assert listed.data["accounts"] == []
+    assert listed.data["primary"] == {"login": "denky", "status": "available"}
+    assert not ManagedLineageAccount.objects.filter(user=player, login="denky").exists()
+
+
+@pytest.mark.django_db
+def test_list_characters_reports_missing_game_account(api):
+    player = User.objects.create_user(username="denky", email="denky@pdl.dev", password="Secret123")
+    ManagedLineageAccount.objects.create(user=player, login="denky", is_primary=True)
+
+    api.force_authenticate(user=player)
+    response = api.get("/api/v1/customer/server/characters/", {"login": "denky"})
+    assert response.status_code == 404
+    assert response.data["error_code"] == "GAME_ACCOUNT_NOT_FOUND"
+    assert response.data["message"] == "Conta Lineage não encontrada."
+
+
+@pytest.mark.django_db
 def test_list_hydrates_primary_already_linked_to_current_user(api):
     player = User.objects.create_user(username="hero", email="hero@pdl.dev", password="Secret123")
     gateway = _gateway()

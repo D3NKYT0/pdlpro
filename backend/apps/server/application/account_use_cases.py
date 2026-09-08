@@ -312,6 +312,8 @@ class ListCharactersUseCase(UseCase[ListCharactersInput, list[GameCharacter]]):
 
     def execute(self, data: ListCharactersInput) -> list[GameCharacter]:
         login = data.login or data.actor.username
+        if self._lineage.get_account(login) is None:
+            raise GameAccountNotFoundError()
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
             raise AuthorizationError("Você não tem acesso a esta conta Lineage.")
         return self._lineage.list_characters(login)
@@ -344,6 +346,8 @@ class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
 
     def execute(self, data: GetCharacterInput) -> GameCharacter:
         login = data.login or data.actor.username
+        if self._lineage.get_account(login) is None:
+            raise GameAccountNotFoundError()
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
             raise AuthorizationError("Você não tem acesso a esta conta Lineage.")
         char = self._lineage.get_character(login, data.char_id)

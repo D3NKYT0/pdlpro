@@ -19,7 +19,9 @@ class DjangoAccountAccessService(IAccountAccessService):
 
     Injete pela porta IAccountAccessService. Use ``can_access`` antes de operar uma conta e
     ``can_link_more`` antes de adicionar vínculo secundário. ``list_accounts`` e ``slot_usage``
-    alimentam a seleção de contas na UI.
+    alimentam a seleção de contas na UI. A listagem reconcilia com o gateway: referências
+    locais sem conta no jogo (ou sem ``linked_user_id`` do usuário) são removidas e não
+    aparecem como vinculadas.
     """
 
     def __init__(self, lineage: ILineageGateway, slots: ILinkSlotRepository) -> None:
@@ -33,12 +35,18 @@ class DjangoAccountAccessService(IAccountAccessService):
 
     def list_accounts(self, user_id: UUID, username: str) -> list[AccessibleAccount]:
         seen: dict[str, AccessibleAccount] = {}
+        stale_pks: list[int] = []
         for row in ManagedLineageAccount.objects.filter(user__id=user_id).order_by("-is_primary", "login"):
+            if not self.can_access(user_id, username, row.login):
+                stale_pks.append(row.pk)
+                continue
             seen[row.login.lower()] = AccessibleAccount(
                 login=row.login,
                 is_primary=row.is_primary,
                 linked=True,
             )
+        if stale_pks:
+            ManagedLineageAccount.objects.filter(pk__in=stale_pks).delete()
         return list(seen.values())
 
     def can_link_more(self, user_id: UUID, username: str) -> bool:

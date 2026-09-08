@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -35,7 +35,7 @@ it('coloca o atalho de troca com o jogo ao lado do saldo', async () => {
   expect(link.closest('.wallet-balance-card')?.querySelector('.wallet-balance-copy')).toBeTruthy()
 })
 
-it('mostra banner promocional quando o catálogo traz promo ativa', async () => {
+it('mostra banner promocional e move a arte com o mouse', async () => {
   vi.mocked(paymentApi.catalog).mockResolvedValue({
     methods: [],
     packages: [],
@@ -43,10 +43,21 @@ it('mostra banner promocional quando o catálogo traz promo ativa', async () => 
     promo: { percent: '20.00', title: 'Recarga em promoção', description: '20% a mais de moedas' },
   } as any)
   mount()
-  expect(await screen.findByLabelText('Recarga em promoção')).toBeTruthy()
+  const banner = await screen.findByLabelText('Recarga em promoção')
   expect(screen.getByText('20%')).toBeTruthy()
   expect(screen.getByText('OFF')).toBeTruthy()
   expect(screen.getByText('20% a mais de moedas')).toBeTruthy()
+  vi.spyOn(banner, 'getBoundingClientRect').mockReturnValue({
+    x: 0, y: 0, top: 0, left: 0, bottom: 200, right: 400, width: 400, height: 200, toJSON: () => ({}),
+  })
+  fireEvent.mouseMove(banner, { clientX: 300, clientY: 50 })
+  await waitFor(() => {
+    expect(Number(banner.style.getPropertyValue('--promo-mx'))).toBeGreaterThan(0)
+  })
+  fireEvent.mouseLeave(banner)
+  await waitFor(() => {
+    expect(banner.style.getPropertyValue('--promo-mx')).toBe('0.000')
+  })
 })
 
 it('omite banner promocional quando o catálogo não traz promo', async () => {

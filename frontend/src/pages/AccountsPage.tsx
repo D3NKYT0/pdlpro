@@ -2,6 +2,7 @@ import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
 import { Button } from '../components/ui/Button'
+import { ErrorNotice } from '../components/ui/Feedback'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -144,7 +145,7 @@ export function AccountsPage() {
                     <strong>{item.login}</strong>
                     <small>{item.is_primary ? 'Conta principal do jogo' : 'Conta adicional vinculada'}</small>
                   </span>
-                  <b>Vinculada</b>
+                  <b>{characters.isError && item.login === selectedLogin ? 'Inválida' : 'Vinculada'}</b>
                 </div>
               ))}
             </div>
@@ -202,12 +203,25 @@ export function AccountsPage() {
             </form>
           ) : null}
 
-          {primaryAccount ? (
+          {primaryAccount && !characters.isError ? (
             <div className="account-created-state">
               <CheckCircle2 aria-hidden="true" />
               <div>
                 <strong>Conta pronta para jogar</strong>
                 <span>A conta {primaryAccount.login} está criada no servidor e vinculada a este painel.</span>
+              </div>
+            </div>
+          ) : null}
+
+          {primaryAccount && characters.isError ? (
+            <div className="account-created-state is-conflict">
+              <ShieldAlert aria-hidden="true" />
+              <div>
+                <strong>Vínculo inconsistente</strong>
+                <span>
+                  A conta {primaryAccount.login} aparece no painel, mas o servidor do jogo não confirma o acesso.
+                  Recarregue a lista de contas ou crie/vincule novamente.
+                </span>
               </div>
             </div>
           ) : null}
@@ -252,7 +266,10 @@ export function AccountsPage() {
             {selectedLogin ? <span className="account-login-chip">{selectedLogin}</span> : null}
           </div>
           {characters.isLoading ? <div className="account-empty-state">Carregando personagens...</div> : null}
-          {!characters.isLoading && selectedLogin ? (
+          {characters.isError ? (
+            <ErrorNotice error={characters.error} onRetry={() => void characters.refetch()} />
+          ) : null}
+          {!characters.isLoading && !characters.isError && selectedLogin ? (
             <table className="table">
               <thead>
                 <tr>
@@ -304,7 +321,7 @@ export function AccountsPage() {
               </tbody>
             </table>
           ) : null}
-          {!characters.isLoading && selectedLogin && !characters.data?.length ? (
+          {!characters.isLoading && !characters.isError && selectedLogin && !characters.data?.length ? (
             <div className="account-empty-state">
               <UsersRound aria-hidden="true" />
               <strong>Nenhum personagem criado</strong>
