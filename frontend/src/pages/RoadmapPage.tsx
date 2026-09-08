@@ -1,4 +1,6 @@
 import { Card } from '../components/ui/Card'
+import { RichTextContent } from '../components/ui/RichText'
+import { plainTextFromRichText } from '../lib/rich-text'
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
@@ -11,6 +13,11 @@ import {
   Meter,
   Status,
 } from "../components/programs/ProgramUI";
+
+function roadmapPreview(description: string, limit = 170): string {
+  const text = plainTextFromRichText(description)
+  return text.length > limit ? `${text.slice(0, limit)}…` : text
+}
 
 export function RoadmapPage() {
   const query = useQuery({
@@ -48,11 +55,7 @@ export function RoadmapPage() {
                 <article className="program-item" key={entry.id}>
                   <span className="panel-eyebrow">{entry.category}</span>
                   <h2>{entry.title}</h2>
-                  <p>
-                    {entry.description.length > 170
-                      ? `${entry.description.slice(0, 170)}…`
-                      : entry.description}
-                  </p>
+                  <p>{roadmapPreview(entry.description)}</p>
                   <Meter value={entry.progress} max={100} />
                   <small>
                     {entry.progress}% concluído{" "}
@@ -100,7 +103,7 @@ export function RoadmapDetailPage() {
           <h1>{entry.title}</h1>
           <Meter value={entry.progress} max={100} />
           <small className="muted">{entry.progress}% concluído</small>
-          <p style={{ whiteSpace: "pre-wrap" }}>{entry.description}</p>
+          <RichTextContent html={entry.description} />
           {entry.target_date && (
             <p className="muted">
               <CalendarDays size={17} /> Previsão:{" "}

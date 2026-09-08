@@ -98,7 +98,8 @@ class RoadmapSerializer(serializers.ModelSerializer):
     """Representa e valida uma entrada do roadmap, incluindo publicação e progresso.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. ``description`` aceita HTML
+    sanitizado (rich text).
 
     Campos declarados: ``id``, ``title``, ``description``, ``category``, ``status``,
     ``progress``, ``target_date``, ``published``, ``order``, ``updated_at``.
@@ -119,6 +120,14 @@ class RoadmapSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "updated_at"]
+
+    def validate_description(self, value: str) -> str:
+        from common.richtext import is_rich_text_empty, sanitize_rich_text
+
+        cleaned = sanitize_rich_text(value)
+        if is_rich_text_empty(cleaned):
+            raise serializers.ValidationError("A descrição é obrigatória.")
+        return cleaned
 
     def validate(self, data):
         if data.get("status") == "completed":

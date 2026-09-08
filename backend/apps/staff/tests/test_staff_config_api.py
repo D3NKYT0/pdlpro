@@ -124,11 +124,18 @@ def test_staff_can_update_coins_shop_and_news(api, staff):
 
     news = api.post(
         "/api/v1/staff/news/",
-        {"title": "Patch 1", "excerpt": "Notas", "body": "Conteúdo do patch.", "is_published": True},
+        {
+            "title": "Patch 1",
+            "excerpt": "Notas",
+            "body": '<p>Conteúdo do patch.</p><script>alert(1)</script>',
+            "is_published": True,
+        },
         format="json",
     )
     assert news.status_code == 200, news.data
     assert news.data["title"] == "Patch 1"
+    assert "<script>" not in news.data["body"]
+    assert "Conteúdo do patch." in news.data["body"]
     listed = api.get("/api/v1/staff/news/")
     assert listed.status_code == 200
     assert listed.data[0]["title"] == "Patch 1"

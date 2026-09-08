@@ -20,24 +20,37 @@ import { AchievementGrid } from '../components/AchievementGrid'
 import { useAuth } from '../contexts/AuthContext'
 import { canAccessStaff } from '../lib/staff'
 import { authApi, serverApi } from '../services/api'
+import { programsApi } from '../services/domain/programs.service'
 
-const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon }> = [
-  { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound },
-  { to: '/painel/accounts', label: 'Conta L2', text: 'Vincular login e personagens', icon: UserRoundCog },
-  { to: '/painel/inventory', label: 'Inventário', text: 'Retirar e depositar itens', icon: Package },
-  { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências', icon: WalletCards },
-  { to: '/painel/shop', label: 'Loja', text: 'Itens da loja do painel', icon: ShoppingBag },
-  { to: '/painel/games', label: 'Jogos', text: 'Roleta, caixas, pesca e mais', icon: Gamepad2 },
-  { to: '/painel/progress', label: 'Conquistas', text: 'Marcos da conta e prêmios', icon: Trophy },
+const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon; resource?: string }> = [
+  { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound, resource: 'profile' },
+  { to: '/painel/accounts', label: 'Conta L2', text: 'Vincular login e personagens', icon: UserRoundCog, resource: 'accounts' },
+  { to: '/painel/inventory', label: 'Inventário', text: 'Retirar e depositar itens', icon: Package, resource: 'inventory' },
+  { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências', icon: WalletCards, resource: 'wallet' },
+  { to: '/painel/shop', label: 'Loja', text: 'Itens da loja do painel', icon: ShoppingBag, resource: 'shop' },
+  { to: '/painel/games', label: 'Jogos', text: 'Roleta, caixas, pesca e mais', icon: Gamepad2, resource: 'games' },
+  { to: '/painel/progress', label: 'Conquistas', text: 'Marcos da conta e prêmios', icon: Trophy, resource: 'progress' },
 ]
 
 export function PainelPage() {
   const { user } = useAuth()
+  const resources = useQuery({
+    queryKey: ['resources'],
+    queryFn: programsApi.resources,
+    staleTime: 15000,
+  })
+  const resourceEnabled = (code?: string) =>
+    !code || !resources.data?.some((r) => r.code === code && !r.enabled)
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
-  const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress, enabled: Boolean(user) })
+  const progress = useQuery({
+    queryKey: ['progress'],
+    queryFn: authApi.progress,
+    enabled: Boolean(user) && resourceEnabled('progress'),
+  })
+  const baseShortcuts = shortcuts.filter((item) => resourceEnabled(item.resource))
   const dashboardShortcuts = canAccessStaff(user)
-    ? [...shortcuts, { to: '/painel/admin', label: 'Admin', text: 'Configurar o painel, rates e loja', icon: SlidersHorizontal }]
-    : shortcuts
+    ? [...baseShortcuts, { to: '/painel/admin', label: 'Admin', text: 'Configurar o painel, rates e loja', icon: SlidersHorizontal }]
+    : baseShortcuts
 
   return (
     <div className="grid panel-dashboard">
@@ -75,7 +88,7 @@ export function PainelPage() {
         </Card>
       </section>
 
-      <AchievementGrid achievements={progress.data?.achievements ?? []} />
+      {resourceEnabled('progress') ? <AchievementGrid achievements={progress.data?.achievements ?? []} /> : null}
 
       <section className="panel-section-heading">
         <div>

@@ -1,20 +1,22 @@
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { themeImage } from '../../theme/assets'
+import { programsApi } from '../../services/domain/programs.service'
 import { PdlSymbol } from '../PdlSymbol'
 
 const exploreLinks = [
   { to: '/', label: 'Início' },
   { to: '/informacoes', label: 'Informações' },
-  { to: '/rankings', label: 'Rankings' },
-  { to: '/wiki', label: 'Wiki' },
-  { to: '/news', label: 'Notícias' },
+  { to: '/rankings', label: 'Rankings', resource: 'rankings' },
+  { to: '/wiki', label: 'Wiki', resource: 'wiki' },
+  { to: '/news', label: 'Notícias', resource: 'news' },
 ]
 
 const accountLinks = [
   { to: '/login', label: 'Entrar' },
   { to: '/painel', label: 'Painel' },
-  { to: '/roadmap', label: 'Roadmap' },
-  { to: '/faq', label: 'Perguntas frequentes' },
+  { to: '/roadmap', label: 'Roadmap', resource: 'roadmap' },
+  { to: '/faq', label: 'Perguntas frequentes', resource: 'faq' },
 ]
 
 const legalLinks = [
@@ -26,6 +28,14 @@ const legalLinks = [
 export function SiteFooter() {
   const year = new Date().getFullYear()
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
+  const resources = useQuery({
+    queryKey: ['resources'],
+    queryFn: programsApi.resources,
+    staleTime: 15000,
+  })
+  const visible = (resource?: string) =>
+    !resource || !resources.data?.some((r) => r.code === resource && !r.enabled)
+  const downloadsEnabled = visible('downloads')
 
   return (
     <footer className="site-footer">
@@ -40,9 +50,11 @@ export function SiteFooter() {
           </Link>
           <p>Progressão, siege e glória no reino de Aden — um servidor Lineage feito para quem joga de verdade.</p>
           <div className="site-footer-actions">
-            <Link className="site-footer-download" to="/downloads">
-              Download
-            </Link>
+            {downloadsEnabled ? (
+              <Link className="site-footer-download" to="/downloads">
+                Download
+              </Link>
+            ) : null}
             <Link className="site-footer-account" to="/register">
               Criar conta
             </Link>
@@ -57,7 +69,7 @@ export function SiteFooter() {
         <div className="site-footer-col" role="navigation" aria-label="Explorar o site">
           <h2>Explorar</h2>
           <ul>
-            {exploreLinks.map((item) => (
+            {exploreLinks.filter((item) => visible(item.resource)).map((item) => (
               <li key={item.to}>
                 <Link to={item.to}>{item.label}</Link>
               </li>
@@ -68,7 +80,7 @@ export function SiteFooter() {
         <div className="site-footer-col" role="navigation" aria-label="Conta e suporte">
           <h2>Conta</h2>
           <ul>
-            {accountLinks.map((item) => (
+            {accountLinks.filter((item) => visible(item.resource)).map((item) => (
               <li key={item.to}>
                 <Link to={item.to}>{item.label}</Link>
               </li>

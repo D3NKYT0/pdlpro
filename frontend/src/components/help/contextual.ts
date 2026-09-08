@@ -44,7 +44,7 @@ const topics: Topic[] = [
     suggestion: copy('Por onde começo no painel do PDL?', 'Where should I start in the PDL dashboard?'), related: ['/painel/accounts', '/painel/support'],
   },
   {
-    path: '/painel/accounts', title: copy('Contas e personagens', 'Accounts and characters'), action: copy('Abrir minhas contas', 'Open my accounts'),
+    path: '/painel/accounts', title: copy('Contas e personagens', 'Accounts and characters'), action: copy('Abrir minhas contas', 'Open my accounts'), resource: 'accounts',
     tips: [
       copy('Confira qual conta L2 está selecionada antes de abrir os personagens. O inventário usa as contas vinculadas ao seu perfil.', 'Check the selected L2 account before opening its characters. The inventory uses accounts linked to your profile.'),
       copy('Vincule só contas suas. Contas reivindicadas aparecem aqui e alimentam inventário, troca e comércio.', 'Link only accounts you own. Claimed accounts show up here and feed inventory, exchange and trading.'),
@@ -134,7 +134,7 @@ const topics: Topic[] = [
     suggestion: copy('Como acompanho meu cadastro e minhas comissões de apoiador?', 'How do I track my supporter application and commissions?'), related: ['/painel/support'],
   },
   {
-    path: '/painel/profile', title: copy('Meu perfil', 'My profile'), action: copy('Abrir meu perfil', 'Open my profile'),
+    path: '/painel/profile', title: copy('Meu perfil', 'My profile'), action: copy('Abrir meu perfil', 'Open my profile'), resource: 'profile',
     tips: [
       copy('Atualize os dados de apresentação do seu perfil. As opções de acesso ficam em Conta e segurança.', 'Update your profile presentation details. Sign-in options are under Account and security.'),
       copy('Nome e foto de apresentação não alteram login nem senha — isso fica em Conta e segurança.', 'Display name and avatar do not change login or password — those live under Account and security.'),
@@ -152,7 +152,7 @@ const topics: Topic[] = [
     suggestion: copy('Como reviso as opções de segurança da minha conta?', 'How do I review my account security options?'), related: ['/painel/support'],
   },
   {
-    path: '/painel/progress', title: copy('Progresso', 'Progress'), action: copy('Abrir meu progresso', 'Open my progress'),
+    path: '/painel/progress', title: copy('Progresso', 'Progress'), action: copy('Abrir meu progresso', 'Open my progress'), resource: 'progress',
     tips: [
       copy('Consulte suas conquistas e o progresso registrado. Os requisitos de cada objetivo ajudam a escolher o próximo passo.', 'Check your achievements and recorded progress. Each goal’s requirements can help you choose your next step.'),
       copy('Conquistas completas e em andamento aparecem com requisitos claros — use-os para priorizar o próximo objetivo.', 'Completed and in-progress achievements show clear requirements — use them to pick the next goal.'),
@@ -161,7 +161,7 @@ const topics: Topic[] = [
     suggestion: copy('Como acompanho meu progresso e minhas conquistas no PDL?', 'How do I track my progress and achievements in PDL?'), related: ['/painel/recompensas'],
   },
   {
-    path: '/painel/notifications', title: copy('Avisos', 'Notifications'), action: copy('Abrir meus avisos', 'Open my notifications'),
+    path: '/painel/notifications', title: copy('Avisos', 'Notifications'), action: copy('Abrir meus avisos', 'Open my notifications'), resource: 'notifications',
     tips: [
       copy('Consulte os avisos recebidos e marque os que já leu. Para conversar com a equipe, abra o Atendimento.', 'Review received notifications and mark the ones you have read. Open Support to talk to the team.'),
       copy('Avisos não lidos ficam em destaque. Marque como lido para limpar a lista sem apagar o histórico.', 'Unread notices stay highlighted. Mark as read to clear the list without deleting history.'),
@@ -170,13 +170,22 @@ const topics: Topic[] = [
     suggestion: copy('Como acompanho os avisos e entro em contato com a equipe?', 'How do I follow notifications and contact the team?'), related: ['/painel/support'],
   },
   {
-    path: '/painel/support', title: copy('Atendimento', 'Support'), action: copy('Ir ao atendimento', 'Contact the team'),
+    path: '/painel/support', title: copy('Atendimento', 'Support'), action: copy('Ir ao atendimento', 'Contact the team'), resource: 'support',
     tips: [
       copy('Descreva o que aconteceu e a tela envolvida no chamado. Acompanhe as respostas da equipe no mesmo atendimento.', 'Describe what happened and which screen was involved in your ticket. Follow team replies in the same support conversation.'),
       copy('Inclua horário aproximado, personagem/conta e o que já tentou — isso acelera a resposta da equipe.', 'Include approximate time, character/account and what you already tried — that speeds up the team reply.'),
       copy('Não envie senhas ou códigos no chamado. A equipe nunca pede esses dados pelo chat.', 'Never send passwords or codes in a ticket. Staff never ask for those in chat.'),
     ],
     suggestion: copy('Como abro e acompanho um chamado para a equipe?', 'How do I open and follow a support ticket?'), related: ['/painel/notifications'],
+  },
+  {
+    path: '/painel/ajuda', title: copy('Ajuda', 'Help'), action: copy('Abrir a ajuda', 'Open help'), resource: 'help',
+    tips: [
+      copy('Converse com o Denkynho sobre a tela em que você está. As respostas usam o contexto do painel e do handbook.', 'Chat with Denkynho about the screen you are on. Answers use panel context and the handbook.'),
+      copy('Prefira perguntas objetivas. Se precisar da equipe humana, abra um chamado no Atendimento.', 'Prefer clear questions. If you need the human team, open a Support ticket.'),
+      copy('O cantinho do mascote continua disponível mesmo quando só a conversa de ajuda estiver em pausa.', 'The pet corner can stay available even when only the help chat is paused.'),
+    ],
+    suggestion: copy('Como uso a ajuda do Denkynho nesta tela?', 'How do I use Denkynho help on this screen?'), related: ['/painel/support'],
   },
   {
     path: '/painel/admin', title: copy('Administração', 'Administration'), action: copy('Abrir administração', 'Open administration'), staff: true,

@@ -32,11 +32,13 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 | [PdlSymbol](../../frontend/src/components/PdlSymbol.tsx) | Emblema vetorial decorativo do PDL, sem iniciais; reutilizado pelos shells e carregamentos |
 | [Tabs](../../frontend/src/components/ui/Tabs.tsx) | Abas controladas, setas, Home/End e associação aos painéis |
 | [Toggle](../../frontend/src/components/ui/Toggle.tsx) | Checkbox nativo, nome acessível e bloqueio durante envio |
+| [RichTextEditor e RichTextContent](../../frontend/src/components/ui/RichText.tsx) | Edição TipTap e leitura sanitizada (DOMPurify); usado em notícias e roadmap |
 | [Pagination](../../frontend/src/components/ui/Pagination.tsx) | Página atual, limites e bloqueio durante consulta; a tela busca os dados |
 | [EmptyState, LoadingState e ErrorNotice](../../frontend/src/components/ui/Feedback.tsx) | Vazio, carregamento anunciado e erro com tentativa explícita |
 
 Os componentes básicos publicam `data-theme-part` estável (`button`, `field`, `card`,
-`page-header`, `tabs`, `select`, `empty-state`, `loading-state` e `error-notice`). Temas podem usar
+`page-header`, `tabs`, `select`, `empty-state`, `loading-state`, `error-notice`,
+`rich-text-editor` e `rich-text-content`). Temas podem usar
 esses seletores para alterar a aparência, mas não devem esconder estados, mudar semântica
 ou substituir a interação implementada pelo componente.
 
@@ -70,6 +72,21 @@ import { Button, ButtonLink, IconButton } from '../../components/ui/Button'
 ```
 
 `ButtonLink` precisa do Router da aplicação e mantém semântica de link, inclusive abrir em outra aba. Não use um botão com `window.location` para navegação interna. `IconButton` exige `label`; a cor e o ícone não substituem a descrição da ação. A variante de perigo não implementa confirmação ou exclusão: a tela continua responsável por essas regras.
+
+## Rich text
+
+`RichTextEditor` grava HTML controlado (`value` / `onChange`). `RichTextContent` sanitiza com DOMPurify antes de exibir. No backend, `common.richtext.sanitize_rich_text` limpa o mesmo subconjunto na gravação de notícias e roadmap. Texto legado sem tags continua legível.
+
+```tsx
+import { Field } from '../../components/ui/Field'
+import { RichTextContent, RichTextEditor } from '../../components/ui/RichText'
+import { isRichTextEmpty } from '../../lib/rich-text'
+
+<Field label="Conteúdo">
+  <RichTextEditor value={body} onChange={setBody} required aria-label="Conteúdo" />
+</Field>
+{!isRichTextEmpty(body) && <RichTextContent html={body} />}
+```
 
 ## Formulário e ação assíncrona
 

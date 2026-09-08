@@ -26,6 +26,7 @@ Centralize código quando ele representa a mesma responsabilidade e precisa evol
 | [require_offline_character](../../backend/apps/server/domain/character_rules.py) | Gateways SQLAlchemy e em memória validam personagem inexistente ou online com as mesmas exceções |
 | [TitleSlugMixin](../../backend/apps/content/infrastructure/mixins.py) | News e WikiPage geram slug apenas quando vazio e preservam slugs publicados |
 | [DocsChromeMixin](../../backend/common/openapi_views.py) | Swagger e ReDoc recebem o mesmo contexto visual |
+| [sanitize_rich_text](../../backend/common/richtext.py) | Notícias e roadmap sanitizam HTML permitido na gravação staff |
 
 A busca de personagem continua restrita a `login` e `char_id` no gateway. A regra compartilhada recebe o resultado autorizado; ela não resolve acesso. `TitleSlugMixin` não resolve colisões de slug nem altera as restrições do banco. Não houve alteração de campos ou necessidade de migração nesta extração.
 

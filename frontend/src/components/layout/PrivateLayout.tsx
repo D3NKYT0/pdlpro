@@ -66,6 +66,8 @@ export function PrivateLayout() {
     staleTime: 15000,
   });
   const codes: Record<string, string> = {
+    profile: "profile",
+    accounts: "accounts",
     wallet: "wallet",
     shop: "shop",
     inventory: "inventory",
@@ -74,7 +76,13 @@ export function PrivateLayout() {
     games: "games",
     recompensas: "games",
     apoiadores: "supporters",
+    progress: "progress",
+    notifications: "notifications",
+    support: "support",
+    ajuda: "help",
   };
+  const resourceEnabled = (code: string) =>
+    !resources.data?.some((r) => r.code === code && !r.enabled);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -88,13 +96,13 @@ export function PrivateLayout() {
   const notices = useQuery({
     queryKey: ["notifications"],
     queryFn: notificationApi.list,
-    enabled: Boolean(user),
+    enabled: Boolean(user) && resourceEnabled("notifications"),
   });
   const unread = notices.data?.unread ?? 0;
   const support = useQuery({
     queryKey: ["support-tickets"],
     queryFn: supportApi.list,
-    enabled: Boolean(user),
+    enabled: Boolean(user) && resourceEnabled("support"),
   });
   const pet = useQuery({
     queryKey: ["denkynho-pet", user?.id],

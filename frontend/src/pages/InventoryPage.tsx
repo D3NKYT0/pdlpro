@@ -273,7 +273,7 @@ export function InventoryPage() {
 
       <Tabs id="inventory" label="Escolha o inventário" className="inventory-tabs" value={activeTab} onChange={setActiveTab} items={[
         { id: 'characters', label: 'Inventário dos personagens', icon: <PackageOpen aria-hidden="true" /> },
-        { id: 'bag', label: <>Bag do site {bagItemsQuantity > 0 && <b>{bagItemsQuantity.toLocaleString('pt-BR')}</b>}</>, icon: <Backpack aria-hidden="true" /> },
+        { id: 'bag', label: 'Bag do site', icon: <Backpack aria-hidden="true" /> },
       ]} />
 
       {activeTab === 'characters' ? (

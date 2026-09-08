@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { PublicEmpty, PublicHero } from '../components/public/PublicChrome'
+import { RichTextContent } from '../components/ui/RichText'
 import { contentApi } from '../services/api'
 
 export function NewsDetailPage() {
@@ -22,7 +23,7 @@ export function NewsDetailPage() {
           <PublicEmpty>Carregando a notícia...</PublicEmpty>
         ) : news.data ? (
           <article className="public-prose">
-            <div className="public-body">{news.data.body}</div>
+            <RichTextContent html={news.data.body} className="public-body" />
           </article>
         ) : (
           <PublicEmpty>Esta notícia não foi encontrada.</PublicEmpty>

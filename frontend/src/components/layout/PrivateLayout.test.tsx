@@ -17,9 +17,13 @@ const themeMock = vi.hoisted(() => ({
   } as { presentation?: { renderer: 'portal-v1'; shells: { panel: { kicker: string; brand: string }; admin: { kicker: string; brand: string } } } | null },
 }))
 
+const resourcesMock = vi.hoisted(() => ({
+  data: [] as Array<{ code: string; enabled: boolean }>,
+}))
+
 vi.mock('@tanstack/react-query', () => ({
   useQuery: ({ queryKey }: { queryKey: string[] }) => {
-    if (queryKey[0] === 'resources') return { data: [], isPending: false, error: null }
+    if (queryKey[0] === 'resources') return { data: resourcesMock.data, isPending: false, error: null }
     if (queryKey[0] === 'support-tickets') return { data: { summary: { waiting_user: 0 } } }
     if (queryKey[0] === 'denkynho-pet') return {
       data: {
@@ -51,6 +55,7 @@ vi.mock('../../theme/assets', () => ({ themeImage: (path: string) => `/theme/${p
 
 afterEach(() => {
   cleanup()
+  resourcesMock.data = []
   themeMock.current.presentation = {
     renderer: 'portal-v1',
     shells: {
@@ -106,4 +111,17 @@ it('preserva o shell original quando o tema default está ativo', () => {
   expect(screen.getByText('Área do jogador')).toBeVisible()
   expect(screen.getByText('Painel', { selector: '.brand' })).toBeVisible()
   expect(container.querySelector('.panel-brand-mark')).toHaveAttribute('src', '/theme/pdl-symbol.svg')
+})
+
+it('esconde itens do menu quando o recurso correspondente está pausado', () => {
+  resourcesMock.data = [
+    { code: 'accounts', enabled: false },
+    { code: 'support', enabled: false },
+    { code: 'help', enabled: false },
+  ]
+  renderAt('/painel/profile')
+  expect(screen.queryByRole('link', { name: 'Conta L2' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Meu perfil' })).toBeVisible()
 })

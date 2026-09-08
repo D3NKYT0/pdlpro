@@ -186,6 +186,40 @@ def test_roadmap_publication_and_staff_permissions(api, staff):
     assert response.status_code == 200 and response.data["progress"] == 100
 
 
+def test_roadmap_description_sanitizes_html(staff):
+    created = staff.post(
+        "/api/v1/staff/roadmap/",
+        {
+            "title": "Expansão",
+            "description": '<p>Novo mapa</p><script>alert(1)</script>',
+            "category": "Servidor",
+            "status": "planned",
+            "progress": 0,
+            "published": True,
+            "order": 1,
+        },
+        format="json",
+    )
+    assert created.status_code == 201, created.data
+    assert "<script>" not in created.data["description"]
+    assert "Novo mapa" in created.data["description"]
+    empty = staff.post(
+        "/api/v1/staff/roadmap/",
+        {
+            "title": "Vazio",
+            "description": "<p><br></p>",
+            "category": "Servidor",
+            "status": "planned",
+            "progress": 0,
+            "published": False,
+            "order": 2,
+        },
+        format="json",
+    )
+    assert empty.status_code == 400
+    assert "descrição" in str(empty.data).lower()
+
+
 @pytest.mark.parametrize(
     "code,path",
     [
@@ -194,6 +228,17 @@ def test_roadmap_publication_and_staff_permissions(api, staff):
         ("roadmap", "public/roadmap/"),
         ("battle-pass", "customer/games/battle-pass/details/"),
         ("fishing", "customer/games/fishing/details/"),
+        ("accounts", "customer/server/accounts/"),
+        ("progress", "shared/me/progress/"),
+        ("notifications", "customer/notifications/"),
+        ("support", "customer/support/"),
+        ("help", "shared/content/assistant/reply/"),
+        ("news", "public/news/"),
+        ("rankings", "public/server/rankings/pvp/"),
+        ("wiki", "public/wiki/"),
+        ("faq", "public/faq/"),
+        ("downloads", "public/downloads/"),
+        ("calendar", "public/calendar/"),
     ],
 )
 def test_resource_gate_enforced_on_api(api, staff, code, path):
@@ -209,7 +254,8 @@ def test_resource_gate_enforced_on_api(api, staff, code, path):
         ).status_code
         == 200
     )
-    assert api.get("/api/v1/" + path).status_code == 200
+    # POST-only routes (ex.: ajuda) may answer 405 when the gate is open.
+    assert api.get("/api/v1/" + path).status_code != 403
 
 
 def test_package_coupon_bonus_checkout_and_commission(api, player, supporter):

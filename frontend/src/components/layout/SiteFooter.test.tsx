@@ -1,21 +1,34 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, expect, it, vi } from 'vitest'
 import { SiteFooter } from './SiteFooter'
+
+vi.mock('../../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn(async () => []) },
+}))
 
 afterEach(() => {
   cleanup()
   vi.unstubAllEnvs()
 })
 
-it('apresenta marca, navegação útil e documentos legais sem atalhos decorativos', () => {
-  const { container } = render(
-    <MemoryRouter>
-      <SiteFooter />
-    </MemoryRouter>,
+function mount(resources: Array<{ code: string; enabled: boolean }> = []) {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  client.setQueryData(['resources'], resources)
+  return render(
+    <QueryClientProvider client={client}>
+      <MemoryRouter>
+        <SiteFooter />
+      </MemoryRouter>
+    </QueryClientProvider>,
   )
+}
+
+it('apresenta marca, navegação útil e documentos legais sem atalhos decorativos', () => {
+  const { container } = mount()
 
   expect(screen.getByRole('contentinfo')).toBeVisible()
   expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/')
@@ -45,14 +58,22 @@ it('apresenta marca, navegação útil e documentos legais sem atalhos decorativ
 it('expõe a comunidade apenas quando a URL do Discord está configurada', () => {
   vi.stubEnv('VITE_DISCORD_URL', 'https://discord.gg/pdl')
 
-  render(
-    <MemoryRouter>
-      <SiteFooter />
-    </MemoryRouter>,
-  )
+  mount()
 
   const community = screen.getByRole('link', { name: 'Comunidade' })
   expect(community).toHaveAttribute('href', 'https://discord.gg/pdl')
   expect(community).toHaveAttribute('target', '_blank')
   expect(community).toHaveAttribute('rel', 'noreferrer')
+})
+
+it('oculta links de conteúdo pausados no rodapé', () => {
+  mount([
+    { code: 'wiki', enabled: false },
+    { code: 'faq', enabled: false },
+    { code: 'downloads', enabled: false },
+  ])
+  expect(screen.queryByRole('link', { name: 'Wiki' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Perguntas frequentes' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Rankings' })).toBeVisible()
 })

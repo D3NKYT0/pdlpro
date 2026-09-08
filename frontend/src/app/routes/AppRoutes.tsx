@@ -78,15 +78,15 @@ export function AppRoutes() {
           <Route element={<PublicContent />}>
             <Route path="/roadmap" element={<ResourceGate code="roadmap"><RoadmapPage /></ResourceGate>} />
             <Route path="/roadmap/:id" element={<ResourceGate code="roadmap"><RoadmapDetailPage /></ResourceGate>} />
-            <Route path="/rankings" element={<RankingsPage />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/news/:slug" element={<NewsDetailPage />} />
+            <Route path="/rankings" element={<ResourceGate code="rankings"><RankingsPage /></ResourceGate>} />
+            <Route path="/news" element={<ResourceGate code="news"><NewsPage /></ResourceGate>} />
+            <Route path="/news/:slug" element={<ResourceGate code="news"><NewsDetailPage /></ResourceGate>} />
             <Route path="/informacoes" element={<InfoPage />} />
-            <Route path="/wiki" element={<WikiPage />} />
-            <Route path="/wiki/:slug" element={<WikiDetailPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/faq" element={<FaqPage />} />
-            <Route path="/downloads" element={<DownloadsPage />} />
+            <Route path="/wiki" element={<ResourceGate code="wiki"><WikiPage /></ResourceGate>} />
+            <Route path="/wiki/:slug" element={<ResourceGate code="wiki"><WikiDetailPage /></ResourceGate>} />
+            <Route path="/calendar" element={<ResourceGate code="calendar"><CalendarPage /></ResourceGate>} />
+            <Route path="/faq" element={<ResourceGate code="faq"><FaqPage /></ResourceGate>} />
+            <Route path="/downloads" element={<ResourceGate code="downloads"><DownloadsPage /></ResourceGate>} />
             <Route path="/terms" element={<LegalPage />} />
             <Route path="/privacy" element={<LegalPage />} />
             <Route path="/agreement" element={<LegalPage />} />
@@ -99,17 +99,17 @@ export function AppRoutes() {
             <Route path="/painel/recompensas" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
             <Route path="/painel/wallet/jogo" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
             <Route path="/painel" element={<PainelPage />} />
-            <Route path="/painel/profile" element={<ProfilePage />} />
+            <Route path="/painel/profile" element={<ResourceGate code="profile"><ProfilePage /></ResourceGate>} />
             <Route path="/painel/security" element={<AccountSecurityPage />} />
             <Route path="/painel/wallet" element={<ResourceGate code="wallet"><WalletPage /></ResourceGate>} />
-            <Route path="/painel/accounts" element={<AccountsPage />} />
-            <Route path="/painel/accounts/:login/:charId" element={<CharacterPage />} />
+            <Route path="/painel/accounts" element={<ResourceGate code="accounts"><AccountsPage /></ResourceGate>} />
+            <Route path="/painel/accounts/:login/:charId" element={<ResourceGate code="accounts"><CharacterPage /></ResourceGate>} />
             <Route path="/painel/inventory" element={<ResourceGate code="inventory"><InventoryPage /></ResourceGate>} />
             <Route path="/painel/games" element={<ResourceGate code="games"><GamesPage /></ResourceGate>} />
-            <Route path="/painel/progress" element={<ProgressPage />} />
-            <Route path="/painel/notifications" element={<NotificationsPage />} />
-            <Route path="/painel/support" element={<SupportPage />} />
-            <Route path="/painel/ajuda" element={<HelpPage />} />
+            <Route path="/painel/progress" element={<ResourceGate code="progress"><ProgressPage /></ResourceGate>} />
+            <Route path="/painel/notifications" element={<ResourceGate code="notifications"><NotificationsPage /></ResourceGate>} />
+            <Route path="/painel/support" element={<ResourceGate code="support"><SupportPage /></ResourceGate>} />
+            <Route path="/painel/ajuda" element={<ResourceGate code="help"><HelpPage /></ResourceGate>} />
             <Route path="/painel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />
             <Route path="/painel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
             <Route path="/painel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />

@@ -1,5 +1,7 @@
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
+import { RichTextEditor } from '../../components/ui/RichText'
+import { isRichTextEmpty } from '../../lib/rich-text'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Check, X, Plus, Pencil, Trash2 } from "lucide-react";
@@ -16,6 +18,7 @@ import {
 } from "../../components/programs/ProgramUI";
 import { useProgramAction } from "../../components/programs/useProgramAction";
 import { AdminHeader } from "./AdminChrome";
+import toast from "react-hot-toast";
 
 export function AdminResourcesPage() {
   const query = useQuery({
@@ -110,12 +113,17 @@ export function AdminRoadmapPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const f = new FormData(e.currentTarget);
+              const description = edit.description || "";
+              if (isRichTextEmpty(description)) {
+                toast.error("Informe a descrição da atualização");
+                return;
+              }
               void action
                 .run(() =>
                   programsApi.saveRoadmap(
                     {
                       title: String(f.get("title")),
-                      description: String(f.get("description")),
+                      description,
                       category: String(f.get("category")),
                       status: String(f.get("status")),
                       progress: Number(f.get("progress")),
@@ -142,10 +150,15 @@ export function AdminRoadmapPage() {
             </label>
             <label>
               Descrição
-              <textarea
-                name="description"
+              <RichTextEditor
+                value={edit.description || ""}
+                onChange={(html) =>
+                  setEdit((current) =>
+                    current ? { ...current, description: html } : current,
+                  )
+                }
                 required
-                defaultValue={edit.description}
+                aria-label="Descrição"
               />
             </label>
             <div className="program-fields">

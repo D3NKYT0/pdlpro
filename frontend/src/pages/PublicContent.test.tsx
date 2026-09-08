@@ -74,12 +74,24 @@ it.each([
   expect(await screen.findByText(message)).toBeTruthy()
 })
 
-it.each(['news', 'wiki'] as const)('detalhe de %s usa slug e apresenta conteúdo como texto', async kind => {
-  const method = kind === 'news' ? contentApi.newsDetail : contentApi.wikiPage
-  vi.mocked(method).mockResolvedValue({ title: 'Guia', body: '<script>alert(1)</script>', summary: 'Resumo', category: 'Geral' } as any)
-  mount(kind === 'news' ? <NewsDetailPage /> : <WikiDetailPage />, `/${kind}/guide`, `/${kind}/:slug`)
+it('detalhe de notícia renderiza HTML seguro e remove script', async () => {
+  vi.mocked(contentApi.newsDetail).mockResolvedValue({
+    title: 'Guia',
+    body: '<p>Olá mundo</p><script>alert(1)</script>',
+    summary: 'Resumo',
+    category: 'Geral',
+  } as any)
+  mount(<NewsDetailPage />, '/news/guide', '/news/:slug')
+  expect(await screen.findByText('Olá mundo')).toBeTruthy()
+  expect(contentApi.newsDetail).toHaveBeenCalledWith('guide')
+  expect(document.querySelector('script')).toBeNull()
+})
+
+it('detalhe da wiki apresenta conteúdo como texto escapado', async () => {
+  vi.mocked(contentApi.wikiPage).mockResolvedValue({ title: 'Guia', body: '<script>alert(1)</script>', summary: 'Resumo', category: 'Geral' } as any)
+  mount(<WikiDetailPage />, '/wiki/guide', '/wiki/:slug')
   expect(await screen.findByText('<script>alert(1)</script>')).toBeTruthy()
-  expect(method).toHaveBeenCalledWith('guide')
+  expect(contentApi.wikiPage).toHaveBeenCalledWith('guide')
   expect(document.querySelector('script')).toBeNull()
 })
 

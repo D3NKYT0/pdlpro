@@ -305,9 +305,11 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
     """
 
     def execute(self, data: dict) -> dict:
+        from common.richtext import is_rich_text_empty, sanitize_rich_text
+
         title = str(data.get("title") or "").strip()
-        body = str(data.get("body") or "").strip()
-        if not title or not body:
+        body = sanitize_rich_text(str(data.get("body") or ""))
+        if not title or is_rich_text_empty(body):
             raise ValidationDomainError("Título e conteúdo são obrigatórios.")
         row = News.objects.filter(id=data["id"]).first() if data.get("id") else None
         if row is None:

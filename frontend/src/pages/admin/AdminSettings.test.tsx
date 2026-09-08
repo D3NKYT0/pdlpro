@@ -18,6 +18,13 @@ import { AdminAccountsPage } from './AdminAccountsPage'
 
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../../components/ItemIcon', () => ({ ItemIcon: () => null }))
+vi.mock('../../components/ui/RichText', () => ({
+  RichTextEditor: ({ value, onChange }: { value: string; onChange: (next: string) => void }) => (
+    <textarea aria-label="Conteúdo" value={value} onChange={(event) => onChange(event.target.value)} />
+  ),
+  RichTextContent: ({ html }: { html: string }) => <div>{html}</div>,
+  isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
+}))
 vi.mock('../../lib/item-icons', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
 vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
 

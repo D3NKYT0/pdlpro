@@ -1,0 +1,158 @@
+.rich-text-editor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid rgba(197, 161, 97, 0.27);
+  border-radius: 2px;
+  background: rgba(6, 6, 5, 0.7);
+}
+
+.rich-text-editor.is-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.rich-text-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.16);
+  background: rgba(197, 161, 97, 0.05);
+}
+
+.rich-text-toolbar-sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 2px 4px;
+  background: rgba(197, 161, 97, 0.2);
+}
+
+.rich-text-tool {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: rgba(245, 239, 227, 0.78);
+  cursor: pointer;
+}
+
+.rich-text-tool:hover:not(:disabled) {
+  border-color: rgba(197, 161, 97, 0.35);
+  color: #fff;
+  background: rgba(197, 161, 97, 0.1);
+}
+
+.rich-text-tool.is-active {
+  border-color: rgba(197, 161, 97, 0.45);
+  color: var(--panel-gold-bright, #c5a161);
+  background: rgba(197, 161, 97, 0.14);
+}
+
+.rich-text-tool:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.rich-text-editor .tiptap,
+.rich-text-prose {
+  min-height: 180px;
+  max-height: 420px;
+  overflow: auto;
+  padding: 12px 14px;
+  outline: none;
+  color: #fff;
+  font: inherit;
+  line-height: 1.55;
+}
+
+.rich-text-editor .tiptap p.is-editor-empty:first-child::before,
+.rich-text-editor .tiptap .is-empty::before {
+  float: left;
+  height: 0;
+  color: rgba(255, 255, 255, 0.35);
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+.rich-text-required {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rich-text-content,
+.rich-text-editor .tiptap {
+  word-break: break-word;
+}
+
+.rich-text-content p,
+.rich-text-editor .tiptap p {
+  margin: 0 0 0.85em;
+}
+
+.rich-text-content p:last-child,
+.rich-text-editor .tiptap p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-content ul,
+.rich-text-content ol,
+.rich-text-editor .tiptap ul,
+.rich-text-editor .tiptap ol {
+  margin: 0 0 0.85em;
+  padding-left: 1.35em;
+}
+
+.rich-text-content a,
+.rich-text-editor .tiptap a {
+  color: var(--panel-gold-bright, #c5a161);
+  text-decoration: underline;
+}
+
+.rich-text-content h2,
+.rich-text-content h3,
+.rich-text-editor .tiptap h2,
+.rich-text-editor .tiptap h3 {
+  margin: 0.4em 0 0.55em;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.rich-text-content h2,
+.rich-text-editor .tiptap h2 {
+  font-size: 1.25em;
+}
+
+.rich-text-content h3,
+.rich-text-editor .tiptap h3 {
+  font-size: 1.1em;
+}
+
+.rich-text-content blockquote,
+.rich-text-editor .tiptap blockquote {
+  margin: 0 0 0.85em;
+  padding-left: 12px;
+  border-left: 3px solid rgba(197, 161, 97, 0.45);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.rich-text-content code,
+.rich-text-editor .tiptap code {
+  padding: 0.1em 0.35em;
+  border: 1px solid rgba(197, 161, 97, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.92em;
+}
+
+.public-body.rich-text-content {
+  white-space: normal;
+}

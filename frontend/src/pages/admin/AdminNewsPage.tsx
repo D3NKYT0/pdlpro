@@ -2,6 +2,8 @@ import { Card } from '../../components/ui/Card'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
+import { RichTextEditor } from '../../components/ui/RichText'
+import { isRichTextEmpty } from '../../lib/rich-text'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { FilePenLine, Newspaper, PencilLine, Send } from 'lucide-react'
@@ -30,6 +32,10 @@ export function AdminNewsPage() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
+    if (isRichTextEmpty(body)) {
+      toast.error('Informe o conteúdo da notícia')
+      return
+    }
     await action.run(async () => {
       await staffApi.saveNews({
         id: editing || undefined,
@@ -56,7 +62,7 @@ export function AdminNewsPage() {
           </header>
           <Field>Título <small>{title.length}/120</small><input maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} required /></Field>
           <Field>Resumo <small>{excerpt.length}/240</small><input maxLength={240} value={excerpt} onChange={(e) => setExcerpt(e.target.value)} /></Field>
-          <Field>Conteúdo<textarea value={body} onChange={(e) => setBody(e.target.value)} rows={9} required /></Field>
+          <Field>Conteúdo<RichTextEditor value={body} onChange={setBody} required aria-label="Conteúdo" /></Field>
         </Card>
 
         <Card as="aside" className="admin-news-publish">
@@ -69,7 +75,7 @@ export function AdminNewsPage() {
           </label>
           <div className="admin-news-checklist">
             <span><small>Título</small><b>{title.trim() ? 'Pronto' : 'Pendente'}</b></span>
-            <span><small>Conteúdo</small><b>{body.trim() ? 'Pronto' : 'Pendente'}</b></span>
+            <span><small>Conteúdo</small><b>{isRichTextEmpty(body) ? 'Pendente' : 'Pronto'}</b></span>
           </div>
           <AdminSaveBar saving={saving} label={editing ? 'Atualizar notícia' : published ? 'Publicar notícia' : 'Salvar rascunho'} />
           {editing ? <Button className="ghost" type="button" onClick={resetEditor}>Cancelar edição</Button> : null}

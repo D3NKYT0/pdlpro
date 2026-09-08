@@ -32,10 +32,12 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
   const pt = language === 'pt'
   const cue = pet?.cue
   const pose = poses.find(item => item.id === (pet?.emotion?.idle_pose || pet?.emotion?.pose)) ?? poses[0]
-  const ticket = supportTicketPrefill(context?.path ?? path, language)
+  const helpEnabled = !resources?.some((resource) => resource.code === 'help' && !resource.enabled)
+  const supportEnabled = !resources?.some((resource) => resource.code === 'support' && !resource.enabled)
+  const ticket = supportEnabled ? supportTicketPrefill(context?.path ?? path, language) : null
   const triggerLabel = cue ? cue.message[language] : (pt ? 'Denkynho: ajuda nesta tela' : 'Denkynho: help on this screen')
   const helpPath = context ? `/painel/ajuda?from=${encodeURIComponent(context.path)}` : '/painel/ajuda'
-  const petCare = careShortcut(cue?.id, language)
+  const petCare = helpEnabled ? careShortcut(cue?.id, language) : null
   const attributes = pet ? [
     { id: 'satiety', label: pt ? 'Saciedade' : 'Satiety', value: pet.attributes.satiety },
     { id: 'energy', label: pt ? 'Energia' : 'Energy', value: pet.attributes.energy },
@@ -97,17 +99,17 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
             ))}
           </div>
           <div className="contextual-help-care">
-            <ButtonLink size="sm" to={helpPath}>{pt ? 'Abrir o cantinho' : 'Open the den'}</ButtonLink>
+            {helpEnabled ? <ButtonLink size="sm" to={helpPath}>{pt ? 'Abrir o cantinho' : 'Open the den'}</ButtonLink> : null}
             {petCare ? <ButtonLink size="sm" variant="secondary" to={helpPath}>{petCare.label}</ButtonLink> : null}
           </div>
         </section> : null}
 
         <section className="contextual-help-guide">
-          {context && <p className="muted contextual-help-ask"><span>{pt ? 'Pergunte:' : 'Ask:'}</span> {context.suggestion}</p>}
+          {context && helpEnabled ? <p className="muted contextual-help-ask"><span>{pt ? 'Pergunte:' : 'Ask:'}</span> {context.suggestion}</p> : null}
           {loading && <LoadingState>{pt ? 'Verificando recursos disponíveis…' : 'Checking available features…'}</LoadingState>}
           <ErrorNotice error={Boolean(error)} fallback={pt ? 'Não foi possível verificar os recursos. Os atalhos de módulos ficam ocultos até a próxima consulta.' : 'Could not check available features. Module shortcuts stay hidden until the next check.'} />
           <div className="contextual-help-actions">
-            <ButtonLink size="sm" to={helpPath}>{pt ? 'Conversar sobre esta tela' : 'Chat about this screen'}</ButtonLink>
+            {helpEnabled ? <ButtonLink size="sm" to={helpPath}>{pt ? 'Conversar sobre esta tela' : 'Chat about this screen'}</ButtonLink> : null}
             {ticket && <ButtonLink size="sm" variant="secondary" to={ticket.to}>{ticket.label}</ButtonLink>}
             {!loading && context?.actions.filter(action => action.to !== context.path).map(action => <ButtonLink key={action.to} size="sm" variant="secondary" to={action.to}>{action.label}</ButtonLink>)}
           </div>

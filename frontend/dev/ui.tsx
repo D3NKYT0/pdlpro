@@ -12,6 +12,7 @@ import { EmptyState, ErrorNotice, LoadingState } from '../src/components/ui/Feed
 import { Toggle } from '../src/components/ui/Toggle'
 import { Tabs } from '../src/components/ui/Tabs'
 import { Pagination } from '../src/components/ui/Pagination'
+import { RichTextContent, RichTextEditor } from '../src/components/ui/RichText'
 import { useAsyncAction } from '../src/hooks/useAsyncAction'
 import { PdlSymbol } from '../src/components/PdlSymbol'
 import '../src/styles/global.css'
@@ -27,6 +28,7 @@ function Showcase() {
   const [saved, setSaved] = useState(false)
   const [failed, setFailed] = useState(true)
   const [lastAction, setLastAction] = useState('Escolha uma ação para experimentar.')
+  const [richText, setRichText] = useState('<p>Escreva com <strong>negrito</strong>, listas e links.</p>')
   const action = useAsyncAction()
   return <main className="panel-app ui-showcase">
     <PageHeader eyebrow="PDL PRO · Biblioteca de interface" title="Uma base para todas as telas" description="Componentes reais do painel. Explore estados, teclado e ações sem acessar a API." />
@@ -61,6 +63,13 @@ function Showcase() {
         <form className="card" onSubmit={event => { event.preventDefault(); void action.run(async () => { setSaved(false); await new Promise(resolve => setTimeout(resolve, 700)); setSaved(true) }) }}>
           <h2>Formulário</h2><Field label="Nome" hint="Exibido aos jogadores."><input placeholder="Nome do servidor" required /></Field><Field label="Assunto"><Select value={topic} onChange={setTopic} options={[{ value: 'all', label: 'Todos os assuntos' }, { value: 'getting_started', label: 'Primeiros passos' }, { value: 'support', label: 'Ajuda e atendimento' }]} /></Field><Field label="Descrição"><textarea rows={2} placeholder="Conte sobre seu servidor" /></Field><Toggle label="Disponível aos jogadores" checked={enabled} onChange={event => setEnabled(event.target.checked)} /><div className="ui-showcase-actions"><Button type="submit" busy={action.pending} busyLabel="Salvando...">Salvar exemplo</Button></div>{saved && <p role="status">Exemplo salvo localmente.</p>}
         </form>
+        <Card>
+          <h2>Rich text</h2>
+          <p className="muted">Editor TipTap e pré-visualização sanitizada, como em notícias e roadmap.</p>
+          <Field label="Conteúdo"><RichTextEditor value={richText} onChange={setRichText} /></Field>
+          <h3>Pré-visualização</h3>
+          <RichTextContent html={richText} />
+        </Card>
         <Card><h2>Consultas</h2><LoadingState /><EmptyState>Nenhum registro encontrado.</EmptyState><ErrorNotice error={failed ? new Error('Não foi possível carregar os dados.') : null} onRetry={() => setFailed(false)} /></Card>
         <Card><h2>Validação e navegação</h2><Field label="E-mail" error={<span id="email-error">Informe um e-mail válido.</span>}><input defaultValue="incompleto" aria-invalid="true" aria-describedby="email-error" /></Field><Pagination page={page} pages={3} onChange={setPage} /><p className="muted">Use Tab para navegar, Espaço nos controles e setas nas abas.</p></Card>
       </div>

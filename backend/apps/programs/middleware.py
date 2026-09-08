@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .models import SystemResource
 
 # Staff administration remains reachable even when a customer-facing module is off.
+# profile uses shared/me/ for the whole session — gated only on the frontend.
 RESOURCE_PATHS = {
     "supporters": ("customer/supporters/",),
     "roadmap": ("public/roadmap/",),
@@ -15,6 +16,21 @@ RESOURCE_PATHS = {
     "battle-pass": ("customer/games/battle-pass/",),
     "daily-bonus": ("customer/games/daily-bonus/",),
     "fishing": ("customer/games/fishing/",),
+    "accounts": (
+        "customer/server/accounts/",
+        "customer/server/characters/",
+        "customer/server/services/",
+    ),
+    "progress": ("shared/me/progress/", "shared/me/rewards/"),
+    "notifications": ("customer/notifications/", "customer/push/"),
+    "support": ("customer/support/",),
+    "help": ("shared/content/assistant/reply/",),
+    "news": ("public/news/", "shared/content/news/"),
+    "rankings": ("public/server/rankings/",),
+    "wiki": ("public/wiki/",),
+    "faq": ("public/faq/", "shared/content/faq/"),
+    "downloads": ("public/downloads/",),
+    "calendar": ("public/calendar/",),
 }
 
 
