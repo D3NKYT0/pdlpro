@@ -854,7 +854,67 @@ html.pdl-panel .admin-hub {
 }
 
 html.pdl-panel .admin-category {
+  --admin-tone: var(--panel-gold-bright);
+  --admin-tone-soft: rgba(197, 161, 97, 0.1);
+  --admin-tone-border: rgba(197, 161, 97, 0.22);
+  --admin-tone-glow: rgba(197, 161, 97, 0.08);
   padding: 22px 24px;
+  border-color: var(--admin-tone-border);
+  background:
+    linear-gradient(90deg, var(--admin-tone-soft), transparent 42%),
+    rgba(5, 5, 4, 0.42);
+  box-shadow: inset 3px 0 0 var(--admin-tone);
+}
+
+html.pdl-panel .admin-category[data-tone="programs"] {
+  --admin-tone: #3fb9a0;
+  --admin-tone-soft: rgba(63, 185, 160, 0.12);
+  --admin-tone-border: rgba(63, 185, 160, 0.28);
+  --admin-tone-glow: rgba(63, 185, 160, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="support"] {
+  --admin-tone: #6ba3d4;
+  --admin-tone-soft: rgba(107, 163, 212, 0.12);
+  --admin-tone-border: rgba(107, 163, 212, 0.28);
+  --admin-tone-glow: rgba(107, 163, 212, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="system"] {
+  --admin-tone: #d4a24a;
+  --admin-tone-soft: rgba(212, 162, 74, 0.12);
+  --admin-tone-border: rgba(212, 162, 74, 0.3);
+  --admin-tone-glow: rgba(212, 162, 74, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="finance"] {
+  --admin-tone: #7eaa83;
+  --admin-tone-soft: rgba(126, 170, 131, 0.12);
+  --admin-tone-border: rgba(126, 170, 131, 0.28);
+  --admin-tone-glow: rgba(126, 170, 131, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="games"] {
+  --admin-tone: #d4836a;
+  --admin-tone-soft: rgba(212, 131, 106, 0.12);
+  --admin-tone-border: rgba(212, 131, 106, 0.28);
+  --admin-tone-glow: rgba(212, 131, 106, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="content"] {
+  --admin-tone: #6eb8c9;
+  --admin-tone-soft: rgba(110, 184, 201, 0.12);
+  --admin-tone-border: rgba(110, 184, 201, 0.28);
+  --admin-tone-glow: rgba(110, 184, 201, 0.12);
+}
+html.pdl-panel .admin-category[data-tone="server"] {
+  --admin-tone: #8a9bb0;
+  --admin-tone-soft: rgba(138, 155, 176, 0.12);
+  --admin-tone-border: rgba(138, 155, 176, 0.28);
+  --admin-tone-glow: rgba(138, 155, 176, 0.12);
+}
+
+html.pdl-panel .admin-category .panel-eyebrow {
+  color: var(--admin-tone);
+}
+
+html.pdl-panel .admin-category h2 {
+  color: var(--admin-tone);
 }
 
 html.pdl-panel .admin-entry-grid {
@@ -869,15 +929,16 @@ html.pdl-panel .admin-entry {
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid var(--admin-tone-border);
   background: rgba(5, 5, 4, 0.38);
   color: inherit;
   text-decoration: none;
 }
 
 html.pdl-panel .admin-entry:hover {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: var(--admin-tone);
   background: rgba(18, 14, 10, 0.72);
+  box-shadow: inset 0 0 0 1px var(--admin-tone-glow);
 }
 
 html.pdl-panel .admin-entry-icon {
@@ -885,9 +946,10 @@ html.pdl-panel .admin-entry-icon {
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid var(--admin-tone-border);
   border-radius: 50%;
-  color: var(--panel-gold-bright);
+  color: var(--admin-tone);
+  background: var(--admin-tone-soft);
 }
 
 html.pdl-panel .admin-entry-icon svg {
@@ -898,6 +960,10 @@ html.pdl-panel .admin-entry-icon svg {
 html.pdl-panel .admin-entry strong,
 html.pdl-panel .admin-entry small {
   display: block;
+}
+
+html.pdl-panel .admin-entry strong {
+  color: var(--admin-tone);
 }
 
 html.pdl-panel .admin-entry small {
