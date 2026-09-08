@@ -4876,10 +4876,34 @@ html.pdl-panel .wallet-activity-item {
   grid-template-columns: 34px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
+  width: 100%;
   min-height: 58px;
   padding: 9px 10px;
   border: 1px solid rgba(197, 161, 97, 0.11);
   background: rgba(5, 5, 4, 0.33);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+html.pdl-panel button.wallet-activity-item:hover {
+  border-color: rgba(230, 199, 125, 0.28);
+  background: rgba(197, 161, 97, 0.08);
+}
+
+html.pdl-panel .wallet-history-link {
+  margin-top: 10px;
+}
+
+html.pdl-panel .wallet-history-page .wallet-activity-list.is-expanded {
+  max-height: none;
+}
+
+html.pdl-panel .wallet-history-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
 }
 
 html.pdl-panel .wallet-row-icon {

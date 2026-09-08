@@ -6,7 +6,9 @@ from rest_framework.response import Response
 
 from apps.wallet.application.use_cases import GetWalletInput, GetWalletUseCase, TransferToPlayerInput, TransferToPlayerUseCase
 from apps.wallet.domain.repositories import IWalletRepository
+from apps.wallet.infrastructure.repositories import DjangoWalletRepository
 from apps.wallet.presentation.serializers import TransferSerializer, WalletSerializer
+from common.pagination import StandardPagination
 from common.views import InjectedAPIView
 
 
@@ -62,7 +64,7 @@ class WalletTransferView(InjectedAPIView):
 
 
 class WalletTransactionsView(InjectedAPIView):
-    """Entrada HTTP para ``GetWalletUseCase``, ``IWalletRepository``.
+    """Entrada HTTP para ``GetWalletUseCase`` e listagem paginada do extrato.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
@@ -73,9 +75,12 @@ class WalletTransactionsView(InjectedAPIView):
     @extend_schema(
         tags=["Carteira"],
         summary="Listar transações",
-        description="Lista o histórico de transações da carteira do usuário autenticado.",
+        description="Lista o histórico de transações da carteira do usuário autenticado, paginado.",
     )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))
-        rows = self.resolve(IWalletRepository).list_transactions(wallet.id)
-        return Response({"results": rows})
+        repo = DjangoWalletRepository()
+        paginator = StandardPagination()
+        page = paginator.paginate_queryset(repo.transactions_queryset(wallet.id), request, view=self)
+        assert page is not None
+        return paginator.get_paginated_response([repo.serialize_transaction(row) for row in page])

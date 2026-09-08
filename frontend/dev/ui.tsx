@@ -12,6 +12,7 @@ import { EmptyState, ErrorNotice, LoadingState } from '../src/components/ui/Feed
 import { Toggle } from '../src/components/ui/Toggle'
 import { Tabs } from '../src/components/ui/Tabs'
 import { Pagination } from '../src/components/ui/Pagination'
+import { Modal } from '../src/components/ui/Modal'
 import { RichTextContent, RichTextEditor } from '../src/components/ui/RichText'
 import { useAsyncAction } from '../src/hooks/useAsyncAction'
 import { PdlSymbol } from '../src/components/PdlSymbol'
@@ -24,6 +25,7 @@ function Showcase() {
   const [tab, setTab] = useState('components')
   const [enabled, setEnabled] = useState(true)
   const [page, setPage] = useState(1)
+  const [modalOpen, setModalOpen] = useState(false)
   const [topic, setTopic] = useState('all')
   const [saved, setSaved] = useState(false)
   const [failed, setFailed] = useState(true)
@@ -71,7 +73,8 @@ function Showcase() {
           <RichTextContent html={richText} />
         </Card>
         <Card><h2>Consultas</h2><LoadingState /><EmptyState>Nenhum registro encontrado.</EmptyState><ErrorNotice error={failed ? new Error('Não foi possível carregar os dados.') : null} onRetry={() => setFailed(false)} /></Card>
-        <Card><h2>Validação e navegação</h2><Field label="E-mail" error={<span id="email-error">Informe um e-mail válido.</span>}><input defaultValue="incompleto" aria-invalid="true" aria-describedby="email-error" /></Field><Pagination page={page} pages={3} onChange={setPage} /><p className="muted">Use Tab para navegar, Espaço nos controles e setas nas abas.</p></Card>
+        <Card><h2>Validação e navegação</h2><Field label="E-mail" error={<span id="email-error">Informe um e-mail válido.</span>}><input defaultValue="incompleto" aria-invalid="true" aria-describedby="email-error" /></Field><Pagination page={page} pages={3} onChange={setPage} /><p className="muted">Use Tab para navegar, Espaço nos controles e setas nas abas.</p><Button onClick={() => setModalOpen(true)}>Abrir modal</Button></Card>
+        <Modal open={modalOpen} title="Exemplo de modal" onClose={() => setModalOpen(false)}><p className="muted">Escape, clique no fundo ou no botão fecham o diálogo.</p></Modal>
       </div>
     </section>
     <Card id="showcase-panel-guidelines" role="tabpanel" aria-labelledby="showcase-tab-guidelines" hidden={tab !== 'guidelines'}><h2>Reaproveitar primeiro</h2><p>Importe componentes de src/components/ui e componha a tela com as regras do seu domínio.</p><p>Button usa type="button" por padrão. Para salvar um formulário, informe type="submit". Use busy e busyLabel durante ações assíncronas. ButtonLink navega dentro do painel; ExternalButtonLink abre um destino público em uma nova aba isolada.</p><p>Guias completos em docs/desenvolvimento/componentes.md e docs/arquitetura/reutilizacao.md.</p></Card>

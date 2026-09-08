@@ -32,6 +32,8 @@ import { SupportPage } from '../../pages/SupportPage'
 import { HelpPage } from '../../pages/HelpPage'
 import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
 import { WalletPage } from '../../pages/WalletPage'
+import { WalletOrdersPage } from '../../pages/WalletOrdersPage'
+import { WalletTransactionsPage } from '../../pages/WalletTransactionsPage'
 import { InfoPage } from '../../pages/InfoPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
 import { WikiPage } from '../../pages/WikiPage'
@@ -99,6 +101,8 @@ export function AppRoutes() {
             <Route path="/painel/apoiadores" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
             <Route path="/painel/recompensas" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
             <Route path="/painel/wallet/jogo" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
+            <Route path="/painel/wallet/pedidos" element={<ResourceGate code="wallet"><WalletOrdersPage /></ResourceGate>} />
+            <Route path="/painel/wallet/extrato" element={<ResourceGate code="wallet"><WalletTransactionsPage /></ResourceGate>} />
             <Route path="/painel" element={<PainelPage />} />
             <Route path="/painel/profile" element={<ResourceGate code="profile"><ProfilePage /></ResourceGate>} />
             <Route path="/painel/security" element={<AccountSecurityPage />} />

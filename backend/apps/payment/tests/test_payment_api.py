@@ -185,6 +185,31 @@ def test_usd_custom_amount_converts_to_coins(api, player):
 
 
 @pytest.mark.django_db
+def test_payment_orders_list_is_paginated(api, player):
+    from apps.payment.infrastructure.models import PedidoPagamento
+
+    for index in range(3):
+        PedidoPagamento.objects.create(
+            user=player,
+            amount=Decimal("10.00") + index,
+            coins=Decimal("10.00") + index,
+            currency="BRL",
+            method="mock",
+            status="pending",
+        )
+    api.force_authenticate(user=player)
+    response = api.get("/api/v1/customer/payments/", {"page_size": 2})
+    assert response.status_code == 200
+    assert response.data["count"] == 3
+    assert response.data["total_pages"] == 2
+    assert len(response.data["results"]) == 2
+    assert "created_at" in response.data["results"][0]
+    page_two = api.get("/api/v1/customer/payments/", {"page": 2, "page_size": 2})
+    assert page_two.status_code == 200
+    assert len(page_two.data["results"]) == 1
+
+
+@pytest.mark.django_db
 def test_real_methods_cannot_be_confirmed_manually(api, player):
     from apps.payment.infrastructure.models import PedidoPagamento
 

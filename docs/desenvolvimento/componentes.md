@@ -34,10 +34,11 @@ Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) 
 | [Toggle](../../frontend/src/components/ui/Toggle.tsx) | Checkbox nativo, nome acessível e bloqueio durante envio |
 | [RichTextEditor e RichTextContent](../../frontend/src/components/ui/RichText.tsx) | Edição TipTap e leitura sanitizada (DOMPurify); usado em notícias e roadmap |
 | [Pagination](../../frontend/src/components/ui/Pagination.tsx) | Página atual, limites e bloqueio durante consulta; a tela busca os dados |
+| [Modal](../../frontend/src/components/ui/Modal.tsx) | Diálogo com fundo, Escape, foco e fechamento pelo backdrop |
 | [EmptyState, LoadingState e ErrorNotice](../../frontend/src/components/ui/Feedback.tsx) | Vazio, carregamento anunciado e erro com tentativa explícita |
 
 Os componentes básicos publicam `data-theme-part` estável (`button`, `field`, `card`,
-`page-header`, `tabs`, `select`, `empty-state`, `loading-state`, `error-notice`,
+`page-header`, `tabs`, `select`, `modal`, `empty-state`, `loading-state`, `error-notice`,
 `rich-text-editor` e `rich-text-content`). Temas podem usar
 esses seletores para alterar a aparência, mas não devem esconder estados, mudar semântica
 ou substituir a interação implementada pelo componente.

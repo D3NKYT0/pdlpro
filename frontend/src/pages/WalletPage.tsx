@@ -1,7 +1,8 @@
 import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Field } from '../components/ui/Field'
-import { Button } from '../components/ui/Button'
+import { Button, ButtonLink } from '../components/ui/Button'
+import { Modal } from '../components/ui/Modal'
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -25,33 +26,17 @@ import toast from 'react-hot-toast'
 import { useAuth } from '../contexts/AuthContext'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
 import { paymentApi, walletApi } from '../services/api'
-import type { ApiPaymentOrder, ApiWalletPromo } from '../services/types'
+import type { ApiPaymentOrder, ApiWalletPromo, ApiWalletTransaction } from '../services/types'
+import {
+  formatWalletMoney,
+  getOrderStatus,
+  getTransactionPresentation,
+  orderDetailEntries,
+  transactionDetailEntries,
+} from './walletHistory'
 
 function formatMoney(value: string, currency: 'BRL' | 'USD') {
-  const amount = Number(value)
-  return new Intl.NumberFormat(currency === 'USD' ? 'en-US' : 'pt-BR', {
-    style: 'currency',
-    currency,
-  }).format(Number.isFinite(amount) ? amount : 0)
-}
-
-const orderStatusLabels: Record<string, string> = {
-  pending: 'Aguardando',
-  processing: 'Processando',
-  confirmed: 'Confirmado',
-  paid: 'Pago',
-  failed: 'Falhou',
-  cancelled: 'Cancelado',
-}
-
-function getOrderStatus(status: string) {
-  const normalized = status.toLowerCase()
-  const modifier = ['confirmed', 'paid'].includes(normalized)
-    ? 'is-success'
-    : ['failed', 'cancelled'].includes(normalized)
-      ? 'is-danger'
-      : 'is-pending'
-  return { label: orderStatusLabels[normalized] ?? status, modifier }
+  return formatWalletMoney(value, currency)
 }
 
 function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
@@ -111,22 +96,18 @@ function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
   )
 }
 
-function getTransactionPresentation(kind: string, amount: string) {
-  const numericAmount = Number(amount)
-  const outgoing = numericAmount < 0 || /(saida|saída|debit|out|withdraw|purchase|spent|send)/i.test(kind)
-  const absoluteAmount = Number.isFinite(numericAmount) ? Math.abs(numericAmount).toFixed(2) : amount
-  return {
-    outgoing,
-    amount: `${outgoing ? '−' : '+'}${absoluteAmount} moedas`,
-  }
-}
-
 export function WalletPage() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
-  const tx = useQuery({ queryKey: ['wallet-tx'], queryFn: walletApi.transactions })
-  const orders = useQuery({ queryKey: ['payments'], queryFn: paymentApi.list })
+  const tx = useQuery({
+    queryKey: ['wallet-tx', 1, 10],
+    queryFn: () => walletApi.transactions({ page: 1, page_size: 10 }),
+  })
+  const orders = useQuery({
+    queryKey: ['payments', 1, 10],
+    queryFn: () => paymentApi.list({ page: 1, page_size: 10 }),
+  })
   const catalog = useQuery({ queryKey: ['payment-catalog'], queryFn: paymentApi.catalog })
   const [recipient, setRecipient] = useState('')
   const [amount, setAmount] = useState('')
@@ -134,6 +115,8 @@ export function WalletPage() {
   const [customAmount, setCustomAmount] = useState('')
   const [document, setDocument] = useState('')
   const [order, setOrder] = useState<ApiPaymentOrder | null>(null)
+  const [selectedOrder, setSelectedOrder] = useState<ApiPaymentOrder | null>(null)
+  const [selectedTx, setSelectedTx] = useState<ApiWalletTransaction | null>(null)
   const [busy, setBusy] = useState(false)
   const [transferBusy, setTransferBusy] = useState(false)
   const brickRef = useRef<{ unmount: () => void } | null>(null)
@@ -302,7 +285,9 @@ export function WalletPage() {
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
   const packages = catalog.data?.packages ?? []
   const transactions = tx.data?.results ?? []
-  const paymentOrders = orders.data ?? []
+  const paymentOrders = orders.data?.results ?? []
+  const ordersCount = orders.data?.count ?? paymentOrders.length
+  const txCount = tx.data?.count ?? transactions.length
 
   return (
     <div className="wallet-page">
@@ -509,7 +494,7 @@ export function WalletPage() {
               <header className="wallet-activity-heading">
                 <span className="wallet-section-icon" aria-hidden="true"><ReceiptText /></span>
                 <div><span className="panel-eyebrow">Recargas</span><h2>Pedidos</h2></div>
-                <b>{paymentOrders.length}</b>
+                <b>{ordersCount}</b>
               </header>
               {orders.isLoading ? (
                 <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando pedidos...</span></div>
@@ -519,27 +504,33 @@ export function WalletPage() {
                     const status = getOrderStatus(row.status)
                     const orderCurrency = row.currency === 'USD' ? 'USD' : 'BRL'
                     return (
-                      <article className="wallet-activity-item" key={row.id}>
+                      <button
+                        type="button"
+                        className="wallet-activity-item"
+                        key={row.id}
+                        onClick={() => setSelectedOrder(row)}
+                      >
                         <span className="wallet-row-icon" aria-hidden="true"><CircleDollarSign /></span>
                         <span className="wallet-row-copy">
                           <strong>{row.coins} moedas</strong>
                           <small>{formatMoney(row.amount, orderCurrency)} · {row.method}</small>
                         </span>
                         <span className={`wallet-status ${status.modifier}`}>{status.label}</span>
-                      </article>
+                      </button>
                     )
                   })}
                 </div>
               ) : (
                 <div className="wallet-empty-state"><ReceiptText aria-hidden="true" /><span><strong>Nenhum pedido</strong><small>Suas recargas aparecerão aqui.</small></span></div>
               )}
+              <ButtonLink to="/painel/wallet/pedidos" variant="ghost" size="sm" className="wallet-history-link">Ver todos os pedidos</ButtonLink>
             </div>
 
             <div className="wallet-activity-section">
               <header className="wallet-activity-heading">
                 <span className="wallet-section-icon" aria-hidden="true"><History /></span>
                 <div><span className="panel-eyebrow">Movimentações</span><h2>Extrato</h2></div>
-                <b>{transactions.length}</b>
+                <b>{txCount}</b>
               </header>
               {tx.isLoading ? (
                 <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando extrato...</span></div>
@@ -549,24 +540,49 @@ export function WalletPage() {
                     const presentation = getTransactionPresentation(row.kind, row.amount)
                     const DirectionIcon = presentation.outgoing ? ArrowUpRight : ArrowDownLeft
                     return (
-                      <article className="wallet-activity-item" key={row.id}>
+                      <button
+                        type="button"
+                        className="wallet-activity-item"
+                        key={row.id}
+                        onClick={() => setSelectedTx(row)}
+                      >
                         <span className={`wallet-row-icon ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`} aria-hidden="true"><DirectionIcon /></span>
                         <span className="wallet-row-copy">
                           <strong>{row.description || row.kind}</strong>
                           <small>{row.kind}</small>
                         </span>
                         <span className={`wallet-transaction-value ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`}>{presentation.amount}</span>
-                      </article>
+                      </button>
                     )
                   })}
                 </div>
               ) : (
                 <div className="wallet-empty-state"><History aria-hidden="true" /><span><strong>Extrato vazio</strong><small>Entradas e saídas serão exibidas aqui.</small></span></div>
               )}
+              <ButtonLink to="/painel/wallet/extrato" variant="ghost" size="sm" className="wallet-history-link">Ver todo o extrato</ButtonLink>
             </div>
           </Card>
         </aside>
       </div>
+
+      <Modal open={Boolean(selectedOrder)} title="Detalhe do pedido" onClose={() => setSelectedOrder(null)}>
+        {selectedOrder ? (
+          <dl className="ui-detail-list">
+            {orderDetailEntries(selectedOrder).map(([label, value]) => (
+              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+            ))}
+          </dl>
+        ) : null}
+      </Modal>
+      <Modal open={Boolean(selectedTx)} title="Detalhe da movimentação" onClose={() => setSelectedTx(null)}>
+        {selectedTx ? (
+          <dl className="ui-detail-list">
+            {transactionDetailEntries(selectedTx).map(([label, value]) => (
+              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+            ))}
+          </dl>
+        ) : null}
+      </Modal>
     </div>
   )
 }

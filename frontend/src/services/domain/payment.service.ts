@@ -1,9 +1,18 @@
 import { request } from '../infra/http'
-import type { ApiBonusPreview, ApiPaymentCatalog, ApiPaymentOrder } from '../types'
+import type { ApiBonusPreview, ApiPage, ApiPaymentCatalog, ApiPaymentOrder } from '../types'
+
+function listQuery(params?: { page?: number; page_size?: number }) {
+  const query = new URLSearchParams()
+  if (params?.page) query.set('page', String(params.page))
+  if (params?.page_size) query.set('page_size', String(params.page_size))
+  const suffix = query.toString()
+  return suffix ? `?${suffix}` : ''
+}
 
 export const paymentApi = {
   catalog: () => request<ApiPaymentCatalog>('/customer/payments/catalog/'),
-  list: () => request<ApiPaymentOrder[]>('/customer/payments/'),
+  list: (params?: { page?: number; page_size?: number }) =>
+    request<ApiPage<ApiPaymentOrder>>(`/customer/payments/${listQuery(params)}`),
   create: (payload: { amount?: string; method?: string; currency?: string; package_id?: string }) =>
     request<ApiPaymentOrder>('/customer/payments/', {
       method: 'POST',

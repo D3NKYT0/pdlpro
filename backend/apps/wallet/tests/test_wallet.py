@@ -90,7 +90,21 @@ def test_wallet_get_is_idempotent_and_transactions_are_private(api, accounts):
     assert Wallet.objects.filter(user=accounts[0]).count() == 1
     other = Wallet.objects.create(user=accounts[1])
     WalletTransaction.objects.create(wallet=other, kind="ENTRADA", amount=99, description="Privado")
-    assert api.get("/api/v1/shared/wallet/transactions/").data == {"results": []}
+    listed = api.get("/api/v1/shared/wallet/transactions/").data
+    assert listed["results"] == []
+    assert listed["count"] == 0
+
+
+def test_wallet_transactions_are_paginated(api, accounts):
+    wallet = Wallet.objects.get(user=accounts[0])
+    for index in range(3):
+        WalletTransaction.objects.create(wallet=wallet, kind="ENTRADA", amount=index + 1, description=f"Tx {index}")
+    response = api.get("/api/v1/shared/wallet/transactions/", {"page_size": 2})
+    assert response.status_code == 200
+    assert response.data["count"] == 3
+    assert response.data["total_pages"] == 2
+    assert len(response.data["results"]) == 2
+    assert "created_at" in response.data["results"][0]
 
 
 @pytest.mark.parametrize("method,path", [("get", ""), ("get", "transactions/"), ("post", "transfer/")])

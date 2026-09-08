@@ -59,7 +59,25 @@ const topics: Topic[] = [
       copy('Pedidos ficam com status até concluírem. Use o histórico para acompanhar compras e movimentos recentes.', 'Orders keep a status until they finish. Use history to track recent purchases and movements.'),
       copy('Para enviar moedas ao personagem, use a troca para o jogo e revise a prévia antes de confirmar.', 'To send coins to a character, use game exchange and review the preview before confirming.'),
     ],
-    suggestion: copy('Como acompanho meu saldo e o status de uma compra de moedas?', 'How do I check my balance and the status of a coin purchase?'), related: ['/painel/wallet/jogo', '/painel/support'],
+    suggestion: copy('Como acompanho meu saldo e o status de uma compra de moedas?', 'How do I check my balance and the status of a coin purchase?'), related: ['/painel/wallet/pedidos', '/painel/wallet/extrato', '/painel/wallet/jogo', '/painel/support'],
+  },
+  {
+    path: '/painel/wallet/pedidos', title: copy('Pedidos de recarga', 'Top-up orders'), action: copy('Abrir pedidos', 'Open orders'), resource: 'wallet',
+    tips: [
+      copy('A lista mostra seus pedidos de recarga com status e valor. Clique em um item para ver o detalhe completo.', 'The list shows your top-up orders with status and amount. Click an item for the full detail.'),
+      copy('Use a paginação para navegar o histórico. Pedidos pendentes ficam visíveis até concluírem ou expirarem.', 'Use pagination to browse history. Pending orders stay visible until they finish or expire.'),
+      copy('Volte à carteira para comprar novamente ou conferir o saldo creditado após o pagamento.', 'Return to the wallet to buy again or check the balance credited after payment.'),
+    ],
+    suggestion: copy('Como vejo o status e o detalhe de um pedido de moedas?', 'How do I see the status and detail of a coin order?'), related: ['/painel/wallet', '/painel/wallet/extrato', '/painel/support'],
+  },
+  {
+    path: '/painel/wallet/extrato', title: copy('Extrato da carteira', 'Wallet statement'), action: copy('Abrir extrato', 'Open statement'), resource: 'wallet',
+    tips: [
+      copy('O extrato lista entradas e saídas da carteira. Clique em um movimento para ver origem, destino e data.', 'The statement lists wallet credits and debits. Click a movement to see origin, destination and date.'),
+      copy('Use a paginação para percorrer o histórico completo além da prévia da carteira.', 'Use pagination to browse the full history beyond the wallet preview.'),
+      copy('Transferências, compras e créditos de promoção aparecem aqui com o sinal do movimento.', 'Transfers, purchases and promo credits appear here with the movement sign.'),
+    ],
+    suggestion: copy('Como leio uma movimentação no extrato da carteira?', 'How do I read a movement on the wallet statement?'), related: ['/painel/wallet', '/painel/wallet/pedidos', '/painel/support'],
   },
   {
     path: '/painel/wallet/jogo', title: copy('Troca para o jogo', 'Game exchange'), action: copy('Abrir troca para o jogo', 'Open game exchange'), resource: 'wallet',

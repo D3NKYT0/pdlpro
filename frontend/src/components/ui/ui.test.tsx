@@ -12,6 +12,7 @@ import { PageHeader } from './PageHeader'
 import { Tabs } from './Tabs'
 import { Toggle } from './Toggle'
 import { Pagination } from './Pagination'
+import { Modal } from './Modal'
 import { Select } from './Select'
 
 afterEach(cleanup)
@@ -59,6 +60,27 @@ it('paginação respeita limites e bloqueia navegação durante a consulta', asy
   expect(change).toHaveBeenCalledTimes(2)
   expect(screen.getByRole('button', { name: /Anterior/ })).toBeDisabled()
 })
+
+it('modal abre com diálogo, fecha no Escape e restaura o foco', async () => {
+  const onClose = vi.fn()
+  const user = userEvent.setup()
+  function Demo() {
+    const [open, setOpen] = useState(false)
+    return <>
+      <Button onClick={() => setOpen(true)}>Abrir</Button>
+      <Modal open={open} title="Detalhe" onClose={() => { onClose(); setOpen(false) }}><p>Conteúdo do registro</p></Modal>
+    </>
+  }
+  render(<Demo />)
+  const opener = screen.getByRole('button', { name: 'Abrir' })
+  await user.click(opener)
+  expect(screen.getByRole('dialog', { name: 'Detalhe' })).toBeTruthy()
+  expect(screen.getByText('Conteúdo do registro')).toBeTruthy()
+  await user.keyboard('{Escape}')
+  expect(onClose).toHaveBeenCalled()
+  expect(screen.queryByRole('dialog')).toBeNull()
+})
+
 it('botão padrão não envia formulário; submit é explícito', async () => {
   const submit = vi.fn(event => event.preventDefault())
   render(<form onSubmit={submit}><Button>Cancelar</Button><Button type="submit">Salvar</Button></form>)

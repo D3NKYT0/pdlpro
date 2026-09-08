@@ -15,8 +15,8 @@ vi.mock('../services/domain/wallet.service', () => ({ walletApi: { me: vi.fn(), 
 beforeEach(() => {
   vi.clearAllMocks()
   vi.mocked(walletApi.me).mockResolvedValue({ balance: '50.00', bonus_balance: '5.00' } as any)
-  vi.mocked(walletApi.transactions).mockResolvedValue({ results: [] })
-  vi.mocked(paymentApi.list).mockResolvedValue([])
+  vi.mocked(walletApi.transactions).mockResolvedValue({ count: 0, total_pages: 1, next: null, previous: null, results: [] })
+  vi.mocked(paymentApi.list).mockResolvedValue({ count: 0, total_pages: 1, next: null, previous: null, results: [] })
   vi.mocked(paymentApi.catalog).mockResolvedValue({ methods: [], packages: [], promo: null } as any)
 })
 afterEach(cleanup)
@@ -25,6 +25,35 @@ function mount() {
   render(<QueryClientProvider client={client}><MemoryRouter><WalletPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+
+it('abre modal de pedido e aponta para histórico completo', async () => {
+  vi.mocked(paymentApi.list).mockResolvedValue({
+    count: 1,
+    total_pages: 1,
+    next: null,
+    previous: null,
+    results: [{
+      id: 'ord-1',
+      amount: '25.00',
+      coins: '25.00',
+      currency: 'BRL',
+      package_code: '',
+      method: 'mock',
+      status: 'pending',
+      checkout_url: '',
+      bonus_applied: '0.00',
+      total_credited: '0.00',
+      created_at: '2026-09-08T12:00:00Z',
+      paid_at: null,
+    }],
+  })
+  const user = mount()
+  expect((await screen.findByRole('link', { name: 'Ver todos os pedidos' })).getAttribute('href')).toBe('/painel/wallet/pedidos')
+  expect(screen.getByRole('link', { name: 'Ver todo o extrato' }).getAttribute('href')).toBe('/painel/wallet/extrato')
+  await user.click(await screen.findByRole('button', { name: /25.00 moedas/ }))
+  expect(await screen.findByRole('dialog', { name: 'Detalhe do pedido' })).toBeTruthy()
+  expect(screen.getByText('ord-1')).toBeTruthy()
+})
 
 it('coloca o atalho de troca com o jogo ao lado do saldo', async () => {
   mount()
@@ -68,7 +97,13 @@ it('omite banner promocional quando o catálogo não traz promo', async () => {
 })
 
 it.each([['SAIDA', '−12.34 moedas'], ['ENTRADA', '+12.34 moedas'], ['debit', '−12.34 moedas']])('mostra sinal correto para movimento %s', async (kind, expected) => {
-  vi.mocked(walletApi.transactions).mockResolvedValue({ results: [{ id: 'tx', kind, amount: '12.34', description: 'Movimento' }] } as any)
+  vi.mocked(walletApi.transactions).mockResolvedValue({
+    count: 1,
+    total_pages: 1,
+    next: null,
+    previous: null,
+    results: [{ id: 'tx', kind, amount: '12.34', description: 'Movimento', origin: '', destination: '', created_at: '2026-09-08T12:00:00Z' }],
+  })
   mount()
   expect(await screen.findByText(expected)).toBeTruthy()
 })

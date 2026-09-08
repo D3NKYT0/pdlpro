@@ -79,16 +79,21 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet)
 
     def list_transactions(self, wallet_id: UUID, *, limit: int = 50) -> list[dict]:
-        rows = WalletTransaction.objects.filter(wallet__id=wallet_id).order_by("-created_at")[:limit]
-        return [
-            {
-                "id": str(row.id),
-                "kind": row.kind,
-                "amount": str(row.amount),
-                "description": row.description,
-                "origin": row.origin,
-                "destination": row.destination,
-                "created_at": row.created_at.isoformat(),
-            }
-            for row in rows
-        ]
+        rows = self.transactions_queryset(wallet_id)[:limit]
+        return [self.serialize_transaction(row) for row in rows]
+
+    def transactions_queryset(self, wallet_id: UUID):
+        """Queryset do extrato da carteira ordenado do mais recente ao mais antigo."""
+
+        return WalletTransaction.objects.filter(wallet__id=wallet_id).order_by("-created_at")
+
+    def serialize_transaction(self, row: WalletTransaction) -> dict:
+        return {
+            "id": str(row.id),
+            "kind": row.kind,
+            "amount": str(row.amount),
+            "description": row.description,
+            "origin": row.origin,
+            "destination": row.destination,
+            "created_at": row.created_at.isoformat(),
+        }

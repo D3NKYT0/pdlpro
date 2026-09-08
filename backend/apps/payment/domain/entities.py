@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
@@ -27,6 +28,8 @@ class PaymentOrderEntity:
     bonus_applied: Decimal
     total_credited: Decimal
     gateway_data: dict = field(default_factory=dict)
+    created_at: datetime | None = None
+    paid_at: datetime | None = None
 
 
 @dataclass(frozen=True, slots=True)

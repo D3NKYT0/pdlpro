@@ -36,7 +36,14 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
             bonus_applied=row.bonus_applied,
             total_credited=row.total_credited,
             gateway_data=row.gateway_data or {},
+            created_at=row.created_at,
+            paid_at=row.paid_at,
         )
+
+    def queryset_by_user(self, user_id: UUID):
+        """Queryset dos pedidos do usuário ordenados do mais recente ao mais antigo."""
+
+        return PedidoPagamento.objects.select_related("user").filter(user__id=user_id).order_by("-created_at")
 
     def get_by_id(self, order_id: UUID) -> PaymentOrderEntity | None:
         row = PedidoPagamento.objects.select_related("user").filter(id=order_id).first()
@@ -54,8 +61,7 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         return self._entity(row) if row else None
 
     def list_by_user(self, user_id: UUID) -> list[PaymentOrderEntity]:
-        rows = PedidoPagamento.objects.select_related("user").filter(user__id=user_id)
-        return [self._entity(row) for row in rows]
+        return [self._entity(row) for row in self.queryset_by_user(user_id)]
 
     def find_reusable(
         self,

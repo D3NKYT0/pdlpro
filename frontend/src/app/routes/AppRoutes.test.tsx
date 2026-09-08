@@ -47,6 +47,8 @@ const pages = [
   ['/painel/accounts/hero/7', 'Personagem'],
   ['/painel/wallet', 'Banco PDL'],
   ['/painel/wallet/jogo', 'Carteira ↔ jogo'],
+  ['/painel/wallet/pedidos', 'Pedidos'],
+  ['/painel/wallet/extrato', 'Extrato'],
   ['/painel/inventory', 'Inventário'],
   ['/painel/games', 'Jogos e recompensas'],
   ['/painel/progress', 'Seu progresso'],

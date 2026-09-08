@@ -19,6 +19,8 @@
 
 Os tipos e limites estão em [application/use_cases.py](../../backend/apps/payment/application/use_cases.py). `amount` pertence à moeda indicada por `currency`; `coins` representa saldo do painel. Não some valores de BRL e USD nem confunda bônus com saldo principal.
 
+A listagem do jogador `GET /api/v1/customer/payments/` usa paginação padrão (`page`, `page_size`, envelope com `count`, `total_pages`, `results`) e inclui `created_at` / `paid_at`. O extrato `GET /api/v1/shared/wallet/transactions/` segue o mesmo envelope.
+
 ## Promoção de recarga
 
 Campanhas de banner na carteira usam o modelo `CoinPurchasePromo`. Configure em `/painel/admin/carteira` (também disponível no Jazzmin: **Promoções de recarga**). Campos: percentual, título, descrição, ativo e vigência opcional (`starts_at` / `ends_at`). No máximo uma campanha fica marcada como ativa.

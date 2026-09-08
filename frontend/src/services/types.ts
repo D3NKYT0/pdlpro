@@ -94,12 +94,32 @@ export interface ApiPaymentOrder {
   client_secret?: string
   bonus_applied: string
   total_credited: string
+  created_at?: string | null
+  paid_at?: string | null
   pix_qr_code?: string
   pix_qr_code_base64?: string
   pix_ticket_url?: string
   boleto_url?: string
   boleto_barcode?: string
   gateway_message?: string
+}
+
+export interface ApiWalletTransaction {
+  id: string
+  kind: string
+  amount: string
+  description: string
+  origin: string
+  destination: string
+  created_at: string
+}
+
+export interface ApiPage<T> {
+  count: number
+  total_pages: number
+  next: string | null
+  previous: string | null
+  results: T[]
 }
 
 export interface ApiCoinPackage {

@@ -15,8 +15,6 @@ from apps.payment.application.use_cases import (
     GetPaymentCatalogUseCase,
     GetPaymentStatusInput,
     GetPaymentStatusUseCase,
-    ListPaymentOrdersInput,
-    ListPaymentOrdersUseCase,
     PreviewBonusInput,
     PreviewPaymentBonusUseCase,
     ProcessPaymentInput,
@@ -24,6 +22,7 @@ from apps.payment.application.use_cases import (
 )
 from apps.payment.domain.entities import PaymentOrderEntity
 from apps.payment.presentation.serializers import CreatePaymentOrderSerializer, PreviewBonusSerializer
+from common.pagination import StandardPagination
 from common.views import InjectedAPIView
 
 
@@ -33,6 +32,9 @@ def dump_order(order: PaymentOrderEntity) -> dict:
     payload["user_id"] = str(payload["user_id"])
     for key in ("amount", "coins", "bonus_applied", "total_credited"):
         payload[key] = str(payload[key])
+    for key in ("created_at", "paid_at"):
+        value = payload.get(key)
+        payload[key] = value.isoformat() if value else None
     gateway = payload.pop("gateway_data", {}) or {}
     payload["pix_qr_code"] = gateway.get("pix_qr_code") or ""
     payload["pix_qr_code_base64"] = gateway.get("pix_qr_code_base64") or ""
@@ -63,23 +65,29 @@ class PaymentCatalogView(InjectedAPIView):
 
 
 class PaymentOrderListView(InjectedAPIView):
-    """Entrada HTTP para ``ListPaymentOrdersUseCase``, ``CreatePaymentOrderUseCase``.
+    """Entrada HTTP para listagem paginada de pedidos e ``CreatePaymentOrderUseCase``.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
-    resposta.
+    resposta. O GET pagina com ``StandardPagination`` sobre os pedidos do usuário autenticado.
     """
 
     permission_classes = [IsAuthenticated]
+    pagination_class = StandardPagination
 
     @extend_schema(
         tags=["Pagamento"],
         summary="Listar pedidos de pagamento",
-        description="Lista os pedidos de pagamento do usuário autenticado.",
+        description="Lista os pedidos de pagamento do usuário autenticado, paginados.",
     )
     def get(self, request):
-        orders = self.resolve(ListPaymentOrdersUseCase).execute(ListPaymentOrdersInput(user_id=request.user.id))
-        return Response([dump_order(order) for order in orders])
+        from apps.payment.infrastructure.repositories import DjangoPaymentOrderRepository
+
+        repo = DjangoPaymentOrderRepository()
+        paginator = StandardPagination()
+        page = paginator.paginate_queryset(repo.queryset_by_user(request.user.id), request, view=self)
+        assert page is not None
+        return paginator.get_paginated_response([dump_order(repo._entity(row)) for row in page])
 
     @extend_schema(
         tags=["Pagamento"],
