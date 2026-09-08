@@ -1,5 +1,5 @@
 import { request } from '../infra/http'
-import type { ApiAuthCapabilities, ApiGamerProfile, ApiPasskeyBegin, ApiPasskeyCredential, ApiUser } from '../types'
+import type { ApiAuthCapabilities, ApiAuthSession, ApiGamerProfile, ApiPasskeyBegin, ApiPasskeyCredential, ApiUser } from '../types'
 
 export type TwoFactorChallenge = { requires_2fa: true; challenge: string }
 
@@ -73,6 +73,9 @@ export const authApi = {
       body: JSON.stringify({ token, password }),
     }),
   logout: () => request<{ ok: boolean }>('/auth/logout/', { method: 'POST' }),
+  sessions: () => request<ApiAuthSession[]>('/auth/sessions/'),
+  revokeSession: (id: string) => request<{ ok: boolean; current: boolean }>(`/auth/sessions/${id}/`, { method: 'DELETE' }),
+  revokeOtherSessions: () => request<{ ok: boolean; revoked: number }>('/auth/sessions/revoke-others/', { method: 'POST' }),
   me: () => request<ApiUser>('/shared/me/'),
   updateMe: (payload: { display_name?: string; bio?: string } | FormData) =>
     request<ApiUser>('/shared/me/', {

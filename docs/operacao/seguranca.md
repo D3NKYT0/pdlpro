@@ -13,6 +13,10 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 - A propriedade de contas Lineage vem do vínculo do gateway. Coincidência de nome e registro local não autorizam operações. Contas antigas devem ser vinculadas com a senha do jogo ou confirmação por e-mail.
 - O Django Admin exige o código TOTP quando o usuário habilitou 2FA. Sessões administrativas sem a prova do segundo fator atual precisam autenticar novamente. O layout preserva CSRF e os assets compartilhados.
 - Refresh tokens são rotacionados e consumidos uma única vez, com bloqueio por usuário. Logout revoga o refresh apresentado; access tokens já emitidos expiram em até 15 minutos por padrão. Redefinir a senha invalida também os access tokens imediatamente nas novas requisições, incluindo autenticação WebSocket.
+- O usuário autenticado lista sessões ativas em `GET /api/v1/auth/sessions/`, revoga uma em
+  `DELETE /api/v1/auth/sessions/<jti>/` e encerra as demais em
+  `POST /api/v1/auth/sessions/revoke-others/`. A interface fica em Conta e segurança
+  (`/painel/security`). Quem já está logado em `/register` é enviado a essa tela.
 - Access e refresh não são expostos no JSON de autenticação; ficam somente nos cookies `HttpOnly`.
 - O link de recuperação usa token vinculado à senha e validade de uma hora. O consumo e a alteração de senha são serializados: repetir o link, inclusive simultaneamente, é rejeitado.
 - OAuth mantém estado descartável associado à sessão do navegador. Cookies de sessão devem acompanhar início e callback. Vincular um provedor exige o mesmo usuário autenticado e a mesma credencial de sessão.

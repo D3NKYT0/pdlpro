@@ -8,9 +8,29 @@ import toast from 'react-hot-toast'
 import { authApi, ApiError } from '../services/api'
 import { AccountSecurityPage } from './AccountSecurityPage'
 
-const session = vi.hoisted(() => ({ user: { email: 'user@test.dev', is_email_verified: false, is_2fa_enabled: false }, refreshUser: vi.fn() }))
+const session = vi.hoisted(() => ({
+  user: { email: 'user@test.dev', is_email_verified: false, is_2fa_enabled: false },
+  refreshUser: vi.fn(),
+  logout: vi.fn(),
+}))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
-vi.mock('../services/domain/auth.service', async original => ({ ...await original<object>(), authApi: { capabilities: vi.fn(), passkeys: vi.fn(), requestEmailVerification: vi.fn(), setupTwoFactor: vi.fn(), confirmTwoFactor: vi.fn(), disableTwoFactor: vi.fn(), beginPasskeyRegistration: vi.fn(), completePasskeyRegistration: vi.fn(), deletePasskey: vi.fn() } }))
+vi.mock('../services/domain/auth.service', async original => ({
+  ...await original<object>(),
+  authApi: {
+    capabilities: vi.fn(),
+    passkeys: vi.fn(),
+    sessions: vi.fn(),
+    revokeSession: vi.fn(),
+    revokeOtherSessions: vi.fn(),
+    requestEmailVerification: vi.fn(),
+    setupTwoFactor: vi.fn(),
+    confirmTwoFactor: vi.fn(),
+    disableTwoFactor: vi.fn(),
+    beginPasskeyRegistration: vi.fn(),
+    completePasskeyRegistration: vi.fn(),
+    deletePasskey: vi.fn(),
+  },
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
@@ -19,6 +39,10 @@ beforeEach(() => {
   session.user.is_email_verified = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ passkeys: true, two_factor: true, email_verification: true, captcha: false, hcaptcha_site_key: '', google: false, discord: false, connected_providers: [] })
   vi.mocked(authApi.passkeys).mockResolvedValue([])
+  vi.mocked(authApi.sessions).mockResolvedValue([
+    { id: 'current', created_at: '2026-09-01T12:00:00Z', expires_at: '2026-09-08T12:00:00Z', current: true },
+    { id: 'other', created_at: '2026-09-02T08:00:00Z', expires_at: '2026-09-09T08:00:00Z', current: false },
+  ])
   vi.mocked(authApi.setupTwoFactor).mockResolvedValue({ secret: 'SECRET123', enabled: false, otpauth_url: 'otpauth://totp/PDL' })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
@@ -92,4 +116,40 @@ it.each([false, true])('remoção de passkey atualiza lista apenas após sucesso
   expect(authApi.deletePasskey).toHaveBeenCalledWith('key')
   if (fail) expect(toast.error).toHaveBeenCalledWith('Remoção recusada')
   else await waitFor(() => expect(authApi.passkeys).toHaveBeenCalledTimes(2))
+})
+
+it('lista sessões e encerra outra sem sair da conta', async () => {
+  vi.mocked(authApi.sessions).mockResolvedValue([
+    { id: 'current', created_at: '2026-09-01T12:00:00Z', expires_at: '2026-09-08T12:00:00Z', current: true },
+    { id: 'other', created_at: '2026-09-02T08:00:00Z', expires_at: '2026-09-09T08:00:00Z', current: false },
+  ])
+  vi.mocked(authApi.revokeSession).mockResolvedValue({ ok: true, current: false })
+  const user = mount()
+  expect(await screen.findByRole('heading', { name: 'Sessões abertas' })).toBeVisible()
+  expect(await screen.findByText('Este navegador')).toBeVisible()
+  expect(screen.getByText('Outra sessão')).toBeVisible()
+  await user.click(screen.getByTitle('Encerrar sessão'))
+  expect(authApi.revokeSession).toHaveBeenCalledWith('other')
+  expect(session.logout).not.toHaveBeenCalled()
+  await waitFor(() => expect(authApi.sessions).toHaveBeenCalledTimes(2))
+  expect(toast.success).toHaveBeenCalledWith('Sessão encerrada.')
+})
+
+it('sair da sessão atual chama logout', async () => {
+  session.logout.mockResolvedValue(undefined)
+  const user = mount()
+  await screen.findByText('Este navegador')
+  await user.click(screen.getByTitle('Sair desta sessão'))
+  expect(authApi.revokeSession).not.toHaveBeenCalled()
+  expect(session.logout).toHaveBeenCalledTimes(1)
+  expect(toast.success).toHaveBeenCalledWith('Sessão encerrada.')
+})
+
+it('encerra as demais sessões de uma vez', async () => {
+  vi.mocked(authApi.revokeOtherSessions).mockResolvedValue({ ok: true, revoked: 1 })
+  const user = mount()
+  await screen.findByRole('button', { name: 'Encerrar outras sessões' })
+  await user.click(screen.getByRole('button', { name: 'Encerrar outras sessões' }))
+  expect(authApi.revokeOtherSessions).toHaveBeenCalledTimes(1)
+  expect(toast.success).toHaveBeenCalledWith('1 sessão(ões) encerrada(s).')
 })

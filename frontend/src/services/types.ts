@@ -177,6 +177,13 @@ export interface ApiPasskeyCredential {
   last_used_at: string | null
 }
 
+export interface ApiAuthSession {
+  id: string
+  created_at: string | null
+  expires_at: string
+  current: boolean
+}
+
 export interface ApiPasskeyBegin {
   options: Record<string, any>
   state: string

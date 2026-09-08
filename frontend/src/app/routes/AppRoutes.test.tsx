@@ -24,7 +24,6 @@ afterEach(() => {
 
 const pages = [
   ['/inicio', 'Inicie sua Jornada em Lineage Agora!'],
-  ['/register', 'Crie sua conta mestre'],
   ['/forgot-password', 'Esqueceu sua senha?'],
   ['/reset-password', 'Nova senha'],
   ['/verify-email', 'Verificar e-mail'],
@@ -84,6 +83,13 @@ it('leva /login autenticado para a landing', () => {
   render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
   expect(window.location.pathname).toBe('/inicio')
   expect(screen.getByRole('heading', { level: 1, name: 'Inicie sua Jornada em Lineage Agora!' })).toBeTruthy()
+})
+
+it('leva /register autenticado para o gerenciador de sessões', () => {
+  window.history.replaceState({}, '', '/register')
+  render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
+  expect(window.location.pathname).toBe('/painel/security')
+  expect(screen.getByRole('heading', { level: 1, name: 'Conta e segurança' })).toBeTruthy()
 })
 
 it.each(pages)('abre %s com API pendente', (path, heading) => {

@@ -2,7 +2,7 @@ import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
@@ -10,8 +10,10 @@ import { useAuth } from '../contexts/AuthContext'
 import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
 
+const SESSION_MANAGER_PATH = '/painel/security'
+
 export function RegisterPage() {
-  const { register } = useAuth()
+  const { user, loading, register } = useAuth()
   const navigate = useNavigate()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const [username, setUsername] = useState('')
@@ -19,6 +21,21 @@ export function RegisterPage() {
   const [password, setPassword] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [captchaToken, setCaptchaToken] = useState('')
+
+  if (loading) {
+    return (
+      <AuthPanel title="Crie sua conta mestre" lead="Carregando sua sessão...">
+        <p className="muted">Aguarde um momento.</p>
+      </AuthPanel>
+    )
+  }
+
+  if (user) {
+    if (user.has_usable_password === false) {
+      return <Navigate to="/complete-account" replace />
+    }
+    return <Navigate to={SESSION_MANAGER_PATH} replace />
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()

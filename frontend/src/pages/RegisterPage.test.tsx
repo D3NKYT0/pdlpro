@@ -9,7 +9,11 @@ import toast from 'react-hot-toast'
 import { authApi, ApiError } from '../services/api'
 import { RegisterPage } from './RegisterPage'
 
-const session = vi.hoisted(() => ({ register: vi.fn() }))
+const session = vi.hoisted(() => ({
+  user: null as null | { username: string; has_usable_password?: boolean },
+  loading: false,
+  register: vi.fn(),
+}))
 const oauth = vi.hoisted(() => ({ beginOAuth: vi.fn() }))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('../lib/oauth', () => ({ beginOAuth: oauth.beginOAuth }))
@@ -19,12 +23,25 @@ vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify, onExpire }: {
 let client: QueryClient
 beforeEach(() => {
   vi.resetAllMocks()
+  session.user = null
+  session.loading = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ passkeys: true, two_factor: true, email_verification: true, captcha: false, hcaptcha_site_key: 'sitekey', google: false, discord: false, connected_providers: [] })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
 function mount() {
-  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={['/register']}><Routes><Route path="/register" element={<RegisterPage />} /><Route path="/painel" element={<h1>Painel autenticado</h1>} /></Routes></MemoryRouter></QueryClientProvider>)
+  render(
+    <QueryClientProvider client={client}>
+      <MemoryRouter initialEntries={['/register']}>
+        <Routes>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/painel" element={<h1>Painel autenticado</h1>} />
+          <Route path="/painel/security" element={<h1>Gerenciador de sessões</h1>} />
+          <Route path="/complete-account" element={<h1>Completar conta</h1>} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  )
   return userEvent.setup()
 }
 it.each([false, true])('cadastro envia consentimento; erro=%s', async fail => {
@@ -70,4 +87,15 @@ it('provedores sociais desabilitados sem credenciais e iniciam OAuth quando disp
   expect(oauth.beginOAuth).toHaveBeenCalledWith('google', 'login')
   await enabled.click(screen.getByRole('button', { name: 'Discord' }))
   expect(oauth.beginOAuth).toHaveBeenCalledWith('discord', 'login')
+})
+it('leva quem já está logado ao gerenciador de sessões', async () => {
+  session.user = { username: 'hero', has_usable_password: true }
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Gerenciador de sessões' })).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Crie sua conta mestra' })).toBeNull()
+})
+it('envia conta social sem senha para completar o cadastro', async () => {
+  session.user = { username: 'oauth', has_usable_password: false }
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Completar conta' })).toBeVisible()
 })

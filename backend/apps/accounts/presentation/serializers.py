@@ -209,3 +209,18 @@ class CompleteCredentialsSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=16, validators=[validate_ascii_username])
     password = serializers.CharField(write_only=True, min_length=8)
     accept_terms = serializers.BooleanField()
+
+
+class AuthSessionSerializer(serializers.Serializer):
+    """Representa uma sessão de refresh ativa do usuário autenticado.
+
+    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
+    ``many=True`` representa uma coleção.
+
+    Campos declarados: ``id``, ``created_at``, ``expires_at``, ``current``.
+    """
+
+    id = serializers.CharField()
+    created_at = serializers.DateTimeField(allow_null=True)
+    expires_at = serializers.DateTimeField()
+    current = serializers.BooleanField()

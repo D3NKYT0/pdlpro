@@ -71,6 +71,8 @@ Fluxo do frontend:
 3. Requisições mutáveis enviam `X-CSRFToken` e os cookies.
 4. Ao receber `401`, o cliente tenta `POST /api/v1/auth/refresh/` uma vez.
 5. `POST /api/v1/auth/logout/` encerra a sessão no navegador.
+6. `GET /api/v1/auth/sessions/` lista sessões ativas; `DELETE /api/v1/auth/sessions/<jti>/`
+   encerra uma; `POST /api/v1/auth/sessions/revoke-others/` encerra as demais.
 
 Login, cadastro, conclusão de 2FA, passkey e OAuth devolvem somente os dados funcionais da
 operação. Access e refresh tokens não são incluídos no JSON: permanecem exclusivamente nos

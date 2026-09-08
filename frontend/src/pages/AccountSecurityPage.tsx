@@ -4,7 +4,7 @@ import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { BadgeCheck, Fingerprint, KeyRound, Link2, MailCheck, Plus, ShieldCheck, Trash2 } from 'lucide-react'
+import { BadgeCheck, Fingerprint, KeyRound, Link2, LogOut, MailCheck, MonitorSmartphone, Plus, ShieldCheck, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { useAuth } from '../contexts/AuthContext'
@@ -12,17 +12,25 @@ import { credentialJSON, creationOptions } from '../lib/webauthn'
 import { authApi } from '../services/api'
 import { beginOAuth } from '../lib/oauth'
 
+function formatSessionWhen(value: string | null) {
+  if (!value) return 'Data desconhecida'
+  return new Date(value).toLocaleString('pt-BR')
+}
+
 export function AccountSecurityPage() {
-  const { user, refreshUser } = useAuth()
+  const { user, refreshUser, logout } = useAuth()
   const queryClient = useQueryClient()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const passkeys = useQuery({ queryKey: ['passkeys'], queryFn: authApi.passkeys })
+  const sessions = useQuery({ queryKey: ['auth-sessions'], queryFn: authApi.sessions })
   const [secret, setSecret] = useState('')
   const [code, setCode] = useState('')
   const [nickname, setNickname] = useState('Meu dispositivo')
   const [busy, setBusy] = useState('')
   const googleConnected = capabilities.data?.connected_providers?.includes('google') ?? false
   const discordConnected = capabilities.data?.connected_providers?.includes('discord') ?? false
+  const activeSessions = sessions.data ?? []
+  const otherSessions = activeSessions.filter((row) => !row.current)
 
   async function requestVerification() {
     setBusy('email')
@@ -88,6 +96,33 @@ export function AccountSecurityPage() {
     }
   }
 
+  async function revokeSession(id: string, current: boolean) {
+    setBusy(`session-${id}`)
+    try {
+      if (current) {
+        await logout()
+        toast.success('Sessão encerrada.')
+        return
+      }
+      await authApi.revokeSession(id)
+      await queryClient.invalidateQueries({ queryKey: ['auth-sessions'] })
+      toast.success('Sessão encerrada.')
+    } catch (error) {
+      toast.error(apiErrorMessage(error, 'Não foi possível encerrar a sessão.'))
+    } finally { setBusy('') }
+  }
+
+  async function revokeOthers() {
+    setBusy('sessions-others')
+    try {
+      const result = await authApi.revokeOtherSessions()
+      await queryClient.invalidateQueries({ queryKey: ['auth-sessions'] })
+      toast.success(result.revoked ? `${result.revoked} sessão(ões) encerrada(s).` : 'Nenhuma outra sessão ativa.')
+    } catch (error) {
+      toast.error(apiErrorMessage(error, 'Não foi possível encerrar as outras sessões.'))
+    } finally { setBusy('') }
+  }
+
   return (
     <div className="security-page">
       <Card className="security-hero">
@@ -96,6 +131,46 @@ export function AccountSecurityPage() {
       </Card>
 
       <div className="security-grid">
+        <Card className="security-card security-sessions" id="sessoes">
+          <header>
+            <span><MonitorSmartphone /></span>
+            <div>
+              <h2>Sessões abertas</h2>
+              <p>Dispositivos e navegadores com acesso à sua conta</p>
+            </div>
+            <b className={activeSessions.length ? 'is-on' : 'is-off'}>{activeSessions.length}</b>
+          </header>
+          <p className="muted">Encerre sessões que você não reconhece. A sessão atual é a deste navegador.</p>
+          {otherSessions.length ? (
+            <Button type="button" className="ghost" disabled={busy === 'sessions-others'} onClick={() => void revokeOthers()}>
+              <LogOut /> Encerrar outras sessões
+            </Button>
+          ) : null}
+          <div className="security-passkey-list">
+            {activeSessions.map((row) => (
+              <article key={row.id}>
+                <MonitorSmartphone />
+                <span>
+                  <strong>{row.current ? 'Este navegador' : 'Outra sessão'}</strong>
+                  <small>
+                    Criada em {formatSessionWhen(row.created_at)} · expira em {formatSessionWhen(row.expires_at)}
+                  </small>
+                </span>
+                <button
+                  type="button"
+                  title={row.current ? 'Sair desta sessão' : 'Encerrar sessão'}
+                  disabled={busy === `session-${row.id}`}
+                  onClick={() => void revokeSession(row.id, row.current)}
+                >
+                  <Trash2 />
+                </button>
+              </article>
+            ))}
+            {sessions.isPending ? <p className="muted">Carregando sessões...</p> : null}
+            {!sessions.isPending && !activeSessions.length ? <p className="muted">Nenhuma sessão ativa encontrada.</p> : null}
+          </div>
+        </Card>
+
         <Card className="security-card">
           <header><span><MailCheck /></span><div><h2>Verificação de e-mail</h2><p>{user?.email}</p></div><b className={user?.is_email_verified ? 'is-on' : 'is-off'}>{user?.is_email_verified ? 'Verificado' : 'Pendente'}</b></header>
           <p className="muted">Necessária para recuperar a conta e confirmar ações sensíveis.</p>

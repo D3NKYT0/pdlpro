@@ -31,7 +31,14 @@ from apps.accounts.application.progress_use_cases import (
     ClaimRewardUseCase,
     GetGamerProfileUseCase,
 )
-from apps.accounts.application.sessions import revoke_refresh, rotate_refresh
+from apps.accounts.application.sessions import (
+    list_sessions,
+    refresh_jti,
+    revoke_other_sessions,
+    revoke_refresh,
+    revoke_session,
+    rotate_refresh,
+)
 from apps.accounts.application.twofa import (
     ConfirmTwoFactorInput,
     ConfirmTwoFactorUseCase,
@@ -63,6 +70,7 @@ from apps.accounts.infrastructure.authentication import (
     set_auth_cookies,
 )
 from apps.accounts.presentation.serializers import (
+    AuthSessionSerializer,
     CompleteCredentialsSerializer,
     LoginSerializer,
     OAuthBeginSerializer,
@@ -365,6 +373,70 @@ class LogoutView(InjectedAPIView):
         revoke_refresh(request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name()), request.user)
         response = Response({"ok": True})
         return clear_auth_cookies(response)
+
+
+class SessionListView(InjectedAPIView):
+    """Lista as sessões de refresh ativas do usuário autenticado.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Auth"],
+        responses=AuthSessionSerializer(many=True),
+        summary="Listar sessões",
+        description="Retorna as sessões de refresh ativas, marcando a sessão do navegador atual.",
+    )
+    def get(self, request):
+        current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
+        rows = list_sessions(request.user, current_jti=current)
+        return Response(AuthSessionSerializer(rows, many=True).data)
+
+
+class SessionRevokeView(InjectedAPIView):
+    """Revoga uma sessão específica do usuário autenticado.
+
+    Implementa DELETE; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Se a sessão corrente for revogada, limpa os cookies de autenticação.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Auth"],
+        summary="Revogar sessão",
+        description="Encerra uma sessão ativa pelo identificador ``jti``. A sessão atual também limpa cookies.",
+    )
+    def delete(self, request, session_id):
+        current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
+        closed_current = revoke_session(request.user, session_id, current_jti=current)
+        response = Response({"ok": True, "current": closed_current})
+        if closed_current:
+            return clear_auth_cookies(response)
+        return response
+
+
+class SessionRevokeOthersView(InjectedAPIView):
+    """Revoga todas as sessões ativas exceto a do navegador atual.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated].
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Auth"],
+        summary="Revogar outras sessões",
+        description="Encerra todas as sessões ativas preservando apenas a sessão corrente do navegador.",
+    )
+    def post(self, request):
+        current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
+        revoked = revoke_other_sessions(request.user, current_jti=current)
+        return Response({"ok": True, "revoked": revoked})
 
 
 class MeView(InjectedAPIView):
