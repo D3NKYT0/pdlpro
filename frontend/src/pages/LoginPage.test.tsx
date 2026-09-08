@@ -8,20 +8,28 @@ import toast from 'react-hot-toast'
 import { LoginPage } from './LoginPage'
 import { authApi, ApiError } from '../services/api'
 
-const session = vi.hoisted(() => ({ login: vi.fn(), verifyTwoFactor: vi.fn(), refreshUser: vi.fn() }))
+const session = vi.hoisted(() => ({
+  user: null as null | { username: string; has_usable_password?: boolean },
+  loading: false,
+  login: vi.fn(),
+  verifyTwoFactor: vi.fn(),
+  refreshUser: vi.fn(),
+}))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../services/domain/auth.service', async original => ({ ...await original<object>(), authApi: { capabilities: vi.fn() } }))
 vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify }: { onVerify: (token: string) => void }) => <button type="button" onClick={() => onVerify('captcha-token')}>Resolver CAPTCHA</button> }))
 beforeEach(() => {
   vi.clearAllMocks()
+  session.user = null
+  session.loading = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ google: false, discord: false, hcaptcha_site_key: 'sitekey' } as any)
 })
 afterEach(cleanup)
 function Destination() { const location = useLocation(); return <h1>{location.pathname}{location.search}</h1> }
-function mount(next = '/painel') {
+function mount(path = '/login') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
-  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/login?next=${encodeURIComponent(next)}`]}><Routes>
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><Routes>
     <Route path="/login" element={<LoginPage />} /><Route path="*" element={<Destination />} />
   </Routes></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
@@ -32,9 +40,36 @@ async function fill(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole('button', { name: 'Entrar no Reino' }))
 }
 
+it('leva quem já está logado para a landing', async () => {
+  session.user = { username: 'hero', has_usable_password: true }
+  mount('/login')
+  expect(await screen.findByRole('heading', { name: '/inicio' })).toBeTruthy()
+  expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
+})
+
+it('respeita next quando o visitante já está logado', async () => {
+  session.user = { username: 'hero', has_usable_password: true }
+  mount(`/login?next=${encodeURIComponent('/painel/wallet')}`)
+  expect(await screen.findByRole('heading', { name: '/painel/wallet' })).toBeTruthy()
+})
+
+it('envia conta social sem senha para completar o cadastro', async () => {
+  session.user = { username: 'oauth', has_usable_password: false }
+  mount('/login')
+  expect(await screen.findByRole('heading', { name: '/complete-account' })).toBeTruthy()
+})
+
+it('mostra espera enquanto a sessão carrega', () => {
+  session.loading = true
+  mount('/login')
+  expect(screen.getByRole('heading', { name: 'Entre no Reino' })).toBeTruthy()
+  expect(screen.getByText('Aguarde um momento.')).toBeTruthy()
+  expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
+})
+
 it.each(['/painel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redireciona apenas para destino local: %s', async next => {
   session.login.mockResolvedValue({ username: 'hero' })
-  const user = mount(next)
+  const user = mount(`/login?next=${encodeURIComponent(next)}`)
   await fill(user)
   expect(session.login).toHaveBeenCalledWith('hero', 'secret', '')
   expect(await screen.findByRole('heading', { name: next.startsWith('/painel') ? next : '/painel' })).toBeTruthy()

@@ -2,9 +2,10 @@
 
 [Índice](../README.md) · [Temas](temas.md) · [Painel e servidor](../desenvolvimento/interface-admin.md)
 
-O Coming Soon substitui a home por uma **página de lançamento própria**, sem o chrome público
-(nav/rodapé padrão ou portal). A equipe configura o modo em **Painel > Administração > Painel e
-servidor**.
+O Coming Soon exibe uma **página de lançamento própria** em `/`, sem o chrome público
+(nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/inicio`
+enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o modo em
+**Painel > Administração > Painel e servidor**.
 
 ## Configuração
 
@@ -21,12 +22,16 @@ A ativação sem data de lançamento é rejeitada pela API.
 ## Comportamento público
 
 1. Visitantes em `/` veem a tela full-bleed com contagem regressiva.
-2. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
-3. Entrar é a ação principal; Downloads fica secundário.
-4. Login e Downloads permanecem acessíveis pelos botões da página.
-5. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
-6. Com restrição de staff, senha/passkey/OAuth/2FA respondem
+2. A landing permanece em `/inicio` (com chrome público). Sem Coming Soon, `/inicio`
+   redireciona para `/`.
+3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
+4. Entrar é a ação principal; Downloads fica secundário.
+5. Login e Downloads permanecem acessíveis pelos botões da página.
+6. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
+7. Com restrição de staff, senha/passkey/OAuth/2FA respondem
    `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns.
+8. Quem já está autenticado em `/login` é enviado à landing (`/inicio`), salvo `?next=`
+   local válido. Conta social sem senha utilizável vai para `/complete-account`.
 
 No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
 
@@ -53,6 +58,8 @@ hero do tema.
 
 - Backend: `apps/server/tests/test_server_info.py`, `apps/staff/tests/test_staff_config_api.py`,
   login restrito em `apps/accounts/tests/test_auth_api.py`.
-- Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, admin em `AdminSettings.test.tsx`.
+- Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, admin em
+  `AdminSettings.test.tsx`.
 - Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
-  tentar login de jogador com restrição de staff.
+  abrir `/inicio` e confirmar a landing; tentar login de jogador com restrição de staff;
+  visitar `/login` já autenticado e confirmar o redirect para `/inicio`.

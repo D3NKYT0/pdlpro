@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useDefaultTheme } from '../../theme/useDefaultTheme'
 import { SiteNav } from './SiteNav'
@@ -14,9 +14,14 @@ export function PublicLayout() {
   const { pathname } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const launchGate = pathname === '/' && Boolean(info.data?.coming_soon)
+  const landingAlias = pathname === '/inicio'
 
   if (pathname === '/' && info.isPending) {
     return null
+  }
+
+  if (landingAlias && info.data && !info.data.coming_soon) {
+    return <Navigate to="/" replace />
   }
 
   if (launchGate && info.data) {

@@ -3,7 +3,7 @@ import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
 import { Fingerprint } from 'lucide-react'
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
@@ -12,13 +12,20 @@ import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
 
+const LANDING_PATH = '/inicio'
+
 function safeNext(value: string | null) {
   if (value && value.startsWith('/') && !value.startsWith('//')) return value
   return '/painel'
 }
 
+function alreadyLoggedInDestination(nextParam: string | null) {
+  if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) return nextParam
+  return LANDING_PATH
+}
+
 export function LoginPage() {
-  const { login, verifyTwoFactor, refreshUser } = useAuth()
+  const { user, loading, login, verifyTwoFactor, refreshUser } = useAuth()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const navigate = useNavigate()
   const location = useLocation()
@@ -31,6 +38,21 @@ export function LoginPage() {
   const [captchaRequired, setCaptchaRequired] = useState(false)
   const [captchaToken, setCaptchaToken] = useState('')
   const [passkeyLoading, setPasskeyLoading] = useState(false)
+
+  if (loading) {
+    return (
+      <AuthPanel title="Entre no Reino" lead="Carregando sua sessão...">
+        <p className="muted">Aguarde um momento.</p>
+      </AuthPanel>
+    )
+  }
+
+  if (user) {
+    if (user.has_usable_password === false) {
+      return <Navigate to="/complete-account" replace />
+    }
+    return <Navigate to={alreadyLoggedInDestination(params.get('next'))} replace />
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
