@@ -42,11 +42,11 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(screen.getByText('Prepare suas armas')).toBeVisible()
   expect(screen.getByLabelText('Contagem regressiva do lançamento')).toHaveTextContent('01')
   expect(screen.getByLabelText('Contagem regressiva do lançamento')).toHaveTextContent('Dias')
-  const entrar = screen.getByRole('link', { name: 'Entrar' })
-  expect(entrar).toHaveAttribute('href', '/login')
-  expect(entrar).toHaveClass('ui-button--lg')
+  expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute('href', '/login')
+  expect(screen.getByRole('link', { name: 'Entrar' })).toHaveClass('ui-button--lg')
   expect(screen.getByRole('link', { name: 'Downloads' })).toHaveAttribute('href', '/downloads')
   expect(screen.getByRole('link', { name: 'Downloads' })).toHaveClass('launch-gate__secondary')
+  expect(document.querySelector('.launch-gate__panel')).not.toBeNull()
   expect(screen.queryByText('Crônica e Rates')).not.toBeInTheDocument()
 })
 
@@ -96,13 +96,21 @@ it('pulsa o bloco de segundos quando a contagem avança', () => {
   vi.useRealTimers()
 })
 
-it('anuncia o fim da contagem quando a data já passou', () => {
+it('anuncia o fim da contagem com efeitos de abertura', () => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-04T00:00:00Z').getTime())
-  render(
+  const { container } = render(
     <MemoryRouter>
       <ComingSoonPage info={info} />
     </MemoryRouter>,
   )
+  expect(container.querySelector('.launch-gate.is-open')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__fireworks')).not.toBeNull()
+  expect(container.querySelectorAll('.launch-gate__shell').length).toBeGreaterThan(3)
+  expect(container.querySelector('.launch-gate__bg--open.is-active')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__bg--waiting.is-active')).toBeNull()
+  expect(screen.getByText('Servidor aberto')).toBeVisible()
   expect(screen.getByRole('status')).toHaveTextContent('O momento chegou')
+  expect(screen.getByText(/As portas se abriram/)).toBeVisible()
   expect(screen.queryByLabelText('Contagem regressiva do lançamento')).not.toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Entrar' }).closest('.launch-gate__actions')).toHaveClass('is-emphasis')
 })

@@ -30,6 +30,11 @@ A ativação sem data de lançamento é rejeitada pela API.
 
 No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
 
+Quando a data chega, a contagem some e a página entra no estado de abertura: troca o fundo
+para a arte de comemoração com fogos (`bg/coming-soon-open.png`), fogos de artifício animados
+em loop, anel luminoso, kicker “Servidor aberto”, mensagem “O momento chegou” e ênfase no
+botão Entrar. O Coming Soon continua ativo até a equipe desligar o modo no painel.
+
 Contrato público em `GET /api/v1/public/server/info/`:
 
 - `coming_soon`
