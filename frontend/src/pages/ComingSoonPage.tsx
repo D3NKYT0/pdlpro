@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ButtonLink } from '../components/ui/Button'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage } from '../theme/assets'
@@ -33,6 +33,21 @@ function useLaunchCountdown(target: string | null | undefined) {
   return value
 }
 
+function useSecondTick(secs: string) {
+  const previous = useRef(secs)
+  const [ticking, setTicking] = useState(false)
+
+  useEffect(() => {
+    if (previous.current === secs) return undefined
+    previous.current = secs
+    setTicking(true)
+    const timer = window.setTimeout(() => setTicking(false), 320)
+    return () => window.clearTimeout(timer)
+  }, [secs])
+
+  return ticking
+}
+
 const UNITS = [
   ['days', 'Dias'],
   ['hours', 'Horas'],
@@ -40,17 +55,27 @@ const UNITS = [
   ['secs', 'Seg'],
 ] as const
 
-function LaunchParticles({ count = 42 }: { count?: number }) {
+function LaunchParticles({ count = 68 }: { count?: number }) {
   const particles = useMemo(
     () =>
-      Array.from({ length: count }, (_, index) => ({
-        id: index,
-        left: `${(index * 37) % 100}%`,
-        delay: `${(index % 12) * 0.55}s`,
-        duration: `${8 + (index % 7)}s`,
-        size: `${2 + (index % 4)}px`,
-        drift: `${((index % 5) - 2) * 18}px`,
-      })),
+      Array.from({ length: count }, (_, index) => {
+        const band = index % 3
+        const left =
+          band === 0
+            ? 38 + ((index * 13) % 24)
+            : band === 1
+              ? 28 + ((index * 17) % 44)
+              : (index * 37) % 100
+        return {
+          id: index,
+          left: `${left}%`,
+          delay: `${(index % 14) * 0.4}s`,
+          duration: `${6 + (index % 8)}s`,
+          size: `${3 + (index % 5)}px`,
+          drift: `${((index % 7) - 3) * 22}px`,
+          bright: band === 0,
+        }
+      }),
     [count],
   )
 
@@ -59,7 +84,7 @@ function LaunchParticles({ count = 42 }: { count?: number }) {
       {particles.map((particle) => (
         <span
           key={particle.id}
-          className="launch-gate__spark"
+          className={`launch-gate__spark${particle.bright ? ' is-bright' : ''}`}
           style={{
             left: particle.left,
             width: particle.size,
@@ -74,13 +99,21 @@ function LaunchParticles({ count = 42 }: { count?: number }) {
   )
 }
 
+function resolveHeroTitle(info: ApiServerInfo) {
+  const configured = info.coming_soon_title?.trim() || ''
+  const brand = info.name?.trim() || 'PDL'
+  if (!configured || configured.toLocaleLowerCase('pt-BR') === 'em breve') return brand
+  return configured
+}
+
 export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
-  const title = info.coming_soon_title?.trim() || info.name?.trim() || 'Em breve'
+  const title = resolveHeroTitle(info)
   const subtitle =
     info.coming_soon_subtitle?.trim() ||
     info.description ||
     'O reino está sendo preparado. A contagem marca a abertura.'
   const countdown = useLaunchCountdown(info.coming_soon_at)
+  const ticking = useSecondTick(countdown.secs)
 
   return (
     <div className="launch-gate" data-theme-page="coming-soon">
@@ -96,7 +129,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
       </div>
 
       <main className="launch-gate__stage">
-        <p className="launch-gate__kicker">Abertura do servidor</p>
+        <p className="launch-gate__kicker">Em breve</p>
         <h1 className="launch-gate__title">{title}</h1>
         <p className="launch-gate__subtitle">{subtitle}</p>
 
@@ -109,7 +142,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
             {UNITS.map(([key, label], index) => (
               <div key={key} className="launch-gate__unit">
                 {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
-                <div className="launch-gate__block">
+                <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
                   <span className="launch-gate__value">{countdown[key]}</span>
                   <span className="launch-gate__label">{label}</span>
                 </div>
@@ -122,7 +155,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           <ButtonLink to="/login" size="lg">
             Entrar
           </ButtonLink>
-          <ButtonLink to="/downloads" variant="secondary" size="lg">
+          <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
             Downloads
           </ButtonLink>
         </div>

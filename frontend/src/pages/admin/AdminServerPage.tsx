@@ -1,9 +1,10 @@
 import { Card } from '../../components/ui/Card'
 import { apiErrorMessage } from '../../lib/errors'
 import { Field } from '../../components/ui/Field'
+import { ButtonLink } from '../../components/ui/Button'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { CalendarClock, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
+import { CalendarClock, ExternalLink, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -43,7 +44,7 @@ export function AdminServerPage() {
   const [start, setStart] = useState('')
   const [comingSoon, setComingSoon] = useState(false)
   const [staffOnly, setStaffOnly] = useState(false)
-  const [comingSoonTitle, setComingSoonTitle] = useState('Em breve')
+  const [comingSoonTitle, setComingSoonTitle] = useState('')
   const [comingSoonSubtitle, setComingSoonSubtitle] = useState('')
   const [comingSoonAt, setComingSoonAt] = useState('')
   const [saving, setSaving] = useState(false)
@@ -68,7 +69,7 @@ export function AdminServerPage() {
     setStart(data.notes.start || '')
     setComingSoon(data.coming_soon)
     setStaffOnly(data.staff_only_login)
-    setComingSoonTitle(data.coming_soon_title || 'Em breve')
+    setComingSoonTitle(data.coming_soon_title || data.name || '')
     setComingSoonSubtitle(data.coming_soon_subtitle || '')
     setComingSoonAt(toDatetimeLocal(data.coming_soon_at))
   }, [panel.data])
@@ -179,11 +180,13 @@ export function AdminServerPage() {
           </header>
           <div className="account-form-fields">
             <Field>
-              Título
+              Título do lançamento
+              <small>Exibido como headline. Use o nome do servidor ou o título da abertura.</small>
               <input
                 value={comingSoonTitle}
                 disabled={!comingSoon}
                 onChange={(e) => setComingSoonTitle(e.target.value)}
+                placeholder={name || 'Nome do servidor'}
                 required={comingSoon}
               />
             </Field>
@@ -207,6 +210,14 @@ export function AdminServerPage() {
               rows={2}
             />
           </Field>
+          {comingSoon ? (
+            <div className="admin-coming-soon-preview" style={{ marginTop: 12 }}>
+              <ButtonLink to="/" target="_blank" rel="noreferrer" variant="secondary" size="sm">
+                <ExternalLink aria-hidden="true" size={14} />
+                Ver página de lançamento
+              </ButtonLink>
+            </div>
+          ) : null}
         </Card>
 
         <Card as="div" className="admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></Card>

@@ -122,8 +122,8 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
   expect(restricted).toBeDisabled()
   await user.click(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ }))
   await user.click(restricted)
-  await user.clear(screen.getByLabelText('Título'))
-  await user.type(screen.getByLabelText('Título'), 'Abertura do reino')
+  await user.clear(screen.getByLabelText(/Título do lançamento/))
+  await user.type(screen.getByLabelText(/Título do lançamento/), 'Abertura do reino')
   await user.type(screen.getByLabelText(/Data e hora do lançamento/), '2027-01-03T18:00')
   await user.type(screen.getByRole('textbox', { name: /Recursos/ }), ' PvP \n\n Eventos ')
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
@@ -135,6 +135,7 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
     coming_soon_title: 'Abertura do reino',
     coming_soon_at: expect.stringMatching(/^2027-01-03T/),
   }))
+  expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')
 })
 
 it.each([false, true])('desvinculação exige confirmação, confirmada=%s', async confirm => {

@@ -21,10 +21,14 @@ A ativação sem data de lançamento é rejeitada pela API.
 ## Comportamento público
 
 1. Visitantes em `/` veem a tela full-bleed com contagem regressiva.
-2. Login e Downloads permanecem acessíveis pelos links da própria página.
-3. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
-4. Com restrição de staff, senha/passkey/OAuth/2FA respondem
+2. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
+3. Entrar é a ação principal; Downloads fica secundário.
+4. Login e Downloads permanecem acessíveis pelos botões da página.
+5. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
+6. Com restrição de staff, senha/passkey/OAuth/2FA respondem
    `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns.
+
+No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
 
 Contrato público em `GET /api/v1/public/server/info/`:
 
