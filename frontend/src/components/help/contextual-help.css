@@ -1,10 +1,10 @@
 .contextual-help { margin-bottom: 10px; }
 
 .card.contextual-help-panel {
-  --contextual-ink: #eef6f2;
-  --contextual-muted: #95b3a8;
+  --contextual-ink: var(--theme-text, var(--panel-text, #eef6f2));
+  --contextual-muted: var(--theme-muted, var(--panel-muted, #95b3a8));
   --contextual-accent: #3fb9a0;
-  --contextual-gold: #d4a24a;
+  --contextual-gold: var(--theme-accent, var(--panel-gold, #d4a24a));
   --contextual-panel: rgba(8, 22, 20, 0.72);
   width: 100%;
   margin-top: 6px;
@@ -128,9 +128,9 @@
 
 .contextual-help-level small,
 .contextual-help-status {
-  color: #f0e0b8;
-  border-color: rgba(212, 162, 74, 0.3);
-  background: rgba(212, 162, 74, 0.1);
+  color: var(--theme-accent-bright, #f0e0b8);
+  border-color: var(--theme-border, rgba(212, 162, 74, 0.3));
+  background: var(--panel-gold-soft, rgba(212, 162, 74, 0.1));
 }
 
 .contextual-help-level small {
@@ -225,7 +225,7 @@
   align-content: center;
   margin: 0;
   padding: 0.55rem 1.55rem 0.45rem;
-  color: #f3e6c8;
+  color: var(--theme-text, #f3e6c8);
   font-size: 0.86rem;
   font-style: italic;
   line-height: 1.45;

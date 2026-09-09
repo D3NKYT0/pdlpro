@@ -1,8 +1,8 @@
 .launch-gate {
-  --launch-ink: #f6ecd4;
-  --launch-muted: #c2b08a;
-  --launch-ember: #d4a24a;
-  --launch-deep: #070504;
+  --launch-ink: var(--theme-text, #f6ecd4);
+  --launch-muted: var(--theme-muted, #c2b08a);
+  --launch-ember: var(--theme-accent, #d4a24a);
+  --launch-deep: var(--theme-bg-deep, #070504);
   position: fixed;
   inset: 0;
   isolation: isolate;

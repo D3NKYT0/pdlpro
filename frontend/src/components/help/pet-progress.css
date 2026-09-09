@@ -13,7 +13,7 @@
   height:auto;
   overflow:visible;
   transform:translate(-50%,-50%) rotate(-14deg);
-  filter:drop-shadow(0 1px 1px #1a1208cc);
+  filter:drop-shadow(0 1px 1px var(--theme-bg-deep, #1a1208cc));
 }
 /* Mão/braço no peito ou pose de atividade: o broche some (também validado em starPin.ts). */
 .pose-pensando .denk-pin,
@@ -28,7 +28,7 @@
 .pose-andando .denk-pin,
 .pose-regando .denk-pin,
 .pose-pescando .denk-pin { display:none; }
-.denk-mascot.is-celebrating:after { content:'✦'; position:absolute; color:#f9d572; top:12%; left:8%; font-size:28px; }
+.denk-mascot.is-celebrating:after { content:'✦'; position:absolute; color:var(--theme-accent-bright, var(--panel-gold-bright, #f9d572)); top:12%; left:8%; font-size:28px; }
 .denk-mascot[data-animated=true].is-celebrating:after { animation:denk-spark 900ms ease-in-out 3; }
 .denk-mascot[data-animated=true].is-dancing:not(:has(.denk-sprite)) .denk-facing { animation:denk-dance 850ms ease-in-out infinite; transform-origin:50% 95%; }
 .denk-mascot[data-animated=true][data-gesture=true] .denk-pose { animation:denk-nod 1400ms ease-in-out infinite; transform-origin:50% 80%; }

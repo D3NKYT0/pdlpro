@@ -4,7 +4,7 @@ import { afterEach, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { usePanelTheme } from './usePanelTheme'
 import { useDefaultTheme } from './useDefaultTheme'
-import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage } from './assets'
+import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage, themeStylesheet } from './assets'
 
 afterEach(() => {
   cleanup()
@@ -35,6 +35,17 @@ it('monta tema público e remove recursos na desmontagem', () => {
 it('normaliza barra inicial nos caminhos de assets', () => {
   expect(themeAsset('/css/main.css')).toBe('/theme/default/css/main.css')
   expect(themeImage('/bg/5.jpg')).toBe('/theme/default/images/bg/5.jpg')
+})
+it('remapeia folhas estruturais via assets lógicos', () => {
+  expect(themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css')).toBe('/theme/pages/coming-soon.css')
+  configureRuntimeTheme({
+    'css/pages/coming-soon.css': '/media/themes/demo/coming-soon.css',
+    'css/public/layout.css': '/media/themes/demo/layout.css',
+  })
+  expect(themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css')).toBe('/media/themes/demo/coming-soon.css')
+  expect(PUBLIC_THEME_STYLES.map((href) => href)).toContain('/media/themes/demo/coming-soon.css')
+  expect(PUBLIC_THEME_STYLES.map((href) => href)).toContain('/media/themes/demo/layout.css')
+  expect(PANEL_THEME_STYLES.map((href) => href)).toContain('/theme/pages/panel.css')
 })
 it('aplica superfícies e densidade a partir do layout do pacote', () => {
   configureRuntimeTheme({

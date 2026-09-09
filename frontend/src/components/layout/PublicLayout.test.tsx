@@ -91,4 +91,5 @@ it('mantém o chrome nas demais rotas públicas', async () => {
   mount('/news')
   expect(await screen.findByRole('heading', { name: 'Notícias' })).toBeVisible()
   expect(screen.getByText('Site nav')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Notícias' }).closest('[data-theme-surface="public"]')).not.toBeNull()
 })

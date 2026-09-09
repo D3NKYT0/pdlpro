@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ButtonLink } from '../components/ui/Button'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage } from '../theme/assets'
-import './coming-soon.css'
 
 type CountdownValue = { days: string; hours: string; mins: string; secs: string; finished: boolean }
 
@@ -201,7 +200,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   }, [])
 
   return (
-    <div className={`launch-gate${finished ? ' is-open' : ''}`} data-theme-page="coming-soon">
+    <div className={`launch-gate${finished ? ' is-open' : ''}`} data-theme-surface="public" data-theme-page="coming-soon">
       <div className="launch-gate__sky" aria-hidden="true">
         <img
           className={`launch-gate__bg launch-gate__bg--waiting${!finished ? ' is-active' : ''}`}

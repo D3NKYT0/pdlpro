@@ -73,6 +73,7 @@ function sectionArt(image: string) {
 }
 
 function DefaultHomePage() {
+  const theme = useTheme()
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
   const wiki = useQuery({ queryKey: ['wiki'], queryFn: () => contentApi.wiki() })
@@ -80,9 +81,14 @@ function DefaultHomePage() {
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
   const trailerId = (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
   const [trailerPlaying, setTrailerPlaying] = useState(false)
-  const serverName = (import.meta.env.VITE_SERVER_NAME as string | undefined) || 'Inicie sua Jornada em Lineage Agora!'
+  const serverName =
+    (import.meta.env.VITE_SERVER_NAME as string | undefined) ||
+    theme.name ||
+    'Inicie sua Jornada em Lineage Agora!'
   const serverDescription =
-    (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined) || 'Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna.'
+    (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined) ||
+    theme.description ||
+    'Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna.'
   const wikiItems = wiki.data?.length
     ? wiki.data.slice(0, 5).map((page) => ({ to: `/wiki/${page.slug}`, label: page.title }))
     : wikiLinks
@@ -96,7 +102,7 @@ function DefaultHomePage() {
     : chronicleCards
 
   return (
-    <>
+    <div data-theme-part="home">
       <div className="video">
         <video autoPlay muted loop playsInline src={themeImage('video.mp4')} onError={(event) => event.currentTarget.remove()} />
       </div>
@@ -375,7 +381,7 @@ function DefaultHomePage() {
           </div>
         </section>
       ) : null}
-    </>
+    </div>
   )
 }
 

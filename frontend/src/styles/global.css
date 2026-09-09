@@ -9,6 +9,13 @@
   --danger: #d45c4a;
   --ok: #6fbf73;
   --border: rgba(212, 175, 55, 0.22);
+  --theme-text: var(--text);
+  --theme-muted: var(--muted);
+  --theme-accent: var(--gold);
+  --theme-accent-bright: var(--gold);
+  --theme-surface: var(--bg-panel);
+  --theme-border: var(--border);
+  --theme-bg-deep: #100e0b;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   --public-header-height: 78px;
   --public-container-width: 1175px;

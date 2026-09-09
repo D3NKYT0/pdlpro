@@ -35,7 +35,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
     )
   }
   return (
-    <>
+    <div data-theme-surface="auth">
       <div className="video">
         <video autoPlay muted loop playsInline src={themeImage('video.mp4')} onError={(event) => event.currentTarget.remove()} />
       </div>
@@ -54,7 +54,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

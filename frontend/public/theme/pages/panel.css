@@ -6,6 +6,13 @@ html.pdl-panel {
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
+  --theme-text: var(--panel-text);
+  --theme-muted: var(--panel-muted);
+  --theme-accent: var(--panel-gold);
+  --theme-accent-bright: var(--panel-gold-bright);
+  --theme-surface: var(--panel-surface);
+  --theme-border: var(--panel-border);
+  --theme-bg-deep: #100e0b;
   --panel-sidebar-width: 264px;
   --panel-shell-gap: 28px;
   --panel-shell-pad-y: 22px;

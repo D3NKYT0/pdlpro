@@ -33,7 +33,7 @@ export function PublicLayout() {
   }
 
   return (
-    <>
+    <div data-theme-surface="public">
       <SiteNav />
 
       <div className="main-content">
@@ -41,7 +41,7 @@ export function PublicLayout() {
       </div>
 
       <SiteFooter />
-    </>
+    </div>
   )
 }
 

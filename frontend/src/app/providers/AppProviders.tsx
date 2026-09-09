@@ -11,7 +11,9 @@ export function AppProviders() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <AppRoutes />
-          <Toaster position="top-right" />
+          <div data-theme-part="toast-host" data-theme-surface="overlay">
+            <Toaster position="top-right" containerClassName="pdl-toast" toastOptions={{ className: 'pdl-toast' }} />
+          </div>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>

@@ -1,9 +1,9 @@
 .help-speech-bubble {
-  --speech-ink: var(--panel-text, #f7f2e8);
+  --speech-ink: var(--theme-text, var(--panel-text, #f7f2e8));
   --speech-fill: linear-gradient(165deg, rgba(62, 48, 28, 0.96), rgba(28, 22, 16, 0.98));
-  --speech-edge: rgba(230, 199, 125, 0.45);
-  --speech-glow: rgba(197, 161, 97, 0.18);
-  --speech-accent: var(--panel-gold-bright, #e6c77d);
+  --speech-edge: var(--theme-border, rgba(230, 199, 125, 0.45));
+  --speech-glow: var(--panel-gold-soft, rgba(197, 161, 97, 0.18));
+  --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   --speech-tail-x: 18px;
   --speech-radius: 18px 18px 18px 7px;
   position: relative;
@@ -79,14 +79,14 @@
 }
 .help-speech-bubble__content > .muted,
 .help-speech-bubble__content > small.muted {
-  color: rgba(247, 242, 232, 0.72);
+  color: var(--theme-muted, rgba(247, 242, 232, 0.72));
 }
 
 .help-speech-bubble--assistant {
   --speech-fill: linear-gradient(165deg, rgba(84, 58, 28, 0.95), rgba(34, 26, 16, 0.98) 55%, rgba(22, 34, 36, 0.96));
   --speech-edge: rgba(230, 199, 125, 0.55);
   --speech-glow: rgba(230, 199, 125, 0.22);
-  --speech-accent: #f0d78a;
+  --speech-accent: var(--theme-accent-bright, #f0d78a);
   --speech-tail-x: 22px;
   --speech-radius: 20px 20px 20px 8px;
   align-self: flex-start;
@@ -123,7 +123,7 @@
   --speech-fill: linear-gradient(180deg, rgba(72, 52, 28, 0.97), rgba(30, 24, 16, 0.98));
   --speech-edge: rgba(230, 199, 125, 0.5);
   --speech-glow: rgba(197, 161, 97, 0.2);
-  --speech-accent: var(--panel-gold-bright, #e6c77d);
+  --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   --speech-radius: 16px 16px 16px 16px;
   width: 100%;
 }

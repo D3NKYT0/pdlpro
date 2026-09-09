@@ -161,14 +161,41 @@ O seletor raiz recomendado é:
   --border: rgba(212, 175, 97, .25);
   --panel-sidebar-width: 288px;
   --panel-radius: 6px;
+  --panel-text: #f4f1e9;
+  --panel-muted: #aaa298;
+  --panel-gold: #d4af61;
+  --panel-gold-bright: #e6c77d;
+  --panel-surface: #151515;
+  --panel-border: rgba(212, 175, 97, .25);
+  --theme-text: var(--panel-text);
+  --theme-muted: var(--panel-muted);
+  --theme-accent: var(--panel-gold);
+  --theme-accent-bright: var(--panel-gold-bright);
+  --theme-surface: var(--panel-surface);
+  --theme-border: var(--panel-border);
+  --theme-bg-deep: #100e0b;
 }
 ```
 
 Seletores de contexto disponíveis: `html.pdl-public`, `html.pdl-panel`,
-`[data-theme-surface="public|auth|panel|admin"]`, `html[data-panel-density]` e os componentes
-compartilhados com `data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs` e estados
-de consulta). O identificador do pacote é aplicado como `data-pdl-theme` no elemento `html`;
-renderers também recebem `data-pdl-renderer`.
+`[data-theme-surface="public|auth|panel|admin|overlay"]`, `html[data-panel-density]` e os componentes
+compartilhados com `data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs`, `toast-host`,
+`home` e estados de consulta). O caminho default sempre marca essas superfícies no shell público,
+autenticação, painel e toasts. O identificador do pacote é aplicado como `data-pdl-theme` no elemento
+`html`; renderers também recebem `data-pdl-renderer`.
+
+O CSS de features do painel (ajuda/companheiro, programas do jogador e painéis admin como
+relatórios financeiros, itens customizados e observação de itens) consome tokens `--theme-*` e
+`--panel-*` (texto, muted, accent, surface, border, fundo profundo). Pacotes personalizam essas
+cores via `theme.css`; os fallbacks hex preservam a aparência default quando o token não existe.
+
+As folhas estruturais em `/theme/public` e `/theme/pages` entram na lista de estilos do default via
+chaves lógicas `css/public/*` e `css/pages/*` (por exemplo `css/pages/coming-soon.css`). Fontes e
+ícones externos usam `vendor/fonts-public.css`, `vendor/fonts-panel.css` e `vendor/font-awesome.css`
+(fallback CDN). Um pacote pode remapear qualquer uma dessas chaves em `assets` sem alterar o
+entrypoint. A página Coming Soon é superfície pública tematizada
+(`data-theme-surface="public"`, `data-theme-page="coming-soon"`) e carrega
+`css/pages/coming-soon.css` pela lista de estilos do tema, não por import local.
 
 ## Segurança e limites
 

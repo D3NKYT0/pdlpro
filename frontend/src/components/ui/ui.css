@@ -17,7 +17,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 .ui-button-spinner { flex-shrink: 0; animation: ui-button-spin 1s linear infinite; }
 @keyframes ui-button-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .ui-button-spinner { animation: none; } }
-.ui-field textarea { background: #0f0d0a; border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font: inherit; resize: vertical; }
+.ui-field textarea { background: var(--theme-bg-deep, #0f0d0a); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font: inherit; resize: vertical; }
 .ui-field { min-width: 0; }
 .ui-field :is(input, select, textarea, .ui-select) { min-width: 0; max-width: 100%; }
 .ui-field-error { color: var(--danger); }
@@ -41,7 +41,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 12px 8px;
-  color: #fff;
+  color: var(--theme-text, #fff);
   font: inherit;
   text-align: left;
   cursor: pointer;

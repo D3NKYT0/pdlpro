@@ -1,15 +1,27 @@
+/* Help feature tokens — bridge to panel/theme with prior hex fallbacks. */
+.help-page,
+.help-companion-host,
+.help-companion-menu {
+  --help-ink: var(--theme-text, var(--panel-text, #f7f2e8));
+  --help-muted: var(--theme-muted, var(--panel-muted, rgba(255, 255, 255, 0.58)));
+  --help-accent: var(--theme-accent, var(--panel-gold, #c5a161));
+  --help-accent-bright: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
+  --help-surface: var(--theme-surface, var(--panel-surface, #18202d));
+  --help-border: var(--theme-border, var(--panel-border, rgba(230, 199, 125, 0.2)));
+}
+
 .help-companion-host { position:relative; min-height:0; }
 .help-companion-host .help-companion { height:100%; }
 .help-character-handle { position:relative; display:grid; place-items:center; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; border-radius:16px; }
 .help-character-handle:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
 .help-character-handle .denk-mascot { width:180px; pointer-events:none; }
-.help-character-badge { position:absolute; bottom:0; right:0; padding:0 8px; border-radius:12px; background:var(--panel-bg, #18202d); color:var(--panel-text, #fff); }
+.help-character-badge { position:absolute; bottom:0; right:0; padding:0 8px; border-radius:12px; background:var(--help-surface, #18202d); color:var(--help-ink, #fff); }
 .panel-app .help-page .help-companion-menu,.help-companion-menu { position:absolute; z-index:40; top:8px; left:calc(100% + 8px); width:min(480px, calc(100vw - 32px)); max-height:calc(100% - 16px); overflow:auto; display:flex; flex-direction:column; gap:12px; padding:16px; box-shadow:0 12px 40px #0005; }
 .help-companion-menu header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .help-companion-menu p { margin:0; }
-.help-preferences { display:grid; gap:10px; padding-top:12px; border-top:1px solid var(--panel-border); }
+.help-preferences { display:grid; gap:10px; padding-top:12px; border-top:1px solid var(--help-border, var(--panel-border)); }
 .help-message-retry { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
-.help-context { display:grid; gap:10px; padding:12px; border-bottom:1px solid var(--panel-border); }
+.help-context { display:grid; gap:10px; padding:12px; border-bottom:1px solid var(--help-border, var(--panel-border)); }
 .help-context p { font-weight:400; margin:0; }
 .help-companion-host.is-floating { position:fixed; z-index:121; width:80px; height:120px; }
 .panel-app .help-page .is-floating .help-companion,.is-floating .help-companion { display:block; padding:0; border:0; background:none; box-shadow:none; overflow:visible; }
@@ -130,7 +142,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 .denk-pet-attributes progress {
   width:100%;
   height:8px;
-  accent-color:var(--panel-gold, #c89b3c);
+  accent-color:var(--help-accent, var(--panel-gold, #c89b3c));
 }
 .denk-pet-attributes b {
   text-align:right;
@@ -164,7 +176,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   flex-wrap:wrap;
   flex-shrink:0;
   padding:12px 16px;
-  border-bottom:1px solid var(--panel-border);
+  border-bottom:1px solid var(--help-border, var(--panel-border));
 }
 .help-chat-head p {
   margin:2px 0 0;
@@ -180,7 +192,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   overflow-y:auto;
   overscroll-behavior:contain;
   scrollbar-width:thin;
-  scrollbar-color:rgba(197, 161, 97, 0.45) transparent;
+  scrollbar-color:var(--panel-gold-soft, rgba(197, 161, 97, 0.45)) transparent;
 }
 .help-messages::-webkit-scrollbar,
 .help-companion::-webkit-scrollbar,
@@ -215,7 +227,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 .help-companion-menu,
 .help-activities[role=group] {
   scrollbar-width:thin;
-  scrollbar-color:rgba(197, 161, 97, 0.45) transparent;
+  scrollbar-color:var(--panel-gold-soft, rgba(197, 161, 97, 0.45)) transparent;
 }
 .help-message.from-user { align-self:flex-end; }
 .help-message.from-assistant { align-self:flex-start; }

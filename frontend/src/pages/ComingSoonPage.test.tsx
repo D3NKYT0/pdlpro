@@ -40,6 +40,8 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(screen.getByText('Em breve')).toBeVisible()
   expect(screen.getByRole('heading', { name: 'O portal se abre' })).toBeVisible()
   expect(screen.getByText('Prepare suas armas')).toBeVisible()
+  expect(document.querySelector('.launch-gate')).toHaveAttribute('data-theme-surface', 'public')
+  expect(document.querySelector('.launch-gate')).toHaveAttribute('data-theme-page', 'coming-soon')
   expect(screen.getByLabelText('Contagem regressiva do lançamento')).toHaveTextContent('01')
   expect(screen.getByLabelText('Contagem regressiva do lançamento')).toHaveTextContent('Dias')
   expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute('href', '/login')

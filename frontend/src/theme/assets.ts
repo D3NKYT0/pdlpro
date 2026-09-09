@@ -62,6 +62,11 @@ export function themeImage(path: string) {
   return themeAsset(`images/${path.replace(/^\//, '')}`)
 }
 
+/** Folhas estruturais em `/theme/public` e `/theme/pages`; pacotes remapam via `assets`. */
+export function themeStylesheet(logicalPath: string, builtinFallback: string) {
+  return runtimeAssets[logicalPath] || builtinFallback
+}
+
 function cssUrl(path: string) {
   return `url(${JSON.stringify(path)})`
 }
@@ -112,35 +117,69 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   }
 }
 
-export const PUBLIC_THEME_STYLES = [
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
-  'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Orbitron:wght@600&display=swap',
-  themeAsset('css/font/stylesheet.css'),
-  themeAsset('css/font.css'),
-  themeAsset('css/main.css'),
-  themeAsset('css/media.css'),
-  themeAsset('css/index.css'),
-  '/theme/public/css/layout.css',
-  '/theme/public/css/index-carousel.css',
-  '/theme/public/css/news.css',
-  '/theme/public/css/faq.css',
-  '/theme/public/css/terms.css',
-  '/theme/pages/home-extras.css',
-  '/theme/pages/public-pages.css',
-  '/theme/pages/news-page.css',
-  '/theme/pages/faq-page.css',
-  '/theme/pages/news-detail.css',
-  '/theme/pages/extras.css',
-  '/theme/pages/info-page.css',
-  '/theme/pages/rankings-page.css',
-  '/theme/pages/auth.css',
-]
+function publicThemeStyles(): string[] {
+  return [
+    themeStylesheet(
+      'vendor/font-awesome.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
+    ),
+    themeStylesheet(
+      'vendor/fonts-public.css',
+      'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Orbitron:wght@600&display=swap',
+    ),
+    themeAsset('css/font/stylesheet.css'),
+    themeAsset('css/font.css'),
+    themeAsset('css/main.css'),
+    themeAsset('css/media.css'),
+    themeAsset('css/index.css'),
+    themeStylesheet('css/public/layout.css', '/theme/public/css/layout.css'),
+    themeStylesheet('css/public/index-carousel.css', '/theme/public/css/index-carousel.css'),
+    themeStylesheet('css/public/news.css', '/theme/public/css/news.css'),
+    themeStylesheet('css/public/faq.css', '/theme/public/css/faq.css'),
+    themeStylesheet('css/public/terms.css', '/theme/public/css/terms.css'),
+    themeStylesheet('css/pages/home-extras.css', '/theme/pages/home-extras.css'),
+    themeStylesheet('css/pages/public-pages.css', '/theme/pages/public-pages.css'),
+    themeStylesheet('css/pages/news-page.css', '/theme/pages/news-page.css'),
+    themeStylesheet('css/pages/faq-page.css', '/theme/pages/faq-page.css'),
+    themeStylesheet('css/pages/news-detail.css', '/theme/pages/news-detail.css'),
+    themeStylesheet('css/pages/extras.css', '/theme/pages/extras.css'),
+    themeStylesheet('css/pages/info-page.css', '/theme/pages/info-page.css'),
+    themeStylesheet('css/pages/rankings-page.css', '/theme/pages/rankings-page.css'),
+    themeStylesheet('css/pages/auth.css', '/theme/pages/auth.css'),
+    themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css'),
+  ]
+}
 
-export const PANEL_THEME_STYLES = [
-  'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap',
-  themeAsset('css/font/stylesheet.css'),
-  themeAsset('css/font.css'),
-  '/theme/pages/panel.css',
-]
+function panelThemeStyles(): string[] {
+  return [
+    themeStylesheet(
+      'vendor/fonts-panel.css',
+      'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap',
+    ),
+    themeAsset('css/font/stylesheet.css'),
+    themeAsset('css/font.css'),
+    themeStylesheet('css/pages/panel.css', '/theme/pages/panel.css'),
+  ]
+}
+
+/** Lista pública resolvida após `configureRuntimeTheme` (assets remapeáveis). */
+export const PUBLIC_THEME_STYLES = {
+  get length() {
+    return publicThemeStyles().length
+  },
+  map<T>(callback: (href: string, index: number, array: string[]) => T): T[] {
+    return publicThemeStyles().map(callback)
+  },
+}
+
+/** Lista do painel resolvida após `configureRuntimeTheme` (assets remapeáveis). */
+export const PANEL_THEME_STYLES = {
+  get length() {
+    return panelThemeStyles().length
+  },
+  map<T>(callback: (href: string, index: number, array: string[]) => T): T[] {
+    return panelThemeStyles().map(callback)
+  },
+}
 
 export const ROUTE_THEME_STYLES: Array<{ test: (path: string) => boolean; href: string }> = []

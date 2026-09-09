@@ -9,7 +9,7 @@ import { contentApi, serverApi } from '../services/api'
 import { HomePage } from './HomePage'
 
 vi.mock('../theme/ThemeProvider', () => ({
-  useTheme: () => ({ presentation: null }),
+  useTheme: vi.fn(() => ({ presentation: null, name: undefined, description: undefined })),
 }))
 vi.mock('../services/domain/content.service', () => ({
   contentApi: { news: vi.fn(), wiki: vi.fn() },
@@ -162,4 +162,20 @@ it('prioriza páginas e notícias publicadas na seção de crônica', async () =
   expect(screen.getByRole('link', { name: /Patch do castelo/i })).toHaveAttribute('href', '/news/patch-80')
   expect(screen.queryByRole('link', { name: /Rates e progressão/i })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: /Notícias do reino/i })).not.toBeInTheDocument()
+})
+
+it('marca a home default com data-theme-part e usa nome/descrição do tema', async () => {
+  const { useTheme } = await import('../theme/ThemeProvider')
+  vi.mocked(useTheme).mockReturnValue({
+    presentation: null,
+    name: 'Reino Temático',
+    description: 'Descrição do pacote de tema',
+  } as never)
+
+  mount()
+  await screen.findByRole('link', { name: /Baixe o Jogo/i })
+
+  expect(document.querySelector('[data-theme-part="home"]')).toBeTruthy()
+  expect(screen.getByRole('heading', { level: 1, name: 'Reino Temático' })).toBeVisible()
+  expect(screen.getByText(/Descrição do pacote de tema/)).toBeVisible()
 })
