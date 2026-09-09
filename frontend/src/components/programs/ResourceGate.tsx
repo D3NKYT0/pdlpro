@@ -1,7 +1,7 @@
 import { Card } from '../ui/Card'
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { programsApi } from "../../services/domain/programs.service";
+import { programsApi } from "../../services/api";
 import { Empty, ErrorNotice, Loading } from "./ProgramUI";
 
 export function ResourceGate({

@@ -9,7 +9,20 @@ import toast from 'react-hot-toast'
 import { ApiError, inventoryApi, lineageApi } from '../services/api'
 import { CharacterPage } from './CharacterPage'
 
-vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { characters: vi.fn(), servicePrices: vi.fn(), changeNickname: vi.fn(), changeSex: vi.fn(), unstuck: vi.fn() }, inventoryApi: { equipment: vi.fn() } }))
+vi.mock('../services/api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../services/api')>()
+  return {
+    ...actual,
+    lineageApi: {
+      characters: vi.fn(),
+      servicePrices: vi.fn(),
+      changeNickname: vi.fn(),
+      changeSex: vi.fn(),
+      unstuck: vi.fn(),
+    },
+    inventoryApi: { equipment: vi.fn() },
+  }
+})
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 const character = { char_id: 7, name: 'Hero', level: 80, online: false, sex: 0, pvp: 0, pk: 0, class_id: 0, title: '', clan_name: '', is_clan_leader: false }
 let query: QueryClient
@@ -30,7 +43,7 @@ it.each(['nickname', 'sex'] as const)('serializa %s, preserva chave após erro e
   let reject!: (reason: unknown) => void
   send.mockImplementationOnce(() => new Promise((_resolve, fail) => { reject = fail }))
   const user = mount()
-  await screen.findByRole('heading', { name: 'Hero', level: 1 })
+  expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
   if (service === 'nickname') await user.type(screen.getByLabelText('Novo nickname'), 'NewHero')
   else await user.selectOptions(screen.getByLabelText('Novo sexo'), 'F')
   await user.dblClick(screen.getByRole('button', { name: service === 'nickname' ? 'Alterar nickname' : 'Alterar sexo' }))

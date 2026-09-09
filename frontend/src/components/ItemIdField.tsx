@@ -1,7 +1,7 @@
 import { Field } from './ui/Field'
 import { useEffect, useRef, useState } from 'react'
 import { ItemIcon } from './ItemIcon'
-import { useItemCatalog, type L2CatalogItem } from '../lib/item-icons'
+import { useItemCatalog, type L2CatalogItem } from '../hooks/useItemCatalog'
 
 interface ItemIdFieldProps {
   value: string

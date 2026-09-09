@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { themeImage } from '../../theme/assets'
-import { programsApi } from '../../services/domain/programs.service'
+import { programsApi } from '../../services/api'
 import { PdlSymbol } from '../PdlSymbol'
 
 const exploreLinks = [

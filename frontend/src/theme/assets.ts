@@ -1,4 +1,4 @@
-import type { ThemeLayout } from '../services/domain/theme.service'
+import type { ThemeLayout } from '../services/api'
 
 export const THEME = '/theme/default'
 

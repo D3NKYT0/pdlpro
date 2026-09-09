@@ -1,7 +1,7 @@
 import { knownScene, type SceneId } from './scenes'
 import type { HelpLanguage } from './personality'
 import { speechFrame } from './speech'
-import type { DenkynhoAction } from '../../services/domain/content.service'
+import type { DenkynhoAction } from '../../services/api'
 
 /** Episódios da vida ambient — dormir/cochilar é só parte do dia. */
 export type AmbientActivity =

@@ -6,9 +6,9 @@ import { ArrowLeftRight, ShieldCheck, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   commerceApi,
+  lineageApi,
   type ExchangeRequest,
-} from "../services/domain/commerce.service";
-import { lineageApi } from "../services/domain/lineage.service";
+} from "../services/api";
 import {
   Empty,
   ErrorNotice,
@@ -103,7 +103,7 @@ export function GameExchangePage() {
                   );
                 pending.current = null;
                 setConfirmation(false);
-              }, "Transferência concluída.");
+              }, "Transferência concluída.", [["game-exchange"], ["wallet"]]);
             }}
           >
             <label>
@@ -267,7 +267,7 @@ export function GameExchangePage() {
                               });
                               if (result.status !== "completed")
                                 throw new Error(result.message);
-                            }, "Transferência concluída.")
+                            }, "Transferência concluída.", [["game-exchange"], ["wallet"]])
                           }
                         >
                           <RefreshCw size={14} />

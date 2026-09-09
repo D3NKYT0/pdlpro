@@ -1,6 +1,6 @@
 import { Button } from '../ui/Button'
 import { Plus, Trash2 } from "lucide-react";
-import type { Reward } from "../../services/domain/programs.service";
+import type { Reward } from "../../services/api";
 
 export function RewardsEditor({
   value,

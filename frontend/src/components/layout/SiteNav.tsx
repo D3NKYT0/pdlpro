@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { CircleUserRound } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { programsApi } from '../../services/domain/programs.service'
+import { programsApi } from '../../services/api'
 import { PdlSymbol } from '../PdlSymbol'
 
 const links = [

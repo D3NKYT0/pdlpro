@@ -7,7 +7,7 @@ import {
 import type {
   Reward,
   RewardHistory,
-} from "../../services/domain/programs.service";
+} from "../../services/api";
 import { ItemIcon } from "../ItemIcon";
 import "./programs.css";
 

@@ -15,10 +15,17 @@ import { shopApi, walletApi } from "../services/api";
 import {
   commerceApi,
   type CartLine,
-} from "../services/domain/commerce.service";
+} from "../services/api";
 import { Empty, ErrorNotice, Loading } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
 import { ProgramHeader } from "../components/programs/ProgramHeader";
+
+const SHOP_CART_KEYS = [["shop-quote"]] as const;
+const SHOP_CHECKOUT_KEYS = [
+  ["shop-quote"],
+  ["shop-purchases"],
+  ["wallet"],
+] as const;
 
 export function ShopPage() {
   const catalog = useQuery({ queryKey: ["shop"], queryFn: shopApi.catalog });
@@ -47,15 +54,20 @@ export function ShopPage() {
   async function change(row: CartLine, quantity: number) {
     key.current = null;
     if (row.kind === "item")
-      await action.run(() =>
-        quantity
-          ? shopApi.updateCartItem(row.id, quantity)
-          : shopApi.removeCartItem(row.id),
+      await action.run(
+        () =>
+          quantity
+            ? shopApi.updateCartItem(row.id, quantity)
+            : shopApi.removeCartItem(row.id),
+        "Carrinho atualizado.",
+        SHOP_CART_KEYS,
       );
     else {
       if (row.package_id)
-        await action.run(() =>
-          commerceApi.packageQuantity(row.package_id!, quantity),
+        await action.run(
+          () => commerceApi.packageQuantity(row.package_id!, quantity),
+          "Carrinho atualizado.",
+          SHOP_CART_KEYS,
         );
     }
   }
@@ -146,6 +158,7 @@ export function ShopPage() {
                         void action.run(
                           () => shopApi.addToCart(item.id),
                           "Item adicionado.",
+                          SHOP_CART_KEYS,
                         );
                       }}
                     >
@@ -187,6 +200,7 @@ export function ShopPage() {
                               ),
                             ),
                           "Pacote adicionado.",
+                          SHOP_CART_KEYS,
                         );
                       }}
                     >
@@ -252,6 +266,7 @@ export function ShopPage() {
                 void action.run(
                   () => commerceApi.options({ promo_code: coupon }),
                   "Cupom atualizado.",
+                  SHOP_CART_KEYS,
                 );
               }}
             >
@@ -274,8 +289,10 @@ export function ShopPage() {
                     type="button"
                     disabled={action.busy}
                     onClick={() =>
-                      void action.run(() =>
-                        commerceApi.options({ promo_code: "" }),
+                      void action.run(
+                        () => commerceApi.options({ promo_code: "" }),
+                        "Cupom removido.",
+                        SHOP_CART_KEYS,
                       )
                     }
                   >
@@ -290,8 +307,11 @@ export function ShopPage() {
                   disabled={action.busy}
                   onChange={(e) => {
                     key.current = null;
-                    void action.run(() =>
-                      commerceApi.options({ use_bonus: e.target.checked }),
+                    void action.run(
+                      () =>
+                        commerceApi.options({ use_bonus: e.target.checked }),
+                      "Preferência de bônus atualizada.",
+                      SHOP_CART_KEYS,
                     );
                   }}
                 />
@@ -333,6 +353,7 @@ export function ShopPage() {
                   .run(
                     () => commerceApi.checkout(key.current!),
                     "Compra concluída! Itens entregues na bag.",
+                    SHOP_CHECKOUT_KEYS,
                   )
                   .then((ok) => {
                     if (ok) key.current = null;

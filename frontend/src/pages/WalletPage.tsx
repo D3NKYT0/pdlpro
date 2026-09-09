@@ -1,100 +1,17 @@
-import { Card } from '../components/ui/Card'
-import { apiErrorMessage } from '../lib/errors'
-import { Field } from '../components/ui/Field'
-import { Button, ButtonLink } from '../components/ui/Button'
-import { Modal } from '../components/ui/Modal'
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  ArrowDownLeft,
-  ArrowUpRight,
-  Banknote,
-  CircleDollarSign,
-  Clock3,
-  Coins,
-  CreditCard,
-  History,
-  Landmark,
-  ReceiptText,
-  Send,
-  ShieldCheck,
-  Sparkles,
-  UserRound,
-} from 'lucide-react'
 import toast from 'react-hot-toast'
+import { Modal } from '../components/ui/Modal'
+import { WalletActivityCard } from '../components/wallet/WalletActivityCard'
+import { WalletHero } from '../components/wallet/WalletHero'
+import { WalletPurchaseCard } from '../components/wallet/WalletPurchaseCard'
+import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
+import { orderDetailEntries, transactionDetailEntries } from '../components/wallet/walletHistory'
 import { useAuth } from '../contexts/AuthContext'
+import { apiErrorMessage } from '../lib/errors'
 import { confirmStripePayment, inferDocumentType, mountMercadoPagoBrick, sanitizeDocument } from '../lib/payments'
 import { paymentApi, walletApi } from '../services/api'
-import type { ApiPaymentOrder, ApiWalletPromo, ApiWalletTransaction } from '../services/types'
-import {
-  formatWalletMoney,
-  getOrderStatus,
-  getTransactionPresentation,
-  orderDetailEntries,
-  transactionDetailEntries,
-} from './walletHistory'
-
-function formatMoney(value: string, currency: 'BRL' | 'USD') {
-  return formatWalletMoney(value, currency)
-}
-
-function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
-  const bannerRef = useRef<HTMLElement>(null)
-  const frameRef = useRef(0)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-
-  useEffect(() => () => cancelAnimationFrame(frameRef.current), [])
-
-  function onMouseMove(event: MouseEvent<HTMLElement>) {
-    const node = bannerRef.current
-    if (!node) return
-    const rect = node.getBoundingClientRect()
-    if (!rect.width || !rect.height) return
-    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1
-    const y = ((event.clientY - rect.top) / rect.height) * 2 - 1
-    cancelAnimationFrame(frameRef.current)
-    frameRef.current = requestAnimationFrame(() => {
-      setTilt({
-        x: Math.max(-1, Math.min(1, x)),
-        y: Math.max(-1, Math.min(1, y)),
-      })
-    })
-  }
-
-  function onMouseLeave() {
-    cancelAnimationFrame(frameRef.current)
-    setTilt({ x: 0, y: 0 })
-  }
-
-  const style = {
-    '--promo-mx': tilt.x.toFixed(3),
-    '--promo-my': tilt.y.toFixed(3),
-  } as CSSProperties
-
-  return (
-    <aside
-      ref={bannerRef}
-      className="wallet-promo-banner"
-      aria-label={promo.title}
-      style={style}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-    >
-      <div className="wallet-promo-banner-art" aria-hidden="true" />
-      <div className="wallet-promo-banner-shade" aria-hidden="true" />
-      <div className="wallet-promo-banner-copy">
-        <span className="panel-eyebrow">Promoção</span>
-        <strong>{promo.title}</strong>
-        {promo.description ? <small>{promo.description}</small> : null}
-        <div className="wallet-promo-banner-offer" aria-hidden="true">
-          <b>{Number(promo.percent)}%</b>
-          <span>OFF</span>
-        </div>
-      </div>
-    </aside>
-  )
-}
+import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
 
 export function WalletPage() {
   const { user } = useAuth()
@@ -282,7 +199,6 @@ export function WalletPage() {
     }
   }
 
-  const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
   const packages = catalog.data?.packages ?? []
   const transactions = tx.data?.results ?? []
   const paymentOrders = orders.data?.results ?? []
@@ -291,277 +207,48 @@ export function WalletPage() {
 
   return (
     <div className="wallet-page">
-      <Card className="wallet-hero">
-        <div className="wallet-hero-copy">
-          <span className="panel-eyebrow">Tesouraria do jogador</span>
-          <span className="wallet-title-icon" aria-hidden="true">
-            <Landmark />
-          </span>
-          <h1>Banco PDL</h1>
-          <p>Gerencie suas moedas, recargas e transferências em um só lugar.</p>
-          <div className="wallet-trust-row">
-            <span><ShieldCheck aria-hidden="true" /> Pagamento protegido</span>
-            <span><Clock3 aria-hidden="true" /> Crédito após confirmação</span>
-          </div>
-        </div>
-
-        <div className="wallet-hero-aside">
-          <div className="wallet-balance-card">
-            <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
-            <div className="wallet-balance-copy">
-              <small>Saldo disponível</small>
-              <strong>{wallet.data?.balance ?? '0.00'} <span>moedas</span></strong>
-            </div>
-            <Link className="wallet-game-exchange" to="/painel/wallet/jogo">
-              <ArrowUpRight aria-hidden="true" />
-              Transferir moedas entre carteira e jogo
-            </Link>
-            <div className="wallet-bonus-chip">
-              <Sparkles aria-hidden="true" />
-              <span>Bônus</span>
-              <b>{wallet.data?.bonus_balance ?? '0.00'}</b>
-            </div>
-          </div>
-        </div>
-      </Card>
+      <WalletHero balance={wallet.data?.balance} bonusBalance={wallet.data?.bonus_balance} />
 
       <div className="wallet-main-grid">
-        <Card className="wallet-purchase-card">
-          <header className="wallet-section-heading">
-            <span className="wallet-section-icon" aria-hidden="true"><CreditCard /></span>
-            <div>
-              <span className="panel-eyebrow">Adicionar saldo</span>
-              <h2>Escolha sua recarga</h2>
-              <p>Selecione a moeda de pagamento e o pacote ideal para você.</p>
-            </div>
-            <div className="wallet-currency-switch" role="group" aria-label="Moeda do pagamento">
-              <button
-                className={currency === 'BRL' ? 'is-active' : ''}
-                type="button"
-                aria-pressed={currency === 'BRL'}
-                onClick={() => setCurrency('BRL')}
-              >
-                <span>R$</span> BRL
-              </button>
-              <button
-                className={currency === 'USD' ? 'is-active' : ''}
-                type="button"
-                aria-pressed={currency === 'USD'}
-                onClick={() => setCurrency('USD')}
-              >
-                <span>$</span> USD
-              </button>
-            </div>
-          </header>
-
-          <div className={`wallet-payment-note${paymentAvailable ? '' : ' is-unavailable'}`}>
-            <ShieldCheck aria-hidden="true" />
-            <span>
-              <strong>{paymentAvailable ? simulatedPayment ? 'Pagamento sujeito a confirmação' : currency === 'USD' ? 'Pagamento internacional via Stripe' : 'Pagamento nacional via Mercado Pago' : 'Recargas temporariamente indisponíveis'}</strong>
-              <small>{paymentAvailable ? simulatedPayment ? mock?.auto_confirm ? 'O crédito automático está habilitado neste ambiente.' : 'O saldo será adicionado somente após a aprovação do pedido.' : currency === 'USD' ? 'Cartão processado com segurança no próprio site.' : 'Pague com cartão, PIX ou boleto sem sair do painel.' : 'Nenhuma cobrança será criada enquanto o serviço de pagamento estiver indisponível.'}</small>
-            </span>
-          </div>
-
-          <div className="pay-packs">
-            {packages.map((pack) => (
-              <button
-                key={pack.id}
-                className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
-                type="button"
-                disabled={busy || !paymentAvailable}
-                aria-label={`Comprar ${pack.total_coins} moedas por ${formatMoney(pack[priceKey], currency)}`}
-                onClick={() => void startPurchase(pack.id)}
-              >
-                {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
-                <span className="pay-pack-name">{pack.name}</span>
-                <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
-                <small>moedas</small>
-                {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">+ {pack.bonus} de bônus</span> : null}
-                <strong className="pay-pack-price">{formatMoney(pack[priceKey], currency)}</strong>
-                <span className="pay-pack-action">{paymentAvailable ? 'Escolher pacote' : 'Indisponível'}</span>
-              </button>
-            ))}
-          </div>
-
-          {catalog.isLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> Carregando pacotes...</div> : null}
-
-          <div className="wallet-custom-purchase">
-            <div className="wallet-custom-copy">
-              <span className="wallet-section-icon" aria-hidden="true"><Banknote /></span>
-              <div>
-                <strong>Prefere outro valor?</strong>
-                <small>Informe quanto deseja pagar e calcularemos as moedas.</small>
-              </div>
-            </div>
-            <form
-              className="wallet-custom-form"
-              onSubmit={(event) => {
-                event.preventDefault()
-                void startPurchase()
-              }}
-            >
-              <Field>
-                <span>Valor em {currency}</span>
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  inputMode="decimal"
-                  value={customAmount}
-                  onChange={(event) => setCustomAmount(event.target.value)}
-                  placeholder={currency === 'USD' ? '9.90' : '50.00'}
-                />
-              </Field>
-              <Button type="submit" disabled={busy || !customAmount || !paymentAvailable}>
-                <CircleDollarSign aria-hidden="true" /> Comprar agora
-              </Button>
-            </form>
-          </div>
-
-          {catalog.data?.promo ? <WalletPromoBanner promo={catalog.data.promo} /> : null}
-
-          <div className="wallet-checkout">
-            {order?.method === 'mercadopago' && !order.pix_qr_code ? (
-              <Field>
-                <span>CPF ou CNPJ do pagador</span>
-                <input value={document} onChange={(event) => setDocument(event.target.value)} placeholder="000.000.000-00" />
-              </Field>
-            ) : null}
-            {order?.method === 'mercadopago' ? <div id="payment-brick" /> : null}
-            {order?.method === 'stripe' ? (
-              <form onSubmit={(event) => void payStripe(event)}>
-                <div id="stripe-element" />
-                <Button type="submit" disabled={busy}>
-                  <CreditCard aria-hidden="true" /> Pagar com cartão
-                </Button>
-              </form>
-            ) : null}
-            {order?.pix_qr_code ? (
-              <div className="wallet-pix-result">
-                <h3>PIX copia e cola</h3>
-                <textarea readOnly value={order.pix_qr_code} rows={3} />
-                {order.pix_qr_code_base64 ? (
-                  <img alt="QR Code PIX" src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-        </Card>
+        <WalletPurchaseCard
+          currency={currency}
+          onCurrencyChange={setCurrency}
+          paymentAvailable={paymentAvailable}
+          simulatedPayment={simulatedPayment}
+          mockAutoConfirm={mock?.auto_confirm}
+          packages={packages}
+          promo={catalog.data?.promo}
+          catalogLoading={catalog.isLoading}
+          customAmount={customAmount}
+          onCustomAmountChange={setCustomAmount}
+          busy={busy}
+          onStartPurchase={startPurchase}
+          order={order}
+          document={document}
+          onDocumentChange={setDocument}
+          onPayStripe={payStripe}
+        />
 
         <aside className="wallet-side-column">
-          <Card className="wallet-transfer-card">
-            <header className="wallet-compact-heading">
-              <span className="wallet-section-icon" aria-hidden="true"><Send /></span>
-              <div>
-                <span className="panel-eyebrow">Entre jogadores</span>
-                <h2>Transferir moedas</h2>
-              </div>
-            </header>
-            <p className="muted">Envie moedas diretamente para outro jogador usando o nome da conta.</p>
-            <form className="wallet-transfer-form" onSubmit={onTransfer}>
-              <Field>
-                <span className="wallet-field-label"><UserRound aria-hidden="true" /> Destinatário</span>
-                <input
-                  value={recipient}
-                  onChange={(event) => setRecipient(event.target.value)}
-                  placeholder="Nome do jogador"
-                  autoComplete="off"
-                  required
-                />
-              </Field>
-              <Field>
-                <span className="wallet-field-label"><Coins aria-hidden="true" /> Quantidade</span>
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  inputMode="decimal"
-                  value={amount}
-                  onChange={(event) => setAmount(event.target.value)}
-                  placeholder="0.00"
-                  required
-                />
-              </Field>
-              <Button type="submit" disabled={transferBusy || !recipient || !amount}>
-                <Send aria-hidden="true" /> {transferBusy ? 'Enviando...' : 'Transferir moedas'}
-              </Button>
-              <small className="wallet-transfer-warning"><ShieldCheck aria-hidden="true" /> Confira o destinatário antes de confirmar.</small>
-            </form>
-          </Card>
+          <WalletTransferCard
+            recipient={recipient}
+            amount={amount}
+            busy={transferBusy}
+            onRecipientChange={setRecipient}
+            onAmountChange={setAmount}
+            onSubmit={onTransfer}
+          />
 
-          <Card className="wallet-activity-card">
-            <div className="wallet-activity-section">
-              <header className="wallet-activity-heading">
-                <span className="wallet-section-icon" aria-hidden="true"><ReceiptText /></span>
-                <div><span className="panel-eyebrow">Recargas</span><h2>Pedidos</h2></div>
-                <b>{ordersCount}</b>
-              </header>
-              {orders.isLoading ? (
-                <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando pedidos...</span></div>
-              ) : paymentOrders.length ? (
-                <div className="wallet-activity-list">
-                  {paymentOrders.map((row) => {
-                    const status = getOrderStatus(row.status)
-                    const orderCurrency = row.currency === 'USD' ? 'USD' : 'BRL'
-                    return (
-                      <button
-                        type="button"
-                        className="wallet-activity-item"
-                        key={row.id}
-                        onClick={() => setSelectedOrder(row)}
-                      >
-                        <span className="wallet-row-icon" aria-hidden="true"><CircleDollarSign /></span>
-                        <span className="wallet-row-copy">
-                          <strong>{row.coins} moedas</strong>
-                          <small>{formatMoney(row.amount, orderCurrency)} · {row.method}</small>
-                        </span>
-                        <span className={`wallet-status ${status.modifier}`}>{status.label}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              ) : (
-                <div className="wallet-empty-state"><ReceiptText aria-hidden="true" /><span><strong>Nenhum pedido</strong><small>Suas recargas aparecerão aqui.</small></span></div>
-              )}
-              <ButtonLink to="/painel/wallet/pedidos" variant="ghost" size="sm" className="wallet-history-link">Ver todos os pedidos</ButtonLink>
-            </div>
-
-            <div className="wallet-activity-section">
-              <header className="wallet-activity-heading">
-                <span className="wallet-section-icon" aria-hidden="true"><History /></span>
-                <div><span className="panel-eyebrow">Movimentações</span><h2>Extrato</h2></div>
-                <b>{txCount}</b>
-              </header>
-              {tx.isLoading ? (
-                <div className="wallet-empty-state"><Clock3 aria-hidden="true" /><span>Carregando extrato...</span></div>
-              ) : transactions.length ? (
-                <div className="wallet-activity-list">
-                  {transactions.map((row) => {
-                    const presentation = getTransactionPresentation(row.kind, row.amount)
-                    const DirectionIcon = presentation.outgoing ? ArrowUpRight : ArrowDownLeft
-                    return (
-                      <button
-                        type="button"
-                        className="wallet-activity-item"
-                        key={row.id}
-                        onClick={() => setSelectedTx(row)}
-                      >
-                        <span className={`wallet-row-icon ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`} aria-hidden="true"><DirectionIcon /></span>
-                        <span className="wallet-row-copy">
-                          <strong>{row.description || row.kind}</strong>
-                          <small>{row.kind}</small>
-                        </span>
-                        <span className={`wallet-transaction-value ${presentation.outgoing ? 'is-outgoing' : 'is-incoming'}`}>{presentation.amount}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              ) : (
-                <div className="wallet-empty-state"><History aria-hidden="true" /><span><strong>Extrato vazio</strong><small>Entradas e saídas serão exibidas aqui.</small></span></div>
-              )}
-              <ButtonLink to="/painel/wallet/extrato" variant="ghost" size="sm" className="wallet-history-link">Ver todo o extrato</ButtonLink>
-            </div>
-          </Card>
+          <WalletActivityCard
+            ordersCount={ordersCount}
+            txCount={txCount}
+            ordersLoading={orders.isLoading}
+            txLoading={tx.isLoading}
+            paymentOrders={paymentOrders}
+            transactions={transactions}
+            onSelectOrder={setSelectedOrder}
+            onSelectTx={setSelectedTx}
+          />
         </aside>
       </div>
 

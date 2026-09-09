@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import {
   commerceApi,
+  programsApi,
+  shopApi,
   type Promo,
   type ShopPackage,
-} from "../../services/domain/commerce.service";
-import { programsApi } from "../../services/domain/programs.service";
-import { shopApi } from "../../services/api";
+} from "../../services/api";
 import {
   Empty,
   ErrorNotice,
@@ -112,7 +112,13 @@ export function AdminCommercePage() {
                       supporter: f.get("supporter") || null,
                     };
               void action
-                .run(() => commerceApi.save(tab, data, draft.id))
+                .run(
+                  () => commerceApi.save(tab, data, draft.id),
+                  tab === "packages" ? "Pacote salvo." : "Cupom salvo.",
+                  tab === "packages"
+                    ? [["staff-packages"], ["shop-packages"]]
+                    : [["staff-promos"]],
+                )
                 .then((ok) => {
                   if (ok) setDraft(null);
                 });

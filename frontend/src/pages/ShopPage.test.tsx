@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { ShopPage } from './ShopPage'
 import { shopApi, walletApi } from '../services/api'
-import { commerceApi } from '../services/domain/commerce.service'
+import { commerceApi } from '../services/api'
 
 vi.mock('../components/ItemIcon', () => ({ ItemIcon: () => null }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn() } }))

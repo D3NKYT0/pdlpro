@@ -1,5 +1,5 @@
 import { request } from "../infra/http";
-import { send } from "./programs.service";
+import { sendJson as send } from "./jsonRequest";
 export type ShopPackage = {
   id: string;
   name: string;

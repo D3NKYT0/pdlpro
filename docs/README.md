@@ -43,6 +43,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Componentes compartilhados](arquitetura/common.md) | DI, lifetimes, transações, UUIDs, erros e admin |
 | [Reutilização e código repetido](arquitetura/reutilizacao.md) | Políticas compartilhadas, limites das abstrações e auditoria reproduzível |
 | [Migração Clean Architecture + DI (PDF)](arquitetura/migracao-clean-architecture-di.pdf) | Registro técnico do que migrámos, decisões e estado validado |
+| [Migração frontend em camadas (PDF)](arquitetura/migracao-frontend-camadas.pdf) | Paridade SPA: barrel, serviços, páginas finas e invalidação escopada |
 
 ### API e configuração
 

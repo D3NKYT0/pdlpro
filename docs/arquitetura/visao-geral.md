@@ -97,13 +97,30 @@ Para suportar um novo fork do servidor, crie outro diretório de consultas com o
 
 ## Frontend
 
-O frontend segue este fluxo:
+O frontend é uma SPA em camadas leves (sem container DI). A regra de negócio permanece no
+backend; o client adapta HTTP e orquestra UI:
 
 ```text
-page/component ──> domain service ──> services/infra/http.ts ──> /api/v1
+pages/components (presentation)
+  → services/api.ts (barrel)
+  → services/domain/*Api (adapters)
+  → services/infra/http.ts (transporte)
+lib/ = helpers puros (sem HTTP)
+hooks/ = ciclo de UI (pending/erro/toast), sem paths de API
 ```
 
-`http.ts` centraliza `credentials: include`, token CSRF, renovação de sessão e conversão do contrato de erro em `ApiError`. `TanStack Query` mantém cache e estado assíncrono. Páginas protegidas passam por `RequireAuth`.
+Regras:
+
+- páginas e componentes de feature importam API/tipos de ``services/api.ts``, não de
+  ``domain/*.service`` nem de ``infra/http`` (exceto testes que precisam de
+  ``resetHttpClient``);
+- ``fetch`` só em ``http.ts`` (CSRF, cookies, refresh, ``ApiError``);
+- ``gamesApi`` cobre gameplay do jogador; ``programsApi`` cobre resources/roadmap/supporters;
+  ``staffGameContentApi`` cobre CRUD staff de conteúdo de jogos;
+- invalidação TanStack Query sempre com ``queryKey`` escopada (``useProgramAction`` exige a lista);
+- sem Inversify/tsyringe: composition root em ``AppProviders`` + objetos ``*Api``.
+
+`TanStack Query` mantém cache e estado assíncrono. Páginas protegidas passam por `RequireAuth`.
 
 O tema global segue um fluxo separado de apresentação:
 
@@ -116,6 +133,8 @@ ThemeProvider ──> /api/v1/public/theme/ ──> CSS e assets em /media/theme
 O backend valida o ZIP, publica os arquivos de forma atômica e expõe apenas metadados,
 rotas internas e caminhos locais. O frontend nunca executa HTML ou JavaScript fornecido
 pelo pacote. O `default` não é um registro de banco e permanece disponível como fallback.
+
+Registro da migração: [migracao-frontend-camadas.pdf](migracao-frontend-camadas.pdf).
 
 ## Como implementar uma mudança
 

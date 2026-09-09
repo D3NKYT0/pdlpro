@@ -8,7 +8,7 @@ import { transitionDurations, useMascotPose } from './useMascotPose'
 import './help.css'
 import './pet-progress.css'
 import { DenkynhoStarPin } from './DenkynhoStarPin'
-import type { DenkynhoAppearance } from '../../services/domain/content.service'
+import type { DenkynhoAppearance } from '../../services/api'
 import { starPinVisible } from './starPin'
 
 import { SceneBackdrop } from './SceneBackdrop'

@@ -2,7 +2,7 @@ import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, Coins, TicketPercent } from "lucide-react";
-import { programsApi } from "../services/domain/programs.service";
+import { programsApi } from "../services/api";
 import {
   Empty,
   ErrorNotice,
@@ -72,6 +72,7 @@ export function SupportersPage() {
                   void action.run(
                     () => programsApi.apply(form),
                     "Cadastro enviado para a equipe.",
+                    [["supporter"]],
                   );
                 }}
               >
@@ -174,6 +175,7 @@ export function SupportersPage() {
                       void action.run(
                         programsApi.payout,
                         "Comissão solicitada. Aguarde a análise da equipe.",
+                        [["supporter"]],
                       )
                     }
                   >

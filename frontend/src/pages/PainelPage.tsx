@@ -20,7 +20,7 @@ import { AchievementGrid } from '../components/AchievementGrid'
 import { useAuth } from '../contexts/AuthContext'
 import { canAccessStaff } from '../lib/staff'
 import { authApi, serverApi } from '../services/api'
-import { programsApi } from '../services/domain/programs.service'
+import { programsApi } from '../services/api'
 
 const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon; resource?: string }> = [
   { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound, resource: 'profile' },

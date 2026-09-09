@@ -9,19 +9,27 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 | Caminho em frontend/src/ | Responsabilidade |
 | --- | --- |
 | `main.tsx`, `App.tsx` | Inicialização da aplicação |
-| `app/providers/` | Providers compartilhados |
+| `app/providers/` | Providers compartilhados (composition root) |
 | `app/routes/` | Rotas e proteções como RequireAuth e RequireStaff |
 | `contexts/AuthContext.tsx` | Estado de autenticação |
-| `pages/`, `pages/admin/` | Telas públicas, do jogador e administrativas |
-| `components/` | Componentes reutilizáveis |
+| `pages/`, `pages/admin/` | Orquestração fina: Query + composição de seções |
+| `components/` | UI de feature e biblioteca visual |
 | `components/ui/`, `hooks/` | Biblioteca visual e ciclo compartilhado de ações |
-| `services/api.ts` | Exportações de serviços consumidos pelas telas |
-| `services/domain/` | Operações organizadas por capacidade do backend |
+| `services/api.ts` | Única fachada de import para telas (APIs + tipos) |
+| `services/domain/` | Adapters `*Api` por capacidade (paths/payloads) |
 | `services/infra/` | HTTP, erros e recuperação da sessão |
 | `services/types.ts` | Tipos dos contratos de API |
-| `lib/` | Helpers de itens, autenticação e outras capacidades |
+| `lib/` | Helpers puros (formatação, indexação); **sem HTTP** |
 | `theme/`, `components/themes/` | Provider global, resolução de assets e renderers homologados |
 | `styles/`, `public/theme/` | Estilos estruturais e tema default embarcado |
+
+### Regras de camada (SPA)
+
+- Importar APIs e tipos de contrato via [`services/api.ts`](../../frontend/src/services/api.ts).
+- Não chamar `fetch` fora de [`http.ts`](../../frontend/src/services/infra/http.ts).
+- Separar serviços: `gamesApi` (gameplay), `programsApi` (produto), `staffGameContentApi` (staff), `catalogApi` (catálogo de itens).
+- Após mutações, invalidar só as `queryKey` necessárias (`useProgramAction` exige a lista).
+- Não há container DI no React; providers + objetos `*Api` bastam. Regra de negócio fica no backend.
 
 ## Executar e compilar
 
@@ -45,11 +53,12 @@ O build gera `frontend/dist`. `npm run preview` serve esse build para uma confer
 
 1. Confirme o contrato na [API](../api/README.md) e no serializer do backend.
 2. Declare ou ajuste os tipos sem converter valores monetários em números imprecisos.
-3. Acrescente a operação ao serviço de domínio e às exportações de `services/api.ts` quando necessário.
-4. Consuma o serviço na página, usando TanStack Query para consultas e invalidação após mutações.
+3. Acrescente a operação ao serviço de domínio e **exporte-a em** `services/api.ts`.
+4. Consuma o serviço na página **importando de** `services/api`, usando TanStack Query para consultas e invalidação **escopada** após mutações.
 5. Registre a rota e a proteção adequada. A proteção visual não substitui a autorização no backend.
 6. Trate estados de carregamento, vazio, erro e acesso negado com a [biblioteca de componentes](componentes.md). Consulte também as [regras de reutilização](../arquitetura/reutilizacao.md).
-7. Acrescente testes proporcionais ao comportamento e confira a tela no navegador.
+7. Prefira páginas finas: orquestração na `pages/`, UI em `components/<feature>/`.
+8. Acrescente testes proporcionais ao comportamento e confira a tela no navegador.
 
 ## Sessão e HTTP
 
@@ -59,7 +68,7 @@ Uma falha de rede não é necessariamente logout; um `401` confirmado e um `502`
 
 ## Catálogo e apresentação de valores
 
-O catálogo de itens vem do backend. Consuma os metadados e `icon_url` recebidos; não crie outro JSON de nomes, regras de grade ou resolução de ícones no frontend. Um UUID de produto do painel não é o ID inteiro do item Lineage.
+O catálogo de itens vem do backend via `catalogApi` / `useItemCatalog`. Consuma os metadados e `icon_url` recebidos; helpers de busca/indexação ficam em `lib/item-icons` sem HTTP. Não crie outro JSON de nomes, regras de grade ou resolução de ícones no frontend. Um UUID de produto do painel não é o ID inteiro do item Lineage.
 
 Valores monetários e quantidades grandes podem chegar como strings para preservar precisão. Separe a formatação visual do valor enviado à API e mantenha BRL, USD, moedas da carteira e fichas com suas unidades explícitas.
 

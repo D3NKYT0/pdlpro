@@ -1,4 +1,4 @@
-import type { DenkynhoAction } from '../../services/domain/content.service'
+import type { DenkynhoAction } from '../../services/api'
 
 const common = {
   width: 44,

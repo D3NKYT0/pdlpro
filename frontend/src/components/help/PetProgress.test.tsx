@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it, vi } from 'vitest'
 import { PetProgress } from './PetProgress'
 import { resetHttpClient } from '../../services/infra/http'
-import type { ApiDenkynhoProfile } from '../../services/domain/content.service'
+import type { ApiDenkynhoProfile } from '../../services/api'
 const profile: ApiDenkynhoProfile = { level: 2, experience: 7, experience_next: 150, attributes: { energy: 75, satiety: 100, happiness: 80, hygiene: 75 }, appearance: { accessory: '', outfit: '', object: '' }, unlocks: [{ id: 'star-pin', slot: 'accessory', level: 2, unlocked: true, label: { pt: 'Broche de estrela', en: 'Star pin' } }, { id: 'dance', slot: 'interaction', level: 3, unlocked: false, label: { pt: 'Dançar juntos', en: 'Dance together' } }] }
 const response = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
 afterEach(() => { cleanup(); resetHttpClient(); vi.unstubAllGlobals(); vi.restoreAllMocks() })

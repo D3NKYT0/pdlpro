@@ -3,7 +3,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, expect, it, vi } from 'vitest'
 import { ResourceGate } from './ResourceGate'
-import { programsApi } from '../../services/domain/programs.service'
+import { programsApi } from '../../services/api'
 
 vi.mock('../../services/domain/programs.service', () => ({ programsApi: { resources: vi.fn() } }))
 afterEach(() => { cleanup(); vi.resetAllMocks() })

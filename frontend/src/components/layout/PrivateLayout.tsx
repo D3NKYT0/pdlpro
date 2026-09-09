@@ -30,7 +30,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { canAccessStaff } from "../../lib/staff";
 import { notificationApi, supportApi, contentApi } from "../../services/api";
 import { usePanelTheme } from "../../theme/usePanelTheme";
-import { programsApi } from "../../services/domain/programs.service";
+import { programsApi } from "../../services/api";
 import { useTheme } from "../../theme/ThemeProvider";
 import { ContextualHelp } from "../help/ContextualHelp";
 import { PdlSymbol } from "../PdlSymbol";

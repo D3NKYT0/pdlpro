@@ -9,7 +9,7 @@ import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 import { ItemIcon } from '../../components/ItemIcon'
 import { ItemIdField } from '../../components/ItemIdField'
-import { useItemCatalog } from '../../lib/item-icons'
+import { useItemCatalog } from '../../hooks/useItemCatalog'
 
 export function AdminShopPage() {
   const catalog = useItemCatalog()

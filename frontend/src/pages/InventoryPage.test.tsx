@@ -9,7 +9,7 @@ import { ApiError, gamesApi, inventoryApi, lineageApi } from '../services/api'
 import { InventoryPage } from './InventoryPage'
 
 vi.mock('../components/ItemIcon', () => ({ ItemIcon: () => null }))
-vi.mock('../lib/item-icons', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
+vi.mock('../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
 vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { accounts: vi.fn(), characters: vi.fn() }, inventoryApi: { dashboard: vi.fn(), gameItems: vi.fn(), withdraw: vi.fn(), deposit: vi.fn(), trade: vi.fn() } }))
 vi.mock('../services/domain/games.service', () => ({ gamesApi: { bag: vi.fn(), transferBag: vi.fn() } }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))

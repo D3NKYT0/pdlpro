@@ -8,8 +8,7 @@ import { ImagePlus, PackagePlus, Search, Pencil, Save, Plus, ShieldCheck, Info, 
 import toast from 'react-hot-toast'
 import { AdminHeader } from './AdminChrome'
 import { useAuth } from '../../contexts/AuthContext'
-import { customItemsApi as api, type CustomItem } from '../../services/domain/customItems.service'
-import { isApiError } from '../../services/infra/http'
+import { customItemsApi as api, isApiError, ITEM_CATALOG_KEY, type CustomItem } from '../../services/api'
 import './custom-items.css'
 
 const empty = { item_id: '', name: '', category: 'COMUM', grade: 'NG', tradeable: true, active: true, metadata: '{}' }
@@ -49,11 +48,11 @@ export function AdminCustomItemsPage() {
     if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) throw new Error('Use um objeto JSON nos metadados, como {"raridade": "raro"}.')
     if (!editing && !file) throw new Error('Selecione uma imagem para cadastrar o item.')
     return api.save({ ...form, metadata: metadata as Record<string, unknown>, image: file }, editing?.id)
-  }, onSuccess: () => { toast.success(editing ? 'Item atualizado no catálogo' : 'Item adicionado ao catálogo'); reset(); void client.invalidateQueries() } })
+  }, onSuccess: () => { toast.success(editing ? 'Item atualizado no catálogo' : 'Item adicionado ao catálogo'); reset(); void Promise.all([client.invalidateQueries({ queryKey: ['staff-custom-items'] }), client.invalidateQueries({ queryKey: ITEM_CATALOG_KEY })]) } })
   const activate = useMutation({ mutationFn: (row: CustomItem) => api.activate(row.id, !row.active), onSuccess: row => {
     if (editing?.id === row.id) edit(row)
     toast.success(row.active ? 'Item ativado' : 'Item desativado, dados preservados')
-    void client.invalidateQueries()
+    void Promise.all([client.invalidateQueries({ queryKey: ['staff-custom-items'] }), client.invalidateQueries({ queryKey: ITEM_CATALOG_KEY })])
   }, onError: error => toast.error(errorText(error)) })
   const canEdit = editing ? list.data?.permissions.change : list.data?.permissions.add
   const busy = save.isPending || activate.isPending

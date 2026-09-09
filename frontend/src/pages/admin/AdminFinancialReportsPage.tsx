@@ -5,13 +5,13 @@ import { type FormEvent, type ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { NavLink, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { ArrowDownLeft, ArrowUpRight, ChartNoAxesCombined, ReceiptText, RefreshCw, Scale, Search, Wallet } from 'lucide-react'
-import { isApiError } from '../../services/api'
 import {
   financialReportsApi,
+  isApiError,
   type FinancialReport,
   type FinancialReportKind,
   type BalanceReportRow,
-} from '../../services/domain/financial-reports.service'
+} from '../../services/api'
 import { AdminHeader } from './AdminChrome'
 import './financial-reports.css'
 

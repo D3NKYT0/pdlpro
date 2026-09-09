@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, expect, it, vi } from 'vitest'
 import { AdminHubPage } from './AdminHubPage'
 import { AdminItemObservationPage, Categories, Snapshots } from './AdminItemObservationPage'
-import { ITEM_CATALOG_KEY } from '../../lib/item-icons'
+import { ITEM_CATALOG_KEY } from '../../services/api'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'observer' } }) }))
 

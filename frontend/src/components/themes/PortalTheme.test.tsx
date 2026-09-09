@@ -5,7 +5,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { contentApi, serverApi } from '../../services/api'
-import type { ThemePresentation } from '../../services/domain/theme.service'
+import type { ThemePresentation } from '../../services/api'
 import { PortalHomePage, PortalPublicLayout } from './PortalTheme'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: null }) }))

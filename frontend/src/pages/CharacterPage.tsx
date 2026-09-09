@@ -30,7 +30,7 @@ import {
 } from 'lucide-react'
 import { formatServicePrice, getClassName } from '../lib/lineage'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
-import type { ApiCharacterEquipmentItem } from '../services/domain/lineage.service'
+import type { ApiCharacterEquipmentItem } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 
 interface EquipmentSlotDefinition {

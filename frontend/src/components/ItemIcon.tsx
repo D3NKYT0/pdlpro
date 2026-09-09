@@ -1,4 +1,4 @@
-import { useItemCatalog } from '../lib/item-icons'
+import { useItemCatalog } from '../hooks/useItemCatalog'
 
 interface ItemIconProps {
   itemId?: string | number | null

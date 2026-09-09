@@ -4,14 +4,15 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Fish } from "lucide-react";
 import { gamesApi } from "../../services/api";
-import { programsApi } from "../../services/domain/programs.service";
 import { Empty, ErrorNotice, Loading } from "../programs/ProgramUI";
 import { useProgramAction } from "../programs/useProgramAction";
+
+const FISHING_KEYS = [["fishing"], ["fishing-details"]] as const;
 
 export function FishingGame() {
   const query = useQuery({
     queryKey: ["fishing-details"],
-    queryFn: programsApi.fishing,
+    queryFn: gamesApi.fishingDetails,
   });
   const fishing = useQuery({
     queryKey: ["fishing"],
@@ -61,7 +62,7 @@ export function FishingGame() {
                     ? `Você pescou ${r.fish?.name}!`
                     : "O peixe escapou. Tente novamente.",
                 );
-              }, "Lançamento concluído.");
+              }, "Lançamento concluído.", FISHING_KEYS);
             }}
           >
             <label>
@@ -121,8 +122,9 @@ export function FishingGame() {
                 disabled={action.busy || !validQuantity || !fishing.data || query.isError || fishing.isError || fishing.data.fichas < b.price * quantity}
                 onClick={() =>
                   void action.run(
-                    () => programsApi.buyBait(b.id, quantity),
+                    () => gamesApi.buyBait(b.id, quantity),
                     "Iscas adicionadas ao estoque.",
+                    FISHING_KEYS,
                   )
                 }
               >

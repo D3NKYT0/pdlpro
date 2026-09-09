@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { Flag, CalendarDays, ArrowLeft, ArrowUpRight } from "lucide-react";
-import { programsApi } from "../services/domain/programs.service";
+import { programsApi } from "../services/api";
 import {
   Empty,
   ErrorNotice,

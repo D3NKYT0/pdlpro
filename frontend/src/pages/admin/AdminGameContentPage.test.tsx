@@ -4,20 +4,24 @@ import { cleanup, render, screen } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { programsApi } from '../../services/domain/programs.service'
+import { staffGameContentApi } from '../../services/api'
 import { AdminGameContentPage } from './AdminGameContentPage'
 
-vi.mock('../../services/domain/programs.service', () => ({
-  programsApi: {
-    configs: vi.fn(),
-    saveConfig: vi.fn(),
-  },
-}))
+vi.mock('../../services/api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../services/api')>()
+  return {
+    ...actual,
+    staffGameContentApi: {
+      configs: vi.fn(),
+      saveConfig: vi.fn(),
+    },
+  }
+})
 
 afterEach(() => { cleanup(); vi.restoreAllMocks() })
 
 beforeEach(() => {
-  vi.mocked(programsApi.configs).mockImplementation(async (section: string) => {
+  vi.mocked(staffGameContentApi.configs).mockImplementation(async (section: string) => {
     if (section === 'seasons') {
       return [{
         id: 's1', name: 'Temporada 1', starts_at: '2026-08-30T23:08:17Z', ends_at: '2026-11-29T23:08:17Z',

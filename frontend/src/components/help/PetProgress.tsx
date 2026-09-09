@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { contentApi, type ApiDenkynhoCareResult, type ApiDenkynhoProfile, type DenkynhoAppearance } from '../../services/domain/content.service'
+import { contentApi, type ApiDenkynhoCareResult, type ApiDenkynhoProfile, type DenkynhoAppearance } from '../../services/api'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
 import { Button, IconButton } from '../ui/Button'
 import { ErrorNotice } from '../ui/Feedback'

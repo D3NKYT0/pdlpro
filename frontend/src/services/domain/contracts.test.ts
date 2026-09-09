@@ -15,8 +15,10 @@ import { pushApi } from './push.service'
 import { serverApi } from './server.service'
 import { shopApi } from './shop.service'
 import { staffApi } from './staff.service'
+import { staffGameContentApi } from './staffGameContent.service'
 import { staffSupportApi, supportApi } from './support.service'
 import { walletApi } from './wallet.service'
+import { catalogApi } from './catalog.service'
 
 vi.mock('../infra/http', () => ({ request: vi.fn() }))
 const send = vi.mocked(request)
@@ -168,15 +170,16 @@ const contracts: Contract[] = [
   ['program.staff', () => programsApi.staffSupporters(), '/staff/supporters/'],
   ['program.review', () => programsApi.reviewSupporter('profile', { status: 'approved' }), '/staff/supporters/profile/', 'PATCH', { status: 'approved' }],
   ['program.reviewPayout', () => programsApi.reviewPayout('payout', 'paid'), '/staff/supporter-payouts/payout/', 'PATCH', { status: 'paid' }],
-  ['program.battle', () => programsApi.battle(), '/customer/games/battle-pass/details/'],
-  ['program.battleAction', () => programsApi.battleAction('claim', 'entry', false), '/customer/games/battle-pass/details/', 'POST', { action: 'claim', entry_id: 'entry', enabled: false }],
-  ['program.daily', () => programsApi.daily(), '/customer/games/daily-bonus/details/'],
-  ['program.fishing', () => programsApi.fishing(), '/customer/games/fishing/details/'],
-  ['program.bait', () => programsApi.buyBait('bait', 2), '/customer/games/fishing/details/', 'POST', { bait_id: 'bait', quantity: 2 }],
-  ['program.stats', () => programsApi.stats('dice'), '/customer/games/statistics/dice/'],
-  ['program.config', () => programsApi.configs('baits'), '/staff/game-content/baits/'],
-  ['program.createConfig', () => programsApi.saveConfig('baits', { name: 'New' }), '/staff/game-content/baits/', 'POST', { name: 'New' }],
-  ['program.updateConfig', () => programsApi.saveConfig('baits', { active: false }, 'bait'), '/staff/game-content/baits/bait/', 'PATCH', { active: false }],
+  ['games.battleDetails', () => gamesApi.battleDetails(), '/customer/games/battle-pass/details/'],
+  ['games.battleAction', () => gamesApi.battleAction('claim', 'entry', false), '/customer/games/battle-pass/details/', 'POST', { action: 'claim', entry_id: 'entry', enabled: false }],
+  ['games.dailyDetails', () => gamesApi.dailyDetails(), '/customer/games/daily-bonus/details/'],
+  ['games.fishingDetails', () => gamesApi.fishingDetails(), '/customer/games/fishing/details/'],
+  ['games.buyBait', () => gamesApi.buyBait('bait', 2), '/customer/games/fishing/details/', 'POST', { bait_id: 'bait', quantity: 2 }],
+  ['games.stats', () => gamesApi.stats('dice'), '/customer/games/statistics/dice/'],
+  ['staffGame.configs', () => staffGameContentApi.configs('baits'), '/staff/game-content/baits/'],
+  ['staffGame.createConfig', () => staffGameContentApi.saveConfig('baits', { name: 'New' }), '/staff/game-content/baits/', 'POST', { name: 'New' }],
+  ['staffGame.updateConfig', () => staffGameContentApi.saveConfig('baits', { active: false }, 'bait'), '/staff/game-content/baits/bait/', 'PATCH', { active: false }],
+  ['catalog.list', () => catalogApi.list(), '/public/items/catalog/'],
   ['commerce.packages', () => commerceApi.packages(), '/shared/shop/commerce/packages/'],
   ['commerce.quote', () => commerceApi.quote(), '/shared/shop/commerce/quote/'],
   ['commerce.options', () => commerceApi.options({ use_bonus: false, promo_code: 'SAVE' }), '/shared/shop/commerce/options/', 'POST', { use_bonus: false, promo_code: 'SAVE' }],

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
 import { ItemIdField } from '../../components/ItemIdField'
-import { useItemCatalog } from '../../lib/item-icons'
+import { useItemCatalog } from '../../hooks/useItemCatalog'
 
 export function AdminCoinsPage() {
   const catalog = useItemCatalog()

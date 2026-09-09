@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { contentApi, serverApi } from '../../services/api'
-import type { ThemeHomeSection, ThemePresentation } from '../../services/domain/theme.service'
+import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { themeAsset } from '../../theme/assets'
 
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
