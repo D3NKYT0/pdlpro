@@ -5,6 +5,7 @@ from uuid import UUID
 
 from django.conf import settings
 
+from apps.accounts.domain.repositories import ISocialAccountRepository
 from common.architecture.base import UseCase
 
 
@@ -19,16 +20,13 @@ class AuthCapabilitiesInput:
 class GetAuthCapabilitiesUseCase(UseCase[AuthCapabilitiesInput, dict]):
     """Monta flags de auth e provedores OAuth conectados sem ORM na presentation."""
 
-    def execute(self, data: AuthCapabilitiesInput) -> dict:
-        from allauth.socialaccount.models import SocialAccount
+    def __init__(self, social: ISocialAccountRepository) -> None:
+        self._social = social
 
+    def execute(self, data: AuthCapabilitiesInput) -> dict:
         connected: list[str] = []
         if data.is_authenticated and data.user_id is not None:
-            connected = list(
-                SocialAccount.objects.filter(user__id=data.user_id).values_list(
-                    "provider", flat=True
-                )
-            )
+            connected = self._social.list_providers_for_user(data.user_id)
         return {
             "passkeys": True,
             "two_factor": True,

@@ -9,7 +9,7 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | App | Responsabilidade | Pontos de entrada para desenvolvimento |
 | --- | --- | --- |
 | `accounts` | Cadastro, sessão, e-mail, 2FA, passkeys e progresso | `application/use_cases.py`, `application/sessions.py`, `application/oauth.py`, `application/webauthn_service.py`, `infrastructure/provider.py` |
-| `server` | Contas Lineage, personagens, serviços e catálogos | `domain/gateways.py`, `application/account_use_cases.py`, `infrastructure/provider.py` |
+| `server` | Contas Lineage, personagens, serviços e catálogos | `domain/gateways.py`, `application/account_use_cases.py`, `application/custom_items.py`, `application/item_observation.py`, `infrastructure/provider.py` |
 | `wallet` | Carteira, transferências, bônus e câmbio com o jogo | `application/use_cases.py`, `application/exchange.py`, `domain/repositories.py` |
 | `payment` | Pedidos, gateways, confirmação e webhooks | `application/use_cases.py`, `application/webhooks.py`, `infrastructure/registry.py` |
 | `shop` | Produtos, pacotes, carrinho, promoções e checkout | `application/use_cases.py`, `application/commerce_use_cases.py` |
@@ -38,11 +38,11 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | View | Trata o transporte e suas permissões | Registre nas URLs e delegue operações aos serviços da aplicação |
 | Modelo/admin | Define persistência e edição administrativa | Use UUID público nas APIs e configure o admin nas classes dedicadas |
 
-Essa é a direção da arquitetura. Apps resolvem casos de uso via container; staff consome
-portas admin dos apps donos (`ICoinAdminRepository`, `IServicePriceRepository`, etc.).
-Helpers de progresso e alguns CRUDs staff ainda podem falar com ORM — leia a implementação
-antes de presumir que toda classe depende apenas de interfaces. Não crie uma porta fictícia
-para usar uma operação existente.
+Essa é a direção da arquitetura e o estado atual do código de aplicação/apresentação:
+casos de uso resolvem portas via container; staff consome portas admin dos apps donos
+(`ICoinAdminRepository`, `IServicePriceRepository`, `ICustomItemRepository`, etc.);
+ORM e ``transaction.atomic`` ficam nos adaptadores / ``UnitOfWork``. Não crie uma porta
+fictícia para usar uma operação existente — leia o provider do app dono.
 
 ## Exemplo: chamar um caso de uso de uma view
 

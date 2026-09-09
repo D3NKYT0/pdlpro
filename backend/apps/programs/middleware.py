@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 
-from .models import SystemResource
+from apps.programs.domain.repositories import ISystemResourceRepository
+from common.di.bootstrap import DependencyInjection
 
 # Staff administration remains reachable even when a customer-facing module is off.
 # profile uses shared/me/ for the whole session — gated only on the frontend.
@@ -55,18 +56,19 @@ class ResourceGateMiddleware:
                 for code, paths in RESOURCE_PATHS.items()
                 if any(path.startswith(p) for p in paths)
             ]
-            if (
-                codes
-                and SystemResource.objects.filter(
-                    code__in=codes, enabled=False
-                ).exists()
-            ):
-                return JsonResponse(
-                    {
-                        "error_code": "RESOURCE_DISABLED",
-                        "message": "Este recurso está temporariamente desativado.",
-                        "details": {},
-                    },
-                    status=403,
+            if codes:
+                resources = (
+                    DependencyInjection.root()
+                    .create_scope()
+                    .resolve(ISystemResourceRepository)
                 )
+                if resources.any_disabled(codes):
+                    return JsonResponse(
+                        {
+                            "error_code": "RESOURCE_DISABLED",
+                            "message": "Este recurso está temporariamente desativado.",
+                            "details": {},
+                        },
+                        status=403,
+                    )
         return self.get_response(request)

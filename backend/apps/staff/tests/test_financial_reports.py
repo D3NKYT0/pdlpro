@@ -8,8 +8,9 @@ from django.test import override_settings
 from rest_framework.test import APIClient
 
 from apps.payment.infrastructure.models import PedidoPagamento
+from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.models import Wallet, WalletTransaction
-from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+from common.di import DependencyInjection
 
 pytestmark = pytest.mark.django_db
 BASE = "/api/v1/staff/financial-reports/"
@@ -48,7 +49,7 @@ def test_empty_reports_and_read_only(staff_client, report):
 
 
 def test_balance_reconciles_bonus_and_counts_all_filtered_rows(staff_client):
-    repo = DjangoWalletRepository()
+    repo = DependencyInjection.root().create_scope().resolve(IWalletRepository)
     wallet = repo.get_or_create(user("alice").id)
     repo.credit(wallet.id, Decimal(100), origin="stripe", description="Compra")
     repo.credit_bonus(wallet.id, Decimal(10), origin="bonus", description="Bônus")

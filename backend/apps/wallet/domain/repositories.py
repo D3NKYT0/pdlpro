@@ -83,7 +83,29 @@ class IWalletRepository(ABC):
 
     @abstractmethod
     def get_active_coin_config(self) -> dict | None:
-        """Retorna a configuração ativa da moeda de câmbio, ou None se ausente."""
+        """Retorna a configuração ativa da moeda de câmbio, ou None se ausente.
+
+        Inclui ``multiplier``, ``usd_multiplier`` e ``withdraw_fee_percent`` como strings
+        quando houver configuração.
+        """
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_active_coin_package(self, package_id: str) -> dict | None:
+        """Localiza pacote ativo por UUID ou código comercial; None se ausente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_coin_packages(self) -> list[dict]:
+        """Lista pacotes ativos ordenados para o catálogo de pagamento."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_current_purchase_promo(self) -> dict | None:
+        """Campanha de recarga vigente (percent/title/description), ou None."""
 
         raise NotImplementedError
 
@@ -141,5 +163,49 @@ class ICoinAdminRepository(ABC):
         active: bool = False,
     ) -> Any:
         """Instancia uma promoção ainda não persistida."""
+
+        raise NotImplementedError
+
+
+class IGameExchangeRepository(ABC):
+    """Porta de recibos de câmbio com o jogo (GameExchange) e bloqueio do usuário.
+
+    Cobre o ORM usado em ``application/exchange.py``. A configuração ativa da moeda continua
+    em ``IWalletRepository.get_active_coin_config``. Registre o adaptador no WalletProvider.
+    """
+
+    @abstractmethod
+    def lock_user(self, user_id: UUID) -> Any:
+        """Usuário sob ``select_for_update``; propaga DoesNotExist se ausente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_by_request_key(self, user_id: UUID, request_key: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def has_pending(self, user_id: UUID) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def create(self, **fields) -> Any:
+        """Persiste um novo recibo de câmbio."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_locked(self, exchange_id: UUID) -> Any:
+        """Recibo sob ``select_for_update``; propaga DoesNotExist se ausente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def mark_connection_uncertain(self, exchange_id: UUID) -> Any | None:
+        """Atualiza recibo pending com erro de conexão e devolve a linha atualizada."""
 
         raise NotImplementedError

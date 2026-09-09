@@ -18,8 +18,9 @@ from apps.accounts.application.twofa import (
     read_login_challenge,
 )
 from apps.accounts.domain.exceptions import InvalidTwoFactorError
-from apps.accounts.infrastructure.repositories import DjangoUserRepository
+from apps.accounts.domain.repositories import IUserRepository
 from common.architecture.exceptions import ValidationDomainError
+from common.di.bootstrap import DependencyInjection
 
 
 def test_challenge_preserves_uuid_and_rejects_tampering():
@@ -46,7 +47,7 @@ def test_malformed_signed_payload_is_domain_error(payload):
 
 @pytest.mark.django_db
 def test_setup_confirm_disable_lifecycle():
-    users = DjangoUserRepository()
+    users = DependencyInjection.root().create_scope().resolve(IUserRepository)
     user = get_user_model().objects.create_user(username="twofa", email="twofa@test.dev")
     setup = SetupTwoFactorUseCase(users).execute(user.id)
     user.refresh_from_db()

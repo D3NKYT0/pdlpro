@@ -4,38 +4,31 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from django.db import transaction
 from django.utils import timezone
 
 from apps.games.application.bag import add_to_bag
-from apps.games.infrastructure.models import (
-    BattlePassLevel,
-    BattlePassReward,
-    BattlePassSeason,
-    UserBattlePassClaim,
-    UserBattlePassProgress,
-)
+from apps.games.domain.repositories import IBagRepository, IBattlePassRepository
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 
-def _active_season() -> BattlePassSeason | None:
-    now = timezone.now()
-    return BattlePassSeason.objects.filter(
-        active=True, starts_at__lte=now, ends_at__gte=now
-    ).first()
+def _resolve_battle_pass(
+    battle_pass: IBattlePassRepository | None,
+) -> IBattlePassRepository:
+    if battle_pass is not None:
+        return battle_pass
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(IBattlePassRepository)
 
 
-def _current_level(progress: UserBattlePassProgress) -> int:
-    row = (
-        BattlePassLevel.objects.filter(
-            season=progress.season, required_xp__lte=progress.xp
-        )
-        .order_by("-level")
-        .first()
-    )
-    return row.level if row else 0
+def _resolve_bags(bags: IBagRepository | None) -> IBagRepository:
+    if bags is not None:
+        return bags
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(IBagRepository)
 
 
 class GetBattlePassUseCase(UseCase[UUID, dict]):
@@ -45,26 +38,19 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, battle_pass: IBattlePassRepository) -> None:
+        self._battle_pass = battle_pass
 
-        season = _active_season()
+    def execute(self, data: UUID) -> dict:
+        season = self._battle_pass.active_season()
         if season is None:
             return {"season": None, "levels": []}
-        user = get_user_model().objects.get(id=data)
-        progress, _ = UserBattlePassProgress.objects.get_or_create(
-            user=user, season=season
-        )
-        claimed = set(
-            UserBattlePassClaim.objects.filter(user=user).values_list(
-                "reward_id", flat=True
-            )
-        )
-        current = _current_level(progress)
+        user = self._battle_pass.require_user(data)
+        progress = self._battle_pass.get_or_create_progress(user, season)
+        claimed = self._battle_pass.list_claimed_reward_ids(user)
+        current = self._battle_pass.current_level(progress)
         levels = []
-        for row in BattlePassLevel.objects.filter(season=season).prefetch_related(
-            "rewards"
-        ):
+        for row in self._battle_pass.list_levels(season):
             levels.append(
                 {
                     "level": row.level,
@@ -113,37 +99,34 @@ class ClaimBattlePassRewardInput:
     reward_id: UUID
 
 
-def claim_battle_pass_reward(*, user_id: UUID, reward_id: UUID) -> dict:
+def claim_battle_pass_reward(
+    *,
+    user_id: UUID,
+    reward_id: UUID,
+    battle_pass: IBattlePassRepository | None = None,
+    bags: IBagRepository | None = None,
+) -> dict:
     """Entrega um prêmio do passe na bag e registra o resgate.
 
     Compartilhado por ``ClaimBattlePassRewardUseCase`` e pelo auto-claim. Deve rodar dentro
     de uma transação quando o chamador precisar atomicidade com outras escritas.
     """
 
-    from django.contrib.auth import get_user_model
-
-    reward = (
-        BattlePassReward.objects.select_related("level_row", "level_row__season")
-        .filter(id=reward_id)
-        .first()
-    )
+    repo = _resolve_battle_pass(battle_pass)
+    bag_repo = _resolve_bags(bags)
+    reward = repo.get_reward(reward_id)
     if reward is None:
         raise EntityNotFoundError("Recompensa do passe não encontrada.")
-    user = get_user_model().objects.select_for_update().get(id=user_id)
+    user = repo.require_user_locked(user_id)
     season = reward.level_row.season
-    if (
-        not season.active
-        or not season.starts_at <= timezone.now() <= season.ends_at
-    ):
+    if not season.active or not season.starts_at <= timezone.now() <= season.ends_at:
         raise ValidationDomainError("Esta temporada não está ativa.")
-    progress, _ = UserBattlePassProgress.objects.get_or_create(
-        user=user, season=reward.level_row.season
-    )
+    progress = repo.get_or_create_progress(user, reward.level_row.season)
     if progress.xp < reward.level_row.required_xp:
         raise ValidationDomainError("Nível do passe insuficiente.")
     if reward.is_premium and not progress.has_premium:
         raise ValidationDomainError("Compre o passe premium para este prêmio.")
-    if UserBattlePassClaim.objects.filter(user=user, reward=reward).exists():
+    if repo.has_claim(user, reward):
         raise ValidationDomainError("Recompensa já resgatada.")
     add_to_bag(
         user,
@@ -151,11 +134,10 @@ def claim_battle_pass_reward(*, user_id: UUID, reward_id: UUID) -> dict:
         item_name=reward.item_name,
         enchant=reward.enchant,
         quantity=reward.quantity,
+        bags=bag_repo,
     )
-    UserBattlePassClaim.objects.create(user=user, reward=reward)
-    from apps.games.infrastructure.models import GameRewardLog
-
-    GameRewardLog.objects.create(
+    repo.create_claim(user, reward)
+    repo.create_reward_log(
         user=user,
         season=season,
         kind="reward",
@@ -186,9 +168,24 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
     retorno é ``dict``.
     """
 
-    @transaction.atomic
+    def __init__(
+        self,
+        battle_pass: IBattlePassRepository,
+        bags: IBagRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._battle_pass = battle_pass
+        self._bags = bags
+        self._unit_of_work = unit_of_work
+
     def execute(self, data: ClaimBattlePassRewardInput) -> dict:
-        return claim_battle_pass_reward(user_id=data.user_id, reward_id=data.reward_id)
+        with self._unit_of_work:
+            return claim_battle_pass_reward(
+                user_id=data.user_id,
+                reward_id=data.reward_id,
+                battle_pass=self._battle_pass,
+                bags=self._bags,
+            )
 
 
 @dataclass(frozen=True, slots=True)
@@ -211,21 +208,25 @@ class BuyBattlePassPremiumUseCase(UseCase[BuyBattlePassPremiumInput, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        battle_pass: IBattlePassRepository,
+        bags: IBagRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._battle_pass = battle_pass
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: BuyBattlePassPremiumInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        season = _active_season()
+        season = self._battle_pass.active_season()
         if season is None:
             raise EntityNotFoundError("Nenhuma temporada ativa.")
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
-            progress, _ = UserBattlePassProgress.objects.get_or_create(
-                user=user, season=season
-            )
+            user = self._battle_pass.require_user_locked(data.user_id)
+            progress = self._battle_pass.get_or_create_progress(user, season)
             if progress.has_premium:
                 raise ValidationDomainError("Você já tem o passe premium.")
             wallet = self._wallets.get_or_create(data.user_id)
@@ -236,17 +237,29 @@ class BuyBattlePassPremiumUseCase(UseCase[BuyBattlePassPremiumInput, dict]):
                 description=f"Passe premium {season.name}",
             )
             progress.has_premium = True
-            progress.save(update_fields=["has_premium", "updated_at"])
+            self._battle_pass.save_progress(
+                progress, update_fields=["has_premium", "updated_at"]
+            )
             if progress.auto_claim:
-                auto_claim_rewards(user, progress)
+                auto_claim_rewards(
+                    user, progress, battle_pass=self._battle_pass, bags=self._bags
+                )
         return {"has_premium": True}
 
 
-def auto_claim_rewards(user, progress):
-    rewards = BattlePassReward.objects.filter(
-        level_row__season=progress.season, level_row__required_xp__lte=progress.xp
-    ).exclude(claims__user=user)
-    if not progress.has_premium:
-        rewards = rewards.filter(is_premium=False)
-    for reward in rewards:
-        claim_battle_pass_reward(user_id=user.id, reward_id=reward.id)
+def auto_claim_rewards(
+    user,
+    progress,
+    *,
+    battle_pass: IBattlePassRepository | None = None,
+    bags: IBagRepository | None = None,
+):
+    repo = _resolve_battle_pass(battle_pass)
+    bag_repo = _resolve_bags(bags)
+    for reward in repo.list_claimable_rewards(user, progress):
+        claim_battle_pass_reward(
+            user_id=user.id,
+            reward_id=reward.id,
+            battle_pass=repo,
+            bags=bag_repo,
+        )

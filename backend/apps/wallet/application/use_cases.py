@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
+from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
 from apps.wallet.domain.entities import (
     InsufficientBalanceError,
@@ -66,16 +67,20 @@ class TransferToPlayerUseCase(UseCase[TransferToPlayerInput, WalletEntity]):
     retorno é ``WalletEntity``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        users: IUserRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._users = users
         self._unit_of_work = unit_of_work
 
     def execute(self, data: TransferToPlayerInput) -> WalletEntity:
         if data.amount <= 0:
             raise InvalidTransferError("O valor deve ser maior que zero.")
-        from django.contrib.auth import get_user_model
-
-        recipient = get_user_model().objects.filter(username__iexact=data.recipient_username).first()
+        recipient = self._users.get_by_username(data.recipient_username)
         if recipient is None:
             raise InvalidTransferError("Destinatário não encontrado.")
         if recipient.id == data.sender_id:

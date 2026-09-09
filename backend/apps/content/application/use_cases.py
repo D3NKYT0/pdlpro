@@ -1,17 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 from uuid import UUID
 
-from django.db.models import Q
-
-from apps.content.infrastructure.models import (
-    CalendarEvent,
-    DownloadLink,
-    Faq,
-    News,
-    WikiPage,
-)
+from apps.content.domain.faq import FaqAudience
+from apps.content.domain.repositories import IContentCatalogRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
 
@@ -39,6 +33,9 @@ class ListNewsUseCase(UseCase[None, list[NewsDTO]]):
     retorno é ``list[NewsDTO]``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: None = None) -> list[NewsDTO]:
         return [
             NewsDTO(
@@ -49,7 +46,7 @@ class ListNewsUseCase(UseCase[None, list[NewsDTO]]):
                 body=item.body,
                 published_at=item.published_at.isoformat(),
             )
-            for item in News.objects.filter(is_published=True)
+            for item in self._catalog.list_published_news()
         ]
 
 
@@ -71,8 +68,11 @@ class GetNewsUseCase(UseCase[GetNewsInput, NewsDTO]):
     ``NewsDTO``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: GetNewsInput) -> NewsDTO:
-        item = News.objects.filter(slug=data.slug, is_published=True).first()
+        item = self._catalog.get_published_news_by_slug(data.slug)
         if item is None:
             raise EntityNotFoundError("Notícia não encontrada.")
         return NewsDTO(
@@ -93,7 +93,7 @@ class ListFaqInput:
     omitem esses artigos para não misturá-los à página FAQ nem às sugestões da Ajuda.
     """
 
-    audience: str = Faq.Audience.PUBLIC
+    audience: str = FaqAudience.PUBLIC
     language: str = "pt"
     for_assistant: bool = False
 
@@ -106,21 +106,30 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
     ``for_assistant``, artigos exclusivos do assistente ficam de fora.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: ListFaqInput | None = None) -> list[dict]:
-        requested = data.audience if data else Faq.Audience.PUBLIC
+        requested = data.audience if data else FaqAudience.PUBLIC
         language = data.language if data and data.language == "en" else "pt"
         allowed = {
-            Faq.Audience.PUBLIC: [Faq.Audience.PUBLIC],
-            Faq.Audience.STAFF: [Faq.Audience.PUBLIC, Faq.Audience.STAFF],
-            Faq.Audience.SUPERADMIN: [Faq.Audience.PUBLIC, Faq.Audience.STAFF, Faq.Audience.SUPERADMIN],
-        }.get(requested, [Faq.Audience.PUBLIC])
-        rows = Faq.objects.filter(is_published=True, audience__in=allowed)
-        if not (data and data.for_assistant):
-            rows = rows.filter(assistant_only=False)
+            FaqAudience.PUBLIC: [FaqAudience.PUBLIC],
+            FaqAudience.STAFF: [FaqAudience.PUBLIC, FaqAudience.STAFF],
+            FaqAudience.SUPERADMIN: [
+                FaqAudience.PUBLIC,
+                FaqAudience.STAFF,
+                FaqAudience.SUPERADMIN,
+            ],
+        }.get(requested, [FaqAudience.PUBLIC])
+        assistant_only = None if (data and data.for_assistant) else False
+        rows = self._catalog.list_published_faq(
+            audiences=allowed,
+            assistant_only=assistant_only,
+        )
         return [self._dump(item, language) for item in rows]
 
     @staticmethod
-    def _dump(item: Faq, language: str) -> dict:
+    def _dump(item: Any, language: str) -> dict:
         english = language == "en" and item.question_en and item.answer_en
         keywords = item.keywords_en if english else item.keywords
         category_labels = {
@@ -134,9 +143,9 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
             "support": "Support and policies",
         }
         audience_labels = {
-            Faq.Audience.PUBLIC: "All users",
-            Faq.Audience.STAFF: "Staff",
-            Faq.Audience.SUPERADMIN: "Superadministrators",
+            FaqAudience.PUBLIC: "All users",
+            FaqAudience.STAFF: "Staff",
+            FaqAudience.SUPERADMIN: "Superadministrators",
         }
         return {
             "id": str(item.id),
@@ -159,10 +168,13 @@ class ListDownloadsUseCase(UseCase[None, list[dict]]):
     retorno é ``list[dict]``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {"id": str(item.id), "title": item.title, "url": item.url, "category": item.category}
-            for item in DownloadLink.objects.filter(is_published=True)
+            for item in self._catalog.list_published_downloads()
         ]
 
 
@@ -191,6 +203,9 @@ class ListWikiPagesUseCase(UseCase[None, list[WikiPageDTO]]):
     retorno é ``list[WikiPageDTO]``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: None = None) -> list[WikiPageDTO]:
         return [
             WikiPageDTO(
@@ -203,7 +218,7 @@ class ListWikiPagesUseCase(UseCase[None, list[WikiPageDTO]]):
                 icon=item.icon,
                 is_menu_item=item.is_menu_item,
             )
-            for item in WikiPage.objects.filter(is_published=True)
+            for item in self._catalog.list_published_wiki()
         ]
 
 
@@ -225,8 +240,11 @@ class GetWikiPageUseCase(UseCase[GetWikiPageInput, WikiPageDTO]):
     ``WikiPageDTO``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: GetWikiPageInput) -> WikiPageDTO:
-        item = WikiPage.objects.filter(slug=data.slug, is_published=True).first()
+        item = self._catalog.get_published_wiki_by_slug(data.slug)
         if item is None:
             raise EntityNotFoundError("Página do wiki não encontrada.")
         return WikiPageDTO(
@@ -259,13 +277,13 @@ class SearchWikiUseCase(UseCase[SearchWikiInput, list[WikiPageDTO]]):
     ``list[WikiPageDTO]``.
     """
 
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
+
     def execute(self, data: SearchWikiInput) -> list[WikiPageDTO]:
         query = data.query.strip()
         if len(query) < 2:
             return []
-        rows = WikiPage.objects.filter(is_published=True).filter(
-            Q(title__icontains=query) | Q(summary__icontains=query) | Q(body__icontains=query)
-        )
         return [
             WikiPageDTO(
                 id=item.id,
@@ -277,7 +295,7 @@ class SearchWikiUseCase(UseCase[SearchWikiInput, list[WikiPageDTO]]):
                 icon=item.icon,
                 is_menu_item=item.is_menu_item,
             )
-            for item in rows[:30]
+            for item in self._catalog.search_published_wiki(query)
         ]
 
 
@@ -287,6 +305,9 @@ class ListCalendarEventsUseCase(UseCase[None, list[dict]]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
     retorno é ``list[dict]``.
     """
+
+    def __init__(self, catalog: IContentCatalogRepository) -> None:
+        self._catalog = catalog
 
     def execute(self, data: None = None) -> list[dict]:
         return [
@@ -298,5 +319,5 @@ class ListCalendarEventsUseCase(UseCase[None, list[dict]]):
                 "ends_at": item.ends_at.isoformat(),
                 "color": item.color,
             }
-            for item in CalendarEvent.objects.filter(is_published=True)
+            for item in self._catalog.list_published_calendar()
         ]

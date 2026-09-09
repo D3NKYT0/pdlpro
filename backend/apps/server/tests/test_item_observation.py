@@ -21,6 +21,7 @@ from apps.server.application.item_observation import (
     observation_source,
     read_observation,
 )
+from apps.server.domain.repositories import IItemObservationRepository
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory,
     ItemObservationDetail,
@@ -31,6 +32,7 @@ from apps.server.infrastructure.item_observation_models import (
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
+from common.di.bootstrap import DependencyInjection
 
 pytestmark = pytest.mark.django_db
 BASE = "/api/v1/staff/item-observation/"
@@ -67,6 +69,10 @@ def gateway():
     result = MagicMock()
     result.observe_items.return_value = deepcopy(RAW)
     return result
+
+
+def observation_repo():
+    return DependencyInjection.root().create_scope().resolve(IItemObservationRepository)
 
 
 def test_dashboard_and_permission_filtered_navigation(enabled, logged):
@@ -251,7 +257,7 @@ def test_snapshot_failure_is_atomic(enabled, admin_user, monkeypatch):
         raise RuntimeError("test write failure")
     monkeypatch.setattr(ItemObservationDetail.objects, "bulk_create", fail)
     with pytest.raises(RuntimeError):
-        capture_snapshot(gateway(), admin_user)
+        capture_snapshot(gateway(), admin_user, observation=observation_repo())
     assert not ItemObservationSnapshot.objects.exists()
 
 
@@ -270,7 +276,7 @@ def test_disabled_does_not_query_gateway(settings):
     settings.LINEAGE_DB_ENABLED = False
     reader = gateway()
     with pytest.raises(ObservationUnavailable):
-        read_observation(reader)
+        read_observation(reader, observation_repo())
     reader.observe_items.assert_not_called()
 
 
@@ -281,7 +287,7 @@ def test_comparison_disappearance_new_items_and_same_source(enabled, logged):
     for snapshot, item_id, quantity in ((old, 57, 100), (new, 57, 150), (old, 10, 20), (new, 11, 30)):
         ItemObservationDetail.objects.create(snapshot=snapshot, item_id=item_id, item_name=f"Item {item_id}",
                                              location="INVENTORY", quantity=quantity, instances=1, unique_owners=1)
-    rows = {row["item_id"]: row for row in compare_snapshots(old, new)}
+    rows = {row["item_id"]: row for row in compare_snapshots(old, new, observation=observation_repo())}
     assert rows[57]["percentage"] == 50
     assert rows[10]["percentage"] == -100
     assert rows[11]["percentage"] is None
@@ -291,10 +297,10 @@ def test_comparison_disappearance_new_items_and_same_source(enabled, logged):
     assert logged.get(BASE + "compare/", {"before": new.id, "after": old.id}).status_code == 400
     assert logged.get(BASE + "compare/", {"before": old.pk, "after": new.pk}).status_code == 400
     with pytest.raises(ObservationUnavailable):
-        compare_snapshots(new, old)
+        compare_snapshots(new, old, observation=observation_repo())
     new.source = "another-source"
     with pytest.raises(ObservationUnavailable):
-        compare_snapshots(old, new)
+        compare_snapshots(old, new, observation=observation_repo())
 
 
 @pytest.mark.parametrize("value", [[True], [0], [-1], [57, 57], ["57"], {}, "57"])

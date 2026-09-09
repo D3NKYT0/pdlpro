@@ -543,7 +543,10 @@ def test_invalid_rewards_and_overlapping_seasons_rejected(staff, season):
 def test_exchange_coins_retries_without_double_debit(player):
     from apps.server.domain.gateways import GameCharacter
     from apps.wallet.application.exchange import ExchangeCoinsUseCase
+    from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
     from apps.wallet.infrastructure.exchange_models import GameExchange
+    from common.architecture.base import UnitOfWork
+    from common.di.bootstrap import DependencyInjection
 
     class Access:
         def can_access(self, *args):
@@ -565,12 +568,17 @@ def test_exchange_coins_retries_without_double_debit(player):
             if self.calls == 1:
                 raise TimeoutError("Commit confirmed only on retry")
 
-    from apps.wallet.infrastructure.repositories import DjangoWalletRepository
-
     CoinConfig.objects.create(name="Coin", coin_id=57, multiplier=1, active=True)
     Wallet.objects.create(user=player, balance=100)
     gateway = Gateway()
-    case = ExchangeCoinsUseCase(gateway, Access(), DjangoWalletRepository())
+    scope = DependencyInjection.root().create_scope()
+    case = ExchangeCoinsUseCase(
+        gateway,
+        Access(),
+        scope.resolve(IWalletRepository),
+        scope.resolve(IGameExchangeRepository),
+        scope.resolve(UnitOfWork),
+    )
     data = {
         "request_key": uuid4(),
         "direction": "to_game",
@@ -594,10 +602,12 @@ def test_exchange_financial_outcomes(player, direction, outcome):
 
     from apps.server.domain.gateways import GameCharacter
     from apps.wallet.application.exchange import ExchangeCoinsUseCase
+    from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
     from apps.wallet.infrastructure.exchange_models import GameExchange
     from apps.wallet.infrastructure.models import WalletTransaction
-    from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+    from common.architecture.base import UnitOfWork
     from common.architecture.exceptions import ValidationDomainError
+    from common.di.bootstrap import DependencyInjection
 
     class Access:
         def can_access(self, *args):
@@ -617,7 +627,14 @@ def test_exchange_financial_outcomes(player, direction, outcome):
 
     CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
     wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
-    case = ExchangeCoinsUseCase(Gateway(), Access(), DjangoWalletRepository())
+    scope = DependencyInjection.root().create_scope()
+    case = ExchangeCoinsUseCase(
+        Gateway(),
+        Access(),
+        scope.resolve(IWalletRepository),
+        scope.resolve(IGameExchangeRepository),
+        scope.resolve(UnitOfWork),
+    )
     data = {
         "request_key": uuid4(),
         "direction": direction,

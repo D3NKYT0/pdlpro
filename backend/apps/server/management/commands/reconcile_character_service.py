@@ -2,8 +2,10 @@ from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 
 from apps.server.application.paid_services import settle_service
+from apps.server.domain.repositories import ICharacterServiceOperationRepository
 from apps.server.infrastructure.service_models import CharacterServiceOperation
 from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.base import UnitOfWork
 from common.di import DependencyInjection
 
 
@@ -27,14 +29,17 @@ class Command(BaseCommand):
         if not options["note"].strip():
             raise CommandError("Registre o responsável e a evidência da conferência.")
         try:
-            wallets = (
-                DependencyInjection.root().create_scope().resolve(IWalletRepository)
-            )
+            scope = DependencyInjection.root().create_scope()
+            wallets = scope.resolve(IWalletRepository)
+            operations = scope.resolve(ICharacterServiceOperationRepository)
+            unit_of_work = scope.resolve(UnitOfWork)
             settle_service(
                 options["operation_id"],
                 completed=options["result"] == "completed",
                 note=options["note"],
                 wallets=wallets,
+                operations=operations,
+                unit_of_work=unit_of_work,
             )
         except (
             CharacterServiceOperation.DoesNotExist,

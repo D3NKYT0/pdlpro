@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.domain.mailer import IMailer
+from apps.accounts.domain.repositories import IUserRepository
 from apps.server.domain.access import (
     AccessibleAccount,
     IAccountAccessService,
@@ -17,7 +18,7 @@ from apps.server.domain.exceptions import (
     LinkSlotLimitError,
 )
 from apps.server.domain.gateways import GameAccount, GameCharacter, ILineageGateway
-from apps.server.infrastructure.models import ManagedLineageAccount
+from apps.server.domain.repositories import IManagedLineageAccountRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 
@@ -73,19 +74,24 @@ class InspectPrimaryLoginUseCase(UseCase[AccountActor, PrimaryLoginState]):
     ``PrimaryLoginState``.
     """
 
-    def __init__(self, lineage: ILineageGateway) -> None:
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        managed_accounts: IManagedLineageAccountRepository,
+    ) -> None:
         self._lineage = lineage
+        self._managed = managed_accounts
 
     def execute(self, data: AccountActor) -> PrimaryLoginState:
         login = data.username
         account = self._lineage.get_account(login)
         if account and same_linked_user(account.linked_user_id, data.user_id):
-            _remember_managed(data.user_id, login, primary=True)
+            self._managed.remember(data.user_id, login, primary=True)
             return PrimaryLoginState(login=login, status="owned")
         if account is None:
             return PrimaryLoginState(login=login, status="available")
         if account.linked_user_id:
-            _promote_existing_primary(data.user_id)
+            self._managed.promote_oldest_as_primary(data.user_id)
             return PrimaryLoginState(login=login, status="taken")
         return PrimaryLoginState(login=login, status="unclaimed")
 
@@ -117,12 +123,14 @@ class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount])
         self,
         lineage: ILineageGateway,
         unit_of_work: UnitOfWork,
+        managed_accounts: IManagedLineageAccountRepository,
     ) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
+        self._managed = managed_accounts
 
     def execute(self, data: RegisterGameAccountInput) -> GameAccount:
-        if _has_primary(data.actor.user_id):
+        if self._managed.has_primary(data.actor.user_id):
             raise ValidationDomainError("Você já possui uma conta principal.")
         preferred = data.actor.username
         custom = (data.login or "").strip()
@@ -157,7 +165,7 @@ class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount])
         with self._unit_of_work:
             if not same_linked_user(account.linked_user_id, data.actor.user_id):
                 account = self._lineage.link_account(login, str(data.actor.user_id))
-            _remember_managed(data.actor.user_id, login, primary=True)
+            self._managed.remember(data.actor.user_id, login, primary=True)
         return account
 
 
@@ -188,10 +196,12 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
         lineage: ILineageGateway,
         access: IAccountAccessService,
         unit_of_work: UnitOfWork,
+        managed_accounts: IManagedLineageAccountRepository,
     ) -> None:
         self._lineage = lineage
         self._access = access
         self._unit_of_work = unit_of_work
+        self._managed = managed_accounts
 
     def execute(self, data: LinkGameAccountInput) -> GameAccount:
         login = data.login.strip()
@@ -211,10 +221,10 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
         with self._unit_of_work:
             if not already_ours:
                 account = self._lineage.link_account(login, str(data.actor.user_id))
-            _remember_managed(
+            self._managed.remember(
                 data.actor.user_id,
                 login,
-                primary=is_preferred or not _has_primary(data.actor.user_id),
+                primary=is_preferred or not self._managed.has_primary(data.actor.user_id),
             )
         return account
 
@@ -240,19 +250,23 @@ class UnlinkGameAccountUseCase(UseCase[UnlinkGameAccountInput, None]):
     retorno é ``None``.
     """
 
-    def __init__(self, lineage: ILineageGateway, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        unit_of_work: UnitOfWork,
+        managed_accounts: IManagedLineageAccountRepository,
+    ) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
+        self._managed = managed_accounts
 
     def execute(self, data: UnlinkGameAccountInput) -> None:
-        managed = ManagedLineageAccount.objects.filter(
-            user__id=data.actor.user_id, login__iexact=data.login
-        ).first()
+        managed = self._managed.find_for_user(data.actor.user_id, data.login)
         if (managed and managed.is_primary) or data.login.lower() == data.actor.username.lower():
             raise ValidationDomainError("Não é possível desvincular a conta principal.")
         with self._unit_of_work:
             self._lineage.unlink_account(data.login, str(data.actor.user_id))
-            ManagedLineageAccount.objects.filter(user__id=data.actor.user_id, login__iexact=data.login).delete()
+            self._managed.delete_for_user(data.actor.user_id, data.login)
 
 
 class InspectGameAccountUseCase(UseCase[str, dict]):
@@ -262,11 +276,12 @@ class InspectGameAccountUseCase(UseCase[str, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``str``. O retorno é ``dict``.
     """
 
-    def __init__(self, lineage: ILineageGateway) -> None:
+    def __init__(self, lineage: ILineageGateway, users: IUserRepository) -> None:
         self._lineage = lineage
+        self._users = users
 
     def execute(self, data: str) -> dict:
-        return _staff_account_snapshot(self._lineage, _require_login(data))
+        return _staff_account_snapshot(self._lineage, self._users, _require_login(data))
 
 
 class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
@@ -276,9 +291,17 @@ class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``str``. O retorno é ``dict``.
     """
 
-    def __init__(self, lineage: ILineageGateway, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        unit_of_work: UnitOfWork,
+        managed_accounts: IManagedLineageAccountRepository,
+        users: IUserRepository,
+    ) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
+        self._managed = managed_accounts
+        self._users = users
 
     def execute(self, data: str) -> dict:
         login = _require_login(data)
@@ -287,8 +310,8 @@ class ForceUnlinkGameAccountUseCase(UseCase[str, dict]):
             raise GameAccountNotFoundError()
         with self._unit_of_work:
             self._lineage.clear_account_link(login)
-            ManagedLineageAccount.objects.filter(login__iexact=login).delete()
-        return _staff_account_snapshot(self._lineage, login)
+            self._managed.delete_by_login(login)
+        return _staff_account_snapshot(self._lineage, self._users, login)
 
 
 @dataclass(frozen=True, slots=True)
@@ -472,10 +495,12 @@ class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
         lineage: ILineageGateway,
         access: IAccountAccessService,
         unit_of_work: UnitOfWork,
+        managed_accounts: IManagedLineageAccountRepository,
     ) -> None:
         self._lineage = lineage
         self._access = access
         self._unit_of_work = unit_of_work
+        self._managed = managed_accounts
 
     def execute(self, data: ConfirmLinkByEmailInput) -> GameAccount:
         from django.core import signing
@@ -500,41 +525,12 @@ class ConfirmLinkByEmailUseCase(UseCase[ConfirmLinkByEmailInput, GameAccount]):
         with self._unit_of_work:
             if not already_ours:
                 account = self._lineage.link_account(login, str(data.actor.user_id))
-            _remember_managed(
+            self._managed.remember(
                 data.actor.user_id,
                 login,
-                primary=is_preferred or not _has_primary(data.actor.user_id),
+                primary=is_preferred or not self._managed.has_primary(data.actor.user_id),
             )
         return account
-
-
-def _has_primary(user_id: UUID) -> bool:
-    return ManagedLineageAccount.objects.filter(user__id=user_id, is_primary=True).exists()
-
-
-def _promote_existing_primary(user_id: UUID) -> None:
-    if _has_primary(user_id):
-        return
-    extra = ManagedLineageAccount.objects.filter(user__id=user_id).order_by("created_at").first()
-    if extra is None:
-        return
-    extra.is_primary = True
-    extra.save(update_fields=["is_primary"])
-
-
-def _remember_managed(user_id: UUID, login: str, *, primary: bool) -> None:
-    from django.contrib.auth import get_user_model
-
-    user = get_user_model().objects.get(id=user_id)
-    if primary:
-        ManagedLineageAccount.objects.filter(user=user, is_primary=True).exclude(login__iexact=login).update(
-            is_primary=False
-        )
-    ManagedLineageAccount.objects.update_or_create(
-        user=user,
-        login=login,
-        defaults={"is_primary": primary},
-    )
 
 
 def _require_login(login: str) -> str:
@@ -544,7 +540,7 @@ def _require_login(login: str) -> str:
     return value
 
 
-def _staff_account_snapshot(lineage: ILineageGateway, login: str) -> dict:
+def _staff_account_snapshot(lineage: ILineageGateway, users: IUserRepository, login: str) -> dict:
     account = lineage.get_account((login or "").strip())
     if account is None:
         raise GameAccountNotFoundError()
@@ -553,15 +549,13 @@ def _staff_account_snapshot(lineage: ILineageGateway, login: str) -> dict:
         "email": account.email,
         "linked": bool(account.linked_user_id),
         "linked_user_id": account.linked_user_id,
-        "panel_username": _panel_username(account.linked_user_id),
+        "panel_username": _panel_username(users, account.linked_user_id),
     }
 
 
-def _panel_username(linked_user_id: str | None) -> str | None:
+def _panel_username(users: IUserRepository, linked_user_id: str | None) -> str | None:
     if not linked_user_id:
         return None
-    from django.contrib.auth import get_user_model
-
     compact = str(linked_user_id).replace("-", "").strip()
     if len(compact) != 32:
         return None
@@ -569,5 +563,5 @@ def _panel_username(linked_user_id: str | None) -> str | None:
         uid = UUID(compact)
     except ValueError:
         return None
-    user = get_user_model().objects.filter(id=uid).first()
+    user = users.get_by_id(uid)
     return user.username if user else None

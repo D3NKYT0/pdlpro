@@ -2,22 +2,42 @@
 
 from uuid import uuid4
 
-from django.contrib.auth import get_user_model
-from django.db import transaction
-
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     CharacterOfflineRequiredError,
     GameAccountNotFoundError,
     NicknameTakenError,
 )
-from apps.server.infrastructure.service_models import CharacterServiceOperation
+from apps.server.domain.repositories import ICharacterServiceOperationRepository
 from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import (
     AuthorizationError,
     ConflictError,
     ValidationDomainError,
 )
+
+
+def _resolve_operations(
+    operations: ICharacterServiceOperationRepository | None,
+) -> ICharacterServiceOperationRepository:
+    if operations is not None:
+        return operations
+    from common.di.bootstrap import DependencyInjection
+
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(ICharacterServiceOperationRepository)
+    )
+
+
+def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
+    if unit_of_work is not None:
+        return unit_of_work
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
 
 
 def settle_service(
@@ -26,14 +46,18 @@ def settle_service(
     completed,
     note,
     wallets: IWalletRepository,
+    operations: ICharacterServiceOperationRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
 ):
     """Concilia uma reserva uma única vez; rejeição confirmada estorna o débito.
 
     Use somente após resposta inequívoca do gateway ou inspeção pela equipe no jogo.
     O chamador administrativo deve registrar a justificativa e nunca presumir falha por timeout.
     """
-    with transaction.atomic():
-        row = CharacterServiceOperation.objects.select_for_update().get(id=operation_id)
+    ops = _resolve_operations(operations)
+    work = _resolve_unit_of_work(unit_of_work)
+    with work:
+        row = ops.get_locked(operation_id)
         if row.status != "pending":
             return
         if not completed and row.amount > 0:
@@ -46,21 +70,32 @@ def settle_service(
             )
         row.status = "completed" if completed else "rejected"
         row.resolution_note = note
-        row.save(update_fields=["status", "resolution_note", "updated_at"])
+        ops.save(row, update_fields=["status", "resolution_note", "updated_at"])
 
 
-def execute_paid_service(actor, *, service, value, price, lineage, access, wallets):
+def execute_paid_service(
+    actor,
+    *,
+    service,
+    value,
+    price,
+    lineage,
+    access,
+    wallets,
+    operations: ICharacterServiceOperationRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
+):
     """Reserva e confirma uma operação; repetição não cobra nem chama o jogo novamente."""
     if price < 0:
         raise ValidationDomainError("Preço de serviço inválido.")
+    ops = _resolve_operations(operations)
+    work = _resolve_unit_of_work(unit_of_work)
     request_key = actor.request_key or uuid4()
-    with transaction.atomic():
-        user = get_user_model().objects.select_for_update().get(id=actor.user_id)
+    with work:
+        user = ops.require_user_locked(actor.user_id)
         if not access.can_access(actor.user_id, actor.username, actor.login):
             raise AuthorizationError()
-        row = CharacterServiceOperation.objects.filter(
-            user=user, request_key=request_key
-        ).first()
+        row = ops.find_by_user_and_request_key(user, request_key)
         if row:
             if (row.login, row.character_id, row.service, row.value) != (
                 actor.login,
@@ -78,9 +113,7 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
             raise ConflictError(
                 "Serviço pendente de conferência pela equipe. Não envie outra solicitação."
             )
-        if CharacterServiceOperation.objects.filter(
-            login=actor.login, character_id=actor.char_id, status="pending"
-        ).exists():
+        if ops.has_pending_for_character(login=actor.login, character_id=actor.char_id):
             raise ConflictError(
                 "Este personagem tem um serviço pendente de conferência pela equipe."
             )
@@ -94,7 +127,7 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
         )
         amount = 0 if already_applied else price
         wallet = wallets.get_or_create(actor.user_id)
-        row = CharacterServiceOperation.objects.create(
+        row = ops.create(
             user=user,
             request_key=request_key,
             login=actor.login,
@@ -128,6 +161,8 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
             completed=False,
             note="Rejeição de domínio anterior à gravação no jogo.",
             wallets=wallets,
+            operations=ops,
+            unit_of_work=work,
         )
         raise
     except Exception as exc:
@@ -137,5 +172,10 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
             details={"operation_id": str(row.id)},
         ) from exc
     settle_service(
-        row.id, completed=True, note="Gateway confirmou a operação.", wallets=wallets
+        row.id,
+        completed=True,
+        note="Gateway confirmou a operação.",
+        wallets=wallets,
+        operations=ops,
+        unit_of_work=work,
     )

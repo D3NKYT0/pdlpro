@@ -8,6 +8,7 @@ from rest_framework.test import APIClient
 
 from apps.payment.application.pricing import CoinPricingService
 from apps.payment.infrastructure.models import PedidoPagamento
+from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.models import (
     CoinConfig,
     CoinPackage,
@@ -15,6 +16,7 @@ from apps.wallet.infrastructure.models import (
     WalletTransaction,
 )
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+from common.di.bootstrap import DependencyInjection
 
 pytestmark = pytest.mark.django_db
 
@@ -94,23 +96,27 @@ def test_mock_cannot_be_used_when_disabled(api, order, settings):
     assert not WalletTransaction.objects.exists()
 
 
+def _pricing() -> CoinPricingService:
+    return CoinPricingService(DependencyInjection.root().create_scope().resolve(IWalletRepository))
+
+
 @pytest.mark.parametrize("amount", [None, Decimal(0), Decimal(-1)])
 def test_quote_rejects_nonpositive_amount(amount):
     with pytest.raises(ValidationDomainError):
-        CoinPricingService().quote(package_id=None, amount=amount, currency="BRL")
+        _pricing().quote(package_id=None, amount=amount, currency="BRL")
 
 
 @pytest.mark.parametrize("currency", ["EUR", "", "BTC"])
 def test_quote_rejects_unsupported_currency(currency):
     with pytest.raises(ValidationDomainError):
-        CoinPricingService().quote(package_id=None, amount=Decimal(10), currency=currency)
+        _pricing().quote(package_id=None, amount=Decimal(10), currency=currency)
 
 
 @pytest.mark.parametrize("by_code", [False, True])
 @pytest.mark.parametrize("currency,price", [("BRL", "30.00"), ("usd", "7.00")])
 def test_package_lookup_by_uuid_or_code_overrides_custom_amount(by_code, currency, price):
     package = CoinPackage.objects.create(code="test-code", name="Teste", coins=50, price_brl=30, price_usd=7)
-    quote = CoinPricingService().quote(package_id=package.code if by_code else str(package.id), amount=Decimal(999), currency=currency)
+    quote = _pricing().quote(package_id=package.code if by_code else str(package.id), amount=Decimal(999), currency=currency)
     assert quote.amount == Decimal(price)
     assert quote.coins == 50
     assert quote.currency == currency.upper()
@@ -119,18 +125,18 @@ def test_package_lookup_by_uuid_or_code_overrides_custom_amount(by_code, currenc
 @pytest.mark.parametrize("identifier", ["nonexistent-code", str(uuid4())])
 def test_missing_package_is_domain_not_found(identifier):
     with pytest.raises(EntityNotFoundError):
-        CoinPricingService().quote(package_id=identifier, amount=None, currency="BRL")
+        _pricing().quote(package_id=identifier, amount=None, currency="BRL")
 
 
 def test_inactive_package_is_not_for_sale():
     package = CoinPackage.objects.create(code="inactive", name="Inativo", coins=50, price_brl=30, price_usd=7, active=False)
     with pytest.raises(EntityNotFoundError):
-        CoinPricingService().quote(package_id=str(package.id), amount=None, currency="BRL")
+        _pricing().quote(package_id=str(package.id), amount=None, currency="BRL")
 
 
 @pytest.mark.parametrize("currency,expected", [("BRL", "25.02"), ("USD", "60.06")])
 def test_quote_uses_active_exchange_rate_and_decimal_rounding(currency, expected):
     CoinConfig.objects.create(name="Teste", multiplier="2.50", usd_multiplier="6")
-    quote = CoinPricingService().quote(package_id=None, amount=Decimal("10.01"), currency=currency)
+    quote = _pricing().quote(package_id=None, amount=Decimal("10.01"), currency=currency)
     # Decimal usa ROUND_HALF_EVEN: 25.025 arredonda para 25.02.
     assert quote.coins == Decimal(expected)

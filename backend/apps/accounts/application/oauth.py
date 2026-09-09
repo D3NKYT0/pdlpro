@@ -9,12 +9,11 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.cache import cache
 
 from apps.accounts.domain.exceptions import OAuthError
+from apps.accounts.domain.repositories import ISocialAccountRepository, IUserRepository
 from common.architecture.base import UseCase
 
 PROVIDERS = {
@@ -82,8 +81,7 @@ def _profile(provider: str, code: str) -> dict:
     return _request_json(config["profile"], token=access_token)
 
 
-def _unique_username(profile: dict, email: str) -> str:
-    User = get_user_model()
+def _unique_username(users: IUserRepository, profile: dict, email: str) -> str:
     raw = (
         profile.get("preferred_username")
         or profile.get("global_name")
@@ -95,7 +93,7 @@ def _unique_username(profile: dict, email: str) -> str:
         base = f"{base}pdl"[:16]
     candidate = base
     counter = 1
-    while User.objects.filter(username__iexact=candidate).exists():
+    while users.exists_username(candidate):
         suffix = str(counter)
         candidate = f"{base[:16 - len(suffix)]}{suffix}"
         counter += 1
@@ -174,6 +172,10 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
     ``(user, linked)``.
     """
 
+    def __init__(self, users: IUserRepository, social: ISocialAccountRepository) -> None:
+        self._users = users
+        self._social = social
+
     def execute(self, data: CompleteOAuthInput) -> tuple:
         state_key = f"oauth-state:{data.state}"
         stored = cache.get(state_key)
@@ -222,14 +224,9 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                 error_code="OAUTH_EMAIL_UNVERIFIED",
             )
 
-        User = get_user_model()
-        social = (
-            SocialAccount.objects.filter(provider=data.provider, uid=provider_uid)
-            .select_related("user")
-            .first()
-        )
+        social = self._social.find_by_provider_uid(data.provider, provider_uid)
         if stored.get("mode") == "link":
-            user = User.objects.filter(id=stored.get("user_id"), is_active=True).first()
+            user = self._users.get_active_orm(stored.get("user_id"))
             if not user:
                 raise OAuthError(
                     "Sessão inválida para conexão.",
@@ -245,7 +242,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
         elif social:
             user = social.user
         else:
-            user = User.objects.filter(email__iexact=email).first()
+            user = self._users.get_orm_by_email(email)
             if user and not user.is_email_verified:
                 raise OAuthError(
                     "Já existe um cadastro com este e-mail. Recupere o acesso e confirme o e-mail "
@@ -257,12 +254,10 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                 display_name = str(
                     profile.get("name") or profile.get("global_name") or profile.get("username") or ""
                 )[:80]
-                user = User.objects.create_user(
-                    username=_unique_username(profile, email),
+                user = self._users.create_oauth_user(
+                    username=_unique_username(self._users, profile, email),
                     email=email,
                     display_name=display_name,
-                    password=None,
-                    is_email_verified=True,
                 )
 
         if not user.is_active:
@@ -272,12 +267,12 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                 status_code=403,
             )
         if not user.is_email_verified and user.email.lower() == email:
-            user.is_email_verified = True
-            user.save(update_fields=["is_email_verified", "updated_at"])
-        SocialAccount.objects.update_or_create(
+            user = self._users.mark_orm_email_verified(user)
+        self._social.update_or_create(
             provider=data.provider,
             uid=provider_uid,
-            defaults={"user": user, "extra_data": profile},
+            user=user,
+            extra_data=profile,
         )
         return user, stored.get("mode") == "link"
 

@@ -6,12 +6,11 @@ from uuid import UUID
 
 from apps.games.application.configuration import require_active_game
 from apps.games.domain.exceptions import InsufficientTokensError
-from apps.games.infrastructure.models import DiceHistory, GameConfig, SlotHistory
+from apps.games.domain.repositories import IGameCatalogRepository, IMinigameRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 SLOT_SYMBOLS = ("sword", "shield", "crown", "adena", "scroll")
-
 
 
 @dataclass(frozen=True, slots=True)
@@ -36,13 +35,18 @@ class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        catalog: IGameCatalogRepository,
+        minigames: IMinigameRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._catalog = catalog
+        self._minigames = minigames
         self._unit_of_work = unit_of_work
 
     def execute(self, data: PlayDiceInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        config = require_active_game("dice")
+        config = require_active_game("dice", catalog=self._catalog)
         min_bet = int((config.settings or {}).get("min_bet", 1))
         if data.amount < min_bet:
             raise ValidationDomainError(f"Aposta mínima: {min_bet} fichas.")
@@ -52,7 +56,7 @@ class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
         if bet_type == "number" and (data.number is None or data.number < 1 or data.number > 6):
             raise ValidationDomainError("Escolha um número de 1 a 6.")
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
+            user = self._minigames.require_user_locked(data.user_id)
             if user.fichas < data.amount:
                 raise InsufficientTokensError()
             user.fichas -= data.amount
@@ -77,7 +81,7 @@ class PlayDiceUseCase(UseCase[PlayDiceInput, dict]):
             if payout:
                 user.fichas += payout
             user.save(update_fields=["fichas", "updated_at"])
-            DiceHistory.objects.create(
+            self._minigames.create_dice_history(
                 user=user,
                 bet_type=bet_type,
                 bet_amount=data.amount,
@@ -107,16 +111,21 @@ class SpinSlotsUseCase(UseCase[SpinSlotsInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        catalog: IGameCatalogRepository,
+        minigames: IMinigameRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._catalog = catalog
+        self._minigames = minigames
         self._unit_of_work = unit_of_work
 
     def execute(self, data: SpinSlotsInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        config = require_active_game("slots")
+        config = require_active_game("slots", catalog=self._catalog)
         cost = int((config.settings or {}).get("cost", 1))
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
+            user = self._minigames.require_user_locked(data.user_id)
             if user.fichas < cost:
                 raise InsufficientTokensError()
             user.fichas -= cost
@@ -130,7 +139,9 @@ class SpinSlotsUseCase(UseCase[SpinSlotsInput, dict]):
             if payout:
                 user.fichas += payout
             user.save(update_fields=["fichas", "updated_at"])
-            SlotHistory.objects.create(user=user, reels=reels, won=bool(payout), payout=payout)
+            self._minigames.create_slot_history(
+                user=user, reels=reels, won=bool(payout), payout=payout
+            )
         return {"reels": reels, "won": bool(payout), "payout": payout, "fichas": user.fichas}
 
 
@@ -140,12 +151,13 @@ class GetMinigamesStateUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, minigames: IMinigameRepository) -> None:
+        self._minigames = minigames
 
-        user = get_user_model().objects.get(id=data)
-        dice = GameConfig.objects.filter(code="dice").first()
-        slots = GameConfig.objects.filter(code="slots").first()
+    def execute(self, data: UUID) -> dict:
+        user = self._minigames.require_user(data)
+        dice = self._minigames.get_config("dice")
+        slots = self._minigames.get_config("slots")
         return {
             "fichas": user.fichas,
             "dice": {

@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from apps.games.application.bag import add_to_bag
 from apps.games.domain.exceptions import InvalidRewardError
+from apps.games.domain.repositories import IBagRepository
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
 
@@ -61,6 +62,7 @@ def grant_rewards(
     label,
     *,
     wallets: IWalletRepository,
+    bags: IBagRepository | None = None,
     unit_of_work: UnitOfWork | None = None,
 ):
     """Concede recompensas validadas via porta de carteira (e bag/fichas).
@@ -80,6 +82,7 @@ def grant_rewards(
                     item_name=reward["name"],
                     quantity=int(amount),
                     enchant=reward["enchant"],
+                    bags=bags,
                 )
             elif kind == "tokens":
                 user.fichas += int(amount)

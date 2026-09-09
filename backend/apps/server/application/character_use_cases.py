@@ -6,7 +6,11 @@ from uuid import UUID
 from apps.server.application.paid_services import execute_paid_service
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
-from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRepository
+from apps.server.domain.repositories import (
+    ICharacterServiceOperationRepository,
+    ILinkSlotRepository,
+    IServicePriceRepository,
+)
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
@@ -46,12 +50,14 @@ class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         access: IAccountAccessService,
         prices: IServicePriceRepository,
         wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._lineage = lineage
         self._access = access
         self._prices = prices
         self._wallets = wallets
+        self._operations = operations
         self._unit_of_work = unit_of_work
 
     def execute(self, data: tuple[CharacterServiceInput, str]) -> None:
@@ -61,13 +67,21 @@ class ChangeNicknameUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         if not cleaned.isalnum() or not (_NICK_MIN <= len(cleaned) <= _NICK_MAX):
             raise ValidationDomainError("Nick inválido. Use 2 a 16 letras ou números.")
         price = self._prices.get_price("CHANGE_NICKNAME")
-        execute_paid_service(actor, service="CHANGE_NICKNAME", value=cleaned, price=price,
-                             lineage=self._lineage, access=self._access, wallets=self._wallets)
+        execute_paid_service(
+            actor,
+            service="CHANGE_NICKNAME",
+            value=cleaned,
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )
 
     def _assert_access(self, actor: CharacterServiceInput) -> None:
         if not self._access.can_access(actor.user_id, actor.username, actor.login):
             raise AuthorizationError()
-
 
 
 class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
@@ -85,12 +99,14 @@ class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         access: IAccountAccessService,
         prices: IServicePriceRepository,
         wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._lineage = lineage
         self._access = access
         self._prices = prices
         self._wallets = wallets
+        self._operations = operations
         self._unit_of_work = unit_of_work
 
     def execute(self, data: tuple[CharacterServiceInput, str]) -> None:
@@ -101,8 +117,17 @@ class ChangeSexUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
         if sex_label.upper() not in {"M", "F"}:
             raise ValidationDomainError("Sexo deve ser M ou F.")
         price = self._prices.get_price("CHANGE_SEX")
-        execute_paid_service(actor, service="CHANGE_SEX", value=str(sex), price=price,
-                             lineage=self._lineage, access=self._access, wallets=self._wallets)
+        execute_paid_service(
+            actor,
+            service="CHANGE_SEX",
+            value=str(sex),
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )
 
 
 class UnstuckCharacterUseCase(UseCase[CharacterServiceInput, None]):

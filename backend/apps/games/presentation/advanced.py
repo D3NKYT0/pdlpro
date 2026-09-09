@@ -197,6 +197,17 @@ def config_serializer(kind):
         raise serializers.ValidationError("Configuração desconhecida.")
     model, fields = CONFIG_MODELS[kind]
 
+    class RelatedUUIDField(serializers.Field):
+        """Aceita UUID na entrada; na saída serializa o ``id`` público do relacionado."""
+
+        def to_internal_value(self, data):
+            return serializers.UUIDField().to_internal_value(data)
+
+        def to_representation(self, value):
+            if value is None:
+                return None
+            return getattr(value, "id", value)
+
     class ConfigSerializer(serializers.ModelSerializer):
         class Meta:
             pass
@@ -210,9 +221,8 @@ def config_serializer(kind):
     for field in fields:
         model_field = model._meta.get_field(field)
         if model_field.many_to_one:
-            ConfigSerializer._declared_fields[field] = serializers.SlugRelatedField(
-                slug_field="id", queryset=model_field.related_model.objects.all()
-            )
+            # FK validada no caso de uso via IGameContentAdminRepository.resolve_related.
+            ConfigSerializer._declared_fields[field] = RelatedUUIDField()
     return ConfigSerializer
 
 

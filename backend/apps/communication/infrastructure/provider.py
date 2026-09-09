@@ -9,9 +9,12 @@ from apps.communication.application.use_cases import (
     MarkNotificationReadUseCase,
 )
 from apps.communication.domain.push import IPushSender
-from apps.communication.domain.repositories import INotificationRepository
+from apps.communication.domain.repositories import INotificationRepository, IPushSubscriptionRepository
 from apps.communication.infrastructure.push import WebPushSender
-from apps.communication.infrastructure.repositories import DjangoNotificationRepository
+from apps.communication.infrastructure.repositories import (
+    DjangoNotificationRepository,
+    DjangoPushSubscriptionRepository,
+)
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
@@ -27,6 +30,11 @@ class CommunicationProvider(AppProvider):
 
     def register(self, container: Container) -> None:
         container.register(INotificationRepository, DjangoNotificationRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            IPushSubscriptionRepository,
+            DjangoPushSubscriptionRepository,
+            lifetime=Lifetime.SCOPED,
+        )
         container.register(IPushSender, WebPushSender, lifetime=Lifetime.SINGLETON)
         container.register_self(NotifyUser, lifetime=Lifetime.TRANSIENT)
         for use_case in (

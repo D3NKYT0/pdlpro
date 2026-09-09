@@ -273,42 +273,58 @@ class DeletePasskeyUseCase(UseCase[DeletePasskeyInput, bool]):
 
 # Funções de módulo usadas pelos testes de fronteira criptográfica.
 def begin_registration(user, nickname: str = "") -> dict:
-    from apps.accounts.infrastructure.repositories import DjangoWebAuthnCredentialRepository
+    from common.di import DependencyInjection
 
-    return BeginPasskeyRegistrationUseCase(DjangoWebAuthnCredentialRepository()).execute(
-        BeginPasskeyRegistrationInput(
-            user_id=user.id,
-            username=user.username,
-            display_name=user.display_name or user.username,
-            nickname=nickname,
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginPasskeyRegistrationUseCase)
+        .execute(
+            BeginPasskeyRegistrationInput(
+                user_id=user.id,
+                username=user.username,
+                display_name=user.display_name or user.username,
+                nickname=nickname,
+            )
         )
     )
 
 
 def complete_registration(user, state: str, credential: dict, nickname: str = "") -> WebAuthnCredentialRecord:
-    from apps.accounts.infrastructure.repositories import DjangoWebAuthnCredentialRepository
+    from common.di import DependencyInjection
 
-    return CompletePasskeyRegistrationUseCase(DjangoWebAuthnCredentialRepository()).execute(
-        CompletePasskeyRegistrationInput(
-            user_id=user.id,
-            state=state,
-            credential=credential,
-            nickname=nickname,
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompletePasskeyRegistrationUseCase)
+        .execute(
+            CompletePasskeyRegistrationInput(
+                user_id=user.id,
+                state=state,
+                credential=credential,
+                nickname=nickname,
+            )
         )
     )
 
 
 def begin_authentication(login: str = "") -> dict:
-    from apps.accounts.infrastructure.repositories import DjangoWebAuthnCredentialRepository
+    from common.di import DependencyInjection
 
-    return BeginPasskeyAuthenticationUseCase(DjangoWebAuthnCredentialRepository()).execute(
-        BeginPasskeyAuthenticationInput(login=login)
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginPasskeyAuthenticationUseCase)
+        .execute(BeginPasskeyAuthenticationInput(login=login))
     )
 
 
 def complete_authentication(state: str, credential: dict):
-    from apps.accounts.infrastructure.repositories import DjangoWebAuthnCredentialRepository
+    from common.di import DependencyInjection
 
-    return CompletePasskeyAuthenticationUseCase(DjangoWebAuthnCredentialRepository()).execute(
-        CompletePasskeyAuthenticationInput(state=state, credential=credential)
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompletePasskeyAuthenticationUseCase)
+        .execute(CompletePasskeyAuthenticationInput(state=state, credential=credential))
     )

@@ -20,14 +20,23 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import SessionAuthenticationError, SessionNotFoundError
 from apps.accounts.domain.repositories import (
+    IProgressRepository,
     ISessionStore,
+    ISocialAccountRepository,
     IUserRepository,
     IWebAuthnCredentialRepository,
     SessionRecord,
     TotpState,
     WebAuthnCredentialRecord,
 )
-from apps.accounts.infrastructure.models import WebAuthnCredential
+from apps.accounts.infrastructure.models import (
+    Achievement,
+    GamerProfile,
+    RewardClaim,
+    RewardDefinition,
+    UserAchievement,
+    WebAuthnCredential,
+)
 from common.architecture.exceptions import ValidationDomainError
 
 User = get_user_model()
@@ -195,6 +204,59 @@ class DjangoUserRepository(IUserRepository):
             user.save(update_fields=["password", "updated_at"])
         return True
 
+    def get_active_orm(self, user_id: UUID | str):
+        return User.objects.filter(id=user_id, is_active=True).first()
+
+    def get_orm_by_email(self, email: str):
+        return User.objects.filter(email__iexact=email).first()
+
+    def create_oauth_user(self, *, username: str, email: str, display_name: str = ""):
+        return User.objects.create_user(
+            username=username,
+            email=email,
+            display_name=display_name,
+            password=None,
+            is_email_verified=True,
+        )
+
+    def mark_orm_email_verified(self, user):
+        user.is_email_verified = True
+        user.save(update_fields=["is_email_verified", "updated_at"])
+        return user
+
+    def require_orm_user(self, user_id: UUID):
+        return User.objects.get(id=user_id)
+
+
+class DjangoSocialAccountRepository(ISocialAccountRepository):
+    """Adaptador Django/allauth de ``ISocialAccountRepository``."""
+
+    def find_by_provider_uid(self, provider: str, uid: str):
+        from allauth.socialaccount.models import SocialAccount
+
+        return (
+            SocialAccount.objects.filter(provider=provider, uid=uid)
+            .select_related("user")
+            .first()
+        )
+
+    def update_or_create(self, *, provider: str, uid: str, user, extra_data: dict):
+        from allauth.socialaccount.models import SocialAccount
+
+        row, _ = SocialAccount.objects.update_or_create(
+            provider=provider,
+            uid=uid,
+            defaults={"user": user, "extra_data": extra_data},
+        )
+        return row
+
+    def list_providers_for_user(self, user_id: UUID) -> list[str]:
+        from allauth.socialaccount.models import SocialAccount
+
+        return list(
+            SocialAccount.objects.filter(user__id=user_id).values_list("provider", flat=True)
+        )
+
 
 class DjangoSessionStore(ISessionStore):
     """Adaptador SimpleJWT/ORM de ``ISessionStore`` para rotação e revogação de sessões."""
@@ -356,3 +418,50 @@ class DjangoWebAuthnCredentialRepository(IWebAuthnCredentialRepository):
     def find_active_user_by_login(self, login: str) -> Any | None:
         query = {"email__iexact": login.strip()} if "@" in login else {"username__iexact": login.strip()}
         return User.objects.filter(**query, is_active=True).first()
+
+
+class DjangoProgressRepository(IProgressRepository):
+    """Adaptador Django de ``IProgressRepository`` para perfil, conquistas e recompensas."""
+
+    def require_user(self, user_id: UUID) -> Any:
+        return User.objects.get(id=user_id)
+
+    def get_or_create_profile(self, user) -> Any:
+        profile, _ = GamerProfile.objects.get_or_create(user=user)
+        return profile
+
+    def save_profile(self, profile, *, update_fields: list[str]) -> None:
+        profile.save(update_fields=update_fields)
+
+    def list_achievements(self, *, order_by_name: bool = False) -> list[Any]:
+        rows = Achievement.objects.all()
+        if order_by_name:
+            rows = rows.order_by("name")
+        return list(rows)
+
+    def list_unlocked_codes(self, user) -> set[str]:
+        return set(
+            UserAchievement.objects.filter(user=user).values_list("achievement__code", flat=True)
+        )
+
+    def has_achievement(self, user, code: str) -> bool:
+        return UserAchievement.objects.filter(user=user, achievement__code=code).exists()
+
+    def unlock_achievement(self, user, achievement) -> bool:
+        _, created = UserAchievement.objects.get_or_create(user=user, achievement=achievement)
+        return created
+
+    def list_rewards(self) -> list[Any]:
+        return list(RewardDefinition.objects.all())
+
+    def get_reward(self, reward_id: UUID) -> Any | None:
+        return RewardDefinition.objects.filter(id=reward_id).first()
+
+    def list_claimed_reward_ids(self, user) -> set[Any]:
+        return set(RewardClaim.objects.filter(user=user).values_list("reward_id", flat=True))
+
+    def has_claimed(self, user, reward) -> bool:
+        return RewardClaim.objects.filter(user=user, reward=reward).exists()
+
+    def create_claim(self, user, reward) -> None:
+        RewardClaim.objects.create(user=user, reward=reward)

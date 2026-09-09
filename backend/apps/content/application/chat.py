@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from typing import Literal
 from uuid import UUID
 
-from django.contrib.auth import get_user_model
 from django.core import signing
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -37,7 +36,7 @@ from apps.content.application.emotions import (
 from apps.content.application.safety import coerced_echo, safety_short_circuit
 from apps.content.application.screens import describe_screen
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
-from apps.content.infrastructure.models import DenkynhoProfile
+from apps.content.domain.repositories import IDenkynhoRepository
 
 logger = logging.getLogger(__name__)
 CONTEXT_SALT = "content.denkynho.conversation.v1"
@@ -188,11 +187,13 @@ class ChatReplyUseCase:
         semantic_matcher: SemanticMatcher,
         assistant_reply_use_case: AssistantReplyUseCase,
         list_faq: ListFaqUseCase,
+        denkynho: IDenkynhoRepository,
     ) -> None:
         self._model = conversation_model
         self._matcher = semantic_matcher
         self._fallback = assistant_reply_use_case
         self._list_faq = list_faq
+        self._denkynho = denkynho
 
     def execute(self, data: ChatInput) -> dict:
         language = detect_language(data.message, data.language)
@@ -345,14 +346,7 @@ class ChatReplyUseCase:
 
         if account_id is None:
             return {"name": "", "detail": "balanced"}
-        user = get_user_model().objects.filter(id=account_id).only("pk").first()
-        if user is None:
-            return {"name": "", "detail": "balanced"}
-        profile = DenkynhoProfile.objects.filter(user=user).only("preferred_name", "detail").first()
-        if profile is None:
-            return {"name": "", "detail": "balanced"}
-        detail = profile.detail if profile.detail in {"brief", "balanced", "detailed"} else "balanced"
-        return {"name": profile.preferred_name, "detail": detail}
+        return self._denkynho.get_preferences(account_id)
 
     def _sources(self, message: str, history: list[dict[str, str]], articles: list[dict]) -> list[dict]:
         if not articles:

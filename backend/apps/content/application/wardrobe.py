@@ -3,12 +3,10 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from django.contrib.auth import get_user_model
-from django.db import transaction
-
-from apps.content.application.denkynho import _locked_profile, _serialize
+from apps.content.application.denkynho import _serialize
+from apps.content.domain.repositories import IDenkynhoRepository
 from apps.content.domain.wardrobe import APPEARANCE_SLOTS, UNLOCKS
-from common.architecture.base import UseCase
+from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 
@@ -24,12 +22,16 @@ class EquipDenkynhoInput:
 class EquipDenkynhoUseCase(UseCase[EquipDenkynhoInput, dict]):
     """Persiste uma seleção liberada sob bloqueio; repetir a seleção não concede XP."""
 
+    def __init__(self, denkynho: IDenkynhoRepository, unit_of_work: UnitOfWork) -> None:
+        self._denkynho = denkynho
+        self._unit_of_work = unit_of_work
+
     def execute(self, data: EquipDenkynhoInput) -> dict:
         if data.slot not in APPEARANCE_SLOTS:
             raise ValidationDomainError("Este espaço do armário não existe.")
-        user = get_user_model().objects.get(id=data.user_id)
-        with transaction.atomic():
-            profile = _locked_profile(user)
+        user = self._denkynho.require_user(data.user_id)
+        with self._unit_of_work:
+            profile = self._denkynho.get_locked_profile(user)
             if data.item_id:
                 item = next((item for item in UNLOCKS if item["id"] == data.item_id and item["slot"] == data.slot), None)
                 if item is None:

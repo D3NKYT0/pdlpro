@@ -9,12 +9,13 @@ import tempfile
 import zipfile
 from datetime import datetime
 from pathlib import Path, PurePosixPath
-from typing import BinaryIO
+from typing import Any, BinaryIO
 
 from django.conf import settings
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 
-from apps.themes.infrastructure.models import ThemePackage
+from apps.themes.domain.repositories import IThemePackageRepository
+from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import (
     ConflictError,
     EntityNotFoundError,
@@ -375,7 +376,7 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
     return manifest, files
 
 
-def serialize_theme(theme: ThemePackage | None = None) -> dict:
+def serialize_theme(theme: Any | None = None) -> dict:
     """Produz o contrato público; sem registro ativo retorna o default imutável."""
 
     if theme is None:
@@ -399,20 +400,45 @@ def serialize_theme(theme: ThemePackage | None = None) -> dict:
     }
 
 
-def get_active_theme() -> dict:
-    return serialize_theme(ThemePackage.objects.filter(is_active=True).first())
+def _resolve_packages() -> IThemePackageRepository:
+    from common.di import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(IThemePackageRepository)
 
 
-def list_themes() -> list[dict]:
-    active_package = ThemePackage.objects.filter(is_active=True).exists()
+def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
+    if unit_of_work is not None:
+        return unit_of_work
+    from common.di import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
+
+
+def get_active_theme(packages: IThemePackageRepository | None = None) -> dict:
+    packages = packages or _resolve_packages()
+    return serialize_theme(packages.get_active())
+
+
+def list_themes(packages: IThemePackageRepository | None = None) -> list[dict]:
+    packages = packages or _resolve_packages()
+    active_package = packages.exists_active()
     default = serialize_theme()
     default["active"] = not active_package
-    return [default, *(serialize_theme(theme) for theme in ThemePackage.objects.all())]
+    return [default, *(serialize_theme(theme) for theme in packages.list_all())]
 
 
-def install_theme(upload: BinaryIO, *, size: int, user) -> dict:
+def install_theme(
+    upload: BinaryIO,
+    *,
+    size: int,
+    user,
+    packages: IThemePackageRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
+) -> dict:
     """Valida e publica um ZIP sem extrair caminhos fornecidos diretamente pelo cliente."""
 
+    packages = packages or _resolve_packages()
+    work = _resolve_unit_of_work(unit_of_work)
     if size <= 0 or size > MAX_ARCHIVE_BYTES:
         raise ValidationDomainError("O ZIP deve ter no máximo 32 MB.")
     archive = upload.read(MAX_ARCHIVE_BYTES + 1)
@@ -421,7 +447,7 @@ def install_theme(upload: BinaryIO, *, size: int, user) -> dict:
     manifest, files = _validate_package(archive)
     digest = hashlib.sha256(archive).hexdigest()
     slug, version = manifest["id"], manifest["version"]
-    if ThemePackage.objects.filter(slug=slug, version=version).exists():
+    if packages.exists_slug_version(slug, version):
         raise ConflictError("Esta versão do tema já está instalada.")
 
     relative = f"{slug}/{version}-{digest[:12]}"
@@ -440,8 +466,8 @@ def install_theme(upload: BinaryIO, *, size: int, user) -> dict:
         final.parent.mkdir(parents=True, exist_ok=True)
         os.replace(staging, final)
         try:
-            with transaction.atomic():
-                theme = ThemePackage.objects.create(
+            with work:
+                theme = packages.create(
                     slug=slug,
                     name=manifest["name"].strip(),
                     version=version,
@@ -465,29 +491,39 @@ def install_theme(upload: BinaryIO, *, size: int, user) -> dict:
         raise
 
 
-def activate_theme(package_id: str | None) -> dict:
-    """Ativa uma versão sob transação; ``None`` restaura o tema default."""
+def activate_theme(
+    package_id: str | None,
+    packages: IThemePackageRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
+) -> dict:
+    """Ativa uma versão sob UnitOfWork; ``None`` restaura o tema default."""
 
-    with transaction.atomic():
-        ThemePackage.objects.select_for_update().filter(is_active=True).update(is_active=False)
+    packages = packages or _resolve_packages()
+    work = _resolve_unit_of_work(unit_of_work)
+    with work:
+        packages.deactivate_all()
         if package_id is None:
             return serialize_theme()
-        try:
-            theme = ThemePackage.objects.select_for_update().get(id=package_id)
-        except (ThemePackage.DoesNotExist, ValueError):
-            raise EntityNotFoundError("Tema não encontrado.") from None
+        theme = packages.lock_get(package_id)
+        if theme is None:
+            raise EntityNotFoundError("Tema não encontrado.")
         theme.is_active = True
-        theme.save(update_fields=("is_active", "updated_at"))
+        packages.save(theme, update_fields=("is_active", "updated_at"))
         return serialize_theme(theme)
 
 
-def delete_theme(package_id: str) -> None:
+def delete_theme(
+    package_id: str,
+    packages: IThemePackageRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
+) -> None:
     """Remove somente pacotes inativos e valida o destino antes da exclusão recursiva."""
 
-    try:
-        theme = ThemePackage.objects.get(id=package_id)
-    except (ThemePackage.DoesNotExist, ValueError):
-        raise EntityNotFoundError("Tema não encontrado.") from None
+    packages = packages or _resolve_packages()
+    work = _resolve_unit_of_work(unit_of_work)
+    theme = packages.get(package_id)
+    if theme is None:
+        raise EntityNotFoundError("Tema não encontrado.")
     if theme.is_active:
         raise ConflictError("Ative outro tema antes de remover este pacote.")
     root = _themes_root()
@@ -498,8 +534,8 @@ def delete_theme(package_id: str) -> None:
     if target.exists():
         os.replace(target, trash)
     try:
-        with transaction.atomic():
-            theme.delete()
+        with work:
+            packages.delete(theme)
     except Exception:
         if trash.exists():
             os.replace(trash, target)

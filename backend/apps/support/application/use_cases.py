@@ -6,17 +6,17 @@ from uuid import UUID
 
 from apps.support.domain.exceptions import InvalidTicketActionError, TicketNotFoundError
 from apps.support.domain.repositories import ITicketRepository
-from apps.support.models import Ticket
+from apps.support.domain.ticket import TicketCategory, TicketPriority, TicketStatus
 from common.architecture.base import UnitOfWork, UseCase
 
 ACTIVE_STATUSES = {
-    Ticket.Status.OPEN,
-    Ticket.Status.IN_PROGRESS,
-    Ticket.Status.WAITING_USER,
-    Ticket.Status.WAITING_TEAM,
+    TicketStatus.OPEN,
+    TicketStatus.IN_PROGRESS,
+    TicketStatus.WAITING_USER,
+    TicketStatus.WAITING_TEAM,
 }
 
-CLOSED_STATUSES = {Ticket.Status.CLOSED, Ticket.Status.RESOLVED}
+CLOSED_STATUSES = {TicketStatus.CLOSED, TicketStatus.RESOLVED}
 
 
 @dataclass(frozen=True, slots=True)
@@ -79,9 +79,9 @@ class CreateTicketUseCase(UseCase[CreateTicketInput, Any]):
             raise InvalidTicketActionError("Informe um assunto com pelo menos 6 caracteres.")
         if len(description) < 20:
             raise InvalidTicketActionError("Conte um pouco mais sobre o problema (mínimo de 20 caracteres).")
-        if data.category not in Ticket.Category.values:
+        if data.category not in TicketCategory.values:
             raise InvalidTicketActionError("Categoria inválida.")
-        if data.priority not in Ticket.Priority.values:
+        if data.priority not in TicketPriority.values:
             raise InvalidTicketActionError("Prioridade inválida.")
         with self._unit_of_work:
             return self._tickets.create(
@@ -174,7 +174,7 @@ class UpdateCustomerTicketUseCase(UseCase[UpdateCustomerTicketInput, Any]):
         if ticket is None:
             raise TicketNotFoundError()
         action = data.action
-        can_close = action == "close" and ticket.status in ACTIVE_STATUSES | {Ticket.Status.RESOLVED}
+        can_close = action == "close" and ticket.status in ACTIVE_STATUSES | {TicketStatus.RESOLVED}
         can_reopen = action == "reopen" and ticket.status in CLOSED_STATUSES
         if not (can_close or can_reopen):
             raise InvalidTicketActionError("Esta ação não está disponível para o chamado.")
@@ -310,10 +310,10 @@ class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, Any]):
             raise TicketNotFoundError()
 
         if data.update_status:
-            if data.status not in Ticket.Status.values:
+            if data.status not in TicketStatus.values:
                 raise InvalidTicketActionError("Status inválido.")
         if data.update_priority:
-            if data.priority not in Ticket.Priority.values:
+            if data.priority not in TicketPriority.values:
                 raise InvalidTicketActionError("Prioridade inválida.")
 
         assignee = None

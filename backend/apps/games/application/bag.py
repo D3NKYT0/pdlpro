@@ -1,15 +1,29 @@
-from apps.games.infrastructure.models import Bag, BagItem
+from apps.games.domain.repositories import IBagRepository
 
 
-def add_to_bag(user, *, item_id: int, item_name: str, enchant: int = 0, quantity: int = 1) -> BagItem:
-    bag, _ = Bag.objects.get_or_create(user=user)
-    item, created = BagItem.objects.get_or_create(
-        bag=bag,
+def _resolve_bag(bag: IBagRepository | None) -> IBagRepository:
+    if bag is not None:
+        return bag
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(IBagRepository)
+
+
+def add_to_bag(
+    user,
+    *,
+    item_id: int,
+    item_name: str,
+    enchant: int = 0,
+    quantity: int = 1,
+    bags: IBagRepository | None = None,
+):
+    """Adiciona ou incrementa um item na bag; resolve ``IBagRepository`` se omitido."""
+
+    return _resolve_bag(bags).add_item(
+        user,
         item_id=item_id,
+        item_name=item_name,
         enchant=enchant,
-        defaults={"item_name": item_name, "quantity": quantity},
+        quantity=quantity,
     )
-    if not created:
-        item.quantity += quantity
-        item.save(update_fields=["quantity", "updated_at"])
-    return item

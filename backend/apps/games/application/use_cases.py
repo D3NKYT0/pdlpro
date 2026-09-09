@@ -6,18 +6,14 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from django.db.models import F
 from django.utils import timezone
 
 from apps.games.application.configuration import require_active_game
 from apps.games.domain.exceptions import AlreadyClaimedError, InsufficientTokensError
-from apps.games.infrastructure.models import (
-    Bag,
-    BagItem,
-    DailyBonusClaim,
-    GameConfig,
-    Prize,
-    SpinHistory,
+from apps.games.domain.repositories import (
+    IBagRepository,
+    IDailyBonusRepository,
+    IGameCatalogRepository,
 )
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -31,12 +27,13 @@ class GetRouletteStateUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, catalog: IGameCatalogRepository) -> None:
+        self._catalog = catalog
 
-        user = get_user_model().objects.get(id=data)
-        prizes = list(Prize.objects.filter(active=True).order_by("name"))
-        config = GameConfig.objects.filter(code="roulette").first()
+    def execute(self, data: UUID) -> dict:
+        user = self._catalog.require_user(data)
+        prizes = self._catalog.list_active_prizes(order_by_name=True)
+        config = self._catalog.get_config_by_code("roulette")
         return {
             "fichas": user.fichas,
             "fail_chance": (config.settings or {}).get("fail_chance", 20) if config else 20,
@@ -74,20 +71,25 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        catalog: IGameCatalogRepository,
+        bags: IBagRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._catalog = catalog
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: SpinRouletteInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        config = require_active_game("roulette")
+        config = require_active_game("roulette", catalog=self._catalog)
         cost = int((config.settings or {}).get("cost", 1))
         fail_chance = int((config.settings or {}).get("fail_chance", 20))
-        prizes = list(Prize.objects.filter(active=True))
+        prizes = self._catalog.list_active_prizes()
         if not prizes:
             raise EntityNotFoundError("Nenhum prêmio cadastrado na roleta.")
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
+            user = self._catalog.require_user_locked(data.user_id)
             if user.fichas < cost:
                 raise InsufficientTokensError()
             user.fichas -= cost
@@ -105,23 +107,25 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
                 fail_weight = total_weight * (fail_chance / (100 - fail_chance))
                 chosen = random.choices([*prizes, None], weights=[*prize_weights, fail_weight], k=1)[0]
             if chosen is None:
-                SpinHistory.objects.create(user=user, prize=None, failed=True, seed=seed)
+                self._catalog.create_spin_history(user=user, prize=None, failed=True, seed=seed)
                 return {"failed": True, "fichas": user.fichas, "prize": None}
-            bag, _ = Bag.objects.get_or_create(user=user)
-            item, created = BagItem.objects.get_or_create(
-                bag=bag,
+            self._bags.add_item(
+                user,
                 item_id=chosen.item_id or 0,
+                item_name=chosen.name,
                 enchant=chosen.enchant,
-                defaults={"item_name": chosen.name, "quantity": 1},
+                quantity=1,
             )
-            if not created:
-                item.quantity += 1
-                item.save(update_fields=["quantity", "updated_at"])
-            SpinHistory.objects.create(user=user, prize=chosen, failed=False, seed=seed)
+            self._catalog.create_spin_history(user=user, prize=chosen, failed=False, seed=seed)
             return {
                 "failed": False,
                 "fichas": user.fichas,
-                "prize": {"item_id": chosen.item_id, "name": chosen.name, "rarity": chosen.rarity, "enchant": chosen.enchant},
+                "prize": {
+                    "item_id": chosen.item_id,
+                    "name": chosen.name,
+                    "rarity": chosen.rarity,
+                    "enchant": chosen.enchant,
+                },
             }
 
 
@@ -145,13 +149,17 @@ class BuyTokensUseCase(UseCase[BuyTokensInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        catalog: IGameCatalogRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._catalog = catalog
         self._unit_of_work = unit_of_work
 
     def execute(self, data: BuyTokensInput) -> dict:
-        from django.contrib.auth import get_user_model
-
         if data.amount < 1 or data.amount > 1000:
             from common.architecture.exceptions import ValidationDomainError
 
@@ -159,9 +167,13 @@ class BuyTokensUseCase(UseCase[BuyTokensInput, dict]):
         price = Decimal(str(data.amount))
         with self._unit_of_work:
             wallet = self._wallets.get_or_create(data.user_id)
-            self._wallets.debit(wallet.id, price, destination="games", description=f"Compra de {data.amount} fichas")
-            get_user_model().objects.filter(id=data.user_id).update(fichas=F("fichas") + data.amount)
-            user = get_user_model().objects.get(id=data.user_id)
+            self._wallets.debit(
+                wallet.id,
+                price,
+                destination="games",
+                description=f"Compra de {data.amount} fichas",
+            )
+            user = self._catalog.add_fichas(data.user_id, data.amount)
         return {"fichas": user.fichas}
 
 
@@ -185,25 +197,35 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        catalog: IGameCatalogRepository,
+        daily_bonus: IDailyBonusRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._catalog = catalog
+        self._daily_bonus = daily_bonus
         self._unit_of_work = unit_of_work
 
     def execute(self, data: ClaimDailyBonusInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        config = require_active_game("daily_bonus")
+        config = require_active_game("daily_bonus", catalog=self._catalog)
         amount = Decimal(str((config.settings or {}).get("amount", "10.00")))
         today = timezone.localdate()
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
-            if DailyBonusClaim.objects.filter(user=user, claimed_on=today).exists():
+            user = self._daily_bonus.require_user_locked(data.user_id)
+            if self._daily_bonus.has_claim(user, today):
                 raise AlreadyClaimedError()
             wallet = self._wallets.get_or_create(data.user_id)
             self._wallets.credit(wallet.id, amount, origin="daily_bonus", description="Bônus diário")
-            DailyBonusClaim.objects.create(user=user, claimed_on=today, amount=amount)
-            from apps.games.infrastructure.models import GameRewardLog
-            GameRewardLog.objects.create(user=user, kind="daily_bonus", label="Bônus diário", rewards=[{"kind": "balance", "quantity": str(amount)}])
+            self._daily_bonus.create_claim(user, claimed_on=today, amount=amount)
+            self._daily_bonus.create_reward_log(
+                user=user,
+                kind="daily_bonus",
+                label="Bônus diário",
+                rewards=[{"kind": "balance", "quantity": str(amount)}],
+            )
             from apps.accounts.application.progress import add_xp
             from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
@@ -218,10 +240,13 @@ class GetDailyBonusStateUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
+    def __init__(self, daily_bonus: IDailyBonusRepository) -> None:
+        self._daily_bonus = daily_bonus
+
     def execute(self, data: UUID) -> dict:
-        config = GameConfig.objects.filter(code="daily_bonus").first()
+        config = self._daily_bonus.get_config()
         today = timezone.localdate()
-        claimed = DailyBonusClaim.objects.filter(user__id=data, claimed_on=today).exists()
+        claimed = self._daily_bonus.has_claim_for_user_id(data, today)
         amount = str((config.settings or {}).get("amount", "10.00")) if config else "10.00"
         return {"claimed": claimed, "amount": amount, "active": bool(config and config.active)}
 
@@ -233,11 +258,19 @@ class GetBagUseCase(UseCase[UUID, list[dict]]):
     ``list[dict]``.
     """
 
+    def __init__(self, bags: IBagRepository) -> None:
+        self._bags = bags
+
     def execute(self, data: UUID) -> list[dict]:
-        bag = Bag.objects.filter(user__id=data).first()
+        bag = self._bags.get_by_user_id(data)
         if bag is None:
             return []
         return [
-            {"item_id": item.item_id, "item_name": item.item_name, "quantity": item.quantity, "enchant": item.enchant}
-            for item in bag.items.all()
+            {
+                "item_id": item.item_id,
+                "item_name": item.item_name,
+                "quantity": item.quantity,
+                "enchant": item.enchant,
+            }
+            for item in self._bags.list_items(bag)
         ]

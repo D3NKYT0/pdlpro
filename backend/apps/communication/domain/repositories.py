@@ -33,3 +33,22 @@ class INotificationRepository(ABC):
     @abstractmethod
     def create(self, user_id: UUID, *, title: str, body: str, kind: str = "info", link: str = "") -> NotificationEntity:
         raise NotImplementedError
+
+
+class IPushSubscriptionRepository(ABC):
+    """Porta de assinaturas Web Push por usuário.
+
+    Injete nos casos de uso de push e registre o adaptador no CommunicationProvider.
+    """
+
+    @abstractmethod
+    def upsert(self, user_id: UUID, *, endpoint: str, auth: str, p256dh: str) -> dict:
+        """Cria ou atualiza a assinatura e devolve ``{"id": str, "subscribed": True}``."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, user_id: UUID, endpoint: str) -> int:
+        """Remove a assinatura do endpoint; devolve quantas linhas foram apagadas."""
+
+        raise NotImplementedError

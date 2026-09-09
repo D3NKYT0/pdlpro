@@ -145,6 +145,67 @@ class IUserRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def get_active_orm(self, user_id: UUID | str) -> Any | None:
+        """Usuário ORM ativo por id, ou None."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_orm_by_email(self, email: str) -> Any | None:
+        """Usuário ORM por e-mail (iexact), ou None."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def create_oauth_user(
+        self,
+        *,
+        username: str,
+        email: str,
+        display_name: str = "",
+    ) -> Any:
+        """Cria usuário OAuth sem senha, com e-mail já verificado; devolve a linha ORM."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def mark_orm_email_verified(self, user: Any) -> Any:
+        """Marca e-mail verificado na linha ORM e devolve a mesma instância."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def require_orm_user(self, user_id: UUID) -> Any:
+        """Usuário ORM por id; propaga DoesNotExist se ausente."""
+
+        raise NotImplementedError
+
+
+class ISocialAccountRepository(ABC):
+    """Porta de vínculos sociais (allauth SocialAccount)."""
+
+    @abstractmethod
+    def find_by_provider_uid(self, provider: str, uid: str) -> Any | None:
+        """Vínculo com ``user`` select_related, ou None."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def update_or_create(
+        self,
+        *,
+        provider: str,
+        uid: str,
+        user: Any,
+        extra_data: dict,
+    ) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_providers_for_user(self, user_id: UUID) -> list[str]:
+        raise NotImplementedError
+
 
 class ISessionStore(ABC):
     """Porta de rotação, listagem e revogação de refresh tokens JWT."""
@@ -219,4 +280,68 @@ class IWebAuthnCredentialRepository(ABC):
     def find_active_user_by_login(self, login: str) -> Any | None:
         """Usuário ORM ativo para montar allowCredentials no login por passkey."""
 
+        raise NotImplementedError
+
+
+class IProgressRepository(ABC):
+    """Porta de progresso gamer: perfil, conquistas e recompensas.
+
+    Injete nos casos de uso e helpers de ``application/progress*``. O adaptador Django
+    concentra ``GamerProfile``, ``Achievement``, ``UserAchievement``, ``RewardDefinition`` e
+    ``RewardClaim``. Predicados de conquista ainda recebem o usuário ORM via
+    ``require_user`` / objetos já carregados.
+    """
+
+    @abstractmethod
+    def require_user(self, user_id: UUID) -> Any:
+        """Usuário ORM por id; propaga DoesNotExist se ausente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_or_create_profile(self, user) -> Any:
+        """Perfil gamer do usuário, criando se necessário."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_profile(self, profile, *, update_fields: list[str]) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_achievements(self, *, order_by_name: bool = False) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_unlocked_codes(self, user) -> set[str]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def has_achievement(self, user, code: str) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def unlock_achievement(self, user, achievement) -> bool:
+        """Associa a conquista ao usuário; devolve True se acabou de desbloquear."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_rewards(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_reward(self, reward_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_claimed_reward_ids(self, user) -> set[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def has_claimed(self, user, reward) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def create_claim(self, user, reward) -> None:
         raise NotImplementedError

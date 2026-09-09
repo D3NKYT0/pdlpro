@@ -10,8 +10,10 @@ from apps.wallet.application.use_cases import (
     TransferToPlayerUseCase,
 )
 from apps.wallet.domain.entities import InsufficientBalanceError
+from apps.wallet.domain.repositories import IWalletRepository
+from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.infrastructure.models import Wallet, WalletTransaction
-from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+from common.di import DependencyInjection
 from common.infrastructure.unit_of_work import DjangoUnitOfWork
 
 pytestmark = pytest.mark.django_db
@@ -64,11 +66,13 @@ def test_recipient_must_exist_and_differ_from_sender(api, recipient):
 
 
 def test_transfer_rolls_back_debit_when_credit_fails(accounts, monkeypatch):
-    repo = DjangoWalletRepository()
+    scope = DependencyInjection.root().create_scope()
+    repo = scope.resolve(IWalletRepository)
+    users = scope.resolve(IUserRepository)
     def unavailable(*args, **kwargs):
         raise RuntimeError("credit unavailable")
     monkeypatch.setattr(repo, "credit", unavailable)
-    case = TransferToPlayerUseCase(repo, DjangoUnitOfWork())
+    case = TransferToPlayerUseCase(repo, users, DjangoUnitOfWork())
     with pytest.raises(RuntimeError, match="credit unavailable"):
         case.execute(TransferToPlayerInput(accounts[0].id, "recipient", Decimal(10)))
     assert Wallet.objects.get(user=accounts[0]).balance == 50
@@ -78,7 +82,7 @@ def test_transfer_rolls_back_debit_when_credit_fails(accounts, monkeypatch):
 
 def test_repository_rechecks_balance_at_debit_time(accounts):
     wallet = Wallet.objects.get(user=accounts[0])
-    repo = DjangoWalletRepository()
+    repo = DependencyInjection.root().create_scope().resolve(IWalletRepository)
     repo.debit(wallet.id, Decimal(50), destination="test", description="Primeiro débito")
     with pytest.raises(InsufficientBalanceError):
         repo.debit(wallet.id, Decimal("0.01"), destination="test", description="Saldo esgotado")
@@ -136,6 +140,7 @@ def test_game_exchange_state_returns_coin_and_empty_history(api, accounts, setti
         "name": "Adena",
         "item_id": 57,
         "multiplier": "1.00",
+        "usd_multiplier": "5.00",
         "withdraw_fee_percent": "5.00",
     }
     assert response.data["history"] == []

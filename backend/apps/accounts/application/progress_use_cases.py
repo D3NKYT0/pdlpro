@@ -5,15 +5,12 @@ from uuid import UUID
 
 from apps.accounts.application.progress import add_xp, unlock_achievements, xp_for_level
 from apps.accounts.domain.bag import IRewardBagPort
-from apps.accounts.infrastructure.models import (
-    Achievement,
-    GamerProfile,
-    RewardClaim,
-    RewardDefinition,
-    UserAchievement,
-)
+from apps.accounts.domain.repositories import IProgressRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+
+_REWARD_KIND_LEVEL = "level"
+_REWARD_KIND_ACHIEVEMENT = "achievement"
 
 
 class GetGamerProfileUseCase(UseCase[UUID, dict]):
@@ -23,15 +20,14 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, progress: IProgressRepository) -> None:
+        self._progress = progress
 
-        user = get_user_model().objects.get(id=data)
-        profile, _ = GamerProfile.objects.get_or_create(user=user)
-        unlocked = unlock_achievements(user)
-        unlocked_codes = set(
-            UserAchievement.objects.filter(user=user).values_list("achievement__code", flat=True)
-        )
+    def execute(self, data: UUID) -> dict:
+        user = self._progress.require_user(data)
+        profile = self._progress.get_or_create_profile(user)
+        unlocked = unlock_achievements(user, self._progress)
+        unlocked_codes = self._progress.list_unlocked_codes(user)
         achievements = [
             {
                 "code": row.code,
@@ -39,16 +35,16 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
                 "description": row.description,
                 "unlocked": row.code in unlocked_codes,
             }
-            for row in Achievement.objects.order_by("name")
+            for row in self._progress.list_achievements(order_by_name=True)
         ]
-        claimed_ids = set(RewardClaim.objects.filter(user=user).values_list("reward_id", flat=True))
+        claimed_ids = self._progress.list_claimed_reward_ids(user)
         rewards = []
-        for reward in RewardDefinition.objects.all():
+        for reward in self._progress.list_rewards():
             available = False
-            if reward.kind == RewardDefinition.Kind.LEVEL:
+            if reward.kind == _REWARD_KIND_LEVEL:
                 available = profile.level >= int(reward.reference)
-            elif reward.kind == RewardDefinition.Kind.ACHIEVEMENT:
-                available = UserAchievement.objects.filter(user=user, achievement__code=reward.reference).exists()
+            elif reward.kind == _REWARD_KIND_ACHIEVEMENT:
+                available = self._progress.has_achievement(user, reward.reference)
             rewards.append(
                 {
                     "id": str(reward.id),
@@ -95,24 +91,23 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
     ``dict``. Entrega itens via ``IRewardBagPort`` (sem import direto de games).
     """
 
-    def __init__(self, reward_bag: IRewardBagPort) -> None:
+    def __init__(self, reward_bag: IRewardBagPort, progress: IProgressRepository) -> None:
         self._reward_bag = reward_bag
+        self._progress = progress
 
     def execute(self, data: ClaimRewardInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        user = get_user_model().objects.get(id=data.user_id)
-        profile, _ = GamerProfile.objects.get_or_create(user=user)
-        reward = RewardDefinition.objects.filter(id=data.reward_id).first()
+        user = self._progress.require_user(data.user_id)
+        profile = self._progress.get_or_create_profile(user)
+        reward = self._progress.get_reward(data.reward_id)
         if reward is None:
             raise EntityNotFoundError("Recompensa não encontrada.")
-        if RewardClaim.objects.filter(user=user, reward=reward).exists():
+        if self._progress.has_claimed(user, reward):
             raise ValidationDomainError("Recompensa já resgatada.")
-        if reward.kind == RewardDefinition.Kind.LEVEL and profile.level < int(reward.reference):
+        if reward.kind == _REWARD_KIND_LEVEL and profile.level < int(reward.reference):
             raise ValidationDomainError("Nível insuficiente.")
         if (
-            reward.kind == RewardDefinition.Kind.ACHIEVEMENT
-            and not UserAchievement.objects.filter(user=user, achievement__code=reward.reference).exists()
+            reward.kind == _REWARD_KIND_ACHIEVEMENT
+            and not self._progress.has_achievement(user, reward.reference)
         ):
             raise ValidationDomainError("Conquista não desbloqueada.")
         self._reward_bag.add_item(
@@ -122,6 +117,6 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
             enchant=reward.enchant,
             quantity=reward.quantity,
         )
-        RewardClaim.objects.create(user=user, reward=reward)
-        add_xp(user, 5)
+        self._progress.create_claim(user, reward)
+        add_xp(user, 5, self._progress)
         return {"claimed": True, "item_id": reward.item_id, "item_name": reward.item_name}

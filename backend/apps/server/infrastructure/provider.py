@@ -22,6 +22,24 @@ from apps.server.application.character_use_cases import (
     PurchaseLinkSlotUseCase,
     UnstuckCharacterUseCase,
 )
+from apps.server.application.custom_items import (
+    GetCustomItemUseCase,
+    ListCustomItemsUseCase,
+    UpsertCustomItemUseCase,
+)
+from apps.server.application.item_observation import (
+    CaptureObservationSnapshotUseCase,
+    CompareObservationSnapshotsUseCase,
+    DeleteObservationCategoryUseCase,
+    DeleteObservationSnapshotUseCase,
+    GetObservationCategoryUseCase,
+    GetObservationSnapshotUseCase,
+    ListLiveObservationUseCase,
+    ListObservationCategoriesUseCase,
+    ListObservationSnapshotsUseCase,
+    SetObservationFavoriteUseCase,
+    UpsertObservationCategoryUseCase,
+)
 from apps.server.application.use_cases import (
     GetRankingUseCase,
     GetServerInfoUseCase,
@@ -31,16 +49,24 @@ from apps.server.application.use_cases import (
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import (
+    ICharacterServiceOperationRepository,
+    ICustomItemRepository,
     IIndexConfigRepository,
+    IItemObservationRepository,
     ILinkSlotRepository,
+    IManagedLineageAccountRepository,
     IServicePriceRepository,
 )
 from apps.server.infrastructure.access import DjangoAccountAccessService
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.repositories import (
+    DjangoCharacterServiceOperationRepository,
+    DjangoCustomItemRepository,
     DjangoIndexConfigRepository,
+    DjangoItemObservationRepository,
     DjangoLinkSlotRepository,
+    DjangoManagedLineageAccountRepository,
     DjangoServicePriceRepository,
 )
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
@@ -68,6 +94,18 @@ class ServerProvider(AppProvider):
         container.register(IServicePriceRepository, DjangoServicePriceRepository, lifetime=Lifetime.SCOPED)
         container.register(IIndexConfigRepository, DjangoIndexConfigRepository, lifetime=Lifetime.SCOPED)
         container.register(ILinkSlotRepository, DjangoLinkSlotRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            IManagedLineageAccountRepository,
+            DjangoManagedLineageAccountRepository,
+            lifetime=Lifetime.SCOPED,
+        )
+        container.register(ICustomItemRepository, DjangoCustomItemRepository, lifetime=Lifetime.SCOPED)
+        container.register(IItemObservationRepository, DjangoItemObservationRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            ICharacterServiceOperationRepository,
+            DjangoCharacterServiceOperationRepository,
+            lifetime=Lifetime.SCOPED,
+        )
         container.register(IAccountAccessService, DjangoAccountAccessService, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetServerInfoUseCase,
@@ -92,5 +130,19 @@ class ServerProvider(AppProvider):
             PurchaseLinkSlotUseCase,
             RequestLinkByEmailUseCase,
             ConfirmLinkByEmailUseCase,
+            ListCustomItemsUseCase,
+            GetCustomItemUseCase,
+            UpsertCustomItemUseCase,
+            ListLiveObservationUseCase,
+            SetObservationFavoriteUseCase,
+            ListObservationSnapshotsUseCase,
+            CaptureObservationSnapshotUseCase,
+            GetObservationSnapshotUseCase,
+            DeleteObservationSnapshotUseCase,
+            CompareObservationSnapshotsUseCase,
+            ListObservationCategoriesUseCase,
+            GetObservationCategoryUseCase,
+            UpsertObservationCategoryUseCase,
+            DeleteObservationCategoryUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

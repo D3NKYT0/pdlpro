@@ -3,13 +3,26 @@ from __future__ import annotations
 from decimal import Decimal
 from uuid import UUID
 
+from django.contrib.auth import get_user_model
 from django.db.models import F
 
 from apps.wallet.application.exchange import exchange_dump
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
-from apps.wallet.domain.repositories import ICoinAdminRepository, IWalletRepository
+from apps.wallet.domain.repositories import (
+    ICoinAdminRepository,
+    IGameExchangeRepository,
+    IWalletRepository,
+)
 from apps.wallet.infrastructure.exchange_models import GameExchange
-from apps.wallet.infrastructure.models import CoinConfig, CoinPurchasePromo, Wallet, WalletTransaction
+from apps.wallet.infrastructure.models import (
+    CoinConfig,
+    CoinPackage,
+    CoinPurchasePromo,
+    Wallet,
+    WalletTransaction,
+)
+
+User = get_user_model()
 
 
 class DjangoWalletRepository(IWalletRepository):
@@ -35,9 +48,7 @@ class DjangoWalletRepository(IWalletRepository):
         return self._to_entity(wallet) if wallet else None
 
     def get_or_create(self, user_id: UUID) -> WalletEntity:
-        from django.contrib.auth import get_user_model
-
-        user = get_user_model().objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
         wallet, _ = Wallet.objects.get_or_create(user=user)
         return self._to_entity(wallet)
 
@@ -127,7 +138,44 @@ class DjangoWalletRepository(IWalletRepository):
             "name": config.name,
             "item_id": config.coin_id,
             "multiplier": str(config.multiplier),
+            "usd_multiplier": str(config.usd_multiplier),
             "withdraw_fee_percent": str(config.withdraw_fee_percent),
+        }
+
+    def _serialize_package(self, row: CoinPackage) -> dict:
+        return {
+            "id": str(row.id),
+            "code": row.code,
+            "name": row.name,
+            "coins": row.coins,
+            "price_brl": row.price_brl,
+            "price_usd": row.price_usd,
+            "badge": row.badge,
+        }
+
+    def find_active_coin_package(self, package_id: str) -> dict | None:
+        try:
+            package_uuid = UUID(str(package_id))
+        except ValueError:
+            package_uuid = None
+        row = None
+        if package_uuid is not None:
+            row = CoinPackage.objects.filter(id=package_uuid, active=True).first()
+        if row is None:
+            row = CoinPackage.objects.filter(code=package_id, active=True).first()
+        return self._serialize_package(row) if row else None
+
+    def list_active_coin_packages(self) -> list[dict]:
+        return [self._serialize_package(row) for row in CoinPackage.objects.filter(active=True)]
+
+    def get_current_purchase_promo(self) -> dict | None:
+        promo = CoinPurchasePromo.current()
+        if promo is None:
+            return None
+        return {
+            "percent": str(promo.percent),
+            "title": promo.title,
+            "description": promo.description,
         }
 
     def list_game_exchanges(self, user_id: UUID, *, limit: int = 100) -> list[dict]:
@@ -173,3 +221,34 @@ class DjangoCoinAdminRepository(ICoinAdminRepository):
         active: bool = False,
     ) -> CoinPurchasePromo:
         return CoinPurchasePromo(title=title, percent=percent, active=active)
+
+
+class DjangoGameExchangeRepository(IGameExchangeRepository):
+    """Adaptador Django de ``IGameExchangeRepository`` para recibos de câmbio com o jogo."""
+
+    def lock_user(self, user_id: UUID):
+        return User.objects.select_for_update().get(id=user_id)
+
+    def find_by_request_key(self, user_id: UUID, request_key: UUID) -> GameExchange | None:
+        return GameExchange.objects.filter(user__id=user_id, request_key=request_key).first()
+
+    def has_pending(self, user_id: UUID) -> bool:
+        return GameExchange.objects.filter(user__id=user_id, status="pending").exists()
+
+    def create(self, **fields) -> GameExchange:
+        return GameExchange.objects.create(**fields)
+
+    def get_locked(self, exchange_id: UUID) -> GameExchange:
+        return GameExchange.objects.select_for_update().get(pk=exchange_id)
+
+    def save(self, row: GameExchange) -> GameExchange:
+        row.save()
+        return row
+
+    def mark_connection_uncertain(self, exchange_id: UUID) -> GameExchange | None:
+        # A conexão pode cair após o jogo aplicar o envio. Preserve pending
+        # e retome pelo mesmo recibo, sem estornar uma operação incerta.
+        GameExchange.objects.filter(pk=exchange_id, status="pending").update(
+            error="Conexão não confirmada. Retome esta mesma transferência; não crie outra."
+        )
+        return GameExchange.objects.filter(pk=exchange_id).first()

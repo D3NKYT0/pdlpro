@@ -13,13 +13,23 @@ from apps.programs.application.use_cases import (
     UpdateRoadmapEntryUseCase,
     UpsertSupporterUseCase,
 )
+from apps.programs.domain.repositories import (
+    IRoadmapRepository,
+    ISupporterRepository,
+    ISystemResourceRepository,
+)
+from apps.programs.infrastructure.repositories import (
+    DjangoRoadmapRepository,
+    DjangoSupporterRepository,
+    DjangoSystemResourceRepository,
+)
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
 
 
 class ProgramsProvider(AppProvider):
-    """Registra os casos de uso do módulo programs.
+    """Registra portas, adaptadores e casos de uso do módulo programs.
 
     O AppConfig inclui este provider no catálogo de DependencyInjection. Acrescente novos
     registros em ``register`` e escolha o lifetime conforme o estado mantido pelo serviço; views
@@ -27,6 +37,11 @@ class ProgramsProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(ISupporterRepository, DjangoSupporterRepository, lifetime=Lifetime.SCOPED)
+        container.register(IRoadmapRepository, DjangoRoadmapRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            ISystemResourceRepository, DjangoSystemResourceRepository, lifetime=Lifetime.SCOPED
+        )
         for use_case in (
             GetSupporterDashboardUseCase,
             UpsertSupporterUseCase,

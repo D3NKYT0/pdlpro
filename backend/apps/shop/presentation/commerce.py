@@ -4,12 +4,13 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.programs.models import Supporter
 from apps.shop.application.commerce_use_cases import (
     CreateStaffPackageInput,
     CreateStaffPackageUseCase,
     CreateStaffPromoInput,
     CreateStaffPromoUseCase,
+    GetStaffPackageUseCase,
+    GetStaffPromoUseCase,
     ListActivePackagesUseCase,
     ListPurchasesUseCase,
     ListStaffPackagesUseCase,
@@ -25,7 +26,8 @@ from apps.shop.application.commerce_use_cases import (
     UpdateStaffPromoUseCase,
     UserScopedInput,
 )
-from apps.shop.infrastructure.models import PromotionCode, ShopItem, ShopPackage
+from apps.shop.infrastructure.models import PromotionCode, ShopPackage
+from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -34,14 +36,13 @@ class PackageItemSerializer(serializers.Serializer):
     """Representa e valida os itens que compõem um pacote da loja.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. A existência do produto é
+    resolvida no caso de uso.
 
     Campos declarados: ``item``, ``quantity``.
     """
 
-    item = serializers.SlugRelatedField(
-        slug_field="id", queryset=ShopItem.objects.all()
-    )
+    item = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=1, max_value=100000)
 
 
@@ -84,16 +85,14 @@ class PromoSerializer(serializers.ModelSerializer):
     """Representa e valida um código promocional e suas condições de uso.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. Unicidade do código e apoiador
+    aprovado são resolvidos no caso de uso.
 
     Campos declarados: ``supporter``.
     """
 
-    supporter = serializers.SlugRelatedField(
-        slug_field="id",
-        queryset=Supporter.objects.filter(status="approved"),
-        allow_null=True,
-        required=False,
+    supporter = serializers.UUIDField(
+        allow_null=True, required=False, source="supporter_id"
     )
 
     class Meta:
@@ -113,13 +112,7 @@ class PromoSerializer(serializers.ModelSerializer):
         extra_kwargs = {"percent": {"min_value": 0, "max_value": 100}}
 
     def validate_code(self, code):
-        code = code.strip().upper()
-        rows = PromotionCode.objects.filter(code=code)
-        if self.instance:
-            rows = rows.exclude(pk=self.instance.pk)
-        if rows.exists():
-            raise serializers.ValidationError("Este código já existe.")
-        return code
+        return code.strip().upper()
 
     def validate(self, data):
         start = data.get("starts_at", getattr(self.instance, "starts_at", None))
@@ -314,9 +307,10 @@ class StaffCommerceView(InjectedAPIView):
     )
     def patch(self, request, section, entry_id):
         if section == "packages":
-            pack = ShopPackage.objects.filter(id=entry_id).first()
-            if pack is None:
-                raise NotFound()
+            try:
+                pack = self.resolve(GetStaffPackageUseCase).execute(entry_id)
+            except EntityNotFoundError as exc:
+                raise NotFound() from exc
             serializer = PackageSerializer(pack, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             data = serializer.validated_data
@@ -337,9 +331,10 @@ class StaffCommerceView(InjectedAPIView):
             )
             return Response(PackageSerializer(pack).data)
         if section == "promos":
-            promo = PromotionCode.objects.filter(id=entry_id).first()
-            if promo is None:
-                raise NotFound()
+            try:
+                promo = self.resolve(GetStaffPromoUseCase).execute(entry_id)
+            except EntityNotFoundError as exc:
+                raise NotFound() from exc
             serializer = PromoSerializer(promo, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             promo = self.resolve(UpdateStaffPromoUseCase).execute(

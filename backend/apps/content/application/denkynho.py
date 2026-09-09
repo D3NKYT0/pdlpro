@@ -6,8 +6,6 @@ from dataclasses import dataclass
 from datetime import timedelta
 from uuid import UUID
 
-from django.contrib.auth import get_user_model
-from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.application.progress import xp_for_level
@@ -18,34 +16,51 @@ from apps.content.application.emotions import (
     emotion_from_needs,
     resolve_emotion,
 )
+from apps.content.domain.denkynho import DenkynhoCareActionKind as Action
+from apps.content.domain.repositories import IDenkynhoRepository
 from apps.content.domain.wardrobe import UNLOCKS, wardrobe_state
-from apps.content.infrastructure.models import DenkynhoCareAction, DenkynhoProfile
-from common.architecture.base import UseCase
+from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ConflictError, ValidationDomainError
 
 _DECAY_INTERVAL = timedelta(minutes=30)
 _DAILY_VISIT_XP = 8
 _DECAY = {"satiety": 4, "energy": 3, "happiness": 2, "hygiene": 2}
 _EFFECTS = {
-    DenkynhoCareAction.Action.FEED: ({"satiety": 32, "happiness": 5}, 12),
-    DenkynhoCareAction.Action.SLEEP: ({"energy": 35}, 10),
-    DenkynhoCareAction.Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
-    DenkynhoCareAction.Action.CARE: ({"happiness": 18}, 12),
-    DenkynhoCareAction.Action.BATH: ({"hygiene": 30, "happiness": 6}, 12),
-    DenkynhoCareAction.Action.WALK: ({"energy": -5, "happiness": 8}, 8),
-    DenkynhoCareAction.Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
+    Action.FEED: ({"satiety": 32, "happiness": 5}, 12),
+    Action.SLEEP: ({"energy": 35}, 10),
+    Action.PLAY: ({"satiety": -8, "energy": -12, "happiness": 28}, 18),
+    Action.CARE: ({"happiness": 18}, 12),
+    Action.BATH: ({"hygiene": 30, "happiness": 6}, 12),
+    Action.WALK: ({"energy": -5, "happiness": 8}, 8),
+    Action.DANCE: ({"satiety": -5, "energy": -10, "happiness": 20}, 16),
 }
 _SATURATED_MESSAGES = {
-    DenkynhoCareAction.Action.FEED: "O Denkynho já está satisfeito.",
-    DenkynhoCareAction.Action.SLEEP: "O Denkynho já descansou bastante.",
-    DenkynhoCareAction.Action.PLAY: "O Denkynho já está muito feliz para brincar agora.",
-    DenkynhoCareAction.Action.CARE: "O Denkynho já está bem cuidado.",
-    DenkynhoCareAction.Action.BATH: "O Denkynho já está limpo.",
-    DenkynhoCareAction.Action.DANCE: "O Denkynho já está muito feliz para dançar agora.",
+    Action.FEED: "O Denkynho já está satisfeito.",
+    Action.SLEEP: "O Denkynho já descansou bastante.",
+    Action.PLAY: "O Denkynho já está muito feliz para brincar agora.",
+    Action.CARE: "O Denkynho já está bem cuidado.",
+    Action.BATH: "O Denkynho já está limpo.",
+    Action.DANCE: "O Denkynho já está muito feliz para dançar agora.",
 }
 
 
-def _emotion_state(profile: DenkynhoProfile, now) -> dict:
+def _resolve_denkynho(repo: IDenkynhoRepository | None) -> IDenkynhoRepository:
+    if repo is not None:
+        return repo
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(IDenkynhoRepository)
+
+
+def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
+    if unit_of_work is not None:
+        return unit_of_work
+    from common.di.bootstrap import DependencyInjection
+
+    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
+
+
+def _emotion_state(profile, now) -> dict:
     """Calcula o humor visível a partir da empatia ainda válida ou das necessidades."""
 
     needs = emotion_from_needs(profile.satiety, profile.energy, profile.happiness, profile.hygiene)
@@ -57,7 +72,7 @@ def _emotion_state(profile: DenkynhoProfile, now) -> dict:
     )
 
 
-def _apply_empathy(profile: DenkynhoProfile, affect: str | None, now) -> bool:
+def _apply_empathy(profile, affect: str | None, now) -> bool:
     """Grava, limpa ou deixa expirar a empatia sem armazenar o texto da mensagem."""
 
     if affect == "calm":
@@ -77,7 +92,7 @@ def _apply_empathy(profile: DenkynhoProfile, affect: str | None, now) -> bool:
     return False
 
 
-def _serialize(profile: DenkynhoProfile, now=None, visit_xp: int = 0) -> dict:
+def _serialize(profile, now=None, visit_xp: int = 0) -> dict:
     """Expõe somente o estado necessário para desenhar o mascote autenticado."""
 
     current = now or timezone.now()
@@ -100,7 +115,7 @@ def _serialize(profile: DenkynhoProfile, now=None, visit_xp: int = 0) -> dict:
     }
 
 
-def _apply_decay(profile: DenkynhoProfile, now) -> bool:
+def _apply_decay(profile, now) -> bool:
     """Aplica períodos completos de desgaste e preserva o tempo restante para a próxima vez."""
 
     elapsed = now - profile.last_decay_at
@@ -113,7 +128,7 @@ def _apply_decay(profile: DenkynhoProfile, now) -> bool:
     return True
 
 
-def _apply_daily_visit(profile: DenkynhoProfile, now) -> int:
+def _apply_daily_visit(profile, now) -> int:
     """Concede um bônus leve na primeira visita do dia, sem streak punitiva."""
 
     today = timezone.localdate(now)
@@ -124,7 +139,7 @@ def _apply_daily_visit(profile: DenkynhoProfile, now) -> int:
     return _DAILY_VISIT_XP
 
 
-def _add_experience(profile: DenkynhoProfile, amount: int) -> None:
+def _add_experience(profile, amount: int) -> None:
     """Soma XP do mascote usando a mesma curva progressiva exibida no painel."""
 
     profile.experience += amount
@@ -133,43 +148,36 @@ def _add_experience(profile: DenkynhoProfile, amount: int) -> None:
         profile.level += 1
 
 
-def _validate_action(profile: DenkynhoProfile, action: str) -> None:
+def _validate_action(profile, action: str) -> None:
     """Evita XP sem cuidado efetivo e bloqueia brincadeira quando faltam necessidades básicas."""
 
     if action not in _EFFECTS:
         raise ValidationDomainError("Este cuidado não existe.")
-    if action == DenkynhoCareAction.Action.DANCE and profile.level < 3:
+    if action == Action.DANCE and profile.level < 3:
         raise ValidationDomainError("Dançar juntos é liberado no nível 3.")
-    if action == DenkynhoCareAction.Action.WALK:
+    if action == Action.WALK:
         if profile.energy < 5:
             raise ValidationDomainError("O Denkynho precisa descansar antes de caminhar.")
         return
-    if action in {DenkynhoCareAction.Action.PLAY, DenkynhoCareAction.Action.DANCE}:
+    if action in {Action.PLAY, Action.DANCE}:
         effects, _ = _EFFECTS[action]
         if profile.energy < -effects["energy"]:
             raise ValidationDomainError("O Denkynho precisa descansar antes de brincar.")
         if profile.satiety < -effects["satiety"]:
             raise ValidationDomainError("O Denkynho precisa comer antes de brincar.")
     target = {
-        DenkynhoCareAction.Action.FEED: "satiety",
-        DenkynhoCareAction.Action.SLEEP: "energy",
-        DenkynhoCareAction.Action.PLAY: "happiness",
-        DenkynhoCareAction.Action.CARE: "happiness",
-        DenkynhoCareAction.Action.BATH: "hygiene",
-        DenkynhoCareAction.Action.DANCE: "happiness",
+        Action.FEED: "satiety",
+        Action.SLEEP: "energy",
+        Action.PLAY: "happiness",
+        Action.CARE: "happiness",
+        Action.BATH: "hygiene",
+        Action.DANCE: "happiness",
     }[action]
     if getattr(profile, target) >= 100:
         raise ValidationDomainError(_SATURATED_MESSAGES[action])
 
 
-def _locked_profile(user) -> DenkynhoProfile:
-    """Obtém o perfil individual sob bloqueio de linha para serializar cuidados concorrentes."""
-
-    DenkynhoProfile.objects.get_or_create(user=user)
-    return DenkynhoProfile.objects.select_for_update().get(user=user)
-
-
-def _persist_living_state(profile: DenkynhoProfile, now, affect: str | None = None) -> bool:
+def _persist_living_state(profile, now, affect: str | None = None) -> bool:
     """Aplica desgaste e empatia e grava somente quando algum desses estados mudou."""
 
     decayed = _apply_decay(profile, now)
@@ -185,13 +193,20 @@ def _persist_living_state(profile: DenkynhoProfile, now, affect: str | None = No
     return True
 
 
-def remember_user_affect(user_id: UUID, affect: str | None) -> dict:
+def remember_user_affect(
+    user_id: UUID,
+    affect: str | None,
+    repo: IDenkynhoRepository | None = None,
+    unit_of_work: UnitOfWork | None = None,
+) -> dict:
     """Atualiza a empatia do mascote da conta e devolve o humor visível atual."""
 
-    user = get_user_model().objects.get(id=user_id)
+    denkynho = _resolve_denkynho(repo)
+    work = _resolve_unit_of_work(unit_of_work)
+    user = denkynho.require_user(user_id)
     now = timezone.now()
-    with transaction.atomic():
-        profile = _locked_profile(user)
+    with work:
+        profile = denkynho.get_locked_profile(user)
         _persist_living_state(profile, now, affect)
         return _emotion_state(profile, now)
 
@@ -208,11 +223,15 @@ class CareDenkynhoInput:
 class GetDenkynhoProfileUseCase(UseCase[UUID, dict]):
     """Carrega e atualiza o desgaste natural do Denkynho do usuário solicitado."""
 
+    def __init__(self, denkynho: IDenkynhoRepository, unit_of_work: UnitOfWork) -> None:
+        self._denkynho = denkynho
+        self._unit_of_work = unit_of_work
+
     def execute(self, user_id: UUID) -> dict:
-        user = get_user_model().objects.get(id=user_id)
+        user = self._denkynho.require_user(user_id)
         now = timezone.now()
-        with transaction.atomic():
-            profile = _locked_profile(user)
+        with self._unit_of_work:
+            profile = self._denkynho.get_locked_profile(user)
             visit_xp = _apply_daily_visit(profile, now)
             decayed = _apply_decay(profile, now)
             empathy_changed = _apply_empathy(profile, None, now)
@@ -240,15 +259,19 @@ class UpdateDenkynhoPreferencesInput:
 class UpdateDenkynhoPreferencesUseCase(UseCase[UpdateDenkynhoPreferencesInput, dict]):
     """Grava preferências explícitas da conta; vazio esquece o apelido."""
 
+    def __init__(self, denkynho: IDenkynhoRepository, unit_of_work: UnitOfWork) -> None:
+        self._denkynho = denkynho
+        self._unit_of_work = unit_of_work
+
     def execute(self, data: UpdateDenkynhoPreferencesInput) -> dict:
         if data.detail not in {"brief", "balanced", "detailed"}:
             raise ValidationDomainError("Escolha respostas curtas, equilibradas ou detalhadas.")
         if not valid_preferred_name(data.preferred_name):
             raise ValidationDomainError("Use um nome de até 30 letras, sem termos ofensivos.")
-        user = get_user_model().objects.get(id=data.user_id)
+        user = self._denkynho.require_user(data.user_id)
         now = timezone.now()
-        with transaction.atomic():
-            profile = _locked_profile(user)
+        with self._unit_of_work:
+            profile = self._denkynho.get_locked_profile(user)
             _persist_living_state(profile, now)
             profile.preferred_name = data.preferred_name
             profile.detail = data.detail
@@ -259,14 +282,15 @@ class UpdateDenkynhoPreferencesUseCase(UseCase[UpdateDenkynhoPreferencesInput, d
 class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
     """Aplica um cuidado, limita atributos e grava sua chave para que retries não dupliquem XP."""
 
+    def __init__(self, denkynho: IDenkynhoRepository, unit_of_work: UnitOfWork) -> None:
+        self._denkynho = denkynho
+        self._unit_of_work = unit_of_work
+
     def execute(self, data: CareDenkynhoInput) -> dict:
-        user = get_user_model().objects.get(id=data.user_id)
-        with transaction.atomic():
-            profile = _locked_profile(user)
-            previous = DenkynhoCareAction.objects.filter(
-                profile=profile,
-                idempotency_key=data.idempotency_key,
-            ).first()
+        user = self._denkynho.require_user(data.user_id)
+        with self._unit_of_work:
+            profile = self._denkynho.get_locked_profile(user)
+            previous = self._denkynho.find_care_action(profile, data.idempotency_key)
             if previous is not None:
                 if previous.action != data.action:
                     raise ConflictError("Esta chave de solicitação já foi usada para outra ação.")
@@ -294,8 +318,8 @@ class CareDenkynhoUseCase(UseCase[CareDenkynhoInput, dict]):
                 *list(_DECAY), "experience", "level", "last_decay_at",
                 "empathy", "empathy_expires_at", "updated_at",
             ])
-            DenkynhoCareAction.objects.create(
-                profile=profile,
+            self._denkynho.create_care_action(
+                profile,
                 idempotency_key=data.idempotency_key,
                 action=data.action,
                 xp_gained=experience,

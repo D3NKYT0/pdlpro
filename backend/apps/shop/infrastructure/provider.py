@@ -1,6 +1,8 @@
 from apps.shop.application.commerce_use_cases import (
     CreateStaffPackageUseCase,
     CreateStaffPromoUseCase,
+    GetStaffPackageUseCase,
+    GetStaffPromoUseCase,
     ListActivePackagesUseCase,
     ListPurchasesUseCase,
     ListStaffPackagesUseCase,
@@ -18,8 +20,18 @@ from apps.shop.application.use_cases import (
     ListShopItemsUseCase,
     UpdateCartItemUseCase,
 )
-from apps.shop.domain.repositories import IShopItemAdminRepository
-from apps.shop.infrastructure.repositories import DjangoShopItemAdminRepository
+from apps.shop.domain.repositories import (
+    ICartRepository,
+    IShopItemAdminRepository,
+    IShopRepository,
+    ISupporterCommissionPort,
+)
+from apps.shop.infrastructure.repositories import (
+    DjangoCartRepository,
+    DjangoShopItemAdminRepository,
+    DjangoShopRepository,
+    DjangoSupporterCommissionAdapter,
+)
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
@@ -35,6 +47,11 @@ class ShopProvider(AppProvider):
 
     def register(self, container: Container) -> None:
         container.register(IShopItemAdminRepository, DjangoShopItemAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IShopRepository, DjangoShopRepository, lifetime=Lifetime.SCOPED)
+        container.register(ICartRepository, DjangoCartRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            ISupporterCommissionPort, DjangoSupporterCommissionAdapter, lifetime=Lifetime.SCOPED
+        )
         for use_case in (
             ListShopItemsUseCase,
             AddToCartUseCase,
@@ -47,7 +64,9 @@ class ShopProvider(AppProvider):
             SetCartPackageUseCase,
             SetCartOptionsUseCase,
             ListStaffPackagesUseCase,
+            GetStaffPackageUseCase,
             ListStaffPromosUseCase,
+            GetStaffPromoUseCase,
             CreateStaffPackageUseCase,
             UpdateStaffPackageUseCase,
             CreateStaffPromoUseCase,

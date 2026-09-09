@@ -2,56 +2,20 @@ import random
 from datetime import timedelta
 from decimal import Decimal
 
-from django.contrib.auth import get_user_model
-from django.db import transaction
-from django.db.models import Count, Q, Sum
-from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 from apps.games.application.rewards import grant_rewards
 from apps.games.domain.exceptions import AlreadyClaimedError
-from apps.wallet.domain.repositories import IWalletRepository
-from common.architecture.exceptions import ValidationDomainError
-from apps.games.infrastructure.models import (
-    BagItem,
-    BattlePassExchange,
-    BattlePassMilestone,
-    BattlePassQuest,
-    BattlePassQuestClaim,
-    BattlePassSeason,
-    DailyBonusClaim,
-    DailyBonusSeason,
-    DiceHistory,
-    EconomyFightLog,
-    FishingBait,
-    FishingCatch,
-    GameConfig,
-    GameRewardLog,
-    SlotHistory,
-    SpinHistory,
-    UserBattlePassProgress,
-    UserFishingBait,
+from apps.games.domain.repositories import (
+    IBagRepository,
+    IBattlePassRepository,
+    IDailyBonusRepository,
+    IFishingRepository,
+    IMinigameRepository,
 )
-
-EVENT_MODELS = {
-    "roulette": SpinHistory,
-    "dice": DiceHistory,
-    "slots": SlotHistory,
-    "fishing": FishingCatch,
-    "economy": EconomyFightLog,
-    "daily_bonus": DailyBonusClaim,
-}
-
-
-def active_season():
-    now = timezone.now()
-    return (
-        BattlePassSeason.objects.filter(
-            active=True, starts_at__lte=now, ends_at__gte=now
-        )
-        .order_by("-starts_at")
-        .first()
-    )
+from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.base import UnitOfWork
+from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 
 def period_start(quest):
@@ -63,22 +27,15 @@ def period_start(quest):
     return timezone.localtime(quest.season.starts_at).date()
 
 
-def quest_count(user, quest):
-    return (
-        EVENT_MODELS[quest.event]
-        .objects.filter(
-            user=user,
-            created_at__gte=quest.season.starts_at,
-            created_at__date__gte=period_start(quest),
-            created_at__lte=quest.season.ends_at,
-        )
-        .count()
-    )
-
-
-def battle_details(user):
-    season = active_season()
-    logs = GameRewardLog.objects.filter(user=user)
+def battle_details(
+    user,
+    *,
+    battle_pass: IBattlePassRepository,
+    bags: IBagRepository,
+    minigames: IMinigameRepository,
+):
+    season = battle_pass.active_season()
+    logs = battle_pass.list_reward_logs(user, exclude_daily=True, limit=100)
     history = [
         {
             "id": str(r.id),
@@ -87,7 +44,7 @@ def battle_details(user):
             "rewards": r.rewards,
             "created_at": r.created_at,
         }
-        for r in logs.exclude(kind="daily_bonus")[:100]
+        for r in logs
     ]
     if not season:
         return {
@@ -98,7 +55,7 @@ def battle_details(user):
             "auto_claim": False,
             "statistics": {},
         }
-    progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=season)
+    progress = battle_pass.get_or_create_progress(user, season)
     quests = [
         {
             "id": str(q.id),
@@ -106,11 +63,9 @@ def battle_details(user):
             "description": q.description,
             "period": q.period,
             "target": q.target,
-            "current": quest_count(user, q),
+            "current": minigames.count_quest_events(user, q),
             "xp": q.xp,
-            "claimed": BattlePassQuestClaim.objects.filter(
-                user=user, quest=q, period_start=period_start(q)
-            ).exists(),
+            "claimed": battle_pass.has_quest_claim(user, q, period_start(q)),
         }
         for q in season.quests.filter(active=True)
     ]
@@ -121,13 +76,12 @@ def battle_details(user):
             "required_item_id": e.required_item_id,
             "required_enchant": e.required_enchant,
             "required_quantity": e.required_quantity,
-            "owned": BagItem.objects.filter(
-                bag__user=user, item_id=e.required_item_id, enchant=e.required_enchant
-            ).aggregate(total=Sum("quantity"))["total"]
-            or 0,
+            "owned": bags.owned_quantity(
+                user, item_id=e.required_item_id, enchant=e.required_enchant
+            ),
             "rewards": e.rewards,
             "limit": e.limit_per_user,
-            "used": logs.filter(kind="exchange", source=e.id).count(),
+            "used": battle_pass.count_logs(user, kind="exchange", source=e.id),
         }
         for e in season.exchanges.filter(active=True)
     ]
@@ -137,7 +91,7 @@ def battle_details(user):
             "name": m.name,
             "required_xp": m.required_xp,
             "rewards": m.rewards,
-            "claimed": logs.filter(kind="milestone", source=m.id).exists(),
+            "claimed": battle_pass.has_log(user, kind="milestone", source=m.id),
         }
         for m in season.milestones.order_by("required_xp")
     ]
@@ -149,18 +103,13 @@ def battle_details(user):
         "auto_claim": progress.auto_claim,
         "statistics": {
             "xp": progress.xp,
-            "quests": BattlePassQuestClaim.objects.filter(
-                user=user, quest__season=season
-            ).count(),
-            "exchanges": logs.filter(season=season, kind="exchange").count(),
-            "rewards": user.battle_pass_claims.filter(
-                reward__level_row__season=season
-            ).count(),
+            "quests": battle_pass.count_quest_claims(user, season),
+            "exchanges": battle_pass.count_logs(user, kind="exchange", season=season),
+            "rewards": battle_pass.count_season_reward_claims(user, season),
         },
     }
 
 
-@transaction.atomic
 def battle_action(
     user_id,
     action,
@@ -168,35 +117,61 @@ def battle_action(
     enabled=False,
     *,
     wallets: IWalletRepository,
+    battle_pass: IBattlePassRepository,
+    bags: IBagRepository,
+    minigames: IMinigameRepository,
+    unit_of_work: UnitOfWork,
 ):
-    user = get_user_model().objects.select_for_update().get(id=user_id)
-    season = active_season()
+    with unit_of_work:
+        return _battle_action_body(
+            user_id,
+            action,
+            entry_id,
+            enabled,
+            wallets=wallets,
+            battle_pass=battle_pass,
+            bags=bags,
+            minigames=minigames,
+        )
+
+
+def _battle_action_body(
+    user_id,
+    action,
+    entry_id=None,
+    enabled=False,
+    *,
+    wallets: IWalletRepository,
+    battle_pass: IBattlePassRepository,
+    bags: IBagRepository,
+    minigames: IMinigameRepository,
+):
+    user = battle_pass.require_user_locked(user_id)
+    season = battle_pass.active_season()
     if not season:
         raise ValidationDomainError("Nenhuma temporada ativa.")
-    progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=season)
+    progress = battle_pass.get_or_create_progress(user, season)
     if action == "auto-claim":
         progress.auto_claim = enabled
-        progress.save(update_fields=["auto_claim", "updated_at"])
+        battle_pass.save_progress(progress, update_fields=["auto_claim", "updated_at"])
         if enabled:
             from apps.games.application.battle_pass_use_cases import auto_claim_rewards
 
-            auto_claim_rewards(user, progress)
+            auto_claim_rewards(user, progress, battle_pass=battle_pass, bags=bags)
     elif action == "quest":
-        quest = get_object_or_404(
-            BattlePassQuest, id=entry_id, season=season, active=True
-        )
+        quest = battle_pass.get_active_quest(season, entry_id)
+        if quest is None:
+            raise EntityNotFoundError("Missão não encontrada.")
         start = period_start(quest)
-        if BattlePassQuestClaim.objects.filter(
-            user=user, quest=quest, period_start=start
-        ).exists():
+        if battle_pass.has_quest_claim(user, quest, start):
             raise ValidationDomainError("Missão já resgatada neste período.")
-        if quest_count(user, quest) < quest.target:
+        if minigames.count_quest_events(user, quest) < quest.target:
             raise ValidationDomainError("Complete o objetivo da missão antes de resgatar.")
-        BattlePassQuestClaim.objects.create(user=user, quest=quest, period_start=start)
+        battle_pass.create_quest_claim(user, quest, start)
         from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
-        add_battle_pass_xp(user, quest.xp)
-        GameRewardLog.objects.create(
+        add_battle_pass_xp(user, quest.xp, battle_pass=battle_pass)
+        battle_pass.create_reward_log(
             user=user,
             season=season,
             kind="quest",
@@ -204,32 +179,28 @@ def battle_action(
             label=f"{quest.name}: +{quest.xp} XP",
         )
     elif action == "exchange":
-        exchange = get_object_or_404(
-            BattlePassExchange, id=entry_id, season=season, active=True
-        )
-        used = GameRewardLog.objects.filter(
-            user=user, kind="exchange", source=exchange.id
-        ).count()
+        exchange = battle_pass.get_active_exchange(season, entry_id)
+        if exchange is None:
+            raise EntityNotFoundError("Troca não encontrada.")
+        used = battle_pass.count_logs(user, kind="exchange", source=exchange.id)
         if exchange.limit_per_user and used >= exchange.limit_per_user:
             raise ValidationDomainError("Limite de trocas atingido.")
-        item = (
-            BagItem.objects.select_for_update()
-            .filter(
-                bag__user=user,
-                item_id=exchange.required_item_id,
-                enchant=exchange.required_enchant,
-            )
-            .first()
+        item = bags.get_item_locked(
+            user,
+            item_id=exchange.required_item_id,
+            enchant=exchange.required_enchant,
         )
         if not item or item.quantity < exchange.required_quantity:
             raise ValidationDomainError("Itens insuficientes na bag.")
         item.quantity -= exchange.required_quantity
         if item.quantity:
-            item.save(update_fields=["quantity", "updated_at"])
+            bags.save_item(item, update_fields=["quantity", "updated_at"])
         else:
-            item.delete()
-        rewards = grant_rewards(user, exchange.rewards, exchange.name, wallets=wallets)
-        GameRewardLog.objects.create(
+            bags.delete_item(item)
+        rewards = grant_rewards(
+            user, exchange.rewards, exchange.name, wallets=wallets, bags=bags
+        )
+        battle_pass.create_reward_log(
             user=user,
             season=season,
             kind="exchange",
@@ -238,16 +209,17 @@ def battle_action(
             rewards=rewards,
         )
     elif action == "milestone":
-        milestone = get_object_or_404(BattlePassMilestone, id=entry_id, season=season)
-        if (
-            progress.xp < milestone.required_xp
-            or GameRewardLog.objects.filter(
-                user=user, kind="milestone", source=milestone.id
-            ).exists()
+        milestone = battle_pass.get_milestone(season, entry_id)
+        if milestone is None:
+            raise EntityNotFoundError("Marco não encontrado.")
+        if progress.xp < milestone.required_xp or battle_pass.has_log(
+            user, kind="milestone", source=milestone.id
         ):
             raise ValidationDomainError("Marco indisponível ou já resgatado.")
-        rewards = grant_rewards(user, milestone.rewards, milestone.name, wallets=wallets)
-        GameRewardLog.objects.create(
+        rewards = grant_rewards(
+            user, milestone.rewards, milestone.name, wallets=wallets, bags=bags
+        )
+        battle_pass.create_reward_log(
             user=user,
             season=season,
             kind="milestone",
@@ -257,22 +229,13 @@ def battle_action(
         )
     else:
         raise ValidationDomainError("Ação inválida.")
-    return battle_details(user)
-
-
-def daily_season():
-    today = timezone.localdate()
-    return (
-        DailyBonusSeason.objects.filter(
-            active=True, starts_on__lte=today, ends_on__gte=today
-        )
-        .order_by("-starts_on")
-        .first()
+    return battle_details(
+        user, battle_pass=battle_pass, bags=bags, minigames=minigames
     )
 
 
-def daily_details(user):
-    season = daily_season()
+def daily_details(user, *, daily_bonus: IDailyBonusRepository):
+    season = daily_bonus.active_season()
     today = timezone.localdate()
     return {
         "season": {
@@ -283,13 +246,16 @@ def daily_details(user):
         }
         if season
         else None,
-        "claimed": DailyBonusClaim.objects.filter(user=user, claimed_on=today).exists(),
-        "days": [{"day": d.day, "rewards": d.rewards} for d in season.days.all()]
+        "claimed": daily_bonus.has_claim(user, today),
+        "days": [
+            {"day": d.day, "rewards": d.rewards}
+            for d in daily_bonus.list_season_days(season)
+        ]
         if season
         else [],
         "pool": [
             {"name": p.name, "weight": p.weight, "rewards": p.rewards}
-            for p in season.pool.all()
+            for p in (season.pool.all() if season else [])
         ]
         if season
         else [],
@@ -300,99 +266,79 @@ def daily_details(user):
                 "rewards": r.rewards,
                 "created_at": r.created_at,
             }
-            for r in GameRewardLog.objects.filter(user=user, kind="daily_bonus")[:60]
+            for r in daily_bonus.list_daily_reward_logs(user)
         ],
     }
 
 
-@transaction.atomic
-def claim_daily_season(user_id, *, wallets: IWalletRepository):
-    user = get_user_model().objects.select_for_update().get(id=user_id)
-    season = daily_season()
-    if (
-        not season
-        or not GameConfig.objects.filter(code="daily_bonus", active=True).exists()
-    ):
-        raise ValidationDomainError("Bônus diário indisponível.")
-    today = timezone.localdate()
-    if DailyBonusClaim.objects.filter(user=user, claimed_on=today).exists():
-        raise AlreadyClaimedError()
-    day = season.days.filter(day=(today - season.starts_on).days + 1).first()
-    rewards = list(day.rewards) if day else []
-    pool = list(season.pool.filter(weight__gt=0))
-    if pool:
-        rewards += random.choices(pool, weights=[p.weight for p in pool], k=1)[
-            0
-        ].rewards
-    if not rewards:
-        raise ValidationDomainError("Nenhuma recompensa configurada para hoje.")
-    rewards = grant_rewards(
-        user, rewards, f"Bônus diário · {season.name}", wallets=wallets
-    )
-    amount = sum(
-        (Decimal(str(r["quantity"])) for r in rewards if r["kind"] == "balance"),
-        Decimal(0),
-    )
-    DailyBonusClaim.objects.create(user=user, claimed_on=today, amount=amount)
-    GameRewardLog.objects.create(
-        user=user,
-        kind="daily_bonus",
-        source=season.id,
-        label=season.name,
-        rewards=rewards,
-    )
-    from apps.games.application.battle_pass_xp import add_battle_pass_xp
-
-    add_battle_pass_xp(user, 10)
-    return {"amount": str(amount), "claimed_on": today.isoformat(), "rewards": rewards}
-
-
-@transaction.atomic
-def buy_bait(user_id, bait_id, quantity):
-    user = get_user_model().objects.select_for_update().get(id=user_id)
-    bait = get_object_or_404(FishingBait, id=bait_id, active=True)
-    if not GameConfig.objects.filter(code="fishing", active=True).exists():
-        raise ValidationDomainError("Pesca desativada.")
-    cost = bait.price * quantity
-    if user.fichas < cost:
-        raise ValidationDomainError("Fichas insuficientes.")
-    user.fichas -= cost
-    user.save(update_fields=["fichas", "updated_at"])
-    stock, _ = UserFishingBait.objects.get_or_create(user=user, bait=bait)
-    stock.quantity += quantity
-    stock.save()
-    return {"quantity": stock.quantity, "fichas": user.fichas}
-
-
-def game_statistics(user, kind):
-    model = EVENT_MODELS.get(kind)
-    if model is None or kind == "daily_bonus":
-        raise ValidationDomainError("Jogo inválido.")
-    rows = model.objects.filter(user=user)
-    success = {
-        "roulette": "failed",
-        "dice": "won",
-        "slots": "won",
-        "fishing": "success",
-        "economy": "won",
-    }[kind]
-    wins = rows.filter(**{success: kind != "roulette"}).count()
-    leaderboard = list(
-        model.objects.values("user__username")
-        .annotate(
-            score=Count("pk"),
-            wins=Count("pk", filter=Q(**{success: kind != "roulette"})),
+def claim_daily_season(
+    user_id,
+    *,
+    wallets: IWalletRepository,
+    daily_bonus: IDailyBonusRepository,
+    bags: IBagRepository,
+    battle_pass: IBattlePassRepository | None = None,
+    unit_of_work: UnitOfWork,
+):
+    with unit_of_work:
+        user = daily_bonus.require_user_locked(user_id)
+        season = daily_bonus.active_season()
+        if not season or not daily_bonus.has_active_config():
+            raise ValidationDomainError("Bônus diário indisponível.")
+        today = timezone.localdate()
+        if daily_bonus.has_claim(user, today):
+            raise AlreadyClaimedError()
+        day = daily_bonus.get_season_day(season, (today - season.starts_on).days + 1)
+        rewards = list(day.rewards) if day else []
+        pool = daily_bonus.list_season_pool(season)
+        if pool:
+            rewards += random.choices(pool, weights=[p.weight for p in pool], k=1)[0].rewards
+        if not rewards:
+            raise ValidationDomainError("Nenhuma recompensa configurada para hoje.")
+        rewards = grant_rewards(
+            user,
+            rewards,
+            f"Bônus diário · {season.name}",
+            wallets=wallets,
+            bags=bags,
         )
-        .order_by("-wins", "-score", "user__username")[:20]
-    )
-    return {
-        "plays": rows.count(),
-        "wins": wins,
-        "leaderboard": [
-            {"username": r["user__username"], "score": r["score"], "wins": r["wins"]}
-            for r in leaderboard
-        ],
-        "payout": rows.aggregate(total=Sum("payout"))["total"] or 0
-        if kind in ("dice", "slots")
-        else 0,
-    }
+        amount = sum(
+            (Decimal(str(r["quantity"])) for r in rewards if r["kind"] == "balance"),
+            Decimal(0),
+        )
+        daily_bonus.create_claim(user, claimed_on=today, amount=amount)
+        daily_bonus.create_reward_log(
+            user=user,
+            kind="daily_bonus",
+            source=season.id,
+            label=season.name,
+            rewards=rewards,
+        )
+        from apps.games.application.battle_pass_xp import add_battle_pass_xp
+
+        add_battle_pass_xp(user, 10, battle_pass=battle_pass)
+        return {"amount": str(amount), "claimed_on": today.isoformat(), "rewards": rewards}
+
+
+def buy_bait(user_id, bait_id, quantity, *, fishing: IFishingRepository, unit_of_work: UnitOfWork):
+    with unit_of_work:
+        user = fishing.require_user_locked(user_id)
+        bait = fishing.get_active_bait(bait_id)
+        if bait is None:
+            raise EntityNotFoundError("Isca não encontrada.")
+        config = fishing.get_config()
+        if config is None or not config.active:
+            raise ValidationDomainError("Pesca desativada.")
+        cost = bait.price * quantity
+        if user.fichas < cost:
+            raise ValidationDomainError("Fichas insuficientes.")
+        user.fichas -= cost
+        user.save(update_fields=["fichas", "updated_at"])
+        stock = fishing.get_or_create_bait_stock(user, bait)
+        stock.quantity += quantity
+        fishing.save_bait_stock(stock)
+        return {"quantity": stock.quantity, "fichas": user.fichas}
+
+
+def game_statistics(user, kind, *, minigames: IMinigameRepository):
+    return minigames.event_statistics(user, kind)

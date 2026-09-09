@@ -2,17 +2,13 @@ from decimal import ROUND_DOWN, Decimal
 from uuid import UUID
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.db import transaction
 from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
 from apps.wallet.domain.entities import InsufficientBalanceError
-from apps.wallet.domain.repositories import IWalletRepository
-from apps.wallet.infrastructure.exchange_models import GameExchange
-from apps.wallet.infrastructure.models import CoinConfig
-from common.architecture.base import UseCase
+from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
+from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 
@@ -77,6 +73,10 @@ class ExchangeCoinsUseCase:
     estorna a reserva; uma falha de conexão mantém o registro pending para consultar/reaplicar o
     mesmo recibo. Na volta, credita o painel após confirmação do gateway. O recibo durável no
     jogo evita aplicar duas vezes; não há uma transação única entre os dois bancos.
+
+    Dual-DB: cada ``with self._unit_of_work`` delimita um atomic do Django; a saída normal do
+    contexto confirma (commit) igual a ``transaction.atomic``, então a reserva fica persistida
+    antes da chamada externa e os blocos de estorno/conclusão são novas fronteiras.
     """
 
     def __init__(
@@ -84,17 +84,22 @@ class ExchangeCoinsUseCase:
         lineage: ILineageGateway,
         access: IAccountAccessService,
         wallets: IWalletRepository,
+        exchanges: IGameExchangeRepository,
+        unit_of_work: UnitOfWork,
     ):
-        self.lineage, self.access, self.wallets = lineage, access, wallets
+        self.lineage = lineage
+        self.access = access
+        self.wallets = wallets
+        self.exchanges = exchanges
+        self._unit_of_work = unit_of_work
 
     def execute(self, user, data):
         # Commit the reservation before contacting the second database. A durable
         # game-side receipt makes retries safe even after an ambiguous network error.
-        with transaction.atomic():
-            get_user_model().objects.select_for_update().get(pk=user.pk)
-            row = GameExchange.objects.filter(
-                user=user, request_key=data["request_key"]
-            ).first()
+        # UnitOfWork context exit commits (same semantics as transaction.atomic).
+        with self._unit_of_work:
+            self.exchanges.lock_user(user.id)
+            row = self.exchanges.find_by_request_key(user.id, data["request_key"])
             if row:
                 if (row.direction, row.login, row.character_id, row.quantity) != (
                     data["direction"],
@@ -106,7 +111,7 @@ class ExchangeCoinsUseCase:
                         "Esta chave já pertence a outra transferência."
                     )
             else:
-                if GameExchange.objects.filter(user=user, status="pending").exists():
+                if self.exchanges.has_pending(user.id):
                     raise ValidationDomainError(
                         "Retome a transferência pendente no histórico antes de iniciar outra."
                     )
@@ -123,20 +128,24 @@ class ExchangeCoinsUseCase:
                     raise ValidationDomainError(
                         "Selecione um personagem seu que esteja offline."
                     )
-                config = CoinConfig.objects.filter(active=True).first()
+                config = self.wallets.get_active_coin_config()
+                multiplier = Decimal(config["multiplier"]) if config else Decimal(0)
+                fee_percent = (
+                    Decimal(config["withdraw_fee_percent"]) if config else Decimal(0)
+                )
                 if (
                     not config
-                    or config.multiplier <= 0
-                    or not 0 <= config.withdraw_fee_percent < 100
+                    or multiplier <= 0
+                    or not 0 <= fee_percent < 100
                 ):
                     raise ValidationDomainError("Conversão de moedas não configurada.")
-                gross = Decimal(data["quantity"]) / config.multiplier
+                gross = Decimal(data["quantity"]) / multiplier
                 if gross != gross.quantize(Decimal("0.01")):
                     raise ValidationDomainError(
                         "A quantidade deve corresponder a um valor exato de saldo (duas casas decimais)."
                     )
                 fee = (
-                    (gross * config.withdraw_fee_percent / 100).quantize(
+                    (gross * fee_percent / 100).quantize(
                         Decimal("0.01"), rounding=ROUND_DOWN
                     )
                     if data["direction"] == "from_game"
@@ -150,11 +159,11 @@ class ExchangeCoinsUseCase:
                     raise InsufficientBalanceError(
                         "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
                     )
-                row = GameExchange.objects.create(
+                row = self.exchanges.create(
                     user=user,
                     **data,
                     character_name=char.name,
-                    item_id=config.coin_id,
+                    item_id=config["item_id"],
                     amount=amount,
                     fee=fee,
                 )
@@ -178,8 +187,8 @@ class ExchangeCoinsUseCase:
             )
         except ValidationDomainError as exc:
             # A business rejection is raised only after the game transaction rolls back.
-            with transaction.atomic():
-                row = GameExchange.objects.select_for_update().get(pk=row.pk)
+            with self._unit_of_work:
+                row = self.exchanges.get_locked(row.pk)
                 if row.status == "pending":
                     if row.direction == "to_game":
                         wallet = self.wallets.get_or_create(user.id)
@@ -190,18 +199,13 @@ class ExchangeCoinsUseCase:
                             description=f"Estorno · {row.id}",
                         )
                     row.status, row.error = "rejected", str(exc)[:300]
-                    row.save()
+                    self.exchanges.save(row)
             return exchange_dump(row)
         except (OSError, TimeoutError, RuntimeError, SQLAlchemyError):
-            GameExchange.objects.filter(pk=row.pk, status="pending").update(
-                # A conexão pode cair após o jogo aplicar o envio. Preserve pending
-                # e retome pelo mesmo recibo, sem estornar uma operação incerta.
-                error="Conexão não confirmada. Retome esta mesma transferência; não crie outra."
-            )
-            row.refresh_from_db()
+            row = self.exchanges.mark_connection_uncertain(row.pk)
             return exchange_dump(row)
-        with transaction.atomic():
-            row = GameExchange.objects.select_for_update().get(pk=row.pk)
+        with self._unit_of_work:
+            row = self.exchanges.get_locked(row.pk)
             if row.status == "pending":
                 if row.direction == "from_game":
                     wallet = self.wallets.get_or_create(user.id)
@@ -212,5 +216,5 @@ class ExchangeCoinsUseCase:
                         description=f"Moedas retiradas do jogo · {row.id}",
                     )
                 row.status, row.error = "completed", ""
-                row.save()
+                self.exchanges.save(row)
         return exchange_dump(row)

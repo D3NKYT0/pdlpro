@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
-from uuid import UUID
 
 from django.conf import settings
 
-from apps.wallet.infrastructure.models import CoinConfig, CoinPackage
+from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 
@@ -34,33 +33,33 @@ class CoinPricingService:
     criar pagamento.
     """
 
+    def __init__(self, wallets: IWalletRepository) -> None:
+        self._wallets = wallets
+
     def quote(self, *, package_id: str | None, amount: Decimal | None, currency: str) -> CoinQuote:
         currency = currency.upper()
         if currency not in {"BRL", "USD"}:
             raise ValidationDomainError("Moeda inválida. Use BRL ou USD.")
         if package_id:
-            # Códigos comerciais não passam pela conversão do UUIDField do ORM.
-            try:
-                package_uuid = UUID(str(package_id))
-            except ValueError:
-                package_uuid = None
-            package = CoinPackage.objects.filter(id=package_uuid, active=True).first() if package_uuid else None
-            if package is None:
-                package = CoinPackage.objects.filter(code=package_id, active=True).first()
+            package = self._wallets.find_active_coin_package(package_id)
             if package is None:
                 raise EntityNotFoundError("Pacote de moedas não encontrado.")
-            price = package.price_brl if currency == "BRL" else package.price_usd
+            price = package["price_brl"] if currency == "BRL" else package["price_usd"]
             return CoinQuote(
-                coins=package.coins,
+                coins=package["coins"],
                 amount=price,
                 currency=currency,
-                package_code=package.code,
-                package_name=package.name,
+                package_code=package["code"],
+                package_name=package["name"],
             )
         if amount is None or amount <= 0:
             raise ValidationDomainError("Informe um pacote ou um valor válido.")
-        config = CoinConfig.objects.filter(active=True).first()
-        brl_rate = config.multiplier if config else Decimal("1.00")
-        usd_rate = config.usd_multiplier if config else Decimal(str(getattr(settings, "COINS_PER_USD", "5.00")))
+        config = self._wallets.get_active_coin_config()
+        brl_rate = Decimal(config["multiplier"]) if config else Decimal("1.00")
+        usd_rate = (
+            Decimal(config["usd_multiplier"])
+            if config and config.get("usd_multiplier") is not None
+            else Decimal(str(getattr(settings, "COINS_PER_USD", "5.00")))
+        )
         coins = (amount * brl_rate if currency == "BRL" else amount * usd_rate).quantize(Decimal("0.01"))
         return CoinQuote(coins=coins, amount=amount, currency=currency, package_code="", package_name="")

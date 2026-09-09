@@ -2,7 +2,6 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from apps.programs.domain.exceptions import RoadmapEntryNotFoundError, ResourceNotFoundError
 from apps.programs.application.use_cases import (
     CreateRoadmapEntryUseCase,
     CreateRoadmapInput,
@@ -27,6 +26,7 @@ from apps.programs.application.use_cases import (
     UpsertSupporterUseCase,
     UserScopedInput,
 )
+from apps.programs.domain.repositories import ISupporterRepository
 from apps.programs.serializers import (
     PayoutReviewSerializer,
     PayoutSerializer,
@@ -89,9 +89,7 @@ class SupporterView(InjectedAPIView):
         responses=SupporterSerializer,
     )
     def post(self, request):
-        from apps.programs.models import Supporter
-
-        row = Supporter.objects.filter(user=request.user).first()
+        row = self.resolve(ISupporterRepository).find_by_user_id(request.user.id)
         serializer = SupporterSerializer(
             row, data=request.data, partial=bool(row), context={"request": request}
         )
@@ -285,12 +283,7 @@ class StaffRoadmapView(InjectedAPIView):
         responses=RoadmapSerializer,
     )
     def patch(self, request, entry_id):
-        from apps.programs.models import RoadmapEntry
-
-        row = RoadmapEntry.objects.filter(id=entry_id).first()
-        if row is None:
-            raise RoadmapEntryNotFoundError()
-        serializer = RoadmapSerializer(row, data=request.data, partial=True)
+        serializer = RoadmapSerializer(data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         updated = self.resolve(UpdateRoadmapEntryUseCase).execute(
             UpdateRoadmapInput(entry_id=entry_id, fields=dict(serializer.validated_data))
@@ -356,12 +349,7 @@ class StaffResourceView(ResourceView):
         responses=ResourceSerializer,
     )
     def patch(self, request, entry_id):
-        from apps.programs.models import SystemResource
-
-        row = SystemResource.objects.filter(id=entry_id).first()
-        if row is None:
-            raise ResourceNotFoundError()
-        serializer = ResourceSerializer(row, data=request.data, partial=True)
+        serializer = ResourceSerializer(data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         updated = self.resolve(UpdateResourceUseCase).execute(
             UpdateResourceInput(entry_id=entry_id, fields=dict(serializer.validated_data))

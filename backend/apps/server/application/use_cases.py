@@ -10,6 +10,7 @@ from apps.server.domain.gateways import (
     ServerInfo,
     ServerStatus,
 )
+from apps.server.domain.repositories import IIndexConfigRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -63,6 +64,9 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
     retorno é ``ServerInfo``.
     """
 
+    def __init__(self, index_config: IIndexConfigRepository) -> None:
+        self._index_config = index_config
+
     def execute(self, data: None = None) -> ServerInfo:
         module = str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or "")
         chronicle = str(getattr(settings, "SERVER_CHRONICLE", "") or "").strip()
@@ -100,9 +104,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             coming_soon_subtitle="",
             coming_soon_at=None,
         )
-        from apps.server.infrastructure.models import IndexConfig
-
-        row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
+        row = self._index_config.get_active()
         if row is None:
             return info
         rates = {**info.rates, **{key: str(value) for key, value in (row.rates or {}).items() if value}}

@@ -19,7 +19,6 @@ from apps.payment.domain.repositories import IPaymentOrderRepository
 from apps.payment.infrastructure.registry import PaymentGatewayRegistry
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
-from apps.wallet.infrastructure.models import CoinPackage, CoinPurchasePromo
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 
@@ -31,17 +30,6 @@ def _configured_methods() -> list[str]:
     return methods
 
 
-def _catalog_promo() -> dict | None:
-    promo = CoinPurchasePromo.current()
-    if promo is None:
-        return None
-    return {
-        "percent": str(promo.percent),
-        "title": promo.title,
-        "description": promo.description,
-    }
-
-
 class GetPaymentCatalogUseCase(UseCase[None, dict]):
     """Lista métodos disponíveis e pacotes ativos com preços e prévia de bônus.
 
@@ -49,24 +37,30 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, gateways: PaymentGatewayRegistry, bonus_policy: IPurchaseBonusPolicy) -> None:
+    def __init__(
+        self,
+        gateways: PaymentGatewayRegistry,
+        bonus_policy: IPurchaseBonusPolicy,
+        wallets: IWalletRepository,
+    ) -> None:
         self._gateways = gateways
         self._bonus_policy = bonus_policy
+        self._wallets = wallets
 
     def execute(self, data: None = None) -> dict:
         methods = self._gateways.available_methods(_configured_methods())
         packages = []
-        for row in CoinPackage.objects.filter(active=True):
-            preview = self._bonus_policy.preview(row.coins)
+        for row in self._wallets.list_active_coin_packages():
+            preview = self._bonus_policy.preview(row["coins"])
             packages.append(
                 {
-                    "id": str(row.id),
-                    "code": row.code,
-                    "name": row.name,
-                    "coins": str(row.coins),
-                    "price_brl": str(row.price_brl),
-                    "price_usd": str(row.price_usd),
-                    "badge": row.badge,
+                    "id": row["id"],
+                    "code": row["code"],
+                    "name": row["name"],
+                    "coins": str(row["coins"]),
+                    "price_brl": str(row["price_brl"]),
+                    "price_usd": str(row["price_usd"]),
+                    "badge": row["badge"],
                     "bonus": str(preview.bonus),
                     "total_coins": str(preview.total),
                 }
@@ -76,7 +70,7 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
             "methods": methods,
             "packages": packages,
             "allow_custom_amount": True,
-            "promo": _catalog_promo(),
+            "promo": self._wallets.get_current_purchase_promo(),
         }
 
 
@@ -101,9 +95,9 @@ class PreviewPaymentBonusUseCase(UseCase[PreviewBonusInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, bonus_policy: IPurchaseBonusPolicy) -> None:
+    def __init__(self, bonus_policy: IPurchaseBonusPolicy, pricing: CoinPricingService) -> None:
         self._bonus_policy = bonus_policy
-        self._pricing = CoinPricingService()
+        self._pricing = pricing
 
     def execute(self, data: PreviewBonusInput) -> dict:
         quote = self._pricing.quote(
@@ -154,11 +148,12 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
         orders: IPaymentOrderRepository,
         gateways: PaymentGatewayRegistry,
         unit_of_work: UnitOfWork,
+        pricing: CoinPricingService,
     ) -> None:
         self._orders = orders
         self._gateways = gateways
         self._unit_of_work = unit_of_work
-        self._pricing = CoinPricingService()
+        self._pricing = pricing
 
     def _resolve_method(self, currency: str, requested: str) -> str:
         available = {item["id"] for item in self._gateways.available_methods(_configured_methods())}

@@ -3,12 +3,10 @@ from __future__ import annotations
 from decimal import ROUND_HALF_UP, Decimal
 from uuid import UUID
 
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 from apps.games.application.bag import add_to_bag
-from apps.programs.models import Commission, Supporter
-from apps.shop.infrastructure.models import Cart, PromotionCode, ShopPurchase
+from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
@@ -78,15 +76,10 @@ def cart_lines(cart):
     return lines
 
 
-def get_promo(code, user, *, lock=False):
+def get_promo(code, user, *, shop: IShopRepository, lock=False):
     if not code:
         return None
-    rows = (
-        PromotionCode.objects.select_for_update()
-        if lock
-        else PromotionCode.objects.all()
-    )
-    promo = rows.filter(code=code.strip().upper(), active=True).first()
+    promo = shop.find_active_promo_by_code(code.strip().upper(), lock=lock)
     now = timezone.now()
     if (
         not promo
@@ -103,10 +96,10 @@ def get_promo(code, user, *, lock=False):
     return promo
 
 
-def quote(cart, user, *, wallet: WalletEntity | None = None, lock=False):
+def quote(cart, user, *, shop: IShopRepository, wallet: WalletEntity | None = None, lock=False):
     lines = cart_lines(cart)
     subtotal = sum((Decimal(row["line_total"]) for row in lines), Decimal("0.00"))
-    promo = get_promo(cart.promo_code, user, lock=lock)
+    promo = get_promo(cart.promo_code, user, shop=shop, lock=lock)
     discount = money(subtotal * promo.percent / 100) if promo else Decimal("0.00")
     total = subtotal - discount
     bonus = (
@@ -131,25 +124,28 @@ def checkout(
     request_key=None,
     *,
     wallets: IWalletRepository,
+    shop: IShopRepository,
+    carts: ICartRepository,
+    commissions: ISupporterCommissionPort,
     unit_of_work: UnitOfWork,
 ):
     """Finaliza o carrinho debitando carteira, entregando itens e registrando a compra."""
 
     with unit_of_work:
-        user = get_user_model().objects.select_for_update().get(id=user_id)
+        user = carts.lock_user(user_id)
         if request_key:
-            prior = ShopPurchase.objects.filter(user=user, request_key=request_key).first()
+            prior = shop.find_purchase_by_request_key(user, request_key)
             if prior:
                 return {"purchase_id": str(prior.id), "total": str(prior.total)}
-        cart = Cart.objects.select_for_update().filter(user=user).first()
+        cart = carts.get_locked_for_user(user)
         if not cart:
             raise ValidationDomainError("Carrinho vazio.")
         wallet = wallets.get_or_create(user_id)
-        details, promo = quote(cart, user, wallet=wallet, lock=True)
+        details, promo = quote(cart, user, shop=shop, wallet=wallet, lock=True)
         if not details["items"]:
             raise ValidationDomainError("Carrinho vazio.")
         due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
-        purchase = ShopPurchase.objects.create(
+        purchase = shop.create_purchase(
             user=user,
             total=details["total"],
             subtotal=details["subtotal"],
@@ -181,16 +177,8 @@ def checkout(
                 add_to_bag(user, **grant)
         if promo:
             promo.uses += 1
-            promo.save(update_fields=["uses", "updated_at"])
+            shop.save_promo(promo)
             if promo.supporter_id:
-                supporter = Supporter.objects.select_for_update().get(pk=promo.supporter_id)
-                amount = money(due * supporter.commission_percent / 100)
-                if amount > 0 and supporter.status == "approved":
-                    Commission.objects.create(
-                        supporter=supporter, purchase=purchase, amount=amount
-                    )
-        cart.items.all().delete()
-        cart.packages.all().delete()
-        cart.promo_code = ""
-        cart.save(update_fields=["promo_code", "updated_at"])
+                commissions.record(supporter_id=promo.supporter_id, purchase=purchase, due=due)
+        carts.clear_after_checkout(cart)
         return {"purchase_id": str(purchase.id), "total": str(purchase.total)}

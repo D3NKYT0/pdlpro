@@ -3,8 +3,8 @@ from __future__ import annotations
 from uuid import UUID
 
 from apps.communication.domain.entities import NotificationEntity
-from apps.communication.domain.repositories import INotificationRepository
-from apps.communication.infrastructure.models import Notification
+from apps.communication.domain.repositories import INotificationRepository, IPushSubscriptionRepository
+from apps.communication.infrastructure.models import Notification, PushSubscription
 
 
 class DjangoNotificationRepository(INotificationRepository):
@@ -52,3 +52,22 @@ class DjangoNotificationRepository(INotificationRepository):
         user = get_user_model().objects.get(id=user_id)
         row = Notification.objects.create(user=user, title=title, body=body, kind=kind, link=link)
         return self._entity(row)
+
+
+class DjangoPushSubscriptionRepository(IPushSubscriptionRepository):
+    """Adaptador Django de ``IPushSubscriptionRepository`` para assinaturas Web Push."""
+
+    def upsert(self, user_id: UUID, *, endpoint: str, auth: str, p256dh: str) -> dict:
+        from django.contrib.auth import get_user_model
+
+        user = get_user_model().objects.get(id=user_id)
+        row, _ = PushSubscription.objects.update_or_create(
+            user=user,
+            endpoint=endpoint,
+            defaults={"auth": auth, "p256dh": p256dh},
+        )
+        return {"id": str(row.id), "subscribed": True}
+
+    def delete(self, user_id: UUID, endpoint: str) -> int:
+        deleted, _ = PushSubscription.objects.filter(user__id=user_id, endpoint=endpoint).delete()
+        return deleted

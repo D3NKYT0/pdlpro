@@ -44,10 +44,29 @@ from apps.games.application.use_cases import (
     GetRouletteStateUseCase,
     SpinRouletteUseCase,
 )
-from apps.games.domain.repositories import IGameConfigAdminRepository, IGameContentAdminRepository
+from apps.games.domain.repositories import (
+    IBagRepository,
+    IBattlePassRepository,
+    IBoxRepository,
+    IDailyBonusRepository,
+    IEconomyRepository,
+    IFishingRepository,
+    IGameCatalogRepository,
+    IGameConfigAdminRepository,
+    IGameContentAdminRepository,
+    IMinigameRepository,
+)
 from apps.games.infrastructure.repositories import (
+    DjangoBagRepository,
+    DjangoBattlePassRepository,
+    DjangoBoxRepository,
+    DjangoDailyBonusRepository,
+    DjangoEconomyRepository,
+    DjangoFishingRepository,
+    DjangoGameCatalogRepository,
     DjangoGameConfigAdminRepository,
     DjangoGameContentAdminRepository,
+    DjangoMinigameRepository,
 )
 from common.di.container import Container
 from common.di.lifetime import Lifetime
@@ -63,8 +82,32 @@ class GamesProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
-        container.register(IGameConfigAdminRepository, DjangoGameConfigAdminRepository, lifetime=Lifetime.SCOPED)
-        container.register(IGameContentAdminRepository, DjangoGameContentAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            IGameConfigAdminRepository, DjangoGameConfigAdminRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IGameContentAdminRepository, DjangoGameContentAdminRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IGameCatalogRepository, DjangoGameCatalogRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(IBagRepository, DjangoBagRepository, lifetime=Lifetime.SCOPED)
+        container.register(IBoxRepository, DjangoBoxRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            IMinigameRepository, DjangoMinigameRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IFishingRepository, DjangoFishingRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IEconomyRepository, DjangoEconomyRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IDailyBonusRepository, DjangoDailyBonusRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IBattlePassRepository, DjangoBattlePassRepository, lifetime=Lifetime.SCOPED
+        )
         for use_case in (
             GetRouletteStateUseCase,
             SpinRouletteUseCase,

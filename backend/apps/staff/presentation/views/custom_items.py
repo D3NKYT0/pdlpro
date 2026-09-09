@@ -1,10 +1,6 @@
 from io import BytesIO
 
 from django.core.files.base import ContentFile
-from django.core.paginator import Paginator
-from django.db import IntegrityError, transaction
-from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from PIL import Image, ImageOps
 from rest_framework import serializers
@@ -12,15 +8,19 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from apps.server.infrastructure.custom_item_models import (
-    ITEM_CATEGORIES,
-    ITEM_GRADES,
-    CustomCatalogItem,
+from apps.server.application.custom_items import (
+    GetCustomItemUseCase,
+    ListCustomItemsInput,
+    ListCustomItemsUseCase,
+    UpsertCustomItemInput,
+    UpsertCustomItemUseCase,
+    catalog_choices,
 )
+from apps.server.infrastructure.custom_item_models import CustomCatalogItem
 from apps.server.infrastructure.lineage.item_catalog import get_xml_catalog
 from common.permissions import IsStaffMember
+from common.views import InjectedAPIView
 
 
 class CanViewCustomItems(BasePermission):
@@ -38,7 +38,7 @@ class CustomItemSerializer(serializers.ModelSerializer):
     """Representa e valida os metadados de um item customizado no catálogo.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização e a persistência pertencem ao fluxo chamador / caso de uso.
 
     Campos declarados: ``image``, ``icon_url``, ``conflicts_with_xml``.
     """
@@ -49,8 +49,21 @@ class CustomItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomCatalogItem
-        fields = ("id", "item_id", "name", "image", "icon_url", "category", "grade", "tradeable",
-                  "metadata", "active", "conflicts_with_xml", "created_at", "updated_at")
+        fields = (
+            "id",
+            "item_id",
+            "name",
+            "image",
+            "icon_url",
+            "category",
+            "grade",
+            "tradeable",
+            "metadata",
+            "active",
+            "conflicts_with_xml",
+            "created_at",
+            "updated_at",
+        )
         read_only_fields = ("id", "created_at", "updated_at")
 
     def get_icon_url(self, obj):
@@ -58,15 +71,6 @@ class CustomItemSerializer(serializers.ModelSerializer):
 
     def get_conflicts_with_xml(self, obj):
         return get_xml_catalog().get(obj.item_id) is not None
-
-    def validate(self, attrs):
-        item_id = attrs.get("item_id", self.instance.item_id if self.instance else None)
-        if self.instance and item_id != self.instance.item_id:
-            raise serializers.ValidationError({"item_id": "O ID não pode ser alterado após o cadastro."})
-        active = attrs.get("active", self.instance.active if self.instance else True)
-        if (not self.instance or active) and get_xml_catalog().get(item_id):
-            raise serializers.ValidationError({"item_id": "Este ID já pertence ao catálogo XML."})
-        return attrs
 
     def validate_image(self, value):
         if value.size > 2 * 1024 * 1024:
@@ -79,7 +83,6 @@ class CustomItemSerializer(serializers.ModelSerializer):
                 if max(img.size) > 1024:
                     raise serializers.ValidationError("Dimensões máximas: 1024 × 1024 pixels.")
                 clean = ImageOps.exif_transpose(img).convert("RGBA")
-                # Re-encoding strips EXIF, arbitrary appended data and user filenames.
                 sanitized = Image.new("RGBA", clean.size)
                 sanitized.paste(clean)
                 output = BytesIO()
@@ -87,25 +90,6 @@ class CustomItemSerializer(serializers.ModelSerializer):
             return ContentFile(output.getvalue(), name="icon.png")
         except (OSError, ValueError, Image.DecompressionBombError):
             raise serializers.ValidationError("Imagem inválida.") from None
-
-    def persist(self, instance, validated_data):
-        old_image = instance.image.name if instance.image else None
-        for key, value in validated_data.items():
-            setattr(instance, key, value)
-        try:
-            with transaction.atomic():
-                instance.save()
-        except IntegrityError:
-            if instance.image and instance.image.name != old_image and instance.image._committed:
-                instance.image.delete(save=False)
-            raise serializers.ValidationError({"item_id": "Este ID já está cadastrado."}) from None
-        return instance
-
-    def create(self, validated_data):
-        return self.persist(CustomCatalogItem(), validated_data)
-
-    def update(self, instance, validated_data):
-        return self.persist(instance, validated_data)
 
 
 class CustomItemQuery(serializers.Serializer):
@@ -121,11 +105,12 @@ class CustomItemQuery(serializers.Serializer):
     page = serializers.IntegerField(default=1, min_value=1, max_value=1000000)
 
 
-class CustomItemsView(APIView):
+class CustomItemsView(InjectedAPIView):
     """Pesquisa e cria metadados de itens customizados no catálogo administrativo.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember, CanViewCustomItems].
+    declarado: [IsAuthenticated, IsStaffMember, CanViewCustomItems]. Resolve casos de uso do
+    ServerProvider.
     """
 
     permission_classes = [IsAuthenticated, IsStaffMember, CanViewCustomItems]
@@ -145,19 +130,25 @@ class CustomItemsView(APIView):
     def get(self, request):
         options = CustomItemQuery(data=request.query_params)
         options.is_valid(raise_exception=True)
-        search = options.validated_data["search"]
-        rows = CustomCatalogItem.objects.all()
-        if search:
-            match = Q(name__icontains=search)
-            if search.isascii() and search.isdigit() and len(search) <= 10:
-                match |= Q(item_id=int(search))
-            rows = rows.filter(match)
-        page = Paginator(rows, 24).get_page(options.validated_data["page"])
-        return Response({"results": CustomItemSerializer(page, many=True).data,
-            "count": page.paginator.count, "page": page.number, "pages": page.paginator.num_pages,
-            "permissions": {action: request.user.has_perm(f"server.{action}_customcatalogitem") for action in ("add", "change")},
-            "categories": [{"value": key, "label": label} for key, label in ITEM_CATEGORIES],
-            "grades": [{"value": key, "label": label} for key, label in ITEM_GRADES]})
+        page = self.resolve(ListCustomItemsUseCase).execute(
+            ListCustomItemsInput(
+                search=options.validated_data["search"],
+                page=options.validated_data["page"],
+            )
+        )
+        return Response(
+            {
+                "results": CustomItemSerializer(page.rows, many=True).data,
+                "count": page.count,
+                "page": page.page,
+                "pages": page.pages,
+                "permissions": {
+                    action: request.user.has_perm(f"server.{action}_customcatalogitem")
+                    for action in ("add", "change")
+                },
+                **catalog_choices(),
+            }
+        )
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
@@ -170,8 +161,10 @@ class CustomItemsView(APIView):
         self.require(request, "add")
         serializer = CustomItemSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=201)
+        row = self.resolve(UpsertCustomItemUseCase).execute(
+            UpsertCustomItemInput(validated_data=serializer.validated_data)
+        )
+        return Response(CustomItemSerializer(row).data, status=201)
 
 
 class CustomItemDetailView(CustomItemsView):
@@ -188,7 +181,8 @@ class CustomItemDetailView(CustomItemsView):
         responses=CustomItemSerializer,
     )
     def get(self, request, item_uuid):
-        return Response(CustomItemSerializer(get_object_or_404(CustomCatalogItem, id=item_uuid)).data)
+        row = self.resolve(GetCustomItemUseCase).execute(item_uuid)
+        return Response(CustomItemSerializer(row).data)
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
@@ -208,7 +202,10 @@ class CustomItemDetailView(CustomItemsView):
     )
     def patch(self, request, item_uuid):
         self.require(request, "change")
-        serializer = CustomItemSerializer(get_object_or_404(CustomCatalogItem, id=item_uuid), data=request.data, partial=True)
+        instance = self.resolve(GetCustomItemUseCase).execute(item_uuid)
+        serializer = CustomItemSerializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        row = self.resolve(UpsertCustomItemUseCase).execute(
+            UpsertCustomItemInput(validated_data=serializer.validated_data, item_id=item_uuid)
+        )
+        return Response(CustomItemSerializer(row).data)

@@ -8,6 +8,7 @@ from apps.content.application.denkynho import CareDenkynhoInput, CareDenkynhoUse
 from apps.content.application.wardrobe import EquipDenkynhoInput, EquipDenkynhoUseCase
 from apps.content.infrastructure.models import DenkynhoCareAction, DenkynhoProfile
 from common.architecture.exceptions import ValidationDomainError
+from common.di import DependencyInjection
 
 PET_URL = "/api/v1/shared/content/assistant/pet/"
 WARDROBE_URL = PET_URL + "wardrobe/"
@@ -136,7 +137,9 @@ def test_care_rolls_back_level_and_unlock_on_receipt_failure(owner, mocker):
     profile = DenkynhoProfile.objects.create(user=owner, experience=95)
     mocker.patch.object(DenkynhoCareAction.objects, "create", side_effect=RuntimeError("receipt failure"))
     with pytest.raises(RuntimeError, match="receipt failure"):
-        CareDenkynhoUseCase().execute(CareDenkynhoInput(owner.id, "feed", uuid4()))
+        DependencyInjection.root().create_scope().resolve(CareDenkynhoUseCase).execute(
+            CareDenkynhoInput(owner.id, "feed", uuid4())
+        )
     profile.refresh_from_db()
     assert (profile.level, profile.experience, profile.satiety) == (1, 95, 75)
 
@@ -150,12 +153,13 @@ def test_wardrobe_rolls_back_failed_persistence_and_rejects_invalid_use_case_slo
         raise RuntimeError("storage failure")
 
     mocker.patch.object(DenkynhoProfile, "save", save_then_fail)
+    equip = DependencyInjection.root().create_scope().resolve(EquipDenkynhoUseCase)
     with pytest.raises(RuntimeError, match="storage failure"):
-        EquipDenkynhoUseCase().execute(EquipDenkynhoInput(owner.id, "accessory", "star-pin"))
+        equip.execute(EquipDenkynhoInput(owner.id, "accessory", "star-pin"))
     profile.refresh_from_db()
     assert profile.appearance == {}
     with pytest.raises(ValidationDomainError):
-        EquipDenkynhoUseCase().execute(EquipDenkynhoInput(owner.id, "interaction", "dance"))
+        equip.execute(EquipDenkynhoInput(owner.id, "interaction", "dance"))
 
 
 def test_invalid_stored_appearance_is_not_exposed(owner, api):
@@ -168,7 +172,9 @@ def test_invalid_stored_appearance_is_not_exposed(owner, api):
 
 def test_unknown_care_is_rejected_at_application_boundary(owner):
     with pytest.raises(ValidationDomainError):
-        CareDenkynhoUseCase().execute(CareDenkynhoInput(owner.id, "unknown", uuid4()))
+        DependencyInjection.root().create_scope().resolve(CareDenkynhoUseCase).execute(
+            CareDenkynhoInput(owner.id, "unknown", uuid4())
+        )
 
 
 def test_retired_scarf_and_loose_lantern_become_scenes_without_changing_progress(owner, api):

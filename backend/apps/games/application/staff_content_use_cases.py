@@ -6,9 +6,11 @@ from uuid import UUID
 
 from apps.games.application.rewards import validate_rewards
 from apps.games.domain.repositories import IGameContentAdminRepository
-from apps.games.infrastructure.staff_content import CONFIG_MODELS
+from apps.games.infrastructure.staff_content import CONFIG_MODELS, get_config_fields
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+
+_RELATED_FIELDS = frozenset({"season", "level_row"})
 
 
 def validate_game_content_fields(
@@ -22,7 +24,24 @@ def validate_game_content_fields(
 
     ``data`` deve conter apenas campos já coeridos (como em ``validated_data`` do serializer).
     Mutates ``data`` quando limpa ``rewards``. Levanta ``ValidationDomainError`` em falhas.
+    Resolve FKs (``season``, ``level_row``) via porta quando o valor é UUID.
     """
+
+    if content is not None:
+        fields = get_config_fields(kind) or []
+        for field_name in fields:
+            if field_name not in _RELATED_FIELDS or field_name not in data:
+                continue
+            value = data[field_name]
+            if value is None or not isinstance(value, UUID):
+                continue
+            related = content.resolve_related(kind, field_name, value)
+            if related is None:
+                raise ValidationDomainError(
+                    "Referência inválida.",
+                    details={field_name: "Objeto relacionado não encontrado."},
+                )
+            data[field_name] = related
 
     def value(key):
         return data.get(key, getattr(instance, key, None) if instance is not None else None)

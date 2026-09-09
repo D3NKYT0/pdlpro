@@ -4,17 +4,8 @@ from dataclasses import dataclass
 from typing import Any
 from uuid import UUID
 
-from django.contrib.auth import get_user_model
-
 from apps.shop.application.commerce import get_promo, quote
-from apps.shop.infrastructure.models import (
-    Cart,
-    CartPackage,
-    PromotionCode,
-    ShopPackage,
-    ShopPackageItem,
-    ShopPurchase,
-)
+from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
@@ -27,14 +18,17 @@ class UserScopedInput:
     user_id: UUID
 
 
-class ListActivePackagesUseCase(UseCase[None, list[ShopPackage]]):
+class ListActivePackagesUseCase(UseCase[None, list[Any]]):
     """Lista pacotes ativos do comércio.
 
     Uso: resolva pelo container e chame ``execute(None)``.
     """
 
-    def execute(self, data: None = None) -> list[ShopPackage]:
-        return list(ShopPackage.objects.filter(active=True))
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: None = None) -> list[Any]:
+        return self._shop.list_active_packages()
 
 
 class ListPurchasesUseCase(UseCase[UserScopedInput, list[dict]]):
@@ -43,8 +37,11 @@ class ListPurchasesUseCase(UseCase[UserScopedInput, list[dict]]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UserScopedInput``.
     """
 
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
     def execute(self, data: UserScopedInput) -> list[dict]:
-        rows = ShopPurchase.objects.filter(user__id=data.user_id).order_by("-created_at")[:100]
+        rows = self._shop.list_purchases(data.user_id, limit=100)
         return [
             {
                 "id": str(r.id),
@@ -66,14 +63,16 @@ class QuoteCartUseCase(UseCase[UserScopedInput, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UserScopedInput``.
     """
 
-    def __init__(self, wallets: IWalletRepository) -> None:
+    def __init__(self, wallets: IWalletRepository, shop: IShopRepository, carts: ICartRepository) -> None:
         self._wallets = wallets
+        self._shop = shop
+        self._carts = carts
 
     def execute(self, data: UserScopedInput) -> dict:
-        user = get_user_model().objects.get(id=data.user_id)
-        cart, _ = Cart.objects.get_or_create(user=user)
+        user = self._carts.require_user(data.user_id)
+        cart = self._carts.get_or_create_for_user(user)
         wallet = self._wallets.get_or_create(data.user_id)
-        return quote(cart, user, wallet=wallet)[0]
+        return quote(cart, user, shop=self._shop, wallet=wallet)[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,26 +90,29 @@ class SetCartPackageUseCase(UseCase[SetCartPackageInput, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``SetCartPackageInput``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        shop: IShopRepository,
+        carts: ICartRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._shop = shop
+        self._carts = carts
         self._unit_of_work = unit_of_work
 
     def execute(self, data: SetCartPackageInput) -> dict:
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
-            cart, _ = Cart.objects.get_or_create(user=user)
-            cart = Cart.objects.select_for_update().get(pk=cart.pk)
-            pack = ShopPackage.objects.filter(id=data.package_id, active=True).first()
+            user = self._carts.lock_user(data.user_id)
+            cart = self._carts.get_or_create_for_user(user)
+            cart = self._carts.lock_cart(cart)
+            pack = self._shop.get_active_package(data.package_id)
             if pack is None:
                 raise EntityNotFoundError("Pacote não encontrado.")
-            if data.quantity == 0:
-                CartPackage.objects.filter(cart=cart, package=pack).delete()
-            else:
-                CartPackage.objects.update_or_create(
-                    cart=cart, package=pack, defaults={"quantity": data.quantity}
-                )
+            self._carts.set_package_quantity(cart, pack, data.quantity)
             wallet = self._wallets.get_or_create(data.user_id)
-            return quote(cart, user, wallet=wallet)[0]
+            return quote(cart, user, shop=self._shop, wallet=wallet)[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -128,44 +130,94 @@ class SetCartOptionsUseCase(UseCase[SetCartOptionsInput, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``SetCartOptionsInput``.
     """
 
-    def __init__(self, wallets: IWalletRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        wallets: IWalletRepository,
+        shop: IShopRepository,
+        carts: ICartRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._wallets = wallets
+        self._shop = shop
+        self._carts = carts
         self._unit_of_work = unit_of_work
 
     def execute(self, data: SetCartOptionsInput) -> dict:
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
-            cart, _ = Cart.objects.get_or_create(user=user)
-            cart = Cart.objects.select_for_update().get(pk=cart.pk)
+            user = self._carts.lock_user(data.user_id)
+            cart = self._carts.get_or_create_for_user(user)
+            cart = self._carts.lock_cart(cart)
             if data.promo_code is not None:
                 value = data.promo_code.strip().upper()
-                get_promo(value, user)
+                get_promo(value, user, shop=self._shop)
                 cart.promo_code = value
             if data.use_bonus is not None:
                 cart.use_bonus = data.use_bonus
-            cart.save()
+            self._carts.save_cart(cart)
             wallet = self._wallets.get_or_create(data.user_id)
-            return quote(cart, user, wallet=wallet)[0]
+            return quote(cart, user, shop=self._shop, wallet=wallet)[0]
 
 
-class ListStaffPackagesUseCase(UseCase[None, list[ShopPackage]]):
+class ListStaffPackagesUseCase(UseCase[None, list[Any]]):
     """Lista todos os pacotes para administração.
 
     Uso: resolva pelo container e chame ``execute(None)``.
     """
 
-    def execute(self, data: None = None) -> list[ShopPackage]:
-        return list(ShopPackage.objects.all())
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: None = None) -> list[Any]:
+        return self._shop.list_all_packages()
 
 
-class ListStaffPromosUseCase(UseCase[None, list[PromotionCode]]):
+class GetStaffPackageUseCase(UseCase[UUID, Any]):
+    """Obtém um pacote administrativo por id ou lança EntityNotFoundError."""
+
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: UUID) -> Any:
+        pack = self._shop.get_package(data)
+        if pack is None:
+            raise EntityNotFoundError("Pacote não encontrado.")
+        return pack
+
+
+class ListStaffPromosUseCase(UseCase[None, list[Any]]):
     """Lista todos os cupons para administração.
 
     Uso: resolva pelo container e chame ``execute(None)``.
     """
 
-    def execute(self, data: None = None) -> list[PromotionCode]:
-        return list(PromotionCode.objects.all())
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: None = None) -> list[Any]:
+        return self._shop.list_all_promos()
+
+
+class GetStaffPromoUseCase(UseCase[UUID, Any]):
+    """Obtém um cupom administrativo por id ou lança EntityNotFoundError."""
+
+    def __init__(self, shop: IShopRepository) -> None:
+        self._shop = shop
+
+    def execute(self, data: UUID) -> Any:
+        promo = self._shop.get_promo(data)
+        if promo is None:
+            raise EntityNotFoundError("Cupom não encontrado.")
+        return promo
+
+
+def _resolve_package_items(shop: IShopRepository, items: list[dict]) -> list[dict]:
+    resolved = []
+    for entry in items:
+        item = shop.get_item(entry["item"])
+        if item is None:
+            raise ValidationDomainError("Item da loja não encontrado.")
+        resolved.append({"item": item, "quantity": entry["quantity"]})
+    return resolved
 
 
 @dataclass(frozen=True, slots=True)
@@ -178,25 +230,26 @@ class CreateStaffPackageInput:
     items: list[dict]
 
 
-class CreateStaffPackageUseCase(UseCase[CreateStaffPackageInput, ShopPackage]):
+class CreateStaffPackageUseCase(UseCase[CreateStaffPackageInput, Any]):
     """Cria um pacote e seus itens compostos.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CreateStaffPackageInput``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(self, shop: IShopRepository, unit_of_work: UnitOfWork) -> None:
+        self._shop = shop
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: CreateStaffPackageInput) -> ShopPackage:
+    def execute(self, data: CreateStaffPackageInput) -> Any:
         if not data.items:
             raise ValidationDomainError("Inclua pelo menos um item.")
         with self._unit_of_work:
-            pack = ShopPackage.objects.create(
-                name=data.name, total_price=data.total_price, active=data.active
+            return self._shop.create_package(
+                name=data.name,
+                total_price=data.total_price,
+                active=data.active,
+                items=_resolve_package_items(self._shop, data.items),
             )
-            for item in data.items:
-                ShopPackageItem.objects.create(package=pack, **item)
-            return pack
 
 
 @dataclass(frozen=True, slots=True)
@@ -208,29 +261,30 @@ class UpdateStaffPackageInput:
     items: list[dict] | None = None
 
 
-class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, ShopPackage]):
+class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, Any]):
     """Atualiza um pacote e, opcionalmente, recria sua composição.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateStaffPackageInput``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(self, shop: IShopRepository, unit_of_work: UnitOfWork) -> None:
+        self._shop = shop
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateStaffPackageInput) -> ShopPackage:
+    def execute(self, data: UpdateStaffPackageInput) -> Any:
         with self._unit_of_work:
-            pack = ShopPackage.objects.filter(id=data.package_id).first()
+            pack = self._shop.get_package(data.package_id)
             if pack is None:
                 raise EntityNotFoundError("Pacote não encontrado.")
             for key, value in data.fields.items():
                 setattr(pack, key, value)
-            pack.save()
+            self._shop.save_package(pack)
             if data.items is not None:
                 if not data.items:
                     raise ValidationDomainError("Inclua pelo menos um item.")
-                pack.package_items.all().delete()
-                for item in data.items:
-                    ShopPackageItem.objects.create(package=pack, **item)
+                self._shop.replace_package_items(
+                    pack, _resolve_package_items(self._shop, data.items)
+                )
             return pack
 
 
@@ -241,18 +295,36 @@ class CreateStaffPromoInput:
     fields: dict
 
 
-class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, PromotionCode]):
+class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, Any]):
     """Cria um código promocional.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CreateStaffPromoInput``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        shop: IShopRepository,
+        commissions: ISupporterCommissionPort,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._shop = shop
+        self._commissions = commissions
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: CreateStaffPromoInput) -> PromotionCode:
+    def execute(self, data: CreateStaffPromoInput) -> Any:
+        fields = dict(data.fields)
+        code = str(fields.get("code", "")).strip().upper()
+        fields["code"] = code
+        if self._shop.promo_code_exists(code):
+            raise ValidationDomainError("Este código já existe.")
+        supporter_id = fields.pop("supporter_id", None)
+        if supporter_id is not None:
+            supporter = self._commissions.get_approved(supporter_id)
+            if supporter is None:
+                raise ValidationDomainError("Apoiador aprovado não encontrado.")
+            fields["supporter"] = supporter
         with self._unit_of_work:
-            return PromotionCode.objects.create(**data.fields)
+            return self._shop.create_promo(**fields)
 
 
 @dataclass(frozen=True, slots=True)
@@ -263,21 +335,42 @@ class UpdateStaffPromoInput:
     fields: dict
 
 
-class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, PromotionCode]):
+class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, Any]):
     """Atualiza um código promocional existente.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateStaffPromoInput``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        shop: IShopRepository,
+        commissions: ISupporterCommissionPort,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._shop = shop
+        self._commissions = commissions
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateStaffPromoInput) -> PromotionCode:
+    def execute(self, data: UpdateStaffPromoInput) -> Any:
+        fields = dict(data.fields)
         with self._unit_of_work:
-            promo = PromotionCode.objects.filter(id=data.promo_id).first()
+            promo = self._shop.get_promo(data.promo_id)
             if promo is None:
                 raise EntityNotFoundError("Cupom não encontrado.")
-            for key, value in data.fields.items():
+            if "code" in fields:
+                code = str(fields["code"]).strip().upper()
+                fields["code"] = code
+                if self._shop.promo_code_exists(code, exclude_id=data.promo_id):
+                    raise ValidationDomainError("Este código já existe.")
+            if "supporter_id" in fields:
+                supporter_id = fields.pop("supporter_id")
+                if supporter_id is None:
+                    fields["supporter"] = None
+                else:
+                    supporter = self._commissions.get_approved(supporter_id)
+                    if supporter is None:
+                        raise ValidationDomainError("Apoiador aprovado não encontrado.")
+                    fields["supporter"] = supporter
+            for key, value in fields.items():
                 setattr(promo, key, value)
-            promo.save()
-            return promo
+            return self._shop.save_promo(promo)

@@ -1,3 +1,4 @@
+from apps.payment.application.pricing import CoinPricingService
 from apps.payment.application.use_cases import (
     ApplyGatewayPaymentUseCase,
     CancelPaymentOrderUseCase,
@@ -48,6 +49,7 @@ class PaymentProvider(AppProvider):
         container.register_self(StripeGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(PaymentGatewayRegistry, lifetime=Lifetime.SINGLETON)
         container.register_self(WebhookSignatureService, lifetime=Lifetime.SINGLETON)
+        container.register_self(CoinPricingService, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetPaymentCatalogUseCase,
             PreviewPaymentBonusUseCase,

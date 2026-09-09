@@ -40,11 +40,10 @@ Direção das dependências para novos fluxos:
 - apresentação trata HTTP/WebSocket e delega a regra ao caso de uso;
 - consultas do banco Lineage ficam nos catálogos SQL da infraestrutura.
 
-A estrutura em camadas com DI cobre os apps de negócio principais (`support`, `programs`,
-`themes`, `shop`, `games`, `wallet`, `payment`, `accounts`, `staff`). Portas admin nos apps
-donos alimentam o staff; autenticação (sessões, 2FA, OAuth, passkeys) resolve via
-`AccountsProvider`. Ainda pode haver ORM residual em helpers de progresso/conteúdo e em
-CRUD staff pontual (`custom_items`, observação de itens). Consulte o [mapa dos apps](apps.md).
+A estrutura em camadas com DI cobre os apps de negócio. **Application e presentation não
+acessam ORM** (``.objects``): só portas injetadas e ``UnitOfWork``. Adaptadores Django ficam
+em ``infrastructure/``. Staff consome portas admin dos apps donos; autenticação resolve via
+``AccountsProvider``. Middleware de recursos usa ``ISystemResourceRepository``.
 
 ## Injeção de dependência
 

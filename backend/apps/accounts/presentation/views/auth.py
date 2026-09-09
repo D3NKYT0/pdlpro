@@ -1,6 +1,5 @@
 import secrets
 
-from django.contrib.auth import get_user_model
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
@@ -74,6 +73,7 @@ from apps.accounts.application.use_cases import (
     UpdateProfileUseCase,
 )
 from apps.accounts.domain.exceptions import InvalidCredentialsError, SessionAuthenticationError
+from apps.accounts.infrastructure.auth_session import AuthSessionService
 from apps.accounts.infrastructure.authentication import (
     _csrf_failed_reason,
     build_auth_response,
@@ -156,10 +156,7 @@ class RegisterView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        from django.contrib.auth import get_user_model
-
-        orm_user = get_user_model().objects.get(id=user.id)
-        return build_auth_response(request, orm_user)
+        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
 
 
 class LoginView(InjectedAPIView):
@@ -200,12 +197,9 @@ class LoginView(InjectedAPIView):
                 details={"captcha_required": captcha_required(request, data["login"])}
             )
         clear_failures(request, data["login"])
-        from django.contrib.auth import get_user_model
-
-        orm_user = get_user_model().objects.get(id=user.id)
-        if orm_user.is_2fa_enabled:
-            return Response({"requires_2fa": True, "challenge": make_login_challenge(orm_user.id)})
-        return build_auth_response(request, orm_user)
+        if user.is_2fa_enabled:
+            return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
+        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
 
 
 class AuthCapabilitiesView(InjectedAPIView):
@@ -335,8 +329,7 @@ class CompleteCredentialsView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        orm_user = get_user_model().objects.get(id=user.id)
-        return build_auth_response(request, orm_user)
+        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
 
 
 class RefreshView(InjectedAPIView):
@@ -525,8 +518,7 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
             VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
         )
-        orm_user = get_user_model().objects.get(id=user.id)
-        return build_auth_response(request, orm_user)
+        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
 
 
 class TwoFactorView(InjectedAPIView):

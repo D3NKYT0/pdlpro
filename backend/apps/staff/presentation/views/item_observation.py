@@ -1,7 +1,5 @@
 import logging
 
-from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -9,21 +7,29 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 
 from apps.server.application.item_observation import (
+    CaptureObservationSnapshotUseCase,
+    CaptureSnapshotInput,
+    CompareObservationSnapshotsUseCase,
+    CompareSnapshotsInput,
+    DeleteObservationCategoryUseCase,
+    DeleteObservationSnapshotUseCase,
+    GetObservationCategoryUseCase,
+    GetObservationSnapshotUseCase,
+    ListLiveObservationUseCase,
+    ListObservationCategoriesUseCase,
+    ListObservationSnapshotsUseCase,
+    LiveObservationInput,
     ObservationUnavailable,
-    capture_snapshot,
-    compare_snapshots,
-    observation_source,
-    read_observation,
+    PageInput,
+    SetFavoriteInput,
+    SetObservationFavoriteUseCase,
+    SnapshotDetailInput,
+    UpsertCategoryInput,
+    UpsertObservationCategoryUseCase,
 )
-from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory,
-    ItemObservationFavorite,
     ItemObservationSnapshot,
-)
-from apps.server.infrastructure.lineage.item_catalog import item_display_name
-from apps.server.infrastructure.lineage.item_catalog import (
-    item_metadata as catalog_metadata,
 )
 from common.architecture.exceptions import DomainError
 from common.permissions import IsStaffMember
@@ -68,7 +74,9 @@ class ItemQuery(PageQuery):
     minimum = serializers.IntegerField(default=0, min_value=0, max_value=10**30 - 1)
     category = serializers.CharField(default="", allow_blank=True, max_length=100)
     favorites = serializers.BooleanField(default=False)
-    sort = serializers.ChoiceField(default="quantity", choices=["quantity", "unique_owners", "instances", "name"])
+    sort = serializers.ChoiceField(
+        default="quantity", choices=["quantity", "unique_owners", "instances", "name"]
+    )
 
 
 class CaptureInput(serializers.Serializer):
@@ -112,7 +120,7 @@ class CategorySerializer(serializers.ModelSerializer):
     """Representa e valida uma categoria usada para organizar observações.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização e a persistência pertencem ao fluxo chamador / caso de uso.
 
     Campos declarados: ``id``, ``name``, ``description``, ``item_ids``, ``order``.
     """
@@ -136,8 +144,18 @@ class SnapshotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ItemObservationSnapshot
-        fields = ("id", "snapshot_date", "source", "created_at", "created_by", "notes",
-                  "total_characters", "total_instances", "total_quantity", "site_quantity")
+        fields = (
+            "id",
+            "snapshot_date",
+            "source",
+            "created_at",
+            "created_by",
+            "notes",
+            "total_characters",
+            "total_instances",
+            "total_quantity",
+            "site_quantity",
+        )
 
 
 def query(serializer_class, request):
@@ -146,30 +164,13 @@ def query(serializer_class, request):
     return serializer.validated_data
 
 
-def paginate(rows, page_number, serialize=lambda row: row):
-    page = Paginator(rows, 50).get_page(page_number)
-    return {"results": [serialize(row) for row in page], "count": page.paginator.count,
-            "page": page.number, "pages": page.paginator.num_pages}
-
-
-def item_metadata(item_id):
-    item = catalog_metadata(item_id)
-    return {"catalog_found": item["catalog_found"], "item_type": item["category"],
-            "grade": item["grade"], "tradeable": item["tradeable"], "icon_url": item["icon_url"], "source": item["source"]}
-
-
-def item_json(row):
-    return {**row, **item_metadata(row["item_id"]),
-            **{key: str(row[key]) for key in ("quantity", "instances", "unique_owners")}}
-
-
 class ObservationView(InjectedAPIView):
     """Base das consultas administrativas de itens, com verificação de permissões e tratamento de
     indisponibilidade.
 
     Usa os handlers herdados ou associados nesta classe. As opções abaixo especializam o
     comportamento da view base. Controle de acesso declarado: [IsAuthenticated, IsStaffMember,
-    CanObserveItems].
+    CanObserveItems]. Resolve casos de uso do ServerProvider.
     """
 
     permission_classes = [IsAuthenticated, IsStaffMember, CanObserveItems]
@@ -182,9 +183,9 @@ class ObservationView(InjectedAPIView):
         try:
             return callback()
         except ObservationUnavailable as exc:
-            raise ObservationUnavailable(
-                str(exc), status_code=unavailable_status
-            ) from None
+            raise ObservationUnavailable(str(exc), status_code=unavailable_status) from None
+        except DomainError:
+            raise
         except Exception as exc:
             logger.exception("Falha na observação de itens L2")
             raise DomainError(
@@ -207,19 +208,25 @@ class ObservationAccessView(ObservationView):
         description="Informa quais ações de observação de itens o usuário autenticado pode executar.",
     )
     def get(self, request):
-        return Response({key: request.user.has_perm(f"server.{permission}") for key, permission in {
-            "capture": "capture_itemobservationsnapshot", "delete_snapshots": "delete_itemobservationsnapshot",
-            "add_categories": "add_itemobservationcategory", "change_categories": "change_itemobservationcategory",
-            "delete_categories": "delete_itemobservationcategory",
-        }.items()})
+        return Response(
+            {
+                key: request.user.has_perm(f"server.{permission}")
+                for key, permission in {
+                    "capture": "capture_itemobservationsnapshot",
+                    "delete_snapshots": "delete_itemobservationsnapshot",
+                    "add_categories": "add_itemobservationcategory",
+                    "change_categories": "change_itemobservationcategory",
+                    "delete_categories": "delete_itemobservationcategory",
+                }.items()
+            }
+        )
 
 
 class ObservationLiveView(ObservationView):
-    """Entrada HTTP para ``ILineageGateway``.
+    """Consulta ao vivo a distribuição de itens no servidor L2.
 
-    Implementa GET; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas da
-    base ou definidas nos padrões do DRF. Resolve a aplicação no escopo da requisição antes de
-    montar a resposta.
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Resolve
+    ``ListLiveObservationUseCase`` no escopo da requisição.
     """
 
     @extend_schema(
@@ -230,33 +237,25 @@ class ObservationLiveView(ObservationView):
     )
     def get(self, request):
         options = query(ItemQuery, request)
-        data = self.safely(lambda: read_observation(self.resolve(ILineageGateway)))
-        favorites = set(ItemObservationFavorite.objects.filter(user=request.user, source=data["source"])
-                        .values_list("item_id", flat=True))
-        rows = list(data["items"])
-        present = {row["item_id"] for row in rows}
-        for item_id in sorted(favorites - present):
-            rows.append({"item_id": item_id, "item_name": item_display_name(item_id), "quantity": 0,
-                         "instances": 0, "unique_owners": 0, "category_name": ""})
-        for row in rows:
-            row["is_favorite"] = row["item_id"] in favorites
-        needle = options["search"].casefold()
-        rows = [row for row in rows if
-                (not needle or needle in row["item_name"].casefold() or needle in str(row["item_id"]))
-                and row["quantity"] >= options["minimum"]
-                and (not options["favorites"] or row["is_favorite"])
-                and (not options["category"] or options["category"] == row["category_name"])]
-        order = options["sort"]
-        rows.sort(key=(lambda row: (row["item_name"].casefold(), row["item_id"])) if order == "name"
-                  else lambda row: (-row[order], row["item_id"]))
-        return Response({
-            **paginate(rows, options["page"], item_json), "source": data["source"],
-            "totals": {key: str(data[key]) for key in
-                       ("total_quantity", "total_instances", "total_characters", "site_quantity")},
-            "locations": [{**row, "quantity": str(row["quantity"]), "instances": str(row["instances"])}
-                          for row in data["locations"]],
-            "categories": CategorySerializer(ItemObservationCategory.objects.all(), many=True).data,
-        })
+        payload = self.safely(
+            lambda: self.resolve(ListLiveObservationUseCase).execute(
+                LiveObservationInput(
+                    user_id=request.user.id,
+                    search=options["search"],
+                    minimum=options["minimum"],
+                    category=options["category"],
+                    favorites=options["favorites"],
+                    sort=options["sort"],
+                    page=options["page"],
+                )
+            )
+        )
+        return Response(
+            {
+                **payload,
+                "categories": CategorySerializer(payload["categories"], many=True).data,
+            }
+        )
 
 
 class ObservationFavoriteView(ObservationView):
@@ -277,21 +276,22 @@ class ObservationFavoriteView(ObservationView):
             raise serializers.ValidationError({"item_id": "ID de item inválido."})
         serializer = FavoriteInput(data=request.data)
         serializer.is_valid(raise_exception=True)
-        criteria = {"user": request.user, "source": observation_source(), "item_id": item_id}
-        active = serializer.validated_data["active"]
-        if active:
-            ItemObservationFavorite.objects.get_or_create(**criteria)
-        else:
-            ItemObservationFavorite.objects.filter(**criteria).delete()
-        return Response({"item_id": item_id, "active": active})
+        return Response(
+            self.resolve(SetObservationFavoriteUseCase).execute(
+                SetFavoriteInput(
+                    user_id=request.user.id,
+                    item_id=item_id,
+                    active=serializer.validated_data["active"],
+                )
+            )
+        )
 
 
 class ObservationSnapshotsView(ObservationView):
-    """Entrada HTTP para ``ILineageGateway``.
+    """Lista e cria capturas persistidas de observação de itens.
 
-    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Usa as permissões herdadas
-    da base ou definidas nos padrões do DRF. Resolve a aplicação no escopo da requisição antes
-    de montar a resposta.
+    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Resolve casos de uso do
+    ServerProvider.
     """
 
     @extend_schema(
@@ -303,8 +303,13 @@ class ObservationSnapshotsView(ObservationView):
     )
     def get(self, request):
         page = query(PageQuery, request)["page"]
-        rows = ItemObservationSnapshot.objects.select_related("created_by")
-        return Response(paginate(rows, page, lambda row: SnapshotSerializer(row).data))
+        payload = self.resolve(ListObservationSnapshotsUseCase).execute(PageInput(page=page))
+        return Response(
+            {
+                **payload,
+                "results": SnapshotSerializer(payload["results"], many=True).data,
+            }
+        )
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
@@ -317,8 +322,12 @@ class ObservationSnapshotsView(ObservationView):
         self.require("capture_itemobservationsnapshot")
         serializer = CaptureInput(data=request.data)
         serializer.is_valid(raise_exception=True)
-        snapshot = self.safely(lambda: capture_snapshot(self.resolve(ILineageGateway), request.user,
-                                                       serializer.validated_data["notes"]), unavailable_status=409)
+        snapshot = self.safely(
+            lambda: self.resolve(CaptureObservationSnapshotUseCase).execute(
+                CaptureSnapshotInput(user=request.user, notes=serializer.validated_data["notes"])
+            ),
+            unavailable_status=409,
+        )
         return Response(SnapshotSerializer(snapshot).data, status=201)
 
 
@@ -337,14 +346,16 @@ class ObservationSnapshotView(ObservationView):
         responses=SnapshotSerializer,
     )
     def get(self, request, snapshot_id):
-        snapshot = get_object_or_404(ItemObservationSnapshot, id=snapshot_id)
         page = query(PageQuery, request)["page"]
-        def serialize(row):
-            return {**item_metadata(row.item_id), "item_id": row.item_id, "item_name": row.item_name, "category_name": row.category_name,
-                    "location": row.location, "quantity": str(row.quantity), "instances": str(row.instances),
-                    "unique_owners": str(row.unique_owners)}
-        return Response({"snapshot": SnapshotSerializer(snapshot).data,
-                         **paginate(snapshot.details.all(), page, serialize)})
+        payload = self.resolve(GetObservationSnapshotUseCase).execute(
+            SnapshotDetailInput(snapshot_id=snapshot_id, page=page)
+        )
+        return Response(
+            {
+                **payload,
+                "snapshot": SnapshotSerializer(payload["snapshot"]).data,
+            }
+        )
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
@@ -354,7 +365,7 @@ class ObservationSnapshotView(ObservationView):
     )
     def delete(self, request, snapshot_id):
         self.require("delete_itemobservationsnapshot")
-        get_object_or_404(ItemObservationSnapshot, id=snapshot_id).delete()
+        self.resolve(DeleteObservationSnapshotUseCase).execute(snapshot_id)
         return Response(status=204)
 
 
@@ -374,14 +385,23 @@ class ObservationComparisonView(ObservationView):
     )
     def get(self, request):
         options = query(ComparisonQuery, request)
-        before = get_object_or_404(ItemObservationSnapshot, id=options["before"])
-        after = get_object_or_404(ItemObservationSnapshot, id=options["after"])
-        rows = self.safely(lambda: compare_snapshots(before, after), unavailable_status=400)
-        def serialize(row):
-            return {**row, **item_metadata(row["item_id"]), "before": str(row["before"]), "after": str(row["after"]), "change": str(row["change"]),
-                    "percentage": str(row["percentage"]) if row["percentage"] is not None else None}
-        return Response({"before": SnapshotSerializer(before).data, "after": SnapshotSerializer(after).data,
-                         **paginate(rows, options["page"], serialize)})
+        payload = self.safely(
+            lambda: self.resolve(CompareObservationSnapshotsUseCase).execute(
+                CompareSnapshotsInput(
+                    before_id=options["before"],
+                    after_id=options["after"],
+                    page=options["page"],
+                )
+            ),
+            unavailable_status=400,
+        )
+        return Response(
+            {
+                **payload,
+                "before": SnapshotSerializer(payload["before"]).data,
+                "after": SnapshotSerializer(payload["after"]).data,
+            }
+        )
 
 
 class ObservationCategoriesView(ObservationView):
@@ -398,7 +418,8 @@ class ObservationCategoriesView(ObservationView):
         responses=CategorySerializer(many=True),
     )
     def get(self, request):
-        return Response(CategorySerializer(ItemObservationCategory.objects.all(), many=True).data)
+        rows = self.resolve(ListObservationCategoriesUseCase).execute()
+        return Response(CategorySerializer(rows, many=True).data)
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
@@ -411,8 +432,10 @@ class ObservationCategoriesView(ObservationView):
         self.require("add_itemobservationcategory")
         serializer = CategorySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=201)
+        row = self.resolve(UpsertObservationCategoryUseCase).execute(
+            UpsertCategoryInput(validated_data=serializer.validated_data)
+        )
+        return Response(CategorySerializer(row).data, status=201)
 
 
 class ObservationCategoryView(ObservationView):
@@ -431,10 +454,13 @@ class ObservationCategoryView(ObservationView):
     )
     def put(self, request, category_id):
         self.require("change_itemobservationcategory")
-        serializer = CategorySerializer(get_object_or_404(ItemObservationCategory, id=category_id), data=request.data)
+        existing = self.resolve(GetObservationCategoryUseCase).execute(category_id)
+        serializer = CategorySerializer(existing, data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        row = self.resolve(UpsertObservationCategoryUseCase).execute(
+            UpsertCategoryInput(validated_data=serializer.validated_data, category_id=category_id)
+        )
+        return Response(CategorySerializer(row).data)
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
@@ -444,5 +470,5 @@ class ObservationCategoryView(ObservationView):
     )
     def delete(self, request, category_id):
         self.require("delete_itemobservationcategory")
-        get_object_or_404(ItemObservationCategory, id=category_id).delete()
+        self.resolve(DeleteObservationCategoryUseCase).execute(category_id)
         return Response(status=204)

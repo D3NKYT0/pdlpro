@@ -8,24 +8,11 @@ from apps.accounts.application.progress import add_xp
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.infrastructure.models import (
-    Fish,
-    FishingCatch,
-    FishingRod,
-    GameConfig,
-    UserFishingBait,
-)
+from apps.games.domain.repositories import IBagRepository, IFishingRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18}
-
-
-def _config() -> GameConfig:
-    row = GameConfig.objects.filter(code="fishing", active=True).first()
-    if row is None:
-        raise GameInactiveError()
-    return row
 
 
 class GetFishingStateUseCase(UseCase[UUID, dict]):
@@ -35,22 +22,17 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, fishing: IFishingRepository) -> None:
+        self._fishing = fishing
 
-        user = get_user_model().objects.get(id=data)
-        rod, _ = FishingRod.objects.get_or_create(user=user)
-        config = GameConfig.objects.filter(code="fishing").first()
-        catches = (
-            FishingCatch.objects.select_related("fish")
-            .filter(user=user)
-            .order_by("-created_at")[:8]
-        )
+    def execute(self, data: UUID) -> dict:
+        user = self._fishing.require_user(data)
+        rod = self._fishing.get_or_create_rod(user)
+        config = self._fishing.get_config()
+        catches = self._fishing.list_recent_catches(user)
         return {
             "fichas": user.fichas,
-            "cost": int((config.settings or {}).get("cost_per_cast", 1))
-            if config
-            else 1,
+            "cost": int((config.settings or {}).get("cost_per_cast", 1)) if config else 1,
             "active": bool(config and config.active),
             "rod": {"level": rod.level, "xp": rod.xp},
             "fish": [
@@ -60,7 +42,7 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
                     "rarity": fish.rarity,
                     "min_rod_level": fish.min_rod_level,
                 }
-                for fish in Fish.objects.filter(active=True)
+                for fish in self._fishing.list_active_fish()
             ],
             "recent": [
                 {
@@ -94,35 +76,40 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        fishing: IFishingRepository,
+        bags: IBagRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._fishing = fishing
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: CastLineInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        cost = int((_config().settings or {}).get("cost_per_cast", 1))
+        config = self._fishing.get_config()
+        if config is None or not config.active:
+            raise GameInactiveError()
+        cost = int((config.settings or {}).get("cost_per_cast", 1))
         with self._unit_of_work:
-            user = get_user_model().objects.select_for_update().get(id=data.user_id)
+            user = self._fishing.require_user_locked(data.user_id)
             bonus = 0
             if data.bait_id:
-                stock = (
-                    UserFishingBait.objects.select_for_update()
-                    .select_related("bait")
-                    .filter(user=user, bait__id=data.bait_id, bait__active=True)
-                    .first()
-                )
+                stock = self._fishing.get_bait_stock_locked(user, data.bait_id)
                 if not stock or stock.quantity < 1:
                     raise ValidationDomainError("Você não possui esta isca.")
                 stock.quantity -= 1
-                stock.save(update_fields=["quantity", "updated_at"])
+                self._fishing.save_bait_stock(
+                    stock, update_fields=["quantity", "updated_at"]
+                )
                 bonus = stock.bait.success_bonus
             if user.fichas < cost:
                 raise InsufficientTokensError()
             user.fichas -= cost
-            rod, _ = FishingRod.objects.select_for_update().get_or_create(user=user)
-            pool = list(Fish.objects.filter(active=True, min_rod_level__lte=rod.level))
+            rod = self._fishing.get_or_create_rod_locked(user)
+            pool = self._fishing.list_fish_for_rod(rod.level)
             if not pool:
-                pool = list(Fish.objects.filter(active=True))
+                pool = self._fishing.list_active_fish()
             fish = (
                 random.choices(
                     pool, weights=[max(item.weight, 1) for item in pool], k=1
@@ -138,7 +125,7 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                 while rod.xp >= rod.level * 100:
                     rod.xp -= rod.level * 100
                     rod.level += 1
-                rod.save(update_fields=["xp", "level", "updated_at"])
+                self._fishing.save_rod(rod, update_fields=["xp", "level", "updated_at"])
                 if fish.fichas_reward:
                     user.fichas += fish.fichas_reward
                 if fish.item_id:
@@ -147,11 +134,12 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                         item_id=fish.item_id,
                         item_name=fish.item_name or fish.name,
                         enchant=fish.enchant,
+                        bags=self._bags,
                     )
                 add_xp(user, 8)
                 add_battle_pass_xp(user, 5)
             user.save(update_fields=["fichas", "updated_at"])
-            FishingCatch.objects.create(
+            self._fishing.create_catch(
                 user=user, fish=fish, success=success, rod_level=rod.level
             )
         return {
