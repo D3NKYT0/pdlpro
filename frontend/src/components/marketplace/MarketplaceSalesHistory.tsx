@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import {
@@ -8,7 +9,7 @@ import {
 import { formatCurrency, formatDateTime as formatDate } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
-import { listingStatus } from './marketplaceHelpers'
+import { listingStatusFor } from './marketplaceHelpers'
 
 interface MarketplaceSalesHistoryProps {
   listings: ApiCharacterListing[]

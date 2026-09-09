@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { authApi, ApiError } from '../services/api'
+import i18n from '../i18n'
 import { ProfilePage } from './ProfilePage'
 
 const session = vi.hoisted(() => ({ user: { username: 'Hero', display_name: 'Herói', email: 'user@test.dev', bio: '', is_email_verified: true, role: 'player' }, refreshUser: vi.fn() }))
@@ -21,7 +22,7 @@ beforeEach(() => {
   vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {})
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
-afterEach(() => { cleanup(); client.clear(); vi.restoreAllMocks() })
+afterEach(async () => { cleanup(); client.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 function mount() {
   const result = render(<QueryClientProvider client={client}><MemoryRouter><ProfilePage /></MemoryRouter></QueryClientProvider>)
   return { ...result, user: userEvent.setup() }
@@ -58,4 +59,15 @@ it('envia imagem, exibe preview e libera URL após salvar', async () => {
   const form = vi.mocked(authApi.updateMe).mock.calls[0][0] as FormData
   expect(form.get('avatar')).toBe(file)
   await waitFor(() => expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:avatar'))
+})
+it('apresenta rótulos, contador e recusa de avatar no idioma ativo', async () => {
+  await i18n.changeLanguage('en')
+  const { container } = mount()
+  expect(screen.getByRole('heading', { name: 'Edit profile' })).toBeVisible()
+  expect(screen.getByRole('textbox', { name: /Display name/ })).toBeVisible()
+  expect(screen.getByText('0/500 characters')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Save changes' })).toBeVisible()
+  const file = new File(['x'], 'avatar', { type: 'text/plain' })
+  fireEvent.change(container.querySelector('input[type=file]')!, { target: { files: [file] } })
+  expect(toast.error).toHaveBeenCalledWith('Choose an image file.')
 })

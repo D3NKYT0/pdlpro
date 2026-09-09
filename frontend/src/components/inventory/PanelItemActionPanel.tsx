@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ArrowRightLeft, Send } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
@@ -50,21 +51,24 @@ export function PanelItemActionPanel({
   onTrade,
   onDeposit,
 }: PanelItemActionPanelProps) {
+  const { t } = useTranslation('panel')
+  const { t: tCommon } = useTranslation('common')
+
   if (action.mode === 'trade') {
     return (
       <form className="inventory-item-action-panel" onSubmit={onTrade}>
         <div className="inventory-item-action-heading">
           <ArrowRightLeft aria-hidden="true" />
           <div>
-            <span className="panel-eyebrow">Transferência entre personagens</span>
+            <span className="panel-eyebrow">{t('inventory.action.tradeEyebrow')}</span>
             <strong>{action.itemName}</strong>
-            <small>Origem: conta {action.originAccount} · {action.originCharacter}</small>
+            <small>{t('inventory.action.origin', { account: action.originAccount, character: action.originCharacter })}</small>
           </div>
         </div>
 
         <div className="inventory-item-action-fields">
           <Field>
-            Conta de destino
+            {t('inventory.action.destinationAccount')}
             <select
               value={destinationLogin}
               onChange={(event) => {
@@ -75,33 +79,33 @@ export function PanelItemActionPanel({
               required
             >
               <option value="">
-                {destinationsLoading ? 'Carregando contas...' : 'Selecione a conta'}
+                {destinationsLoading ? t('inventory.action.loadingAccounts') : t('inventory.action.selectAccount')}
               </option>
               {destinationAccounts.map((account) => (
                 <option value={account.login} key={account.login}>
-                  {account.login}{account.is_primary ? ' — principal' : ''}
+                  {t(account.is_primary ? 'inventory.action.accountPrimaryOption' : 'inventory.action.accountOption', { login: account.login })}
                 </option>
               ))}
             </select>
           </Field>
           <Field>
-            Personagem de destino
+            {t('inventory.action.destinationCharacter')}
             <select
               value={destinationInventoryId}
               onChange={(event) => onDestinationInventoryIdChange(event.target.value)}
               disabled={!destinationLogin}
               required
             >
-              <option value="">Selecione o personagem</option>
+              <option value="">{t('inventory.action.selectCharacter')}</option>
               {destinationCharacters.map((inventory) => (
                 <option value={inventory.inventory_id} key={inventory.inventory_id}>
-                  {inventory.character_name} — nível {inventory.character.level}
+                  {t('inventory.action.characterOption', { name: inventory.character_name, level: inventory.character.level })}
                 </option>
               ))}
             </select>
           </Field>
           <Field>
-            Quantidade
+            {t('inventory.action.quantity')}
             <input
               type="number"
               min={1}
@@ -116,26 +120,26 @@ export function PanelItemActionPanel({
 
         {destinationsError ? (
           <p className="inventory-item-action-notice inventory-item-action-error">
-            Não foi possível carregar os personagens de destino. Use Atualizar e tente novamente.
+            {t('inventory.action.destinationsError')}
           </p>
         ) : null}
 
         {!destinationsLoading && !destinationsError && !destinationAccounts.length ? (
           <p className="inventory-item-action-notice">
-            Não existe outro personagem disponível para receber este item.
+            {t('inventory.action.noDestinations')}
           </p>
         ) : null}
 
         <div className="inventory-item-action-buttons">
           <Button className="ghost" type="button" onClick={onCancel} disabled={pending}>
-            Cancelar
+            {tCommon('cancel')}
           </Button>
           <Button
             type="submit"
             disabled={pending || destinationsError || !destinationInventoryId}
           >
             <ArrowRightLeft aria-hidden="true" />
-            {pending ? 'Transferindo...' : 'Confirmar transferência'}
+            {pending ? t('inventory.action.transferring') : t('inventory.action.confirmTransfer')}
           </Button>
         </div>
       </form>
@@ -153,13 +157,13 @@ export function PanelItemActionPanel({
       <div className="inventory-item-action-heading">
         <Send aria-hidden="true" />
         <div>
-          <span className="panel-eyebrow">Confirmar envio ao jogo</span>
+          <span className="panel-eyebrow">{t('inventory.action.depositEyebrow')}</span>
           <strong>{action.itemName}</strong>
-          <small>Destino: conta {accountName} · personagem {characterName}</small>
+          <small>{t('inventory.action.destination', { account: accountName, character: characterName })}</small>
         </div>
       </div>
       <Field className="inventory-deposit-quantity">
-        Quantidade
+        {t('inventory.action.quantity')}
         <input
           type="number"
           min={1}
@@ -171,15 +175,15 @@ export function PanelItemActionPanel({
         />
       </Field>
       <p className="inventory-item-action-notice">
-        O item sairá do painel e entrará na fila de entrega deste personagem.
+        {t('inventory.action.depositNotice')}
       </p>
       <div className="inventory-item-action-buttons">
         <Button className="ghost" type="button" onClick={onCancel} disabled={pending}>
-          Cancelar
+          {tCommon('cancel')}
         </Button>
         <Button type="submit" disabled={pending}>
           <Send aria-hidden="true" />
-          {pending ? 'Enviando...' : `Enviar para ${characterName}`}
+          {pending ? t('inventory.action.sending') : t('inventory.action.sendTo', { character: characterName })}
         </Button>
       </div>
     </form>

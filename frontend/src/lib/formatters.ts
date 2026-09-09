@@ -27,3 +27,15 @@ export function formatDateTime(value: string | null | undefined, style: 'short' 
   const date = new Date(value)
   return Number.isNaN(date.getTime()) ? i18n.t('unavailableDate', { ns: 'common' }) : dateFormatter(style).format(date)
 }
+
+export function formatDate(value: string | null | undefined, style: 'short' | 'medium' = 'short') {
+  if (!value) return i18n.t('unavailableDate', { ns: 'common' })
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return i18n.t('unavailableDate', { ns: 'common' })
+  return new Intl.DateTimeFormat(intlLocale(), { dateStyle: style }).format(date)
+}
+
+/** Números de relatório; a escala decimal vem de quem chama. */
+export function formatNumber(value: string | number, options?: Intl.NumberFormatOptions) {
+  return new Intl.NumberFormat(intlLocale(), options).format(Number(value))
+}

@@ -2,6 +2,7 @@ import { type FormEvent, type ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, Navigate, NavLink, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import {
   ChartNoAxesCombined,
   Gavel,
@@ -15,6 +16,7 @@ import {
 import { Card } from '../../components/ui/Card'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
+import { formatDateTime, formatNumber } from '../../lib/formatters'
 import {
   isApiError,
   operationalReportsApi,
@@ -29,43 +31,31 @@ type CategorySlug = 'financeiro' | 'inventario' | 'leiloes' | 'compras' | 'marke
 
 const categories: {
   slug: CategorySlug
-  title: string
-  description: string
   icon: LucideIcon
   to: string
 }[] = [
   {
     slug: 'financeiro',
-    title: 'Financeiro',
-    description: 'Saldos, fluxo de caixa, pedidos e reconciliação de carteiras.',
     icon: ChartNoAxesCombined,
     to: '/painel/admin/relatorios/financeiro/saldos',
   },
   {
     slug: 'inventario',
-    title: 'Inventário',
-    description: 'Movimentações do inventário do painel, tops de itens e usuários.',
     icon: Package,
     to: '/painel/admin/relatorios/inventario',
   },
   {
     slug: 'leiloes',
-    title: 'Leilões',
-    description: 'Status dos leilões, lances e itens com mais atividade.',
     icon: Gavel,
     to: '/painel/admin/relatorios/leiloes',
   },
   {
     slug: 'compras',
-    title: 'Compras da loja',
-    description: 'Receita da loja, carrinhos abandonados e tops de itens e cupons.',
     icon: ShoppingBag,
     to: '/painel/admin/relatorios/compras',
   },
   {
     slug: 'marketplace',
-    title: 'Marketplace',
-    description: 'Anúncios de personagens, vendas e ranking de vendedores.',
     icon: Store,
     to: '/painel/admin/relatorios/marketplace',
   },
@@ -78,23 +68,24 @@ const categoryToKind: Record<Exclude<CategorySlug, 'financeiro'>, OperationalRep
   marketplace: 'marketplace',
 }
 
-const statusLabels: Record<string, string> = {
-  open: 'Aberto',
-  finished: 'Finalizado',
-  cancelled: 'Cancelado',
-  completed: 'Concluída',
-  for_sale: 'À venda',
-  sold: 'Vendido',
-  disputed: 'Em disputa',
-  RETIROU_DO_JOGO: 'Retirou do jogo',
-  INSERIU_NO_JOGO: 'Inseriu no jogo',
-  TROCA_ENTRE_PERSONAGENS: 'Troca entre personagens',
+const OPERATIONAL_STATUSES: Record<string, string[]> = {
+  auctions: ['open', 'finished', 'cancelled'],
+  marketplace: ['for_sale', 'sold', 'cancelled', 'disputed'],
+  purchases: ['completed', 'cancelled'],
 }
 
-const numberFormat = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
-const quantity = (value: string | number) => numberFormat.format(Number(value))
-const dateTime = (value: string | null | undefined) => (value ? new Date(value).toLocaleString('pt-BR') : '—')
+const INVENTORY_ACTIONS = ['RETIROU_DO_JOGO', 'INSERIU_NO_JOGO', 'TROCA_ENTRE_PERSONAGENS']
+
+type AdminT = TFunction<'admin'>
+
+const quantity = (value: string | number) =>
+  formatNumber(value, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+const dateTime = (value: string | null | undefined) => (value ? formatDateTime(value, 'short') : '—')
 const dayLabel = (value: string) => value.split('-').reverse().join('/')
+
+function statusLabel(t: AdminT, value: string) {
+  return t(`reports.statusLabels.${value}`, { defaultValue: value })
+}
 
 function Metric({ label, value, detail, tone }: { label: string; value: ReactNode; detail?: string; tone?: string }) {
   return (
@@ -106,8 +97,8 @@ function Metric({ label, value, detail, tone }: { label: string; value: ReactNod
   )
 }
 
-function Status({ value }: { value: string }) {
-  return <span className={`finance-status is-${value}`}>{statusLabels[value] || value}</span>
+function Status({ value, t }: { value: string; t: AdminT }) {
+  return <span className={`finance-status is-${value}`}>{statusLabel(t, value)}</span>
 }
 
 function ReportsHub() {
@@ -115,7 +106,7 @@ function ReportsHub() {
   return (
     <div className="account-page financial-reports">
       <AdminHeader
-        kicker={t('common:staff', { defaultValue: 'Staff' })}
+        kicker={t('common:staff')}
         title={t('reports.title')}
         description={t('reports.description')}
       />
@@ -143,10 +134,12 @@ function OperationalFilters({
   kind,
   params,
   apply,
+  t,
 }: {
   kind: OperationalReportKind
   params: URLSearchParams
   apply: (params: URLSearchParams) => void
+  t: AdminT
 }) {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -156,36 +149,29 @@ function OperationalFilters({
     })
     apply(next)
   }
-  const statuses =
-    kind === 'auctions'
-      ? ['open', 'finished', 'cancelled']
-      : kind === 'marketplace'
-        ? ['for_sale', 'sold', 'cancelled', 'disputed']
-        : kind === 'purchases'
-          ? ['completed', 'cancelled']
-          : []
+  const statuses = OPERATIONAL_STATUSES[kind] ?? []
   return (
     <form className="card finance-filters" onSubmit={submit}>
       <Field>
-        Usuário
-        <input name="username" defaultValue={params.get('username') || ''} placeholder="Buscar pelo nome" maxLength={150} />
+        {t('reports.username')}
+        <input name="username" defaultValue={params.get('username') || ''} placeholder={t('reports.usernamePlaceholder')} maxLength={150} />
       </Field>
       <Field>
-        Data inicial
+        {t('reports.dateFrom')}
         <input type="date" name="date_from" defaultValue={params.get('date_from') || ''} />
       </Field>
       <Field>
-        Data final
+        {t('reports.dateTo')}
         <input type="date" name="date_to" defaultValue={params.get('date_to') || ''} />
       </Field>
       {kind === 'inventory' ? (
         <Field>
-          Ação
+          {t('reports.action')}
           <select name="action" defaultValue={params.get('action') || ''}>
-            <option value="">Todas</option>
-            {['RETIROU_DO_JOGO', 'INSERIU_NO_JOGO', 'TROCA_ENTRE_PERSONAGENS'].map((action) => (
+            <option value="">{t('common:all')}</option>
+            {INVENTORY_ACTIONS.map((action) => (
               <option key={action} value={action}>
-                {statusLabels[action]}
+                {statusLabel(t, action)}
               </option>
             ))}
           </select>
@@ -193,51 +179,51 @@ function OperationalFilters({
       ) : null}
       {statuses.length ? (
         <Field>
-          Situação
+          {t('reports.status')}
           <select name="status" defaultValue={params.get('status') || ''}>
-            <option value="">Todas</option>
+            <option value="">{t('common:all')}</option>
             {statuses.map((status) => (
               <option key={status} value={status}>
-                {statusLabels[status]}
+                {statusLabel(t, status)}
               </option>
             ))}
           </select>
         </Field>
       ) : null}
       <Field>
-        Por página
+        {t('reports.pageSize')}
         <select name="page_size" defaultValue={params.get('page_size') || '20'}>
-          <option value="20">20 registros</option>
-          <option value="50">50 registros</option>
+          <option value="20">{t('reports.records', { count: 20 })}</option>
+          <option value="50">{t('reports.records', { count: 50 })}</option>
         </select>
       </Field>
       <div className="finance-actions">
         <Button type="submit">
           <Search size={16} />
-          Aplicar filtros
+          {t('reports.applyFilters')}
         </Button>
         <Button className="secondary" type="button" onClick={() => apply(new URLSearchParams())}>
-          Limpar
+          {t('common:clear')}
         </Button>
       </div>
     </form>
   )
 }
 
-function OperationalSummary({ data }: { data: OperationalReport }) {
+function OperationalSummary({ data, t }: { data: OperationalReport; t: AdminT }) {
   if (data.kind === 'inventory') {
     const actions = data.summary.actions as Record<string, { quantity: number; events: number }>
     return (
       <>
         <div className="finance-metrics">
-          <Metric label="Movimentações" value={quantity(data.summary.log_count as number)} detail={`Janela de ${data.summary.window_days} dias`} />
-          <Metric label="Itens distintos" value={quantity(data.summary.unique_items as number)} />
-          <Metric label="Usuários" value={quantity(data.summary.unique_users as number)} />
+          <Metric label={t('reports.inventory.moves')} value={quantity(data.summary.log_count as number)} detail={t('reports.inventory.window', { days: data.summary.window_days })} />
+          <Metric label={t('reports.inventory.uniqueItems')} value={quantity(data.summary.unique_items as number)} />
+          <Metric label={t('reports.inventory.users')} value={quantity(data.summary.unique_users as number)} />
         </div>
-        <div className="finance-status-counts" aria-label="Totais por ação">
+        <div className="finance-status-counts" aria-label={t('reports.inventory.actionTotals')}>
           {Object.entries(actions || {}).map(([action, row]) => (
             <span key={action}>
-              <Status value={action} />
+              <Status value={action} t={t} />
               <b>{quantity(row.quantity)}</b>
             </span>
           ))}
@@ -248,43 +234,43 @@ function OperationalSummary({ data }: { data: OperationalReport }) {
   if (data.kind === 'auctions') {
     return (
       <div className="finance-metrics">
-        <Metric label="Leilões" value={quantity(data.summary.auction_count as number)} />
-        <Metric label="Abertos" value={quantity(data.summary.open_count as number)} tone="is-positive" />
-        <Metric label="Finalizados" value={quantity(data.summary.finished_count as number)} />
-        <Metric label="Lances" value={quantity(data.summary.bid_count as number)} />
+        <Metric label={t('reports.auctions.auctions')} value={quantity(data.summary.auction_count as number)} />
+        <Metric label={t('reports.auctions.open')} value={quantity(data.summary.open_count as number)} tone="is-positive" />
+        <Metric label={t('reports.auctions.finished')} value={quantity(data.summary.finished_count as number)} />
+        <Metric label={t('reports.auctions.bids')} value={quantity(data.summary.bid_count as number)} />
       </div>
     )
   }
   if (data.kind === 'purchases') {
     return (
       <div className="finance-metrics">
-        <Metric label="Compras" value={quantity(data.summary.purchase_count as number)} />
-        <Metric label="Concluídas" value={quantity(data.summary.completed_count as number)} tone="is-positive" />
-        <Metric label="Receita" value={quantity(data.summary.revenue as string)} detail="Compras concluídas" />
-        <Metric label="Carrinhos ativos" value={quantity(data.summary.abandoned_carts as number)} detail="Com itens ou pacotes" />
+        <Metric label={t('reports.purchases.purchases')} value={quantity(data.summary.purchase_count as number)} />
+        <Metric label={t('reports.purchases.completed')} value={quantity(data.summary.completed_count as number)} tone="is-positive" />
+        <Metric label={t('reports.purchases.revenue')} value={quantity(data.summary.revenue as string)} detail={t('reports.purchases.revenueDetail')} />
+        <Metric label={t('reports.purchases.carts')} value={quantity(data.summary.abandoned_carts as number)} detail={t('reports.purchases.cartsDetail')} />
       </div>
     )
   }
   return (
     <div className="finance-metrics">
-      <Metric label="Anúncios" value={quantity(data.summary.listing_count as number)} />
-      <Metric label="À venda" value={quantity(data.summary.for_sale_count as number)} tone="is-positive" />
-      <Metric label="Vendidos" value={quantity(data.summary.sold_count as number)} />
-      <Metric label="Receita vendida" value={quantity(data.summary.sold_revenue as string)} />
+      <Metric label={t('reports.marketplace.listings')} value={quantity(data.summary.listing_count as number)} />
+      <Metric label={t('reports.marketplace.forSale')} value={quantity(data.summary.for_sale_count as number)} tone="is-positive" />
+      <Metric label={t('reports.marketplace.sold')} value={quantity(data.summary.sold_count as number)} />
+      <Metric label={t('reports.marketplace.soldRevenue')} value={quantity(data.summary.sold_revenue as string)} />
     </div>
   )
 }
 
-function OperationalTable({ data }: { data: OperationalReport }) {
+function OperationalTable({ data, t }: { data: OperationalReport; t: AdminT }) {
   if (data.kind === 'inventory') {
     return (
       <table>
         <thead>
           <tr>
-            <th>Dia</th>
-            <th>Quantidade</th>
-            <th>Ações no dia</th>
-            <th>Detalhe</th>
+            <th>{t('reports.inventory.day')}</th>
+            <th>{t('reports.inventory.quantity')}</th>
+            <th>{t('reports.inventory.dayActions')}</th>
+            <th>{t('reports.inventory.detail')}</th>
           </tr>
         </thead>
         <tbody>
@@ -296,7 +282,7 @@ function OperationalTable({ data }: { data: OperationalReport }) {
               <td>
                 {Object.entries((row.actions as Record<string, number>) || {}).map(([action, total]) => (
                   <small key={action}>
-                    {statusLabels[action] || action}: {quantity(total)}
+                    {statusLabel(t, action)}: {quantity(total)}
                   </small>
                 ))}
               </td>
@@ -311,12 +297,12 @@ function OperationalTable({ data }: { data: OperationalReport }) {
       <table>
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Vendedor</th>
-            <th>Lance atual</th>
-            <th>Lances</th>
-            <th>Situação</th>
-            <th>Encerra</th>
+            <th>{t('reports.auctions.item')}</th>
+            <th>{t('reports.auctions.seller')}</th>
+            <th>{t('reports.auctions.currentBid')}</th>
+            <th>{t('reports.auctions.bids')}</th>
+            <th>{t('reports.status')}</th>
+            <th>{t('reports.auctions.endsAt')}</th>
           </tr>
         </thead>
         <tbody>
@@ -325,14 +311,17 @@ function OperationalTable({ data }: { data: OperationalReport }) {
               <td>
                 <strong>{String(row.item_name)}</strong>
                 <small>
-                  +{quantity(row.item_enchant as number)} · qtd {quantity(row.quantity as number)}
+                  {t('reports.auctions.itemDetail', {
+                    enchant: quantity(row.item_enchant as number),
+                    quantity: quantity(row.quantity as number),
+                  })}
                 </small>
               </td>
               <td>{String(row.seller || '—')}</td>
               <td>{row.current_bid != null ? quantity(row.current_bid as string) : '—'}</td>
               <td>{quantity(row.bid_count as number)}</td>
               <td>
-                <Status value={String(row.status)} />
+                <Status value={String(row.status)} t={t} />
               </td>
               <td>{dateTime(row.ends_at as string)}</td>
             </tr>
@@ -346,12 +335,12 @@ function OperationalTable({ data }: { data: OperationalReport }) {
       <table>
         <thead>
           <tr>
-            <th>Usuário</th>
-            <th>Total</th>
-            <th>Desconto</th>
-            <th>Cupom</th>
-            <th>Situação</th>
-            <th>Criado em</th>
+            <th>{t('reports.username')}</th>
+            <th>{t('reports.purchases.total')}</th>
+            <th>{t('reports.purchases.discount')}</th>
+            <th>{t('reports.purchases.coupon')}</th>
+            <th>{t('reports.status')}</th>
+            <th>{t('reports.purchases.createdAt')}</th>
           </tr>
         </thead>
         <tbody>
@@ -364,7 +353,7 @@ function OperationalTable({ data }: { data: OperationalReport }) {
               <td>{quantity(row.discount as string)}</td>
               <td>{String(row.promo_code || '—')}</td>
               <td>
-                <Status value={String(row.status)} />
+                <Status value={String(row.status)} t={t} />
               </td>
               <td>{dateTime(row.created_at as string)}</td>
             </tr>
@@ -377,12 +366,12 @@ function OperationalTable({ data }: { data: OperationalReport }) {
     <table>
       <thead>
         <tr>
-          <th>Personagem</th>
-          <th>Vendedor</th>
-          <th>Comprador</th>
-          <th>Preço</th>
-          <th>Situação</th>
-          <th>Criado em</th>
+          <th>{t('reports.marketplace.character')}</th>
+          <th>{t('reports.auctions.seller')}</th>
+          <th>{t('reports.marketplace.buyer')}</th>
+          <th>{t('reports.marketplace.price')}</th>
+          <th>{t('reports.status')}</th>
+          <th>{t('reports.purchases.createdAt')}</th>
         </tr>
       </thead>
       <tbody>
@@ -390,13 +379,13 @@ function OperationalTable({ data }: { data: OperationalReport }) {
           <tr key={String(row.id)}>
             <td>
               <strong>{String(row.char_name)}</strong>
-              <small>Nv. {quantity(row.char_level as number)}</small>
+              <small>{t('reports.marketplace.characterLevel', { level: quantity(row.char_level as number) })}</small>
             </td>
             <td>{String(row.seller || '—')}</td>
             <td>{String(row.buyer || '—')}</td>
             <td>{quantity(row.price as string)}</td>
             <td>
-              <Status value={String(row.status)} />
+              <Status value={String(row.status)} t={t} />
             </td>
             <td>{dateTime(row.created_at as string)}</td>
           </tr>
@@ -407,8 +396,10 @@ function OperationalTable({ data }: { data: OperationalReport }) {
 }
 
 function OperationalReportPanel({ category }: { category: Exclude<CategorySlug, 'financeiro'> }) {
+  const { t } = useTranslation('admin')
   const kind = categoryToKind[category]
-  const meta = categories.find((item) => item.slug === category)!
+  const title = t(`reports.categories.${category}.title`)
+  const description = t(`reports.categories.${category}.description`)
   const [params, setParams] = useSearchParams()
   const query = useQuery({
     queryKey: ['staff-operational-report', kind, params.toString()],
@@ -423,76 +414,74 @@ function OperationalReportPanel({ category }: { category: Exclude<CategorySlug, 
   const data = query.data
   return (
     <div className="account-page financial-reports">
-      <AdminHeader kicker="Relatórios" title={meta.title} description={meta.description} />
-      <nav className="finance-tabs" aria-label="Categorias de relatórios">
+      <AdminHeader kicker={t('reports.kicker')} title={title} description={description} />
+      <nav className="finance-tabs" aria-label={t('reports.categoriesNav')}>
         {categories.map((item) => {
           const Icon = item.icon
           return (
             <NavLink key={item.slug} to={item.to} className={() => (item.slug === category ? 'is-active' : '')}>
               <Icon size={18} />
-              {item.title}
+              {t(`reports.categories.${item.slug}.title`)}
             </NavLink>
           )
         })}
       </nav>
       <div className="finance-section-heading">
         <div>
-          <h2>{meta.title}</h2>
-          <p className="muted">{meta.description}</p>
+          <h2>{title}</h2>
+          <p className="muted">{description}</p>
         </div>
         <Button type="submit" className="secondary" onClick={() => void query.refetch()} disabled={query.isFetching}>
           <RefreshCw size={16} />
-          {query.isFetching ? 'Atualizando…' : 'Atualizar'}
+          {query.isFetching ? t('reports.refreshing') : t('reports.refresh')}
         </Button>
       </div>
-      <OperationalFilters key={`${kind}:${params}`} kind={kind} params={params} apply={setParams} />
+      <OperationalFilters key={`${kind}:${params}`} kind={kind} params={params} apply={setParams} t={t} />
       {query.isPending && (
         <Card className="finance-empty" role="status">
-          Carregando relatório…
+          {t('reports.loading')}
         </Card>
       )}
       {query.isError && (
         <Card className="finance-error" role="alert">
-          <strong>Não foi possível carregar o relatório.</strong>
-          <p>{isApiError(query.error) ? query.error.message : 'Tente novamente.'}</p>
+          <strong>{t('reports.loadError')}</strong>
+          <p>{isApiError(query.error) ? query.error.message : t('reports.tryAgain')}</p>
           <Button type="submit" className="secondary" onClick={() => void query.refetch()}>
-            Tentar novamente
+            {t('common:retry')}
           </Button>
         </Card>
       )}
       {data && !query.isError ? (
         <>
-          <OperationalSummary data={data} />
+          <OperationalSummary data={data} t={t} />
           <Card className="finance-results" aria-busy={query.isFetching}>
             <div className="finance-section-heading">
               <div>
-                <h3>Detalhamento</h3>
+                <h3>{t('reports.detail')}</h3>
                 <p className="muted">
-                  {data.count.toLocaleString('pt-BR')} registros · Totais calculados sobre todos os resultados dos filtros.
+                  {t('reports.detailHint', { count: data.count })}
                 </p>
               </div>
             </div>
             {data.results.length ? (
-              <div className="finance-table" tabIndex={0} role="region" aria-label={`Tabela: ${meta.title}`}>
-                <OperationalTable data={data} />
+              <div className="finance-table" tabIndex={0} role="region" aria-label={t('reports.tableLabel', { title })}>
+                <OperationalTable data={data} t={t} />
               </div>
             ) : (
               <div className="finance-empty">
                 <Search size={28} />
-                <h3>Nenhum registro encontrado</h3>
-                <p className="muted">Ajuste os filtros ou consulte novamente após novas movimentações.</p>
+                <h3>{t('reports.emptyTitle')}</h3>
+                <p className="muted">{t('reports.emptyHint')}</p>
               </div>
             )}
             <div className="finance-pagination">
-              <span>
-                Página {page} de {data.total_pages}
-              </span>
+              <span>{t('common:pageOf', { page, total: data.total_pages })}</span>
               <div>
                 <Button type="submit" className="secondary" disabled={!data.previous || query.isFetching} onClick={() => changePage(page - 1)}>
-                  Anterior
+                  {t('common:previous')}
                 </Button>
                 <Button type="submit" className="secondary" disabled={!data.next || query.isFetching} onClick={() => changePage(page + 1)}>
-                  Próxima
+                  {t('common:next')}
                 </Button>
               </div>
             </div>

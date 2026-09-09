@@ -1,11 +1,13 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { apiErrorMessage } from '../../lib/errors'
 import { gamesApi, inventoryApi, lineageApi } from '../../services/api'
 import type { InventoryTab, PanelItemAction } from './types'
 
 export function useInventoryDashboard() {
+  const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
   const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
@@ -113,11 +115,11 @@ export function useInventoryDashboard() {
         item_id: Number(itemId),
         quantity: Number(quantity),
       })
-      toast.success('Item retirado para o painel')
+      toast.success(t('inventory.toast.withdrawn'))
       await queryClient.invalidateQueries({ queryKey: ['inventory', login] })
       await queryClient.invalidateQueries({ queryKey: ['game-items'] })
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha na retirada'))
+      toast.error(apiErrorMessage(error, t('inventory.toast.withdrawFailed')))
     }
   }
 
@@ -125,7 +127,7 @@ export function useInventoryDashboard() {
     if (!panelItemAction) return
     const depositQuantity = Number(panelActionQuantity)
     if (!Number.isInteger(depositQuantity) || depositQuantity < 1 || depositQuantity > panelItemAction.availableQuantity) {
-      toast.error('Informe uma quantidade válida para enviar ao jogo')
+      toast.error(t('inventory.toast.invalidDepositQuantity'))
       return
     }
 
@@ -138,14 +140,14 @@ export function useInventoryDashboard() {
         quantity: depositQuantity,
         enchant,
       })
-      toast.success(`${depositQuantity}x enviado para ${panelItemAction.originCharacter}`)
+      toast.success(t('inventory.toast.deposited', { quantity: depositQuantity, character: panelItemAction.originCharacter }))
       setPanelItemAction(null)
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['inventory'] }),
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha no depósito'))
+      toast.error(apiErrorMessage(error, t('inventory.toast.depositFailed')))
     } finally {
       setPanelActionPending(false)
     }
@@ -160,11 +162,11 @@ export function useInventoryDashboard() {
     )
 
     if (!destinationLogin || !destination) {
-      toast.error('Selecione a conta e o personagem de destino')
+      toast.error(t('inventory.toast.selectDestination'))
       return
     }
     if (!Number.isInteger(tradeQuantity) || tradeQuantity < 1 || tradeQuantity > panelItemAction.availableQuantity) {
-      toast.error('Informe uma quantidade válida para transferir')
+      toast.error(t('inventory.toast.invalidTradeQuantity'))
       return
     }
 
@@ -177,14 +179,14 @@ export function useInventoryDashboard() {
         quantity: tradeQuantity,
         enchant: panelItemAction.enchant,
       })
-      toast.success(`${tradeQuantity}x transferido para ${destination.character_name}`)
+      toast.success(t('inventory.toast.traded', { quantity: tradeQuantity, character: destination.character_name }))
       setPanelItemAction(null)
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['inventory'] }),
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha na transferência'))
+      toast.error(apiErrorMessage(error, t('inventory.toast.tradeFailed')))
     } finally {
       setPanelActionPending(false)
     }
@@ -196,14 +198,14 @@ export function useInventoryDashboard() {
       (inventory) => inventory.inventory_id === bagTransferInventoryId,
     )
     if (!destination) {
-      toast.error('Selecione o personagem que receberá os itens')
+      toast.error(t('inventory.toast.selectBagDestination'))
       return
     }
 
     setBagTransferPending(true)
     try {
       const result = await gamesApi.transferBag(destination.inventory_id)
-      toast.success(`${result.moved} itens movidos para o inventário de ${destination.character_name}`)
+      toast.success(t('inventory.toast.bagMoved', { moved: result.moved, character: destination.character_name }))
       setBagTransferInventoryId('')
       setSelectedLogin(destination.account_name)
       setActiveTab('characters')
@@ -213,7 +215,7 @@ export function useInventoryDashboard() {
         queryClient.invalidateQueries({ queryKey: ['inventory-destinations'] }),
       ])
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha ao mover os itens da Bag'))
+      toast.error(apiErrorMessage(error, t('inventory.toast.bagFailed')))
     } finally {
       setBagTransferPending(false)
     }

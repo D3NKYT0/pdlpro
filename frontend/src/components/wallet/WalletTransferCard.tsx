@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Coins, Send, ShieldCheck, UserRound } from 'lucide-react'
 import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
@@ -21,29 +22,31 @@ export function WalletTransferCard({
   onAmountChange,
   onSubmit,
 }: WalletTransferCardProps) {
+  const { t } = useTranslation('panel')
+
   return (
     <Card className="wallet-transfer-card">
       <header className="wallet-compact-heading">
         <span className="wallet-section-icon" aria-hidden="true"><Send /></span>
         <div>
-          <span className="panel-eyebrow">Entre jogadores</span>
-          <h2>Transferir moedas</h2>
+          <span className="panel-eyebrow">{t('wallet.transfer.eyebrow')}</span>
+          <h2>{t('wallet.transfer.title')}</h2>
         </div>
       </header>
-      <p className="muted">Envie moedas diretamente para outro jogador usando o nome da conta.</p>
+      <p className="muted">{t('wallet.transfer.description')}</p>
       <form className="wallet-transfer-form" onSubmit={onSubmit}>
         <Field>
-          <span className="wallet-field-label"><UserRound aria-hidden="true" /> Destinatário</span>
+          <span className="wallet-field-label"><UserRound aria-hidden="true" /> {t('wallet.transfer.recipient')}</span>
           <input
             value={recipient}
             onChange={(event) => onRecipientChange(event.target.value)}
-            placeholder="Nome do jogador"
+            placeholder={t('wallet.transfer.recipientPlaceholder')}
             autoComplete="off"
             required
           />
         </Field>
         <Field>
-          <span className="wallet-field-label"><Coins aria-hidden="true" /> Quantidade</span>
+          <span className="wallet-field-label"><Coins aria-hidden="true" /> {t('wallet.transfer.amount')}</span>
           <input
             type="number"
             min="0.01"
@@ -56,9 +59,9 @@ export function WalletTransferCard({
           />
         </Field>
         <Button type="submit" disabled={busy || !recipient || !amount}>
-          <Send aria-hidden="true" /> {busy ? 'Enviando...' : 'Transferir moedas'}
+          <Send aria-hidden="true" /> {busy ? t('wallet.transfer.submitting') : t('wallet.transfer.submit')}
         </Button>
-        <small className="wallet-transfer-warning"><ShieldCheck aria-hidden="true" /> Confira o destinatário antes de confirmar.</small>
+        <small className="wallet-transfer-warning"><ShieldCheck aria-hidden="true" /> {t('wallet.transfer.warning')}</small>
       </form>
     </Card>
   )

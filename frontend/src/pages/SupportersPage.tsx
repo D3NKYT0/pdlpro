@@ -1,8 +1,10 @@
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Coins, TicketPercent } from "lucide-react";
 import { programsApi } from "../services/api";
+import { formatDate, formatDateTime } from "../lib/formatters";
 import {
   Empty,
   ErrorNotice,
@@ -13,6 +15,7 @@ import { useProgramAction } from "../components/programs/useProgramAction";
 import { ProgramHeader } from "../components/programs/ProgramHeader";
 
 export function SupportersPage() {
+  const { t } = useTranslation("panel");
   const query = useQuery({
     queryKey: ["supporter"],
     queryFn: programsApi.supporter,
@@ -23,9 +26,9 @@ export function SupportersPage() {
   return (
     <div className="program-page">
       <ProgramHeader
-        eyebrow="Cresça com a comunidade"
-        title="Programa de apoiadores"
-        description="Compartilhe o servidor, acompanhe seus cupons e receba comissões pelas compras que você indicar."
+        eyebrow={t("supporters.eyebrow")}
+        title={t("supporters.title")}
+        description={t("supporters.description")}
       />
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
@@ -33,20 +36,20 @@ export function SupportersPage() {
         <>
           <div className="program-grid">
             <Card as="div" className="program-stat">
-              <small>Comissão disponível</small>
-              <strong>{Number(data.available).toFixed(2)} moedas</strong>
+              <small>{t("supporters.available")}</small>
+              <strong>{t("supporters.coins", { amount: Number(data.available).toFixed(2) })}</strong>
             </Card>
             <Card as="div" className="program-stat">
-              <small>Sua participação</small>
+              <small>{t("supporters.share")}</small>
               <strong>{profile?.commission_percent || "0"}%</strong>
             </Card>
             <Card as="div" className="program-stat">
-              <small>Seu cadastro</small>
+              <small>{t("supporters.registration")}</small>
               <div style={{ marginTop: 14 }}>
                 {profile ? (
                   <Status value={profile.status} />
                 ) : (
-                  <span className="muted">Ainda não enviado</span>
+                  <span className="muted">{t("supporters.notSubmitted")}</span>
                 )}
               </div>
             </Card>
@@ -54,11 +57,13 @@ export function SupportersPage() {
           <div className="program-two">
             <Card className="program-section">
               <h2>
-                {profile ? "Seu perfil de apoiador" : "Faça parte do programa"}
+                {profile
+                  ? t("supporters.profileTitle")
+                  : t("supporters.joinTitle")}
               </h2>
               {profile?.review_note && (
                 <p className="program-note">
-                  Resposta da equipe: {profile.review_note}
+                  {t("supporters.reviewNote", { note: profile.review_note })}
                 </p>
               )}
               <form
@@ -71,7 +76,7 @@ export function SupportersPage() {
                   if (file instanceof File && !file.size) form.delete("image");
                   void action.run(
                     () => programsApi.apply(form),
-                    "Cadastro enviado para a equipe.",
+                    t("supporters.applyToast"),
                     [["supporter"]],
                   );
                 }}
@@ -84,17 +89,17 @@ export function SupportersPage() {
                   />
                 )}
                 <label>
-                  Nome público
+                  {t("supporters.nameLabel")}
                   <input
                     name="name"
                     defaultValue={profile?.name}
                     required
                     maxLength={100}
-                    placeholder="Como sua comunidade conhece você"
+                    placeholder={t("supporters.namePlaceholder")}
                   />
                 </label>
                 <label>
-                  Canal ou página
+                  {t("supporters.channelLabel")}
                   <input
                     name="channel_url"
                     defaultValue={profile?.channel_url}
@@ -104,16 +109,16 @@ export function SupportersPage() {
                   />
                 </label>
                 <label>
-                  Conte um pouco sobre seu trabalho
+                  {t("supporters.aboutLabel")}
                   <textarea
                     name="description"
                     defaultValue={profile?.description}
                     maxLength={2000}
-                    placeholder="Seu conteúdo, comunidade e como pretende divulgar o servidor"
+                    placeholder={t("supporters.aboutPlaceholder")}
                   />
                 </label>
                 <label>
-                  Imagem do perfil
+                  {t("supporters.imageLabel")}
                   <input
                     type="file"
                     name="image"
@@ -123,10 +128,10 @@ export function SupportersPage() {
                 <div className="program-actions">
                   <Button disabled={action.busy} type="submit">
                     {action.busy
-                      ? "Enviando…"
+                      ? t("supporters.sending")
                       : profile
-                        ? "Salvar perfil"
-                        : "Enviar candidatura"}
+                        ? t("supporters.saveProfile")
+                        : t("supporters.apply")}
                     <ArrowUpRight size={17} />
                   </Button>
                 </div>
@@ -135,7 +140,7 @@ export function SupportersPage() {
             <div className="program-page">
               <Card className="program-section">
                 <div className="program-section-heading">
-                  <h2>Seus cupons</h2>
+                  <h2>{t("supporters.couponsTitle")}</h2>
                   <TicketPercent size={22} />
                 </div>
                 {data.coupons.length ? (
@@ -146,23 +151,20 @@ export function SupportersPage() {
                         <Status value={c.active ? "available" : "rejected"} />
                       </div>
                       <p>
-                        {c.percent}% de desconto · {c.uses} utilizações
+                        {t("supporters.couponSummary", {
+                          percent: c.percent,
+                          uses: c.uses,
+                        })}
                       </p>
                     </article>
                   ))
                 ) : (
-                  <Empty>
-                    Após a aprovação, a equipe poderá vincular seus cupons.
-                  </Empty>
+                  <Empty>{t("supporters.couponsEmpty")}</Empty>
                 )}
               </Card>
               <Card className="program-section">
-                <h2>Solicitar comissão</h2>
-                <p className="muted">
-                  As comissões aprovadas são creditadas na sua carteira do
-                  painel. O cálculo considera o saldo pago, sem a parte coberta
-                  por bônus.
-                </p>
+                <h2>{t("supporters.payoutTitle")}</h2>
+                <p className="muted">{t("supporters.payoutDescription")}</p>
                 <div className="program-actions">
                   <Button type="submit"
 
@@ -174,37 +176,35 @@ export function SupportersPage() {
                     onClick={() =>
                       void action.run(
                         programsApi.payout,
-                        "Comissão solicitada. Aguarde a análise da equipe.",
+                        t("supporters.payoutToast"),
                         [["supporter"]],
                       )
                     }
                   >
                     <Coins size={18} />
-                    Solicitar saldo disponível
+                    {t("supporters.payoutAction")}
                   </Button>
                 </div>
               </Card>
             </div>
           </div>
           <Card className="program-section">
-            <h2>Solicitações de comissão</h2>
+            <h2>{t("supporters.payoutsTitle")}</h2>
             {data.payouts.length ? (
               <div className="program-table-wrap">
                 <table className="program-table">
                   <thead>
                     <tr>
-                      <th>Data</th>
-                      <th>Valor</th>
-                      <th>Status</th>
-                      <th>Observação</th>
+                      <th>{t("supporters.table.date")}</th>
+                      <th>{t("supporters.table.amount")}</th>
+                      <th>{t("supporters.table.status")}</th>
+                      <th>{t("supporters.table.note")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.payouts.map((p) => (
                       <tr key={p.id}>
-                        <td>
-                          {new Date(p.created_at).toLocaleDateString("pt-BR")}
-                        </td>
+                        <td>{formatDate(p.created_at)}</td>
                         <td>{p.amount}</td>
                         <td>
                           <Status value={p.status} />
@@ -216,27 +216,25 @@ export function SupportersPage() {
                 </table>
               </div>
             ) : (
-              <Empty>Você ainda não solicitou comissões.</Empty>
+              <Empty>{t("supporters.payoutsEmpty")}</Empty>
             )}
           </Card>
           <Card className="program-section">
-            <h2>Comissões geradas</h2>
+            <h2>{t("supporters.commissionsTitle")}</h2>
             {data.commissions.length ? (
               <div className="program-table-wrap">
                 <table className="program-table">
                   <thead>
                     <tr>
-                      <th>Compra realizada em</th>
-                      <th>Comissão</th>
-                      <th>Situação</th>
+                      <th>{t("supporters.table.purchasedAt")}</th>
+                      <th>{t("supporters.table.commission")}</th>
+                      <th>{t("supporters.table.situation")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.commissions.map((c) => (
                       <tr key={c.id}>
-                        <td>
-                          {new Date(c.created_at).toLocaleString("pt-BR")}
-                        </td>
+                        <td>{formatDateTime(c.created_at, "short")}</td>
                         <td>{c.amount}</td>
                         <td>
                           <Status value={c.status} />
@@ -247,9 +245,7 @@ export function SupportersPage() {
                 </table>
               </div>
             ) : (
-              <Empty>
-                As compras realizadas com seus cupons aparecerão aqui.
-              </Empty>
+              <Empty>{t("supporters.commissionsEmpty")}</Empty>
             )}
           </Card>
         </>

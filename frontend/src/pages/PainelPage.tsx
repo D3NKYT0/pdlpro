@@ -1,6 +1,7 @@
 import { Card } from '../components/ui/Card'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   ArrowUpRight,
   Gamepad2,
@@ -22,17 +23,18 @@ import { canAccessStaff } from '../lib/staff'
 import { authApi, serverApi } from '../services/api'
 import { programsApi } from '../services/api'
 
-const shortcuts: Array<{ to: string; label: string; text: string; icon: LucideIcon; resource?: string }> = [
-  { to: '/painel/profile', label: 'Meu perfil', text: 'Avatar, nome e biografia', icon: CircleUserRound, resource: 'profile' },
-  { to: '/painel/accounts', label: 'Conta L2', text: 'Vincular login e personagens', icon: UserRoundCog, resource: 'accounts' },
-  { to: '/painel/inventory', label: 'Inventário', text: 'Retirar e depositar itens', icon: Package, resource: 'inventory' },
-  { to: '/painel/wallet', label: 'Carteira', text: 'Saldo, PIX e transferências', icon: WalletCards, resource: 'wallet' },
-  { to: '/painel/shop', label: 'Loja', text: 'Itens da loja do painel', icon: ShoppingBag, resource: 'shop' },
-  { to: '/painel/games', label: 'Jogos', text: 'Roleta, caixas, pesca e mais', icon: Gamepad2, resource: 'games' },
-  { to: '/painel/progress', label: 'Conquistas', text: 'Marcos da conta e prêmios', icon: Trophy, resource: 'progress' },
+const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: string }> = [
+  { to: '/painel/profile', key: 'profile', icon: CircleUserRound, resource: 'profile' },
+  { to: '/painel/accounts', key: 'accounts', icon: UserRoundCog, resource: 'accounts' },
+  { to: '/painel/inventory', key: 'inventory', icon: Package, resource: 'inventory' },
+  { to: '/painel/wallet', key: 'wallet', icon: WalletCards, resource: 'wallet' },
+  { to: '/painel/shop', key: 'shop', icon: ShoppingBag, resource: 'shop' },
+  { to: '/painel/games', key: 'games', icon: Gamepad2, resource: 'games' },
+  { to: '/painel/progress', key: 'progress', icon: Trophy, resource: 'progress' },
 ]
 
 export function PainelPage() {
+  const { t } = useTranslation('panel')
   const { user } = useAuth()
   const resources = useQuery({
     queryKey: ['resources'],
@@ -49,40 +51,40 @@ export function PainelPage() {
   })
   const baseShortcuts = shortcuts.filter((item) => resourceEnabled(item.resource))
   const dashboardShortcuts = canAccessStaff(user)
-    ? [...baseShortcuts, { to: '/painel/admin', label: 'Admin', text: 'Configurar o painel, rates e loja', icon: SlidersHorizontal }]
+    ? [...baseShortcuts, { to: '/painel/admin', key: 'admin', icon: SlidersHorizontal }]
     : baseShortcuts
 
   return (
     <div className="grid panel-dashboard">
       <Card className="panel-welcome">
-        <span className="panel-eyebrow">Visão geral da conta</span>
-        <h1>Olá, {user?.display_name || user?.username}</h1>
-        <p className="muted">Gerencie sua jornada, seus personagens e recompensas em um só lugar.</p>
+        <span className="panel-eyebrow">{t('dashboard.eyebrow')}</span>
+        <h1>{t('dashboard.greeting', { name: user?.display_name || user?.username })}</h1>
+        <p className="muted">{t('dashboard.subtitle')}</p>
       </Card>
 
-      <section className="grid cols-3 panel-status-grid" aria-label="Status do servidor">
+      <section className="grid cols-3 panel-status-grid" aria-label={t('dashboard.statusAria')}>
         <Card as="article" className="status-card">
           <Server aria-hidden="true" />
           <div className="status-copy">
-            <span className="muted">Game server</span>
+            <span className="muted">{t('dashboard.gameServer')}</span>
             <div className={status.data?.game_online ? 'badge' : 'badge off'}>
-              {status.data?.game_online ? 'Online' : 'Offline'}
+              {status.data?.game_online ? t('dashboard.online') : t('dashboard.offline')}
             </div>
           </div>
         </Card>
         <Card as="article" className="status-card">
           <KeyRound aria-hidden="true" />
           <div className="status-copy">
-            <span className="muted">Login server</span>
+            <span className="muted">{t('dashboard.loginServer')}</span>
             <div className={status.data?.login_online ? 'badge' : 'badge off'}>
-              {status.data?.login_online ? 'Online' : 'Offline'}
+              {status.data?.login_online ? t('dashboard.online') : t('dashboard.offline')}
             </div>
           </div>
         </Card>
         <Card as="article" className="status-card">
           <Users aria-hidden="true" />
           <div className="status-copy">
-            <span className="muted">Jogadores online</span>
+            <span className="muted">{t('dashboard.playersOnline')}</span>
             <div className="stat">{status.data?.players_online ?? 0}</div>
           </div>
         </Card>
@@ -92,8 +94,8 @@ export function PainelPage() {
 
       <section className="panel-section-heading">
         <div>
-          <span className="panel-eyebrow">Acesso rápido</span>
-          <h2>Continue sua aventura</h2>
+          <span className="panel-eyebrow">{t('dashboard.quickAccessEyebrow')}</span>
+          <h2>{t('dashboard.quickAccessTitle')}</h2>
         </div>
       </section>
 
@@ -106,8 +108,8 @@ export function PainelPage() {
                 <Icon aria-hidden="true" />
               </span>
               <span className="shortcut-copy">
-                <h3>{item.label}</h3>
-                <p className="muted">{item.text}</p>
+                <h3>{t(`dashboard.shortcuts.${item.key}.label`)}</h3>
+                <p className="muted">{t(`dashboard.shortcuts.${item.key}.text`)}</p>
               </span>
               <ArrowUpRight className="shortcut-arrow" aria-hidden="true" />
             </Link>

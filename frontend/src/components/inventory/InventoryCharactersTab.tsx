@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import {
   ArrowDownToLine,
   ArrowRightLeft,
@@ -18,6 +19,7 @@ import type { useInventoryDashboard } from './useInventoryDashboard'
 type InventoryDashboard = ReturnType<typeof useInventoryDashboard>
 
 export function InventoryCharactersTab({ inventory }: { inventory: InventoryDashboard }) {
+  const { t } = useTranslation('panel')
   const {
     login,
     accounts,
@@ -72,14 +74,14 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
         <div className="inventory-control-heading">
           <Backpack aria-hidden="true" />
           <div>
-            <span className="panel-eyebrow">Conta ativa</span>
-            <h2>Consultar personagem</h2>
+            <span className="panel-eyebrow">{t('inventory.characters.eyebrow')}</span>
+            <h2>{t('inventory.characters.title')}</h2>
           </div>
         </div>
 
         {accounts.data?.accounts.length ? (
           <Field className="inventory-account-field">
-            Conta Lineage
+            {t('inventory.characters.account')}
             <select value={login} onChange={(event) => {
               // Limpa a seleção no mesmo render para não consultar o personagem
               // anterior usando o login da nova conta.
@@ -88,7 +90,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
             }}>
               {accounts.data.accounts.map((account) => (
                 <option key={account.login} value={account.login}>
-                  {account.login}{account.is_primary ? ' — principal' : ''}
+                  {t(account.is_primary ? 'inventory.characters.accountPrimaryOption' : 'inventory.characters.accountOption', { login: account.login })}
                 </option>
               ))}
             </select>
@@ -96,46 +98,46 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
         ) : null}
 
         {accounts.isLoading || characters.isLoading ? (
-          <div className="account-empty-state">Carregando dados do servidor...</div>
+          <div className="account-empty-state">{t('inventory.characters.loadingServer')}</div>
         ) : null}
 
         {!accounts.isLoading && !login ? (
           <div className="account-empty-state">
             <UserRoundSearch aria-hidden="true" />
-            <strong>Nenhuma conta Lineage vinculada</strong>
-            <span>Crie ou vincule uma conta na seção Conta L2 antes de acessar o inventário.</span>
+            <strong>{t('inventory.characters.noAccountTitle')}</strong>
+            <span>{t('inventory.characters.noAccountText')}</span>
           </div>
         ) : null}
 
         {!characters.isLoading && login && !characters.data?.length ? (
           <div className="account-empty-state">
             <UserRoundSearch aria-hidden="true" />
-            <strong>A conta {login} ainda não possui personagens</strong>
-            <span>Crie um personagem dentro do jogo e use Atualizar para carregá-lo aqui.</span>
+            <strong>{t('inventory.characters.noCharactersTitle', { login })}</strong>
+            <span>{t('inventory.characters.noCharactersText')}</span>
           </div>
         ) : null}
 
         {!characters.isLoading && Boolean(characters.data?.length) ? (
           <form className="inventory-withdraw-form" onSubmit={onWithdraw}>
             <Field>
-              Personagem
+              {t('inventory.characters.character')}
               <select value={charId} onChange={(e) => setCharId(e.target.value ? Number(e.target.value) : '')} required>
-                <option value="">Selecione</option>
+                <option value="">{t('inventory.characters.select')}</option>
                 {(characters.data ?? []).map((char) => (
                   <option key={char.char_id} value={char.char_id}>
-                    {char.name} — nível {char.level}
+                    {t('inventory.characters.characterOption', { name: char.name, level: char.level })}
                   </option>
                 ))}
               </select>
             </Field>
             <ItemIdField value={itemId} required onChange={(id) => setItemId(id)} />
             <Field>
-              Quantidade
+              {t('inventory.characters.quantity')}
               <input inputMode="numeric" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
             </Field>
             <Button type="submit">
               <ArrowDownToLine aria-hidden="true" />
-              Retirar do jogo
+              {t('inventory.characters.withdraw')}
             </Button>
           </form>
         ) : null}
@@ -169,7 +171,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
           <div className="inventory-character-heading">
             <PackageOpen aria-hidden="true" />
             <div>
-              <span className="panel-eyebrow">Baú do painel · conta {row.account_name}</span>
+              <span className="panel-eyebrow">{t('inventory.characters.chestEyebrow', { account: row.account_name })}</span>
               <h2>{row.character_name}</h2>
             </div>
           </div>
@@ -181,8 +183,8 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
               >
                 <ItemIcon itemId={item.item_id} name={item.item_name} size={32} />
                 <span>
-                  <strong>{item.item_name || `Item ${item.item_id}`}</strong>
-                  <small>+{item.enchant} · quantidade {item.quantity}</small>
+                  <strong>{item.item_name || t('inventory.itemFallback', { id: item.item_id })}</strong>
+                  <small>{t('inventory.characters.itemMeta', { enchant: item.enchant, quantity: item.quantity })}</small>
                 </span>
                 <div className="inventory-panel-item-actions">
                   <Button
@@ -196,13 +198,13 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                       originAccount: row.account_name,
                       originCharacter: row.character_name,
                       itemId: item.item_id,
-                      itemName: item.item_name || `Item ${item.item_id}`,
+                      itemName: item.item_name || t('inventory.itemFallback', { id: item.item_id }),
                       availableQuantity: item.quantity,
                       enchant: item.enchant,
                     })}
                   >
                     <ArrowRightLeft aria-hidden="true" />
-                    Transferir
+                    {t('inventory.characters.transfer')}
                   </Button>
                   <Button
                     className="ghost"
@@ -215,13 +217,13 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                       originAccount: row.account_name,
                       originCharacter: row.character_name,
                       itemId: item.item_id,
-                      itemName: item.item_name || `Item ${item.item_id}`,
+                      itemName: item.item_name || t('inventory.itemFallback', { id: item.item_id }),
                       availableQuantity: item.quantity,
                       enchant: item.enchant,
                     })}
                   >
                     <Send aria-hidden="true" />
-                    Enviar ao jogo
+                    {t('inventory.characters.sendToGame')}
                   </Button>
                 </div>
 
@@ -251,7 +253,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
                 ) : null}
               </div>
             ))}
-            {!row.items.length ? <div className="inventory-panel-empty">Nenhum item guardado no painel.</div> : null}
+            {!row.items.length ? <div className="inventory-panel-empty">{t('inventory.characters.panelEmpty')}</div> : null}
           </div>
         </Card>
       ))}

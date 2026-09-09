@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { NotificationsPage } from './NotificationsPage'
+import i18n from '../i18n'
 import { notificationApi, pushApi, ApiError } from '../services/api'
 
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
@@ -15,7 +16,7 @@ beforeEach(() => {
   vi.mocked(pushApi.vapid).mockResolvedValue({ enabled: false, public_key: '' })
   vi.mocked(notificationApi.list).mockResolvedValue({ unread: 1, results: [{ id: 'note', title: 'Aviso', body: 'Seu pagamento foi creditado', kind: 'payment', is_read: false }] } as any)
 })
-afterEach(cleanup)
+afterEach(async () => { cleanup(); await i18n.changeLanguage('pt') })
 function mount() {
   render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><NotificationsPage /></QueryClientProvider>)
   return userEvent.setup()
@@ -36,4 +37,13 @@ it('mostra falha sem remover aviso', async () => {
   await user.click(await screen.findByRole('button', { name: 'Marcar como lida' }))
   expect(toast.error).toHaveBeenCalledWith('Falha ao salvar')
   expect(screen.getByText('Seu pagamento foi creditado')).toBeTruthy()
+})
+it('traduz título, contador e ações no idioma ativo', async () => {
+  vi.mocked(notificationApi.markAllRead).mockResolvedValue(undefined as never)
+  await i18n.changeLanguage('en')
+  const user = mount()
+  expect(await screen.findByText('1 unread')).toBeTruthy()
+  expect(screen.getByRole('heading', { name: 'Alerts' })).toBeTruthy()
+  await user.click(screen.getByRole('button', { name: 'Mark all' }))
+  expect(toast.success).toHaveBeenCalledWith('All marked as read')
 })

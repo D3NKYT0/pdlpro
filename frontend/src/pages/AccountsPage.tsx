@@ -6,6 +6,7 @@ import { ErrorNotice } from '../components/ui/Feedback'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
@@ -13,6 +14,7 @@ import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
 
 export function AccountsPage() {
+  const { t } = useTranslation('panel')
   const { user } = useAuth()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -44,7 +46,7 @@ export function AccountsPage() {
     setSubmitting('register')
     try {
       await lineageApi.register(registerPassword, primaryTaken ? alternateLogin : undefined)
-      toast.success(primaryUnclaimed ? 'Conta Lineage vinculada' : 'Conta Lineage criada e vinculada')
+      toast.success(primaryUnclaimed ? t('accounts.accountClaimed') : t('accounts.accountCreated'))
       await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
       setRegisterPassword('')
       setAlternateLogin('')
@@ -53,7 +55,7 @@ export function AccountsPage() {
       if (isApiError(error) && error.errorCode === 'ACCOUNT_ALREADY_LINKED') {
         setUseAlternateLogin(true)
       }
-      toast.error(apiErrorMessage(error, 'Falha ao registrar'))
+      toast.error(apiErrorMessage(error, t('accounts.registerError')))
     } finally {
       setSubmitting(null)
     }
@@ -65,24 +67,24 @@ export function AccountsPage() {
     lineageApi
       .confirmLinkByEmail(token)
       .then(async () => {
-        toast.success('Conta Lineage vinculada pelo e-mail')
+        toast.success(t('accounts.linkedByEmail'))
         await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
       })
-      .catch((error) => toast.error(apiErrorMessage(error, 'Falha ao confirmar vínculo')))
+      .catch((error) => toast.error(apiErrorMessage(error, t('accounts.confirmLinkError'))))
       .finally(() => {
         params.delete('link_token')
         setParams(params, { replace: true })
       })
-  }, [params, queryClient, setParams])
+  }, [params, queryClient, setParams, t])
 
   async function onLinkByEmail(event: FormEvent) {
     event.preventDefault()
     setSubmitting('email')
     try {
       await lineageApi.requestLinkByEmail(linkEmail)
-      toast.success('Enviamos o link para o e-mail da conta Lineage')
+      toast.success(t('accounts.linkEmailSent'))
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha ao solicitar vínculo'))
+      toast.error(apiErrorMessage(error, t('accounts.linkEmailError')))
     } finally {
       setSubmitting(null)
     }
@@ -93,12 +95,12 @@ export function AccountsPage() {
     setSubmitting('link')
     try {
       await lineageApi.link(login, password)
-      toast.success('Conta vinculada')
+      toast.success(t('accounts.accountLinked'))
       await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
       setLogin('')
       setPassword('')
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha ao vincular'))
+      toast.error(apiErrorMessage(error, t('accounts.linkError')))
     } finally {
       setSubmitting(null)
     }
@@ -108,13 +110,13 @@ export function AccountsPage() {
     <div className="account-page">
       <Card as="header" className="account-hero">
         <div>
-          <span className="panel-eyebrow">Central de personagens</span>
-          <h1>Conta Lineage</h1>
-          <p className="muted">Gerencie o acesso ao jogo e as contas vinculadas ao seu painel.</p>
+          <span className="panel-eyebrow">{t('accounts.eyebrow')}</span>
+          <h1>{t('accounts.title')}</h1>
+          <p className="muted">{t('accounts.subtitle')}</p>
         </div>
-        <div className="account-slot-summary" aria-label="Slots para contas adicionais">
+        <div className="account-slot-summary" aria-label={t('accounts.slotsAria')}>
           <UsersRound aria-hidden="true" />
-          <span>Contas adicionais</span>
+          <span>{t('accounts.slotsLabel')}</span>
           <strong>{accounts.data?.slots.used ?? 0}/{accounts.data?.slots.total ?? 0}</strong>
         </div>
       </Card>
@@ -123,16 +125,16 @@ export function AccountsPage() {
         <Card className="account-management">
           <div className="account-section-heading">
             <div>
-              <span className="panel-eyebrow">Acesso ao servidor</span>
-              <h2>Suas contas</h2>
+              <span className="panel-eyebrow">{t('accounts.serverAccess')}</span>
+              <h2>{t('accounts.yourAccounts')}</h2>
             </div>
             <span className={`account-status-pill ${primaryAccount ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
               {primaryAccount ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
-              {primaryAccount ? 'Principal ativa' : primaryTaken ? 'Login ocupado' : 'Aguardando criação'}
+              {primaryAccount ? t('accounts.statusPrimaryActive') : primaryTaken ? t('accounts.statusLoginTaken') : t('accounts.statusWaiting')}
             </span>
           </div>
 
-          {accounts.isLoading ? <div className="account-empty-state">Carregando contas...</div> : null}
+          {accounts.isLoading ? <div className="account-empty-state">{t('accounts.loadingAccounts')}</div> : null}
 
           {!accounts.isLoading && linkedAccounts.length > 0 ? (
             <div className="account-list">
@@ -143,9 +145,9 @@ export function AccountsPage() {
                   </span>
                   <span>
                     <strong>{item.login}</strong>
-                    <small>{item.is_primary ? 'Conta principal do jogo' : 'Conta adicional vinculada'}</small>
+                    <small>{item.is_primary ? t('accounts.primaryAccount') : t('accounts.additionalAccount')}</small>
                   </span>
-                  <b>{characters.isError && item.login === selectedLogin ? 'Inválida' : 'Vinculada'}</b>
+                  <b>{characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}</b>
                 </div>
               ))}
             </div>
@@ -155,10 +157,8 @@ export function AccountsPage() {
             <div className="account-created-state is-conflict">
               <ShieldAlert aria-hidden="true" />
               <div>
-                <strong>O login {preferredLogin} já está vinculado</strong>
-                <span>
-                  Essa conta Lineage pertence a outro painel. Crie a principal com outro login ou vincule abaixo uma conta que já seja sua.
-                </span>
+                <strong>{t('accounts.conflictTitle', { login: preferredLogin })}</strong>
+                <span>{t('accounts.conflictText')}</span>
               </div>
             </div>
           ) : null}
@@ -168,19 +168,22 @@ export function AccountsPage() {
               <div className="account-form-title">
                 <UserRoundPlus aria-hidden="true" />
                 <div>
-                  <h3>{primaryTaken ? 'Criar com outro login' : primaryUnclaimed ? 'Reivindicar conta principal' : 'Criar conta principal'}</h3>
+                  <h3>{primaryTaken ? t('accounts.createWithOtherLogin') : primaryUnclaimed ? t('accounts.claimPrimary') : t('accounts.createPrimary')}</h3>
                   <p>
                     {primaryTaken
-                      ? 'Escolha um login livre para o jogo. Ele fica vinculado a este painel.'
-                      : primaryUnclaimed
-                        ? <>Já existe uma conta <strong>{preferredLogin}</strong> no servidor. Informe a senha do jogo para vinculá-la.</>
-                        : <>O login do jogo será <strong>{preferredLogin}</strong>.</>}
+                      ? t('accounts.createWithOtherLoginHint')
+                      : <Trans
+                          t={t}
+                          i18nKey={primaryUnclaimed ? 'accounts.claimHint' : 'accounts.createHint'}
+                          values={{ login: preferredLogin }}
+                          components={{ strong: <strong /> }}
+                        />}
                   </p>
                 </div>
               </div>
               {primaryTaken ? (
                 <Field>
-                  Novo login do jogo
+                  {t('accounts.newGameLogin')}
                   <input
                     value={alternateLogin}
                     onChange={(e) => setAlternateLogin(e.target.value)}
@@ -192,13 +195,13 @@ export function AccountsPage() {
                 </Field>
               ) : null}
               <Field>
-                Senha do jogo
+                {t('accounts.gamePassword')}
                 <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={6} />
               </Field>
               <Button type="submit" disabled={submitting !== null}>
                 {submitting === 'register'
-                  ? (primaryUnclaimed ? 'Vinculando...' : 'Criando...')
-                  : (primaryTaken ? 'Criar conta principal' : primaryUnclaimed ? 'Vincular conta' : 'Criar e vincular')}
+                  ? (primaryUnclaimed ? t('accounts.linking') : t('accounts.creating'))
+                  : (primaryTaken ? t('accounts.createPrimary') : primaryUnclaimed ? t('accounts.linkAccount') : t('accounts.createAndLink'))}
               </Button>
             </form>
           ) : null}
@@ -207,8 +210,8 @@ export function AccountsPage() {
             <div className="account-created-state">
               <CheckCircle2 aria-hidden="true" />
               <div>
-                <strong>Conta pronta para jogar</strong>
-                <span>A conta {primaryAccount.login} está criada no servidor e vinculada a este painel.</span>
+                <strong>{t('accounts.readyTitle')}</strong>
+                <span>{t('accounts.readyText', { login: primaryAccount.login })}</span>
               </div>
             </div>
           ) : null}
@@ -217,42 +220,39 @@ export function AccountsPage() {
             <div className="account-created-state is-conflict">
               <ShieldAlert aria-hidden="true" />
               <div>
-                <strong>Vínculo inconsistente</strong>
-                <span>
-                  A conta {primaryAccount.login} aparece no painel, mas o servidor do jogo não confirma o acesso.
-                  Recarregue a lista de contas ou crie/vincule novamente.
-                </span>
+                <strong>{t('accounts.inconsistentTitle')}</strong>
+                <span>{t('accounts.inconsistentText', { login: primaryAccount.login })}</span>
               </div>
             </div>
           ) : null}
 
           <form className="account-action-form" onSubmit={onLinkByEmail}>
-            <h3>Vincular pelo e-mail da conta L2</h3>
-            <p className="muted">Receba um link de confirmação no endereço cadastrado no jogo.</p>
+            <h3>{t('accounts.linkByEmailTitle')}</h3>
+            <p className="muted">{t('accounts.linkByEmailHint')}</p>
             <Field>
-              E-mail no jogo
+              {t('accounts.gameEmail')}
               <input type="email" value={linkEmail} onChange={(e) => setLinkEmail(e.target.value)} required />
             </Field>
             <Button type="submit" disabled={submitting !== null}>
-              {submitting === 'email' ? 'Enviando...' : 'Enviar link'}
+              {submitting === 'email' ? t('accounts.sending') : t('accounts.sendLink')}
             </Button>
           </form>
 
           <form className="account-action-form" onSubmit={onLink}>
-            <h3>Vincular conta existente</h3>
-            <p className="muted">Use o login e a senha de uma conta adicional já existente.</p>
+            <h3>{t('accounts.linkExistingTitle')}</h3>
+            <p className="muted">{t('accounts.linkExistingHint')}</p>
             <div className="account-form-fields">
               <Field>
-                Login
+                {t('accounts.login')}
                 <input value={login} onChange={(e) => setLogin(e.target.value)} required />
               </Field>
               <Field>
-                Senha
+                {t('accounts.password')}
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </Field>
             </div>
             <Button type="submit" disabled={submitting !== null}>
-              {submitting === 'link' ? 'Vinculando...' : 'Vincular conta'}
+              {submitting === 'link' ? t('accounts.linking') : t('accounts.linkAccount')}
             </Button>
           </form>
         </Card>
@@ -260,12 +260,12 @@ export function AccountsPage() {
         <Card className="account-characters">
           <div className="account-section-heading">
             <div>
-              <span className="panel-eyebrow">Mundo do jogo</span>
-              <h2>Personagens</h2>
+              <span className="panel-eyebrow">{t('accounts.gameWorld')}</span>
+              <h2>{t('accounts.characters')}</h2>
             </div>
             {selectedLogin ? <span className="account-login-chip">{selectedLogin}</span> : null}
           </div>
-          {characters.isLoading ? <div className="account-empty-state">Carregando personagens...</div> : null}
+          {characters.isLoading ? <div className="account-empty-state">{t('accounts.loadingCharacters')}</div> : null}
           {characters.isError ? (
             <ErrorNotice error={characters.error} onRetry={() => void characters.refetch()} />
           ) : null}
@@ -273,10 +273,10 @@ export function AccountsPage() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Lv</th>
-                  <th>Classe</th>
-                  <th>Status</th>
+                  <th>{t('accounts.columnName')}</th>
+                  <th>{t('accounts.columnLevel')}</th>
+                  <th>{t('accounts.columnClass')}</th>
+                  <th>{t('accounts.columnStatus')}</th>
                   <th></th>
                 </tr>
               </thead>
@@ -305,12 +305,12 @@ export function AccountsPage() {
                     </td>
                     <td>{char.level}</td>
                     <td>{getClassName(char.class_id)}</td>
-                    <td><span className={`badge ${char.online ? '' : 'off'}`}>{char.online ? 'Online' : 'Offline'}</span></td>
+                    <td><span className={`badge ${char.online ? '' : 'off'}`}>{char.online ? t('accounts.online') : t('accounts.offline')}</span></td>
                     <td>
                       <Link
                         className="account-character-open"
                         to={`/painel/accounts/${selectedLogin}/${char.char_id}`}
-                        aria-label={`Abrir ${char.name}`}
+                        aria-label={t('accounts.openCharacter', { name: char.name })}
                         onClick={(event) => event.stopPropagation()}
                       >
                         <ChevronRight aria-hidden="true" />
@@ -324,15 +324,15 @@ export function AccountsPage() {
           {!characters.isLoading && !characters.isError && selectedLogin && !characters.data?.length ? (
             <div className="account-empty-state">
               <UsersRound aria-hidden="true" />
-              <strong>Nenhum personagem criado</strong>
-              <span>Entre no jogo com a conta {selectedLogin} para criar seu primeiro personagem.</span>
+              <strong>{t('accounts.noCharactersTitle')}</strong>
+              <span>{t('accounts.noCharactersText', { login: selectedLogin })}</span>
             </div>
           ) : null}
           {!characters.isLoading && !selectedLogin ? (
             <div className="account-empty-state">
               <UserRoundPlus aria-hidden="true" />
-              <strong>Nenhuma conta vinculada</strong>
-              <span>Crie sua conta principal ou vincule uma conta existente para ver os personagens.</span>
+              <strong>{t('accounts.noAccountTitle')}</strong>
+              <span>{t('accounts.noAccountText')}</span>
             </div>
           ) : null}
         </Card>

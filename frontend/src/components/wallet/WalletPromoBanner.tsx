@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ApiWalletPromo } from '../../services/types'
 
 export function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
+  const { t } = useTranslation('panel')
   const bannerRef = useRef<HTMLElement>(null)
   const frameRef = useRef(0)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -46,7 +48,7 @@ export function WalletPromoBanner({ promo }: { promo: ApiWalletPromo }) {
       <div className="wallet-promo-banner-art" aria-hidden="true" />
       <div className="wallet-promo-banner-shade" aria-hidden="true" />
       <div className="wallet-promo-banner-copy">
-        <span className="panel-eyebrow">Promoção</span>
+        <span className="panel-eyebrow">{t('wallet.promo.eyebrow')}</span>
         <strong>{promo.title}</strong>
         {promo.description ? <small>{promo.description}</small> : null}
         <div className="wallet-promo-banner-offer" aria-hidden="true">

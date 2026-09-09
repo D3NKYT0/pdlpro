@@ -55,8 +55,9 @@ vi.mock('../../theme/ThemeProvider', () => ({
 vi.mock('../../theme/usePanelTheme', () => ({ usePanelTheme: vi.fn() }))
 vi.mock('../../theme/assets', () => ({ themeImage: (path: string) => `/theme/${path}` }))
 
-afterEach(() => {
+afterEach(async () => {
   cleanup()
+  await i18n.changeLanguage('pt')
   resourcesMock.data = []
   themeMock.current.presentation = {
     renderer: 'portal-v1',
@@ -143,4 +144,15 @@ it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () 
   expect(screen.getByRole('combobox', { name: 'Idioma do site' })).toBeVisible()
   expect(screen.getByRole('link', { name: 'Abrir meu perfil' })).toBeVisible()
   expect(screen.getByRole('button', { name: 'Sair' })).toBeVisible()
+})
+
+it('traduz o rodapé e o cabeçalho do menu quando o idioma muda', async () => {
+  themeMock.current.presentation = null
+  await i18n.changeLanguage('en')
+  renderAt('/painel/profile')
+  expect(screen.getByText('Player area')).toBeVisible()
+  expect(screen.getByText('Menu')).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Open my profile' })).toBeVisible()
+  expect(screen.getByText('Verified account')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Sign out' })).toHaveAttribute('title', 'Sign out of the account')
 })

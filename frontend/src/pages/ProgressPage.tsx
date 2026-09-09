@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import {
   Check,
   Crown,
@@ -22,6 +23,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { ItemIcon } from '../components/ItemIcon'
 
 export function ProgressPage() {
+  const { t } = useTranslation('panel')
   const { user, refreshUser } = useAuth()
   const queryClient = useQueryClient()
   const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress })
@@ -40,30 +42,30 @@ export function ProgressPage() {
   async function claimReward(id: string) {
     try {
       const result = await authApi.claimReward(id)
-      toast.success(`${result.item_name} enviado à bag`)
+      toast.success(t('progress.toast.rewardSent', { item: result.item_name }))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível resgatar'))
+      toast.error(apiErrorMessage(error, t('progress.toast.claimError')))
     }
   }
 
   async function claimPass(id: string) {
     try {
       const result = await gamesApi.claimBattlePass(id)
-      toast.success(`${result.item_name} enviado à bag`)
+      toast.success(t('progress.toast.rewardSent', { item: result.item_name }))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível resgatar o passe'))
+      toast.error(apiErrorMessage(error, t('progress.toast.passClaimError')))
     }
   }
 
   async function buyPremium() {
     try {
       await gamesApi.buyBattlePassPremium()
-      toast.success('Passe premium ativado')
+      toast.success(t('progress.toast.premiumActivated'))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha ao comprar o passe'))
+      toast.error(apiErrorMessage(error, t('progress.toast.premiumError')))
     }
   }
 
@@ -71,9 +73,9 @@ export function ProgressPage() {
     try {
       const result = await authApi.setupTwoFactor()
       setSetupSecret(result.secret)
-      toast.success('Salve o segredo e confirme com o código')
+      toast.success(t('progress.toast.secretGenerated'))
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha ao iniciar 2FA'))
+      toast.error(apiErrorMessage(error, t('progress.toast.setupError')))
     }
   }
 
@@ -82,16 +84,16 @@ export function ProgressPage() {
     try {
       if (user?.is_2fa_enabled) {
         await authApi.disableTwoFactor(code)
-        toast.success('2FA desativado')
+        toast.success(t('progress.toast.twoFactorDisabled'))
       } else {
         await authApi.confirmTwoFactor(code)
-        toast.success('2FA ativado')
+        toast.success(t('progress.toast.twoFactorEnabled'))
       }
       setCode('')
       setSetupSecret('')
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Código inválido'))
+      toast.error(apiErrorMessage(error, t('progress.toast.invalidCode')))
     }
   }
 
@@ -115,19 +117,19 @@ export function ProgressPage() {
         <div className="profile-progress-title">
           <span className="profile-progress-icon"><Trophy aria-hidden="true" /></span>
           <div>
-            <span className="panel-eyebrow">Jornada do aventureiro</span>
-            <h1>Seu progresso</h1>
-            <p className="muted">Complete desafios, evolua sua conta e desbloqueie novas recompensas.</p>
+            <span className="panel-eyebrow">{t('progress.eyebrow')}</span>
+            <h1>{t('progress.title')}</h1>
+            <p className="muted">{t('progress.description')}</p>
           </div>
         </div>
         <div className="profile-level-badge">
-          <span>Nível</span>
+          <span>{t('progress.level')}</span>
           <strong>{profileLevel}</strong>
         </div>
         <div className="profile-xp-progress">
           <div className="progress-labels">
-            <span><Zap aria-hidden="true" /> {profileXp} XP</span>
-            <span>{profileXpNext} XP para o próximo nível</span>
+            <span><Zap aria-hidden="true" /> {t('progress.xp', { xp: profileXp })}</span>
+            <span>{t('progress.xpNext', { xp: profileXpNext })}</span>
           </div>
           <div className="progress-bar"><i style={{ width: `${profilePercent}%` }} /></div>
         </div>
@@ -141,48 +143,48 @@ export function ProgressPage() {
           <Card className="progress-module">
             <div className="progress-module-heading">
               <span><Gift aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Prêmios de evolução</span><h2>Recompensas</h2></div>
+              <div><span className="panel-eyebrow">{t('progress.rewards.eyebrow')}</span><h2>{t('progress.rewards.title')}</h2></div>
             </div>
             <div className="profile-reward-list">
               {(progress.data?.rewards ?? []).map((row) => (
                 <article className={`profile-reward ${row.claimed ? 'claimed' : row.available ? 'available' : 'locked'}`} key={row.id}>
                   <ItemIcon itemId={row.item_id} name={row.item_name} size={28} />
-                  <span><strong>{row.item_name} × {row.quantity}</strong><small>{row.description}</small></span>
+                  <span><strong>{t('progress.rewardQuantity', { name: row.item_name, quantity: row.quantity })}</strong><small>{row.description}</small></span>
                   {row.claimed ? (
-                    <b><Check aria-hidden="true" /> Resgatada</b>
+                    <b><Check aria-hidden="true" /> {t('progress.rewards.claimed')}</b>
                   ) : row.available ? (
-                    <Button type="button" onClick={() => void claimReward(row.id)}>Resgatar</Button>
+                    <Button type="button" onClick={() => void claimReward(row.id)}>{t('progress.rewards.claim')}</Button>
                   ) : (
-                    <b><LockKeyhole aria-hidden="true" /> Bloqueada</b>
+                    <b><LockKeyhole aria-hidden="true" /> {t('progress.rewards.locked')}</b>
                   )}
                 </article>
               ))}
-              {!progress.data?.rewards.length ? <div className="progress-empty">Nenhuma recompensa disponível.</div> : null}
+              {!progress.data?.rewards.length ? <div className="progress-empty">{t('progress.rewards.empty')}</div> : null}
             </div>
           </Card>
 
           <Card className="progress-module security-module">
             <div className="progress-module-heading">
               <span><ShieldCheck aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Proteção da conta</span><h2>Segurança</h2></div>
+              <div><span className="panel-eyebrow">{t('progress.security.eyebrow')}</span><h2>{t('progress.security.title')}</h2></div>
               <b className={user?.is_2fa_enabled ? 'security-on' : 'security-off'}>
-                {user?.is_2fa_enabled ? 'Ativo' : 'Inativo'}
+                {user?.is_2fa_enabled ? t('progress.security.on') : t('progress.security.off')}
               </b>
             </div>
-            <p className="muted">Use autenticação em duas etapas para proteger seus personagens e itens.</p>
+            <p className="muted">{t('progress.security.description')}</p>
             {!user?.is_2fa_enabled ? (
               <Button className="ghost" type="button" onClick={() => void setupTwoFactor()}>
-                <KeyRound aria-hidden="true" /> Gerar segredo
+                <KeyRound aria-hidden="true" /> {t('progress.security.generateSecret')}
               </Button>
             ) : null}
-            {setupSecret ? <div className="setup-secret"><span>Segredo do autenticador</span><strong>{setupSecret}</strong></div> : null}
+            {setupSecret ? <div className="setup-secret"><span>{t('progress.security.secretLabel')}</span><strong>{setupSecret}</strong></div> : null}
             <form className="security-form" onSubmit={confirmTwoFactor}>
               <Field>
-                Código do autenticador
+                {t('progress.security.codeLabel')}
                 <input value={code} onChange={(event) => setCode(event.target.value)} required inputMode="numeric" />
               </Field>
               <Button type="submit">
-                {user?.is_2fa_enabled ? 'Desativar 2FA' : 'Confirmar 2FA'}
+                {user?.is_2fa_enabled ? t('progress.security.disable') : t('progress.security.confirm')}
               </Button>
             </form>
           </Card>
@@ -195,33 +197,33 @@ export function ProgressPage() {
                 <div className="battle-pass-title">
                   <span className="battle-pass-emblem"><Crown aria-hidden="true" /></span>
                   <div>
-                    <span className="panel-eyebrow">Temporada ativa</span>
-                    <h2>Passe de batalha</h2>
+                    <span className="panel-eyebrow">{t('progress.pass.eyebrow')}</span>
+                    <h2>{t('progress.pass.title')}</h2>
                     <p>{pass.season.name}</p>
                   </div>
                 </div>
                 {pass.has_premium ? (
-                  <span className="premium-active"><Sparkles aria-hidden="true" /> Premium ativo</span>
+                  <span className="premium-active"><Sparkles aria-hidden="true" /> {t('progress.pass.premiumActive')}</span>
                 ) : (
                   <Button type="button" onClick={() => void buyPremium()}>
-                    <Crown aria-hidden="true" /> Premium · R$ {pass.season.premium_price}
+                    <Crown aria-hidden="true" /> {t('progress.pass.premiumBuy', { price: pass.season.premium_price })}
                   </Button>
                 )}
               </header>
 
               <div className="battle-pass-overview">
-                <div><span>Nível atual</span><strong>{pass.current_level}</strong></div>
-                <div><span>XP da temporada</span><strong>{pass.xp}</strong></div>
-                <div><span>Prêmios resgatados</span><strong>{claimedPassRewards}/{passRewardCount}</strong></div>
+                <div><span>{t('progress.pass.currentLevel')}</span><strong>{pass.current_level}</strong></div>
+                <div><span>{t('progress.pass.seasonXp')}</span><strong>{pass.xp}</strong></div>
+                <div><span>{t('progress.pass.claimedRewards')}</span><strong>{claimedPassRewards}/{passRewardCount}</strong></div>
               </div>
 
               <div className="battle-pass-progress">
-                <div className="progress-labels"><span>Progresso da temporada</span><span>{Math.round(passPercent)}%</span></div>
+                <div className="progress-labels"><span>{t('progress.pass.seasonProgress')}</span><span>{Math.round(passPercent)}%</span></div>
                 <div className="progress-bar"><i style={{ width: `${passPercent}%` }} /></div>
               </div>
 
               <div className="pass-track-legend">
-                <span>Nível</span><span><Gift aria-hidden="true" /> Trilha livre</span><span><Crown aria-hidden="true" /> Trilha premium</span>
+                <span>{t('progress.pass.levelLegend')}</span><span><Gift aria-hidden="true" /> {t('progress.pass.freeTrack')}</span><span><Crown aria-hidden="true" /> {t('progress.pass.premiumTrack')}</span>
               </div>
 
               <div className="pass-reward-track">
@@ -233,19 +235,19 @@ export function ProgressPage() {
                       <div className="pass-tier-level">
                         <span>{level.unlocked ? <Check aria-hidden="true" /> : <LockKeyhole aria-hidden="true" />}</span>
                         <strong>{level.level}</strong>
-                        <small>{level.required_xp} XP</small>
+                        <small>{t('progress.pass.xpRequired', { xp: level.required_xp })}</small>
                       </div>
                       <div className="pass-tier-lane free-lane">
                         {freeRewards.map((reward) => (
                           <div className={`pass-reward ${reward.claimed ? 'claimed' : !level.unlocked ? 'locked' : 'available'}`} key={reward.id}>
                             <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
-                            <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
-                            {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : !level.unlocked ? <b><LockKeyhole aria-hidden="true" /></b> : (
-                              <Button type="button" onClick={() => void claimPass(reward.id)}>Resgatar</Button>
+                            <span><strong>{t('progress.rewardQuantity', { name: reward.item_name, quantity: reward.quantity })}</strong><small>{reward.description}</small></span>
+                            {reward.claimed ? <b><Check aria-hidden="true" /> {t('progress.pass.rewardClaimed')}</b> : !level.unlocked ? <b><LockKeyhole aria-hidden="true" /></b> : (
+                              <Button type="button" onClick={() => void claimPass(reward.id)}>{t('progress.pass.claim')}</Button>
                             )}
                           </div>
                         ))}
-                        {!freeRewards.length ? <span className="no-pass-reward">Sem prêmio livre</span> : null}
+                        {!freeRewards.length ? <span className="no-pass-reward">{t('progress.pass.noFreeReward')}</span> : null}
                       </div>
                       <div className="pass-tier-lane premium-lane">
                         {premiumRewards.map((reward) => {
@@ -253,14 +255,14 @@ export function ProgressPage() {
                           return (
                             <div className={`pass-reward ${reward.claimed ? 'claimed' : locked ? 'locked' : 'available'}`} key={reward.id}>
                               <ItemIcon itemId={reward.item_id} name={reward.item_name} size={24} />
-                              <span><strong>{reward.item_name} × {reward.quantity}</strong><small>{reward.description}</small></span>
-                              {reward.claimed ? <b><Check aria-hidden="true" /> Resgatado</b> : locked ? <b><LockKeyhole aria-hidden="true" /></b> : (
-                                <Button type="button" onClick={() => void claimPass(reward.id)}>Resgatar</Button>
+                              <span><strong>{t('progress.rewardQuantity', { name: reward.item_name, quantity: reward.quantity })}</strong><small>{reward.description}</small></span>
+                              {reward.claimed ? <b><Check aria-hidden="true" /> {t('progress.pass.rewardClaimed')}</b> : locked ? <b><LockKeyhole aria-hidden="true" /></b> : (
+                                <Button type="button" onClick={() => void claimPass(reward.id)}>{t('progress.pass.claim')}</Button>
                               )}
                             </div>
                           )
                         })}
-                        {!premiumRewards.length ? <span className="no-pass-reward">Sem prêmio premium</span> : null}
+                        {!premiumRewards.length ? <span className="no-pass-reward">{t('progress.pass.noPremiumReward')}</span> : null}
                       </div>
                     </article>
                   )
@@ -268,7 +270,7 @@ export function ProgressPage() {
               </div>
             </>
           ) : (
-            <div className="progress-empty large"><Crown aria-hidden="true" /> Nenhuma temporada ativa.</div>
+            <div className="progress-empty large"><Crown aria-hidden="true" /> {t('progress.pass.empty')}</div>
           )}
         </Card>
       </div>

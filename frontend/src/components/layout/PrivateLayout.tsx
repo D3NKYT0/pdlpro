@@ -138,7 +138,7 @@ export function PrivateLayout() {
           <div className="panel-brand">
             <PdlSymbol className="panel-brand-mark" />
             <div>
-              <span className="panel-kicker">{shellCopy?.kicker ?? "Área do jogador"}</span>
+              <span className="panel-kicker">{shellCopy?.kicker ?? t("shell.kicker")}</span>
               <div className="brand">{shellCopy?.brand ?? t("brand")}</div>
             </div>
           </div>
@@ -151,7 +151,7 @@ export function PrivateLayout() {
             onClick={() => setMenuOpen((open) => !open)}
           >
             {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-            <span>Menu</span>
+            <span>{t("shell.menu")}</span>
           </button>
           <div
             className={`sidebar-drawer${menuOpen ? " is-open" : ""}`}
@@ -204,7 +204,7 @@ export function PrivateLayout() {
                   <NavLink
                     className="panel-user-avatar"
                     to="/painel/profile"
-                    aria-label="Abrir meu perfil"
+                    aria-label={t("shell.openProfile")}
                   >
                     {user.avatar_url ? (
                       <img src={user.avatar_url} alt="" />
@@ -216,14 +216,14 @@ export function PrivateLayout() {
                     <strong>{user.display_name || user.username}</strong>
                     <span>
                       {user.is_email_verified
-                        ? "Conta verificada"
-                        : "Confirme seu e-mail"}
+                        ? t("shell.verifiedAccount")
+                        : t("shell.confirmEmail")}
                     </span>
                   </NavLink>
                   <Button
                     className="ghost"
                     type="button"
-                    title="Sair da conta"
+                    title={t("shell.logoutTitle")}
                     onClick={() => {
                       void logout().then(() => navigate("/"));
                     }}
@@ -239,7 +239,7 @@ export function PrivateLayout() {
         <button
           className={`panel-menu-backdrop${menuOpen ? " is-open" : ""}`}
           type="button"
-          aria-label="Fechar menu"
+          aria-label={tPublic("nav.closeMenu")}
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />

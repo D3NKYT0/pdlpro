@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Banknote,
   CircleDollarSign,
@@ -52,18 +53,30 @@ export function WalletPurchaseCard({
   onDocumentChange,
   onPayStripe,
 }: WalletPurchaseCardProps) {
+  const { t } = useTranslation('panel')
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
+  const noteVariant = !paymentAvailable
+    ? 'Unavailable'
+    : simulatedPayment
+      ? 'Simulated'
+      : currency === 'USD'
+        ? 'Stripe'
+        : 'MercadoPago'
+  const noteTitle = t(`wallet.purchase.note${noteVariant}Title`)
+  const noteText = noteVariant === 'Simulated'
+    ? t(mockAutoConfirm ? 'wallet.purchase.noteAutoConfirm' : 'wallet.purchase.noteManualConfirm')
+    : t(`wallet.purchase.note${noteVariant}`)
 
   return (
     <Card className="wallet-purchase-card">
       <header className="wallet-section-heading">
         <span className="wallet-section-icon" aria-hidden="true"><CreditCard /></span>
         <div>
-          <span className="panel-eyebrow">Adicionar saldo</span>
-          <h2>Escolha sua recarga</h2>
-          <p>Selecione a moeda de pagamento e o pacote ideal para você.</p>
+          <span className="panel-eyebrow">{t('wallet.purchase.eyebrow')}</span>
+          <h2>{t('wallet.purchase.title')}</h2>
+          <p>{t('wallet.purchase.subtitle')}</p>
         </div>
-        <div className="wallet-currency-switch" role="group" aria-label="Moeda do pagamento">
+        <div className="wallet-currency-switch" role="group" aria-label={t('wallet.purchase.currencyGroup')}>
           <button
             className={currency === 'BRL' ? 'is-active' : ''}
             type="button"
@@ -86,8 +99,8 @@ export function WalletPurchaseCard({
       <div className={`wallet-payment-note${paymentAvailable ? '' : ' is-unavailable'}`}>
         <ShieldCheck aria-hidden="true" />
         <span>
-          <strong>{paymentAvailable ? simulatedPayment ? 'Pagamento sujeito a confirmação' : currency === 'USD' ? 'Pagamento internacional via Stripe' : 'Pagamento nacional via Mercado Pago' : 'Recargas temporariamente indisponíveis'}</strong>
-          <small>{paymentAvailable ? simulatedPayment ? mockAutoConfirm ? 'O crédito automático está habilitado neste ambiente.' : 'O saldo será adicionado somente após a aprovação do pedido.' : currency === 'USD' ? 'Cartão processado com segurança no próprio site.' : 'Pague com cartão, PIX ou boleto sem sair do painel.' : 'Nenhuma cobrança será criada enquanto o serviço de pagamento estiver indisponível.'}</small>
+          <strong>{noteTitle}</strong>
+          <small>{noteText}</small>
         </span>
       </div>
 
@@ -98,28 +111,31 @@ export function WalletPurchaseCard({
             className={`pay-pack ${pack.badge ? 'is-featured' : ''}`}
             type="button"
             disabled={busy || !paymentAvailable}
-            aria-label={`Comprar ${pack.total_coins} moedas por ${formatWalletMoney(pack[priceKey], currency)}`}
+            aria-label={t('wallet.purchase.packAria', {
+              coins: pack.total_coins,
+              price: formatWalletMoney(pack[priceKey], currency),
+            })}
             onClick={() => void onStartPurchase(pack.id)}
           >
             {pack.badge ? <span className="pay-pack-badge"><Sparkles aria-hidden="true" /> {pack.badge}</span> : null}
             <span className="pay-pack-name">{pack.name}</span>
             <span className="pay-pack-coins"><Coins aria-hidden="true" /> {pack.total_coins}</span>
-            <small>moedas</small>
-            {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">+ {pack.bonus} de bônus</span> : null}
+            <small>{t('wallet.purchase.packCoins')}</small>
+            {Number(pack.bonus) > 0 ? <span className="pay-pack-bonus">{t('wallet.purchase.packBonus', { bonus: pack.bonus })}</span> : null}
             <strong className="pay-pack-price">{formatWalletMoney(pack[priceKey], currency)}</strong>
-            <span className="pay-pack-action">{paymentAvailable ? 'Escolher pacote' : 'Indisponível'}</span>
+            <span className="pay-pack-action">{paymentAvailable ? t('wallet.purchase.packChoose') : t('wallet.purchase.packUnavailable')}</span>
           </button>
         ))}
       </div>
 
-      {catalogLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> Carregando pacotes...</div> : null}
+      {catalogLoading ? <div className="wallet-inline-state"><Clock3 aria-hidden="true" /> {t('wallet.purchase.loadingPackages')}</div> : null}
 
       <div className="wallet-custom-purchase">
         <div className="wallet-custom-copy">
           <span className="wallet-section-icon" aria-hidden="true"><Banknote /></span>
           <div>
-            <strong>Prefere outro valor?</strong>
-            <small>Informe quanto deseja pagar e calcularemos as moedas.</small>
+            <strong>{t('wallet.purchase.customTitle')}</strong>
+            <small>{t('wallet.purchase.customSubtitle')}</small>
           </div>
         </div>
         <form
@@ -130,7 +146,7 @@ export function WalletPurchaseCard({
           }}
         >
           <Field>
-            <span>Valor em {currency}</span>
+            <span>{t('wallet.purchase.customAmount', { currency })}</span>
             <input
               type="number"
               min="0.01"
@@ -142,7 +158,7 @@ export function WalletPurchaseCard({
             />
           </Field>
           <Button type="submit" disabled={busy || !customAmount || !paymentAvailable}>
-            <CircleDollarSign aria-hidden="true" /> Comprar agora
+            <CircleDollarSign aria-hidden="true" /> {t('wallet.purchase.buyNow')}
           </Button>
         </form>
       </div>
@@ -152,7 +168,7 @@ export function WalletPurchaseCard({
       <div className="wallet-checkout">
         {order?.method === 'mercadopago' && !order.pix_qr_code ? (
           <Field>
-            <span>CPF ou CNPJ do pagador</span>
+            <span>{t('wallet.purchase.document')}</span>
             <input value={document} onChange={(event) => onDocumentChange(event.target.value)} placeholder="000.000.000-00" />
           </Field>
         ) : null}
@@ -161,16 +177,16 @@ export function WalletPurchaseCard({
           <form onSubmit={(event) => void onPayStripe(event)}>
             <div id="stripe-element" />
             <Button type="submit" disabled={busy}>
-              <CreditCard aria-hidden="true" /> Pagar com cartão
+              <CreditCard aria-hidden="true" /> {t('wallet.purchase.payCard')}
             </Button>
           </form>
         ) : null}
         {order?.pix_qr_code ? (
           <div className="wallet-pix-result">
-            <h3>PIX copia e cola</h3>
+            <h3>{t('wallet.purchase.pixTitle')}</h3>
             <textarea readOnly value={order.pix_qr_code} rows={3} />
             {order.pix_qr_code_base64 ? (
-              <img alt="QR Code PIX" src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
+              <img alt={t('wallet.purchase.pixAlt')} src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
             ) : null}
           </div>
         ) : null}

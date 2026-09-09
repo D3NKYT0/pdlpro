@@ -1,13 +1,9 @@
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../../services/types'
 
-const orderStatusLabels: Record<string, string> = {
-  pending: 'Aguardando',
-  processing: 'Processando',
-  confirmed: 'Confirmado',
-  paid: 'Pago',
-  failed: 'Falhou',
-  cancelled: 'Cancelado',
-}
+/** Tradutor do namespace `panel` recebido pelas telas da carteira. */
+export type WalletTranslate = (key: string, options?: Record<string, unknown>) => string
+
+const orderStatusKeys = ['pending', 'processing', 'confirmed', 'paid', 'failed', 'cancelled']
 
 export function formatWalletMoney(value: string, currency: 'BRL' | 'USD') {
   const amount = Number(value)
@@ -24,54 +20,55 @@ export function formatWalletDate(value?: string | null) {
   return date.toLocaleString('pt-BR')
 }
 
-export function getOrderStatus(status: string) {
+export function getOrderStatus(status: string, t: WalletTranslate) {
   const normalized = status.toLowerCase()
   const modifier = ['confirmed', 'paid'].includes(normalized)
     ? 'is-success'
     : ['failed', 'cancelled'].includes(normalized)
       ? 'is-danger'
       : 'is-pending'
-  return { label: orderStatusLabels[normalized] ?? status, modifier }
+  const label = orderStatusKeys.includes(normalized) ? t(`wallet.status.${normalized}`) : status
+  return { label, modifier }
 }
 
-export function getTransactionPresentation(kind: string, amount: string) {
+export function getTransactionPresentation(kind: string, amount: string, t: WalletTranslate) {
   const numericAmount = Number(amount)
   const outgoing = numericAmount < 0 || /(saida|saída|debit|out|withdraw|purchase|spent|send)/i.test(kind)
   const absoluteAmount = Number.isFinite(numericAmount) ? Math.abs(numericAmount).toFixed(2) : amount
   return {
     outgoing,
-    amount: `${outgoing ? '−' : '+'}${absoluteAmount} moedas`,
+    amount: t('wallet.transactionAmount', { sign: outgoing ? '−' : '+', amount: absoluteAmount }),
   }
 }
 
-export function orderDetailEntries(order: ApiPaymentOrder) {
+export function orderDetailEntries(order: ApiPaymentOrder, t: WalletTranslate) {
   const currency = order.currency === 'USD' ? 'USD' : 'BRL'
   return [
-    ['Status', getOrderStatus(order.status).label],
-    ['Moedas', `${order.coins} moedas`],
-    ['Valor', formatWalletMoney(order.amount, currency)],
-    ['Método', order.method || '—'],
-    ['Pacote', order.package_code || 'Personalizado'],
-    ['Bônus aplicado', order.bonus_applied || '0.00'],
-    ['Total creditado', order.total_credited || '0.00'],
-    ['Criado em', formatWalletDate(order.created_at)],
-    ['Pago em', formatWalletDate(order.paid_at)],
-    ['PIX', order.pix_qr_code || '—'],
-    ['Boleto', order.boleto_barcode || order.boleto_url || '—'],
-    ['Mensagem', order.gateway_message || '—'],
-    ['Identificador', order.id],
+    [t('wallet.detail.status'), getOrderStatus(order.status, t).label],
+    [t('wallet.detail.coins'), t('wallet.detail.coinsValue', { coins: order.coins })],
+    [t('wallet.detail.amount'), formatWalletMoney(order.amount, currency)],
+    [t('wallet.detail.method'), order.method || '—'],
+    [t('wallet.detail.package'), order.package_code || t('wallet.detail.packageCustom')],
+    [t('wallet.detail.bonusApplied'), order.bonus_applied || '0.00'],
+    [t('wallet.detail.totalCredited'), order.total_credited || '0.00'],
+    [t('wallet.detail.createdAt'), formatWalletDate(order.created_at)],
+    [t('wallet.detail.paidAt'), formatWalletDate(order.paid_at)],
+    [t('wallet.detail.pix'), order.pix_qr_code || '—'],
+    [t('wallet.detail.boleto'), order.boleto_barcode || order.boleto_url || '—'],
+    [t('wallet.detail.message'), order.gateway_message || '—'],
+    [t('wallet.detail.id'), order.id],
   ] as const
 }
 
-export function transactionDetailEntries(row: ApiWalletTransaction) {
-  const presentation = getTransactionPresentation(row.kind, row.amount)
+export function transactionDetailEntries(row: ApiWalletTransaction, t: WalletTranslate) {
+  const presentation = getTransactionPresentation(row.kind, row.amount, t)
   return [
-    ['Tipo', row.kind],
-    ['Valor', presentation.amount],
-    ['Descrição', row.description || '—'],
-    ['Origem', row.origin || '—'],
-    ['Destino', row.destination || '—'],
-    ['Data', formatWalletDate(row.created_at)],
-    ['Identificador', row.id],
+    [t('wallet.detail.kind'), row.kind],
+    [t('wallet.detail.amount'), presentation.amount],
+    [t('wallet.detail.description'), row.description || '—'],
+    [t('wallet.detail.origin'), row.origin || '—'],
+    [t('wallet.detail.destination'), row.destination || '—'],
+    [t('wallet.detail.date'), formatWalletDate(row.created_at)],
+    [t('wallet.detail.id'), row.id],
   ] as const
 }

@@ -2,6 +2,7 @@ import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   BadgeDollarSign,
   Store,
@@ -55,25 +56,26 @@ export function MarketplaceSellForm({
   onNotesChange,
   onSubmit,
 }: MarketplaceSellFormProps) {
+  const { t } = useTranslation('panel')
   const selectedCharacter = characters.find((character) => String(character.char_id) === charId)
 
   return (
     <Card className="marketplace-sell-card">
       <div className="marketplace-section-heading compact">
         <div>
-          <span className="panel-eyebrow">Novo anúncio</span>
-          <h2>Vender personagem</h2>
+          <span className="panel-eyebrow">{t('marketplace.sell.eyebrow')}</span>
+          <h2>{t('marketplace.sell.title')}</h2>
         </div>
         <BadgeDollarSign aria-hidden="true" />
       </div>
       <form onSubmit={onSubmit}>
         <Field>
-          Personagem
+          {t('marketplace.sell.character')}
           <select value={charId} onChange={(event) => onCharChange(event.target.value)} required>
-            <option value="">Selecione para visualizar</option>
+            <option value="">{t('marketplace.sell.selectCharacter')}</option>
             {characters.map((char) => (
               <option key={char.char_id} value={char.char_id}>
-                {char.name} — nível {char.level}
+                {t('marketplace.sell.characterOption', { name: char.name, level: char.level })}
               </option>
             ))}
           </select>
@@ -84,46 +86,46 @@ export function MarketplaceSellForm({
             <div className="marketplace-character-preview-head">
               <div className="marketplace-character-emblem"><UserRound aria-hidden="true" /></div>
               <div>
-                <span className="panel-eyebrow">Prévia do anúncio</span>
+                <span className="panel-eyebrow">{t('marketplace.sell.previewEyebrow')}</span>
                 <strong>{selectedCharacter.name}</strong>
-                <small>{getClassName(selectedCharacter.class_id)} · nível {selectedCharacter.level}</small>
+                <small>{t('marketplace.sell.classLevel', { className: getClassName(selectedCharacter.class_id), level: selectedCharacter.level })}</small>
               </div>
               <span className={`marketplace-online-state ${selectedCharacter.online ? 'online' : 'offline'}`}>
-                {selectedCharacter.online ? 'Online' : 'Offline'}
+                {selectedCharacter.online ? t('marketplace.sell.online') : t('marketplace.sell.offline')}
               </span>
             </div>
             <dl className="marketplace-character-preview-stats">
-              <div><dt>PvP</dt><dd>{selectedCharacter.pvp.toLocaleString('pt-BR')}</dd></div>
-              <div><dt>PK</dt><dd>{selectedCharacter.pk.toLocaleString('pt-BR')}</dd></div>
-              <div><dt>Clã</dt><dd>{selectedCharacter.clan_name || 'Sem clã'}</dd></div>
-              <div><dt>Título</dt><dd>{selectedCharacter.title || 'Sem título'}</dd></div>
+              <div><dt>{t('marketplace.sell.pvp')}</dt><dd>{selectedCharacter.pvp.toLocaleString('pt-BR')}</dd></div>
+              <div><dt>{t('marketplace.sell.pk')}</dt><dd>{selectedCharacter.pk.toLocaleString('pt-BR')}</dd></div>
+              <div><dt>{t('marketplace.sell.clan')}</dt><dd>{selectedCharacter.clan_name || t('marketplace.sell.noClan')}</dd></div>
+              <div><dt>{t('marketplace.sell.titleLabel')}</dt><dd>{selectedCharacter.title || t('marketplace.sell.noTitle')}</dd></div>
             </dl>
             <div className="marketplace-character-preview-equipment">
-              <span>Equipamentos que aparecerão no anúncio</span>
-              {equipmentLoading ? <small>Carregando equipamentos...</small> : null}
+              <span>{t('marketplace.sell.equipmentTitle')}</span>
+              {equipmentLoading ? <small>{t('marketplace.sell.equipmentLoading')}</small> : null}
               {!equipmentLoading ? (
                 <div>
                   {equipment.slice(0, 10).map((item, index) => (
                     <ItemIcon itemId={item.item_id} name={item.name} size={32} key={`${item.item_id}-${item.slot ?? index}`} />
                   ))}
-                  {!equipment.length ? <small>Nenhum equipamento encontrado.</small> : null}
+                  {!equipment.length ? <small>{t('marketplace.sell.equipmentEmpty')}</small> : null}
                 </div>
               ) : null}
             </div>
-            {selectedCharacter.online ? <p>O personagem precisa estar offline para ser anunciado.</p> : null}
+            {selectedCharacter.online ? <p>{t('marketplace.sell.onlineWarning')}</p> : null}
           </div>
         ) : null}
 
         <Field>
-          Preço
-          <input type="number" min="0.01" step="0.01" inputMode="decimal" value={price} onChange={(event) => onPriceChange(event.target.value)} placeholder="0,00" required />
+          {t('marketplace.sell.price')}
+          <input type="number" min="0.01" step="0.01" inputMode="decimal" value={price} onChange={(event) => onPriceChange(event.target.value)} placeholder={t('marketplace.sell.pricePlaceholder')} required />
         </Field>
         <Field>
-          Descrição para o comprador
-          <textarea value={notes} onChange={(event) => onNotesChange(event.target.value)} maxLength={500} placeholder="Destaques, build ou observações do personagem" />
+          {t('marketplace.sell.notes')}
+          <textarea value={notes} onChange={(event) => onNotesChange(event.target.value)} maxLength={500} placeholder={t('marketplace.sell.notesPlaceholder')} />
         </Field>
         <Button type="submit" disabled={publishing || !selectedCharacter || selectedCharacter.online}>
-          <Store aria-hidden="true" /> {publishing ? 'Publicando...' : 'Publicar anúncio'}
+          <Store aria-hidden="true" /> {publishing ? t('marketplace.sell.publishing') : t('marketplace.sell.publish')}
         </Button>
       </form>
     </Card>

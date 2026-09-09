@@ -19,6 +19,11 @@ Git até **9 de setembro de 2026**.
 - Internacionalização **pt / en / es** na SPA (`i18next`), seletor de idioma persistente,
   campos `*_es` (e EN onde faltava) em FAQ, notícias, wiki, roadmap e documentos legais;
   assistente e FAQ aceitam `lang=es`.
+- Cobertura pt/en/es das telas de engajamento do painel (Jogos, Jornada e recompensas,
+  Progresso, Apoiadores e Ficha do personagem) e da área administrativa (central de
+  módulos, relatórios operacionais e financeiros, fila de chamados), com novos blocos
+  `games`, `rewards`, `progress`, `supporters` e `character` em `panel` e `support`,
+  `statusLabels` e `finance` em `admin`.
 - Observabilidade: logging estruturado, auditoria, integração Sentry e middleware de
   rastreamento de requisições e erros.
 - Central de **Help** com FAQ (categorias, busca, audiência, suporte EN), artigos só
@@ -66,6 +71,9 @@ Git até **9 de setembro de 2026**.
 - Tokens de acesso/refresh removidos do corpo das respostas de autenticação
   (sessão por cookies).
 - Limite de mensagem do chat do assistente elevado para 400 caracteres.
+- Datas e números do painel e dos relatórios seguem o idioma ativo: os formatadores
+  fixos em `pt-BR` deram lugar a `formatDate`, `formatDateTime` e `formatNumber` em
+  `frontend/src/lib/formatters.ts`.
 - Estilos do painel admin e da Help refinados para hierarquia e responsividade com
   tokens de tema.
 - Arquivos `.log` passam a residir apenas em `backend/log/` e `frontend/log/`

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { Modal } from '../components/ui/Modal'
 import { WalletActivityCard } from '../components/wallet/WalletActivityCard'
@@ -14,6 +15,7 @@ import { paymentApi, walletApi } from '../services/api'
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../services/types'
 
 export function WalletPage() {
+  const { t } = useTranslation('panel')
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
@@ -54,7 +56,7 @@ export function WalletPage() {
 
   async function startPurchase(packageId?: string) {
     if (!paymentMethod) {
-      toast.error('As recargas estão temporariamente indisponíveis. Tente novamente mais tarde.')
+      toast.error(t('wallet.toast.rechargeUnavailable'))
       return
     }
     setBusy(true)
@@ -70,14 +72,14 @@ export function WalletPage() {
       setOrder(created)
       if (created.method === 'mock' && mock?.auto_confirm) {
         const confirmed = await paymentApi.confirm(created.id)
-        toast.success(`${confirmed.coins} moedas creditadas`)
+        toast.success(t('wallet.toast.coinsCredited', { coins: confirmed.coins }))
         setOrder(null)
         await refreshWallet()
       } else if (created.method === 'mock') {
-        toast.success('Pedido criado e aguardando confirmação.')
+        toast.success(t('wallet.toast.orderPending'))
       }
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível iniciar o pagamento'))
+      toast.error(apiErrorMessage(error, t('wallet.toast.paymentStartFailed')))
     } finally {
       setBusy(false)
     }
@@ -101,11 +103,11 @@ export function WalletPage() {
             const result = await paymentApi.process(order.id, formData)
             setOrder(result)
             if (result.status === 'confirmed') {
-              toast.success(`${result.coins} moedas creditadas`)
+              toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
               setOrder(null)
               await refreshWallet()
             } else if (result.pix_qr_code) {
-              toast.success('PIX gerado. Pague para creditar as moedas.')
+              toast.success(t('wallet.toast.pixGenerated'))
             }
           },
         })
@@ -115,7 +117,7 @@ export function WalletPage() {
         }
         brickRef.current = controller
       } catch (error) {
-        toast.error(apiErrorMessage(error, 'Falha ao abrir o Mercado Pago'))
+        toast.error(apiErrorMessage(error, t('wallet.toast.mercadoPagoFailed')))
       }
     })()
     return () => {
@@ -137,7 +139,7 @@ export function WalletPage() {
         unmount = session.unmount
         brickRef.current = session
       } catch (error) {
-        toast.error(apiErrorMessage(error, 'Falha ao abrir o Stripe'))
+        toast.error(apiErrorMessage(error, t('wallet.toast.stripeOpenFailed')))
       }
     })()
     return () => unmount?.()
@@ -149,7 +151,7 @@ export function WalletPage() {
       const current = await paymentApi.status(order.id)
       setOrder(current)
       if (current.status === 'confirmed') {
-        toast.success(`${current.coins} moedas creditadas`)
+        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
         setOrder(null)
         await refreshWallet()
       }
@@ -165,19 +167,19 @@ export function WalletPage() {
     try {
       const result = await session.confirm()
       if (result.error) {
-        toast.error(result.error.message || 'Pagamento recusado')
+        toast.error(result.error.message || t('wallet.toast.paymentDeclined'))
         return
       }
       const current = await paymentApi.status(order.id)
       setOrder(current.status === 'confirmed' ? null : current)
       if (current.status === 'confirmed') {
-        toast.success(`${current.coins} moedas creditadas`)
+        toast.success(t('wallet.toast.coinsCredited', { coins: current.coins }))
         await refreshWallet()
       } else {
-        toast.success('Pagamento enviado. Aguarde a confirmação.')
+        toast.success(t('wallet.toast.paymentSent'))
       }
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha no Stripe'))
+      toast.error(apiErrorMessage(error, t('wallet.toast.stripeFailed')))
     } finally {
       setBusy(false)
     }
@@ -188,12 +190,12 @@ export function WalletPage() {
     setTransferBusy(true)
     try {
       await walletApi.transfer(recipient, amount)
-      toast.success('Transferência enviada')
+      toast.success(t('wallet.toast.transferSent'))
       setRecipient('')
       setAmount('')
       await refreshWallet()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha na transferência'))
+      toast.error(apiErrorMessage(error, t('wallet.toast.transferFailed')))
     } finally {
       setTransferBusy(false)
     }
@@ -252,19 +254,19 @@ export function WalletPage() {
         </aside>
       </div>
 
-      <Modal open={Boolean(selectedOrder)} title="Detalhe do pedido" onClose={() => setSelectedOrder(null)}>
+      <Modal open={Boolean(selectedOrder)} title={t('wallet.modal.order')} onClose={() => setSelectedOrder(null)}>
         {selectedOrder ? (
           <dl className="ui-detail-list">
-            {orderDetailEntries(selectedOrder).map(([label, value]) => (
+            {orderDetailEntries(selectedOrder, t).map(([label, value]) => (
               <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
             ))}
           </dl>
         ) : null}
       </Modal>
-      <Modal open={Boolean(selectedTx)} title="Detalhe da movimentação" onClose={() => setSelectedTx(null)}>
+      <Modal open={Boolean(selectedTx)} title={t('wallet.modal.transaction')} onClose={() => setSelectedTx(null)}>
         {selectedTx ? (
           <dl className="ui-detail-list">
-            {transactionDetailEntries(selectedTx).map(([label, value]) => (
+            {transactionDetailEntries(selectedTx, t).map(([label, value]) => (
               <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
             ))}
           </dl>

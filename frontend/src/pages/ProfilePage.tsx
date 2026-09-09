@@ -4,6 +4,7 @@ import { Field } from '../components/ui/Field'
 import { Button } from '../components/ui/Button'
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import {
   BadgeCheck,
   Camera,
@@ -22,8 +23,10 @@ import { useAuth } from '../contexts/AuthContext'
 import { authApi } from '../services/api'
 
 const MAX_AVATAR_BYTES = 5 * 1024 * 1024
+const MAX_BIO_LENGTH = 500
 
 export function ProfilePage() {
+  const { t } = useTranslation('panel')
   const { user, refreshUser } = useAuth()
   const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress })
   const [displayName, setDisplayName] = useState(user?.display_name ?? '')
@@ -54,11 +57,11 @@ export function ProfilePage() {
     const file = event.target.files?.[0]
     if (!file) return
     if (!file.type.startsWith('image/')) {
-      toast.error('Escolha um arquivo de imagem.')
+      toast.error(t('profile.avatarNotImage'))
       return
     }
     if (file.size > MAX_AVATAR_BYTES) {
-      toast.error('O avatar deve ter no máximo 5 MB.')
+      toast.error(t('profile.avatarTooLarge'))
       return
     }
     setAvatar(file)
@@ -75,9 +78,9 @@ export function ProfilePage() {
       await authApi.updateMe(data)
       await refreshUser()
       setAvatar(null)
-      toast.success('Perfil atualizado com sucesso.')
+      toast.success(t('profile.saved'))
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível atualizar o perfil.'))
+      toast.error(apiErrorMessage(error, t('profile.saveError')))
     } finally {
       setSaving(false)
     }
@@ -88,18 +91,18 @@ export function ProfilePage() {
       <Card className="user-profile-hero">
         <div className="user-profile-cover" />
         <div className="user-profile-identity">
-          <button className="user-profile-avatar" type="button" onClick={() => fileInput.current?.click()} aria-label="Alterar avatar">
-            {avatarPreview ? <img src={avatarPreview} alt={`Avatar de ${user?.username}`} /> : <CircleUserRound aria-hidden="true" />}
+          <button className="user-profile-avatar" type="button" onClick={() => fileInput.current?.click()} aria-label={t('profile.changeAvatar')}>
+            {avatarPreview ? <img src={avatarPreview} alt={t('profile.avatarAlt', { username: user?.username })} /> : <CircleUserRound aria-hidden="true" />}
             <span><Camera aria-hidden="true" /></span>
           </button>
           <div>
-            <span className="panel-eyebrow">Perfil do jogador</span>
+            <span className="panel-eyebrow">{t('profile.eyebrow')}</span>
             <h1>{displayName || user?.username}</h1>
             <p>@{user?.username}</p>
           </div>
           <div className={`user-profile-verified ${user?.is_email_verified ? 'is-verified' : ''}`}>
             {user?.is_email_verified ? <BadgeCheck aria-hidden="true" /> : <Mail aria-hidden="true" />}
-            <span>{user?.is_email_verified ? 'Conta verificada' : 'E-mail pendente'}</span>
+            <span>{user?.is_email_verified ? t('profile.verifiedAccount') : t('profile.emailPending')}</span>
           </div>
         </div>
       </Card>
@@ -109,32 +112,32 @@ export function ProfilePage() {
           <Card className="user-profile-completeness">
             <div className="user-profile-section-title">
               <span><Sparkles aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Personalização</span><h2>Progresso do perfil</h2></div>
+              <div><span className="panel-eyebrow">{t('profile.personalization')}</span><h2>{t('profile.completenessTitle')}</h2></div>
               <strong>{completeness}%</strong>
             </div>
             <div className="progress-bar"><i style={{ width: `${completeness}%` }} /></div>
-            <p className="muted">Adicione avatar, nome de exibição e biografia para completar seu perfil.</p>
+            <p className="muted">{t('profile.completenessHint')}</p>
           </Card>
 
           <Card className="user-profile-form-card">
             <div className="user-profile-section-title">
               <span><UserRound aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Informações públicas</span><h2>Editar perfil</h2></div>
+              <div><span className="panel-eyebrow">{t('profile.publicInfo')}</span><h2>{t('profile.editTitle')}</h2></div>
             </div>
             <form onSubmit={saveProfile}>
               <input ref={fileInput} type="file" accept="image/*" hidden onChange={chooseAvatar} />
               <Field>
-                Nome de exibição
+                {t('profile.displayName')}
                 <input value={displayName} maxLength={80} onChange={(event) => setDisplayName(event.target.value)} placeholder={user?.username} />
-                <small>É assim que seu nome aparece no painel.</small>
+                <small>{t('profile.displayNameHint')}</small>
               </Field>
               <Field>
-                Biografia
-                <textarea value={bio} maxLength={500} rows={5} onChange={(event) => setBio(event.target.value)} placeholder="Conte um pouco sobre sua jornada no servidor..." />
-                <small>{bio.length}/500 caracteres</small>
+                {t('profile.bio')}
+                <textarea value={bio} maxLength={MAX_BIO_LENGTH} rows={5} onChange={(event) => setBio(event.target.value)} placeholder={t('profile.bioPlaceholder')} />
+                <small>{t('profile.bioCounter', { length: bio.length, max: MAX_BIO_LENGTH })}</small>
               </Field>
               <Button type="submit" disabled={saving}>
-                <Save aria-hidden="true" /> {saving ? 'Salvando...' : 'Salvar alterações'}
+                <Save aria-hidden="true" /> {saving ? t('profile.saving') : t('profile.save')}
               </Button>
             </form>
           </Card>
@@ -144,25 +147,25 @@ export function ProfilePage() {
           <Card className="user-profile-stats">
             <div className="user-profile-section-title compact">
               <span><Trophy aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Sua jornada</span><h2>Resumo</h2></div>
+              <div><span className="panel-eyebrow">{t('profile.journey')}</span><h2>{t('profile.summary')}</h2></div>
             </div>
             <div className="user-profile-stat-list">
-              <div><Trophy aria-hidden="true" /><span><small>Nível</small><strong>{progress.data?.level ?? 1}</strong></span></div>
-              <div><Sparkles aria-hidden="true" /><span><small>Conquistas</small><strong>{unlockedCount}/{totalAchievements || 0}</strong></span></div>
-              <div><Coins aria-hidden="true" /><span><small>Fichas</small><strong>{user?.fichas ?? 0}</strong></span></div>
+              <div><Trophy aria-hidden="true" /><span><small>{t('profile.level')}</small><strong>{progress.data?.level ?? 1}</strong></span></div>
+              <div><Sparkles aria-hidden="true" /><span><small>{t('profile.achievements')}</small><strong>{unlockedCount}/{totalAchievements || 0}</strong></span></div>
+              <div><Coins aria-hidden="true" /><span><small>{t('profile.chips')}</small><strong>{user?.fichas ?? 0}</strong></span></div>
             </div>
           </Card>
 
           <Card className="user-profile-account">
             <div className="user-profile-section-title compact">
               <span><ShieldCheck aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">Dados da conta</span><h2>Identificação</h2></div>
+              <div><span className="panel-eyebrow">{t('profile.accountData')}</span><h2>{t('profile.identification')}</h2></div>
             </div>
             <dl>
-              <div><dt>Usuário</dt><dd>{user?.username}</dd></div>
-              <div><dt>E-mail</dt><dd>{user?.email}</dd></div>
-              <div><dt>Função</dt><dd>{user?.role === 'player' ? 'Jogador' : user?.role}</dd></div>
-              <div><dt>Segurança</dt><dd>{user?.is_2fa_enabled ? '2FA ativo' : '2FA inativo'}</dd></div>
+              <div><dt>{t('profile.username')}</dt><dd>{user?.username}</dd></div>
+              <div><dt>{t('profile.email')}</dt><dd>{user?.email}</dd></div>
+              <div><dt>{t('profile.role')}</dt><dd>{user?.role === 'player' ? t('profile.rolePlayer') : user?.role}</dd></div>
+              <div><dt>{t('profile.security')}</dt><dd>{user?.is_2fa_enabled ? t('profile.twoFactorOn') : t('profile.twoFactorOff')}</dd></div>
             </dl>
           </Card>
         </aside>

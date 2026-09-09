@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import {
   ArrowLeft,
@@ -29,18 +30,10 @@ import { getHelpContext } from '../components/help/contextual'
 import { supportApi } from '../services/api'
 import type { ApiSupportTicket } from '../services/types'
 
-const categories = [
-  ['technical', 'Problema técnico', 'Launcher, site, cliente ou conexão'],
-  ['billing', 'Pagamento e loja', 'PIX, saldo, compra ou entrega'],
-  ['account', 'Conta e segurança', 'Acesso, e-mail, senha ou proteção'],
-  ['game', 'Suporte ao jogo', 'Personagem, item ou situação no servidor'],
-  ['bug', 'Relatar um bug', 'Algo não funcionou como deveria'],
-  ['report', 'Denúncia', 'Comportamento, fraude ou abuso'],
-  ['suggestion', 'Sugestão', 'Ideias para melhorar o servidor'],
-  ['other', 'Outro assunto', 'Para tudo que não se encaixa acima'],
-] as const
+const categories = ['technical', 'billing', 'account', 'game', 'bug', 'report', 'suggestion', 'other'] as const
 
 export function SupportPage() {
+  const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
   const [params, setParams] = useSearchParams()
   const list = useQuery({ queryKey: ['support-tickets'], queryFn: supportApi.list })
@@ -56,11 +49,11 @@ export function SupportPage() {
   const [subject, setSubject] = useState(() => {
     if (prefillSubject) return prefillSubject.slice(0, 160)
     const screen = getHelpContext(prefillFrom)
-    return screen ? `Ajuda: ${screen.title}` : ''
+    return screen ? t('support.prefillSubject', { title: screen.title }) : ''
   })
   const [description, setDescription] = useState(() => {
     const screen = getHelpContext(prefillFrom)
-    return screen ? `Estou na tela ${screen.title} (${screen.path}) e preciso de ajuda da equipe.` : ''
+    return screen ? t('support.prefillDescription', { title: screen.title, path: screen.path }) : ''
   })
   const [category, setCategory] = useState('')
   const [priority, setPriority] = useState('normal')
@@ -98,7 +91,7 @@ export function SupportPage() {
     setPending(true)
     try {
       const ticket = await supportApi.create({ subject, description, category, priority })
-      toast.success(`Chamado ${ticket.protocol} aberto`)
+      toast.success(t('support.ticketOpened', { protocol: ticket.protocol }))
       setSubject('')
       setDescription('')
       setCategory('')
@@ -107,7 +100,7 @@ export function SupportPage() {
       setParams({ ticket: ticket.id })
       await refresh(ticket.id)
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível abrir o chamado'))
+      toast.error(apiErrorMessage(error, t('support.createError')))
     } finally {
       setPending(false)
     }
@@ -120,10 +113,10 @@ export function SupportPage() {
     try {
       await supportApi.reply(selectedId, reply)
       setReply('')
-      toast.success('Mensagem enviada para a equipe')
+      toast.success(t('support.replySent'))
       await refresh(selectedId)
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível enviar a mensagem'))
+      toast.error(apiErrorMessage(error, t('support.replyError')))
     } finally {
       setPending(false)
     }
@@ -134,10 +127,10 @@ export function SupportPage() {
     setPending(true)
     try {
       await supportApi.action(selectedId, action)
-      toast.success(action === 'close' ? 'Chamado encerrado' : 'Chamado reaberto')
+      toast.success(action === 'close' ? t('support.ticketClosed') : t('support.ticketReopened'))
       await refresh(selectedId)
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível atualizar o chamado'))
+      toast.error(apiErrorMessage(error, t('support.actionError')))
     } finally {
       setPending(false)
     }
@@ -147,31 +140,31 @@ export function SupportPage() {
     <div className="support-page">
       <Card as="header" className="support-hero">
         <div>
-          <span className="panel-eyebrow"><Headphones aria-hidden="true" /> Central de atendimento</span>
-          <h1>Como podemos ajudar?</h1>
-          <p className="muted">Abra, acompanhe e responda seus chamados em um só lugar.</p>
+          <span className="panel-eyebrow"><Headphones aria-hidden="true" /> {t('support.eyebrow')}</span>
+          <h1>{t('support.title')}</h1>
+          <p className="muted">{t('support.subtitle')}</p>
         </div>
         <Button className="support-new-button" type="button" onClick={() => { setCreating(true); setParams({}) }}>
-          <Plus aria-hidden="true" /> Novo chamado
+          <Plus aria-hidden="true" /> {t('support.newTicket')}
         </Button>
       </Card>
 
-      <section className="support-overview" aria-label="Resumo dos chamados">
-        <div className="support-stat"><LifeBuoy /><span><strong>{list.data?.summary.active ?? 0}</strong> em atendimento</span></div>
-        <div className="support-stat attention"><CircleAlert /><span><strong>{list.data?.summary.waiting_user ?? 0}</strong> aguardando você</span></div>
-        <div className="support-stat done"><CheckCircle2 /><span><strong>{list.data?.summary.resolved ?? 0}</strong> finalizados</span></div>
+      <section className="support-overview" aria-label={t('support.overviewAria')}>
+        <div className="support-stat"><LifeBuoy /><span><strong>{list.data?.summary.active ?? 0}</strong> {t('support.statActive')}</span></div>
+        <div className="support-stat attention"><CircleAlert /><span><strong>{list.data?.summary.waiting_user ?? 0}</strong> {t('support.statWaiting')}</span></div>
+        <div className="support-stat done"><CheckCircle2 /><span><strong>{list.data?.summary.resolved ?? 0}</strong> {t('support.statResolved')}</span></div>
       </section>
 
       <div className="support-workspace">
         <aside className={`card support-inbox${creating ? ' is-mobile-hidden' : ''}`}>
           <div className="support-inbox-head">
-            <div><span className="panel-eyebrow">Seus chamados</span><h2>Atendimentos</h2></div>
-            <button type="button" aria-label="Novo chamado" onClick={() => { setCreating(true); setParams({}) }}><Plus /></button>
+            <div><span className="panel-eyebrow">{t('support.inboxEyebrow')}</span><h2>{t('support.inboxTitle')}</h2></div>
+            <button type="button" aria-label={t('support.newTicket')} onClick={() => { setCreating(true); setParams({}) }}><Plus /></button>
           </div>
           <div className="support-filter-tabs">
-            <button className={filter === 'active' ? 'active' : ''} type="button" onClick={() => setFilter('active')}>Ativos</button>
-            <button className={filter === 'all' ? 'active' : ''} type="button" onClick={() => setFilter('all')}>Todos</button>
-            <button className={filter === 'closed' ? 'active' : ''} type="button" onClick={() => setFilter('closed')}>Finalizados</button>
+            <button className={filter === 'active' ? 'active' : ''} type="button" onClick={() => setFilter('active')}>{t('support.filterActive')}</button>
+            <button className={filter === 'all' ? 'active' : ''} type="button" onClick={() => setFilter('all')}>{t('support.filterAll')}</button>
+            <button className={filter === 'closed' ? 'active' : ''} type="button" onClick={() => setFilter('closed')}>{t('support.filterClosed')}</button>
           </div>
           <div className="support-ticket-list">
             {tickets.map((ticket) => (
@@ -183,11 +176,11 @@ export function SupportPage() {
               >
                 <span className="support-ticket-row-top"><b>{ticket.protocol}</b><small>{formatDateTime(ticket.last_activity_at, 'short')}</small></span>
                 <strong>{ticket.subject}</strong>
-                <span className="support-ticket-row-bottom"><TicketStatus ticket={ticket} /><small>{ticket.message_count ?? 0} mensagens</small></span>
+                <span className="support-ticket-row-bottom"><TicketStatus ticket={ticket} /><small>{t('support.messagesCount', { total: ticket.message_count ?? 0 })}</small></span>
               </button>
             ))}
             {!list.isLoading && !tickets.length ? (
-              <div className="support-empty-mini"><MessageSquareText /><strong>Nenhum chamado aqui</strong><span>Quando precisar, nossa equipe estará por perto.</span></div>
+              <div className="support-empty-mini"><MessageSquareText /><strong>{t('support.emptyInboxTitle')}</strong><span>{t('support.emptyInboxText')}</span></div>
             ) : null}
           </div>
         </aside>
@@ -196,43 +189,43 @@ export function SupportPage() {
           {creating ? (
             <form className="support-create" onSubmit={submitTicket}>
               <div className="support-main-head">
-                <div><span className="panel-eyebrow">Novo atendimento</span><h2>Conte o que aconteceu</h2><p className="muted">Quanto mais contexto, mais rápido conseguiremos ajudar.</p></div>
-                <button className="support-icon-button" type="button" onClick={() => setCreating(false)} aria-label="Fechar"><X /></button>
+                <div><span className="panel-eyebrow">{t('support.createEyebrow')}</span><h2>{t('support.createTitle')}</h2><p className="muted">{t('support.createHint')}</p></div>
+                <button className="support-icon-button" type="button" onClick={() => setCreating(false)} aria-label={t('support.closeForm')}><X /></button>
               </div>
               <fieldset className="support-category-fieldset">
-                <legend>Qual é o assunto?</legend>
+                <legend>{t('support.categoryLegend')}</legend>
                 <div className="support-category-grid">
-                  {categories.map(([value, label, hint]) => (
+                  {categories.map((value) => (
                     <label className={category === value ? 'selected' : ''} key={value}>
                       <input type="radio" name="category" value={value} checked={category === value} onChange={() => setCategory(value)} required />
-                      <span><strong>{label}</strong><small>{hint}</small></span><ChevronRight />
+                      <span><strong>{t(`support.categories.${value}.label`)}</strong><small>{t(`support.categories.${value}.hint`)}</small></span><ChevronRight />
                     </label>
                   ))}
                 </div>
               </fieldset>
-              <Field>Assunto<input value={subject} onChange={(event) => setSubject(event.target.value)} minLength={6} maxLength={160} placeholder="Resuma o problema em uma frase" required /></Field>
-              <Field>Detalhes<textarea value={description} onChange={(event) => setDescription(event.target.value)} minLength={20} rows={7} placeholder="Diga o que você tentou, quando aconteceu e qualquer informação importante..." required /></Field>
+              <Field>{t('support.subject')}<input value={subject} onChange={(event) => setSubject(event.target.value)} minLength={6} maxLength={160} placeholder={t('support.subjectPlaceholder')} required /></Field>
+              <Field>{t('support.details')}<textarea value={description} onChange={(event) => setDescription(event.target.value)} minLength={20} rows={7} placeholder={t('support.detailsPlaceholder')} required /></Field>
               <div className="support-form-footer">
-                <Field>Prioridade<select value={priority} onChange={(event) => setPriority(event.target.value)}><option value="low">Baixa — dúvida ou sugestão</option><option value="normal">Normal — preciso de ajuda</option><option value="high">Alta — impede meu acesso ou uso</option><option value="urgent">Urgente — segurança ou pagamento</option></select></Field>
-                <Button type="submit" disabled={pending || !category}><Send /> {pending ? 'Abrindo...' : 'Abrir chamado'}</Button>
+                <Field>{t('support.priority')}<select value={priority} onChange={(event) => setPriority(event.target.value)}><option value="low">{t('support.priorityLow')}</option><option value="normal">{t('support.priorityNormal')}</option><option value="high">{t('support.priorityHigh')}</option><option value="urgent">{t('support.priorityUrgent')}</option></select></Field>
+                <Button type="submit" disabled={pending || !category}><Send /> {pending ? t('support.opening') : t('support.openTicket')}</Button>
               </div>
-              <p className="support-privacy-note"><ShieldCheck /> Suas informações ficam visíveis apenas para você e para a equipe responsável.</p>
+              <p className="support-privacy-note"><ShieldCheck /> {t('support.privacyNote')}</p>
             </form>
           ) : detail.data ? (
             <div className="support-conversation">
               <div className="support-main-head support-conversation-head">
                 <button className="support-mobile-back" type="button" onClick={() => setParams({})}><ArrowLeft /></button>
-                <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> Aberto em {formatDateTime(detail.data.created_at, 'short')}</span><span>Atendente: {detail.data.assigned_to}</span></div></div>
-                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(['closed', 'resolved'].includes(detail.data.status) ? 'reopen' : 'close')}>{['closed', 'resolved'].includes(detail.data.status) ? 'Reabrir' : 'Encerrar'}</Button>
+                <div><span className="panel-eyebrow">{detail.data.protocol} · {detail.data.category_label}</span><h2>{detail.data.subject}</h2><div className="support-ticket-meta"><TicketStatus ticket={detail.data} /><span><Clock3 /> {t('support.openedAt', { when: formatDateTime(detail.data.created_at, 'short') })}</span><span>{t('support.assignedTo', { name: detail.data.assigned_to })}</span></div></div>
+                <Button className="ghost compact" type="button" disabled={pending} onClick={() => void ticketAction(['closed', 'resolved'].includes(detail.data.status) ? 'reopen' : 'close')}>{['closed', 'resolved'].includes(detail.data.status) ? t('support.reopen') : t('support.closeTicket')}</Button>
               </div>
-              {detail.data.status === 'waiting_user' ? <div className="support-action-banner"><CircleAlert /><div><strong>A equipe precisa da sua resposta</strong><span>Confira a última mensagem abaixo para o atendimento continuar.</span></div></div> : null}
+              {detail.data.status === 'waiting_user' ? <div className="support-action-banner"><CircleAlert /><div><strong>{t('support.waitingTitle')}</strong><span>{t('support.waitingText')}</span></div></div> : null}
               <TicketMessages messages={detail.data.messages ?? []} />
               {!['closed', 'resolved'].includes(detail.data.status) ? (
-                <form className="support-reply" onSubmit={submitReply}><label><span>Responder à equipe</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder="Escreva sua mensagem..." required /></label><Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? 'Enviando...' : 'Enviar'}</Button></form>
-              ) : <div className="support-closed-note"><CheckCircle2 /><div><strong>Este atendimento foi finalizado</strong><span>Se o problema continuar, você pode reabrir o chamado.</span></div></div>}
+                <form className="support-reply" onSubmit={submitReply}><label><span>{t('support.replyLabel')}</span><textarea value={reply} onChange={(event) => setReply(event.target.value)} rows={3} placeholder={t('support.replyPlaceholder')} required /></label><Button type="submit" disabled={pending || !reply.trim()}><Send /> {pending ? t('support.sending') : t('support.send')}</Button></form>
+              ) : <div className="support-closed-note"><CheckCircle2 /><div><strong>{t('support.closedTitle')}</strong><span>{t('support.closedText')}</span></div></div>}
             </div>
           ) : (
-            <div className="support-empty"><Sparkles /><h2>Atendimento humano, sem perder o contexto</h2><p>Selecione um chamado ou abra um novo. Todo o histórico fica organizado aqui.</p><Button type="button" onClick={() => setCreating(true)}><Plus /> Abrir chamado</Button></div>
+            <div className="support-empty"><Sparkles /><h2>{t('support.emptyTitle')}</h2><p>{t('support.emptyText')}</p><Button type="button" onClick={() => setCreating(true)}><Plus /> {t('support.openTicket')}</Button></div>
           )}
         </main>
       </div>

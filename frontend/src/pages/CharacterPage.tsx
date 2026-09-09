@@ -6,6 +6,8 @@ import { Button } from '../components/ui/Button'
 import { useRef, useState, type FormEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import toast from 'react-hot-toast'
 import {
   ArrowLeft,
@@ -35,51 +37,64 @@ import { ItemIcon } from '../components/ItemIcon'
 
 interface EquipmentSlotDefinition {
   key: string
-  label: string
+  labelKey: string
   slotIds: number[]
   icon: LucideIcon
 }
 
 const BODY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'head', label: 'Elmo', slotIds: [6], icon: Crown },
-  { key: 'gloves', label: 'Luvas', slotIds: [9], icon: Hand },
-  { key: 'chest', label: 'Armadura', slotIds: [10], icon: Shirt },
-  { key: 'feet', label: 'Botas', slotIds: [12], icon: Footprints },
-  { key: 'legs', label: 'Calças', slotIds: [11], icon: Shirt },
+  { key: 'head', labelKey: 'head', slotIds: [6], icon: Crown },
+  { key: 'gloves', labelKey: 'gloves', slotIds: [9], icon: Hand },
+  { key: 'chest', labelKey: 'chest', slotIds: [10], icon: Shirt },
+  { key: 'feet', labelKey: 'feet', slotIds: [12], icon: Footprints },
+  { key: 'legs', labelKey: 'legs', slotIds: [11], icon: Shirt },
 ]
 
 const WEAPON_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'weapon', label: 'Arma', slotIds: [14, 7], icon: Sword },
-  { key: 'offhand', label: 'Mão secundária', slotIds: [8], icon: Shield },
+  { key: 'weapon', labelKey: 'weapon', slotIds: [14, 7], icon: Sword },
+  { key: 'offhand', labelKey: 'offhand', slotIds: [8], icon: Shield },
 ]
 
 const ACCESSORY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'left-ear', label: 'Brinco', slotIds: [2], icon: Gem },
-  { key: 'neck', label: 'Colar', slotIds: [3], icon: Gem },
-  { key: 'right-ear', label: 'Brinco', slotIds: [1], icon: Gem },
-  { key: 'left-ring', label: 'Anel', slotIds: [5], icon: CircleDot },
-  { key: 'right-ring', label: 'Anel', slotIds: [4], icon: CircleDot },
+  { key: 'left-ear', labelKey: 'earring', slotIds: [2], icon: Gem },
+  { key: 'neck', labelKey: 'necklace', slotIds: [3], icon: Gem },
+  { key: 'right-ear', labelKey: 'earring', slotIds: [1], icon: Gem },
+  { key: 'left-ring', labelKey: 'ring', slotIds: [5], icon: CircleDot },
+  { key: 'right-ring', labelKey: 'ring', slotIds: [4], icon: CircleDot },
 ]
 
 const EQUIPMENT_SLOT_GROUPS = [
-  { key: 'body', label: 'Equipamentos', slots: BODY_EQUIPMENT_SLOTS },
-  { key: 'weapons', label: 'Armas', slots: WEAPON_EQUIPMENT_SLOTS },
-  { key: 'accessories', label: 'Acessórios', slots: ACCESSORY_EQUIPMENT_SLOTS },
+  { key: 'body', labelKey: 'body', slots: BODY_EQUIPMENT_SLOTS },
+  { key: 'weapons', labelKey: 'weapons', slots: WEAPON_EQUIPMENT_SLOTS },
+  { key: 'accessories', labelKey: 'accessories', slots: ACCESSORY_EQUIPMENT_SLOTS },
 ]
 
 const EQUIPMENT_SLOTS = EQUIPMENT_SLOT_GROUPS.flatMap((group) => group.slots)
 
 const DISPLAYED_EQUIPMENT_SLOTS = new Set(EQUIPMENT_SLOTS.flatMap((slot) => slot.slotIds))
 
-function EquipmentSlot({ definition, item }: { definition: EquipmentSlotDefinition; item?: ApiCharacterEquipmentItem }) {
+function EquipmentSlot({
+  definition,
+  item,
+  t,
+}: {
+  definition: EquipmentSlotDefinition
+  item?: ApiCharacterEquipmentItem
+  t: TFunction<'panel'>
+}) {
   const Icon = definition.icon
+  const label = t(`character.slots.${definition.labelKey}`)
+  const enchant = item && item.enchant > 0 ? ` · +${item.enchant}` : ''
   return (
     <article
       className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : ''}`}
-      aria-label={`${definition.label}: ${item ? item.name : 'vazio'}`}
-      title={item ? `${item.name} · ID ${item.item_id}${item.enchant > 0 ? ` · +${item.enchant}` : ''}` : definition.label}
+      aria-label={t('character.equipment.slotAria', {
+        label,
+        value: item ? item.name : t('character.equipment.emptySlot'),
+      })}
+      title={item ? `${item.name} · ${t('character.equipment.itemId', { id: item.item_id })}${enchant}` : label}
     >
-      <span className="character-equipment-slot-label">{definition.label}</span>
+      <span className="character-equipment-slot-label">{label}</span>
       <div className="character-equipment-slot-cell">
         {item ? (
           <ItemIcon itemId={item.item_id} name={item.name} size={38} />
@@ -90,7 +105,7 @@ function EquipmentSlot({ definition, item }: { definition: EquipmentSlotDefiniti
           <span className="character-equipment-slot-copy">
             <strong>{item.name}</strong>
             <small>
-              ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}
+              {t('character.equipment.itemId', { id: item.item_id })}{enchant}
             </small>
           </span>
         ) : null}
@@ -100,6 +115,7 @@ function EquipmentSlot({ definition, item }: { definition: EquipmentSlotDefiniti
 }
 
 export function CharacterPage() {
+  const { t } = useTranslation('panel')
   const { login = '', charId = '' } = useParams()
   const queryClient = useQueryClient()
   const id = Number(charId)
@@ -140,14 +156,14 @@ export function CharacterPage() {
       setSubmitting('nick')
       try {
         await lineageApi.changeNickname(login, id, nickname, requestKey('nickname', nickname))
-        toast.success('Nickname alterado')
+        toast.success(t('character.toast.nicknameChanged'))
         setNickname('')
         operation.current = null
         await refreshCharacter()
         await queryClient.invalidateQueries({ queryKey: ['wallet'] })
       } finally { setSubmitting(null) }
     })
-    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível alterar o nickname'))
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.nicknameError')))
   }
 
   async function onChangeSex(event: FormEvent) {
@@ -158,12 +174,12 @@ export function CharacterPage() {
       try {
         await lineageApi.changeSex(login, id, sex, requestKey('sex', sex))
         operation.current = null
-        toast.success('Sexo alterado')
+        toast.success(t('character.toast.sexChanged'))
         await refreshCharacter()
         await queryClient.invalidateQueries({ queryKey: ['wallet'] })
       } finally { setSubmitting(null) }
     })
-    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível alterar o sexo'))
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.sexError')))
   }
 
   async function onUnstuck() {
@@ -171,10 +187,10 @@ export function CharacterPage() {
       setSubmitting('unstuck')
       try {
         await lineageApi.unstuck(login, id)
-        toast.success('Personagem destravado')
+        toast.success(t('character.toast.unstuckDone'))
       } finally { setSubmitting(null) }
     })
-    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, 'Não foi possível destravar'))
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.unstuckError')))
   }
 
   return (
@@ -183,34 +199,38 @@ export function CharacterPage() {
         <div>
           <Link className="character-back" to="/painel/accounts">
             <ArrowLeft aria-hidden="true" />
-            Contas
+            {t('character.backToAccounts')}
           </Link>
-          <span className="panel-eyebrow">Ficha do personagem</span>
-          <h1>{char?.name ?? 'Personagem'}</h1>
+          <span className="panel-eyebrow">{t('character.eyebrow')}</span>
+          <h1>{char?.name ?? t('character.fallbackName')}</h1>
           <p className="muted">
-            {login} · {getClassName(char?.class_id)} · Nv. {char?.level ?? '—'}
+            {t('character.summary', {
+              login,
+              className: getClassName(char?.class_id),
+              level: char?.level ?? '—',
+            })}
           </p>
         </div>
         {char ? (
           <span className={`account-status-pill ${char.online ? 'is-active' : ''}`}>
-            {char.online ? 'Online' : 'Offline'}
+            {char.online ? t('character.online') : t('character.offline')}
           </span>
         ) : null}
       </Card>
 
-      {characters.isLoading ? <Card as="div" className="account-empty-state">Carregando personagem...</Card> : null}
+      {characters.isLoading ? <Card as="div" className="account-empty-state">{t('character.loading')}</Card> : null}
       {characters.isError ? (
         <Card as="div" className="account-empty-state">
           <UsersRound aria-hidden="true" />
-          <strong>Não foi possível abrir o personagem</strong>
-          <span>{isApiError(characters.error) ? characters.error.message : 'Volte para a conta e tente novamente.'}</span>
+          <strong>{t('character.errorTitle')}</strong>
+          <span>{isApiError(characters.error) ? characters.error.message : t('character.errorHint')}</span>
         </Card>
       ) : null}
       {missing ? (
         <Card as="div" className="account-empty-state">
           <UsersRound aria-hidden="true" />
-          <strong>Personagem não encontrado</strong>
-          <span>Volte para a conta e escolha outro personagem.</span>
+          <strong>{t('character.missingTitle')}</strong>
+          <span>{t('character.missingHint')}</span>
         </Card>
       ) : null}
 
@@ -219,91 +239,92 @@ export function CharacterPage() {
           <Card className="character-sheet">
             <div className="account-section-heading">
               <div>
-                <span className="panel-eyebrow">Informações</span>
+                <span className="panel-eyebrow">{t('character.infoEyebrow')}</span>
                 <h2>{char.name}</h2>
               </div>
               {char.is_clan_leader ? (
                 <span className="account-login-chip">
                   <Crown aria-hidden="true" />
-                  Líder de clã
+                  {t('character.clanLeader')}
                 </span>
               ) : null}
             </div>
             <dl className="character-stats">
               <div>
-                <dt>Título</dt>
+                <dt>{t('character.stats.title')}</dt>
                 <dd>{char.title || '—'}</dd>
               </div>
               <div>
-                <dt>Nível</dt>
+                <dt>{t('character.stats.level')}</dt>
                 <dd>{char.level}</dd>
               </div>
               <div>
-                <dt>Classe base</dt>
+                <dt>{t('character.stats.baseClass')}</dt>
                 <dd>{getClassName(char.class_id)}</dd>
               </div>
               <div>
-                <dt>Sexo</dt>
-                <dd>{char.sex === 1 ? 'Feminino' : 'Masculino'}</dd>
+                <dt>{t('character.stats.sex')}</dt>
+                <dd>{char.sex === 1 ? t('character.female') : t('character.male')}</dd>
               </div>
               <div>
-                <dt>Online</dt>
-                <dd>{char.online ? 'Sim' : 'Não'}</dd>
+                <dt>{t('character.stats.online')}</dt>
+                <dd>{char.online ? t('character.yes') : t('character.no')}</dd>
               </div>
               <div>
-                <dt>Clã</dt>
+                <dt>{t('character.stats.clan')}</dt>
                 <dd>{char.clan_name || '—'}</dd>
               </div>
               <div>
-                <dt>PvP</dt>
+                <dt>{t('character.stats.pvp')}</dt>
                 <dd>{char.pvp}</dd>
               </div>
               <div>
-                <dt>PK</dt>
+                <dt>{t('character.stats.pk')}</dt>
                 <dd>{char.pk}</dd>
               </div>
             </dl>
             {!offline ? (
-              <p className="character-offline-hint">O personagem precisa estar offline para usar os serviços.</p>
+              <p className="character-offline-hint">{t('character.offlineHint')}</p>
             ) : null}
           </Card>
 
           <Card className="character-equipment">
             <div className="account-section-heading">
               <div>
-                <span className="panel-eyebrow">Visual do personagem</span>
-                <h2>Itens equipados</h2>
+                <span className="panel-eyebrow">{t('character.equipment.eyebrow')}</span>
+                <h2>{t('character.equipment.title')}</h2>
               </div>
               <span className="character-readonly-chip">
                 <Eye aria-hidden="true" />
-                Somente leitura
+                {t('character.equipment.readonly')}
               </span>
             </div>
 
             <div className="character-equipment-summary">
               <Package aria-hidden="true" />
               <strong>{equippedItems.length}</strong>
-              <span>{equippedItems.length === 1 ? 'item equipado' : 'itens equipados'}</span>
+              <span>{t('character.equipment.equipped', { count: equippedItems.length })}</span>
             </div>
 
-            {equipment.isLoading ? <div className="character-equipment-message">Carregando equipamentos...</div> : null}
+            {equipment.isLoading ? <div className="character-equipment-message">{t('character.equipment.loading')}</div> : null}
             {equipment.isError ? (
               <div className="character-equipment-message is-error">
-                Não foi possível consultar os equipamentos deste personagem.
+                {t('character.equipment.error')}
               </div>
             ) : null}
 
             {!equipment.isLoading && !equipment.isError ? (
-              <div className="character-paperdoll" aria-label="Equipamentos atuais do personagem">
+              <div className="character-paperdoll" aria-label={t('character.equipment.paperdollLabel')}>
                 {EQUIPMENT_SLOT_GROUPS.map((group) => (
                   <section className={`character-equipment-group character-equipment-group-${group.key}`} key={group.key}>
-                    <h3>{group.label}</h3>
+                    <h3>{t(`character.groups.${group.labelKey}`)}</h3>
                     <div className="character-equipment-slots">
                       {group.slots.map((definition) => (
                         <EquipmentSlot
                           key={definition.key}
                           definition={definition}
                           item={equippedItems.find((item) => definition.slotIds.includes(item.slot))}
+                          t={t}
                         />
                       ))}
                     </div>
@@ -314,14 +335,14 @@ export function CharacterPage() {
 
             {additionalEquipment.length ? (
               <div className="character-equipment-additional">
-                <span>Outros slots equipados</span>
+                <span>{t('character.equipment.additional')}</span>
                 <div>
                   {additionalEquipment.map((item) => (
                     <article key={`${item.slot}-${item.item_id}`}>
                       <ItemIcon itemId={item.item_id} name={item.name} size={28} />
                       <span>
                         <strong>{item.name}</strong>
-                        <small>Slot {item.slot} · ID {item.item_id}{item.enchant > 0 ? ` · +${item.enchant}` : ''}</small>
+                        <small>{t('character.equipment.slotInfo', { slot: item.slot, id: item.item_id })}{item.enchant > 0 ? ` · +${item.enchant}` : ''}</small>
                       </span>
                     </article>
                   ))}
@@ -335,13 +356,13 @@ export function CharacterPage() {
               <div className="account-form-title">
                 <Pencil aria-hidden="true" />
                 <div>
-                  <h3>Alterar nickname</h3>
-                  <p>2 a 16 letras ou números. Custa {formatServicePrice(prices.data?.CHANGE_NICKNAME)}.</p>
+                  <h3>{t('character.services.nickname.title')}</h3>
+                  <p>{t('character.services.nickname.hint', { price: formatServicePrice(prices.data?.CHANGE_NICKNAME) })}</p>
                 </div>
               </div>
               <form className="account-action-form" onSubmit={onChangeNickname}>
                 <Field>
-                  Novo nickname
+                  {t('character.services.nickname.field')}
                   <input
                     value={nickname}
                     onChange={(event) => setNickname(event.target.value)}
@@ -352,7 +373,7 @@ export function CharacterPage() {
                   />
                 </Field>
                 <Button type="submit" disabled={!offline || submitting !== null}>
-                  {submitting === 'nick' ? 'Alterando...' : 'Alterar nickname'}
+                  {submitting === 'nick' ? t('character.services.nickname.submitting') : t('character.services.nickname.submit')}
                 </Button>
               </form>
             </Card>
@@ -361,21 +382,21 @@ export function CharacterPage() {
               <div className="account-form-title">
                 <VenusAndMars aria-hidden="true" />
                 <div>
-                  <h3>Alterar sexo</h3>
-                  <p>Troca permanente. Custa {formatServicePrice(prices.data?.CHANGE_SEX)}.</p>
+                  <h3>{t('character.services.sex.title')}</h3>
+                  <p>{t('character.services.sex.hint', { price: formatServicePrice(prices.data?.CHANGE_SEX) })}</p>
                 </div>
               </div>
               <form className="account-action-form" onSubmit={onChangeSex}>
                 <Field>
-                  Novo sexo
+                  {t('character.services.sex.field')}
                   <select value={sex} onChange={(event) => setSex(event.target.value as 'M' | 'F' | '')} required disabled={!offline}>
-                    <option value="">Selecione</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Feminino</option>
+                    <option value="">{t('character.services.sex.placeholder')}</option>
+                    <option value="M">{t('character.male')}</option>
+                    <option value="F">{t('character.female')}</option>
                   </select>
                 </Field>
                 <Button type="submit" disabled={!offline || submitting !== null}>
-                  {submitting === 'sex' ? 'Alterando...' : 'Alterar sexo'}
+                  {submitting === 'sex' ? t('character.services.sex.submitting') : t('character.services.sex.submit')}
                 </Button>
               </form>
             </Card>
@@ -384,13 +405,13 @@ export function CharacterPage() {
               <div className="account-form-title">
                 <Undo2 aria-hidden="true" />
                 <div>
-                  <h3>Destravar</h3>
-                  <p>Teleporta para um local seguro. {formatServicePrice(prices.data?.UNSTUCK)}.</p>
+                  <h3>{t('character.services.unstuck.title')}</h3>
+                  <p>{t('character.services.unstuck.hint', { price: formatServicePrice(prices.data?.UNSTUCK) })}</p>
                 </div>
               </div>
-              <p className="muted">Use se o personagem travou ou caiu em um lugar inacessível.</p>
+              <p className="muted">{t('character.services.unstuck.description')}</p>
               <Button type="button" onClick={() => void onUnstuck()} disabled={!offline || submitting !== null}>
-                {submitting === 'unstuck' ? 'Destravando...' : 'Destravar personagem'}
+                {submitting === 'unstuck' ? t('character.services.unstuck.submitting') : t('character.services.unstuck.submit')}
               </Button>
             </Card>
 
@@ -398,18 +419,18 @@ export function CharacterPage() {
               <div className="account-form-title">
                 <MapPin aria-hidden="true" />
                 <div>
-                  <h3>Atalhos</h3>
-                  <p>Mesmos destinos do painel antigo.</p>
+                  <h3>{t('character.services.shortcuts.title')}</h3>
+                  <p>{t('character.services.shortcuts.hint')}</p>
                 </div>
               </div>
               <div className="character-shortcut-list">
                 <Link className="btn ghost" to="/painel/inventory">
                   <Package aria-hidden="true" />
-                  Inventário
+                  {t('character.services.shortcuts.inventory')}
                 </Link>
                 <Link className="btn ghost" to="/painel/marketplace">
                   <Store aria-hidden="true" />
-                  Marketplace
+                  {t('character.services.shortcuts.marketplace')}
                 </Link>
               </div>
             </Card>

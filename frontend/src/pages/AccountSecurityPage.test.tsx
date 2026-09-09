@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { authApi, ApiError } from '../services/api'
+import i18n from '../i18n'
 import { AccountSecurityPage } from './AccountSecurityPage'
 
 const session = vi.hoisted(() => ({
@@ -46,7 +47,7 @@ beforeEach(() => {
   vi.mocked(authApi.setupTwoFactor).mockResolvedValue({ secret: 'SECRET123', enabled: false, otpauth_url: 'otpauth://totp/PDL' })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
-afterEach(() => { cleanup(); client.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+afterEach(async () => { cleanup(); client.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 function mount() {
   render(<QueryClientProvider client={client}><AccountSecurityPage /></QueryClientProvider>)
   return userEvent.setup()
@@ -164,4 +165,17 @@ it('encerra as demais sessões de uma vez', async () => {
   await user.click(screen.getByRole('button', { name: 'Encerrar outras sessões' }))
   expect(authApi.revokeOtherSessions).toHaveBeenCalledTimes(1)
   expect(toast.success).toHaveBeenCalledWith('1 sessão(ões) encerrada(s).')
+})
+
+it('traduz títulos, sessões e avisos de 2FA no idioma ativo', async () => {
+  vi.mocked(authApi.requestEmailVerification).mockResolvedValue({ already_verified: true } as Awaited<ReturnType<typeof authApi.requestEmailVerification>>)
+  await i18n.changeLanguage('en')
+  const user = mount()
+  expect(screen.getByRole('heading', { name: 'Account & security' })).toBeVisible()
+  expect(screen.getByText('Loading sessions...')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Open sessions' })).toBeVisible()
+  expect(await screen.findByText('This browser')).toBeVisible()
+  expect(screen.getByTitle('End session')).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Resend verification' }))
+  expect(toast.success).toHaveBeenCalledWith('Your e-mail is already verified.')
 })

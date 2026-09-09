@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { ArrowUpRight, Coins, Clock3, Landmark, ShieldCheck, Sparkles } from 'lucide-react'
 import { Card } from '../ui/Card'
 
@@ -8,18 +9,20 @@ type WalletHeroProps = {
 }
 
 export function WalletHero({ balance, bonusBalance }: WalletHeroProps) {
+  const { t } = useTranslation('panel')
+
   return (
     <Card className="wallet-hero">
       <div className="wallet-hero-copy">
-        <span className="panel-eyebrow">Tesouraria do jogador</span>
+        <span className="panel-eyebrow">{t('wallet.hero.eyebrow')}</span>
         <span className="wallet-title-icon" aria-hidden="true">
           <Landmark />
         </span>
-        <h1>Banco PDL</h1>
-        <p>Gerencie suas moedas, recargas e transferências em um só lugar.</p>
+        <h1>{t('wallet.hero.title')}</h1>
+        <p>{t('wallet.hero.subtitle')}</p>
         <div className="wallet-trust-row">
-          <span><ShieldCheck aria-hidden="true" /> Pagamento protegido</span>
-          <span><Clock3 aria-hidden="true" /> Crédito após confirmação</span>
+          <span><ShieldCheck aria-hidden="true" /> {t('wallet.hero.trustPayment')}</span>
+          <span><Clock3 aria-hidden="true" /> {t('wallet.hero.trustCredit')}</span>
         </div>
       </div>
 
@@ -27,16 +30,16 @@ export function WalletHero({ balance, bonusBalance }: WalletHeroProps) {
         <div className="wallet-balance-card">
           <span className="wallet-balance-icon" aria-hidden="true"><Coins /></span>
           <div className="wallet-balance-copy">
-            <small>Saldo disponível</small>
-            <strong>{balance ?? '0.00'} <span>moedas</span></strong>
+            <small>{t('wallet.hero.availableBalance')}</small>
+            <strong>{balance ?? '0.00'} <span>{t('wallet.hero.coins')}</span></strong>
           </div>
           <Link className="wallet-game-exchange" to="/painel/wallet/jogo">
             <ArrowUpRight aria-hidden="true" />
-            Transferir moedas entre carteira e jogo
+            {t('wallet.hero.gameExchange')}
           </Link>
           <div className="wallet-bonus-chip">
             <Sparkles aria-hidden="true" />
-            <span>Bônus</span>
+            <span>{t('wallet.hero.bonus')}</span>
             <b>{bonusBalance ?? '0.00'}</b>
           </div>
         </div>

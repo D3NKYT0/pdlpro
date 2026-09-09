@@ -2,6 +2,7 @@ import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { ArrowLeftRight, ShieldCheck, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -18,6 +19,7 @@ import {
 import { useProgramAction } from "../components/programs/useProgramAction";
 
 export function GameExchangePage() {
+  const { t } = useTranslation("panel");
   const query = useQuery({
     queryKey: ["game-exchange"],
     queryFn: commerceApi.exchangeState,
@@ -53,14 +55,11 @@ export function GameExchangePage() {
       <Card as="header" className="program-hero">
         <div>
           <Link to="/painel/wallet" className="character-back">
-            ← Voltar à carteira
+            ← {t("exchange.back")}
           </Link>
-          <span className="panel-eyebrow">Sua economia, conectada</span>
-          <h1>Carteira ↔ jogo</h1>
-          <p>
-            Envie moedas ao personagem ou converta moedas do jogo em saldo. O
-            personagem precisa estar offline.
-          </p>
+          <span className="panel-eyebrow">{t("exchange.eyebrow")}</span>
+          <h1>{t("exchange.title")}</h1>
+          <p>{t("exchange.description")}</p>
         </div>
         <ArrowLeftRight />
       </Card>
@@ -70,13 +69,12 @@ export function GameExchangePage() {
       {query.isPending && <Loading />}
       <div className="program-two">
         <Card className="program-section">
-          <h2>Nova transferência</h2>
+          <h2>{t("exchange.form.title")}</h2>
           {query.data && !query.data.enabled && (
             <p className="program-note">
               {query.data.unavailable_reason ||
-                "A integração do jogo está indisponível."}{" "}
-              A transferência ficará disponível quando a integração estiver
-              pronta.
+                t("exchange.form.unavailableReason")}{" "}
+              {t("exchange.form.unavailableHint")}
             </p>
           )}
           <form
@@ -98,16 +96,15 @@ export function GameExchangePage() {
                 const r = await commerceApi.exchange(pending.current!);
                 if (r.status !== "completed")
                   throw new Error(
-                    r.message ||
-                      "Transferência pendente. Use Retomar no histórico.",
+                    r.message || t("exchange.toast.pending"),
                   );
                 pending.current = null;
                 setConfirmation(false);
-              }, "Transferência concluída.", [["game-exchange"], ["wallet"]]);
+              }, t("exchange.toast.completed"), [["game-exchange"], ["wallet"]]);
             }}
           >
             <label>
-              Operação
+              {t("exchange.form.operation")}
               <select
                 value={direction}
                 onChange={(e) => {
@@ -115,12 +112,12 @@ export function GameExchangePage() {
                   setDirection(e.target.value);
                 }}
               >
-                <option value="to_game">Enviar saldo ao jogo</option>
-                <option value="from_game">Trazer moedas do jogo</option>
+                <option value="to_game">{t("exchange.form.toGame")}</option>
+                <option value="from_game">{t("exchange.form.fromGame")}</option>
               </select>
             </label>
             <label>
-              Conta Lineage
+              {t("exchange.form.account")}
               <select
                 required
                 value={login}
@@ -130,7 +127,7 @@ export function GameExchangePage() {
                   setCharId("");
                 }}
               >
-                <option value="">Selecione sua conta</option>
+                <option value="">{t("exchange.form.selectAccount")}</option>
                 {accounts.data?.accounts.map((a) => (
                   <option key={a.login} value={a.login}>
                     {a.login}
@@ -139,7 +136,7 @@ export function GameExchangePage() {
               </select>
             </label>
             <label>
-              Personagem
+              {t("exchange.form.character")}
               <select
                 required
                 value={charId}
@@ -148,17 +145,17 @@ export function GameExchangePage() {
                   setCharId(e.target.value);
                 }}
               >
-                <option value="">Selecione o personagem</option>
+                <option value="">{t("exchange.form.selectCharacter")}</option>
                 {chars.data?.map((c) => (
                   <option disabled={c.online} key={c.char_id} value={c.char_id}>
                     {c.name}
-                    {c.online ? " · Online" : ""}
+                    {c.online ? t("exchange.form.onlineSuffix") : ""}
                   </option>
                 ))}
               </select>
             </label>
             <label>
-              Quantidade de moedas no jogo
+              {t("exchange.form.quantity")}
               <input
                 type="number"
                 required
@@ -173,11 +170,17 @@ export function GameExchangePage() {
             </label>
             {confirmation && (
               <p className="program-note">
-                Confirme a transferência de {quantity} moedas{" "}
-                {direction === "to_game" ? "para" : "de"}{" "}
-                {chars.data?.find((c) => c.char_id === Number(charId))?.name}.{" "}
-                {direction === "to_game" ? "Débito" : "Crédito"} de{" "}
-                {(gross - fee).toFixed(2)} no saldo.
+                {t("exchange.form.confirmation", {
+                  quantity,
+                  preposition: direction === "to_game"
+                    ? t("exchange.form.prepositionTo")
+                    : t("exchange.form.prepositionFrom"),
+                  character: chars.data?.find((c) => c.char_id === Number(charId))?.name,
+                  operation: direction === "to_game"
+                    ? t("exchange.form.operationDebit")
+                    : t("exchange.form.operationCredit"),
+                  amount: (gross - fee).toFixed(2),
+                })}
               </p>
             )}
             <Button type="submit"
@@ -185,57 +188,60 @@ export function GameExchangePage() {
               disabled={action.busy || !query.data?.enabled || !coin}
             >
               {action.busy
-                ? "Processando…"
+                ? t("exchange.form.processing")
                 : confirmation
-                  ? "Confirmar transferência"
-                  : "Revisar transferência"}
+                  ? t("exchange.form.confirm")
+                  : t("exchange.form.review")}
             </Button>
           </form>
         </Card>
         <Card className="program-section">
           <div className="program-section-heading">
-            <h2>Resumo da conversão</h2>
+            <h2>{t("exchange.summary.title")}</h2>
             <ShieldCheck color="var(--gold)" />
           </div>
           <div className="program-stat">
             <small>
-              {direction === "to_game" ? "Saldo a debitar" : "Saldo a receber"}
+              {direction === "to_game"
+                ? t("exchange.summary.debit")
+                : t("exchange.summary.credit")}
             </small>
             <strong>
               {Number.isFinite(gross) ? (gross - fee).toFixed(2) : "0.00"}
             </strong>
           </div>
           <p className="muted">
-            Moeda: {coin?.name || "Não configurada"} · ID {coin?.item_id || "—"}
+            {t("exchange.summary.coin", {
+              name: coin?.name || t("exchange.summary.coinUnset"),
+              id: coin?.item_id || "—",
+            })}
           </p>
           <p className="muted">
-            1 moeda de saldo = {coin?.multiplier || "—"} unidade(s) no jogo.
+            {t("exchange.summary.rate", { multiplier: coin?.multiplier || "—" })}
           </p>
           <p className="muted">
-            Taxa de retirada: {coin?.withdraw_fee_percent || "0"}%. Nesta
-            operação: {fee.toFixed(2)}.
+            {t("exchange.summary.fee", {
+              percent: coin?.withdraw_fee_percent || "0",
+              fee: fee.toFixed(2),
+            })}
           </p>
-          <p className="program-note">
-            Saldo bônus não é transferível. Envios ao jogo usam a fila de
-            entrega do servidor. Em caso de falha de conexão, retome a operação
-            pendente no histórico.
-          </p>
+          <p className="program-note">{t("exchange.summary.note")}</p>
         </Card>
       </div>
       <Card className="program-section">
-        <h2>Histórico de transferências</h2>
+        <h2>{t("exchange.history.title")}</h2>
         {query.data?.history.length ? (
           <div className="program-table-wrap">
             <table className="program-table">
               <thead>
                 <tr>
-                  <th>Data</th>
-                  <th>Personagem</th>
-                  <th>Operação</th>
-                  <th>Quantidade</th>
-                  <th>Saldo</th>
-                  <th>Status</th>
-                  <th>Ação</th>
+                  <th>{t("exchange.history.date")}</th>
+                  <th>{t("exchange.history.character")}</th>
+                  <th>{t("exchange.history.operation")}</th>
+                  <th>{t("exchange.history.quantity")}</th>
+                  <th>{t("exchange.history.balance")}</th>
+                  <th>{t("exchange.history.status")}</th>
+                  <th>{t("exchange.history.action")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -244,7 +250,9 @@ export function GameExchangePage() {
                     <td>{new Date(r.created_at).toLocaleString("pt-BR")}</td>
                     <td>{r.character_name}</td>
                     <td>
-                      {r.direction === "to_game" ? "Para o jogo" : "Do jogo"}
+                      {r.direction === "to_game"
+                        ? t("exchange.history.toGame")
+                        : t("exchange.history.fromGame")}
                     </td>
                     <td>{r.quantity}</td>
                     <td>{r.amount}</td>
@@ -267,11 +275,11 @@ export function GameExchangePage() {
                               });
                               if (result.status !== "completed")
                                 throw new Error(result.message);
-                            }, "Transferência concluída.", [["game-exchange"], ["wallet"]])
+                            }, t("exchange.toast.completed"), [["game-exchange"], ["wallet"]])
                           }
                         >
                           <RefreshCw size={14} />
-                          Retomar
+                          {t("exchange.history.resume")}
                         </Button>
                       )}
                     </td>
@@ -281,9 +289,7 @@ export function GameExchangePage() {
             </table>
           </div>
         ) : (
-          <Empty>
-            Você ainda não realizou transferências entre a carteira e o jogo.
-          </Empty>
+          <Empty>{t("exchange.history.empty")}</Empty>
         )}
       </Card>
     </div>

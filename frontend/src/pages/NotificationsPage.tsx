@@ -2,10 +2,12 @@ import { Card } from '../components/ui/Card'
 import { apiErrorMessage } from '../lib/errors'
 import { Button } from '../components/ui/Button'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { disableBrowserPush, enableBrowserPush, isApiError, notificationApi, pushApi } from '../services/api'
 
 export function NotificationsPage() {
+  const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
   const query = useQuery({ queryKey: ['notifications'], queryFn: notificationApi.list })
   const vapid = useQuery({ queryKey: ['push-vapid'], queryFn: pushApi.vapid })
@@ -15,24 +17,24 @@ export function NotificationsPage() {
       await notificationApi.markRead(id)
       await queryClient.invalidateQueries({ queryKey: ['notifications'] })
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível marcar como lida'))
+      toast.error(apiErrorMessage(error, t('notifications.markOneError')))
     }
   }
 
   async function markAll() {
     try {
       await notificationApi.markAllRead()
-      toast.success('Todas marcadas como lidas')
+      toast.success(t('notifications.markAllSuccess'))
       await queryClient.invalidateQueries({ queryKey: ['notifications'] })
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível atualizar'))
+      toast.error(apiErrorMessage(error, t('notifications.markAllError')))
     }
   }
 
   return (
     <Card>
-      <h1>Avisos</h1>
-      <p className="muted">{query.data?.unread ?? 0} não lidos</p>
+      <h1>{t('notifications.title')}</h1>
+      <p className="muted">{t('notifications.unreadCount', { unread: query.data?.unread ?? 0 })}</p>
       {vapid.data?.enabled ? (
         <p>
           <Button
@@ -40,29 +42,29 @@ export function NotificationsPage() {
             type="button"
             onClick={() =>
               void enableBrowserPush()
-                .then(() => toast.success('Push ativado neste navegador'))
+                .then(() => toast.success(t('notifications.pushEnabled')))
                 .catch((error) => toast.error(isApiError(error) ? error.message : String(error)))
             }
           >
-            Ativar push
+            {t('notifications.enablePush')}
           </Button>{' '}
           <Button
             className="ghost"
             type="button"
             onClick={() =>
               void disableBrowserPush()
-                .then(() => toast.success('Push desativado'))
+                .then(() => toast.success(t('notifications.pushDisabled')))
                 .catch((error) => toast.error(isApiError(error) ? error.message : String(error)))
             }
           >
-            Desativar
+            {t('notifications.disablePush')}
           </Button>
         </p>
       ) : null}
       {query.data?.unread ? (
         <p>
           <Button className="ghost" type="button" onClick={() => void markAll()}>
-            Marcar todas
+            {t('notifications.markAll')}
           </Button>
         </p>
       ) : null}
@@ -71,16 +73,16 @@ export function NotificationsPage() {
           <h3>{item.title}</h3>
           <p>{item.body}</p>
           <p className="muted">
-            {item.kind} — {item.is_read ? 'lida' : 'nova'}
+            {item.kind} — {item.is_read ? t('notifications.read') : t('notifications.new')}
           </p>
           {!item.is_read ? (
             <Button type="button" onClick={() => void markOne(item.id)}>
-              Marcar como lida
+              {t('notifications.markOne')}
             </Button>
           ) : null}
         </Card>
       ))}
-      {!query.data?.results.length && <p className="muted">Nenhum aviso ainda.</p>}
+      {!query.data?.results.length && <p className="muted">{t('notifications.empty')}</p>}
     </Card>
   )
 }

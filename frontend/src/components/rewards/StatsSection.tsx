@@ -1,11 +1,15 @@
 import { Card } from '../ui/Card'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { gamesApi } from '../../services/api'
 import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
 
+const STAT_GAMES = ['roulette', 'dice', 'slots', 'fishing', 'economy'] as const
+
 export function StatsSection() {
-  const [game, setGame] = useState('roulette')
+  const { t } = useTranslation('panel')
+  const [game, setGame] = useState<string>('roulette')
   const query = useQuery({
     queryKey: ['game-statistics', game],
     queryFn: () => gamesApi.stats(game),
@@ -13,19 +17,13 @@ export function StatsSection() {
   return (
     <>
       <div className="program-tabs">
-        {[
-          ['roulette', 'Roleta'],
-          ['dice', 'Dados'],
-          ['slots', 'Slots'],
-          ['fishing', 'Pesca'],
-          ['economy', 'Economia'],
-        ].map(([id, label]) => (
+        {STAT_GAMES.map((id) => (
           <button
             className={game === id ? 'active' : ''}
             key={id}
             onClick={() => setGame(id)}
           >
-            {label}
+            {t(`rewards.stats.games.${id}`)}
           </button>
         ))}
       </div>
@@ -35,15 +33,15 @@ export function StatsSection() {
         <>
           <div className="program-grid">
             <Card as="div" className="program-stat">
-              <small>Suas partidas</small>
+              <small>{t('rewards.stats.plays')}</small>
               <strong>{query.data.plays}</strong>
             </Card>
             <Card as="div" className="program-stat">
-              <small>Resultados positivos</small>
+              <small>{t('rewards.stats.wins')}</small>
               <strong>{query.data.wins}</strong>
             </Card>
             <Card as="div" className="program-stat">
-              <small>Taxa de sucesso</small>
+              <small>{t('rewards.stats.successRate')}</small>
               <strong>
                 {query.data.plays
                   ? ((query.data.wins / query.data.plays) * 100).toFixed(1)
@@ -53,20 +51,17 @@ export function StatsSection() {
             </Card>
           </div>
           <Card className="program-section">
-            <h2>Ranking de desempenho</h2>
-            <p className="muted">
-              Jogadores com mais resultados positivos neste jogo; partidas como
-              desempate.
-            </p>
+            <h2>{t('rewards.stats.rankingTitle')}</h2>
+            <p className="muted">{t('rewards.stats.rankingDescription')}</p>
             {query.data.leaderboard.length ? (
               <div className="program-table-wrap">
                 <table className="program-table">
                   <thead>
                     <tr>
-                      <th>Posição</th>
-                      <th>Jogador</th>
-                      <th>Partidas</th>
-                      <th>Resultados positivos</th>
+                      <th>{t('rewards.stats.position')}</th>
+                      <th>{t('rewards.stats.player')}</th>
+                      <th>{t('rewards.stats.rounds')}</th>
+                      <th>{t('rewards.stats.wins')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -82,7 +77,7 @@ export function StatsSection() {
                 </table>
               </div>
             ) : (
-              <Empty>A primeira partida começa este ranking.</Empty>
+              <Empty>{t('rewards.stats.empty')}</Empty>
             )}
           </Card>
         </>

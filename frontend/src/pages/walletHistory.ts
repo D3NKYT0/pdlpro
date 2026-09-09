@@ -6,3 +6,4 @@ export {
   orderDetailEntries,
   transactionDetailEntries,
 } from '../components/wallet/walletHistory'
+export type { WalletTranslate } from '../components/wallet/walletHistory'

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { ApiError, lineageApi } from '../services/api'
+import i18n from '../i18n'
 import { AccountsPage } from './AccountsPage'
 
 const session = vi.hoisted(() => ({ user: { id: 'u1', username: 'denky' } }))
@@ -29,9 +30,10 @@ beforeEach(() => {
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 
-afterEach(() => {
+afterEach(async () => {
   cleanup()
   client.clear()
+  await i18n.changeLanguage('pt')
 })
 
 function mount() {
@@ -81,4 +83,22 @@ it('não mascara conta inexistente como lista vazia de personagens', async () =>
 
   await user.click(screen.getByRole('button', { name: 'Tentar novamente' }))
   await waitFor(() => expect(lineageApi.characters).toHaveBeenCalledTimes(2))
+})
+
+it('traduz o estado da conta e o formulário de criação no idioma ativo', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [],
+    slots: { used: 0, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'unclaimed' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  await i18n.changeLanguage('en')
+
+  mount()
+
+  expect(screen.getByRole('heading', { name: 'Lineage account' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Claim primary account' })).toBeVisible()
+  expect(screen.getByText('Awaiting creation')).toBeVisible()
+  expect(screen.getByText('denky', { selector: 'strong' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Link an existing account' })).toBeVisible()
+  expect(screen.getByText('No linked account')).toBeVisible()
 })

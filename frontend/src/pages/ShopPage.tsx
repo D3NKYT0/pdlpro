@@ -2,6 +2,7 @@ import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import {
   ShoppingCart,
   Package,
@@ -28,6 +29,7 @@ const SHOP_CHECKOUT_KEYS = [
 ] as const;
 
 export function ShopPage() {
+  const { t } = useTranslation("panel");
   const catalog = useQuery({ queryKey: ["shop"], queryFn: shopApi.catalog });
   const packages = useQuery({
     queryKey: ["shop-packages"],
@@ -59,14 +61,14 @@ export function ShopPage() {
           quantity
             ? shopApi.updateCartItem(row.id, quantity)
             : shopApi.removeCartItem(row.id),
-        "Carrinho atualizado.",
+        t("shop.toast.cartUpdated"),
         SHOP_CART_KEYS,
       );
     else {
       if (row.package_id)
         await action.run(
           () => commerceApi.packageQuantity(row.package_id!, quantity),
-          "Carrinho atualizado.",
+          t("shop.toast.cartUpdated"),
           SHOP_CART_KEYS,
         );
     }
@@ -74,18 +76,18 @@ export function ShopPage() {
   return (
     <div className="program-page shop-page">
       <ProgramHeader
-        eyebrow="Mercado do jogador"
-        title="Loja do servidor"
-        description="Itens, pacotes e vantagens para sua jornada. Suas compras são entregues na bag do painel."
+        eyebrow={t("shop.eyebrow")}
+        title={t("shop.title")}
+        description={t("shop.description")}
       />
       <ErrorNotice
         error={catalog.error || packages.error || cart.error || action.error}
       />
-      <div className="program-tabs" aria-label="Seções da loja">
+      <div className="program-tabs" aria-label={t("shop.tabsLabel")}>
         {[
-          ["items", "Itens"],
-          ["packages", "Pacotes"],
-          ["history", "Minhas compras"],
+          ["items", t("shop.tabs.items")],
+          ["packages", t("shop.tabs.packages")],
+          ["history", t("shop.tabs.history")],
         ].map(([id, label]) => (
           <button
             key={id}
@@ -98,7 +100,7 @@ export function ShopPage() {
       </div>
       {tab === "history" ? (
         <Card className="program-section">
-          <h2>Histórico de compras</h2>
+          <h2>{t("shop.history.title")}</h2>
           <ErrorNotice error={purchases.error} />
           {purchases.isPending && <Loading />}
           {purchases.data?.map((p) => (
@@ -107,25 +109,27 @@ export function ShopPage() {
                 <strong>
                   {new Date(p.created_at).toLocaleString("pt-BR")}
                 </strong>
-                <span>{money(p.total)} moedas</span>
+                <span>{t("shop.coins", { value: money(p.total) })}</span>
               </div>
               <div className="program-rewards">
                 {p.items.map((i, index) => (
                   <span className="program-reward" key={index}>
-                    {i.quantity} × {i.name}
+                    {t("shop.history.itemLine", { quantity: i.quantity, name: i.name })}
                   </span>
                 ))}
               </div>
               <small>
-                Desconto: {money(p.discount)} · Bônus utilizado:{" "}
-                {money(p.bonus_used)}
-                {p.promo_code ? ` · Cupom ${p.promo_code}` : ""}
+                {t("shop.history.summary", {
+                  discount: money(p.discount),
+                  bonus: money(p.bonus_used),
+                })}
+                {p.promo_code ? t("shop.history.coupon", { code: p.promo_code }) : ""}
               </small>
             </article>
           ))}
           {purchases.data?.length === 0 && (
             <Empty>
-              Suas compras aparecerão aqui, com itens e valores preservados.
+              {t("shop.history.empty")}
             </Empty>
           )}
         </Card>
@@ -133,7 +137,7 @@ export function ShopPage() {
         <div className="program-two">
           <Card className="program-section">
             <h2>
-              {tab === "items" ? "Itens disponíveis" : "Pacotes especiais"}
+              {tab === "items" ? t("shop.catalog.itemsTitle") : t("shop.catalog.packagesTitle")}
             </h2>
             {(catalog.isPending || packages.isPending) && <Loading />}
             <div className="shop-product-grid">
@@ -147,8 +151,8 @@ export function ShopPage() {
                     />
                     <div className="shop-product-info">
                       <h3>{item.name}</h3>
-                      <p>{item.quantity} unidades</p>
-                      <strong>{money(item.price)} moedas</strong>
+                      <p>{t("shop.catalog.units", { quantity: item.quantity })}</p>
+                      <strong>{t("shop.coins", { value: money(item.price) })}</strong>
                     </div>
                     <Button type="submit"
 
@@ -157,13 +161,13 @@ export function ShopPage() {
                         key.current = null;
                         void action.run(
                           () => shopApi.addToCart(item.id),
-                          "Item adicionado.",
+                          t("shop.toast.itemAdded"),
                           SHOP_CART_KEYS,
                         );
                       }}
                     >
                       <Plus size={17} />
-                      Adicionar
+                      {t("shop.catalog.add")}
                     </Button>
                   </article>
                 ))}
@@ -177,12 +181,12 @@ export function ShopPage() {
                         <span className="program-reward" key={index}>
                           <ItemIcon itemId={i.item_id} size={28} />
                           <span>
-                            {i.grant_quantity} × {i.name}
+                            {t("shop.catalog.packLine", { quantity: i.grant_quantity, name: i.name })}
                           </span>
                         </span>
                       ))}
                     </div>
-                    <strong>{money(pack.total_price)} moedas</strong>
+                    <strong>{t("shop.coins", { value: money(pack.total_price) })}</strong>
                     <Button type="submit"
 
                       disabled={action.busy || !pack.contents.length}
@@ -199,24 +203,24 @@ export function ShopPage() {
                                 )?.quantity || 0) + 1,
                               ),
                             ),
-                          "Pacote adicionado.",
+                          t("shop.toast.packageAdded"),
                           SHOP_CART_KEYS,
                         );
                       }}
                     >
                       <Plus size={17} />
-                      Adicionar pacote
+                      {t("shop.catalog.addPackage")}
                     </Button>
                   </article>
                 ))}
             </div>
             {(tab === "items" ? catalog.data : packages.data)?.length === 0 && (
-              <Empty>Nenhum produto disponível nesta categoria.</Empty>
+              <Empty>{t("shop.catalog.empty")}</Empty>
             )}
           </Card>
           <Card as="aside" className="program-section">
             <div className="program-section-heading">
-              <h2>Seu carrinho</h2>
+              <h2>{t("shop.cart.title")}</h2>
               <ShoppingCart color="var(--gold)" />
             </div>
             {cart.isPending && <Loading />}
@@ -230,7 +234,7 @@ export function ShopPage() {
                   <Button type="submit"
                     className="ghost"
                     disabled={action.busy}
-                    aria-label={`Diminuir ${row.name}`}
+                    aria-label={t("shop.cart.decrease", { name: row.name })}
                     onClick={() => void change(row, row.quantity - 1)}
                   >
                     <Minus size={14} />
@@ -239,7 +243,7 @@ export function ShopPage() {
                   <Button type="submit"
                     className="ghost"
                     disabled={action.busy || row.quantity >= 99}
-                    aria-label={`Aumentar ${row.name}`}
+                    aria-label={t("shop.cart.increase", { name: row.name })}
                     onClick={() => void change(row, row.quantity + 1)}
                   >
                     <Plus size={14} />
@@ -247,7 +251,7 @@ export function ShopPage() {
                   <Button type="submit"
                     className="ghost"
                     disabled={action.busy}
-                    aria-label={`Remover ${row.name}`}
+                    aria-label={t("shop.cart.remove", { name: row.name })}
                     onClick={() => void change(row, 0)}
                   >
                     <Trash2 size={15} />
@@ -256,7 +260,7 @@ export function ShopPage() {
               </article>
             ))}
             {cart.data?.items.length === 0 && (
-              <Empty>Escolha itens ou pacotes para começar.</Empty>
+              <Empty>{t("shop.cart.empty")}</Empty>
             )}
             <form
               className="program-form"
@@ -265,23 +269,23 @@ export function ShopPage() {
                 key.current = null;
                 void action.run(
                   () => commerceApi.options({ promo_code: coupon }),
-                  "Cupom atualizado.",
+                  t("shop.toast.couponUpdated"),
                   SHOP_CART_KEYS,
                 );
               }}
             >
               <label>
-                Cupom de desconto
+                {t("shop.cart.coupon")}
                 <input
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                   maxLength={40}
-                  placeholder={cart.data?.promo_code || "Código promocional"}
+                  placeholder={cart.data?.promo_code || t("shop.cart.couponPlaceholder")}
                 />
               </label>
               <div className="program-actions">
                 <Button type="submit" className="ghost" disabled={action.busy}>
-                  Aplicar cupom
+                  {t("shop.cart.applyCoupon")}
                 </Button>
                 {cart.data?.promo_code && (
                   <Button
@@ -291,12 +295,12 @@ export function ShopPage() {
                     onClick={() =>
                       void action.run(
                         () => commerceApi.options({ promo_code: "" }),
-                        "Cupom removido.",
+                        t("shop.toast.couponRemoved"),
                         SHOP_CART_KEYS,
                       )
                     }
                   >
-                    Remover {cart.data.promo_code}
+                    {t("shop.cart.removeCoupon", { code: cart.data.promo_code })}
                   </Button>
                 )}
               </div>
@@ -310,33 +314,33 @@ export function ShopPage() {
                     void action.run(
                       () =>
                         commerceApi.options({ use_bonus: e.target.checked }),
-                      "Preferência de bônus atualizada.",
+                      t("shop.toast.bonusUpdated"),
                       SHOP_CART_KEYS,
                     );
                   }}
                 />
-                Usar saldo bônus ({wallet.data?.bonus_balance || "0.00"})
+                {t("shop.cart.useBonus", { balance: wallet.data?.bonus_balance || "0.00" })}
               </label>
             </form>
             <div className="shop-cart-summary">
               <p>
-                <span>Subtotal</span>
+                <span>{t("shop.cart.subtotal")}</span>
                 <strong>{money(cart.data?.subtotal || 0)}</strong>
               </p>
               <p>
-                <span>Desconto</span>
+                <span>{t("shop.cart.discount")}</span>
                 <strong>− {money(cart.data?.discount || 0)}</strong>
               </p>
               <p>
-                <span>Bônus utilizado</span>
+                <span>{t("shop.cart.bonusUsed")}</span>
                 <strong>− {money(cart.data?.bonus_used || 0)}</strong>
               </p>
               <p className="shop-cart-total">
-                <span>A pagar</span>
+                <span>{t("shop.cart.due")}</span>
                 <strong>{money(cart.data?.balance_due || 0)}</strong>
               </p>
               <small className="muted">
-                Saldo disponível: {wallet.data?.balance || "0.00"} moedas
+                {t("shop.cart.availableBalance", { balance: wallet.data?.balance || "0.00" })}
               </small>
             </div>
             <Button type="submit"
@@ -352,7 +356,7 @@ export function ShopPage() {
                 void action
                   .run(
                     () => commerceApi.checkout(key.current!),
-                    "Compra concluída! Itens entregues na bag.",
+                    t("shop.toast.checkoutDone"),
                     SHOP_CHECKOUT_KEYS,
                   )
                   .then((ok) => {
@@ -361,7 +365,7 @@ export function ShopPage() {
               }}
             >
               <CheckCircle2 size={18} />{" "}
-              {action.busy ? "Processando…" : "Finalizar compra"}
+              {action.busy ? t("shop.cart.processing") : t("shop.cart.checkout")}
             </Button>
           </Card>
         </div>

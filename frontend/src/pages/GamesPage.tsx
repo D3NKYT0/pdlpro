@@ -6,6 +6,7 @@ import { Field } from '../components/ui/Field'
 import { useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Coins,
@@ -27,15 +28,16 @@ import { ResourceGate } from '../components/programs/ResourceGate'
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
 
-const gameTabs: Array<{ id: GameTab; label: string; icon: LucideIcon }> = [
-  { id: 'roulette', label: 'Roleta', icon: RotateCw },
-  { id: 'boxes', label: 'Caixas', icon: Box },
-  { id: 'chance', label: 'Dados e slots', icon: Dices },
-  { id: 'fishing', label: 'Pesca', icon: Fish },
-  { id: 'economy', label: 'Economia', icon: Sword },
+const gameTabs: Array<{ id: GameTab; icon: LucideIcon }> = [
+  { id: 'roulette', icon: RotateCw },
+  { id: 'boxes', icon: Box },
+  { id: 'chance', icon: Dices },
+  { id: 'fishing', icon: Fish },
+  { id: 'economy', icon: Sword },
 ]
 
 export function GamesPage() {
+  const { t } = useTranslation('panel')
   const action = useFeedbackAction()
   const queryClient = useQueryClient()
   const roulette = useQuery({ queryKey: ['roulette'], queryFn: gamesApi.roulette })
@@ -72,101 +74,103 @@ export function GamesPage() {
   async function spin() {
     await action.run(async () => {
       const result = await gamesApi.spin()
-      if (result.failed) toast.error('Sem prêmio desta vez')
-      else toast.success(`Você ganhou ${result.prize?.name}`)
+      if (result.failed) toast.error(t('games.toast.noPrize'))
+      else toast.success(t('games.toast.prizeWon', { prize: result.prize?.name }))
       await refresh()
-    }, 'Falha no giro')
+    }, t('games.toast.spinError'))
   }
 
   async function buy(event: FormEvent) {
     event.preventDefault()
     await action.run(async () => {
       await gamesApi.buyTokens(Number(amount))
-      toast.success('Fichas creditadas')
+      toast.success(t('games.toast.tokensCredited'))
       await refresh()
-    }, 'Não foi possível comprar fichas')
+    }, t('games.toast.buyTokensError'))
   }
 
   async function claim() {
     await action.run(async () => {
       const result = await gamesApi.claimDailyBonus()
-      toast.success(`Bônus de R$ ${result.amount} creditado`)
+      toast.success(t('games.toast.bonusCredited', { amount: result.amount }))
       await refresh()
-    }, 'Não foi possível resgatar')
+    }, t('games.toast.claimError'))
   }
 
   async function buyBox(id: string) {
     await action.run(async () => {
       await gamesApi.buyBox(id)
-      toast.success('Caixa comprada')
+      toast.success(t('games.toast.boxBought'))
       await refresh()
-    }, 'Falha na compra')
+    }, t('games.toast.buyBoxError'))
   }
 
   async function openBox(id: string) {
     await action.run(async () => {
       const result = await gamesApi.openBox(id)
-      toast.success(`${result.item.name} (+${result.item.enchant})`)
+      toast.success(t('games.toast.boxOpened', { name: result.item.name, enchant: result.item.enchant }))
       await refresh()
-    }, 'Falha ao abrir')
+    }, t('games.toast.openBoxError'))
   }
 
   async function playDice(event: FormEvent) {
     event.preventDefault()
     await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
-      toast[result.won ? 'success' : 'error'](`Dado ${result.roll} · ${result.won ? `+${result.payout}` : 'perdeu'}`)
+      const outcome = result.won ? t('games.toast.diceWin', { payout: result.payout }) : t('games.toast.diceLoss')
+      toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome }))
       await refresh()
-    }, 'Falha nos dados')
+    }, t('games.toast.diceError'))
   }
 
   async function playSlots() {
     await action.run(async () => {
       const result = await gamesApi.slots()
-      toast[result.won ? 'success' : 'error'](`${result.reels.join(' | ')} · ${result.won ? `+${result.payout}` : 'nada'}`)
+      const outcome = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
+      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', { reels: result.reels.join(' | '), outcome }))
       await refresh()
-    }, 'Falha nos slots')
+    }, t('games.toast.slotsError'))
   }
 
   async function fight(monsterId: string) {
     await action.run(async () => {
       const result = await gamesApi.fight(monsterId)
       toast[result.won ? 'success' : 'error'](
-        result.won ? `Vitória · +${result.fragments_earned} fragmentos` : 'Derrota',
+        result.won ? t('games.toast.fightWin', { fragments: result.fragments_earned }) : t('games.toast.fightLoss'),
       )
       await refresh()
-    }, 'Falha no combate')
+    }, t('games.toast.fightError'))
   }
 
   async function enchant() {
     await action.run(async () => {
       const result = await gamesApi.enchant()
       toast[result.success ? 'success' : 'error'](
-        result.success ? `Arma +${result.weapon.level}` : 'O encantamento falhou',
+        result.success ? t('games.toast.enchantSuccess', { level: result.weapon.level }) : t('games.toast.enchantFailed'),
       )
       await refresh()
-    }, 'Falha no encante')
+    }, t('games.toast.enchantError'))
   }
 
   const tokens = roulette.data?.fichas ?? minigames.data?.fichas ?? 0
 
   return (
     <div className="games-page">
-      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">Missões, bônus diário e rankings ↗</Link></div>
+      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">{t('games.rewardsLink')}</Link></div>
       <Card as="header" className="games-hero">
         <div className="games-hero-copy">
-          <span className="panel-eyebrow">Central de jogos</span>
-          <h1>Jogos e recompensas</h1>
-          <p className="muted">Use suas fichas, conquiste prêmios e fortaleça seu personagem.</p>
+          <span className="panel-eyebrow">{t('games.eyebrow')}</span>
+          <h1>{t('games.title')}</h1>
+          <p className="muted">{t('games.description')}</p>
         </div>
         <div className="token-balance">
           <Coins aria-hidden="true" />
-          <span>Saldo disponível</span>
-          <strong>{tokens} fichas</strong>
+          <span>{t('games.balance')}</span>
+          <strong>{t('games.tokens', { count: tokens })}</strong>
         </div>
       </Card>
 
-      <Tabs id="game" label="Escolha um jogo" className="game-tabs" value={activeGame} onChange={setActiveGame} items={gameTabs.map(({ id, label, icon: Icon }) => ({ id, label, icon: <Icon aria-hidden="true" /> }))} />
+      <Tabs id="game" label={t('games.tabsLabel')} className="game-tabs" value={activeGame} onChange={setActiveGame} items={gameTabs.map(({ id, icon: Icon }) => ({ id, label: t(`games.tabs.${id}`), icon: <Icon aria-hidden="true" /> }))} />
 
       <fieldset className="game-tab-panels ui-action-group" disabled={action.pending}>
         <div
@@ -180,10 +184,10 @@ export function GamesPage() {
           <div className="game-module-heading">
             <span className="game-module-icon"><RotateCw aria-hidden="true" /></span>
             <div>
-              <span className="panel-eyebrow">Tente a sorte</span>
-              <h2>Roleta</h2>
+              <span className="panel-eyebrow">{t('games.roulette.eyebrow')}</span>
+              <h2>{t('games.roulette.title')}</h2>
             </div>
-            <span className="game-cost">{roulette.data?.cost ?? 1} ficha por giro</span>
+            <span className="game-cost">{t('games.roulette.cost', { count: roulette.data?.cost ?? 1 })}</span>
           </div>
 
           <div className="roulette-content">
@@ -192,25 +196,25 @@ export function GamesPage() {
                 <Trophy />
                 <span>{tokens}</span>
               </div>
-              <p className="muted">Chance de não receber prêmio: {roulette.data?.fail_chance ?? 20}%</p>
+              <p className="muted">{t('games.roulette.failChance', { percent: roulette.data?.fail_chance ?? 20 })}</p>
               <Button type="button" onClick={() => void spin()}>
-                <Sparkles aria-hidden="true" /> Girar agora
+                <Sparkles aria-hidden="true" /> {t('games.roulette.spin')}
               </Button>
             </div>
 
             <div className="roulette-side">
               <form className="game-inline-form" onSubmit={buy}>
                 <Field>
-                  Comprar fichas <span>1 ficha = R$ 1</span>
+                  {t('games.roulette.buyLabel')} <span>{t('games.roulette.buyHint')}</span>
                   <input value={amount} onChange={(event) => setAmount(event.target.value)} inputMode="numeric" />
                 </Field>
                 <Button className="ghost" type="submit">
-                  <Coins aria-hidden="true" /> Comprar
+                  <Coins aria-hidden="true" /> {t('games.roulette.buy')}
                 </Button>
               </form>
 
               <div className="game-subsection">
-                <h3>Prêmios disponíveis</h3>
+                <h3>{t('games.roulette.prizes')}</h3>
                 <div className="prize-list">
                   {(roulette.data?.prizes ?? []).map((prize) => (
                     <div className="prize-item" key={prize.id}>
@@ -219,7 +223,7 @@ export function GamesPage() {
                       <b>{prize.weight}</b>
                     </div>
                   ))}
-                  {!roulette.data?.prizes.length ? <p className="game-empty">Nenhum prêmio configurado.</p> : null}
+                  {!roulette.data?.prizes.length ? <p className="game-empty">{t('games.roulette.noPrizes')}</p> : null}
                 </div>
               </div>
             </div>
@@ -230,19 +234,19 @@ export function GamesPage() {
           <div className="game-module-heading">
             <span className="game-module-icon"><Gift aria-hidden="true" /></span>
             <div>
-              <span className="panel-eyebrow">Recompensa diária</span>
-              <h2>Bônus diário</h2>
+              <span className="panel-eyebrow">{t('games.daily.eyebrow')}</span>
+              <h2>{t('games.daily.title')}</h2>
             </div>
           </div>
           <div className="daily-value">
-            <span>Valor de hoje</span>
+            <span>{t('games.daily.todayValue')}</span>
             <strong>R$ {bonus.data?.amount ?? '10.00'}</strong>
           </div>
           {bonus.data?.claimed ? (
-            <div className="game-state is-complete"><Sparkles aria-hidden="true" /> Bônus já resgatado hoje</div>
+            <div className="game-state is-complete"><Sparkles aria-hidden="true" /> {t('games.daily.claimed')}</div>
           ) : (
             <Button type="button" onClick={() => void claim()}>
-              <Gift aria-hidden="true" /> Resgatar bônus
+              <Gift aria-hidden="true" /> {t('games.daily.claim')}
             </Button>
           )}
           </Card>
@@ -258,28 +262,28 @@ export function GamesPage() {
           <div className="game-module-heading">
             <span className="game-module-icon"><Box aria-hidden="true" /></span>
             <div>
-              <span className="panel-eyebrow">Itens surpresa</span>
-              <h2>Caixas</h2>
+              <span className="panel-eyebrow">{t('games.boxes.eyebrow')}</span>
+              <h2>{t('games.boxes.title')}</h2>
             </div>
           </div>
           <div className="game-item-list">
             {(boxes.data?.types ?? []).map((row) => (
               <article className="game-list-item" key={row.id}>
                 <PackageOpen aria-hidden="true" />
-                <span><strong>{row.name}</strong><small>{row.boosters_amount} boosters</small></span>
+                <span><strong>{row.name}</strong><small>{t('games.boxes.boosters', { count: row.boosters_amount })}</small></span>
                 <b>R$ {row.price}</b>
-                <Button className="ghost" type="button" onClick={() => void buyBox(row.id)}>Comprar</Button>
+                <Button className="ghost" type="button" onClick={() => void buyBox(row.id)}>{t('games.boxes.buy')}</Button>
               </article>
             ))}
             {(boxes.data?.boxes ?? []).map((row) => (
               <article className="game-list-item" key={row.id}>
                 <Box aria-hidden="true" />
-                <span><strong>{row.type_name}</strong><small>{row.remaining} de {row.total} restantes</small></span>
-                <Button type="button" onClick={() => void openBox(row.id)}>Abrir · 1 ficha</Button>
+                <span><strong>{row.type_name}</strong><small>{t('games.boxes.remaining', { remaining: row.remaining, total: row.total })}</small></span>
+                <Button type="button" onClick={() => void openBox(row.id)}>{t('games.boxes.open', { count: 1 })}</Button>
               </article>
             ))}
             {!boxes.data?.types.length && !boxes.data?.boxes.length ? (
-              <div className="game-empty"><Box aria-hidden="true" /> Nenhuma caixa disponível no momento.</div>
+              <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
             ) : null}
           </div>
         </Card>
@@ -294,28 +298,28 @@ export function GamesPage() {
           <div className="game-module-heading">
             <span className="game-module-icon"><Dices aria-hidden="true" /></span>
             <div>
-              <span className="panel-eyebrow">Minigames</span>
-              <h2>Dados e slots</h2>
+              <span className="panel-eyebrow">{t('games.chance.eyebrow')}</span>
+              <h2>{t('games.chance.title')}</h2>
             </div>
           </div>
           <form className="game-form-grid" onSubmit={playDice}>
             <Field>
-              Tipo de aposta
+              {t('games.chance.betType')}
               <select value={diceType} onChange={(event) => setDiceType(event.target.value)}>
-                <option value="even">Par</option>
-                <option value="odd">Ímpar</option>
-                <option value="high">Alto (4-6)</option>
-                <option value="low">Baixo (1-3)</option>
+                <option value="even">{t('games.chance.even')}</option>
+                <option value="odd">{t('games.chance.odd')}</option>
+                <option value="high">{t('games.chance.high')}</option>
+                <option value="low">{t('games.chance.low')}</option>
               </select>
             </Field>
             <Field>
-              Fichas
+              {t('games.chance.tokens')}
               <input value={diceAmount} onChange={(event) => setDiceAmount(event.target.value)} inputMode="numeric" />
             </Field>
             <div className="game-actions">
-              <Button type="submit"><Dices aria-hidden="true" /> Jogar dado</Button>
+              <Button type="submit"><Dices aria-hidden="true" /> {t('games.chance.playDice')}</Button>
               <Button className="ghost" type="button" onClick={() => void playSlots()}>
-                Girar slots · {minigames.data?.slots.cost ?? 1} ficha
+                {t('games.chance.playSlots', { count: minigames.data?.slots.cost ?? 1 })}
               </Button>
             </div>
           </form>
@@ -344,30 +348,30 @@ export function GamesPage() {
           <div className="game-module-heading">
             <span className="game-module-icon"><Sword aria-hidden="true" /></span>
             <div>
-              <span className="panel-eyebrow">Arena de combate</span>
-              <h2>Economia</h2>
+              <span className="panel-eyebrow">{t('games.economy.eyebrow')}</span>
+              <h2>{t('games.economy.title')}</h2>
             </div>
-            <div className="weapon-level">Arma <strong>+{economy.data?.weapon.level ?? 0}</strong></div>
+            <div className="weapon-level">{t('games.economy.weapon')} <strong>+{economy.data?.weapon.level ?? 0}</strong></div>
           </div>
           <div className="fragment-progress">
-            <span><b>{economy.data?.weapon.fragments ?? 0}</b> / 10 fragmentos</span>
+            <span><b>{economy.data?.weapon.fragments ?? 0}</b> {t('games.economy.fragments', { max: 10 })}</span>
             <i style={{ width: `${Math.min(100, ((economy.data?.weapon.fragments ?? 0) / 10) * 100)}%` }} />
           </div>
           <div className="monster-list">
             {(economy.data?.monsters ?? []).map((monster) => (
               <article className="monster-item" key={monster.id}>
                 <Sword aria-hidden="true" />
-                <span><strong>{monster.name}</strong><small>Requer arma +{monster.required_weapon_level}</small></span>
+                <span><strong>{monster.name}</strong><small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small></span>
                 {monster.alive ? (
-                  <Button className="ghost" type="button" onClick={() => void fight(monster.id)}>Lutar · 1 ficha</Button>
+                  <Button className="ghost" type="button" onClick={() => void fight(monster.id)}>{t('games.economy.fight', { count: 1 })}</Button>
                 ) : (
-                  <span className="respawn">Retorna em {monster.respawn_in}s</span>
+                  <span className="respawn">{t('games.economy.respawn', { seconds: monster.respawn_in })}</span>
                 )}
               </article>
             ))}
           </div>
           <Button type="button" onClick={() => void enchant()}>
-            <Sparkles aria-hidden="true" /> Encantar · 10 fragmentos
+            <Sparkles aria-hidden="true" /> {t('games.economy.enchant', { count: 10 })}
           </Button>
         </Card>
 

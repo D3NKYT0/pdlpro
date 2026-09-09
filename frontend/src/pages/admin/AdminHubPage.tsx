@@ -21,64 +21,64 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-type Entry = { to: string; title: string; description: string; icon: LucideIcon; external?: boolean }
-type Category = { name: string; tone: 'programs' | 'support' | 'system' | 'finance' | 'games' | 'content' | 'server'; entries: Entry[] }
+type Entry = { to: string; key: string; icon: LucideIcon; external?: boolean }
+type Category = { key: string; tone: 'programs' | 'support' | 'system' | 'finance' | 'games' | 'content' | 'server'; entries: Entry[] }
 
 const categories: Category[] = [
-  {name: 'Programas e expansão', tone: 'programs', entries: [
-    {to:'/painel/admin/apoiadores',title:'Apoiadores e comissões',description:'Candidaturas, percentuais e aprovação de comissões',icon:Coins},
-    {to:'/painel/admin/comercio',title:'Pacotes e cupons',description:'Pacotes de itens, descontos e cupons de apoiadores',icon:ShoppingBag},
-    {to:'/painel/admin/recompensas',title:'Oficina de recompensas',description:'Temporadas, missões, trocas, bônus e iscas',icon:Gamepad2},
+  {key: 'programs', tone: 'programs', entries: [
+    {to:'/painel/admin/apoiadores',key:'supporters',icon:Coins},
+    {to:'/painel/admin/comercio',key:'commerce',icon:ShoppingBag},
+    {to:'/painel/admin/recompensas',key:'rewardsWorkshop',icon:Gamepad2},
   ]},
   {
-    name: 'Atendimento',
+    key: 'support',
     tone: 'support',
     entries: [
-      { to: '/painel/admin/atendimento', title: 'Fila de chamados', description: 'SLA, responsáveis, respostas e histórico do jogador', icon: Headphones },
+      { to: '/painel/admin/atendimento', key: 'tickets', icon: Headphones },
     ],
   },
   {
-    name: 'Sistema',
+    key: 'system',
     tone: 'system',
     entries: [
-      { to: '/painel/admin/recursos', title: 'Controle de recursos', description: 'Ativar ou pausar módulos por categoria', icon: Settings2 },
-      { to: '/painel/admin/temas', title: 'Temas', description: 'Instalar, ativar e restaurar a aparência do frontend', icon: Palette },
-      { to: '/admin/', title: 'Django Admin', description: 'CRUD completo do sistema', icon: ExternalLink, external: true },
+      { to: '/painel/admin/recursos', key: 'resources', icon: Settings2 },
+      { to: '/painel/admin/temas', key: 'themes', icon: Palette },
+      { to: '/admin/', key: 'djangoAdmin', icon: ExternalLink, external: true },
     ],
   },
   {
-    name: 'Financeiro',
+    key: 'finance',
     tone: 'finance',
     entries: [
-      { to: '/painel/admin/relatorios', title: 'Relatórios', description: 'Financeiro, inventário, leilões, loja e marketplace', icon: ChartNoAxesCombined },
-      { to: '/painel/admin/moedas', title: 'Moedas', description: 'Moeda ativa, multiplicador e taxa', icon: Coins },
-      { to: '/painel/admin/loja', title: 'Loja', description: 'Itens vendidos no painel', icon: ShoppingBag },
-      { to: '/painel/admin/carteira', title: 'Configuração da carteira', description: 'Banner promocional e bônus mínimo nas recargas', icon: WalletCards },
+      { to: '/painel/admin/relatorios', key: 'reports', icon: ChartNoAxesCombined },
+      { to: '/painel/admin/moedas', key: 'coins', icon: Coins },
+      { to: '/painel/admin/loja', key: 'shop', icon: ShoppingBag },
+      { to: '/painel/admin/carteira', key: 'wallet', icon: WalletCards },
     ],
   },
   {
-    name: 'Jogos',
+    key: 'games',
     tone: 'games',
-    entries: [{ to: '/painel/admin/jogos', title: 'Módulos de jogos', description: 'Ligar ou desligar roleta, caixas e o restante', icon: Gamepad2 }],
+    entries: [{ to: '/painel/admin/jogos', key: 'gameModules', icon: Gamepad2 }],
   },
   {
-    name: 'Conteúdo',
+    key: 'content',
     tone: 'content',
     entries: [
-      { to: '/painel/admin/noticias', title: 'Notícias', description: 'Publicar avisos do servidor', icon: Newspaper },
-      { to: '/painel/admin/roadmap', title: 'Roadmap', description: 'Planejamento, etapas e novidades do servidor', icon: CalendarDays },
-      { to: '/painel/admin/servidor', title: 'Coming Soon', description: 'Contagem regressiva da home', icon: CalendarDays },
+      { to: '/painel/admin/noticias', key: 'news', icon: Newspaper },
+      { to: '/painel/admin/roadmap', key: 'roadmap', icon: CalendarDays },
+      { to: '/painel/admin/servidor', key: 'comingSoon', icon: CalendarDays },
     ],
   },
   {
-    name: 'Servidor',
+    key: 'server',
     tone: 'server',
     entries: [
-      { to: '/painel/admin/servidor', title: 'Painel e servidor', description: 'Nome, rates, chronicle e coming soon', icon: Server },
-      { to: '/painel/admin/itens', title: 'Observar itens', description: 'Economia do servidor, favoritos, snapshots e comparação entre datas', icon: ChartNoAxesCombined },
-      { to: '/painel/admin/itens/customs', title: 'Itens customizados', description: 'Cadastrar nome, ID, imagem e metadados no catálogo único', icon: PackagePlus },
-      { to: '/painel/admin/servicos', title: 'Serviços', description: 'Preços de nick, sexo, slots e destravamento', icon: Settings2 },
-      { to: '/painel/admin/contas', title: 'Contas Lineage', description: 'Consultar login e remover o vínculo com o painel', icon: Unlink },
+      { to: '/painel/admin/servidor', key: 'server', icon: Server },
+      { to: '/painel/admin/itens', key: 'itemWatch', icon: ChartNoAxesCombined },
+      { to: '/painel/admin/itens/customs', key: 'customItems', icon: PackagePlus },
+      { to: '/painel/admin/servicos', key: 'services', icon: Settings2 },
+      { to: '/painel/admin/contas', key: 'lineageAccounts', icon: Unlink },
     ],
   },
 ]
@@ -95,23 +95,23 @@ export function AdminHubPage() {
         </div>
         <span className="account-status-pill is-active">
           <SlidersHorizontal aria-hidden="true" />
-          Staff
+          {t('common:staff')}
         </span>
       </Card>
 
       {categories.map((category) => (
-        <Card className="admin-category" data-tone={category.tone} key={category.name}>
+        <Card className="admin-category" data-tone={category.tone} key={category.key}>
           <div className="account-section-heading">
             <div>
-              <span className="panel-eyebrow">Módulo</span>
-              <h2>{category.name}</h2>
+              <span className="panel-eyebrow">{t('hub.module')}</span>
+              <h2>{t(`hub.categories.${category.key}`)}</h2>
             </div>
           </div>
           <div className="admin-entry-grid">
             {category.entries.map((entry) => {
               const Icon = entry.icon
-              const title = entry.to === '/painel/admin/relatorios' ? t('hub.reports') : entry.title
-              const description = entry.to === '/painel/admin/relatorios' ? t('hub.reportsDesc') : entry.description
+              const title = entry.key === 'reports' ? t('hub.reports') : t(`hub.entries.${entry.key}.title`)
+              const description = entry.key === 'reports' ? t('hub.reportsDesc') : t(`hub.entries.${entry.key}.description`)
               const body = (
                 <>
                   <span className="admin-entry-icon">
@@ -124,11 +124,11 @@ export function AdminHubPage() {
                 </>
               )
               return entry.external ? (
-                <a className="admin-entry" key={entry.title} href={entry.to} target="_blank" rel="noreferrer">
+                <a className="admin-entry" key={entry.key} href={entry.to} target="_blank" rel="noreferrer">
                   {body}
                 </a>
               ) : (
-                <Link className="admin-entry" key={entry.to + entry.title} to={entry.to}>
+                <Link className="admin-entry" key={entry.to + entry.key} to={entry.to}>
                   {body}
                 </Link>
               )
@@ -139,7 +139,7 @@ export function AdminHubPage() {
 
       <p className="muted admin-hub-note">
         <Bell aria-hidden="true" />
-        Notificações, calendário e o restante do CRUD fino continuam no Django Admin.
+        {t('hub.note')}
       </p>
     </div>
   )

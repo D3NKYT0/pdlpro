@@ -8,6 +8,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { ApiError, supportApi } from '../services/api'
 import type { ApiSupportTicket } from '../services/types'
+import i18n from '../i18n'
 import { SupportPage } from './SupportPage'
 
 vi.mock('../services/domain/support.service', () => ({ supportApi: { list: vi.fn(), detail: vi.fn(), create: vi.fn(), reply: vi.fn(), action: vi.fn() } }))
@@ -26,7 +27,7 @@ beforeEach(() => {
   vi.mocked(supportApi.action).mockResolvedValue(ticket)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
-afterEach(() => { cleanup(); client.clear() })
+afterEach(async () => { cleanup(); client.clear(); await i18n.changeLanguage('pt') })
 function mount(path = '/') {
   render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><SupportPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
@@ -99,4 +100,14 @@ it('abre o formulário com assunto da tela e não envia o histórico do chat', a
   expect(await screen.findByRole('textbox', { name: 'Assunto' })).toHaveValue('Ajuda: Carteira')
   expect(screen.getByRole('textbox', { name: 'Detalhes' })).toHaveValue('Estou na tela Carteira (/painel/wallet) e preciso de ajuda da equipe.')
   expect(supportApi.create).not.toHaveBeenCalled()
+})
+it('traduz filtros, categorias e prioridade no idioma ativo', async () => {
+  await i18n.changeLanguage('en')
+  const user = mount()
+  expect(screen.getByRole('heading', { name: 'How can we help?' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Finished' })).toBeVisible()
+  await user.click(screen.getAllByRole('button', { name: 'New ticket' })[0])
+  expect(screen.getByRole('radio', { name: /Payment and shop/ })).toBeVisible()
+  expect(screen.getByRole('textbox', { name: 'Subject' })).toHaveAttribute('placeholder', 'Summarize the problem in one sentence')
+  expect(screen.getByRole('combobox', { name: 'Priority' })).toHaveDisplayValue('Normal — I need help')
 })
