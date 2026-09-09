@@ -10,7 +10,7 @@ from apps.wallet.application.use_cases import (
     TransferToPlayerInput,
     TransferToPlayerUseCase,
 )
-from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.presentation.serializers import TransferSerializer, WalletSerializer
 from common.pagination import StandardPagination
 from common.views import InjectedAPIView
@@ -83,8 +83,8 @@ class WalletTransactionsView(InjectedAPIView):
     )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))
-        repo = DjangoWalletRepository()
+        repo = self.resolve(IWalletRepository)
         paginator = StandardPagination()
-        page = paginator.paginate_queryset(repo.transactions_queryset(wallet.id), request, view=self)
+        page = paginator.paginate_queryset(repo.transaction_rows(wallet.id), request, view=self)
         assert page is not None
         return paginator.get_paginated_response([repo.serialize_transaction(row) for row in page])

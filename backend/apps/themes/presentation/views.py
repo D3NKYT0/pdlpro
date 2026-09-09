@@ -4,16 +4,19 @@ from rest_framework import serializers, status
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from apps.themes.application.theme_packages import (
-    activate_theme,
-    delete_theme,
-    get_active_theme,
-    install_theme,
-    list_themes,
+from apps.themes.application.use_cases import (
+    ActivateThemeInput,
+    ActivateThemeUseCase,
+    DeleteThemeInput,
+    DeleteThemeUseCase,
+    GetActiveThemeUseCase,
+    InstallThemeInput,
+    InstallThemeUseCase,
+    ListThemesUseCase,
 )
 from common.permissions import IsSuperAdmin
+from common.views import InjectedAPIView
 
 
 class ThemeUploadSerializer(serializers.Serializer):
@@ -27,7 +30,7 @@ class ThemeUploadSerializer(serializers.Serializer):
         return value
 
 
-class ActiveThemeView(APIView):
+class ActiveThemeView(InjectedAPIView):
     """Expõe apenas os caminhos e metadados necessários para montar o tema ativo."""
 
     permission_classes = [AllowAny]
@@ -38,12 +41,12 @@ class ActiveThemeView(APIView):
         description="Expõe apenas os caminhos e metadados necessários para montar o tema ativo.",
     )
     def get(self, request):
-        response = Response(get_active_theme())
+        response = Response(self.resolve(GetActiveThemeUseCase).execute(None))
         patch_cache_control(response, public=True, max_age=0, must_revalidate=True)
         return response
 
 
-class StaffThemeListInstallView(APIView):
+class StaffThemeListInstallView(InjectedAPIView):
     """Lista e instala temas; alteração visual global é exclusiva de superadministradores."""
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
@@ -55,7 +58,7 @@ class StaffThemeListInstallView(APIView):
         description="Lista os pacotes de tema instalados; alteração visual global é exclusiva de superadministradores.",
     )
     def get(self, request):
-        return Response(list_themes())
+        return Response(self.resolve(ListThemesUseCase).execute(None))
 
     @extend_schema(
         tags=["Staff"],
@@ -67,11 +70,13 @@ class StaffThemeListInstallView(APIView):
         serializer = ThemeUploadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         package = serializer.validated_data["package"]
-        installed = install_theme(package, size=package.size, user=request.user)
+        installed = self.resolve(InstallThemeUseCase).execute(
+            InstallThemeInput(upload=package, size=package.size, user=request.user)
+        )
         return Response(installed, status=status.HTTP_201_CREATED)
 
 
-class StaffThemeActivateView(APIView):
+class StaffThemeActivateView(InjectedAPIView):
     """Ativa uma versão instalada ou restaura explicitamente o tema default."""
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
@@ -82,10 +87,14 @@ class StaffThemeActivateView(APIView):
         description="Ativa uma versão instalada ou restaura explicitamente o tema default.",
     )
     def post(self, request, package_id=None):
-        return Response(activate_theme(str(package_id) if package_id else None))
+        return Response(
+            self.resolve(ActivateThemeUseCase).execute(
+                ActivateThemeInput(package_id=str(package_id) if package_id else None)
+            )
+        )
 
 
-class StaffThemeDetailView(APIView):
+class StaffThemeDetailView(InjectedAPIView):
     """Remove um pacote inativo; o tema default não possui endpoint de exclusão."""
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
@@ -96,5 +105,5 @@ class StaffThemeDetailView(APIView):
         description="Remove um pacote inativo; o tema default não possui endpoint de exclusão.",
     )
     def delete(self, request, package_id):
-        delete_theme(str(package_id))
+        self.resolve(DeleteThemeUseCase).execute(DeleteThemeInput(package_id=str(package_id)))
         return Response(status=status.HTTP_204_NO_CONTENT)

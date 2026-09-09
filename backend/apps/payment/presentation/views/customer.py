@@ -21,6 +21,7 @@ from apps.payment.application.use_cases import (
     ProcessPaymentUseCase,
 )
 from apps.payment.domain.entities import PaymentOrderEntity
+from apps.payment.domain.repositories import IPaymentOrderRepository
 from apps.payment.presentation.serializers import (
     CreatePaymentOrderSerializer,
     PreviewBonusSerializer,
@@ -84,15 +85,11 @@ class PaymentOrderListView(InjectedAPIView):
         description="Lista os pedidos de pagamento do usuário autenticado, paginados.",
     )
     def get(self, request):
-        from apps.payment.infrastructure.repositories import (
-            DjangoPaymentOrderRepository,
-        )
-
-        repo = DjangoPaymentOrderRepository()
+        repo = self.resolve(IPaymentOrderRepository)
         paginator = StandardPagination()
-        page = paginator.paginate_queryset(repo.queryset_by_user(request.user.id), request, view=self)
+        page = paginator.paginate_queryset(repo.order_rows(request.user.id), request, view=self)
         assert page is not None
-        return paginator.get_paginated_response([dump_order(repo._entity(row)) for row in page])
+        return paginator.get_paginated_response([dump_order(repo.to_entity(row)) for row in page])
 
     @extend_schema(
         tags=["Pagamento"],

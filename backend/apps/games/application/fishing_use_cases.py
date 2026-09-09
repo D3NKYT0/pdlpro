@@ -16,6 +16,7 @@ from apps.games.infrastructure.models import (
     UserFishingBait,
 )
 from common.architecture.base import UnitOfWork, UseCase
+from common.architecture.exceptions import ValidationDomainError
 
 SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18}
 
@@ -104,8 +105,6 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
             user = get_user_model().objects.select_for_update().get(id=data.user_id)
             bonus = 0
             if data.bait_id:
-                from rest_framework.exceptions import ValidationError
-
                 stock = (
                     UserFishingBait.objects.select_for_update()
                     .select_related("bait")
@@ -113,7 +112,7 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                     .first()
                 )
                 if not stock or stock.quantity < 1:
-                    raise ValidationError("Você não possui esta isca.")
+                    raise ValidationDomainError("Você não possui esta isca.")
                 stock.quantity -= 1
                 stock.save(update_fields=["quantity", "updated_at"])
                 bonus = stock.bait.success_bonus

@@ -20,9 +20,9 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | `content` | Notícias, wiki, FAQ, downloads e documentos legais | `application/use_cases.py`, `application/legal.py` |
 | `communication` | Notificações persistidas e Web Push | `application/notify.py`, `application/push_use_cases.py` |
 | `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py`, `application/financial_reports.py`, `presentation/views/` |
-| `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `models.py`, `services.py`, `views.py`, `middleware.py` |
-| `support` | Chamados, respostas e atribuição de atendimento | `models.py`, `presentation/views/customer.py`, `presentation/views/staff.py` |
-| `themes` | Instalação, validação, ativação e publicação de temas globais | `application/theme_packages.py`, `infrastructure/models.py`, `presentation/views.py` |
+| `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `application/use_cases.py`, `infrastructure/provider.py`, `views.py`, `middleware.py` |
+| `support` | Chamados, respostas e atribuição de atendimento | `application/use_cases.py`, `domain/repositories.py`, `presentation/views/` |
+| `themes` | Instalação, validação, ativação e publicação de temas globais | `application/use_cases.py`, `application/theme_packages.py`, `infrastructure/provider.py` |
 
 ## Responsabilidade das classes
 
@@ -38,7 +38,11 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | View | Trata o transporte e suas permissões | Registre nas URLs e delegue operações aos serviços da aplicação |
 | Modelo/admin | Define persistência e edição administrativa | Use UUID público nas APIs e configure o admin nas classes dedicadas |
 
-Essa é a direção da arquitetura, mas a organização atual tem variações. `programs` mantém modelos, serializers e views na raiz; `support` mantém parte das regras nos handlers; alguns serviços de `games`, `shop` e `staff` acessam o ORM diretamente. Leia a implementação antes de presumir que toda classe depende apenas de interfaces. Não crie uma porta fictícia para usar uma operação existente.
+Essa é a direção da arquitetura. Apps como `marketplace`, `inventory`, `support`, `programs` e
+`themes` já resolvem casos de uso via container; `shop` commerce e `games` advanced também
+passam por use cases registrados. Ainda restam acessos diretos ao ORM em partes de `accounts`,
+`staff` e alguns módulos de conteúdo — leia a implementação antes de presumir que toda classe
+depende apenas de interfaces. Não crie uma porta fictícia para usar uma operação existente.
 
 ## Exemplo: chamar um caso de uso de uma view
 

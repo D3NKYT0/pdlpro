@@ -1,14 +1,18 @@
+from __future__ import annotations
+
 from decimal import ROUND_HALF_UP, Decimal
+from uuid import UUID
 
 from django.contrib.auth import get_user_model
-from django.db import transaction
 from django.utils import timezone
-from rest_framework.exceptions import ValidationError
 
 from apps.games.application.bag import add_to_bag
 from apps.programs.models import Commission, Supporter
 from apps.shop.infrastructure.models import Cart, PromotionCode, ShopPurchase
-from apps.wallet.infrastructure.models import Wallet, WalletTransaction
+from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
+from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.base import UnitOfWork
+from common.architecture.exceptions import ValidationDomainError
 
 
 def money(value):
@@ -20,7 +24,7 @@ def cart_lines(cart):
     for row in cart.items.select_related("item").order_by("created_at"):
         item = row.item
         if not item.active or item.price < 0 or row.quantity < 1:
-            raise ValidationError(f"{item.name} não está disponível.")
+            raise ValidationDomainError(f"{item.name} não está disponível.")
         lines.append(
             {
                 "id": str(row.id),
@@ -51,7 +55,7 @@ def cart_lines(cart):
             or not entries
             or any(not e.item.active for e in entries)
         ):
-            raise ValidationError(f"O pacote {pack.name} não está disponível.")
+            raise ValidationDomainError(f"O pacote {pack.name} não está disponível.")
         lines.append(
             {
                 "id": str(row.id),
@@ -91,21 +95,20 @@ def get_promo(code, user, *, lock=False):
         or (promo.ends_at and promo.ends_at <= now)
         or (promo.max_uses and promo.uses >= promo.max_uses)
     ):
-        raise ValidationError("Cupom inválido, expirado ou esgotado.")
+        raise ValidationDomainError("Cupom inválido, expirado ou esgotado.")
     if promo.supporter_id and (
         promo.supporter.status != "approved" or promo.supporter.user_id == user.pk
     ):
-        raise ValidationError("Este cupom de apoiador não pode ser usado nesta compra.")
+        raise ValidationDomainError("Este cupom de apoiador não pode ser usado nesta compra.")
     return promo
 
 
-def quote(cart, user, *, wallet=None, lock=False):
+def quote(cart, user, *, wallet: WalletEntity | None = None, lock=False):
     lines = cart_lines(cart)
     subtotal = sum((Decimal(row["line_total"]) for row in lines), Decimal("0.00"))
     promo = get_promo(cart.promo_code, user, lock=lock)
     discount = money(subtotal * promo.percent / 100) if promo else Decimal("0.00")
     total = subtotal - discount
-    wallet = wallet or Wallet.objects.filter(user=user).first()
     bonus = (
         min(wallet.bonus_balance, total)
         if wallet and cart.use_bonus
@@ -123,61 +126,71 @@ def quote(cart, user, *, wallet=None, lock=False):
     }, promo
 
 
-@transaction.atomic
-def checkout(user_id, request_key=None):
-    user = get_user_model().objects.select_for_update().get(id=user_id)
-    if request_key:
-        prior = ShopPurchase.objects.filter(user=user, request_key=request_key).first()
-        if prior:
-            return {"purchase_id": str(prior.id), "total": str(prior.total)}
-    cart = Cart.objects.select_for_update().filter(user=user).first()
-    if not cart:
-        raise ValidationError("Carrinho vazio.")
-    wallet, _ = Wallet.objects.get_or_create(user=user)
-    wallet = Wallet.objects.select_for_update().get(pk=wallet.pk)
-    details, promo = quote(cart, user, wallet=wallet, lock=True)
-    if not details["items"]:
-        raise ValidationError("Carrinho vazio.")
-    due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
-    if wallet.balance < due:
-        raise ValidationError("Saldo insuficiente.")
-    wallet.balance -= due
-    wallet.bonus_balance -= bonus
-    wallet.save(update_fields=["balance", "bonus_balance", "updated_at"])
-    purchase = ShopPurchase.objects.create(
-        user=user,
-        total=details["total"],
-        subtotal=details["subtotal"],
-        discount=details["discount"],
-        bonus_used=bonus,
-        promo_code=cart.promo_code,
-        items_snapshot=details["items"],
-        request_key=request_key,
-    )
-    for amount, suffix in ((due, "saldo"), (bonus, "bônus")):
-        if amount:
-            WalletTransaction.objects.create(
-                wallet=wallet,
-                kind="SAIDA",
-                amount=amount,
-                destination="shop",
-                description=f"Compra na loja ({suffix}) · {purchase.id}",
-            )
-    for row in details["items"]:
-        for grant in row["grants"]:
-            add_to_bag(user, **grant)
-    if promo:
-        promo.uses += 1
-        promo.save(update_fields=["uses", "updated_at"])
-        if promo.supporter_id:
-            supporter = Supporter.objects.select_for_update().get(pk=promo.supporter_id)
-            amount = money(due * supporter.commission_percent / 100)
-            if amount > 0 and supporter.status == "approved":
-                Commission.objects.create(
-                    supporter=supporter, purchase=purchase, amount=amount
+def checkout(
+    user_id: UUID,
+    request_key=None,
+    *,
+    wallets: IWalletRepository,
+    unit_of_work: UnitOfWork,
+):
+    """Finaliza o carrinho debitando carteira, entregando itens e registrando a compra."""
+
+    with unit_of_work:
+        user = get_user_model().objects.select_for_update().get(id=user_id)
+        if request_key:
+            prior = ShopPurchase.objects.filter(user=user, request_key=request_key).first()
+            if prior:
+                return {"purchase_id": str(prior.id), "total": str(prior.total)}
+        cart = Cart.objects.select_for_update().filter(user=user).first()
+        if not cart:
+            raise ValidationDomainError("Carrinho vazio.")
+        wallet = wallets.get_or_create(user_id)
+        details, promo = quote(cart, user, wallet=wallet, lock=True)
+        if not details["items"]:
+            raise ValidationDomainError("Carrinho vazio.")
+        due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
+        purchase = ShopPurchase.objects.create(
+            user=user,
+            total=details["total"],
+            subtotal=details["subtotal"],
+            discount=details["discount"],
+            bonus_used=bonus,
+            promo_code=cart.promo_code,
+            items_snapshot=details["items"],
+            request_key=request_key,
+        )
+        try:
+            if due:
+                wallets.debit(
+                    wallet.id,
+                    due,
+                    destination="shop",
+                    description=f"Compra na loja (saldo) · {purchase.id}",
                 )
-    cart.items.all().delete()
-    cart.packages.all().delete()
-    cart.promo_code = ""
-    cart.save(update_fields=["promo_code", "updated_at"])
-    return {"purchase_id": str(purchase.id), "total": str(purchase.total)}
+            if bonus:
+                wallets.debit_bonus(
+                    wallet.id,
+                    bonus,
+                    destination="shop",
+                    description=f"Compra na loja (bônus) · {purchase.id}",
+                )
+        except InsufficientBalanceError as exc:
+            raise ValidationDomainError("Saldo insuficiente.") from exc
+        for row in details["items"]:
+            for grant in row["grants"]:
+                add_to_bag(user, **grant)
+        if promo:
+            promo.uses += 1
+            promo.save(update_fields=["uses", "updated_at"])
+            if promo.supporter_id:
+                supporter = Supporter.objects.select_for_update().get(pk=promo.supporter_id)
+                amount = money(due * supporter.commission_percent / 100)
+                if amount > 0 and supporter.status == "approved":
+                    Commission.objects.create(
+                        supporter=supporter, purchase=purchase, amount=amount
+                    )
+        cart.items.all().delete()
+        cart.packages.all().delete()
+        cart.promo_code = ""
+        cart.save(update_fields=["promo_code", "updated_at"])
+        return {"purchase_id": str(purchase.id), "total": str(purchase.total)}

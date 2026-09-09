@@ -44,3 +44,10 @@ class BoxNotOwnedError(ValidationDomainError):
     """Falha de domínio: Essa caixa não pertence a você."""
 
     message = "Essa caixa não pertence a você."
+
+
+class InvalidRewardError(ValidationDomainError):
+    """Falha de domínio: configuração ou payload de recompensa inválido."""
+
+    error_code = "INVALID_REWARD"
+    message = "Recompensa inválida."

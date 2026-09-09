@@ -12,7 +12,7 @@ from apps.server.domain.exceptions import (
     NicknameTakenError,
 )
 from apps.server.infrastructure.service_models import CharacterServiceOperation
-from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.exceptions import (
     AuthorizationError,
     ConflictError,
@@ -20,7 +20,13 @@ from common.architecture.exceptions import (
 )
 
 
-def settle_service(operation_id, *, completed, note):
+def settle_service(
+    operation_id,
+    *,
+    completed,
+    note,
+    wallets: IWalletRepository,
+):
     """Concilia uma reserva uma única vez; rejeição confirmada estorna o débito.
 
     Use somente após resposta inequívoca do gateway ou inspeção pela equipe no jogo.
@@ -31,7 +37,6 @@ def settle_service(operation_id, *, completed, note):
         if row.status != "pending":
             return
         if not completed and row.amount > 0:
-            wallets = DjangoWalletRepository()
             wallet = wallets.get_or_create(row.user.id)
             wallets.credit(
                 wallet.id,
@@ -122,6 +127,7 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
             row.id,
             completed=False,
             note="Rejeição de domínio anterior à gravação no jogo.",
+            wallets=wallets,
         )
         raise
     except Exception as exc:
@@ -130,4 +136,6 @@ def execute_paid_service(actor, *, service, value, price, lineage, access, walle
             "Não foi possível confirmar o serviço. O saldo permanece reservado; solicite conferência à equipe.",
             details={"operation_id": str(row.id)},
         ) from exc
-    settle_service(row.id, completed=True, note="Gateway confirmou a operação.")
+    settle_service(
+        row.id, completed=True, note="Gateway confirmou a operação.", wallets=wallets
+    )

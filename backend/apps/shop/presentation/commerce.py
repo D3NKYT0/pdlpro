@@ -1,24 +1,33 @@
-from django.db import transaction
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from apps.programs.models import Supporter
-from apps.shop.application.commerce import get_promo, quote
-from apps.shop.infrastructure.models import (
-    Cart,
-    CartPackage,
-    PromotionCode,
-    ShopItem,
-    ShopPackage,
-    ShopPackageItem,
-    ShopPurchase,
+from apps.shop.application.commerce_use_cases import (
+    CreateStaffPackageInput,
+    CreateStaffPackageUseCase,
+    CreateStaffPromoInput,
+    CreateStaffPromoUseCase,
+    ListActivePackagesUseCase,
+    ListPurchasesUseCase,
+    ListStaffPackagesUseCase,
+    ListStaffPromosUseCase,
+    QuoteCartUseCase,
+    SetCartOptionsInput,
+    SetCartOptionsUseCase,
+    SetCartPackageInput,
+    SetCartPackageUseCase,
+    UpdateStaffPackageInput,
+    UpdateStaffPackageUseCase,
+    UpdateStaffPromoInput,
+    UpdateStaffPromoUseCase,
+    UserScopedInput,
 )
+from apps.shop.infrastructure.models import PromotionCode, ShopItem, ShopPackage
 from common.permissions import IsStaffMember
+from common.views import InjectedAPIView
 
 
 class PackageItemSerializer(serializers.Serializer):
@@ -40,7 +49,7 @@ class PackageSerializer(serializers.ModelSerializer):
     """Representa e valida o pacote comercial e sua composição.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. Persistência fica nos casos de uso.
 
     Campos declarados: ``items``, ``contents``.
     """
@@ -69,24 +78,6 @@ class PackageSerializer(serializers.ModelSerializer):
         if not items:
             raise serializers.ValidationError("Inclua pelo menos um item.")
         return items
-
-    @transaction.atomic
-    def create(self, data):
-        items = data.pop("items")
-        pack = ShopPackage.objects.create(**data)
-        for item in items:
-            ShopPackageItem.objects.create(package=pack, **item)
-        return pack
-
-    @transaction.atomic
-    def update(self, instance, data):
-        items = data.pop("items", None)
-        instance = super().update(instance, data)
-        if items is not None:
-            instance.package_items.all().delete()
-            for item in items:
-                ShopPackageItem.objects.create(package=instance, **item)
-        return instance
 
 
 class PromoSerializer(serializers.ModelSerializer):
@@ -166,7 +157,7 @@ class CartPackageSerializer(serializers.Serializer):
     quantity = serializers.IntegerField(min_value=0, max_value=99, default=1)
 
 
-class CommerceView(APIView):
+class CommerceView(InjectedAPIView):
     """Trata pacotes, opções e histórico de compras do comércio para o usuário da sessão.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
@@ -188,32 +179,20 @@ class CommerceView(APIView):
         if section == "packages":
             return Response(
                 PackageSerializer(
-                    ShopPackage.objects.filter(active=True), many=True
+                    self.resolve(ListActivePackagesUseCase).execute(None), many=True
                 ).data
             )
         if section == "purchases":
-            rows = ShopPurchase.objects.filter(user=request.user).order_by(
-                "-created_at"
-            )[:100]
             return Response(
-                [
-                    {
-                        "id": str(r.id),
-                        "total": str(r.total),
-                        "subtotal": str(r.subtotal),
-                        "discount": str(r.discount),
-                        "bonus_used": str(r.bonus_used),
-                        "promo_code": r.promo_code,
-                        "items": r.items_snapshot,
-                        "created_at": r.created_at,
-                    }
-                    for r in rows
-                ]
+                self.resolve(ListPurchasesUseCase).execute(
+                    UserScopedInput(user_id=request.user.id)
+                )
             )
         if section != "quote":
             raise NotFound()
-        cart, _ = Cart.objects.get_or_create(user=request.user)
-        return Response(quote(cart, request.user)[0])
+        return Response(
+            self.resolve(QuoteCartUseCase).execute(UserScopedInput(user_id=request.user.id))
+        )
 
     @extend_schema(
         tags=["Comércio"],
@@ -225,53 +204,43 @@ class CommerceView(APIView):
         ),
         request=CartPackageSerializer,
     )
-    @transaction.atomic
     def post(self, request, section):
         if section not in ("packages", "options"):
             raise NotFound()
-        type(request.user).objects.select_for_update().get(pk=request.user.pk)
-        cart, _ = Cart.objects.get_or_create(user=request.user)
-        cart = Cart.objects.select_for_update().get(pk=cart.pk)
         if section == "packages":
             serializer = CartPackageSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             data = serializer.validated_data
-            pack = get_object_or_404(ShopPackage, id=data["package_id"], active=True)
-            if data["quantity"] == 0:
-                CartPackage.objects.filter(cart=cart, package=pack).delete()
-            else:
-                CartPackage.objects.update_or_create(
-                    cart=cart, package=pack, defaults={"quantity": data["quantity"]}
+            return Response(
+                self.resolve(SetCartPackageUseCase).execute(
+                    SetCartPackageInput(
+                        user_id=request.user.id,
+                        package_id=data["package_id"],
+                        quantity=data["quantity"],
+                    )
                 )
-        else:
-            serializer = CartOptionsSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            for key, value in serializer.validated_data.items():
-                if key == "promo_code":
-                    value = value.strip().upper()
-                    get_promo(value, request.user)
-                setattr(cart, key, value)
-            cart.save()
-        return Response(quote(cart, request.user)[0])
+            )
+        serializer = CartOptionsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(
+            self.resolve(SetCartOptionsUseCase).execute(
+                SetCartOptionsInput(
+                    user_id=request.user.id,
+                    promo_code=serializer.validated_data.get("promo_code"),
+                    use_bonus=serializer.validated_data.get("use_bonus"),
+                )
+            )
+        )
 
 
-class StaffCommerceView(APIView):
-    """Administra as configurações de comércio suportadas pelo registro de modelos e serializers.
+class StaffCommerceView(InjectedAPIView):
+    """Administra pacotes e promoções do comércio via casos de uso.
 
     Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated, IsStaffMember].
     """
 
     permission_classes = [IsAuthenticated, IsStaffMember]
-
-    def config(self, section):
-        if section not in ("packages", "promos"):
-            raise NotFound()
-        return (
-            (ShopPackage, PackageSerializer)
-            if section == "packages"
-            else (PromotionCode, PromoSerializer)
-        )
 
     @extend_schema(
         tags=["Comércio"],
@@ -283,8 +252,19 @@ class StaffCommerceView(APIView):
         responses=PackageSerializer(many=True),
     )
     def get(self, request, section):
-        model, serializer = self.config(section)
-        return Response(serializer(model.objects.all(), many=True).data)
+        if section == "packages":
+            return Response(
+                PackageSerializer(
+                    self.resolve(ListStaffPackagesUseCase).execute(None), many=True
+                ).data
+            )
+        if section == "promos":
+            return Response(
+                PromoSerializer(
+                    self.resolve(ListStaffPromosUseCase).execute(None), many=True
+                ).data
+            )
+        raise NotFound()
 
     @extend_schema(
         tags=["Comércio"],
@@ -297,11 +277,30 @@ class StaffCommerceView(APIView):
         responses=PackageSerializer,
     )
     def post(self, request, section):
-        _, cls = self.config(section)
-        serializer = cls(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=201)
+        if section == "packages":
+            serializer = PackageSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            data = serializer.validated_data
+            pack = self.resolve(CreateStaffPackageUseCase).execute(
+                CreateStaffPackageInput(
+                    name=data["name"],
+                    total_price=data["total_price"],
+                    active=data.get("active", True),
+                    items=[
+                        {"item": row["item"], "quantity": row["quantity"]}
+                        for row in data["items"]
+                    ],
+                )
+            )
+            return Response(PackageSerializer(pack).data, status=201)
+        if section == "promos":
+            serializer = PromoSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            promo = self.resolve(CreateStaffPromoUseCase).execute(
+                CreateStaffPromoInput(fields=dict(serializer.validated_data))
+            )
+            return Response(PromoSerializer(promo).data, status=201)
+        raise NotFound()
 
     @extend_schema(
         tags=["Comércio"],
@@ -314,10 +313,39 @@ class StaffCommerceView(APIView):
         responses=PackageSerializer,
     )
     def patch(self, request, section, entry_id):
-        model, cls = self.config(section)
-        serializer = cls(
-            get_object_or_404(model, id=entry_id), data=request.data, partial=True
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if section == "packages":
+            pack = ShopPackage.objects.filter(id=entry_id).first()
+            if pack is None:
+                raise NotFound()
+            serializer = PackageSerializer(pack, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            data = serializer.validated_data
+            items = data.pop("items", None)
+            pack = self.resolve(UpdateStaffPackageUseCase).execute(
+                UpdateStaffPackageInput(
+                    package_id=entry_id,
+                    fields=dict(data),
+                    items=(
+                        [
+                            {"item": row["item"], "quantity": row["quantity"]}
+                            for row in items
+                        ]
+                        if items is not None
+                        else None
+                    ),
+                )
+            )
+            return Response(PackageSerializer(pack).data)
+        if section == "promos":
+            promo = PromotionCode.objects.filter(id=entry_id).first()
+            if promo is None:
+                raise NotFound()
+            serializer = PromoSerializer(promo, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            promo = self.resolve(UpdateStaffPromoUseCase).execute(
+                UpdateStaffPromoInput(
+                    promo_id=entry_id, fields=dict(serializer.validated_data)
+                )
+            )
+            return Response(PromoSerializer(promo).data)
+        raise NotFound()

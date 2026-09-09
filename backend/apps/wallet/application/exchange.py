@@ -2,13 +2,14 @@ from decimal import ROUND_DOWN, Decimal
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from rest_framework.exceptions import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
+from apps.wallet.domain.entities import InsufficientBalanceError
+from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.exchange_models import GameExchange
-from apps.wallet.infrastructure.models import CoinConfig, Wallet, WalletTransaction
+from apps.wallet.infrastructure.models import CoinConfig
 from common.architecture.exceptions import ValidationDomainError
 
 
@@ -44,8 +45,13 @@ class ExchangeCoinsUseCase:
     jogo evita aplicar duas vezes; não há uma transação única entre os dois bancos.
     """
 
-    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService):
-        self.lineage, self.access = lineage, access
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        wallets: IWalletRepository,
+    ):
+        self.lineage, self.access, self.wallets = lineage, access, wallets
 
     def execute(self, user, data):
         # Commit the reservation before contacting the second database. A durable
@@ -62,25 +68,25 @@ class ExchangeCoinsUseCase:
                     data["character_id"],
                     data["quantity"],
                 ):
-                    raise ValidationError(
+                    raise ValidationDomainError(
                         "Esta chave já pertence a outra transferência."
                     )
             else:
                 if GameExchange.objects.filter(user=user, status="pending").exists():
-                    raise ValidationError(
+                    raise ValidationDomainError(
                         "Retome a transferência pendente no histórico antes de iniciar outra."
                     )
                 try:
                     self.lineage.assert_exchange_ready()
                 except (RuntimeError, OSError, TimeoutError, SQLAlchemyError):
-                    raise ValidationError(
+                    raise ValidationDomainError(
                         "Integração de moedas indisponível. A equipe precisa verificar a conexão, os recibos e as tabelas transacionais."
                     ) from None
                 if not self.access.can_access(user.id, user.username, data["login"]):
-                    raise ValidationError("Conta não vinculada ao seu usuário.")
+                    raise ValidationDomainError("Conta não vinculada ao seu usuário.")
                 char = self.lineage.get_character(data["login"], data["character_id"])
                 if not char or char.online:
-                    raise ValidationError(
+                    raise ValidationDomainError(
                         "Selecione um personagem seu que esteja offline."
                     )
                 config = CoinConfig.objects.filter(active=True).first()
@@ -89,10 +95,10 @@ class ExchangeCoinsUseCase:
                     or config.multiplier <= 0
                     or not 0 <= config.withdraw_fee_percent < 100
                 ):
-                    raise ValidationError("Conversão de moedas não configurada.")
+                    raise ValidationDomainError("Conversão de moedas não configurada.")
                 gross = Decimal(data["quantity"]) / config.multiplier
                 if gross != gross.quantize(Decimal("0.01")):
-                    raise ValidationError(
+                    raise ValidationDomainError(
                         "A quantidade deve corresponder a um valor exato de saldo (duas casas decimais)."
                     )
                 fee = (
@@ -104,16 +110,12 @@ class ExchangeCoinsUseCase:
                 )
                 amount = gross - fee
                 if amount <= 0 or amount > Decimal("9999999999.99"):
-                    raise ValidationError("Valor de conversão inválido.")
-                wallet, _ = Wallet.objects.get_or_create(user=user)
-                wallet = Wallet.objects.select_for_update().get(pk=wallet.pk)
-                if data["direction"] == "to_game":
-                    if wallet.balance < amount:
-                        raise ValidationError(
-                            "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
-                        )
-                    wallet.balance -= amount
-                    wallet.save(update_fields=["balance", "updated_at"])
+                    raise ValidationDomainError("Valor de conversão inválido.")
+                wallet = self.wallets.get_or_create(user.id)
+                if data["direction"] == "to_game" and wallet.balance < amount:
+                    raise InsufficientBalanceError(
+                        "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
+                    )
                 row = GameExchange.objects.create(
                     user=user,
                     **data,
@@ -123,10 +125,9 @@ class ExchangeCoinsUseCase:
                     fee=fee,
                 )
                 if row.direction == "to_game":
-                    WalletTransaction.objects.create(
-                        wallet=wallet,
-                        kind="SAIDA",
-                        amount=amount,
+                    self.wallets.debit(
+                        wallet.id,
+                        amount,
                         destination="game_exchange",
                         description=f"Reserva para o jogo · {row.id}",
                     )
@@ -147,13 +148,10 @@ class ExchangeCoinsUseCase:
                 row = GameExchange.objects.select_for_update().get(pk=row.pk)
                 if row.status == "pending":
                     if row.direction == "to_game":
-                        wallet = Wallet.objects.select_for_update().get(user=user)
-                        wallet.balance += row.amount
-                        wallet.save(update_fields=["balance", "updated_at"])
-                        WalletTransaction.objects.create(
-                            wallet=wallet,
-                            kind="ENTRADA",
-                            amount=row.amount,
+                        wallet = self.wallets.get_or_create(user.id)
+                        self.wallets.credit(
+                            wallet.id,
+                            row.amount,
                             origin="game_exchange_refund",
                             description=f"Estorno · {row.id}",
                         )
@@ -172,13 +170,10 @@ class ExchangeCoinsUseCase:
             row = GameExchange.objects.select_for_update().get(pk=row.pk)
             if row.status == "pending":
                 if row.direction == "from_game":
-                    wallet = Wallet.objects.select_for_update().get(user=user)
-                    wallet.balance += row.amount
-                    wallet.save(update_fields=["balance", "updated_at"])
-                    WalletTransaction.objects.create(
-                        wallet=wallet,
-                        kind="ENTRADA",
-                        amount=row.amount,
+                    wallet = self.wallets.get_or_create(user.id)
+                    self.wallets.credit(
+                        wallet.id,
+                        row.amount,
                         origin="game_exchange",
                         description=f"Moedas retiradas do jogo · {row.id}",
                     )

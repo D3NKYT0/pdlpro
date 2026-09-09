@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from apps.games.application.advanced_use_cases import ClaimDailyBonusOrSeasonUseCase
 from apps.games.application.battle_pass_use_cases import (
     BuyBattlePassPremiumInput,
     BuyBattlePassPremiumUseCase,
@@ -41,7 +42,6 @@ from apps.games.application.use_cases import (
     BuyTokensInput,
     BuyTokensUseCase,
     ClaimDailyBonusInput,
-    ClaimDailyBonusUseCase,
     GetBagUseCase,
     GetDailyBonusStateUseCase,
     GetRouletteStateUseCase,
@@ -110,7 +110,7 @@ class BuyTokensView(ItemCatalogAPIView):
 
 
 class DailyBonusView(ItemCatalogAPIView):
-    """Entrada HTTP para ``GetDailyBonusStateUseCase``, ``ClaimDailyBonusUseCase``.
+    """Entrada HTTP para ``GetDailyBonusStateUseCase``, ``ClaimDailyBonusOrSeasonUseCase``.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
@@ -133,11 +133,10 @@ class DailyBonusView(ItemCatalogAPIView):
         description="Resgata o bônus diário ativo, priorizando a temporada diária quando existir.",
     )
     def post(self, request):
-        from apps.games.application.advanced import claim_daily_season, daily_season
-        if daily_season():
-            return Response(claim_daily_season(request.user.id))
         return Response(
-            self.resolve(ClaimDailyBonusUseCase).execute(ClaimDailyBonusInput(user_id=request.user.id))
+            self.resolve(ClaimDailyBonusOrSeasonUseCase).execute(
+                ClaimDailyBonusInput(user_id=request.user.id)
+            )
         )
 
 

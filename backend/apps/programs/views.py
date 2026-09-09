@@ -1,17 +1,31 @@
-from django.db import transaction
-from django.db.models import Sum
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from apps.programs.models import (
-    Commission,
-    CommissionPayout,
-    RoadmapEntry,
-    Supporter,
-    SystemResource,
+from apps.programs.domain.exceptions import RoadmapEntryNotFoundError, ResourceNotFoundError
+from apps.programs.application.use_cases import (
+    CreateRoadmapEntryUseCase,
+    CreateRoadmapInput,
+    DeleteRoadmapEntryUseCase,
+    DeleteRoadmapInput,
+    GetRoadmapInput,
+    GetSupporterDashboardUseCase,
+    ListPublishedRoadmapUseCase,
+    ListResourcesUseCase,
+    ListStaffRoadmapUseCase,
+    ListStaffSupportersUseCase,
+    RequestCommissionPayoutUseCase,
+    ReviewPayoutInput,
+    ReviewPayoutUseCase,
+    ReviewSupporterInput,
+    ReviewSupporterUseCase,
+    UpdateResourceInput,
+    UpdateResourceUseCase,
+    UpdateRoadmapEntryUseCase,
+    UpdateRoadmapInput,
+    UpsertSupporterInput,
+    UpsertSupporterUseCase,
+    UserScopedInput,
 )
 from apps.programs.serializers import (
     PayoutReviewSerializer,
@@ -21,19 +35,32 @@ from apps.programs.serializers import (
     SupporterReviewSerializer,
     SupporterSerializer,
 )
-from apps.programs.services import request_commission, review_payout
-from apps.shop.infrastructure.models import PromotionCode
 from common.permissions import IsStaffMember
+from common.views import InjectedAPIView
 
 
-class SupporterView(APIView):
-    """Consulta o cadastro de apoiador, comissões e repasses do usuário e recebe sua inscrição.
+class SupporterView(InjectedAPIView):
+    """Consulta o cadastro de apoiador e recebe sua inscrição via casos de uso.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated].
     """
 
     permission_classes = [IsAuthenticated]
+
+    def _serialize_dashboard(self, request, payload: dict) -> dict:
+        profile = payload["profile"]
+        return {
+            "profile": (
+                SupporterSerializer(profile, context={"request": request}).data
+                if profile is not None
+                else None
+            ),
+            "available": payload["available"],
+            "coupons": payload["coupons"],
+            "commissions": payload["commissions"],
+            "payouts": PayoutSerializer(payload["payouts"], many=True).data,
+        }
 
     @extend_schema(
         tags=["Apoiadores"],
@@ -46,44 +73,10 @@ class SupporterView(APIView):
         responses=SupporterSerializer,
     )
     def get(self, request):
-        row = Supporter.objects.filter(user=request.user).first()
-        if not row:
-            return Response(
-                {
-                    "profile": None,
-                    "available": "0.00",
-                    "coupons": [],
-                    "payouts": [],
-                    "commissions": [],
-                }
-            )
-        commissions = Commission.objects.filter(supporter=row)
-        return Response(
-            {
-                "profile": SupporterSerializer(row, context={"request": request}).data,
-                "available": str(
-                    commissions.filter(payout__isnull=True).aggregate(
-                        total=Sum("amount")
-                    )["total"]
-                    or 0
-                ),
-                "coupons": list(
-                    PromotionCode.objects.filter(supporter=row).values(
-                        "code", "percent", "active", "uses"
-                    )
-                ),
-                "commissions": [
-                    {
-                        "id": str(c.id),
-                        "amount": str(c.amount),
-                        "created_at": c.created_at,
-                        "status": c.payout.status if c.payout else "available",
-                    }
-                    for c in commissions.select_related("payout")[:100]
-                ],
-                "payouts": PayoutSerializer(row.payouts.all()[:100], many=True).data,
-            }
+        payload = self.resolve(GetSupporterDashboardUseCase).execute(
+            UserScopedInput(user_id=request.user.id)
         )
+        return Response(self._serialize_dashboard(request, payload))
 
     @extend_schema(
         tags=["Apoiadores"],
@@ -96,22 +89,23 @@ class SupporterView(APIView):
         responses=SupporterSerializer,
     )
     def post(self, request):
-        with transaction.atomic():
-            # Serialize first-time applications on the user row, too.
-            type(request.user).objects.select_for_update().get(pk=request.user.pk)
-            row = Supporter.objects.filter(user=request.user).first()
-            serializer = SupporterSerializer(
-                row, data=request.data, partial=bool(row), context={"request": request}
+        from apps.programs.models import Supporter
+
+        row = Supporter.objects.filter(user=request.user).first()
+        serializer = SupporterSerializer(
+            row, data=request.data, partial=bool(row), context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        payload = self.resolve(UpsertSupporterUseCase).execute(
+            UpsertSupporterInput(
+                user_id=request.user.id,
+                validated_data=dict(serializer.validated_data),
             )
-            serializer.is_valid(raise_exception=True)
-            serializer.save(
-                user=request.user,
-                status="pending" if not row or row.status == "rejected" else row.status,
-            )
-        return self.get(request)
+        )
+        return Response(self._serialize_dashboard(request, payload))
 
 
-class RequestPayoutView(APIView):
+class RequestPayoutView(InjectedAPIView):
     """Recebe a solicitação de repasse de comissões do apoiador autenticado.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
@@ -130,13 +124,14 @@ class RequestPayoutView(APIView):
         responses=PayoutSerializer,
     )
     def post(self, request):
-        return Response(
-            PayoutSerializer(request_commission(request.user)).data, status=201
+        payout = self.resolve(RequestCommissionPayoutUseCase).execute(
+            UserScopedInput(user_id=request.user.id)
         )
+        return Response(PayoutSerializer(payout).data, status=201)
 
 
-class StaffSupporterView(APIView):
-    """Permite à equipe consultar e revisar cadastros de apoiadores e suas condições.
+class StaffSupporterView(InjectedAPIView):
+    """Permite à equipe consultar e revisar cadastros de apoiadores.
 
     Implementa GET, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated, IsStaffMember].
@@ -154,15 +149,11 @@ class StaffSupporterView(APIView):
         responses=SupporterSerializer(many=True),
     )
     def get(self, request):
+        payload = self.resolve(ListStaffSupportersUseCase).execute(None)
         return Response(
             {
-                "supporters": SupporterSerializer(
-                    Supporter.objects.select_related("user").all(), many=True
-                ).data,
-                "payouts": PayoutSerializer(
-                    CommissionPayout.objects.select_related("supporter").all()[:200],
-                    many=True,
-                ).data,
+                "supporters": SupporterSerializer(payload["supporters"], many=True).data,
+                "payouts": PayoutSerializer(payload["payouts"], many=True).data,
             }
         )
 
@@ -179,26 +170,19 @@ class StaffSupporterView(APIView):
     def patch(self, request, entry_id):
         serializer = SupporterReviewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        with transaction.atomic():
-            row = get_object_or_404(Supporter.objects.select_for_update(), id=entry_id)
-            for key, value in serializer.validated_data.items():
-                setattr(row, key, value)
-            row.save()
-            # Do not replace staff/moderator/admin privileges with a supporter role.
-            user = row.user
-            if row.status == "approved" and user.role == "player":
-                type(user).objects.filter(pk=user.pk, role="player").update(
-                    role="supporter"
-                )
-            elif row.status == "rejected" and user.role == "supporter":
-                type(user).objects.filter(pk=user.pk, role="supporter").update(
-                    role="player"
-                )
+        row = self.resolve(ReviewSupporterUseCase).execute(
+            ReviewSupporterInput(
+                entry_id=entry_id,
+                status=serializer.validated_data["status"],
+                review_note=serializer.validated_data["review_note"],
+                commission_percent=serializer.validated_data["commission_percent"],
+            )
+        )
         return Response(SupporterSerializer(row).data)
 
 
-class StaffPayoutView(APIView):
-    """Permite à equipe consultar e revisar pedidos de repasse de comissões.
+class StaffPayoutView(InjectedAPIView):
+    """Permite à equipe revisar pedidos de repasse de comissões.
 
     Implementa PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated, IsStaffMember].
@@ -217,21 +201,19 @@ class StaffPayoutView(APIView):
         responses=PayoutSerializer,
     )
     def patch(self, request, entry_id):
-        get_object_or_404(CommissionPayout, id=entry_id)
         serializer = PayoutReviewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(
-            PayoutSerializer(
-                review_payout(
-                    entry_id,
-                    serializer.validated_data["status"],
-                    serializer.validated_data["note"],
-                )
-            ).data
+        payout = self.resolve(ReviewPayoutUseCase).execute(
+            ReviewPayoutInput(
+                payout_id=entry_id,
+                status=serializer.validated_data["status"],
+                note=serializer.validated_data["note"],
+            )
         )
+        return Response(PayoutSerializer(payout).data)
 
 
-class RoadmapView(APIView):
+class RoadmapView(InjectedAPIView):
     """Expõe as entradas publicadas do roadmap.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
@@ -250,15 +232,15 @@ class RoadmapView(APIView):
         responses=RoadmapSerializer(many=True),
     )
     def get(self, request, entry_id=None):
-        rows = RoadmapEntry.objects.filter(published=True)
+        result = self.resolve(ListPublishedRoadmapUseCase).execute(
+            GetRoadmapInput(entry_id=entry_id)
+        )
         if entry_id:
-            return Response(
-                RoadmapSerializer(get_object_or_404(rows, id=entry_id)).data
-            )
-        return Response(RoadmapSerializer(rows, many=True).data)
+            return Response(RoadmapSerializer(result).data)
+        return Response(RoadmapSerializer(result, many=True).data)
 
 
-class StaffRoadmapView(APIView):
+class StaffRoadmapView(InjectedAPIView):
     """Permite à equipe criar, atualizar e excluir entradas do roadmap.
 
     Implementa GET, POST, PATCH, DELETE; registre ``as_view()`` nas URLs do módulo. Controle de
@@ -274,7 +256,11 @@ class StaffRoadmapView(APIView):
         responses=RoadmapSerializer(many=True),
     )
     def get(self, request):
-        return Response(RoadmapSerializer(RoadmapEntry.objects.all(), many=True).data)
+        return Response(
+            RoadmapSerializer(
+                self.resolve(ListStaffRoadmapUseCase).execute(None), many=True
+            ).data
+        )
 
     @extend_schema(
         tags=["Roadmap"],
@@ -286,8 +272,10 @@ class StaffRoadmapView(APIView):
     def post(self, request):
         serializer = RoadmapSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=201)
+        row = self.resolve(CreateRoadmapEntryUseCase).execute(
+            CreateRoadmapInput(fields=dict(serializer.validated_data))
+        )
+        return Response(RoadmapSerializer(row).data, status=201)
 
     @extend_schema(
         tags=["Roadmap"],
@@ -297,14 +285,17 @@ class StaffRoadmapView(APIView):
         responses=RoadmapSerializer,
     )
     def patch(self, request, entry_id):
-        serializer = RoadmapSerializer(
-            get_object_or_404(RoadmapEntry, id=entry_id),
-            data=request.data,
-            partial=True,
-        )
+        from apps.programs.models import RoadmapEntry
+
+        row = RoadmapEntry.objects.filter(id=entry_id).first()
+        if row is None:
+            raise RoadmapEntryNotFoundError()
+        serializer = RoadmapSerializer(row, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        updated = self.resolve(UpdateRoadmapEntryUseCase).execute(
+            UpdateRoadmapInput(entry_id=entry_id, fields=dict(serializer.validated_data))
+        )
+        return Response(RoadmapSerializer(updated).data)
 
     @extend_schema(
         tags=["Roadmap"],
@@ -312,11 +303,11 @@ class StaffRoadmapView(APIView):
         description="Remove a entrada do roadmap identificada por entry_id.",
     )
     def delete(self, request, entry_id):
-        get_object_or_404(RoadmapEntry, id=entry_id).delete()
+        self.resolve(DeleteRoadmapEntryUseCase).execute(DeleteRoadmapInput(entry_id=entry_id))
         return Response(status=204)
 
 
-class ResourceView(APIView):
+class ResourceView(InjectedAPIView):
     """Lista os recursos do sistema e seu estado de ativação.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
@@ -333,7 +324,9 @@ class ResourceView(APIView):
     )
     def get(self, request):
         return Response(
-            ResourceSerializer(SystemResource.objects.all(), many=True).data
+            ResourceSerializer(
+                self.resolve(ListResourcesUseCase).execute(None), many=True
+            ).data
         )
 
 
@@ -363,11 +356,14 @@ class StaffResourceView(ResourceView):
         responses=ResourceSerializer,
     )
     def patch(self, request, entry_id):
-        serializer = ResourceSerializer(
-            get_object_or_404(SystemResource, id=entry_id),
-            data=request.data,
-            partial=True,
-        )
+        from apps.programs.models import SystemResource
+
+        row = SystemResource.objects.filter(id=entry_id).first()
+        if row is None:
+            raise ResourceNotFoundError()
+        serializer = ResourceSerializer(row, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        updated = self.resolve(UpdateResourceUseCase).execute(
+            UpdateResourceInput(entry_id=entry_id, fields=dict(serializer.validated_data))
+        )
+        return Response(ResourceSerializer(updated).data)

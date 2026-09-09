@@ -1,15 +1,14 @@
 from decimal import Decimal
 
-from django.db import transaction
-from rest_framework.exceptions import ValidationError
-
 from apps.games.application.bag import add_to_bag
-from apps.wallet.infrastructure.models import Wallet, WalletTransaction
+from apps.games.domain.exceptions import InvalidRewardError
+from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.base import UnitOfWork
 
 
 def validate_rewards(rewards):
     if not isinstance(rewards, list) or not 1 <= len(rewards) <= 30:
-        raise ValidationError("Informe de 1 a 30 recompensas.")
+        raise InvalidRewardError("Informe de 1 a 30 recompensas.")
     cleaned = []
     for reward in rewards:
         if not isinstance(reward, dict) or reward.get("kind") not in (
@@ -18,7 +17,7 @@ def validate_rewards(rewards):
             "balance",
             "bonus",
         ):
-            raise ValidationError("Tipo de recompensa inválido.")
+            raise InvalidRewardError("Tipo de recompensa inválido.")
         try:
             amount = Decimal(str(reward.get("quantity", 0)))
             if not amount.is_finite() or amount <= 0 or amount > 100000000:
@@ -50,40 +49,61 @@ def validate_rewards(rewards):
                 )
             cleaned.append(entry)
         except (ValueError, TypeError, ArithmeticError):
-            raise ValidationError(
+            raise InvalidRewardError(
                 "Quantidade, ID ou encantamento da recompensa inválido."
             ) from None
     return cleaned
 
 
-@transaction.atomic
-def grant_rewards(user, rewards, label):
+def grant_rewards(
+    user,
+    rewards,
+    label,
+    *,
+    wallets: IWalletRepository,
+    unit_of_work: UnitOfWork | None = None,
+):
+    """Concede recompensas validadas via porta de carteira (e bag/fichas).
+
+    Quando ``unit_of_work`` é informado, a concessão fica dentro desse escopo.
+    Caso contrário, o chamador deve já estar em uma transação/UoW.
+    """
     rewards = validate_rewards(rewards)
-    # All callers serialize on the user row before checking claim eligibility.
-    for reward in rewards:
-        kind, amount = reward["kind"], Decimal(str(reward["quantity"]))
-        if kind == "item":
-            add_to_bag(
-                user,
-                item_id=reward["item_id"],
-                item_name=reward["name"],
-                quantity=int(amount),
-                enchant=reward["enchant"],
-            )
-        elif kind == "tokens":
-            user.fichas += int(amount)
-            user.save(update_fields=["fichas", "updated_at"])
-        else:
-            wallet, _ = Wallet.objects.get_or_create(user=user)
-            wallet = Wallet.objects.select_for_update().get(pk=wallet.pk)
-            field = "bonus_balance" if kind == "bonus" else "balance"
-            setattr(wallet, field, getattr(wallet, field) + amount)
-            wallet.save(update_fields=[field, "updated_at"])
-            WalletTransaction.objects.create(
-                wallet=wallet,
-                kind="ENTRADA",
-                amount=amount,
-                origin="game_reward",
-                description=f"{label} ({kind})",
-            )
-    return rewards
+
+    def _apply():
+        for reward in rewards:
+            kind, amount = reward["kind"], Decimal(str(reward["quantity"]))
+            if kind == "item":
+                add_to_bag(
+                    user,
+                    item_id=reward["item_id"],
+                    item_name=reward["name"],
+                    quantity=int(amount),
+                    enchant=reward["enchant"],
+                )
+            elif kind == "tokens":
+                user.fichas += int(amount)
+                user.save(update_fields=["fichas", "updated_at"])
+            else:
+                wallet = wallets.get_or_create(user.id)
+                description = f"{label} ({kind})"
+                if kind == "bonus":
+                    wallets.credit_bonus(
+                        wallet.id,
+                        amount,
+                        origin="game_reward",
+                        description=description,
+                    )
+                else:
+                    wallets.credit(
+                        wallet.id,
+                        amount,
+                        origin="game_reward",
+                        description=description,
+                    )
+        return rewards
+
+    if unit_of_work is not None:
+        with unit_of_work:
+            return _apply()
+    return _apply()

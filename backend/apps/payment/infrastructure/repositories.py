@@ -2,13 +2,24 @@ from __future__ import annotations
 
 from datetime import timedelta
 from decimal import Decimal
+from typing import Any
 from uuid import UUID
 
 from django.utils import timezone
 
 from apps.payment.domain.entities import PaymentOrderEntity
-from apps.payment.domain.repositories import IPaymentOrderRepository
-from apps.payment.infrastructure.models import PedidoPagamento
+from apps.payment.domain.repositories import (
+    IPaymentOrderRepository,
+    IWebhookLogRepository,
+)
+from apps.payment.infrastructure.models import PedidoPagamento, WebhookLog
+
+
+class DjangoWebhookLogRepository(IWebhookLogRepository):
+    """Persiste ``WebhookLog`` via ORM Django."""
+
+    def create(self, *, kind: str, data_id: str, payload: dict | Any) -> None:
+        WebhookLog.objects.create(kind=kind, data_id=data_id, payload=payload)
 
 
 class DjangoPaymentOrderRepository(IPaymentOrderRepository):
@@ -17,10 +28,10 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
 
     Concentra consultas e escritas ORM da porta. Prefira resolver a interface pelo container; ao
     combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
-    UnitOfWork.
+    UnitOfWork. ``order_rows`` devolve QuerySet ordenado para paginação DRF.
     """
 
-    def _entity(self, row: PedidoPagamento) -> PaymentOrderEntity:
+    def to_entity(self, row: PedidoPagamento) -> PaymentOrderEntity:
         return PaymentOrderEntity(
             id=row.id,
             user_id=row.user.id,
@@ -40,28 +51,28 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
             paid_at=row.paid_at,
         )
 
-    def queryset_by_user(self, user_id: UUID):
-        """Queryset dos pedidos do usuário ordenados do mais recente ao mais antigo."""
+    def order_rows(self, user_id: UUID):
+        """QuerySet dos pedidos do usuário ordenados do mais recente ao mais antigo."""
 
         return PedidoPagamento.objects.select_related("user").filter(user__id=user_id).order_by("-created_at")
 
     def get_by_id(self, order_id: UUID) -> PaymentOrderEntity | None:
         row = PedidoPagamento.objects.select_related("user").filter(id=order_id).first()
-        return self._entity(row) if row else None
+        return self.to_entity(row) if row else None
 
     def get_by_external_id(self, external_id: str) -> PaymentOrderEntity | None:
         if not external_id:
             return None
         row = PedidoPagamento.objects.select_related("user").filter(external_id=external_id).first()
-        return self._entity(row) if row else None
+        return self.to_entity(row) if row else None
 
     def get_for_update(self, order_id: UUID) -> PaymentOrderEntity | None:
         """Serializa liquidação/cancelamento bloqueando só o pedido, sem bloquear o usuário."""
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).filter(id=order_id).first()
-        return self._entity(row) if row else None
+        return self.to_entity(row) if row else None
 
     def list_by_user(self, user_id: UUID) -> list[PaymentOrderEntity]:
-        return [self._entity(row) for row in self.queryset_by_user(user_id)]
+        return [self.to_entity(row) for row in self.order_rows(user_id)]
 
     def find_reusable(
         self,
@@ -87,7 +98,7 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
             )
             .first()
         )
-        return self._entity(row) if row else None
+        return self.to_entity(row) if row else None
 
     def create(
         self,
@@ -116,7 +127,7 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
             checkout_url=checkout_url,
             client_secret=client_secret,
         )
-        return self._entity(row)
+        return self.to_entity(row)
 
     def update_checkout(
         self,
@@ -130,7 +141,7 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
     ) -> PaymentOrderEntity:
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
         if row.status not in {"pending", "processing"}:
-            return self._entity(row)
+            return self.to_entity(row)
         row.external_id = external_id
         row.checkout_url = checkout_url
         if client_secret:
@@ -143,23 +154,23 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         if status:
             fields.append("status")
         row.save(update_fields=fields)
-        return self._entity(row)
+        return self.to_entity(row)
 
     def mark_cancelled(self, order_id: UUID) -> PaymentOrderEntity:
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
         if row.status not in {"pending", "processing"}:
-            return self._entity(row)
+            return self.to_entity(row)
         row.status = PedidoPagamento.Status.CANCELLED
         row.save(update_fields=["status", "updated_at"])
-        return self._entity(row)
+        return self.to_entity(row)
 
     def mark_failed(self, order_id: UUID) -> PaymentOrderEntity:
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
         if row.status not in {"pending", "processing"}:
-            return self._entity(row)
+            return self.to_entity(row)
         row.status = PedidoPagamento.Status.FAILED
         row.save(update_fields=["status", "updated_at"])
-        return self._entity(row)
+        return self.to_entity(row)
 
     def mark_confirmed(self, order_id: UUID, *, bonus_applied: Decimal, total_credited: Decimal) -> PaymentOrderEntity:
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
@@ -168,4 +179,4 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         row.total_credited = total_credited
         row.paid_at = timezone.now()
         row.save(update_fields=["status", "bonus_applied", "total_credited", "paid_at", "updated_at"])
-        return self._entity(row)
+        return self.to_entity(row)

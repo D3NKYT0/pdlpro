@@ -1,3 +1,16 @@
+from apps.shop.application.commerce_use_cases import (
+    CreateStaffPackageUseCase,
+    CreateStaffPromoUseCase,
+    ListActivePackagesUseCase,
+    ListPurchasesUseCase,
+    ListStaffPackagesUseCase,
+    ListStaffPromosUseCase,
+    QuoteCartUseCase,
+    SetCartOptionsUseCase,
+    SetCartPackageUseCase,
+    UpdateStaffPackageUseCase,
+    UpdateStaffPromoUseCase,
+)
 from apps.shop.application.use_cases import (
     AddToCartUseCase,
     CheckoutUseCase,
@@ -19,8 +32,22 @@ class ShopProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
-        container.register_self(ListShopItemsUseCase, lifetime=Lifetime.TRANSIENT)
-        container.register_self(AddToCartUseCase, lifetime=Lifetime.TRANSIENT)
-        container.register_self(GetCartUseCase, lifetime=Lifetime.TRANSIENT)
-        container.register_self(UpdateCartItemUseCase, lifetime=Lifetime.TRANSIENT)
-        container.register_self(CheckoutUseCase, lifetime=Lifetime.TRANSIENT)
+        for use_case in (
+            ListShopItemsUseCase,
+            AddToCartUseCase,
+            GetCartUseCase,
+            UpdateCartItemUseCase,
+            CheckoutUseCase,
+            ListActivePackagesUseCase,
+            ListPurchasesUseCase,
+            QuoteCartUseCase,
+            SetCartPackageUseCase,
+            SetCartOptionsUseCase,
+            ListStaffPackagesUseCase,
+            ListStaffPromosUseCase,
+            CreateStaffPackageUseCase,
+            UpdateStaffPackageUseCase,
+            CreateStaffPromoUseCase,
+            UpdateStaffPromoUseCase,
+        ):
+            container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

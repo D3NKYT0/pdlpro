@@ -5,9 +5,20 @@ import hmac
 import json
 import logging
 import urllib.parse
+from dataclasses import dataclass
+from typing import Any
+from uuid import UUID
 
 from django.conf import settings
 from django.utils import timezone
+
+from apps.payment.application.use_cases import (
+    ApplyGatewayPaymentInput,
+    ApplyGatewayPaymentUseCase,
+)
+from apps.payment.domain.repositories import IWebhookLogRepository
+from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
+from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
 
@@ -67,3 +78,95 @@ class WebhookSignatureService:
         except Exception:  # noqa: BLE001
             logger.warning("Assinatura Stripe inválida.")
             return None
+
+
+@dataclass(frozen=True, slots=True)
+class HandleMercadoPagoWebhookInput:
+    """Payload já validado por assinatura para ``HandleMercadoPagoWebhookUseCase``."""
+
+    payload: dict
+    request_id: str = ""
+
+
+class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, None]):
+    """Registra o webhook do Mercado Pago e liquida pagamentos aprovados.
+
+    A view deve validar a assinatura com ``WebhookSignatureService`` antes de chamar
+    ``execute``. Consulta o pagamento no gateway e aplica via ``ApplyGatewayPaymentUseCase``.
+    """
+
+    def __init__(
+        self,
+        logs: IWebhookLogRepository,
+        gateway: MercadoPagoGateway,
+        apply: ApplyGatewayPaymentUseCase,
+    ) -> None:
+        self._logs = logs
+        self._gateway = gateway
+        self._apply = apply
+
+    def execute(self, data: HandleMercadoPagoWebhookInput) -> None:
+        payload = data.payload
+        event_id = str(payload.get("id") or data.request_id or "")
+        data_id = str((payload.get("data") or {}).get("id") or "")
+        self._logs.create(kind="mercadopago", data_id=event_id or data_id, payload=payload)
+        action = payload.get("action") or payload.get("type")
+        if action in {"payment.created", "payment", "payment.updated"} and data_id:
+            result = self._gateway.fetch_by_id(data_id)
+            if result and result.status == "approved":
+                order_id = None
+                metadata = (result.raw or {}).get("metadata") or {}
+                if metadata.get("order_id"):
+                    try:
+                        order_id = UUID(str(metadata["order_id"]))
+                    except ValueError:
+                        order_id = None
+                self._apply.execute(
+                    ApplyGatewayPaymentInput(
+                        external_id=result.external_id,
+                        order_id=order_id,
+                        approved=True,
+                    )
+                )
+
+
+@dataclass(frozen=True, slots=True)
+class HandleStripeWebhookInput:
+    """Evento Stripe já validado por assinatura para ``HandleStripeWebhookUseCase``."""
+
+    event: Any
+
+
+class HandleStripeWebhookUseCase(UseCase[HandleStripeWebhookInput, None]):
+    """Registra o webhook do Stripe e liquida pagamentos concluídos.
+
+    A view deve validar a assinatura com ``WebhookSignatureService`` antes de chamar
+    ``execute``. Aplica o crédito via ``ApplyGatewayPaymentUseCase``.
+    """
+
+    def __init__(self, logs: IWebhookLogRepository, apply: ApplyGatewayPaymentUseCase) -> None:
+        self._logs = logs
+        self._apply = apply
+
+    def execute(self, data: HandleStripeWebhookInput) -> None:
+        event = data.event
+        self._logs.create(kind=event["type"], data_id=event["id"], payload=event)
+        if event["type"] in {"payment_intent.succeeded", "checkout.session.completed"}:
+            obj = event["data"]["object"]
+            external_id = (
+                obj.get("id") if event["type"] == "payment_intent.succeeded" else obj.get("payment_intent")
+            )
+            metadata = obj.get("metadata") or {}
+            order_id = None
+            if metadata.get("order_id"):
+                try:
+                    order_id = UUID(str(metadata["order_id"]))
+                except ValueError:
+                    order_id = None
+            self._apply.execute(
+                ApplyGatewayPaymentInput(
+                    external_id=str(external_id or ""),
+                    order_id=order_id,
+                    approved=True,
+                )
+            )

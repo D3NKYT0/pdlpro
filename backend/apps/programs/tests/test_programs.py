@@ -458,7 +458,7 @@ def test_daily_season_and_pool_reward_once(api, player):
     assert response.status_code == 200, response.data
     assert (
         api.post("/api/v1/customer/games/daily-bonus/", {}, format="json").status_code
-        == 400
+        == 409
     )
     player.refresh_from_db()
     assert player.fichas == 103
@@ -565,10 +565,12 @@ def test_exchange_coins_retries_without_double_debit(player):
             if self.calls == 1:
                 raise TimeoutError("Commit confirmed only on retry")
 
+    from apps.wallet.infrastructure.repositories import DjangoWalletRepository
+
     CoinConfig.objects.create(name="Coin", coin_id=57, multiplier=1, active=True)
     Wallet.objects.create(user=player, balance=100)
     gateway = Gateway()
-    case = ExchangeCoinsUseCase(gateway, Access())
+    case = ExchangeCoinsUseCase(gateway, Access(), DjangoWalletRepository())
     data = {
         "request_key": uuid4(),
         "direction": "to_game",
@@ -590,12 +592,11 @@ def test_exchange_coins_retries_without_double_debit(player):
 def test_exchange_financial_outcomes(player, direction, outcome):
     from decimal import Decimal
 
-    from rest_framework.exceptions import ValidationError
-
     from apps.server.domain.gateways import GameCharacter
     from apps.wallet.application.exchange import ExchangeCoinsUseCase
     from apps.wallet.infrastructure.exchange_models import GameExchange
     from apps.wallet.infrastructure.models import WalletTransaction
+    from apps.wallet.infrastructure.repositories import DjangoWalletRepository
     from common.architecture.exceptions import ValidationDomainError
 
     class Access:
@@ -616,7 +617,7 @@ def test_exchange_financial_outcomes(player, direction, outcome):
 
     CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
     wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
-    case = ExchangeCoinsUseCase(Gateway(), Access())
+    case = ExchangeCoinsUseCase(Gateway(), Access(), DjangoWalletRepository())
     data = {
         "request_key": uuid4(),
         "direction": direction,
@@ -625,7 +626,7 @@ def test_exchange_financial_outcomes(player, direction, outcome):
         "quantity": 20,
     }
     if outcome == "unready":
-        with pytest.raises(ValidationError):
+        with pytest.raises(ValidationDomainError):
             case.execute(player, data)
         assert not GameExchange.objects.exists()
         assert not WalletTransaction.objects.exists()

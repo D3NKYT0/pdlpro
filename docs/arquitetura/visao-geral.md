@@ -40,7 +40,10 @@ Direção das dependências para novos fluxos:
 - apresentação trata HTTP/WebSocket e delega a regra ao caso de uso;
 - consultas do banco Lineage ficam nos catálogos SQL da infraestrutura.
 
-A estrutura atual tem variações: `programs` mantém arquivos na raiz do app, `support` concentra parte das regras nas views e alguns serviços acessam o ORM diretamente. Consulte o [mapa dos apps](apps.md) antes de presumir que todas as operações já seguem a separação completa.
+A estrutura em camadas com DI cobre os apps de negócio principais (`support`, `programs`,
+`themes`, `shop`, `games`, `wallet`, `payment`). Ainda há ORM residual em partes de
+`accounts`, `staff` e alguns helpers de `games`/`content`; consulte o [mapa dos apps](apps.md)
+antes de presumir que toda operação já depende apenas de portas.
 
 ## Injeção de dependência
 

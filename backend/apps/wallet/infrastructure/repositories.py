@@ -14,9 +14,10 @@ class DjangoWalletRepository(IWalletRepository):
     """Persiste carteiras e extratos usando o ORM do Django.
 
     Converte modelos em WalletEntity. Atualiza saldos com expressões F e usa um débito
-    condicional para impedir saldo principal negativo. Não valida valores positivos aqui; essa
-    validação pertence ao caso de uso. Use dentro de UnitOfWork para que alteração do saldo e
-    gravação do extrato revertam juntas em caso de erro. Não consome saldo de bônus nos débitos.
+    condicional para impedir saldo principal ou de bônus negativo. Não valida valores
+    positivos aqui; essa validação pertence ao caso de uso. Use dentro de UnitOfWork para que
+    alteração do saldo e gravação do extrato revertam juntas em caso de erro. ``debit`` não
+    consome saldo de bônus; ``debit_bonus`` não consome saldo principal.
     """
 
     def _to_entity(self, wallet: Wallet) -> WalletEntity:
@@ -78,12 +79,30 @@ class DjangoWalletRepository(IWalletRepository):
         )
         return self._to_entity(wallet)
 
+    def debit_bonus(
+        self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str
+    ) -> WalletEntity:
+        updated = Wallet.objects.filter(id=wallet_id, bonus_balance__gte=amount).update(
+            bonus_balance=F("bonus_balance") - amount
+        )
+        if not updated:
+            raise InsufficientBalanceError()
+        wallet = Wallet.objects.select_related("user").get(id=wallet_id)
+        WalletTransaction.objects.create(
+            wallet=wallet,
+            kind=WalletTransaction.Kind.DEBIT,
+            amount=amount,
+            destination=destination,
+            description=description,
+        )
+        return self._to_entity(wallet)
+
     def list_transactions(self, wallet_id: UUID, *, limit: int = 50) -> list[dict]:
-        rows = self.transactions_queryset(wallet_id)[:limit]
+        rows = self.transaction_rows(wallet_id)[:limit]
         return [self.serialize_transaction(row) for row in rows]
 
-    def transactions_queryset(self, wallet_id: UUID):
-        """Queryset do extrato da carteira ordenado do mais recente ao mais antigo."""
+    def transaction_rows(self, wallet_id: UUID):
+        """QuerySet do extrato da carteira ordenado do mais recente ao mais antigo."""
 
         return WalletTransaction.objects.filter(wallet__id=wallet_id).order_by("-created_at")
 

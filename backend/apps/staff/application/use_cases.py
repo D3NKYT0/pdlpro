@@ -23,8 +23,8 @@ DEFAULT_SERVICES = (
 )
 
 
-def _panel_defaults() -> dict:
-    info = GetServerInfoUseCase().execute()
+def _panel_defaults(server_info: GetServerInfoUseCase) -> dict:
+    info = server_info.execute()
     row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
     return {
         "id": str(row.id) if row else None,
@@ -73,8 +73,11 @@ class GetPanelSettingsUseCase(UseCase[None, dict]):
     retorno é ``dict``.
     """
 
+    def __init__(self, server_info: GetServerInfoUseCase) -> None:
+        self._server_info = server_info
+
     def execute(self, data: None = None) -> dict:
-        return _panel_defaults()
+        return _panel_defaults(self._server_info)
 
 
 class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
@@ -82,6 +85,9 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
+
+    def __init__(self, server_info: GetServerInfoUseCase) -> None:
+        self._server_info = server_info
 
     def execute(self, data: dict) -> dict:
         row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
@@ -115,7 +121,7 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.coming_soon_title = "Em breve"
         row.is_active = True
         row.save()
-        return _panel_defaults()
+        return _panel_defaults(self._server_info)
 
 
 class ListStaffServicePricesUseCase(UseCase[None, list[dict]]):

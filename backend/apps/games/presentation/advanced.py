@@ -1,4 +1,3 @@
-from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
@@ -6,12 +5,19 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.games.application.advanced import (
-    battle_action,
-    battle_details,
-    buy_bait,
-    daily_details,
-    game_statistics,
+from apps.games.application.advanced_use_cases import (
+    BattlePassActionInput,
+    BattlePassActionUseCase,
+    BattlePassDetailsInput,
+    BuyBaitInput,
+    BuyBaitUseCase,
+    DailyBonusDetailsInput,
+    FishingDetailsInput,
+    GameStatisticsInput,
+    GetBattlePassDetailsUseCase,
+    GetDailyBonusDetailsUseCase,
+    GetFishingDetailsUseCase,
+    GetGameStatisticsUseCase,
 )
 from apps.games.application.rewards import validate_rewards
 from apps.games.infrastructure.models import (
@@ -26,10 +32,9 @@ from apps.games.infrastructure.models import (
     DailyBonusSeason,
     Fish,
     FishingBait,
-    FishingCatch,
-    UserFishingBait,
 )
 from common.permissions import IsStaffMember
+from common.views import InjectedAPIView
 
 
 class BattleActionSerializer(serializers.Serializer):
@@ -53,7 +58,7 @@ class BattleActionSerializer(serializers.Serializer):
         return data
 
 
-class BattleDetailsView(APIView):
+class BattleDetailsView(InjectedAPIView):
     """Consulta o conteúdo adicional do passe e encaminha ações validadas ao serviço de batalha.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
@@ -68,7 +73,11 @@ class BattleDetailsView(APIView):
         description="Retorna o conteúdo adicional do passe de batalha disponível para o jogador autenticado.",
     )
     def get(self, request):
-        return Response(battle_details(request.user))
+        return Response(
+            self.resolve(GetBattlePassDetailsUseCase).execute(
+                BattlePassDetailsInput(user_id=request.user.id)
+            )
+        )
 
     @extend_schema(
         tags=["Jogos"],
@@ -79,10 +88,20 @@ class BattleDetailsView(APIView):
     def post(self, request):
         serializer = BattleActionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(battle_action(request.user.id, **serializer.validated_data))
+        data = serializer.validated_data
+        return Response(
+            self.resolve(BattlePassActionUseCase).execute(
+                BattlePassActionInput(
+                    user_id=request.user.id,
+                    action=data["action"],
+                    entry_id=str(data["entry_id"]) if data.get("entry_id") else None,
+                    enabled=data.get("enabled", False),
+                )
+            )
+        )
 
 
-class DailyDetailsView(APIView):
+class DailyDetailsView(InjectedAPIView):
     """Consulta o calendário e os detalhes do bônus diário para o jogador.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
@@ -97,7 +116,11 @@ class DailyDetailsView(APIView):
         description="Retorna o calendário e os detalhes do bônus diário do jogador autenticado.",
     )
     def get(self, request):
-        return Response(daily_details(request.user))
+        return Response(
+            self.resolve(GetDailyBonusDetailsUseCase).execute(
+                DailyBonusDetailsInput(user_id=request.user.id)
+            )
+        )
 
 
 class BaitPurchaseSerializer(serializers.Serializer):
@@ -113,7 +136,7 @@ class BaitPurchaseSerializer(serializers.Serializer):
     quantity = serializers.IntegerField(min_value=1, max_value=999, default=1)
 
 
-class FishingDetailsView(APIView):
+class FishingDetailsView(InjectedAPIView):
     """Lista iscas, estoque e capturas do usuário e permite comprar iscas.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
@@ -128,40 +151,10 @@ class FishingDetailsView(APIView):
         description="Lista iscas ativas, estoque do jogador e coleção de peixes capturados.",
     )
     def get(self, request):
-        stock = dict(
-            UserFishingBait.objects.filter(user=request.user).values_list(
-                "bait_id", "quantity"
-            )
-        )
-        catches = dict(
-            FishingCatch.objects.filter(user=request.user, success=True)
-            .values("fish_id")
-            .annotate(total=Count("pk"))
-            .values_list("fish_id", "total")
-        )
         return Response(
-            {
-                "baits": [
-                    {
-                        "id": str(b.id),
-                        "name": b.name,
-                        "description": b.description,
-                        "price": b.price,
-                        "success_bonus": b.success_bonus,
-                        "quantity": stock.get(b.pk, 0),
-                    }
-                    for b in FishingBait.objects.filter(active=True)
-                ],
-                "collection": [
-                    {
-                        "id": str(f.id),
-                        "name": f.name,
-                        "rarity": f.rarity,
-                        "count": catches.get(f.pk, 0),
-                    }
-                    for f in Fish.objects.filter(active=True)
-                ],
-            }
+            self.resolve(GetFishingDetailsUseCase).execute(
+                FishingDetailsInput(user_id=request.user.id)
+            )
         )
 
     @extend_schema(
@@ -173,10 +166,18 @@ class FishingDetailsView(APIView):
     def post(self, request):
         serializer = BaitPurchaseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(buy_bait(request.user.id, **serializer.validated_data))
+        return Response(
+            self.resolve(BuyBaitUseCase).execute(
+                BuyBaitInput(
+                    user_id=request.user.id,
+                    bait_id=str(serializer.validated_data["bait_id"]),
+                    quantity=serializer.validated_data["quantity"],
+                )
+            )
+        )
 
 
-class GameStatisticsView(APIView):
+class GameStatisticsView(InjectedAPIView):
     """Expõe as estatísticas produzidas pelo serviço de jogos.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
@@ -191,8 +192,11 @@ class GameStatisticsView(APIView):
         description="Retorna as estatísticas do tipo solicitado para o jogador autenticado.",
     )
     def get(self, request, kind):
-        return Response(game_statistics(request.user, kind))
-
+        return Response(
+            self.resolve(GetGameStatisticsUseCase).execute(
+                GameStatisticsInput(user_id=request.user.id, kind=kind)
+            )
+        )
 
 CONFIG_MODELS = {
     "seasons": (

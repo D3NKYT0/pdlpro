@@ -7,9 +7,11 @@ from django.db import transaction
 from django.db.models import Count, Q, Sum
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from rest_framework.exceptions import ValidationError
 
 from apps.games.application.rewards import grant_rewards
+from apps.games.domain.exceptions import AlreadyClaimedError
+from apps.wallet.domain.repositories import IWalletRepository
+from common.architecture.exceptions import ValidationDomainError
 from apps.games.infrastructure.models import (
     BagItem,
     BattlePassExchange,
@@ -159,11 +161,18 @@ def battle_details(user):
 
 
 @transaction.atomic
-def battle_action(user_id, action, entry_id=None, enabled=False):
+def battle_action(
+    user_id,
+    action,
+    entry_id=None,
+    enabled=False,
+    *,
+    wallets: IWalletRepository,
+):
     user = get_user_model().objects.select_for_update().get(id=user_id)
     season = active_season()
     if not season:
-        raise ValidationError("Nenhuma temporada ativa.")
+        raise ValidationDomainError("Nenhuma temporada ativa.")
     progress, _ = UserBattlePassProgress.objects.get_or_create(user=user, season=season)
     if action == "auto-claim":
         progress.auto_claim = enabled
@@ -180,9 +189,9 @@ def battle_action(user_id, action, entry_id=None, enabled=False):
         if BattlePassQuestClaim.objects.filter(
             user=user, quest=quest, period_start=start
         ).exists():
-            raise ValidationError("Missão já resgatada neste período.")
+            raise ValidationDomainError("Missão já resgatada neste período.")
         if quest_count(user, quest) < quest.target:
-            raise ValidationError("Complete o objetivo da missão antes de resgatar.")
+            raise ValidationDomainError("Complete o objetivo da missão antes de resgatar.")
         BattlePassQuestClaim.objects.create(user=user, quest=quest, period_start=start)
         from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
@@ -202,7 +211,7 @@ def battle_action(user_id, action, entry_id=None, enabled=False):
             user=user, kind="exchange", source=exchange.id
         ).count()
         if exchange.limit_per_user and used >= exchange.limit_per_user:
-            raise ValidationError("Limite de trocas atingido.")
+            raise ValidationDomainError("Limite de trocas atingido.")
         item = (
             BagItem.objects.select_for_update()
             .filter(
@@ -213,13 +222,13 @@ def battle_action(user_id, action, entry_id=None, enabled=False):
             .first()
         )
         if not item or item.quantity < exchange.required_quantity:
-            raise ValidationError("Itens insuficientes na bag.")
+            raise ValidationDomainError("Itens insuficientes na bag.")
         item.quantity -= exchange.required_quantity
         if item.quantity:
             item.save(update_fields=["quantity", "updated_at"])
         else:
             item.delete()
-        rewards = grant_rewards(user, exchange.rewards, exchange.name)
+        rewards = grant_rewards(user, exchange.rewards, exchange.name, wallets=wallets)
         GameRewardLog.objects.create(
             user=user,
             season=season,
@@ -236,8 +245,8 @@ def battle_action(user_id, action, entry_id=None, enabled=False):
                 user=user, kind="milestone", source=milestone.id
             ).exists()
         ):
-            raise ValidationError("Marco indisponível ou já resgatado.")
-        rewards = grant_rewards(user, milestone.rewards, milestone.name)
+            raise ValidationDomainError("Marco indisponível ou já resgatado.")
+        rewards = grant_rewards(user, milestone.rewards, milestone.name, wallets=wallets)
         GameRewardLog.objects.create(
             user=user,
             season=season,
@@ -247,7 +256,7 @@ def battle_action(user_id, action, entry_id=None, enabled=False):
             rewards=rewards,
         )
     else:
-        raise ValidationError("Ação inválida.")
+        raise ValidationDomainError("Ação inválida.")
     return battle_details(user)
 
 
@@ -297,17 +306,17 @@ def daily_details(user):
 
 
 @transaction.atomic
-def claim_daily_season(user_id):
+def claim_daily_season(user_id, *, wallets: IWalletRepository):
     user = get_user_model().objects.select_for_update().get(id=user_id)
     season = daily_season()
     if (
         not season
         or not GameConfig.objects.filter(code="daily_bonus", active=True).exists()
     ):
-        raise ValidationError("Bônus diário indisponível.")
+        raise ValidationDomainError("Bônus diário indisponível.")
     today = timezone.localdate()
     if DailyBonusClaim.objects.filter(user=user, claimed_on=today).exists():
-        raise ValidationError("Você já resgatou o bônus de hoje.")
+        raise AlreadyClaimedError()
     day = season.days.filter(day=(today - season.starts_on).days + 1).first()
     rewards = list(day.rewards) if day else []
     pool = list(season.pool.filter(weight__gt=0))
@@ -316,8 +325,10 @@ def claim_daily_season(user_id):
             0
         ].rewards
     if not rewards:
-        raise ValidationError("Nenhuma recompensa configurada para hoje.")
-    rewards = grant_rewards(user, rewards, f"Bônus diário · {season.name}")
+        raise ValidationDomainError("Nenhuma recompensa configurada para hoje.")
+    rewards = grant_rewards(
+        user, rewards, f"Bônus diário · {season.name}", wallets=wallets
+    )
     amount = sum(
         (Decimal(str(r["quantity"])) for r in rewards if r["kind"] == "balance"),
         Decimal(0),
@@ -341,10 +352,10 @@ def buy_bait(user_id, bait_id, quantity):
     user = get_user_model().objects.select_for_update().get(id=user_id)
     bait = get_object_or_404(FishingBait, id=bait_id, active=True)
     if not GameConfig.objects.filter(code="fishing", active=True).exists():
-        raise ValidationError("Pesca desativada.")
+        raise ValidationDomainError("Pesca desativada.")
     cost = bait.price * quantity
     if user.fichas < cost:
-        raise ValidationError("Fichas insuficientes.")
+        raise ValidationDomainError("Fichas insuficientes.")
     user.fichas -= cost
     user.save(update_fields=["fichas", "updated_at"])
     stock, _ = UserFishingBait.objects.get_or_create(user=user, bait=bait)
@@ -356,7 +367,7 @@ def buy_bait(user_id, bait_id, quantity):
 def game_statistics(user, kind):
     model = EVENT_MODELS.get(kind)
     if model is None or kind == "daily_bonus":
-        raise ValidationError("Jogo inválido.")
+        raise ValidationDomainError("Jogo inválido.")
     rows = model.objects.filter(user=user)
     success = {
         "roulette": "failed",

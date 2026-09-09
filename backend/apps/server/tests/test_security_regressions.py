@@ -190,7 +190,16 @@ def test_service_repetition_and_ambiguous_failure_reserve_only_once(
     assert len(calls) == 1
     row = CharacterServiceOperation.objects.get(user=user)
     assert row.status == "pending"
-    settle_service(row.id, completed=True, note="Test operator verified game mutation")
+    from apps.wallet.domain.repositories import IWalletRepository
+    from common.di import DependencyInjection
+
+    wallets = DependencyInjection.root().create_scope().resolve(IWalletRepository)
+    settle_service(
+        row.id,
+        completed=True,
+        note="Test operator verified game mutation",
+        wallets=wallets,
+    )
     assert api.post(path, data, format="json").status_code == 200
     assert len(calls) == 1
     wallet.refresh_from_db()
@@ -228,7 +237,13 @@ def test_known_service_rejection_refunds_once_and_conflicting_key_is_rejected(
     assert api.post(path, data, format="json").status_code == 409
     row = CharacterServiceOperation.objects.get(user=user)
     assert row.status == "rejected"
-    settle_service(row.id, completed=False, note="Repeated reconciliation")
+    from apps.wallet.domain.repositories import IWalletRepository
+    from common.di import DependencyInjection
+
+    wallets = DependencyInjection.root().create_scope().resolve(IWalletRepository)
+    settle_service(
+        row.id, completed=False, note="Repeated reconciliation", wallets=wallets
+    )
     assert api.post(path, data, format="json").status_code == 409
     assert (
         api.post(path, {**data, "name": "OtherName"}, format="json").status_code == 409

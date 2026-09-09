@@ -12,9 +12,12 @@ class IWalletRepository(ABC):
 
     Recebe UUIDs públicos e valores Decimal em moedas do painel. ``credit`` altera o saldo
     principal; ``credit_bonus`` altera somente o saldo de bônus; ``debit`` usa somente o saldo
-    principal e pode lançar InsufficientBalanceError. As movimentações registram origem/destino
-    e descrição no extrato. Valide valores positivos na aplicação e envolva operações
-    relacionadas em UnitOfWork: a porta não promete uma transação por chamada.
+    principal e pode lançar InsufficientBalanceError; ``debit_bonus`` usa somente o saldo de
+    bônus e pode lançar InsufficientBalanceError. As movimentações registram origem/destino e
+    descrição no extrato. ``transaction_rows`` devolve um iterável ordenado do mais recente ao
+    mais antigo para paginação; o adaptador Django retorna um QuerySet de ``WalletTransaction``.
+    Valide valores positivos na aplicação e envolva operações relacionadas em UnitOfWork: a porta
+    não promete uma transação por chamada.
     """
 
     @abstractmethod
@@ -44,6 +47,30 @@ class IWalletRepository(ABC):
     @abstractmethod
     def debit(self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str) -> WalletEntity:
         """Desconta saldo principal ou lança InsufficientBalanceError; registra a saída."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def debit_bonus(
+        self, wallet_id: UUID, amount: Decimal, *, destination: str, description: str
+    ) -> WalletEntity:
+        """Desconta saldo de bônus ou lança InsufficientBalanceError; registra a saída."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def transaction_rows(self, wallet_id: UUID):
+        """Iterável ordenado do extrato para paginação na apresentação.
+
+        O adaptador Django retorna um QuerySet; serialize cada linha com
+        ``serialize_transaction`` após fatiar a página.
+        """
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def serialize_transaction(self, row) -> dict:
+        """Serializa uma linha de ``transaction_rows`` no formato do extrato da API."""
 
         raise NotImplementedError
 

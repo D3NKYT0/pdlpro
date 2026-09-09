@@ -180,6 +180,7 @@ class CheckoutInput:
     """
 
     user_id: UUID
+    request_key: UUID | None = None
 
 
 class CheckoutUseCase(UseCase[CheckoutInput, dict]):
@@ -197,4 +198,9 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
     def execute(self, data: CheckoutInput) -> dict:
         from apps.shop.application.commerce import checkout
 
-        return checkout(data.user_id)
+        return checkout(
+            data.user_id,
+            data.request_key,
+            wallets=self._wallets,
+            unit_of_work=self._unit_of_work,
+        )

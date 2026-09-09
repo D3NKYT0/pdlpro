@@ -2,9 +2,23 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from decimal import Decimal
+from typing import Any
 from uuid import UUID
 
 from apps.payment.domain.entities import PaymentOrderEntity
+
+
+class IWebhookLogRepository(ABC):
+    """Porta de auditoria das notificações recebidas dos gateways de pagamento.
+
+    Injete esta interface nos casos de uso de webhook e registre o adaptador no provider.
+    """
+
+    @abstractmethod
+    def create(self, *, kind: str, data_id: str, payload: dict | Any) -> None:
+        """Persiste o payload bruto do evento para auditoria."""
+
+        raise NotImplementedError
 
 
 class IPaymentOrderRepository(ABC):
@@ -13,6 +27,8 @@ class IPaymentOrderRepository(ABC):
     Injete esta interface nos serviços de aplicação e registre o adaptador no provider. As
     assinaturas abaixo definem entradas e retornos; resultados opcionais usam None para
     ausência. Validação de negócio e autorização devem ocorrer no caso de uso que chama a porta.
+    ``order_rows`` devolve um iterável ordenado do mais recente ao mais antigo para paginação;
+    o adaptador Django retorna um QuerySet de ``PedidoPagamento``.
     """
 
     @abstractmethod
@@ -26,6 +42,21 @@ class IPaymentOrderRepository(ABC):
 
     @abstractmethod
     def get_by_external_id(self, external_id: str) -> PaymentOrderEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def order_rows(self, user_id: UUID):
+        """Iterável ordenado dos pedidos do usuário para paginação na apresentação.
+
+        O adaptador Django retorna um QuerySet; combine com ``to_entity`` após fatiar a página.
+        """
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def to_entity(self, row: Any) -> PaymentOrderEntity:
+        """Converte uma linha de ``order_rows`` em ``PaymentOrderEntity``."""
+
         raise NotImplementedError
 
     @abstractmethod

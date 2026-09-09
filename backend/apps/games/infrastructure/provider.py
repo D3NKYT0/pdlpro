@@ -1,3 +1,12 @@
+from apps.games.application.advanced_use_cases import (
+    BattlePassActionUseCase,
+    BuyBaitUseCase,
+    ClaimDailyBonusOrSeasonUseCase,
+    GetBattlePassDetailsUseCase,
+    GetDailyBonusDetailsUseCase,
+    GetFishingDetailsUseCase,
+    GetGameStatisticsUseCase,
+)
 from apps.games.application.battle_pass_use_cases import (
     BuyBattlePassPremiumUseCase,
     ClaimBattlePassRewardUseCase,
@@ -67,5 +76,12 @@ class GamesProvider(AppProvider):
             GetBattlePassUseCase,
             ClaimBattlePassRewardUseCase,
             BuyBattlePassPremiumUseCase,
+            GetBattlePassDetailsUseCase,
+            BattlePassActionUseCase,
+            GetDailyBonusDetailsUseCase,
+            ClaimDailyBonusOrSeasonUseCase,
+            GetFishingDetailsUseCase,
+            BuyBaitUseCase,
+            GetGameStatisticsUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

@@ -6,6 +6,8 @@ from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from apps.shop.application.use_cases import (
     AddToCartInput,
     AddToCartUseCase,
+    CheckoutInput,
+    CheckoutUseCase,
     GetCartInput,
     GetCartUseCase,
     ListShopItemsUseCase,
@@ -118,10 +120,10 @@ class ShopCartItemView(ItemCatalogAPIView):
 
 
 class ShopCheckoutView(ItemCatalogAPIView):
-    """Finaliza a compra pela rotina checkout e devolve o resultado da operação.
+    """Entrada HTTP para ``CheckoutUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated].
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
     """
 
     permission_classes = [IsAuthenticated]
@@ -134,8 +136,10 @@ class ShopCheckoutView(ItemCatalogAPIView):
     def post(self, request):
         from rest_framework import serializers
 
-        from apps.shop.application.commerce import checkout
-
-        key = serializers.UUIDField(allow_null=True).run_validation(request.data.get("request_key"))
-        result = checkout(request.user.id, key)
+        key = serializers.UUIDField(allow_null=True).run_validation(
+            request.data.get("request_key")
+        )
+        result = self.resolve(CheckoutUseCase).execute(
+            CheckoutInput(user_id=request.user.id, request_key=key)
+        )
         return Response(result)
