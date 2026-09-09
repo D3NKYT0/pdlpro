@@ -17,7 +17,11 @@ from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.item_catalog import IItemCatalog
 from apps.server.domain.repositories import IItemObservationRepository
 from common.architecture.base import UseCase
-from common.architecture.exceptions import ConflictError, DomainError, EntityNotFoundError
+from common.architecture.exceptions import (
+    ConflictError,
+    DomainError,
+    EntityNotFoundError,
+)
 
 
 class ObservationUnavailable(DomainError):

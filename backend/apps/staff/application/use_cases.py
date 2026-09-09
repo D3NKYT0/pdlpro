@@ -9,7 +9,10 @@ from apps.content.domain.repositories import INewsAdminRepository
 from apps.games.domain.repositories import IGameConfigAdminRepository
 from apps.server.application.use_cases import GetServerInfoUseCase
 from apps.server.domain.item_catalog import IItemDisplayName
-from apps.server.domain.repositories import IIndexConfigRepository, IServicePriceRepository
+from apps.server.domain.repositories import (
+    IIndexConfigRepository,
+    IServicePriceRepository,
+)
 from apps.shop.domain.repositories import IShopItemAdminRepository
 from apps.wallet.domain.repositories import ICoinAdminRepository
 from common.architecture.base import UseCase

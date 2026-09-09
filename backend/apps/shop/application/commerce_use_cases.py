@@ -5,7 +5,11 @@ from typing import Any
 from uuid import UUID
 
 from apps.shop.application.commerce import get_promo, quote
-from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
+from apps.shop.domain.repositories import (
+    ICartRepository,
+    IShopRepository,
+    ISupporterCommissionPort,
+)
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError

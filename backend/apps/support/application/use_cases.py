@@ -318,12 +318,10 @@ class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, dict]):
         if ticket is None:
             raise TicketNotFoundError()
 
-        if data.update_status:
-            if data.status not in TicketStatus.values:
-                raise InvalidTicketActionError("Status inválido.")
-        if data.update_priority:
-            if data.priority not in TicketPriority.values:
-                raise InvalidTicketActionError("Prioridade inválida.")
+        if data.update_status and data.status not in TicketStatus.values:
+            raise InvalidTicketActionError("Status inválido.")
+        if data.update_priority and data.priority not in TicketPriority.values:
+            raise InvalidTicketActionError("Prioridade inválida.")
 
         assignee = None
         if data.update_assigned_to:

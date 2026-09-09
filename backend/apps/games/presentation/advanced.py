@@ -17,7 +17,11 @@ from apps.games.application.advanced_use_cases import (
     GetFishingDetailsUseCase,
     GetGameStatisticsUseCase,
 )
-from apps.games.application.staff_content_schema import CONFIG_FIELDS, RELATED_FIELDS, known_content_kind
+from apps.games.application.staff_content_schema import (
+    CONFIG_FIELDS,
+    RELATED_FIELDS,
+    known_content_kind,
+)
 from apps.games.application.staff_content_use_cases import (
     GetGameContentInput,
     GetGameContentUseCase,
@@ -26,7 +30,6 @@ from apps.games.application.staff_content_use_cases import (
     UpsertGameContentInput,
     UpsertGameContentUseCase,
 )
-from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -246,12 +249,9 @@ class StaffGameContentView(InjectedAPIView):
         description="Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.",
     )
     def patch(self, request, kind, entry_id):
-        try:
-            instance = self.resolve(GetGameContentUseCase).execute(
-                GetGameContentInput(kind=kind, entry_id=entry_id)
-            )
-        except EntityNotFoundError:
-            raise
+        instance = self.resolve(GetGameContentUseCase).execute(
+            GetGameContentInput(kind=kind, entry_id=entry_id)
+        )
         cls = config_serializer(kind)
         serializer = cls(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)

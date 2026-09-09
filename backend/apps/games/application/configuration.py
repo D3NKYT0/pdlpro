@@ -1,7 +1,10 @@
 """Política única de disponibilidade para ações que consomem recursos dos jogos."""
 
 from apps.games.domain.exceptions import GameInactiveError
-from apps.games.domain.repositories import IGameCatalogRepository, IGameConfigAdminRepository
+from apps.games.domain.repositories import (
+    IGameCatalogRepository,
+    IGameConfigAdminRepository,
+)
 
 
 def require_active_game(

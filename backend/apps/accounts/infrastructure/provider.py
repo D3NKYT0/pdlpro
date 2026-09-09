@@ -1,5 +1,4 @@
 from apps.accounts.application.auth_capabilities import (
-    AuthCapabilitiesInput,
     GetAuthCapabilitiesUseCase,
 )
 from apps.accounts.application.email_use_cases import (

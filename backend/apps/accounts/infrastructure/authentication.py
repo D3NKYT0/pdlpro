@@ -83,7 +83,7 @@ class AuthSessionService(IAuthSessionService):
 __all__ = [
     "AuthSessionService",
     "CookieJWTAuthentication",
+    "_csrf_failed_reason",
     "get_access_cookie_name",
     "get_refresh_cookie_name",
-    "_csrf_failed_reason",
 ]

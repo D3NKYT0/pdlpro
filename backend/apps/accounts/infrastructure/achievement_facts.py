@@ -167,7 +167,10 @@ class DjangoAchievementFacts(IAchievementFacts):
         return rows.exists()
 
     def battle_pass_highest_level(self, user) -> int:
-        from apps.games.infrastructure.models import BattlePassLevel, UserBattlePassProgress
+        from apps.games.infrastructure.models import (
+            BattlePassLevel,
+            UserBattlePassProgress,
+        )
 
         highest = 0
         for progress in UserBattlePassProgress.objects.filter(user=user):

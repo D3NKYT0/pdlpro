@@ -11,7 +11,11 @@ from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.domain.repositories import IBagRepository, IBattlePassRepository, IEconomyRepository
+from apps.games.domain.repositories import (
+    IBagRepository,
+    IBattlePassRepository,
+    IEconomyRepository,
+)
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 

@@ -6,6 +6,7 @@ from typing import Any
 from uuid import UUID
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import FieldDoesNotExist
 from django.db.models import Count, F, Q, Sum
 from django.utils import timezone
 
@@ -144,7 +145,7 @@ class DjangoGameContentAdminRepository(IGameContentAdminRepository):
         model = self._model(kind)
         try:
             related_model = model._meta.get_field(field_name).related_model
-        except Exception:
+        except FieldDoesNotExist:
             return None
         if related_model is None:
             return None

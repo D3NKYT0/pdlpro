@@ -5,7 +5,11 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.games.domain.repositories import IBagRepository
-from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
+from apps.shop.domain.repositories import (
+    ICartRepository,
+    IShopRepository,
+    ISupporterCommissionPort,
+)
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError

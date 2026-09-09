@@ -1,4 +1,7 @@
-from apps.wallet.application.exchange import ExchangeCoinsUseCase, GetExchangeStateUseCase
+from apps.wallet.application.exchange import (
+    ExchangeCoinsUseCase,
+    GetExchangeStateUseCase,
+)
 from apps.wallet.application.use_cases import (
     GetWalletUseCase,
     PreviewPurchaseBonusUseCase,

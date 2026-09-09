@@ -7,7 +7,11 @@ from django.utils import timezone
 
 from apps.games.application.bag import add_to_bag
 from apps.games.domain.repositories import IBagRepository
-from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
+from apps.shop.domain.repositories import (
+    ICartRepository,
+    IShopRepository,
+    ISupporterCommissionPort,
+)
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork

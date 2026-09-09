@@ -3,7 +3,10 @@ from __future__ import annotations
 from uuid import UUID
 
 from apps.communication.domain.entities import NotificationEntity
-from apps.communication.domain.repositories import INotificationRepository, IPushSubscriptionRepository
+from apps.communication.domain.repositories import (
+    INotificationRepository,
+    IPushSubscriptionRepository,
+)
 from apps.communication.infrastructure.models import Notification, PushSubscription
 
 

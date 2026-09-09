@@ -548,7 +548,10 @@ def test_invalid_rewards_and_overlapping_seasons_rejected(staff, season):
 def test_exchange_coins_retries_without_double_debit(player):
     from apps.server.domain.gateways import GameCharacter
     from apps.wallet.application.exchange import ExchangeCoinsUseCase
-    from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
+    from apps.wallet.domain.repositories import (
+        IGameExchangeRepository,
+        IWalletRepository,
+    )
     from apps.wallet.infrastructure.exchange_models import GameExchange
     from common.architecture.base import UnitOfWork
     from common.di.bootstrap import DependencyInjection
@@ -607,7 +610,10 @@ def test_exchange_financial_outcomes(player, direction, outcome):
 
     from apps.server.domain.gateways import GameCharacter
     from apps.wallet.application.exchange import ExchangeCoinsUseCase
-    from apps.wallet.domain.repositories import IGameExchangeRepository, IWalletRepository
+    from apps.wallet.domain.repositories import (
+        IGameExchangeRepository,
+        IWalletRepository,
+    )
     from apps.wallet.infrastructure.exchange_models import GameExchange
     from apps.wallet.infrastructure.models import WalletTransaction
     from common.architecture.base import UnitOfWork

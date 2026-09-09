@@ -73,7 +73,10 @@ from apps.accounts.application.use_cases import (
     UpdateProfileUseCase,
 )
 from apps.accounts.domain.auth_session import IAuthSessionService
-from apps.accounts.domain.exceptions import InvalidCredentialsError, SessionAuthenticationError
+from apps.accounts.domain.exceptions import (
+    InvalidCredentialsError,
+    SessionAuthenticationError,
+)
 from apps.accounts.presentation.auth_cookies import (
     build_auth_response,
     clear_auth_cookies,

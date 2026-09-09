@@ -26,7 +26,12 @@ from apps.server.infrastructure.item_observation_models import (
     ItemObservationFavorite,
     ItemObservationSnapshot,
 )
-from apps.server.infrastructure.models import AccountLinkSlot, IndexConfig, ManagedLineageAccount, ServicePrice
+from apps.server.infrastructure.models import (
+    AccountLinkSlot,
+    IndexConfig,
+    ManagedLineageAccount,
+    ServicePrice,
+)
 from apps.server.infrastructure.service_models import CharacterServiceOperation
 
 User = get_user_model()

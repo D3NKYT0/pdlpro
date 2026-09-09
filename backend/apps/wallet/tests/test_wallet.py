@@ -5,13 +5,13 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
+from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.application.use_cases import (
     TransferToPlayerInput,
     TransferToPlayerUseCase,
 )
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository
-from apps.accounts.domain.repositories import IUserRepository
 from apps.wallet.infrastructure.models import Wallet, WalletTransaction
 from common.di import DependencyInjection
 from common.infrastructure.unit_of_work import DjangoUnitOfWork

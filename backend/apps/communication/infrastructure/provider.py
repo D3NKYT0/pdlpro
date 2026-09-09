@@ -9,7 +9,10 @@ from apps.communication.application.use_cases import (
     MarkNotificationReadUseCase,
 )
 from apps.communication.domain.push import IPushSender
-from apps.communication.domain.repositories import INotificationRepository, IPushSubscriptionRepository
+from apps.communication.domain.repositories import (
+    INotificationRepository,
+    IPushSubscriptionRepository,
+)
 from apps.communication.infrastructure.push import WebPushSender
 from apps.communication.infrastructure.repositories import (
     DjangoNotificationRepository,

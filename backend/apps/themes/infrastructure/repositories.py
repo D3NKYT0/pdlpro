@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
-
 from apps.themes.domain.repositories import IThemePackageRepository
 from apps.themes.infrastructure.models import ThemePackage
 

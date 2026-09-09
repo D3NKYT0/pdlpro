@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from uuid import UUID
 
 from apps.server.domain.item_catalog import IItemCatalog
 from common.architecture.base import UseCase

@@ -85,7 +85,11 @@ class DjangoTicketRepository(ITicketRepository):
         return self._base_qs().filter(id=ticket_id).first()
 
     def dump_ticket(self, ticket: Ticket, *, detail: bool = False, staff: bool = False) -> dict:
-        from apps.support.domain.ticket import TicketCategory, TicketPriority, TicketStatus
+        from apps.support.domain.ticket import (
+            TicketCategory,
+            TicketPriority,
+            TicketStatus,
+        )
 
         def _name(user) -> str:
             if not user:

@@ -4,7 +4,10 @@ from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.wallet.application.exchange import ExchangeCoinsUseCase, GetExchangeStateUseCase
+from apps.wallet.application.exchange import (
+    ExchangeCoinsUseCase,
+    GetExchangeStateUseCase,
+)
 from common.views import InjectedAPIView
 
 

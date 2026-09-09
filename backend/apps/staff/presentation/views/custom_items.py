@@ -1,5 +1,5 @@
-from io import BytesIO
 import json
+from io import BytesIO
 
 from django.core.files.base import ContentFile
 from drf_spectacular.utils import extend_schema

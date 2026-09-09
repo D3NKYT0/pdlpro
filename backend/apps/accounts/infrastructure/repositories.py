@@ -18,7 +18,10 @@ from rest_framework_simplejwt.token_blacklist.models import (
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.accounts.domain.entities import UserEntity
-from apps.accounts.domain.exceptions import SessionAuthenticationError, SessionNotFoundError
+from apps.accounts.domain.exceptions import (
+    SessionAuthenticationError,
+    SessionNotFoundError,
+)
 from apps.accounts.domain.repositories import (
     IProgressRepository,
     ISessionStore,

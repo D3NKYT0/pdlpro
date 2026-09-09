@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 from uuid import UUID
 
 from apps.server.application.item_catalog_use_cases import serialize_custom_item
 from apps.server.domain.item_catalog import ITEM_CATEGORIES, ITEM_GRADES, IItemCatalog
 from apps.server.domain.repositories import ICustomItemRepository
 from common.architecture.base import UseCase
-from common.architecture.exceptions import ConflictError, EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    ConflictError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 
 @dataclass(frozen=True, slots=True)
