@@ -72,3 +72,4 @@ lib/ = helpers puros (sem HTTP)
 - Documente responsabilidade, uso e efeitos colaterais de classes públicas, especialmente em `backend/apps/` e `backend/common/`.
 - Mantenha o README principal focado. Guias detalhados ficam em subpastas de `docs/`, com entrada em [docs/README.md](docs/README.md).
 - Ao criar uma funcionalidade, atualize seu guia, os exemplos de uso e os cenários de teste. Consulte a [política de qualidade](docs/desenvolvimento/politica-de-testes.md).
+- Mantenha o [changelog](docs/historico/changelog.md) e o ponteiro em [CHANGELOG.md](CHANGELOG.md) alinhados ao Git: use a data da última atualização / última versão publicada como corte (`git log --since=…`), agrupe em Adicionado / Alterado / Corrigido / Removido (Keep a Changelog) e atualize a linha “Última atualização” do `CHANGELOG.md`. Não liste commit a commit; consolide o impacto para o produto.

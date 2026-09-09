@@ -8,10 +8,70 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+Alterações desde **2 de setembro de 2026** (após `[2.1.0]`), consolidadas pelo histórico
+Git até **9 de setembro de 2026**.
+
+### Adicionado
+
+- Observabilidade: logging estruturado, auditoria, integração Sentry e middleware de
+  rastreamento de requisições e erros.
+- Central de **Help** com FAQ (categorias, busca, audiência, suporte EN), artigos só
+  para o assistente e tipagens diárias contextuais com múltiplas dicas por tópico.
+- Companheiro **Denkynho**: personalidade local, preferências (nome preferido, detalhe
+  da resposta), handbook administrativo, emoções/empatia, moderação, protocolos de
+  segurança (crise, assédio, injeção de prompt) e respostas sociais.
+- Integração de modelo de IA local e remoto para o assistente (Docker, variáveis de
+  ambiente, fallback e validação de endpoint).
+- Cuidados e vida do mascote: ações (carinho, banho, caminhada, dança etc.), rotina
+  ambiente, poses/overlays PNG, cenas de guarda-roupa (jardim, biblioteca, acampamento,
+  lago) e ícones de atividade.
+- Página **Coming Soon** com título/subtítulo/data de lançamento, countdown, efeitos
+  visuais, restrição de login para não-staff e coexistência da landing em `/inicio`.
+- Gestão de sessões ativas: listar, revogar uma sessão e revogar as demais.
+- Conclusão de credenciais para usuários OAuth (`CompleteCredentialsUseCase`).
+- Promoções de compra de moedas (`CoinPurchasePromo`) no catálogo de pagamento e
+  gestão/exibição na carteira.
+- Validação de contas de jogo, limpeza de contas órfãs e reforço no acesso a
+  personagens.
+- Paginação de pedidos de pagamento e transações da carteira, com `created_at` /
+  `paid_at` nas respostas.
+- Configuração de layout de temas (ordem e visibilidade de seções) e exibição do
+  contrato de compatibilidade na instalação de temas.
+- Configuração administrativa de MFA; rate limits dedicados de login/cadastro;
+  request key em operações de serviço de personagem.
+- Componente `Select` temático compartilhado nos formulários; emblema `PDLSymbol` e
+  arte original na home (trailer, seções visuais).
+- Sanitização HTML em descrições de roadmap e notícias.
+- Migração documentada de **Clean Architecture + DI** no backend e de **camadas SPA**
+  no frontend (PDFs e guias em `docs/arquitetura/`); regras espelhadas em `AGENTS.md`.
+- Cobertura de temas no caminho público/painel: `data-theme-surface` consistente,
+  Coming Soon no chrome do tema, CSS de features em tokens `--theme-*` / `--panel-*`.
+
+### Alterado
+
+- Backend alinhado a portas, casos de uso e `AppProvider`: conquistas, progresso,
+  OAuth, WebAuthn, e-mail, recompensas de jogos e sessão de autenticação
+  (`IAuthSessionService.require_user`; cookies JWT montados na presentation).
+- Frontend: barrel `services/api.ts`, serviços por capacidade (`gamesApi`,
+  `programsApi`, `staffGameContentApi`, `catalogApi`), páginas finas e invalidação
+  TanStack escopada; Help enxuto via controller de feature.
+- Exceções de domínio mais específicas em ações de jogo e concessão de recompensas;
+  repositórios no lugar de acessos ORM espalhados nos fluxos de conta/perfil.
+- Tokens de acesso/refresh removidos do corpo das respostas de autenticação
+  (sessão por cookies).
+- Limite de mensagem do chat do assistente elevado para 400 caracteres.
+- Estilos do painel admin e da Help refinados para hierarquia e responsividade com
+  tokens de tema.
+
 ### Corrigido
 
 - O `requirements.txt` do backend passa a instalar PyTorch CPU. O wheel padrão do
   PyPI no Linux puxava CUDA 13 e esgotava o disco no `docker compose` de produção.
+- Bloqueio de respostas em chamados fechados ou resolvidos, com mensagem clara.
+- Layout, assets e responsividade da página Coming Soon (incluindo mobile).
+- Caminhos e âncoras de assets/poses do Denkynho; pin de estrela e overlays ambiente.
+- Documentação local de desenvolvimento (proxy com backend indisponível) e caminhos
+  de teste no Vitest.
 
 ## [2.1.0] - 2026-09-02
 
