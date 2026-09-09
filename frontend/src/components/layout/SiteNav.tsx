@@ -9,7 +9,11 @@ import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
 
 function navActive(path: string, to: string, end?: boolean) {
-  if (end) return path === to
+  if (end) {
+    // Landing cancela em `/` (site aberto) ou fica em `/inicio` (Coming Soon / pós-login).
+    if (to === '/') return path === '/' || path === '/inicio'
+    return path === to
+  }
   return path === to || path.startsWith(`${to}/`)
 }
 
@@ -88,13 +92,10 @@ export function SiteNav() {
               )
             })}
           </ul>
-          <div className="site-nav-drawer-locale">
-            <LanguageSwitcher id="nav-drawer-language" />
-          </div>
         </div>
 
         <div className="site-nav-actions">
-          <LanguageSwitcher className="site-nav-language" id="nav-language" />
+          <LanguageSwitcher className="language-switcher site-nav-language" id="nav-language" />
           {user ? (
             <Link className="user" to="/painel">
               <CircleUserRound aria-hidden="true" />

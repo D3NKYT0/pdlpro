@@ -108,7 +108,7 @@ export function SiteFooter() {
           <p>{t('footer.rights', { year })}</p>
           <span className="site-footer-locale">
             <img src={themeImage('icons/world.png')} alt="" aria-hidden="true" />
-            <LanguageSwitcher className="site-footer-language" id="footer-language" />
+            <LanguageSwitcher className="language-switcher site-footer-language" id="footer-language" />
           </span>
         </div>
       </div>

@@ -37,6 +37,8 @@ it('destaca a rota atual e controla o menu por botão, fundo e Escape', async ()
   expect(screen.getByRole('navigation', { name: 'Navegação principal' })).toBeVisible()
   expect(screen.getByRole('link', { name: 'Rankings' })).toHaveAttribute('aria-current', 'page')
   expect(container.querySelector('.site-nav-brand .site-brand-mark')).toHaveAttribute('src', '/theme/default/images/pdl-symbol.svg')
+  expect(container.querySelectorAll('.site-nav-actions .language-switcher [data-theme-part="select"]')).toHaveLength(1)
+  expect(container.querySelectorAll('.language-switcher .ui-select-trigger')).toHaveLength(1)
 
   const toggle = screen.getByRole('button', { name: 'Abrir menu' })
   await user.click(toggle)
@@ -61,4 +63,12 @@ it('oculta links de conteúdo quando o recurso está pausado', () => {
   expect(screen.queryByRole('link', { name: 'Rankings' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Wiki' })).toBeVisible()
+})
+
+it.each(['/', '/inicio'])('marca Início como página atual em %s', (path) => {
+  const { container } = mount(path)
+  const home = screen.getByRole('link', { name: 'Início' })
+  expect(home).toHaveAttribute('aria-current', 'page')
+  expect(home.closest('li')).toHaveClass('active')
+  expect(container.querySelector('.site-nav-drawer li.active a')).toBe(home)
 })

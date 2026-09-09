@@ -1,32 +1,32 @@
 import { useTranslation } from 'react-i18next'
 import { LANGUAGE_LABELS, SUPPORTED_LANGUAGES, type AppLanguage } from '../../i18n/locale'
+import { Select } from '../ui/Select'
 
 type Props = {
   className?: string
   id?: string
 }
 
+const LANGUAGE_OPTIONS = SUPPORTED_LANGUAGES.map((code) => ({
+  value: code,
+  label: LANGUAGE_LABELS[code],
+}))
+
 export function LanguageSwitcher({ className, id = 'pdl-language' }: Props) {
   const { i18n, t } = useTranslation('common')
   const current = (SUPPORTED_LANGUAGES.includes(i18n.language as AppLanguage) ? i18n.language : 'pt') as AppLanguage
 
   return (
-    <label className={className || 'language-switcher'} htmlFor={id}>
-      <span className="visually-hidden">{t('language')}</span>
-      <select
+    <div className={className || 'language-switcher'}>
+      <Select
         id={id}
         value={current}
+        options={LANGUAGE_OPTIONS}
         aria-label={t('languageOfSite')}
-        onChange={(event) => {
-          void i18n.changeLanguage(event.target.value)
+        onChange={(value) => {
+          void i18n.changeLanguage(value)
         }}
-      >
-        {SUPPORTED_LANGUAGES.map((code) => (
-          <option key={code} value={code}>
-            {LANGUAGE_LABELS[code]}
-          </option>
-        ))}
-      </select>
-    </label>
+      />
+    </div>
   )
 }

@@ -198,7 +198,7 @@ export function PrivateLayout() {
               ) : null}
             </div>
             <div className="panel-user">
-              <LanguageSwitcher className="panel-language" id="panel-language" />
+              <LanguageSwitcher className="language-switcher panel-language" id="panel-language" />
               {user ? (
                 <>
                   <NavLink

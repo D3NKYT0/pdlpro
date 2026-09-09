@@ -25,9 +25,12 @@ it('persists language choice and updates document lang', async () => {
       <LanguageSwitcher />
     </I18nextProvider>,
   )
-  await user.selectOptions(screen.getByLabelText('Idioma do site'), 'es')
+  const trigger = screen.getByRole('combobox', { name: 'Idioma do site' })
+  expect(trigger.closest('[data-theme-part="select"]')).toBeTruthy()
+  await user.click(trigger)
+  await user.click(screen.getByRole('option', { name: 'Español' }))
   expect(i18n.language).toBe('es')
   expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe('es')
   expect(document.documentElement.lang).toBe('es')
-  expect(screen.getByLabelText('Idioma del sitio')).toBeTruthy()
+  expect(screen.getByRole('combobox', { name: 'Idioma del sitio' })).toBeTruthy()
 })

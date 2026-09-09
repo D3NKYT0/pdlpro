@@ -446,6 +446,20 @@ html.pdl-public .site-nav-actions {
     flex: 0 0 auto;
 }
 
+html.pdl-public .site-nav-language .ui-select-trigger {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 34px 0 12px;
+    border-color: rgba(197, 161, 97, 0.22);
+    background-color: rgba(17, 14, 10, 0.72);
+    color: #ead092;
+    font-size: 0.8rem;
+}
+
+html.pdl-public .site-footer-locale .language-switcher .ui-select-trigger {
+    color: rgba(232, 223, 205, 0.9);
+}
+
 html.pdl-public .site-nav-actions .user {
     height: 48px;
     margin: 0;

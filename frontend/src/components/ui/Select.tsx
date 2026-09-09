@@ -14,6 +14,8 @@ export function Select({
   onChange,
   disabled = false,
   id,
+  className,
+  'aria-label': ariaLabel,
   'aria-invalid': ariaInvalid,
   'aria-describedby': ariaDescribedBy,
 }: {
@@ -22,6 +24,8 @@ export function Select({
   onChange: (value: string) => void
   disabled?: boolean
   id?: string
+  className?: string
+  'aria-label'?: string
   'aria-invalid'?: boolean | 'true' | 'false'
   'aria-describedby'?: string
 }) {
@@ -50,7 +54,8 @@ export function Select({
       top: openUp ? undefined : box.bottom + 4,
       bottom: openUp ? window.innerHeight - box.top + 4 : undefined,
       maxHeight,
-      zIndex: 80,
+      // Above public site-nav / drawer chrome (≈1000–1002).
+      zIndex: 1200,
     })
   }
 
@@ -129,13 +134,14 @@ export function Select({
   }
 
   return (
-    <div className="ui-select" data-theme-part="select" ref={root}>
+    <div className={['ui-select', className].filter(Boolean).join(' ')} data-theme-part="select" ref={root}>
       <button
         type="button"
         ref={trigger}
         id={id}
         className="ui-select-trigger"
         role="combobox"
+        aria-label={ariaLabel}
         aria-expanded={open}
         aria-controls={listId}
         aria-haspopup="listbox"
