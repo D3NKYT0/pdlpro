@@ -42,6 +42,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Guia dos apps](arquitetura/apps.md) | Responsabilidades dos módulos e exemplos de casos de uso |
 | [Componentes compartilhados](arquitetura/common.md) | DI, lifetimes, transações, UUIDs, erros e admin |
 | [Reutilização e código repetido](arquitetura/reutilizacao.md) | Políticas compartilhadas, limites das abstrações e auditoria reproduzível |
+| [Migração Clean Architecture + DI (PDF)](arquitetura/migracao-clean-architecture-di.pdf) | Registro técnico do que migrámos, decisões e estado validado |
 
 ### API e configuração
 
