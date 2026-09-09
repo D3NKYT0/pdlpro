@@ -67,6 +67,12 @@ lib/ = helpers puros (sem HTTP)
 - No backend, extraia políticas duplicadas para o app responsável. Use `common/` somente para capacidades transversais; preserve autorização, transações e diferenças entre integrações. Consulte [Reutilização](docs/arquitetura/reutilizacao.md).
 - Na revisão, execute a auditoria de repetição e confira o comportamento no navegador em desktop e celular com o tema carregado. Similaridade sintática é um indício; não force uma abstração entre regras diferentes.
 
+## Logs
+
+- Todo arquivo `.log` fica em `backend/log/*` ou `frontend/log/*`. Não grave `.log` na raiz do repositório, em `apps/`, `src/`, `scripts/` nem pastas adjacentes.
+- Backend: handler de arquivo via `LOG_TO_FILE` / `LOG_DIR` (padrão `backend/log/app.log` no desenvolvimento). Frontend (Vite): `frontend/log/vite.log` e `frontend/log/proxy.log`. Produção continua privilegiando stdout para coletores Docker.
+- Conteúdo de `*/log/` fica fora do Git (`.gitkeep` mantém a pasta).
+
 ## Documentação
 
 - Documente responsabilidade, uso e efeitos colaterais de classes públicas, especialmente em `backend/apps/` e `backend/common/`.

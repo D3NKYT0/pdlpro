@@ -6,6 +6,12 @@ O PDL PRO registra eventos operacionais em `stdout`/`stderr`, adequados para col
 Loki, Elastic, CloudWatch ou pelo agente da plataforma. Em produção cada linha da aplicação e do
 Nginx é JSON; no desenvolvimento o padrão da aplicação é legível para humanos.
 
+Quando a aplicação grava arquivos `.log` em disco, eles ficam **somente** em `backend/log/` e
+`frontend/log/` (nunca na raiz do repositório nem em `apps/` / `src/`). No desenvolvimento o backend
+liga `LOG_TO_FILE` por padrão (`backend/log/app.log` com rotação). O Vite espelha warn/error em
+`frontend/log/vite.log` e avisos de proxy em `frontend/log/proxy.log`. Em produção o padrão continua
+sendo stdout; use `LOG_TO_FILE=true` apenas se montar um volume em uma pasta `log`.
+
 ## Correlação e esquema
 
 Toda resposta recebe `X-Request-ID`. Um valor recebido é reutilizado somente quando contém de 1 a
@@ -36,6 +42,10 @@ logger.info(
 | `LOG_LEVEL` | `INFO` | Nível global, Django, Celery e ASGI |
 | `APP_LOG_LEVEL` | `LOG_LEVEL`; `DEBUG` no desenvolvimento | Nível dos módulos `apps.*` |
 | `DJANGO_LOG_LEVEL` | `LOG_LEVEL` | Sobrescrita exclusiva do Django |
+| `LOG_TO_FILE` | `true` no desenvolvimento; `false` em produção | Grava `backend/log/app.log` além do console |
+| `LOG_DIR` | `backend/log` | Pasta de arquivos `.log` (deve se chamar `log`) |
+| `LOG_FILE_MAX_BYTES` | `10485760` | Tamanho máximo de cada arquivo rotativo |
+| `LOG_FILE_BACKUP_COUNT` | `5` | Quantidade de backups rotativos |
 | `SERVICE_NAME` | `pdl-backend` | Origem do evento; o Compose diferencia API, ASGI e Celery |
 | `LOG_ENVIRONMENT` | `development` ou `production` | Ambiente incluído nos eventos estruturados |
 | `AUDIT_LOG_RETENTION_DAYS` | `365` | Retenção das ações de staff |

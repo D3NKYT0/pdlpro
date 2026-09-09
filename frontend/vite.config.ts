@@ -2,12 +2,17 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { quietBackendProxyPlugin } from './dev/quietProxyLogger.ts'
+import { ensureFrontendLogDir } from './dev/logPaths.ts'
+import { createViteFileLogger } from './dev/viteFileLogger.ts'
 
 const sentrySourceMapsEnabled = Boolean(
   process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT,
 )
 
+ensureFrontendLogDir()
+
 export default defineConfig({
+  customLogger: createViteFileLogger(),
   plugins: [
     quietBackendProxyPlugin(),
     react(),

@@ -62,6 +62,8 @@ Git até **9 de setembro de 2026**.
 - Limite de mensagem do chat do assistente elevado para 400 caracteres.
 - Estilos do painel admin e da Help refinados para hierarquia e responsividade com
   tokens de tema.
+- Arquivos `.log` passam a residir apenas em `backend/log/` e `frontend/log/`
+  (handler rotativo no Django de desenvolvimento; Vite espelha warn/error e proxy).
 
 ### Corrigido
 

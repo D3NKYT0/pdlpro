@@ -11,13 +11,19 @@ env/
 ENV/
 
 # Django
-*.log
 local_settings.py
 *.sqlite3
 *.sqlite3-journal
 /backend/staticfiles/
 /backend/media/
 /backend/htmlcov/
+
+# Logs — somente sob */log/ (ver AGENTS.md); conteúdo ignorado, pasta versionada
+*.log
+/backend/log/*
+!/backend/log/.gitkeep
+/frontend/log/*
+!/frontend/log/.gitkeep
 
 # Environment variables
 .env

@@ -1,5 +1,7 @@
 import type { Plugin } from 'vite'
 
+import { appendFrontendLog } from './logPaths.ts'
+
 export const BACKEND_UNAVAILABLE_MESSAGE =
   'Backend indisponível no destino do proxy. Suba o Django (porta 8000 no desenvolvimento nativo) para as APIs; recusas repetidas não serão exibidas neste terminal.'
 
@@ -46,6 +48,7 @@ export function quietBackendProxyPlugin(): Plugin {
       logger.error = (msg, options) => {
         if (isBackendProxyRefusal(String(msg), options?.error)) {
           if (gate.shouldAnnounce()) {
+            appendFrontendLog('proxy.log', `[${new Date().toISOString()}] ${BACKEND_UNAVAILABLE_MESSAGE}`)
             logger.warn(BACKEND_UNAVAILABLE_MESSAGE)
           }
           return

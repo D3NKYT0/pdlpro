@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = True
 OPENAPI_DOCS_PUBLIC = True
-LOGGING = get_logging_config(env, default_app_level="DEBUG")
+LOGGING = get_logging_config(env, default_app_level="DEBUG", default_log_to_file=True)
 
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
