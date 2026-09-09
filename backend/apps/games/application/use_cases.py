@@ -8,10 +8,14 @@ from uuid import UUID
 
 from django.utils import timezone
 
+from apps.accounts.application.progress import add_xp
+from apps.accounts.domain.repositories import IProgressRepository
+from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.application.configuration import require_active_game
 from apps.games.domain.exceptions import AlreadyClaimedError, InsufficientTokensError
 from apps.games.domain.repositories import (
     IBagRepository,
+    IBattlePassRepository,
     IDailyBonusRepository,
     IGameCatalogRepository,
 )
@@ -202,11 +206,17 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
         wallets: IWalletRepository,
         catalog: IGameCatalogRepository,
         daily_bonus: IDailyBonusRepository,
+        progress: IProgressRepository,
+        battle_pass: IBattlePassRepository,
+        bags: IBagRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._wallets = wallets
         self._catalog = catalog
         self._daily_bonus = daily_bonus
+        self._progress = progress
+        self._battle_pass = battle_pass
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: ClaimDailyBonusInput) -> dict:
@@ -226,11 +236,10 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
                 label="Bônus diário",
                 rewards=[{"kind": "balance", "quantity": str(amount)}],
             )
-            from apps.accounts.application.progress import add_xp
-            from apps.games.application.battle_pass_xp import add_battle_pass_xp
-
-            add_xp(user, 15)
-            add_battle_pass_xp(user, 10)
+            add_xp(user, 15, self._progress)
+            add_battle_pass_xp(
+                user, 10, battle_pass=self._battle_pass, bags=self._bags
+            )
         return {"amount": str(amount), "claimed_on": today.isoformat()}
 
 

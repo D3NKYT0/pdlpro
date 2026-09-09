@@ -18,7 +18,7 @@ class UserScopedInput:
     user_id: UUID
 
 
-class ListActivePackagesUseCase(UseCase[None, list[Any]]):
+class ListActivePackagesUseCase(UseCase[None, list[dict]]):
     """Lista pacotes ativos do comércio.
 
     Uso: resolva pelo container e chame ``execute(None)``.
@@ -27,8 +27,8 @@ class ListActivePackagesUseCase(UseCase[None, list[Any]]):
     def __init__(self, shop: IShopRepository) -> None:
         self._shop = shop
 
-    def execute(self, data: None = None) -> list[Any]:
-        return self._shop.list_active_packages()
+    def execute(self, data: None = None) -> list[dict]:
+        return [self._shop.dump_package(row) for row in self._shop.list_active_packages()]
 
 
 class ListPurchasesUseCase(UseCase[UserScopedInput, list[dict]]):
@@ -72,7 +72,7 @@ class QuoteCartUseCase(UseCase[UserScopedInput, dict]):
         user = self._carts.require_user(data.user_id)
         cart = self._carts.get_or_create_for_user(user)
         wallet = self._wallets.get_or_create(data.user_id)
-        return quote(cart, user, shop=self._shop, wallet=wallet)[0]
+        return quote(cart, user, shop=self._shop, carts=self._carts, wallet=wallet)[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -112,7 +112,7 @@ class SetCartPackageUseCase(UseCase[SetCartPackageInput, dict]):
                 raise EntityNotFoundError("Pacote não encontrado.")
             self._carts.set_package_quantity(cart, pack, data.quantity)
             wallet = self._wallets.get_or_create(data.user_id)
-            return quote(cart, user, shop=self._shop, wallet=wallet)[0]
+            return quote(cart, user, shop=self._shop, carts=self._carts, wallet=wallet)[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -155,10 +155,10 @@ class SetCartOptionsUseCase(UseCase[SetCartOptionsInput, dict]):
                 cart.use_bonus = data.use_bonus
             self._carts.save_cart(cart)
             wallet = self._wallets.get_or_create(data.user_id)
-            return quote(cart, user, shop=self._shop, wallet=wallet)[0]
+            return quote(cart, user, shop=self._shop, carts=self._carts, wallet=wallet)[0]
 
 
-class ListStaffPackagesUseCase(UseCase[None, list[Any]]):
+class ListStaffPackagesUseCase(UseCase[None, list[dict]]):
     """Lista todos os pacotes para administração.
 
     Uso: resolva pelo container e chame ``execute(None)``.
@@ -167,24 +167,24 @@ class ListStaffPackagesUseCase(UseCase[None, list[Any]]):
     def __init__(self, shop: IShopRepository) -> None:
         self._shop = shop
 
-    def execute(self, data: None = None) -> list[Any]:
-        return self._shop.list_all_packages()
+    def execute(self, data: None = None) -> list[dict]:
+        return [self._shop.dump_package(row) for row in self._shop.list_all_packages()]
 
 
-class GetStaffPackageUseCase(UseCase[UUID, Any]):
+class GetStaffPackageUseCase(UseCase[UUID, dict]):
     """Obtém um pacote administrativo por id ou lança EntityNotFoundError."""
 
     def __init__(self, shop: IShopRepository) -> None:
         self._shop = shop
 
-    def execute(self, data: UUID) -> Any:
+    def execute(self, data: UUID) -> dict:
         pack = self._shop.get_package(data)
         if pack is None:
             raise EntityNotFoundError("Pacote não encontrado.")
-        return pack
+        return self._shop.dump_package(pack)
 
 
-class ListStaffPromosUseCase(UseCase[None, list[Any]]):
+class ListStaffPromosUseCase(UseCase[None, list[dict]]):
     """Lista todos os cupons para administração.
 
     Uso: resolva pelo container e chame ``execute(None)``.
@@ -193,21 +193,21 @@ class ListStaffPromosUseCase(UseCase[None, list[Any]]):
     def __init__(self, shop: IShopRepository) -> None:
         self._shop = shop
 
-    def execute(self, data: None = None) -> list[Any]:
-        return self._shop.list_all_promos()
+    def execute(self, data: None = None) -> list[dict]:
+        return [self._shop.dump_promo(row) for row in self._shop.list_all_promos()]
 
 
-class GetStaffPromoUseCase(UseCase[UUID, Any]):
+class GetStaffPromoUseCase(UseCase[UUID, dict]):
     """Obtém um cupom administrativo por id ou lança EntityNotFoundError."""
 
     def __init__(self, shop: IShopRepository) -> None:
         self._shop = shop
 
-    def execute(self, data: UUID) -> Any:
+    def execute(self, data: UUID) -> dict:
         promo = self._shop.get_promo(data)
         if promo is None:
             raise EntityNotFoundError("Cupom não encontrado.")
-        return promo
+        return self._shop.dump_promo(promo)
 
 
 def _resolve_package_items(shop: IShopRepository, items: list[dict]) -> list[dict]:
@@ -230,7 +230,7 @@ class CreateStaffPackageInput:
     items: list[dict]
 
 
-class CreateStaffPackageUseCase(UseCase[CreateStaffPackageInput, Any]):
+class CreateStaffPackageUseCase(UseCase[CreateStaffPackageInput, dict]):
     """Cria um pacote e seus itens compostos.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CreateStaffPackageInput``.
@@ -240,16 +240,17 @@ class CreateStaffPackageUseCase(UseCase[CreateStaffPackageInput, Any]):
         self._shop = shop
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: CreateStaffPackageInput) -> Any:
+    def execute(self, data: CreateStaffPackageInput) -> dict:
         if not data.items:
             raise ValidationDomainError("Inclua pelo menos um item.")
         with self._unit_of_work:
-            return self._shop.create_package(
+            pack = self._shop.create_package(
                 name=data.name,
                 total_price=data.total_price,
                 active=data.active,
                 items=_resolve_package_items(self._shop, data.items),
             )
+            return self._shop.dump_package(pack)
 
 
 @dataclass(frozen=True, slots=True)
@@ -261,7 +262,7 @@ class UpdateStaffPackageInput:
     items: list[dict] | None = None
 
 
-class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, Any]):
+class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, dict]):
     """Atualiza um pacote e, opcionalmente, recria sua composição.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateStaffPackageInput``.
@@ -271,7 +272,7 @@ class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, Any]):
         self._shop = shop
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateStaffPackageInput) -> Any:
+    def execute(self, data: UpdateStaffPackageInput) -> dict:
         with self._unit_of_work:
             pack = self._shop.get_package(data.package_id)
             if pack is None:
@@ -285,7 +286,7 @@ class UpdateStaffPackageUseCase(UseCase[UpdateStaffPackageInput, Any]):
                 self._shop.replace_package_items(
                     pack, _resolve_package_items(self._shop, data.items)
                 )
-            return pack
+            return self._shop.dump_package(pack)
 
 
 @dataclass(frozen=True, slots=True)
@@ -295,7 +296,7 @@ class CreateStaffPromoInput:
     fields: dict
 
 
-class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, Any]):
+class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, dict]):
     """Cria um código promocional.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CreateStaffPromoInput``.
@@ -311,7 +312,7 @@ class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, Any]):
         self._commissions = commissions
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: CreateStaffPromoInput) -> Any:
+    def execute(self, data: CreateStaffPromoInput) -> dict:
         fields = dict(data.fields)
         code = str(fields.get("code", "")).strip().upper()
         fields["code"] = code
@@ -324,7 +325,7 @@ class CreateStaffPromoUseCase(UseCase[CreateStaffPromoInput, Any]):
                 raise ValidationDomainError("Apoiador aprovado não encontrado.")
             fields["supporter"] = supporter
         with self._unit_of_work:
-            return self._shop.create_promo(**fields)
+            return self._shop.dump_promo(self._shop.create_promo(**fields))
 
 
 @dataclass(frozen=True, slots=True)
@@ -335,7 +336,7 @@ class UpdateStaffPromoInput:
     fields: dict
 
 
-class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, Any]):
+class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, dict]):
     """Atualiza um código promocional existente.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateStaffPromoInput``.
@@ -351,7 +352,7 @@ class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, Any]):
         self._commissions = commissions
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateStaffPromoInput) -> Any:
+    def execute(self, data: UpdateStaffPromoInput) -> dict:
         fields = dict(data.fields)
         with self._unit_of_work:
             promo = self._shop.get_promo(data.promo_id)
@@ -373,4 +374,4 @@ class UpdateStaffPromoUseCase(UseCase[UpdateStaffPromoInput, Any]):
                     fields["supporter"] = supporter
             for key, value in fields.items():
                 setattr(promo, key, value)
-            return self._shop.save_promo(promo)
+            return self._shop.dump_promo(self._shop.save_promo(promo))

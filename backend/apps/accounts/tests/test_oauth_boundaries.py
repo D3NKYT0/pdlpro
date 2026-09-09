@@ -8,17 +8,47 @@ from django.contrib.auth.models import AnonymousUser
 from django.core.cache import cache
 from rest_framework.test import APIClient
 
-from apps.accounts.application.oauth import begin_oauth as _begin_oauth
-from apps.accounts.application.oauth import complete_oauth as _complete_oauth
+from apps.accounts.application.oauth import (
+    BeginOAuthInput,
+    BeginOAuthUseCase,
+    CompleteOAuthInput,
+    CompleteOAuthUseCase,
+)
 from apps.accounts.domain.exceptions import OAuthError
+from common.di.bootstrap import DependencyInjection
 
 
 def begin_oauth(provider, mode, user):
-    return _begin_oauth(provider, mode, user, browser_key="test-browser")
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginOAuthUseCase)
+        .execute(
+            BeginOAuthInput(
+                provider=provider,
+                mode=mode,
+                user=user,
+                browser_key="test-browser",
+            )
+        )
+    )
 
 
 def complete_oauth(provider, code, state, user=None):
-    return _complete_oauth(provider, code, state, browser_key="test-browser", user=user)
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompleteOAuthUseCase)
+        .execute(
+            CompleteOAuthInput(
+                provider=provider,
+                code=code,
+                state=state,
+                browser_key="test-browser",
+                user=user,
+            )
+        )
+    )
 
 
 pytestmark = pytest.mark.django_db

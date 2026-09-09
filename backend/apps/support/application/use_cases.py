@@ -30,7 +30,7 @@ class ListCustomerTicketsInput:
 class CustomerTicketListResult:
     """Lista de chamados do jogador com contadores de estado."""
 
-    tickets: list[Any]
+    tickets: list[dict]
     summary: dict[str, int]
 
 
@@ -45,7 +45,9 @@ class ListCustomerTicketsUseCase(UseCase[ListCustomerTicketsInput, CustomerTicke
 
     def execute(self, data: ListCustomerTicketsInput) -> CustomerTicketListResult:
         return CustomerTicketListResult(
-            tickets=self._tickets.list_for_user(data.user_id),
+            tickets=[
+                self._tickets.dump_ticket(row) for row in self._tickets.list_for_user(data.user_id)
+            ],
             summary=self._tickets.summarize_for_user(data.user_id),
         )
 
@@ -62,7 +64,7 @@ class CreateTicketInput:
     context: dict
 
 
-class CreateTicketUseCase(UseCase[CreateTicketInput, Any]):
+class CreateTicketUseCase(UseCase[CreateTicketInput, dict]):
     """Cria um chamado com a mensagem inicial do jogador.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CreateTicketInput``.
@@ -72,7 +74,7 @@ class CreateTicketUseCase(UseCase[CreateTicketInput, Any]):
         self._tickets = tickets
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: CreateTicketInput) -> Any:
+    def execute(self, data: CreateTicketInput) -> dict:
         subject = data.subject.strip()
         description = data.description.strip()
         if len(subject) < 6:
@@ -84,7 +86,7 @@ class CreateTicketUseCase(UseCase[CreateTicketInput, Any]):
         if data.priority not in TicketPriority.values:
             raise InvalidTicketActionError("Prioridade inválida.")
         with self._unit_of_work:
-            return self._tickets.create(
+            ticket = self._tickets.create(
                 data.user_id,
                 subject=subject[:160],
                 description=description,
@@ -92,6 +94,7 @@ class CreateTicketUseCase(UseCase[CreateTicketInput, Any]):
                 priority=data.priority,
                 context=data.context if isinstance(data.context, dict) else {},
             )
+            return self._tickets.dump_ticket(ticket, detail=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -102,7 +105,7 @@ class GetCustomerTicketInput:
     ticket_id: UUID
 
 
-class GetCustomerTicketUseCase(UseCase[GetCustomerTicketInput, Any]):
+class GetCustomerTicketUseCase(UseCase[GetCustomerTicketInput, dict]):
     """Consulta um chamado do próprio usuário.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``GetCustomerTicketInput``.
@@ -111,11 +114,11 @@ class GetCustomerTicketUseCase(UseCase[GetCustomerTicketInput, Any]):
     def __init__(self, tickets: ITicketRepository) -> None:
         self._tickets = tickets
 
-    def execute(self, data: GetCustomerTicketInput) -> Any:
+    def execute(self, data: GetCustomerTicketInput) -> dict:
         ticket = self._tickets.get_for_user(data.ticket_id, data.user_id)
         if ticket is None:
             raise TicketNotFoundError()
-        return ticket
+        return self._tickets.dump_ticket(ticket, detail=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -127,7 +130,7 @@ class ReplyCustomerTicketInput:
     body: str
 
 
-class ReplyCustomerTicketUseCase(UseCase[ReplyCustomerTicketInput, Any]):
+class ReplyCustomerTicketUseCase(UseCase[ReplyCustomerTicketInput, dict]):
     """Envia mensagem do jogador no chamado e notifica o atendente quando houver.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``ReplyCustomerTicketInput``.
@@ -137,7 +140,7 @@ class ReplyCustomerTicketUseCase(UseCase[ReplyCustomerTicketInput, Any]):
         self._tickets = tickets
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: ReplyCustomerTicketInput) -> Any:
+    def execute(self, data: ReplyCustomerTicketInput) -> dict:
         ticket = self._tickets.get_for_user(data.ticket_id, data.user_id)
         if ticket is None:
             raise TicketNotFoundError()
@@ -147,7 +150,8 @@ class ReplyCustomerTicketUseCase(UseCase[ReplyCustomerTicketInput, Any]):
         if len(body) < 2:
             raise InvalidTicketActionError("Escreva uma mensagem para a equipe.")
         with self._unit_of_work:
-            return self._tickets.add_customer_reply(data.ticket_id, data.user_id, body)
+            ticket = self._tickets.add_customer_reply(data.ticket_id, data.user_id, body)
+            return self._tickets.dump_ticket(ticket, detail=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -159,7 +163,7 @@ class UpdateCustomerTicketInput:
     action: str | None
 
 
-class UpdateCustomerTicketUseCase(UseCase[UpdateCustomerTicketInput, Any]):
+class UpdateCustomerTicketUseCase(UseCase[UpdateCustomerTicketInput, dict]):
     """Encerra ou reabre o chamado do próprio jogador conforme a ação informada.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateCustomerTicketInput``.
@@ -169,7 +173,7 @@ class UpdateCustomerTicketUseCase(UseCase[UpdateCustomerTicketInput, Any]):
         self._tickets = tickets
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateCustomerTicketInput) -> Any:
+    def execute(self, data: UpdateCustomerTicketInput) -> dict:
         ticket = self._tickets.get_for_user(data.ticket_id, data.user_id)
         if ticket is None:
             raise TicketNotFoundError()
@@ -179,7 +183,8 @@ class UpdateCustomerTicketUseCase(UseCase[UpdateCustomerTicketInput, Any]):
         if not (can_close or can_reopen):
             raise InvalidTicketActionError("Esta ação não está disponível para o chamado.")
         with self._unit_of_work:
-            return self._tickets.apply_customer_action(data.ticket_id, data.user_id, action)
+            ticket = self._tickets.apply_customer_action(data.ticket_id, data.user_id, action)
+            return self._tickets.dump_ticket(ticket, detail=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -195,7 +200,7 @@ class ListStaffTicketsInput:
 class StaffTicketListResult:
     """Fila de atendimento com indicadores agregados."""
 
-    tickets: list[Any]
+    tickets: list[dict]
     summary: dict[str, int]
 
 
@@ -210,11 +215,14 @@ class ListStaffTicketsUseCase(UseCase[ListStaffTicketsInput, StaffTicketListResu
 
     def execute(self, data: ListStaffTicketsInput) -> StaffTicketListResult:
         return StaffTicketListResult(
-            tickets=self._tickets.list_for_staff(
-                status=data.status,
-                category=data.category,
-                query=data.query,
-            ),
+            tickets=[
+                self._tickets.dump_ticket(row, staff=True)
+                for row in self._tickets.list_for_staff(
+                    status=data.status,
+                    category=data.category,
+                    query=data.query,
+                )
+            ],
             summary=self._tickets.summarize_for_staff(),
         )
 
@@ -226,7 +234,7 @@ class GetStaffTicketInput:
     ticket_id: UUID
 
 
-class GetStaffTicketUseCase(UseCase[GetStaffTicketInput, Any]):
+class GetStaffTicketUseCase(UseCase[GetStaffTicketInput, dict]):
     """Consulta um chamado com visão administrativa.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``GetStaffTicketInput``.
@@ -235,11 +243,11 @@ class GetStaffTicketUseCase(UseCase[GetStaffTicketInput, Any]):
     def __init__(self, tickets: ITicketRepository) -> None:
         self._tickets = tickets
 
-    def execute(self, data: GetStaffTicketInput) -> Any:
+    def execute(self, data: GetStaffTicketInput) -> dict:
         ticket = self._tickets.get_by_id(data.ticket_id)
         if ticket is None:
             raise TicketNotFoundError()
-        return ticket
+        return self._tickets.dump_ticket(ticket, detail=True, staff=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -252,7 +260,7 @@ class ReplyStaffTicketInput:
     is_internal: bool = False
 
 
-class ReplyStaffTicketUseCase(UseCase[ReplyStaffTicketInput, Any]):
+class ReplyStaffTicketUseCase(UseCase[ReplyStaffTicketInput, dict]):
     """Permite à equipe responder um chamado, inclusive com notas internas.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``ReplyStaffTicketInput``.
@@ -262,7 +270,7 @@ class ReplyStaffTicketUseCase(UseCase[ReplyStaffTicketInput, Any]):
         self._tickets = tickets
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: ReplyStaffTicketInput) -> Any:
+    def execute(self, data: ReplyStaffTicketInput) -> dict:
         ticket = self._tickets.get_by_id(data.ticket_id)
         if ticket is None:
             raise TicketNotFoundError()
@@ -272,12 +280,13 @@ class ReplyStaffTicketUseCase(UseCase[ReplyStaffTicketInput, Any]):
         if len(body) < 2:
             raise InvalidTicketActionError("Escreva uma resposta.")
         with self._unit_of_work:
-            return self._tickets.add_staff_reply(
+            ticket = self._tickets.add_staff_reply(
                 data.ticket_id,
                 data.actor_id,
                 body,
                 is_internal=data.is_internal,
             )
+            return self._tickets.dump_ticket(ticket, detail=True, staff=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -294,7 +303,7 @@ class UpdateStaffTicketInput:
     update_assigned_to: bool = False
 
 
-class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, Any]):
+class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, dict]):
     """Atribui responsáveis e atualiza o estado de um chamado pela equipe.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateStaffTicketInput``.
@@ -304,7 +313,7 @@ class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, Any]):
         self._tickets = tickets
         self._unit_of_work = unit_of_work
 
-    def execute(self, data: UpdateStaffTicketInput) -> Any:
+    def execute(self, data: UpdateStaffTicketInput) -> dict:
         ticket = self._tickets.get_by_id(data.ticket_id)
         if ticket is None:
             raise TicketNotFoundError()
@@ -328,7 +337,7 @@ class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, Any]):
                     raise InvalidTicketActionError("Atendente não encontrado.")
 
         with self._unit_of_work:
-            return self._tickets.update_staff_ticket(
+            ticket = self._tickets.update_staff_ticket(
                 data.ticket_id,
                 data.actor_id,
                 status=data.status,
@@ -338,3 +347,4 @@ class UpdateStaffTicketUseCase(UseCase[UpdateStaffTicketInput, Any]):
                 assignee=assignee,
                 update_assignee=data.update_assigned_to,
             )
+            return self._tickets.dump_ticket(ticket, detail=True, staff=True)

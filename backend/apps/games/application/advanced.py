@@ -67,7 +67,7 @@ def battle_details(
             "xp": q.xp,
             "claimed": battle_pass.has_quest_claim(user, q, period_start(q)),
         }
-        for q in season.quests.filter(active=True)
+        for q in battle_pass.list_active_quests(season)
     ]
     exchanges = [
         {
@@ -83,7 +83,7 @@ def battle_details(
             "limit": e.limit_per_user,
             "used": battle_pass.count_logs(user, kind="exchange", source=e.id),
         }
-        for e in season.exchanges.filter(active=True)
+        for e in battle_pass.list_active_exchanges(season)
     ]
     milestones = [
         {
@@ -93,7 +93,7 @@ def battle_details(
             "rewards": m.rewards,
             "claimed": battle_pass.has_log(user, kind="milestone", source=m.id),
         }
-        for m in season.milestones.order_by("required_xp")
+        for m in battle_pass.list_milestones(season)
     ]
     return {
         "quests": quests,
@@ -170,7 +170,7 @@ def _battle_action_body(
         battle_pass.create_quest_claim(user, quest, start)
         from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
-        add_battle_pass_xp(user, quest.xp, battle_pass=battle_pass)
+        add_battle_pass_xp(user, quest.xp, battle_pass=battle_pass, bags=bags)
         battle_pass.create_reward_log(
             user=user,
             season=season,
@@ -255,7 +255,7 @@ def daily_details(user, *, daily_bonus: IDailyBonusRepository):
         else [],
         "pool": [
             {"name": p.name, "weight": p.weight, "rewards": p.rewards}
-            for p in (season.pool.all() if season else [])
+            for p in daily_bonus.list_season_pool(season)
         ]
         if season
         else [],
@@ -277,7 +277,7 @@ def claim_daily_season(
     wallets: IWalletRepository,
     daily_bonus: IDailyBonusRepository,
     bags: IBagRepository,
-    battle_pass: IBattlePassRepository | None = None,
+    battle_pass: IBattlePassRepository,
     unit_of_work: UnitOfWork,
 ):
     with unit_of_work:
@@ -316,7 +316,7 @@ def claim_daily_season(
         )
         from apps.games.application.battle_pass_xp import add_battle_pass_xp
 
-        add_battle_pass_xp(user, 10, battle_pass=battle_pass)
+        add_battle_pass_xp(user, 10, battle_pass=battle_pass, bags=bags)
         return {"amount": str(amount), "claimed_on": today.isoformat(), "rewards": rewards}
 
 

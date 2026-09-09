@@ -72,15 +72,15 @@ from apps.accounts.application.use_cases import (
     UpdateProfileInput,
     UpdateProfileUseCase,
 )
+from apps.accounts.domain.auth_session import IAuthSessionService
 from apps.accounts.domain.exceptions import InvalidCredentialsError, SessionAuthenticationError
-from apps.accounts.infrastructure.auth_session import AuthSessionService
-from apps.accounts.infrastructure.authentication import (
-    _csrf_failed_reason,
+from apps.accounts.presentation.auth_cookies import (
     build_auth_response,
     clear_auth_cookies,
     get_refresh_cookie_name,
     set_auth_cookies,
 )
+from apps.accounts.presentation.csrf import csrf_failed_reason
 from apps.accounts.presentation.serializers import (
     AuthSessionSerializer,
     CompleteCredentialsSerializer,
@@ -156,7 +156,7 @@ class RegisterView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
+        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
 
 
 class LoginView(InjectedAPIView):
@@ -199,7 +199,7 @@ class LoginView(InjectedAPIView):
         clear_failures(request, data["login"])
         if user.is_2fa_enabled:
             return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
-        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
+        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
 
 
 class AuthCapabilitiesView(InjectedAPIView):
@@ -294,8 +294,11 @@ class OAuthCompleteView(InjectedAPIView):
         from apps.server.application.access import (
             assert_login_allowed_during_coming_soon,
         )
+        from apps.server.domain.repositories import IIndexConfigRepository
 
-        assert_login_allowed_during_coming_soon(user)
+        assert_login_allowed_during_coming_soon(
+            user, self.resolve(IIndexConfigRepository)
+        )
         if user.is_2fa_enabled:
             return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
         return build_auth_response(request, user)
@@ -329,7 +332,7 @@ class CompleteCredentialsView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
+        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
 
 
 class RefreshView(InjectedAPIView):
@@ -349,7 +352,7 @@ class RefreshView(InjectedAPIView):
     )
     def post(self, request):
         raw = request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name())
-        if not request.data.get("refresh") and raw and _csrf_failed_reason(request):
+        if not request.data.get("refresh") and raw and csrf_failed_reason(request):
             return Response({"message": "Validação CSRF necessária."}, status=status.HTTP_403_FORBIDDEN)
         if not raw:
             return Response(
@@ -518,7 +521,7 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
             VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
         )
-        return self.resolve(AuthSessionService).build_auth_response(request, user.id)
+        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
 
 
 class TwoFactorView(InjectedAPIView):

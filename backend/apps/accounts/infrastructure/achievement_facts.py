@@ -1,14 +1,16 @@
 """Consultas ORM multi-app usadas pelas regras de conquista.
 
-Interim CA: ``achievement_rules`` não importa modelos estrangeiros; chama esta fachada.
+Adaptador de ``IAchievementFacts``: a aplicação chama a porta; o ORM fica aqui.
 """
 
 from __future__ import annotations
 
 from django.db.models import Q
 
+from apps.accounts.domain.achievement_facts import IAchievementFacts
 
-class DjangoAchievementFacts:
+
+class DjangoAchievementFacts(IAchievementFacts):
     """Encapsula contagens e existência de fatos de conquista em outros apps."""
 
     def _profile(self, user):

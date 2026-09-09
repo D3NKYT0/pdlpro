@@ -16,6 +16,14 @@ class TicketStatus:
     values = frozenset(
         {OPEN, IN_PROGRESS, WAITING_USER, WAITING_TEAM, RESOLVED, CLOSED}
     )
+    labels = {
+        OPEN: "Aberto",
+        IN_PROGRESS: "Em atendimento",
+        WAITING_USER: "Aguardando jogador",
+        WAITING_TEAM: "Aguardando equipe",
+        RESOLVED: "Resolvido",
+        CLOSED: "Fechado",
+    }
 
 
 class TicketCategory:
@@ -33,6 +41,16 @@ class TicketCategory:
     values = frozenset(
         {TECHNICAL, BILLING, ACCOUNT, GAME, BUG, REPORT, SUGGESTION, OTHER}
     )
+    labels = {
+        TECHNICAL: "Problema técnico",
+        BILLING: "Pagamento e loja",
+        ACCOUNT: "Conta e segurança",
+        GAME: "Suporte ao jogo",
+        BUG: "Relatar um bug",
+        REPORT: "Denúncia",
+        SUGGESTION: "Sugestão",
+        OTHER: "Outro assunto",
+    }
 
 
 class TicketPriority:
@@ -44,3 +62,9 @@ class TicketPriority:
     URGENT = "urgent"
 
     values = frozenset({LOW, NORMAL, HIGH, URGENT})
+    labels = {
+        LOW: "Baixa",
+        NORMAL: "Normal",
+        HIGH: "Alta",
+        URGENT: "Urgente",
+    }

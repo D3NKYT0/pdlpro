@@ -64,6 +64,18 @@ it('não oferece reenvio quando e-mail está confirmado', () => {
   expect(screen.queryByRole('button', { name: 'Reenviar verificação' })).not.toBeInTheDocument()
   expect(screen.getByText('Identidade de e-mail confirmada')).toBeVisible()
 })
+it('empilha e-mail, 2FA, passkeys e conexões ao lado das sessões', () => {
+  const { container } = render(<QueryClientProvider client={client}><AccountSecurityPage /></QueryClientProvider>)
+  const side = container.querySelector('.security-side')
+  const sessions = container.querySelector('.security-sessions')
+  expect(side).toBeTruthy()
+  expect(sessions).toBeTruthy()
+  expect(side?.previousElementSibling).toBe(sessions)
+  expect(side?.querySelector('.security-email')).toBeTruthy()
+  expect(side?.querySelector('.security-passkeys')).toBeTruthy()
+  expect(side?.querySelector('.security-connections')).toBeTruthy()
+  expect(side?.textContent).toMatch(/Autenticação em duas etapas/)
+})
 it.each([false, true])('confirma 2FA com código; erro=%s', async fail => {
   if (fail) vi.mocked(authApi.confirmTwoFactor).mockRejectedValue(new ApiError('Código incorreto', 400, 'INVALID'))
   const user = mount()

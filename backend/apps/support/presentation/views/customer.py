@@ -15,8 +15,7 @@ from apps.support.application.use_cases import (
     UpdateCustomerTicketInput,
     UpdateCustomerTicketUseCase,
 )
-from apps.support.models import Ticket
-from apps.support.presentation.views.shared import serialize_ticket
+from apps.support.domain.ticket import TicketCategory, TicketPriority
 from common.views import InjectedAPIView
 
 
@@ -41,7 +40,7 @@ class CustomerTicketListCreateView(InjectedAPIView):
             ListCustomerTicketsInput(user_id=request.user.id)
         )
         return Response({
-            "results": [serialize_ticket(row) for row in result.tickets],
+            "results": result.tickets,
             "summary": result.summary,
         })
 
@@ -56,12 +55,12 @@ class CustomerTicketListCreateView(InjectedAPIView):
                 user_id=request.user.id,
                 subject=str(request.data.get("subject", "")),
                 description=str(request.data.get("description", "")),
-                category=str(request.data.get("category", Ticket.Category.OTHER)),
-                priority=str(request.data.get("priority", Ticket.Priority.NORMAL)),
+                category=str(request.data.get("category", TicketCategory.OTHER)),
+                priority=str(request.data.get("priority", TicketPriority.NORMAL)),
                 context=request.data.get("context") if isinstance(request.data.get("context"), dict) else {},
             )
         )
-        return Response(serialize_ticket(ticket, detail=True), status=status.HTTP_201_CREATED)
+        return Response(ticket, status=status.HTTP_201_CREATED)
 
 
 class CustomerTicketDetailView(InjectedAPIView):
@@ -83,7 +82,7 @@ class CustomerTicketDetailView(InjectedAPIView):
         ticket = self.resolve(GetCustomerTicketUseCase).execute(
             GetCustomerTicketInput(user_id=request.user.id, ticket_id=ticket_id)
         )
-        return Response(serialize_ticket(ticket, detail=True))
+        return Response(ticket)
 
     @extend_schema(
         tags=["Atendimento"],
@@ -98,7 +97,7 @@ class CustomerTicketDetailView(InjectedAPIView):
                 body=str(request.data.get("body", "")),
             )
         )
-        return Response(serialize_ticket(ticket, detail=True), status=status.HTTP_201_CREATED)
+        return Response(ticket, status=status.HTTP_201_CREATED)
 
     @extend_schema(
         tags=["Atendimento"],
@@ -113,4 +112,4 @@ class CustomerTicketDetailView(InjectedAPIView):
                 action=request.data.get("action"),
             )
         )
-        return Response(serialize_ticket(ticket, detail=True))
+        return Response(ticket)

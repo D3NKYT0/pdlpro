@@ -190,15 +190,19 @@ def test_service_repetition_and_ambiguous_failure_reserve_only_once(
     assert len(calls) == 1
     row = CharacterServiceOperation.objects.get(user=user)
     assert row.status == "pending"
+    from apps.server.domain.repositories import ICharacterServiceOperationRepository
     from apps.wallet.domain.repositories import IWalletRepository
+    from common.architecture.base import UnitOfWork
     from common.di import DependencyInjection
 
-    wallets = DependencyInjection.root().create_scope().resolve(IWalletRepository)
+    scope = DependencyInjection.root().create_scope()
     settle_service(
         row.id,
         completed=True,
         note="Test operator verified game mutation",
-        wallets=wallets,
+        wallets=scope.resolve(IWalletRepository),
+        operations=scope.resolve(ICharacterServiceOperationRepository),
+        unit_of_work=scope.resolve(UnitOfWork),
     )
     assert api.post(path, data, format="json").status_code == 200
     assert len(calls) == 1
@@ -237,12 +241,19 @@ def test_known_service_rejection_refunds_once_and_conflicting_key_is_rejected(
     assert api.post(path, data, format="json").status_code == 409
     row = CharacterServiceOperation.objects.get(user=user)
     assert row.status == "rejected"
+    from apps.server.domain.repositories import ICharacterServiceOperationRepository
     from apps.wallet.domain.repositories import IWalletRepository
+    from common.architecture.base import UnitOfWork
     from common.di import DependencyInjection
 
-    wallets = DependencyInjection.root().create_scope().resolve(IWalletRepository)
+    scope = DependencyInjection.root().create_scope()
     settle_service(
-        row.id, completed=False, note="Repeated reconciliation", wallets=wallets
+        row.id,
+        completed=False,
+        note="Repeated reconciliation",
+        wallets=scope.resolve(IWalletRepository),
+        operations=scope.resolve(ICharacterServiceOperationRepository),
+        unit_of_work=scope.resolve(UnitOfWork),
     )
     assert api.post(path, data, format="json").status_code == 409
     assert (

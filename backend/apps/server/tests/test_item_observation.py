@@ -22,6 +22,7 @@ from apps.server.application.item_observation import (
     read_observation,
 )
 from apps.server.domain.repositories import IItemObservationRepository
+from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.item_observation_models import (
     ItemObservationCategory,
     ItemObservationDetail,
@@ -41,6 +42,10 @@ RAW = {
     "details": [{"item_id": 57, "location": "INVENTORY", "quantity": 300, "instances": 2, "unique_owners": 1}],
     "characters": [{"total": 10}],
 }
+
+
+def _catalog():
+    return LineageItemCatalogAdapter()
 
 
 @pytest.fixture
@@ -257,7 +262,9 @@ def test_snapshot_failure_is_atomic(enabled, admin_user, monkeypatch):
         raise RuntimeError("test write failure")
     monkeypatch.setattr(ItemObservationDetail.objects, "bulk_create", fail)
     with pytest.raises(RuntimeError):
-        capture_snapshot(gateway(), admin_user, observation=observation_repo())
+        capture_snapshot(
+            gateway(), admin_user, observation=observation_repo(), catalog=_catalog()
+        )
     assert not ItemObservationSnapshot.objects.exists()
 
 
@@ -276,7 +283,7 @@ def test_disabled_does_not_query_gateway(settings):
     settings.LINEAGE_DB_ENABLED = False
     reader = gateway()
     with pytest.raises(ObservationUnavailable):
-        read_observation(reader, observation_repo())
+        read_observation(reader, observation_repo(), _catalog())
     reader.observe_items.assert_not_called()
 
 

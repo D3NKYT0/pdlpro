@@ -7,10 +7,11 @@ from uuid import UUID
 from django.utils import timezone
 
 from apps.accounts.application.progress import add_xp
+from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.domain.repositories import IBagRepository, IEconomyRepository
+from apps.games.domain.repositories import IBagRepository, IBattlePassRepository, IEconomyRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -86,8 +87,18 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
     ``dict``.
     """
 
-    def __init__(self, economy: IEconomyRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        economy: IEconomyRepository,
+        progress: IProgressRepository,
+        battle_pass: IBattlePassRepository,
+        bags: IBagRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._economy = economy
+        self._progress = progress
+        self._battle_pass = battle_pass
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: FightMonsterInput) -> dict:
@@ -124,8 +135,10 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
                 self._economy.save_monster(
                     monster, update_fields=["defeated_at", "updated_at"]
                 )
-                add_xp(user, 6)
-                add_battle_pass_xp(user, 4)
+                add_xp(user, 6, self._progress)
+                add_battle_pass_xp(
+                    user, 4, battle_pass=self._battle_pass, bags=self._bags
+                )
             user.save(update_fields=["fichas", "updated_at"])
             self._economy.create_fight_log(
                 user=user,

@@ -132,7 +132,17 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
     def _dump(item: Any, language: str) -> dict:
         english = language == "en" and item.question_en and item.answer_en
         keywords = item.keywords_en if english else item.keywords
-        category_labels = {
+        category_labels_pt = {
+            "getting_started": "Primeiros passos",
+            "account_security": "Conta e segurança",
+            "game_accounts": "Contas e personagens",
+            "economy": "Carteira e inventário",
+            "commerce": "Loja e comércio",
+            "games_rewards": "Jogos e recompensas",
+            "community": "Conteúdo e comunidade",
+            "support": "Ajuda e atendimento",
+        }
+        category_labels_en = {
             "getting_started": "Getting started",
             "account_security": "Account and security",
             "game_accounts": "Game accounts and characters",
@@ -142,21 +152,28 @@ class ListFaqUseCase(UseCase[ListFaqInput, list[dict]]):
             "community": "Community and content",
             "support": "Support and policies",
         }
-        audience_labels = {
+        audience_labels_pt = {
+            FaqAudience.PUBLIC: "Todos os usuários",
+            FaqAudience.STAFF: "Equipe",
+            FaqAudience.SUPERADMIN: "Superadministradores",
+        }
+        audience_labels_en = {
             FaqAudience.PUBLIC: "All users",
             FaqAudience.STAFF: "Staff",
             FaqAudience.SUPERADMIN: "Superadministrators",
         }
+        category_labels = category_labels_en if english else category_labels_pt
+        audience_labels = audience_labels_en if english else audience_labels_pt
         return {
             "id": str(item.id),
             "question": item.question_en if english else item.question,
             "short_answer": item.short_answer_en if english else item.short_answer,
             "answer": item.answer_en if english else item.answer,
             "category": item.category,
-            "category_label": category_labels.get(item.category, item.get_category_display()) if english else item.get_category_display(),
+            "category_label": category_labels.get(item.category, item.category),
             "keywords": [keyword.strip() for keyword in keywords.split(",") if keyword.strip()],
             "audience": item.audience,
-            "audience_label": audience_labels.get(item.audience, item.get_audience_display()) if english else item.get_audience_display(),
+            "audience_label": audience_labels.get(item.audience, item.audience),
             "language": "en" if english else "pt",
         }
 

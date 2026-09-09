@@ -14,6 +14,7 @@ from apps.accounts.domain.exceptions import (
     UserNotFoundError,
 )
 from apps.accounts.domain.repositories import IUserRepository
+from apps.server.domain.repositories import IIndexConfigRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -92,8 +93,9 @@ class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
     retorno é ``UserEntity``.
     """
 
-    def __init__(self, users: IUserRepository) -> None:
+    def __init__(self, users: IUserRepository, index_config: IIndexConfigRepository) -> None:
         self._users = users
+        self._index_config = index_config
 
     def execute(self, data: AuthenticateUserInput) -> UserEntity:
         user = self._users.get_by_login(data.login.strip())
@@ -103,7 +105,7 @@ class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
             assert_login_allowed_during_coming_soon,
         )
 
-        assert_login_allowed_during_coming_soon(user)
+        assert_login_allowed_during_coming_soon(user, self._index_config)
         return user
 
 

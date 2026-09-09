@@ -5,15 +5,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from apps.server.domain.item_catalog import ITEM_CATEGORIES, ITEM_GRADES
 from common.models import BaseModel
-
-ITEM_CATEGORIES = [(key, label) for key, label in (
-    ("COMUM", "Comum"), ("WEAPON", "Arma"), ("SHIELD", "Escudo"), ("HELMET", "Elmo"),
-    ("ARMOR", "Armadura"), ("PANTS", "Calça"), ("BOOTS", "Botas"), ("GLOVES", "Luvas"),
-    ("NECKLACE", "Colar"), ("EARRING", "Brinco"), ("RING", "Anel"), ("HAIR", "Acessório"),
-    ("FACE", "Máscara"), ("UNDERWEAR", "Roupa íntima"), ("FORMAL", "Traje"), ("PET", "Pet"),
-)]
-ITEM_GRADES = [(grade, grade) for grade in ("NG", "D", "C", "B", "A", "S")]
 
 
 def custom_item_image_path(instance, filename):

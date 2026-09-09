@@ -512,6 +512,24 @@ class IBattlePassRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def list_levels_with_rewards(self, season) -> list[dict]:
+        """Níveis com lista plana de recompensas (sem caminhar relações ORM na aplicação)."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_quests(self, season) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_exchanges(self, season) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_milestones(self, season) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
     def list_claimed_reward_ids(self, user) -> set:
         raise NotImplementedError
 

@@ -41,6 +41,8 @@ from apps.accounts.application.webauthn_service import (
     DeletePasskeyUseCase,
     ListPasskeysUseCase,
 )
+from apps.accounts.domain.achievement_facts import IAchievementFacts
+from apps.accounts.domain.auth_session import IAuthSessionService
 from apps.accounts.domain.bag import IRewardBagPort
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import (
@@ -50,7 +52,8 @@ from apps.accounts.domain.repositories import (
     IUserRepository,
     IWebAuthnCredentialRepository,
 )
-from apps.accounts.infrastructure.auth_session import AuthSessionService
+from apps.accounts.infrastructure.achievement_facts import DjangoAchievementFacts
+from apps.accounts.infrastructure.authentication import AuthSessionService
 from apps.accounts.infrastructure.bag import GamesRewardBagAdapter
 from apps.accounts.infrastructure.mailer import DjangoMailer
 from apps.accounts.infrastructure.repositories import (
@@ -85,9 +88,10 @@ class AccountsProvider(AppProvider):
             lifetime=Lifetime.SCOPED,
         )
         container.register(IProgressRepository, DjangoProgressRepository, lifetime=Lifetime.SCOPED)
+        container.register(IAchievementFacts, DjangoAchievementFacts, lifetime=Lifetime.SCOPED)
         container.register(IRewardBagPort, GamesRewardBagAdapter, lifetime=Lifetime.SCOPED)
         container.register(IMailer, DjangoMailer, lifetime=Lifetime.SINGLETON)
-        container.register_self(AuthSessionService, lifetime=Lifetime.SCOPED)
+        container.register(IAuthSessionService, AuthSessionService, lifetime=Lifetime.SCOPED)
         container.register_self(RegisterUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(CompleteCredentialsUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(AuthenticateUserUseCase, lifetime=Lifetime.TRANSIENT)

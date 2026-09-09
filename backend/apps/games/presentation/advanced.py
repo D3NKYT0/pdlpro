@@ -17,27 +17,22 @@ from apps.games.application.advanced_use_cases import (
     GetFishingDetailsUseCase,
     GetGameStatisticsUseCase,
 )
+from apps.games.application.staff_content_schema import CONFIG_FIELDS, RELATED_FIELDS, known_content_kind
 from apps.games.application.staff_content_use_cases import (
+    GetGameContentInput,
+    GetGameContentUseCase,
     ListGameContentInput,
     ListGameContentUseCase,
     UpsertGameContentInput,
     UpsertGameContentUseCase,
 )
-from apps.games.domain.repositories import IGameContentAdminRepository
-from apps.games.infrastructure.staff_content import CONFIG_MODELS
 from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
 
 class BattleActionSerializer(serializers.Serializer):
-    """Valida a ação e os identificadores do conteúdo adicional do passe de batalha.
-
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
-
-    Campos declarados: ``action``, ``entry_id``, ``enabled``.
-    """
+    """Valida a ação e os identificadores do conteúdo adicional do passe de batalha."""
 
     action = serializers.ChoiceField(
         choices=["quest", "exchange", "milestone", "auto-claim"]
@@ -52,11 +47,7 @@ class BattleActionSerializer(serializers.Serializer):
 
 
 class BattleDetailsView(InjectedAPIView):
-    """Consulta o conteúdo adicional do passe e encaminha ações validadas ao serviço de batalha.
-
-    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated].
-    """
+    """Consulta o conteúdo adicional do passe e encaminha ações validadas ao serviço de batalha."""
 
     permission_classes = [IsAuthenticated]
 
@@ -95,11 +86,7 @@ class BattleDetailsView(InjectedAPIView):
 
 
 class DailyDetailsView(InjectedAPIView):
-    """Consulta o calendário e os detalhes do bônus diário para o jogador.
-
-    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated].
-    """
+    """Consulta o calendário e os detalhes do bônus diário para o jogador."""
 
     permission_classes = [IsAuthenticated]
 
@@ -117,24 +104,14 @@ class DailyDetailsView(InjectedAPIView):
 
 
 class BaitPurchaseSerializer(serializers.Serializer):
-    """Valida a seleção e a quantidade de iscas para compra.
-
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
-
-    Campos declarados: ``bait_id``, ``quantity``.
-    """
+    """Valida a seleção e a quantidade de iscas para compra."""
 
     bait_id = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=1, max_value=999, default=1)
 
 
 class FishingDetailsView(InjectedAPIView):
-    """Lista iscas, estoque e capturas do usuário e permite comprar iscas.
-
-    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated].
-    """
+    """Lista iscas, estoque e capturas do usuário e permite comprar iscas."""
 
     permission_classes = [IsAuthenticated]
 
@@ -171,11 +148,7 @@ class FishingDetailsView(InjectedAPIView):
 
 
 class GameStatisticsView(InjectedAPIView):
-    """Expõe as estatísticas produzidas pelo serviço de jogos.
-
-    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
-    [IsAuthenticated].
-    """
+    """Expõe as estatísticas produzidas pelo serviço de jogos."""
 
     permission_classes = [IsAuthenticated]
 
@@ -192,46 +165,55 @@ class GameStatisticsView(InjectedAPIView):
         )
 
 
+_FIELD_TYPES = {
+    "name": serializers.CharField(max_length=120),
+    "description": serializers.CharField(allow_blank=True, required=False, default=""),
+    "active": serializers.BooleanField(required=False, default=True),
+    "premium_price": serializers.DecimalField(max_digits=12, decimal_places=2, min_value=0),
+    "starts_at": serializers.DateTimeField(),
+    "ends_at": serializers.DateTimeField(),
+    "starts_on": serializers.DateField(),
+    "ends_on": serializers.DateField(),
+    "level": serializers.IntegerField(min_value=1),
+    "required_xp": serializers.IntegerField(min_value=0),
+    "is_premium": serializers.BooleanField(required=False, default=False),
+    "item_id": serializers.IntegerField(min_value=1),
+    "item_name": serializers.CharField(max_length=120, allow_blank=True, required=False, default=""),
+    "enchant": serializers.IntegerField(min_value=0, required=False, default=0),
+    "quantity": serializers.IntegerField(min_value=1),
+    "event": serializers.CharField(max_length=80),
+    "target": serializers.IntegerField(min_value=1),
+    "xp": serializers.IntegerField(min_value=0),
+    "period": serializers.CharField(max_length=20),
+    "required_item_id": serializers.IntegerField(min_value=1),
+    "required_enchant": serializers.IntegerField(min_value=0, required=False, default=0),
+    "required_quantity": serializers.IntegerField(min_value=1),
+    "rewards": serializers.JSONField(),
+    "limit_per_user": serializers.IntegerField(min_value=0, required=False, default=0),
+    "day": serializers.IntegerField(min_value=1),
+    "weight": serializers.IntegerField(min_value=1),
+    "price": serializers.IntegerField(min_value=0),
+    "success_bonus": serializers.IntegerField(min_value=0, max_value=90, required=False, default=0),
+}
+
+
 def config_serializer(kind):
-    if kind not in CONFIG_MODELS:
+    if not known_content_kind(kind):
         raise serializers.ValidationError("Configuração desconhecida.")
-    model, fields = CONFIG_MODELS[kind]
-
-    class RelatedUUIDField(serializers.Field):
-        """Aceita UUID na entrada; na saída serializa o ``id`` público do relacionado."""
-
-        def to_internal_value(self, data):
-            return serializers.UUIDField().to_internal_value(data)
-
-        def to_representation(self, value):
-            if value is None:
-                return None
-            return getattr(value, "id", value)
-
-    class ConfigSerializer(serializers.ModelSerializer):
-        class Meta:
-            pass
-
-    ConfigSerializer.Meta.model = model
-    ConfigSerializer.Meta.fields = ["id", *fields]
-    ConfigSerializer.Meta.read_only_fields = ["id"]
-    ConfigSerializer.Meta.extra_kwargs = (
-        {"premium_price": {"min_value": 0}} if kind == "seasons" else {}
-    )
+    fields = CONFIG_FIELDS[kind]
+    attrs = {"id": serializers.UUIDField(read_only=True)}
     for field in fields:
-        model_field = model._meta.get_field(field)
-        if model_field.many_to_one:
-            # FK validada no caso de uso via IGameContentAdminRepository.resolve_related.
-            ConfigSerializer._declared_fields[field] = RelatedUUIDField()
-    return ConfigSerializer
+        if field in RELATED_FIELDS:
+            attrs[field] = serializers.UUIDField()
+        elif field in _FIELD_TYPES:
+            attrs[field] = _FIELD_TYPES[field]
+        else:
+            attrs[field] = serializers.JSONField(required=False)
+    return type(f"{kind.replace('-', '_').title()}ConfigSerializer", (serializers.Serializer,), attrs)
 
 
 class StaffGameContentView(InjectedAPIView):
-    """Administra os tipos de conteúdo dos jogos previstos no registro de serializers.
-
-    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember].
-    """
+    """Administra os tipos de conteúdo dos jogos previstos no registro de serializers."""
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
@@ -264,9 +246,12 @@ class StaffGameContentView(InjectedAPIView):
         description="Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.",
     )
     def patch(self, request, kind, entry_id):
-        instance = self.resolve(IGameContentAdminRepository).get_kind(kind, entry_id)
-        if instance is None:
-            raise EntityNotFoundError("Entrada de configuração não encontrada.")
+        try:
+            instance = self.resolve(GetGameContentUseCase).execute(
+                GetGameContentInput(kind=kind, entry_id=entry_id)
+            )
+        except EntityNotFoundError:
+            raise
         cls = config_serializer(kind)
         serializer = cls(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)

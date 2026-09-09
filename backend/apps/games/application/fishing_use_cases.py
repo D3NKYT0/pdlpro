@@ -5,10 +5,11 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.application.progress import add_xp
+from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.domain.repositories import IBagRepository, IFishingRepository
+from apps.games.domain.repositories import IBagRepository, IBattlePassRepository, IFishingRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -80,10 +81,14 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
         self,
         fishing: IFishingRepository,
         bags: IBagRepository,
+        progress: IProgressRepository,
+        battle_pass: IBattlePassRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._fishing = fishing
         self._bags = bags
+        self._progress = progress
+        self._battle_pass = battle_pass
         self._unit_of_work = unit_of_work
 
     def execute(self, data: CastLineInput) -> dict:
@@ -136,8 +141,10 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                         enchant=fish.enchant,
                         bags=self._bags,
                     )
-                add_xp(user, 8)
-                add_battle_pass_xp(user, 5)
+                add_xp(user, 8, self._progress)
+                add_battle_pass_xp(
+                    user, 5, battle_pass=self._battle_pass, bags=self._bags
+                )
             user.save(update_fields=["fichas", "updated_at"])
             self._fishing.create_catch(
                 user=user, fish=fish, success=success, rod_level=rod.level

@@ -13,7 +13,6 @@ from apps.support.application.use_cases import (
     UpdateStaffTicketInput,
     UpdateStaffTicketUseCase,
 )
-from apps.support.presentation.views.shared import serialize_ticket
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -42,7 +41,7 @@ class StaffTicketListView(InjectedAPIView):
             )
         )
         return Response({
-            "results": [serialize_ticket(row, staff=True) for row in result.tickets],
+            "results": result.tickets,
             "summary": result.summary,
         })
 
@@ -64,7 +63,7 @@ class StaffTicketDetailView(InjectedAPIView):
     )
     def get(self, request, ticket_id):
         ticket = self.resolve(GetStaffTicketUseCase).execute(GetStaffTicketInput(ticket_id=ticket_id))
-        return Response(serialize_ticket(ticket, detail=True, staff=True))
+        return Response(ticket)
 
     @extend_schema(
         tags=["Staff - Atendimento"],
@@ -80,7 +79,7 @@ class StaffTicketDetailView(InjectedAPIView):
                 is_internal=bool(request.data.get("is_internal", False)),
             )
         )
-        return Response(serialize_ticket(ticket, detail=True, staff=True), status=status.HTTP_201_CREATED)
+        return Response(ticket, status=status.HTTP_201_CREATED)
 
     @extend_schema(
         tags=["Staff - Atendimento"],
@@ -100,4 +99,4 @@ class StaffTicketDetailView(InjectedAPIView):
                 update_assigned_to="assigned_to" in request.data,
             )
         )
-        return Response(serialize_ticket(ticket, detail=True, staff=True))
+        return Response(ticket)

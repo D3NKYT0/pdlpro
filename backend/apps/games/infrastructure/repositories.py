@@ -638,6 +638,27 @@ class DjangoBattlePassRepository(IBattlePassRepository):
             BattlePassLevel.objects.filter(season=season).prefetch_related("rewards")
         )
 
+    def list_levels_with_rewards(self, season) -> list[dict]:
+        levels = []
+        for row in BattlePassLevel.objects.filter(season=season).prefetch_related("rewards"):
+            levels.append(
+                {
+                    "level": row.level,
+                    "required_xp": row.required_xp,
+                    "rewards": list(row.rewards.all()),
+                }
+            )
+        return levels
+
+    def list_active_quests(self, season) -> list:
+        return list(season.quests.filter(active=True))
+
+    def list_active_exchanges(self, season) -> list:
+        return list(season.exchanges.filter(active=True))
+
+    def list_milestones(self, season) -> list:
+        return list(season.milestones.order_by("required_xp"))
+
     def list_claimed_reward_ids(self, user) -> set:
         return set(
             UserBattlePassClaim.objects.filter(user=user).values_list("reward_id", flat=True)

@@ -40,10 +40,11 @@ Direção das dependências para novos fluxos:
 - apresentação trata HTTP/WebSocket e delega a regra ao caso de uso;
 - consultas do banco Lineage ficam nos catálogos SQL da infraestrutura.
 
-A estrutura em camadas com DI cobre os apps de negócio. **Application e presentation não
-acessam ORM** (``.objects``): só portas injetadas e ``UnitOfWork``. Adaptadores Django ficam
-em ``infrastructure/``. Staff consome portas admin dos apps donos; autenticação resolve via
-``AccountsProvider``. Middleware de recursos usa ``ISystemResourceRepository``.
+A estrutura em camadas com DI cobre os apps de negócio. Application e presentation não
+acessam ORM nem importam ``infrastructure``: só portas/domain e ``UnitOfWork``. Adaptadores
+Django e middlewares de catálogo ficam em ``infrastructure/``. Staff consome portas admin dos
+apps donos; autenticação resolve ``IAuthSessionService``. Seeds de preview podem usar ORM
+direto (infraestrutura de comando).
 
 ## Injeção de dependência
 

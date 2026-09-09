@@ -18,44 +18,22 @@ from common.architecture.exceptions import (
 )
 
 
-def _resolve_operations(
-    operations: ICharacterServiceOperationRepository | None,
-) -> ICharacterServiceOperationRepository:
-    if operations is not None:
-        return operations
-    from common.di.bootstrap import DependencyInjection
-
-    return (
-        DependencyInjection.root()
-        .create_scope()
-        .resolve(ICharacterServiceOperationRepository)
-    )
-
-
-def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
-    if unit_of_work is not None:
-        return unit_of_work
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
-
-
 def settle_service(
     operation_id,
     *,
     completed,
     note,
     wallets: IWalletRepository,
-    operations: ICharacterServiceOperationRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    operations: ICharacterServiceOperationRepository,
+    unit_of_work: UnitOfWork,
 ):
     """Concilia uma reserva uma única vez; rejeição confirmada estorna o débito.
 
     Use somente após resposta inequívoca do gateway ou inspeção pela equipe no jogo.
     O chamador administrativo deve registrar a justificativa e nunca presumir falha por timeout.
     """
-    ops = _resolve_operations(operations)
-    work = _resolve_unit_of_work(unit_of_work)
+    ops = operations
+    work = unit_of_work
     with work:
         row = ops.get_locked(operation_id)
         if row.status != "pending":
@@ -82,14 +60,14 @@ def execute_paid_service(
     lineage,
     access,
     wallets,
-    operations: ICharacterServiceOperationRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    operations: ICharacterServiceOperationRepository,
+    unit_of_work: UnitOfWork,
 ):
     """Reserva e confirma uma operação; repetição não cobra nem chama o jogo novamente."""
     if price < 0:
         raise ValidationDomainError("Preço de serviço inválido.")
-    ops = _resolve_operations(operations)
-    work = _resolve_unit_of_work(unit_of_work)
+    ops = operations
+    work = unit_of_work
     request_key = actor.request_key or uuid4()
     with work:
         user = ops.require_user_locked(actor.user_id)

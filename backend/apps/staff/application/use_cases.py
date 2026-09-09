@@ -8,8 +8,8 @@ from django.utils.text import slugify
 from apps.content.domain.repositories import INewsAdminRepository
 from apps.games.domain.repositories import IGameConfigAdminRepository
 from apps.server.application.use_cases import GetServerInfoUseCase
+from apps.server.domain.item_catalog import IItemDisplayName
 from apps.server.domain.repositories import IIndexConfigRepository, IServicePriceRepository
-from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.shop.domain.repositories import IShopItemAdminRepository
 from apps.wallet.domain.repositories import ICoinAdminRepository
 from common.architecture.base import UseCase
@@ -257,15 +257,16 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
-    def __init__(self, coins: ICoinAdminRepository) -> None:
+    def __init__(self, coins: ICoinAdminRepository, item_names: IItemDisplayName) -> None:
         self._coins = coins
+        self._item_names = item_names
 
     def execute(self, data: dict) -> dict:
         row = self._coins.get_coin_config()
         if row is None:
             row = self._coins.new_coin_config(name="Adena")
         row.coin_id = int(data.get("coin_id") or row.coin_id or 57)
-        row.name = item_display_name(row.coin_id)
+        row.name = self._item_names.display_name(row.coin_id)
         row.multiplier = Decimal(str(data.get("multiplier") or row.multiplier or "1"))
         row.usd_multiplier = Decimal(str(data.get("usd_multiplier") or row.usd_multiplier or "5"))
         row.withdraw_fee_percent = Decimal(str(data.get("withdraw_fee_percent") or row.withdraw_fee_percent or "0"))
@@ -349,14 +350,15 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
-    def __init__(self, shop_items: IShopItemAdminRepository) -> None:
+    def __init__(self, shop_items: IShopItemAdminRepository, item_names: IItemDisplayName) -> None:
         self._shop_items = shop_items
+        self._item_names = item_names
 
     def execute(self, data: dict) -> dict:
         item_id = int(data.get("item_id") or 0)
         if item_id <= 0:
             raise ValidationDomainError("Informe o ID do item no jogo.")
-        name = item_display_name(item_id)
+        name = self._item_names.display_name(item_id)
         price = Decimal(str(data.get("price") or "0"))
         quantity = int(data.get("quantity") or 1)
         active = bool(data.get("active", True))

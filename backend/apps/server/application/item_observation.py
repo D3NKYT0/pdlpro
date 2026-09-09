@@ -7,17 +7,17 @@ from typing import Any
 from uuid import UUID
 
 from django.conf import settings
-from django.db import IntegrityError
 from django.utils import timezone
 
-from apps.server.domain.gateways import ILineageGateway
-from apps.server.domain.repositories import IItemObservationRepository
-from apps.server.infrastructure.lineage.item_catalog import item_display_name
-from apps.server.infrastructure.lineage.item_catalog import (
-    item_metadata as catalog_metadata,
+from apps.server.application.item_catalog_use_cases import (
+    serialize_observation_category,
+    serialize_observation_snapshot,
 )
+from apps.server.domain.gateways import ILineageGateway
+from apps.server.domain.item_catalog import IItemCatalog
+from apps.server.domain.repositories import IItemObservationRepository
 from common.architecture.base import UseCase
-from common.architecture.exceptions import DomainError, EntityNotFoundError
+from common.architecture.exceptions import ConflictError, DomainError, EntityNotFoundError
 
 
 class ObservationUnavailable(DomainError):
@@ -90,8 +90,8 @@ def observation_source() -> str:
     )
 
 
-def item_metadata(item_id: int) -> dict:
-    item = catalog_metadata(item_id)
+def item_metadata(catalog: IItemCatalog, item_id: int) -> dict:
+    item = catalog.metadata(item_id)
     return {
         "catalog_found": item["catalog_found"],
         "item_type": item["category"],
@@ -116,15 +116,19 @@ def _paginate(rows: list, page_number: int, page_size: int, serialize=lambda row
     }
 
 
-def _serialize_item_row(row: dict) -> dict:
+def _serialize_item_row(catalog: IItemCatalog, row: dict) -> dict:
     return {
         **row,
-        **item_metadata(row["item_id"]),
+        **item_metadata(catalog, row["item_id"]),
         **{key: str(row[key]) for key in ("quantity", "instances", "unique_owners")},
     }
 
 
-def read_observation(gateway: ILineageGateway, observation: IItemObservationRepository) -> dict:
+def read_observation(
+    gateway: ILineageGateway,
+    observation: IItemObservationRepository,
+    catalog: IItemCatalog,
+) -> dict:
     if not settings.LINEAGE_DB_ENABLED:
         raise ObservationUnavailable(
             "O banco L2 está desativado. Ative LINEAGE_DB_ENABLED para consultar os itens."
@@ -137,7 +141,7 @@ def read_observation(gateway: ILineageGateway, observation: IItemObservationRepo
         return {
             **row,
             "item_id": item_id,
-            "item_name": item_display_name(item_id),
+            "item_name": catalog.display_name(item_id),
             "category_name": categories.get(item_id, ""),
             **{key: int(row[key] or 0) for key in ("quantity", "instances", "unique_owners")},
         }
@@ -169,11 +173,12 @@ def capture_snapshot(
     notes: str = "",
     *,
     observation: IItemObservationRepository,
+    catalog: IItemCatalog,
 ) -> Any:
     source, today = observation_source(), timezone.localdate()
     if observation.snapshot_exists_for_day(source=source, snapshot_date=today):
         raise ObservationUnavailable("Já existe um snapshot de hoje para esta origem.")
-    data = read_observation(gateway, observation)
+    data = read_observation(gateway, observation, catalog)
     try:
         return observation.create_snapshot_with_details(
             source=source,
@@ -186,7 +191,7 @@ def capture_snapshot(
             },
             details=data["details"],
         )
-    except IntegrityError:
+    except ConflictError:
         if observation.snapshot_exists_for_day(source=source, snapshot_date=today):
             raise ObservationUnavailable("Já existe um snapshot de hoje para esta origem.") from None
         raise
@@ -229,12 +234,18 @@ class ListLiveObservationUseCase(UseCase[LiveObservationInput, dict]):
     Uso: resolva pelo container e chame ``execute`` com ``LiveObservationInput``.
     """
 
-    def __init__(self, gateway: ILineageGateway, observation: IItemObservationRepository) -> None:
+    def __init__(
+        self,
+        gateway: ILineageGateway,
+        observation: IItemObservationRepository,
+        catalog: IItemCatalog,
+    ) -> None:
         self._gateway = gateway
         self._observation = observation
+        self._catalog = catalog
 
     def execute(self, data: LiveObservationInput) -> dict:
-        raw = read_observation(self._gateway, self._observation)
+        raw = read_observation(self._gateway, self._observation, self._catalog)
         favorites = self._observation.list_favorite_item_ids(user_id=data.user_id, source=raw["source"])
         rows = list(raw["items"])
         present = {row["item_id"] for row in rows}
@@ -242,7 +253,7 @@ class ListLiveObservationUseCase(UseCase[LiveObservationInput, dict]):
             rows.append(
                 {
                     "item_id": item_id,
-                    "item_name": item_display_name(item_id),
+                    "item_name": self._catalog.display_name(item_id),
                     "quantity": 0,
                     "instances": 0,
                     "unique_owners": 0,
@@ -268,7 +279,9 @@ class ListLiveObservationUseCase(UseCase[LiveObservationInput, dict]):
         )
         categories = self._observation.list_categories()
         return {
-            **_paginate(rows, data.page, data.page_size, _serialize_item_row),
+            **_paginate(
+                rows, data.page, data.page_size, lambda row: _serialize_item_row(self._catalog, row)
+            ),
             "source": raw["source"],
             "totals": {
                 key: str(raw[key])
@@ -278,7 +291,7 @@ class ListLiveObservationUseCase(UseCase[LiveObservationInput, dict]):
                 {**row, "quantity": str(row["quantity"]), "instances": str(row["instances"])}
                 for row in raw["locations"]
             ],
-            "categories": categories,
+            "categories": [serialize_observation_category(row) for row in categories],
         }
 
 
@@ -305,27 +318,44 @@ class ListObservationSnapshotsUseCase(UseCase[PageInput, dict]):
 
     def execute(self, data: PageInput) -> dict:
         rows = self._observation.list_snapshots()
-        return _paginate(rows, data.page, data.page_size)
+        return _paginate(
+            rows,
+            data.page,
+            data.page_size,
+            serialize_observation_snapshot,
+        )
 
 
 class CaptureObservationSnapshotUseCase(UseCase[CaptureSnapshotInput, Any]):
     """Captura o estado atual da observação e persiste um novo snapshot."""
 
-    def __init__(self, gateway: ILineageGateway, observation: IItemObservationRepository) -> None:
+    def __init__(
+        self,
+        gateway: ILineageGateway,
+        observation: IItemObservationRepository,
+        catalog: IItemCatalog,
+    ) -> None:
         self._gateway = gateway
         self._observation = observation
+        self._catalog = catalog
 
-    def execute(self, data: CaptureSnapshotInput) -> Any:
-        return capture_snapshot(
-            self._gateway, data.user, data.notes, observation=self._observation
+    def execute(self, data: CaptureSnapshotInput) -> dict:
+        snapshot = capture_snapshot(
+            self._gateway,
+            data.user,
+            data.notes,
+            observation=self._observation,
+            catalog=self._catalog,
         )
+        return serialize_observation_snapshot(snapshot)
 
 
 class GetObservationSnapshotUseCase(UseCase[SnapshotDetailInput, dict]):
     """Retorna metadados e detalhes paginados de uma captura."""
 
-    def __init__(self, observation: IItemObservationRepository) -> None:
+    def __init__(self, observation: IItemObservationRepository, catalog: IItemCatalog) -> None:
         self._observation = observation
+        self._catalog = catalog
 
     def execute(self, data: SnapshotDetailInput) -> dict:
         snapshot = self._observation.get_snapshot(data.snapshot_id)
@@ -335,7 +365,7 @@ class GetObservationSnapshotUseCase(UseCase[SnapshotDetailInput, dict]):
 
         def serialize(row):
             return {
-                **item_metadata(row.item_id),
+                **item_metadata(self._catalog, row.item_id),
                 "item_id": row.item_id,
                 "item_name": row.item_name,
                 "category_name": row.category_name,
@@ -345,7 +375,10 @@ class GetObservationSnapshotUseCase(UseCase[SnapshotDetailInput, dict]):
                 "unique_owners": str(row.unique_owners),
             }
 
-        return {"snapshot": snapshot, **_paginate(details, data.page, data.page_size, serialize)}
+        return {
+            "snapshot": serialize_observation_snapshot(snapshot),
+            **_paginate(details, data.page, data.page_size, serialize),
+        }
 
 
 class DeleteObservationSnapshotUseCase(UseCase[UUID, None]):
@@ -362,8 +395,9 @@ class DeleteObservationSnapshotUseCase(UseCase[UUID, None]):
 class CompareObservationSnapshotsUseCase(UseCase[CompareSnapshotsInput, dict]):
     """Compara duas capturas e pagina as diferenças encontradas."""
 
-    def __init__(self, observation: IItemObservationRepository) -> None:
+    def __init__(self, observation: IItemObservationRepository, catalog: IItemCatalog) -> None:
         self._observation = observation
+        self._catalog = catalog
 
     def execute(self, data: CompareSnapshotsInput) -> dict:
         before = self._observation.get_snapshot(data.before_id)
@@ -375,7 +409,7 @@ class CompareObservationSnapshotsUseCase(UseCase[CompareSnapshotsInput, dict]):
         def serialize(row):
             return {
                 **row,
-                **item_metadata(row["item_id"]),
+                **item_metadata(self._catalog, row["item_id"]),
                 "before": str(row["before"]),
                 "after": str(row["after"]),
                 "change": str(row["change"]),
@@ -383,47 +417,52 @@ class CompareObservationSnapshotsUseCase(UseCase[CompareSnapshotsInput, dict]):
             }
 
         return {
-            "before": before,
-            "after": after,
+            "before": serialize_observation_snapshot(before),
+            "after": serialize_observation_snapshot(after),
             **_paginate(rows, data.page, data.page_size, serialize),
         }
 
 
-class ListObservationCategoriesUseCase(UseCase[None, list[Any]]):
+class ListObservationCategoriesUseCase(UseCase[None, list[dict]]):
     """Lista categorias usadas para organizar a observação de itens."""
 
     def __init__(self, observation: IItemObservationRepository) -> None:
         self._observation = observation
 
-    def execute(self, data: None = None) -> list[Any]:
-        return self._observation.list_categories()
+    def execute(self, data: None = None) -> list[dict]:
+        return [
+            serialize_observation_category(row)
+            for row in self._observation.list_categories()
+        ]
 
 
-class GetObservationCategoryUseCase(UseCase[UUID, Any]):
+class GetObservationCategoryUseCase(UseCase[UUID, dict]):
     """Retorna uma categoria de observação pelo UUID público."""
 
     def __init__(self, observation: IItemObservationRepository) -> None:
         self._observation = observation
 
-    def execute(self, data: UUID) -> Any:
+    def execute(self, data: UUID) -> dict:
         row = self._observation.get_category(data)
         if row is None:
             raise EntityNotFoundError("Categoria de observação não encontrada.")
-        return row
+        return serialize_observation_category(row)
 
 
-class UpsertObservationCategoryUseCase(UseCase[UpsertCategoryInput, Any]):
+class UpsertObservationCategoryUseCase(UseCase[UpsertCategoryInput, dict]):
     """Cria ou atualiza uma categoria de observação."""
 
     def __init__(self, observation: IItemObservationRepository) -> None:
         self._observation = observation
 
-    def execute(self, data: UpsertCategoryInput) -> Any:
+    def execute(self, data: UpsertCategoryInput) -> dict:
         if data.category_id is None:
-            return self._observation.create_category(data.validated_data)
-        if self._observation.get_category(data.category_id) is None:
-            raise EntityNotFoundError("Categoria de observação não encontrada.")
-        return self._observation.update_category(data.category_id, data.validated_data)
+            row = self._observation.create_category(data.validated_data)
+        else:
+            if self._observation.get_category(data.category_id) is None:
+                raise EntityNotFoundError("Categoria de observação não encontrada.")
+            row = self._observation.update_category(data.category_id, data.validated_data)
+        return serialize_observation_category(row)
 
 
 class DeleteObservationCategoryUseCase(UseCase[UUID, None]):

@@ -134,6 +134,12 @@ class ICustomItemRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def item_id_taken(self, item_id: int, *, exclude_id: UUID | None = None) -> bool:
+        """Indica se o ID numérico do jogo já está cadastrado."""
+
+        raise NotImplementedError
+
+    @abstractmethod
     def new(self) -> Any:
         """Instancia um item customizado ainda não persistido."""
 
@@ -141,7 +147,10 @@ class ICustomItemRepository(ABC):
 
     @abstractmethod
     def save(self, row: Any) -> Any:
-        """Persiste o item e devolve a linha salva. Pode levantar IntegrityError."""
+        """Persiste o item e devolve a linha salva.
+
+        Em conflito de ``item_id`` único, o adaptador levanta ``ConflictError``.
+        """
 
         raise NotImplementedError
 

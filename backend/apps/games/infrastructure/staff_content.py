@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from apps.games.domain.game_content import GAME_CONTENT_FIELDS
 from apps.games.infrastructure.models import (
     BattlePassExchange,
     BattlePassLevel,
@@ -14,45 +15,19 @@ from apps.games.infrastructure.models import (
 )
 
 CONFIG_MODELS = {
-    "seasons": (
-        BattlePassSeason,
-        ["name", "starts_at", "ends_at", "active", "premium_price"],
-    ),
-    "levels": (BattlePassLevel, ["season", "level", "required_xp"]),
-    "rewards": (
-        BattlePassReward,
-        [
-            "level_row",
-            "is_premium",
-            "item_id",
-            "item_name",
-            "enchant",
-            "quantity",
-            "description",
-        ],
-    ),
-    "quests": (
-        BattlePassQuest,
-        ["season", "name", "description", "event", "target", "xp", "period", "active"],
-    ),
-    "exchanges": (
-        BattlePassExchange,
-        [
-            "season",
-            "name",
-            "required_item_id",
-            "required_enchant",
-            "required_quantity",
-            "rewards",
-            "limit_per_user",
-            "active",
-        ],
-    ),
-    "milestones": (BattlePassMilestone, ["season", "name", "required_xp", "rewards"]),
-    "daily-seasons": (DailyBonusSeason, ["name", "starts_on", "ends_on", "active"]),
-    "daily-days": (DailyBonusDay, ["season", "day", "rewards"]),
-    "daily-pool": (DailyBonusPoolEntry, ["season", "name", "weight", "rewards"]),
-    "baits": (FishingBait, ["name", "description", "price", "success_bonus", "active"]),
+    kind: (model, list(GAME_CONTENT_FIELDS[kind]))
+    for kind, model in (
+        ("seasons", BattlePassSeason),
+        ("levels", BattlePassLevel),
+        ("rewards", BattlePassReward),
+        ("quests", BattlePassQuest),
+        ("exchanges", BattlePassExchange),
+        ("milestones", BattlePassMilestone),
+        ("daily-seasons", DailyBonusSeason),
+        ("daily-days", DailyBonusDay),
+        ("daily-pool", DailyBonusPoolEntry),
+        ("baits", FishingBait),
+    )
 }
 
 

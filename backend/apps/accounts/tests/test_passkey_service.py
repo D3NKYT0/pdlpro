@@ -12,9 +12,71 @@ from webauthn.helpers.exceptions import (
 )
 
 from apps.accounts.application import webauthn_service as service
+from apps.accounts.application.webauthn_service import (
+    BeginPasskeyAuthenticationInput,
+    BeginPasskeyAuthenticationUseCase,
+    BeginPasskeyRegistrationInput,
+    BeginPasskeyRegistrationUseCase,
+    CompletePasskeyAuthenticationInput,
+    CompletePasskeyAuthenticationUseCase,
+    CompletePasskeyRegistrationInput,
+    CompletePasskeyRegistrationUseCase,
+)
+from apps.accounts.domain.exceptions import WebAuthnError
 from apps.accounts.infrastructure.models import WebAuthnCredential
+from common.di.bootstrap import DependencyInjection
 
 pytestmark = pytest.mark.django_db
+
+
+def begin_registration(user, nickname: str = "") -> dict:
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginPasskeyRegistrationUseCase)
+        .execute(
+            BeginPasskeyRegistrationInput(
+                user_id=user.id,
+                username=user.username,
+                display_name=user.display_name or user.username,
+                nickname=nickname,
+            )
+        )
+    )
+
+
+def complete_registration(user, state: str, credential: dict, nickname: str = ""):
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompletePasskeyRegistrationUseCase)
+        .execute(
+            CompletePasskeyRegistrationInput(
+                user_id=user.id,
+                state=state,
+                credential=credential,
+                nickname=nickname,
+            )
+        )
+    )
+
+
+def begin_authentication(login: str = "") -> dict:
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginPasskeyAuthenticationUseCase)
+        .execute(BeginPasskeyAuthenticationInput(login=login))
+    )
+
+
+def complete_authentication(state: str, credential: dict):
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompletePasskeyAuthenticationUseCase)
+        .execute(CompletePasskeyAuthenticationInput(state=state, credential=credential))
+    )
 
 
 @pytest.fixture
@@ -27,54 +89,89 @@ def owner(settings):
 
 @pytest.fixture
 def key(owner):
-    return WebAuthnCredential.objects.create(user=owner, credential_id=b"credential", public_key=b"public-key", sign_count=3, transports=["internal"])
+    return WebAuthnCredential.objects.create(
+        user=owner,
+        credential_id=b"credential",
+        public_key=b"public-key",
+        sign_count=3,
+        transports=["internal"],
+    )
 
 
 def test_registration_verifies_binding_and_persists_public_credential(owner, mocker):
-    verify = mocker.patch.object(service, "verify_registration_response", return_value=SimpleNamespace(credential_id=b"new-key", credential_public_key=b"public-key", sign_count=0, aaguid=None))
-    begin = service.begin_registration(owner, "Laptop")
-    result = service.complete_registration(owner, begin["state"], {"response": {"transports": ["internal"]}})
+    verify = mocker.patch.object(
+        service,
+        "verify_registration_response",
+        return_value=SimpleNamespace(
+            credential_id=b"new-key",
+            credential_public_key=b"public-key",
+            sign_count=0,
+            aaguid=None,
+        ),
+    )
+    begin = begin_registration(owner, "Laptop")
+    result = complete_registration(
+        owner, begin["state"], {"response": {"transports": ["internal"]}}
+    )
     assert result.user_id == owner.id
     assert result.nickname == "Laptop"
     assert bytes(result.credential_id) == b"new-key"
-    assert verify.call_args.kwargs["expected_challenge"] == base64url_to_bytes(begin["options"]["challenge"])
+    assert verify.call_args.kwargs["expected_challenge"] == base64url_to_bytes(
+        begin["options"]["challenge"]
+    )
     assert verify.call_args.kwargs["expected_rp_id"] == "test.dev"
     assert verify.call_args.kwargs["expected_origin"] == ["https://test.dev"]
     assert verify.call_args.kwargs["require_user_verification"] is True
-    with pytest.raises(service.WebAuthnError):
-        service.complete_registration(owner, begin["state"], {})
+    with pytest.raises(WebAuthnError):
+        complete_registration(owner, begin["state"], {})
     verify.assert_called_once()
 
 
 def test_registration_cannot_use_another_users_challenge(owner, mocker):
     other = get_user_model().objects.create_user(username="other", email="other@test.dev")
     verify = mocker.patch.object(service, "verify_registration_response")
-    begin = service.begin_registration(owner)
-    with pytest.raises(service.WebAuthnError):
-        service.complete_registration(other, begin["state"], {})
+    begin = begin_registration(owner)
+    with pytest.raises(WebAuthnError):
+        complete_registration(other, begin["state"], {})
     verify.assert_not_called()
     assert not WebAuthnCredential.objects.exists()
 
 
 @pytest.mark.parametrize("login", ["PASSKEY", "PASSKEY@TEST.DEV", ""])
 def test_authentication_updates_sign_count_and_consumes_challenge(owner, key, mocker, login):
-    verify = mocker.patch.object(service, "verify_authentication_response", return_value=SimpleNamespace(new_sign_count=4))
-    begin = service.begin_authentication(login)
-    result = service.complete_authentication(begin["state"], {"rawId": bytes_to_base64url(b"credential")})
+    verify = mocker.patch.object(
+        service,
+        "verify_authentication_response",
+        return_value=SimpleNamespace(new_sign_count=4),
+    )
+    begin = begin_authentication(login)
+    result = complete_authentication(
+        begin["state"], {"rawId": bytes_to_base64url(b"credential")}
+    )
     assert result == owner
     key.refresh_from_db()
     assert key.sign_count == 4
     assert key.last_used_at is not None
     assert verify.call_args.kwargs["credential_current_sign_count"] == 3
     assert verify.call_args.kwargs["require_user_verification"] is True
-    with pytest.raises(service.WebAuthnError):
-        service.complete_authentication(begin["state"], {"id": bytes_to_base64url(b"credential")})
+    with pytest.raises(WebAuthnError):
+        complete_authentication(
+            begin["state"], {"id": bytes_to_base64url(b"credential")}
+        )
 
 
-@pytest.mark.parametrize("reason", ["unknown-key", "inactive", "other-user", "wrong-kind", "expired"])
+@pytest.mark.parametrize(
+    "reason", ["unknown-key", "inactive", "other-user", "wrong-kind", "expired"]
+)
 def test_invalid_authentication_never_reaches_crypto_verifier(owner, key, mocker, reason):
     other = get_user_model().objects.create_user(username="other", email="other@test.dev")
-    begin = service.begin_registration(owner) if reason == "wrong-kind" else service.begin_authentication(other.username if reason == "other-user" else owner.username)
+    begin = (
+        begin_registration(owner)
+        if reason == "wrong-kind"
+        else begin_authentication(
+            other.username if reason == "other-user" else owner.username
+        )
+    )
     if reason == "inactive":
         owner.is_active = False
         owner.save()
@@ -82,23 +179,25 @@ def test_invalid_authentication_never_reaches_crypto_verifier(owner, key, mocker
         cache.clear()
     verify = mocker.patch.object(service, "verify_authentication_response")
     raw_id = b"missing" if reason == "unknown-key" else b"credential"
-    with pytest.raises(service.WebAuthnError):
-        service.complete_authentication(begin["state"], {"id": bytes_to_base64url(raw_id)})
+    with pytest.raises(WebAuthnError):
+        complete_authentication(begin["state"], {"id": bytes_to_base64url(raw_id)})
     verify.assert_not_called()
     key.refresh_from_db()
     assert key.sign_count == 3
 
 
 def test_registration_excludes_existing_keys(owner, key):
-    begin = service.begin_registration(owner)
-    assert begin["options"]["excludeCredentials"][0]["id"] == bytes_to_base64url(b"credential")
+    begin = begin_registration(owner)
+    assert begin["options"]["excludeCredentials"][0]["id"] == bytes_to_base64url(
+        b"credential"
+    )
     assert begin["options"]["excludeCredentials"][0]["transports"] == ["internal"]
 
 
 def test_unknown_transport_does_not_break_options(owner, key):
     key.transports = ["internal", "future-transport", None]
     key.save()
-    begin = service.begin_authentication(owner.username)
+    begin = begin_authentication(owner.username)
     assert begin["options"]["allowCredentials"][0]["transports"] == ["internal"]
 
 
@@ -116,17 +215,36 @@ def test_passkey_delete_is_private(owner, key):
 def test_invalid_registration_signature_returns_400(owner, mocker):
     client = APIClient()
     client.force_authenticate(owner)
-    begin = service.begin_registration(owner)
-    mocker.patch.object(service, "verify_registration_response", side_effect=InvalidRegistrationResponse("bad signature"))
-    response = client.post("/api/v1/auth/passkeys/register/complete/", {"state": begin["state"], "credential": {"id": "bad"}}, format="json")
+    begin = begin_registration(owner)
+    mocker.patch.object(
+        service,
+        "verify_registration_response",
+        side_effect=InvalidRegistrationResponse("bad signature"),
+    )
+    response = client.post(
+        "/api/v1/auth/passkeys/register/complete/",
+        {"state": begin["state"], "credential": {"id": "bad"}},
+        format="json",
+    )
     assert response.status_code == 400
     assert not WebAuthnCredential.objects.exists()
 
 
 def test_invalid_authentication_signature_returns_401(owner, key, mocker):
-    begin = service.begin_authentication(owner.username)
-    mocker.patch.object(service, "verify_authentication_response", side_effect=InvalidAuthenticationResponse("bad signature"))
-    response = APIClient().post("/api/v1/auth/passkeys/login/complete/", {"state": begin["state"], "credential": {"id": bytes_to_base64url(b"credential")}}, format="json")
+    begin = begin_authentication(owner.username)
+    mocker.patch.object(
+        service,
+        "verify_authentication_response",
+        side_effect=InvalidAuthenticationResponse("bad signature"),
+    )
+    response = APIClient().post(
+        "/api/v1/auth/passkeys/login/complete/",
+        {
+            "state": begin["state"],
+            "credential": {"id": bytes_to_base64url(b"credential")},
+        },
+        format="json",
+    )
     assert response.status_code == 401
     assert not response.cookies
     key.refresh_from_db()

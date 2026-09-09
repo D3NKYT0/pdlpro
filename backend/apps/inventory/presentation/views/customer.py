@@ -21,7 +21,10 @@ from apps.inventory.presentation.serializers import (
     TradeSerializer,
     WithdrawSerializer,
 )
-from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
+from apps.server.application.item_catalog_use_cases import (
+    ItemIsTradeableUseCase,
+    ItemTradeableInput,
+)
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
@@ -91,9 +94,10 @@ class CharacterItemsView(ItemCatalogAPIView):
         login = request.query_params.get("login") or request.user.username
         items = self.resolve(ListGameItemsUseCase).execute((inventory_actor(request, login), char_id))
         payload = []
+        tradeable = self.resolve(ItemIsTradeableUseCase)
         for item in items:
             row = asdict(item)
-            row["tradeable"] = item_is_tradeable(item.item_id)
+            row["tradeable"] = tradeable.execute(ItemTradeableInput(item_id=item.item_id))
             payload.append(row)
         return Response(payload)
 

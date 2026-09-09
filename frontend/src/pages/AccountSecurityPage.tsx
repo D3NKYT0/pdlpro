@@ -171,34 +171,36 @@ export function AccountSecurityPage() {
           </div>
         </Card>
 
-        <Card className="security-card">
-          <header><span><MailCheck /></span><div><h2>Verificação de e-mail</h2><p>{user?.email}</p></div><b className={user?.is_email_verified ? 'is-on' : 'is-off'}>{user?.is_email_verified ? 'Verificado' : 'Pendente'}</b></header>
-          <p className="muted">Necessária para recuperar a conta e confirmar ações sensíveis.</p>
-          {!user?.is_email_verified ? <Button type="submit" disabled={busy === 'email'} onClick={() => void requestVerification()}><MailCheck /> Reenviar verificação</Button> : <div className="security-success"><BadgeCheck /> Identidade de e-mail confirmada</div>}
-        </Card>
+        <div className="security-side">
+          <Card className="security-card security-email">
+            <header><span><MailCheck /></span><div><h2>Verificação de e-mail</h2><p>{user?.email}</p></div><b className={user?.is_email_verified ? 'is-on' : 'is-off'}>{user?.is_email_verified ? 'Verificado' : 'Pendente'}</b></header>
+            <p className="muted">Necessária para recuperar a conta e confirmar ações sensíveis.</p>
+            {!user?.is_email_verified ? <Button type="submit" disabled={busy === 'email'} onClick={() => void requestVerification()}><MailCheck /> Reenviar verificação</Button> : <div className="security-success"><BadgeCheck /> Identidade de e-mail confirmada</div>}
+          </Card>
 
-        <Card className="security-card">
-          <header><span><KeyRound /></span><div><h2>Autenticação em duas etapas</h2><p>Aplicativo autenticador (TOTP)</p></div><b className={user?.is_2fa_enabled ? 'is-on' : 'is-off'}>{user?.is_2fa_enabled ? 'Ativo' : 'Inativo'}</b></header>
-          {!user?.is_2fa_enabled && !secret ? <Button type="submit" className="security-2fa-start" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> Ativar 2FA</Button> : null}
-          {secret ? <div className="security-secret"><span>Chave do autenticador</span><strong>{secret}</strong><small>Guarde em local seguro e adicione ao Google Authenticator, Authy ou similar.</small></div> : null}
-          {(secret || user?.is_2fa_enabled) ? <form className="security-inline-form" onSubmit={submit2fa}><Field>Código de 6 dígitos<input value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" required /></Field><Button type="submit" disabled={busy === '2fa'}>{user?.is_2fa_enabled ? 'Desativar 2FA' : 'Confirmar ativação'}</Button></form> : null}
-        </Card>
+          <Card className="security-card">
+            <header><span><KeyRound /></span><div><h2>Autenticação em duas etapas</h2><p>Aplicativo autenticador (TOTP)</p></div><b className={user?.is_2fa_enabled ? 'is-on' : 'is-off'}>{user?.is_2fa_enabled ? 'Ativo' : 'Inativo'}</b></header>
+            {!user?.is_2fa_enabled && !secret ? <Button type="submit" className="security-2fa-start" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> Ativar 2FA</Button> : null}
+            {secret ? <div className="security-secret"><span>Chave do autenticador</span><strong>{secret}</strong><small>Guarde em local seguro e adicione ao Google Authenticator, Authy ou similar.</small></div> : null}
+            {(secret || user?.is_2fa_enabled) ? <form className="security-inline-form" onSubmit={submit2fa}><Field>Código de 6 dígitos<input value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" required /></Field><Button type="submit" disabled={busy === '2fa'}>{user?.is_2fa_enabled ? 'Desativar 2FA' : 'Confirmar ativação'}</Button></form> : null}
+          </Card>
 
-        <Card className="security-card security-passkeys">
-          <header><span><Fingerprint /></span><div><h2>Chaves de acesso</h2><p>Passkey, biometria ou PIN do dispositivo</p></div><b className={passkeys.data?.length ? 'is-on' : 'is-off'}>{passkeys.data?.length ?? 0}</b></header>
-          <div className="security-add-passkey"><Field>Nome do dispositivo<input value={nickname} maxLength={64} onChange={(event) => setNickname(event.target.value)} /></Field><Button type="submit" disabled={busy === 'passkey'} onClick={() => void addPasskey()}><Fingerprint /> Adicionar passkey</Button></div>
-          <div className="security-passkey-list">
-            {(passkeys.data ?? []).map((row) => <article key={row.id}><Fingerprint /><span><strong>{row.nickname || 'Chave de acesso'}</strong><small>Criada em {new Date(row.created_at).toLocaleDateString('pt-BR')}</small></span><button type="button" title="Remover chave" onClick={() => void removePasskey(row.id)}><Trash2 /></button></article>)}
-            {!passkeys.data?.length ? <p className="muted">Nenhuma chave cadastrada. Depois de adicionar, você poderá entrar sem senha.</p> : null}
-          </div>
-        </Card>
+          <Card className="security-card security-passkeys">
+            <header><span><Fingerprint /></span><div><h2>Chaves de acesso</h2><p>Passkey, biometria ou PIN do dispositivo</p></div><b className={passkeys.data?.length ? 'is-on' : 'is-off'}>{passkeys.data?.length ?? 0}</b></header>
+            <div className="security-add-passkey"><Field>Nome do dispositivo<input value={nickname} maxLength={64} onChange={(event) => setNickname(event.target.value)} /></Field><Button type="submit" disabled={busy === 'passkey'} onClick={() => void addPasskey()}><Fingerprint /> Adicionar passkey</Button></div>
+            <div className="security-passkey-list">
+              {(passkeys.data ?? []).map((row) => <article key={row.id}><Fingerprint /><span><strong>{row.nickname || 'Chave de acesso'}</strong><small>Criada em {new Date(row.created_at).toLocaleDateString('pt-BR')}</small></span><button type="button" title="Remover chave" onClick={() => void removePasskey(row.id)}><Trash2 /></button></article>)}
+              {!passkeys.data?.length ? <p className="muted">Nenhuma chave cadastrada. Depois de adicionar, você poderá entrar sem senha.</p> : null}
+            </div>
+          </Card>
 
-        <Card className="security-card security-connections">
-          <header><span><Link2 /></span><div><h2>Contas conectadas</h2><p>Outras formas de entrar</p></div></header>
-          <div className="security-provider"><GoogleIcon /><span><strong>Google</strong><small>{googleConnected ? 'Conta conectada' : capabilities.data?.google ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><Button type="submit" className="ghost" disabled={googleConnected || !capabilities.data?.google} onClick={() => void beginOAuth('google', 'link')}>{googleConnected ? 'Conectado' : 'Conectar'}</Button></div>
-          <div className="security-provider"><DiscordIcon /><span><strong>Discord</strong><small>{discordConnected ? 'Conta conectada' : capabilities.data?.discord ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><Button type="submit" className="ghost" disabled={discordConnected || !capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'link')}>{discordConnected ? 'Conectado' : 'Conectar'}</Button></div>
-          <div className="security-provider"><ShieldCheck /><span><strong>CAPTCHA adaptativo</strong><small>{capabilities.data?.captcha ? 'Proteção ativa após tentativas suspeitas' : 'Configure as chaves hCaptcha no ambiente'}</small></span><b className={capabilities.data?.captcha ? 'is-on' : 'is-off'}>{capabilities.data?.captcha ? 'Ativo' : 'Configurar'}</b></div>
-        </Card>
+          <Card className="security-card security-connections">
+            <header><span><Link2 /></span><div><h2>Contas conectadas</h2><p>Outras formas de entrar</p></div></header>
+            <div className="security-provider"><GoogleIcon /><span><strong>Google</strong><small>{googleConnected ? 'Conta conectada' : capabilities.data?.google ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><Button type="submit" className="ghost" disabled={googleConnected || !capabilities.data?.google} onClick={() => void beginOAuth('google', 'link')}>{googleConnected ? 'Conectado' : 'Conectar'}</Button></div>
+            <div className="security-provider"><DiscordIcon /><span><strong>Discord</strong><small>{discordConnected ? 'Conta conectada' : capabilities.data?.discord ? 'Disponível para conexão' : 'Aguardando credenciais do servidor'}</small></span><Button type="submit" className="ghost" disabled={discordConnected || !capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'link')}>{discordConnected ? 'Conectado' : 'Conectar'}</Button></div>
+            <div className="security-provider"><ShieldCheck /><span><strong>CAPTCHA adaptativo</strong><small>{capabilities.data?.captcha ? 'Proteção ativa após tentativas suspeitas' : 'Configure as chaves hCaptcha no ambiente'}</small></span><b className={capabilities.data?.captcha ? 'is-on' : 'is-off'}>{capabilities.data?.captcha ? 'Ativo' : 'Configurar'}</b></div>
+          </Card>
+        </div>
       </div>
     </div>
   )

@@ -5,12 +5,15 @@ from typing import Any
 from uuid import UUID
 
 from apps.games.application.rewards import validate_rewards
+from apps.games.application.staff_content_schema import (
+    RELATED_FIELDS,
+    get_config_fields,
+    known_content_kind,
+    serialize_game_content_row,
+)
 from apps.games.domain.repositories import IGameContentAdminRepository
-from apps.games.infrastructure.staff_content import CONFIG_MODELS, get_config_fields
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
-
-_RELATED_FIELDS = frozenset({"season", "level_row"})
 
 
 def validate_game_content_fields(
@@ -30,7 +33,7 @@ def validate_game_content_fields(
     if content is not None:
         fields = get_config_fields(kind) or []
         for field_name in fields:
-            if field_name not in _RELATED_FIELDS or field_name not in data:
+            if field_name not in RELATED_FIELDS or field_name not in data:
                 continue
             value = data[field_name]
             if value is None or not isinstance(value, UUID):
@@ -44,7 +47,11 @@ def validate_game_content_fields(
             data[field_name] = related
 
     def value(key):
-        return data.get(key, getattr(instance, key, None) if instance is not None else None)
+        if instance is None:
+            return data.get(key)
+        if isinstance(instance, dict):
+            return data.get(key, instance.get(key))
+        return data.get(key, getattr(instance, key, None))
 
     for key in (
         "target",
@@ -73,7 +80,10 @@ def validate_game_content_fields(
             if end < start:
                 raise ValidationDomainError("A data final deve ser posterior à inicial.")
             if value("active") is not False and content is not None:
-                exclude_id = getattr(instance, "id", None) if instance is not None else None
+                if isinstance(instance, dict):
+                    exclude_id = instance.get("id")
+                else:
+                    exclude_id = getattr(instance, "id", None) if instance is not None else None
                 if content.has_active_overlap(
                     kind,
                     start_key=start_key,
@@ -86,7 +96,9 @@ def validate_game_content_fields(
     if kind == "daily-days" and value("season") and value("day"):
         season = value("season")
         day = value("day")
-        if day > (season.ends_on - season.starts_on).days + 1:
+        ends_on = getattr(season, "ends_on", None)
+        starts_on = getattr(season, "starts_on", None)
+        if ends_on is not None and starts_on is not None and day > (ends_on - starts_on).days + 1:
             raise ValidationDomainError("O dia está fora da duração da temporada.")
     return data
 
@@ -97,13 +109,19 @@ class ListGameContentInput:
 
 
 @dataclass(frozen=True, slots=True)
+class GetGameContentInput:
+    kind: str
+    entry_id: UUID
+
+
+@dataclass(frozen=True, slots=True)
 class UpsertGameContentInput:
     kind: str
     validated_data: dict
     entry_id: UUID | None = None
 
 
-class ListGameContentUseCase(UseCase[ListGameContentInput, list[Any]]):
+class ListGameContentUseCase(UseCase[ListGameContentInput, list[dict]]):
     """Lista as entradas de configuração do tipo de conteúdo informado.
 
     Uso: resolva pelo container e chame ``execute`` com ``ListGameContentInput``.
@@ -112,24 +130,42 @@ class ListGameContentUseCase(UseCase[ListGameContentInput, list[Any]]):
     def __init__(self, content: IGameContentAdminRepository) -> None:
         self._content = content
 
-    def execute(self, data: ListGameContentInput) -> list[Any]:
-        if data.kind not in CONFIG_MODELS:
+    def execute(self, data: ListGameContentInput) -> list[dict]:
+        if not known_content_kind(data.kind):
             raise ValidationDomainError("Configuração desconhecida.")
-        return self._content.list_kind(data.kind)
+        return [
+            serialize_game_content_row(data.kind, row)
+            for row in self._content.list_kind(data.kind)
+        ]
 
 
-class UpsertGameContentUseCase(UseCase[UpsertGameContentInput, Any]):
+class GetGameContentUseCase(UseCase[GetGameContentInput, dict]):
+    """Obtém uma entrada de configuração staff por tipo e id."""
+
+    def __init__(self, content: IGameContentAdminRepository) -> None:
+        self._content = content
+
+    def execute(self, data: GetGameContentInput) -> dict:
+        if not known_content_kind(data.kind):
+            raise ValidationDomainError("Configuração desconhecida.")
+        instance = self._content.get_kind(data.kind, data.entry_id)
+        if instance is None:
+            raise EntityNotFoundError("Entrada de configuração não encontrada.")
+        return serialize_game_content_row(data.kind, instance)
+
+
+class UpsertGameContentUseCase(UseCase[UpsertGameContentInput, dict]):
     """Cria ou atualiza uma entrada de conteúdo de jogos após validação de domínio.
 
     Uso: resolva pelo container e chame ``execute`` com ``UpsertGameContentInput``. O retorno é
-    a linha ORM persistida.
+    o dict serializado da linha persistida.
     """
 
     def __init__(self, content: IGameContentAdminRepository) -> None:
         self._content = content
 
-    def execute(self, data: UpsertGameContentInput) -> Any:
-        if data.kind not in CONFIG_MODELS:
+    def execute(self, data: UpsertGameContentInput) -> dict:
+        if not known_content_kind(data.kind):
             raise ValidationDomainError("Configuração desconhecida.")
         instance = None
         if data.entry_id is not None:
@@ -143,12 +179,15 @@ class UpsertGameContentUseCase(UseCase[UpsertGameContentInput, Any]):
             content=self._content,
         )
         if data.entry_id is None:
-            return self._content.create(data.kind, payload)
-        return self._content.update(data.kind, data.entry_id, payload)
+            row = self._content.create(data.kind, payload)
+        else:
+            row = self._content.update(data.kind, data.entry_id, payload)
+        return serialize_game_content_row(data.kind, row)
 
 
-# Re-export helpers used by presentation serializers.
 __all__ = [
+    "GetGameContentInput",
+    "GetGameContentUseCase",
     "ListGameContentInput",
     "ListGameContentUseCase",
     "UpsertGameContentInput",

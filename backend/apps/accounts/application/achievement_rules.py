@@ -2,20 +2,16 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from apps.accounts.infrastructure.achievement_facts import DjangoAchievementFacts
+from apps.accounts.domain.achievement_facts import IAchievementFacts
 
 Rule = Callable[[object], bool]
 
 
-def build_achievement_rules(
-    facts: DjangoAchievementFacts | None = None,
-) -> dict[str, Rule]:
+def build_achievement_rules(facts: IAchievementFacts) -> dict[str, Rule]:
     """Monta predicados de conquista sem importar modelos de outros apps.
 
-    As consultas ORM ficam em ``DjangoAchievementFacts`` (interim CA).
+    As consultas ORM ficam no adaptador de ``IAchievementFacts``.
     """
-
-    facts = facts or DjangoAchievementFacts()
 
     return {
         "primeiro_login": lambda user: True,

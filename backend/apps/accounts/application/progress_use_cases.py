@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.application.progress import add_xp, unlock_achievements, xp_for_level
+from apps.accounts.domain.achievement_facts import IAchievementFacts
 from apps.accounts.domain.bag import IRewardBagPort
 from apps.accounts.domain.repositories import IProgressRepository
 from common.architecture.base import UseCase
@@ -20,13 +21,14 @@ class GetGamerProfileUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def __init__(self, progress: IProgressRepository) -> None:
+    def __init__(self, progress: IProgressRepository, facts: IAchievementFacts) -> None:
         self._progress = progress
+        self._facts = facts
 
     def execute(self, data: UUID) -> dict:
         user = self._progress.require_user(data)
         profile = self._progress.get_or_create_profile(user)
-        unlocked = unlock_achievements(user, self._progress)
+        unlocked = unlock_achievements(user, self._progress, facts=self._facts)
         unlocked_codes = self._progress.list_unlocked_codes(user)
         achievements = [
             {

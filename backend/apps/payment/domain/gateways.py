@@ -35,3 +35,24 @@ class IPaymentGateway(ABC):
 
     def fetch_status(self, order: PaymentOrderEntity) -> ProcessResult | None:
         return None
+
+    def fetch_by_external_id(self, external_id: str) -> ProcessResult | None:
+        """Consulta um pagamento pelo id externo do provedor (ex.: webhook)."""
+
+        return None
+
+
+class IPaymentGatewayRegistry(ABC):
+    """Porta de seleção de gateways de pagamento por nome do método."""
+
+    @abstractmethod
+    def get(self, method: str) -> IPaymentGateway:
+        """Retorna o gateway disponível ou lança PaymentMethodUnavailableError."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def available_methods(self, configured: list[str]) -> list[dict]:
+        """Filtra métodos configurados e retorna metadados públicos."""
+
+        raise NotImplementedError

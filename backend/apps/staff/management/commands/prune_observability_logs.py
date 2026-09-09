@@ -1,11 +1,12 @@
-from datetime import timedelta
-
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from django.utils import timezone
 
-from apps.payment.infrastructure.models import WebhookLog
-from apps.staff.infrastructure.models import AuditLog
+from apps.staff.application.observability import (
+    PruneObservabilityLogsInput,
+    PruneObservabilityLogsUseCase,
+)
+from common.architecture.exceptions import ValidationDomainError
+from common.di.bootstrap import DependencyInjection
 
 
 class Command(BaseCommand):
@@ -21,22 +22,20 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        audit_days = settings.AUDIT_LOG_RETENTION_DAYS
-        webhook_days = settings.WEBHOOK_LOG_RETENTION_DAYS
-        if audit_days < 1 or webhook_days < 1:
-            raise CommandError("Retention periods must be at least one day.")
-
-        now = timezone.now()
-        querysets = {
-            "audit": AuditLog.objects.filter(created_at__lt=now - timedelta(days=audit_days)),
-            "webhook": WebhookLog.objects.filter(created_at__lt=now - timedelta(days=webhook_days)),
-        }
-        counts = {name: queryset.count() for name, queryset in querysets.items()}
-        mode = "apply" if options["apply"] else "preview"
+        scope = DependencyInjection.root().create_scope()
+        use_case = scope.resolve(PruneObservabilityLogsUseCase)
+        try:
+            result = use_case.execute(
+                PruneObservabilityLogsInput(
+                    apply=bool(options["apply"]),
+                    audit_days=settings.AUDIT_LOG_RETENTION_DAYS,
+                    webhook_days=settings.WEBHOOK_LOG_RETENTION_DAYS,
+                )
+            )
+        except ValidationDomainError as exc:
+            raise CommandError(str(exc)) from exc
+        mode = "apply" if result.applied else "preview"
         self.stdout.write(
-            f"mode={mode} audit={counts['audit']} webhook={counts['webhook']} "
-            f"audit_days={audit_days} webhook_days={webhook_days}"
+            f"mode={mode} audit={result.counts.audit} webhook={result.counts.webhook} "
+            f"audit_days={result.audit_days} webhook_days={result.webhook_days}"
         )
-        if options["apply"]:
-            for queryset in querysets.values():
-                queryset.delete()

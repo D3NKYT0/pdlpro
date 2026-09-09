@@ -16,8 +16,8 @@ from apps.payment.application.use_cases import (
     ApplyGatewayPaymentInput,
     ApplyGatewayPaymentUseCase,
 )
+from apps.payment.domain.gateways import IPaymentGatewayRegistry
 from apps.payment.domain.repositories import IWebhookLogRepository
-from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
 from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
@@ -98,11 +98,11 @@ class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, Non
     def __init__(
         self,
         logs: IWebhookLogRepository,
-        gateway: MercadoPagoGateway,
+        gateways: IPaymentGatewayRegistry,
         apply: ApplyGatewayPaymentUseCase,
     ) -> None:
         self._logs = logs
-        self._gateway = gateway
+        self._gateways = gateways
         self._apply = apply
 
     def execute(self, data: HandleMercadoPagoWebhookInput) -> None:
@@ -112,7 +112,7 @@ class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, Non
         self._logs.create(kind="mercadopago", data_id=event_id or data_id, payload=payload)
         action = payload.get("action") or payload.get("type")
         if action in {"payment.created", "payment", "payment.updated"} and data_id:
-            result = self._gateway.fetch_by_id(data_id)
+            result = self._gateways.get("mercadopago").fetch_by_external_id(data_id)
             if result and result.status == "approved":
                 order_id = None
                 metadata = (result.raw or {}).get("metadata") or {}

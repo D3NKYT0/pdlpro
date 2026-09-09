@@ -2,10 +2,14 @@ from __future__ import annotations
 
 from apps.accounts.domain.bag import IRewardBagPort
 from apps.games.application.bag import add_to_bag
+from apps.games.domain.repositories import IBagRepository
 
 
 class GamesRewardBagAdapter(IRewardBagPort):
     """Entrega recompensas de progresso na bag via o adaptador de games."""
+
+    def __init__(self, bags: IBagRepository) -> None:
+        self._bags = bags
 
     def add_item(
         self,
@@ -22,4 +26,5 @@ class GamesRewardBagAdapter(IRewardBagPort):
             item_name=item_name,
             enchant=enchant,
             quantity=quantity,
+            bags=self._bags,
         )

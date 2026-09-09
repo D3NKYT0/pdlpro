@@ -37,6 +37,7 @@ from apps.content.application.safety import coerced_echo, safety_short_circuit
 from apps.content.application.screens import describe_screen
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from apps.content.domain.repositories import IDenkynhoRepository
+from common.architecture.base import UnitOfWork
 
 logger = logging.getLogger(__name__)
 CONTEXT_SALT = "content.denkynho.conversation.v1"
@@ -188,12 +189,14 @@ class ChatReplyUseCase:
         assistant_reply_use_case: AssistantReplyUseCase,
         list_faq: ListFaqUseCase,
         denkynho: IDenkynhoRepository,
+        unit_of_work: UnitOfWork,
     ) -> None:
         self._model = conversation_model
         self._matcher = semantic_matcher
         self._fallback = assistant_reply_use_case
         self._list_faq = list_faq
         self._denkynho = denkynho
+        self._unit_of_work = unit_of_work
 
     def execute(self, data: ChatInput) -> dict:
         language = detect_language(data.message, data.language)
@@ -309,7 +312,12 @@ class ChatReplyUseCase:
         """Lê e atualiza o humor do mascote da conta; sem conta, só aplica o sinal atual."""
 
         if account_id is not None:
-            return remember_user_affect(account_id, affect)
+            return remember_user_affect(
+                account_id,
+                affect,
+                repo=self._denkynho,
+                unit_of_work=self._unit_of_work,
+            )
         if affect and affect != "calm":
             return describe_emotion(affect, "user")
         return describe_emotion("calm", "default")

@@ -27,10 +27,6 @@ from apps.server.application.item_observation import (
     UpsertCategoryInput,
     UpsertObservationCategoryUseCase,
 )
-from apps.server.infrastructure.item_observation_models import (
-    ItemObservationCategory,
-    ItemObservationSnapshot,
-)
 from common.architecture.exceptions import DomainError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
@@ -116,46 +112,41 @@ class ComparisonQuery(PageQuery):
     after = serializers.UUIDField()
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    """Representa e valida uma categoria usada para organizar observações.
+class CategorySerializer(serializers.Serializer):
+    """Representa e valida uma categoria usada para organizar observações (dict)."""
 
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização e a persistência pertencem ao fluxo chamador / caso de uso.
+    id = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(max_length=100)
+    description = serializers.CharField(allow_blank=True, required=False, default="")
+    item_ids = serializers.JSONField(required=False, default=list)
+    order = serializers.IntegerField(min_value=0, required=False, default=0)
 
-    Campos declarados: ``id``, ``name``, ``description``, ``item_ids``, ``order``.
-    """
+    def validate_item_ids(self, value):
+        if (
+            not isinstance(value, list)
+            or len(value) > 2000
+            or any(type(item) is not int or not 0 < item <= 2147483647 for item in value)
+            or len(set(value)) != len(value)
+        ):
+            raise serializers.ValidationError(
+                "Informe uma lista de até 2000 IDs positivos, sem repetições."
+            )
+        return value
 
-    class Meta:
-        model = ItemObservationCategory
-        fields = ("id", "name", "description", "item_ids", "order")
-        read_only_fields = ("id",)
 
+class SnapshotSerializer(serializers.Serializer):
+    """Representa os metadados de uma captura persistida de observação de itens (dict)."""
 
-class SnapshotSerializer(serializers.ModelSerializer):
-    """Representa os metadados de uma captura persistida de observação de itens.
-
-    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
-    ``many=True`` representa uma coleção.
-
-    Campos declarados: ``created_by``.
-    """
-
-    created_by = serializers.CharField(source="created_by.username", read_only=True, allow_null=True)
-
-    class Meta:
-        model = ItemObservationSnapshot
-        fields = (
-            "id",
-            "snapshot_date",
-            "source",
-            "created_at",
-            "created_by",
-            "notes",
-            "total_characters",
-            "total_instances",
-            "total_quantity",
-            "site_quantity",
-        )
+    id = serializers.UUIDField(read_only=True)
+    snapshot_date = serializers.DateField(read_only=True)
+    source = serializers.CharField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
+    created_by = serializers.CharField(read_only=True, allow_null=True)
+    notes = serializers.CharField(read_only=True)
+    total_characters = serializers.IntegerField(read_only=True)
+    total_instances = serializers.IntegerField(read_only=True)
+    total_quantity = serializers.IntegerField(read_only=True)
+    site_quantity = serializers.IntegerField(read_only=True)
 
 
 def query(serializer_class, request):

@@ -12,7 +12,6 @@ from pathlib import Path, PurePosixPath
 from typing import Any, BinaryIO
 
 from django.conf import settings
-from django.db import IntegrityError
 
 from apps.themes.domain.repositories import IThemePackageRepository
 from common.architecture.base import UnitOfWork
@@ -400,27 +399,11 @@ def serialize_theme(theme: Any | None = None) -> dict:
     }
 
 
-def _resolve_packages() -> IThemePackageRepository:
-    from common.di import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(IThemePackageRepository)
-
-
-def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
-    if unit_of_work is not None:
-        return unit_of_work
-    from common.di import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
-
-
-def get_active_theme(packages: IThemePackageRepository | None = None) -> dict:
-    packages = packages or _resolve_packages()
+def get_active_theme(packages: IThemePackageRepository) -> dict:
     return serialize_theme(packages.get_active())
 
 
-def list_themes(packages: IThemePackageRepository | None = None) -> list[dict]:
-    packages = packages or _resolve_packages()
+def list_themes(packages: IThemePackageRepository) -> list[dict]:
     active_package = packages.exists_active()
     default = serialize_theme()
     default["active"] = not active_package
@@ -432,13 +415,12 @@ def install_theme(
     *,
     size: int,
     user,
-    packages: IThemePackageRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    packages: IThemePackageRepository,
+    unit_of_work: UnitOfWork,
 ) -> dict:
     """Valida e publica um ZIP sem extrair caminhos fornecidos diretamente pelo cliente."""
 
-    packages = packages or _resolve_packages()
-    work = _resolve_unit_of_work(unit_of_work)
+    work = unit_of_work
     if size <= 0 or size > MAX_ARCHIVE_BYTES:
         raise ValidationDomainError("O ZIP deve ter no máximo 32 MB.")
     archive = upload.read(MAX_ARCHIVE_BYTES + 1)
@@ -479,7 +461,7 @@ def install_theme(
                     entrypoint=manifest["entrypoint"],
                     installed_by=user,
                 )
-        except IntegrityError:
+        except ConflictError:
             shutil.rmtree(final, ignore_errors=True)
             raise ConflictError("Esta versão do tema já está instalada.") from None
         return serialize_theme(theme)
@@ -493,13 +475,12 @@ def install_theme(
 
 def activate_theme(
     package_id: str | None,
-    packages: IThemePackageRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    packages: IThemePackageRepository,
+    unit_of_work: UnitOfWork,
 ) -> dict:
     """Ativa uma versão sob UnitOfWork; ``None`` restaura o tema default."""
 
-    packages = packages or _resolve_packages()
-    work = _resolve_unit_of_work(unit_of_work)
+    work = unit_of_work
     with work:
         packages.deactivate_all()
         if package_id is None:
@@ -514,13 +495,12 @@ def activate_theme(
 
 def delete_theme(
     package_id: str,
-    packages: IThemePackageRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    packages: IThemePackageRepository,
+    unit_of_work: UnitOfWork,
 ) -> None:
     """Remove somente pacotes inativos e valida o destino antes da exclusão recursiva."""
 
-    packages = packages or _resolve_packages()
-    work = _resolve_unit_of_work(unit_of_work)
+    work = unit_of_work
     theme = packages.get(package_id)
     if theme is None:
         raise EntityNotFoundError("Tema não encontrado.")

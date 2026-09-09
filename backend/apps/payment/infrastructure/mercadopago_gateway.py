@@ -104,18 +104,21 @@ class MercadoPagoGateway(IPaymentGateway):
         return self._to_result(mp_payment)
 
     def fetch_by_id(self, payment_id: str) -> ProcessResult | None:
-        if not payment_id or not self.is_available():
+        return self.fetch_by_external_id(payment_id)
+
+    def fetch_by_external_id(self, external_id: str) -> ProcessResult | None:
+        if not external_id or not self.is_available():
             return None
         import mercadopago
 
         sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
-        info = sdk.payment().get(payment_id)
+        info = sdk.payment().get(external_id)
         if info.get("status") != 200:
             return None
         return self._to_result(info.get("response") or {})
 
     def fetch_status(self, order: PaymentOrderEntity) -> ProcessResult | None:
-        return self.fetch_by_id(order.external_id)
+        return self.fetch_by_external_id(order.external_id)
 
     def _to_result(self, mp_payment: dict) -> ProcessResult:
         mp_status = mp_payment.get("status") or "pending"

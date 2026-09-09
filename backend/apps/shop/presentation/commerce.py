@@ -26,97 +26,56 @@ from apps.shop.application.commerce_use_cases import (
     UpdateStaffPromoUseCase,
     UserScopedInput,
 )
-from apps.shop.infrastructure.models import PromotionCode, ShopPackage
 from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
 
 class PackageItemSerializer(serializers.Serializer):
-    """Representa e valida os itens que compõem um pacote da loja.
-
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador. A existência do produto é
-    resolvida no caso de uso.
-
-    Campos declarados: ``item``, ``quantity``.
-    """
+    """Representa e valida os itens que compõem um pacote da loja."""
 
     item = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=1, max_value=100000)
 
 
-class PackageSerializer(serializers.ModelSerializer):
-    """Representa e valida o pacote comercial e sua composição.
+class PackageSerializer(serializers.Serializer):
+    """Representa e valida o pacote comercial e sua composição (entrada/saída em dict)."""
 
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador. Persistência fica nos casos de uso.
-
-    Campos declarados: ``items``, ``contents``.
-    """
-
-    items = PackageItemSerializer(many=True, write_only=True)
-    contents = serializers.SerializerMethodField()
-
-    class Meta:
-        model = ShopPackage
-        fields = ["id", "name", "total_price", "active", "items", "contents"]
-        extra_kwargs = {"total_price": {"min_value": 0}}
-
-    def get_contents(self, obj):
-        return [
-            {
-                "item": str(row.item.id),
-                "item_id": row.item.item_id,
-                "name": row.item.name,
-                "quantity": row.quantity,
-                "grant_quantity": row.quantity * row.item.quantity,
-            }
-            for row in obj.package_items.select_related("item")
-        ]
+    id = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(max_length=100)
+    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+    active = serializers.BooleanField(default=True)
+    items = PackageItemSerializer(many=True, write_only=True, required=False)
+    contents = serializers.ListField(child=serializers.DictField(), read_only=True)
 
     def validate_items(self, items):
-        if not items:
+        if items is not None and not items:
             raise serializers.ValidationError("Inclua pelo menos um item.")
         return items
 
 
-class PromoSerializer(serializers.ModelSerializer):
-    """Representa e valida um código promocional e suas condições de uso.
+class PromoSerializer(serializers.Serializer):
+    """Representa e valida um código promocional (entrada/saída em dict)."""
 
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador. Unicidade do código e apoiador
-    aprovado são resolvidos no caso de uso.
-
-    Campos declarados: ``supporter``.
-    """
-
-    supporter = serializers.UUIDField(
-        allow_null=True, required=False, source="supporter_id"
-    )
-
-    class Meta:
-        model = PromotionCode
-        fields = [
-            "id",
-            "code",
-            "percent",
-            "active",
-            "starts_at",
-            "ends_at",
-            "max_uses",
-            "uses",
-            "supporter",
-        ]
-        read_only_fields = ["id", "uses"]
-        extra_kwargs = {"percent": {"min_value": 0, "max_value": 100}}
+    id = serializers.UUIDField(read_only=True)
+    code = serializers.CharField(max_length=40)
+    percent = serializers.DecimalField(max_digits=5, decimal_places=2, min_value=0, max_value=100)
+    active = serializers.BooleanField(default=True)
+    starts_at = serializers.DateTimeField(allow_null=True, required=False)
+    ends_at = serializers.DateTimeField(allow_null=True, required=False)
+    max_uses = serializers.IntegerField(min_value=0, default=0)
+    uses = serializers.IntegerField(read_only=True)
+    supporter = serializers.UUIDField(allow_null=True, required=False, source="supporter_id")
 
     def validate_code(self, code):
         return code.strip().upper()
 
     def validate(self, data):
-        start = data.get("starts_at", getattr(self.instance, "starts_at", None))
-        end = data.get("ends_at", getattr(self.instance, "ends_at", None))
+        start = data.get("starts_at")
+        end = data.get("ends_at")
+        if self.partial and self.instance:
+            start = data.get("starts_at", self.instance.get("starts_at"))
+            end = data.get("ends_at", self.instance.get("ends_at"))
         if start and end and start >= end:
             raise serializers.ValidationError(
                 "A data final deve ser posterior à inicial."
@@ -125,37 +84,21 @@ class PromoSerializer(serializers.ModelSerializer):
 
 
 class CartOptionsSerializer(serializers.Serializer):
-    """Valida as opções de compra associadas ao carrinho.
-
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
-
-    Campos declarados: ``promo_code``, ``use_bonus``.
-    """
+    """Valida as opções de compra associadas ao carrinho."""
 
     promo_code = serializers.CharField(max_length=40, allow_blank=True, required=False)
     use_bonus = serializers.BooleanField(required=False)
 
 
 class CartPackageSerializer(serializers.Serializer):
-    """Valida a seleção e a quantidade de pacotes no carrinho.
-
-    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
-
-    Campos declarados: ``package_id``, ``quantity``.
-    """
+    """Valida a seleção e a quantidade de pacotes no carrinho."""
 
     package_id = serializers.UUIDField()
     quantity = serializers.IntegerField(min_value=0, max_value=99, default=1)
 
 
 class CommerceView(InjectedAPIView):
-    """Trata pacotes, opções e histórico de compras do comércio para o usuário da sessão.
-
-    Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated].
-    """
+    """Trata pacotes, opções e histórico de compras do comércio para o usuário da sessão."""
 
     permission_classes = [IsAuthenticated]
 
@@ -227,11 +170,7 @@ class CommerceView(InjectedAPIView):
 
 
 class StaffCommerceView(InjectedAPIView):
-    """Administra pacotes e promoções do comércio via casos de uso.
-
-    Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
-    declarado: [IsAuthenticated, IsStaffMember].
-    """
+    """Administra pacotes e promoções do comércio via casos de uso."""
 
     permission_classes = [IsAuthenticated, IsStaffMember]
 
@@ -274,6 +213,9 @@ class StaffCommerceView(InjectedAPIView):
             serializer = PackageSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             data = serializer.validated_data
+            items = data.get("items")
+            if not items:
+                raise serializers.ValidationError({"items": "Inclua pelo menos um item."})
             pack = self.resolve(CreateStaffPackageUseCase).execute(
                 CreateStaffPackageInput(
                     name=data["name"],
@@ -281,7 +223,7 @@ class StaffCommerceView(InjectedAPIView):
                     active=data.get("active", True),
                     items=[
                         {"item": row["item"], "quantity": row["quantity"]}
-                        for row in data["items"]
+                        for row in items
                     ],
                 )
             )
@@ -313,12 +255,12 @@ class StaffCommerceView(InjectedAPIView):
                 raise NotFound() from exc
             serializer = PackageSerializer(pack, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
-            data = serializer.validated_data
+            data = dict(serializer.validated_data)
             items = data.pop("items", None)
             pack = self.resolve(UpdateStaffPackageUseCase).execute(
                 UpdateStaffPackageInput(
                     package_id=entry_id,
-                    fields=dict(data),
+                    fields=data,
                     items=(
                         [
                             {"item": row["item"], "quantity": row["quantity"]}

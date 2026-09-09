@@ -62,7 +62,7 @@ def grant_rewards(
     label,
     *,
     wallets: IWalletRepository,
-    bags: IBagRepository | None = None,
+    bags: IBagRepository,
     unit_of_work: UnitOfWork | None = None,
 ):
     """Concede recompensas validadas via porta de carteira (e bag/fichas).

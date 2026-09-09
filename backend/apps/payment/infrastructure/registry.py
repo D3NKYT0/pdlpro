@@ -3,13 +3,13 @@ from __future__ import annotations
 from django.conf import settings
 
 from apps.payment.domain.exceptions import PaymentMethodUnavailableError
-from apps.payment.domain.gateways import IPaymentGateway
+from apps.payment.domain.gateways import IPaymentGateway, IPaymentGatewayRegistry
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
 from apps.payment.infrastructure.mock_gateway import MockPaymentGateway
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
 
 
-class PaymentGatewayRegistry:
+class PaymentGatewayRegistry(IPaymentGatewayRegistry):
     """Seleciona adaptadores de pagamento por nome do método.
 
     ``get(method)`` exige um adaptador cadastrado e disponível; caso contrário, lança

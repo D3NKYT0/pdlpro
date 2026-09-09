@@ -4,17 +4,9 @@ from apps.accounts.domain.exceptions import ComingSoonLoginRestrictedError
 from apps.server.domain.repositories import IIndexConfigRepository
 
 
-def _resolve_index_config(index_config: IIndexConfigRepository | None) -> IIndexConfigRepository:
-    if index_config is not None:
-        return index_config
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(IIndexConfigRepository)
-
-
 def assert_login_allowed_during_coming_soon(
     user,
-    index_config: IIndexConfigRepository | None = None,
+    index_config: IIndexConfigRepository,
 ) -> None:
     """Bloqueia login de visitantes comuns quando Coming Soon restringe o acesso à staff.
 
@@ -22,7 +14,7 @@ def assert_login_allowed_during_coming_soon(
     seguem autorizados. Sem configuração ativa, ou com Coming Soon desligado, não interfere.
     """
 
-    row = _resolve_index_config(index_config).get_active()
+    row = index_config.get_active()
     if row is None or not row.coming_soon or not row.staff_only_login:
         return
     if bool(

@@ -44,6 +44,12 @@ class ITicketRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def dump_ticket(self, ticket: Any, *, detail: bool = False, staff: bool = False) -> dict:
+        """Serializa chamado (e mensagens quando detail) sem expor relações ORM à application."""
+
+        raise NotImplementedError
+
+    @abstractmethod
     def add_customer_reply(self, ticket_id: UUID, author_id: UUID, body: str) -> Any:
         raise NotImplementedError
 

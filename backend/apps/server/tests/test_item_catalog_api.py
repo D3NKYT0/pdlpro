@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from apps.games.infrastructure.models import Prize
+from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.item_catalog import (
     get_item_catalog,
     item_metadata,
@@ -48,9 +49,10 @@ def test_public_catalog_uses_configured_xml_without_game_connection(custom_catal
 
 @pytest.mark.django_db
 def test_response_adapter_preserves_values_and_never_mutates_stored_payload(custom_catalog):
+    catalog = LineageItemCatalogAdapter()
     row = {"id": str(uuid4()), "item_id": 57, "item_name": "Old saved name", "quantity": 9007199254740993,
            "price": Decimal("10.50"), "enchant": 7}
-    data = with_item_metadata({"items": [row], "name": "Container label"})
+    data = with_item_metadata({"items": [row], "name": "Container label"}, catalog)
     assert row["item_name"] == "Old saved name"
     assert data["name"] == "Container label"
     assert data["items"][0]["item_name"] == "Custom Currency"
@@ -58,7 +60,7 @@ def test_response_adapter_preserves_values_and_never_mutates_stored_payload(cust
         assert data["items"][0][key] == row[key]
     for invalid in (str(uuid4()), True, None, -1, "../57", "99999999999999"):
         value = {"item_id": invalid, "name": "Not a L2 item"}
-        assert with_item_metadata(value) == value
+        assert with_item_metadata(value, catalog) == value
     assert item_metadata(99999)["catalog_found"] is False
     assert item_metadata(99999)["icon_url"] == "/item-icons/default.jpg"
 

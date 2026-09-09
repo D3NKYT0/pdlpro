@@ -57,10 +57,48 @@ class DjangoShopRepository(IShopRepository):
         return ShopItem.objects.filter(id=item_id).first()
 
     def list_active_packages(self) -> list[ShopPackage]:
-        return list(ShopPackage.objects.filter(active=True))
+        return list(
+            ShopPackage.objects.filter(active=True).prefetch_related(
+                "package_items__item"
+            )
+        )
+
+    def dump_package(self, pack: ShopPackage) -> dict:
+        contents = [
+            {
+                "item": str(row.item.id),
+                "item_id": row.item.item_id,
+                "name": row.item.name,
+                "quantity": row.quantity,
+                "grant_quantity": row.quantity * row.item.quantity,
+            }
+            for row in pack.package_items.select_related("item")
+        ]
+        return {
+            "id": pack.id,
+            "name": pack.name,
+            "total_price": pack.total_price,
+            "active": pack.active,
+            "contents": contents,
+        }
+
+    def dump_promo(self, promo: PromotionCode) -> dict:
+        return {
+            "id": promo.id,
+            "code": promo.code,
+            "percent": promo.percent,
+            "active": promo.active,
+            "starts_at": promo.starts_at,
+            "ends_at": promo.ends_at,
+            "max_uses": promo.max_uses,
+            "uses": promo.uses,
+            "supporter_id": promo.supporter_id,
+        }
 
     def list_all_packages(self) -> list[ShopPackage]:
-        return list(ShopPackage.objects.all())
+        return list(
+            ShopPackage.objects.all().prefetch_related("package_items__item")
+        )
 
     def get_package(self, package_id: UUID) -> ShopPackage | None:
         return ShopPackage.objects.filter(id=package_id).first()
@@ -181,6 +219,52 @@ class DjangoCartRepository(ICartRepository):
         if cart is None:
             return []
         return list(cart.items.select_related("item").order_by("created_at"))
+
+    def list_checkout_lines(self, cart: Cart) -> list[dict]:
+        lines: list[dict] = []
+        for row in cart.items.select_related("item").order_by("created_at"):
+            item = row.item
+            lines.append(
+                {
+                    "id": str(row.id),
+                    "kind": "item",
+                    "name": item.name,
+                    "quantity": row.quantity,
+                    "unit_price": item.price,
+                    "active": item.active,
+                    "item_id": item.item_id,
+                    "item_quantity": item.quantity,
+                }
+            )
+        for row in (
+            cart.packages.select_related("package")
+            .prefetch_related("package__package_items__item")
+            .order_by("created_at")
+        ):
+            pack = row.package
+            entries = list(pack.package_items.all())
+            lines.append(
+                {
+                    "id": str(row.id),
+                    "kind": "package",
+                    "package_id": str(pack.id),
+                    "name": pack.name,
+                    "quantity": row.quantity,
+                    "unit_price": pack.total_price,
+                    "active": pack.active,
+                    "entries": [
+                        {
+                            "item_id": e.item.item_id,
+                            "item_name": e.item.name,
+                            "item_active": e.item.active,
+                            "item_quantity": e.item.quantity,
+                            "entry_quantity": e.quantity,
+                        }
+                        for e in entries
+                    ],
+                }
+            )
+        return lines
 
 
 class DjangoSupporterCommissionAdapter(ISupporterCommissionPort):

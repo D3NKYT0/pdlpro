@@ -22,7 +22,14 @@ class DjangoThemePackageRepository(IThemePackageRepository):
         return ThemePackage.objects.filter(slug=slug, version=version).exists()
 
     def create(self, **fields) -> ThemePackage:
-        return ThemePackage.objects.create(**fields)
+        from django.db import IntegrityError
+
+        from common.architecture.exceptions import ConflictError
+
+        try:
+            return ThemePackage.objects.create(**fields)
+        except IntegrityError as exc:
+            raise ConflictError("Esta versão do tema já está instalada.") from exc
 
     def deactivate_all(self) -> None:
         ThemePackage.objects.select_for_update().filter(is_active=True).update(is_active=False)

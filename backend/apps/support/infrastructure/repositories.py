@@ -84,6 +84,64 @@ class DjangoTicketRepository(ITicketRepository):
     def get_by_id(self, ticket_id: UUID) -> Any | None:
         return self._base_qs().filter(id=ticket_id).first()
 
+    def dump_ticket(self, ticket: Ticket, *, detail: bool = False, staff: bool = False) -> dict:
+        from apps.support.domain.ticket import TicketCategory, TicketPriority, TicketStatus
+
+        def _name(user) -> str:
+            if not user:
+                return "Sistema"
+            return user.display_name or user.username
+
+        due_at = ticket.created_at + timedelta(hours=SLA_HOURS.get(ticket.priority, 48))
+        payload = {
+            "id": str(ticket.id),
+            "protocol": ticket.protocol,
+            "subject": ticket.subject,
+            "description": ticket.description,
+            "category": ticket.category,
+            "category_label": TicketCategory.labels.get(ticket.category, ticket.category),
+            "priority": ticket.priority,
+            "priority_label": TicketPriority.labels.get(ticket.priority, ticket.priority),
+            "status": ticket.status,
+            "status_label": TicketStatus.labels.get(ticket.status, ticket.status),
+            "context": ticket.context,
+            "assigned_to": _name(ticket.assigned_to) if ticket.assigned_to else "Equipe PDL",
+            "created_at": ticket.created_at,
+            "updated_at": ticket.updated_at,
+            "last_activity_at": ticket.last_activity_at,
+            "first_response_at": ticket.first_response_at,
+            "resolved_at": ticket.resolved_at,
+            "closed_at": ticket.closed_at,
+            "sla_due_at": due_at,
+            "sla_breached": timezone.now() > due_at
+            and ticket.status not in {"resolved", "closed"},
+        }
+        if staff:
+            payload["customer"] = {
+                "id": str(ticket.user.id),
+                "username": ticket.user.username,
+                "display_name": _name(ticket.user),
+                "email": ticket.user.email,
+            }
+        if detail:
+            messages = ticket.messages.select_related("author").all()
+            if not staff:
+                messages = messages.filter(is_internal=False)
+            payload["messages"] = [
+                {
+                    "id": str(message.id),
+                    "body": message.body,
+                    "author_name": _name(message.author),
+                    "is_staff_reply": message.is_staff_reply,
+                    "is_internal": message.is_internal,
+                    "created_at": message.created_at,
+                }
+                for message in messages
+            ]
+        else:
+            payload["message_count"] = ticket.messages.filter(is_internal=False).count()
+        return payload
+
     def add_customer_reply(self, ticket_id: UUID, author_id: UUID, body: str) -> Any:
         ticket = self._base_qs().select_for_update().get(id=ticket_id)
         author = User.objects.get(id=author_id)

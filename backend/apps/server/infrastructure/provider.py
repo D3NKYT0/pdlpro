@@ -27,6 +27,10 @@ from apps.server.application.custom_items import (
     ListCustomItemsUseCase,
     UpsertCustomItemUseCase,
 )
+from apps.server.application.item_catalog_use_cases import (
+    ItemIsTradeableUseCase,
+    ListPublicItemCatalogUseCase,
+)
 from apps.server.application.item_observation import (
     CaptureObservationSnapshotUseCase,
     CompareObservationSnapshotsUseCase,
@@ -48,6 +52,7 @@ from apps.server.application.use_cases import (
 )
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
+from apps.server.domain.item_catalog import IItemCatalog, IItemDisplayName
 from apps.server.domain.repositories import (
     ICharacterServiceOperationRepository,
     ICustomItemRepository,
@@ -58,6 +63,7 @@ from apps.server.domain.repositories import (
     IServicePriceRepository,
 )
 from apps.server.infrastructure.access import DjangoAccountAccessService
+from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.repositories import (
@@ -106,6 +112,9 @@ class ServerProvider(AppProvider):
             DjangoCharacterServiceOperationRepository,
             lifetime=Lifetime.SCOPED,
         )
+        item_catalog = LineageItemCatalogAdapter()
+        container.register(IItemCatalog, instance=item_catalog, lifetime=Lifetime.SINGLETON)
+        container.register(IItemDisplayName, instance=item_catalog, lifetime=Lifetime.SINGLETON)
         container.register(IAccountAccessService, DjangoAccountAccessService, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetServerInfoUseCase,
@@ -133,6 +142,8 @@ class ServerProvider(AppProvider):
             ListCustomItemsUseCase,
             GetCustomItemUseCase,
             UpsertCustomItemUseCase,
+            ListPublicItemCatalogUseCase,
+            ItemIsTradeableUseCase,
             ListLiveObservationUseCase,
             SetObservationFavoriteUseCase,
             ListObservationSnapshotsUseCase,

@@ -44,22 +44,6 @@ _SATURATED_MESSAGES = {
 }
 
 
-def _resolve_denkynho(repo: IDenkynhoRepository | None) -> IDenkynhoRepository:
-    if repo is not None:
-        return repo
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(IDenkynhoRepository)
-
-
-def _resolve_unit_of_work(unit_of_work: UnitOfWork | None) -> UnitOfWork:
-    if unit_of_work is not None:
-        return unit_of_work
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(UnitOfWork)
-
-
 def _emotion_state(profile, now) -> dict:
     """Calcula o humor visível a partir da empatia ainda válida ou das necessidades."""
 
@@ -196,17 +180,16 @@ def _persist_living_state(profile, now, affect: str | None = None) -> bool:
 def remember_user_affect(
     user_id: UUID,
     affect: str | None,
-    repo: IDenkynhoRepository | None = None,
-    unit_of_work: UnitOfWork | None = None,
+    *,
+    repo: IDenkynhoRepository,
+    unit_of_work: UnitOfWork,
 ) -> dict:
     """Atualiza a empatia do mascote da conta e devolve o humor visível atual."""
 
-    denkynho = _resolve_denkynho(repo)
-    work = _resolve_unit_of_work(unit_of_work)
-    user = denkynho.require_user(user_id)
+    user = repo.require_user(user_id)
     now = timezone.now()
-    with work:
-        profile = denkynho.get_locked_profile(user)
+    with unit_of_work:
+        profile = repo.get_locked_profile(user)
         _persist_living_state(profile, now, affect)
         return _emotion_state(profile, now)
 

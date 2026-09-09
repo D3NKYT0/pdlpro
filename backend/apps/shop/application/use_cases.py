@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
+from apps.games.domain.repositories import IBagRepository
 from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -204,12 +205,14 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
         shop: IShopRepository,
         carts: ICartRepository,
         commissions: ISupporterCommissionPort,
+        bags: IBagRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._wallets = wallets
         self._shop = shop
         self._carts = carts
         self._commissions = commissions
+        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: CheckoutInput) -> dict:
@@ -222,5 +225,6 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
             shop=self._shop,
             carts=self._carts,
             commissions=self._commissions,
+            bags=self._bags,
             unit_of_work=self._unit_of_work,
         )

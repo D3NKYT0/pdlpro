@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 
 from apps.accounts.application.achievement_catalog import ACHIEVEMENTS
 from apps.accounts.application.achievement_rules import build_achievement_rules
+from apps.accounts.infrastructure.achievement_facts import DjangoAchievementFacts
 from apps.accounts.infrastructure.models import Achievement
 from apps.games.infrastructure.models import SpinHistory
 
@@ -22,7 +23,9 @@ def user(db):
 
 @pytest.mark.django_db
 def test_catalog_matches_unlock_rules():
-    assert {code for code, _, _ in ACHIEVEMENTS} == set(build_achievement_rules())
+    assert {code for code, _, _ in ACHIEVEMENTS} == set(
+        build_achievement_rules(DjangoAchievementFacts())
+    )
 
 
 @pytest.mark.django_db

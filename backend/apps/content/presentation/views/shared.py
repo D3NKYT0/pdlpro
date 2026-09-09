@@ -22,7 +22,7 @@ from apps.content.application.denkynho import (
 )
 from apps.content.application.screens import canonical_screen
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
-from apps.content.infrastructure.models import Faq
+from apps.content.domain.faq import FaqAudience
 from common.views import InjectedAPIView
 
 
@@ -39,11 +39,11 @@ class AuthenticatedFaqListView(InjectedAPIView):
     def get(self, request):
         user = request.user
         if user.is_superuser:
-            audience = Faq.Audience.SUPERADMIN
+            audience = FaqAudience.SUPERADMIN
         elif user.is_staff_member:
-            audience = Faq.Audience.STAFF
+            audience = FaqAudience.STAFF
         else:
-            audience = Faq.Audience.PUBLIC
+            audience = FaqAudience.PUBLIC
         language = "en" if request.query_params.get("lang") == "en" else "pt"
         return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(audience=audience, language=language)))
 
@@ -88,11 +88,11 @@ class AssistantReplyView(InjectedAPIView):
         serializer.is_valid(raise_exception=True)
         user = request.user
         if user.is_superuser:
-            audience = Faq.Audience.SUPERADMIN
+            audience = FaqAudience.SUPERADMIN
         elif user.is_staff_member:
-            audience = Faq.Audience.STAFF
+            audience = FaqAudience.STAFF
         else:
-            audience = Faq.Audience.PUBLIC
+            audience = FaqAudience.PUBLIC
         data = dict(serializer.validated_data)
         conversational = data.pop("conversation")
         context = data.pop("context")

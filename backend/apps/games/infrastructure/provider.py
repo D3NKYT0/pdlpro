@@ -34,6 +34,7 @@ from apps.games.application.minigame_use_cases import (
 )
 from apps.games.application.staff_content_use_cases import (
     ListGameContentUseCase,
+    GetGameContentUseCase,
     UpsertGameContentUseCase,
 )
 from apps.games.application.use_cases import (
@@ -138,6 +139,7 @@ class GamesProvider(AppProvider):
             BuyBaitUseCase,
             GetGameStatisticsUseCase,
             ListGameContentUseCase,
+            GetGameContentUseCase,
             UpsertGameContentUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

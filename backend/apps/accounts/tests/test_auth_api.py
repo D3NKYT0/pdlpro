@@ -342,7 +342,9 @@ def test_setup_and_confirm_two_factor(api, user):
 @pytest.mark.django_db
 def test_gamer_profile_and_claim_level_reward(api, user):
     from apps.accounts.application.progress import add_xp
+    from apps.accounts.domain.repositories import IProgressRepository
     from apps.accounts.infrastructure.models import RewardDefinition
+    from common.di.bootstrap import DependencyInjection
 
     reward = RewardDefinition.objects.create(
         kind="level", reference="2", item_id=57, item_name="Adena", quantity=80, description="Nv.2"
@@ -351,7 +353,8 @@ def test_gamer_profile_and_claim_level_reward(api, user):
     profile = api.get("/api/v1/shared/me/progress/")
     assert profile.status_code == 200
     assert profile.data["level"] == 1
-    add_xp(user, 100)
+    progress = DependencyInjection.root().create_scope().resolve(IProgressRepository)
+    add_xp(user, 100, progress)
     profile = api.get("/api/v1/shared/me/progress/")
     assert profile.data["level"] == 2
     reward_row = next(row for row in profile.data["rewards"] if row["id"] == str(reward.id))

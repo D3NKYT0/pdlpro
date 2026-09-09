@@ -57,11 +57,10 @@ class ResourceGateMiddleware:
                 if any(path.startswith(p) for p in paths)
             ]
             if codes:
-                resources = (
-                    DependencyInjection.root()
-                    .create_scope()
-                    .resolve(ISystemResourceRepository)
-                )
+                container = getattr(request, "container", None)
+                if container is None:
+                    container = DependencyInjection.root().create_scope()
+                resources = container.resolve(ISystemResourceRepository)
                 if resources.any_disabled(codes):
                     return JsonResponse(
                         {

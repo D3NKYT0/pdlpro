@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
+# Seed/preview: carga direta via ORM é infraestrutura deliberada deste comando
+# (não faz parte do fluxo de aplicação/DI).
 from apps.games.infrastructure.models import (
     BattlePassExchange,
     BattlePassLevel,
@@ -45,6 +47,7 @@ class Command(BaseCommand):
         parser.add_argument("--password", required=True)
 
     def handle(self, *args, **options):
+        # Seeds are infrastructure/setup tooling and may use the ORM directly.
         if not getattr(settings, "PDL_QA_PREVIEW", False):
             raise CommandError(
                 "Use --settings=core.settings.preview; o banco normal não é permitido."

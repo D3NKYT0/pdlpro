@@ -64,6 +64,18 @@ class IShopRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def dump_package(self, pack: Any) -> dict:
+        """Serializa pacote e composição para a API (sem expor relações ORM)."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def dump_promo(self, promo: Any) -> dict:
+        """Serializa cupom para a API."""
+
+        raise NotImplementedError
+
+    @abstractmethod
     def list_all_packages(self) -> list[Any]:
         raise NotImplementedError
 
@@ -206,6 +218,16 @@ class ICartRepository(ABC):
     @abstractmethod
     def snapshot_items(self, cart: Any | None) -> list[Any]:
         """Linhas do carrinho com ``item`` selecionado, ordenadas por criação."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_checkout_lines(self, cart: Any) -> list[dict]:
+        """Linhas de item e pacote como dicts planos para cotação/checkout.
+
+        Cada linha inclui campos necessários à validação e aos grants; a aplicação
+        valida disponibilidade sem caminhar relações ORM.
+        """
 
         raise NotImplementedError
 

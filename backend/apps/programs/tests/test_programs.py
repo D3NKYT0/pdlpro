@@ -342,7 +342,7 @@ def test_staff_can_create_packages_and_game_configuration(staff, season):
         format="json",
     )
     assert result.status_code == 201, result.data
-    assert result.data["season"] == season.id
+    assert result.data["season"] == str(season.id)
 
 
 def test_quest_progress_is_verified_and_claim_is_once(api, player, season):
@@ -373,9 +373,14 @@ def test_auto_claim_only_unlocked_nonpremium_and_no_duplicates(api, player, seas
         format="json",
     )
     from apps.games.application.battle_pass_xp import add_battle_pass_xp
+    from apps.games.domain.repositories import IBagRepository, IBattlePassRepository
+    from common.di.bootstrap import DependencyInjection
 
-    add_battle_pass_xp(player, 30)
-    add_battle_pass_xp(player, 30)
+    scope = DependencyInjection.root().create_scope()
+    battle_pass = scope.resolve(IBattlePassRepository)
+    bags = scope.resolve(IBagRepository)
+    add_battle_pass_xp(player, 30, battle_pass=battle_pass, bags=bags)
+    add_battle_pass_xp(player, 30, battle_pass=battle_pass, bags=bags)
     assert UserBattlePassClaim.objects.filter(user=player, reward=regular).count() == 1
     assert not UserBattlePassClaim.objects.filter(user=player, reward=premium).exists()
     assert BagItem.objects.get(bag__user=player, item_id=57).quantity == 5

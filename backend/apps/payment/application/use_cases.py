@@ -15,8 +15,8 @@ from apps.payment.domain.exceptions import (
     PaymentNotPendingError,
     PaymentOrderNotFoundError,
 )
+from apps.payment.domain.gateways import IPaymentGatewayRegistry
 from apps.payment.domain.repositories import IPaymentOrderRepository
-from apps.payment.infrastructure.registry import PaymentGatewayRegistry
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -39,7 +39,7 @@ class GetPaymentCatalogUseCase(UseCase[None, dict]):
 
     def __init__(
         self,
-        gateways: PaymentGatewayRegistry,
+        gateways: IPaymentGatewayRegistry,
         bonus_policy: IPurchaseBonusPolicy,
         wallets: IWalletRepository,
     ) -> None:
@@ -146,7 +146,7 @@ class CreatePaymentOrderUseCase(UseCase[CreatePaymentOrderInput, PaymentOrderEnt
     def __init__(
         self,
         orders: IPaymentOrderRepository,
-        gateways: PaymentGatewayRegistry,
+        gateways: IPaymentGatewayRegistry,
         unit_of_work: UnitOfWork,
         pricing: CoinPricingService,
     ) -> None:
@@ -403,7 +403,7 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
     def __init__(
         self,
         orders: IPaymentOrderRepository,
-        gateways: PaymentGatewayRegistry,
+        gateways: IPaymentGatewayRegistry,
         settle: SettlePaymentUseCase,
         unit_of_work: UnitOfWork,
     ) -> None:
@@ -477,7 +477,7 @@ class GetPaymentStatusUseCase(UseCase[GetPaymentStatusInput, PaymentOrderEntity]
     def __init__(
         self,
         orders: IPaymentOrderRepository,
-        gateways: PaymentGatewayRegistry,
+        gateways: IPaymentGatewayRegistry,
         settle: SettlePaymentUseCase,
         unit_of_work: UnitOfWork,
     ) -> None:

@@ -146,11 +146,24 @@ class DjangoCustomItemRepository(ICustomItemRepository):
     def get_by_id(self, item_id: UUID) -> CustomCatalogItem | None:
         return CustomCatalogItem.objects.filter(id=item_id).first()
 
+    def item_id_taken(self, item_id: int, *, exclude_id: UUID | None = None) -> bool:
+        rows = CustomCatalogItem.objects.filter(item_id=item_id)
+        if exclude_id is not None:
+            rows = rows.exclude(id=exclude_id)
+        return rows.exists()
+
     def new(self) -> CustomCatalogItem:
         return CustomCatalogItem()
 
     def save(self, row: CustomCatalogItem) -> CustomCatalogItem:
-        row.save()
+        from django.db import IntegrityError
+
+        from common.architecture.exceptions import ConflictError
+
+        try:
+            row.save()
+        except IntegrityError as exc:
+            raise ConflictError("Este ID já está cadastrado.") from exc
         return row
 
     def delete_image_file(self, row: CustomCatalogItem, *, old_name: str | None) -> None:
@@ -227,35 +240,42 @@ class DjangoItemObservationRepository(IItemObservationRepository):
         totals: dict,
         details: list[dict],
     ) -> ItemObservationSnapshot:
-        with transaction.atomic():
-            snapshot = ItemObservationSnapshot.objects.create(
-                source=source,
-                snapshot_date=snapshot_date,
-                created_by=created_by,
-                notes=notes,
-                **totals,
-            )
-            ItemObservationDetail.objects.bulk_create(
-                [
-                    ItemObservationDetail(
-                        snapshot=snapshot,
-                        **{
-                            key: row[key]
-                            for key in (
-                                "item_id",
-                                "item_name",
-                                "location",
-                                "quantity",
-                                "instances",
-                                "unique_owners",
-                                "category_name",
-                            )
-                        },
-                    )
-                    for row in details
-                ],
-                batch_size=1000,
-            )
+        from django.db import IntegrityError
+
+        from common.architecture.exceptions import ConflictError
+
+        try:
+            with transaction.atomic():
+                snapshot = ItemObservationSnapshot.objects.create(
+                    source=source,
+                    snapshot_date=snapshot_date,
+                    created_by=created_by,
+                    notes=notes,
+                    **totals,
+                )
+                ItemObservationDetail.objects.bulk_create(
+                    [
+                        ItemObservationDetail(
+                            snapshot=snapshot,
+                            **{
+                                key: row[key]
+                                for key in (
+                                    "item_id",
+                                    "item_name",
+                                    "location",
+                                    "quantity",
+                                    "instances",
+                                    "unique_owners",
+                                    "category_name",
+                                )
+                            },
+                        )
+                        for row in details
+                    ],
+                    batch_size=1000,
+                )
+        except IntegrityError as exc:
+            raise ConflictError("Já existe um snapshot de hoje para esta origem.") from exc
         return snapshot
 
     def list_snapshot_details(self, snapshot: ItemObservationSnapshot) -> list[ItemObservationDetail]:

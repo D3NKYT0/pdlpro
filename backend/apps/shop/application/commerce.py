@@ -6,6 +6,7 @@ from uuid import UUID
 from django.utils import timezone
 
 from apps.games.application.bag import add_to_bag
+from apps.games.domain.repositories import IBagRepository
 from apps.shop.domain.repositories import ICartRepository, IShopRepository, ISupporterCommissionPort
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import IWalletRepository
@@ -17,57 +18,52 @@ def money(value):
     return Decimal(value).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
-def cart_lines(cart):
+def cart_lines(cart, *, carts: ICartRepository):
     lines = []
-    for row in cart.items.select_related("item").order_by("created_at"):
-        item = row.item
-        if not item.active or item.price < 0 or row.quantity < 1:
-            raise ValidationDomainError(f"{item.name} não está disponível.")
-        lines.append(
-            {
-                "id": str(row.id),
-                "kind": "item",
-                "name": item.name,
-                "quantity": row.quantity,
-                "unit_price": str(item.price),
-                "line_total": str(money(item.price * row.quantity)),
-                "grants": [
-                    {
-                        "item_id": item.item_id,
-                        "item_name": item.name,
-                        "quantity": item.quantity * row.quantity,
-                    }
-                ],
-            }
-        )
-    for row in (
-        cart.packages.select_related("package")
-        .prefetch_related("package__package_items__item")
-        .order_by("created_at")
-    ):
-        pack = row.package
-        entries = list(pack.package_items.all())
+    for row in carts.list_checkout_lines(cart):
+        if row["kind"] == "item":
+            if not row["active"] or row["unit_price"] < 0 or row["quantity"] < 1:
+                raise ValidationDomainError(f"{row['name']} não está disponível.")
+            lines.append(
+                {
+                    "id": row["id"],
+                    "kind": "item",
+                    "name": row["name"],
+                    "quantity": row["quantity"],
+                    "unit_price": str(row["unit_price"]),
+                    "line_total": str(money(row["unit_price"] * row["quantity"])),
+                    "grants": [
+                        {
+                            "item_id": row["item_id"],
+                            "item_name": row["name"],
+                            "quantity": row["item_quantity"] * row["quantity"],
+                        }
+                    ],
+                }
+            )
+            continue
+        entries = row["entries"]
         if (
-            not pack.active
-            or pack.total_price < 0
+            not row["active"]
+            or row["unit_price"] < 0
             or not entries
-            or any(not e.item.active for e in entries)
+            or any(not e["item_active"] for e in entries)
         ):
-            raise ValidationDomainError(f"O pacote {pack.name} não está disponível.")
+            raise ValidationDomainError(f"O pacote {row['name']} não está disponível.")
         lines.append(
             {
-                "id": str(row.id),
+                "id": row["id"],
                 "kind": "package",
-                "package_id": str(pack.id),
-                "name": pack.name,
-                "quantity": row.quantity,
-                "unit_price": str(pack.total_price),
-                "line_total": str(money(pack.total_price * row.quantity)),
+                "package_id": row["package_id"],
+                "name": row["name"],
+                "quantity": row["quantity"],
+                "unit_price": str(row["unit_price"]),
+                "line_total": str(money(row["unit_price"] * row["quantity"])),
                 "grants": [
                     {
-                        "item_id": e.item.item_id,
-                        "item_name": e.item.name,
-                        "quantity": e.item.quantity * e.quantity * row.quantity,
+                        "item_id": e["item_id"],
+                        "item_name": e["item_name"],
+                        "quantity": e["item_quantity"] * e["entry_quantity"] * row["quantity"],
                     }
                     for e in entries
                 ],
@@ -96,8 +92,16 @@ def get_promo(code, user, *, shop: IShopRepository, lock=False):
     return promo
 
 
-def quote(cart, user, *, shop: IShopRepository, wallet: WalletEntity | None = None, lock=False):
-    lines = cart_lines(cart)
+def quote(
+    cart,
+    user,
+    *,
+    shop: IShopRepository,
+    carts: ICartRepository,
+    wallet: WalletEntity | None = None,
+    lock=False,
+):
+    lines = cart_lines(cart, carts=carts)
     subtotal = sum((Decimal(row["line_total"]) for row in lines), Decimal("0.00"))
     promo = get_promo(cart.promo_code, user, shop=shop, lock=lock)
     discount = money(subtotal * promo.percent / 100) if promo else Decimal("0.00")
@@ -127,6 +131,7 @@ def checkout(
     shop: IShopRepository,
     carts: ICartRepository,
     commissions: ISupporterCommissionPort,
+    bags: IBagRepository,
     unit_of_work: UnitOfWork,
 ):
     """Finaliza o carrinho debitando carteira, entregando itens e registrando a compra."""
@@ -141,7 +146,7 @@ def checkout(
         if not cart:
             raise ValidationDomainError("Carrinho vazio.")
         wallet = wallets.get_or_create(user_id)
-        details, promo = quote(cart, user, shop=shop, wallet=wallet, lock=True)
+        details, promo = quote(cart, user, shop=shop, carts=carts, wallet=wallet, lock=True)
         if not details["items"]:
             raise ValidationDomainError("Carrinho vazio.")
         due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
@@ -174,7 +179,7 @@ def checkout(
             raise ValidationDomainError("Saldo insuficiente.") from exc
         for row in details["items"]:
             for grant in row["grants"]:
-                add_to_bag(user, **grant)
+                add_to_bag(user, bags=bags, **grant)
         if promo:
             promo.uses += 1
             shop.save_promo(promo)

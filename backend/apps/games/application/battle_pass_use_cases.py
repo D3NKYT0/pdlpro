@@ -13,24 +13,6 @@ from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
 
-def _resolve_battle_pass(
-    battle_pass: IBattlePassRepository | None,
-) -> IBattlePassRepository:
-    if battle_pass is not None:
-        return battle_pass
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(IBattlePassRepository)
-
-
-def _resolve_bags(bags: IBagRepository | None) -> IBagRepository:
-    if bags is not None:
-        return bags
-    from common.di.bootstrap import DependencyInjection
-
-    return DependencyInjection.root().create_scope().resolve(IBagRepository)
-
-
 class GetBattlePassUseCase(UseCase[UUID, dict]):
     """Monta a temporada ativa, o progresso e os níveis do passe; pode criar o progresso inicial do
     jogador.
@@ -50,12 +32,12 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
         claimed = self._battle_pass.list_claimed_reward_ids(user)
         current = self._battle_pass.current_level(progress)
         levels = []
-        for row in self._battle_pass.list_levels(season):
+        for row in self._battle_pass.list_levels_with_rewards(season):
             levels.append(
                 {
-                    "level": row.level,
-                    "required_xp": row.required_xp,
-                    "unlocked": progress.xp >= row.required_xp,
+                    "level": row["level"],
+                    "required_xp": row["required_xp"],
+                    "unlocked": progress.xp >= row["required_xp"],
                     "rewards": [
                         {
                             "id": str(reward.id),
@@ -68,7 +50,7 @@ class GetBattlePassUseCase(UseCase[UUID, dict]):
                             "locked_premium": reward.is_premium
                             and not progress.has_premium,
                         }
-                        for reward in row.rewards.all()
+                        for reward in row["rewards"]
                     ],
                 }
             )
@@ -103,8 +85,8 @@ def claim_battle_pass_reward(
     *,
     user_id: UUID,
     reward_id: UUID,
-    battle_pass: IBattlePassRepository | None = None,
-    bags: IBagRepository | None = None,
+    battle_pass: IBattlePassRepository,
+    bags: IBagRepository,
 ) -> dict:
     """Entrega um prêmio do passe na bag e registra o resgate.
 
@@ -112,8 +94,8 @@ def claim_battle_pass_reward(
     de uma transação quando o chamador precisar atomicidade com outras escritas.
     """
 
-    repo = _resolve_battle_pass(battle_pass)
-    bag_repo = _resolve_bags(bags)
+    repo = battle_pass
+    bag_repo = bags
     reward = repo.get_reward(reward_id)
     if reward is None:
         raise EntityNotFoundError("Recompensa do passe não encontrada.")
@@ -251,11 +233,11 @@ def auto_claim_rewards(
     user,
     progress,
     *,
-    battle_pass: IBattlePassRepository | None = None,
-    bags: IBagRepository | None = None,
+    battle_pass: IBattlePassRepository,
+    bags: IBagRepository,
 ):
-    repo = _resolve_battle_pass(battle_pass)
-    bag_repo = _resolve_bags(bags)
+    repo = battle_pass
+    bag_repo = bags
     for reward in repo.list_claimable_rewards(user, progress):
         claim_battle_pass_reward(
             user_id=user.id,

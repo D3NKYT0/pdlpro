@@ -276,37 +276,3 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
         )
         return user, stored.get("mode") == "link"
 
-
-# Compatibilidade com testes de fronteira que chamam funções de módulo.
-def begin_oauth(provider: str, mode: str, user, *, browser_key: str) -> str:
-    from common.di import DependencyInjection
-
-    return (
-        DependencyInjection.root()
-        .create_scope()
-        .resolve(BeginOAuthUseCase)
-        .execute(
-            BeginOAuthInput(
-                provider=provider, mode=mode, user=user, browser_key=browser_key
-            )
-        )
-    )
-
-
-def complete_oauth(provider: str, code: str, state: str, *, browser_key: str, user=None):
-    from common.di import DependencyInjection
-
-    return (
-        DependencyInjection.root()
-        .create_scope()
-        .resolve(CompleteOAuthUseCase)
-        .execute(
-            CompleteOAuthInput(
-                provider=provider,
-                code=code,
-                state=state,
-                browser_key=browser_key,
-                user=user,
-            )
-        )
-    )

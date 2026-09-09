@@ -16,6 +16,7 @@ from apps.payment.application.webhooks import (
     HandleStripeWebhookUseCase,
     WebhookSignatureService,
 )
+from apps.payment.domain.gateways import IPaymentGatewayRegistry
 from apps.payment.domain.repositories import (
     IPaymentOrderRepository,
     IWebhookLogRepository,
@@ -47,7 +48,9 @@ class PaymentProvider(AppProvider):
         container.register_self(MockPaymentGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(MercadoPagoGateway, lifetime=Lifetime.SINGLETON)
         container.register_self(StripeGateway, lifetime=Lifetime.SINGLETON)
-        container.register_self(PaymentGatewayRegistry, lifetime=Lifetime.SINGLETON)
+        container.register(
+            IPaymentGatewayRegistry, PaymentGatewayRegistry, lifetime=Lifetime.SINGLETON
+        )
         container.register_self(WebhookSignatureService, lifetime=Lifetime.SINGLETON)
         container.register_self(CoinPricingService, lifetime=Lifetime.SCOPED)
         for use_case in (
