@@ -277,13 +277,20 @@ html.pdl-panel .menu-badge {
 
 html.pdl-panel .panel-user {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px 2px 0;
+  border-top: 1px solid rgba(197, 161, 97, 0.16);
+}
+
+html.pdl-panel .panel-user-account {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr) 36px;
   align-items: center;
   gap: 9px;
   min-width: 0;
-  padding: 16px 2px 0;
-  border-top: 1px solid rgba(197, 161, 97, 0.16);
 }
 
 html.pdl-panel .panel-user-avatar {
@@ -7452,6 +7459,11 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .panel-user {
+    display: flex;
+    width: 100%;
+  }
+
+  html.pdl-panel .panel-user-account {
     display: grid;
     width: 100%;
   }

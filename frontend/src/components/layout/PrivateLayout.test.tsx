@@ -2,7 +2,9 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { I18nextProvider } from 'react-i18next'
 import { afterEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { PrivateLayout } from './PrivateLayout'
 
 const themeMock = vi.hoisted(() => ({
@@ -67,13 +69,15 @@ afterEach(() => {
 
 function renderAt(path: string) {
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <Routes>
-        <Route path="/painel" element={<PrivateLayout />}>
-          <Route path="*" element={<h1>Conteúdo privado</h1>} />
-        </Route>
-      </Routes>
-    </MemoryRouter>,
+    <I18nextProvider i18n={i18n}>
+      <MemoryRouter initialEntries={[path]}>
+        <Routes>
+          <Route path="/painel" element={<PrivateLayout />}>
+            <Route path="*" element={<h1>Conteúdo privado</h1>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </I18nextProvider>,
   )
 }
 
@@ -124,4 +128,19 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
   expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Meu perfil' })).toBeVisible()
+})
+
+it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () => {
+  const { container } = renderAt('/painel/profile')
+  const panelUser = container.querySelector('.panel-user')
+  const language = container.querySelector('.panel-language')
+  const account = container.querySelector('.panel-user-account')
+  expect(panelUser).toContainElement(language as HTMLElement)
+  expect(panelUser).toContainElement(account as HTMLElement)
+  expect(account).not.toContainElement(language as HTMLElement)
+  expect(account?.querySelector('.panel-user-avatar')).toBeTruthy()
+  expect(account?.querySelector('.panel-user-copy')).toBeTruthy()
+  expect(screen.getByRole('combobox', { name: 'Idioma do site' })).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Abrir meu perfil' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Sair' })).toBeVisible()
 })

@@ -200,7 +200,7 @@ export function PrivateLayout() {
             <div className="panel-user">
               <LanguageSwitcher className="language-switcher panel-language" id="panel-language" />
               {user ? (
-                <>
+                <div className="panel-user-account">
                   <NavLink
                     className="panel-user-avatar"
                     to="/painel/profile"
@@ -231,7 +231,7 @@ export function PrivateLayout() {
                     <LogOut aria-hidden="true" />
                     <span>{t("nav.logout")}</span>
                   </Button>
-                </>
+                </div>
               ) : null}
             </div>
           </div>
