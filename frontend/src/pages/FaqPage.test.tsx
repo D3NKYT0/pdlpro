@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { FaqPage } from './FaqPage'
-import { resetHttpClient } from '../services/infra/http'
+import { resetHttpClient } from '../services/api'
 
 const rows = [
   { id: '1', question: 'Como recupero a senha?', short_answer: 'Use a recuperação.', answer: 'Abra Esqueci minha senha.', category: 'account_security', category_label: 'Conta e segurança', keywords: ['reset'] },

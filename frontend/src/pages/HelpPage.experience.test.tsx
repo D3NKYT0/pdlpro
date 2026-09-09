@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
-import { resetHttpClient } from '../services/infra/http'
+import { resetHttpClient } from '../services/api'
 import { loadHelpPreferences } from '../components/help/preferences'
 
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'experience-user', username: 'Daniel', role: 'player' } }) }))

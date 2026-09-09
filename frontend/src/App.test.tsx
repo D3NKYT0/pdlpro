@@ -3,7 +3,7 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { ApiError, request } from './services/infra/http'
+import { ApiError, request } from './services/api'
 import { queryClient } from './services/infra/queryClient'
 import App from './App'
 

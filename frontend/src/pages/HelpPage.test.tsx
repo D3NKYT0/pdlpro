@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
-import { resetHttpClient } from '../services/infra/http'
+import { resetHttpClient } from '../services/api'
 import type { AmbientActivity } from '../components/help/idleRoutine'
 import { estimateSpeechMs } from '../components/help/idleRoutine'
 const ambientPlan = vi.hoisted(() => ({ current: null as AmbientActivity[] | null }))

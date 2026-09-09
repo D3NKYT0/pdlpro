@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { formatCurrency, formatDateTime } from './formatters'
 import { apiErrorMessage } from './errors'
-import { ApiError } from '../services/infra/http'
+import { ApiError } from '../services/api'
 
 it.each([['12.34', '12,34'], [null, '0,00'], ['invalid', '0,00'], [-2, '-R$']])('formata valor %s para exibição', (input, expected) => {
   expect(formatCurrency(input)).toContain(expected)

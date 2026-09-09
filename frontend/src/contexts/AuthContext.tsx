@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { authApi, isTwoFactorChallenge, type ApiUser, type TwoFactorChallenge } from '../services/api'
-import { refreshSession } from '../services/api'
-import { restoreSession } from '../services/infra/session'
+import { authApi, isTwoFactorChallenge, restoreSession, refreshSession, type ApiUser, type TwoFactorChallenge } from '../services/api'
 
 const REFRESH_EVERY_MS = 10 * 60 * 1000
 const RETRY_EVERY_MS = 5000

@@ -25,10 +25,11 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 
 ### Regras de camada (SPA)
 
-- Importar APIs e tipos de contrato via [`services/api.ts`](../../frontend/src/services/api.ts).
-- Não chamar `fetch` fora de [`http.ts`](../../frontend/src/services/infra/http.ts).
+- Importar APIs e tipos de contrato via [`services/api.ts`](../../frontend/src/services/api.ts) (inclui `resetHttpClient` / `restoreSession` para testes e sessão).
+- Não chamar `fetch` fora de [`http.ts`](../../frontend/src/services/infra/http.ts). Helpers em `lib/` também importam de `services/api`, não de `infra` direto.
 - Separar serviços: `gamesApi` (gameplay), `programsApi` (produto), `staffGameContentApi` (staff), `catalogApi` (catálogo de itens).
 - Após mutações, invalidar só as `queryKey` necessárias (`useProgramAction` exige a lista).
+- Páginas finas: orquestração em hooks de feature quando o estado cresce (ex.: `useHelpPageController`).
 - Não há container DI no React; providers + objetos `*Api` bastam. Regra de negócio fica no backend.
 
 ## Executar e compilar

@@ -2,9 +2,7 @@
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { AuthProvider, useAuth } from './AuthContext'
-import { authApi } from '../services/api'
-import { restoreSession } from '../services/infra/session'
-import { refreshSession } from '../services/infra/http'
+import { authApi, restoreSession, refreshSession } from '../services/api'
 
 vi.mock('../services/infra/session', () => ({ restoreSession: vi.fn() }))
 vi.mock('../services/infra/http', async importOriginal => ({ ...await importOriginal<object>(), refreshSession: vi.fn() }))

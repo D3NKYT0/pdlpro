@@ -1,5 +1,6 @@
 export * from './types'
-export { request, isApiError, ApiError, refreshSession } from './infra/http'
+export { request, isApiError, ApiError, refreshSession, resetHttpClient } from './infra/http'
+export { restoreSession } from './infra/session'
 export { authApi, isTwoFactorChallenge } from './domain/auth.service'
 export type { TwoFactorChallenge } from './domain/auth.service'
 export { serverApi } from './domain/server.service'
