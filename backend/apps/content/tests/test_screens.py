@@ -14,4 +14,5 @@ def test_canonical_screen_keeps_known_panel_paths_and_drops_inventions():
 def test_describe_screen_uses_the_requested_language():
     assert describe_screen("/painel/wallet", "pt") == {"path": "/painel/wallet", "title": "Carteira"}
     assert describe_screen("/painel/wallet", "en") == {"path": "/painel/wallet", "title": "Wallet"}
+    assert describe_screen("/painel/wallet", "es") == {"path": "/painel/wallet", "title": "Cartera"}
     assert describe_screen("/faq", "pt") is None

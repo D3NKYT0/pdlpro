@@ -1,13 +1,13 @@
 import type { DenkynhoEmotionId } from './emotions'
 
 export interface PersonalityReply { text: string; pose: string; action?: { label: string; url: string } }
-export type HelpLanguage = 'pt' | 'en'
+export type HelpLanguage = 'pt' | 'en' | 'es'
 
 interface WelcomeIdentity { suggestedName?: string; roleLabel: string }
 
 export function denkynhoWelcome(date = new Date(), identity?: WelcomeIdentity, language: HelpLanguage = 'pt'): string {
   const hour = date.getHours()
-  if (language === 'en') {
+  if (language !== 'pt') {
     const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
     const recognized = identity?.suggestedName ? `, ${identity.suggestedName}` : ''
     const role = identity?.roleLabel === 'superadministrador' ? 'superadministrator' : identity?.roleLabel === 'equipe' ? 'staff member' : 'player'
@@ -202,6 +202,7 @@ const englishReplies: Array<{ matches: RegExp; reply: PersonalityReply[] }> = [
 const askingHow = {
   pt: /^(oi |ola |e ai )?(como (voce )?(vai|esta)|tudo (bem|bom)( com voce)?|voce esta bem|ta bem)$/,
   en: /^(how are you|are you ok|are you well)$/,
+  es: /^(como (estas|estás|te va)|todo bien|estas bien|estás bien)$/,
 }
 const feelingPose: Record<DenkynhoEmotionId, string> = {
   calm: '02-sucesso', joyful: '02-sucesso', amused: '06-rindo', sad: '07-triste',
@@ -226,6 +227,15 @@ const howIFeel: Record<HelpLanguage, Partial<Record<DenkynhoEmotionId, string>>>
     confused: "I'm trying to follow you. Could you tell me another way?",
     frustrated: "I noticed your frustration. Let's slow down and I'll look for a better path.",
   },
+  es: {
+    joyful: '¡Estoy feliz contigo! Podemos seguir con lo que necesites en el PDL.',
+    amused: 'Me río contigo. Cuando quieras, cuéntame la siguiente duda.',
+    sad: 'Estoy más callado porque noté que no estás bien. Estoy aquí contigo.',
+    sleepy: 'Estoy un poco somnoliento, pero igual puedo ayudar.',
+    surprised: 'Todavía estoy sorprendido por lo que contaste. Estoy aquí para ayudar.',
+    confused: 'Intento seguirte. ¿Puedes contármelo de otra forma?',
+    frustrated: 'Noté tu frustración. Vamos con calma y busco un mejor camino.',
+  },
 }
 
 /** Responde somente a interações sociais curtas e bem reconhecidas. */
@@ -236,6 +246,6 @@ export function matchPersonality(message: string, variant = 0, language: HelpLan
     const text = howIFeel[language][feeling]
     if (text) return { text, pose: feelingPose[feeling] }
   }
-  const choices = (language === 'en' ? englishReplies : replies).find(item => item.matches.test(normalized))?.reply
+  const choices = (language === 'pt' ? replies : englishReplies).find(item => item.matches.test(normalized))?.reply
   return choices?.[Math.abs(variant) % choices.length]
 }

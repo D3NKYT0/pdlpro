@@ -10,6 +10,7 @@ export { contentApi } from './domain/content.service'
 export type {
   ApiDenkynhoCareResult,
   ApiDenkynhoProfile,
+  ContentLanguage,
   DenkynhoAction,
   DenkynhoAppearance,
 } from './domain/content.service'
@@ -78,6 +79,8 @@ export type {
   PaymentReportRow,
   PaymentStatus,
 } from './domain/financial-reports.service'
+export { operationalReportsApi } from './domain/operational-reports.service'
+export type { OperationalReport, OperationalReportKind } from './domain/operational-reports.service'
 export { customItemsApi, customItemFormData } from './domain/customItems.service'
 export type { CustomItem, CustomItemInput, CustomItemList } from './domain/customItems.service'
 export { itemObservationApi, formatItemQuantity } from './domain/itemObservation.service'

@@ -1,0 +1,44 @@
+{
+  "hub": {
+    "eyebrow": "Admin area",
+    "title": "Settings hub",
+    "description": "Configure the panel without leaving the player area.",
+    "reports": "Reports",
+    "reportsDesc": "Finance, inventory, auctions, shop and marketplace"
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "Aggregated panel queries grouped by operational and financial category.",
+    "kicker": "Reports",
+    "loading": "Loading report…",
+    "loadError": "Could not load the report.",
+    "emptyTitle": "No records found",
+    "emptyHint": "Adjust the filters or check again after new activity.",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
+    "detail": "Details",
+    "detailHint": "{{count}} records · Totals cover every filtered row.",
+    "username": "User",
+    "dateFrom": "Start date",
+    "dateTo": "End date",
+    "status": "Status",
+    "action": "Action",
+    "pageSize": "Per page",
+    "applyFilters": "Apply filters",
+    "categories": {
+      "financeiro": { "title": "Finance", "description": "Balances, cash flow, orders and wallet reconciliation." },
+      "inventario": { "title": "Inventory", "description": "Panel inventory moves, top items and users." },
+      "leiloes": { "title": "Auctions", "description": "Auction status, bids and most active items." },
+      "compras": { "title": "Shop purchases", "description": "Shop revenue, abandoned carts and top items/coupons." },
+      "marketplace": { "title": "Marketplace", "description": "Character listings, sales and top sellers." }
+    },
+    "finance": {
+      "title": "Finance",
+      "description": "Track payments, wallet moves and balance integrity.",
+      "balances": "User balances",
+      "cashFlow": "Cash flow",
+      "payments": "Orders and payments",
+      "reconciliation": "Reconciliation"
+    }
+  }
+}

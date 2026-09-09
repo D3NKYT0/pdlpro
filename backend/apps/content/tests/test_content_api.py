@@ -165,6 +165,33 @@ def test_faq_returns_english_layers_when_requested(api):
 
 
 @pytest.mark.django_db
+def test_faq_returns_spanish_layers_when_requested(api):
+    Faq.objects.create(
+        question="Como recuperar senha?",
+        short_answer="Use a recuperação.",
+        answer="Abra a recuperação.",
+        keywords="senha",
+        question_en="How do I recover my password?",
+        short_answer_en="Use password recovery.",
+        answer_en="Open password recovery on the sign-in page.",
+        keywords_en="password,reset",
+        question_es="¿Cómo recupero mi contraseña?",
+        short_answer_es="Usa la recuperación.",
+        answer_es="Abre la recuperación en la página de acceso.",
+        keywords_es="contraseña,reset",
+        category=Faq.Category.ACCOUNT_SECURITY,
+    )
+
+    response = api.get("/api/v1/public/faq/?lang=es")
+    article = next(item for item in response.data if item["question"] == "¿Cómo recupero mi contraseña?")
+
+    assert response.status_code == 200
+    assert article["language"] == "es"
+    assert article["category_label"] == "Cuenta y seguridad"
+    assert article["short_answer"] == "Usa la recuperación."
+
+
+@pytest.mark.django_db
 def test_public_faq_never_exposes_internal_articles(api):
     Faq.objects.create(question="Público", answer="Todos", audience=Faq.Audience.PUBLIC)
     Faq.objects.create(question="Equipe", answer="Interno", audience=Faq.Audience.STAFF)
@@ -232,3 +259,9 @@ def test_legal_documents(api):
     assert terms.status_code == 200
     assert terms.data["title"]
     assert terms.data["body"]
+    assert terms.data["language"] == "pt"
+
+    terms_es = api.get("/api/v1/public/legal/terms/?lang=es")
+    assert terms_es.status_code == 200
+    assert terms_es.data["language"] == "es"
+    assert "Términos" in terms_es.data["title"]

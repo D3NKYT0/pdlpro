@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "main": "Main navigation",
+    "home": "Home",
+    "info": "Information",
+    "rankings": "Rankings",
+    "wiki": "Wiki",
+    "news": "News",
+    "roadmap": "Roadmap",
+    "faq": "FAQ",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "exploreRealm": "Explore the realm",
+    "myAccount": "My account",
+    "signIn": "Sign in",
+    "download": "Download",
+    "brandHome": "PDL PRO — Home"
+  },
+  "footer": {
+    "tagline": "Progression, sieges and glory in Aden — a Lineage server built for players who mean it.",
+    "createAccount": "Create account",
+    "community": "Community",
+    "explore": "Explore",
+    "account": "Account",
+    "legal": "Legal",
+    "exploreNav": "Explore the site",
+    "accountNav": "Account and support",
+    "legalNav": "Legal documents",
+    "panel": "Panel",
+    "faq": "FAQ",
+    "agreement": "User Agreement",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "rights": "© {{year}} PDL PRO. All rights reserved."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "empty": "No questions found.",
+    "language": "Answer language"
+  },
+  "home": {
+    "defaultTitle": "Begin your Lineage journey now!",
+    "defaultDescription": "Where legends are born, heroes fight, and glory is eternal.",
+    "downloadGame": "Download the game",
+    "createMaster": "Create your master account"
+  }
+}

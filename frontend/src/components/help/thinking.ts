@@ -3,6 +3,7 @@ import type { HelpLanguage } from './personality'
 export const thinkingPhrases: Record<HelpLanguage, string[]> = {
   pt: ['Estou pensando…', 'Deixa eu consultar com calma…', 'Já estou montando a resposta…', 'Quase lá…'],
   en: ['Thinking…', 'Let me look this up carefully…', 'Putting the answer together…', 'Almost there…'],
+  es: ['Pensando…', 'Déjame consultarlo con calma…', 'Estoy armando la respuesta…', 'Casi listo…'],
 }
 
 /** Frase curta da espera, em ciclo, enquanto a geração ainda não devolveu o texto. */

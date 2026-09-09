@@ -1,0 +1,23 @@
+{
+  "brand": "Panel",
+  "nav": {
+    "dashboard": "Dashboard",
+    "profile": "My profile",
+    "security": "Account & security",
+    "accounts": "L2 account",
+    "inventory": "Inventory",
+    "wallet": "Wallet",
+    "shop": "Shop",
+    "marketplace": "Marketplace",
+    "auctions": "Auctions",
+    "games": "Games",
+    "rewards": "Journey & rewards",
+    "supporters": "Supporters",
+    "progress": "Progress",
+    "notifications": "Alerts",
+    "support": "Support",
+    "help": "Help",
+    "admin": "Administration",
+    "logout": "Sign out"
+  }
+}

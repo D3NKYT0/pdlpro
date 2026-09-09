@@ -230,12 +230,13 @@ class RoadmapView(InjectedAPIView):
         responses=RoadmapSerializer(many=True),
     )
     def get(self, request, entry_id=None):
+        from common.i18n import resolve_language
+
+        language = resolve_language(request.query_params.get("lang"))
         result = self.resolve(ListPublishedRoadmapUseCase).execute(
-            GetRoadmapInput(entry_id=entry_id)
+            GetRoadmapInput(entry_id=entry_id, language=language)
         )
-        if entry_id:
-            return Response(RoadmapSerializer(result).data)
-        return Response(RoadmapSerializer(result, many=True).data)
+        return Response(result)
 
 
 class StaffRoadmapView(InjectedAPIView):

@@ -20,8 +20,14 @@ class News(TitleSlugMixin, BaseModel):
 
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     title = models.CharField(max_length=200)
+    title_en = models.CharField(max_length=200, blank=True)
+    title_es = models.CharField(max_length=200, blank=True)
     excerpt = models.CharField(max_length=300, blank=True)
+    excerpt_en = models.CharField(max_length=300, blank=True)
+    excerpt_es = models.CharField(max_length=300, blank=True)
     body = models.TextField()
+    body_en = models.TextField(blank=True)
+    body_es = models.TextField(blank=True)
     image = models.ImageField(upload_to="news/", null=True, blank=True)
     author = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, null=True, blank=True)
     published_at = models.DateTimeField(default=timezone.now)
@@ -70,6 +76,9 @@ class Faq(BaseModel):
     question_en = models.CharField(max_length=250, blank=True)
     short_answer_en = models.CharField(max_length=400, blank=True)
     answer_en = models.TextField(blank=True)
+    question_es = models.CharField(max_length=250, blank=True)
+    short_answer_es = models.CharField(max_length=400, blank=True)
+    answer_es = models.TextField(blank=True)
     category = models.CharField(max_length=40, choices=Category.choices, default=Category.GETTING_STARTED)
     keywords = models.CharField(
         max_length=500,
@@ -80,6 +89,11 @@ class Faq(BaseModel):
         max_length=500,
         blank=True,
         help_text="English alternative terms separated by commas.",
+    )
+    keywords_es = models.CharField(
+        max_length=500,
+        blank=True,
+        help_text="Términos alternativos en español separados por comas.",
     )
     audience = models.CharField(
         max_length=16,
@@ -246,8 +260,14 @@ class WikiPage(TitleSlugMixin, BaseModel):
 
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     title = models.CharField(max_length=200)
+    title_en = models.CharField(max_length=200, blank=True)
+    title_es = models.CharField(max_length=200, blank=True)
     summary = models.CharField(max_length=400, blank=True)
+    summary_en = models.CharField(max_length=400, blank=True)
+    summary_es = models.CharField(max_length=400, blank=True)
     body = models.TextField()
+    body_en = models.TextField(blank=True)
+    body_es = models.TextField(blank=True)
     category = models.CharField(max_length=40, default="guide")
     icon = models.CharField(max_length=50, blank=True)
     order = models.IntegerField(default=0)

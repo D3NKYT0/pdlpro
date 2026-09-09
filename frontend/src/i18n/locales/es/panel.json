@@ -1,0 +1,23 @@
+{
+  "brand": "Panel",
+  "nav": {
+    "dashboard": "Panel",
+    "profile": "Mi perfil",
+    "security": "Cuenta y seguridad",
+    "accounts": "Cuenta L2",
+    "inventory": "Inventario",
+    "wallet": "Cartera",
+    "shop": "Tienda",
+    "marketplace": "Marketplace",
+    "auctions": "Subastas",
+    "games": "Juegos",
+    "rewards": "Viaje y recompensas",
+    "supporters": "Patrocinadores",
+    "progress": "Progreso",
+    "notifications": "Avisos",
+    "support": "Atención",
+    "help": "Ayuda",
+    "admin": "Administración",
+    "logout": "Salir"
+  }
+}

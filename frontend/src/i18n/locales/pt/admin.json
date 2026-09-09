@@ -1,0 +1,44 @@
+{
+  "hub": {
+    "eyebrow": "Área administrativa",
+    "title": "Central de configurações",
+    "description": "Configure o painel como no PDL antigo, sem sair da área do jogador.",
+    "reports": "Relatórios",
+    "reportsDesc": "Financeiro, inventário, leilões, loja e marketplace"
+  },
+  "reports": {
+    "title": "Relatórios",
+    "description": "Consultas agregadas do painel, agrupadas por categoria operacional e financeira.",
+    "kicker": "Relatórios",
+    "loading": "Carregando relatório…",
+    "loadError": "Não foi possível carregar o relatório.",
+    "emptyTitle": "Nenhum registro encontrado",
+    "emptyHint": "Ajuste os filtros ou consulte novamente após novas movimentações.",
+    "refresh": "Atualizar",
+    "refreshing": "Atualizando…",
+    "detail": "Detalhamento",
+    "detailHint": "{{count}} registros · Totais calculados sobre todos os resultados dos filtros.",
+    "username": "Usuário",
+    "dateFrom": "Data inicial",
+    "dateTo": "Data final",
+    "status": "Situação",
+    "action": "Ação",
+    "pageSize": "Por página",
+    "applyFilters": "Aplicar filtros",
+    "categories": {
+      "financeiro": { "title": "Financeiro", "description": "Saldos, fluxo de caixa, pedidos e reconciliação de carteiras." },
+      "inventario": { "title": "Inventário", "description": "Movimentações do inventário do painel, tops de itens e usuários." },
+      "leiloes": { "title": "Leilões", "description": "Status dos leilões, lances e itens com mais atividade." },
+      "compras": { "title": "Compras da loja", "description": "Receita da loja, carrinhos abandonados e tops de itens e cupons." },
+      "marketplace": { "title": "Marketplace", "description": "Anúncios de personagens, vendas e ranking de vendedores." }
+    },
+    "finance": {
+      "title": "Financeiro",
+      "description": "Acompanhe pagamentos, movimentações e a integridade das carteiras do painel.",
+      "balances": "Saldos dos usuários",
+      "cashFlow": "Fluxo de caixa",
+      "payments": "Pedidos e pagamentos",
+      "reconciliation": "Reconciliação"
+    }
+  }
+}

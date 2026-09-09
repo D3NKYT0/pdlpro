@@ -23,6 +23,13 @@ class NewsAdmin(PDLModelAdmin):
     list_display = ("title", "slug", "is_published", "published_at")
     prepopulated_fields = {"slug": ("title",)}
     list_filter = ("is_published",)
+    search_fields = ("title", "title_en", "title_es", "excerpt", "body")
+    fieldsets = (
+        ("Publicação", {"fields": ("is_published", "published_at", "slug", "image", "author")}),
+        ("Português", {"fields": ("title", "excerpt", "body")}),
+        ("English", {"fields": ("title_en", "excerpt_en", "body_en")}),
+        ("Español", {"fields": ("title_es", "excerpt_es", "body_es")}),
+    )
 
 
 @admin.register(Faq)
@@ -38,6 +45,7 @@ class FaqAdmin(PDLModelAdmin):
     search_fields = (
         "question", "short_answer", "answer", "keywords",
         "question_en", "short_answer_en", "answer_en", "keywords_en",
+        "question_es", "short_answer_es", "answer_es", "keywords_es",
     )
     fieldsets = (
         ("Publicação", {
@@ -46,6 +54,7 @@ class FaqAdmin(PDLModelAdmin):
         }),
         ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
         ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+        ("Español", {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
     )
 
 
@@ -54,7 +63,7 @@ class DenkynhoHandbookAdmin(PDLModelAdmin):
     """Formulário editorial dos passo a passo internos do Denkynho.
 
     Novos artigos nascem com ``assistant_only`` e não entram no FAQ público. A equipe
-    publica em português e inglês por aqui, sem uma migration de conteúdo.
+    publica em português, inglês e espanhol por aqui, sem uma migration de conteúdo.
     """
 
     list_display = ("question", "category", "audience", "order", "is_published")
@@ -62,6 +71,7 @@ class DenkynhoHandbookAdmin(PDLModelAdmin):
     search_fields = (
         "question", "short_answer", "answer", "keywords",
         "question_en", "short_answer_en", "answer_en", "keywords_en",
+        "question_es", "short_answer_es", "answer_es", "keywords_es",
     )
     fieldsets = (
         ("Destino", {
@@ -70,6 +80,7 @@ class DenkynhoHandbookAdmin(PDLModelAdmin):
         }),
         ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
         ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+        ("Español", {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
     )
 
     def get_queryset(self, request):
@@ -104,6 +115,13 @@ class WikiPageAdmin(PDLModelAdmin):
     list_display = ("title", "slug", "category", "is_published", "is_menu_item", "order")
     prepopulated_fields = {"slug": ("title",)}
     list_filter = ("category", "is_published")
+    search_fields = ("title", "title_en", "title_es", "summary", "body")
+    fieldsets = (
+        ("Publicação", {"fields": ("is_published", "is_menu_item", "category", "icon", "order", "slug")}),
+        ("Português", {"fields": ("title", "summary", "body")}),
+        ("English", {"fields": ("title_en", "summary_en", "body_en")}),
+        ("Español", {"fields": ("title_es", "summary_es", "body_es")}),
+    )
 
 
 @admin.register(CalendarEvent)

@@ -1,0 +1,21 @@
+{
+  "brand": "PDL PRO",
+  "lineage": "Lineage",
+  "loading": "Cargando…",
+  "retry": "Reintentar",
+  "apply": "Aplicar",
+  "clear": "Limpiar",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "back": "Volver",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "search": "Buscar",
+  "all": "Todas",
+  "language": "Idioma",
+  "languageOfSite": "Idioma del sitio",
+  "unavailableDate": "Fecha no disponible",
+  "errorGeneric": "No se pudo completar la operación.",
+  "staff": "Staff",
+  "pageOf": "Página {{page}} de {{total}}"
+}

@@ -1,0 +1,23 @@
+{
+  "brand": "Painel",
+  "nav": {
+    "dashboard": "Painel",
+    "profile": "Meu perfil",
+    "security": "Conta e segurança",
+    "accounts": "Conta L2",
+    "inventory": "Inventário",
+    "wallet": "Carteira",
+    "shop": "Loja",
+    "marketplace": "Marketplace",
+    "auctions": "Leilão",
+    "games": "Jogos",
+    "rewards": "Jornada e recompensas",
+    "supporters": "Apoiadores",
+    "progress": "Progresso",
+    "notifications": "Avisos",
+    "support": "Atendimento",
+    "help": "Ajuda",
+    "admin": "Administração",
+    "logout": "Sair"
+  }
+}

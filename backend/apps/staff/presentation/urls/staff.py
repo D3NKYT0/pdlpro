@@ -23,6 +23,12 @@ from apps.staff.presentation.views.financial_reports import (
     PaymentReportView,
     ReconciliationReportView,
 )
+from apps.staff.presentation.views.operational_reports import (
+    AuctionsOperationalReportView,
+    InventoryOperationalReportView,
+    MarketplaceOperationalReportView,
+    PurchasesOperationalReportView,
+)
 from apps.staff.presentation.views.item_observation import (
     ObservationAccessView,
     ObservationCategoriesView,
@@ -41,6 +47,10 @@ urlpatterns = [
     path("financial-reports/cash-flow/", CashFlowReportView.as_view(), name="staff-report-cash-flow"),
     path("financial-reports/payments/", PaymentReportView.as_view(), name="staff-report-payments"),
     path("financial-reports/reconciliation/", ReconciliationReportView.as_view(), name="staff-report-reconciliation"),
+    path("operational-reports/inventory/", InventoryOperationalReportView.as_view(), name="staff-ops-inventory"),
+    path("operational-reports/auctions/", AuctionsOperationalReportView.as_view(), name="staff-ops-auctions"),
+    path("operational-reports/purchases/", PurchasesOperationalReportView.as_view(), name="staff-ops-purchases"),
+    path("operational-reports/marketplace/", MarketplaceOperationalReportView.as_view(), name="staff-ops-marketplace"),
     path("custom-items/", CustomItemsView.as_view(), name="staff-custom-items"),
     path("custom-items/<uuid:item_uuid>/", CustomItemDetailView.as_view(), name="staff-custom-item-detail"),
     path("item-observation/access/", ObservationAccessView.as_view()),

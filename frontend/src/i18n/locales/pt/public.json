@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "main": "Navegação principal",
+    "home": "Início",
+    "info": "Informações",
+    "rankings": "Rankings",
+    "wiki": "Wiki",
+    "news": "Notícias",
+    "roadmap": "Roadmap",
+    "faq": "Perguntas Frequentes",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "exploreRealm": "Explore o reino",
+    "myAccount": "Minha Conta",
+    "signIn": "Entrar",
+    "download": "Download",
+    "brandHome": "PDL PRO — Início"
+  },
+  "footer": {
+    "tagline": "Progressão, siege e glória no reino de Aden — um servidor Lineage feito para quem joga de verdade.",
+    "createAccount": "Criar conta",
+    "community": "Comunidade",
+    "explore": "Explorar",
+    "account": "Conta",
+    "legal": "Legal",
+    "exploreNav": "Explorar o site",
+    "accountNav": "Conta e suporte",
+    "legalNav": "Documentos legais",
+    "panel": "Painel",
+    "faq": "Perguntas frequentes",
+    "agreement": "Acordo do Usuário",
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade",
+    "rights": "© {{year}} PDL PRO. Todos os direitos reservados."
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "empty": "Nenhuma pergunta encontrada.",
+    "language": "Idioma das respostas"
+  },
+  "home": {
+    "defaultTitle": "Inicie sua Jornada em Lineage Agora!",
+    "defaultDescription": "Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna.",
+    "downloadGame": "Baixe o Jogo",
+    "createMaster": "Crie sua conta mestra"
+  }
+}

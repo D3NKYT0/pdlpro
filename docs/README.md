@@ -32,6 +32,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Interface do admin/backend](desenvolvimento/interface-admin.md) | Jazzmin, login, botões compartilhados, envio nativo e documentação HTTP |
 | [Testes e qualidade](desenvolvimento/testes.md) | Pytest, Vitest, isolamento, exemplos, cobertura e limites |
 | [Política de testes](desenvolvimento/politica-de-testes.md) | Testes obrigatórios para features e correções, critérios de review e CI |
+| [Internacionalização](desenvolvimento/i18n.md) | Idiomas pt/en/es, seletor, namespaces e conteúdo CMS |
 | [Preview isolado](desenvolvimento/preview.md) | Dados demonstrativos sem acessar pagamentos ou jogo reais |
 
 ### Arquitetura

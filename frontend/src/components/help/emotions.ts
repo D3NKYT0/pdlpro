@@ -1,6 +1,6 @@
 export type DenkynhoEmotionId = 'calm' | 'joyful' | 'amused' | 'sad' | 'sleepy' | 'surprised' | 'confused' | 'frustrated'
 export type DenkynhoEmotionSource = 'user' | 'needs' | 'default'
-export type HelpEmotionLanguage = 'pt' | 'en'
+export type HelpEmotionLanguage = 'pt' | 'en' | 'es'
 
 export interface DenkynhoEmotion {
   id: DenkynhoEmotionId
@@ -86,13 +86,13 @@ export const defaultDenkynhoEmotion: DenkynhoEmotion = {
 
 /** Rótulo curto do humor atual, para o painel do mascote. */
 export function emotionLabel(id: DenkynhoEmotionId, language: HelpEmotionLanguage): string {
-  return labels[language][id]
+  return labels[language === 'pt' ? 'pt' : 'en'][id]
 }
 
 /** Frase de status: empatia com o usuário ou necessidade do próprio mascote. */
 export function emotionStatus(emotion: DenkynhoEmotion, language: HelpEmotionLanguage): string {
   const table = emotion.source === 'user' ? userStatus : needsStatus
-  return table[language][emotion.id]
+  return table[language === 'pt' ? 'pt' : 'en'][emotion.id]
 }
 
 export function isDenkynhoEmotion(value: unknown): value is DenkynhoEmotion {

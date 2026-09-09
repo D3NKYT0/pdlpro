@@ -28,6 +28,7 @@ def test_lingua_detects_supported_languages_and_respects_selection():
     assert detect_language("Como posso recuperar minha senha?") == "pt"
     assert detect_language("How can I recover my password?") == "en"
     assert detect_language("Hello", preferred="pt") == "pt"
+    assert detect_language("Hola, ¿cómo recupero mi contraseña?", preferred="es") == "es"
 
 
 @pytest.mark.parametrize("message", ["canal", "cultura", "Carambola", "Rolamento", "classificar"])
@@ -51,6 +52,41 @@ def test_assistant_validates_message_and_language(api, player):
     )
     assert empty.status_code == 400
     assert invalid_language.status_code == 400
+
+
+@pytest.mark.django_db
+def test_assistant_accepts_spanish_language_with_localized_faq(api, player, mocker):
+    Faq.objects.create(
+        question="Como recuperar minha senha?",
+        short_answer="Use a recuperação.",
+        answer="Abra a recuperação na entrada.",
+        keywords="senha,reset",
+        question_en="How do I recover my password?",
+        short_answer_en="Use password recovery.",
+        answer_en="Open password recovery on the sign-in page.",
+        keywords_en="password,reset",
+        question_es="¿Cómo recupero mi contraseña?",
+        short_answer_es="Usa la recuperación.",
+        answer_es="Abre la recuperación en la página de acceso.",
+        keywords_es="contraseña,reset",
+    )
+    mocker.patch.object(
+        SentenceTransformerMatcher,
+        "similarities",
+        autospec=True,
+        side_effect=semantic_match("recupero mi contraseña"),
+    )
+    api.force_authenticate(player)
+
+    response = api.post(
+        "/api/v1/shared/content/assistant/reply/",
+        {"message": "olvidé mis credenciales y no puedo entrar", "language": "es"},
+    )
+
+    assert response.status_code == 200
+    assert response.data["language"] == "es"
+    assert response.data["kind"] == "knowledge"
+    assert "contraseña" in response.data["answer"]["text"].lower() or "recuperación" in response.data["answer"]["text"].lower()
 
 
 @pytest.mark.django_db

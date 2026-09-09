@@ -5,7 +5,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.content.application.legal import (
+    GetLegalDocumentInput,
     GetLegalDocumentUseCase,
+    ListLegalDocumentsInput,
     ListLegalDocumentsUseCase,
 )
 from apps.content.application.use_cases import (
@@ -17,11 +19,14 @@ from apps.content.application.use_cases import (
     ListDownloadsUseCase,
     ListFaqInput,
     ListFaqUseCase,
+    ListNewsInput,
     ListNewsUseCase,
+    ListWikiInput,
     ListWikiPagesUseCase,
     SearchWikiInput,
     SearchWikiUseCase,
 )
+from common.i18n import resolve_language
 from common.views import InjectedAPIView
 
 
@@ -41,7 +46,8 @@ class NewsListView(InjectedAPIView):
         description="Lista as notícias públicas publicadas no portal.",
     )
     def get(self, request):
-        items = self.resolve(ListNewsUseCase).execute(None)
+        language = resolve_language(request.query_params.get("lang"))
+        items = self.resolve(ListNewsUseCase).execute(ListNewsInput(language=language))
         payload = []
         for item in items:
             row = asdict(item)
@@ -66,7 +72,8 @@ class NewsDetailView(InjectedAPIView):
         description="Retorna o conteúdo completo da notícia identificada pelo slug.",
     )
     def get(self, request, slug: str):
-        news = self.resolve(GetNewsUseCase).execute(GetNewsInput(slug=slug))
+        language = resolve_language(request.query_params.get("lang"))
+        news = self.resolve(GetNewsUseCase).execute(GetNewsInput(slug=slug, language=language))
         payload = asdict(news)
         payload["id"] = str(payload["id"])
         return Response(payload)
@@ -88,7 +95,7 @@ class FaqListView(InjectedAPIView):
         description="Lista as perguntas frequentes públicas no idioma solicitado.",
     )
     def get(self, request):
-        language = "en" if request.query_params.get("lang") == "en" else "pt"
+        language = resolve_language(request.query_params.get("lang"))
         return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(language=language)))
 
 
@@ -133,11 +140,14 @@ class WikiListView(InjectedAPIView):
         description="Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado.",
     )
     def get(self, request):
+        language = resolve_language(request.query_params.get("lang"))
         query = request.query_params.get("q", "").strip()
         if query:
-            items = self.resolve(SearchWikiUseCase).execute(SearchWikiInput(query=query))
+            items = self.resolve(SearchWikiUseCase).execute(
+                SearchWikiInput(query=query, language=language)
+            )
         else:
-            items = self.resolve(ListWikiPagesUseCase).execute(None)
+            items = self.resolve(ListWikiPagesUseCase).execute(ListWikiInput(language=language))
         return Response([dump_wiki(item) for item in items])
 
 
@@ -157,7 +167,14 @@ class WikiDetailView(InjectedAPIView):
         description="Retorna o conteúdo da página da wiki identificada pelo slug.",
     )
     def get(self, request, slug: str):
-        return Response(dump_wiki(self.resolve(GetWikiPageUseCase).execute(GetWikiPageInput(slug=slug))))
+        language = resolve_language(request.query_params.get("lang"))
+        return Response(
+            dump_wiki(
+                self.resolve(GetWikiPageUseCase).execute(
+                    GetWikiPageInput(slug=slug, language=language)
+                )
+            )
+        )
 
 
 class CalendarEventListView(InjectedAPIView):
@@ -195,7 +212,12 @@ class LegalListView(InjectedAPIView):
         description="Lista os documentos legais públicos disponíveis no portal.",
     )
     def get(self, request):
-        return Response(self.resolve(ListLegalDocumentsUseCase).execute())
+        language = resolve_language(request.query_params.get("lang"))
+        return Response(
+            self.resolve(ListLegalDocumentsUseCase).execute(
+                ListLegalDocumentsInput(language=language)
+            )
+        )
 
 
 class LegalDetailView(InjectedAPIView):
@@ -214,4 +236,11 @@ class LegalDetailView(InjectedAPIView):
         description="Retorna o conteúdo do documento legal identificado pelo slug.",
     )
     def get(self, request, slug: str):
-        return Response(asdict(self.resolve(GetLegalDocumentUseCase).execute(slug)))
+        language = resolve_language(request.query_params.get("lang"))
+        return Response(
+            asdict(
+                self.resolve(GetLegalDocumentUseCase).execute(
+                    GetLegalDocumentInput(slug=slug, language=language)
+                )
+            )
+        )

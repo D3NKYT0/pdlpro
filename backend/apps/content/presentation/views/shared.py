@@ -23,6 +23,7 @@ from apps.content.application.denkynho import (
 from apps.content.application.screens import canonical_screen
 from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from apps.content.domain.faq import FaqAudience
+from common.i18n import resolve_language
 from common.views import InjectedAPIView
 
 
@@ -44,7 +45,7 @@ class AuthenticatedFaqListView(InjectedAPIView):
             audience = FaqAudience.STAFF
         else:
             audience = FaqAudience.PUBLIC
-        language = "en" if request.query_params.get("lang") == "en" else "pt"
+        language = resolve_language(request.query_params.get("lang"))
         return Response(self.resolve(ListFaqUseCase).execute(ListFaqInput(audience=audience, language=language)))
 
 
@@ -62,7 +63,7 @@ class AssistantPreferencesSerializer(serializers.Serializer):
 
 class AssistantReplySerializer(serializers.Serializer):
     message = serializers.CharField(max_length=MESSAGE_MAX_LENGTH, trim_whitespace=True, allow_blank=False)
-    language = serializers.ChoiceField(choices=["auto", "pt", "en"], default="auto")
+    language = serializers.ChoiceField(choices=["auto", "pt", "en", "es"], default="auto")
     conversation = serializers.BooleanField(default=False)
     context = serializers.CharField(max_length=60000, allow_blank=True, default="")
     preferences = AssistantPreferencesSerializer(required=False)

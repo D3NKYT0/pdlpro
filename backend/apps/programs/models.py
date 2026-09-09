@@ -82,7 +82,11 @@ class RoadmapEntry(BaseModel):
     """
 
     title = models.CharField(max_length=160)
+    title_en = models.CharField(max_length=160, blank=True)
+    title_es = models.CharField(max_length=160, blank=True)
     description = models.TextField()
+    description_en = models.TextField(blank=True)
+    description_es = models.TextField(blank=True)
     category = models.CharField(max_length=60, default="Servidor")
     status = models.CharField(
         max_length=20,

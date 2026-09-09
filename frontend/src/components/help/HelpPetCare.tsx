@@ -196,6 +196,7 @@ export function HelpPetCare({
           options={[
             { value: 'pt', label: 'Português' },
             { value: 'en', label: 'English' },
+            { value: 'es', label: 'Español' },
           ]}
         />
       </Field>

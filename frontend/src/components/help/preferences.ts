@@ -15,7 +15,7 @@ export function validHelpPreferences(value: unknown): value is HelpPreferences {
   if (!value || typeof value !== 'object') return false
   const data = value as HelpPreferences
   return typeof data.preferred_name === 'string' && (data.preferred_name === '' || isSafePreferredName(data.preferred_name))
-    && ['brief', 'balanced', 'detailed'].includes(data.detail) && ['pt', 'en'].includes(data.language) && typeof data.remember === 'boolean'
+    && ['brief', 'balanced', 'detailed'].includes(data.detail) && ['pt', 'en', 'es'].includes(data.language) && typeof data.remember === 'boolean'
 }
 
 /** Reads only the current account's opt-in choices; unavailable or corrupt storage uses defaults. */

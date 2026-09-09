@@ -75,7 +75,7 @@ function sectionArt(image: string) {
 function DefaultHomePage() {
   const theme = useTheme()
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
-  const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
+  const news = useQuery({ queryKey: ['news'], queryFn: () => contentApi.news() })
   const wiki = useQuery({ queryKey: ['wiki'], queryFn: () => contentApi.wiki() })
   const clans = useQuery({ queryKey: ['rankings', 'clans'], queryFn: () => serverApi.rankings('clans') })
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined

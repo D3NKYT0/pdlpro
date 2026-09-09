@@ -1,5 +1,6 @@
 import { Card } from '../../components/ui/Card'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   Bell,
   ChartNoAxesCombined,
@@ -49,7 +50,7 @@ const categories: Category[] = [
     name: 'Financeiro',
     tone: 'finance',
     entries: [
-      { to: '/painel/admin/financeiro/saldos', title: 'Relatórios financeiros', description: 'Saldos, fluxo de caixa, pedidos e reconciliação de carteiras', icon: ChartNoAxesCombined },
+      { to: '/painel/admin/relatorios', title: 'Relatórios', description: 'Financeiro, inventário, leilões, loja e marketplace', icon: ChartNoAxesCombined },
       { to: '/painel/admin/moedas', title: 'Moedas', description: 'Moeda ativa, multiplicador e taxa', icon: Coins },
       { to: '/painel/admin/loja', title: 'Loja', description: 'Itens vendidos no painel', icon: ShoppingBag },
       { to: '/painel/admin/carteira', title: 'Configuração da carteira', description: 'Banner promocional e bônus mínimo nas recargas', icon: WalletCards },
@@ -83,13 +84,14 @@ const categories: Category[] = [
 ]
 
 export function AdminHubPage() {
+  const { t } = useTranslation('admin')
   return (
     <div className="account-page admin-hub">
       <Card as="header" className="account-hero">
         <div>
-          <span className="panel-eyebrow">Área administrativa</span>
-          <h1>Central de configurações</h1>
-          <p className="muted">Configure o painel como no PDL antigo, sem sair da área do jogador.</p>
+          <span className="panel-eyebrow">{t('hub.eyebrow')}</span>
+          <h1>{t('hub.title')}</h1>
+          <p className="muted">{t('hub.description')}</p>
         </div>
         <span className="account-status-pill is-active">
           <SlidersHorizontal aria-hidden="true" />
@@ -108,14 +110,16 @@ export function AdminHubPage() {
           <div className="admin-entry-grid">
             {category.entries.map((entry) => {
               const Icon = entry.icon
+              const title = entry.to === '/painel/admin/relatorios' ? t('hub.reports') : entry.title
+              const description = entry.to === '/painel/admin/relatorios' ? t('hub.reportsDesc') : entry.description
               const body = (
                 <>
                   <span className="admin-entry-icon">
                     <Icon aria-hidden="true" />
                   </span>
                   <span>
-                    <strong>{entry.title}</strong>
-                    <small>{entry.description}</small>
+                    <strong>{title}</strong>
+                    <small>{description}</small>
                   </span>
                 </>
               )

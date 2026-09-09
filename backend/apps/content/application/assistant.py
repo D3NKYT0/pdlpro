@@ -30,10 +30,11 @@ from apps.content.application.use_cases import ListFaqInput, ListFaqUseCase
 from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
-SUPPORTED_LANGUAGES = {"pt", "en"}
+SUPPORTED_LANGUAGES = {"pt", "en", "es"}
 LANGUAGE_DETECTOR = LanguageDetectorBuilder.from_languages(
     Language.PORTUGUESE,
     Language.ENGLISH,
+    Language.SPANISH,
 ).build()
 BLOCKED = {
     # Vocabulário curado a partir do filtro do CARDGAME. Termos de crise e
@@ -82,6 +83,13 @@ BLOCKED = {
         "wank", "wanker", "wanking", "whore", "wtf", "xhamster", "xnxx", "xvideos",
         "youporn", "zoophilia",
     },
+    "es": {
+        "cabron", "cabrones", "cojones", "coño", "culero", "gilipollas", "hijoputa",
+        "idiota", "imbecil", "joder", "jolines", "mamada", "maricón", "maricon", "mierda",
+        "ojete", "pendejo", "pendeja", "polla", "puta", "puto", "putas", "puto", "verga",
+        "zorra", "zoofilia", "estupro", "violacion", "violador", "pedofilo", "pedofilia",
+        "porno", "pornografia", "nazi", "nazis", "retrasado", "retrasada",
+    },
 }
 LEET = str.maketrans(
     {"0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s", "!": "i"}
@@ -128,12 +136,16 @@ def valid_preferred_name(value: str) -> bool:
 
 
 def detect_language(text: str, preferred: str = "auto") -> str:
-    """Detecta português ou inglês com Lingua; entradas ambíguas preservam o padrão PT."""
+    """Detecta português, inglês ou espanhol com Lingua; entradas ambíguas preservam o padrão PT."""
 
     if preferred in SUPPORTED_LANGUAGES:
         return preferred
     detected = LANGUAGE_DETECTOR.detect_language_of(text)
-    return "en" if detected == Language.ENGLISH else "pt"
+    if detected == Language.ENGLISH:
+        return "en"
+    if detected == Language.SPANISH:
+        return "es"
+    return "pt"
 
 
 @cache
@@ -161,7 +173,7 @@ class AssistantReplyInput:
 
 
 class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
-    """Interpreta PT/EN e consulta somente artigos permitidos para a audiência recebida."""
+    """Interpreta PT/EN/ES e consulta somente artigos permitidos para a audiência recebida."""
 
     def __init__(
         self,
@@ -174,11 +186,12 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
     def execute(self, data: AssistantReplyInput) -> dict:
         language = detect_language(data.message, data.language)
         if blocked_term(data.message):
-            text = (
-                "I can't use that language here. Please rephrase your message respectfully."
-                if language == "en"
-                else "Essa linguagem não pode ser usada aqui. Reformule a mensagem de modo respeitoso."
-            )
+            blocked_messages = {
+                "en": "I can't use that language here. Please rephrase your message respectfully.",
+                "es": "Ese lenguaje no se puede usar aquí. Reformule el mensaje de forma respetuosa.",
+                "pt": "Essa linguagem não pode ser usada aqui. Reformule a mensagem de modo respeitoso.",
+            }
+            text = blocked_messages.get(language, blocked_messages["pt"])
             return {
                 "language": language,
                 "kind": "blocked",
@@ -202,8 +215,12 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
         if laugh:
             return {"language": language, "kind": "social", "engine": "rapidfuzz", "answer": laugh}
         if correction:
-            text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
-                    if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
+            correction_messages = {
+                "pt": "Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?",
+                "en": "Sorry, I misunderstood your question. What did you want to talk about?",
+                "es": "Perdón, interpreté mal tu pregunta. ¿Sobre qué querías hablar?",
+            }
+            text = correction_messages.get(language, correction_messages["pt"])
             return {"language": language, "kind": "unknown", "engine": "conversation", "related_ids": [], "answer": {"text": text, "pose": "09-confuso"}}
         articles = self._list_faq.execute(
             ListFaqInput(audience=data.audience, language=language, for_assistant=True)
@@ -278,11 +295,12 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
                     "pose": "04-dica",
                 },
             }
-        text = (
-            "I found related topics, but I need a little more detail to answer safely."
-            if language == "en"
-            else "Encontrei assuntos relacionados, mas preciso de um pouco mais de detalhe para responder com segurança."
-        )
+        unknown_messages = {
+            "en": "I found related topics, but I need a little more detail to answer safely.",
+            "es": "Encontré temas relacionados, pero necesito un poco más de detalle para responder con seguridad.",
+            "pt": "Encontrei assuntos relacionados, mas preciso de um pouco mais de detalhe para responder com segurança.",
+        }
+        text = unknown_messages.get(language, unknown_messages["pt"])
         related_floor = 0.55 if engine == "rapidfuzz" else 0.45
         related = [
             article["id"]

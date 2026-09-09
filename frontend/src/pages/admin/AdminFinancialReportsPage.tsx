@@ -144,13 +144,13 @@ export function AdminFinancialReportsPage() {
     queryFn: ({ signal }) => financialReportsApi.get(kind, params, signal),
     enabled: Boolean(selected),
   })
-  if (!selected) return <Navigate to="/painel/admin/financeiro/saldos" replace />
+  if (!selected) return <Navigate to="/painel/admin/relatorios/financeiro/saldos" replace />
   function changePage(page: number) { const next = new URLSearchParams(params); next.set('page', String(page)); setParams(next) }
   const page = Number(params.get('page') || 1)
   const data = query.data
   return <div className="account-page financial-reports">
-    <AdminHeader kicker="Financeiro" title="Relatórios financeiros" description="Acompanhe pagamentos, movimentações e a integridade das carteiras do painel." />
-    <nav className="finance-tabs" aria-label="Relatórios financeiros">{reports.map((item) => { const Icon = item.icon; return <NavLink key={item.slug} to={`/painel/admin/financeiro/${item.slug}`} className={() => item.kind === kind ? 'is-active' : ''}><Icon size={18} />{item.title}</NavLink> })}</nav>
+    <AdminHeader kicker="Relatórios" title="Financeiro" description="Acompanhe pagamentos, movimentações e a integridade das carteiras do painel." />
+    <nav className="finance-tabs" aria-label="Relatórios financeiros">{reports.map((item) => { const Icon = item.icon; return <NavLink key={item.slug} to={`/painel/admin/relatorios/financeiro/${item.slug}`} className={() => item.kind === kind ? 'is-active' : ''}><Icon size={18} />{item.title}</NavLink> })}</nav>
     <div className="finance-section-heading"><div><h2>{selected.title}</h2><p className="muted">{selected.description}</p></div><Button type="submit" className="secondary" onClick={() => void query.refetch()} disabled={query.isFetching}><RefreshCw size={16} />{query.isFetching ? 'Atualizando…' : 'Atualizar'}</Button></div>
     <Filters key={`${kind}:${params}`} kind={kind} params={params} apply={setParams} />
     <p className="finance-explanation">{kind === 'payments'

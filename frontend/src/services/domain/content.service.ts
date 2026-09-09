@@ -36,11 +36,11 @@ export interface ApiFaq {
   keywords: string[]
   audience: 'public' | 'staff' | 'superadmin'
   audience_label: string
-  language?: 'pt' | 'en'
+  language?: 'pt' | 'en' | 'es'
 }
 
 export interface ApiAssistantReply {
-  language: 'pt' | 'en'
+  language: 'pt' | 'en' | 'es'
   kind: 'knowledge' | 'unknown' | 'blocked' | 'social' | 'crisis'
   engine: 'sentence-transformers+rapidfuzz' | 'rapidfuzz' | 'moderation' | 'conversation' | 'ollama' | 'remote' | 'safety'
   mode?: 'generative' | 'limited'
@@ -95,12 +95,21 @@ export interface ApiDenkynhoCareResult extends ApiDenkynhoProfile {
   replayed: boolean
 }
 
+export type ContentLanguage = 'pt' | 'en' | 'es'
+
+function withLang(path: string, language: ContentLanguage = 'pt', extraQuery = '') {
+  const params = new URLSearchParams(extraQuery)
+  if (language !== 'pt') params.set('lang', language)
+  const query = params.toString()
+  return query ? `${path}?${query}` : path
+}
+
 export const contentApi = {
-  news: () => request<ApiNews[]>('/public/news/'),
-  newsDetail: (slug: string) => request<ApiNews>(`/public/news/${slug}/`),
-  faq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/public/faq/${language === 'en' ? '?lang=en' : ''}`),
-  authenticatedFaq: (language: 'pt' | 'en' = 'pt') => request<ApiFaq[]>(`/shared/content/faq/${language === 'en' ? '?lang=en' : ''}`),
-  assistantReply: (message: string, language: 'pt' | 'en', context?: string, preferences?: AssistantPreferences, screen?: string) => request<ApiAssistantReply>(
+  news: (language: ContentLanguage = 'pt') => request<ApiNews[]>(withLang('/public/news/', language)),
+  newsDetail: (slug: string, language: ContentLanguage = 'pt') => request<ApiNews>(withLang(`/public/news/${slug}/`, language)),
+  faq: (language: ContentLanguage = 'pt') => request<ApiFaq[]>(withLang('/public/faq/', language)),
+  authenticatedFaq: (language: ContentLanguage = 'pt') => request<ApiFaq[]>(withLang('/shared/content/faq/', language)),
+  assistantReply: (message: string, language: ContentLanguage, context?: string, preferences?: AssistantPreferences, screen?: string) => request<ApiAssistantReply>(
     '/shared/content/assistant/reply/',
     { method: 'POST', body: JSON.stringify({ message, language, ...(context !== undefined ? { conversation: true, context } : {}), ...(preferences ? { preferences } : {}), ...(screen ? { screen } : {}) }) },
   ),
@@ -112,10 +121,10 @@ export const contentApi = {
     { method: 'POST', body: JSON.stringify({ action, idempotency_key: idempotencyKey }) },
   ),
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
-  wiki: (q?: string) => request<ApiWikiPage[]>(`/public/wiki/${q ? `?q=${encodeURIComponent(q)}` : ''}`),
-  wikiPage: (slug: string) => request<ApiWikiPage>(`/public/wiki/${slug}/`),
+  wiki: (q?: string, language: ContentLanguage = 'pt') => request<ApiWikiPage[]>(withLang('/public/wiki/', language, q ? `q=${encodeURIComponent(q)}` : '')),
+  wikiPage: (slug: string, language: ContentLanguage = 'pt') => request<ApiWikiPage>(withLang(`/public/wiki/${slug}/`, language)),
   calendar: () => request<ApiCalendarEvent[]>('/public/calendar/'),
-  legal: () => request<{ version: string; documents: Array<{ slug: string; title: string }> }>('/public/legal/'),
-  legalDocument: (slug: string) =>
-    request<{ slug: string; title: string; body: string; version: string }>(`/public/legal/${slug}/`),
+  legal: (language: ContentLanguage = 'pt') => request<{ version: string; documents: Array<{ slug: string; title: string }> }>(withLang('/public/legal/', language)),
+  legalDocument: (slug: string, language: ContentLanguage = 'pt') =>
+    request<{ slug: string; title: string; body: string; version: string }>(withLang(`/public/legal/${slug}/`, language)),
 }

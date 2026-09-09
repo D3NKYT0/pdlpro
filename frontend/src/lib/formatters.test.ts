@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest'
+import '../i18n'
 import { formatCurrency, formatDateTime } from './formatters'
 import { apiErrorMessage } from './errors'
 import { ApiError } from '../services/api'

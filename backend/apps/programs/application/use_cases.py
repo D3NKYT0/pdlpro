@@ -239,6 +239,23 @@ class GetRoadmapInput:
     """Consulta pública do roadmap; ``entry_id`` opcional restringe a uma entrada."""
 
     entry_id: UUID | None = None
+    language: str = "pt"
+
+
+def localize_roadmap_entry(row: Any, language: str = "pt") -> dict:
+    """Serializa uma entrada do roadmap com título/descrição no idioma pedido."""
+
+    from common.i18n import localized_text, resolve_language
+    from apps.programs.serializers import RoadmapSerializer
+
+    language = resolve_language(language)
+    data = dict(RoadmapSerializer(row).data)
+    data["title"] = localized_text(row, "title", language)
+    data["description"] = localized_text(row, "description", language)
+    data["language"] = language
+    for key in ("title_en", "title_es", "description_en", "description_es"):
+        data.pop(key, None)
+    return data
 
 
 class ListPublishedRoadmapUseCase(UseCase[GetRoadmapInput, list[Any] | Any]):
@@ -255,8 +272,8 @@ class ListPublishedRoadmapUseCase(UseCase[GetRoadmapInput, list[Any] | Any]):
             row = self._roadmap.get_published(data.entry_id)
             if row is None:
                 raise RoadmapEntryNotFoundError()
-            return row
-        return self._roadmap.list_published()
+            return localize_roadmap_entry(row, data.language)
+        return [localize_roadmap_entry(row, data.language) for row in self._roadmap.list_published()]
 
 
 class ListStaffRoadmapUseCase(UseCase[None, list[Any]]):

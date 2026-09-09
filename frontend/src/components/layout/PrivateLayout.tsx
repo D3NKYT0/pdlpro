@@ -2,6 +2,7 @@ import { Button } from '../ui/Button'
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import {
   ArrowLeft,
   Bell,
@@ -33,33 +34,36 @@ import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/api";
 import { useTheme } from "../../theme/ThemeProvider";
 import { ContextualHelp } from "../help/ContextualHelp";
+import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { PdlSymbol } from "../PdlSymbol";
 
 const links: Array<{
   to: string;
-  label: string;
+  labelKey: string;
   icon: LucideIcon;
   end?: boolean;
 }> = [
-  { to: "/painel", label: "Painel", icon: LayoutDashboard, end: true },
-  { to: "/painel/profile", label: "Meu perfil", icon: CircleUserRound },
-  { to: "/painel/security", label: "Conta e segurança", icon: ShieldCheck },
-  { to: "/painel/accounts", label: "Conta L2", icon: UserRoundCog },
-  { to: "/painel/inventory", label: "Inventário", icon: Package },
-  { to: "/painel/wallet", label: "Carteira", icon: WalletCards },
-  { to: "/painel/shop", label: "Loja", icon: ShoppingBag },
-  { to: "/painel/marketplace", label: "Marketplace", icon: Store },
-  { to: "/painel/auctions", label: "Leilão", icon: Gavel },
-  { to: "/painel/games", label: "Jogos", icon: Gamepad2 },
-  { to: "/painel/recompensas", label: "Jornada e recompensas", icon: Gift },
-  { to: "/painel/apoiadores", label: "Apoiadores", icon: Handshake },
-  { to: "/painel/progress", label: "Progresso", icon: Trophy },
-  { to: "/painel/notifications", label: "Avisos", icon: Bell },
-  { to: "/painel/support", label: "Atendimento", icon: Headphones },
-  { to: "/painel/ajuda", label: "Ajuda", icon: MessageCircle },
+  { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard, end: true },
+  { to: "/painel/profile", labelKey: "nav.profile", icon: CircleUserRound },
+  { to: "/painel/security", labelKey: "nav.security", icon: ShieldCheck },
+  { to: "/painel/accounts", labelKey: "nav.accounts", icon: UserRoundCog },
+  { to: "/painel/inventory", labelKey: "nav.inventory", icon: Package },
+  { to: "/painel/wallet", labelKey: "nav.wallet", icon: WalletCards },
+  { to: "/painel/shop", labelKey: "nav.shop", icon: ShoppingBag },
+  { to: "/painel/marketplace", labelKey: "nav.marketplace", icon: Store },
+  { to: "/painel/auctions", labelKey: "nav.auctions", icon: Gavel },
+  { to: "/painel/games", labelKey: "nav.games", icon: Gamepad2 },
+  { to: "/painel/recompensas", labelKey: "nav.rewards", icon: Gift },
+  { to: "/painel/apoiadores", labelKey: "nav.supporters", icon: Handshake },
+  { to: "/painel/progress", labelKey: "nav.progress", icon: Trophy },
+  { to: "/painel/notifications", labelKey: "nav.notifications", icon: Bell },
+  { to: "/painel/support", labelKey: "nav.support", icon: Headphones },
+  { to: "/painel/ajuda", labelKey: "nav.help", icon: MessageCircle },
 ];
 
 export function PrivateLayout() {
+  const { t } = useTranslation("panel");
+  const { t: tPublic } = useTranslation("public");
   const resources = useQuery({
     queryKey: ["resources"],
     queryFn: programsApi.resources,
@@ -135,13 +139,13 @@ export function PrivateLayout() {
             <PdlSymbol className="panel-brand-mark" />
             <div>
               <span className="panel-kicker">{shellCopy?.kicker ?? "Área do jogador"}</span>
-              <div className="brand">{shellCopy?.brand ?? "Painel"}</div>
+              <div className="brand">{shellCopy?.brand ?? t("brand")}</div>
             </div>
           </div>
           <button
             className="panel-menu-toggle"
             type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-label={menuOpen ? tPublic("nav.closeMenu") : tPublic("nav.openMenu")}
             aria-expanded={menuOpen}
             aria-controls="panel-navigation-drawer"
             onClick={() => setMenuOpen((open) => !open)}
@@ -155,12 +159,12 @@ export function PrivateLayout() {
           >
             <NavLink className="site-back" to="/">
               <ArrowLeft aria-hidden="true" />
-              <span>Voltar ao site</span>
+              <span>{tPublic("nav.home")}</span>
             </NavLink>
             <div
               className="panel-menu"
               role="navigation"
-              aria-label="Navegação da área do jogador"
+              aria-label={t("brand")}
             >
               {links
                 .filter(
@@ -176,7 +180,7 @@ export function PrivateLayout() {
                   return (
                     <NavLink key={link.to} to={link.to} end={link.end}>
                       <Icon aria-hidden="true" />
-                      <span>{link.label}</span>
+                      <span>{t(link.labelKey)}</span>
                       {link.to === "/painel/notifications" && unread ? (
                         <b className="menu-badge">{unread}</b>
                       ) : null}
@@ -189,11 +193,12 @@ export function PrivateLayout() {
               {canAccessStaff(user) ? (
                 <NavLink to="/painel/admin">
                   <SlidersHorizontal aria-hidden="true" />
-                  <span>Admin</span>
+                  <span>{t("nav.admin")}</span>
                 </NavLink>
               ) : null}
             </div>
             <div className="panel-user">
+              <LanguageSwitcher className="panel-language" id="panel-language" />
               {user ? (
                 <>
                   <NavLink
@@ -224,7 +229,7 @@ export function PrivateLayout() {
                     }}
                   >
                     <LogOut aria-hidden="true" />
-                    <span>Sair</span>
+                    <span>{t("nav.logout")}</span>
                   </Button>
                 </>
               ) : null}

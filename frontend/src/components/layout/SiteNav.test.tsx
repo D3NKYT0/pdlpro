@@ -4,7 +4,9 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
+import { I18nextProvider } from 'react-i18next'
 import { afterEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { SiteNav } from './SiteNav'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: null }) }))
@@ -18,11 +20,13 @@ function mount(path = '/rankings', resources: Array<{ code: string; enabled: boo
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   client.setQueryData(['resources'], resources)
   return render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={[path]}>
-        <SiteNav />
-      </MemoryRouter>
-    </QueryClientProvider>,
+    <I18nextProvider i18n={i18n}>
+      <QueryClientProvider client={client}>
+        <MemoryRouter initialEntries={[path]}>
+          <SiteNav />
+        </MemoryRouter>
+      </QueryClientProvider>
+    </I18nextProvider>,
   )
 }
 

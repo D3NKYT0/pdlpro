@@ -13,6 +13,12 @@ Git até **9 de setembro de 2026**.
 
 ### Adicionado
 
+- Área unificada de **Relatórios** na staff (`/painel/admin/relatorios`) com categorias
+  Financeiro, Inventário, Leilões, Compras da loja e Marketplace; APIs em
+  `/api/v1/staff/operational-reports/`.
+- Internacionalização **pt / en / es** na SPA (`i18next`), seletor de idioma persistente,
+  campos `*_es` (e EN onde faltava) em FAQ, notícias, wiki, roadmap e documentos legais;
+  assistente e FAQ aceitam `lang=es`.
 - Observabilidade: logging estruturado, auditoria, integração Sentry e middleware de
   rastreamento de requisições e erros.
 - Central de **Help** com FAQ (categorias, busca, audiência, suporte EN), artigos só

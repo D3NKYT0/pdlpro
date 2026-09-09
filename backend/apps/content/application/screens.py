@@ -5,24 +5,32 @@ from __future__ import annotations
 import re
 
 SCREENS: dict[str, dict[str, str]] = {
-    "/painel": {"pt": "Painel", "en": "Dashboard"},
-    "/painel/ajuda": {"pt": "Ajuda", "en": "Help"},
-    "/painel/accounts": {"pt": "Contas e personagens", "en": "Accounts and characters"},
-    "/painel/wallet": {"pt": "Carteira", "en": "Wallet"},
-    "/painel/wallet/jogo": {"pt": "Troca para o jogo", "en": "Game exchange"},
-    "/painel/inventory": {"pt": "Inventário", "en": "Inventory"},
-    "/painel/shop": {"pt": "Loja", "en": "Shop"},
-    "/painel/marketplace": {"pt": "Marketplace", "en": "Marketplace"},
-    "/painel/auctions": {"pt": "Leilões", "en": "Auctions"},
-    "/painel/games": {"pt": "Jogos", "en": "Games"},
-    "/painel/recompensas": {"pt": "Jornada e recompensas", "en": "Journey and rewards"},
-    "/painel/apoiadores": {"pt": "Apoiadores", "en": "Supporters"},
-    "/painel/profile": {"pt": "Meu perfil", "en": "My profile"},
-    "/painel/security": {"pt": "Conta e segurança", "en": "Account and security"},
-    "/painel/progress": {"pt": "Progresso", "en": "Progress"},
-    "/painel/notifications": {"pt": "Avisos", "en": "Notifications"},
-    "/painel/support": {"pt": "Atendimento", "en": "Support"},
-    "/painel/admin": {"pt": "Administração", "en": "Administration"},
+    "/painel": {"pt": "Painel", "en": "Dashboard", "es": "Panel"},
+    "/painel/ajuda": {"pt": "Ajuda", "en": "Help", "es": "Ayuda"},
+    "/painel/accounts": {
+        "pt": "Contas e personagens",
+        "en": "Accounts and characters",
+        "es": "Cuentas y personajes",
+    },
+    "/painel/wallet": {"pt": "Carteira", "en": "Wallet", "es": "Cartera"},
+    "/painel/wallet/jogo": {"pt": "Troca para o jogo", "en": "Game exchange", "es": "Cambio al juego"},
+    "/painel/inventory": {"pt": "Inventário", "en": "Inventory", "es": "Inventario"},
+    "/painel/shop": {"pt": "Loja", "en": "Shop", "es": "Tienda"},
+    "/painel/marketplace": {"pt": "Marketplace", "en": "Marketplace", "es": "Marketplace"},
+    "/painel/auctions": {"pt": "Leilões", "en": "Auctions", "es": "Subastas"},
+    "/painel/games": {"pt": "Jogos", "en": "Games", "es": "Juegos"},
+    "/painel/recompensas": {
+        "pt": "Jornada e recompensas",
+        "en": "Journey and rewards",
+        "es": "Jornada y recompensas",
+    },
+    "/painel/apoiadores": {"pt": "Apoiadores", "en": "Supporters", "es": "Patrocinadores"},
+    "/painel/profile": {"pt": "Meu perfil", "en": "My profile", "es": "Mi perfil"},
+    "/painel/security": {"pt": "Conta e segurança", "en": "Account and security", "es": "Cuenta y seguridad"},
+    "/painel/progress": {"pt": "Progresso", "en": "Progress", "es": "Progreso"},
+    "/painel/notifications": {"pt": "Avisos", "en": "Notifications", "es": "Avisos"},
+    "/painel/support": {"pt": "Atendimento", "en": "Support", "es": "Atención"},
+    "/painel/admin": {"pt": "Administração", "en": "Administration", "es": "Administración"},
 }
 _ACCOUNT_DETAIL = re.compile(r"^/painel/accounts/[a-zA-Z0-9_-]+/[0-9]+$")
 
@@ -46,4 +54,4 @@ def describe_screen(path: str, language: str) -> dict[str, str] | None:
     if not canonical:
         return None
     titles = SCREENS[canonical]
-    return {"path": canonical, "title": titles["en"] if language == "en" else titles["pt"]}
+    return {"path": canonical, "title": titles.get(language) or titles["pt"]}

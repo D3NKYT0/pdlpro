@@ -62,9 +62,17 @@ export const programsApi = {
   resources: () => request<Resource[]>('/public/resources/'),
   toggleResource: (id: string, enabled: boolean) =>
     sendJson<Resource>(`/staff/resources/${id}/`, { enabled }, 'PATCH'),
-  roadmap: (staff = false) =>
-    request<RoadmapEntry[]>(`/${staff ? 'staff' : 'public'}/roadmap/`),
-  roadmapDetail: (id: string) => request<RoadmapEntry>(`/public/roadmap/${id}/`),
+  roadmap: (staff = false, language: 'pt' | 'en' | 'es' = 'pt') => {
+    const params = new URLSearchParams()
+    if (language !== 'pt') params.set('lang', language)
+    const query = params.toString()
+    const base = `/${staff ? 'staff' : 'public'}/roadmap/`
+    return request<RoadmapEntry[]>(query ? `${base}?${query}` : base)
+  },
+  roadmapDetail: (id: string, language: 'pt' | 'en' | 'es' = 'pt') => {
+    const params = language === 'pt' ? '' : `?lang=${language}`
+    return request<RoadmapEntry>(`/public/roadmap/${id}/${params}`)
+  },
   saveRoadmap: (data: Partial<RoadmapEntry>, id?: string) =>
     sendJson<RoadmapEntry>(
       `/staff/roadmap/${id ? `${id}/` : ''}`,

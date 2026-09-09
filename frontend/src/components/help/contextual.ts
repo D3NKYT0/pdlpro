@@ -21,7 +21,7 @@ interface Topic {
   resource?: string
   staff?: boolean
 }
-const copy = (pt: string, en: string): Copy => ({ pt, en })
+const copy = (pt: string, en: string, es = en): Copy => ({ pt, en, es })
 
 /** Stable tip-of-the-day index for a screen: same calendar day + path → same tip. */
 export function dailyTipIndex(count: number, seed: string, now = new Date()) {
@@ -216,7 +216,7 @@ const topics: Topic[] = [
   },
 ]
 
-const adminPages = new Set(['recursos', 'roadmap', 'apoiadores', 'comercio', 'recompensas', 'financeiro', 'itens', 'itens/customs', 'servidor', 'contas', 'servicos', 'moedas', 'loja', 'noticias', 'jogos', 'atendimento', 'temas'].map(path => `/painel/admin/${path}`))
+const adminPages = new Set(['recursos', 'roadmap', 'apoiadores', 'comercio', 'recompensas', 'relatorios', 'financeiro', 'itens', 'itens/customs', 'servidor', 'contas', 'servicos', 'moedas', 'loja', 'noticias', 'jogos', 'atendimento', 'temas'].map(path => `/painel/admin/${path}`))
 
 function resolveTopic(path: string | null | undefined) {
   if (!path) return undefined
@@ -252,11 +252,11 @@ export function getHelpContext(path: string | null | undefined, user: HelpIdenti
 export function supportTicketPrefill(path: string | null | undefined, language: HelpLanguage = 'pt'): { to: string; label: string } | null {
   const context = getHelpContext(path, null, undefined, language)
   if (!context) return null
-  const subject = language === 'pt' ? `Ajuda: ${context.title}` : `Help: ${context.title}`
+  const subject = language === 'pt' ? `Ajuda: ${context.title}` : language === 'es' ? `Ayuda: ${context.title}` : `Help: ${context.title}`
   const params = new URLSearchParams({ subject, from: context.path })
   return {
     to: `/painel/support?${params.toString()}`,
-    label: language === 'pt' ? 'Abrir chamado sobre esta tela' : 'Open a ticket about this screen',
+    label: language === 'pt' ? 'Abrir chamado sobre esta tela' : language === 'es' ? 'Abrir ticket sobre esta pantalla' : 'Open a ticket about this screen',
   }
 }
 

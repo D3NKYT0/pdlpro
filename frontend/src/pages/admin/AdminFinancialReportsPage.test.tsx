@@ -15,7 +15,7 @@ function renderReport(data: FinancialReport, slug: string, search = '') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: Infinity } } })
   client.setQueryData(['staff-financial-report', data.kind, search], data)
   try {
-    return renderToStaticMarkup(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/painel/admin/financeiro/${slug}?${search}`]}><Routes><Route path="/painel/admin/financeiro/:report" element={<AdminFinancialReportsPage />} /></Routes></MemoryRouter></QueryClientProvider>)
+    return renderToStaticMarkup(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/painel/admin/relatorios/financeiro/${slug}?${search}`]}><Routes><Route path="/painel/admin/relatorios/:category/:report" element={<AdminFinancialReportsPage />} /></Routes></MemoryRouter></QueryClientProvider>)
   } finally {
     client.clear()
   }

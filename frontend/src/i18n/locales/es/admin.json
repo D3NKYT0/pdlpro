@@ -1,0 +1,44 @@
+{
+  "hub": {
+    "eyebrow": "Área administrativa",
+    "title": "Central de configuración",
+    "description": "Configura el panel sin salir del área del jugador.",
+    "reports": "Informes",
+    "reportsDesc": "Finanzas, inventario, subastas, tienda y marketplace"
+  },
+  "reports": {
+    "title": "Informes",
+    "description": "Consultas agregadas del panel agrupadas por categoría operativa y financiera.",
+    "kicker": "Informes",
+    "loading": "Cargando informe…",
+    "loadError": "No se pudo cargar el informe.",
+    "emptyTitle": "No se encontraron registros",
+    "emptyHint": "Ajusta los filtros o consulta de nuevo tras nuevos movimientos.",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando…",
+    "detail": "Detalle",
+    "detailHint": "{{count}} registros · Los totales cubren todos los resultados filtrados.",
+    "username": "Usuario",
+    "dateFrom": "Fecha inicial",
+    "dateTo": "Fecha final",
+    "status": "Situación",
+    "action": "Acción",
+    "pageSize": "Por página",
+    "applyFilters": "Aplicar filtros",
+    "categories": {
+      "financeiro": { "title": "Finanzas", "description": "Saldos, flujo de caja, pedidos y conciliación de carteras." },
+      "inventario": { "title": "Inventario", "description": "Movimientos del inventario del panel, tops de ítems y usuarios." },
+      "leiloes": { "title": "Subastas", "description": "Estado de las subastas, pujas e ítems más activos." },
+      "compras": { "title": "Compras de la tienda", "description": "Ingresos, carritos abandonados y tops de ítems y cupones." },
+      "marketplace": { "title": "Marketplace", "description": "Anuncios de personajes, ventas y ranking de vendedores." }
+    },
+    "finance": {
+      "title": "Finanzas",
+      "description": "Sigue pagos, movimientos e integridad de las carteras.",
+      "balances": "Saldos de usuarios",
+      "cashFlow": "Flujo de caja",
+      "payments": "Pedidos y pagos",
+      "reconciliation": "Conciliación"
+    }
+  }
+}

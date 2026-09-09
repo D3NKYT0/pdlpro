@@ -179,7 +179,7 @@ def test_history_is_bounded_and_new_conversation_starts_empty(chat):
     assert len(model.call_args.kwargs["messages"]) == 2
 
 
-@pytest.mark.parametrize("body", [{"message": "x" * 401}, {"message": "hi", "context": "x" * 60001}, {"message": "hi", "conversation": "invalid"}, {"message": "hi", "language": "es"}])
+@pytest.mark.parametrize("body", [{"message": "x" * 401}, {"message": "hi", "context": "x" * 60001}, {"message": "hi", "conversation": "invalid"}, {"message": "hi", "language": "fr"}])
 def test_invalid_inputs_never_reach_model(chat, body):
     api, _, model = chat
     response = api.post("/api/v1/shared/content/assistant/reply/", body, format="json")

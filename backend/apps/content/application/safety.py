@@ -92,6 +92,12 @@ CRISIS_TEXT = {
         "24 hours. Elsewhere, contact local emergency or mental-health services. You are "
         "not alone — people are willing to help."
     ),
+    "es": (
+        "Siento mucho que te sientas así. Es importante hablar con alguien de confianza o "
+        "buscar ayuda profesional ahora. En Brasil puedes llamar al CVV al 188, las 24 horas. "
+        "En otros lugares, contacta los servicios locales de emergencia o salud mental. "
+        "No estás solo — hay personas dispuestas a ayudar."
+    ),
 }
 HARASSMENT_TEXT = {
     "pt": (
@@ -102,6 +108,10 @@ HARASSMENT_TEXT = {
         "That kind of jab about sexual orientation doesn't belong here. I can help with "
         "the portal — please rephrase respectfully, without insults."
     ),
+    "es": (
+        "Esa provocación sobre orientación sexual no cabe aquí. Puedo ayudarte con el "
+        "portal — reformula con respeto, sin ofensas."
+    ),
 }
 INJECTION_TEXT = {
     "pt": (
@@ -111,6 +121,10 @@ INJECTION_TEXT = {
     "en": (
         "I don't follow requests to ignore my rules or to repeat words on command. "
         "If you have a PDL question, ask directly — that's what I'm here for."
+    ),
+    "es": (
+        "No sigo pedidos para ignorar mis reglas ni para repetir palabras bajo comando. "
+        "Si tienes una duda sobre PDL, pregunta directamente — para eso estoy."
     ),
 }
 
@@ -126,7 +140,7 @@ def crisis_reply(message: str, language: str) -> dict | None:
         "kind": "crisis",
         "engine": "safety",
         "related_ids": [],
-        "answer": {"text": CRISIS_TEXT[language], "pose": "07-triste"},
+        "answer": {"text": CRISIS_TEXT.get(language) or CRISIS_TEXT["pt"], "pose": "07-triste"},
     }
 
 
@@ -141,7 +155,7 @@ def harassment_reply(message: str, language: str) -> dict | None:
         "kind": "blocked",
         "engine": "safety",
         "related_ids": [],
-        "answer": {"text": HARASSMENT_TEXT[language], "pose": "10-frustrado"},
+        "answer": {"text": HARASSMENT_TEXT.get(language) or HARASSMENT_TEXT["pt"], "pose": "10-frustrado"},
     }
 
 
@@ -156,7 +170,7 @@ def injection_reply(message: str, language: str) -> dict | None:
         "kind": "social",
         "engine": "safety",
         "related_ids": [],
-        "answer": {"text": INJECTION_TEXT[language], "pose": "10-frustrado"},
+        "answer": {"text": INJECTION_TEXT.get(language) or INJECTION_TEXT["pt"], "pose": "10-frustrado"},
     }
 
 

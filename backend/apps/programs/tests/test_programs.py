@@ -172,12 +172,24 @@ def test_supporter_approval_updates_only_player_role(staff, supporter, role):
 
 
 def test_roadmap_publication_and_staff_permissions(api, staff):
-    public = RoadmapEntry.objects.create(title="Visible", description="Details")
+    public = RoadmapEntry.objects.create(
+        title="Visible",
+        description="Details",
+        title_es="Visible ES",
+        description_es="Detalles",
+    )
     private = RoadmapEntry.objects.create(
         title="Private", description="Draft", published=False
     )
     anonymous = APIClient()
-    assert len(anonymous.get("/api/v1/public/roadmap/").data) == 1
+    listed = anonymous.get("/api/v1/public/roadmap/")
+    assert len(listed.data) == 1
+    assert listed.data[0]["title"] == "Visible"
+    spanish = anonymous.get("/api/v1/public/roadmap/?lang=es")
+    assert spanish.data[0]["title"] == "Visible ES"
+    assert spanish.data[0]["description"] == "Detalles"
+    assert spanish.data[0]["language"] == "es"
+    assert "title_es" not in spanish.data[0]
     assert anonymous.get(f"/api/v1/public/roadmap/{private.id}/").status_code == 404
     assert api.post("/api/v1/staff/roadmap/", {}, format="json").status_code == 403
     response = staff.patch(

@@ -127,7 +127,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
   })
   const news = useQuery({
     queryKey: ['news'],
-    queryFn: contentApi.news,
+    queryFn: () => contentApi.news(),
     enabled: sections.includes('news'),
   })
 

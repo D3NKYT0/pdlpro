@@ -1,15 +1,29 @@
-const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
-const dates = {
-  short: new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }),
-  medium: new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }),
+import i18n from '../i18n'
+import { INTL_LOCALES, isAppLanguage } from '../i18n/locale'
+
+function intlLocale() {
+  const language = i18n.language
+  return isAppLanguage(language) ? INTL_LOCALES[language] : 'pt-BR'
+}
+
+function moneyFormatter(currency = 'BRL') {
+  return new Intl.NumberFormat(intlLocale(), { style: 'currency', currency })
+}
+
+function dateFormatter(style: 'short' | 'medium') {
+  return new Intl.DateTimeFormat(intlLocale(), {
+    dateStyle: style,
+    timeStyle: 'short',
+  })
 }
 
 /** Formatação de exibição; cálculos monetários continuam no domínio/API. */
-export function formatCurrency(value: string | number | null | undefined) {
-  return money.format(Number(value) || 0)
+export function formatCurrency(value: string | number | null | undefined, currency = 'BRL') {
+  return moneyFormatter(currency).format(Number(value) || 0)
 }
+
 export function formatDateTime(value: string | null | undefined, style: 'short' | 'medium' = 'medium') {
-  if (!value) return 'Data indisponível'
+  if (!value) return i18n.t('unavailableDate', { ns: 'common' })
   const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? 'Data indisponível' : dates[style].format(date)
+  return Number.isNaN(date.getTime()) ? i18n.t('unavailableDate', { ns: 'common' }) : dateFormatter(style).format(date)
 }

@@ -8,7 +8,7 @@ function formatNewsDate(value: string) {
 }
 
 export function NewsPage() {
-  const news = useQuery({ queryKey: ['news'], queryFn: contentApi.news })
+  const news = useQuery({ queryKey: ['news'], queryFn: () => contentApi.news() })
 
   return (
     <div className="public-page">

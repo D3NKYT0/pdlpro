@@ -40,7 +40,7 @@ import { WikiPage } from '../../pages/WikiPage'
 import { LEGACY_PANEL_REDIRECTS } from './legacyRedirects'
 import { AdminAccountsPage } from '../../pages/admin/AdminAccountsPage'
 import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
-import { AdminFinancialReportsPage } from '../../pages/admin/AdminFinancialReportsPage'
+import { AdminReportsPage, AdminFinancialReportsRedirect } from '../../pages/admin/AdminReportsPage'
 import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
 import { AdminHubPage } from '../../pages/admin/AdminHubPage'
 import { AdminItemObservationPage } from '../../pages/admin/AdminItemObservationPage'
@@ -125,7 +125,9 @@ export function AppRoutes() {
               <Route path="/painel/admin/comercio" element={<AdminCommercePage />} />
               <Route path="/painel/admin/recompensas" element={<AdminGameContentPage />} />
               <Route path="/painel/admin" element={<AdminHubPage />} />
-              <Route path="/painel/admin/financeiro/:report?" element={<AdminFinancialReportsPage />} />
+              <Route path="/painel/admin/relatorios" element={<AdminReportsPage />} />
+              <Route path="/painel/admin/relatorios/:category/:report?" element={<AdminReportsPage />} />
+              <Route path="/painel/admin/financeiro/:report?" element={<AdminFinancialReportsRedirect />} />
               <Route path="/painel/admin/itens" element={<AdminItemObservationPage />} />
               <Route path="/painel/admin/itens/customs" element={<AdminCustomItemsPage />} />
               <Route path="/painel/admin/servidor" element={<AdminServerPage />} />

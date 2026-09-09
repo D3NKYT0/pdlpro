@@ -101,8 +101,9 @@ class RoadmapSerializer(serializers.ModelSerializer):
     validated_data. A autorização pertence ao fluxo chamador. ``description`` aceita HTML
     sanitizado (rich text).
 
-    Campos declarados: ``id``, ``title``, ``description``, ``category``, ``status``,
-    ``progress``, ``target_date``, ``published``, ``order``, ``updated_at``.
+    Campos declarados: ``id``, ``title``, ``title_en``, ``title_es``, ``description``,
+    ``description_en``, ``description_es``, ``category``, ``status``, ``progress``,
+    ``target_date``, ``published``, ``order``, ``updated_at``.
     """
 
     class Meta:
@@ -110,7 +111,11 @@ class RoadmapSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "title",
+            "title_en",
+            "title_es",
             "description",
+            "description_en",
+            "description_es",
             "category",
             "status",
             "progress",
@@ -128,6 +133,16 @@ class RoadmapSerializer(serializers.ModelSerializer):
         if is_rich_text_empty(cleaned):
             raise serializers.ValidationError("A descrição é obrigatória.")
         return cleaned
+
+    def validate_description_en(self, value: str) -> str:
+        from common.richtext import sanitize_rich_text
+
+        return sanitize_rich_text(value) if value else ""
+
+    def validate_description_es(self, value: str) -> str:
+        from common.richtext import sanitize_rich_text
+
+        return sanitize_rich_text(value) if value else ""
 
     def validate(self, data):
         if data.get("status") == "completed":

@@ -1,20 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { CircleUserRound } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { programsApi } from '../../services/api'
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
-
-const links = [
-  { to: '/', label: 'Início', end: true },
-  { to: '/informacoes', label: 'Informações' },
-  { to: '/rankings', label: 'Rankings', resource: 'rankings' },
-  { to: '/wiki', label: 'Wiki', resource: 'wiki' },
-  { to: '/news', label: 'Notícias', resource: 'news' },
-  { to: '/roadmap', label: 'Roadmap', resource: 'roadmap' },
-  { to: '/faq', label: 'Perguntas Frequentes', resource: 'faq' },
-]
 
 function navActive(path: string, to: string, end?: boolean) {
   if (end) return path === to
@@ -22,6 +14,7 @@ function navActive(path: string, to: string, end?: boolean) {
 }
 
 export function SiteNav() {
+  const { t } = useTranslation('public')
   const { user } = useAuth()
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -31,6 +24,15 @@ export function SiteNav() {
     queryFn: programsApi.resources,
     staleTime: 15000,
   })
+  const links = [
+    { to: '/', label: t('nav.home'), end: true },
+    { to: '/informacoes', label: t('nav.info') },
+    { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
+    { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
+    { to: '/news', label: t('nav.news'), resource: 'news' },
+    { to: '/roadmap', label: t('nav.roadmap'), resource: 'roadmap' },
+    { to: '/faq', label: t('nav.faq'), resource: 'faq' },
+  ]
   const visibleLinks = links.filter(
     (link) => !link.resource || !resources.data?.some((r) => r.code === link.resource && !r.enabled),
   )
@@ -57,22 +59,22 @@ export function SiteNav() {
   }, [menuOpen])
 
   return (
-    <nav className={`site-nav${scrolled ? ' scrolled' : ''}`} aria-label="Navegação principal">
+    <nav className={`site-nav${scrolled ? ' scrolled' : ''}`} aria-label={t('nav.main')}>
       <div className="site-nav-shell">
-        <Link className="site-nav-brand" to="/" aria-label="PDL PRO — Início">
+        <Link className="site-nav-brand" to="/" aria-label={t('nav.brandHome')}>
           <PdlSymbol className="site-brand-mark" />
           <span className="site-brand-copy"><strong>PDL PRO</strong><small>Lineage</small></span>
         </Link>
 
-        <button type="button" className="open" aria-label="Abrir menu" aria-expanded={menuOpen} aria-controls="site-navigation-drawer" onClick={() => setMenuOpen(true)}>
+        <button type="button" className="open" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls="site-navigation-drawer" onClick={() => setMenuOpen(true)}>
           <i className="fa-solid fa-bars" aria-hidden="true" />
         </button>
 
         <div className={`site-nav-drawer${menuOpen ? ' is-open' : ''}`} id="site-navigation-drawer">
           <div className="site-nav-drawer-head">
             <PdlSymbol className="site-brand-mark" />
-            <span>Explore o reino</span>
-            <button type="button" className="close" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>
+            <span>{t('nav.exploreRealm')}</span>
+            <button type="button" className="close" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>
               <i className="fa-solid fa-xmark" aria-hidden="true" />
             </button>
           </div>
@@ -86,21 +88,25 @@ export function SiteNav() {
               )
             })}
           </ul>
+          <div className="site-nav-drawer-locale">
+            <LanguageSwitcher id="nav-drawer-language" />
+          </div>
         </div>
 
         <div className="site-nav-actions">
+          <LanguageSwitcher className="site-nav-language" id="nav-language" />
           {user ? (
             <Link className="user" to="/painel">
               <CircleUserRound aria-hidden="true" />
-              <span>Minha Conta</span>
+              <span>{t('nav.myAccount')}</span>
             </Link>
           ) : (
             <Link className="user" to="/login">
               <CircleUserRound aria-hidden="true" />
-              <span>Entrar</span>
+              <span>{t('nav.signIn')}</span>
             </Link>
           )}
-          {downloadsEnabled ? <Link className="download" to="/downloads">Download</Link> : null}
+          {downloadsEnabled ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
         </div>
       </div>
       <button className={`site-nav-backdrop${menuOpen ? ' is-open' : ''}`} type="button" aria-hidden="true" tabIndex={-1} onClick={() => setMenuOpen(false)} />
