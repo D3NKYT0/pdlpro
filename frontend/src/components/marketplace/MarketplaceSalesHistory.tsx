@@ -26,25 +26,28 @@ export function MarketplaceSalesHistory({
   onView,
   onCancel,
 }: MarketplaceSalesHistoryProps) {
+  const { t } = useTranslation('panel')
+  const { t: tCommon } = useTranslation('common')
+
   return (
     <Card className="marketplace-sales-card">
       <div className="marketplace-section-heading compact">
         <div>
-          <span className="panel-eyebrow">Histórico</span>
-          <h2>Minhas vendas</h2>
+          <span className="panel-eyebrow">{t('marketplace.sales.eyebrow')}</span>
+          <h2>{t('marketplace.sales.title')}</h2>
         </div>
         <PackageOpen aria-hidden="true" />
       </div>
       <div className="marketplace-sales-list">
         {listings.map((listing) => {
-          const status = listingStatus[listing.status] ?? { label: listing.status, className: 'unknown' }
+          const status = listingStatusFor(listing.status, t)
           return (
             <article className="marketplace-sale-row" key={listing.id}>
               <div className="marketplace-sale-main">
                 <div className="marketplace-character-emblem small"><UsersRound aria-hidden="true" /></div>
                 <div>
                   <strong>{listing.char_name}</strong>
-                  <small>{getClassName(listing.char_class)} · nível {listing.char_level}</small>
+                  <small>{t('marketplace.sales.classLevel', { className: getClassName(listing.char_class), level: listing.char_level })}</small>
                 </div>
               </div>
               <div className="marketplace-sale-meta">
@@ -54,18 +57,18 @@ export function MarketplaceSalesHistory({
               </div>
               <div className="marketplace-sale-actions">
                 <Button className="ghost" type="button" onClick={() => onView(listing)}>
-                  <Eye aria-hidden="true" /> Visualizar
+                  <Eye aria-hidden="true" /> {t('marketplace.sales.view')}
                 </Button>
                 {listing.status === 'for_sale' ? (
                   <Button className="ghost danger" type="button" onClick={() => onCancel(listing.id)} disabled={pendingListingId === listing.id}>
-                    {pendingListingId === listing.id ? 'Cancelando...' : 'Cancelar'}
+                    {pendingListingId === listing.id ? t('marketplace.sales.cancelling') : tCommon('cancel')}
                   </Button>
                 ) : null}
               </div>
             </article>
           )
         })}
-        {!loading && !listings.length ? <div className="marketplace-empty">Você ainda não criou anúncios.</div> : null}
+        {!loading && !listings.length ? <div className="marketplace-empty">{t('marketplace.sales.empty')}</div> : null}
       </div>
     </Card>
   )

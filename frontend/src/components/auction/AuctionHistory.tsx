@@ -1,10 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Eye, History } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate } from '../../lib/formatters'
 import type { ApiAuction } from '../../services/api'
-import { auctionStatus } from './auctionHelpers'
+import { auctionStatusFor } from './auctionHelpers'
 
 interface AuctionHistoryProps {
   auctions: ApiAuction[]
@@ -13,18 +14,20 @@ interface AuctionHistoryProps {
 }
 
 export function AuctionHistory({ auctions, loading, onView }: AuctionHistoryProps) {
+  const { t } = useTranslation('panel')
+
   return (
     <Card className="auction-history-card">
       <div className="marketplace-section-heading compact">
         <div>
-          <span className="panel-eyebrow">Seus anúncios</span>
-          <h2>Histórico de leilões</h2>
+          <span className="panel-eyebrow">{t('auctions.history.eyebrow')}</span>
+          <h2>{t('auctions.history.title')}</h2>
         </div>
         <History aria-hidden="true" />
       </div>
       <div className="marketplace-sales-list">
         {auctions.map((auction) => {
-          const status = auctionStatus[auction.status] ?? { label: auction.status, className: 'unknown' }
+          const status = auctionStatusFor(auction.status, t)
           return (
             <article className="marketplace-sale-row auction-history-row" key={auction.id}>
               <div className="marketplace-sale-main">
@@ -43,14 +46,14 @@ export function AuctionHistory({ auctions, loading, onView }: AuctionHistoryProp
               </div>
               <div className="marketplace-sale-actions">
                 <Button className="ghost" type="button" onClick={() => onView(auction)}>
-                  <Eye aria-hidden="true" /> Visualizar
+                  <Eye aria-hidden="true" /> {t('auctions.history.view')}
                 </Button>
               </div>
             </article>
           )
         })}
-        {loading ? <div className="marketplace-empty">Carregando histórico...</div> : null}
-        {!loading && !auctions.length ? <div className="marketplace-empty">Você ainda não criou leilões.</div> : null}
+        {loading ? <div className="marketplace-empty">{t('auctions.history.loading')}</div> : null}
+        {!loading && !auctions.length ? <div className="marketplace-empty">{t('auctions.history.empty')}</div> : null}
       </div>
     </Card>
   )

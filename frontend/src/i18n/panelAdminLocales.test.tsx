@@ -108,9 +108,12 @@ describe('admin hub and reports follow the active language', () => {
     expect(await withLanguage('pt', () => render(<AdminHubPage />))).toContain('Programas e expansão')
     const english = await withLanguage('en', () => render(<AdminHubPage />))
     expect(english).toContain('Programs and growth')
+    expect(english).toContain('Reports')
     expect(english).toContain('Ticket queue')
     expect(english).not.toContain('Fila de chamados')
-    expect(await withLanguage('es', () => render(<AdminHubPage />))).toContain('Cola de tickets')
+    const spanish = await withLanguage('es', () => render(<AdminHubPage />))
+    expect(spanish).toContain('Cola de tickets')
+    expect(spanish).toContain('Informes')
   })
 
   it('translates the operational report hub categories', async () => {

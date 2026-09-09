@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { RefreshCcw } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { inventoryApi, lineageApi, marketplaceApi } from '../services/api'
@@ -15,6 +16,7 @@ import { MarketplaceSalesHistory } from '../components/marketplace/MarketplaceSa
 
 export function MarketplacePage() {
   const { user } = useAuth()
+  const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
   const catalog = useQuery({ queryKey: ['marketplace'], queryFn: marketplaceApi.catalog })
   const mine = useQuery({ queryKey: ['marketplace-mine'], queryFn: marketplaceApi.mine, enabled: Boolean(user) })
@@ -51,13 +53,13 @@ export function MarketplacePage() {
     setPublishing(true)
     try {
       await marketplaceApi.list({ char_id: Number(charId), price, notes })
-      toast.success('Personagem listado')
+      toast.success(t('marketplace.toast.listed'))
       setCharId('')
       setPrice('')
       setNotes('')
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível listar'))
+      toast.error(apiErrorMessage(error, t('marketplace.toast.listFailed')))
     } finally {
       setPublishing(false)
     }
@@ -68,10 +70,10 @@ export function MarketplacePage() {
     try {
       const updated = await marketplaceApi.buy(id)
       setSelectedListing(updated)
-      toast.success('Compra concluída')
+      toast.success(t('marketplace.toast.bought'))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível comprar'))
+      toast.error(apiErrorMessage(error, t('marketplace.toast.buyFailed')))
     } finally {
       setPendingListingId('')
     }
@@ -82,10 +84,10 @@ export function MarketplacePage() {
     try {
       const updated = await marketplaceApi.cancel(id)
       setSelectedListing(updated)
-      toast.success('Venda cancelada')
+      toast.success(t('marketplace.toast.cancelled'))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível cancelar'))
+      toast.error(apiErrorMessage(error, t('marketplace.toast.cancelFailed')))
     } finally {
       setPendingListingId('')
     }
@@ -95,22 +97,22 @@ export function MarketplacePage() {
     <div className="marketplace-page">
       <Card className="marketplace-hero">
         <div>
-          <span className="panel-eyebrow">Comércio entre jogadores</span>
-          <h1>Marketplace</h1>
-          <p className="muted">Conheça o personagem, confira seus equipamentos e negocie com segurança.</p>
+          <span className="panel-eyebrow">{t('marketplace.hero.eyebrow')}</span>
+          <h1>{t('marketplace.hero.title')}</h1>
+          <p className="muted">{t('marketplace.hero.subtitle')}</p>
         </div>
         <Button className="ghost" type="button" onClick={() => void refresh()}>
-          <RefreshCcw aria-hidden="true" /> Atualizar
+          <RefreshCcw aria-hidden="true" /> {t('marketplace.refresh')}
         </Button>
       </Card>
 
       <Card className="marketplace-catalog-card">
         <div className="marketplace-section-heading">
           <div>
-            <span className="panel-eyebrow">Personagens disponíveis</span>
-            <h2>À venda agora</h2>
+            <span className="panel-eyebrow">{t('marketplace.catalog.eyebrow')}</span>
+            <h2>{t('marketplace.catalog.title')}</h2>
           </div>
-          <span>{catalog.data?.length ?? 0} anúncios</span>
+          <span>{t('marketplace.catalog.count', { total: catalog.data?.length ?? 0 })}</span>
         </div>
 
         {selectedListing ? (
@@ -157,7 +159,7 @@ export function MarketplacePage() {
         </aside>
       ) : (
         <Card className="marketplace-auth-card">
-          <p className="muted">Entre para vender ou comprar personagens.</p>
+          <p className="muted">{t('marketplace.authRequired')}</p>
         </Card>
       )}
     </div>

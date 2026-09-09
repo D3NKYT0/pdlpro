@@ -119,16 +119,16 @@ def care_cue(satiety: int, energy: int, happiness: int, hygiene: int) -> dict | 
     """Aviso discreto da necessidade mais urgente, sem texto de conversa."""
 
     checks = (
-        ("energy", energy, 20, "O Denkynho está com sono.", "Denkynho is sleepy."),
-        ("satiety", satiety, 20, "O Denkynho está com fome.", "Denkynho is hungry."),
-        ("hygiene", hygiene, 20, "O Denkynho precisa de um banho.", "Denkynho needs a bath."),
-        ("happiness", happiness, 25, "O Denkynho está sentindo sua falta.", "Denkynho is missing you."),
+        ("energy", energy, 20, "O Denkynho está com sono.", "Denkynho is sleepy.", "Denkynho tiene sueño."),
+        ("satiety", satiety, 20, "O Denkynho está com fome.", "Denkynho is hungry.", "Denkynho tiene hambre."),
+        ("hygiene", hygiene, 20, "O Denkynho precisa de um banho.", "Denkynho needs a bath.", "Denkynho necesita un baño."),
+        ("happiness", happiness, 25, "O Denkynho está sentindo sua falta.", "Denkynho is missing you.", "Denkynho te echa de menos."),
     )
-    low = [(name, value, pt, en) for name, value, limit, pt, en in checks if value < limit]
+    low = [(name, value, pt, en, es) for name, value, limit, pt, en, es in checks if value < limit]
     if not low:
         return None
-    name, _, pt, en = min(low, key=lambda item: item[1])
-    return {"id": name, "message": {"pt": pt, "en": en}}
+    name, _, pt, en, es = min(low, key=lambda item: item[1])
+    return {"id": name, "message": {"pt": pt, "en": en, "es": es}}
 
 
 def model_affect(value: str | None) -> EmotionId | None:

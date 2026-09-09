@@ -1,4 +1,30 @@
 {
   "language": "Help language",
-  "placeholder": "How can I help?"
+  "placeholder": "How can I help?",
+  "contextual": {
+    "kicker": "Denkynho's den",
+    "triggerHelp": "Denkynho: help on this screen",
+    "levelShort": "Lv. {{level}}",
+    "visitXp": "Visit +{{xp}} XP",
+    "close": "Close screen help",
+    "needs": "Needs",
+    "openDen": "Open the den",
+    "ask": "Ask:",
+    "checkingResources": "Checking available features…",
+    "resourcesError": "Could not check available features. Module shortcuts stay hidden until the next check.",
+    "chatAboutScreen": "Chat about this screen",
+    "tipOfDay": "Tip of the day",
+    "care": {
+      "satiety": "Feed in the den",
+      "energy": "Put him to rest",
+      "hygiene": "Give a bath",
+      "happiness": "Give affection"
+    },
+    "attributes": {
+      "satiety": "Satiety",
+      "energy": "Energy",
+      "happiness": "Happiness",
+      "hygiene": "Hygiene"
+    }
+  }
 }

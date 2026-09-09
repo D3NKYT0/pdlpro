@@ -1094,6 +1094,15 @@
     "xp": "{{xp}} XP",
     "xpNext": "{{xp}} XP para o próximo nível",
     "rewardQuantity": "{{name}} × {{quantity}}",
+    "achievements": {
+      "eyebrow": "Marcos da conta",
+      "title": "Conquistas",
+      "viewRewards": "Ver prêmios",
+      "locked": "Conquista bloqueada",
+      "empty": "Nenhuma conquista configurada.",
+      "paginationAria": "Páginas de conquistas",
+      "pageOf": "{{page}} / {{total}}"
+    },
     "rewards": {
       "eyebrow": "Prêmios de evolução",
       "title": "Recompensas",

@@ -899,6 +899,12 @@ html.pdl-panel .admin-category[data-tone="system"] {
   --admin-tone-border: rgba(212, 162, 74, 0.3);
   --admin-tone-glow: rgba(212, 162, 74, 0.12);
 }
+html.pdl-panel .admin-category[data-tone="reports"] {
+  --admin-tone: #5a9fbf;
+  --admin-tone-soft: rgba(90, 159, 191, 0.12);
+  --admin-tone-border: rgba(90, 159, 191, 0.28);
+  --admin-tone-glow: rgba(90, 159, 191, 0.12);
+}
 html.pdl-panel .admin-category[data-tone="finance"] {
   --admin-tone: #7eaa83;
   --admin-tone-soft: rgba(126, 170, 131, 0.12);

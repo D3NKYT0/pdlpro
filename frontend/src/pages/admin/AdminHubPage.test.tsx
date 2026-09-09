@@ -7,13 +7,15 @@ import { AdminHubPage } from './AdminHubPage'
 describe('AdminHubPage', () => {
   it('marca cada módulo com tom de cor para leitura rápida', () => {
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
-    for (const tone of ['programs', 'support', 'system', 'finance', 'games', 'content', 'server']) {
+    for (const tone of ['programs', 'support', 'system', 'reports', 'finance', 'games', 'content', 'server']) {
       expect(html).toContain(`data-tone="${tone}"`)
     }
     expect(html).toContain('Programas e expansão')
     expect(html).toContain('Fila de chamados')
     expect(html).toMatch(/data-tone="system"[\s\S]*Controle de recursos/)
     expect(html).not.toMatch(/data-tone="programs"[\s\S]*Controle de recursos[\s\S]*data-tone="support"/)
+    expect(html).toMatch(/data-tone="reports"[\s\S]*Relatórios/)
+    expect(html).not.toMatch(/data-tone="finance"[\s\S]*Relatórios[\s\S]*data-tone="games"/)
     expect(html).toMatch(/data-tone="content"[\s\S]*Roadmap/)
     expect(html).not.toMatch(/data-tone="programs"[\s\S]*Roadmap[\s\S]*data-tone="support"/)
     expect(html).toMatch(/data-tone="finance"[\s\S]*Configuração da carteira/)

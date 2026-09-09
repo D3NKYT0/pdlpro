@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import {
   ChevronRight,
   Clock3,
@@ -18,6 +19,8 @@ interface AuctionOpenListProps {
 }
 
 export function AuctionOpenList({ auctions, username, loading, onSelect }: AuctionOpenListProps) {
+  const { t } = useTranslation('panel')
+
   return (
     <>
       <div className="auction-listing-grid">
@@ -35,30 +38,30 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
                   <ItemIcon itemId={auction.item_id} name={auction.item_name} size={48} />
                 </div>
                 <div>
-                  <span className="panel-eyebrow">{isOwner ? 'Seu leilão' : `Vendedor: ${auction.seller_username}`}</span>
+                  <span className="panel-eyebrow">{isOwner ? t('auctions.list.ownerEyebrow') : t('auctions.list.sellerEyebrow', { name: auction.seller_username })}</span>
                   <h3>{auction.item_name}</h3>
-                  <p>ID {auction.item_id}</p>
+                  <p>{t('auctions.list.itemId', { id: auction.item_id })}</p>
                 </div>
               </div>
               <div className="auction-listing-stats">
-                <span><PackageOpen aria-hidden="true" /><b>{auction.quantity.toLocaleString('pt-BR')}</b> unidades</span>
-                <span><Sparkles aria-hidden="true" /><b>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : '0'}</b> enchant</span>
-                <span><Clock3 aria-hidden="true" /><b>{formatRemaining(auction.ends_at)}</b></span>
+                <span><PackageOpen aria-hidden="true" /><b>{auction.quantity.toLocaleString('pt-BR')}</b> {t('auctions.list.units')}</span>
+                <span><Sparkles aria-hidden="true" /><b>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : '0'}</b> {t('auctions.list.enchant')}</span>
+                <span><Clock3 aria-hidden="true" /><b>{formatRemaining(auction.ends_at, t)}</b></span>
               </div>
               <div className="auction-listing-card-footer">
                 <span>
-                  <small>{auction.current_bid ? 'Lance atual' : 'Valor inicial'}</small>
+                  <small>{auction.current_bid ? t('auctions.list.currentBid') : t('auctions.list.startingValue')}</small>
                   <strong>{formatCurrency(auction.current_bid ?? auction.min_bid)}</strong>
                 </span>
-                <span className="marketplace-open-listing">Ver leilão <ChevronRight aria-hidden="true" /></span>
+                <span className="marketplace-open-listing">{t('auctions.list.view')} <ChevronRight aria-hidden="true" /></span>
               </div>
             </button>
           )
         })}
       </div>
-      {loading ? <div className="marketplace-empty">Carregando leilões...</div> : null}
+      {loading ? <div className="marketplace-empty">{t('auctions.list.loading')}</div> : null}
       {!loading && !auctions.length ? (
-        <div className="marketplace-empty"><Gavel aria-hidden="true" /> Nenhum leilão aberto.</div>
+        <div className="marketplace-empty"><Gavel aria-hidden="true" /> {t('auctions.list.empty')}</div>
       ) : null}
     </>
   )

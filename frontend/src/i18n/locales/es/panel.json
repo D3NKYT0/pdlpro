@@ -1094,6 +1094,15 @@
     "xp": "{{xp}} XP",
     "xpNext": "{{xp}} XP para el siguiente nivel",
     "rewardQuantity": "{{name}} × {{quantity}}",
+    "achievements": {
+      "eyebrow": "Hitos de la cuenta",
+      "title": "Logros",
+      "viewRewards": "Ver premios",
+      "locked": "Logro bloqueado",
+      "empty": "Ningún logro configurado.",
+      "paginationAria": "Páginas de logros",
+      "pageOf": "{{page}} / {{total}}"
+    },
     "rewards": {
       "eyebrow": "Premios de evolución",
       "title": "Recompensas",

@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { RefreshCcw } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { auctionApi, inventoryApi, lineageApi } from '../services/api'
@@ -16,6 +17,7 @@ import { nextBidFor } from '../components/auction/auctionHelpers'
 
 export function AuctionPage() {
   const { user } = useAuth()
+  const { t } = useTranslation('panel')
   const queryClient = useQueryClient()
   const open = useQuery({ queryKey: ['auctions'], queryFn: auctionApi.open })
   const mine = useQuery({ queryKey: ['auctions-mine'], queryFn: auctionApi.mine, enabled: Boolean(user) })
@@ -76,7 +78,7 @@ export function AuctionPage() {
         min_bid: minBid,
         hours: Number(hours),
       })
-      toast.success('Leilão criado')
+      toast.success(t('auctions.toast.created'))
       setSelectedAuctionId(created.id)
       setInventoryId('')
       setItemKey('')
@@ -84,7 +86,7 @@ export function AuctionPage() {
       setMinBid('')
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível criar o leilão'))
+      toast.error(apiErrorMessage(error, t('auctions.toast.createFailed')))
     } finally {
       setCreating(false)
     }
@@ -95,10 +97,10 @@ export function AuctionPage() {
     setBidding(true)
     try {
       await auctionApi.bid(auctionId, bidAmount, bidCharacter)
-      toast.success('Lance enviado')
+      toast.success(t('auctions.toast.bidSent'))
       await refresh()
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Lance recusado'))
+      toast.error(apiErrorMessage(error, t('auctions.toast.bidFailed')))
     } finally {
       setBidding(false)
     }
@@ -108,22 +110,22 @@ export function AuctionPage() {
     <div className="marketplace-page auction-page">
       <Card className="marketplace-hero auction-hero">
         <div>
-          <span className="panel-eyebrow">Negociação de itens</span>
-          <h1>Leilões</h1>
-          <p className="muted">Confira o item, acompanhe os lances e escolha quem receberá o prêmio.</p>
+          <span className="panel-eyebrow">{t('auctions.hero.eyebrow')}</span>
+          <h1>{t('auctions.hero.title')}</h1>
+          <p className="muted">{t('auctions.hero.subtitle')}</p>
         </div>
         <Button className="ghost" type="button" onClick={() => void refresh()}>
-          <RefreshCcw aria-hidden="true" /> Atualizar
+          <RefreshCcw aria-hidden="true" /> {t('auctions.refresh')}
         </Button>
       </Card>
 
       <Card className="marketplace-catalog-card auction-catalog-card">
         <div className="marketplace-section-heading">
           <div>
-            <span className="panel-eyebrow">Itens disponíveis</span>
-            <h2>Leilões abertos</h2>
+            <span className="panel-eyebrow">{t('auctions.catalog.eyebrow')}</span>
+            <h2>{t('auctions.catalog.title')}</h2>
           </div>
-          <span>{open.data?.length ?? 0} anúncios</span>
+          <span>{t('auctions.catalog.count', { total: open.data?.length ?? 0 })}</span>
         </div>
 
         {selectedAuction ? (
@@ -181,7 +183,7 @@ export function AuctionPage() {
         </aside>
       ) : (
         <Card className="marketplace-auth-card">
-          <p className="muted">Entre para criar leilões ou dar lances.</p>
+          <p className="muted">{t('auctions.authRequired')}</p>
         </Card>
       )}
     </div>

@@ -206,13 +206,29 @@ const topics: Topic[] = [
     suggestion: copy('Como uso a ajuda do Denkynho nesta tela?', 'How do I use Denkynho help on this screen?'), related: ['/painel/support'],
   },
   {
-    path: '/painel/admin', title: copy('Administração', 'Administration'), action: copy('Abrir administração', 'Open administration'), staff: true,
+    path: '/painel/admin', title: copy('Administração', 'Administration', 'Administración'), action: copy('Abrir administração', 'Open administration', 'Abrir administración'), staff: true,
     tips: [
-      copy('Escolha o módulo administrativo desejado. Cada operação continua sujeita às permissões da sua função.', 'Choose the administration module you need. Each operation still requires the permissions assigned to your role.'),
-      copy('Módulos ocultos ou bloqueados indicam falta de permissão — peça acesso à função correta se precisar.', 'Hidden or blocked modules mean missing permission — ask for the right role if you need access.'),
-      copy('Alterações administrativas têm efeito imediato. Confirme filtros e o registro certo antes de salvar.', 'Admin changes take effect immediately. Confirm filters and the right record before saving.'),
+      copy(
+        'Escolha o módulo administrativo desejado. Cada operação continua sujeita às permissões da sua função.',
+        'Choose the administration module you need. Each operation still requires the permissions assigned to your role.',
+        'Elige el módulo administrativo deseado. Cada operación sigue sujeta a los permisos de tu función.',
+      ),
+      copy(
+        'Módulos ocultos ou bloqueados indicam falta de permissão — peça acesso à função correta se precisar.',
+        'Hidden or blocked modules mean missing permission — ask for the right role if you need access.',
+        'Los módulos ocultos o bloqueados indican falta de permiso: pide acceso a la función correcta si lo necesitas.',
+      ),
+      copy(
+        'Alterações administrativas têm efeito imediato. Confirme filtros e o registro certo antes de salvar.',
+        'Admin changes take effect immediately. Confirm filters and the right record before saving.',
+        'Los cambios administrativos tienen efecto inmediato. Confirma los filtros y el registro correcto antes de guardar.',
+      ),
     ],
-    suggestion: copy('Como encontro as ferramentas disponíveis para minha função na equipe?', 'How do I find the tools available to my staff role?'), related: ['/painel/support'],
+    suggestion: copy(
+      'Como encontro as ferramentas disponíveis para minha função na equipe?',
+      'How do I find the tools available to my staff role?',
+      '¿Cómo encuentro las herramientas disponibles para mi función en el equipo?',
+    ), related: ['/painel/support'],
   },
 ]
 

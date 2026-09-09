@@ -2,6 +2,7 @@ import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   BadgeDollarSign,
   Gavel,
@@ -53,6 +54,7 @@ export function AuctionCreateForm({
   onHoursChange,
   onSubmit,
 }: AuctionCreateFormProps) {
+  const { t } = useTranslation('panel')
   const selectedInventory = inventory.find((row) => row.inventory_id === inventoryId)
   const selectedItem = (selectedInventory?.items ?? []).find(
     (item) => `${item.item_id}:${item.enchant}` === itemKey,
@@ -62,23 +64,23 @@ export function AuctionCreateForm({
     <Card className="auction-create-card">
       <div className="marketplace-section-heading compact">
         <div>
-          <span className="panel-eyebrow">Novo anúncio</span>
-          <h2>Criar leilão</h2>
+          <span className="panel-eyebrow">{t('auctions.create.eyebrow')}</span>
+          <h2>{t('auctions.create.title')}</h2>
         </div>
         <BadgeDollarSign aria-hidden="true" />
       </div>
       <form onSubmit={onSubmit}>
         <Field>
-          Inventário do personagem
+          {t('auctions.create.inventory')}
           <select
             value={inventoryId}
             onChange={(event) => onInventoryChange(event.target.value)}
             required
           >
-            <option value="">Selecione o inventário</option>
+            <option value="">{t('auctions.create.selectInventory')}</option>
             {inventory.map((row) => (
               <option key={row.inventory_id} value={row.inventory_id}>
-                {row.character_name} — {row.items.length} itens
+                {t('auctions.create.inventoryOption', { character: row.character_name, total: row.items.length })}
               </option>
             ))}
           </select>
@@ -88,25 +90,25 @@ export function AuctionCreateForm({
           <div className="auction-inventory-summary">
             <UserRound aria-hidden="true" />
             <div>
-              <span className="panel-eyebrow">Inventário selecionado</span>
+              <span className="panel-eyebrow">{t('auctions.create.selectedInventoryEyebrow')}</span>
               <strong>{selectedInventory.character_name}</strong>
-              <small>{selectedInventory.items.length} tipos de item disponíveis</small>
+              <small>{t('auctions.create.itemTypes', { total: selectedInventory.items.length })}</small>
             </div>
           </div>
         ) : null}
 
         <Field>
-          Item
+          {t('auctions.create.item')}
           <select
             value={itemKey}
             onChange={(event) => onItemChange(event.target.value)}
             required
             disabled={!selectedInventory}
           >
-            <option value="">Selecione o item</option>
+            <option value="">{t('auctions.create.selectItem')}</option>
             {(selectedInventory?.items ?? []).map((item) => (
               <option key={`${item.id}-${item.item_id}-${item.enchant}`} value={`${item.item_id}:${item.enchant}`}>
-                {item.item_name || `Item ${item.item_id}`} {item.enchant > 0 ? `+${item.enchant}` : ''} — x{item.quantity}
+                {item.item_name || t('auctions.create.itemFallback', { id: item.item_id })} {item.enchant > 0 ? `+${item.enchant}` : ''} — x{item.quantity}
               </option>
             ))}
           </select>
@@ -118,17 +120,17 @@ export function AuctionCreateForm({
               <ItemIcon itemId={selectedItem.item_id} name={selectedItem.item_name} size={64} />
             </div>
             <div>
-              <span className="panel-eyebrow">Item que será anunciado</span>
-              <strong>{selectedItem.item_name || `Item ${selectedItem.item_id}`}</strong>
-              <small>ID {selectedItem.item_id} · disponível x{selectedItem.quantity.toLocaleString('pt-BR')}</small>
-              <span>{selectedItem.enchant > 0 ? `Encantamento +${selectedItem.enchant}` : 'Sem encantamento'}</span>
+              <span className="panel-eyebrow">{t('auctions.create.selectedItemEyebrow')}</span>
+              <strong>{selectedItem.item_name || t('auctions.create.itemFallback', { id: selectedItem.item_id })}</strong>
+              <small>{t('auctions.create.selectedItemMeta', { id: selectedItem.item_id, quantity: selectedItem.quantity.toLocaleString('pt-BR') })}</small>
+              <span>{selectedItem.enchant > 0 ? t('auctions.create.enchantValue', { enchant: selectedItem.enchant }) : t('auctions.create.noEnchant')}</span>
             </div>
           </div>
         ) : null}
 
         <div className="auction-form-grid">
           <Field>
-            Quantidade
+            {t('auctions.create.quantity')}
             <input
               type="number"
               min="1"
@@ -139,20 +141,20 @@ export function AuctionCreateForm({
             />
           </Field>
           <Field>
-            Duração
+            {t('auctions.create.duration')}
             <select value={hours} onChange={(event) => onHoursChange(event.target.value)} required>
-              <option value="1">1 hora</option>
-              <option value="6">6 horas</option>
-              <option value="12">12 horas</option>
-              <option value="24">24 horas</option>
-              <option value="48">2 dias</option>
-              <option value="72">3 dias</option>
-              <option value="168">7 dias</option>
+              <option value="1">{t('auctions.create.duration1h')}</option>
+              <option value="6">{t('auctions.create.duration6h')}</option>
+              <option value="12">{t('auctions.create.duration12h')}</option>
+              <option value="24">{t('auctions.create.duration24h')}</option>
+              <option value="48">{t('auctions.create.duration2d')}</option>
+              <option value="72">{t('auctions.create.duration3d')}</option>
+              <option value="168">{t('auctions.create.duration7d')}</option>
             </select>
           </Field>
         </div>
         <Field>
-          Lance inicial
+          {t('auctions.create.minBid')}
           <input
             type="number"
             min="0.01"
@@ -160,16 +162,16 @@ export function AuctionCreateForm({
             inputMode="decimal"
             value={minBid}
             onChange={(event) => onMinBidChange(event.target.value)}
-            placeholder="0,00"
+            placeholder={t('auctions.create.minBidPlaceholder')}
             required
           />
         </Field>
         <div className="auction-security-note">
           <ShieldCheck aria-hidden="true" />
-          <span>O item sai do inventário do painel e fica reservado até o encerramento.</span>
+          <span>{t('auctions.create.securityNote')}</span>
         </div>
         <Button type="submit" disabled={!selectedItem || creating}>
-          <Gavel aria-hidden="true" /> {creating ? 'Publicando...' : 'Publicar leilão'}
+          <Gavel aria-hidden="true" /> {creating ? t('auctions.create.publishing') : t('auctions.create.publish')}
         </Button>
       </form>
     </Card>

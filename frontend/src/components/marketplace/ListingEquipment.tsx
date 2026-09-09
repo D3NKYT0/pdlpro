@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
 import { ItemIcon } from '../ItemIcon'
 import type { ListingEquipmentItem } from './marketplaceHelpers'
 
 export function ListingEquipment({ equipment }: { equipment: ListingEquipmentItem[] }) {
+  const { t } = useTranslation('panel')
+
   if (!equipment.length) {
-    return <div className="marketplace-equipment-empty">Nenhum equipamento registrado no momento do anúncio.</div>
+    return <div className="marketplace-equipment-empty">{t('marketplace.equipment.empty')}</div>
   }
 
   return (
@@ -13,7 +16,7 @@ export function ListingEquipment({ equipment }: { equipment: ListingEquipmentIte
           <ItemIcon itemId={item.item_id} name={item.name} size={38} />
           <span>
             <strong>{item.name}</strong>
-            <small>{item.enchant > 0 ? `+${item.enchant}` : 'Sem encantamento'}</small>
+            <small>{item.enchant > 0 ? `+${item.enchant}` : t('marketplace.equipment.noEnchant')}</small>
           </span>
         </div>
       ))}

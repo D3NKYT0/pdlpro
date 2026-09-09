@@ -22,7 +22,11 @@ import {
 } from 'lucide-react'
 
 type Entry = { to: string; key: string; icon: LucideIcon; external?: boolean }
-type Category = { key: string; tone: 'programs' | 'support' | 'system' | 'finance' | 'games' | 'content' | 'server'; entries: Entry[] }
+type Category = {
+  key: string
+  tone: 'programs' | 'support' | 'system' | 'reports' | 'finance' | 'games' | 'content' | 'server'
+  entries: Entry[]
+}
 
 const categories: Category[] = [
   {key: 'programs', tone: 'programs', entries: [
@@ -47,10 +51,16 @@ const categories: Category[] = [
     ],
   },
   {
+    key: 'reports',
+    tone: 'reports',
+    entries: [
+      { to: '/painel/admin/relatorios', key: 'reports', icon: ChartNoAxesCombined },
+    ],
+  },
+  {
     key: 'finance',
     tone: 'finance',
     entries: [
-      { to: '/painel/admin/relatorios', key: 'reports', icon: ChartNoAxesCombined },
       { to: '/painel/admin/moedas', key: 'coins', icon: Coins },
       { to: '/painel/admin/loja', key: 'shop', icon: ShoppingBag },
       { to: '/painel/admin/carteira', key: 'wallet', icon: WalletCards },

@@ -1094,6 +1094,15 @@
     "xp": "{{xp}} XP",
     "xpNext": "{{xp}} XP to the next level",
     "rewardQuantity": "{{name}} × {{quantity}}",
+    "achievements": {
+      "eyebrow": "Account milestones",
+      "title": "Achievements",
+      "viewRewards": "View rewards",
+      "locked": "Achievement locked",
+      "empty": "No achievements configured.",
+      "paginationAria": "Achievement pages",
+      "pageOf": "{{page}} / {{total}}"
+    },
     "rewards": {
       "eyebrow": "Progression prizes",
       "title": "Rewards",

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useIsFetching } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { themeImage } from '../../theme/assets'
@@ -67,6 +68,7 @@ async function waitForVisualAssets() {
 }
 
 export function GlobalLoadingOverlay() {
+  const { t } = useTranslation('common')
   const { pathname, search } = useLocation()
   const { loading: authLoading } = useAuth()
   const fetching = useIsFetching()
@@ -137,7 +139,7 @@ export function GlobalLoadingOverlay() {
       className={`global-loader global-loader--${phase}`}
       role="status"
       aria-live="polite"
-      aria-label="Carregando a página"
+      aria-label={t('loadingPage')}
       aria-hidden={phase === 'hidden'}
     >
       <div className="global-loader__glow" aria-hidden="true" />
@@ -145,8 +147,8 @@ export function GlobalLoadingOverlay() {
         <div className="global-loader__crest">
           <PdlSymbol />
         </div>
-        <img className="global-loader__wordmark" src={themeImage('logo.png')} alt="PDL PRO" />
-        <span>Preparando sua jornada</span>
+        <img className="global-loader__wordmark" src={themeImage('logo.png')} alt={t('brand')} />
+        <span>{t('preparingJourney')}</span>
         <div className="global-loader__progress" aria-hidden="true">
           <i />
         </div>

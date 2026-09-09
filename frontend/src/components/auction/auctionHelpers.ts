@@ -1,21 +1,32 @@
 import type { ApiAuction } from '../../services/api'
 
-export const auctionStatus: Record<string, { label: string; className: string }> = {
-  open: { label: 'Aberto', className: 'open' },
-  finished: { label: 'Finalizado', className: 'finished' },
-  cancelled: { label: 'Cancelado', className: 'cancelled' },
+/** Tradutor do namespace `panel` recebido pelas telas de leilão. */
+export type AuctionTranslate = (key: string, options?: Record<string, unknown>) => string
+
+const auctionStatusClasses: Record<string, string> = {
+  open: 'open',
+  finished: 'finished',
+  cancelled: 'cancelled',
 }
 
-export function formatRemaining(value: string) {
+/** Rótulo e modificador visual do status de um leilão, traduzidos no idioma ativo. */
+export function auctionStatusFor(status: string, t: AuctionTranslate) {
+  const className = auctionStatusClasses[status]
+  if (!className) return { label: status, className: 'unknown' }
+  return { label: t(`auctions.status.${status}`), className }
+}
+
+/** Tempo restante até o encerramento do leilão, já traduzido. */
+export function formatRemaining(value: string, t: AuctionTranslate) {
   const milliseconds = new Date(value).getTime() - Date.now()
-  if (milliseconds <= 0) return 'Encerrando'
+  if (milliseconds <= 0) return t('auctions.remaining.ending')
   const totalMinutes = Math.ceil(milliseconds / 60000)
   const days = Math.floor(totalMinutes / 1440)
   const hours = Math.floor((totalMinutes % 1440) / 60)
   const minutes = totalMinutes % 60
-  if (days > 0) return `${days}d ${hours}h restantes`
-  if (hours > 0) return `${hours}h ${minutes}min restantes`
-  return `${minutes}min restantes`
+  if (days > 0) return t('auctions.remaining.days', { days, hours })
+  if (hours > 0) return t('auctions.remaining.hours', { hours, minutes })
+  return t('auctions.remaining.minutes', { minutes })
 }
 
 export function nextBidFor(auction: ApiAuction) {

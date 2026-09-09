@@ -81,7 +81,7 @@ export interface ApiDenkynhoProfile {
     source: 'user' | 'needs' | 'default'
   }
   preferences?: { preferred_name: string; detail: 'brief' | 'balanced' | 'detailed' }
-  cue?: { id: string; message: { pt: string; en: string } } | null
+  cue?: { id: string; message: { pt: string; en: string; es?: string } } | null
   daily_visit?: boolean
   visit_xp?: number
 }

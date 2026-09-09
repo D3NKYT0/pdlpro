@@ -1,4 +1,30 @@
 {
   "language": "Idioma da ajuda",
-  "placeholder": "Como posso ajudar?"
+  "placeholder": "Como posso ajudar?",
+  "contextual": {
+    "kicker": "Cantinho do Denkynho",
+    "triggerHelp": "Denkynho: ajuda nesta tela",
+    "levelShort": "Nv. {{level}}",
+    "visitXp": "Visita +{{xp}} XP",
+    "close": "Fechar ajuda da tela",
+    "needs": "Necessidades",
+    "openDen": "Abrir o cantinho",
+    "ask": "Pergunte:",
+    "checkingResources": "Verificando recursos disponíveis…",
+    "resourcesError": "Não foi possível verificar os recursos. Os atalhos de módulos ficam ocultos até a próxima consulta.",
+    "chatAboutScreen": "Conversar sobre esta tela",
+    "tipOfDay": "Dica do dia",
+    "care": {
+      "satiety": "Alimentar no cantinho",
+      "energy": "Levar para descansar",
+      "hygiene": "Dar um banho",
+      "happiness": "Fazer carinho"
+    },
+    "attributes": {
+      "satiety": "Saciedade",
+      "energy": "Energia",
+      "happiness": "Alegria",
+      "hygiene": "Higiene"
+    }
+  }
 }
