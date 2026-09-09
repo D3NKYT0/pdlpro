@@ -5,8 +5,12 @@ from uuid import UUID
 
 from django.db.models import Sum
 
-from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRepository
-from apps.server.infrastructure.models import AccountLinkSlot, ServicePrice
+from apps.server.domain.repositories import (
+    IIndexConfigRepository,
+    ILinkSlotRepository,
+    IServicePriceRepository,
+)
+from apps.server.infrastructure.models import AccountLinkSlot, IndexConfig, ServicePrice
 
 
 class DjangoServicePriceRepository(IServicePriceRepository):
@@ -24,6 +28,16 @@ class DjangoServicePriceRepository(IServicePriceRepository):
             defaults = {"CHANGE_NICKNAME": Decimal("10.00"), "CHANGE_SEX": Decimal("10.00"), "LINK_SLOT": Decimal("10.00")}
             return defaults.get(code, Decimal("0.00"))
         return row.price
+
+    def list_all(self) -> list[ServicePrice]:
+        return list(ServicePrice.objects.all())
+
+    def upsert(self, *, code: str, name: str, price: Decimal, active: bool) -> ServicePrice:
+        row, _ = ServicePrice.objects.update_or_create(
+            code=code,
+            defaults={"name": name, "price": price, "active": active},
+        )
+        return row
 
 
 class DjangoLinkSlotRepository(ILinkSlotRepository):
@@ -45,3 +59,17 @@ class DjangoLinkSlotRepository(ILinkSlotRepository):
         user = get_user_model().objects.get(id=user_id)
         AccountLinkSlot.objects.create(user=user, extra_slots=quantity)
         return self.extra_slots(user_id)
+
+
+class DjangoIndexConfigRepository(IIndexConfigRepository):
+    """Adaptador Django de ``IIndexConfigRepository`` para a configuração ativa do painel."""
+
+    def get_active(self) -> IndexConfig | None:
+        return IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
+
+    def new(self) -> IndexConfig:
+        return IndexConfig()
+
+    def save(self, row: IndexConfig) -> IndexConfig:
+        row.save()
+        return row

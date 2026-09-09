@@ -18,6 +18,8 @@ from apps.shop.application.use_cases import (
     ListShopItemsUseCase,
     UpdateCartItemUseCase,
 )
+from apps.shop.domain.repositories import IShopItemAdminRepository
+from apps.shop.infrastructure.repositories import DjangoShopItemAdminRepository
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
@@ -32,6 +34,7 @@ class ShopProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IShopItemAdminRepository, DjangoShopItemAdminRepository, lifetime=Lifetime.SCOPED)
         for use_case in (
             ListShopItemsUseCase,
             AddToCartUseCase,

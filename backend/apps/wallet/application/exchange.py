@@ -1,5 +1,7 @@
 from decimal import ROUND_DOWN, Decimal
+from uuid import UUID
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from sqlalchemy.exc import SQLAlchemyError
@@ -10,6 +12,7 @@ from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.exchange_models import GameExchange
 from apps.wallet.infrastructure.models import CoinConfig
+from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 
@@ -29,6 +32,37 @@ def exchange_dump(row):
         "message": row.error,
         "created_at": row.created_at,
     }
+
+
+class GetExchangeStateUseCase(UseCase[UUID, dict]):
+    """Consulta disponibilidade do câmbio, moeda ativa e histórico recente do usuário.
+
+    Uso: resolva pelo container e chame ``execute(user_id)``. Lê configuração e histórico
+    via ``IWalletRepository`` e verifica a prontidão do gateway do jogo quando habilitado.
+    """
+
+    def __init__(self, lineage: ILineageGateway, wallets: IWalletRepository) -> None:
+        self._lineage = lineage
+        self._wallets = wallets
+
+    def execute(self, data: UUID) -> dict:
+        enabled = False
+        unavailable_reason = "O banco do jogo está desconectado."
+        if settings.LINEAGE_DB_ENABLED:
+            try:
+                self._lineage.assert_exchange_ready()
+                enabled, unavailable_reason = True, ""
+            except (RuntimeError, OSError, TimeoutError, SQLAlchemyError):
+                unavailable_reason = (
+                    "A equipe precisa preparar os recibos de transferência e verificar "
+                    "a conexão e as tabelas InnoDB do jogo."
+                )
+        return {
+            "enabled": enabled,
+            "unavailable_reason": unavailable_reason,
+            "coin": self._wallets.get_active_coin_config(),
+            "history": self._wallets.list_game_exchanges(data, limit=100),
+        }
 
 
 class ExchangeCoinsUseCase:

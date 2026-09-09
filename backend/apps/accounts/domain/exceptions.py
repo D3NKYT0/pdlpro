@@ -2,6 +2,7 @@ from common.architecture.exceptions import (
     ConflictError,
     DomainError,
     EntityNotFoundError,
+    ValidationDomainError,
 )
 
 
@@ -68,3 +69,30 @@ class InvalidTwoFactorError(DomainError):
     error_code = "INVALID_2FA"
     status_code = 400
     message = "Código 2FA inválido."
+
+
+class SessionNotFoundError(EntityNotFoundError):
+    """Falha de domínio: sessão de refresh inexistente ou já encerrada."""
+
+    message = "Sessão não encontrada."
+
+
+class SessionAuthenticationError(DomainError):
+    """Falha de domínio: refresh token inválido ou alheio à sessão autenticada."""
+
+    error_code = "AUTHENTICATION_FAILED"
+    status_code = 401
+    message = "Refresh token inválido."
+
+
+class WebAuthnError(ValidationDomainError):
+    """Falha de domínio no fluxo de registro ou autenticação WebAuthn/passkey."""
+
+    message = "Não foi possível validar esta chave de acesso."
+
+
+class OAuthError(DomainError):
+    """Falha de domínio OAuth; o ``error_code`` espelha o contrato HTTP legado."""
+
+    error_code = "OAUTH_ERROR"
+    message = "Não foi possível concluir a autenticação social."

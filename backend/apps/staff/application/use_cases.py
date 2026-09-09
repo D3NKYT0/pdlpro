@@ -5,13 +5,13 @@ from decimal import Decimal
 from django.conf import settings
 from django.utils.text import slugify
 
-from apps.content.infrastructure.models import News
-from apps.games.infrastructure.models import GameConfig
+from apps.content.domain.repositories import INewsAdminRepository
+from apps.games.domain.repositories import IGameConfigAdminRepository
 from apps.server.application.use_cases import GetServerInfoUseCase
+from apps.server.domain.repositories import IIndexConfigRepository, IServicePriceRepository
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
-from apps.server.infrastructure.models import IndexConfig, ServicePrice
-from apps.shop.infrastructure.models import ShopItem
-from apps.wallet.infrastructure.models import CoinConfig, CoinPurchasePromo
+from apps.shop.domain.repositories import IShopItemAdminRepository
+from apps.wallet.domain.repositories import ICoinAdminRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -23,9 +23,9 @@ DEFAULT_SERVICES = (
 )
 
 
-def _panel_defaults(server_info: GetServerInfoUseCase) -> dict:
+def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfigRepository) -> dict:
     info = server_info.execute()
-    row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
+    row = index_config.get_active()
     return {
         "id": str(row.id) if row else None,
         "slogan": row.slogan if row else str(getattr(settings, "PROJECT_TITLE", "PDL PRO")),
@@ -65,6 +65,72 @@ def _parse_optional_datetime(raw, *, field: str) -> object | None:
     return parsed
 
 
+def _list_staff_service_prices(prices: IServicePriceRepository) -> list[dict]:
+    existing = {row.code: row for row in prices.list_all()}
+    payload = []
+    for code, name, price in DEFAULT_SERVICES:
+        row = existing.get(code)
+        payload.append(
+            {
+                "code": code,
+                "name": row.name if row else name,
+                "price": str(row.price if row else price),
+                "active": row.active if row else True,
+            }
+        )
+    for code, row in existing.items():
+        if code in {item[0] for item in DEFAULT_SERVICES}:
+            continue
+        payload.append({"code": row.code, "name": row.name, "price": str(row.price), "active": row.active})
+    return payload
+
+
+def _coin_config_payload(row, *, settings_module=settings) -> dict:
+    if row is None:
+        return {
+            "id": None,
+            "name": "Adena",
+            "coin_id": 57,
+            "multiplier": "1.00",
+            "usd_multiplier": str(getattr(settings_module, "COINS_PER_USD", "5.00")),
+            "withdraw_fee_percent": "0.00",
+            "active": True,
+        }
+    return {
+        "id": str(row.id),
+        "name": row.name,
+        "coin_id": row.coin_id,
+        "multiplier": str(row.multiplier),
+        "usd_multiplier": str(row.usd_multiplier),
+        "withdraw_fee_percent": str(row.withdraw_fee_percent),
+        "active": row.active,
+    }
+
+
+def _wallet_promo_payload(row) -> dict:
+    if row is None:
+        return {
+            "id": None,
+            "percent": "10.00",
+            "title": "Promoção de recarga",
+            "description": "",
+            "active": False,
+            "starts_at": None,
+            "ends_at": None,
+            "currently_active": False,
+        }
+    return {
+        "id": str(row.id),
+        "percent": str(row.percent),
+        "title": row.title,
+        "description": row.description,
+        "active": row.active,
+        "starts_at": row.starts_at.isoformat() if row.starts_at else None,
+        "ends_at": row.ends_at.isoformat() if row.ends_at else None,
+        "currently_active": row.is_currently_active(),
+    }
+
+
 class GetPanelSettingsUseCase(UseCase[None, dict]):
     """Retorna as configurações efetivas do painel, usando padrões quando não há configuração
     persistida.
@@ -73,11 +139,12 @@ class GetPanelSettingsUseCase(UseCase[None, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, server_info: GetServerInfoUseCase) -> None:
+    def __init__(self, server_info: GetServerInfoUseCase, index_config: IIndexConfigRepository) -> None:
         self._server_info = server_info
+        self._index_config = index_config
 
     def execute(self, data: None = None) -> dict:
-        return _panel_defaults(self._server_info)
+        return _panel_defaults(self._server_info, self._index_config)
 
 
 class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
@@ -86,13 +153,14 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
-    def __init__(self, server_info: GetServerInfoUseCase) -> None:
+    def __init__(self, server_info: GetServerInfoUseCase, index_config: IIndexConfigRepository) -> None:
         self._server_info = server_info
+        self._index_config = index_config
 
     def execute(self, data: dict) -> dict:
-        row = IndexConfig.objects.filter(is_active=True).order_by("-updated_at").first()
+        row = self._index_config.get_active()
         if row is None:
-            row = IndexConfig()
+            row = self._index_config.new()
         row.slogan = str(data.get("slogan") or row.slogan or "")
         row.name = str(data.get("name") or "")
         row.description = str(data.get("description") or "")
@@ -120,8 +188,8 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
         if not row.coming_soon_title:
             row.coming_soon_title = "Em breve"
         row.is_active = True
-        row.save()
-        return _panel_defaults(self._server_info)
+        self._index_config.save(row)
+        return _panel_defaults(self._server_info, self._index_config)
 
 
 class ListStaffServicePricesUseCase(UseCase[None, list[dict]]):
@@ -131,24 +199,11 @@ class ListStaffServicePricesUseCase(UseCase[None, list[dict]]):
     retorno é ``list[dict]``.
     """
 
+    def __init__(self, prices: IServicePriceRepository) -> None:
+        self._prices = prices
+
     def execute(self, data: None = None) -> list[dict]:
-        existing = {row.code: row for row in ServicePrice.objects.all()}
-        payload = []
-        for code, name, price in DEFAULT_SERVICES:
-            row = existing.get(code)
-            payload.append(
-                {
-                    "code": code,
-                    "name": row.name if row else name,
-                    "price": str(row.price if row else price),
-                    "active": row.active if row else True,
-                }
-            )
-        for code, row in existing.items():
-            if code in {item[0] for item in DEFAULT_SERVICES}:
-                continue
-            payload.append({"code": row.code, "name": row.name, "price": str(row.price), "active": row.active})
-        return payload
+        return _list_staff_service_prices(self._prices)
 
 
 class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
@@ -157,6 +212,9 @@ class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``list[dict]``. O retorno é
     ``list[dict]``.
     """
+
+    def __init__(self, prices: IServicePriceRepository) -> None:
+        self._prices = prices
 
     def execute(self, data: list[dict]) -> list[dict]:
         if not data:
@@ -168,15 +226,13 @@ class UpsertStaffServicePricesUseCase(UseCase[list[dict], list[dict]]):
             price = Decimal(str(item.get("price") or "0"))
             if price < 0:
                 raise ValidationDomainError("O preço não pode ser negativo.")
-            ServicePrice.objects.update_or_create(
+            self._prices.upsert(
                 code=code,
-                defaults={
-                    "name": str(item.get("name") or code),
-                    "price": price,
-                    "active": bool(item.get("active", True)),
-                },
+                name=str(item.get("name") or code),
+                price=price,
+                active=bool(item.get("active", True)),
             )
-        return ListStaffServicePricesUseCase().execute()
+        return _list_staff_service_prices(self._prices)
 
 
 class GetStaffCoinConfigUseCase(UseCase[None, dict]):
@@ -187,27 +243,11 @@ class GetStaffCoinConfigUseCase(UseCase[None, dict]):
     retorno é ``dict``.
     """
 
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
     def execute(self, data: None = None) -> dict:
-        row = CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
-        if row is None:
-            return {
-                "id": None,
-                "name": "Adena",
-                "coin_id": 57,
-                "multiplier": "1.00",
-                "usd_multiplier": str(getattr(settings, "COINS_PER_USD", "5.00")),
-                "withdraw_fee_percent": "0.00",
-                "active": True,
-            }
-        return {
-            "id": str(row.id),
-            "name": row.name,
-            "coin_id": row.coin_id,
-            "multiplier": str(row.multiplier),
-            "usd_multiplier": str(row.usd_multiplier),
-            "withdraw_fee_percent": str(row.withdraw_fee_percent),
-            "active": row.active,
-        }
+        return _coin_config_payload(self._coins.get_coin_config())
 
 
 class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
@@ -217,42 +257,21 @@ class UpdateStaffCoinConfigUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
     def execute(self, data: dict) -> dict:
-        row = CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
+        row = self._coins.get_coin_config()
         if row is None:
-            row = CoinConfig(name="Adena")
+            row = self._coins.new_coin_config(name="Adena")
         row.coin_id = int(data.get("coin_id") or row.coin_id or 57)
         row.name = item_display_name(row.coin_id)
         row.multiplier = Decimal(str(data.get("multiplier") or row.multiplier or "1"))
         row.usd_multiplier = Decimal(str(data.get("usd_multiplier") or row.usd_multiplier or "5"))
         row.withdraw_fee_percent = Decimal(str(data.get("withdraw_fee_percent") or row.withdraw_fee_percent or "0"))
         row.active = True
-        row.save()
-        return GetStaffCoinConfigUseCase().execute()
-
-
-def _wallet_promo_payload(row: CoinPurchasePromo | None) -> dict:
-    if row is None:
-        return {
-            "id": None,
-            "percent": "10.00",
-            "title": "Promoção de recarga",
-            "description": "",
-            "active": False,
-            "starts_at": None,
-            "ends_at": None,
-            "currently_active": False,
-        }
-    return {
-        "id": str(row.id),
-        "percent": str(row.percent),
-        "title": row.title,
-        "description": row.description,
-        "active": row.active,
-        "starts_at": row.starts_at.isoformat() if row.starts_at else None,
-        "ends_at": row.ends_at.isoformat() if row.ends_at else None,
-        "currently_active": row.is_currently_active(),
-    }
+        self._coins.save_coin_config(row)
+        return _coin_config_payload(self._coins.get_coin_config())
 
 
 class GetStaffWalletPromoUseCase(UseCase[None, dict]):
@@ -262,9 +281,11 @@ class GetStaffWalletPromoUseCase(UseCase[None, dict]):
     retorno é ``dict``.
     """
 
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
     def execute(self, data: None = None) -> dict:
-        row = CoinPurchasePromo.objects.filter(active=True).first() or CoinPurchasePromo.objects.order_by("-updated_at").first()
-        return _wallet_promo_payload(row)
+        return _wallet_promo_payload(self._coins.get_promo())
 
 
 class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
@@ -273,10 +294,13 @@ class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
     def execute(self, data: dict) -> dict:
-        row = CoinPurchasePromo.objects.filter(active=True).first() or CoinPurchasePromo.objects.order_by("-updated_at").first()
+        row = self._coins.get_promo()
         if row is None:
-            row = CoinPurchasePromo(title="Promoção de recarga", percent=Decimal("10.00"), active=False)
+            row = self._coins.new_promo(title="Promoção de recarga", percent=Decimal("10.00"), active=False)
         title = str(data.get("title") or "").strip()
         if not title:
             raise ValidationDomainError("Informe o título da promoção.")
@@ -291,7 +315,7 @@ class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
         row.ends_at = _parse_optional_datetime(data.get("ends_at"), field="ends_at")
         if row.starts_at and row.ends_at and row.ends_at <= row.starts_at:
             raise ValidationDomainError("A data final deve ser posterior ao início da promoção.")
-        row.save()
+        self._coins.save_promo(row)
         return _wallet_promo_payload(row)
 
 
@@ -301,6 +325,9 @@ class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
     retorno é ``list[dict]``.
     """
+
+    def __init__(self, shop_items: IShopItemAdminRepository) -> None:
+        self._shop_items = shop_items
 
     def execute(self, data: None = None) -> list[dict]:
         return [
@@ -312,7 +339,7 @@ class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):
                 "quantity": item.quantity,
                 "active": item.active,
             }
-            for item in ShopItem.objects.all().order_by("name")
+            for item in self._shop_items.list_all()
         ]
 
 
@@ -322,6 +349,9 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
+    def __init__(self, shop_items: IShopItemAdminRepository) -> None:
+        self._shop_items = shop_items
+
     def execute(self, data: dict) -> dict:
         item_id = int(data.get("item_id") or 0)
         if item_id <= 0:
@@ -330,16 +360,16 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
         price = Decimal(str(data.get("price") or "0"))
         quantity = int(data.get("quantity") or 1)
         active = bool(data.get("active", True))
-        row = ShopItem.objects.filter(id=data["id"]).first() if data.get("id") else None
+        row = self._shop_items.get_by_id(data["id"]) if data.get("id") else None
         if row is None:
-            row = ShopItem(name=name, item_id=item_id, price=price, quantity=quantity, active=active)
+            row = self._shop_items.new(name=name, item_id=item_id, price=price, quantity=quantity, active=active)
         else:
             row.name = name
             row.item_id = item_id
             row.price = price
             row.quantity = quantity
             row.active = active
-        row.save()
+        self._shop_items.save(row)
         return {
             "id": str(row.id),
             "name": row.name,
@@ -357,6 +387,9 @@ class ListStaffNewsUseCase(UseCase[None, list[dict]]):
     retorno é ``list[dict]``.
     """
 
+    def __init__(self, news: INewsAdminRepository) -> None:
+        self._news = news
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {
@@ -368,7 +401,7 @@ class ListStaffNewsUseCase(UseCase[None, list[dict]]):
                 "is_published": item.is_published,
                 "published_at": item.published_at.isoformat() if item.published_at else None,
             }
-            for item in News.objects.all().order_by("-published_at", "-created_at")
+            for item in self._news.list_all()
         ]
 
 
@@ -378,6 +411,9 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
+    def __init__(self, news: INewsAdminRepository) -> None:
+        self._news = news
+
     def execute(self, data: dict) -> dict:
         from common.richtext import is_rich_text_empty, sanitize_rich_text
 
@@ -385,13 +421,13 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
         body = sanitize_rich_text(str(data.get("body") or ""))
         if not title or is_rich_text_empty(body):
             raise ValidationDomainError("Título e conteúdo são obrigatórios.")
-        row = News.objects.filter(id=data["id"]).first() if data.get("id") else None
+        row = self._news.get_by_id(data["id"]) if data.get("id") else None
         if row is None:
-            row = News(title=title, body=body)
+            row = self._news.new(title=title, body=body)
             base = slugify(title)[:180] or "noticia"
             slug = base
             suffix = 2
-            while News.objects.filter(slug=slug).exists():
+            while self._news.slug_exists(slug):
                 slug = f"{base}-{suffix}"
                 suffix += 1
             row.slug = slug
@@ -401,7 +437,7 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
         if data.get("slug"):
             row.slug = slugify(str(data["slug"]))[:200]
         row.is_published = bool(data.get("is_published", False))
-        row.save()
+        self._news.save(row)
         return {
             "id": str(row.id),
             "slug": row.slug,
@@ -420,6 +456,9 @@ class ListStaffGamesUseCase(UseCase[None, list[dict]]):
     retorno é ``list[dict]``.
     """
 
+    def __init__(self, games: IGameConfigAdminRepository) -> None:
+        self._games = games
+
     def execute(self, data: None = None) -> list[dict]:
         return [
             {
@@ -429,7 +468,7 @@ class ListStaffGamesUseCase(UseCase[None, list[dict]]):
                 "active": item.active,
                 "settings": item.settings or {},
             }
-            for item in GameConfig.objects.all().order_by("name")
+            for item in self._games.list_all()
         ]
 
 
@@ -439,10 +478,13 @@ class ToggleStaffGameUseCase(UseCase[dict, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
     """
 
+    def __init__(self, games: IGameConfigAdminRepository) -> None:
+        self._games = games
+
     def execute(self, data: dict) -> dict:
-        row = GameConfig.objects.filter(id=data.get("id")).first() if data.get("id") else None
+        row = self._games.get_by_id(data["id"]) if data.get("id") else None
         if row is None:
-            row = GameConfig.objects.filter(code=str(data.get("code") or "")).first()
+            row = self._games.get_by_code(str(data.get("code") or ""))
         if row is None:
             raise EntityNotFoundError("Jogo não encontrado.")
         if "active" in data:
@@ -451,5 +493,5 @@ class ToggleStaffGameUseCase(UseCase[dict, dict]):
             row.settings = data["settings"]
         if data.get("name"):
             row.name = str(data["name"])
-        row.save()
+        self._games.save(row)
         return {"id": str(row.id), "code": row.code, "name": row.name, "active": row.active, "settings": row.settings}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from decimal import Decimal
+from typing import Any
 from uuid import UUID
 
 from apps.wallet.domain.entities import WalletEntity
@@ -77,5 +78,68 @@ class IWalletRepository(ABC):
     @abstractmethod
     def list_transactions(self, wallet_id: UUID, *, limit: int = 50) -> list[dict]:
         """Lista as movimentações mais recentes da carteira, respeitando limit."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_active_coin_config(self) -> dict | None:
+        """Retorna a configuração ativa da moeda de câmbio, ou None se ausente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_game_exchanges(self, user_id: UUID, *, limit: int = 100) -> list[dict]:
+        """Lista os câmbios mais recentes do usuário no formato da API de histórico."""
+
+        raise NotImplementedError
+
+
+class ICoinAdminRepository(ABC):
+    """Porta administrativa de configuração de moeda e promoção de recarga.
+
+    Injete esta interface nos casos de uso staff e registre o adaptador no WalletProvider.
+    Retornos opcionais usam None quando não há registro; ``save_*`` persistem o modelo ORM
+    (incluindo regras de unicidade de ativo no ``save`` do modelo).
+    """
+
+    @abstractmethod
+    def get_coin_config(self) -> Any | None:
+        """Retorna a configuração ativa ou a mais recente; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_coin_config(self, row: Any) -> Any:
+        """Persiste a configuração de moeda e devolve a linha salva."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def new_coin_config(self, *, name: str = "Adena") -> Any:
+        """Instancia uma configuração ainda não persistida."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_promo(self) -> Any | None:
+        """Retorna a promoção ativa ou a mais recente; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_promo(self, row: Any) -> Any:
+        """Persiste a promoção de recarga e devolve a linha salva."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def new_promo(
+        self,
+        *,
+        title: str = "Promoção de recarga",
+        percent: Decimal = Decimal("10.00"),
+        active: bool = False,
+    ) -> Any:
+        """Instancia uma promoção ainda não persistida."""
 
         raise NotImplementedError

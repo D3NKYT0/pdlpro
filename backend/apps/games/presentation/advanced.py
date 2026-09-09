@@ -1,9 +1,7 @@
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from apps.games.application.advanced_use_cases import (
     BattlePassActionInput,
@@ -19,20 +17,15 @@ from apps.games.application.advanced_use_cases import (
     GetFishingDetailsUseCase,
     GetGameStatisticsUseCase,
 )
-from apps.games.application.rewards import validate_rewards
-from apps.games.infrastructure.models import (
-    BattlePassExchange,
-    BattlePassLevel,
-    BattlePassMilestone,
-    BattlePassQuest,
-    BattlePassReward,
-    BattlePassSeason,
-    DailyBonusDay,
-    DailyBonusPoolEntry,
-    DailyBonusSeason,
-    Fish,
-    FishingBait,
+from apps.games.application.staff_content_use_cases import (
+    ListGameContentInput,
+    ListGameContentUseCase,
+    UpsertGameContentInput,
+    UpsertGameContentUseCase,
 )
+from apps.games.domain.repositories import IGameContentAdminRepository
+from apps.games.infrastructure.staff_content import CONFIG_MODELS
+from common.architecture.exceptions import EntityNotFoundError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -198,48 +191,6 @@ class GameStatisticsView(InjectedAPIView):
             )
         )
 
-CONFIG_MODELS = {
-    "seasons": (
-        BattlePassSeason,
-        ["name", "starts_at", "ends_at", "active", "premium_price"],
-    ),
-    "levels": (BattlePassLevel, ["season", "level", "required_xp"]),
-    "rewards": (
-        BattlePassReward,
-        [
-            "level_row",
-            "is_premium",
-            "item_id",
-            "item_name",
-            "enchant",
-            "quantity",
-            "description",
-        ],
-    ),
-    "quests": (
-        BattlePassQuest,
-        ["season", "name", "description", "event", "target", "xp", "period", "active"],
-    ),
-    "exchanges": (
-        BattlePassExchange,
-        [
-            "season",
-            "name",
-            "required_item_id",
-            "required_enchant",
-            "required_quantity",
-            "rewards",
-            "limit_per_user",
-            "active",
-        ],
-    ),
-    "milestones": (BattlePassMilestone, ["season", "name", "required_xp", "rewards"]),
-    "daily-seasons": (DailyBonusSeason, ["name", "starts_on", "ends_on", "active"]),
-    "daily-days": (DailyBonusDay, ["season", "day", "rewards"]),
-    "daily-pool": (DailyBonusPoolEntry, ["season", "name", "weight", "rewards"]),
-    "baits": (FishingBait, ["name", "description", "price", "success_bonus", "active"]),
-}
-
 
 def config_serializer(kind):
     if kind not in CONFIG_MODELS:
@@ -249,61 +200,6 @@ def config_serializer(kind):
     class ConfigSerializer(serializers.ModelSerializer):
         class Meta:
             pass
-
-        def validate(self, data):
-            def value(key):
-                return data.get(key, getattr(self.instance, key, None))
-
-            for key in (
-                "target",
-                "quantity",
-                "required_item_id",
-                "item_id",
-                "required_quantity",
-                "day",
-                "weight",
-            ):
-                if key in data and data[key] < 1:
-                    raise serializers.ValidationError({key: "Deve ser maior que zero."})
-            if "success_bonus" in data and data["success_bonus"] > 90:
-                raise serializers.ValidationError(
-                    {"success_bonus": "Máximo de 90 pontos percentuais."}
-                )
-            if "rewards" in data:
-                data["rewards"] = validate_rewards(data["rewards"])
-            for start_key, end_key in (
-                ("starts_at", "ends_at"),
-                ("starts_on", "ends_on"),
-            ):
-                start, end = value(start_key), value(end_key)
-                if start and end:
-                    if end < start:
-                        raise serializers.ValidationError(
-                            "A data final deve ser posterior à inicial."
-                        )
-                    overlapping = model.objects.filter(
-                        **{
-                            f"{start_key}__lte": end,
-                            f"{end_key}__gte": start,
-                            "active": True,
-                        }
-                    )
-                    if self.instance:
-                        overlapping = overlapping.exclude(pk=self.instance.pk)
-                    if value("active") is not False and overlapping.exists():
-                        raise serializers.ValidationError(
-                            "Já existe uma temporada ativa neste período."
-                        )
-            if (
-                kind == "daily-days"
-                and value("season")
-                and value("day")
-                > (value("season").ends_on - value("season").starts_on).days + 1
-            ):
-                raise serializers.ValidationError(
-                    "O dia está fora da duração da temporada."
-                )
-            return data
 
     ConfigSerializer.Meta.model = model
     ConfigSerializer.Meta.fields = ["id", *fields]
@@ -320,7 +216,7 @@ def config_serializer(kind):
     return ConfigSerializer
 
 
-class StaffGameContentView(APIView):
+class StaffGameContentView(InjectedAPIView):
     """Administra os tipos de conteúdo dos jogos previstos no registro de serializers.
 
     Implementa GET, POST, PATCH; registre ``as_view()`` nas URLs do módulo. Controle de acesso
@@ -335,8 +231,9 @@ class StaffGameContentView(APIView):
         description="Lista as entradas de configuração do tipo de conteúdo informado.",
     )
     def get(self, request, kind):
+        rows = self.resolve(ListGameContentUseCase).execute(ListGameContentInput(kind=kind))
         cls = config_serializer(kind)
-        return Response(cls(cls.Meta.model.objects.all(), many=True).data)
+        return Response(cls(rows, many=True).data)
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
@@ -346,8 +243,10 @@ class StaffGameContentView(APIView):
     def post(self, request, kind):
         serializer = config_serializer(kind)(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=201)
+        row = self.resolve(UpsertGameContentUseCase).execute(
+            UpsertGameContentInput(kind=kind, validated_data=serializer.validated_data)
+        )
+        return Response(config_serializer(kind)(row).data, status=201)
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
@@ -355,12 +254,17 @@ class StaffGameContentView(APIView):
         description="Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.",
     )
     def patch(self, request, kind, entry_id):
+        instance = self.resolve(IGameContentAdminRepository).get_kind(kind, entry_id)
+        if instance is None:
+            raise EntityNotFoundError("Entrada de configuração não encontrada.")
         cls = config_serializer(kind)
-        serializer = cls(
-            get_object_or_404(cls.Meta.model, id=entry_id),
-            data=request.data,
-            partial=True,
-        )
+        serializer = cls(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        row = self.resolve(UpsertGameContentUseCase).execute(
+            UpsertGameContentInput(
+                kind=kind,
+                validated_data=serializer.validated_data,
+                entry_id=entry_id,
+            )
+        )
+        return Response(cls(row).data)

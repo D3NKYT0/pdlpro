@@ -20,11 +20,13 @@ from apps.content.application.use_cases import (
     SearchWikiUseCase,
 )
 from apps.content.application.wardrobe import EquipDenkynhoUseCase
+from apps.content.domain.repositories import INewsAdminRepository
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
 
 from .configured_model import ConfiguredConversationModel
+from .repositories import DjangoNewsAdminRepository
 from .semantic import SentenceTransformerMatcher
 
 
@@ -44,6 +46,7 @@ class ContentProvider(AppProvider):
             SentenceTransformerMatcher,
             lifetime=Lifetime.SINGLETON,
         )
+        container.register(INewsAdminRepository, DjangoNewsAdminRepository, lifetime=Lifetime.SCOPED)
         for use_case in (
             AssistantReplyUseCase,
             GetDenkynhoProfileUseCase,

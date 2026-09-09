@@ -182,11 +182,17 @@ class ChatReplyUseCase:
     reutilizado pelo mesmo usuário, papel e idioma. Não há gravação de transcrições.
     """
 
-    def __init__(self, conversation_model: ConversationModel, semantic_matcher: SemanticMatcher,
-                 assistant_reply_use_case: AssistantReplyUseCase) -> None:
+    def __init__(
+        self,
+        conversation_model: ConversationModel,
+        semantic_matcher: SemanticMatcher,
+        assistant_reply_use_case: AssistantReplyUseCase,
+        list_faq: ListFaqUseCase,
+    ) -> None:
         self._model = conversation_model
         self._matcher = semantic_matcher
         self._fallback = assistant_reply_use_case
+        self._list_faq = list_faq
 
     def execute(self, data: ChatInput) -> dict:
         language = detect_language(data.message, data.language)
@@ -220,7 +226,9 @@ class ChatReplyUseCase:
             return result
         if not self._model.enabled():
             return self._limited(data, emotion, regex_affect, owner, memory)
-        articles = ListFaqUseCase().execute(ListFaqInput(data.audience, language, for_assistant=True))
+        articles = self._list_faq.execute(
+            ListFaqInput(data.audience, language, for_assistant=True)
+        )
         sources = self._sources(data.message, history, articles)
         safe_name = data.display_name[:60] if not blocked_term(data.display_name) else ""
         system = PERSONA + "\nIDIOMA: " + language + "\nIDENTIDADE: " + json.dumps({

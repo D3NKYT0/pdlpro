@@ -3,11 +3,8 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from sqlalchemy.exc import SQLAlchemyError
 
-from apps.wallet.application.exchange import ExchangeCoinsUseCase, exchange_dump
-from apps.wallet.infrastructure.exchange_models import GameExchange
-from apps.wallet.infrastructure.models import CoinConfig
+from apps.wallet.application.exchange import ExchangeCoinsUseCase, GetExchangeStateUseCase
 from common.views import InjectedAPIView
 
 
@@ -30,7 +27,7 @@ class ExchangeSerializer(serializers.Serializer):
 
 
 class GameExchangeView(InjectedAPIView):
-    """Entrada HTTP para ``ExchangeCoinsUseCase``.
+    """Entrada HTTP para ``GetExchangeStateUseCase`` e ``ExchangeCoinsUseCase``.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
@@ -49,33 +46,7 @@ class GameExchangeView(InjectedAPIView):
         ),
     )
     def get(self, request):
-        config = CoinConfig.objects.filter(active=True).first()
-        enabled = False
-        unavailable_reason = "O banco do jogo está desconectado."
-        if settings.LINEAGE_DB_ENABLED:
-            try:
-                self.resolve(ExchangeCoinsUseCase).lineage.assert_exchange_ready()
-                enabled, unavailable_reason = True, ""
-            except (RuntimeError, OSError, TimeoutError, SQLAlchemyError):
-                unavailable_reason = "A equipe precisa preparar os recibos de transferência e verificar a conexão e as tabelas InnoDB do jogo."
-        return Response(
-            {
-                "enabled": enabled,
-                "unavailable_reason": unavailable_reason,
-                "coin": {
-                    "name": config.name,
-                    "item_id": config.coin_id,
-                    "multiplier": str(config.multiplier),
-                    "withdraw_fee_percent": str(config.withdraw_fee_percent),
-                }
-                if config
-                else None,
-                "history": [
-                    dict(exchange_dump(r), login=r.login, character_id=r.character_id)
-                    for r in GameExchange.objects.filter(user=request.user).order_by("-created_at")[:100]
-                ],
-            }
-        )
+        return Response(self.resolve(GetExchangeStateUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Carteira"],

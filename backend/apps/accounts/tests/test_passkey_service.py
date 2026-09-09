@@ -34,7 +34,7 @@ def test_registration_verifies_binding_and_persists_public_credential(owner, moc
     verify = mocker.patch.object(service, "verify_registration_response", return_value=SimpleNamespace(credential_id=b"new-key", credential_public_key=b"public-key", sign_count=0, aaguid=None))
     begin = service.begin_registration(owner, "Laptop")
     result = service.complete_registration(owner, begin["state"], {"response": {"transports": ["internal"]}})
-    assert result.user == owner
+    assert result.user_id == owner.id
     assert result.nickname == "Laptop"
     assert bytes(result.credential_id) == b"new-key"
     assert verify.call_args.kwargs["expected_challenge"] == base64url_to_bytes(begin["options"]["challenge"])

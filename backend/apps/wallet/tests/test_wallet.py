@@ -115,3 +115,27 @@ def test_wallet_requires_authentication(method, path):
     response = getattr(APIClient(), method)(f"/api/v1/shared/wallet/{path}")
     assert response.status_code in (401, 403)
     assert not WalletTransaction.objects.exists()
+
+
+def test_game_exchange_state_returns_coin_and_empty_history(api, accounts, settings):
+    from apps.wallet.infrastructure.models import CoinConfig
+
+    settings.LINEAGE_DB_ENABLED = False
+    CoinConfig.objects.create(
+        name="Adena",
+        coin_id=57,
+        multiplier="1.00",
+        withdraw_fee_percent="5.00",
+        active=True,
+    )
+    response = api.get("/api/v1/shared/wallet/game-exchange/")
+    assert response.status_code == 200, response.data
+    assert response.data["enabled"] is False
+    assert response.data["unavailable_reason"]
+    assert response.data["coin"] == {
+        "name": "Adena",
+        "item_id": 57,
+        "multiplier": "1.00",
+        "withdraw_fee_percent": "5.00",
+    }
+    assert response.data["history"] == []

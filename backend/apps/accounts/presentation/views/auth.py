@@ -4,12 +4,14 @@ from django.contrib.auth import get_user_model
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
-from rest_framework_simplejwt.exceptions import TokenError
 
+from apps.accounts.application.auth_capabilities import (
+    AuthCapabilitiesInput,
+    GetAuthCapabilitiesUseCase,
+)
 from apps.accounts.application.captcha import (
     captcha_required,
     clear_failures,
@@ -25,19 +27,29 @@ from apps.accounts.application.email_use_cases import (
     VerifyEmailInput,
     VerifyEmailUseCase,
 )
-from apps.accounts.application.oauth import begin_oauth, complete_oauth
+from apps.accounts.application.oauth import (
+    BeginOAuthInput,
+    BeginOAuthUseCase,
+    CompleteOAuthInput,
+    CompleteOAuthUseCase,
+)
 from apps.accounts.application.progress_use_cases import (
     ClaimRewardInput,
     ClaimRewardUseCase,
     GetGamerProfileUseCase,
 )
 from apps.accounts.application.sessions import (
-    list_sessions,
+    ListSessionsInput,
+    ListSessionsUseCase,
+    RevokeOtherSessionsInput,
+    RevokeOtherSessionsUseCase,
+    RevokeRefreshInput,
+    RevokeRefreshUseCase,
+    RevokeSessionInput,
+    RevokeSessionUseCase,
+    RotateRefreshInput,
+    RotateRefreshUseCase,
     refresh_jti,
-    revoke_other_sessions,
-    revoke_refresh,
-    revoke_session,
-    rotate_refresh,
 )
 from apps.accounts.application.twofa import (
     ConfirmTwoFactorInput,
@@ -61,7 +73,7 @@ from apps.accounts.application.use_cases import (
     UpdateProfileInput,
     UpdateProfileUseCase,
 )
-from apps.accounts.domain.exceptions import InvalidCredentialsError
+from apps.accounts.domain.exceptions import InvalidCredentialsError, SessionAuthenticationError
 from apps.accounts.infrastructure.authentication import (
     _csrf_failed_reason,
     build_auth_response,
@@ -211,23 +223,14 @@ class AuthCapabilitiesView(InjectedAPIView):
         description="Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores OAuth e vínculos sociais da sessão.",
     )
     def get(self, request):
-        from allauth.socialaccount.models import SocialAccount
-        from django.conf import settings
-
-        connected = []
-        if request.user.is_authenticated:
-            connected = list(SocialAccount.objects.filter(user=request.user).values_list("provider", flat=True))
-
-        return Response({
-            "passkeys": True,
-            "two_factor": True,
-            "email_verification": True,
-            "captcha": settings.HCAPTCHA_ENABLED,
-            "hcaptcha_site_key": settings.HCAPTCHA_SITE_KEY,
-            "google": bool(settings.GOOGLE_CLIENT_ID and settings.GOOGLE_CLIENT_SECRET),
-            "discord": bool(settings.DISCORD_CLIENT_ID and settings.DISCORD_CLIENT_SECRET),
-            "connected_providers": connected,
-        })
+        return Response(
+            self.resolve(GetAuthCapabilitiesUseCase).execute(
+                AuthCapabilitiesInput(
+                    user_id=request.user.id if request.user.is_authenticated else None,
+                    is_authenticated=request.user.is_authenticated,
+                )
+            )
+        )
 
 
 class OAuthBeginView(InjectedAPIView):
@@ -250,9 +253,18 @@ class OAuthBeginView(InjectedAPIView):
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         browser_key = request.session.setdefault("oauth_browser", secrets.token_urlsafe(32))
-        return Response({"authorization_url": begin_oauth(
-            data["provider"], data["mode"], request.user, browser_key=browser_key,
-        )})
+        return Response(
+            {
+                "authorization_url": self.resolve(BeginOAuthUseCase).execute(
+                    BeginOAuthInput(
+                        provider=data["provider"],
+                        mode=data["mode"],
+                        user=request.user,
+                        browser_key=browser_key,
+                    )
+                )
+            }
+        )
 
 
 class OAuthCompleteView(InjectedAPIView):
@@ -274,9 +286,14 @@ class OAuthCompleteView(InjectedAPIView):
         serializer = OAuthCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        user, linked = complete_oauth(
-            data["provider"], data["code"], data["state"],
-            browser_key=request.session.get("oauth_browser", ""), user=request.user,
+        user, linked = self.resolve(CompleteOAuthUseCase).execute(
+            CompleteOAuthInput(
+                provider=data["provider"],
+                code=data["code"],
+                state=data["state"],
+                browser_key=request.session.get("oauth_browser", ""),
+                user=request.user,
+            )
         )
         if linked:
             return Response({"linked": True})
@@ -347,8 +364,8 @@ class RefreshView(InjectedAPIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         try:
-            refresh = rotate_refresh(raw)
-        except (TokenError, AuthenticationFailed, get_user_model().DoesNotExist, ValueError, TypeError, KeyError):
+            refresh = self.resolve(RotateRefreshUseCase).execute(RotateRefreshInput(raw=raw))
+        except SessionAuthenticationError:
             return Response(
                 {"error_code": "AUTHENTICATION_FAILED", "message": "Refresh token inválido."},
                 status=status.HTTP_401_UNAUTHORIZED,
@@ -372,7 +389,12 @@ class LogoutView(InjectedAPIView):
         description="Revoga o refresh token e remove os cookies de autenticação da resposta.",
     )
     def post(self, request):
-        revoke_refresh(request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name()), request.user)
+        self.resolve(RevokeRefreshUseCase).execute(
+            RevokeRefreshInput(
+                raw=request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name()),
+                user_id=request.user.id,
+            )
+        )
         response = Response({"ok": True})
         return clear_auth_cookies(response)
 
@@ -394,7 +416,9 @@ class SessionListView(InjectedAPIView):
     )
     def get(self, request):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
-        rows = list_sessions(request.user, current_jti=current)
+        rows = self.resolve(ListSessionsUseCase).execute(
+            ListSessionsInput(user_id=request.user.id, current_jti=current)
+        )
         return Response(AuthSessionSerializer(rows, many=True).data)
 
 
@@ -414,7 +438,9 @@ class SessionRevokeView(InjectedAPIView):
     )
     def delete(self, request, session_id):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
-        closed_current = revoke_session(request.user, session_id, current_jti=current)
+        closed_current = self.resolve(RevokeSessionUseCase).execute(
+            RevokeSessionInput(user_id=request.user.id, jti=session_id, current_jti=current)
+        )
         response = Response({"ok": True, "current": closed_current})
         if closed_current:
             return clear_auth_cookies(response)
@@ -437,7 +463,9 @@ class SessionRevokeOthersView(InjectedAPIView):
     )
     def post(self, request):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
-        revoked = revoke_other_sessions(request.user, current_jti=current)
+        revoked = self.resolve(RevokeOtherSessionsUseCase).execute(
+            RevokeOtherSessionsInput(user_id=request.user.id, current_jti=current)
+        )
         return Response({"ok": True, "revoked": revoked})
 
 
@@ -497,7 +525,8 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
             VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
         )
-        return build_auth_response(request, user)
+        orm_user = get_user_model().objects.get(id=user.id)
+        return build_auth_response(request, orm_user)
 
 
 class TwoFactorView(InjectedAPIView):

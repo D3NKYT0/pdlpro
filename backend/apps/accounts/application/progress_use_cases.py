@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.application.progress import add_xp, unlock_achievements, xp_for_level
+from apps.accounts.domain.bag import IRewardBagPort
 from apps.accounts.infrastructure.models import (
     Achievement,
     GamerProfile,
@@ -11,7 +12,6 @@ from apps.accounts.infrastructure.models import (
     RewardDefinition,
     UserAchievement,
 )
-from apps.games.application.bag import add_to_bag
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
@@ -92,8 +92,11 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
     e XP.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``ClaimRewardInput``. O retorno é
-    ``dict``.
+    ``dict``. Entrega itens via ``IRewardBagPort`` (sem import direto de games).
     """
+
+    def __init__(self, reward_bag: IRewardBagPort) -> None:
+        self._reward_bag = reward_bag
 
     def execute(self, data: ClaimRewardInput) -> dict:
         from django.contrib.auth import get_user_model
@@ -112,7 +115,7 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
             and not UserAchievement.objects.filter(user=user, achievement__code=reward.reference).exists()
         ):
             raise ValidationDomainError("Conquista não desbloqueada.")
-        add_to_bag(
+        self._reward_bag.add_item(
             user,
             item_id=reward.item_id,
             item_name=reward.item_name,

@@ -25,7 +25,7 @@ from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.server.infrastructure.lineage.item_catalog import (
     item_metadata as catalog_metadata,
 )
-from common.exceptions import PdlAPIException
+from common.architecture.exceptions import DomainError
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -182,12 +182,16 @@ class ObservationView(InjectedAPIView):
         try:
             return callback()
         except ObservationUnavailable as exc:
-            raise PdlAPIException(str(exc), error_code="ITEM_OBSERVATION_UNAVAILABLE",
-                                  status_code=unavailable_status) from None
-        except Exception:
+            raise ObservationUnavailable(
+                str(exc), status_code=unavailable_status
+            ) from None
+        except Exception as exc:
             logger.exception("Falha na observação de itens L2")
-            raise PdlAPIException("Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL.",
-                                  error_code="ITEM_OBSERVATION_UNAVAILABLE", status_code=503) from None
+            raise DomainError(
+                "Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL.",
+                error_code="ITEM_OBSERVATION_UNAVAILABLE",
+                status_code=503,
+            ) from exc
 
 
 class ObservationAccessView(ObservationView):

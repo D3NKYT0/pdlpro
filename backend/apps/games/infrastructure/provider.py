@@ -32,6 +32,10 @@ from apps.games.application.minigame_use_cases import (
     PlayDiceUseCase,
     SpinSlotsUseCase,
 )
+from apps.games.application.staff_content_use_cases import (
+    ListGameContentUseCase,
+    UpsertGameContentUseCase,
+)
 from apps.games.application.use_cases import (
     BuyTokensUseCase,
     ClaimDailyBonusUseCase,
@@ -39,6 +43,11 @@ from apps.games.application.use_cases import (
     GetDailyBonusStateUseCase,
     GetRouletteStateUseCase,
     SpinRouletteUseCase,
+)
+from apps.games.domain.repositories import IGameConfigAdminRepository, IGameContentAdminRepository
+from apps.games.infrastructure.repositories import (
+    DjangoGameConfigAdminRepository,
+    DjangoGameContentAdminRepository,
 )
 from common.di.container import Container
 from common.di.lifetime import Lifetime
@@ -54,6 +63,8 @@ class GamesProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IGameConfigAdminRepository, DjangoGameConfigAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IGameContentAdminRepository, DjangoGameContentAdminRepository, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetRouletteStateUseCase,
             SpinRouletteUseCase,
@@ -83,5 +94,7 @@ class GamesProvider(AppProvider):
             GetFishingDetailsUseCase,
             BuyBaitUseCase,
             GetGameStatisticsUseCase,
+            ListGameContentUseCase,
+            UpsertGameContentUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

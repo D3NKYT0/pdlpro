@@ -5,9 +5,11 @@ from uuid import UUID
 
 from django.db.models import F
 
+from apps.wallet.application.exchange import exchange_dump
 from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
-from apps.wallet.domain.repositories import IWalletRepository
-from apps.wallet.infrastructure.models import Wallet, WalletTransaction
+from apps.wallet.domain.repositories import ICoinAdminRepository, IWalletRepository
+from apps.wallet.infrastructure.exchange_models import GameExchange
+from apps.wallet.infrastructure.models import CoinConfig, CoinPurchasePromo, Wallet, WalletTransaction
 
 
 class DjangoWalletRepository(IWalletRepository):
@@ -116,3 +118,58 @@ class DjangoWalletRepository(IWalletRepository):
             "destination": row.destination,
             "created_at": row.created_at.isoformat(),
         }
+
+    def get_active_coin_config(self) -> dict | None:
+        config = CoinConfig.objects.filter(active=True).first()
+        if config is None:
+            return None
+        return {
+            "name": config.name,
+            "item_id": config.coin_id,
+            "multiplier": str(config.multiplier),
+            "withdraw_fee_percent": str(config.withdraw_fee_percent),
+        }
+
+    def list_game_exchanges(self, user_id: UUID, *, limit: int = 100) -> list[dict]:
+        rows = GameExchange.objects.filter(user__id=user_id).order_by("-created_at")[:limit]
+        return [
+            dict(exchange_dump(row), login=row.login, character_id=row.character_id)
+            for row in rows
+        ]
+
+
+class DjangoCoinAdminRepository(ICoinAdminRepository):
+    """Adaptador Django de ``ICoinAdminRepository`` para configuração de moeda e promoção.
+
+    Concentra consultas e escritas ORM da porta administrativa. Prefira resolver a interface
+    pelo container; o ``save`` dos modelos desativa outros registros ativos quando aplicável.
+    """
+
+    def get_coin_config(self) -> CoinConfig | None:
+        return CoinConfig.objects.filter(active=True).first() or CoinConfig.objects.order_by("-updated_at").first()
+
+    def save_coin_config(self, row: CoinConfig) -> CoinConfig:
+        row.save()
+        return row
+
+    def new_coin_config(self, *, name: str = "Adena") -> CoinConfig:
+        return CoinConfig(name=name)
+
+    def get_promo(self) -> CoinPurchasePromo | None:
+        return (
+            CoinPurchasePromo.objects.filter(active=True).first()
+            or CoinPurchasePromo.objects.order_by("-updated_at").first()
+        )
+
+    def save_promo(self, row: CoinPurchasePromo) -> CoinPurchasePromo:
+        row.save()
+        return row
+
+    def new_promo(
+        self,
+        *,
+        title: str = "Promoção de recarga",
+        percent: Decimal = Decimal("10.00"),
+        active: bool = False,
+    ) -> CoinPurchasePromo:
+        return CoinPurchasePromo(title=title, percent=percent, active=active)

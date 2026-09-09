@@ -6,7 +6,9 @@ from uuid import UUID
 import pyotp
 from django.core import signing
 
+from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import InvalidTwoFactorError, UserNotFoundError
+from apps.accounts.domain.repositories import IUserRepository
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -38,16 +40,18 @@ class SetupTwoFactorUseCase(UseCase[UUID, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
     """
 
-    def execute(self, data: UUID) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, users: IUserRepository) -> None:
+        self._users = users
 
-        user = get_user_model().objects.get(id=data)
-        if user.is_2fa_enabled:
+    def execute(self, data: UUID) -> dict:
+        state = self._users.get_totp_state(data)
+        if state is None:
+            raise UserNotFoundError()
+        if state.is_2fa_enabled:
             raise ValidationDomainError("O 2FA já está ativo.")
         secret = pyotp.random_base32()
-        user.totp_secret = secret
-        user.save(update_fields=["totp_secret", "updated_at"])
-        uri = pyotp.TOTP(secret).provisioning_uri(name=user.username, issuer_name="PDL PRO")
+        self._users.set_totp_secret(data, secret)
+        uri = pyotp.TOTP(secret).provisioning_uri(name=state.username, issuer_name="PDL PRO")
         return {"secret": secret, "otpauth_url": uri, "enabled": False}
 
 
@@ -71,14 +75,16 @@ class ConfirmTwoFactorUseCase(UseCase[ConfirmTwoFactorInput, dict]):
     retorno é ``dict``.
     """
 
-    def execute(self, data: ConfirmTwoFactorInput) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, users: IUserRepository) -> None:
+        self._users = users
 
-        user = get_user_model().objects.get(id=data.user_id)
-        if not _verify(user.totp_secret, data.code):
+    def execute(self, data: ConfirmTwoFactorInput) -> dict:
+        state = self._users.get_totp_state(data.user_id)
+        if state is None:
+            raise UserNotFoundError()
+        if not _verify(state.totp_secret, data.code):
             raise InvalidTwoFactorError()
-        user.is_2fa_enabled = True
-        user.save(update_fields=["is_2fa_enabled", "updated_at"])
+        self._users.enable_2fa(data.user_id)
         return {"enabled": True}
 
 
@@ -102,15 +108,16 @@ class DisableTwoFactorUseCase(UseCase[DisableTwoFactorInput, dict]):
     retorno é ``dict``.
     """
 
-    def execute(self, data: DisableTwoFactorInput) -> dict:
-        from django.contrib.auth import get_user_model
+    def __init__(self, users: IUserRepository) -> None:
+        self._users = users
 
-        user = get_user_model().objects.get(id=data.user_id)
-        if not user.is_2fa_enabled or not _verify(user.totp_secret, data.code):
+    def execute(self, data: DisableTwoFactorInput) -> dict:
+        state = self._users.get_totp_state(data.user_id)
+        if state is None:
+            raise UserNotFoundError()
+        if not state.is_2fa_enabled or not _verify(state.totp_secret, data.code):
             raise InvalidTwoFactorError()
-        user.is_2fa_enabled = False
-        user.totp_secret = ""
-        user.save(update_fields=["is_2fa_enabled", "totp_secret", "updated_at"])
+        self._users.disable_2fa(data.user_id)
         return {"enabled": False}
 
 
@@ -126,23 +133,28 @@ class VerifyTwoFactorLoginInput:
     code: str
 
 
-class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, object]):
-    """Valida o desafio assinado e o código TOTP e retorna o usuário ORM para concluir o login.
+class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, UserEntity]):
+    """Valida o desafio assinado e o código TOTP e retorna a entidade do usuário para concluir o
+    login.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``VerifyTwoFactorLoginInput``. O
-    retorno é ``object``.
+    retorno é ``UserEntity``.
     """
 
-    def execute(self, data: VerifyTwoFactorLoginInput) -> object:
-        from django.contrib.auth import get_user_model
+    def __init__(self, users: IUserRepository) -> None:
+        self._users = users
 
+    def execute(self, data: VerifyTwoFactorLoginInput) -> UserEntity:
         user_id = read_login_challenge(data.challenge)
         # O usuário pode ser desativado entre a senha e a conclusão do segundo fator.
-        user = get_user_model().objects.filter(id=user_id, is_active=True).first()
+        state = self._users.get_totp_state(user_id)
+        if state is None or not state.is_active:
+            raise UserNotFoundError()
+        if not state.is_2fa_enabled or not _verify(state.totp_secret, data.code):
+            raise InvalidTwoFactorError()
+        user = self._users.get_by_id(user_id)
         if user is None:
             raise UserNotFoundError()
-        if not user.is_2fa_enabled or not _verify(user.totp_secret, data.code):
-            raise InvalidTwoFactorError()
         from apps.server.application.access import (
             assert_login_allowed_during_coming_soon,
         )

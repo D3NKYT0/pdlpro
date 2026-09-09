@@ -4,10 +4,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import default_token_generator
 from django.core import signing
-from django.db import transaction
 
 from apps.accounts.domain.exceptions import UserNotFoundError
 from apps.accounts.domain.mailer import IMailer
@@ -115,8 +112,9 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
         user = self._users.get_by_email(data.email.strip().lower())
         if user is None:
             return {"sent": True}
-        account = get_user_model().objects.get(id=user.id)
-        token = f"{user.id}:{default_token_generator.make_token(account)}"
+        token = self._users.make_password_reset_token(user.id)
+        if token is None:
+            return {"sent": True}
         link = _frontend_url(f"/reset-password?token={token}")
         self._mailer.send(
             user.email,
@@ -146,22 +144,12 @@ class ConfirmPasswordResetUseCase(UseCase[ConfirmPasswordResetInput, dict]):
     retorno é ``dict``.
     """
 
-    def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
+    def __init__(self, users: IUserRepository) -> None:
         self._users = users
-        self._unit_of_work = unit_of_work
 
     def execute(self, data: ConfirmPasswordResetInput) -> dict:
         if len(data.password) < 8:
             raise ValidationDomainError("A senha precisa ter ao menos 8 caracteres.")
-        try:
-            uid, token = data.token.split(":", 1)
-            user_id = UUID(uid)
-        except (ValueError, AttributeError) as exc:
-            raise ValidationDomainError("Link de redefinição inválido ou expirado.") from exc
-        # Serializa consumo e mudança de senha; dois usos simultâneos não passam.
-        with transaction.atomic():
-            user = get_user_model().objects.select_for_update().filter(id=user_id).first()
-            if user is None or not default_token_generator.check_token(user, token):
-                raise ValidationDomainError("Link de redefinição inválido ou expirado.")
-            self._users.set_password(user_id, data.password)
+        if not self._users.consume_password_reset_token(data.token, data.password):
+            raise ValidationDomainError("Link de redefinição inválido ou expirado.")
         return {"reset": True}

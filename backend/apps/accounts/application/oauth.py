@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import secrets
+from dataclasses import dataclass
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -13,7 +14,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 
-from common.exceptions import PdlAPIException
+from apps.accounts.domain.exceptions import OAuthError
+from common.architecture.base import UseCase
 
 PROVIDERS = {
     "google": {
@@ -36,41 +38,11 @@ def _credentials(provider: str) -> tuple[str, str]:
         return settings.GOOGLE_CLIENT_ID, settings.GOOGLE_CLIENT_SECRET
     if provider == "discord":
         return settings.DISCORD_CLIENT_ID, settings.DISCORD_CLIENT_SECRET
-    raise PdlAPIException("Provedor de login inválido.", error_code="OAUTH_PROVIDER_INVALID")
+    raise OAuthError("Provedor de login inválido.", error_code="OAUTH_PROVIDER_INVALID")
 
 
 def callback_url(provider: str) -> str:
     return f"{settings.FRONTEND_URL.rstrip('/')}/auth/callback/{provider}"
-
-
-def begin_oauth(provider: str, mode: str, user, *, browser_key: str) -> str:
-    config = PROVIDERS.get(provider)
-    client_id, client_secret = _credentials(provider)
-    if not config or not client_id or not client_secret:
-        raise PdlAPIException("Este provedor ainda não foi configurado.", error_code="OAUTH_NOT_CONFIGURED")
-    if mode not in {"login", "link"}:
-        raise PdlAPIException("Modo OAuth inválido.", error_code="OAUTH_MODE_INVALID")
-    if mode == "link" and not user.is_authenticated:
-        raise PdlAPIException("Entre na conta antes de conectá-la.", error_code="AUTHENTICATION_REQUIRED", status_code=401)
-
-    state = secrets.token_urlsafe(32)
-    cache.set(
-        f"oauth-state:{state}",
-        {"provider": provider, "mode": mode, "user_id": str(user.id) if user.is_authenticated else "",
-         "browser": hashlib.sha256(browser_key.encode()).hexdigest(),
-         "auth_hash": user.get_session_auth_hash() if user.is_authenticated else ""},
-        timeout=600,
-    )
-    params = {
-        "client_id": client_id,
-        "redirect_uri": callback_url(provider),
-        "response_type": "code",
-        "scope": config["scope"],
-        "state": state,
-    }
-    if provider == "google":
-        params["prompt"] = "select_account"
-    return f"{config['authorize']}?{urlencode(params)}"
 
 
 def _request_json(url: str, *, data: dict | None = None, token: str = "") -> dict:
@@ -84,7 +56,7 @@ def _request_json(url: str, *, data: dict | None = None, token: str = "") -> dic
         with urlopen(Request(url, data=body, headers=headers), timeout=10) as response:
             return json.loads(response.read().decode())
     except (HTTPError, URLError, TimeoutError, ValueError) as exc:
-        raise PdlAPIException(
+        raise OAuthError(
             "Não foi possível validar a conta externa.",
             error_code="OAUTH_PROVIDER_ERROR",
             status_code=502,
@@ -106,13 +78,18 @@ def _profile(provider: str, code: str) -> dict:
     )
     access_token = token_data.get("access_token", "")
     if not access_token:
-        raise PdlAPIException("Código OAuth inválido ou expirado.", error_code="OAUTH_CODE_INVALID")
+        raise OAuthError("Código OAuth inválido ou expirado.", error_code="OAUTH_CODE_INVALID")
     return _request_json(config["profile"], token=access_token)
 
 
 def _unique_username(profile: dict, email: str) -> str:
     User = get_user_model()
-    raw = profile.get("preferred_username") or profile.get("global_name") or profile.get("username") or email.split("@", 1)[0]
+    raw = (
+        profile.get("preferred_username")
+        or profile.get("global_name")
+        or profile.get("username")
+        or email.split("@", 1)[0]
+    )
     base = re.sub(r"[^A-Za-z0-9]", "", str(raw))[:16] or "jogador"
     if len(base) < 3:
         base = f"{base}pdl"[:16]
@@ -125,68 +102,216 @@ def _unique_username(profile: dict, email: str) -> str:
     return candidate
 
 
-def complete_oauth(provider: str, code: str, state: str, *, browser_key: str, user=None):
-    state_key = f"oauth-state:{state}"
-    stored = cache.get(state_key)
-    if (not stored or stored.get("provider") != provider or not browser_key
-            or not secrets.compare_digest(stored.get("browser", ""), hashlib.sha256(browser_key.encode()).hexdigest())):
-        raise PdlAPIException("A tentativa de login expirou. Tente novamente.", error_code="OAUTH_STATE_INVALID")
-    if stored.get("mode") == "link" and (
-        not getattr(user, "is_authenticated", False) or str(user.id) != stored.get("user_id")
-        or not secrets.compare_digest(user.get_session_auth_hash(), stored.get("auth_hash", ""))
-    ):
-        raise PdlAPIException("Entre novamente para conectar sua conta.", error_code="AUTHENTICATION_REQUIRED", status_code=401)
-    # add é atômico no cache: um callback não pode ser consumido simultaneamente.
-    if not cache.add(f"{state_key}:consumed", True, timeout=600):
-        raise PdlAPIException("A tentativa de login expirou. Tente novamente.", error_code="OAUTH_STATE_INVALID")
-    cache.delete(state_key)
+@dataclass(frozen=True, slots=True)
+class BeginOAuthInput:
+    """Dados de entrada de ``BeginOAuthUseCase.execute``."""
 
-    profile = _profile(provider, code)
-    raw_uid = profile.get("sub") if provider == "google" else profile.get("id")
-    provider_uid = str(raw_uid).strip() if raw_uid is not None else ""
-    email = str(profile.get("email", "")).strip().lower()
-    verified = bool(profile.get("email_verified") if provider == "google" else profile.get("verified"))
-    if not provider_uid or not email or not verified:
-        raise PdlAPIException(
-            "O provedor precisa fornecer um e-mail verificado.",
-            error_code="OAUTH_EMAIL_UNVERIFIED",
+    provider: str
+    mode: str
+    user: object
+    browser_key: str
+
+
+class BeginOAuthUseCase(UseCase[BeginOAuthInput, str]):
+    """Gera a URL de autorização do provedor e persiste o estado OAuth no cache.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``BeginOAuthInput``.
+    """
+
+    def execute(self, data: BeginOAuthInput) -> str:
+        config = PROVIDERS.get(data.provider)
+        client_id, client_secret = _credentials(data.provider)
+        if not config or not client_id or not client_secret:
+            raise OAuthError("Este provedor ainda não foi configurado.", error_code="OAUTH_NOT_CONFIGURED")
+        if data.mode not in {"login", "link"}:
+            raise OAuthError("Modo OAuth inválido.", error_code="OAUTH_MODE_INVALID")
+        if data.mode == "link" and not data.user.is_authenticated:
+            raise OAuthError(
+                "Entre na conta antes de conectá-la.",
+                error_code="AUTHENTICATION_REQUIRED",
+                status_code=401,
+            )
+
+        state = secrets.token_urlsafe(32)
+        cache.set(
+            f"oauth-state:{state}",
+            {
+                "provider": data.provider,
+                "mode": data.mode,
+                "user_id": str(data.user.id) if data.user.is_authenticated else "",
+                "browser": hashlib.sha256(data.browser_key.encode()).hexdigest(),
+                "auth_hash": data.user.get_session_auth_hash() if data.user.is_authenticated else "",
+            },
+            timeout=600,
         )
+        params = {
+            "client_id": client_id,
+            "redirect_uri": callback_url(data.provider),
+            "response_type": "code",
+            "scope": config["scope"],
+            "state": state,
+        }
+        if data.provider == "google":
+            params["prompt"] = "select_account"
+        return f"{config['authorize']}?{urlencode(params)}"
 
-    User = get_user_model()
-    social = SocialAccount.objects.filter(provider=provider, uid=provider_uid).select_related("user").first()
-    if stored.get("mode") == "link":
-        user = User.objects.filter(id=stored.get("user_id"), is_active=True).first()
-        if not user:
-            raise PdlAPIException("Sessão inválida para conexão.", error_code="AUTHENTICATION_REQUIRED", status_code=401)
-        if social and social.user_id != user.pk:
-            raise PdlAPIException("Essa conta externa já está conectada a outro usuário.", error_code="OAUTH_ALREADY_LINKED", status_code=409)
-    elif social:
-        user = social.user
-    else:
-        user = User.objects.filter(email__iexact=email).first()
-        if user and not user.is_email_verified:
-            raise PdlAPIException(
-                "Já existe um cadastro com este e-mail. Recupere o acesso e confirme o e-mail antes de conectar o provedor.",
-                error_code="OAUTH_ACCOUNT_UNVERIFIED", status_code=409,
+
+@dataclass(frozen=True, slots=True)
+class CompleteOAuthInput:
+    """Dados de entrada de ``CompleteOAuthUseCase.execute``."""
+
+    provider: str
+    code: str
+    state: str
+    browser_key: str
+    user: object | None = None
+
+
+class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
+    """Troca o código OAuth por vínculo social ou usuário autenticável.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``CompleteOAuthInput``. O retorno é
+    ``(user, linked)``.
+    """
+
+    def execute(self, data: CompleteOAuthInput) -> tuple:
+        state_key = f"oauth-state:{data.state}"
+        stored = cache.get(state_key)
+        if (
+            not stored
+            or stored.get("provider") != data.provider
+            or not data.browser_key
+            or not secrets.compare_digest(
+                stored.get("browser", ""),
+                hashlib.sha256(data.browser_key.encode()).hexdigest(),
             )
-        if not user:
-            display_name = str(profile.get("name") or profile.get("global_name") or profile.get("username") or "")[:80]
-            user = User.objects.create_user(
-                username=_unique_username(profile, email),
-                email=email,
-                display_name=display_name,
-                password=None,
-                is_email_verified=True,
+        ):
+            raise OAuthError(
+                "A tentativa de login expirou. Tente novamente.",
+                error_code="OAUTH_STATE_INVALID",
+            )
+        user = data.user
+        if stored.get("mode") == "link" and (
+            not getattr(user, "is_authenticated", False)
+            or str(user.id) != stored.get("user_id")
+            or not secrets.compare_digest(user.get_session_auth_hash(), stored.get("auth_hash", ""))
+        ):
+            raise OAuthError(
+                "Entre novamente para conectar sua conta.",
+                error_code="AUTHENTICATION_REQUIRED",
+                status_code=401,
+            )
+        # add é atômico no cache: um callback não pode ser consumido simultaneamente.
+        if not cache.add(f"{state_key}:consumed", True, timeout=600):
+            raise OAuthError(
+                "A tentativa de login expirou. Tente novamente.",
+                error_code="OAUTH_STATE_INVALID",
+            )
+        cache.delete(state_key)
+
+        profile = _profile(data.provider, data.code)
+        raw_uid = profile.get("sub") if data.provider == "google" else profile.get("id")
+        provider_uid = str(raw_uid).strip() if raw_uid is not None else ""
+        email = str(profile.get("email", "")).strip().lower()
+        verified = bool(
+            profile.get("email_verified") if data.provider == "google" else profile.get("verified")
+        )
+        if not provider_uid or not email or not verified:
+            raise OAuthError(
+                "O provedor precisa fornecer um e-mail verificado.",
+                error_code="OAUTH_EMAIL_UNVERIFIED",
             )
 
-    if not user.is_active:
-        raise PdlAPIException("Esta conta está desativada.", error_code="ACCOUNT_DISABLED", status_code=403)
-    if not user.is_email_verified and user.email.lower() == email:
-        user.is_email_verified = True
-        user.save(update_fields=["is_email_verified", "updated_at"])
-    SocialAccount.objects.update_or_create(
-        provider=provider,
-        uid=provider_uid,
-        defaults={"user": user, "extra_data": profile},
+        User = get_user_model()
+        social = (
+            SocialAccount.objects.filter(provider=data.provider, uid=provider_uid)
+            .select_related("user")
+            .first()
+        )
+        if stored.get("mode") == "link":
+            user = User.objects.filter(id=stored.get("user_id"), is_active=True).first()
+            if not user:
+                raise OAuthError(
+                    "Sessão inválida para conexão.",
+                    error_code="AUTHENTICATION_REQUIRED",
+                    status_code=401,
+                )
+            if social and social.user_id != user.pk:
+                raise OAuthError(
+                    "Essa conta externa já está conectada a outro usuário.",
+                    error_code="OAUTH_ALREADY_LINKED",
+                    status_code=409,
+                )
+        elif social:
+            user = social.user
+        else:
+            user = User.objects.filter(email__iexact=email).first()
+            if user and not user.is_email_verified:
+                raise OAuthError(
+                    "Já existe um cadastro com este e-mail. Recupere o acesso e confirme o e-mail "
+                    "antes de conectar o provedor.",
+                    error_code="OAUTH_ACCOUNT_UNVERIFIED",
+                    status_code=409,
+                )
+            if not user:
+                display_name = str(
+                    profile.get("name") or profile.get("global_name") or profile.get("username") or ""
+                )[:80]
+                user = User.objects.create_user(
+                    username=_unique_username(profile, email),
+                    email=email,
+                    display_name=display_name,
+                    password=None,
+                    is_email_verified=True,
+                )
+
+        if not user.is_active:
+            raise OAuthError(
+                "Esta conta está desativada.",
+                error_code="ACCOUNT_DISABLED",
+                status_code=403,
+            )
+        if not user.is_email_verified and user.email.lower() == email:
+            user.is_email_verified = True
+            user.save(update_fields=["is_email_verified", "updated_at"])
+        SocialAccount.objects.update_or_create(
+            provider=data.provider,
+            uid=provider_uid,
+            defaults={"user": user, "extra_data": profile},
+        )
+        return user, stored.get("mode") == "link"
+
+
+# Compatibilidade com testes de fronteira que chamam funções de módulo.
+def begin_oauth(provider: str, mode: str, user, *, browser_key: str) -> str:
+    from common.di import DependencyInjection
+
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(BeginOAuthUseCase)
+        .execute(
+            BeginOAuthInput(
+                provider=provider, mode=mode, user=user, browser_key=browser_key
+            )
+        )
     )
-    return user, stored.get("mode") == "link"
+
+
+def complete_oauth(provider: str, code: str, state: str, *, browser_key: str, user=None):
+    from common.di import DependencyInjection
+
+    return (
+        DependencyInjection.root()
+        .create_scope()
+        .resolve(CompleteOAuthUseCase)
+        .execute(
+            CompleteOAuthInput(
+                provider=provider,
+                code=code,
+                state=state,
+                browser_key=browser_key,
+                user=user,
+            )
+        )
+    )

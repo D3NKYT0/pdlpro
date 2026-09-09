@@ -18,6 +18,7 @@ from apps.accounts.application.twofa import (
     read_login_challenge,
 )
 from apps.accounts.domain.exceptions import InvalidTwoFactorError
+from apps.accounts.infrastructure.repositories import DjangoUserRepository
 from common.architecture.exceptions import ValidationDomainError
 
 
@@ -45,18 +46,19 @@ def test_malformed_signed_payload_is_domain_error(payload):
 
 @pytest.mark.django_db
 def test_setup_confirm_disable_lifecycle():
+    users = DjangoUserRepository()
     user = get_user_model().objects.create_user(username="twofa", email="twofa@test.dev")
-    setup = SetupTwoFactorUseCase().execute(user.id)
+    setup = SetupTwoFactorUseCase(users).execute(user.id)
     user.refresh_from_db()
     assert not user.is_2fa_enabled
     assert user.totp_secret == setup["secret"]
     code = pyotp.TOTP(setup["secret"]).now()
-    assert ConfirmTwoFactorUseCase().execute(ConfirmTwoFactorInput(user.id, code)) == {"enabled": True}
+    assert ConfirmTwoFactorUseCase(users).execute(ConfirmTwoFactorInput(user.id, code)) == {"enabled": True}
     with pytest.raises(ValidationDomainError):
-        SetupTwoFactorUseCase().execute(user.id)
+        SetupTwoFactorUseCase(users).execute(user.id)
     with pytest.raises(InvalidTwoFactorError):
-        DisableTwoFactorUseCase().execute(DisableTwoFactorInput(user.id, "invalid"))
-    assert DisableTwoFactorUseCase().execute(DisableTwoFactorInput(user.id, code)) == {"enabled": False}
+        DisableTwoFactorUseCase(users).execute(DisableTwoFactorInput(user.id, "invalid"))
+    assert DisableTwoFactorUseCase(users).execute(DisableTwoFactorInput(user.id, code)) == {"enabled": False}
     user.refresh_from_db()
     assert not user.totp_secret
     assert not user.is_2fa_enabled

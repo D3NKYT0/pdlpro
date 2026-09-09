@@ -5,14 +5,21 @@ from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 
 from apps.accounts.application.webauthn_service import (
-    WebAuthnError,
-    begin_authentication,
-    begin_registration,
-    complete_authentication,
-    complete_registration,
+    BeginPasskeyAuthenticationInput,
+    BeginPasskeyAuthenticationUseCase,
+    BeginPasskeyRegistrationInput,
+    BeginPasskeyRegistrationUseCase,
+    CompletePasskeyAuthenticationInput,
+    CompletePasskeyAuthenticationUseCase,
+    CompletePasskeyRegistrationInput,
+    CompletePasskeyRegistrationUseCase,
+    DeletePasskeyInput,
+    DeletePasskeyUseCase,
+    ListPasskeysInput,
+    ListPasskeysUseCase,
 )
+from apps.accounts.domain.exceptions import WebAuthnError
 from apps.accounts.infrastructure.authentication import build_auth_response
-from apps.accounts.infrastructure.models import WebAuthnCredential
 from apps.accounts.presentation.serializers import (
     PasskeyBeginSerializer,
     PasskeyCompleteSerializer,
@@ -22,7 +29,7 @@ from common.views import InjectedAPIView
 
 
 class PasskeyListView(InjectedAPIView):
-    """Lista as credenciais passkey registradas pelo usuário autenticado.
+    """Entrada HTTP para ``ListPasskeysUseCase``.
 
     Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated].
@@ -37,12 +44,12 @@ class PasskeyListView(InjectedAPIView):
         description="Retorna as credenciais passkey registradas pelo usuário autenticado.",
     )
     def get(self, request):
-        rows = WebAuthnCredential.objects.filter(user=request.user)
+        rows = self.resolve(ListPasskeysUseCase).execute(ListPasskeysInput(user_id=request.user.id))
         return Response(PasskeyCredentialSerializer(rows, many=True).data)
 
 
 class PasskeyRegisterBeginView(InjectedAPIView):
-    """Prepara o desafio WebAuthn para registrar uma passkey do usuário autenticado.
+    """Entrada HTTP para ``BeginPasskeyRegistrationUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated].
@@ -59,11 +66,20 @@ class PasskeyRegisterBeginView(InjectedAPIView):
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(begin_registration(request.user, serializer.validated_data.get("nickname", "")))
+        return Response(
+            self.resolve(BeginPasskeyRegistrationUseCase).execute(
+                BeginPasskeyRegistrationInput(
+                    user_id=request.user.id,
+                    username=request.user.username,
+                    display_name=request.user.display_name or request.user.username,
+                    nickname=serializer.validated_data.get("nickname", ""),
+                )
+            )
+        )
 
 
 class PasskeyRegisterCompleteView(InjectedAPIView):
-    """Valida a resposta ao desafio de registro e persiste a nova credencial passkey.
+    """Entrada HTTP para ``CompletePasskeyRegistrationUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated].
@@ -82,14 +98,19 @@ class PasskeyRegisterCompleteView(InjectedAPIView):
         serializer = PasskeyCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
-            row = complete_registration(request.user, **serializer.validated_data)
+            row = self.resolve(CompletePasskeyRegistrationUseCase).execute(
+                CompletePasskeyRegistrationInput(
+                    user_id=request.user.id,
+                    **serializer.validated_data,
+                )
+            )
         except WebAuthnError as exc:
             return Response({"message": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(PasskeyCredentialSerializer(row).data, status=status.HTTP_201_CREATED)
 
 
 class PasskeyLoginBeginView(InjectedAPIView):
-    """Prepara o desafio WebAuthn para autenticação por passkey.
+    """Entrada HTTP para ``BeginPasskeyAuthenticationUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [AllowAny].
@@ -108,11 +129,15 @@ class PasskeyLoginBeginView(InjectedAPIView):
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(begin_authentication(serializer.validated_data.get("login", "")))
+        return Response(
+            self.resolve(BeginPasskeyAuthenticationUseCase).execute(
+                BeginPasskeyAuthenticationInput(login=serializer.validated_data.get("login", ""))
+            )
+        )
 
 
 class PasskeyLoginCompleteView(InjectedAPIView):
-    """Valida a autenticação por passkey e inicia a sessão ou a etapa de 2FA.
+    """Entrada HTTP para ``CompletePasskeyAuthenticationUseCase``.
 
     Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [AllowAny].
@@ -132,9 +157,17 @@ class PasskeyLoginCompleteView(InjectedAPIView):
         serializer = PasskeyCompleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
-            user = complete_authentication(serializer.validated_data["state"], serializer.validated_data["credential"])
+            user = self.resolve(CompletePasskeyAuthenticationUseCase).execute(
+                CompletePasskeyAuthenticationInput(
+                    state=serializer.validated_data["state"],
+                    credential=serializer.validated_data["credential"],
+                )
+            )
         except WebAuthnError:
-            return Response({"message": "Não foi possível autenticar com esta chave."}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "Não foi possível autenticar com esta chave."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
         from apps.server.application.access import (
             assert_login_allowed_during_coming_soon,
         )
@@ -142,12 +175,13 @@ class PasskeyLoginCompleteView(InjectedAPIView):
         assert_login_allowed_during_coming_soon(user)
         if user.is_2fa_enabled:
             from apps.accounts.application.twofa import make_login_challenge
+
             return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
         return build_auth_response(request, user)
 
 
 class PasskeyDeleteView(InjectedAPIView):
-    """Exclui uma credencial passkey limitada ao usuário da sessão.
+    """Entrada HTTP para ``DeletePasskeyUseCase``.
 
     Implementa DELETE; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
     [IsAuthenticated].
@@ -161,5 +195,7 @@ class PasskeyDeleteView(InjectedAPIView):
         description="Remove uma credencial passkey pertencente ao usuário autenticado.",
     )
     def delete(self, request, credential_id):
-        deleted, _ = WebAuthnCredential.objects.filter(id=credential_id, user=request.user).delete()
+        deleted = self.resolve(DeletePasskeyUseCase).execute(
+            DeletePasskeyInput(user_id=request.user.id, credential_id=credential_id)
+        )
         return Response(status=status.HTTP_204_NO_CONTENT if deleted else status.HTTP_404_NOT_FOUND)

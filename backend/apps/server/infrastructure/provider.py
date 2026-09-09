@@ -30,11 +30,16 @@ from apps.server.application.use_cases import (
 )
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
-from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRepository
+from apps.server.domain.repositories import (
+    IIndexConfigRepository,
+    ILinkSlotRepository,
+    IServicePriceRepository,
+)
 from apps.server.infrastructure.access import DjangoAccountAccessService
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.repositories import (
+    DjangoIndexConfigRepository,
     DjangoLinkSlotRepository,
     DjangoServicePriceRepository,
 )
@@ -61,6 +66,7 @@ class ServerProvider(AppProvider):
         else:
             container.register(ILineageGateway, NullLineageGateway, lifetime=Lifetime.SINGLETON)
         container.register(IServicePriceRepository, DjangoServicePriceRepository, lifetime=Lifetime.SCOPED)
+        container.register(IIndexConfigRepository, DjangoIndexConfigRepository, lifetime=Lifetime.SCOPED)
         container.register(ILinkSlotRepository, DjangoLinkSlotRepository, lifetime=Lifetime.SCOPED)
         container.register(IAccountAccessService, DjangoAccountAccessService, lifetime=Lifetime.SCOPED)
         for use_case in (

@@ -14,13 +14,18 @@ from apps.server.infrastructure.item_observation_models import (
     ItemObservationSnapshot,
 )
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
+from common.architecture.exceptions import DomainError
 
 
-class ObservationUnavailable(Exception):
+class ObservationUnavailable(DomainError):
     """Sinaliza que a captura de itens não está disponível na integração atual.
 
-    A apresentação deve traduzir essa condição para a resposta do recurso.
+    A apresentação expõe ``ITEM_OBSERVATION_UNAVAILABLE`` com status HTTP 503 por padrão.
     """
+
+    error_code = "ITEM_OBSERVATION_UNAVAILABLE"
+    status_code = 503
+    message = "Observação de itens indisponível."
 
 
 

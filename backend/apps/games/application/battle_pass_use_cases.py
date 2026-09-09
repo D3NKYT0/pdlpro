@@ -113,6 +113,71 @@ class ClaimBattlePassRewardInput:
     reward_id: UUID
 
 
+def claim_battle_pass_reward(*, user_id: UUID, reward_id: UUID) -> dict:
+    """Entrega um prêmio do passe na bag e registra o resgate.
+
+    Compartilhado por ``ClaimBattlePassRewardUseCase`` e pelo auto-claim. Deve rodar dentro
+    de uma transação quando o chamador precisar atomicidade com outras escritas.
+    """
+
+    from django.contrib.auth import get_user_model
+
+    reward = (
+        BattlePassReward.objects.select_related("level_row", "level_row__season")
+        .filter(id=reward_id)
+        .first()
+    )
+    if reward is None:
+        raise EntityNotFoundError("Recompensa do passe não encontrada.")
+    user = get_user_model().objects.select_for_update().get(id=user_id)
+    season = reward.level_row.season
+    if (
+        not season.active
+        or not season.starts_at <= timezone.now() <= season.ends_at
+    ):
+        raise ValidationDomainError("Esta temporada não está ativa.")
+    progress, _ = UserBattlePassProgress.objects.get_or_create(
+        user=user, season=reward.level_row.season
+    )
+    if progress.xp < reward.level_row.required_xp:
+        raise ValidationDomainError("Nível do passe insuficiente.")
+    if reward.is_premium and not progress.has_premium:
+        raise ValidationDomainError("Compre o passe premium para este prêmio.")
+    if UserBattlePassClaim.objects.filter(user=user, reward=reward).exists():
+        raise ValidationDomainError("Recompensa já resgatada.")
+    add_to_bag(
+        user,
+        item_id=reward.item_id,
+        item_name=reward.item_name,
+        enchant=reward.enchant,
+        quantity=reward.quantity,
+    )
+    UserBattlePassClaim.objects.create(user=user, reward=reward)
+    from apps.games.infrastructure.models import GameRewardLog
+
+    GameRewardLog.objects.create(
+        user=user,
+        season=season,
+        kind="reward",
+        source=reward.id,
+        label=reward.item_name,
+        rewards=[
+            {
+                "kind": "item",
+                "item_id": reward.item_id,
+                "name": reward.item_name,
+                "quantity": reward.quantity,
+                "enchant": reward.enchant,
+            }
+        ],
+    )
+    return {
+        "claimed": True,
+        "item_id": reward.item_id,
+        "item_name": reward.item_name,
+    }
+
+
 class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
     """Valida temporada, nível, acesso premium e resgate anterior, entrega o item na bag e registra
     o prêmio.
@@ -123,62 +188,7 @@ class ClaimBattlePassRewardUseCase(UseCase[ClaimBattlePassRewardInput, dict]):
 
     @transaction.atomic
     def execute(self, data: ClaimBattlePassRewardInput) -> dict:
-        from django.contrib.auth import get_user_model
-
-        reward = (
-            BattlePassReward.objects.select_related("level_row", "level_row__season")
-            .filter(id=data.reward_id)
-            .first()
-        )
-        if reward is None:
-            raise EntityNotFoundError("Recompensa do passe não encontrada.")
-        user = get_user_model().objects.select_for_update().get(id=data.user_id)
-        season = reward.level_row.season
-        if (
-            not season.active
-            or not season.starts_at <= timezone.now() <= season.ends_at
-        ):
-            raise ValidationDomainError("Esta temporada não está ativa.")
-        progress, _ = UserBattlePassProgress.objects.get_or_create(
-            user=user, season=reward.level_row.season
-        )
-        if progress.xp < reward.level_row.required_xp:
-            raise ValidationDomainError("Nível do passe insuficiente.")
-        if reward.is_premium and not progress.has_premium:
-            raise ValidationDomainError("Compre o passe premium para este prêmio.")
-        if UserBattlePassClaim.objects.filter(user=user, reward=reward).exists():
-            raise ValidationDomainError("Recompensa já resgatada.")
-        add_to_bag(
-            user,
-            item_id=reward.item_id,
-            item_name=reward.item_name,
-            enchant=reward.enchant,
-            quantity=reward.quantity,
-        )
-        UserBattlePassClaim.objects.create(user=user, reward=reward)
-        from apps.games.infrastructure.models import GameRewardLog
-
-        GameRewardLog.objects.create(
-            user=user,
-            season=season,
-            kind="reward",
-            source=reward.id,
-            label=reward.item_name,
-            rewards=[
-                {
-                    "kind": "item",
-                    "item_id": reward.item_id,
-                    "name": reward.item_name,
-                    "quantity": reward.quantity,
-                    "enchant": reward.enchant,
-                }
-            ],
-        )
-        return {
-            "claimed": True,
-            "item_id": reward.item_id,
-            "item_name": reward.item_name,
-        }
+        return claim_battle_pass_reward(user_id=data.user_id, reward_id=data.reward_id)
 
 
 @dataclass(frozen=True, slots=True)
@@ -239,6 +249,4 @@ def auto_claim_rewards(user, progress):
     if not progress.has_premium:
         rewards = rewards.filter(is_premium=False)
     for reward in rewards:
-        ClaimBattlePassRewardUseCase().execute(
-            ClaimBattlePassRewardInput(user_id=user.id, reward_id=reward.id)
-        )
+        claim_battle_pass_reward(user_id=user.id, reward_id=reward.id)

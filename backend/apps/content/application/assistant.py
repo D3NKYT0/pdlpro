@@ -163,8 +163,13 @@ class AssistantReplyInput:
 class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
     """Interpreta PT/EN e consulta somente artigos permitidos para a audiência recebida."""
 
-    def __init__(self, semantic_matcher: SemanticMatcher) -> None:
+    def __init__(
+        self,
+        semantic_matcher: SemanticMatcher,
+        list_faq: ListFaqUseCase,
+    ) -> None:
         self._semantic_matcher = semantic_matcher
+        self._list_faq = list_faq
 
     def execute(self, data: AssistantReplyInput) -> dict:
         language = detect_language(data.message, data.language)
@@ -200,7 +205,7 @@ class AssistantReplyUseCase(UseCase[AssistantReplyInput, dict]):
             text = ("Desculpa, interpretei sua pergunta errado. Qual era o assunto que você queria conversar?"
                     if language == "pt" else "Sorry, I misunderstood your question. What did you want to talk about?")
             return {"language": language, "kind": "unknown", "engine": "conversation", "related_ids": [], "answer": {"text": text, "pose": "09-confuso"}}
-        articles = ListFaqUseCase().execute(
+        articles = self._list_faq.execute(
             ListFaqInput(audience=data.audience, language=language, for_assistant=True)
         )
         if is_pdl_intro_query(data.message):

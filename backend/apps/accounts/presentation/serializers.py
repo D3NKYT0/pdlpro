@@ -125,21 +125,19 @@ class UpdateProfileSerializer(serializers.Serializer):
     avatar = serializers.ImageField(required=False)
 
 
-class PasskeyCredentialSerializer(serializers.ModelSerializer):
+class PasskeyCredentialSerializer(serializers.Serializer):
     """Representa os metadados de uma passkey do usuário, sem expor a chave da credencial.
 
-    Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
-    ``many=True`` representa uma coleção.
+    Aceita o modelo ORM ou ``WebAuthnCredentialRecord``. Use ``Serializer(instancia).data``
+    (com o nome desta classe) para representar a saída; ``many=True`` representa uma coleção.
 
     Campos declarados: ``id``, ``nickname``, ``created_at``, ``last_used_at``.
     """
 
-    class Meta:
-        from apps.accounts.infrastructure.models import WebAuthnCredential
-
-        model = WebAuthnCredential
-        fields = ["id", "nickname", "created_at", "last_used_at"]
-        read_only_fields = fields
+    id = serializers.UUIDField()
+    nickname = serializers.CharField(allow_blank=True)
+    created_at = serializers.DateTimeField(allow_null=True)
+    last_used_at = serializers.DateTimeField(allow_null=True)
 
 
 class PasskeyBeginSerializer(serializers.Serializer):

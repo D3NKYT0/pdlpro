@@ -88,8 +88,13 @@ class UpsertSupporterUseCase(UseCase[UpsertSupporterInput, dict]):
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpsertSupporterInput``.
     """
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(
+        self,
+        unit_of_work: UnitOfWork,
+        get_dashboard: GetSupporterDashboardUseCase,
+    ) -> None:
         self._unit_of_work = unit_of_work
+        self._get_dashboard = get_dashboard
 
     def execute(self, data: UpsertSupporterInput) -> dict:
         with self._unit_of_work:
@@ -106,7 +111,7 @@ class UpsertSupporterUseCase(UseCase[UpsertSupporterInput, dict]):
                 setattr(row, key, value)
             row.status = status
             row.save()
-        return GetSupporterDashboardUseCase().execute(UserScopedInput(user_id=data.user_id))
+        return self._get_dashboard.execute(UserScopedInput(user_id=data.user_id))
 
 
 class RequestCommissionPayoutUseCase(UseCase[UserScopedInput, CommissionPayout]):

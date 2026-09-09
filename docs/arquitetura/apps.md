@@ -8,18 +8,18 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 
 | App | Responsabilidade | Pontos de entrada para desenvolvimento |
 | --- | --- | --- |
-| `accounts` | Cadastro, sessão, e-mail, 2FA, passkeys e progresso | `application/use_cases.py`, `application/twofa.py`, `presentation/views/auth.py` |
+| `accounts` | Cadastro, sessão, e-mail, 2FA, passkeys e progresso | `application/use_cases.py`, `application/sessions.py`, `application/oauth.py`, `application/webauthn_service.py`, `infrastructure/provider.py` |
 | `server` | Contas Lineage, personagens, serviços e catálogos | `domain/gateways.py`, `application/account_use_cases.py`, `infrastructure/provider.py` |
 | `wallet` | Carteira, transferências, bônus e câmbio com o jogo | `application/use_cases.py`, `application/exchange.py`, `domain/repositories.py` |
 | `payment` | Pedidos, gateways, confirmação e webhooks | `application/use_cases.py`, `application/webhooks.py`, `infrastructure/registry.py` |
-| `shop` | Produtos, pacotes, carrinho, promoções e checkout | `application/use_cases.py`, `application/commerce.py` |
+| `shop` | Produtos, pacotes, carrinho, promoções e checkout | `application/use_cases.py`, `application/commerce_use_cases.py` |
 | `inventory` | Inventários do painel e movimentação de itens | `application/use_cases.py`, `domain/repositories.py` |
 | `marketplace` | Custódia, anúncios e venda de personagens | `application/use_cases.py` |
 | `auction` | Leilões, lances e entrega de itens | `application/use_cases.py`, `tasks.py` |
-| `games` | Roleta, caixas, pesca, economia e passe | `application/*_use_cases.py`, `infrastructure/models.py` |
-| `content` | Notícias, wiki, FAQ, downloads e documentos legais | `application/use_cases.py`, `application/legal.py` |
+| `games` | Roleta, caixas, pesca, economia e passe | `application/*_use_cases.py`, `application/staff_content_use_cases.py` |
+| `content` | Notícias, wiki, FAQ, downloads e documentos legais | `application/use_cases.py`, `domain/repositories.py` |
 | `communication` | Notificações persistidas e Web Push | `application/notify.py`, `application/push_use_cases.py` |
-| `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py`, `application/financial_reports.py`, `presentation/views/` |
+| `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py` (consome portas admin dos apps donos), `presentation/views/` |
 | `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `application/use_cases.py`, `infrastructure/provider.py`, `views.py`, `middleware.py` |
 | `support` | Chamados, respostas e atribuição de atendimento | `application/use_cases.py`, `domain/repositories.py`, `presentation/views/` |
 | `themes` | Instalação, validação, ativação e publicação de temas globais | `application/use_cases.py`, `application/theme_packages.py`, `infrastructure/provider.py` |
@@ -38,11 +38,11 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | View | Trata o transporte e suas permissões | Registre nas URLs e delegue operações aos serviços da aplicação |
 | Modelo/admin | Define persistência e edição administrativa | Use UUID público nas APIs e configure o admin nas classes dedicadas |
 
-Essa é a direção da arquitetura. Apps como `marketplace`, `inventory`, `support`, `programs` e
-`themes` já resolvem casos de uso via container; `shop` commerce e `games` advanced também
-passam por use cases registrados. Ainda restam acessos diretos ao ORM em partes de `accounts`,
-`staff` e alguns módulos de conteúdo — leia a implementação antes de presumir que toda classe
-depende apenas de interfaces. Não crie uma porta fictícia para usar uma operação existente.
+Essa é a direção da arquitetura. Apps resolvem casos de uso via container; staff consome
+portas admin dos apps donos (`ICoinAdminRepository`, `IServicePriceRepository`, etc.).
+Helpers de progresso e alguns CRUDs staff ainda podem falar com ORM — leia a implementação
+antes de presumir que toda classe depende apenas de interfaces. Não crie uma porta fictícia
+para usar uma operação existente.
 
 ## Exemplo: chamar um caso de uso de uma view
 
