@@ -6,20 +6,15 @@ from uuid import UUID
 from django.http import HttpResponse
 from rest_framework import exceptions
 from rest_framework.authentication import CSRFCheck
-from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import TokenError
 
 from apps.accounts.domain.auth_session import IAuthSessionService
 from apps.accounts.domain.repositories import IUserRepository
-from apps.accounts.presentation.auth_cookies import (
-    build_auth_response,
-    clear_auth_cookies,
+from apps.accounts.infrastructure.cookie_names import (
     get_access_cookie_name,
     get_refresh_cookie_name,
-    set_auth_cookies,
 )
-from apps.accounts.presentation.csrf import csrf_failed_reason as _csrf_failed_reason
 
 _SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
 
@@ -76,10 +71,7 @@ class CookieJWTAuthentication(JWTAuthentication):
 
 
 class AuthSessionService(IAuthSessionService):
-    """Carrega o usuário ORM exigido por ``RefreshToken.for_user`` e monta a resposta.
-
-    Views resolvem ``IAuthSessionService`` em vez de ORM direto.
-    """
+    """Materializa o usuário ORM para a presentation montar cookies JWT."""
 
     def __init__(self, users: IUserRepository) -> None:
         self._users = users
@@ -87,18 +79,11 @@ class AuthSessionService(IAuthSessionService):
     def require_user(self, user_id: UUID):
         return self._users.require_orm_user(user_id)
 
-    def build_auth_response(self, request, user_id: UUID) -> Response:
-        return build_auth_response(request, self.require_user(user_id))
 
-
-# Compatibilidade para imports legados de authentication.
 __all__ = [
     "AuthSessionService",
     "CookieJWTAuthentication",
-    "build_auth_response",
-    "clear_auth_cookies",
     "get_access_cookie_name",
     "get_refresh_cookie_name",
-    "set_auth_cookies",
     "_csrf_failed_reason",
 ]

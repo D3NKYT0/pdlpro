@@ -43,8 +43,8 @@ Direção das dependências para novos fluxos:
 A estrutura em camadas com DI cobre os apps de negócio. Application e presentation não
 acessam ORM nem importam ``infrastructure``: só portas/domain e ``UnitOfWork``. Adaptadores
 Django e middlewares de catálogo ficam em ``infrastructure/``. Staff consome portas admin dos
-apps donos; autenticação resolve ``IAuthSessionService``. Seeds de preview podem usar ORM
-direto (infraestrutura de comando).
+apps donos; autenticação resolve ``IAuthSessionService`` (usuário ORM; cookies JWT
+montados na presentation). Seed de preview resolve ``IPreviewSeedService`` (ORM no adaptador).
 
 ## Injeção de dependência
 

@@ -6,8 +6,10 @@ from uuid import UUID
 
 
 class IAuthSessionService(ABC):
-    """Porta de montagem da resposta de autenticação com cookies JWT."""
+    """Porta que materializa o usuário de sessão para cookies JWT (sem montar HTTP)."""
 
     @abstractmethod
-    def build_auth_response(self, request: Any, user_id: UUID) -> Any:
+    def require_user(self, user_id: UUID) -> Any:
+        """Devolve o usuário ORM exigido por ``RefreshToken.for_user``."""
+
         raise NotImplementedError

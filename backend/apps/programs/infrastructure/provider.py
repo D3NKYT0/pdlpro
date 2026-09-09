@@ -13,11 +13,13 @@ from apps.programs.application.use_cases import (
     UpdateRoadmapEntryUseCase,
     UpsertSupporterUseCase,
 )
+from apps.programs.domain.preview_seed import IPreviewSeedService
 from apps.programs.domain.repositories import (
     IRoadmapRepository,
     ISupporterRepository,
     ISystemResourceRepository,
 )
+from apps.programs.infrastructure.preview_seed import DjangoPreviewSeedService
 from apps.programs.infrastructure.repositories import (
     DjangoRoadmapRepository,
     DjangoSupporterRepository,
@@ -41,6 +43,9 @@ class ProgramsProvider(AppProvider):
         container.register(IRoadmapRepository, DjangoRoadmapRepository, lifetime=Lifetime.SCOPED)
         container.register(
             ISystemResourceRepository, DjangoSystemResourceRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IPreviewSeedService, DjangoPreviewSeedService, lifetime=Lifetime.TRANSIENT
         )
         for use_case in (
             GetSupporterDashboardUseCase,

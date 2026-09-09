@@ -156,7 +156,7 @@ class RegisterView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
+        return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
 
 
 class LoginView(InjectedAPIView):
@@ -199,7 +199,7 @@ class LoginView(InjectedAPIView):
         clear_failures(request, data["login"])
         if user.is_2fa_enabled:
             return Response({"requires_2fa": True, "challenge": make_login_challenge(user.id)})
-        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
+        return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
 
 
 class AuthCapabilitiesView(InjectedAPIView):
@@ -332,7 +332,7 @@ class CompleteCredentialsView(InjectedAPIView):
                 accept_terms=data["accept_terms"],
             )
         )
-        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
+        return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
 
 
 class RefreshView(InjectedAPIView):
@@ -521,7 +521,7 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
             VerifyTwoFactorLoginInput(challenge=request.data.get("challenge", ""), code=request.data.get("code", ""))
         )
-        return self.resolve(IAuthSessionService).build_auth_response(request, user.id)
+        return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
 
 
 class TwoFactorView(InjectedAPIView):
