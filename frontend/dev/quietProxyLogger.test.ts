@@ -41,12 +41,11 @@ it('anuncia a primeira recusa e silencia as seguintes até o backend voltar', ()
 it('o plugin de desenvolvimento intercepta o logger do servidor Vite', () => {
   const plugin = quietBackendProxyPlugin()
   const error = { ...new Error('connect ECONNREFUSED'), code: 'ECONNREFUSED' }
-  const originalError = () => {
-    throw new Error('não deveria registrar recusa repetida')
-  }
   const warnings: string[] = []
   const logger = {
-    error: originalError,
+    error(_msg: string, _options?: { error?: unknown }) {
+      throw new Error('não deveria registrar recusa repetida')
+    },
     warn(message: string) {
       warnings.push(message)
     },
@@ -56,7 +55,9 @@ it('o plugin de desenvolvimento intercepta o logger do servidor Vite', () => {
   if (typeof configureServer !== 'function') {
     throw new Error('plugin sem configureServer')
   }
-  configureServer({ config: { logger } } as never)
+  ;(configureServer as unknown as (server: { config: { logger: typeof logger } }) => void)({
+    config: { logger },
+  })
   logger.error('http proxy error: /api/v1/public/theme/', { error })
   logger.error('http proxy error: /api/v1/shared/me/', { error })
 

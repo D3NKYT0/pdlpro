@@ -1,6 +1,9 @@
 from django.urls import path
 
-from apps.payment.presentation.views.webhooks import MercadoPagoWebhookView, StripeWebhookView
+from apps.payment.presentation.views.webhooks import (
+    MercadoPagoWebhookView,
+    StripeWebhookView,
+)
 from apps.staff.presentation.views.system import HealthView, VersionView
 
 urlpatterns = [

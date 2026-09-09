@@ -2,18 +2,23 @@ import json
 from io import BytesIO
 
 import pytest
-from PIL import Image
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import connection
 from django.test.utils import CaptureQueriesContext
+from PIL import Image
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.accounts.infrastructure.authentication import get_access_cookie_name
 from apps.server.infrastructure.custom_item_models import CustomCatalogItem
-from apps.server.infrastructure.lineage.item_catalog import get_item_catalog, item_catalog_scope, item_metadata, item_is_tradeable
+from apps.server.infrastructure.lineage.item_catalog import (
+    get_item_catalog,
+    item_catalog_scope,
+    item_is_tradeable,
+    item_metadata,
+)
 
 pytestmark = pytest.mark.django_db
 BASE = "/api/v1/staff/custom-items/"

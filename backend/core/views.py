@@ -1,7 +1,7 @@
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET
 from django.contrib import admin
+from django.http import JsonResponse
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_GET
 
 from common.version import API_VERSION
 

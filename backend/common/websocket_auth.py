@@ -34,13 +34,18 @@ def _extract_cookie_token(scope) -> str | None:
 
 @database_sync_to_async
 def get_user_from_access_token(token_key: str):
+    from rest_framework_simplejwt.authentication import JWTAuthentication
+    from rest_framework_simplejwt.exceptions import (
+        AuthenticationFailed,
+        InvalidToken,
+        TokenError,
+    )
     from rest_framework_simplejwt.tokens import AccessToken
 
     try:
         access_token = AccessToken(token_key)
-        from rest_framework_simplejwt.authentication import JWTAuthentication
         return JWTAuthentication().get_user(access_token)
-    except Exception:
+    except (TokenError, InvalidToken, AuthenticationFailed, User.DoesNotExist, TypeError, ValueError, KeyError):
         return AnonymousUser()
 
 

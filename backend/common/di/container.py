@@ -160,7 +160,7 @@ class Container:
         annotated = target.__init__ if construct else target
         try:
             hints = get_type_hints(annotated)
-        except Exception:
+        except (NameError, AttributeError, TypeError, ValueError):
             hints = getattr(annotated, "__annotations__", {}) or {}
 
         signature = inspect.signature(annotated)

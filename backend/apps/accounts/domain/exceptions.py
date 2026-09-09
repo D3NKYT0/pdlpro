@@ -1,4 +1,8 @@
-from common.architecture.exceptions import ConflictError, DomainError, EntityNotFoundError
+from common.architecture.exceptions import (
+    ConflictError,
+    DomainError,
+    EntityNotFoundError,
+)
 
 
 class UserNotFoundError(EntityNotFoundError):

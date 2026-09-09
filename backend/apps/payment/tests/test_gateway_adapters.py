@@ -5,7 +5,10 @@ from uuid import uuid4
 
 import pytest
 
-from apps.payment.domain.exceptions import PaymentGatewayError, PaymentMethodUnavailableError
+from apps.payment.domain.exceptions import (
+    PaymentGatewayError,
+    PaymentMethodUnavailableError,
+)
 from apps.payment.infrastructure.mercadopago_gateway import MercadoPagoGateway
 from apps.payment.infrastructure.stripe_gateway import StripeGateway
 

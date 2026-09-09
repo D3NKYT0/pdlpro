@@ -9,14 +9,6 @@ from apps.games.application.battle_pass_use_cases import (
     ClaimBattlePassRewardUseCase,
     GetBattlePassUseCase,
 )
-from apps.games.application.economy_use_cases import (
-    EnchantWeaponInput,
-    EnchantWeaponUseCase,
-    FightMonsterInput,
-    FightMonsterUseCase,
-    GetEconomyStateUseCase,
-)
-from apps.games.application.fishing_use_cases import CastLineInput, CastLineUseCase, GetFishingStateUseCase
 from apps.games.application.box_use_cases import (
     BuyBoxInput,
     BuyBoxUseCase,
@@ -25,6 +17,18 @@ from apps.games.application.box_use_cases import (
     OpenBoxUseCase,
     TransferBagInput,
     TransferBagToInventoryUseCase,
+)
+from apps.games.application.economy_use_cases import (
+    EnchantWeaponInput,
+    EnchantWeaponUseCase,
+    FightMonsterInput,
+    FightMonsterUseCase,
+    GetEconomyStateUseCase,
+)
+from apps.games.application.fishing_use_cases import (
+    CastLineInput,
+    CastLineUseCase,
+    GetFishingStateUseCase,
 )
 from apps.games.application.minigame_use_cases import (
     GetMinigamesStateUseCase,
@@ -129,7 +133,7 @@ class DailyBonusView(ItemCatalogAPIView):
         description="Resgata o bônus diário ativo, priorizando a temporada diária quando existir.",
     )
     def post(self, request):
-        from apps.games.application.advanced import daily_season, claim_daily_season
+        from apps.games.application.advanced import claim_daily_season, daily_season
         if daily_season():
             return Response(claim_daily_season(request.user.id))
         return Response(

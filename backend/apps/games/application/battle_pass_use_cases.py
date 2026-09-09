@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from django.utils import timezone
 from django.db import transaction
+from django.utils import timezone
 
 from apps.games.application.bag import add_to_bag
 from apps.games.infrastructure.models import (

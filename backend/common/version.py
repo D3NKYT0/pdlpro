@@ -10,7 +10,7 @@ def read_version() -> str:
 
         data = json.loads(VERSION_FILE.read_text(encoding="utf-8"))
         return str(data.get("api_version") or data.get("version") or "1.0.0")
-    except Exception:
+    except (OSError, ValueError, TypeError, KeyError):
         return "1.0.0"
 
 

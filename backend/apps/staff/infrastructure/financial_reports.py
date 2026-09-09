@@ -3,7 +3,19 @@ from decimal import Decimal
 
 from django.contrib.auth import get_user_model
 from django.core.paginator import EmptyPage, Paginator
-from django.db.models import Case, CharField, Count, DecimalField, F, Max, Min, Q, Sum, Value, When
+from django.db.models import (
+    Case,
+    CharField,
+    Count,
+    DecimalField,
+    F,
+    Max,
+    Min,
+    Q,
+    Sum,
+    Value,
+    When,
+)
 from django.db.models.functions import Abs, Coalesce, TruncDate
 
 from apps.payment.infrastructure.models import PedidoPagamento

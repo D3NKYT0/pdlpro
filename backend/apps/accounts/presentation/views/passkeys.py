@@ -13,7 +13,11 @@ from apps.accounts.application.webauthn_service import (
 )
 from apps.accounts.infrastructure.authentication import build_auth_response
 from apps.accounts.infrastructure.models import WebAuthnCredential
-from apps.accounts.presentation.serializers import PasskeyBeginSerializer, PasskeyCompleteSerializer, PasskeyCredentialSerializer
+from apps.accounts.presentation.serializers import (
+    PasskeyBeginSerializer,
+    PasskeyCompleteSerializer,
+    PasskeyCredentialSerializer,
+)
 from common.views import InjectedAPIView
 
 
@@ -131,7 +135,9 @@ class PasskeyLoginCompleteView(InjectedAPIView):
             user = complete_authentication(serializer.validated_data["state"], serializer.validated_data["credential"])
         except WebAuthnError:
             return Response({"message": "Não foi possível autenticar com esta chave."}, status=status.HTTP_401_UNAUTHORIZED)
-        from apps.server.application.access import assert_login_allowed_during_coming_soon
+        from apps.server.application.access import (
+            assert_login_allowed_during_coming_soon,
+        )
 
         assert_login_allowed_during_coming_soon(user)
         if user.is_2fa_enabled:

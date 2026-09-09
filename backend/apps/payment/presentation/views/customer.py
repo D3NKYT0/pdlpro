@@ -21,7 +21,10 @@ from apps.payment.application.use_cases import (
     ProcessPaymentUseCase,
 )
 from apps.payment.domain.entities import PaymentOrderEntity
-from apps.payment.presentation.serializers import CreatePaymentOrderSerializer, PreviewBonusSerializer
+from apps.payment.presentation.serializers import (
+    CreatePaymentOrderSerializer,
+    PreviewBonusSerializer,
+)
 from common.pagination import StandardPagination
 from common.views import InjectedAPIView
 
@@ -81,7 +84,9 @@ class PaymentOrderListView(InjectedAPIView):
         description="Lista os pedidos de pagamento do usuário autenticado, paginados.",
     )
     def get(self, request):
-        from apps.payment.infrastructure.repositories import DjangoPaymentOrderRepository
+        from apps.payment.infrastructure.repositories import (
+            DjangoPaymentOrderRepository,
+        )
 
         repo = DjangoPaymentOrderRepository()
         paginator = StandardPagination()

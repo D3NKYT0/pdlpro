@@ -4,7 +4,11 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from common.architecture.exceptions import DomainError, EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    DomainError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 
 @dataclass(frozen=True, slots=True)

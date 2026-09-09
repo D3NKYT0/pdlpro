@@ -9,7 +9,9 @@ from django.utils import timezone
 
 from apps.inventory.infrastructure.models import InventoryItem
 from apps.server.infrastructure.item_observation_models import (
-    ItemObservationCategory, ItemObservationDetail, ItemObservationSnapshot,
+    ItemObservationCategory,
+    ItemObservationDetail,
+    ItemObservationSnapshot,
 )
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
 
@@ -20,7 +22,6 @@ class ObservationUnavailable(Exception):
     A apresentação deve traduzir essa condição para a resposta do recurso.
     """
 
-    pass
 
 
 def observation_source():

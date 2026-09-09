@@ -280,7 +280,9 @@ class OAuthCompleteView(InjectedAPIView):
         )
         if linked:
             return Response({"linked": True})
-        from apps.server.application.access import assert_login_allowed_during_coming_soon
+        from apps.server.application.access import (
+            assert_login_allowed_during_coming_soon,
+        )
 
         assert_login_allowed_during_coming_soon(user)
         if user.is_2fa_enabled:

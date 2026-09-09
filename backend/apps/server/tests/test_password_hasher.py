@@ -1,5 +1,9 @@
 from apps.server.infrastructure.crypto.whirlpool2003 import Whirlpool2003
-from apps.server.infrastructure.passwords import LineagePasswordHasher, SHA1_LENGTH, WHIRLPOOL_LENGTH
+from apps.server.infrastructure.passwords import (
+    SHA1_LENGTH,
+    WHIRLPOOL_LENGTH,
+    LineagePasswordHasher,
+)
 
 
 def test_whirlpool2003_empty_digest_matches_vector():

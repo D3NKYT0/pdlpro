@@ -1,15 +1,9 @@
 from django.urls import path
-from apps.themes.presentation.urls import staff_urlpatterns
-from apps.staff.presentation.views.accounts import StaffInspectGameAccountView, StaffUnlinkGameAccountView
-from apps.staff.presentation.views.financial_reports import (
-    BalanceReportView, CashFlowReportView, PaymentReportView, ReconciliationReportView,
-)
-from apps.staff.presentation.views.custom_items import CustomItemsView, CustomItemDetailView
-from apps.staff.presentation.views.item_observation import (
-    ObservationAccessView, ObservationLiveView, ObservationFavoriteView, ObservationSnapshotsView,
-    ObservationSnapshotView, ObservationComparisonView, ObservationCategoriesView, ObservationCategoryView,
-)
 
+from apps.staff.presentation.views.accounts import (
+    StaffInspectGameAccountView,
+    StaffUnlinkGameAccountView,
+)
 from apps.staff.presentation.views.config import (
     StaffCoinConfigView,
     StaffGamesView,
@@ -19,6 +13,27 @@ from apps.staff.presentation.views.config import (
     StaffShopItemsView,
     StaffWalletPromoView,
 )
+from apps.staff.presentation.views.custom_items import (
+    CustomItemDetailView,
+    CustomItemsView,
+)
+from apps.staff.presentation.views.financial_reports import (
+    BalanceReportView,
+    CashFlowReportView,
+    PaymentReportView,
+    ReconciliationReportView,
+)
+from apps.staff.presentation.views.item_observation import (
+    ObservationAccessView,
+    ObservationCategoriesView,
+    ObservationCategoryView,
+    ObservationComparisonView,
+    ObservationFavoriteView,
+    ObservationLiveView,
+    ObservationSnapshotsView,
+    ObservationSnapshotView,
+)
+from apps.themes.presentation.urls import staff_urlpatterns
 
 urlpatterns = [
     *staff_urlpatterns,

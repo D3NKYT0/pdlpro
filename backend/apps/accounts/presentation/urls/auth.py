@@ -1,11 +1,14 @@
 from django.urls import path
 
 from apps.accounts.presentation.views.auth import (
-    ConfirmPasswordResetView,
+    AuthCapabilitiesView,
     CompleteCredentialsView,
+    ConfirmPasswordResetView,
     CsrfView,
     LoginView,
     LogoutView,
+    OAuthBeginView,
+    OAuthCompleteView,
     RefreshView,
     RegisterView,
     RequestEmailVerificationView,
@@ -15,9 +18,6 @@ from apps.accounts.presentation.views.auth import (
     SessionRevokeView,
     VerifyEmailView,
     VerifyTwoFactorLoginView,
-    AuthCapabilitiesView,
-    OAuthBeginView,
-    OAuthCompleteView,
 )
 from apps.accounts.presentation.views.passkeys import (
     PasskeyDeleteView,

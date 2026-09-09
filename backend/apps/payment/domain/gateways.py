@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from apps.payment.domain.entities import CheckoutSession, PaymentOrderEntity, ProcessResult
+from apps.payment.domain.entities import (
+    CheckoutSession,
+    PaymentOrderEntity,
+    ProcessResult,
+)
 
 
 class IPaymentGateway(ABC):

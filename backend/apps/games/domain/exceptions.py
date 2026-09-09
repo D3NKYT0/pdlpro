@@ -1,4 +1,8 @@
-from common.architecture.exceptions import ConflictError, DomainError, ValidationDomainError
+from common.architecture.exceptions import (
+    ConflictError,
+    DomainError,
+    ValidationDomainError,
+)
 
 
 class InsufficientTokensError(DomainError):

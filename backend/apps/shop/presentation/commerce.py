@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.programs.models import Supporter
 from apps.shop.application.commerce import get_promo, quote
 from apps.shop.infrastructure.models import (
     Cart,
@@ -17,7 +18,6 @@ from apps.shop.infrastructure.models import (
     ShopPackageItem,
     ShopPurchase,
 )
-from apps.programs.models import Supporter
 from common.permissions import IsStaffMember
 
 

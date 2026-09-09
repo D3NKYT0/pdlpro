@@ -3,6 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
+from django.conf import settings
+
+from apps.accounts.application.email_use_cases import RequestEmailVerificationUseCase
 from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import (
     EmailTakenError,
@@ -10,9 +13,6 @@ from apps.accounts.domain.exceptions import (
     UsernameTakenError,
     UserNotFoundError,
 )
-from django.conf import settings
-
-from apps.accounts.application.email_use_cases import RequestEmailVerificationUseCase
 from apps.accounts.domain.repositories import IUserRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
@@ -99,7 +99,9 @@ class AuthenticateUserUseCase(UseCase[AuthenticateUserInput, UserEntity]):
         user = self._users.get_by_login(data.login.strip())
         if user is None or not self._users.check_password(user.id, data.password):
             raise InvalidCredentialsError()
-        from apps.server.application.access import assert_login_allowed_during_coming_soon
+        from apps.server.application.access import (
+            assert_login_allowed_during_coming_soon,
+        )
 
         assert_login_allowed_during_coming_soon(user)
         return user

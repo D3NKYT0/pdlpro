@@ -5,7 +5,13 @@ from uuid import UUID
 
 from django.db.models import Q
 
-from apps.content.infrastructure.models import CalendarEvent, DownloadLink, Faq, News, WikiPage
+from apps.content.infrastructure.models import (
+    CalendarEvent,
+    DownloadLink,
+    Faq,
+    News,
+    WikiPage,
+)
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError
 

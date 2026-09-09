@@ -1,6 +1,4 @@
 from apps.staff.application.financial_reports import GetFinancialReportUseCase
-from apps.staff.domain.financial_reports import IFinancialReportRepository
-from apps.staff.infrastructure.financial_reports import DjangoFinancialReportRepository
 from apps.staff.application.use_cases import (
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
@@ -17,6 +15,8 @@ from apps.staff.application.use_cases import (
     UpsertStaffServicePricesUseCase,
     UpsertStaffShopItemUseCase,
 )
+from apps.staff.domain.financial_reports import IFinancialReportRepository
+from apps.staff.infrastructure.financial_reports import DjangoFinancialReportRepository
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider

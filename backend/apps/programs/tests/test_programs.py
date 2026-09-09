@@ -541,8 +541,8 @@ def test_invalid_rewards_and_overlapping_seasons_rejected(staff, season):
 
 
 def test_exchange_coins_retries_without_double_debit(player):
-    from apps.wallet.application.exchange import ExchangeCoinsUseCase
     from apps.server.domain.gateways import GameCharacter
+    from apps.wallet.application.exchange import ExchangeCoinsUseCase
     from apps.wallet.infrastructure.exchange_models import GameExchange
 
     class Access:
@@ -589,12 +589,14 @@ def test_exchange_coins_retries_without_double_debit(player):
 @pytest.mark.parametrize("outcome", ["success", "rejected", "unready"])
 def test_exchange_financial_outcomes(player, direction, outcome):
     from decimal import Decimal
-    from apps.wallet.application.exchange import ExchangeCoinsUseCase
+
+    from rest_framework.exceptions import ValidationError
+
     from apps.server.domain.gateways import GameCharacter
+    from apps.wallet.application.exchange import ExchangeCoinsUseCase
     from apps.wallet.infrastructure.exchange_models import GameExchange
     from apps.wallet.infrastructure.models import WalletTransaction
     from common.architecture.exceptions import ValidationDomainError
-    from rest_framework.exceptions import ValidationError
 
     class Access:
         def can_access(self, *args):
@@ -615,13 +617,13 @@ def test_exchange_financial_outcomes(player, direction, outcome):
     CoinConfig.objects.create(name="Coin", multiplier=2, withdraw_fee_percent=5)
     wallet = Wallet.objects.create(user=player, balance=100, bonus_balance=20)
     case = ExchangeCoinsUseCase(Gateway(), Access())
-    data = dict(
-        request_key=uuid4(),
-        direction=direction,
-        login="player",
-        character_id=1,
-        quantity=20,
-    )
+    data = {
+        "request_key": uuid4(),
+        "direction": direction,
+        "login": "player",
+        "character_id": 1,
+        "quantity": 20,
+    }
     if outcome == "unready":
         with pytest.raises(ValidationError):
             case.execute(player, data)
@@ -642,6 +644,6 @@ def test_exchange_financial_outcomes(player, direction, outcome):
     wallet.refresh_from_db()
     expected = Decimal(100)
     if outcome == "success":
-        expected += Decimal("9.50") if direction == "from_game" else Decimal("-10")
+        expected += Decimal("9.50") if direction == "from_game" else Decimal(-10)
     assert wallet.balance == expected
     assert wallet.bonus_balance == 20

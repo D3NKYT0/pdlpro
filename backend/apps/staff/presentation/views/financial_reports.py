@@ -62,7 +62,6 @@ class BalanceReportView(FinancialReportView):
     DRF.
     """
 
-    pass
 
 
 @extend_schema(

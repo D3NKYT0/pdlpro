@@ -1,7 +1,12 @@
 from django.urls import path
-from apps.server.presentation.views.item_catalog import ItemCatalogView
 
-from apps.server.presentation.views.public import PublicLineageQueryView, RankingView, ServerInfoView, ServerStatusView
+from apps.server.presentation.views.item_catalog import ItemCatalogView
+from apps.server.presentation.views.public import (
+    PublicLineageQueryView,
+    RankingView,
+    ServerInfoView,
+    ServerStatusView,
+)
 
 urlpatterns = [
     path("items/catalog/", ItemCatalogView.as_view(), name="public-item-catalog"),

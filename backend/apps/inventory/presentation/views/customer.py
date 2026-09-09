@@ -16,7 +16,11 @@ from apps.inventory.application.use_cases import (
     WithdrawItemInput,
     WithdrawItemUseCase,
 )
-from apps.inventory.presentation.serializers import DepositSerializer, TradeSerializer, WithdrawSerializer
+from apps.inventory.presentation.serializers import (
+    DepositSerializer,
+    TradeSerializer,
+    WithdrawSerializer,
+)
 from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 

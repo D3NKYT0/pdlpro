@@ -12,7 +12,6 @@ import pytest
 from apps.server.application.use_cases import PUBLIC_LINEAGE_QUERIES
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 
-
 CATALOG = LineageQueryCatalog.load("dreamv3")
 READ_QUERIES = [
     name for name, sql in CATALOG._statements.items()
@@ -94,7 +93,7 @@ def test_complete_feature_catalog():
 @pytest.mark.parametrize("name", READ_QUERIES)
 def test_selects_resolve_against_schema(schema, name):
     # SQLite checks names/columns; locking syntax is verified on the MySQL contract.
-    sql = re.sub(r"\s+FOR UPDATE\s*$", "", CATALOG[name], flags=re.I)
+    sql = re.sub(r"\s+FOR UPDATE\s*$", "", CATALOG[name], flags=re.IGNORECASE)
     params = {key: 1 for key in re.findall(r":([a-zA-Z_][a-zA-Z0-9_]*)", sql)}
     schema.execute("EXPLAIN QUERY PLAN " + sql, params).fetchall()
 

@@ -9,8 +9,8 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
 django.setup()
 
-from common.websocket_auth import CookieJWTAuthMiddleware  # noqa: E402
-from core.websocket_routing import websocket_urlpatterns  # noqa: E402
+from common.websocket_auth import CookieJWTAuthMiddleware
+from core.websocket_routing import websocket_urlpatterns
 
 application = ProtocolTypeRouter(
     {

@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.db.models import Count, Sum, Q
+from django.db.models import Count, Q, Sum
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
@@ -30,7 +30,6 @@ from apps.games.infrastructure.models import (
     UserBattlePassProgress,
     UserFishingBait,
 )
-
 
 EVENT_MODELS = {
     "roulette": SpinHistory,

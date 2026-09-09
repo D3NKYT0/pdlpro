@@ -311,6 +311,7 @@ def test_disabled_embeddings_do_not_construct_sentence_transformer(settings, moc
 @pytest.mark.django_db
 def test_semantic_privacy_migration_updates_only_seeded_article():
     from importlib import import_module
+
     from django.apps import apps
 
     migration = import_module('apps.content.migrations.0010_update_semantic_privacy')

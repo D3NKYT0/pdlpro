@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from django.db.models import F
 from django.db import transaction
+from django.db.models import F
 from django.utils import timezone
 
 from apps.games.infrastructure.models import BattlePassSeason, UserBattlePassProgress

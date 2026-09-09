@@ -1,5 +1,9 @@
-from apps.wallet.application.use_cases import GetWalletUseCase, PreviewPurchaseBonusUseCase, TransferToPlayerUseCase
 from apps.wallet.application.exchange import ExchangeCoinsUseCase
+from apps.wallet.application.use_cases import (
+    GetWalletUseCase,
+    PreviewPurchaseBonusUseCase,
+    TransferToPlayerUseCase,
+)
 from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.bonus import DjangoPurchaseBonusPolicy

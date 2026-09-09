@@ -15,7 +15,11 @@ from django.conf import settings
 from django.db import IntegrityError, transaction
 
 from apps.themes.infrastructure.models import ThemePackage
-from common.architecture.exceptions import ConflictError, EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    ConflictError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 MAX_ARCHIVE_BYTES = 32 * 1024 * 1024
 MAX_EXPANDED_BYTES = 64 * 1024 * 1024
@@ -152,9 +156,8 @@ def _validate_layout(value, assets: dict) -> None:
         )
         if "sidebarWidth" in panel:
             _int_range(panel["sidebarWidth"], "layout.panel.sidebarWidth", 200, 360)
-        if "density" in panel:
-            if panel["density"] not in PANEL_DENSITIES:
-                raise ValidationDomainError("layout.panel.density precisa ser compact, comfortable ou spacious.")
+        if "density" in panel and panel["density"] not in PANEL_DENSITIES:
+            raise ValidationDomainError("layout.panel.density precisa ser compact, comfortable ou spacious.")
         if "radius" in panel:
             _int_range(panel["radius"], "layout.panel.radius", 0, 24)
     if "public" in layout:
@@ -209,7 +212,7 @@ def _validate_presentation(value, assets: dict) -> None:
         _text(hero[key], f"presentation.home.hero.{key}", limit=500 if key == "description" else 120)
     _route(hero["actionTo"], "presentation.home.hero.actionTo")
     try:
-        datetime.fromisoformat(_text(hero["countdownAt"], "presentation.home.hero.countdownAt").replace("Z", "+00:00"))
+        datetime.fromisoformat(_text(hero["countdownAt"], "presentation.home.hero.countdownAt"))
     except ValueError:
         raise ValidationDomainError("presentation.home.hero.countdownAt precisa usar data ISO 8601.") from None
 

@@ -1,4 +1,8 @@
-from common.architecture.exceptions import ConflictError, EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    ConflictError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 
 class ListingNotFoundError(EntityNotFoundError):

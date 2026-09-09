@@ -1,8 +1,8 @@
-from .base import *  # noqa: F403
+from .base import *
 
 DEBUG = True
 OPENAPI_DOCS_PUBLIC = True
-LOGGING = get_logging_config(env, default_app_level="DEBUG")  # noqa: F405
+LOGGING = get_logging_config(env, default_app_level="DEBUG")
 
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
@@ -25,5 +25,5 @@ CHANNEL_LAYERS = {
     }
 }
 
-if "django_extensions" not in INSTALLED_APPS:  # noqa: F405
-    INSTALLED_APPS += ["django_extensions"]  # noqa: F405
+if "django_extensions" not in INSTALLED_APPS:
+    INSTALLED_APPS += ["django_extensions"]

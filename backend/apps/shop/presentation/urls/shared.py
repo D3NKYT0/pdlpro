@@ -1,6 +1,11 @@
 from django.urls import path
 
-from apps.shop.presentation.views.shared import ShopCartItemView, ShopCartView, ShopCatalogView, ShopCheckoutView
+from apps.shop.presentation.views.shared import (
+    ShopCartItemView,
+    ShopCartView,
+    ShopCatalogView,
+    ShopCheckoutView,
+)
 
 urlpatterns = [
     path("catalog/", ShopCatalogView.as_view(), name="shared-shop-catalog"),

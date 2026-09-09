@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from apps.payment.domain.entities import CheckoutSession, PaymentOrderEntity, ProcessResult
+from apps.payment.domain.entities import (
+    CheckoutSession,
+    PaymentOrderEntity,
+    ProcessResult,
+)
 from apps.payment.domain.gateways import IPaymentGateway
 
 

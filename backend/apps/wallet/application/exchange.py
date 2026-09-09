@@ -1,8 +1,9 @@
-from decimal import Decimal, ROUND_DOWN
+from decimal import ROUND_DOWN, Decimal
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
+from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.gateways import ILineageGateway
@@ -71,10 +72,10 @@ class ExchangeCoinsUseCase:
                     )
                 try:
                     self.lineage.assert_exchange_ready()
-                except Exception:
+                except (RuntimeError, OSError, TimeoutError, SQLAlchemyError):
                     raise ValidationError(
                         "Integração de moedas indisponível. A equipe precisa verificar a conexão, os recibos e as tabelas transacionais."
-                    )
+                    ) from None
                 if not self.access.can_access(user.id, user.username, data["login"]):
                     raise ValidationError("Conta não vinculada ao seu usuário.")
                 char = self.lineage.get_character(data["login"], data["character_id"])
@@ -159,7 +160,7 @@ class ExchangeCoinsUseCase:
                     row.status, row.error = "rejected", str(exc)[:300]
                     row.save()
             return exchange_dump(row)
-        except Exception:
+        except (OSError, TimeoutError, RuntimeError, SQLAlchemyError):
             GameExchange.objects.filter(pk=row.pk, status="pending").update(
                 # A conexão pode cair após o jogo aplicar o envio. Preserve pending
                 # e retome pelo mesmo recibo, sem estornar uma operação incerta.

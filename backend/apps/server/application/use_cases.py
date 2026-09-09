@@ -4,7 +4,12 @@ from dataclasses import dataclass
 
 from django.conf import settings
 
-from apps.server.domain.gateways import ILineageGateway, RankingEntry, ServerInfo, ServerStatus
+from apps.server.domain.gateways import (
+    ILineageGateway,
+    RankingEntry,
+    ServerInfo,
+    ServerStatus,
+)
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -49,7 +54,6 @@ class GetServerStatusInput:
     parâmetros das configurações e do gateway.
     """
 
-    pass
 
 
 class GetServerInfoUseCase(UseCase[None, ServerInfo]):

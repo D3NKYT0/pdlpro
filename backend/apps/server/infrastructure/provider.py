@@ -1,10 +1,12 @@
+from django.conf import settings
+
 from apps.server.application.account_use_cases import (
     ConfirmLinkByEmailUseCase,
+    ForceUnlinkGameAccountUseCase,
     GetCharacterUseCase,
     GetLinkSlotsUseCase,
-    InspectPrimaryLoginUseCase,
-    ForceUnlinkGameAccountUseCase,
     InspectGameAccountUseCase,
+    InspectPrimaryLoginUseCase,
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
     ListCharactersUseCase,
@@ -32,12 +34,14 @@ from apps.server.domain.repositories import ILinkSlotRepository, IServicePriceRe
 from apps.server.infrastructure.access import DjangoAccountAccessService
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
-from apps.server.infrastructure.repositories import DjangoLinkSlotRepository, DjangoServicePriceRepository
+from apps.server.infrastructure.repositories import (
+    DjangoLinkSlotRepository,
+    DjangoServicePriceRepository,
+)
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
-from django.conf import settings
 
 
 class ServerProvider(AppProvider):

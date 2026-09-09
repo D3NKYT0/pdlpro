@@ -83,9 +83,8 @@ def _get_exception_code(exc: Exception, status_code: int) -> str:
     explicit_code = getattr(exc, "error_code", None)
     if explicit_code:
         return normalize_error_code(explicit_code)
-    if hasattr(exc, "get_codes"):
-        if code := _first_scalar_code(exc.get_codes()):
-            return normalize_error_code(code)
+    if hasattr(exc, "get_codes") and (code := _first_scalar_code(exc.get_codes())):
+        return normalize_error_code(code)
     default_code = getattr(exc, "default_code", None)
     if default_code:
         return normalize_error_code(default_code)

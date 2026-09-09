@@ -11,7 +11,11 @@ from apps.server.application.use_cases import (
     RunPublicLineageQueryInput,
     RunPublicLineageQueryUseCase,
 )
-from apps.server.presentation.serializers import RankingEntrySerializer, ServerInfoSerializer, ServerStatusSerializer
+from apps.server.presentation.serializers import (
+    RankingEntrySerializer,
+    ServerInfoSerializer,
+    ServerStatusSerializer,
+)
 from common.views import InjectedAPIView
 
 

@@ -50,9 +50,9 @@ def test_empty_reports_and_read_only(staff_client, report):
 def test_balance_reconciles_bonus_and_counts_all_filtered_rows(staff_client):
     repo = DjangoWalletRepository()
     wallet = repo.get_or_create(user("alice").id)
-    repo.credit(wallet.id, Decimal("100"), origin="stripe", description="Compra")
-    repo.credit_bonus(wallet.id, Decimal("10"), origin="bonus", description="Bônus")
-    repo.debit(wallet.id, Decimal("20"), destination="shop", description="Loja")
+    repo.credit(wallet.id, Decimal(100), origin="stripe", description="Compra")
+    repo.credit_bonus(wallet.id, Decimal(10), origin="bonus", description="Bônus")
+    repo.debit(wallet.id, Decimal(20), destination="shop", description="Loja")
     Wallet.objects.create(user=user("alice2"), balance="7.00")
     response = staff_client.get(f"{BASE}balances/", {"username": "alice", "page_size": 1})
     assert response.status_code == 200, response.data

@@ -1,6 +1,5 @@
 from django.urls import include, path
-from apps.wallet.presentation.views.exchange import GameExchangeView
-from apps.shop.presentation.commerce import CommerceView, StaffCommerceView
+
 from apps.games.presentation.advanced import (
     BattleDetailsView,
     DailyDetailsView,
@@ -8,6 +7,8 @@ from apps.games.presentation.advanced import (
     GameStatisticsView,
     StaffGameContentView,
 )
+from apps.shop.presentation.commerce import CommerceView, StaffCommerceView
+from apps.wallet.presentation.views.exchange import GameExchangeView
 
 urlpatterns = [
     path("shared/wallet/game-exchange/", GameExchangeView.as_view()),

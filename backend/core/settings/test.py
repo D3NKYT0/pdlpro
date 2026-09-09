@@ -2,7 +2,7 @@ import os
 
 os.environ["REDIS_URL"] = "memory://"
 
-from .development import *  # noqa: E402, F403
+from .development import *
 
 os.environ["REDIS_URL"] = "memory://"
 
@@ -14,10 +14,10 @@ SECRET_KEY = "django-insecure-test-key-with-more-than-thirty-two-characters-for-
 DEBUG = False
 LINEAGE_DB_ENABLED = False
 
-DATABASES = {  # noqa: F405
+DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "test.sqlite3",  # noqa: F405
+        "NAME": BASE_DIR / "test.sqlite3",
     }
 }
 

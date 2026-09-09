@@ -8,8 +8,8 @@ from django.utils.text import slugify
 from apps.content.infrastructure.models import News
 from apps.games.infrastructure.models import GameConfig
 from apps.server.application.use_cases import GetServerInfoUseCase
-from apps.server.infrastructure.models import IndexConfig, ServicePrice
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
+from apps.server.infrastructure.models import IndexConfig, ServicePrice
 from apps.shop.infrastructure.models import ShopItem
 from apps.wallet.infrastructure.models import CoinConfig, CoinPurchasePromo
 from common.architecture.base import UseCase

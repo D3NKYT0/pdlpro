@@ -5,7 +5,6 @@ from django import forms
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.utils.html import strip_tags
 
-
 _MONEY_TERMS = (
     "price",
     "amount",
@@ -321,4 +320,3 @@ class PDLAdminModelForm(PDLAdminFormMixin, forms.ModelForm):
     formulários personalizados podem herdá-la diretamente.
     """
 
-    pass

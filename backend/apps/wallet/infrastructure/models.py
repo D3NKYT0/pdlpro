@@ -142,9 +142,7 @@ class CoinPurchasePromo(BaseModel):
         moment = at or timezone.now()
         if self.starts_at and self.starts_at > moment:
             return False
-        if self.ends_at and self.ends_at <= moment:
-            return False
-        return True
+        return not (self.ends_at and self.ends_at <= moment)
 
     @classmethod
     def current(cls, *, at=None):

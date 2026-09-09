@@ -6,7 +6,11 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.games.application.bag import add_to_bag
-from apps.games.domain.exceptions import BoxEmptyError, BoxNotOwnedError, InsufficientTokensError
+from apps.games.domain.exceptions import (
+    BoxEmptyError,
+    BoxNotOwnedError,
+    InsufficientTokensError,
+)
 from apps.games.infrastructure.models import Box, BoxSlot, BoxType, CatalogItem
 from apps.inventory.domain.exceptions import InventoryNotFoundError
 from apps.inventory.domain.repositories import IInventoryRepository

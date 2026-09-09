@@ -4,7 +4,10 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.content.application.legal import GetLegalDocumentUseCase, ListLegalDocumentsUseCase
+from apps.content.application.legal import (
+    GetLegalDocumentUseCase,
+    ListLegalDocumentsUseCase,
+)
 from apps.content.application.use_cases import (
     GetNewsInput,
     GetNewsUseCase,
@@ -12,8 +15,8 @@ from apps.content.application.use_cases import (
     GetWikiPageUseCase,
     ListCalendarEventsUseCase,
     ListDownloadsUseCase,
-    ListFaqUseCase,
     ListFaqInput,
+    ListFaqUseCase,
     ListNewsUseCase,
     ListWikiPagesUseCase,
     SearchWikiInput,

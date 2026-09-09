@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from sqlalchemy.exc import SQLAlchemyError
 
 from apps.wallet.application.exchange import ExchangeCoinsUseCase, exchange_dump
 from apps.wallet.infrastructure.exchange_models import GameExchange
@@ -55,7 +56,7 @@ class GameExchangeView(InjectedAPIView):
             try:
                 self.resolve(ExchangeCoinsUseCase).lineage.assert_exchange_ready()
                 enabled, unavailable_reason = True, ""
-            except Exception:
+            except (RuntimeError, OSError, TimeoutError, SQLAlchemyError):
                 unavailable_reason = "A equipe precisa preparar os recibos de transferência e verificar a conexão e as tabelas InnoDB do jogo."
         return Response(
             {

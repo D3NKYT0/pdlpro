@@ -5,7 +5,10 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
-from apps.wallet.application.use_cases import TransferToPlayerInput, TransferToPlayerUseCase
+from apps.wallet.application.use_cases import (
+    TransferToPlayerInput,
+    TransferToPlayerUseCase,
+)
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.infrastructure.models import Wallet, WalletTransaction
 from apps.wallet.infrastructure.repositories import DjangoWalletRepository
@@ -17,7 +20,7 @@ pytestmark = pytest.mark.django_db
 @pytest.fixture
 def accounts():
     users = [get_user_model().objects.create_user(username=name, email=f"{name}@test.dev") for name in ("sender", "recipient")]
-    Wallet.objects.create(user=users[0], balance=Decimal("50"), bonus_balance=Decimal("100"))
+    Wallet.objects.create(user=users[0], balance=Decimal(50), bonus_balance=Decimal(100))
     return users
 
 
@@ -37,9 +40,9 @@ def test_transfer_conserves_main_balance_and_records_both_sides(api, accounts, a
     assert response.status_code == 200, response.data
     assert response.data["balance"] == expected
     sender, recipient = [Wallet.objects.get(user=user) for user in accounts]
-    assert sender.balance + recipient.balance == Decimal("50")
+    assert sender.balance + recipient.balance == Decimal(50)
     assert recipient.balance == Decimal(amount)
-    assert sender.bonus_balance == Decimal("100")
+    assert sender.bonus_balance == Decimal(100)
     assert recipient.bonus_balance == 0
     assert list(sender.transactions.values_list("kind", "amount", "description")) == [("SAIDA", Decimal(amount), "Presente")]
     assert list(recipient.transactions.values_list("kind", "amount", "description")) == [("ENTRADA", Decimal(amount), "Presente")]
@@ -67,7 +70,7 @@ def test_transfer_rolls_back_debit_when_credit_fails(accounts, monkeypatch):
     monkeypatch.setattr(repo, "credit", unavailable)
     case = TransferToPlayerUseCase(repo, DjangoUnitOfWork())
     with pytest.raises(RuntimeError, match="credit unavailable"):
-        case.execute(TransferToPlayerInput(accounts[0].id, "recipient", Decimal("10")))
+        case.execute(TransferToPlayerInput(accounts[0].id, "recipient", Decimal(10)))
     assert Wallet.objects.get(user=accounts[0]).balance == 50
     assert not WalletTransaction.objects.exists()
     assert not Wallet.objects.filter(user=accounts[1]).exists()
@@ -76,7 +79,7 @@ def test_transfer_rolls_back_debit_when_credit_fails(accounts, monkeypatch):
 def test_repository_rechecks_balance_at_debit_time(accounts):
     wallet = Wallet.objects.get(user=accounts[0])
     repo = DjangoWalletRepository()
-    repo.debit(wallet.id, Decimal("50"), destination="test", description="Primeiro débito")
+    repo.debit(wallet.id, Decimal(50), destination="test", description="Primeiro débito")
     with pytest.raises(InsufficientBalanceError):
         repo.debit(wallet.id, Decimal("0.01"), destination="test", description="Saldo esgotado")
     wallet.refresh_from_db()

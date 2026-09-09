@@ -1,20 +1,24 @@
 from io import BytesIO
 
-from PIL import Image, ImageOps
 from django.core.files.base import ContentFile
-from django.db import IntegrityError, transaction
 from django.core.paginator import Paginator
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
+from PIL import Image, ImageOps
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.server.infrastructure.custom_item_models import CustomCatalogItem, ITEM_CATEGORIES, ITEM_GRADES
+from apps.server.infrastructure.custom_item_models import (
+    ITEM_CATEGORIES,
+    ITEM_GRADES,
+    CustomCatalogItem,
+)
 from apps.server.infrastructure.lineage.item_catalog import get_xml_catalog
 from common.permissions import IsStaffMember
 

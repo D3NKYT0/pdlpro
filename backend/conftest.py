@@ -3,13 +3,14 @@ import pytest
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
+from common.di.exceptions import UnregisteredServiceError
 
 
 @pytest.fixture(autouse=True)
 def reset_in_memory_lineage():
     try:
         gateway = DependencyInjection.root().resolve(ILineageGateway)
-    except Exception:
+    except UnregisteredServiceError:
         yield
         return
     if isinstance(gateway, NullLineageGateway):

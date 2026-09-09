@@ -6,6 +6,7 @@ import time
 from django.conf import settings
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
+from sqlalchemy.exc import SQLAlchemyError
 
 from apps.server.domain.access import same_linked_user
 from apps.server.domain.character_rules import require_offline_character
@@ -184,7 +185,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         try:
             rows = self._fetch("players_online")
             players = int(rows[0]["total"]) if rows else 0
-        except Exception:
+        except (SQLAlchemyError, OSError, KeyError, TypeError, ValueError, IndexError):
             players = 0
         factor = float(settings.FAKE_PLAYERS_FACTOR or 1)
         players = max(int(settings.FAKE_PLAYERS_MIN), int(players * factor))

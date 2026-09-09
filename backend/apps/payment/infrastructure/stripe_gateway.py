@@ -5,8 +5,15 @@ from decimal import Decimal
 
 from django.conf import settings
 
-from apps.payment.domain.entities import CheckoutSession, PaymentOrderEntity, ProcessResult
-from apps.payment.domain.exceptions import PaymentGatewayError, PaymentMethodUnavailableError
+from apps.payment.domain.entities import (
+    CheckoutSession,
+    PaymentOrderEntity,
+    ProcessResult,
+)
+from apps.payment.domain.exceptions import (
+    PaymentGatewayError,
+    PaymentMethodUnavailableError,
+)
 from apps.payment.domain.gateways import IPaymentGateway
 
 logger = logging.getLogger(__name__)
@@ -44,7 +51,7 @@ class StripeGateway(IPaymentGateway):
 
         self._configure()
         try:
-            cents = int((order.amount * 100).quantize(Decimal("1")))
+            cents = int((order.amount * 100).quantize(Decimal(1)))
             intent = stripe.PaymentIntent.create(
                 amount=cents,
                 currency=order.currency.lower(),
@@ -56,7 +63,7 @@ class StripeGateway(IPaymentGateway):
                 automatic_payment_methods={"enabled": True},
                 description=f"PDL PRO — {order.coins} moedas",
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             logger.exception("Stripe falhou ao criar PaymentIntent")
             raise PaymentGatewayError("Não foi possível iniciar o pagamento Stripe.") from exc
         return CheckoutSession(

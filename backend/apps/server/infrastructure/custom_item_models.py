@@ -2,11 +2,10 @@ import json
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from common.models import BaseModel
-
 
 ITEM_CATEGORIES = [(key, label) for key, label in (
     ("COMUM", "Comum"), ("WEAPON", "Arma"), ("SHIELD", "Escudo"), ("HELMET", "Elmo"),

@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from apps.inventory.infrastructure.models import BlockedServerItem, Inventory, InventoryItem, InventoryLog
+from apps.inventory.infrastructure.models import (
+    BlockedServerItem,
+    Inventory,
+    InventoryItem,
+    InventoryLog,
+)
 from common.admin import PDLModelAdmin
 
 

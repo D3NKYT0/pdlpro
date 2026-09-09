@@ -2,7 +2,10 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.server.application.account_use_cases import ForceUnlinkGameAccountUseCase, InspectGameAccountUseCase
+from apps.server.application.account_use_cases import (
+    ForceUnlinkGameAccountUseCase,
+    InspectGameAccountUseCase,
+)
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 

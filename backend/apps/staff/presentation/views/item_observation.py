@@ -9,13 +9,22 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 
 from apps.server.application.item_observation import (
-    ObservationUnavailable, capture_snapshot, compare_snapshots, observation_source, read_observation,
+    ObservationUnavailable,
+    capture_snapshot,
+    compare_snapshots,
+    observation_source,
+    read_observation,
 )
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.item_observation_models import (
-    ItemObservationCategory, ItemObservationFavorite, ItemObservationSnapshot,
+    ItemObservationCategory,
+    ItemObservationFavorite,
+    ItemObservationSnapshot,
 )
-from apps.server.infrastructure.lineage.item_catalog import item_metadata as catalog_metadata, item_display_name
+from apps.server.infrastructure.lineage.item_catalog import item_display_name
+from apps.server.infrastructure.lineage.item_catalog import (
+    item_metadata as catalog_metadata,
+)
 from common.exceptions import PdlAPIException
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView

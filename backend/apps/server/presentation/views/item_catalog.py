@@ -1,9 +1,13 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema
 
-from apps.server.infrastructure.lineage.item_catalog import DEFAULT_ITEM_ICON, get_item_catalog, item_metadata
+from apps.server.infrastructure.lineage.item_catalog import (
+    DEFAULT_ITEM_ICON,
+    get_item_catalog,
+    item_metadata,
+)
 
 
 class ItemCatalogView(APIView):

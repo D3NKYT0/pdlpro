@@ -15,7 +15,10 @@ from apps.auction.application.use_cases import (
     PlaceBidUseCase,
 )
 from apps.auction.domain.entities import AuctionEntity, BidEntity
-from apps.auction.presentation.serializers import CreateAuctionSerializer, PlaceBidSerializer
+from apps.auction.presentation.serializers import (
+    CreateAuctionSerializer,
+    PlaceBidSerializer,
+)
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 

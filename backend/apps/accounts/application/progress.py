@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 from apps.accounts.application.achievement_rules import build_achievement_rules
-from apps.accounts.infrastructure.models import Achievement, GamerProfile, UserAchievement
+from apps.accounts.infrastructure.models import (
+    Achievement,
+    GamerProfile,
+    UserAchievement,
+)
 
 _RULES = None
 

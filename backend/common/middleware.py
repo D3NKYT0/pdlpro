@@ -119,7 +119,7 @@ class ObservabilityMiddleware:
             view_name = getattr(match, "view_name", "") or "staff-api"
             route_kwargs = getattr(match, "kwargs", {}) or {}
             target_id = next(
-                (str(value) for key, value in route_kwargs.items() if key.endswith("_id") or key.endswith("_uuid")),
+                (str(value) for key, value in route_kwargs.items() if key.endswith(("_id", "_uuid"))),
                 "",
             )
             AuditLog.objects.create(

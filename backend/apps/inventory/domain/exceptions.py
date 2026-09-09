@@ -1,4 +1,8 @@
-from common.architecture.exceptions import DomainError, EntityNotFoundError, ValidationDomainError
+from common.architecture.exceptions import (
+    DomainError,
+    EntityNotFoundError,
+    ValidationDomainError,
+)
 
 
 class InventoryNotFoundError(EntityNotFoundError):

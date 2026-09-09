@@ -6,7 +6,6 @@ from contextvars import ContextVar, Token
 from datetime import UTC, datetime
 from typing import Any
 
-
 request_id_context: ContextVar[str] = ContextVar("request_id", default="")
 
 _STANDARD_LOG_RECORD_FIELDS = frozenset(

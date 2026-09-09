@@ -3,22 +3,29 @@ from datetime import timedelta
 from unittest.mock import MagicMock
 
 import pytest
+from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
-from django.contrib import admin
 from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
-from apps.accounts.infrastructure.authentication import get_access_cookie_name
 
+from apps.accounts.infrastructure.authentication import get_access_cookie_name
 from apps.inventory.infrastructure.models import Inventory, InventoryItem
 from apps.server.application.item_observation import (
-    ObservationUnavailable, capture_snapshot, compare_snapshots, observation_source, read_observation,
+    ObservationUnavailable,
+    capture_snapshot,
+    compare_snapshots,
+    observation_source,
+    read_observation,
 )
 from apps.server.infrastructure.item_observation_models import (
-    ItemObservationCategory, ItemObservationDetail, ItemObservationFavorite, ItemObservationSnapshot,
+    ItemObservationCategory,
+    ItemObservationDetail,
+    ItemObservationFavorite,
+    ItemObservationSnapshot,
     validate_item_ids,
 )
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog

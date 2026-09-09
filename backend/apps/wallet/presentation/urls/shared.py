@@ -1,6 +1,10 @@
 from django.urls import path
 
-from apps.wallet.presentation.views.shared import WalletTransactionsView, WalletTransferView, WalletView
+from apps.wallet.presentation.views.shared import (
+    WalletTransactionsView,
+    WalletTransferView,
+    WalletView,
+)
 
 urlpatterns = [
     path("", WalletView.as_view(), name="shared-wallet"),

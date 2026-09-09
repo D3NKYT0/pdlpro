@@ -72,7 +72,7 @@ _PDL_INTRO = re.compile(
 _STOP = frozenset(
     {
         "a", "o", "os", "as", "um", "uma", "de", "da", "do", "das", "dos", "e", "em",
-        "na", "no", "para", "por", "com", "que", "se", "meu", "minha", "the", "a", "an",
+        "na", "no", "para", "por", "com", "que", "se", "meu", "minha", "the", "an",
         "is", "are", "to", "of", "for", "my", "your", "you", "i", "me", "how", "what",
         "como", "qual", "quais", "sobre", "and", "or", "in", "on", "at", "so", "why",
     }

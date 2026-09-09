@@ -4,7 +4,10 @@ from apps.communication.application.push_use_cases import (
     SubscribePushUseCase,
     UnsubscribePushUseCase,
 )
-from apps.communication.application.use_cases import ListNotificationsUseCase, MarkNotificationReadUseCase
+from apps.communication.application.use_cases import (
+    ListNotificationsUseCase,
+    MarkNotificationReadUseCase,
+)
 from apps.communication.domain.push import IPushSender
 from apps.communication.domain.repositories import INotificationRepository
 from apps.communication.infrastructure.push import WebPushSender

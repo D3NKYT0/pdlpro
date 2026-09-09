@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Generic, TypeVar
+from typing import TypeVar
 from uuid import UUID
 
 TInput = TypeVar("TInput")
@@ -29,7 +29,7 @@ class ValueObject:
     """
 
 
-class UseCase(ABC, Generic[TInput, TOutput]):
+class UseCase[TInput, TOutput](ABC):
     """Contrato de entrada da aplicação: recebe TInput e produz TOutput.
 
     Implemente ``execute(data)`` com a regra de negócio e declare dependências no construtor com
@@ -45,7 +45,7 @@ class UseCase(ABC, Generic[TInput, TOutput]):
         raise NotImplementedError
 
 
-class Repository(ABC, Generic[TEntity]):
+class Repository[TEntity](ABC):
     """Contrato genérico de consulta por UUID e persistência de entidades.
 
     Implemente o acesso ao banco em ``infrastructure`` e registre o adaptador no provider.

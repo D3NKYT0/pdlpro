@@ -8,8 +8,15 @@ from typing import Any
 from django.conf import settings
 from mercadopago.config import RequestOptions
 
-from apps.payment.domain.entities import CheckoutSession, PaymentOrderEntity, ProcessResult
-from apps.payment.domain.exceptions import PaymentGatewayError, PaymentMethodUnavailableError
+from apps.payment.domain.entities import (
+    CheckoutSession,
+    PaymentOrderEntity,
+    ProcessResult,
+)
+from apps.payment.domain.exceptions import (
+    PaymentGatewayError,
+    PaymentMethodUnavailableError,
+)
 from apps.payment.domain.gateways import IPaymentGateway
 
 logger = logging.getLogger(__name__)

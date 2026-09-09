@@ -117,7 +117,7 @@ def test_login_blocked_for_players_during_coming_soon_staff_only(api, user):
     assert blocked.status_code == 403
     assert blocked.data["error_code"] == "COMING_SOON_LOGIN_RESTRICTED"
 
-    staff = User.objects.create_user(username="gm", email="gm@pdl.dev", password="Secret123", is_staff=True)
+    User.objects.create_user(username="gm", email="gm@pdl.dev", password="Secret123", is_staff=True)
     allowed = api.post(
         "/api/v1/auth/login/",
         {"login": "gm", "password": "Secret123"},

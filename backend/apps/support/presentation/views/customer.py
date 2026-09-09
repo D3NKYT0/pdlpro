@@ -10,7 +10,6 @@ from apps.communication.infrastructure.models import Notification
 from apps.support.models import Ticket, TicketMessage
 from apps.support.presentation.views.shared import serialize_ticket
 
-
 ACTIVE_STATUSES = {Ticket.Status.OPEN, Ticket.Status.IN_PROGRESS, Ticket.Status.WAITING_USER, Ticket.Status.WAITING_TEAM}
 
 

@@ -4,7 +4,13 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.application.progress import add_xp, unlock_achievements, xp_for_level
-from apps.accounts.infrastructure.models import Achievement, GamerProfile, RewardClaim, RewardDefinition, UserAchievement
+from apps.accounts.infrastructure.models import (
+    Achievement,
+    GamerProfile,
+    RewardClaim,
+    RewardDefinition,
+    UserAchievement,
+)
 from apps.games.application.bag import add_to_bag
 from common.architecture.base import UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
@@ -101,9 +107,11 @@ class ClaimRewardUseCase(UseCase[ClaimRewardInput, dict]):
             raise ValidationDomainError("Recompensa já resgatada.")
         if reward.kind == RewardDefinition.Kind.LEVEL and profile.level < int(reward.reference):
             raise ValidationDomainError("Nível insuficiente.")
-        if reward.kind == RewardDefinition.Kind.ACHIEVEMENT:
-            if not UserAchievement.objects.filter(user=user, achievement__code=reward.reference).exists():
-                raise ValidationDomainError("Conquista não desbloqueada.")
+        if (
+            reward.kind == RewardDefinition.Kind.ACHIEVEMENT
+            and not UserAchievement.objects.filter(user=user, achievement__code=reward.reference).exists()
+        ):
+            raise ValidationDomainError("Conquista não desbloqueada.")
         add_to_bag(
             user,
             item_id=reward.item_id,

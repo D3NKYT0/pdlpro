@@ -1,0 +1,13 @@
+# Ruff 0.16+ enables a much larger default rule set. Django and DRF use
+# mutable class attributes as intentional shared configuration (Meta,
+# permission_classes, serializer fields, migration state, etc.).
+target-version = "py314"
+extend-exclude = ["**/migrations"]
+
+[lint]
+ignore = [
+    "RUF012", # mutable class defaults shared by Django/DRF framework config
+]
+
+[lint.per-file-ignores]
+"manage.py" = ["EXE001"]

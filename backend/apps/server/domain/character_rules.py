@@ -1,7 +1,10 @@
 """Validações compartilhadas pelos adaptadores reais e em memória do jogo."""
 
+from apps.server.domain.exceptions import (
+    CharacterOfflineRequiredError,
+    GameAccountNotFoundError,
+)
 from apps.server.domain.gateways import GameCharacter
-from apps.server.domain.exceptions import CharacterOfflineRequiredError, GameAccountNotFoundError
 
 
 def require_offline_character(character: GameCharacter | None) -> GameCharacter:

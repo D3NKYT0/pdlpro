@@ -6,7 +6,9 @@ from apps.marketplace.application.use_cases import (
     PurchaseListingUseCase,
 )
 from apps.marketplace.domain.repositories import ICharacterListingRepository
-from apps.marketplace.infrastructure.repositories import DjangoCharacterListingRepository
+from apps.marketplace.infrastructure.repositories import (
+    DjangoCharacterListingRepository,
+)
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider

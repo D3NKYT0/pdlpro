@@ -1,6 +1,5 @@
 from .jazzmin_icons import JAZZMIN_ICONS_PDL
 
-
 JAZZMIN_SETTINGS_PDL = {
     "site_title": "PDL PRO",
     "site_header": "PDL PRO Admin",

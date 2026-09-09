@@ -4,7 +4,12 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.accounts.domain.mailer import IMailer
-from apps.server.domain.access import AccessibleAccount, IAccountAccessService, PrimaryLoginState, same_linked_user
+from apps.server.domain.access import (
+    AccessibleAccount,
+    IAccountAccessService,
+    PrimaryLoginState,
+    same_linked_user,
+)
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
     GameAccountAlreadyExistsError,

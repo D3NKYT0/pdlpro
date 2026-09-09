@@ -1,6 +1,9 @@
 import pytest
 
-from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog, QueryDialectNotFoundError
+from apps.server.infrastructure.lineage.catalog import (
+    LineageQueryCatalog,
+    QueryDialectNotFoundError,
+)
 
 
 def test_lucerav2_catalog_loads_required_queries():

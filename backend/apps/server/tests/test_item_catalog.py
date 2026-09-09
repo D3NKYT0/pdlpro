@@ -4,7 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from apps.server.infrastructure.lineage.item_catalog import LineageItemCatalog, item_display_name
+from apps.server.infrastructure.lineage.item_catalog import (
+    LineageItemCatalog,
+    item_display_name,
+)
 
 SAMPLE = """
 <list>

@@ -5,10 +5,13 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
-from apps.server.infrastructure.lineage.item_catalog import get_item_catalog, item_metadata
+from apps.games.infrastructure.models import Prize
+from apps.server.infrastructure.lineage.item_catalog import (
+    get_item_catalog,
+    item_metadata,
+)
 from apps.server.presentation.item_metadata import with_item_metadata
 from apps.shop.infrastructure.models import ShopItem
-from apps.games.infrastructure.models import Prize
 
 
 @pytest.fixture

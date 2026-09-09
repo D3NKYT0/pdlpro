@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Self
+
 from django.db import transaction
 
 from common.architecture.base import UnitOfWork
@@ -18,7 +20,7 @@ class DjangoUnitOfWork(UnitOfWork):
     def __init__(self) -> None:
         self._atomic = None
 
-    def __enter__(self) -> DjangoUnitOfWork:
+    def __enter__(self) -> Self:
         """Entra em um novo bloco atomic no banco padrão do Django."""
 
         self._atomic = transaction.atomic()
@@ -37,7 +39,7 @@ class DjangoUnitOfWork(UnitOfWork):
         """Não antecipa commit: a confirmação ocorre ao sair normalmente do bloco."""
 
         # Um commit aqui quebraria a composição com um atomic externo do Django.
-        return None
+        return
 
     def rollback(self) -> None:
         """Marca a transação ativa do Django para rollback ao sair do bloco."""

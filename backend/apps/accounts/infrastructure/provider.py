@@ -4,7 +4,10 @@ from apps.accounts.application.email_use_cases import (
     RequestPasswordResetUseCase,
     VerifyEmailUseCase,
 )
-from apps.accounts.application.progress_use_cases import ClaimRewardUseCase, GetGamerProfileUseCase
+from apps.accounts.application.progress_use_cases import (
+    ClaimRewardUseCase,
+    GetGamerProfileUseCase,
+)
 from apps.accounts.application.twofa import (
     ConfirmTwoFactorUseCase,
     DisableTwoFactorUseCase,

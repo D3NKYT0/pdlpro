@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
-from rest_framework.test import APIClient
 import pytest
+from rest_framework.test import APIClient
 
 from apps.server.infrastructure.models import IndexConfig
 
@@ -27,7 +27,7 @@ def test_public_server_info_exposes_coming_soon_launch_fields():
         coming_soon=True,
         coming_soon_title="O portal se abre",
         coming_soon_subtitle="Prepare-se",
-        coming_soon_at=datetime(2027, 1, 3, 18, 0, tzinfo=timezone.utc),
+        coming_soon_at=datetime(2027, 1, 3, 18, 0, tzinfo=UTC),
         is_active=True,
     )
     response = APIClient().get("/api/v1/public/server/info/")

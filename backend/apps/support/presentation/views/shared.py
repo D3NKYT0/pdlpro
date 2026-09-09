@@ -2,7 +2,6 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-
 SLA_HOURS = {"low": 72, "normal": 48, "high": 24, "urgent": 8}
 
 

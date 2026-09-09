@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from apps.shop.application.use_cases import (
     AddToCartInput,
     AddToCartUseCase,
@@ -11,8 +12,11 @@ from apps.shop.application.use_cases import (
     UpdateCartItemInput,
     UpdateCartItemUseCase,
 )
-from apps.shop.presentation.serializers import AddToCartSerializer, ShopItemSerializer, UpdateCartItemSerializer
-from apps.server.presentation.item_metadata import ItemCatalogAPIView
+from apps.shop.presentation.serializers import (
+    AddToCartSerializer,
+    ShopItemSerializer,
+    UpdateCartItemSerializer,
+)
 
 
 class ShopCatalogView(ItemCatalogAPIView):
@@ -129,6 +133,7 @@ class ShopCheckoutView(ItemCatalogAPIView):
     )
     def post(self, request):
         from rest_framework import serializers
+
         from apps.shop.application.commerce import checkout
 
         key = serializers.UUIDField(allow_null=True).run_validation(request.data.get("request_key"))

@@ -20,7 +20,7 @@ def gateway():
     queries._statements = dict(queries._statements)
     for name in ("exchange_get_receipt", "exchange_character", "exchange_stacks"):
         queries._statements[name] = re.sub(
-            r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.I
+            r"\s+FOR UPDATE\s*$", "", queries[name], flags=re.IGNORECASE
         )
     queries._statements["exchange_insert_receipt"] = (
         "INSERT INTO pdl_exchange_receipts(receipt,completed) VALUES(:receipt,0) ON CONFLICT(receipt) DO NOTHING"

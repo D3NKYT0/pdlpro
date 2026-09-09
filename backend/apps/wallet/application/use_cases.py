@@ -5,7 +5,12 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.wallet.domain.bonus import BonusPreview, IPurchaseBonusPolicy
-from apps.wallet.domain.entities import InsufficientBalanceError, InvalidTransferError, WalletEntity, WalletNotFoundError
+from apps.wallet.domain.entities import (
+    InsufficientBalanceError,
+    InvalidTransferError,
+    WalletEntity,
+    WalletNotFoundError,
+)
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 

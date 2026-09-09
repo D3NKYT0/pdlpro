@@ -1,6 +1,6 @@
 """Autenticação ASGI exercitada com tokens reais e banco de teste."""
-from asgiref.sync import async_to_sync
 import pytest
+from asgiref.sync import async_to_sync
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import AccessToken
 

@@ -1,3 +1,4 @@
+from apps.wallet.infrastructure.exchange_models import GameExchange
 from apps.wallet.infrastructure.models import (
     CoinConfig,
     CoinPackage,
@@ -6,14 +7,13 @@ from apps.wallet.infrastructure.models import (
     Wallet,
     WalletTransaction,
 )
-from apps.wallet.infrastructure.exchange_models import GameExchange
 
 __all__ = [
     "CoinConfig",
     "CoinPackage",
     "CoinPurchaseBonus",
     "CoinPurchasePromo",
+    "GameExchange",
     "Wallet",
     "WalletTransaction",
-    "GameExchange",
 ]

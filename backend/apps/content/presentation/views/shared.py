@@ -8,7 +8,11 @@ from apps.content.application.assistant import (
     AssistantReplyUseCase,
     valid_preferred_name,
 )
-from apps.content.application.chat import MESSAGE_MAX_LENGTH, ChatInput, ChatReplyUseCase
+from apps.content.application.chat import (
+    MESSAGE_MAX_LENGTH,
+    ChatInput,
+    ChatReplyUseCase,
+)
 from apps.content.application.denkynho import (
     CareDenkynhoInput,
     CareDenkynhoUseCase,

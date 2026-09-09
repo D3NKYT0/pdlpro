@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from contextvars import ContextVar
 from contextlib import contextmanager
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 
@@ -180,7 +180,7 @@ class LineageItemCatalog:
         for match in ITEM_RE.finditer(xml):
             kind, raw_id, raw_name, body = match.groups()
             name = _decode_xml(raw_name).strip()
-            if not name or re.search(r"not in use", name, re.I) or re.fullmatch(r"not used", name, re.I):
+            if not name or re.search(r"not in use", name, re.IGNORECASE) or re.fullmatch(r"not used", name, re.IGNORECASE):
                 continue
             sets = {key: value for key, value in SET_RE.findall(body)}
             normalized_sets = {key.casefold(): value for key, value in sets.items()}

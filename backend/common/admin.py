@@ -56,7 +56,6 @@ class PDLTabularInline(PDLInlineFormMixin, admin.TabularInline):
     preservando as máscaras e os widgets compartilhados.
     """
 
-    pass
 
 
 class PDLStackedInline(PDLInlineFormMixin, admin.StackedInline):
@@ -66,7 +65,6 @@ class PDLStackedInline(PDLInlineFormMixin, admin.StackedInline):
     que uma linha tabular no admin.
     """
 
-    pass
 
 
 class PDLForm(PDLAdminFormMixin, forms.Form):
@@ -76,4 +74,3 @@ class PDLForm(PDLAdminFormMixin, forms.Form):
     ORM, use PDLAdminModelForm.
     """
 
-    pass

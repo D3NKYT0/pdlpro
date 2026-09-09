@@ -2,7 +2,10 @@ from unittest.mock import Mock
 
 import pytest
 
-from apps.server.domain.exceptions import CharacterOfflineRequiredError, GameAccountNotFoundError
+from apps.server.domain.exceptions import (
+    CharacterOfflineRequiredError,
+    GameAccountNotFoundError,
+)
 from apps.server.domain.gateways import GameCharacter
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway

@@ -8,9 +8,14 @@ from django.core import signing
 from rest_framework.test import APIClient
 
 from apps.accounts.application.twofa import (
-    ConfirmTwoFactorInput, ConfirmTwoFactorUseCase, DisableTwoFactorInput,
-    DisableTwoFactorUseCase, SetupTwoFactorUseCase, TWOFA_SALT,
-    make_login_challenge, read_login_challenge,
+    TWOFA_SALT,
+    ConfirmTwoFactorInput,
+    ConfirmTwoFactorUseCase,
+    DisableTwoFactorInput,
+    DisableTwoFactorUseCase,
+    SetupTwoFactorUseCase,
+    make_login_challenge,
+    read_login_challenge,
 )
 from apps.accounts.domain.exceptions import InvalidTwoFactorError
 from common.architecture.exceptions import ValidationDomainError

@@ -9,9 +9,20 @@ from apps.games.application.box_use_cases import (
     OpenBoxUseCase,
     TransferBagToInventoryUseCase,
 )
-from apps.games.application.economy_use_cases import EnchantWeaponUseCase, FightMonsterUseCase, GetEconomyStateUseCase
-from apps.games.application.fishing_use_cases import CastLineUseCase, GetFishingStateUseCase
-from apps.games.application.minigame_use_cases import GetMinigamesStateUseCase, PlayDiceUseCase, SpinSlotsUseCase
+from apps.games.application.economy_use_cases import (
+    EnchantWeaponUseCase,
+    FightMonsterUseCase,
+    GetEconomyStateUseCase,
+)
+from apps.games.application.fishing_use_cases import (
+    CastLineUseCase,
+    GetFishingStateUseCase,
+)
+from apps.games.application.minigame_use_cases import (
+    GetMinigamesStateUseCase,
+    PlayDiceUseCase,
+    SpinSlotsUseCase,
+)
 from apps.games.application.use_cases import (
     BuyTokensUseCase,
     ClaimDailyBonusUseCase,

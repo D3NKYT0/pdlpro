@@ -1,5 +1,6 @@
 import hashlib
 import json
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -38,5 +39,5 @@ def verify_hcaptcha(token: str, remote_ip: str = "") -> bool:
     try:
         with urllib.request.urlopen("https://api.hcaptcha.com/siteverify", data=data, timeout=8) as response:
             return bool(json.loads(response.read().decode()).get("success"))
-    except Exception:
+    except (OSError, TimeoutError, urllib.error.URLError, json.JSONDecodeError, ValueError, TypeError):
         return False

@@ -69,7 +69,7 @@ def test_outbid_refunds_previous_participant_and_closing_runs_once(world):
     assert close.execute() == {"closed": 1}
     assert close.execute() == {"closed": 0}
     assert Wallet.objects.get(user=users[0]).balance == 130
-    assert sum(Wallet.objects.values_list("balance", flat=True)) == Decimal("300")
+    assert sum(Wallet.objects.values_list("balance", flat=True)) == Decimal(300)
     assert InventoryItem.objects.get(inventory__user=users[2], item_id=57).quantity == 20
     assert not InventoryItem.objects.filter(inventory__user=users[1]).exists()
 

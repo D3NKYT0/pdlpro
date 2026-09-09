@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from apps.staff.application.use_cases import (
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
@@ -20,7 +21,6 @@ from apps.staff.application.use_cases import (
 )
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
-from apps.server.presentation.item_metadata import ItemCatalogAPIView
 
 
 class StaffPanelSettingsView(InjectedAPIView):

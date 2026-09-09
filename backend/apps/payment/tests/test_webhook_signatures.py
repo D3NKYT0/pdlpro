@@ -1,7 +1,7 @@
 """Assinaturas são verificadas sem enviar requisições a provedores reais."""
 import hashlib
 import hmac
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 from django.test import RequestFactory
@@ -13,7 +13,7 @@ from apps.payment.application.webhooks import WebhookSignatureService
 def signed_request(settings, monkeypatch):
     settings.MERCADO_PAGO_WEBHOOK_SECRET = "test-secret"
     now = 1700000000
-    monkeypatch.setattr("apps.payment.application.webhooks.timezone.now", lambda: datetime.fromtimestamp(now, timezone.utc))
+    monkeypatch.setattr("apps.payment.application.webhooks.timezone.now", lambda: datetime.fromtimestamp(now, UTC))
     def make(*, age=0, data_id="123", query=True):
         ts = str(now - age)
         digest = hmac.new(b"test-secret", f"id:{data_id};request-id:req-1;ts:{ts};".encode(), hashlib.sha256).hexdigest()

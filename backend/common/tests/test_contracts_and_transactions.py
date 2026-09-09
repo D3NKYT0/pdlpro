@@ -3,7 +3,11 @@ import pytest
 from django.contrib.auth import get_user_model
 
 from common.di.container import Container
-from common.di.exceptions import CircularDependencyError, MissingAnnotationError, UnregisteredServiceError
+from common.di.exceptions import (
+    CircularDependencyError,
+    MissingAnnotationError,
+    UnregisteredServiceError,
+)
 from common.error_contract import build_error_payload, normalize_error_code
 from common.infrastructure.unit_of_work import DjangoUnitOfWork
 
@@ -41,7 +45,7 @@ class OptionalService:
 
 
 class Circular:
-    def __init__(self, child: "Circular"):
+    def __init__(self, child: Circular):
         self.child = child
 
 

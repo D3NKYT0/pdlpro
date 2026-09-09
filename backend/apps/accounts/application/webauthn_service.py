@@ -16,8 +16,8 @@ from webauthn import (
 from webauthn.helpers import base64url_to_bytes, bytes_to_base64url, options_to_json
 from webauthn.helpers.exceptions import WebAuthnException
 from webauthn.helpers.structs import (
-    AuthenticatorTransport,
     AuthenticatorSelectionCriteria,
+    AuthenticatorTransport,
     PublicKeyCredentialDescriptor,
     ResidentKeyRequirement,
     UserVerificationRequirement,
@@ -35,7 +35,6 @@ class WebAuthnError(Exception):
     A apresentação converte a mensagem em resposta de validação ao cliente.
     """
 
-    pass
 
 
 def _rp_id() -> str:

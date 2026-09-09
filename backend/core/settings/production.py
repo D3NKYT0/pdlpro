@@ -1,10 +1,10 @@
-from .base import *  # noqa: F403
+from .base import *
 from .monitoring import configure_error_monitoring
 
 DEBUG = False
 REST_FRAMEWORK["NUM_PROXIES"] = env.int("TRUSTED_PROXY_COUNT", default=2)
-LOGGING = get_logging_config(env, default_format="json", default_environment="production")  # noqa: F405
-SENTRY_ENABLED = configure_error_monitoring(env)  # noqa: F405
+LOGGING = get_logging_config(env, default_format="json", default_environment="production")
+SENTRY_ENABLED = configure_error_monitoring(env)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
@@ -22,7 +22,7 @@ CONTENT_SECURITY_POLICY = f"{CONTENT_SECURITY_POLICY} upgrade-insecure-requests;
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
-REST_AUTH.update(  # noqa: F405
+REST_AUTH.update(
     {
         "JWT_AUTH_SECURE": True,
         "JWT_AUTH_HTTPONLY": True,
@@ -32,4 +32,4 @@ REST_AUTH.update(  # noqa: F405
 
 # MiniLM continua disponível; o padrão desligado evita baixar Hugging Face no
 # primeiro chat. A geração local ou remota liga-se por DENKYNHO_LLM_ENABLED.
-DENKYNHO_EMBEDDINGS_ENABLED = env.bool("DENKYNHO_EMBEDDINGS_ENABLED", default=False)  # noqa: F405
+DENKYNHO_EMBEDDINGS_ENABLED = env.bool("DENKYNHO_EMBEDDINGS_ENABLED", default=False)

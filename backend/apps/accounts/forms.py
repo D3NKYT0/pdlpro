@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 from apps.accounts.infrastructure.models import User
 from common.forms import PDLAdminFormMixin

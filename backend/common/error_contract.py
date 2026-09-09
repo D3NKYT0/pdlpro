@@ -4,7 +4,6 @@ import re
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-
 STATUS_ERROR_CODES = {
     400: "VALIDATION_ERROR",
     401: "AUTHENTICATION_REQUIRED",

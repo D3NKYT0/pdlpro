@@ -1,6 +1,10 @@
 from django.urls import path
 
-from apps.marketplace.presentation.views.customer import CancelListingView, MyListingsView, PurchaseListingView
+from apps.marketplace.presentation.views.customer import (
+    CancelListingView,
+    MyListingsView,
+    PurchaseListingView,
+)
 
 urlpatterns = [
     path("", MyListingsView.as_view(), name="customer-marketplace"),

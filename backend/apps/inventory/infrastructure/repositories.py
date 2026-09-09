@@ -5,7 +5,12 @@ from uuid import UUID
 from apps.inventory.domain.entities import InventoryEntity, InventoryItemEntity
 from apps.inventory.domain.exceptions import InsufficientItemQuantityError
 from apps.inventory.domain.repositories import IInventoryRepository
-from apps.inventory.infrastructure.models import BlockedServerItem, Inventory, InventoryItem, InventoryLog
+from apps.inventory.infrastructure.models import (
+    BlockedServerItem,
+    Inventory,
+    InventoryItem,
+    InventoryLog,
+)
 from apps.server.infrastructure.lineage.item_catalog import item_is_tradeable
 
 

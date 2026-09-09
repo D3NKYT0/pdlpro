@@ -10,7 +10,12 @@ from apps.accounts.application.progress import add_xp
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
-from apps.games.infrastructure.models import EconomyFightLog, EconomyWeapon, GameConfig, Monster
+from apps.games.infrastructure.models import (
+    EconomyFightLog,
+    EconomyWeapon,
+    GameConfig,
+    Monster,
+)
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 

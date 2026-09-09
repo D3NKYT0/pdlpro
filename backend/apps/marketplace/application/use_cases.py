@@ -17,7 +17,10 @@ from apps.marketplace.domain.exceptions import (
 )
 from apps.marketplace.domain.repositories import ICharacterListingRepository
 from apps.server.domain.access import IAccountAccessService
-from apps.server.domain.exceptions import CharacterOfflineRequiredError, GameAccountNotFoundError
+from apps.server.domain.exceptions import (
+    CharacterOfflineRequiredError,
+    GameAccountNotFoundError,
+)
 from apps.server.domain.gateways import ILineageGateway
 from apps.wallet.domain.entities import InsufficientBalanceError
 from apps.wallet.domain.repositories import IWalletRepository

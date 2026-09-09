@@ -11,11 +11,17 @@ from django.utils import timezone
 
 from apps.games.application.configuration import require_active_game
 from apps.games.domain.exceptions import AlreadyClaimedError, InsufficientTokensError
-from apps.games.infrastructure.models import Bag, BagItem, DailyBonusClaim, GameConfig, Prize, SpinHistory
+from apps.games.infrastructure.models import (
+    Bag,
+    BagItem,
+    DailyBonusClaim,
+    GameConfig,
+    Prize,
+    SpinHistory,
+)
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError
-
 
 
 class GetRouletteStateUseCase(UseCase[UUID, dict]):

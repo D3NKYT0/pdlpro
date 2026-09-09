@@ -1,8 +1,8 @@
-from datetime import date
 from decimal import Decimal
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.communication.infrastructure.models import Notification
@@ -68,7 +68,7 @@ def test_daily_bonus_credits_wallet_once(api, player):
     assert second.status_code == 409
     state = api.get("/api/v1/customer/games/daily-bonus/")
     assert state.data["claimed"] is True
-    assert DailyBonusClaim.objects.filter(user=player, claimed_on=date.today()).count() == 1
+    assert DailyBonusClaim.objects.filter(user=player, claimed_on=timezone.localdate()).count() == 1
 
 
 @pytest.mark.django_db
@@ -193,7 +193,11 @@ def test_battle_pass_claim_free_reward(api, player):
 
     from django.utils import timezone
 
-    from apps.games.infrastructure.models import BattlePassLevel, BattlePassReward, BattlePassSeason
+    from apps.games.infrastructure.models import (
+        BattlePassLevel,
+        BattlePassReward,
+        BattlePassSeason,
+    )
 
     BattlePassSeason.objects.update(active=False)
     season = BattlePassSeason.objects.create(

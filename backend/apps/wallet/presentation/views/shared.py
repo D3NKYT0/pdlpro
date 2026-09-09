@@ -4,8 +4,12 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.wallet.application.use_cases import GetWalletInput, GetWalletUseCase, TransferToPlayerInput, TransferToPlayerUseCase
-from apps.wallet.domain.repositories import IWalletRepository
+from apps.wallet.application.use_cases import (
+    GetWalletInput,
+    GetWalletUseCase,
+    TransferToPlayerInput,
+    TransferToPlayerUseCase,
+)
 from apps.wallet.infrastructure.repositories import DjangoWalletRepository
 from apps.wallet.presentation.serializers import TransferSerializer, WalletSerializer
 from common.pagination import StandardPagination
