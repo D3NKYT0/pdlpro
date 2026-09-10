@@ -12,6 +12,7 @@ from core import views
 
 urlpatterns = [
     path("", views.backend_index, name="backend_index"),
+    path("i18n/", include("django.conf.urls.i18n")),
     path("admin/components/", admin.site.admin_view(views.admin_components), name="admin-components"),
     path("admin/", admin.site.urls),
     path("api/v1/", include("core.api_urls")),

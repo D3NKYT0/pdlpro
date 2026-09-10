@@ -113,6 +113,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -121,6 +122,12 @@ TEMPLATES = [
 ]
 
 LANGUAGE_CODE = env("CONFIG_LANGUAGE_CODE", default="pt-br")
+LANGUAGES = [
+    ("pt-br", "Português"),
+    ("en", "English"),
+    ("es", "Español"),
+]
+LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = env("CONFIG_TIME_ZONE", default="America/Sao_Paulo")
 USE_I18N = True
 USE_TZ = True

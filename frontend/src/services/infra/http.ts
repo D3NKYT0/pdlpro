@@ -61,6 +61,14 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
   const method = (rest.method || 'GET').toUpperCase()
   const headers = new Headers(rest.headers)
   headers.set('Accept', 'application/json')
+  try {
+    const language = localStorage.getItem('pdl.language')
+    if (language === 'pt' || language === 'en' || language === 'es') {
+      headers.set('Accept-Language', language === 'pt' ? 'pt-BR' : language)
+    }
+  } catch {
+    /* private mode / SSR */
+  }
   if (rest.body && !(rest.body instanceof FormData) && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }

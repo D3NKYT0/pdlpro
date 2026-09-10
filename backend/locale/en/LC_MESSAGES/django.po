@@ -1,0 +1,31 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PDL PRO package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PDL PRO\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-09 22:00+0000\n"
+"PO-Revision-Date: 2026-09-09 22:00+0000\n"
+"Last-Translator: PDL PRO\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Não foi possível processar a solicitação."
+msgstr "Unable to process the request."
+
+msgid "O recurso solicitado não foi encontrado."
+msgstr "The requested resource was not found."
+
+msgid "A solicitação conflita com o estado atual do recurso."
+msgstr "The request conflicts with the current resource state."
+
+msgid "Você não tem permissão para realizar esta ação."
+msgstr "You do not have permission to perform this action."
+
+msgid "Verifique os dados informados e tente novamente."
+msgstr "Check the provided data and try again."

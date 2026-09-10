@@ -29,8 +29,10 @@ def custom_exception_handler(exc: Exception, context: dict[str, Any]) -> Respons
     """
 
     if isinstance(exc, DomainError):
+        from django.utils.translation import gettext as _
+
         exc = PdlAPIException(
-            exc.message,
+            _(str(exc.message)),
             error_code=exc.error_code,
             details=exc.details,
             status_code=exc.status_code,

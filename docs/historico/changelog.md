@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Django **gettext** no backend: `LANGUAGES` pt-br/en/es, `LocaleMiddleware`,
+  `ApiLanguageMiddleware`, catálogos em `backend/locale/`, `POST /i18n/setlang/`
+  e tradução das mensagens base de `DomainError` na borda HTTP; a SPA envia
+  `Accept-Language`.
+
 ### Alterado
 
 - Tema builtin renomeado para **PDL Classic**, com descrição voltada à identidade

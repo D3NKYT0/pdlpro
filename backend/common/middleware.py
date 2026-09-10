@@ -59,6 +59,39 @@ class SecurityHeadersMiddleware:
         return response
 
 
+class ApiLanguageMiddleware:
+    """Ativa o gettext Django a partir de ``?lang=`` ou ``Accept-Language``.
+
+    Prioridade: query ``lang`` (produto pt|en|es) → idioma já escolhido pelo
+    ``LocaleMiddleware`` (sessão / Accept-Language). O domínio permanece sem Django;
+    a borda HTTP e templates admin usam o locale ativo.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        from common.i18n import activate_language, from_django_language, resolve_language
+
+        explicit = request.GET.get("lang") or request.headers.get("X-Language")
+        if explicit:
+            django_language = activate_language(explicit)
+        else:
+            # LocaleMiddleware já pode ter ativado via Accept-Language / sessão.
+            from django.utils import translation
+
+            product = from_django_language(translation.get_language())
+            django_language = activate_language(product)
+
+        request.LANGUAGE_CODE = django_language
+        request.pdl_language = resolve_language(
+            explicit or from_django_language(django_language)
+        )
+        response = self.get_response(request)
+        response.setdefault("Content-Language", django_language)
+        return response
+
+
 class ObservabilityMiddleware:
     """Record structured HTTP access events and persistent staff write audits.
 

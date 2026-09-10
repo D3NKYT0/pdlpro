@@ -51,6 +51,11 @@ Detalhe em [Internacionalização](docs/desenvolvimento/i18n.md). Idiomas: `pt`,
   `pt-BR` fixo).
 - Namespaces: `common`, `public`, `auth`, `panel`, `admin`, `help` (e `personality`
   quando aplicável).
+- No **backend**, mensagens de sistema (erros de domínio na borda HTTP, e-mails,
+  templates admin) usam Django gettext (`locale/`, `makemessages` /
+  `compilemessages`). O domínio permanece sem Django: strings PT como msgid;
+  ative o locale com `activate_language` / `ApiLanguageMiddleware` e aplique
+  `gettext` na apresentação. Conteúdo editorial continua em campos `*_en`/`*_es`.
 
 ### Temas (público + painel)
 
