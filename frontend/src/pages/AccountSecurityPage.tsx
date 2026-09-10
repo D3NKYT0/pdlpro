@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { BadgeCheck, Fingerprint, KeyRound, Link2, LogOut, MailCheck, MonitorSmartphone, Plus, ShieldCheck, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
+import { PrivacyLgpdPanel } from '../components/legal/PrivacyLgpdPanel'
 import { useAuth } from '../contexts/AuthContext'
 import { credentialJSON, creationOptions } from '../lib/webauthn'
 import { authApi } from '../services/api'
@@ -30,6 +31,12 @@ export function AccountSecurityPage() {
   const [code, setCode] = useState('')
   const [nickname, setNickname] = useState(() => t('security.defaultDeviceName'))
   const [busy, setBusy] = useState('')
+  const [lgpdMsg, setLgpdMsg] = useState<string | null>(null)
+  const [lgpdErr, setLgpdErr] = useState<string | null>(null)
+  const [lgpdExporting, setLgpdExporting] = useState(false)
+  const [lgpdDeleting, setLgpdDeleting] = useState(false)
+  const [lgpdRequestingCode, setLgpdRequestingCode] = useState(false)
+  const [lgpdDeleteCode, setLgpdDeleteCode] = useState('')
   const googleConnected = capabilities.data?.connected_providers?.includes('google') ?? false
   const discordConnected = capabilities.data?.connected_providers?.includes('discord') ?? false
   const activeSessions = sessions.data ?? []
@@ -126,6 +133,64 @@ export function AccountSecurityPage() {
     } finally { setBusy('') }
   }
 
+  async function handleExportData() {
+    setLgpdExporting(true)
+    setLgpdErr(null)
+    setLgpdMsg(null)
+    try {
+      const result = await authApi.exportData()
+      setLgpdMsg(result.detail)
+      toast.success(result.detail)
+    } catch (error) {
+      const message = apiErrorMessage(error, t('security.exportError'))
+      setLgpdErr(message)
+      toast.error(message)
+    } finally {
+      setLgpdExporting(false)
+    }
+  }
+
+  async function handleRequestDeleteCode() {
+    setLgpdRequestingCode(true)
+    setLgpdErr(null)
+    setLgpdMsg(null)
+    try {
+      const result = await authApi.requestDeleteCode()
+      setLgpdMsg(result.detail)
+      toast.success(result.detail)
+    } catch (error) {
+      const message = apiErrorMessage(error, t('security.deleteCodeError'))
+      setLgpdErr(message)
+      toast.error(message)
+    } finally {
+      setLgpdRequestingCode(false)
+    }
+  }
+
+  async function handleDeleteAccount() {
+    if (!window.confirm(t('security.deleteConfirm'))) return
+    const typed = window.prompt(t('security.deleteTypeConfirm'))
+    if (typed !== t('security.deleteWord')) {
+      setLgpdErr(t('security.deleteCancelled'))
+      return
+    }
+    setLgpdDeleting(true)
+    setLgpdErr(null)
+    setLgpdMsg(null)
+    try {
+      const result = await authApi.deleteAccount(lgpdDeleteCode.trim())
+      setLgpdMsg(result.detail)
+      toast.success(result.detail)
+      await logout()
+    } catch (error) {
+      const message = apiErrorMessage(error, t('security.deleteError'))
+      setLgpdErr(message)
+      toast.error(message)
+    } finally {
+      setLgpdDeleting(false)
+    }
+  }
+
   return (
     <div className="security-page">
       <Card className="security-hero">
@@ -208,6 +273,19 @@ export function AccountSecurityPage() {
           </Card>
         </div>
       </div>
+
+      <PrivacyLgpdPanel
+        message={lgpdMsg}
+        error={lgpdErr}
+        exporting={lgpdExporting}
+        deleting={lgpdDeleting}
+        requestingCode={lgpdRequestingCode}
+        deleteCode={lgpdDeleteCode}
+        onDeleteCodeChange={setLgpdDeleteCode}
+        onExportData={() => void handleExportData()}
+        onRequestDeleteCode={() => void handleRequestDeleteCode()}
+        onDeleteAccount={() => void handleDeleteAccount()}
+      />
     </div>
   )
 }

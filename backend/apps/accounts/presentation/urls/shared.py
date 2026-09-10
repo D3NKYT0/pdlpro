@@ -7,6 +7,12 @@ from apps.accounts.presentation.views.auth import (
     MeView,
     TwoFactorView,
 )
+from apps.accounts.presentation.views.lgpd import (
+    DeleteAccountView,
+    LgpdExportDownloadView,
+    RequestAccountDeletionCodeView,
+    RequestDataExportView,
+)
 
 urlpatterns = [
     path("me/", MeView.as_view(), name="shared-me"),
@@ -14,4 +20,16 @@ urlpatterns = [
     path("me/2fa/", TwoFactorView.as_view(), name="shared-me-2fa"),
     path("me/progress/", GamerProfileView.as_view(), name="shared-me-progress"),
     path("me/rewards/<uuid:reward_id>/claim/", ClaimRewardView.as_view(), name="shared-me-claim-reward"),
+    path("me/export-data/", RequestDataExportView.as_view(), name="shared-me-export-data"),
+    path(
+        "me/request-delete-code/",
+        RequestAccountDeletionCodeView.as_view(),
+        name="shared-me-request-delete-code",
+    ),
+    path("me/delete-account/", DeleteAccountView.as_view(), name="shared-me-delete-account"),
+    path(
+        "lgpd-export/<str:token>/download/",
+        LgpdExportDownloadView.as_view(),
+        name="shared-lgpd-export-download",
+    ),
 ]

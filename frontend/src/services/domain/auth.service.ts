@@ -90,4 +90,19 @@ export const authApi = {
   beginPasskeyLogin: (login: string) => request<ApiPasskeyBegin>('/auth/passkeys/login/begin/', { method: 'POST', body: JSON.stringify({ login }) }),
   completePasskeyLogin: (state: string, credential: unknown) => request<ApiUser | TwoFactorChallenge>('/auth/passkeys/login/complete/', { method: 'POST', body: JSON.stringify({ state, credential }) }),
   deletePasskey: (id: string) => request<void>(`/auth/passkeys/${id}/`, { method: 'DELETE' }),
+  exportData: () =>
+    request<{ detail: string; download_url?: string; expires_at?: string }>('/shared/me/export-data/', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
+  requestDeleteCode: () =>
+    request<{ detail: string }>('/shared/me/request-delete-code/', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
+  deleteAccount: (code: string) =>
+    request<{ detail: string }>('/shared/me/delete-account/', {
+      method: 'POST',
+      body: JSON.stringify({ code }),
+    }),
 }

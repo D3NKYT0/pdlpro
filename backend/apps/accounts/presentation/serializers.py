@@ -125,6 +125,20 @@ class AcceptTermsSerializer(serializers.Serializer):
     terms_accepted = serializers.BooleanField()
 
 
+class DeleteAccountSerializer(serializers.Serializer):
+    """Contrato de entrada HTTP para exclusão/anonimização LGPD."""
+
+    code = serializers.CharField(min_length=6, max_length=6)
+
+
+class LgpdActionResponseSerializer(serializers.Serializer):
+    """Envelope de resposta das ações LGPD (exportação / exclusão)."""
+
+    detail = serializers.CharField()
+    download_url = serializers.CharField(required=False)
+    expires_at = serializers.DateTimeField(required=False)
+
+
 class RegisterSerializer(serializers.Serializer):
     """Valida os dados do cadastro público, incluindo senha, aceite legal e token de captcha.
 

@@ -226,3 +226,55 @@ class RewardClaim(BaseModel):
     class Meta:
         verbose_name=_("Recompensa resgatada")
         unique_together = ("user", "reward")
+
+
+class DataExportLog(BaseModel):
+    """Pacote de portabilidade LGPD gerado sob demanda para download assinado."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="data_export_logs",
+    )
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.CharField(max_length=512, blank=True, default="")
+    export_file = models.FileField(upload_to="lgpd_exports/%Y/%m/", blank=True)
+    file_size_bytes = models.PositiveBigIntegerField(default=0)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    downloaded_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("Log de exportação de dados (LGPD)")
+        verbose_name_plural = _("Logs de exportação de dados (LGPD)")
+        ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return f"Export {self.user_id} @ {self.created_at}"
+
+
+class AccountActionCode(models.Model):
+    """OTP de ações sensíveis da conta (ex.: exclusão LGPD)."""
+
+    class CodeType(models.TextChoices):
+        LGPD_DELETE = "lgpd_delete", _("Exclusão de conta (LGPD)")
+
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="action_codes",
+    )
+    code_hash = models.CharField(max_length=64)
+    type = models.CharField(max_length=32, choices=CodeType.choices)
+    expires_at = models.DateTimeField()
+    is_used = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Código de ação da conta")
+        verbose_name_plural = _("Códigos de ação da conta")
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["user", "type", "is_used"], name="pdl_action_code_lookup"),
+            models.Index(fields=["expires_at"], name="pdl_action_code_exp"),
+        ]

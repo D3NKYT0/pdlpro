@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast'
 import { I18nextProvider } from 'react-i18next'
 import { AuthProvider } from '../../contexts/AuthContext'
 import { CookieConsentProvider } from '../../contexts/CookieConsentContext'
+import { ConsentEnforcementBridge } from '../../components/legal/ConsentEnforcementBridge'
 import i18n from '../../i18n'
 import { queryClient } from '../../services/infra/queryClient'
 import { AppRoutes } from '../routes/AppRoutes'
@@ -14,6 +15,7 @@ export function AppProviders() {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <CookieConsentProvider>
+            <ConsentEnforcementBridge />
             <AuthProvider>
               <AppRoutes />
               <div data-theme-part="toast-host" data-theme-surface="overlay">

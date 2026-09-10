@@ -8,6 +8,8 @@ import toast from 'react-hot-toast'
 import { authApi, ApiError } from '../services/api'
 import i18n from '../i18n'
 import { AccountSecurityPage } from './AccountSecurityPage'
+import { CookieConsentProvider } from '../contexts/CookieConsentContext'
+import { MemoryRouter } from 'react-router-dom'
 
 const session = vi.hoisted(() => ({
   user: { email: 'user@test.dev', is_email_verified: false, is_2fa_enabled: false },
@@ -30,6 +32,9 @@ vi.mock('../services/domain/auth.service', async original => ({
     beginPasskeyRegistration: vi.fn(),
     completePasskeyRegistration: vi.fn(),
     deletePasskey: vi.fn(),
+    exportData: vi.fn(),
+    requestDeleteCode: vi.fn(),
+    deleteAccount: vi.fn(),
   },
 }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
@@ -49,7 +54,15 @@ beforeEach(() => {
 })
 afterEach(async () => { cleanup(); client.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 function mount() {
-  render(<QueryClientProvider client={client}><AccountSecurityPage /></QueryClientProvider>)
+  render(
+    <MemoryRouter>
+      <CookieConsentProvider>
+        <QueryClientProvider client={client}>
+          <AccountSecurityPage />
+        </QueryClientProvider>
+      </CookieConsentProvider>
+    </MemoryRouter>,
+  )
   return userEvent.setup()
 }
 it.each([false, true])('reenvio de verificação informa e-mail já confirmado=%s', async verified => {
@@ -66,7 +79,15 @@ it('não oferece reenvio quando e-mail está confirmado', () => {
   expect(screen.getByText('Identidade de e-mail confirmada')).toBeVisible()
 })
 it('empilha e-mail, 2FA, passkeys e conexões ao lado das sessões', () => {
-  const { container } = render(<QueryClientProvider client={client}><AccountSecurityPage /></QueryClientProvider>)
+  const { container } = render(
+    <MemoryRouter>
+      <CookieConsentProvider>
+        <QueryClientProvider client={client}>
+          <AccountSecurityPage />
+        </QueryClientProvider>
+      </CookieConsentProvider>
+    </MemoryRouter>,
+  )
   const side = container.querySelector('.security-side')
   const sessions = container.querySelector('.security-sessions')
   expect(side).toBeTruthy()
@@ -76,6 +97,8 @@ it('empilha e-mail, 2FA, passkeys e conexões ao lado das sessões', () => {
   expect(side?.querySelector('.security-passkeys')).toBeTruthy()
   expect(side?.querySelector('.security-connections')).toBeTruthy()
   expect(side?.textContent).toMatch(/Autenticação em duas etapas/)
+  expect(container.querySelector('.security-privacy')).toBeTruthy()
+  expect(screen.getByRole('heading', { name: /Privacidade, LGPD e cookies/i })).toBeTruthy()
 })
 it.each([false, true])('confirma 2FA com código; erro=%s', async fail => {
   if (fail) vi.mocked(authApi.confirmTwoFactor).mockRejectedValue(new ApiError('Código incorreto', 400, 'INVALID'))
@@ -178,4 +201,13 @@ it('traduz títulos, sessões e avisos de 2FA no idioma ativo', async () => {
   expect(screen.getByTitle('End session')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Resend verification' }))
   expect(toast.success).toHaveBeenCalledWith('Your e-mail is already verified.')
+})
+
+it('solicita exportação LGPD a partir da área de privacidade', async () => {
+  vi.mocked(authApi.exportData).mockResolvedValue({ detail: 'Pacote LGPD gerado.' })
+  const user = mount()
+  await user.click(screen.getByRole('button', { name: /Enviar meus dados por e-mail/i }))
+  expect(authApi.exportData).toHaveBeenCalledTimes(1)
+  expect(toast.success).toHaveBeenCalledWith('Pacote LGPD gerado.')
+  expect(await screen.findByRole('status')).toHaveTextContent('Pacote LGPD gerado.')
 })

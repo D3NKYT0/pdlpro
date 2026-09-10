@@ -96,3 +96,31 @@ class OAuthError(DomainError):
 
     error_code = "OAUTH_ERROR"
     message = "Não foi possível concluir a autenticação social."
+
+
+class LgpdExportPendingError(ConflictError):
+    """Já existe uma exportação LGPD em andamento para a conta."""
+
+    error_code = "LGPD_EXPORT_PENDING"
+    message = "Já existe uma exportação em andamento. Aguarde o e-mail ou tente novamente em alguns minutos."
+
+
+class LgpdInvalidDeleteCodeError(ValidationDomainError):
+    """OTP de exclusão LGPD inválido ou expirado."""
+
+    error_code = "LGPD_INVALID_DELETE_CODE"
+    message = "Código de confirmação inválido ou expirado."
+
+
+class LgpdExportNotFoundError(EntityNotFoundError):
+    """Link de download LGPD inválido ou arquivo ausente."""
+
+    message = "Link de exportação inválido ou arquivo não encontrado."
+
+
+class LgpdExportExpiredError(DomainError):
+    """Link de download LGPD expirado."""
+
+    error_code = "LGPD_EXPORT_EXPIRED"
+    status_code = 403
+    message = "Link de exportação expirado."

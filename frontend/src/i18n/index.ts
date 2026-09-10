@@ -8,6 +8,7 @@ import {
   readStoredLanguage,
   type AppLanguage,
 } from './locale'
+import { hasFunctionalConsent, readCookieConsent } from '../lib/cookieConsent'
 
 import ptCommon from './locales/pt/common.json'
 import ptPublic from './locales/pt/public.json'
@@ -38,9 +39,16 @@ const initialLanguage: AppLanguage =
     ? 'pt'
     : readStoredLanguage() || readDjangoLanguageCookie() || detectBrowserLanguage()
 
-// Keep storage aligned with the active UI language so HTTP headers follow the SPA.
-if (import.meta.env.MODE !== 'test') {
+const canPersistLanguage =
+  import.meta.env.MODE === 'test' ||
+  !readCookieConsent() ||
+  hasFunctionalConsent()
+
+// Idioma persistido só com cookie funcional (ou antes da decisão / em testes).
+if (canPersistLanguage && import.meta.env.MODE !== 'test') {
   persistLanguage(initialLanguage)
+} else if (import.meta.env.MODE !== 'test' && !canPersistLanguage) {
+  // Sessão atual usa o idioma detectado, sem gravar preferência.
 }
 
 void i18n.use(initReactI18next).init({
@@ -59,7 +67,9 @@ void i18n.use(initReactI18next).init({
 
 i18n.on('languageChanged', (language) => {
   if (language === 'pt' || language === 'en' || language === 'es') {
-    persistLanguage(language)
+    if (import.meta.env.MODE === 'test' || !readCookieConsent() || hasFunctionalConsent()) {
+      persistLanguage(language)
+    }
     if (typeof document !== 'undefined') {
       document.documentElement.lang = language === 'pt' ? 'pt-BR' : language
     }

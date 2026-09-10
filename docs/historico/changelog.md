@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Self-service LGPD em `/panel/security`: exportação de dados por e-mail,
+  exclusão/anonimização com OTP, preferências de cookies e enforcement real
+  (analytics → Sentry; funcionais → persistência de idioma).
+
 ### Alterado
 
 ### Corrigido

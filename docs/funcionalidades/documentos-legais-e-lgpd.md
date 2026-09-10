@@ -49,13 +49,32 @@ O banner de cookies é **client-only** (`localStorage` `PDL_cookie_consent`), co
 categorias essenciais / funcionais / analíticos / marketing. Cookies JWT de
 sessão são essenciais e não podem ser desligados pelo banner.
 
+Efeitos reais do consentimento:
+
+| Categoria | Comportamento |
+| --- | --- |
+| Essenciais | Sessão JWT, CSRF, idioma de sessão sem persistência forçada |
+| Funcionais | Persiste idioma (`pdl.language` + cookie `django_language`) |
+| Analíticos | Inicializa Sentry (`VITE_SENTRY_DSN`) via `ConsentEnforcementBridge` |
+| Marketing | Reservado; nenhum script de marketing no core hoje |
+
 O chrome visual (banner, modal de preferências e gate de reaceitação) vive em
 `css/public/terms.css` (carregado no tema público e no painel, remapeável). O
 corpo das páginas legais e o histórico usam `css/pages/public-pages.css`, no
 mesmo padrão de Wiki/FAQ/Notícias.
 
-## Direitos do titular (nesta versão)
+## Self-service no painel
 
-Pedidos de acesso, correção, portabilidade e exclusão são atendidos via suporte
-e e-mail do DPO, conforme a página `/lgpd`. Exportação/exclusão self-service
-fica para uma entrega futura.
+Em `/panel/security` a seção **Privacidade, LGPD e cookies** permite:
+
+- consultar documentos legais;
+- **exportar dados** (`POST /api/v1/shared/me/export-data/`) — pacote `.json.gz` com
+  link assinado por e-mail;
+- **excluir/anonimizar conta** — OTP por e-mail
+  (`POST /api/v1/shared/me/request-delete-code/`) + confirmação
+  (`POST /api/v1/shared/me/delete-account/`) e digitar a palavra de confirmação na UI;
+- gerenciar preferências de cookies (mesmo store do banner).
+
+Download do pacote: `GET /api/v1/shared/lgpd-export/<token>/download/`.
+
+Pedidos de correção ou dúvidas ao DPO continuam pelos canais da página `/lgpd`.

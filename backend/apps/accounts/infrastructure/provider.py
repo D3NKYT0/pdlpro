@@ -7,6 +7,12 @@ from apps.accounts.application.email_use_cases import (
     RequestPasswordResetUseCase,
     VerifyEmailUseCase,
 )
+from apps.accounts.application.lgpd_use_cases import (
+    DeleteAccountUseCase,
+    RequestAccountDeletionCodeUseCase,
+    RequestDataExportUseCase,
+    ResolveLgpdExportDownloadUseCase,
+)
 from apps.accounts.application.oauth import BeginOAuthUseCase, CompleteOAuthUseCase
 from apps.accounts.application.progress_use_cases import (
     ClaimRewardUseCase,
@@ -44,6 +50,7 @@ from apps.accounts.application.webauthn_service import (
 from apps.accounts.domain.achievement_facts import IAchievementFacts
 from apps.accounts.domain.auth_session import IAuthSessionService
 from apps.accounts.domain.bag import IRewardBagPort
+from apps.accounts.domain.lgpd import ILgpdPrivacyService
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import (
     IProgressRepository,
@@ -55,6 +62,7 @@ from apps.accounts.domain.repositories import (
 from apps.accounts.infrastructure.achievement_facts import DjangoAchievementFacts
 from apps.accounts.infrastructure.authentication import AuthSessionService
 from apps.accounts.infrastructure.bag import GamesRewardBagAdapter
+from apps.accounts.infrastructure.lgpd import DjangoLgpdPrivacyService
 from apps.accounts.infrastructure.mailer import DjangoMailer
 from apps.accounts.infrastructure.repositories import (
     DjangoProgressRepository,
@@ -91,6 +99,7 @@ class AccountsProvider(AppProvider):
         container.register(IAchievementFacts, DjangoAchievementFacts, lifetime=Lifetime.SCOPED)
         container.register(IRewardBagPort, GamesRewardBagAdapter, lifetime=Lifetime.SCOPED)
         container.register(IMailer, DjangoMailer, lifetime=Lifetime.SINGLETON)
+        container.register(ILgpdPrivacyService, DjangoLgpdPrivacyService, lifetime=Lifetime.SCOPED)
         container.register(IAuthSessionService, AuthSessionService, lifetime=Lifetime.SCOPED)
         container.register_self(RegisterUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(CompleteCredentialsUseCase, lifetime=Lifetime.TRANSIENT)
@@ -123,5 +132,9 @@ class AccountsProvider(AppProvider):
             CompletePasskeyAuthenticationUseCase,
             ListPasskeysUseCase,
             DeletePasskeyUseCase,
+            RequestDataExportUseCase,
+            RequestAccountDeletionCodeUseCase,
+            DeleteAccountUseCase,
+            ResolveLgpdExportDownloadUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)
