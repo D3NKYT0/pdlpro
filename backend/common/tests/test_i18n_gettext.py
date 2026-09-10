@@ -53,7 +53,9 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
         response = middleware(request)
         self.assertEqual(request.pdl_language, "en")
         self.assertEqual(request.LANGUAGE_CODE, "en")
-        self.assertEqual(response.content.decode(), "The requested resource was not found.")
+        self.assertEqual(
+            response.content.decode(), "The requested resource was not found."
+        )
         self.assertEqual(response["Content-Language"], "en")
 
     def test_x_language_beats_django_language_cookie(self):
@@ -74,7 +76,9 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
 
         response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
         self.assertEqual(request.pdl_language, "en")
-        self.assertEqual(response.content.decode(), "The requested resource was not found.")
+        self.assertEqual(
+            response.content.decode(), "The requested resource was not found."
+        )
 
     def test_api_accept_language_beats_django_language_cookie(self):
         factory = RequestFactory()
@@ -93,7 +97,9 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
 
         response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
         self.assertEqual(request.pdl_language, "en")
-        self.assertEqual(response.content.decode(), "The requested resource was not found.")
+        self.assertEqual(
+            response.content.decode(), "The requested resource was not found."
+        )
 
     def test_non_api_keeps_cookie_over_accept_language(self):
         factory = RequestFactory()
@@ -139,7 +145,9 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
     def test_domain_error_message_is_translated_in_handler(self):
         activate_language("es")
         try:
-            response = custom_exception_handler(EntityNotFoundError(), {"request": None})
+            response = custom_exception_handler(
+                EntityNotFoundError(), {"request": None}
+            )
         finally:
             translation.deactivate()
         self.assertIsNotNone(response)
@@ -213,13 +221,13 @@ class CatalogResolutionTests(SimpleTestCase):
             activate_language(language)
             try:
                 drifted = [
-                    msgid
-                    for msgid, pair in data.items()
-                    if _(msgid) != pair[index]
+                    msgid for msgid, pair in data.items() if _(msgid) != pair[index]
                 ]
             finally:
                 translation.deactivate()
-            self.assertEqual(drifted, [], f"{language}: {len(drifted)} msgid(s) drifted")
+            self.assertEqual(
+                drifted, [], f"{language}: {len(drifted)} msgid(s) drifted"
+            )
 
     def test_fuzzy_lookalikes_do_not_steal_api_msgstr(self):
         """msgmerge fuzzy leftovers used to map similar msgids to the wrong EN string."""

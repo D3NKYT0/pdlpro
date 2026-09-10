@@ -51,7 +51,7 @@ def test_admin_login_exposes_language_selector_and_sync_script(client):
     response = client.get(reverse("admin:login"))
     assert response.status_code == 200
     body = response.content.decode()
-    assert 'data-pdl-language-form' in body
+    assert "data-pdl-language-form" in body
     assert 'name="language"' in body
     assert "pdl_admin/js/language-sync.js" in body
     assert reverse("set_language") in body or "/i18n/setlang/" in body
@@ -78,7 +78,7 @@ def test_swagger_topbar_exposes_language_selector_and_localized_schema_url():
     response = Client().get("/api/docs/swagger-ui/")
     assert response.status_code == 200
     body = response.content.decode().replace("\\u003D", "=")
-    assert 'data-pdl-language-form' in body
+    assert "data-pdl-language-form" in body
     assert "pdl_admin/js/language-sync.js" in body
     assert 'id="pdl-docs-language"' in body
     assert 'class="pdl-docs-language-select"' in body

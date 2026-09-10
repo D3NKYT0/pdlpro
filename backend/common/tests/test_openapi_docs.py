@@ -2,6 +2,7 @@ import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import Client, override_settings
+from drf_spectacular.drainage import GENERATOR_STATS
 from drf_spectacular.generators import SchemaGenerator
 from rest_framework.response import Response
 
@@ -13,7 +14,9 @@ def test_openapi_schema_documents_every_operation():
     schema = SchemaGenerator().get_schema(request=None, public=True)
     assert schema is not None
 
-    tag_docs = {tag["name"]: (tag.get("description") or "").strip() for tag in pdl_swagger_tags}
+    tag_docs = {
+        tag["name"]: (tag.get("description") or "").strip() for tag in pdl_swagger_tags
+    }
     used_tags: set[str] = set()
     missing_summary: list[str] = []
     missing_description: list[str] = []
@@ -37,8 +40,39 @@ def test_openapi_schema_documents_every_operation():
     assert not missing_summary, f"operações sem summary: {missing_summary}"
     assert not missing_description, f"operações sem description: {missing_description}"
 
-    undocumented = sorted(tag for tag in used_tags if tag not in tag_docs or not tag_docs[tag])
+    undocumented = sorted(
+        tag for tag in used_tags if tag not in tag_docs or not tag_docs[tag]
+    )
     assert not undocumented, f"tags sem descrição em pdl_swagger_tags: {undocumented}"
+
+
+@override_settings(OPENAPI_DOCS_PUBLIC=True)
+def test_openapi_schema_generation_is_quiet():
+    """Regressão: sem ERROR/WARN de serializer/auth/operationId no schema."""
+    GENERATOR_STATS.reset()
+    schema = SchemaGenerator().get_schema(request=None, public=True)
+    assert schema is not None
+
+    noisy = [
+        msg
+        for msg in list(GENERATOR_STATS._error_cache)
+        + list(GENERATOR_STATS._warn_cache)
+        if "unable to guess serializer" in msg
+        or "could not resolve authenticator" in msg
+        or "has collisions" in msg
+    ]
+    assert not noisy, f"ruído OpenAPI restante: {noisy}"
+
+    schemes = (schema.get("components") or {}).get("securitySchemes") or {}
+    assert "cookieJwtAuth" in schemes
+
+    operation_ids = [
+        op["operationId"]
+        for methods in schema["paths"].values()
+        for method, op in methods.items()
+        if not method.startswith("x-")
+    ]
+    assert len(operation_ids) == len(set(operation_ids))
 
 
 @override_settings(OPENAPI_DOCS_PUBLIC=True)
@@ -79,7 +113,7 @@ def test_docs_nav_active_uses_green_glow_not_outline():
     assert '.pdl-docs-nav .pdl-button[aria-current="page"]' in css
     assert "hue-rotate(65deg)" in css
     assert "text-shadow" in css
-    assert 'outline: 1px solid var(--pdl-gold' not in css
+    assert "outline: 1px solid var(--pdl-gold" not in css
 
 
 def test_docs_css_defines_branded_loader():

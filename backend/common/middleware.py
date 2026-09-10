@@ -53,9 +53,7 @@ class SecurityHeadersMiddleware:
         from django.conf import settings
 
         response = self.get_response(request)
-        response.setdefault(
-            "Content-Security-Policy", settings.CONTENT_SECURITY_POLICY
-        )
+        response.setdefault("Content-Security-Policy", settings.CONTENT_SECURITY_POLICY)
         return response
 
 
@@ -68,9 +66,7 @@ def _api_accept_language_applies(path: str) -> bool:
     """
     if not path.startswith("/api/"):
         return False
-    if path.startswith("/api/docs/"):
-        return False
-    return True
+    return not path.startswith("/api/docs/")
 
 
 class ApiLanguageMiddleware:
@@ -99,9 +95,7 @@ class ApiLanguageMiddleware:
             accept = parse_accept_language(request.headers.get("Accept-Language"))
 
         explicit = (
-            request.GET.get("lang")
-            or request.headers.get("X-Language")
-            or accept
+            request.GET.get("lang") or request.headers.get("X-Language") or accept
         )
         if explicit:
             django_language = activate_language(explicit)
@@ -167,7 +161,10 @@ class ObservabilityMiddleware:
         return f"/{route}" if route else request.path_info
 
     def _audit_staff_write(self, request, response) -> None:
-        if request.method not in self._write_methods or not request.path_info.startswith(self._staff_prefix):
+        if (
+            request.method not in self._write_methods
+            or not request.path_info.startswith(self._staff_prefix)
+        ):
             return
         user = getattr(request, "user", None)
         if not getattr(user, "is_authenticated", False) or not (
@@ -181,7 +178,11 @@ class ObservabilityMiddleware:
             view_name = getattr(match, "view_name", "") or "staff-api"
             route_kwargs = getattr(match, "kwargs", {}) or {}
             target_id = next(
-                (str(value) for key, value in route_kwargs.items() if key.endswith(("_id", "_uuid"))),
+                (
+                    str(value)
+                    for key, value in route_kwargs.items()
+                    if key.endswith(("_id", "_uuid"))
+                ),
                 "",
             )
             AuditLog.objects.create(
@@ -194,7 +195,9 @@ class ObservabilityMiddleware:
                 status_code=response.status_code,
                 target_type=view_name,
                 target_id=target_id,
-                payload={"outcome": "success" if response.status_code < 400 else "failure"},
+                payload={
+                    "outcome": "success" if response.status_code < 400 else "failure"
+                },
             )
         except Exception:
             logger.exception("Failed to persist staff audit event")
@@ -202,7 +205,11 @@ class ObservabilityMiddleware:
     @staticmethod
     def _client_ip(request) -> str | None:
         forwarded = request.META.get("HTTP_X_FORWARDED_FOR", "")
-        value = (forwarded.split(",", 1)[0] if forwarded else request.META.get("REMOTE_ADDR", "")).strip()
+        value = (
+            forwarded.split(",", 1)[0]
+            if forwarded
+            else request.META.get("REMOTE_ADDR", "")
+        ).strip()
         try:
             return str(ip_address(value))
         except ValueError:
@@ -281,5 +288,5 @@ class ApiErrorContractMiddleware:
             return None
         try:
             return json.loads(response.content.decode("utf-8") or "null")
-        except (ValueError, UnicodeDecodeError):
+        except ValueError, UnicodeDecodeError:
             return None
