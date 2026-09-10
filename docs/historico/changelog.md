@@ -8,6 +8,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.2.0] - 2026-09-09
+
 Alterações desde **2 de setembro de 2026** (após `[2.1.0]`), consolidadas pelo histórico
 Git até **9 de setembro de 2026**.
 
@@ -74,6 +76,8 @@ Git até **9 de setembro de 2026**.
 - Datas e números do painel e dos relatórios seguem o idioma ativo: os formatadores
   fixos em `pt-BR` deram lugar a `formatDate`, `formatDateTime` e `formatNumber` em
   `frontend/src/lib/formatters.ts`.
+- Textos sociais do Denkynho (boas-vindas, intenções e “como estou”) passaram a
+  `personality.json` (pt/en/es); matchers e poses permanecem no código.
 - Estilos do painel admin e da Help refinados para hierarquia e responsividade com
   tokens de tema.
 - Arquivos `.log` passam a residir apenas em `backend/log/` e `frontend/log/`
@@ -91,6 +95,8 @@ Git até **9 de setembro de 2026**.
 - Caminhos e âncoras de assets/poses do Denkynho; pin de estrela e overlays ambiente.
 - Documentação local de desenvolvimento (proxy com backend indisponível) e caminhos
   de teste no Vitest.
+- Ícones Jazzmin dos models de programas e descrição OpenAPI da tag
+  `Staff / Relatórios`.
 
 ## [2.1.0] - 2026-09-02
 
