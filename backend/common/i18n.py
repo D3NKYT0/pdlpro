@@ -43,6 +43,26 @@ def resolve_language(value: str | None, default: str = "pt") -> str:
     return default
 
 
+def parse_accept_language(header: str | None) -> str | None:
+    """Primeiro idioma de produto suportado em ``Accept-Language``, ou ``None``."""
+
+    if not header:
+        return None
+    for part in header.split(","):
+        token = part.split(";", 1)[0].strip().lower().replace("_", "-")
+        if not token or token == "*":
+            continue
+        if token in SUPPORTED_CONTENT_LANGUAGES:
+            return token
+        if token.startswith("pt"):
+            return "pt"
+        if token.startswith("en"):
+            return "en"
+        if token.startswith("es"):
+            return "es"
+    return None
+
+
 def to_django_language(language: str) -> str:
     """Converte código de produto para o código Django correspondente."""
 

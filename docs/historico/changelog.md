@@ -13,7 +13,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Django **gettext** no backend: `LANGUAGES` pt-br/en/es, `LocaleMiddleware`,
   `ApiLanguageMiddleware`, catálogos em `backend/locale/`, `POST /i18n/setlang/`
   e tradução das mensagens base de `DomainError` na borda HTTP; a SPA envia
-  `Accept-Language`.
+  `X-Language` e `Accept-Language`.
 - Cobertura gettext ampla do admin/Jazzmin: `verbose_name` / choices / help_text
   dos modelos, `AppConfig`, fieldsets, formulários, e-mails de conta/vinculação,
   `welcome_sign` do Jazzmin e catálogo de msgids de domínio (~300 strings EN/ES).
@@ -41,6 +41,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Idioma da SPA e da API sincronizados: o cliente envia `X-Language` e, nas
+  rotas `/api/`, `Accept-Language` prevalece sobre o cookie `django_language`
+  (antes o setlang do Jazzmin travava o gettext da API no idioma do admin).
 - Migrações pendentes de `Meta.verbose_name` (gettext) em `games`, `programs`,
   `server` e `shop` — `makemigrations --check` volta a passar.
 - Tela **Coming Soon** / abertura do servidor passa a usar i18n pt/en/es (kicker,

@@ -34,6 +34,11 @@ import esPersonality from './locales/es/personality.json'
 const initialLanguage: AppLanguage =
   import.meta.env.MODE === 'test' ? 'pt' : readStoredLanguage() || detectBrowserLanguage()
 
+// Keep storage aligned with the active UI language so HTTP headers follow the SPA.
+if (import.meta.env.MODE !== 'test') {
+  persistLanguage(initialLanguage)
+}
+
 void i18n.use(initReactI18next).init({
   resources: {
     pt: { common: ptCommon, public: ptPublic, auth: ptAuth, panel: ptPanel, admin: ptAdmin, help: ptHelp, personality: ptPersonality },

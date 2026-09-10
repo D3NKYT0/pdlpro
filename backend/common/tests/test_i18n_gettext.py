@@ -11,6 +11,7 @@ from common.exceptions import custom_exception_handler
 from common.i18n import (
     activate_language,
     from_django_language,
+    parse_accept_language,
     resolve_language,
     to_django_language,
 )
@@ -23,6 +24,13 @@ class ProductLanguageHelpersTests(SimpleTestCase):
         self.assertEqual(resolve_language("pt-BR"), "pt")
         self.assertEqual(resolve_language("es-ES"), "es")
         self.assertEqual(resolve_language("fr"), "pt")
+
+    def test_parse_accept_language_picks_first_supported(self):
+        self.assertEqual(parse_accept_language("en-US,en;q=0.9,pt-BR;q=0.8"), "en")
+        self.assertEqual(parse_accept_language("pt-BR"), "pt")
+        self.assertEqual(parse_accept_language("fr-FR,fr;q=0.9"), None)
+        self.assertIsNone(parse_accept_language(""))
+        self.assertIsNone(parse_accept_language(None))
 
     def test_django_locale_roundtrip(self):
         self.assertEqual(to_django_language("pt"), "pt-br")
@@ -47,6 +55,65 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
         self.assertEqual(request.LANGUAGE_CODE, "en")
         self.assertEqual(response.content.decode(), "The requested resource was not found.")
         self.assertEqual(response["Content-Language"], "en")
+
+    def test_x_language_beats_django_language_cookie(self):
+        factory = RequestFactory()
+        request = factory.get(
+            "/api/v1/public/news/",
+            HTTP_X_LANGUAGE="en",
+            HTTP_ACCEPT_LANGUAGE="es",
+        )
+        request.COOKIES["django_language"] = "pt-br"
+
+        def view(_request):
+            from django.http import HttpResponse
+
+            return HttpResponse(_("O recurso solicitado não foi encontrado."))
+
+        from django.middleware.locale import LocaleMiddleware
+
+        response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
+        self.assertEqual(request.pdl_language, "en")
+        self.assertEqual(response.content.decode(), "The requested resource was not found.")
+
+    def test_api_accept_language_beats_django_language_cookie(self):
+        factory = RequestFactory()
+        request = factory.get(
+            "/api/v1/public/news/",
+            HTTP_ACCEPT_LANGUAGE="en",
+        )
+        request.COOKIES["django_language"] = "pt-br"
+
+        def view(_request):
+            from django.http import HttpResponse
+
+            return HttpResponse(_("O recurso solicitado não foi encontrado."))
+
+        from django.middleware.locale import LocaleMiddleware
+
+        response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
+        self.assertEqual(request.pdl_language, "en")
+        self.assertEqual(response.content.decode(), "The requested resource was not found.")
+
+    def test_non_api_keeps_cookie_over_accept_language(self):
+        factory = RequestFactory()
+        request = factory.get(
+            "/admin/",
+            HTTP_ACCEPT_LANGUAGE="en",
+        )
+        request.COOKIES["django_language"] = "pt-br"
+
+        def view(_request):
+            from django.http import HttpResponse
+            from django.utils import translation
+
+            return HttpResponse(translation.get_language())
+
+        from django.middleware.locale import LocaleMiddleware
+
+        response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
+        self.assertEqual(request.pdl_language, "pt")
+        self.assertEqual(response.content.decode(), "pt-br")
 
     def test_domain_error_message_is_translated_in_handler(self):
         activate_language("es")

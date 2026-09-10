@@ -56,6 +56,21 @@ export function contentLang(language: string): AppLanguage {
   return isAppLanguage(language) ? language : 'pt'
 }
 
+/** BCP 47 value for `Accept-Language` (Django maps `pt-BR` → `pt-br`). */
+export function acceptLanguageHeader(language: AppLanguage): string {
+  return language === 'pt' ? 'pt-BR' : language
+}
+
+/** Active product language from i18n, then `localStorage`. */
+export function activeAppLanguage(current?: string | null): AppLanguage | null {
+  if (isAppLanguage(current)) return current
+  const base = String(current || '')
+    .split(/[-_]/)[0]
+    ?.toLowerCase()
+  if (isAppLanguage(base)) return base
+  return readStoredLanguage()
+}
+
 /** hCaptcha language codes. */
 export function hcaptchaLanguage(language: string): string {
   if (language === 'en') return 'en'

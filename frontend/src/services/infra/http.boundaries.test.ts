@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { ApiError, refreshSession, request, resetHttpClient } from './http'
 
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status })
@@ -10,10 +11,11 @@ beforeEach(() => {
   fetchMock.mockReset()
   vi.stubGlobal('fetch', fetchMock)
 })
-afterEach(() => {
+afterEach(async () => {
   resetHttpClient()
   vi.useRealTimers()
   vi.unstubAllGlobals()
+  await i18n.changeLanguage('pt')
 })
 
 describe('limites de repetição e contrato de erro', () => {
@@ -54,6 +56,15 @@ describe('limites de repetição e contrato de erro', () => {
   it('preserva contrato mesmo quando o servidor responde HTML', async () => {
     fetchMock.mockResolvedValue(new Response('<h1>Not found</h1>', { status: 404 }))
     await expect(request('/public/server/')).rejects.toMatchObject({ status: 404, errorCode: 'ERROR', details: {} })
+  })
+
+  it('envia X-Language e Accept-Language conforme o idioma da SPA', async () => {
+    await i18n.changeLanguage('en')
+    fetchMock.mockResolvedValue(json({ ok: true }))
+    await request('/public/server/')
+    const headers = fetchMock.mock.calls[0][1].headers as Headers
+    expect(headers.get('X-Language')).toBe('en')
+    expect(headers.get('Accept-Language')).toBe('en')
   })
 })
 

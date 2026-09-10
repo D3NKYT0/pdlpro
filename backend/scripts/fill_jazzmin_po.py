@@ -85,12 +85,12 @@ ENTRY = re.compile(
     r"(?P<head>(?:^#.*\n)*)"
     r"(?P<body>msgid (?P<raw>(?:\"\"\n(?:\".*\"\n)+|\".*\"\n))"
     r"msgstr (?:\"\"\n(?:\".*\"\n)*|\".*\"\n))",
-    re.M,
+    re.MULTILINE,
 )
 
 
 def decode_msgid(raw: str) -> str:
-    parts = re.findall(r'"(.*?)"', raw, re.S)
+    parts = re.findall(r'"(.*?)"', raw, re.DOTALL)
     text = "".join(parts)
     return (
         text.replace(r"\\", "\0")

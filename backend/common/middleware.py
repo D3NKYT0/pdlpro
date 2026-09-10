@@ -60,11 +60,12 @@ class SecurityHeadersMiddleware:
 
 
 class ApiLanguageMiddleware:
-    """Ativa o gettext Django a partir de ``?lang=`` ou ``Accept-Language``.
+    """Ativa o gettext Django a partir de ``?lang=``, ``X-Language`` ou ``Accept-Language``.
 
-    Prioridade: query ``lang`` (produto pt|en|es) → idioma já escolhido pelo
-    ``LocaleMiddleware`` (sessão / Accept-Language). O domínio permanece sem Django;
-    a borda HTTP e templates admin usam o locale ativo.
+    Prioridade na API: query ``lang`` → ``X-Language`` → ``Accept-Language`` →
+    idioma já escolhido pelo ``LocaleMiddleware`` (cookie / sessão). Fora de
+    ``/api/``, ``Accept-Language`` não sobrescreve o cookie do admin (setlang).
+    O domínio permanece sem Django; a borda HTTP e templates admin usam o locale ativo.
     """
 
     def __init__(self, get_response):
@@ -74,14 +75,23 @@ class ApiLanguageMiddleware:
         from common.i18n import (
             activate_language,
             from_django_language,
+            parse_accept_language,
             resolve_language,
         )
 
-        explicit = request.GET.get("lang") or request.headers.get("X-Language")
+        accept = None
+        if request.path.startswith("/api/"):
+            accept = parse_accept_language(request.headers.get("Accept-Language"))
+
+        explicit = (
+            request.GET.get("lang")
+            or request.headers.get("X-Language")
+            or accept
+        )
         if explicit:
             django_language = activate_language(explicit)
         else:
-            # LocaleMiddleware já pode ter ativado via Accept-Language / sessão.
+            # LocaleMiddleware já pode ter ativado via cookie / Accept-Language.
             from django.utils import translation
 
             product = from_django_language(translation.get_language())
