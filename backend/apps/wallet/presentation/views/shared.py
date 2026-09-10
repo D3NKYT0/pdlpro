@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -27,8 +28,8 @@ class WalletView(InjectedAPIView):
 
     @extend_schema(
         tags=["Carteira"],
-        summary="Consultar carteira",
-        description="Retorna o saldo e os dados da carteira do usuário autenticado.",
+        summary=gettext_lazy("Consultar carteira"),
+        description=gettext_lazy("Retorna o saldo e os dados da carteira do usuário autenticado."),
         responses=WalletSerializer,
     )
     def get(self, request):
@@ -47,8 +48,8 @@ class WalletTransferView(InjectedAPIView):
 
     @extend_schema(
         tags=["Carteira"],
-        summary="Transferir para jogador",
-        description="Transfere moedas da carteira do usuário autenticado para outro jogador.",
+        summary=gettext_lazy("Transferir para jogador"),
+        description=gettext_lazy("Transfere moedas da carteira do usuário autenticado para outro jogador."),
         request=TransferSerializer,
         responses=WalletSerializer,
     )
@@ -78,8 +79,8 @@ class WalletTransactionsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Carteira"],
-        summary="Listar transações",
-        description="Lista o histórico de transações da carteira do usuário autenticado, paginado.",
+        summary=gettext_lazy("Listar transações"),
+        description=gettext_lazy("Lista o histórico de transações da carteira do usuário autenticado, paginado."),
     )
     def get(self, request):
         wallet = self.resolve(GetWalletUseCase).execute(GetWalletInput(user_id=request.user.id))

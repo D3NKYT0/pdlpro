@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -31,8 +32,8 @@ class ServerInfoView(InjectedAPIView):
 
     @extend_schema(
         tags=["Servidor"],
-        summary="Informações do servidor",
-        description="Retorna as informações públicas de configuração e apresentação do servidor.",
+        summary=gettext_lazy("Informações do servidor"),
+        description=gettext_lazy("Retorna as informações públicas de configuração e apresentação do servidor."),
         responses=ServerInfoSerializer,
     )
     def get(self, request):
@@ -52,8 +53,8 @@ class ServerStatusView(InjectedAPIView):
 
     @extend_schema(
         tags=["Servidor"],
-        summary="Status do servidor",
-        description="Retorna o status online, contagens e disponibilidade atual do servidor.",
+        summary=gettext_lazy("Status do servidor"),
+        description=gettext_lazy("Retorna o status online, contagens e disponibilidade atual do servidor."),
         responses=ServerStatusSerializer,
     )
     def get(self, request):
@@ -73,8 +74,8 @@ class RankingView(InjectedAPIView):
 
     @extend_schema(
         tags=["Servidor"],
-        summary="Ranking público",
-        description="Retorna o ranking público do tipo informado, limitado pelo parâmetro limit.",
+        summary=gettext_lazy("Ranking público"),
+        description=gettext_lazy("Retorna o ranking público do tipo informado, limitado pelo parâmetro limit."),
         responses=RankingEntrySerializer(many=True),
     )
     def get(self, request, kind: str):
@@ -109,8 +110,8 @@ class PublicLineageQueryView(InjectedAPIView):
 
     @extend_schema(
         tags=["Servidor"],
-        summary="Consulta pública Lineage",
-        description="Executa uma consulta pública nomeada no banco Lineage e devolve as linhas resultantes.",
+        summary=gettext_lazy("Consulta pública Lineage"),
+        description=gettext_lazy("Executa uma consulta pública nomeada no banco Lineage e devolve as linhas resultantes."),
     )
     def get(self, request, name: str):
         params = {key: value for key, value in request.query_params.items()}

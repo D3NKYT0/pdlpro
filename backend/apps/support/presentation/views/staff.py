@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -29,8 +30,8 @@ class StaffTicketListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Atendimento"],
-        summary="Listar chamados (staff)",
-        description="Lista chamados para a equipe com filtros e indicadores de atendimento.",
+        summary=gettext_lazy("Listar chamados (staff)"),
+        description=gettext_lazy("Lista chamados para a equipe com filtros e indicadores de atendimento."),
     )
     def get(self, request):
         result = self.resolve(ListStaffTicketsUseCase).execute(
@@ -58,8 +59,8 @@ class StaffTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Atendimento"],
-        summary="Detalhe do chamado (staff)",
-        description="Consulta o chamado informado com mensagens e metadados administrativos.",
+        summary=gettext_lazy("Detalhe do chamado (staff)"),
+        description=gettext_lazy("Consulta o chamado informado com mensagens e metadados administrativos."),
     )
     def get(self, request, ticket_id):
         ticket = self.resolve(GetStaffTicketUseCase).execute(GetStaffTicketInput(ticket_id=ticket_id))
@@ -67,8 +68,8 @@ class StaffTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Atendimento"],
-        summary="Responder chamado (staff)",
-        description="Permite à equipe responder um chamado, inclusive com notas internas.",
+        summary=gettext_lazy("Responder chamado (staff)"),
+        description=gettext_lazy("Permite à equipe responder um chamado, inclusive com notas internas."),
     )
     def post(self, request, ticket_id):
         ticket = self.resolve(ReplyStaffTicketUseCase).execute(
@@ -83,8 +84,8 @@ class StaffTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Atendimento"],
-        summary="Atualizar chamado (staff)",
-        description="Permite à equipe atribuir responsáveis e atualizar o estado de um chamado.",
+        summary=gettext_lazy("Atualizar chamado (staff)"),
+        description=gettext_lazy("Permite à equipe atribuir responsáveis e atualizar o estado de um chamado."),
     )
     def patch(self, request, ticket_id):
         ticket = self.resolve(UpdateStaffTicketUseCase).execute(

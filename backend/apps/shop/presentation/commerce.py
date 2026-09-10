@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
@@ -105,7 +106,7 @@ class CommerceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Comércio"],
-        summary="Consultar seção do comércio",
+        summary=gettext_lazy("Consultar seção do comércio"),
         description=(
             "Consulta a seção informada no path: pacotes ativos (packages), histórico "
             "de compras (purchases) ou cotação atual do carrinho (quote)."
@@ -133,7 +134,7 @@ class CommerceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Comércio"],
-        summary="Atualizar carrinho do comércio",
+        summary=gettext_lazy("Atualizar carrinho do comércio"),
         description=(
             "Atualiza a seção informada: pacotes no carrinho (packages, via "
             "CartPackageSerializer) ou opções de compra (options, via "
@@ -177,7 +178,7 @@ class StaffCommerceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Comércio"],
-        summary="Listar pacotes ou promoções (staff)",
+        summary=gettext_lazy("Listar pacotes ou promoções (staff)"),
         description=(
             "Lista pacotes (packages) ou códigos promocionais (promos) conforme a "
             "seção do path. Respostas tipadas com PackageSerializer ou PromoSerializer."
@@ -201,7 +202,7 @@ class StaffCommerceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Comércio"],
-        summary="Criar pacote ou promoção (staff)",
+        summary=gettext_lazy("Criar pacote ou promoção (staff)"),
         description=(
             "Cria um pacote (packages, PackageSerializer) ou um código promocional "
             "(promos, PromoSerializer) conforme a seção do path."
@@ -240,7 +241,7 @@ class StaffCommerceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Comércio"],
-        summary="Atualizar pacote ou promoção (staff)",
+        summary=gettext_lazy("Atualizar pacote ou promoção (staff)"),
         description=(
             "Atualiza parcialmente um pacote ou promoção identificado por entry_id, "
             "conforme a seção (packages/promos)."

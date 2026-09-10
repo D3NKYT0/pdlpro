@@ -3,6 +3,7 @@ from io import BytesIO
 
 from django.core.files.base import ContentFile
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from PIL import Image, ImageOps
 from rest_framework import serializers
@@ -102,7 +103,7 @@ class CustomItemsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
-        summary="Listar itens customizados",
+        summary=gettext_lazy("Listar itens customizados"),
         parameters=[CustomItemQuery],
         responses=CustomItemSerializer(many=True),
     )
@@ -131,7 +132,7 @@ class CustomItemsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
-        summary="Criar item customizado",
+        summary=gettext_lazy("Criar item customizado"),
         request=CustomItemSerializer,
         responses={201: CustomItemSerializer},
     )
@@ -152,7 +153,7 @@ class CustomItemDetailView(CustomItemsView):
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
-        summary="Detalhe do item customizado",
+        summary=gettext_lazy("Detalhe do item customizado"),
         responses=CustomItemSerializer,
     )
     def get(self, request, item_uuid):
@@ -161,7 +162,7 @@ class CustomItemDetailView(CustomItemsView):
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
-        summary="Método não permitido",
+        summary=gettext_lazy("Método não permitido"),
         responses={405: None},
     )
     def post(self, request, item_uuid):
@@ -169,7 +170,7 @@ class CustomItemDetailView(CustomItemsView):
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
-        summary="Atualizar item customizado",
+        summary=gettext_lazy("Atualizar item customizado"),
         request=CustomItemSerializer,
         responses=CustomItemSerializer,
     )

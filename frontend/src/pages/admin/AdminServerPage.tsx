@@ -4,6 +4,7 @@ import { Field } from '../../components/ui/Field'
 import { ButtonLink } from '../../components/ui/Button'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, ExternalLink, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
@@ -25,6 +26,7 @@ function fromDatetimeLocal(value: string) {
 }
 
 export function AdminServerPage() {
+  const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
   const panel = useQuery({ queryKey: ['staff-panel'], queryFn: staffApi.panel })
   const [name, setName] = useState('')
@@ -94,11 +96,11 @@ export function AdminServerPage() {
         coming_soon_subtitle: comingSoonSubtitle,
         coming_soon_at: fromDatetimeLocal(comingSoonAt),
       })
-      toast.success('Configuração do servidor salva')
+      toast.success(t('server.saved'))
       await queryClient.invalidateQueries({ queryKey: ['staff-panel'] })
       await queryClient.invalidateQueries({ queryKey: ['server-info'] })
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível salvar'))
+      toast.error(apiErrorMessage(error, t('server.saveError')))
     } finally {
       setSaving(false)
     }
@@ -106,65 +108,65 @@ export function AdminServerPage() {
 
   return (
     <div className="account-page">
-      <AdminHeader kicker="Servidor" title="Painel e servidor" description="Nome, rates e aviso de coming soon exibidos no site." />
+      <AdminHeader kicker={t('server.kicker')} title={t('server.title')} description={t('server.description')} />
       <form className="admin-server-form" onSubmit={onSubmit}>
         <Card className="admin-config-section">
-          <header><span><ServerCog /></span><div><span className="panel-eyebrow">Identidade</span><h2>Informações do servidor</h2><p>Dados principais exibidos na página inicial.</p></div></header>
+          <header><span><ServerCog /></span><div><span className="panel-eyebrow">{t('server.identityEyebrow')}</span><h2>{t('server.identityTitle')}</h2><p>{t('server.identityDescription')}</p></div></header>
           <div className="account-form-fields">
-            <Field>Nome<input value={name} onChange={(e) => setName(e.target.value)} /></Field>
-            <Field>Slogan<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></Field>
+            <Field>{t('server.name')}<input value={name} onChange={(e) => setName(e.target.value)} /></Field>
+            <Field>{t('server.slogan')}<input value={slogan} onChange={(e) => setSlogan(e.target.value)} /></Field>
           </div>
-          <Field>Descrição<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></Field>
+          <Field>{t('server.descriptionField')}<textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} /></Field>
           <div className="account-form-fields">
-            <Field>Chronicle<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></Field>
-            <Field>Nível máximo<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></Field>
+            <Field>{t('server.chronicle')}<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></Field>
+            <Field>{t('server.maxLevel')}<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></Field>
           </div>
         </Card>
 
         <div className="admin-server-columns">
           <Card className="admin-config-section">
-            <header><span><Gauge /></span><div><span className="panel-eyebrow">Progressão</span><h2>Rates do servidor</h2><p>Multiplicadores de experiência e itens.</p></div></header>
+            <header><span><Gauge /></span><div><span className="panel-eyebrow">{t('server.ratesEyebrow')}</span><h2>{t('server.ratesTitle')}</h2><p>{t('server.ratesDescription')}</p></div></header>
             <div className="admin-server-rate-grid">
-              <Field>XP<input value={xp} onChange={(e) => setXp(e.target.value)} /></Field>
-              <Field>SP<input value={sp} onChange={(e) => setSp(e.target.value)} /></Field>
-              <Field>Adena<input value={adena} onChange={(e) => setAdena(e.target.value)} /></Field>
-              <Field>Drop<input value={drop} onChange={(e) => setDrop(e.target.value)} /></Field>
-              <Field>Spoil<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></Field>
+              <Field>{t('server.xp')}<input value={xp} onChange={(e) => setXp(e.target.value)} /></Field>
+              <Field>{t('server.sp')}<input value={sp} onChange={(e) => setSp(e.target.value)} /></Field>
+              <Field>{t('server.adena')}<input value={adena} onChange={(e) => setAdena(e.target.value)} /></Field>
+              <Field>{t('server.drop')}<input value={drop} onChange={(e) => setDrop(e.target.value)} /></Field>
+              <Field>{t('server.spoil')}<input value={spoil} onChange={(e) => setSpoil(e.target.value)} /></Field>
             </div>
           </Card>
 
           <Card className="admin-config-section">
-            <header><span><Sparkles /></span><div><span className="panel-eyebrow">Equipamentos</span><h2>Encantamento</h2><p>Limites usados nas informações públicas.</p></div></header>
+            <header><span><Sparkles /></span><div><span className="panel-eyebrow">{t('server.enchantEyebrow')}</span><h2>{t('server.enchantTitle')}</h2><p>{t('server.enchantDescription')}</p></div></header>
             <div className="account-form-fields">
-              <Field>Enchant seguro<input value={safe} onChange={(e) => setSafe(e.target.value)} /></Field>
-              <Field>Enchant máximo<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></Field>
+              <Field>{t('server.safeEnchant')}<input value={safe} onChange={(e) => setSafe(e.target.value)} /></Field>
+              <Field>{t('server.maxEnchant')}<input value={maxEnchant} onChange={(e) => setMaxEnchant(e.target.value)} /></Field>
             </div>
           </Card>
         </div>
 
         <Card className="admin-config-section">
-          <header><span><FileText /></span><div><span className="panel-eyebrow">Conteúdo público</span><h2>Recursos e notas</h2><p>Textos complementares apresentados aos jogadores.</p></div></header>
-          <Field>Recursos <small>Um recurso por linha</small><textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></Field>
+          <header><span><FileText /></span><div><span className="panel-eyebrow">{t('server.contentEyebrow')}</span><h2>{t('server.contentTitle')}</h2><p>{t('server.contentDescription')}</p></div></header>
+          <Field>{t('server.features')} <small>{t('server.featuresHint')}</small><textarea value={features} onChange={(e) => setFeatures(e.target.value)} rows={4} /></Field>
           <div className="account-form-fields">
-            <Field>Nota de PvP<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={3} /></Field>
-            <Field>Nota inicial<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></Field>
+            <Field>{t('server.pvpNote')}<textarea value={pvp} onChange={(e) => setPvp(e.target.value)} rows={3} /></Field>
+            <Field>{t('server.startNote')}<textarea value={start} onChange={(e) => setStart(e.target.value)} rows={3} /></Field>
           </div>
         </Card>
 
         <Card className="admin-config-section admin-access-section">
-          <header><span><LockKeyhole /></span><div><span className="panel-eyebrow">Controle de acesso</span><h2>Publicação do servidor</h2><p>Defina quem pode entrar enquanto o projeto está em preparação.</p></div></header>
+          <header><span><LockKeyhole /></span><div><span className="panel-eyebrow">{t('server.accessEyebrow')}</span><h2>{t('server.accessTitle')}</h2><p>{t('server.accessDescription')}</p></div></header>
           <div className="admin-toggle-list">
             <label className="admin-toggle">
               <input type="checkbox" checked={comingSoon} onChange={(e) => setComingSoon(e.target.checked)} />
               <span className="admin-toggle-control" aria-hidden="true"><i /></span>
-              <span><strong>Ativar Coming Soon</strong><small>Exibe a página de lançamento para visitantes.</small></span>
-              <b>{comingSoon ? 'Ativo' : 'Inativo'}</b>
+              <span><strong>{t('server.enableComingSoon')}</strong><small>{t('server.enableComingSoonHint')}</small></span>
+              <b>{comingSoon ? t('server.active') : t('server.inactive')}</b>
             </label>
             <label className={`admin-toggle${!comingSoon ? ' is-disabled' : ''}`}>
               <input type="checkbox" checked={staffOnly} disabled={!comingSoon} onChange={(e) => setStaffOnly(e.target.checked)} />
               <span className="admin-toggle-control" aria-hidden="true"><i /></span>
-              <span><strong>Permitir login apenas para staff</strong><small>Bloqueia jogadores comuns durante o Coming Soon.</small></span>
-              <b>{staffOnly && comingSoon ? 'Ativo' : 'Inativo'}</b>
+              <span><strong>{t('server.staffOnly')}</strong><small>{t('server.staffOnlyHint')}</small></span>
+              <b>{staffOnly && comingSoon ? t('server.active') : t('server.inactive')}</b>
             </label>
           </div>
         </Card>
@@ -173,25 +175,25 @@ export function AdminServerPage() {
           <header>
             <span><CalendarClock /></span>
             <div>
-              <span className="panel-eyebrow">Lançamento</span>
-              <h2>Página Coming Soon</h2>
-              <p>Título, subtítulo e data usados na contagem regressiva pública.</p>
+              <span className="panel-eyebrow">{t('server.launchEyebrow')}</span>
+              <h2>{t('server.launchTitle')}</h2>
+              <p>{t('server.launchDescription')}</p>
             </div>
           </header>
           <div className="account-form-fields">
             <Field>
-              Título do lançamento
-              <small>Exibido como headline. Use o nome do servidor ou o título da abertura.</small>
+              {t('server.launchHeadline')}
+              <small>{t('server.launchHeadlineHint')}</small>
               <input
                 value={comingSoonTitle}
                 disabled={!comingSoon}
                 onChange={(e) => setComingSoonTitle(e.target.value)}
-                placeholder={name || 'Nome do servidor'}
+                placeholder={name || t('server.launchHeadlinePlaceholder')}
                 required={comingSoon}
               />
             </Field>
             <Field>
-              Data e hora do lançamento
+              {t('server.launchDate')}
               <input
                 type="datetime-local"
                 value={comingSoonAt}
@@ -202,7 +204,7 @@ export function AdminServerPage() {
             </Field>
           </div>
           <Field>
-            Subtítulo
+            {t('server.launchSubtitle')}
             <textarea
               value={comingSoonSubtitle}
               disabled={!comingSoon}
@@ -214,13 +216,13 @@ export function AdminServerPage() {
             <div className="admin-coming-soon-preview" style={{ marginTop: 12 }}>
               <ButtonLink to="/" target="_blank" rel="noreferrer" variant="secondary" size="sm">
                 <ExternalLink aria-hidden="true" size={14} />
-                Ver página de lançamento
+                {t('server.viewLaunchPage')}
               </ButtonLink>
             </div>
           ) : null}
         </Card>
 
-        <Card as="div" className="admin-server-actions"><span><strong>Configuração do servidor</strong><small>Revise os campos antes de publicar as alterações.</small></span><AdminSaveBar saving={saving} /></Card>
+        <Card as="div" className="admin-server-actions"><span><strong>{t('server.actionsTitle')}</strong><small>{t('server.actionsHint')}</small></span><AdminSaveBar saving={saving} /></Card>
       </form>
     </div>
   )

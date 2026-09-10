@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '../../ui/Button'
 import { Card } from '../../ui/Card'
 import { RewardsEditor } from '../../programs/RewardsEditor'
@@ -29,10 +30,11 @@ export function GameContentEditor({
   onCancel,
   onSubmit,
 }: GameContentEditorProps) {
+  const { t } = useTranslation('admin')
   return (
     <Card className="program-section">
       <h2>
-        {editId ? 'Editar' : 'Criar'} · {label}
+        {t(editId ? 'gameContent.editorEdit' : 'gameContent.editorCreate')} · {label}
       </h2>
       <form
         className="program-form"
@@ -78,11 +80,11 @@ export function GameContentEditor({
                           onDraftChange({ ...draft, [f.key]: e.target.value })
                         }
                       >
-                        <option value="">Selecione…</option>
+                        <option value="">{t('gameContent.selectPlaceholder')}</option>
                         {f.options
-                          ? f.options.map(([v, l]) => (
-                              <option key={v} value={v}>
-                                {l}
+                          ? f.options.map(([value, optionLabel]) => (
+                              <option key={value} value={value}>
+                                {optionLabel}
                               </option>
                             ))
                           : rowsFor(f.source!).map((row) => (
@@ -137,14 +139,14 @@ export function GameContentEditor({
         )}
         <div className="program-actions">
           <Button type="submit" disabled={busy}>
-            Salvar configuração
+            {t('gameContent.saveConfig')}
           </Button>
           <Button
             className="ghost"
             type="button"
             onClick={onCancel}
           >
-            Cancelar
+            {t('gameContent.cancel')}
           </Button>
         </div>
       </form>

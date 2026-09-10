@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -42,7 +43,7 @@ class GameExchangeView(InjectedAPIView):
 
     @extend_schema(
         tags=["Carteira"],
-        summary="Consultar câmbio com o jogo",
+        summary=gettext_lazy("Consultar câmbio com o jogo"),
         description=(
             "Retorna se o câmbio está disponível, o motivo de indisponibilidade quando "
             "houver, a configuração da moeda ativa e o histórico recente de trocas do "
@@ -54,7 +55,7 @@ class GameExchangeView(InjectedAPIView):
 
     @extend_schema(
         tags=["Carteira"],
-        summary="Executar câmbio de moedas",
+        summary=gettext_lazy("Executar câmbio de moedas"),
         description=(
             "Transfere moedas entre a carteira do portal e o personagem no jogo "
             "(to_game ou from_game). Exige request_key para idempotência."

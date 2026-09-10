@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -57,8 +58,8 @@ class BattleDetailsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Detalhes do passe de batalha",
-        description="Retorna o conteúdo adicional do passe de batalha disponível para o jogador autenticado.",
+        summary=gettext_lazy("Detalhes do passe de batalha"),
+        description=gettext_lazy("Retorna o conteúdo adicional do passe de batalha disponível para o jogador autenticado."),
     )
     def get(self, request):
         return Response(
@@ -69,8 +70,8 @@ class BattleDetailsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Ação do passe de batalha",
-        description="Executa uma ação validada no conteúdo adicional do passe (missão, troca, marco ou resgate automático).",
+        summary=gettext_lazy("Ação do passe de batalha"),
+        description=gettext_lazy("Executa uma ação validada no conteúdo adicional do passe (missão, troca, marco ou resgate automático)."),
         request=BattleActionSerializer,
     )
     def post(self, request):
@@ -96,8 +97,8 @@ class DailyDetailsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Detalhes do bônus diário",
-        description="Retorna o calendário e os detalhes do bônus diário do jogador autenticado.",
+        summary=gettext_lazy("Detalhes do bônus diário"),
+        description=gettext_lazy("Retorna o calendário e os detalhes do bônus diário do jogador autenticado."),
     )
     def get(self, request):
         return Response(
@@ -121,8 +122,8 @@ class FishingDetailsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Detalhes da pesca",
-        description="Lista iscas ativas, estoque do jogador e coleção de peixes capturados.",
+        summary=gettext_lazy("Detalhes da pesca"),
+        description=gettext_lazy("Lista iscas ativas, estoque do jogador e coleção de peixes capturados."),
     )
     def get(self, request):
         return Response(
@@ -133,8 +134,8 @@ class FishingDetailsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Comprar iscas",
-        description="Compra iscas de pesca para o jogador autenticado com a quantidade informada.",
+        summary=gettext_lazy("Comprar iscas"),
+        description=gettext_lazy("Compra iscas de pesca para o jogador autenticado com a quantidade informada."),
         request=BaitPurchaseSerializer,
     )
     def post(self, request):
@@ -158,8 +159,8 @@ class GameStatisticsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estatísticas de jogos",
-        description="Retorna as estatísticas do tipo solicitado para o jogador autenticado.",
+        summary=gettext_lazy("Estatísticas de jogos"),
+        description=gettext_lazy("Retorna as estatísticas do tipo solicitado para o jogador autenticado."),
     )
     def get(self, request, kind):
         return Response(
@@ -223,8 +224,8 @@ class StaffGameContentView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
-        summary="Listar conteúdo de jogos",
-        description="Lista as entradas de configuração do tipo de conteúdo informado.",
+        summary=gettext_lazy("Listar conteúdo de jogos"),
+        description=gettext_lazy("Lista as entradas de configuração do tipo de conteúdo informado."),
     )
     def get(self, request, kind):
         rows = self.resolve(ListGameContentUseCase).execute(ListGameContentInput(kind=kind))
@@ -233,8 +234,8 @@ class StaffGameContentView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
-        summary="Criar conteúdo de jogos",
-        description="Cria uma nova entrada de configuração para o tipo de conteúdo informado.",
+        summary=gettext_lazy("Criar conteúdo de jogos"),
+        description=gettext_lazy("Cria uma nova entrada de configuração para o tipo de conteúdo informado."),
     )
     def post(self, request, kind):
         serializer = config_serializer(kind)(data=request.data)
@@ -246,8 +247,8 @@ class StaffGameContentView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff - Conteúdo de jogos"],
-        summary="Atualizar conteúdo de jogos",
-        description="Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.",
+        summary=gettext_lazy("Atualizar conteúdo de jogos"),
+        description=gettext_lazy("Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID."),
     )
     def patch(self, request, kind, entry_id):
         instance = self.resolve(GetGameContentUseCase).execute(

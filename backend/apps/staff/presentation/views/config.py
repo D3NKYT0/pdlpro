@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -35,16 +36,16 @@ class StaffPanelSettingsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Consultar configurações do painel",
-        description="Retorna as configurações administrativas atuais do painel.",
+        summary=gettext_lazy("Consultar configurações do painel"),
+        description=gettext_lazy("Retorna as configurações administrativas atuais do painel."),
     )
     def get(self, request):
         return Response(self.resolve(GetPanelSettingsUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar configurações do painel",
-        description="Atualiza as configurações administrativas do painel com o payload informado.",
+        summary=gettext_lazy("Atualizar configurações do painel"),
+        description=gettext_lazy("Atualiza as configurações administrativas do painel com o payload informado."),
     )
     def put(self, request):
         return Response(self.resolve(UpdatePanelSettingsUseCase).execute(request.data or {}))
@@ -62,16 +63,16 @@ class StaffServicePricesView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Listar preços de serviços",
-        description="Lista os preços dos serviços de personagem gerenciados pela equipe.",
+        summary=gettext_lazy("Listar preços de serviços"),
+        description=gettext_lazy("Lista os preços dos serviços de personagem gerenciados pela equipe."),
     )
     def get(self, request):
         return Response(self.resolve(ListStaffServicePricesUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar preços de serviços",
-        description="Cria ou atualiza os preços dos serviços de personagem informados.",
+        summary=gettext_lazy("Atualizar preços de serviços"),
+        description=gettext_lazy("Cria ou atualiza os preços dos serviços de personagem informados."),
     )
     def put(self, request):
         payload = request.data if isinstance(request.data, list) else request.data.get("items", [])
@@ -90,16 +91,16 @@ class StaffCoinConfigView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Consultar configuração de moedas",
-        description="Retorna a configuração administrativa das moedas do painel.",
+        summary=gettext_lazy("Consultar configuração de moedas"),
+        description=gettext_lazy("Retorna a configuração administrativa das moedas do painel."),
     )
     def get(self, request):
         return Response(self.resolve(GetStaffCoinConfigUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar configuração de moedas",
-        description="Atualiza a configuração administrativa das moedas do painel.",
+        summary=gettext_lazy("Atualizar configuração de moedas"),
+        description=gettext_lazy("Atualiza a configuração administrativa das moedas do painel."),
     )
     def put(self, request):
         return Response(self.resolve(UpdateStaffCoinConfigUseCase).execute(request.data or {}))
@@ -117,16 +118,16 @@ class StaffWalletPromoView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Consultar promoção de recarga",
-        description="Retorna a campanha promocional da carteira usada no banner e no bônus de moedas.",
+        summary=gettext_lazy("Consultar promoção de recarga"),
+        description=gettext_lazy("Retorna a campanha promocional da carteira usada no banner e no bônus de moedas."),
     )
     def get(self, request):
         return Response(self.resolve(GetStaffWalletPromoUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar promoção de recarga",
-        description="Cria ou atualiza a campanha promocional da carteira.",
+        summary=gettext_lazy("Atualizar promoção de recarga"),
+        description=gettext_lazy("Cria ou atualiza a campanha promocional da carteira."),
     )
     def put(self, request):
         return Response(self.resolve(UpdateStaffWalletPromoUseCase).execute(request.data or {}))
@@ -144,24 +145,24 @@ class StaffShopItemsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Listar itens da loja",
-        description="Lista os itens da loja gerenciados administrativamente pela equipe.",
+        summary=gettext_lazy("Listar itens da loja"),
+        description=gettext_lazy("Lista os itens da loja gerenciados administrativamente pela equipe."),
     )
     def get(self, request):
         return Response(self.resolve(ListStaffShopItemsUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Criar item da loja",
-        description="Cria ou atualiza um item da loja com o payload administrativo informado.",
+        summary=gettext_lazy("Criar item da loja"),
+        description=gettext_lazy("Cria ou atualiza um item da loja com o payload administrativo informado."),
     )
     def post(self, request):
         return Response(self.resolve(UpsertStaffShopItemUseCase).execute(request.data or {}))
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar item da loja",
-        description="Atualiza um item da loja com o payload administrativo informado.",
+        summary=gettext_lazy("Atualizar item da loja"),
+        description=gettext_lazy("Atualiza um item da loja com o payload administrativo informado."),
     )
     def put(self, request):
         return Response(self.resolve(UpsertStaffShopItemUseCase).execute(request.data or {}))
@@ -179,24 +180,24 @@ class StaffNewsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Listar notícias",
-        description="Lista as notícias gerenciadas administrativamente pela equipe.",
+        summary=gettext_lazy("Listar notícias"),
+        description=gettext_lazy("Lista as notícias gerenciadas administrativamente pela equipe."),
     )
     def get(self, request):
         return Response(self.resolve(ListStaffNewsUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Criar notícia",
-        description="Cria ou atualiza uma notícia com o payload administrativo informado.",
+        summary=gettext_lazy("Criar notícia"),
+        description=gettext_lazy("Cria ou atualiza uma notícia com o payload administrativo informado."),
     )
     def post(self, request):
         return Response(self.resolve(UpsertStaffNewsUseCase).execute(request.data or {}))
 
     @extend_schema(
         tags=["Staff"],
-        summary="Atualizar notícia",
-        description="Atualiza uma notícia com o payload administrativo informado.",
+        summary=gettext_lazy("Atualizar notícia"),
+        description=gettext_lazy("Atualiza uma notícia com o payload administrativo informado."),
     )
     def put(self, request):
         return Response(self.resolve(UpsertStaffNewsUseCase).execute(request.data or {}))
@@ -214,16 +215,16 @@ class StaffGamesView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Listar jogos",
-        description="Lista os jogos do painel e o estado de ativação de cada um.",
+        summary=gettext_lazy("Listar jogos"),
+        description=gettext_lazy("Lista os jogos do painel e o estado de ativação de cada um."),
     )
     def get(self, request):
         return Response(self.resolve(ListStaffGamesUseCase).execute())
 
     @extend_schema(
         tags=["Staff"],
-        summary="Alternar jogo",
-        description="Ativa ou desativa um jogo do painel conforme o payload informado.",
+        summary=gettext_lazy("Alternar jogo"),
+        description=gettext_lazy("Ativa ou desativa um jogo do painel conforme o payload informado."),
     )
     def put(self, request):
         return Response(self.resolve(ToggleStaffGameUseCase).execute(request.data or {}))

@@ -2,12 +2,14 @@ import { Card } from '../../components/ui/Card'
 import { apiErrorMessage } from '../../lib/errors'
 import { Button } from '../../components/ui/Button'
 import { useState, type FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckCircle2, Link2Off, Search, ShieldAlert, Unlink } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi, type ApiStaffGameAccount } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
 
 export function AdminAccountsPage() {
+  const { t } = useTranslation('admin')
   const [login, setLogin] = useState('')
   const [account, setAccount] = useState<ApiStaffGameAccount | null>(null)
   const [looking, setLooking] = useState(false)
@@ -20,7 +22,7 @@ export function AdminAccountsPage() {
       setAccount(await staffApi.inspectAccount(login.trim()))
     } catch (error) {
       setAccount(null)
-      toast.error(apiErrorMessage(error, 'Não foi possível consultar a conta'))
+      toast.error(apiErrorMessage(error, t('accounts.toast.inspectError')))
     } finally {
       setLooking(false)
     }
@@ -28,16 +30,16 @@ export function AdminAccountsPage() {
 
   async function onUnlink() {
     if (!account) return
-    if (!window.confirm(`Desvincular a conta ${account.login} do painel? Ela fica livre para ser reivindicada.`)) {
+    if (!window.confirm(t('accounts.confirmUnlink', { login: account.login }))) {
       return
     }
     setUnlinking(true)
     try {
       const updated = await staffApi.unlinkAccount(account.login)
       setAccount(updated)
-      toast.success(`O vínculo de ${updated.login} foi removido`)
+      toast.success(t('accounts.toast.unlinked', { login: updated.login }))
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível desvincular'))
+      toast.error(apiErrorMessage(error, t('accounts.toast.unlinkError')))
     } finally {
       setUnlinking(false)
     }
@@ -45,31 +47,31 @@ export function AdminAccountsPage() {
 
   const panelOwner = account?.panel_username || account?.linked_user_id || '—'
   const ownerHint = account?.panel_username
-    ? 'Usuário do painel'
+    ? t('accounts.ownerPanelUser')
     : account?.linked_user_id
-      ? 'UUID sem usuário no painel'
-      : 'Sem dono no painel'
+      ? t('accounts.ownerUuid')
+      : t('accounts.ownerNone')
 
   return (
     <div className="account-page admin-accounts-page">
       <AdminHeader
-        kicker="Servidor"
-        title="Contas Lineage"
-        description="Consulte um login do jogo e remova o vínculo com o painel."
+        kicker={t('accounts.kicker')}
+        title={t('accounts.title')}
+        description={t('accounts.description')}
       />
 
       <Card className="admin-accounts-panel">
         <header className="admin-services-heading">
           <span><Search /></span>
           <div>
-            <span className="panel-eyebrow">Consulta</span>
-            <h2>Buscar pelo login</h2>
-            <p>Use o mesmo login com que o jogador entra no Lineage.</p>
+            <span className="panel-eyebrow">{t('accounts.eyebrow')}</span>
+            <h2>{t('accounts.searchTitle')}</h2>
+            <p>{t('accounts.searchText')}</p>
           </div>
         </header>
         <form className="admin-accounts-search" onSubmit={onInspect}>
           <label>
-            Login da conta L2
+            {t('accounts.loginLabel')}
             <input
               value={login}
               onChange={(event) => setLogin(event.target.value)}
@@ -78,11 +80,11 @@ export function AdminAccountsPage() {
               maxLength={45}
               autoComplete="off"
               spellCheck={false}
-              placeholder="admin"
+              placeholder={t('accounts.loginPlaceholder')}
             />
           </label>
           <Button type="submit" disabled={looking || unlinking}>
-            {looking ? 'Consultando...' : 'Consultar'}
+            {looking ? t('accounts.inspecting') : t('accounts.inspect')}
           </Button>
         </form>
       </Card>
@@ -94,33 +96,29 @@ export function AdminAccountsPage() {
               {account.linked ? <ShieldAlert /> : <CheckCircle2 />}
             </span>
             <div>
-              <span className="panel-eyebrow">Resultado</span>
+              <span className="panel-eyebrow">{t('accounts.resultEyebrow')}</span>
               <h2>{account.login}</h2>
-              <p>
-                {account.linked
-                  ? 'Esta conta Lineage está presa a um painel.'
-                  : 'Esta conta está livre para ser criada ou vinculada.'}
-              </p>
+              <p>{account.linked ? t('accounts.linkedText') : t('accounts.freeText')}</p>
             </div>
             <b className={`account-status-pill ${account.linked ? 'is-conflict' : 'is-active'}`}>
               {account.linked ? <Unlink /> : <CheckCircle2 />}
-              {account.linked ? 'Vinculada' : 'Livre'}
+              {account.linked ? t('accounts.linked') : t('accounts.free')}
             </b>
           </header>
 
           <div className="admin-accounts-facts">
             <article>
-              <small>Login</small>
+              <small>{t('accounts.login')}</small>
               <strong>{account.login}</strong>
             </article>
             <article>
-              <small>E-mail no jogo</small>
+              <small>{t('accounts.gameEmail')}</small>
               <strong title={account.email || undefined}>{account.email || '—'}</strong>
             </article>
             <article>
-              <small>Vínculo</small>
+              <small>{t('accounts.link')}</small>
               <strong className={account.linked ? 'is-warn' : 'is-ok'}>
-                {account.linked ? 'Ativo no servidor' : 'Sem linked_uuid'}
+                {account.linked ? t('accounts.linkActive') : t('accounts.linkNone')}
               </strong>
             </article>
             <article>
@@ -134,20 +132,20 @@ export function AdminAccountsPage() {
           {account.linked ? (
             <footer className="admin-accounts-footer">
               <div>
-                <strong>Remover o vínculo</strong>
-                <span>A conta volta a ficar disponível para criação ou vínculo no painel do jogador.</span>
+                <strong>{t('accounts.unlinkTitle')}</strong>
+                <span>{t('accounts.unlinkText')}</span>
               </div>
               <button type="button" className="admin-accounts-danger" onClick={() => void onUnlink()} disabled={unlinking}>
                 <Link2Off aria-hidden="true" />
-                {unlinking ? 'Desvinculando...' : 'Remover vínculo'}
+                {unlinking ? t('accounts.unlinking') : t('accounts.unlink')}
               </button>
             </footer>
           ) : (
             <footer className="admin-accounts-footer is-ok">
               <CheckCircle2 aria-hidden="true" />
               <div>
-                <strong>Nada a remover</strong>
-                <span>Não há linked_uuid nesta conta Lineage.</span>
+                <strong>{t('accounts.nothingTitle')}</strong>
+                <span>{t('accounts.nothingText')}</span>
               </div>
             </footer>
           )}

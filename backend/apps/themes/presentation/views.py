@@ -1,5 +1,6 @@
 from django.utils.cache import patch_cache_control
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers, status
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
@@ -38,8 +39,8 @@ class ActiveThemeView(InjectedAPIView):
 
     @extend_schema(
         tags=["Temas"],
-        summary="Tema ativo",
-        description="Expõe apenas os caminhos e metadados necessários para montar o tema ativo.",
+        summary=gettext_lazy("Tema ativo"),
+        description=gettext_lazy("Expõe apenas os caminhos e metadados necessários para montar o tema ativo."),
     )
     def get(self, request):
         response = Response(self.resolve(GetActiveThemeUseCase).execute(None))
@@ -55,16 +56,16 @@ class StaffThemeListInstallView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Listar temas",
-        description="Lista os pacotes de tema instalados; alteração visual global é exclusiva de superadministradores.",
+        summary=gettext_lazy("Listar temas"),
+        description=gettext_lazy("Lista os pacotes de tema instalados; alteração visual global é exclusiva de superadministradores."),
     )
     def get(self, request):
         return Response(self.resolve(ListThemesUseCase).execute(None))
 
     @extend_schema(
         tags=["Staff"],
-        summary="Instalar tema",
-        description="Instala um pacote .zip de tema; alteração visual global é exclusiva de superadministradores.",
+        summary=gettext_lazy("Instalar tema"),
+        description=gettext_lazy("Instala um pacote .zip de tema; alteração visual global é exclusiva de superadministradores."),
         request=ThemeUploadSerializer,
     )
     def post(self, request):
@@ -84,8 +85,8 @@ class StaffThemeActivateView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Ativar tema",
-        description="Ativa uma versão instalada ou restaura explicitamente o tema default.",
+        summary=gettext_lazy("Ativar tema"),
+        description=gettext_lazy("Ativa uma versão instalada ou restaura explicitamente o tema default."),
     )
     def post(self, request, package_id=None):
         return Response(
@@ -102,8 +103,8 @@ class StaffThemeDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Excluir tema",
-        description="Remove um pacote inativo; o tema default não possui endpoint de exclusão.",
+        summary=gettext_lazy("Excluir tema"),
+        description=gettext_lazy("Remove um pacote inativo; o tema default não possui endpoint de exclusão."),
     )
     def delete(self, request, package_id):
         self.resolve(DeleteThemeUseCase).execute(DeleteThemeInput(package_id=str(package_id)))

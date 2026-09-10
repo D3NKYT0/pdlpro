@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -32,8 +33,8 @@ class CustomerTicketListCreateView(InjectedAPIView):
 
     @extend_schema(
         tags=["Atendimento"],
-        summary="Listar meus chamados",
-        description="Lista os chamados do próprio usuário com contadores de estado.",
+        summary=gettext_lazy("Listar meus chamados"),
+        description=gettext_lazy("Lista os chamados do próprio usuário com contadores de estado."),
     )
     def get(self, request):
         result = self.resolve(ListCustomerTicketsUseCase).execute(
@@ -46,8 +47,8 @@ class CustomerTicketListCreateView(InjectedAPIView):
 
     @extend_schema(
         tags=["Atendimento"],
-        summary="Criar chamado",
-        description="Cria um novo chamado do usuário autenticado com a mensagem inicial.",
+        summary=gettext_lazy("Criar chamado"),
+        description=gettext_lazy("Cria um novo chamado do usuário autenticado com a mensagem inicial."),
     )
     def post(self, request):
         ticket = self.resolve(CreateTicketUseCase).execute(
@@ -75,8 +76,8 @@ class CustomerTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Atendimento"],
-        summary="Detalhe do chamado",
-        description="Consulta o chamado do próprio usuário com mensagens e metadados.",
+        summary=gettext_lazy("Detalhe do chamado"),
+        description=gettext_lazy("Consulta o chamado do próprio usuário com mensagens e metadados."),
     )
     def get(self, request, ticket_id):
         ticket = self.resolve(GetCustomerTicketUseCase).execute(
@@ -86,8 +87,8 @@ class CustomerTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Atendimento"],
-        summary="Responder chamado",
-        description="Envia uma mensagem do jogador no chamado e notifica o atendente quando houver.",
+        summary=gettext_lazy("Responder chamado"),
+        description=gettext_lazy("Envia uma mensagem do jogador no chamado e notifica o atendente quando houver."),
     )
     def post(self, request, ticket_id):
         ticket = self.resolve(ReplyCustomerTicketUseCase).execute(
@@ -101,8 +102,8 @@ class CustomerTicketDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Atendimento"],
-        summary="Encerrar ou reabrir chamado",
-        description="Permite ao jogador encerrar ou reabrir o próprio chamado conforme a ação informada.",
+        summary=gettext_lazy("Encerrar ou reabrir chamado"),
+        description=gettext_lazy("Permite ao jogador encerrar ou reabrir o próprio chamado conforme a ação informada."),
     )
     def patch(self, request, ticket_id):
         ticket = self.resolve(UpdateCustomerTicketUseCase).execute(

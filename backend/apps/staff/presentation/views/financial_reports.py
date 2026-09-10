@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -49,8 +50,8 @@ class FinancialReportView(InjectedAPIView):
 
 @extend_schema(
     tags=["Staff / Financeiro"],
-    summary="Relatório de saldos",
-    description="Expõe o relatório de saldos usando os filtros e a paginação da base financeira.",
+    summary=gettext_lazy("Relatório de saldos"),
+    description=gettext_lazy("Expõe o relatório de saldos usando os filtros e a paginação da base financeira."),
     parameters=[BalanceFiltersSerializer],
     responses=BalanceReportSerializer,
 )
@@ -66,8 +67,8 @@ class BalanceReportView(FinancialReportView):
 
 @extend_schema(
     tags=["Staff / Financeiro"],
-    summary="Relatório de conciliação",
-    description="Especializa a consulta financeira para conciliação de saldos e movimentações.",
+    summary=gettext_lazy("Relatório de conciliação"),
+    description=gettext_lazy("Especializa a consulta financeira para conciliação de saldos e movimentações."),
     parameters=[BalanceFiltersSerializer],
     responses=BalanceReportSerializer,
 )
@@ -84,8 +85,8 @@ class ReconciliationReportView(FinancialReportView):
 
 @extend_schema(
     tags=["Staff / Financeiro"],
-    summary="Relatório de fluxo de caixa",
-    description="Especializa a consulta financeira para o relatório de fluxo de caixa.",
+    summary=gettext_lazy("Relatório de fluxo de caixa"),
+    description=gettext_lazy("Especializa a consulta financeira para o relatório de fluxo de caixa."),
     parameters=[CashFlowFiltersSerializer],
     responses=CashFlowReportSerializer,
 )
@@ -103,8 +104,8 @@ class CashFlowReportView(FinancialReportView):
 
 @extend_schema(
     tags=["Staff / Financeiro"],
-    summary="Relatório de pagamentos",
-    description="Especializa a consulta financeira para o relatório de pagamentos.",
+    summary=gettext_lazy("Relatório de pagamentos"),
+    description=gettext_lazy("Especializa a consulta financeira para o relatório de pagamentos."),
     parameters=[PaymentFiltersSerializer],
     responses=PaymentReportSerializer,
 )

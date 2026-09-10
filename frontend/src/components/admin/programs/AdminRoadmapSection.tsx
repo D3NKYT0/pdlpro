@@ -4,6 +4,7 @@ import { RichTextEditor } from '../../ui/RichText'
 import { isRichTextEmpty } from '../../../lib/rich-text'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Plus, Pencil, Trash2 } from 'lucide-react'
 import {
   programsApi,
@@ -20,6 +21,7 @@ import { AdminHeader } from '../../../pages/admin/AdminChrome'
 import toast from 'react-hot-toast'
 
 export function AdminRoadmapSection() {
+  const { t } = useTranslation('admin')
   const query = useQuery({
     queryKey: ['staff-roadmap'],
     queryFn: () => programsApi.roadmap(true),
@@ -30,9 +32,9 @@ export function AdminRoadmapSection() {
   return (
     <div className="program-page">
       <AdminHeader
-        kicker="Conteúdo"
-        title="Gerenciar roadmap"
-        description="Organize os próximos passos e mantenha a comunidade informada."
+        kicker={t('roadmap.kicker')}
+        title={t('roadmap.title')}
+        description={t('roadmap.description')}
       />
       <ErrorNotice error={query.error || action.error} />
       <div className="program-actions">
@@ -43,12 +45,12 @@ export function AdminRoadmapSection() {
           }
         >
           <Plus size={18} />
-          Nova atualização
+          {t('roadmap.new')}
         </Button>
       </div>
       {edit && (
         <Card className="program-section">
-          <h2>{edit.id ? 'Editar atualização' : 'Nova atualização'}</h2>
+          <h2>{edit.id ? t('roadmap.edit') : t('roadmap.new')}</h2>
           <form
             key={edit.id || 'new'}
             className="program-form"
@@ -57,7 +59,7 @@ export function AdminRoadmapSection() {
               const f = new FormData(e.currentTarget)
               const description = edit.description || ''
               if (isRichTextEmpty(description)) {
-                toast.error('Informe a descrição da atualização')
+                toast.error(t('roadmap.descriptionRequired'))
                 return
               }
               void action
@@ -76,7 +78,7 @@ export function AdminRoadmapSection() {
                       },
                       edit.id,
                     ),
-                  'Atualização salva.',
+                  t('roadmap.saved'),
                   [['staff-roadmap'], ['roadmap']],
                 )
                 .then((ok) => {
@@ -85,7 +87,7 @@ export function AdminRoadmapSection() {
             }}
           >
             <label>
-              Título
+              {t('roadmap.titleField')}
               <input
                 name="title"
                 required
@@ -94,7 +96,7 @@ export function AdminRoadmapSection() {
               />
             </label>
             <label>
-              Descrição
+              {t('roadmap.descriptionField')}
               <RichTextEditor
                 value={edit.description || ''}
                 onChange={(html) =>
@@ -103,12 +105,12 @@ export function AdminRoadmapSection() {
                   )
                 }
                 required
-                aria-label="Descrição"
+                aria-label={t('roadmap.descriptionField')}
               />
             </label>
             <div className="program-fields">
               <label>
-                Categoria
+                {t('roadmap.category')}
                 <input
                   name="category"
                   required
@@ -117,15 +119,15 @@ export function AdminRoadmapSection() {
                 />
               </label>
               <label>
-                Etapa
+                {t('roadmap.stage')}
                 <select name="status" defaultValue={edit.status}>
-                  <option value="planned">Planejado</option>
-                  <option value="progress">Em andamento</option>
-                  <option value="completed">Concluído</option>
+                  <option value="planned">{t('roadmap.statusPlanned')}</option>
+                  <option value="progress">{t('roadmap.statusProgress')}</option>
+                  <option value="completed">{t('roadmap.statusCompleted')}</option>
                 </select>
               </label>
               <label>
-                Progresso (%)
+                {t('roadmap.progress')}
                 <input
                   name="progress"
                   type="number"
@@ -136,7 +138,7 @@ export function AdminRoadmapSection() {
                 />
               </label>
               <label>
-                Previsão
+                {t('roadmap.targetDate')}
                 <input
                   name="target_date"
                   type="date"
@@ -144,7 +146,7 @@ export function AdminRoadmapSection() {
                 />
               </label>
               <label>
-                Ordem
+                {t('roadmap.order')}
                 <input
                   name="order"
                   type="number"
@@ -159,18 +161,18 @@ export function AdminRoadmapSection() {
                 type="checkbox"
                 defaultChecked={edit.published}
               />
-              Publicar no site
+              {t('roadmap.publish')}
             </label>
             <div className="program-actions">
               <Button type="submit" disabled={action.busy}>
-                Salvar atualização
+                {t('roadmap.save')}
               </Button>
               <Button
                 className="ghost"
                 type="button"
                 onClick={() => setEdit(null)}
               >
-                Cancelar
+                {t('roadmap.cancel')}
               </Button>
             </div>
           </form>
@@ -183,13 +185,16 @@ export function AdminRoadmapSection() {
             <Status value={r.status} />
             <h2>{r.title}</h2>
             <p className="muted">
-              {r.category} · {r.progress}% ·{' '}
-              {r.published ? 'Publicado' : 'Rascunho'}
+              {t('roadmap.summary', {
+                category: r.category,
+                progress: r.progress,
+                state: r.published ? t('roadmap.published') : t('roadmap.draft'),
+              })}
             </p>
             <div className="program-actions">
               <Button type="submit" className="ghost" onClick={() => setEdit(r)}>
                 <Pencil size={16} />
-                Editar
+                {t('roadmap.editAction')}
               </Button>
               {remove === r.id ? (
                 <>
@@ -200,23 +205,23 @@ export function AdminRoadmapSection() {
                       void action
                         .run(
                           () => programsApi.deleteRoadmap(r.id),
-                          'Atualização removida.',
+                          t('roadmap.removed'),
                           [['staff-roadmap'], ['roadmap']],
                         )
                         .then(() => setRemove(null))
                     }
                   >
-                    Confirmar exclusão
+                    {t('roadmap.confirmDelete')}
                   </Button>
                   <Button type="submit" className="ghost" onClick={() => setRemove(null)}>
-                    Cancelar
+                    {t('roadmap.cancel')}
                   </Button>
                 </>
               ) : (
                 <Button type="submit"
                   className="ghost"
                   onClick={() => setRemove(r.id)}
-                  aria-label={`Excluir ${r.title}`}
+                  aria-label={t('roadmap.delete', { title: r.title })}
                 >
                   <Trash2 size={16} />
                 </Button>
@@ -226,7 +231,7 @@ export function AdminRoadmapSection() {
         ))}
       </div>
       {query.data?.length === 0 && (
-        <Empty>Crie a primeira atualização do roadmap.</Empty>
+        <Empty>{t('roadmap.empty')}</Empty>
       )}
     </div>
   )

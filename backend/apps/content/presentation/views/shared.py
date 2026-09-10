@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -35,8 +36,8 @@ class AuthenticatedFaqListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Listar FAQ autenticado",
-        description="Entrega ajuda pública e interna conforme a identidade autenticada da requisição.",
+        summary=gettext_lazy("Listar FAQ autenticado"),
+        description=gettext_lazy("Entrega ajuda pública e interna conforme a identidade autenticada da requisição."),
     )
     def get(self, request):
         user = request.user
@@ -81,8 +82,8 @@ class AssistantReplyView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Responder com o assistente",
-        description="Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo autorizado.",
+        summary=gettext_lazy("Responder com o assistente"),
+        description=gettext_lazy("Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo autorizado."),
         request=AssistantReplySerializer,
     )
     def post(self, request):
@@ -137,16 +138,16 @@ class DenkynhoProfileView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Perfil do Denkynho",
-        description="Retorna o perfil do Denkynho vinculado à sessão autenticada atual.",
+        summary=gettext_lazy("Perfil do Denkynho"),
+        description=gettext_lazy("Retorna o perfil do Denkynho vinculado à sessão autenticada atual."),
     )
     def get(self, request):
         return Response(self.resolve(GetDenkynhoProfileUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Atualizar preferências do Denkynho",
-        description="Atualiza apelido e nível de detalhe persistidos no mascote da conta autenticada.",
+        summary=gettext_lazy("Atualizar preferências do Denkynho"),
+        description=gettext_lazy("Atualiza apelido e nível de detalhe persistidos no mascote da conta autenticada."),
         request=DenkynhoPreferencesSerializer,
     )
     def patch(self, request):
@@ -159,8 +160,8 @@ class DenkynhoProfileView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Cuidar do Denkynho",
-        description="Executa uma ação de cuidado no Denkynho da sessão autenticada atual.",
+        summary=gettext_lazy("Cuidar do Denkynho"),
+        description=gettext_lazy("Executa uma ação de cuidado no Denkynho da sessão autenticada atual."),
         request=DenkynhoCareSerializer,
     )
     def post(self, request):

@@ -1,6 +1,7 @@
 from dataclasses import asdict
 from uuid import UUID
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -60,8 +61,8 @@ class PaymentCatalogView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Catálogo de pagamento",
-        description="Retorna pacotes, métodos e regras disponíveis para criação de pedidos de pagamento.",
+        summary=gettext_lazy("Catálogo de pagamento"),
+        description=gettext_lazy("Retorna pacotes, métodos e regras disponíveis para criação de pedidos de pagamento."),
     )
     def get(self, request):
         catalog = self.resolve(GetPaymentCatalogUseCase).execute()
@@ -81,8 +82,8 @@ class PaymentOrderListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Listar pedidos de pagamento",
-        description="Lista os pedidos de pagamento do usuário autenticado, paginados.",
+        summary=gettext_lazy("Listar pedidos de pagamento"),
+        description=gettext_lazy("Lista os pedidos de pagamento do usuário autenticado, paginados."),
     )
     def get(self, request):
         repo = self.resolve(IPaymentOrderRepository)
@@ -93,8 +94,8 @@ class PaymentOrderListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Criar pedido de pagamento",
-        description="Cria um novo pedido de pagamento para o usuário autenticado.",
+        summary=gettext_lazy("Criar pedido de pagamento"),
+        description=gettext_lazy("Cria um novo pedido de pagamento para o usuário autenticado."),
         request=CreatePaymentOrderSerializer,
     )
     def post(self, request):
@@ -124,8 +125,8 @@ class PreviewPaymentBonusView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Prévia de bônus",
-        description="Calcula a prévia de bônus e créditos para o valor ou pacote informado.",
+        summary=gettext_lazy("Prévia de bônus"),
+        description=gettext_lazy("Calcula a prévia de bônus e créditos para o valor ou pacote informado."),
         request=PreviewBonusSerializer,
     )
     def post(self, request):
@@ -154,8 +155,8 @@ class CancelPaymentOrderView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Cancelar pedido",
-        description="Cancela o pedido de pagamento informado pertencente ao usuário autenticado.",
+        summary=gettext_lazy("Cancelar pedido"),
+        description=gettext_lazy("Cancela o pedido de pagamento informado pertencente ao usuário autenticado."),
     )
     def post(self, request, order_id):
         order = self.resolve(CancelPaymentOrderUseCase).execute(
@@ -175,8 +176,8 @@ class ConfirmPaymentOrderView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Confirmar pagamento",
-        description="Confirma o pagamento do pedido informado para o usuário autenticado.",
+        summary=gettext_lazy("Confirmar pagamento"),
+        description=gettext_lazy("Confirma o pagamento do pedido informado para o usuário autenticado."),
     )
     def post(self, request, order_id):
         order = self.resolve(ConfirmPaymentUseCase).execute(
@@ -196,8 +197,8 @@ class ProcessPaymentOrderView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Processar pagamento",
-        description="Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto.",
+        summary=gettext_lazy("Processar pagamento"),
+        description=gettext_lazy("Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto."),
     )
     def post(self, request, order_id):
         outcome = self.resolve(ProcessPaymentUseCase).execute(
@@ -231,8 +232,8 @@ class PaymentOrderStatusView(InjectedAPIView):
 
     @extend_schema(
         tags=["Pagamento"],
-        summary="Status do pedido",
-        description="Consulta o status atual do pedido de pagamento informado.",
+        summary=gettext_lazy("Status do pedido"),
+        description=gettext_lazy("Consulta o status atual do pedido de pagamento informado."),
     )
     def get(self, request, order_id: UUID):
         order = self.resolve(GetPaymentStatusUseCase).execute(

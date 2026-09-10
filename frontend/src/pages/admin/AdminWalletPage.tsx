@@ -4,6 +4,7 @@ import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { Field } from '../../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Megaphone, Percent } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
@@ -25,10 +26,11 @@ function fromDatetimeLocal(value: string) {
 }
 
 export function AdminWalletPage() {
+  const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
   const promo = useQuery({ queryKey: ['staff-wallet-promo'], queryFn: staffApi.walletPromo })
   const [percent, setPercent] = useState('10.00')
-  const [title, setTitle] = useState('Promoção de recarga')
+  const [title, setTitle] = useState(() => t('wallet.defaultTitle'))
   const [description, setDescription] = useState('')
   const [active, setActive] = useState(false)
   const [startsAt, setStartsAt] = useState('')
@@ -57,59 +59,66 @@ export function AdminWalletPage() {
         starts_at: fromDatetimeLocal(startsAt),
         ends_at: fromDatetimeLocal(endsAt),
       })
-      toast.success('Promoção da carteira atualizada')
+      toast.success(t('wallet.toast.saved'))
       await queryClient.invalidateQueries({ queryKey: ['staff-wallet-promo'] })
-    }, 'Não foi possível salvar')
+    }, t('wallet.toast.error'))
   }
 
   return (
     <div className="account-page">
       <AdminHeader
-        kicker="Financeiro"
-        title="Configuração da carteira"
-        description="Banner e bônus mínimo de moedas nas recargas. O valor cobrado no pagamento não muda."
+        kicker={t('wallet.kicker')}
+        title={t('wallet.title')}
+        description={t('wallet.description')}
       />
       <form className="admin-coins-form" onSubmit={onSubmit}>
         <Card className="admin-config-section admin-coin-identity">
           <header>
             <span><Megaphone /></span>
             <div>
-              <span className="panel-eyebrow">Promoção de recarga</span>
-              <h2>Banner na carteira</h2>
-              <p>Quando ativa e dentro da vigência, aparece em /panel/wallet e eleva o piso do bônus de moedas.</p>
+              <span className="panel-eyebrow">{t('wallet.eyebrow')}</span>
+              <h2>{t('wallet.bannerTitle')}</h2>
+              <p>{t('wallet.bannerText')}</p>
             </div>
           </header>
           <div className="account-form-fields">
             <Field>
-              Título
+              {t('wallet.fieldTitle')}
               <input value={title} onChange={(event) => setTitle(event.target.value)} required maxLength={120} />
             </Field>
             <Field>
-              Descrição
-              <input value={description} onChange={(event) => setDescription(event.target.value)} maxLength={240} placeholder="Texto curto do banner" />
+              {t('wallet.fieldDescription')}
+              <input value={description} onChange={(event) => setDescription(event.target.value)} maxLength={240} placeholder={t('wallet.descriptionPlaceholder')} />
             </Field>
             <Field>
               <span className="admin-coin-metric-icon" aria-hidden="true"><Percent /></span>
-              Percentual de bônus (%)
+              {t('wallet.percent')}
               <input type="number" min="0" max="100" step="0.01" value={percent} onChange={(event) => setPercent(event.target.value)} required />
             </Field>
             <Field>
-              Início (opcional)
+              {t('wallet.startsAt')}
               <input type="datetime-local" value={startsAt} onChange={(event) => setStartsAt(event.target.value)} />
             </Field>
             <Field>
-              Fim (opcional)
+              {t('wallet.endsAt')}
               <input type="datetime-local" value={endsAt} onChange={(event) => setEndsAt(event.target.value)} />
             </Field>
-            <Toggle label="Campanha ativa" checked={active} onChange={(event) => setActive(event.target.checked)} />
+            <Toggle label={t('wallet.activeToggle')} checked={active} onChange={(event) => setActive(event.target.checked)} />
           </div>
         </Card>
 
         <Card as="div" className="admin-server-actions">
           <span>
-            <strong>{title || 'Promoção sem título'}</strong>
+            <strong>{title || t('wallet.untitled')}</strong>
             <small>
-              {percent || '0'}% OFF · {active ? (promo.data?.currently_active ? 'vigente agora' : 'ativa, fora da vigência') : 'inativa'}
+              {t('wallet.summary', {
+                percent: percent || '0',
+                status: active
+                  ? promo.data?.currently_active
+                    ? t('wallet.status.current')
+                    : t('wallet.status.outOfWindow')
+                  : t('wallet.status.inactive'),
+              })}
             </small>
           </span>
           <AdminSaveBar saving={saving} />

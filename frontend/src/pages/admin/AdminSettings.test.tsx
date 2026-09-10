@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { ReactElement } from 'react'
 import toast from 'react-hot-toast'
+import i18n from '../../i18n'
 import { ApiError, staffApi } from '../../services/api'
 import { AdminCoinsPage } from './AdminCoinsPage'
 import { AdminWalletPage } from './AdminWalletPage'
@@ -190,4 +191,28 @@ it.each([false, true])('desvinculação exige confirmação, confirmada=%s', asy
     expect(staffApi.unlinkAccount).toHaveBeenCalledWith('hero')
     expect(await screen.findByText('Nada a remover')).toBeVisible()
   } else expect(staffApi.unlinkAccount).not.toHaveBeenCalled()
+})
+
+it('moedas seguem o idioma ativo no chrome, nos rótulos e no aviso de sucesso', async () => {
+  await i18n.changeLanguage('en')
+  const user = mount(<AdminCoinsPage />)
+  expect(await screen.findByRole('heading', { name: 'Wallet identity' })).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Hub' })).toBeVisible()
+  expect(screen.queryByText('Identidade da carteira')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Save' }))
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Currency updated'))
+})
+
+it('contas Lineage interpolam o login nas mensagens do idioma ativo', async () => {
+  await i18n.changeLanguage('es')
+  vi.spyOn(window, 'confirm').mockReturnValue(true)
+  vi.mocked(staffApi.inspectAccount).mockResolvedValue({ login: 'hero', email: 'hero@test.dev', linked: true, linked_user_id: 'owner', panel_username: 'Owner' })
+  vi.mocked(staffApi.unlinkAccount).mockResolvedValue({ login: 'hero', email: 'hero@test.dev', linked: false, linked_user_id: null, panel_username: null })
+  const user = mount(<AdminAccountsPage />)
+  await user.type(screen.getByLabelText('Login de la cuenta L2'), 'hero')
+  await user.click(screen.getByRole('button', { name: 'Consultar' }))
+  await user.click(await screen.findByRole('button', { name: 'Quitar vínculo' }))
+  expect(window.confirm).toHaveBeenCalledWith('¿Desvincular la cuenta hero del panel? Quedará libre para ser reclamada.')
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('El vínculo de hero fue eliminado'))
+  expect(await screen.findByText('Nada que quitar')).toBeVisible()
 })

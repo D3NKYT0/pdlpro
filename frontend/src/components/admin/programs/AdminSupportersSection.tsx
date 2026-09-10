@@ -2,6 +2,7 @@ import { Card } from '../../ui/Card'
 import { Button } from '../../ui/Button'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Check, X } from 'lucide-react'
 import {
   programsApi,
@@ -17,6 +18,7 @@ import { useProgramAction } from '../../programs/useProgramAction'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
 
 export function AdminSupportersSection() {
+  const { t } = useTranslation('admin')
   const query = useQuery({
     queryKey: ['staff-supporters'],
     queryFn: programsApi.staffSupporters,
@@ -26,15 +28,15 @@ export function AdminSupportersSection() {
   return (
     <div className="program-page">
       <AdminHeader
-        kicker="Comunidade"
-        title="Apoiadores e comissões"
-        description="Analise candidaturas, defina a comissão e aprove créditos na carteira dos apoiadores."
+        kicker={t('supporters.kicker')}
+        title={t('supporters.title')}
+        description={t('supporters.description')}
       />
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
       {edit && (
         <Card className="program-section">
-          <h2>Analisar {edit.name}</h2>
+          <h2>{t('supporters.review', { name: edit.name })}</h2>
           <form
             className="program-form"
             key={edit.id}
@@ -49,7 +51,7 @@ export function AdminSupportersSection() {
                       commission_percent: f.get('commission_percent'),
                       review_note: f.get('review_note'),
                     }),
-                  'Análise salva.',
+                  t('supporters.reviewSaved'),
                   [['staff-supporters']],
                 )
                 .then((ok) => {
@@ -59,14 +61,14 @@ export function AdminSupportersSection() {
           >
             <div className="program-fields">
               <label>
-                Decisão
+                {t('supporters.decision')}
                 <select name="status">
-                  <option value="approved">Aprovar</option>
-                  <option value="rejected">Recusar</option>
+                  <option value="approved">{t('supporters.approve')}</option>
+                  <option value="rejected">{t('supporters.reject')}</option>
                 </select>
               </label>
               <label>
-                Comissão (%)
+                {t('supporters.commission')}
                 <input
                   name="commission_percent"
                   type="number"
@@ -79,19 +81,19 @@ export function AdminSupportersSection() {
               </label>
             </div>
             <label>
-              Resposta ao apoiador
+              {t('supporters.reviewNote')}
               <textarea name="review_note" defaultValue={edit.review_note} />
             </label>
             <div className="program-actions">
               <Button type="submit" disabled={action.busy}>
-                Salvar análise
+                {t('supporters.saveReview')}
               </Button>
               <Button
                 className="ghost"
                 type="button"
                 onClick={() => setEdit(null)}
               >
-                Cancelar
+                {t('supporters.cancel')}
               </Button>
             </div>
           </form>
@@ -105,38 +107,38 @@ export function AdminSupportersSection() {
               <Status value={s.status} />
             </div>
             <small className="muted">
-              @{s.username} · Comissão {s.commission_percent}%
+              {t('supporters.supporterMeta', {
+                username: s.username,
+                percent: s.commission_percent,
+              })}
             </small>
-            <p className="muted">{s.description || 'Sem descrição.'}</p>
+            <p className="muted">{s.description || t('supporters.noDescription')}</p>
             <a href={s.channel_url} target="_blank" rel="noreferrer">
-              Visitar canal ↗
+              {t('supporters.visitChannel')}
             </a>
             <div className="program-actions">
               <Button type="submit" className="ghost" onClick={() => setEdit(s)}>
-                Analisar cadastro
+                {t('supporters.reviewAction')}
               </Button>
             </div>
           </Card>
         ))}
       </div>
       {query.data?.supporters.length === 0 && (
-        <Empty>Nenhuma candidatura recebida.</Empty>
+        <Empty>{t('supporters.emptyApplications')}</Empty>
       )}
       <Card className="program-section">
-        <h2>Solicitações de comissão</h2>
-        <p className="muted">
-          A aprovação credita o valor na carteira do apoiador. Uma solicitação
-          processada não pode ser creditada novamente.
-        </p>
+        <h2>{t('supporters.payoutsTitle')}</h2>
+        <p className="muted">{t('supporters.payoutsHint')}</p>
         {query.data?.payouts.length ? (
           <div className="program-table-wrap">
             <table className="program-table">
               <thead>
                 <tr>
-                  <th>Apoiador</th>
-                  <th>Valor</th>
-                  <th>Status</th>
-                  <th>Análise</th>
+                  <th>{t('supporters.columnSupporter')}</th>
+                  <th>{t('supporters.columnAmount')}</th>
+                  <th>{t('supporters.columnStatus')}</th>
+                  <th>{t('supporters.columnReview')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -156,13 +158,13 @@ export function AdminSupportersSection() {
                             onClick={() =>
                               void action.run(
                                 () => programsApi.reviewPayout(p.id, 'paid'),
-                                'Comissão creditada.',
+                                t('supporters.credited'),
                                 [['staff-supporters']],
                               )
                             }
                           >
                             <Check size={16} />
-                            Creditar
+                            {t('supporters.credit')}
                           </Button>
                           <Button type="submit"
                             className="ghost"
@@ -170,17 +172,17 @@ export function AdminSupportersSection() {
                             onClick={() =>
                               void action.run(
                                 () => programsApi.reviewPayout(p.id, 'rejected'),
-                                'Comissão recusada.',
+                                t('supporters.rejected'),
                                 [['staff-supporters']],
                               )
                             }
                           >
                             <X size={16} />
-                            Recusar
+                            {t('supporters.rejectPayout')}
                           </Button>
                         </div>
                       ) : (
-                        'Processado'
+                        t('supporters.processed')
                       )}
                     </td>
                   </tr>
@@ -189,7 +191,7 @@ export function AdminSupportersSection() {
             </table>
           </div>
         ) : (
-          <Empty>Nenhuma comissão solicitada.</Empty>
+          <Empty>{t('supporters.emptyPayouts')}</Empty>
         )}
       </Card>
     </div>

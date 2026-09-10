@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -62,8 +63,8 @@ class VapidPublicKeyView(InjectedAPIView):
 
     @extend_schema(
         tags=["Push"],
-        summary="Chave pública VAPID",
-        description="Retorna a chave pública VAPID usada para assinar notificações Web Push.",
+        summary=gettext_lazy("Chave pública VAPID"),
+        description=gettext_lazy("Retorna a chave pública VAPID usada para assinar notificações Web Push."),
     )
     def get(self, request):
         return Response(self.resolve(GetVapidPublicKeyUseCase).execute())
@@ -81,8 +82,8 @@ class PushSubscriptionView(InjectedAPIView):
 
     @extend_schema(
         tags=["Push"],
-        summary="Assinar push",
-        description="Registra a assinatura Web Push do navegador para o usuário autenticado.",
+        summary=gettext_lazy("Assinar push"),
+        description=gettext_lazy("Registra a assinatura Web Push do navegador para o usuário autenticado."),
         request=SubscribePushSerializer,
     )
     def post(self, request):
@@ -102,8 +103,8 @@ class PushSubscriptionView(InjectedAPIView):
 
     @extend_schema(
         tags=["Push"],
-        summary="Cancelar assinatura push",
-        description="Remove a assinatura Web Push do endpoint informado para o usuário autenticado.",
+        summary=gettext_lazy("Cancelar assinatura push"),
+        description=gettext_lazy("Remove a assinatura Web Push do endpoint informado para o usuário autenticado."),
         request=UnsubscribePushSerializer,
     )
     def delete(self, request):

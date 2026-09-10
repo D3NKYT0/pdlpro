@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 import '../i18n'
-import { formatCurrency, formatDateTime } from './formatters'
+import { formatCurrency, formatDateTime, formatTime } from './formatters'
 import { apiErrorMessage } from './errors'
 import { ApiError } from '../services/api'
 
@@ -13,6 +13,12 @@ it.each([undefined, null, '', 'invalid'])('data ausente/inválida não quebra te
 it('datas compartilham o locale e mantêm estilos explícitos', () => {
   const date = '2026-09-02T12:00:00Z'
   expect(formatDateTime(date, 'short')).toBe(new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(date)))
+})
+it('hora segue o locale ativo e trata entrada ausente', () => {
+  const date = new Date('2026-09-02T12:34:56Z')
+  expect(formatTime(date)).toBe(new Intl.DateTimeFormat('pt-BR', { timeStyle: 'medium' }).format(date))
+  expect(formatTime(date.getTime())).toBe(formatTime(date))
+  for (const invalid of [undefined, null, '', 'invalid']) expect(formatTime(invalid)).toBe('Data indisponível')
 })
 it('erro técnico usa fallback; API preserva mensagem pública', () => {
   expect(apiErrorMessage(new Error('SQL secret'), 'Falha ao salvar')).toBe('Falha ao salvar')

@@ -1,5 +1,6 @@
 from dataclasses import asdict
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -24,8 +25,8 @@ class NotificationListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Notificações"],
-        summary="Listar notificações",
-        description="Lista as notificações do usuário autenticado e o total de não lidas.",
+        summary=gettext_lazy("Listar notificações"),
+        description=gettext_lazy("Lista as notificações do usuário autenticado e o total de não lidas."),
     )
     def get(self, request):
         payload = self.resolve(ListNotificationsUseCase).execute(ListNotificationsInput(user_id=request.user.id))
@@ -48,8 +49,8 @@ class MarkAllNotificationsReadView(InjectedAPIView):
 
     @extend_schema(
         tags=["Notificações"],
-        summary="Marcar todas como lidas",
-        description="Marca todas as notificações do usuário autenticado como lidas.",
+        summary=gettext_lazy("Marcar todas como lidas"),
+        description=gettext_lazy("Marca todas as notificações do usuário autenticado como lidas."),
     )
     def post(self, request):
         return Response(
@@ -70,8 +71,8 @@ class MarkNotificationReadView(InjectedAPIView):
 
     @extend_schema(
         tags=["Notificações"],
-        summary="Marcar notificação como lida",
-        description="Marca a notificação informada como lida para o usuário autenticado.",
+        summary=gettext_lazy("Marcar notificação como lida"),
+        description=gettext_lazy("Marca a notificação informada como lida para o usuário autenticado."),
     )
     def post(self, request, notification_id):
         return Response(

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -45,8 +46,8 @@ class OperationalReportView(InjectedAPIView):
 
 @extend_schema(
     tags=["Staff / Relatórios"],
-    summary="Relatório de inventário",
-    description="Movimentações de inventário do painel com totais, tops e série diária.",
+    summary=gettext_lazy("Relatório de inventário"),
+    description=gettext_lazy("Movimentações de inventário do painel com totais, tops e série diária."),
     parameters=[InventoryReportFiltersSerializer],
     responses=OperationalReportResponseSerializer,
 )
@@ -57,8 +58,8 @@ class InventoryOperationalReportView(OperationalReportView):
 
 @extend_schema(
     tags=["Staff / Relatórios"],
-    summary="Relatório de leilões",
-    description="Leilões por status, lances e tops de atividade.",
+    summary=gettext_lazy("Relatório de leilões"),
+    description=gettext_lazy("Leilões por status, lances e tops de atividade."),
     parameters=[AuctionReportFiltersSerializer],
     responses=OperationalReportResponseSerializer,
 )
@@ -69,8 +70,8 @@ class AuctionsOperationalReportView(OperationalReportView):
 
 @extend_schema(
     tags=["Staff / Relatórios"],
-    summary="Relatório de compras da loja",
-    description="Compras concluídas, receita, carrinhos abandonados e tops de itens/pacotes/cupons.",
+    summary=gettext_lazy("Relatório de compras da loja"),
+    description=gettext_lazy("Compras concluídas, receita, carrinhos abandonados e tops de itens/pacotes/cupons."),
     parameters=[PurchaseReportFiltersSerializer],
     responses=OperationalReportResponseSerializer,
 )
@@ -81,8 +82,8 @@ class PurchasesOperationalReportView(OperationalReportView):
 
 @extend_schema(
     tags=["Staff / Relatórios"],
-    summary="Relatório de marketplace",
-    description="Anúncios de personagens por status, receita de vendas e tops de vendedores.",
+    summary=gettext_lazy("Relatório de marketplace"),
+    description=gettext_lazy("Anúncios de personagens por status, receita de vendas e tops de vendedores."),
     parameters=[MarketplaceReportFiltersSerializer],
     responses=OperationalReportResponseSerializer,
 )

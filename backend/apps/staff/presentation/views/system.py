@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -18,8 +19,8 @@ class HealthView(APIView):
 
     @extend_schema(
         tags=["Sistema"],
-        summary="Health check",
-        description="Disponibiliza a resposta de health check do sistema.",
+        summary=gettext_lazy("Health check"),
+        description=gettext_lazy("Disponibiliza a resposta de health check do sistema."),
     )
     def get(self, request):
         return Response({"status": "ok"})
@@ -37,8 +38,8 @@ class VersionView(APIView):
 
     @extend_schema(
         tags=["Sistema"],
-        summary="Versão da API",
-        description="Disponibiliza os metadados de versão do sistema.",
+        summary=gettext_lazy("Versão da API"),
+        description=gettext_lazy("Disponibiliza os metadados de versão do sistema."),
     )
     def get(self, request):
         return Response({"product": "PDL PRO", "api_version": API_VERSION})

@@ -21,6 +21,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   com gettext; o exception handler também traduz `message`/`details` no idioma ativo.
 - Correção dos catálogos EN/ES: remoção de restos *fuzzy* (`#|`) que mapeavam
   msgids parecidos para `msgstr` errados (ex.: refresh ausente, ID de item, 2FA).
+- Internacionalização **pt/en/es** das telas admin da SPA (`admin.json`: chrome,
+  finanças, server, themes, commerce, custom items, item watch, game content,
+  roadmap, supporters e demais módulos).
+- Summaries/descriptions OpenAPI e tags do Spectacular com `gettext_lazy`,
+  catálogos EN/ES preenchidos.
 
 ### Alterado
 
@@ -29,6 +34,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Migrações pendentes de `Meta.verbose_name` (gettext) em `games`, `programs`,
+  `server` e `shop` — `makemigrations --check` volta a passar.
 - Tela **Coming Soon** / abertura do servidor passa a usar i18n pt/en/es (kicker,
   subtítulo de abertura, contagem e CTAs), em vez de textos fixos em português, e
   inclui seletor de idioma (a página substitui o layout público sem nav/footer).

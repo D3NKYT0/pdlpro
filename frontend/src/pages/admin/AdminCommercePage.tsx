@@ -2,6 +2,7 @@ import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import {
   commerceApi,
@@ -20,6 +21,7 @@ import { useProgramAction } from "../../components/programs/useProgramAction";
 import { AdminHeader } from "./AdminChrome";
 
 export function AdminCommercePage() {
+  const { t } = useTranslation("admin");
   const packs = useQuery({
     queryKey: ["staff-packages"],
     queryFn: commerceApi.staffPackages,
@@ -39,6 +41,7 @@ export function AdminCommercePage() {
   const [contents, setContents] = useState<
     { item: string; quantity: number }[]
   >([]);
+  const packages = tab === "packages";
   function open(row?: ShopPackage | Promo) {
     setDraft(row || {});
     setContents(
@@ -50,15 +53,15 @@ export function AdminCommercePage() {
   return (
     <div className="program-page">
       <AdminHeader
-        kicker="Economia"
-        title="Pacotes e cupons"
-        description="Monte combinações de itens, configure descontos e vincule cupons aos apoiadores aprovados."
+        kicker={t("commerce.kicker")}
+        title={t("commerce.title")}
+        description={t("commerce.description")}
       />
       <ErrorNotice error={packs.error || promos.error || action.error} />
       <div className="program-tabs">
         {[
-          ["packages", "Pacotes"],
-          ["promos", "Cupons"],
+          ["packages", t("commerce.tabPackages")],
+          ["promos", t("commerce.tabPromos")],
         ].map(([id, label]) => (
           <button
             key={id}
@@ -75,14 +78,19 @@ export function AdminCommercePage() {
       <div className="program-actions">
         <Button type="submit" onClick={() => open()}>
           <Plus size={18} />
-          Criar {tab === "packages" ? "pacote" : "cupom"}
+          {packages ? t("commerce.createPackage") : t("commerce.createPromo")}
         </Button>
       </div>
       {draft && (
         <Card className="program-section">
           <h2>
-            {draft.id ? "Editar" : "Novo"}{" "}
-            {tab === "packages" ? "pacote" : "cupom"}
+            {packages
+              ? draft.id
+                ? t("commerce.editPackage")
+                : t("commerce.newPackage")
+              : draft.id
+                ? t("commerce.editPromo")
+                : t("commerce.newPromo")}
           </h2>
           <form
             key={draft.id || tab}
@@ -90,32 +98,33 @@ export function AdminCommercePage() {
             onSubmit={(e) => {
               e.preventDefault();
               const f = new FormData(e.currentTarget);
-              const data =
-                tab === "packages"
-                  ? {
-                      name: f.get("name"),
-                      total_price: f.get("total_price"),
-                      active: f.has("active"),
-                      items: contents,
-                    }
-                  : {
-                      code: f.get("code"),
-                      percent: f.get("percent"),
-                      active: f.has("active"),
-                      starts_at: f.get("starts_at")
-                        ? new Date(String(f.get("starts_at"))).toISOString()
-                        : null,
-                      ends_at: f.get("ends_at")
-                        ? new Date(String(f.get("ends_at"))).toISOString()
-                        : null,
-                      max_uses: Number(f.get("max_uses")),
-                      supporter: f.get("supporter") || null,
-                    };
+              const data = packages
+                ? {
+                    name: f.get("name"),
+                    total_price: f.get("total_price"),
+                    active: f.has("active"),
+                    items: contents,
+                  }
+                : {
+                    code: f.get("code"),
+                    percent: f.get("percent"),
+                    active: f.has("active"),
+                    starts_at: f.get("starts_at")
+                      ? new Date(String(f.get("starts_at"))).toISOString()
+                      : null,
+                    ends_at: f.get("ends_at")
+                      ? new Date(String(f.get("ends_at"))).toISOString()
+                      : null,
+                    max_uses: Number(f.get("max_uses")),
+                    supporter: f.get("supporter") || null,
+                  };
               void action
                 .run(
                   () => commerceApi.save(tab, data, draft.id),
-                  tab === "packages" ? "Pacote salvo." : "Cupom salvo.",
-                  tab === "packages"
+                  packages
+                    ? t("commerce.packageSaved")
+                    : t("commerce.promoSaved"),
+                  packages
                     ? [["staff-packages"], ["shop-packages"]]
                     : [["staff-promos"]],
                 )
@@ -124,15 +133,15 @@ export function AdminCommercePage() {
                 });
             }}
           >
-            {tab === "packages" ? (
+            {packages ? (
               <>
                 <div className="program-fields">
                   <label>
-                    Nome do pacote
+                    {t("commerce.packageName")}
                     <input name="name" required defaultValue={draft.name} />
                   </label>
                   <label>
-                    Preço em moedas
+                    {t("commerce.priceCoins")}
                     <input
                       name="total_price"
                       type="number"
@@ -143,11 +152,11 @@ export function AdminCommercePage() {
                     />
                   </label>
                 </div>
-                <h3>Conteúdo do pacote</h3>
+                <h3>{t("commerce.packageContents")}</h3>
                 {contents.map((c, i) => (
                   <div className="program-fields" key={i}>
                     <label>
-                      Item
+                      {t("commerce.item")}
                       <select
                         required
                         value={c.item}
@@ -159,16 +168,19 @@ export function AdminCommercePage() {
                           )
                         }
                       >
-                        <option value="">Selecione um item</option>
+                        <option value="">{t("commerce.selectItem")}</option>
                         {items.data?.map((item) => (
                           <option key={item.id} value={item.id}>
-                            {item.name} · {item.quantity} unidades
+                            {t("commerce.itemOption", {
+                              name: item.name,
+                              quantity: item.quantity,
+                            })}
                           </option>
                         ))}
                       </select>
                     </label>
                     <label>
-                      Quantidade
+                      {t("commerce.quantity")}
                       <input
                         type="number"
                         min={1}
@@ -193,7 +205,7 @@ export function AdminCommercePage() {
                       }
                     >
                       <Trash2 size={14} />
-                      Remover item
+                      {t("commerce.removeItem")}
                     </Button>
                   </div>
                 ))}
@@ -206,14 +218,14 @@ export function AdminCommercePage() {
                     }
                   >
                     <Plus size={16} />
-                    Adicionar item
+                    {t("commerce.addItem")}
                   </Button>
                 </div>
               </>
             ) : (
               <div className="program-fields">
                 <label>
-                  Código
+                  {t("commerce.code")}
                   <input
                     name="code"
                     required
@@ -222,7 +234,7 @@ export function AdminCommercePage() {
                   />
                 </label>
                 <label>
-                  Desconto (%)
+                  {t("commerce.discount")}
                   <input
                     name="percent"
                     type="number"
@@ -234,7 +246,7 @@ export function AdminCommercePage() {
                   />
                 </label>
                 <label>
-                  Início (opcional)
+                  {t("commerce.startsAt")}
                   <input
                     type="datetime-local"
                     name="starts_at"
@@ -242,7 +254,7 @@ export function AdminCommercePage() {
                   />
                 </label>
                 <label>
-                  Fim (opcional)
+                  {t("commerce.endsAt")}
                   <input
                     type="datetime-local"
                     name="ends_at"
@@ -250,7 +262,7 @@ export function AdminCommercePage() {
                   />
                 </label>
                 <label>
-                  Limite de usos (0 = ilimitado)
+                  {t("commerce.maxUses")}
                   <input
                     name="max_uses"
                     type="number"
@@ -259,9 +271,9 @@ export function AdminCommercePage() {
                   />
                 </label>
                 <label>
-                  Apoiador
+                  {t("commerce.supporter")}
                   <select name="supporter" defaultValue={draft.supporter || ""}>
-                    <option value="">Sem apoiador</option>
+                    <option value="">{t("commerce.noSupporter")}</option>
                     {supporters.data?.supporters
                       .filter((s) => s.status === "approved")
                       .map((s) => (
@@ -279,23 +291,21 @@ export function AdminCommercePage() {
                 type="checkbox"
                 defaultChecked={draft.active ?? true}
               />
-              Ativo
+              {t("commerce.active")}
             </label>
             <div className="program-actions">
               <Button type="submit"
 
-                disabled={
-                  action.busy || (tab === "packages" && !contents.length)
-                }
+                disabled={action.busy || (packages && !contents.length)}
               >
-                Salvar
+                {t("commerce.save")}
               </Button>
               <Button
                 type="button"
                 className="ghost"
                 onClick={() => setDraft(null)}
               >
-                Cancelar
+                {t("commerce.cancel")}
               </Button>
             </div>
           </form>
@@ -303,23 +313,28 @@ export function AdminCommercePage() {
       )}
       {(packs.isPending || promos.isPending) && <Loading />}
       <div className="program-grid">
-        {tab === "packages"
+        {packages
           ? packs.data?.map((p) => (
               <Card as="article" className="program-section" key={p.id}>
                 <div className="program-section-heading">
                   <h2>{p.name}</h2>
                   <Status value={p.active ? "available" : "rejected"} />
                 </div>
-                <strong>{p.total_price} moedas</strong>
+                <strong>
+                  {t("commerce.packagePrice", { price: p.total_price })}
+                </strong>
                 {p.contents.map((c, i) => (
                   <small className="muted" key={i}>
-                    {c.grant_quantity} × {c.name}
+                    {t("commerce.packageLine", {
+                      quantity: c.grant_quantity,
+                      name: c.name,
+                    })}
                   </small>
                 ))}
                 <div className="program-actions">
                   <Button type="submit" className="ghost" onClick={() => open(p)}>
                     <Pencil size={16} />
-                    Editar pacote
+                    {t("commerce.editPackage")}
                   </Button>
                 </div>
               </Card>
@@ -330,21 +345,26 @@ export function AdminCommercePage() {
                   <h2>{p.code}</h2>
                   <Status value={p.active ? "available" : "rejected"} />
                 </div>
-                <strong>{p.percent}% de desconto</strong>
+                <strong>
+                  {t("commerce.promoDiscount", { percent: p.percent })}
+                </strong>
                 <small className="muted">
-                  {p.uses} utilizações · Limite {p.max_uses || "ilimitado"}
+                  {t("commerce.promoUses", {
+                    uses: p.uses,
+                    limit: p.max_uses || t("commerce.unlimited"),
+                  })}
                 </small>
                 <div className="program-actions">
                   <Button type="submit" className="ghost" onClick={() => open(p)}>
                     <Pencil size={16} />
-                    Editar cupom
+                    {t("commerce.editPromo")}
                   </Button>
                 </div>
               </Card>
             ))}
       </div>
-      {(tab === "packages" ? packs.data : promos.data)?.length === 0 && (
-        <Empty>Nenhum registro nesta seção.</Empty>
+      {(packages ? packs.data : promos.data)?.length === 0 && (
+        <Empty>{t("commerce.empty")}</Empty>
       )}
     </div>
   );

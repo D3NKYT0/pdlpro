@@ -1,5 +1,6 @@
 from dataclasses import asdict
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -56,8 +57,8 @@ class PublicAuctionListView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Leilão"],
-        summary="Listar leilões abertos",
-        description="Encerra leilões expirados e retorna a lista pública de leilões ainda abertos.",
+        summary=gettext_lazy("Listar leilões abertos"),
+        description=gettext_lazy("Encerra leilões expirados e retorna a lista pública de leilões ainda abertos."),
     )
     def get(self, request):
         self.resolve(CloseExpiredAuctionsUseCase).execute(None)
@@ -77,8 +78,8 @@ class MyAuctionsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Leilão"],
-        summary="Listar meus leilões",
-        description="Lista os leilões criados pelo usuário autenticado.",
+        summary=gettext_lazy("Listar meus leilões"),
+        description=gettext_lazy("Lista os leilões criados pelo usuário autenticado."),
     )
     def get(self, request):
         auctions = self.resolve(ListMyAuctionsUseCase).execute(ListMyAuctionsInput(user_id=request.user.id))
@@ -86,8 +87,8 @@ class MyAuctionsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Leilão"],
-        summary="Criar leilão",
-        description="Cria um novo leilão a partir de um item do inventário do usuário autenticado.",
+        summary=gettext_lazy("Criar leilão"),
+        description=gettext_lazy("Cria um novo leilão a partir de um item do inventário do usuário autenticado."),
         request=CreateAuctionSerializer,
     )
     def post(self, request):
@@ -119,8 +120,8 @@ class PlaceBidView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Leilão"],
-        summary="Dar lance",
-        description="Registra um lance no leilão informado para o usuário autenticado.",
+        summary=gettext_lazy("Dar lance"),
+        description=gettext_lazy("Registra um lance no leilão informado para o usuário autenticado."),
         request=PlaceBidSerializer,
     )
     def post(self, request, auction_id):

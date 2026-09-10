@@ -3,6 +3,7 @@ import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { Field } from '../../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { BadgeDollarSign, Coins, Percent, Scale } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
@@ -11,6 +12,7 @@ import { ItemIdField } from '../../components/ItemIdField'
 import { useItemCatalog } from '../../hooks/useItemCatalog'
 
 export function AdminCoinsPage() {
+  const { t } = useTranslation('admin')
   const catalog = useItemCatalog()
   const queryClient = useQueryClient()
   const coins = useQuery({ queryKey: ['staff-coins'], queryFn: staffApi.coins })
@@ -42,22 +44,22 @@ export function AdminCoinsPage() {
         withdraw_fee_percent: fee,
         active: true,
       })
-      toast.success('Moeda atualizada')
+      toast.success(t('coins.toast.saved'))
       await queryClient.invalidateQueries({ queryKey: ['staff-coins'] })
-    }, 'Não foi possível salvar')
+    }, t('coins.toast.error'))
   }
 
   return (
     <div className="account-page">
-      <AdminHeader kicker="Financeiro" title="Moedas" description="Moeda ativa da carteira e taxas de saque." />
+      <AdminHeader kicker={t('coins.kicker')} title={t('coins.title')} description={t('coins.description')} />
       <form className="admin-coins-form" onSubmit={onSubmit}>
         <Card className="admin-config-section admin-coin-identity">
           <header>
             <span><Coins /></span>
-            <div><span className="panel-eyebrow">Moeda principal</span><h2>Identidade da carteira</h2><p>Vincule a moeda virtual ao item correspondente no servidor.</p></div>
+            <div><span className="panel-eyebrow">{t('coins.eyebrow')}</span><h2>{t('coins.identityTitle')}</h2><p>{t('coins.identityText')}</p></div>
           </header>
           <div className="account-form-fields">
-            <Field>Nome do catálogo<input value={catalog.getById(coinId)?.name ?? (coinId ? `Item ${coinId}` : '')} readOnly /><small>O nome vem do item selecionado no catálogo.</small></Field>
+            <Field>{t('coins.catalogName')}<input value={catalog.getById(coinId)?.name ?? (coinId ? t('coins.itemFallback', { id: coinId }) : '')} readOnly /><small>{t('coins.catalogHint')}</small></Field>
             <ItemIdField
               value={coinId}
               onChange={(id, item) => {
@@ -71,23 +73,23 @@ export function AdminCoinsPage() {
         <section className="admin-coin-metrics">
           <Field className="card admin-coin-metric">
             <span className="admin-coin-metric-icon"><Scale /></span>
-            <span><b>Multiplicador</b><small>Ajuste global aplicado à moeda</small></span>
+            <span><b>{t('coins.multiplier')}</b><small>{t('coins.multiplierHint')}</small></span>
             <span className="admin-coin-input"><b>×</b><input type="number" min="0" step="0.01" value={multiplier} onChange={(e) => setMultiplier(e.target.value)} /></span>
           </Field>
           <Field className="card admin-coin-metric">
             <span className="admin-coin-metric-icon"><BadgeDollarSign /></span>
-            <span><b>Conversão por USD</b><small>Moedas entregues por dólar</small></span>
+            <span><b>{t('coins.usd')}</b><small>{t('coins.usdHint')}</small></span>
             <span className="admin-coin-input"><b>$</b><input type="number" min="0" step="0.01" value={usd} onChange={(e) => setUsd(e.target.value)} /></span>
           </Field>
           <Field className="card admin-coin-metric">
             <span className="admin-coin-metric-icon"><Percent /></span>
-            <span><b>Taxa de retirada</b><small>Percentual retido no saque</small></span>
+            <span><b>{t('coins.fee')}</b><small>{t('coins.feeHint')}</small></span>
             <span className="admin-coin-input"><b>%</b><input type="number" min="0" max="100" step="0.01" value={fee} onChange={(e) => setFee(e.target.value)} /></span>
           </Field>
         </section>
 
         <Card as="div" className="admin-server-actions">
-          <span><strong>Configuração da moeda</strong><small>{name || 'Moeda sem nome'} · Item {coinId || 'não definido'} · taxa de {fee || '0'}%</small></span>
+          <span><strong>{t('coins.summaryTitle')}</strong><small>{t('coins.summary', { name: name || t('coins.unnamed'), item: coinId || t('coins.undefinedItem'), fee: fee || '0' })}</small></span>
           <AdminSaveBar saving={saving} />
         </Card>
       </form>

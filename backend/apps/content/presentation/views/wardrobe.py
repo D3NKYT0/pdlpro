@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -23,16 +24,16 @@ class DenkynhoWardrobeView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Consultar guarda-roupa",
-        description="Consulta os desbloqueios e a aparência atual do mascote da própria conta.",
+        summary=gettext_lazy("Consultar guarda-roupa"),
+        description=gettext_lazy("Consulta os desbloqueios e a aparência atual do mascote da própria conta."),
     )
     def get(self, request):
         return Response(self.resolve(GetDenkynhoProfileUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Equipar peça no Denkynho",
-        description="Equipa ou remove uma peça no guarda-roupa do mascote da própria conta.",
+        summary=gettext_lazy("Equipar peça no Denkynho"),
+        description=gettext_lazy("Equipa ou remove uma peça no guarda-roupa do mascote da própria conta."),
         request=DenkynhoWardrobeSerializer,
     )
     def patch(self, request):

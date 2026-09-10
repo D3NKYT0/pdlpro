@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -69,16 +70,16 @@ class RouletteView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado da roleta",
-        description="Retorna o estado atual da roleta para o jogador autenticado.",
+        summary=gettext_lazy("Estado da roleta"),
+        description=gettext_lazy("Retorna o estado atual da roleta para o jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetRouletteStateUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Girar a roleta",
-        description="Executa um giro da roleta e devolve o resultado para o jogador autenticado.",
+        summary=gettext_lazy("Girar a roleta"),
+        description=gettext_lazy("Executa um giro da roleta e devolve o resultado para o jogador autenticado."),
     )
     def post(self, request):
         return Response(self.resolve(SpinRouletteUseCase).execute(SpinRouletteInput(user_id=request.user.id)))
@@ -95,8 +96,8 @@ class BuyTokensView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Comprar fichas",
-        description="Compra a quantidade informada de fichas para uso nos jogos do painel.",
+        summary=gettext_lazy("Comprar fichas"),
+        description=gettext_lazy("Compra a quantidade informada de fichas para uso nos jogos do painel."),
         request=BuyTokensSerializer,
     )
     def post(self, request):
@@ -121,16 +122,16 @@ class DailyBonusView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado do bônus diário",
-        description="Retorna o estado do bônus diário disponível para o jogador autenticado.",
+        summary=gettext_lazy("Estado do bônus diário"),
+        description=gettext_lazy("Retorna o estado do bônus diário disponível para o jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetDailyBonusStateUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Resgatar bônus diário",
-        description="Resgata o bônus diário ativo, priorizando a temporada diária quando existir.",
+        summary=gettext_lazy("Resgatar bônus diário"),
+        description=gettext_lazy("Resgata o bônus diário ativo, priorizando a temporada diária quando existir."),
     )
     def post(self, request):
         return Response(
@@ -152,16 +153,16 @@ class BagView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Consultar bolsa",
-        description="Lista o conteúdo da bolsa de jogos do jogador autenticado.",
+        summary=gettext_lazy("Consultar bolsa"),
+        description=gettext_lazy("Lista o conteúdo da bolsa de jogos do jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetBagUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Transferir bolsa",
-        description="Transfere o conteúdo da bolsa para o inventário de personagem informado.",
+        summary=gettext_lazy("Transferir bolsa"),
+        description=gettext_lazy("Transfere o conteúdo da bolsa para o inventário de personagem informado."),
         request=TransferBagSerializer,
     )
     def post(self, request):
@@ -186,16 +187,16 @@ class BoxListView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Listar caixas",
-        description="Lista os tipos de caixas disponíveis para compra pelo jogador autenticado.",
+        summary=gettext_lazy("Listar caixas"),
+        description=gettext_lazy("Lista os tipos de caixas disponíveis para compra pelo jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(ListBoxTypesUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Comprar caixa",
-        description="Compra uma caixa do tipo informado para o jogador autenticado.",
+        summary=gettext_lazy("Comprar caixa"),
+        description=gettext_lazy("Compra uma caixa do tipo informado para o jogador autenticado."),
         request=BuyBoxSerializer,
     )
     def post(self, request):
@@ -219,8 +220,8 @@ class OpenBoxView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Abrir caixa",
-        description="Abre a caixa identificada e devolve as recompensas obtidas.",
+        summary=gettext_lazy("Abrir caixa"),
+        description=gettext_lazy("Abre a caixa identificada e devolve as recompensas obtidas."),
     )
     def post(self, request, box_id):
         return Response(self.resolve(OpenBoxUseCase).execute(OpenBoxInput(user_id=request.user.id, box_id=box_id)))
@@ -237,8 +238,8 @@ class MinigamesView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado dos minijogos",
-        description="Retorna o estado consolidado dos minijogos disponíveis para o jogador.",
+        summary=gettext_lazy("Estado dos minijogos"),
+        description=gettext_lazy("Retorna o estado consolidado dos minijogos disponíveis para o jogador."),
     )
     def get(self, request):
         return Response(self.resolve(GetMinigamesStateUseCase).execute(request.user.id))
@@ -255,8 +256,8 @@ class DiceView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Jogar dados",
-        description="Executa uma jogada de dados com os parâmetros informados e devolve o resultado.",
+        summary=gettext_lazy("Jogar dados"),
+        description=gettext_lazy("Executa uma jogada de dados com os parâmetros informados e devolve o resultado."),
         request=PlayDiceSerializer,
     )
     def post(self, request):
@@ -280,8 +281,8 @@ class SlotsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Girar caça-níqueis",
-        description="Executa um giro no caça-níqueis e devolve o resultado para o jogador autenticado.",
+        summary=gettext_lazy("Girar caça-níqueis"),
+        description=gettext_lazy("Executa um giro no caça-níqueis e devolve o resultado para o jogador autenticado."),
     )
     def post(self, request):
         return Response(self.resolve(SpinSlotsUseCase).execute(SpinSlotsInput(user_id=request.user.id)))
@@ -299,16 +300,16 @@ class FishingView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado da pesca",
-        description="Retorna o estado atual do minijogo de pesca para o jogador autenticado.",
+        summary=gettext_lazy("Estado da pesca"),
+        description=gettext_lazy("Retorna o estado atual do minijogo de pesca para o jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetFishingStateUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Lançar linha",
-        description="Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura.",
+        summary=gettext_lazy("Lançar linha"),
+        description=gettext_lazy("Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura."),
     )
     def post(self, request):
         from rest_framework import serializers
@@ -327,8 +328,8 @@ class EconomyView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado da economia",
-        description="Retorna o estado do minijogo de economia para o jogador autenticado.",
+        summary=gettext_lazy("Estado da economia"),
+        description=gettext_lazy("Retorna o estado do minijogo de economia para o jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetEconomyStateUseCase).execute(request.user.id))
@@ -345,8 +346,8 @@ class FightMonsterView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Combater monstro",
-        description="Inicia um combate contra o monstro informado e devolve o resultado.",
+        summary=gettext_lazy("Combater monstro"),
+        description=gettext_lazy("Inicia um combate contra o monstro informado e devolve o resultado."),
     )
     def post(self, request, monster_id):
         return Response(
@@ -367,8 +368,8 @@ class EnchantWeaponView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Encantar arma",
-        description="Tenta encantar a arma do jogador no minijogo de economia e devolve o resultado.",
+        summary=gettext_lazy("Encantar arma"),
+        description=gettext_lazy("Tenta encantar a arma do jogador no minijogo de economia e devolve o resultado."),
     )
     def post(self, request):
         return Response(self.resolve(EnchantWeaponUseCase).execute(EnchantWeaponInput(user_id=request.user.id)))
@@ -386,16 +387,16 @@ class BattlePassView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Estado do passe de batalha",
-        description="Retorna o progresso e as recompensas do passe de batalha do jogador autenticado.",
+        summary=gettext_lazy("Estado do passe de batalha"),
+        description=gettext_lazy("Retorna o progresso e as recompensas do passe de batalha do jogador autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetBattlePassUseCase).execute(request.user.id))
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Comprar passe premium",
-        description="Adquire o passe de batalha premium para o jogador autenticado.",
+        summary=gettext_lazy("Comprar passe premium"),
+        description=gettext_lazy("Adquire o passe de batalha premium para o jogador autenticado."),
     )
     def post(self, request):
         return Response(
@@ -414,8 +415,8 @@ class ClaimBattlePassView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Jogos"],
-        summary="Resgatar recompensa do passe",
-        description="Resgata a recompensa do passe de batalha identificada pelo ID informado.",
+        summary=gettext_lazy("Resgatar recompensa do passe"),
+        description=gettext_lazy("Resgata a recompensa do passe de batalha identificada pelo ID informado."),
     )
     def post(self, request, reward_id):
         return Response(

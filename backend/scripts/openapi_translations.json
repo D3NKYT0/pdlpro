@@ -1,0 +1,1362 @@
+{
+  "Pesquise as permissões disponíveis e use as setas para atribuir ou remover.": [
+    "Search available permissions and use the arrows to assign or remove them.",
+    "Busca los permisos disponibles y usa las flechas para asignar o quitar."
+  ],
+  "Obter token CSRF": [
+    "Get CSRF token",
+    "Obtener token CSRF"
+  ],
+  "Retorna o token CSRF necessário para requisições de escrita autenticadas por cookie.": [
+    "Returns the CSRF token required for write requests authenticated by cookie.",
+    "Devuelve el token CSRF necesario para las solicitudes de escritura autenticadas por cookie."
+  ],
+  "Registrar conta": [
+    "Register account",
+    "Registrar cuenta"
+  ],
+  "Cria uma nova conta de usuário e inicia a sessão com cookies de autenticação.": [
+    "Creates a new user account and starts the session with authentication cookies.",
+    "Crea una nueva cuenta de usuario e inicia la sesión con cookies de autenticación."
+  ],
+  "Autentica com login e senha, podendo exigir CAPTCHA ou desafio de segundo fator.": [
+    "Authenticates with login and password, and may require CAPTCHA or a second-factor challenge.",
+    "Autentica con usuario y contraseña, y puede exigir CAPTCHA o un desafío de segundo factor."
+  ],
+  "Capacidades de autenticação": [
+    "Authentication capabilities",
+    "Capacidades de autenticación"
+  ],
+  "Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores OAuth e vínculos sociais da sessão.": [
+    "Reports the flags for passkeys, 2FA, email verification, CAPTCHA, OAuth providers and the social links of the session.",
+    "Informa los flags de passkeys, 2FA, verificación de correo, CAPTCHA, proveedores OAuth y vínculos sociales de la sesión."
+  ],
+  "Iniciar OAuth": [
+    "Start OAuth",
+    "Iniciar OAuth"
+  ],
+  "Gera a URL de autorização do provedor social para login ou vínculo de conta.": [
+    "Generates the social provider authorization URL for login or account linking.",
+    "Genera la URL de autorización del proveedor social para iniciar sesión o vincular la cuenta."
+  ],
+  "Concluir OAuth": [
+    "Complete OAuth",
+    "Completar OAuth"
+  ],
+  "Troca o código do provedor por sessão autenticada, vínculo de conta ou desafio 2FA.": [
+    "Exchanges the provider code for an authenticated session, an account link or a 2FA challenge.",
+    "Cambia el código del proveedor por una sesión autenticada, un vínculo de cuenta o un desafío 2FA."
+  ],
+  "Completar credenciais": [
+    "Complete credentials",
+    "Completar credenciales"
+  ],
+  "Define username e senha para contas criadas via OAuth que ainda não possuem credenciais locais.": [
+    "Sets the username and password for accounts created via OAuth that still have no local credentials.",
+    "Define el nombre de usuario y la contraseña de las cuentas creadas vía OAuth que aún no tienen credenciales locales."
+  ],
+  "Renovar sessão": [
+    "Refresh session",
+    "Renovar sesión"
+  ],
+  "Rotaciona o refresh token e atualiza os cookies JWT da sessão.": [
+    "Rotates the refresh token and updates the session JWT cookies.",
+    "Rota el refresh token y actualiza las cookies JWT de la sesión."
+  ],
+  "Sair": [
+    "Sign out",
+    "Cerrar sesión"
+  ],
+  "Revoga o refresh token e remove os cookies de autenticação da resposta.": [
+    "Revokes the refresh token and removes the authentication cookies from the response.",
+    "Revoca el refresh token y elimina las cookies de autenticación de la respuesta."
+  ],
+  "Listar sessões": [
+    "List sessions",
+    "Listar sesiones"
+  ],
+  "Retorna as sessões de refresh ativas, marcando a sessão do navegador atual.": [
+    "Returns the active refresh sessions, flagging the current browser session.",
+    "Devuelve las sesiones de refresh activas, marcando la sesión del navegador actual."
+  ],
+  "Revogar sessão": [
+    "Revoke session",
+    "Revocar sesión"
+  ],
+  "Encerra uma sessão ativa pelo identificador ``jti``. A sessão atual também limpa cookies.": [
+    "Ends an active session by its ``jti`` identifier. Ending the current session also clears cookies.",
+    "Finaliza una sesión activa por el identificador ``jti``. La sesión actual también limpia las cookies."
+  ],
+  "Revogar outras sessões": [
+    "Revoke other sessions",
+    "Revocar otras sesiones"
+  ],
+  "Encerra todas as sessões ativas preservando apenas a sessão corrente do navegador.": [
+    "Ends every active session, keeping only the current browser session.",
+    "Finaliza todas las sesiones activas y conserva solo la sesión actual del navegador."
+  ],
+  "Obter perfil": [
+    "Get profile",
+    "Obtener perfil"
+  ],
+  "Retorna os dados do usuário autenticado na sessão atual.": [
+    "Returns the data of the user authenticated in the current session.",
+    "Devuelve los datos del usuario autenticado en la sesión actual."
+  ],
+  "Atualiza campos do perfil do usuário autenticado e devolve o estado atualizado.": [
+    "Updates profile fields of the authenticated user and returns the updated state.",
+    "Actualiza campos del perfil del usuario autenticado y devuelve el estado actualizado."
+  ],
+  "Verificar 2FA no login": [
+    "Verify 2FA at login",
+    "Verificar 2FA en el inicio de sesión"
+  ],
+  "Valida o código de segundo fator do desafio de login e inicia a sessão.": [
+    "Validates the second-factor code from the login challenge and starts the session.",
+    "Valida el código de segundo factor del desafío de inicio de sesión e inicia la sesión."
+  ],
+  "Gerenciar 2FA": [
+    "Manage 2FA",
+    "Gestionar 2FA"
+  ],
+  "Configura, confirma ou desativa a autenticação de dois fatores da conta.": [
+    "Sets up, confirms or disables two-factor authentication for the account.",
+    "Configura, confirma o desactiva la autenticación de dos factores de la cuenta."
+  ],
+  "Retorna progresso, recompensas e dados de jogo do usuário autenticado.": [
+    "Returns progress, rewards and game data of the authenticated user.",
+    "Devuelve el progreso, las recompensas y los datos de juego del usuario autenticado."
+  ],
+  "Solicitar verificação de e-mail": [
+    "Request email verification",
+    "Solicitar verificación de correo"
+  ],
+  "Dispara o envio do e-mail com o link de verificação da conta autenticada.": [
+    "Triggers the email carrying the verification link for the authenticated account.",
+    "Dispara el envío del correo con el enlace de verificación de la cuenta autenticada."
+  ],
+  "Verificar e-mail": [
+    "Verify email",
+    "Verificar correo"
+  ],
+  "Confirma o endereço de e-mail a partir do token recebido na mensagem de verificação.": [
+    "Confirms the email address using the token received in the verification message.",
+    "Confirma la dirección de correo a partir del token recibido en el mensaje de verificación."
+  ],
+  "Solicitar redefinição de senha": [
+    "Request password reset",
+    "Solicitar restablecimiento de contraseña"
+  ],
+  "Envia o e-mail com o token para redefinir a senha da conta associada ao endereço informado.": [
+    "Sends the email with the token to reset the password of the account linked to the given address.",
+    "Envía el correo con el token para restablecer la contraseña de la cuenta asociada a la dirección indicada."
+  ],
+  "Define a nova senha usando o token de redefinição recebido por e-mail.": [
+    "Sets the new password using the reset token received by email.",
+    "Define la nueva contraseña usando el token de restablecimiento recibido por correo."
+  ],
+  "Resgata uma recompensa de progresso disponível para o usuário autenticado.": [
+    "Claims a progress reward available to the authenticated user.",
+    "Canjea una recompensa de progreso disponible para el usuario autenticado."
+  ],
+  "Listar passkeys": [
+    "List passkeys",
+    "Listar passkeys"
+  ],
+  "Retorna as credenciais passkey registradas pelo usuário autenticado.": [
+    "Returns the passkey credentials registered by the authenticated user.",
+    "Devuelve las credenciales passkey registradas por el usuario autenticado."
+  ],
+  "Iniciar registro de passkey": [
+    "Start passkey registration",
+    "Iniciar registro de passkey"
+  ],
+  "Gera o desafio WebAuthn para criar uma nova credencial passkey na conta autenticada.": [
+    "Generates the WebAuthn challenge to create a new passkey credential on the authenticated account.",
+    "Genera el desafío WebAuthn para crear una nueva credencial passkey en la cuenta autenticada."
+  ],
+  "Concluir registro de passkey": [
+    "Complete passkey registration",
+    "Completar registro de passkey"
+  ],
+  "Valida a resposta WebAuthn e persiste a nova credencial passkey do usuário.": [
+    "Validates the WebAuthn response and persists the user's new passkey credential.",
+    "Valida la respuesta WebAuthn y persiste la nueva credencial passkey del usuario."
+  ],
+  "Iniciar login com passkey": [
+    "Start passkey login",
+    "Iniciar login con passkey"
+  ],
+  "Gera o desafio WebAuthn para autenticar o usuário com uma passkey existente.": [
+    "Generates the WebAuthn challenge to authenticate the user with an existing passkey.",
+    "Genera el desafío WebAuthn para autenticar al usuario con una passkey existente."
+  ],
+  "Concluir login com passkey": [
+    "Complete passkey login",
+    "Completar login con passkey"
+  ],
+  "Valida a asserção WebAuthn e inicia a sessão ou o desafio de segundo fator.": [
+    "Validates the WebAuthn assertion and starts the session or the second-factor challenge.",
+    "Valida la aserción WebAuthn e inicia la sesión o el desafío de segundo factor."
+  ],
+  "Excluir passkey": [
+    "Delete passkey",
+    "Eliminar passkey"
+  ],
+  "Remove uma credencial passkey pertencente ao usuário autenticado.": [
+    "Removes a passkey credential belonging to the authenticated user.",
+    "Elimina una credencial passkey perteneciente al usuario autenticado."
+  ],
+  "Listar leilões abertos": [
+    "List open auctions",
+    "Listar subastas abiertas"
+  ],
+  "Encerra leilões expirados e retorna a lista pública de leilões ainda abertos.": [
+    "Closes expired auctions and returns the public list of auctions still open.",
+    "Cierra las subastas vencidas y devuelve la lista pública de subastas aún abiertas."
+  ],
+  "Listar meus leilões": [
+    "List my auctions",
+    "Listar mis subastas"
+  ],
+  "Lista os leilões criados pelo usuário autenticado.": [
+    "Lists the auctions created by the authenticated user.",
+    "Lista las subastas creadas por el usuario autenticado."
+  ],
+  "Cria um novo leilão a partir de um item do inventário do usuário autenticado.": [
+    "Creates a new auction from an item in the authenticated user's inventory.",
+    "Crea una nueva subasta a partir de un ítem del inventario del usuario autenticado."
+  ],
+  "Registra um lance no leilão informado para o usuário autenticado.": [
+    "Places a bid on the given auction for the authenticated user.",
+    "Registra una puja en la subasta indicada para el usuario autenticado."
+  ],
+  "Lista as notificações do usuário autenticado e o total de não lidas.": [
+    "Lists the authenticated user's notifications and the unread total.",
+    "Lista las notificaciones del usuario autenticado y el total de no leídas."
+  ],
+  "Marcar todas como lidas": [
+    "Mark all as read",
+    "Marcar todas como leídas"
+  ],
+  "Marca todas as notificações do usuário autenticado como lidas.": [
+    "Marks every notification of the authenticated user as read.",
+    "Marca como leídas todas las notificaciones del usuario autenticado."
+  ],
+  "Marcar notificação como lida": [
+    "Mark notification as read",
+    "Marcar notificación como leída"
+  ],
+  "Marca a notificação informada como lida para o usuário autenticado.": [
+    "Marks the given notification as read for the authenticated user.",
+    "Marca la notificación indicada como leída para el usuario autenticado."
+  ],
+  "Chave pública VAPID": [
+    "VAPID public key",
+    "Clave pública VAPID"
+  ],
+  "Retorna a chave pública VAPID usada para assinar notificações Web Push.": [
+    "Returns the VAPID public key used to sign Web Push notifications.",
+    "Devuelve la clave pública VAPID usada para firmar notificaciones Web Push."
+  ],
+  "Assinar push": [
+    "Subscribe to push",
+    "Suscribirse a push"
+  ],
+  "Registra a assinatura Web Push do navegador para o usuário autenticado.": [
+    "Registers the browser Web Push subscription for the authenticated user.",
+    "Registra la suscripción Web Push del navegador para el usuario autenticado."
+  ],
+  "Cancelar assinatura push": [
+    "Unsubscribe from push",
+    "Cancelar suscripción push"
+  ],
+  "Remove a assinatura Web Push do endpoint informado para o usuário autenticado.": [
+    "Removes the Web Push subscription of the given endpoint for the authenticated user.",
+    "Elimina la suscripción Web Push del endpoint indicado para el usuario autenticado."
+  ],
+  "Sentimento do usuário que o mascote está acompanhando; vazio quando não há empatia ativa.": [
+    "Feeling of the user the mascot is following; empty when there is no active empathy.",
+    "Sentimiento del usuario que la mascota está acompañando; vacío cuando no hay empatía activa."
+  ],
+  "Quando a empatia expira, o humor volta a ser calculado só pelas necessidades do mascote.": [
+    "When empathy expires, mood is computed again only from the mascot's needs.",
+    "Cuando la empatía expira, el humor vuelve a calcularse solo por las necesidades de la mascota."
+  ],
+  "Lista as notícias públicas publicadas no portal.": [
+    "Lists the public news published on the portal.",
+    "Lista las noticias públicas publicadas en el portal."
+  ],
+  "Detalhe da notícia": [
+    "News detail",
+    "Detalle de la noticia"
+  ],
+  "Retorna o conteúdo completo da notícia identificada pelo slug.": [
+    "Returns the full content of the news item identified by the slug.",
+    "Devuelve el contenido completo de la noticia identificada por el slug."
+  ],
+  "Listar FAQ público": [
+    "List public FAQ",
+    "Listar FAQ público"
+  ],
+  "Lista as perguntas frequentes públicas no idioma solicitado.": [
+    "Lists the public frequently asked questions in the requested language.",
+    "Lista las preguntas frecuentes públicas en el idioma solicitado."
+  ],
+  "Lista os arquivos e links de download disponíveis publicamente.": [
+    "Lists the publicly available download files and links.",
+    "Lista los archivos y enlaces de descarga disponibles públicamente."
+  ],
+  "Listar ou buscar wiki": [
+    "List or search wiki",
+    "Listar o buscar en la wiki"
+  ],
+  "Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado.": [
+    "Lists the wiki pages, or searches by term when the q parameter is provided.",
+    "Lista las páginas de la wiki o busca por término cuando se indica el parámetro q."
+  ],
+  "Detalhe da página wiki": [
+    "Wiki page detail",
+    "Detalle de la página wiki"
+  ],
+  "Retorna o conteúdo da página da wiki identificada pelo slug.": [
+    "Returns the content of the wiki page identified by the slug.",
+    "Devuelve el contenido de la página wiki identificada por el slug."
+  ],
+  "Listar eventos do calendário": [
+    "List calendar events",
+    "Listar eventos del calendario"
+  ],
+  "Lista os eventos públicos do calendário do servidor.": [
+    "Lists the public events on the server calendar.",
+    "Lista los eventos públicos del calendario del servidor."
+  ],
+  "Listar documentos legais": [
+    "List legal documents",
+    "Listar documentos legales"
+  ],
+  "Lista os documentos legais públicos disponíveis no portal.": [
+    "Lists the public legal documents available on the portal.",
+    "Lista los documentos legales públicos disponibles en el portal."
+  ],
+  "Detalhe do documento legal": [
+    "Legal document detail",
+    "Detalle del documento legal"
+  ],
+  "Retorna o conteúdo do documento legal identificado pelo slug.": [
+    "Returns the content of the legal document identified by the slug.",
+    "Devuelve el contenido del documento legal identificado por el slug."
+  ],
+  "Entrega ajuda pública e interna conforme a identidade autenticada da requisição.": [
+    "Delivers public and internal help according to the authenticated identity of the request.",
+    "Entrega ayuda pública e interna según la identidad autenticada de la solicitud."
+  ],
+  "Responder com o assistente": [
+    "Reply with the assistant",
+    "Responder con el asistente"
+  ],
+  "Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo autorizado.": [
+    "Interprets a message without persisting its text and returns only authorized content.",
+    "Interpreta un mensaje sin persistir su texto y devuelve solo contenido autorizado."
+  ],
+  "Retorna o perfil do Denkynho vinculado à sessão autenticada atual.": [
+    "Returns the Denkynho profile linked to the current authenticated session.",
+    "Devuelve el perfil de Denkynho vinculado a la sesión autenticada actual."
+  ],
+  "Atualiza apelido e nível de detalhe persistidos no mascote da conta autenticada.": [
+    "Updates the nickname and detail level stored on the authenticated account's mascot.",
+    "Actualiza el apodo y el nivel de detalle guardados en la mascota de la cuenta autenticada."
+  ],
+  "Executa uma ação de cuidado no Denkynho da sessão autenticada atual.": [
+    "Runs a care action on the Denkynho of the current authenticated session.",
+    "Ejecuta una acción de cuidado en el Denkynho de la sesión autenticada actual."
+  ],
+  "Consultar guarda-roupa": [
+    "Get wardrobe",
+    "Consultar guardarropa"
+  ],
+  "Consulta os desbloqueios e a aparência atual do mascote da própria conta.": [
+    "Returns the unlocks and the current appearance of the account's own mascot.",
+    "Consulta los desbloqueos y la apariencia actual de la mascota de la propia cuenta."
+  ],
+  "Equipa ou remove uma peça no guarda-roupa do mascote da própria conta.": [
+    "Equips or removes a piece in the wardrobe of the account's own mascot.",
+    "Equipa o quita una pieza en el guardarropa de la mascota de la propia cuenta."
+  ],
+  "Detalhes do passe de batalha": [
+    "Battle pass details",
+    "Detalles del battle pass"
+  ],
+  "Retorna o conteúdo adicional do passe de batalha disponível para o jogador autenticado.": [
+    "Returns the additional battle pass content available to the authenticated player.",
+    "Devuelve el contenido adicional del battle pass disponible para el jugador autenticado."
+  ],
+  "Ação do passe de batalha": [
+    "Battle pass action",
+    "Acción del battle pass"
+  ],
+  "Executa uma ação validada no conteúdo adicional do passe (missão, troca, marco ou resgate automático).": [
+    "Runs a validated action on the additional pass content (mission, exchange, milestone or automatic claim).",
+    "Ejecuta una acción validada en el contenido adicional del pase (misión, intercambio, hito o canje automático)."
+  ],
+  "Retorna o calendário e os detalhes do bônus diário do jogador autenticado.": [
+    "Returns the calendar and the details of the authenticated player's daily bonus.",
+    "Devuelve el calendario y los detalles del bono diario del jugador autenticado."
+  ],
+  "Lista iscas ativas, estoque do jogador e coleção de peixes capturados.": [
+    "Lists the active baits, the player's stock and the collection of caught fish.",
+    "Lista los cebos activos, el stock del jugador y la colección de peces capturados."
+  ],
+  "Comprar iscas": [
+    "Buy baits",
+    "Comprar cebos"
+  ],
+  "Compra iscas de pesca para o jogador autenticado com a quantidade informada.": [
+    "Buys fishing baits for the authenticated player in the given quantity.",
+    "Compra cebos de pesca para el jugador autenticado con la cantidad indicada."
+  ],
+  "Estatísticas de jogos": [
+    "Game statistics",
+    "Estadísticas de juegos"
+  ],
+  "Retorna as estatísticas do tipo solicitado para o jogador autenticado.": [
+    "Returns the statistics of the requested type for the authenticated player.",
+    "Devuelve las estadísticas del tipo solicitado para el jugador autenticado."
+  ],
+  "Listar conteúdo de jogos": [
+    "List game content",
+    "Listar contenido de juegos"
+  ],
+  "Lista as entradas de configuração do tipo de conteúdo informado.": [
+    "Lists the configuration entries for the given content type.",
+    "Lista las entradas de configuración del tipo de contenido indicado."
+  ],
+  "Criar conteúdo de jogos": [
+    "Create game content",
+    "Crear contenido de juegos"
+  ],
+  "Cria uma nova entrada de configuração para o tipo de conteúdo informado.": [
+    "Creates a new configuration entry for the given content type.",
+    "Crea una nueva entrada de configuración para el tipo de contenido indicado."
+  ],
+  "Atualizar conteúdo de jogos": [
+    "Update game content",
+    "Actualizar contenido de juegos"
+  ],
+  "Atualiza parcialmente uma entrada de configuração identificada pelo tipo e pelo ID.": [
+    "Partially updates a configuration entry identified by type and ID.",
+    "Actualiza parcialmente una entrada de configuración identificada por el tipo y el ID."
+  ],
+  "Retorna o estado atual da roleta para o jogador autenticado.": [
+    "Returns the current roulette state for the authenticated player.",
+    "Devuelve el estado actual de la ruleta para el jugador autenticado."
+  ],
+  "Executa um giro da roleta e devolve o resultado para o jogador autenticado.": [
+    "Runs a roulette spin and returns the result for the authenticated player.",
+    "Ejecuta un giro de la ruleta y devuelve el resultado para el jugador autenticado."
+  ],
+  "Comprar fichas": [
+    "Buy tokens",
+    "Comprar fichas"
+  ],
+  "Compra a quantidade informada de fichas para uso nos jogos do painel.": [
+    "Buys the given amount of tokens for use in the panel games.",
+    "Compra la cantidad indicada de fichas para usar en los juegos del panel."
+  ],
+  "Retorna o estado do bônus diário disponível para o jogador autenticado.": [
+    "Returns the state of the daily bonus available to the authenticated player.",
+    "Devuelve el estado del bono diario disponible para el jugador autenticado."
+  ],
+  "Resgata o bônus diário ativo, priorizando a temporada diária quando existir.": [
+    "Claims the active daily bonus, prioritizing the daily season when one exists.",
+    "Canjea el bono diario activo, priorizando la temporada diaria cuando exista."
+  ],
+  "Consultar bolsa": [
+    "Get bag",
+    "Consultar bolsa"
+  ],
+  "Lista o conteúdo da bolsa de jogos do jogador autenticado.": [
+    "Lists the contents of the authenticated player's game bag.",
+    "Lista el contenido de la bolsa de juegos del jugador autenticado."
+  ],
+  "Transferir bolsa": [
+    "Transfer bag",
+    "Transferir bolsa"
+  ],
+  "Transfere o conteúdo da bolsa para o inventário de personagem informado.": [
+    "Transfers the bag contents to the given character inventory.",
+    "Transfiere el contenido de la bolsa al inventario del personaje indicado."
+  ],
+  "Lista os tipos de caixas disponíveis para compra pelo jogador autenticado.": [
+    "Lists the box types available for purchase by the authenticated player.",
+    "Lista los tipos de cajas disponibles para la compra por el jugador autenticado."
+  ],
+  "Compra uma caixa do tipo informado para o jogador autenticado.": [
+    "Buys a box of the given type for the authenticated player.",
+    "Compra una caja del tipo indicado para el jugador autenticado."
+  ],
+  "Abrir caixa": [
+    "Open box",
+    "Abrir caja"
+  ],
+  "Abre a caixa identificada e devolve as recompensas obtidas.": [
+    "Opens the identified box and returns the rewards obtained.",
+    "Abre la caja identificada y devuelve las recompensas obtenidas."
+  ],
+  "Estado dos minijogos": [
+    "Minigames state",
+    "Estado de los minijuegos"
+  ],
+  "Retorna o estado consolidado dos minijogos disponíveis para o jogador.": [
+    "Returns the consolidated state of the minigames available to the player.",
+    "Devuelve el estado consolidado de los minijuegos disponibles para el jugador."
+  ],
+  "Executa uma jogada de dados com os parâmetros informados e devolve o resultado.": [
+    "Runs a dice roll with the given parameters and returns the result.",
+    "Ejecuta una tirada de dados con los parámetros indicados y devuelve el resultado."
+  ],
+  "Girar caça-níqueis": [
+    "Spin slot machine",
+    "Girar la tragamonedas"
+  ],
+  "Executa um giro no caça-níqueis e devolve o resultado para o jogador autenticado.": [
+    "Runs a slot machine spin and returns the result for the authenticated player.",
+    "Ejecuta un giro en la tragamonedas y devuelve el resultado para el jugador autenticado."
+  ],
+  "Retorna o estado atual do minijogo de pesca para o jogador autenticado.": [
+    "Returns the current state of the fishing minigame for the authenticated player.",
+    "Devuelve el estado actual del minijuego de pesca para el jugador autenticado."
+  ],
+  "Lançar linha": [
+    "Cast line",
+    "Lanzar el sedal"
+  ],
+  "Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura.": [
+    "Casts the fishing line, optionally using a bait, and returns the catch result.",
+    "Lanza el sedal de pesca, opcionalmente usando un cebo, y devuelve el resultado de la captura."
+  ],
+  "Retorna o estado do minijogo de economia para o jogador autenticado.": [
+    "Returns the state of the economy minigame for the authenticated player.",
+    "Devuelve el estado del minijuego de economía para el jugador autenticado."
+  ],
+  "Inicia um combate contra o monstro informado e devolve o resultado.": [
+    "Starts a fight against the given monster and returns the result.",
+    "Inicia un combate contra el monstruo indicado y devuelve el resultado."
+  ],
+  "Encantar arma": [
+    "Enchant weapon",
+    "Encantar arma"
+  ],
+  "Tenta encantar a arma do jogador no minijogo de economia e devolve o resultado.": [
+    "Attempts to enchant the player's weapon in the economy minigame and returns the result.",
+    "Intenta encantar el arma del jugador en el minijuego de economía y devuelve el resultado."
+  ],
+  "Estado do passe de batalha": [
+    "Battle pass state",
+    "Estado del battle pass"
+  ],
+  "Retorna o progresso e as recompensas do passe de batalha do jogador autenticado.": [
+    "Returns the progress and rewards of the authenticated player's battle pass.",
+    "Devuelve el progreso y las recompensas del battle pass del jugador autenticado."
+  ],
+  "Comprar passe premium": [
+    "Buy premium pass",
+    "Comprar pase premium"
+  ],
+  "Adquire o passe de batalha premium para o jogador autenticado.": [
+    "Purchases the premium battle pass for the authenticated player.",
+    "Adquiere el battle pass premium para el jugador autenticado."
+  ],
+  "Resgata a recompensa do passe de batalha identificada pelo ID informado.": [
+    "Claims the battle pass reward identified by the given ID.",
+    "Canjea la recompensa del battle pass identificada por el ID indicado."
+  ],
+  "Sincroniza e retorna os inventários dos personagens acessíveis ao usuário autenticado.": [
+    "Synchronizes and returns the inventories of the characters accessible to the authenticated user.",
+    "Sincroniza y devuelve los inventarios de los personajes accesibles para el usuario autenticado."
+  ],
+  "Lista os itens do personagem informado, indicando quais são negociáveis.": [
+    "Lists the items of the given character, indicating which ones are tradable.",
+    "Lista los ítems del personaje indicado, señalando cuáles son negociables."
+  ],
+  "Lista os equipamentos atualmente vestidos pelo personagem informado.": [
+    "Lists the equipment currently worn by the given character.",
+    "Lista el equipo que lleva puesto actualmente el personaje indicado."
+  ],
+  "Retirar item": [
+    "Withdraw item",
+    "Retirar ítem"
+  ],
+  "Depositar item": [
+    "Deposit item",
+    "Depositar ítem"
+  ],
+  "Deposita um item do inventário do painel de volta ao personagem no jogo.": [
+    "Deposits an item from the panel inventory back to the character in the game.",
+    "Deposita un ítem del inventario del panel de vuelta al personaje en el juego."
+  ],
+  "Transfere um item entre inventários do painel pertencentes ao usuário autenticado.": [
+    "Transfers an item between panel inventories belonging to the authenticated user.",
+    "Transfiere un ítem entre inventarios del panel pertenecientes al usuario autenticado."
+  ],
+  "Lista os anúncios de personagens disponíveis publicamente no marketplace.": [
+    "Lists the character listings publicly available on the marketplace.",
+    "Lista los anuncios de personajes disponibles públicamente en el marketplace."
+  ],
+  "Listar meus anúncios": [
+    "List my listings",
+    "Listar mis anuncios"
+  ],
+  "Lista os anúncios de personagens criados pelo usuário autenticado.": [
+    "Lists the character listings created by the authenticated user.",
+    "Lista los anuncios de personajes creados por el usuario autenticado."
+  ],
+  "Criar anúncio": [
+    "Create listing",
+    "Crear anuncio"
+  ],
+  "Cria um anúncio de personagem no marketplace para o usuário autenticado.": [
+    "Creates a character listing on the marketplace for the authenticated user.",
+    "Crea un anuncio de personaje en el marketplace para el usuario autenticado."
+  ],
+  "Compra o anúncio de personagem informado em nome do usuário autenticado.": [
+    "Buys the given character listing on behalf of the authenticated user.",
+    "Compra el anuncio de personaje indicado en nombre del usuario autenticado."
+  ],
+  "Cancela o anúncio de personagem informado pertencente ao usuário autenticado.": [
+    "Cancels the given character listing belonging to the authenticated user.",
+    "Cancela el anuncio de personaje indicado perteneciente al usuario autenticado."
+  ],
+  "Retorna pacotes, métodos e regras disponíveis para criação de pedidos de pagamento.": [
+    "Returns the packages, methods and rules available for creating payment orders.",
+    "Devuelve los paquetes, métodos y reglas disponibles para crear pedidos de pago."
+  ],
+  "Cria um novo pedido de pagamento para o usuário autenticado.": [
+    "Creates a new payment order for the authenticated user.",
+    "Crea un nuevo pedido de pago para el usuario autenticado."
+  ],
+  "Calcula a prévia de bônus e créditos para o valor ou pacote informado.": [
+    "Computes the bonus and credit preview for the given amount or package.",
+    "Calcula la vista previa de bonos y créditos para el importe o paquete indicado."
+  ],
+  "Cancela o pedido de pagamento informado pertencente ao usuário autenticado.": [
+    "Cancels the given payment order belonging to the authenticated user.",
+    "Cancela el pedido de pago indicado perteneciente al usuario autenticado."
+  ],
+  "Confirma o pagamento do pedido informado para o usuário autenticado.": [
+    "Confirms the payment of the given order for the authenticated user.",
+    "Confirma el pago del pedido indicado para el usuario autenticado."
+  ],
+  "Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto.": [
+    "Sends the order to the gateway and returns charge data such as PIX or boleto.",
+    "Envía el pedido a la pasarela y devuelve datos de cobro como PIX o boleto."
+  ],
+  "Consulta o status atual do pedido de pagamento informado.": [
+    "Returns the current status of the given payment order.",
+    "Consulta el estado actual del pedido de pago indicado."
+  ],
+  "Webhook Mercado Pago": [
+    "Mercado Pago webhook",
+    "Webhook de Mercado Pago"
+  ],
+  "Recebe eventos do Mercado Pago, valida a assinatura e credita pagamentos aprovados.": [
+    "Receives Mercado Pago events, validates the signature and credits approved payments.",
+    "Recibe eventos de Mercado Pago, valida la firma y acredita los pagos aprobados."
+  ],
+  "Webhook Stripe": [
+    "Stripe webhook",
+    "Webhook de Stripe"
+  ],
+  "Recebe eventos do Stripe, valida a assinatura e credita pagamentos concluídos.": [
+    "Receives Stripe events, validates the signature and credits completed payments.",
+    "Recibe eventos de Stripe, valida la firma y acredita los pagos completados."
+  ],
+  "Consultar painel do apoiador": [
+    "Get supporter dashboard",
+    "Consultar el panel del patrocinador"
+  ],
+  "Inscrever ou atualizar apoiador": [
+    "Enroll or update supporter",
+    "Inscribir o actualizar patrocinador"
+  ],
+  "Listar apoiadores e repasses (staff)": [
+    "List supporters and payouts (staff)",
+    "Listar patrocinadores y pagos (staff)"
+  ],
+  "Revisar cadastro de apoiador": [
+    "Review supporter registration",
+    "Revisar registro de patrocinador"
+  ],
+  "Listar roadmap publicado": [
+    "List published roadmap",
+    "Listar roadmap publicado"
+  ],
+  "Listar roadmap (staff)": [
+    "List roadmap (staff)",
+    "Listar roadmap (staff)"
+  ],
+  "Lista todas as entradas do roadmap, inclusive as não publicadas.": [
+    "Lists every roadmap entry, including the unpublished ones.",
+    "Lista todas las entradas del roadmap, incluidas las no publicadas."
+  ],
+  "Cria uma nova entrada no roadmap com os dados enviados.": [
+    "Creates a new roadmap entry with the submitted data.",
+    "Crea una nueva entrada en el roadmap con los datos enviados."
+  ],
+  "Atualiza parcialmente a entrada do roadmap identificada por entry_id.": [
+    "Partially updates the roadmap entry identified by entry_id.",
+    "Actualiza parcialmente la entrada del roadmap identificada por entry_id."
+  ],
+  "Retorna todos os recursos do sistema e o respectivo estado de ativação.": [
+    "Returns every system feature and its activation state.",
+    "Devuelve todos los recursos del sistema y su estado de activación."
+  ],
+  "Listar recursos (staff)": [
+    "List features (staff)",
+    "Listar recursos (staff)"
+  ],
+  "Lista os recursos do sistema para administração pela equipe.": [
+    "Lists the system features for staff administration.",
+    "Lista los recursos del sistema para su administración por el staff."
+  ],
+  "Atualiza parcialmente o recurso do sistema identificado por entry_id.": [
+    "Partially updates the system feature identified by entry_id.",
+    "Actualiza parcialmente el recurso del sistema identificado por entry_id."
+  ],
+  "Retorna contas acessíveis, slots de vínculo e o estado do login principal.": [
+    "Returns the accessible accounts, the link slots and the main login state.",
+    "Devuelve las cuentas accesibles, los slots de vínculo y el estado del login principal."
+  ],
+  "Cria uma nova conta de jogo e a vincula ao usuário autenticado.": [
+    "Creates a new game account and links it to the authenticated user.",
+    "Crea una nueva cuenta de juego y la vincula al usuario autenticado."
+  ],
+  "Vincula uma conta de jogo existente ao usuário autenticado mediante senha.": [
+    "Links an existing game account to the authenticated user using its password.",
+    "Vincula una cuenta de juego existente al usuario autenticado mediante contraseña."
+  ],
+  "Desvincular conta de jogo": [
+    "Unlink game account",
+    "Desvincular cuenta de juego"
+  ],
+  "Remove o vínculo da conta de jogo informada com o usuário autenticado.": [
+    "Removes the link between the given game account and the authenticated user.",
+    "Elimina el vínculo de la cuenta de juego indicada con el usuario autenticado."
+  ],
+  "Lista os personagens da conta de jogo acessível ao usuário autenticado.": [
+    "Lists the characters of the game account accessible to the authenticated user.",
+    "Lista los personajes de la cuenta de juego accesible para el usuario autenticado."
+  ],
+  "Retorna os dados do personagem informado na conta acessível ao usuário.": [
+    "Returns the data of the given character in the account accessible to the user.",
+    "Devuelve los datos del personaje indicado en la cuenta accesible para el usuario."
+  ],
+  "Alterar senha do jogo": [
+    "Change game password",
+    "Cambiar la contraseña del juego"
+  ],
+  "Atualiza a senha da conta de jogo vinculada ao usuário autenticado.": [
+    "Updates the password of the game account linked to the authenticated user.",
+    "Actualiza la contraseña de la cuenta de juego vinculada al usuario autenticado."
+  ],
+  "Altera o nick do personagem informado cobrando o serviço correspondente.": [
+    "Changes the nickname of the given character, charging the corresponding service.",
+    "Cambia el nick del personaje indicado cobrando el servicio correspondiente."
+  ],
+  "Altera o sexo do personagem informado cobrando o serviço correspondente.": [
+    "Changes the gender of the given character, charging the corresponding service.",
+    "Cambia el sexo del personaje indicado cobrando el servicio correspondiente."
+  ],
+  "Move o personagem preso para um local seguro no servidor de jogo.": [
+    "Moves the stuck character to a safe location on the game server (unstuck).",
+    "Mueve al personaje atascado a un lugar seguro en el servidor de juego (unstuck)."
+  ],
+  "Solicitar vínculo por e-mail": [
+    "Request link by email",
+    "Solicitar vínculo por correo"
+  ],
+  "Inicia o fluxo de vínculo de conta de jogo mediante confirmação por e-mail.": [
+    "Starts the game account linking flow with confirmation by email.",
+    "Inicia el flujo de vínculo de cuenta de juego mediante confirmación por correo."
+  ],
+  "Confirmar vínculo por e-mail": [
+    "Confirm link by email",
+    "Confirmar vínculo por correo"
+  ],
+  "Confirma o vínculo da conta de jogo com o token recebido por e-mail.": [
+    "Confirms the game account link with the token received by email.",
+    "Confirma el vínculo de la cuenta de juego con el token recibido por correo."
+  ],
+  "Adquire slots adicionais de vínculo de contas de jogo para o usuário autenticado.": [
+    "Purchases additional game account link slots for the authenticated user.",
+    "Adquiere slots adicionales de vínculo de cuentas de juego para el usuario autenticado."
+  ],
+  "Lista os preços dos serviços de personagem disponíveis no painel.": [
+    "Lists the prices of the character services available in the panel.",
+    "Lista los precios de los servicios de personaje disponibles en el panel."
+  ],
+  "Catálogo canônico: XML + customs do banco PDL. Não consulta nem expõe o banco L2.": [
+    "Canonical catalog: XML + customs from the PDL database. It neither queries nor exposes the L2 database.",
+    "Catálogo canónico: XML + customs de la base de datos PDL. No consulta ni expone la base de datos L2."
+  ],
+  "Retorna as informações públicas de configuração e apresentação do servidor.": [
+    "Returns the public configuration and presentation information of the server.",
+    "Devuelve la información pública de configuración y presentación del servidor."
+  ],
+  "Status do servidor": [
+    "Server status",
+    "Estado del servidor"
+  ],
+  "Retorna o status online, contagens e disponibilidade atual do servidor.": [
+    "Returns the online status, counts and current availability of the server.",
+    "Devuelve el estado en línea, los recuentos y la disponibilidad actual del servidor."
+  ],
+  "Ranking público": [
+    "Public ranking",
+    "Ranking público"
+  ],
+  "Retorna o ranking público do tipo informado, limitado pelo parâmetro limit.": [
+    "Returns the public ranking of the given type, capped by the limit parameter.",
+    "Devuelve el ranking público del tipo indicado, limitado por el parámetro limit."
+  ],
+  "Executa uma consulta pública nomeada no banco Lineage e devolve as linhas resultantes.": [
+    "Runs a named public query against the Lineage database and returns the resulting rows.",
+    "Ejecuta una consulta pública con nombre en la base de datos Lineage y devuelve las filas resultantes."
+  ],
+  "Atualizar carrinho do comércio": [
+    "Update commerce cart",
+    "Actualizar el carrito de comercio"
+  ],
+  "Listar pacotes ou promoções (staff)": [
+    "List packages or promotions (staff)",
+    "Listar paquetes o promociones (staff)"
+  ],
+  "Criar pacote ou promoção (staff)": [
+    "Create package or promotion (staff)",
+    "Crear paquete o promoción (staff)"
+  ],
+  "Atualizar pacote ou promoção (staff)": [
+    "Update package or promotion (staff)",
+    "Actualizar paquete o promoción (staff)"
+  ],
+  "Lista os itens disponíveis para compra na loja do portal.": [
+    "Lists the items available for purchase in the portal shop.",
+    "Lista los ítems disponibles para la compra en la tienda del portal."
+  ],
+  "Retorna o carrinho atual do usuário autenticado na loja.": [
+    "Returns the current shop cart of the authenticated user.",
+    "Devuelve el carrito actual del usuario autenticado en la tienda."
+  ],
+  "Adiciona um item ao carrinho da loja do usuário autenticado.": [
+    "Adds an item to the shop cart of the authenticated user.",
+    "Añade un ítem al carrito de la tienda del usuario autenticado."
+  ],
+  "Atualiza a quantidade de um item já presente no carrinho da loja.": [
+    "Updates the quantity of an item already in the shop cart.",
+    "Actualiza la cantidad de un ítem que ya está en el carrito de la tienda."
+  ],
+  "Remove o item informado do carrinho da loja do usuário autenticado.": [
+    "Removes the given item from the shop cart of the authenticated user.",
+    "Elimina el ítem indicado del carrito de la tienda del usuario autenticado."
+  ],
+  "Finaliza a compra pela rotina checkout e devolve o resultado da operação.": [
+    "Completes the purchase through the checkout routine and returns the operation result.",
+    "Finaliza la compra mediante la rutina de checkout y devuelve el resultado de la operación."
+  ],
+  "Inspecionar conta de jogo": [
+    "Inspect game account",
+    "Inspeccionar cuenta de juego"
+  ],
+  "Consulta os dados administrativos da conta de jogo informada pelo login.": [
+    "Returns the administrative data of the game account identified by login.",
+    "Consulta los datos administrativos de la cuenta de juego indicada por el login."
+  ],
+  "Forçar desvínculo de conta": [
+    "Force account unlink",
+    "Forzar la desvinculación de la cuenta"
+  ],
+  "Remove forçadamente o vínculo da conta de jogo informada pelo login.": [
+    "Forcibly removes the link of the game account identified by login.",
+    "Elimina de forma forzada el vínculo de la cuenta de juego indicada por el login."
+  ],
+  "Retorna as configurações administrativas atuais do painel.": [
+    "Returns the current administrative settings of the panel.",
+    "Devuelve la configuración administrativa actual del panel."
+  ],
+  "Atualiza as configurações administrativas do painel com o payload informado.": [
+    "Updates the administrative settings of the panel with the given payload.",
+    "Actualiza la configuración administrativa del panel con el payload indicado."
+  ],
+  "Lista os preços dos serviços de personagem gerenciados pela equipe.": [
+    "Lists the character service prices managed by staff.",
+    "Lista los precios de los servicios de personaje gestionados por el staff."
+  ],
+  "Cria ou atualiza os preços dos serviços de personagem informados.": [
+    "Creates or updates the given character service prices.",
+    "Crea o actualiza los precios de los servicios de personaje indicados."
+  ],
+  "Retorna a configuração administrativa das moedas do painel.": [
+    "Returns the administrative configuration of the panel coins.",
+    "Devuelve la configuración administrativa de las monedas del panel."
+  ],
+  "Atualiza a configuração administrativa das moedas do painel.": [
+    "Updates the administrative configuration of the panel coins.",
+    "Actualiza la configuración administrativa de las monedas del panel."
+  ],
+  "Retorna a campanha promocional da carteira usada no banner e no bônus de moedas.": [
+    "Returns the wallet promotional campaign used in the banner and in the coin bonus.",
+    "Devuelve la campaña promocional de la cartera usada en el banner y en el bono de monedas."
+  ],
+  "Cria ou atualiza a campanha promocional da carteira.": [
+    "Creates or updates the wallet promotional campaign.",
+    "Crea o actualiza la campaña promocional de la cartera."
+  ],
+  "Lista os itens da loja gerenciados administrativamente pela equipe.": [
+    "Lists the shop items managed administratively by staff.",
+    "Lista los ítems de la tienda gestionados administrativamente por el staff."
+  ],
+  "Cria ou atualiza um item da loja com o payload administrativo informado.": [
+    "Creates or updates a shop item with the given administrative payload.",
+    "Crea o actualiza un ítem de la tienda con el payload administrativo indicado."
+  ],
+  "Atualiza um item da loja com o payload administrativo informado.": [
+    "Updates a shop item with the given administrative payload.",
+    "Actualiza un ítem de la tienda con el payload administrativo indicado."
+  ],
+  "Lista as notícias gerenciadas administrativamente pela equipe.": [
+    "Lists the news managed administratively by staff.",
+    "Lista las noticias gestionadas administrativamente por el staff."
+  ],
+  "Cria ou atualiza uma notícia com o payload administrativo informado.": [
+    "Creates or updates a news item with the given administrative payload.",
+    "Crea o actualiza una noticia con el payload administrativo indicado."
+  ],
+  "Atualizar notícia": [
+    "Update news item",
+    "Actualizar noticia"
+  ],
+  "Atualiza uma notícia com o payload administrativo informado.": [
+    "Updates a news item with the given administrative payload.",
+    "Actualiza una noticia con el payload administrativo indicado."
+  ],
+  "Listar jogos": [
+    "List games",
+    "Listar juegos"
+  ],
+  "Lista os jogos do painel e o estado de ativação de cada um.": [
+    "Lists the panel games and the activation state of each one.",
+    "Lista los juegos del panel y el estado de activación de cada uno."
+  ],
+  "Alternar jogo": [
+    "Toggle game",
+    "Alternar juego"
+  ],
+  "Ativa ou desativa um jogo do painel conforme o payload informado.": [
+    "Enables or disables a panel game according to the given payload.",
+    "Activa o desactiva un juego del panel según el payload indicado."
+  ],
+  "Expõe o relatório de saldos usando os filtros e a paginação da base financeira.": [
+    "Exposes the balance report using the filters and pagination of the financial base.",
+    "Expone el informe de saldos usando los filtros y la paginación de la base financiera."
+  ],
+  "Relatório de conciliação": [
+    "Reconciliation report",
+    "Informe de conciliación"
+  ],
+  "Especializa a consulta financeira para conciliação de saldos e movimentações.": [
+    "Specializes the financial query for the reconciliation of balances and movements.",
+    "Especializa la consulta financiera para la conciliación de saldos y movimientos."
+  ],
+  "Relatório de fluxo de caixa": [
+    "Cash flow report",
+    "Informe de flujo de caja"
+  ],
+  "Especializa a consulta financeira para o relatório de fluxo de caixa.": [
+    "Specializes the financial query for the cash flow report.",
+    "Especializa la consulta financiera para el informe de flujo de caja."
+  ],
+  "Especializa a consulta financeira para o relatório de pagamentos.": [
+    "Specializes the financial query for the payments report.",
+    "Especializa la consulta financiera para el informe de pagos."
+  ],
+  "Informa quais ações de observação de itens o usuário autenticado pode executar.": [
+    "Reports which item observation actions the authenticated user may perform.",
+    "Informa qué acciones de observación de ítems puede ejecutar el usuario autenticado."
+  ],
+  "Consulta a distribuição atual de itens no servidor L2 com filtros e paginação.": [
+    "Queries the current item distribution on the L2 server with filters and pagination.",
+    "Consulta la distribución actual de ítems en el servidor L2 con filtros y paginación."
+  ],
+  "Atualizar favorito": [
+    "Update favorite",
+    "Actualizar favorito"
+  ],
+  "Adiciona ou remove o item informado dos favoritos de observação do usuário.": [
+    "Adds or removes the given item from the user's observation favorites.",
+    "Añade o elimina el ítem indicado de los favoritos de observación del usuario."
+  ],
+  "Listar capturas": [
+    "List snapshots",
+    "Listar capturas"
+  ],
+  "Lista as capturas persistidas de observação de itens com paginação.": [
+    "Lists the persisted item observation snapshots with pagination.",
+    "Lista las capturas persistidas de observación de ítems con paginación."
+  ],
+  "Captura o estado atual da observação de itens e persiste um novo snapshot.": [
+    "Captures the current item observation state and persists a new snapshot.",
+    "Captura el estado actual de la observación de ítems y persiste una nueva instantánea."
+  ],
+  "Detalhe da captura": [
+    "Snapshot detail",
+    "Detalle de la captura"
+  ],
+  "Retorna os metadados e os detalhes paginados de uma captura de observação.": [
+    "Returns the metadata and the paginated details of an observation snapshot.",
+    "Devuelve los metadatos y los detalles paginados de una captura de observación."
+  ],
+  "Excluir captura": [
+    "Delete snapshot",
+    "Eliminar captura"
+  ],
+  "Remove permanentemente a captura de observação identificada pelo ID.": [
+    "Permanently removes the observation snapshot identified by the ID.",
+    "Elimina de forma permanente la captura de observación identificada por el ID."
+  ],
+  "Comparar capturas": [
+    "Compare snapshots",
+    "Comparar capturas"
+  ],
+  "Compara duas capturas de observação e pagina as diferenças encontradas entre elas.": [
+    "Compares two observation snapshots and paginates the differences found between them.",
+    "Compara dos capturas de observación y pagina las diferencias encontradas entre ellas."
+  ],
+  "Listar categorias": [
+    "List categories",
+    "Listar categorías"
+  ],
+  "Lista as categorias usadas para organizar a observação de itens.": [
+    "Lists the categories used to organize item observation.",
+    "Lista las categorías usadas para organizar la observación de ítems."
+  ],
+  "Criar categoria": [
+    "Create category",
+    "Crear categoría"
+  ],
+  "Cria uma nova categoria para organizar itens na observação administrativa.": [
+    "Creates a new category to organize items in the administrative observation.",
+    "Crea una nueva categoría para organizar ítems en la observación administrativa."
+  ],
+  "Atualiza os dados de uma categoria de observação existente.": [
+    "Updates the data of an existing observation category.",
+    "Actualiza los datos de una categoría de observación existente."
+  ],
+  "Excluir categoria": [
+    "Delete category",
+    "Eliminar categoría"
+  ],
+  "Remove permanentemente a categoria de observação identificada pelo ID.": [
+    "Permanently removes the observation category identified by the ID.",
+    "Elimina de forma permanente la categoría de observación identificada por el ID."
+  ],
+  "Movimentações de inventário do painel com totais, tops e série diária.": [
+    "Panel inventory movements with totals, top lists and daily series.",
+    "Movimientos de inventario del panel con totales, tops y serie diaria."
+  ],
+  "Relatório de leilões": [
+    "Auctions report",
+    "Informe de subastas"
+  ],
+  "Leilões por status, lances e tops de atividade.": [
+    "Auctions by status, bids and activity top lists.",
+    "Subastas por estado, pujas y tops de actividad."
+  ],
+  "Compras concluídas, receita, carrinhos abandonados e tops de itens/pacotes/cupons.": [
+    "Completed purchases, revenue, abandoned carts and top items/packages/coupons.",
+    "Compras completadas, ingresos, carritos abandonados y tops de ítems/paquetes/cupones."
+  ],
+  "Relatório de marketplace": [
+    "Marketplace report",
+    "Informe de marketplace"
+  ],
+  "Anúncios de personagens por status, receita de vendas e tops de vendedores.": [
+    "Character listings by status, sales revenue and top sellers.",
+    "Anuncios de personajes por estado, ingresos por ventas y tops de vendedores."
+  ],
+  "Health check": [
+    "Health check",
+    "Health check"
+  ],
+  "Disponibiliza a resposta de health check do sistema.": [
+    "Provides the system health check response.",
+    "Proporciona la respuesta de health check del sistema."
+  ],
+  "Versão da API": [
+    "API version",
+    "Versión de la API"
+  ],
+  "Disponibiliza os metadados de versão do sistema.": [
+    "Provides the system version metadata.",
+    "Proporciona los metadatos de versión del sistema."
+  ],
+  "Lista os chamados do próprio usuário com contadores de estado.": [
+    "Lists the user's own tickets with status counters.",
+    "Lista los tickets del propio usuario con contadores de estado."
+  ],
+  "Cria um novo chamado do usuário autenticado com a mensagem inicial.": [
+    "Creates a new ticket for the authenticated user with the initial message.",
+    "Crea un nuevo ticket del usuario autenticado con el mensaje inicial."
+  ],
+  "Consulta o chamado do próprio usuário com mensagens e metadados.": [
+    "Returns the user's own ticket with messages and metadata.",
+    "Consulta el ticket del propio usuario con mensajes y metadatos."
+  ],
+  "Envia uma mensagem do jogador no chamado e notifica o atendente quando houver.": [
+    "Sends a player message on the ticket and notifies the assigned agent when there is one.",
+    "Envía un mensaje del jugador en el ticket y notifica al agente asignado cuando lo haya."
+  ],
+  "Encerrar ou reabrir chamado": [
+    "Close or reopen ticket",
+    "Cerrar o reabrir ticket"
+  ],
+  "Permite ao jogador encerrar ou reabrir o próprio chamado conforme a ação informada.": [
+    "Lets the player close or reopen their own ticket according to the given action.",
+    "Permite al jugador cerrar o reabrir su propio ticket según la acción indicada."
+  ],
+  "Listar chamados (staff)": [
+    "List tickets (staff)",
+    "Listar tickets (staff)"
+  ],
+  "Lista chamados para a equipe com filtros e indicadores de atendimento.": [
+    "Lists tickets for staff with filters and service indicators.",
+    "Lista tickets para el staff con filtros e indicadores de atención."
+  ],
+  "Consulta o chamado informado com mensagens e metadados administrativos.": [
+    "Returns the given ticket with messages and administrative metadata.",
+    "Consulta el ticket indicado con mensajes y metadatos administrativos."
+  ],
+  "Responder chamado (staff)": [
+    "Reply to ticket (staff)",
+    "Responder ticket (staff)"
+  ],
+  "Permite à equipe responder um chamado, inclusive com notas internas.": [
+    "Lets staff reply to a ticket, including with internal notes.",
+    "Permite al staff responder un ticket, incluso con notas internas."
+  ],
+  "Atualizar chamado (staff)": [
+    "Update ticket (staff)",
+    "Actualizar ticket (staff)"
+  ],
+  "Permite à equipe atribuir responsáveis e atualizar o estado de um chamado.": [
+    "Lets staff assign owners and update the status of a ticket.",
+    "Permite al staff asignar responsables y actualizar el estado de un ticket."
+  ],
+  "Tema ativo": [
+    "Active theme",
+    "Tema activo"
+  ],
+  "Expõe apenas os caminhos e metadados necessários para montar o tema ativo.": [
+    "Exposes only the paths and metadata required to assemble the active theme.",
+    "Expone solo las rutas y los metadatos necesarios para montar el tema activo."
+  ],
+  "Listar temas": [
+    "List themes",
+    "Listar temas"
+  ],
+  "Lista os pacotes de tema instalados; alteração visual global é exclusiva de superadministradores.": [
+    "Lists the installed theme packages; global visual changes are restricted to superusers.",
+    "Lista los paquetes de tema instalados; el cambio visual global es exclusivo de los superadministradores."
+  ],
+  "Instalar tema": [
+    "Install theme",
+    "Instalar tema"
+  ],
+  "Instala um pacote .zip de tema; alteração visual global é exclusiva de superadministradores.": [
+    "Installs a .zip theme package; global visual changes are restricted to superusers.",
+    "Instala un paquete .zip de tema; el cambio visual global es exclusivo de los superadministradores."
+  ],
+  "Ativar tema": [
+    "Activate theme",
+    "Activar tema"
+  ],
+  "Ativa uma versão instalada ou restaura explicitamente o tema default.": [
+    "Activates an installed version or explicitly restores the default theme.",
+    "Activa una versión instalada o restaura explícitamente el tema default."
+  ],
+  "Excluir tema": [
+    "Delete theme",
+    "Eliminar tema"
+  ],
+  "Remove um pacote inativo; o tema default não possui endpoint de exclusão.": [
+    "Removes an inactive package; the default theme has no deletion endpoint.",
+    "Elimina un paquete inactivo; el tema default no tiene endpoint de eliminación."
+  ],
+  "Consultar câmbio com o jogo": [
+    "Get game exchange rates",
+    "Consultar el cambio con el juego"
+  ],
+  "Retorna o saldo e os dados da carteira do usuário autenticado.": [
+    "Returns the balance and the wallet data of the authenticated user.",
+    "Devuelve el saldo y los datos de la cartera del usuario autenticado."
+  ],
+  "Transferir para jogador": [
+    "Transfer to player",
+    "Transferir a un jugador"
+  ],
+  "Transfere moedas da carteira do usuário autenticado para outro jogador.": [
+    "Transfers coins from the authenticated user's wallet to another player.",
+    "Transfiere monedas de la cartera del usuario autenticado a otro jugador."
+  ],
+  "Lista o histórico de transações da carteira do usuário autenticado, paginado.": [
+    "Lists the authenticated user's wallet transaction history, paginated.",
+    "Lista el historial de transacciones de la cartera del usuario autenticado, paginado."
+  ],
+  "O servidor está em período de lançamento. O login está restrito à equipe no momento.": [
+    "The server is in its launch period. Login is currently restricted to staff.",
+    "El servidor está en período de lanzamiento. El inicio de sesión está restringido al staff en este momento."
+  ],
+  "\nAPI REST do **PDL PRO** (Painel Definitivo Lineage 2.0).\n\nBackend somente API. O frontend React consome estes contratos.\n\n## Autenticação\n\n- **JWT** — cookie HttpOnly (`PDL-auth`) ou header `Authorization: Bearer <token>`.\n- Em escritas autenticadas por cookie, envie também `X-CSRFToken`.\n\n## Prefixos\n\n| Prefixo | Uso |\n|---|---|\n| `/api/v1/auth/` | Cadastro, login, tokens, OAuth e passkeys |\n| `/api/v1/shared/` | Perfil, carteira, loja, conteúdo autenticado |\n| `/api/v1/public/` | Rankings, status do servidor, notícias e programas públicos |\n| `/api/v1/customer/` | Conta Lineage, inventário, jogos e apoiadores |\n| `/api/v1/staff/` | Administração do painel |\n| `/api/v1/system/` | Health e versão |\n\n## Contrato\n\n- Identificadores públicos são UUID (`id`). O `seq_id` sequencial é interno.\n- Erros 4xx/5xx usam o envelope `error_code`, `message`, `details` e `request_id`.\n": [
+    "\nREST API for **PDL PRO** (Painel Definitivo Lineage 2.0).\n\nAPI-only backend. The React frontend consumes these contracts.\n\n## Authentication\n\n- **JWT** — HttpOnly cookie (`PDL-auth`) or `Authorization: Bearer <token>` header.\n- On writes authenticated by cookie, also send `X-CSRFToken`.\n\n## Prefixes\n\n| Prefix | Usage |\n|---|---|\n| `/api/v1/auth/` | Sign-up, login, tokens, OAuth and passkeys |\n| `/api/v1/shared/` | Profile, wallet, shop, authenticated content |\n| `/api/v1/public/` | Rankings, server status, news and public programs |\n| `/api/v1/customer/` | Lineage account, inventory, games and supporters |\n| `/api/v1/staff/` | Panel administration |\n| `/api/v1/system/` | Health and version |\n\n## Contract\n\n- Public identifiers are UUID (`id`). The sequential `seq_id` is internal.\n- 4xx/5xx errors use the `error_code`, `message`, `details` and `request_id` envelope.\n",
+    "\nAPI REST de **PDL PRO** (Painel Definitivo Lineage 2.0).\n\nBackend solo API. El frontend React consume estos contratos.\n\n## Autenticación\n\n- **JWT** — cookie HttpOnly (`PDL-auth`) o header `Authorization: Bearer <token>`.\n- En escrituras autenticadas por cookie, envía también `X-CSRFToken`.\n\n## Prefijos\n\n| Prefijo | Uso |\n|---|---|\n| `/api/v1/auth/` | Registro, inicio de sesión, tokens, OAuth y passkeys |\n| `/api/v1/shared/` | Perfil, cartera, tienda, contenido autenticado |\n| `/api/v1/public/` | Rankings, estado del servidor, noticias y programas públicos |\n| `/api/v1/customer/` | Cuenta Lineage, inventario, juegos y patrocinadores |\n| `/api/v1/staff/` | Administración del panel |\n| `/api/v1/system/` | Health y versión |\n\n## Contrato\n\n- Los identificadores públicos son UUID (`id`). El `seq_id` secuencial es interno.\n- Los errores 4xx/5xx usan el envoltorio `error_code`, `message`, `details` y `request_id`.\n"
+  ],
+  "Cadastro, login, CSRF, refresh, logout, verificação de e-mail, recuperação de senha, 2FA, OAuth social e capacidades de autenticação.": [
+    "Sign-up, login, CSRF, refresh, logout, email verification, password recovery, 2FA, social OAuth and authentication capabilities.",
+    "Registro, inicio de sesión, CSRF, refresh, logout, verificación de correo, recuperación de contraseña, 2FA, OAuth social y capacidades de autenticación."
+  ],
+  "Registro, listagem, exclusão e autenticação WebAuthn/passkey (desafios begin/complete).": [
+    "Registration, listing, deletion and WebAuthn/passkey authentication (begin/complete challenges).",
+    "Registro, listado, eliminación y autenticación WebAuthn/passkey (desafíos begin/complete)."
+  ],
+  "Dados do jogador autenticado, preferências, progresso gamer e resgate de recompensas de perfil.": [
+    "Authenticated player data, preferences, gamer progress and profile reward claims.",
+    "Datos del jugador autenticado, preferencias, progreso gamer y canje de recompensas de perfil."
+  ],
+  "Status do servidor Lineage 2, informações públicas, rankings e consultas de personagens/contas.": [
+    "Lineage 2 server status, public information, rankings and character/account queries.",
+    "Estado del servidor Lineage 2, información pública, rankings y consultas de personajes/cuentas."
+  ],
+  "Consulta pública/autenticada ao catálogo de itens do servidor.": [
+    "Public/authenticated queries against the server item catalog.",
+    "Consulta pública/autenticada al catálogo de ítems del servidor."
+  ],
+  "Saldo de moedas do painel, transferências entre jogadores, extrato e câmbio de moedas painel ↔ jogo.": [
+    "Panel coin balance, player-to-player transfers, statement and panel ↔ game coin exchange.",
+    "Saldo de monedas del panel, transferencias entre jugadores, extracto y cambio de monedas panel ↔ juego."
+  ],
+  "Catálogo de itens da loja, carrinho, atualização de itens e checkout.": [
+    "Shop item catalog, cart, item updates and checkout.",
+    "Catálogo de ítems de la tienda, carrito, actualización de ítems y checkout."
+  ],
+  "Pacotes, cotação do carrinho, opções (cupom/bônus) e histórico de compras. Staff gerencia pacotes e códigos promocionais.": [
+    "Packages, cart quote, options (coupon/bonus) and purchase history. Staff manages packages and promo codes.",
+    "Paquetes, cotización del carrito, opciones (cupón/bono) e historial de compras. El staff gestiona paquetes y códigos promocionales."
+  ],
+  "Notícias, FAQ, downloads, assistente Denkynho, wardrobe e conteúdo autenticado do painel.": [
+    "News, FAQ, downloads, Denkynho assistant, wardrobe and authenticated panel content.",
+    "Noticias, FAQ, descargas, asistente Denkynho, wardrobe y contenido autenticado del panel."
+  ],
+  "Artigos da wiki pública do servidor.": [
+    "Articles from the public server wiki.",
+    "Artículos de la wiki pública del servidor."
+  ],
+  "Eventos do calendário público do servidor.": [
+    "Events from the public server calendar.",
+    "Eventos del calendario público del servidor."
+  ],
+  "Documentos legais públicos (termos, privacidade e afins).": [
+    "Public legal documents (terms, privacy and the like).",
+    "Documentos legales públicos (términos, privacidad y similares)."
+  ],
+  "Vínculo e desvínculo de contas do jogo, personagens, senha, nickname, sexo, unstuck, slots e preços de serviços.": [
+    "Linking and unlinking game accounts, characters, password, nickname, gender, unstuck, slots and service prices.",
+    "Vínculo y desvínculo de cuentas del juego, personajes, contraseña, nickname, sexo, unstuck, slots y precios de servicios."
+  ],
+  "Dashboard do inventário no painel, itens/equipamentos do personagem, retirada, depósito e troca.": [
+    "Panel inventory dashboard, character items/equipment, withdrawal, deposit and transfer.",
+    "Dashboard del inventario en el panel, ítems/equipo del personaje, retirada, depósito e intercambio."
+  ],
+  "Roleta, bônus diário, bag, caixas, minigames, dados, slots, pesca, economia, monstro, encantamento, battle pass, detalhes avançados e estatísticas.": [
+    "Roulette, daily bonus, bag, boxes, minigames, dice, slots, fishing, economy, monster, enchanting, battle pass, advanced details and statistics.",
+    "Ruleta, bono diario, bag, cajas, minigames, dados, slots, pesca, economía, monstruo, encantamiento, battle pass, detalles avanzados y estadísticas."
+  ],
+  "Listagens públicas e do jogador, compra e cancelamento no marketplace.": [
+    "Public and player listings, purchase and cancellation on the marketplace.",
+    "Listados públicos y del jugador, compra y cancelación en el marketplace."
+  ],
+  "Leilões públicos, meus leilões, criação e lances.": [
+    "Public auctions, my auctions, creation and bids.",
+    "Subastas públicas, mis subastas, creación y pujas."
+  ],
+  "Catálogo de métodos, pedidos de recarga, preview de bônus, cancelamento, confirmação, processamento e status.": [
+    "Method catalog, top-up orders, bonus preview, cancellation, confirmation, processing and status.",
+    "Catálogo de métodos, pedidos de recarga, vista previa de bonos, cancelación, confirmación, procesamiento y estado."
+  ],
+  "Callbacks de provedores de pagamento (Mercado Pago, Stripe).": [
+    "Payment provider callbacks (Mercado Pago, Stripe).",
+    "Callbacks de proveedores de pago (Mercado Pago, Stripe)."
+  ],
+  "Lista de notificações do jogador e marcação como lidas.": [
+    "Player notification list and marking as read.",
+    "Lista de notificaciones del jugador y marcado como leídas."
+  ],
+  "Chave VAPID pública e inscrição/remoção de push no navegador.": [
+    "Public VAPID key and browser push subscription/removal.",
+    "Clave VAPID pública y suscripción/eliminación de push en el navegador."
+  ],
+  "Tickets de suporte do jogador: listagem, criação, detalhe e mensagens.": [
+    "Player support tickets: listing, creation, detail and messages.",
+    "Tickets de soporte del jugador: listado, creación, detalle y mensajes."
+  ],
+  "Inscrição de apoiador, comissões, cupons e solicitação de repasse. Staff revisa apoiadores e payouts.": [
+    "Supporter enrollment, commissions, coupons and payout requests. Staff reviews supporters and payouts.",
+    "Inscripción de patrocinadores, comisiones, cupones y solicitud de pago. El staff revisa patrocinadores y payouts."
+  ],
+  "Roadmap público do projeto e CRUD administrativo das entradas.": [
+    "Public project roadmap and administrative CRUD of its entries.",
+    "Roadmap público del proyecto y CRUD administrativo de las entradas."
+  ],
+  "Flags/recursos do sistema (feature toggles) públicos e administrativos.": [
+    "Public and administrative system flags/features (feature toggles).",
+    "Flags/recursos del sistema (feature toggles) públicos y administrativos."
+  ],
+  "Tema ativo do painel para o frontend.": [
+    "Active panel theme for the frontend.",
+    "Tema activo del panel para el frontend."
+  ],
+  "Health check e versão da API.": [
+    "Health check and API version.",
+    "Health check y versión de la API."
+  ],
+  "Configurações do painel, preços de serviços, moedas, itens da loja, notícias, jogos, temas, inspeção de contas e demais operações administrativas.": [
+    "Panel settings, service prices, coins, shop items, news, games, themes, account inspection and other administrative operations.",
+    "Configuración del panel, precios de servicios, monedas, ítems de la tienda, noticias, juegos, temas, inspección de cuentas y demás operaciones administrativas."
+  ],
+  "Fila e detalhe de tickets para a equipe de suporte.": [
+    "Queue and ticket detail for the support staff.",
+    "Cola y detalle de tickets para el equipo de soporte."
+  ],
+  "Relatórios de saldo, reconciliação, fluxo de caixa e pagamentos.": [
+    "Balance, reconciliation, cash flow and payment reports.",
+    "Informes de saldo, conciliación, flujo de caja y pagos."
+  ],
+  "Relatórios operacionais de inventário, leilões, compras da loja e marketplace.": [
+    "Operational reports for inventory, auctions, shop purchases and marketplace.",
+    "Informes operativos de inventario, subastas, compras de la tienda y marketplace."
+  ],
+  "CRUD administrativo do catálogo de itens customizados (metadados e ícones).": [
+    "Administrative CRUD of the custom item catalog (metadata and icons).",
+    "CRUD administrativo del catálogo de ítems personalizados (metadatos e iconos)."
+  ],
+  "Observação live de itens no L2, favoritos, capturas (snapshots), comparação e categorias de organização.": [
+    "Live item observation on L2, favorites, snapshots, comparison and organization categories.",
+    "Observación en vivo de ítems en L2, favoritos, capturas (snapshots), comparación y categorías de organización."
+  ],
+  "CRUD administrativo de temporadas, níveis, recompensas, quests, exchanges, milestones, bônus diário e iscas.": [
+    "Administrative CRUD of seasons, levels, rewards, quests, exchanges, milestones, daily bonus and baits.",
+    "CRUD administrativo de temporadas, niveles, recompensas, quests, exchanges, milestones, bono diario y cebos."
+  ],
+  "Interfaces Swagger UI e ReDoc desta documentação OpenAPI.": [
+    "Swagger UI and ReDoc interfaces for this OpenAPI documentation.",
+    "Interfaces Swagger UI y ReDoc de esta documentación OpenAPI."
+  ]
+}

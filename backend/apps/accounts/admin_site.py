@@ -5,7 +5,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django.utils.crypto import constant_time_compare, salted_hmac
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy as _lazy
+from django.utils.translation import gettext_lazy
 
 from apps.accounts.application.twofa import _verify
 
@@ -21,7 +21,7 @@ class MFAAdminAuthenticationForm(AdminAuthenticationForm):
     """Exige TOTP para contas que o ativaram e registra a prova na sessão validada."""
 
     otp = forms.CharField(
-        label=_lazy("Código do autenticador"),
+        label=gettext_lazy("Código do autenticador"),
         required=False,
         max_length=6,
         widget=forms.TextInput(

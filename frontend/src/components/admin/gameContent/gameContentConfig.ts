@@ -1,3 +1,5 @@
+import type { TFunction } from 'i18next'
+
 export type GameContentField = {
   key: string
   label: string
@@ -8,164 +10,103 @@ export type GameContentField = {
   min?: number
 }
 
-const name: GameContentField = { key: 'name', label: 'Nome' }
-const active: GameContentField = {
-  key: 'active',
-  label: 'Ativo',
-  type: 'checkbox',
-  initial: true,
-}
-const season: GameContentField = { key: 'season', label: 'Temporada', source: 'seasons' }
-const rewards: GameContentField = {
-  key: 'rewards',
-  label: 'Recompensas',
-  type: 'rewards',
-  initial: [],
-}
-const number = (key: string, label: string, initial = 1, min = 0): GameContentField => ({
-  key,
-  label,
-  type: 'number',
-  initial,
-  min,
-})
-
-export const gameConfigSections: {
+export type GameContentSection = {
   id: string
   label: string
   fields: GameContentField[]
-}[] = [
-  {
-    id: 'seasons',
-    label: 'Temporadas do passe',
-    fields: [
+}
+
+/** Rótulos vêm do namespace `admin`; as chaves e os valores das opções continuam estáveis para a API. */
+const field = (t: TFunction, key: string, extra: Partial<GameContentField> = {}): GameContentField => ({
+  key,
+  label: t(`gameContent.fields.${key}`),
+  ...extra,
+})
+
+const number = (t: TFunction, key: string, initial = 1, min = 0): GameContentField =>
+  field(t, key, { type: 'number', initial, min })
+
+const options = (t: TFunction, group: string, values: string[]): [string, string][] =>
+  values.map((value) => [value, t(`gameContent.${group}.${value}`)])
+
+export function buildGameContentConfig(t: TFunction): GameContentSection[] {
+  const name = field(t, 'name')
+  const active = field(t, 'active', { type: 'checkbox', initial: true })
+  const season = field(t, 'season', { source: 'seasons' })
+  const rewards = field(t, 'rewards', { type: 'rewards', initial: [] })
+  const section = (id: string, fields: GameContentField[]): GameContentSection => ({
+    id,
+    label: t(`gameContent.sections.${id}`),
+    fields,
+  })
+
+  return [
+    section('seasons', [
       name,
-      { key: 'starts_at', label: 'Início', type: 'datetime-local' },
-      { key: 'ends_at', label: 'Fim', type: 'datetime-local' },
-      number('premium_price', 'Preço premium', 50),
+      field(t, 'starts_at', { type: 'datetime-local' }),
+      field(t, 'ends_at', { type: 'datetime-local' }),
+      number(t, 'premium_price', 50),
       active,
-    ],
-  },
-  {
-    id: 'levels',
-    label: 'Níveis',
-    fields: [
-      season,
-      number('level', 'Nível'),
-      number('required_xp', 'XP necessário', 0),
-    ],
-  },
-  {
-    id: 'rewards',
-    label: 'Prêmios do passe',
-    fields: [
-      { key: 'level_row', label: 'Nível', source: 'levels' },
-      { key: 'item_name', label: 'Nome do item' },
-      number('item_id', 'ID do item', 57, 1),
-      number('enchant', 'Encantamento', 0),
-      number('quantity', 'Quantidade', 1, 1),
-      { key: 'description', label: 'Descrição', type: 'textarea' },
-      { key: 'is_premium', label: 'Exclusivo premium', type: 'checkbox' },
-    ],
-  },
-  {
-    id: 'quests',
-    label: 'Missões',
-    fields: [
-      season,
-      name,
-      { key: 'description', label: 'Descrição', type: 'textarea' },
-      {
-        key: 'event',
-        label: 'Objetivo',
-        options: [
-          ['roulette', 'Girar roleta'],
-          ['dice', 'Jogar dados'],
-          ['slots', 'Girar slots'],
-          ['fishing', 'Pescar'],
-          ['economy', 'Combater'],
-          ['daily_bonus', 'Resgatar bônus diário'],
-        ],
-      },
-      number('target', 'Quantidade necessária', 1, 1),
-      number('xp', 'Recompensa em XP', 25),
-      {
-        key: 'period',
-        label: 'Repetição',
-        options: [
-          ['daily', 'Diária'],
-          ['weekly', 'Semanal'],
-          ['season', 'Uma vez na temporada'],
-        ],
-      },
-      active,
-    ],
-  },
-  {
-    id: 'exchanges',
-    label: 'Trocas de itens',
-    fields: [
+    ]),
+    section('levels', [season, number(t, 'level'), number(t, 'required_xp', 0)]),
+    section('rewards', [
+      field(t, 'level_row', { source: 'levels' }),
+      field(t, 'item_name'),
+      number(t, 'item_id', 57, 1),
+      number(t, 'enchant', 0),
+      number(t, 'quantity', 1, 1),
+      field(t, 'description', { type: 'textarea' }),
+      field(t, 'is_premium', { type: 'checkbox' }),
+    ]),
+    section('quests', [
       season,
       name,
-      number('required_item_id', 'ID do item exigido', 57, 1),
-      number('required_enchant', 'Encantamento exigido', 0),
-      number('required_quantity', 'Quantidade exigida', 1, 1),
-      number('limit_per_user', 'Limite por jogador (0 = sem limite)'),
-      rewards,
+      field(t, 'description', { type: 'textarea' }),
+      field(t, 'event', {
+        options: options(t, 'events', ['roulette', 'dice', 'slots', 'fishing', 'economy', 'daily_bonus']),
+      }),
+      number(t, 'target', 1, 1),
+      number(t, 'xp', 25),
+      field(t, 'period', { options: options(t, 'periods', ['daily', 'weekly', 'season']) }),
       active,
-    ],
-  },
-  {
-    id: 'milestones',
-    label: 'Marcos de progresso',
-    fields: [
+    ]),
+    section('exchanges', [
       season,
       name,
-      number('required_xp', 'XP necessário', 100),
+      number(t, 'required_item_id', 57, 1),
+      number(t, 'required_enchant', 0),
+      number(t, 'required_quantity', 1, 1),
+      number(t, 'limit_per_user'),
       rewards,
-    ],
-  },
-  {
-    id: 'daily-seasons',
-    label: 'Temporadas do bônus',
-    fields: [
-      name,
-      { key: 'starts_on', label: 'Primeiro dia', type: 'date' },
-      { key: 'ends_on', label: 'Último dia', type: 'date' },
       active,
-    ],
-  },
-  {
-    id: 'daily-days',
-    label: 'Recompensas por dia',
-    fields: [
-      { key: 'season', label: 'Temporada', source: 'daily-seasons' },
-      number('day', 'Dia da temporada', 1, 1),
-      rewards,
-    ],
-  },
-  {
-    id: 'daily-pool',
-    label: 'Sorteios do bônus',
-    fields: [
-      { key: 'season', label: 'Temporada', source: 'daily-seasons' },
+    ]),
+    section('milestones', [season, name, number(t, 'required_xp', 100), rewards]),
+    section('daily-seasons', [
       name,
-      number('weight', 'Peso no sorteio', 1, 1),
-      rewards,
-    ],
-  },
-  {
-    id: 'baits',
-    label: 'Iscas de pesca',
-    fields: [
-      name,
-      { key: 'description', label: 'Descrição', type: 'textarea' },
-      number('price', 'Preço em fichas'),
-      number('success_bonus', 'Bônus de chance (pontos percentuais)', 5),
+      field(t, 'starts_on', { type: 'date' }),
+      field(t, 'ends_on', { type: 'date' }),
       active,
-    ],
-  },
-]
+    ]),
+    section('daily-days', [
+      field(t, 'season', { source: 'daily-seasons' }),
+      number(t, 'day', 1, 1),
+      rewards,
+    ]),
+    section('daily-pool', [
+      field(t, 'season', { source: 'daily-seasons' }),
+      name,
+      number(t, 'weight', 1, 1),
+      rewards,
+    ]),
+    section('baits', [
+      name,
+      field(t, 'description', { type: 'textarea' }),
+      number(t, 'price'),
+      number(t, 'success_bonus', 5),
+      active,
+    ]),
+  ]
+}
 
 export function localDate(value: string) {
   if (!/(Z|[+-]\d{2}:\d{2})$/.test(value)) return value
@@ -175,7 +116,8 @@ export function localDate(value: string) {
     .slice(0, 16)
 }
 
-export function rowLabel(
+export function buildRowLabel(
+  t: TFunction,
   row: { id: string; [key: string]: unknown },
   seasons: Array<{ id: string; [key: string]: unknown }>,
 ) {
@@ -183,9 +125,12 @@ export function rowLabel(
     row.name ||
       row.item_name ||
       (row.level !== undefined
-        ? `Nível ${row.level} · ${seasons.find((s) => s.id === row.season)?.name || 'Temporada'}`
+        ? t('gameContent.rowLevel', {
+            level: row.level,
+            season: seasons.find((s) => s.id === row.season)?.name || t('gameContent.rowSeason'),
+          })
         : row.day !== undefined
-          ? `Dia ${row.day}`
-          : 'Registro'),
+          ? t('gameContent.rowDay', { day: row.day })
+          : t('gameContent.rowRecord')),
   )
 }

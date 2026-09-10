@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -25,8 +26,8 @@ class MercadoPagoWebhookView(InjectedAPIView):
 
     @extend_schema(
         tags=["Webhooks"],
-        summary="Webhook Mercado Pago",
-        description="Recebe eventos do Mercado Pago, valida a assinatura e credita pagamentos aprovados.",
+        summary=gettext_lazy("Webhook Mercado Pago"),
+        description=gettext_lazy("Recebe eventos do Mercado Pago, valida a assinatura e credita pagamentos aprovados."),
     )
     def post(self, request):
         signatures = self.resolve(WebhookSignatureService)
@@ -54,8 +55,8 @@ class StripeWebhookView(InjectedAPIView):
 
     @extend_schema(
         tags=["Webhooks"],
-        summary="Webhook Stripe",
-        description="Recebe eventos do Stripe, valida a assinatura e credita pagamentos concluídos.",
+        summary=gettext_lazy("Webhook Stripe"),
+        description=gettext_lazy("Recebe eventos do Stripe, valida a assinatura e credita pagamentos concluídos."),
     )
     def post(self, request):
         signatures = self.resolve(WebhookSignatureService)

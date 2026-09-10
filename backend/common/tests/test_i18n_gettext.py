@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.test import RequestFactory, SimpleTestCase
 from django.utils import translation
@@ -88,6 +90,48 @@ class CatalogResolutionTests(SimpleTestCase):
         assert response is not None
         self.assertIn("CAPTCHA", response.data["message"])
         self.assertNotIn("Resolva", response.data["message"])
+
+    def test_openapi_documentation_strings_are_translated(self):
+        """Summaries and tag blurbs wrapped in gettext must resolve per language."""
+        activate_language("en")
+        try:
+            self.assertEqual(_("Obter token CSRF"), "Get CSRF token")
+            self.assertEqual(_("Excluir passkey"), "Delete passkey")
+            self.assertEqual(_("Webhook Mercado Pago"), "Mercado Pago webhook")
+            self.assertEqual(
+                _("Health check e versão da API."),
+                "Health check and API version.",
+            )
+        finally:
+            translation.deactivate()
+
+        activate_language("es")
+        try:
+            self.assertEqual(_("Obter token CSRF"), "Obtener token CSRF")
+            self.assertEqual(_("Excluir passkey"), "Eliminar passkey")
+        finally:
+            translation.deactivate()
+
+    def test_openapi_translation_data_file_matches_catalogs(self):
+        """scripts/openapi_translations.json is the source of truth for both catalogs."""
+        data = json.loads(
+            (settings.BASE_DIR / "scripts" / "openapi_translations.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertGreaterEqual(len(data), 339)
+
+        for language, index in (("en", 0), ("es", 1)):
+            activate_language(language)
+            try:
+                drifted = [
+                    msgid
+                    for msgid, pair in data.items()
+                    if _(msgid) != pair[index]
+                ]
+            finally:
+                translation.deactivate()
+            self.assertEqual(drifted, [], f"{language}: {len(drifted)} msgid(s) drifted")
 
     def test_fuzzy_lookalikes_do_not_steal_api_msgstr(self):
         """msgmerge fuzzy leftovers used to map similar msgids to the wrong EN string."""

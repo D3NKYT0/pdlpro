@@ -2,6 +2,7 @@ import secrets
 
 from django.middleware.csrf import get_token
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -115,8 +116,8 @@ class CsrfView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Obter token CSRF",
-        description="Retorna o token CSRF necessário para requisições de escrita autenticadas por cookie.",
+        summary=gettext_lazy("Obter token CSRF"),
+        description=gettext_lazy("Retorna o token CSRF necessário para requisições de escrita autenticadas por cookie."),
     )
     def get(self, request):
         return Response({"csrfToken": get_token(request)})
@@ -137,8 +138,8 @@ class RegisterView(InjectedAPIView):
         tags=["Auth"],
         request=RegisterSerializer,
         responses=UserSerializer,
-        summary="Registrar conta",
-        description="Cria uma nova conta de usuário e inicia a sessão com cookies de autenticação.",
+        summary=gettext_lazy("Registrar conta"),
+        description=gettext_lazy("Cria uma nova conta de usuário e inicia a sessão com cookies de autenticação."),
     )
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -178,8 +179,8 @@ class LoginView(InjectedAPIView):
         tags=["Auth"],
         request=LoginSerializer,
         responses=UserSerializer,
-        summary="Entrar",
-        description="Autentica com login e senha, podendo exigir CAPTCHA ou desafio de segundo fator.",
+        summary=gettext_lazy("Entrar"),
+        description=gettext_lazy("Autentica com login e senha, podendo exigir CAPTCHA ou desafio de segundo fator."),
     )
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -217,8 +218,8 @@ class AuthCapabilitiesView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Capacidades de autenticação",
-        description="Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores OAuth e vínculos sociais da sessão.",
+        summary=gettext_lazy("Capacidades de autenticação"),
+        description=gettext_lazy("Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores OAuth e vínculos sociais da sessão."),
     )
     def get(self, request):
         return Response(
@@ -243,8 +244,8 @@ class OAuthBeginView(InjectedAPIView):
     @extend_schema(
         tags=["Auth"],
         request=OAuthBeginSerializer,
-        summary="Iniciar OAuth",
-        description="Gera a URL de autorização do provedor social para login ou vínculo de conta.",
+        summary=gettext_lazy("Iniciar OAuth"),
+        description=gettext_lazy("Gera a URL de autorização do provedor social para login ou vínculo de conta."),
     )
     def post(self, request):
         serializer = OAuthBeginSerializer(data=request.data)
@@ -277,8 +278,8 @@ class OAuthCompleteView(InjectedAPIView):
     @extend_schema(
         tags=["Auth"],
         request=OAuthCompleteSerializer,
-        summary="Concluir OAuth",
-        description="Troca o código do provedor por sessão autenticada, vínculo de conta ou desafio 2FA.",
+        summary=gettext_lazy("Concluir OAuth"),
+        description=gettext_lazy("Troca o código do provedor por sessão autenticada, vínculo de conta ou desafio 2FA."),
     )
     def post(self, request):
         serializer = OAuthCompleteSerializer(data=request.data)
@@ -321,8 +322,8 @@ class CompleteCredentialsView(InjectedAPIView):
         tags=["Auth"],
         request=CompleteCredentialsSerializer,
         responses=UserSerializer,
-        summary="Completar credenciais",
-        description="Define username e senha para contas criadas via OAuth que ainda não possuem credenciais locais.",
+        summary=gettext_lazy("Completar credenciais"),
+        description=gettext_lazy("Define username e senha para contas criadas via OAuth que ainda não possuem credenciais locais."),
     )
     def post(self, request):
         serializer = CompleteCredentialsSerializer(data=request.data)
@@ -351,8 +352,8 @@ class RefreshView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Renovar sessão",
-        description="Rotaciona o refresh token e atualiza os cookies JWT da sessão.",
+        summary=gettext_lazy("Renovar sessão"),
+        description=gettext_lazy("Rotaciona o refresh token e atualiza os cookies JWT da sessão."),
     )
     def post(self, request):
         raw = request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name())
@@ -385,8 +386,8 @@ class LogoutView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Sair",
-        description="Revoga o refresh token e remove os cookies de autenticação da resposta.",
+        summary=gettext_lazy("Sair"),
+        description=gettext_lazy("Revoga o refresh token e remove os cookies de autenticação da resposta."),
     )
     def post(self, request):
         self.resolve(RevokeRefreshUseCase).execute(
@@ -411,8 +412,8 @@ class SessionListView(InjectedAPIView):
     @extend_schema(
         tags=["Auth"],
         responses=AuthSessionSerializer(many=True),
-        summary="Listar sessões",
-        description="Retorna as sessões de refresh ativas, marcando a sessão do navegador atual.",
+        summary=gettext_lazy("Listar sessões"),
+        description=gettext_lazy("Retorna as sessões de refresh ativas, marcando a sessão do navegador atual."),
     )
     def get(self, request):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
@@ -433,8 +434,8 @@ class SessionRevokeView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Revogar sessão",
-        description="Encerra uma sessão ativa pelo identificador ``jti``. A sessão atual também limpa cookies.",
+        summary=gettext_lazy("Revogar sessão"),
+        description=gettext_lazy("Encerra uma sessão ativa pelo identificador ``jti``. A sessão atual também limpa cookies."),
     )
     def delete(self, request, session_id):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
@@ -458,8 +459,8 @@ class SessionRevokeOthersView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Revogar outras sessões",
-        description="Encerra todas as sessões ativas preservando apenas a sessão corrente do navegador.",
+        summary=gettext_lazy("Revogar outras sessões"),
+        description=gettext_lazy("Encerra todas as sessões ativas preservando apenas a sessão corrente do navegador."),
     )
     def post(self, request):
         current = refresh_jti(request.COOKIES.get(get_refresh_cookie_name()))
@@ -482,8 +483,8 @@ class MeView(InjectedAPIView):
     @extend_schema(
         tags=["Perfil"],
         responses=UserSerializer,
-        summary="Obter perfil",
-        description="Retorna os dados do usuário autenticado na sessão atual.",
+        summary=gettext_lazy("Obter perfil"),
+        description=gettext_lazy("Retorna os dados do usuário autenticado na sessão atual."),
     )
     def get(self, request):
         user = self.resolve(GetCurrentUserUseCase).execute(GetCurrentUserInput(user_id=request.user.id))
@@ -493,8 +494,8 @@ class MeView(InjectedAPIView):
         tags=["Perfil"],
         request=UpdateProfileSerializer,
         responses=UserSerializer,
-        summary="Atualizar perfil",
-        description="Atualiza campos do perfil do usuário autenticado e devolve o estado atualizado.",
+        summary=gettext_lazy("Atualizar perfil"),
+        description=gettext_lazy("Atualiza campos do perfil do usuário autenticado e devolve o estado atualizado."),
     )
     def patch(self, request):
         serializer = UpdateProfileSerializer(data=request.data)
@@ -518,8 +519,8 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Verificar 2FA no login",
-        description="Valida o código de segundo fator do desafio de login e inicia a sessão.",
+        summary=gettext_lazy("Verificar 2FA no login"),
+        description=gettext_lazy("Valida o código de segundo fator do desafio de login e inicia a sessão."),
     )
     def post(self, request):
         user = self.resolve(VerifyTwoFactorLoginUseCase).execute(
@@ -540,8 +541,8 @@ class TwoFactorView(InjectedAPIView):
 
     @extend_schema(
         tags=["Perfil"],
-        summary="Gerenciar 2FA",
-        description="Configura, confirma ou desativa a autenticação de dois fatores da conta.",
+        summary=gettext_lazy("Gerenciar 2FA"),
+        description=gettext_lazy("Configura, confirma ou desativa a autenticação de dois fatores da conta."),
     )
     def post(self, request):
         action = request.data.get("action") or "setup"
@@ -572,8 +573,8 @@ class GamerProfileView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Perfil"],
-        summary="Perfil gamer",
-        description="Retorna progresso, recompensas e dados de jogo do usuário autenticado.",
+        summary=gettext_lazy("Perfil gamer"),
+        description=gettext_lazy("Retorna progresso, recompensas e dados de jogo do usuário autenticado."),
     )
     def get(self, request):
         return Response(self.resolve(GetGamerProfileUseCase).execute(request.user.id))
@@ -590,8 +591,8 @@ class RequestEmailVerificationView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Solicitar verificação de e-mail",
-        description="Dispara o envio do e-mail com o link de verificação da conta autenticada.",
+        summary=gettext_lazy("Solicitar verificação de e-mail"),
+        description=gettext_lazy("Dispara o envio do e-mail com o link de verificação da conta autenticada."),
     )
     def post(self, request):
         return Response(self.resolve(RequestEmailVerificationUseCase).execute(request.user.id))
@@ -610,8 +611,8 @@ class VerifyEmailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Verificar e-mail",
-        description="Confirma o endereço de e-mail a partir do token recebido na mensagem de verificação.",
+        summary=gettext_lazy("Verificar e-mail"),
+        description=gettext_lazy("Confirma o endereço de e-mail a partir do token recebido na mensagem de verificação."),
     )
     def post(self, request):
         return Response(
@@ -632,8 +633,8 @@ class RequestPasswordResetView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Solicitar redefinição de senha",
-        description="Envia o e-mail com o token para redefinir a senha da conta associada ao endereço informado.",
+        summary=gettext_lazy("Solicitar redefinição de senha"),
+        description=gettext_lazy("Envia o e-mail com o token para redefinir a senha da conta associada ao endereço informado."),
     )
     def post(self, request):
         return Response(
@@ -656,8 +657,8 @@ class ConfirmPasswordResetView(InjectedAPIView):
 
     @extend_schema(
         tags=["Auth"],
-        summary="Confirmar redefinição de senha",
-        description="Define a nova senha usando o token de redefinição recebido por e-mail.",
+        summary=gettext_lazy("Confirmar redefinição de senha"),
+        description=gettext_lazy("Define a nova senha usando o token de redefinição recebido por e-mail."),
     )
     def post(self, request):
         return Response(
@@ -681,8 +682,8 @@ class ClaimRewardView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Perfil"],
-        summary="Resgatar recompensa",
-        description="Resgata uma recompensa de progresso disponível para o usuário autenticado.",
+        summary=gettext_lazy("Resgatar recompensa"),
+        description=gettext_lazy("Resgata uma recompensa de progresso disponível para o usuário autenticado."),
     )
     def post(self, request, reward_id):
         return Response(

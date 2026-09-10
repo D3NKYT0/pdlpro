@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -66,8 +67,8 @@ class LineageAccountsView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Contas Lineage vinculadas",
-        description="Retorna contas acessíveis, slots de vínculo e o estado do login principal.",
+        summary=gettext_lazy("Contas Lineage vinculadas"),
+        description=gettext_lazy("Retorna contas acessíveis, slots de vínculo e o estado do login principal."),
     )
     def get(self, request):
         actor = actor_from(request)
@@ -94,8 +95,8 @@ class RegisterGameAccountView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Registrar conta de jogo",
-        description="Cria uma nova conta de jogo e a vincula ao usuário autenticado.",
+        summary=gettext_lazy("Registrar conta de jogo"),
+        description=gettext_lazy("Cria uma nova conta de jogo e a vincula ao usuário autenticado."),
         request=RegisterGameAccountSerializer,
     )
     def post(self, request):
@@ -122,8 +123,8 @@ class LinkGameAccountView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Vincular conta de jogo",
-        description="Vincula uma conta de jogo existente ao usuário autenticado mediante senha.",
+        summary=gettext_lazy("Vincular conta de jogo"),
+        description=gettext_lazy("Vincula uma conta de jogo existente ao usuário autenticado mediante senha."),
         request=LinkGameAccountSerializer,
     )
     def post(self, request):
@@ -150,8 +151,8 @@ class UnlinkGameAccountView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Desvincular conta de jogo",
-        description="Remove o vínculo da conta de jogo informada com o usuário autenticado.",
+        summary=gettext_lazy("Desvincular conta de jogo"),
+        description=gettext_lazy("Remove o vínculo da conta de jogo informada com o usuário autenticado."),
         request=UnlinkGameAccountSerializer,
     )
     def post(self, request):
@@ -174,8 +175,8 @@ class CharactersView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Listar personagens",
-        description="Lista os personagens da conta de jogo acessível ao usuário autenticado.",
+        summary=gettext_lazy("Listar personagens"),
+        description=gettext_lazy("Lista os personagens da conta de jogo acessível ao usuário autenticado."),
     )
     def get(self, request):
         login = request.query_params.get("login") or request.user.username
@@ -196,8 +197,8 @@ class CharacterDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Detalhe do personagem",
-        description="Retorna os dados do personagem informado na conta acessível ao usuário.",
+        summary=gettext_lazy("Detalhe do personagem"),
+        description=gettext_lazy("Retorna os dados do personagem informado na conta acessível ao usuário."),
     )
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
@@ -218,8 +219,8 @@ class UpdateGamePasswordView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Alterar senha do jogo",
-        description="Atualiza a senha da conta de jogo vinculada ao usuário autenticado.",
+        summary=gettext_lazy("Alterar senha do jogo"),
+        description=gettext_lazy("Atualiza a senha da conta de jogo vinculada ao usuário autenticado."),
         request=UpdateGamePasswordSerializer,
     )
     def post(self, request):
@@ -246,8 +247,8 @@ class ChangeNicknameView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Alterar nick do personagem",
-        description="Altera o nick do personagem informado cobrando o serviço correspondente.",
+        summary=gettext_lazy("Alterar nick do personagem"),
+        description=gettext_lazy("Altera o nick do personagem informado cobrando o serviço correspondente."),
         request=ChangeNicknameSerializer,
     )
     def post(self, request):
@@ -280,8 +281,8 @@ class ChangeSexView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Alterar sexo do personagem",
-        description="Altera o sexo do personagem informado cobrando o serviço correspondente.",
+        summary=gettext_lazy("Alterar sexo do personagem"),
+        description=gettext_lazy("Altera o sexo do personagem informado cobrando o serviço correspondente."),
         request=ChangeSexSerializer,
     )
     def post(self, request):
@@ -314,8 +315,8 @@ class UnstuckView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Destravar personagem",
-        description="Move o personagem preso para um local seguro no servidor de jogo.",
+        summary=gettext_lazy("Destravar personagem"),
+        description=gettext_lazy("Move o personagem preso para um local seguro no servidor de jogo."),
         request=UnstuckSerializer,
     )
     def post(self, request):
@@ -344,8 +345,8 @@ class RequestLinkByEmailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Solicitar vínculo por e-mail",
-        description="Inicia o fluxo de vínculo de conta de jogo mediante confirmação por e-mail.",
+        summary=gettext_lazy("Solicitar vínculo por e-mail"),
+        description=gettext_lazy("Inicia o fluxo de vínculo de conta de jogo mediante confirmação por e-mail."),
     )
     def post(self, request):
         return Response(
@@ -366,8 +367,8 @@ class ConfirmLinkByEmailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Confirmar vínculo por e-mail",
-        description="Confirma o vínculo da conta de jogo com o token recebido por e-mail.",
+        summary=gettext_lazy("Confirmar vínculo por e-mail"),
+        description=gettext_lazy("Confirma o vínculo da conta de jogo com o token recebido por e-mail."),
     )
     def post(self, request):
         account = self.resolve(ConfirmLinkByEmailUseCase).execute(
@@ -387,8 +388,8 @@ class PurchaseSlotView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Comprar slot de vínculo",
-        description="Adquire slots adicionais de vínculo de contas de jogo para o usuário autenticado.",
+        summary=gettext_lazy("Comprar slot de vínculo"),
+        description=gettext_lazy("Adquire slots adicionais de vínculo de contas de jogo para o usuário autenticado."),
         request=PurchaseSlotSerializer,
     )
     def post(self, request):
@@ -411,8 +412,8 @@ class ServicePricesView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conta Lineage"],
-        summary="Preços dos serviços",
-        description="Lista os preços dos serviços de personagem disponíveis no painel.",
+        summary=gettext_lazy("Preços dos serviços"),
+        description=gettext_lazy("Lista os preços dos serviços de personagem disponíveis no painel."),
     )
     def get(self, request):
         return Response(self.resolve(ListServicePricesUseCase).execute())

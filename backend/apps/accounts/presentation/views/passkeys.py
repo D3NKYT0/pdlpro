@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -41,8 +42,8 @@ class PasskeyListView(InjectedAPIView):
     @extend_schema(
         tags=["Passkeys"],
         responses=PasskeyCredentialSerializer(many=True),
-        summary="Listar passkeys",
-        description="Retorna as credenciais passkey registradas pelo usuário autenticado.",
+        summary=gettext_lazy("Listar passkeys"),
+        description=gettext_lazy("Retorna as credenciais passkey registradas pelo usuário autenticado."),
     )
     def get(self, request):
         rows = self.resolve(ListPasskeysUseCase).execute(ListPasskeysInput(user_id=request.user.id))
@@ -61,8 +62,8 @@ class PasskeyRegisterBeginView(InjectedAPIView):
     @extend_schema(
         tags=["Passkeys"],
         request=PasskeyBeginSerializer,
-        summary="Iniciar registro de passkey",
-        description="Gera o desafio WebAuthn para criar uma nova credencial passkey na conta autenticada.",
+        summary=gettext_lazy("Iniciar registro de passkey"),
+        description=gettext_lazy("Gera o desafio WebAuthn para criar uma nova credencial passkey na conta autenticada."),
     )
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
@@ -92,8 +93,8 @@ class PasskeyRegisterCompleteView(InjectedAPIView):
         tags=["Passkeys"],
         request=PasskeyCompleteSerializer,
         responses=PasskeyCredentialSerializer,
-        summary="Concluir registro de passkey",
-        description="Valida a resposta WebAuthn e persiste a nova credencial passkey do usuário.",
+        summary=gettext_lazy("Concluir registro de passkey"),
+        description=gettext_lazy("Valida a resposta WebAuthn e persiste a nova credencial passkey do usuário."),
     )
     def post(self, request):
         serializer = PasskeyCompleteSerializer(data=request.data)
@@ -124,8 +125,8 @@ class PasskeyLoginBeginView(InjectedAPIView):
     @extend_schema(
         tags=["Passkeys"],
         request=PasskeyBeginSerializer,
-        summary="Iniciar login com passkey",
-        description="Gera o desafio WebAuthn para autenticar o usuário com uma passkey existente.",
+        summary=gettext_lazy("Iniciar login com passkey"),
+        description=gettext_lazy("Gera o desafio WebAuthn para autenticar o usuário com uma passkey existente."),
     )
     def post(self, request):
         serializer = PasskeyBeginSerializer(data=request.data)
@@ -151,8 +152,8 @@ class PasskeyLoginCompleteView(InjectedAPIView):
     @extend_schema(
         tags=["Passkeys"],
         request=PasskeyCompleteSerializer,
-        summary="Concluir login com passkey",
-        description="Valida a asserção WebAuthn e inicia a sessão ou o desafio de segundo fator.",
+        summary=gettext_lazy("Concluir login com passkey"),
+        description=gettext_lazy("Valida a asserção WebAuthn e inicia a sessão ou o desafio de segundo fator."),
     )
     def post(self, request):
         serializer = PasskeyCompleteSerializer(data=request.data)
@@ -195,8 +196,8 @@ class PasskeyDeleteView(InjectedAPIView):
 
     @extend_schema(
         tags=["Passkeys"],
-        summary="Excluir passkey",
-        description="Remove uma credencial passkey pertencente ao usuário autenticado.",
+        summary=gettext_lazy("Excluir passkey"),
+        description=gettext_lazy("Remove uma credencial passkey pertencente ao usuário autenticado."),
     )
     def delete(self, request, credential_id):
         deleted = self.resolve(DeletePasskeyUseCase).execute(

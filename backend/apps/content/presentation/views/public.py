@@ -1,5 +1,6 @@
 from dataclasses import asdict
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -42,8 +43,8 @@ class NewsListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Listar notícias",
-        description="Lista as notícias públicas publicadas no portal.",
+        summary=gettext_lazy("Listar notícias"),
+        description=gettext_lazy("Lista as notícias públicas publicadas no portal."),
     )
     def get(self, request):
         language = resolve_language(request.query_params.get("lang"))
@@ -68,8 +69,8 @@ class NewsDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Detalhe da notícia",
-        description="Retorna o conteúdo completo da notícia identificada pelo slug.",
+        summary=gettext_lazy("Detalhe da notícia"),
+        description=gettext_lazy("Retorna o conteúdo completo da notícia identificada pelo slug."),
     )
     def get(self, request, slug: str):
         language = resolve_language(request.query_params.get("lang"))
@@ -91,8 +92,8 @@ class FaqListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Listar FAQ público",
-        description="Lista as perguntas frequentes públicas no idioma solicitado.",
+        summary=gettext_lazy("Listar FAQ público"),
+        description=gettext_lazy("Lista as perguntas frequentes públicas no idioma solicitado."),
     )
     def get(self, request):
         language = resolve_language(request.query_params.get("lang"))
@@ -111,8 +112,8 @@ class DownloadListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Conteúdo"],
-        summary="Listar downloads",
-        description="Lista os arquivos e links de download disponíveis publicamente.",
+        summary=gettext_lazy("Listar downloads"),
+        description=gettext_lazy("Lista os arquivos e links de download disponíveis publicamente."),
     )
     def get(self, request):
         return Response(self.resolve(ListDownloadsUseCase).execute(None))
@@ -136,8 +137,8 @@ class WikiListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Wiki"],
-        summary="Listar ou buscar wiki",
-        description="Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado.",
+        summary=gettext_lazy("Listar ou buscar wiki"),
+        description=gettext_lazy("Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado."),
     )
     def get(self, request):
         language = resolve_language(request.query_params.get("lang"))
@@ -163,8 +164,8 @@ class WikiDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Wiki"],
-        summary="Detalhe da página wiki",
-        description="Retorna o conteúdo da página da wiki identificada pelo slug.",
+        summary=gettext_lazy("Detalhe da página wiki"),
+        description=gettext_lazy("Retorna o conteúdo da página da wiki identificada pelo slug."),
     )
     def get(self, request, slug: str):
         language = resolve_language(request.query_params.get("lang"))
@@ -189,8 +190,8 @@ class CalendarEventListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Calendário"],
-        summary="Listar eventos do calendário",
-        description="Lista os eventos públicos do calendário do servidor.",
+        summary=gettext_lazy("Listar eventos do calendário"),
+        description=gettext_lazy("Lista os eventos públicos do calendário do servidor."),
     )
     def get(self, request):
         return Response(self.resolve(ListCalendarEventsUseCase).execute(None))
@@ -208,8 +209,8 @@ class LegalListView(InjectedAPIView):
 
     @extend_schema(
         tags=["Legal"],
-        summary="Listar documentos legais",
-        description="Lista os documentos legais públicos disponíveis no portal.",
+        summary=gettext_lazy("Listar documentos legais"),
+        description=gettext_lazy("Lista os documentos legais públicos disponíveis no portal."),
     )
     def get(self, request):
         language = resolve_language(request.query_params.get("lang"))
@@ -232,8 +233,8 @@ class LegalDetailView(InjectedAPIView):
 
     @extend_schema(
         tags=["Legal"],
-        summary="Detalhe do documento legal",
-        description="Retorna o conteúdo do documento legal identificado pelo slug.",
+        summary=gettext_lazy("Detalhe do documento legal"),
+        description=gettext_lazy("Retorna o conteúdo do documento legal identificado pelo slug."),
     )
     def get(self, request, slug: str):
         language = resolve_language(request.query_params.get("lang"))

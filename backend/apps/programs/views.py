@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -64,7 +65,7 @@ class SupporterView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Consultar painel do apoiador",
+        summary=gettext_lazy("Consultar painel do apoiador"),
         description=(
             "Retorna o perfil de apoiador do usuário autenticado, saldo disponível, "
             "cupons vinculados, comissões e histórico de repasses. Se ainda não houver "
@@ -80,7 +81,7 @@ class SupporterView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Inscrever ou atualizar apoiador",
+        summary=gettext_lazy("Inscrever ou atualizar apoiador"),
         description=(
             "Cria ou atualiza a inscrição de apoiador do usuário autenticado. "
             "Novas inscrições e reenvios após rejeição ficam com status pendente."
@@ -114,7 +115,7 @@ class RequestPayoutView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Solicitar repasse de comissões",
+        summary=gettext_lazy("Solicitar repasse de comissões"),
         description=(
             "Solicita o repasse das comissões disponíveis do apoiador autenticado. "
             "Retorna o pedido de payout criado."
@@ -139,7 +140,7 @@ class StaffSupporterView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Listar apoiadores e repasses (staff)",
+        summary=gettext_lazy("Listar apoiadores e repasses (staff)"),
         description=(
             "Lista todos os cadastros de apoiadores e os pedidos de repasse recentes "
             "para revisão pela equipe."
@@ -157,7 +158,7 @@ class StaffSupporterView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Revisar cadastro de apoiador",
+        summary=gettext_lazy("Revisar cadastro de apoiador"),
         description=(
             "Atualiza status e condições de um cadastro de apoiador. Aprovação pode "
             "elevar o papel do usuário para supporter; rejeição pode rebaixá-lo a player."
@@ -190,7 +191,7 @@ class StaffPayoutView(InjectedAPIView):
 
     @extend_schema(
         tags=["Apoiadores"],
-        summary="Revisar pedido de repasse",
+        summary=gettext_lazy("Revisar pedido de repasse"),
         description=(
             "Atualiza o status e a nota de um pedido de repasse de comissões "
             "identificado por entry_id."
@@ -222,7 +223,7 @@ class RoadmapView(InjectedAPIView):
 
     @extend_schema(
         tags=["Roadmap"],
-        summary="Listar roadmap publicado",
+        summary=gettext_lazy("Listar roadmap publicado"),
         description=(
             "Retorna as entradas publicadas do roadmap. Com entry_id, devolve apenas "
             "aquela entrada; sem ele, lista todas as publicadas."
@@ -250,8 +251,8 @@ class StaffRoadmapView(InjectedAPIView):
 
     @extend_schema(
         tags=["Roadmap"],
-        summary="Listar roadmap (staff)",
-        description="Lista todas as entradas do roadmap, inclusive as não publicadas.",
+        summary=gettext_lazy("Listar roadmap (staff)"),
+        description=gettext_lazy("Lista todas as entradas do roadmap, inclusive as não publicadas."),
         responses=RoadmapSerializer(many=True),
     )
     def get(self, request):
@@ -263,8 +264,8 @@ class StaffRoadmapView(InjectedAPIView):
 
     @extend_schema(
         tags=["Roadmap"],
-        summary="Criar entrada do roadmap",
-        description="Cria uma nova entrada no roadmap com os dados enviados.",
+        summary=gettext_lazy("Criar entrada do roadmap"),
+        description=gettext_lazy("Cria uma nova entrada no roadmap com os dados enviados."),
         request=RoadmapSerializer,
         responses=RoadmapSerializer,
     )
@@ -278,8 +279,8 @@ class StaffRoadmapView(InjectedAPIView):
 
     @extend_schema(
         tags=["Roadmap"],
-        summary="Atualizar entrada do roadmap",
-        description="Atualiza parcialmente a entrada do roadmap identificada por entry_id.",
+        summary=gettext_lazy("Atualizar entrada do roadmap"),
+        description=gettext_lazy("Atualiza parcialmente a entrada do roadmap identificada por entry_id."),
         request=RoadmapSerializer,
         responses=RoadmapSerializer,
     )
@@ -293,8 +294,8 @@ class StaffRoadmapView(InjectedAPIView):
 
     @extend_schema(
         tags=["Roadmap"],
-        summary="Excluir entrada do roadmap",
-        description="Remove a entrada do roadmap identificada por entry_id.",
+        summary=gettext_lazy("Excluir entrada do roadmap"),
+        description=gettext_lazy("Remove a entrada do roadmap identificada por entry_id."),
     )
     def delete(self, request, entry_id):
         self.resolve(DeleteRoadmapEntryUseCase).execute(DeleteRoadmapInput(entry_id=entry_id))
@@ -312,8 +313,8 @@ class ResourceView(InjectedAPIView):
 
     @extend_schema(
         tags=["Recursos"],
-        summary="Listar recursos do sistema",
-        description="Retorna todos os recursos do sistema e o respectivo estado de ativação.",
+        summary=gettext_lazy("Listar recursos do sistema"),
+        description=gettext_lazy("Retorna todos os recursos do sistema e o respectivo estado de ativação."),
         responses=ResourceSerializer(many=True),
     )
     def get(self, request):
@@ -335,8 +336,8 @@ class StaffResourceView(ResourceView):
 
     @extend_schema(
         tags=["Recursos"],
-        summary="Listar recursos (staff)",
-        description="Lista os recursos do sistema para administração pela equipe.",
+        summary=gettext_lazy("Listar recursos (staff)"),
+        description=gettext_lazy("Lista os recursos do sistema para administração pela equipe."),
         responses=ResourceSerializer(many=True),
     )
     def get(self, request):
@@ -344,8 +345,8 @@ class StaffResourceView(ResourceView):
 
     @extend_schema(
         tags=["Recursos"],
-        summary="Atualizar recurso do sistema",
-        description="Atualiza parcialmente o recurso do sistema identificado por entry_id.",
+        summary=gettext_lazy("Atualizar recurso do sistema"),
+        description=gettext_lazy("Atualiza parcialmente o recurso do sistema identificado por entry_id."),
         request=ResourceSerializer,
         responses=ResourceSerializer,
     )

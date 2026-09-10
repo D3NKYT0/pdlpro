@@ -1,6 +1,7 @@
 import logging
 
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -196,8 +197,8 @@ class ObservationAccessView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Permissões de observação",
-        description="Informa quais ações de observação de itens o usuário autenticado pode executar.",
+        summary=gettext_lazy("Permissões de observação"),
+        description=gettext_lazy("Informa quais ações de observação de itens o usuário autenticado pode executar."),
     )
     def get(self, request):
         return Response(
@@ -223,8 +224,8 @@ class ObservationLiveView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Observação ao vivo",
-        description="Consulta a distribuição atual de itens no servidor L2 com filtros e paginação.",
+        summary=gettext_lazy("Observação ao vivo"),
+        description=gettext_lazy("Consulta a distribuição atual de itens no servidor L2 com filtros e paginação."),
         parameters=[ItemQuery],
     )
     def get(self, request):
@@ -259,8 +260,8 @@ class ObservationFavoriteView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Atualizar favorito",
-        description="Adiciona ou remove o item informado dos favoritos de observação do usuário.",
+        summary=gettext_lazy("Atualizar favorito"),
+        description=gettext_lazy("Adiciona ou remove o item informado dos favoritos de observação do usuário."),
         request=FavoriteInput,
     )
     def put(self, request, item_id):
@@ -288,8 +289,8 @@ class ObservationSnapshotsView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Listar capturas",
-        description="Lista as capturas persistidas de observação de itens com paginação.",
+        summary=gettext_lazy("Listar capturas"),
+        description=gettext_lazy("Lista as capturas persistidas de observação de itens com paginação."),
         parameters=[PageQuery],
         responses=SnapshotSerializer(many=True),
     )
@@ -305,8 +306,8 @@ class ObservationSnapshotsView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Criar captura",
-        description="Captura o estado atual da observação de itens e persiste um novo snapshot.",
+        summary=gettext_lazy("Criar captura"),
+        description=gettext_lazy("Captura o estado atual da observação de itens e persiste um novo snapshot."),
         request=CaptureInput,
         responses={201: SnapshotSerializer},
     )
@@ -332,8 +333,8 @@ class ObservationSnapshotView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Detalhe da captura",
-        description="Retorna os metadados e os detalhes paginados de uma captura de observação.",
+        summary=gettext_lazy("Detalhe da captura"),
+        description=gettext_lazy("Retorna os metadados e os detalhes paginados de uma captura de observação."),
         parameters=[PageQuery],
         responses=SnapshotSerializer,
     )
@@ -351,8 +352,8 @@ class ObservationSnapshotView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Excluir captura",
-        description="Remove permanentemente a captura de observação identificada pelo ID.",
+        summary=gettext_lazy("Excluir captura"),
+        description=gettext_lazy("Remove permanentemente a captura de observação identificada pelo ID."),
         responses={204: None},
     )
     def delete(self, request, snapshot_id):
@@ -370,8 +371,8 @@ class ObservationComparisonView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Comparar capturas",
-        description="Compara duas capturas de observação e pagina as diferenças encontradas entre elas.",
+        summary=gettext_lazy("Comparar capturas"),
+        description=gettext_lazy("Compara duas capturas de observação e pagina as diferenças encontradas entre elas."),
         parameters=[ComparisonQuery],
         responses=SnapshotSerializer,
     )
@@ -405,8 +406,8 @@ class ObservationCategoriesView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Listar categorias",
-        description="Lista as categorias usadas para organizar a observação de itens.",
+        summary=gettext_lazy("Listar categorias"),
+        description=gettext_lazy("Lista as categorias usadas para organizar a observação de itens."),
         responses=CategorySerializer(many=True),
     )
     def get(self, request):
@@ -415,8 +416,8 @@ class ObservationCategoriesView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Criar categoria",
-        description="Cria uma nova categoria para organizar itens na observação administrativa.",
+        summary=gettext_lazy("Criar categoria"),
+        description=gettext_lazy("Cria uma nova categoria para organizar itens na observação administrativa."),
         request=CategorySerializer,
         responses={201: CategorySerializer},
     )
@@ -439,8 +440,8 @@ class ObservationCategoryView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Atualizar categoria",
-        description="Atualiza os dados de uma categoria de observação existente.",
+        summary=gettext_lazy("Atualizar categoria"),
+        description=gettext_lazy("Atualiza os dados de uma categoria de observação existente."),
         request=CategorySerializer,
         responses=CategorySerializer,
     )
@@ -456,8 +457,8 @@ class ObservationCategoryView(ObservationView):
 
     @extend_schema(
         tags=["Staff - Observação de itens"],
-        summary="Excluir categoria",
-        description="Remove permanentemente a categoria de observação identificada pelo ID.",
+        summary=gettext_lazy("Excluir categoria"),
+        description=gettext_lazy("Remove permanentemente a categoria de observação identificada pelo ID."),
         responses={204: None},
     )
     def delete(self, request, category_id):

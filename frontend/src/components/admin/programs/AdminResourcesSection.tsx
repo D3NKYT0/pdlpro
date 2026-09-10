@@ -1,8 +1,8 @@
 import { Card } from '../../ui/Card'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { programsApi } from '../../../services/api'
 import {
-  Empty,
   ErrorNotice,
   Loading,
 } from '../../programs/ProgramUI'
@@ -10,6 +10,7 @@ import { useProgramAction } from '../../programs/useProgramAction'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
 
 export function AdminResourcesSection() {
+  const { t } = useTranslation('admin')
   const query = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -19,9 +20,9 @@ export function AdminResourcesSection() {
   return (
     <div className="program-page">
       <AdminHeader
-        kicker="Sistema"
-        title="Controle de recursos"
-        description="Defina quais módulos ficam disponíveis. A desativação bloqueia as telas e a API; o acesso administrativo é preservado."
+        kicker={t('resources.kicker')}
+        title={t('resources.title')}
+        description={t('resources.description')}
       />
       <ErrorNotice error={query.error || action.error} />
       {query.isPending && <Loading />}
@@ -38,21 +39,21 @@ export function AdminResourcesSection() {
                     <p>{r.description}</p>
                     <small>
                       {r.enabled
-                        ? 'Disponível aos jogadores'
-                        : 'Temporariamente desativado'}
+                        ? t('resources.available')
+                        : t('resources.unavailable')}
                     </small>
                   </div>
                   <button
                     type="button"
                     role="switch"
                     aria-checked={r.enabled}
-                    aria-label={`${r.enabled ? 'Desativar' : 'Ativar'} ${r.name}`}
+                    aria-label={t(r.enabled ? 'resources.disable' : 'resources.enable', { name: r.name })}
                     disabled={action.busy}
                     className="program-switch"
                     onClick={() =>
                       void action.run(
                         () => programsApi.toggleResource(r.id, !r.enabled),
-                        r.enabled ? 'Recurso desativado.' : 'Recurso ativado.',
+                        r.enabled ? t('resources.disabled') : t('resources.enabled'),
                         [['resources']],
                       )
                     }

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -14,8 +15,8 @@ class ItemCatalogView(InjectedAPIView):
 
     @extend_schema(
         tags=["Catálogo de itens"],
-        summary="Catálogo de itens",
-        description="Catálogo canônico: XML + customs do banco PDL. Não consulta nem expõe o banco L2.",
+        summary=gettext_lazy("Catálogo de itens"),
+        description=gettext_lazy("Catálogo canônico: XML + customs do banco PDL. Não consulta nem expõe o banco L2."),
     )
     def get(self, request):
         payload = self.resolve(ListPublicItemCatalogUseCase).execute(None)

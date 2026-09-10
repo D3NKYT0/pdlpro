@@ -2,8 +2,10 @@ import { Pencil } from 'lucide-react'
 import { Button } from '../../ui/Button'
 import { Card } from '../../ui/Card'
 import { Empty } from '../../programs/ProgramUI'
+import { formatDate, formatDateTime } from '../../../lib/formatters'
 import type { ConfigRow } from '../../../services/api'
 import type { GameContentField } from './gameContentConfig'
+import { useTranslation } from 'react-i18next'
 
 interface GameContentRecordListProps {
   fields: GameContentField[]
@@ -20,6 +22,7 @@ export function GameContentRecordList({
   rowLabel,
   onEdit,
 }: GameContentRecordListProps) {
+  const { t } = useTranslation('admin')
   return (
     <>
       <div className="program-grid program-record-grid">
@@ -40,13 +43,13 @@ export function GameContentRecordList({
                   <h3>{rowLabel(row)}</h3>
                   {isActive !== undefined ? (
                     <span className={`program-status ${isActive ? 'status-available' : 'status-pending'}`}>
-                      {isActive ? 'Ativo' : 'Inativo'}
+                      {t(isActive ? 'gameContent.active' : 'gameContent.inactive')}
                     </span>
                   ) : null}
                 </div>
                 <Button type="button" size="sm" variant="secondary" onClick={() => onEdit(row)}>
                   <Pencil size={16} />
-                  Editar
+                  {t('gameContent.edit')}
                 </Button>
               </header>
               <dl className="program-record-meta">
@@ -60,14 +63,15 @@ export function GameContentRecordList({
                           : '—'
                         : f.type === 'checkbox'
                           ? row[f.key]
-                            ? 'Sim'
-                            : 'Não'
+                            ? t('gameContent.yes')
+                            : t('gameContent.no')
                           : f.type === 'datetime-local'
-                            ? new Date(String(row[f.key])).toLocaleString('pt-BR')
+                            ? formatDateTime(String(row[f.key]), 'short')
                             : f.type === 'date'
-                              ? new Date(`${row[f.key]}T12:00:00`).toLocaleDateString('pt-BR')
+                              ? formatDate(`${row[f.key]}T12:00:00`)
                               : f.options
-                                ? f.options.find(([key]) => key === row[f.key])?.[1] || String(row[f.key])
+                                ? f.options.find(([value]) => value === row[f.key])?.[1] ||
+                                  String(row[f.key] ?? '—')
                                 : String(row[f.key] ?? '—')}
                     </dd>
                   </div>
@@ -79,8 +83,7 @@ export function GameContentRecordList({
       </div>
       {rows?.length === 0 && (
         <Empty>
-          Nenhum registro. Configure esta etapa para disponibilizar novas
-          recompensas.
+          {t('gameContent.empty')}
         </Empty>
       )}
     </>

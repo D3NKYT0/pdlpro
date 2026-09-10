@@ -28,6 +28,13 @@ export function formatDateTime(value: string | null | undefined, style: 'short' 
   return Number.isNaN(date.getTime()) ? i18n.t('unavailableDate', { ns: 'common' }) : dateFormatter(style).format(date)
 }
 
+export function formatTime(value: string | number | Date | null | undefined) {
+  if (value === null || value === undefined || value === '') return i18n.t('unavailableDate', { ns: 'common' })
+  const date = value instanceof Date ? value : new Date(value)
+  if (Number.isNaN(date.getTime())) return i18n.t('unavailableDate', { ns: 'common' })
+  return new Intl.DateTimeFormat(intlLocale(), { timeStyle: 'medium' }).format(date)
+}
+
 export function formatDate(value: string | null | undefined, style: 'short' | 'medium' = 'short') {
   if (!value) return i18n.t('unavailableDate', { ns: 'common' })
   const date = new Date(value)

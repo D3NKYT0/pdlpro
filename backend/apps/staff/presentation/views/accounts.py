@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,8 +23,8 @@ class StaffInspectGameAccountView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Inspecionar conta de jogo",
-        description="Consulta os dados administrativos da conta de jogo informada pelo login.",
+        summary=gettext_lazy("Inspecionar conta de jogo"),
+        description=gettext_lazy("Consulta os dados administrativos da conta de jogo informada pelo login."),
     )
     def get(self, request):
         return Response(self.resolve(InspectGameAccountUseCase).execute(request.query_params.get("login") or ""))
@@ -41,8 +42,8 @@ class StaffUnlinkGameAccountView(InjectedAPIView):
 
     @extend_schema(
         tags=["Staff"],
-        summary="Forçar desvínculo de conta",
-        description="Remove forçadamente o vínculo da conta de jogo informada pelo login.",
+        summary=gettext_lazy("Forçar desvínculo de conta"),
+        description=gettext_lazy("Remove forçadamente o vínculo da conta de jogo informada pelo login."),
     )
     def post(self, request):
         return Response(self.resolve(ForceUnlinkGameAccountUseCase).execute(request.data.get("login") or ""))

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -33,8 +34,8 @@ class ShopCatalogView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Loja"],
-        summary="Catálogo da loja",
-        description="Lista os itens disponíveis para compra na loja do portal.",
+        summary=gettext_lazy("Catálogo da loja"),
+        description=gettext_lazy("Lista os itens disponíveis para compra na loja do portal."),
         responses=ShopItemSerializer(many=True),
     )
     def get(self, request):
@@ -54,16 +55,16 @@ class ShopCartView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Loja"],
-        summary="Consultar carrinho",
-        description="Retorna o carrinho atual do usuário autenticado na loja.",
+        summary=gettext_lazy("Consultar carrinho"),
+        description=gettext_lazy("Retorna o carrinho atual do usuário autenticado na loja."),
     )
     def get(self, request):
         return Response(self.resolve(GetCartUseCase).execute(GetCartInput(user_id=request.user.id)))
 
     @extend_schema(
         tags=["Loja"],
-        summary="Adicionar ao carrinho",
-        description="Adiciona um item ao carrinho da loja do usuário autenticado.",
+        summary=gettext_lazy("Adicionar ao carrinho"),
+        description=gettext_lazy("Adiciona um item ao carrinho da loja do usuário autenticado."),
         request=AddToCartSerializer,
     )
     def post(self, request):
@@ -91,8 +92,8 @@ class ShopCartItemView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Loja"],
-        summary="Atualizar item do carrinho",
-        description="Atualiza a quantidade de um item já presente no carrinho da loja.",
+        summary=gettext_lazy("Atualizar item do carrinho"),
+        description=gettext_lazy("Atualiza a quantidade de um item já presente no carrinho da loja."),
         request=UpdateCartItemSerializer,
     )
     def patch(self, request, cart_item_id):
@@ -109,8 +110,8 @@ class ShopCartItemView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Loja"],
-        summary="Remover item do carrinho",
-        description="Remove o item informado do carrinho da loja do usuário autenticado.",
+        summary=gettext_lazy("Remover item do carrinho"),
+        description=gettext_lazy("Remove o item informado do carrinho da loja do usuário autenticado."),
     )
     def delete(self, request, cart_item_id):
         result = self.resolve(UpdateCartItemUseCase).execute(
@@ -130,8 +131,8 @@ class ShopCheckoutView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Loja"],
-        summary="Finalizar compra",
-        description="Finaliza a compra pela rotina checkout e devolve o resultado da operação.",
+        summary=gettext_lazy("Finalizar compra"),
+        description=gettext_lazy("Finaliza a compra pela rotina checkout e devolve o resultado da operação."),
     )
     def post(self, request):
         from rest_framework import serializers

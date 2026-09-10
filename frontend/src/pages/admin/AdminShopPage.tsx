@@ -4,6 +4,7 @@ import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -12,6 +13,7 @@ import { ItemIdField } from '../../components/ItemIdField'
 import { useItemCatalog } from '../../hooks/useItemCatalog'
 
 export function AdminShopPage() {
+  const { t } = useTranslation('admin')
   const catalog = useItemCatalog()
   const queryClient = useQueryClient()
   const shop = useQuery({ queryKey: ['staff-shop'], queryFn: staffApi.shop })
@@ -39,22 +41,22 @@ export function AdminShopPage() {
         quantity: Number(quantity),
         active: true,
       })
-      toast.success(editing ? 'Item atualizado' : 'Item criado')
+      toast.success(editing ? t('shop.toast.updated') : t('shop.toast.created'))
       setName('')
       setItemId('')
       setPrice('')
       setQuantity('1')
       setEditing(null)
       await refresh()
-    }, 'Não foi possível salvar')
+    }, t('shop.toast.error'))
   }
 
   return (
     <div className="account-page">
-      <AdminHeader kicker="Financeiro" title="Loja" description="Itens vendidos no painel do jogador." />
+      <AdminHeader kicker={t('shop.kicker')} title={t('shop.title')} description={t('shop.description')} />
       <form className="card admin-form admin-shop-form" onSubmit={onSubmit}>
         <div className="account-form-fields">
-          <Field>Nome do catálogo<input value={catalog.getById(itemId)?.name ?? (itemId ? `Item ${itemId}` : '')} readOnly /><small>Definido pelo ID selecionado, na fonte única de itens.</small></Field>
+          <Field>{t('shop.catalogName')}<input value={catalog.getById(itemId)?.name ?? (itemId ? t('shop.itemFallback', { id: itemId }) : '')} readOnly /><small>{t('shop.catalogHint')}</small></Field>
           <ItemIdField
             value={itemId}
             required
@@ -65,25 +67,25 @@ export function AdminShopPage() {
           />
         </div>
         <div className="account-form-fields">
-          <Field>Preço<input value={price} onChange={(e) => setPrice(e.target.value)} required /></Field>
-          <Field>Quantidade<input value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></Field>
+          <Field>{t('shop.price')}<input value={price} onChange={(e) => setPrice(e.target.value)} required /></Field>
+          <Field>{t('shop.quantity')}<input value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></Field>
         </div>
-        <AdminSaveBar saving={saving} label={editing ? 'Atualizar item' : 'Criar item'} />
+        <AdminSaveBar saving={saving} label={editing ? t('shop.update') : t('shop.create')} />
       </form>
       <Card>
         <div className="account-section-heading">
           <div>
-            <span className="panel-eyebrow">Catálogo</span>
-            <h2>Itens</h2>
+            <span className="panel-eyebrow">{t('shop.eyebrow')}</span>
+            <h2>{t('shop.listTitle')}</h2>
           </div>
         </div>
         <table className="table">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>ID</th>
-              <th>Preço</th>
-              <th>Qtd</th>
+              <th>{t('shop.columns.name')}</th>
+              <th>{t('shop.columns.id')}</th>
+              <th>{t('shop.columns.price')}</th>
+              <th>{t('shop.columns.quantity')}</th>
               <th></th>
             </tr>
           </thead>
@@ -111,7 +113,7 @@ export function AdminShopPage() {
                       setQuantity(String(item.quantity))
                     }}
                   >
-                    Editar
+                    {t('shop.edit')}
                   </Button>
                 </td>
               </tr>

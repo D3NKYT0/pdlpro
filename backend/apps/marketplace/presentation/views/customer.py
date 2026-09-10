@@ -1,5 +1,6 @@
 from dataclasses import asdict
 
+from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -40,8 +41,8 @@ class PublicMarketplaceView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Marketplace"],
-        summary="Listar anúncios públicos",
-        description="Lista os anúncios de personagens disponíveis publicamente no marketplace.",
+        summary=gettext_lazy("Listar anúncios públicos"),
+        description=gettext_lazy("Lista os anúncios de personagens disponíveis publicamente no marketplace."),
     )
     def get(self, request):
         listings = self.resolve(ListPublicListingsUseCase).execute(None)
@@ -60,8 +61,8 @@ class MyListingsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Marketplace"],
-        summary="Listar meus anúncios",
-        description="Lista os anúncios de personagens criados pelo usuário autenticado.",
+        summary=gettext_lazy("Listar meus anúncios"),
+        description=gettext_lazy("Lista os anúncios de personagens criados pelo usuário autenticado."),
     )
     def get(self, request):
         listings = self.resolve(ListMyListingsUseCase).execute(ListMyListingsInput(user_id=request.user.id))
@@ -69,8 +70,8 @@ class MyListingsView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Marketplace"],
-        summary="Criar anúncio",
-        description="Cria um anúncio de personagem no marketplace para o usuário autenticado.",
+        summary=gettext_lazy("Criar anúncio"),
+        description=gettext_lazy("Cria um anúncio de personagem no marketplace para o usuário autenticado."),
         request=CreateListingSerializer,
     )
     def post(self, request):
@@ -101,8 +102,8 @@ class PurchaseListingView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Marketplace"],
-        summary="Comprar anúncio",
-        description="Compra o anúncio de personagem informado em nome do usuário autenticado.",
+        summary=gettext_lazy("Comprar anúncio"),
+        description=gettext_lazy("Compra o anúncio de personagem informado em nome do usuário autenticado."),
     )
     def post(self, request, listing_id):
         listing = self.resolve(PurchaseListingUseCase).execute(
@@ -126,8 +127,8 @@ class CancelListingView(ItemCatalogAPIView):
 
     @extend_schema(
         tags=["Marketplace"],
-        summary="Cancelar anúncio",
-        description="Cancela o anúncio de personagem informado pertencente ao usuário autenticado.",
+        summary=gettext_lazy("Cancelar anúncio"),
+        description=gettext_lazy("Cancela o anúncio de personagem informado pertencente ao usuário autenticado."),
     )
     def post(self, request, listing_id):
         listing = self.resolve(CancelListingUseCase).execute(
