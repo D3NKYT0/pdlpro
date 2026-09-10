@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 
@@ -14,7 +15,7 @@ class OperationalReportFiltersSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if attrs.get("date_from") and attrs.get("date_to") and attrs["date_from"] > attrs["date_to"]:
-            raise serializers.ValidationError({"date_to": "A data final deve ser igual ou posterior à inicial."})
+            raise serializers.ValidationError({"date_to": _("A data final deve ser igual ou posterior à inicial.")})
         return attrs
 
 

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -57,7 +58,7 @@ class AssistantPreferencesSerializer(serializers.Serializer):
 
     def validate_preferred_name(self, value):
         if not valid_preferred_name(value):
-            raise serializers.ValidationError("Use um nome de até 30 letras, sem termos ofensivos.")
+            raise serializers.ValidationError(_("Use um nome de até 30 letras, sem termos ofensivos."))
         return value
 
 
@@ -125,7 +126,7 @@ class DenkynhoPreferencesSerializer(serializers.Serializer):
 
     def validate_preferred_name(self, value):
         if not valid_preferred_name(value):
-            raise serializers.ValidationError("Use um nome de até 30 letras, sem termos ofensivos.")
+            raise serializers.ValidationError(_("Use um nome de até 30 letras, sem termos ofensivos."))
         return value
 
 

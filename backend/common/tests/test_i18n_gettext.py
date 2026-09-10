@@ -72,3 +72,19 @@ class CatalogResolutionTests(SimpleTestCase):
             )
         finally:
             translation.deactivate()
+
+    def test_api_validation_message_translates_in_handler(self):
+        from rest_framework.exceptions import ValidationError
+
+        activate_language("en")
+        try:
+            response = custom_exception_handler(
+                ValidationError("Resolva o CAPTCHA para continuar."),
+                {"request": None},
+            )
+        finally:
+            translation.deactivate()
+        self.assertIsNotNone(response)
+        assert response is not None
+        self.assertIn("CAPTCHA", response.data["message"])
+        self.assertNotIn("Resolva", response.data["message"])

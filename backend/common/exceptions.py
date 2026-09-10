@@ -4,6 +4,7 @@ import logging
 from collections.abc import Mapping, Sequence
 from typing import Any
 
+from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
@@ -25,12 +26,12 @@ def custom_exception_handler(exc: Exception, context: dict[str, Any]) -> Respons
 
     Configure em REST_FRAMEWORK['EXCEPTION_HANDLER']. Exceções não tratadas são registradas com
     request_id e produzem uma resposta 500 genérica; erros previstos preservam código, mensagem
-    e detalhes públicos.
+    e detalhes públicos. Mensagens públicas passam por ``gettext`` no idioma ativo.
     """
 
-    if isinstance(exc, DomainError):
-        from django.utils.translation import gettext as _
+    from django.utils.translation import gettext as _
 
+    if isinstance(exc, DomainError):
         exc = PdlAPIException(
             _(str(exc.message)),
             error_code=exc.error_code,
@@ -58,13 +59,32 @@ def custom_exception_handler(exc: Exception, context: dict[str, Any]) -> Respons
         data = {**data, "details": details}
 
     request = context.get("request") if isinstance(context, dict) else None
-    response.data = build_error_payload(
+    payload = build_error_payload(
         data,
         status_code=response.status_code,
         request_id=getattr(request, "request_id", None),
         error_code=specific_code,
     )
+    response.data = _translate_error_payload(payload)
     return response
+
+
+def _translate_error_payload(payload: Mapping[str, Any]) -> dict[str, Any]:
+    """Traduz ``message`` e strings em ``details`` com o gettext ativo."""
+
+    from django.utils.translation import gettext as _
+
+    translated = dict(payload)
+    message = translated.get("message")
+    if isinstance(message, str) and message.strip():
+        translated["message"] = _(message)
+    details = translated.get("details")
+    if isinstance(details, Mapping):
+        translated["details"] = {
+            key: _(value) if isinstance(value, str) else value
+            for key, value in details.items()
+        }
+    return translated
 
 
 def _first_scalar_code(value: Any) -> str | None:
@@ -102,7 +122,7 @@ class PdlAPIException(APIException):
     """
 
     status_code = 400
-    default_detail = "Não foi possível processar a solicitação."
+    default_detail = _("Não foi possível processar a solicitação.")
     default_code = "API_ERROR"
 
     def __init__(

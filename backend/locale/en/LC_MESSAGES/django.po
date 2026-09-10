@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 23:25-0300\n"
+"POT-Creation-Date: 2026-09-10 00:33-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: English\n"
@@ -155,7 +155,6 @@ msgid ""
 msgstr ""
 "Search available permissions and use the arrows to assign or remove them."
 
-#, fuzzy
 #| msgid "Apoiador"
 msgid "Jogador"
 msgstr "Supporter"
@@ -164,12 +163,11 @@ msgid "Apoiador"
 msgstr "Supporter"
 
 msgid "Moderador"
-msgstr ""
+msgstr "Moderator"
 
 msgid "Equipe"
-msgstr ""
+msgstr "Staff"
 
-#, fuzzy
 #| msgid "Superadministrador"
 msgid "Administrador"
 msgstr "Superuser"
@@ -193,7 +191,7 @@ msgid "Conquista do jogador"
 msgstr "Player achievement"
 
 msgid "Nível"
-msgstr ""
+msgstr "Level"
 
 msgid "Recompensa"
 msgstr "Reward"
@@ -201,19 +199,42 @@ msgstr "Reward"
 msgid "Recompensa resgatada"
 msgstr "Claimed reward"
 
+msgid "Resolva o CAPTCHA para criar sua conta."
+msgstr "Solve the CAPTCHA to create your account."
+
+msgid "Resolva o CAPTCHA para continuar."
+msgstr "Solve the CAPTCHA to continue."
+
+msgid "Validação CSRF necessária."
+msgstr "CSRF validation required."
+
+#| msgid "Refresh token inválido."
+msgid "Refresh token ausente."
+msgstr "Invalid refresh token."
+
+msgid "Refresh token inválido."
+msgstr "Invalid refresh token."
+
+#| msgid "Código 2FA inválido."
+msgid "Ação 2FA inválida."
+msgstr "Invalid 2FA code."
+
+#| msgid "Não foi possível validar esta chave de acesso."
+msgid "Não foi possível autenticar com esta chave."
+msgstr "Unable to validate this passkey."
+
 msgid "Leilão"
 msgstr "Auction"
 
 msgid "Aberto"
 msgstr "Open"
 
-#, fuzzy
 #| msgid "Atualizado em"
 msgid "Finalizado"
 msgstr "Updated at"
 
 msgid "Cancelado"
-msgstr ""
+msgstr "Cancelled"
 
 msgid "Leilões"
 msgstr "Auctions"
@@ -278,41 +299,36 @@ msgid "Notícias"
 msgstr "News"
 
 msgid "Primeiros passos"
-msgstr ""
+msgstr "Getting started"
 
 msgid "Conta e segurança"
 msgstr "Account and security"
 
-#, fuzzy
 #| msgid "Anúncios de personagem"
 msgid "Contas e personagens"
 msgstr "Character listings"
 
-#, fuzzy
 #| msgid "Item de inventário"
 msgid "Carteira e inventário"
 msgstr "Inventory item"
 
 msgid "Loja e comércio"
-msgstr ""
+msgstr "Shop and trade"
 
-#, fuzzy
 #| msgid "Recompensa"
 msgid "Jogos e recompensas"
 msgstr "Reward"
 
 msgid "Conteúdo e comunidade"
-msgstr ""
+msgstr "Content and community"
 
-#, fuzzy
 #| msgid "Atendimento"
 msgid "Ajuda e atendimento"
 msgstr "Support"
 
 msgid "Todos os usuários"
-msgstr ""
+msgstr "All users"
 
-#, fuzzy
 #| msgid "Superadministrador"
 msgid "Superadministradores"
 msgstr "Superuser"
@@ -386,30 +402,28 @@ msgstr "Denkynho profile"
 msgid "Perfis do Denkynho"
 msgstr "Denkynho profiles"
 
-#, fuzzy
 #| msgid "Atendimento"
 msgid "Alimentar"
 msgstr "Support"
 
 msgid "Dormir"
-msgstr ""
+msgstr "Sleep"
 
 msgid "Brincar"
-msgstr ""
+msgstr "Play"
 
-#, fuzzy
 #| msgid "Carrinho"
 msgid "Dar carinho"
 msgstr "Cart"
 
 msgid "Dar banho"
-msgstr ""
+msgstr "Bathe"
 
 msgid "Caminhar"
-msgstr ""
+msgstr "Walk"
 
 msgid "Dançar juntos"
-msgstr ""
+msgstr "Dance together"
 
 msgid "Cuidado do Denkynho"
 msgstr "Denkynho care action"
@@ -434,6 +448,9 @@ msgstr "Event"
 
 msgid "Calendário"
 msgstr "Calendar"
+
+msgid "Use um nome de até 30 letras, sem termos ofensivos."
+msgstr "Use a name of up to 30 letters, without offensive terms."
 
 msgid "Jogos"
 msgstr "Games"
@@ -529,111 +546,99 @@ msgid "Resgate do passe"
 msgstr "Pass claim"
 
 msgid "Diária"
-msgstr ""
+msgstr "Daily"
 
 msgid "Semanal"
-msgstr ""
+msgstr "Weekly"
 
-#, fuzzy
 #| msgid "Temporada do passe"
 msgid "Temporada"
 msgstr "Pass season"
 
-#, fuzzy
 #| msgid "Progresso do passe"
 msgid "Missão do passe"
 msgstr "Pass progress"
 
-#, fuzzy
 #| msgid "Nível do passe"
 msgid "Missões do passe"
 msgstr "Pass level"
 
-#, fuzzy
 #| msgid "Resgate do passe"
 msgid "Resgate de missão do passe"
 msgstr "Pass claim"
 
-#, fuzzy
 #| msgid "Resgate do passe"
 msgid "Resgates de missão do passe"
 msgstr "Pass claim"
 
-#, fuzzy
 #| msgid "Temporada do passe"
 msgid "Troca do passe"
 msgstr "Pass season"
 
-#, fuzzy
 #| msgid "Temporada do passe"
 msgid "Trocas do passe"
 msgstr "Pass season"
 
-#, fuzzy
 #| msgid "Progresso do passe"
 msgid "Marco do passe"
 msgstr "Pass progress"
 
-#, fuzzy
 #| msgid "Progresso do passe"
 msgid "Marcos do passe"
 msgstr "Pass progress"
 
 msgid "Log de recompensa de jogo"
-msgstr ""
+msgstr "Game reward log"
 
 msgid "Logs de recompensa de jogo"
-msgstr ""
+msgstr "Game reward logs"
 
-#, fuzzy
 #| msgid "Resgate de bônus diário"
 msgid "Temporada de bônus diário"
 msgstr "Daily bonus claim"
 
-#, fuzzy
 #| msgid "Resgate de bônus diário"
 msgid "Temporadas de bônus diário"
 msgstr "Daily bonus claim"
 
-#, fuzzy
 #| msgid "Resgate de bônus diário"
 msgid "Dia de bônus diário"
 msgstr "Daily bonus claim"
 
-#, fuzzy
 #| msgid "Resgate de bônus diário"
 msgid "Dias de bônus diário"
 msgstr "Daily bonus claim"
 
-#, fuzzy
 #| msgid "Entrada do roadmap"
 msgid "Entrada do pool de bônus"
 msgstr "Roadmap entry"
 
-#, fuzzy
 #| msgid "Entradas do roadmap"
 msgid "Entradas do pool de bônus"
 msgstr "Roadmap entries"
 
-#, fuzzy
 #| msgid "Vara de pesca"
 msgid "Isca de pesca"
 msgstr "Fishing rod"
 
-#, fuzzy
 #| msgid "Vara de pesca"
 msgid "Iscas de pesca"
 msgstr "Fishing rod"
 
-#, fuzzy
 #| msgid "Conquista do jogador"
 msgid "Isca do jogador"
 msgstr "Player achievement"
 
-#, fuzzy
 #| msgid "Conquista do jogador"
 msgid "Iscas do jogador"
 msgstr "Player achievement"
+
+msgid "Selecione uma recompensa."
+msgstr "Select a reward."
+
+#| msgid "Configuração de moeda"
+msgid "Configuração desconhecida."
+msgstr "Currency setting"
 
 msgid "Inventário"
 msgstr "Inventory"
@@ -663,13 +668,13 @@ msgid "Marketplace"
 msgstr "Marketplace"
 
 msgid "À venda"
-msgstr ""
+msgstr "For sale"
 
 msgid "Vendido"
-msgstr ""
+msgstr "Sold"
 
 msgid "Em disputa"
-msgstr ""
+msgstr "In dispute"
 
 msgid "Anúncio de personagem"
 msgstr "Character listing"
@@ -681,22 +686,22 @@ msgid "Pagamento"
 msgstr "Payment"
 
 msgid "Pendente"
-msgstr ""
+msgstr "Pending"
 
 msgid "Processando"
-msgstr ""
+msgstr "Processing"
 
 msgid "Confirmado"
-msgstr ""
+msgstr "Confirmed"
 
 msgid "Falhou"
-msgstr ""
+msgstr "Failed"
 
 msgid "Real"
-msgstr ""
+msgstr "Brazilian real"
 
 msgid "Dólar"
-msgstr ""
+msgstr "US dollar"
 
 msgid "Pedido de pagamento"
 msgstr "Payment order"
@@ -709,6 +714,10 @@ msgstr "Webhook log"
 
 msgid "Logs de webhook"
 msgstr "Webhook logs"
+
+#| msgid "Valor inválido."
+msgid "Assinatura inválida."
+msgstr "Invalid amount."
 
 msgid "Programas e recursos"
 msgstr "Programs and features"
@@ -749,6 +758,12 @@ msgstr "System feature"
 msgid "Recursos do sistema"
 msgstr "System features"
 
+msgid "A imagem deve ter no máximo 5 MB."
+msgstr "The image must be at most 5 MB."
+
+msgid "A descrição é obrigatória."
+msgstr "Description is required."
+
 msgid "Identidade"
 msgstr "Identity"
 
@@ -779,131 +794,119 @@ msgid "Servidor Lineage"
 msgstr "Lineage server"
 
 msgid "Os metadados devem ser um objeto JSON."
-msgstr ""
+msgstr "Metadata must be a JSON object."
 
-#, fuzzy
 #| msgid "Valor inválido."
 msgid "Metadados JSON inválidos."
 msgstr "Invalid amount."
 
 msgid "Metadados limitados a 16 KB."
-msgstr ""
+msgstr "Metadata limited to 16 KB."
 
 msgid "ID no jogo"
-msgstr ""
+msgstr "In-game ID"
 
 msgid "Nome"
-msgstr ""
+msgstr "Name"
 
 msgid "Imagem"
-msgstr ""
+msgstr "Image"
 
 msgid "Tipo"
-msgstr ""
+msgstr "Type"
 
 msgid "Grau"
-msgstr ""
+msgstr "Grade"
 
 msgid "Negociável"
-msgstr ""
+msgstr "Tradable"
 
-#, fuzzy
 #| msgid "Metadados"
 msgid "Metadados públicos"
 msgstr "Metadata"
 
 msgid "Ativo"
-msgstr ""
+msgstr "Active"
 
-#, fuzzy
 #| msgid "Item bloqueado"
 msgid "Item customizado"
 msgstr "Locked item"
 
-#, fuzzy
 #| msgid "Itens bloqueados"
 msgid "Itens customizados"
 msgstr "Locked items"
 
 msgid "Informe uma lista de até 2000 IDs positivos, sem repetições."
-msgstr ""
+msgstr "Provide a list of up to 2000 positive IDs, without duplicates."
 
-#, fuzzy
 #| msgid "Inscrição push"
 msgid "Descrição"
 msgstr "Push subscription"
 
 msgid "IDs dos itens"
-msgstr ""
+msgstr "Item IDs"
 
 msgid ""
 "Exemplo: [57, 4037]. Em sobreposições, vale a primeira categoria na ordem."
 msgstr ""
 
 msgid "Ordem"
-msgstr ""
+msgstr "Order"
 
-#, fuzzy
 #| msgid "Preço de serviço"
 msgid "Categoria de observação"
 msgstr "Service price"
 
-#, fuzzy
 #| msgid "Preços de serviço"
 msgid "Categorias de observação"
 msgstr "Service prices"
 
 msgid "Data"
-msgstr ""
+msgstr "Date"
 
 msgid "Origem L2"
-msgstr ""
+msgstr "L2 origin"
 
-#, fuzzy
 #| msgid "Criado em"
 msgid "Criado por"
 msgstr "Created at"
 
 msgid "Personagens"
-msgstr ""
+msgstr "Characters"
 
 msgid "Stacks L2"
-msgstr ""
+msgstr "L2 stacks"
 
-#, fuzzy
 #| msgid "Identidade"
 msgid "Quantidade L2"
 msgstr "Identity"
 
 msgid "Quantidade no painel"
-msgstr ""
+msgstr "Panel quantity"
 
 msgid "Notas"
-msgstr ""
+msgstr "Notes"
 
 msgid "Snapshot de itens"
-msgstr ""
+msgstr "Item snapshot"
 
 msgid "Snapshots de itens"
-msgstr ""
+msgstr "Item snapshots"
 
 msgid "Pode capturar snapshot dos itens L2"
-msgstr ""
+msgstr "Can capture L2 item snapshot"
 
 msgid "Detalhe de observação"
-msgstr ""
+msgstr "Observation detail"
 
-#, fuzzy
 #| msgid "Preços de serviço"
 msgid "Detalhes de observação"
 msgstr "Service prices"
 
-#, fuzzy
 #| msgid "Preço de serviço"
 msgid "Favorito de observação"
 msgstr "Service price"
 
-#, fuzzy
 #| msgid "Preços de serviço"
 msgid "Favoritos de observação"
 msgstr "Service prices"
@@ -933,17 +936,18 @@ msgid "Configurações do painel"
 msgstr "Panel settings"
 
 msgid "Estornado"
-msgstr ""
+msgstr "Refunded"
 
-#, fuzzy
 #| msgid "Preço de serviço"
 msgid "Operação de serviço"
 msgstr "Service price"
 
-#, fuzzy
 #| msgid "Preços de serviço"
 msgid "Operações de serviço"
 msgstr "Service prices"
+
+msgid "Use 3 a 16 letras ou números, sem espaços."
+msgstr "Use 3 to 16 letters or numbers, without spaces."
 
 msgid "Loja"
 msgstr "Shop"
@@ -996,6 +1000,12 @@ msgstr "Promo code"
 msgid "Códigos promocionais"
 msgstr "Promo codes"
 
+msgid "Inclua pelo menos um item."
+msgstr "Include at least one item."
+
+msgid "A data final deve ser posterior à inicial."
+msgstr "The end date must be after the start date."
+
 msgid "Staff"
 msgstr "Staff"
 
@@ -1004,6 +1014,41 @@ msgstr "Audit log"
 
 msgid "Logs de auditoria"
 msgstr "Audit logs"
+
+#| msgid "O preço deve ser maior que zero."
+msgid "O máximo deve ser maior ou igual ao mínimo."
+msgstr "The price must be greater than zero."
+
+msgid "A data final deve ser igual ou posterior à inicial."
+msgstr "The end date must be on or after the start date."
+
+msgid "A imagem deve ter no máximo 2 MB."
+msgstr "The image must be at most 2 MB."
+
+msgid "Use PNG, JPEG ou WebP estático."
+msgstr "Use PNG, JPEG or static WebP."
+
+msgid "Dimensões máximas: 1024 × 1024 pixels."
+msgstr "Maximum dimensions: 1024 × 1024 pixels."
+
+#| msgid "Lance inválido."
+msgid "Imagem inválida."
+msgstr "Invalid bid."
+
+#| msgid "Você não tem permissão para realizar esta ação."
+msgid "Você não tem permissão para esta ação."
+msgstr "You do not have permission to perform this action."
+
+msgid "Imagem obrigatória."
+msgstr "Image required."
+
+msgid ""
+"Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."
+msgstr ""
+
+#| msgid "Refresh token inválido."
+msgid "ID de item inválido."
+msgstr "Invalid refresh token."
 
 msgid "Atendimento"
 msgstr "Support"
@@ -1074,6 +1119,9 @@ msgstr "Themes"
 msgid "Tema"
 msgstr "Theme"
 
+msgid "Envie um arquivo .zip."
+msgstr "Upload a .zip file."
+
 msgid "Carteira"
 msgstr "Wallet"
 
@@ -1113,8 +1161,14 @@ msgstr "Coin package"
 msgid "Pacotes de moedas"
 msgstr "Coin packages"
 
+msgid "Conecte o banco do jogo para transferir moedas."
+msgstr "Connect the game database to transfer coins."
+
 msgid "Common"
 msgstr "Common"
+
+msgid "Não foi possível processar a solicitação."
+msgstr "Unable to process the request."
 
 msgid "nome@exemplo.com"
 msgstr "name@example.com"
@@ -1137,9 +1191,6 @@ msgstr "{\"key\": \"value\"}"
 #, python-format
 msgid "Informe %(label)s"
 msgstr "Enter %(label)s"
-
-msgid "Não foi possível processar a solicitação."
-msgstr "Unable to process the request."
 
 msgid "O recurso solicitado não foi encontrado."
 msgstr "The requested resource was not found."
@@ -1176,9 +1227,6 @@ msgstr "Invalid 2FA code."
 
 msgid "Sessão não encontrada."
 msgstr "Session not found."
-
-msgid "Refresh token inválido."
-msgstr "Invalid refresh token."
 
 msgid "Não foi possível validar esta chave de acesso."
 msgstr "Unable to validate this passkey."
@@ -1305,6 +1353,46 @@ msgstr "Ticket not found."
 
 msgid "Esta ação não está disponível para o chamado."
 msgstr "This action is not available for the ticket."
+
+#| msgid "Autenticação em dois fatores"
+msgid "Autenticação necessária."
+msgstr "Two-factor authentication"
+
+msgid "Método não permitido."
+msgstr "Method not allowed."
+
+msgid "O conteúdo enviado excede o tamanho permitido."
+msgstr "The uploaded content exceeds the allowed size."
+
+#| msgid "Cadastro de apoiador não encontrado."
+msgid "Formato de conteúdo não suportado."
+msgstr "Supporter registration not found."
+
+msgid "Muitas tentativas. Aguarde um momento e tente novamente."
+msgstr "Too many attempts. Wait a moment and try again."
+
+msgid "Ocorreu um erro interno. Tente novamente em instantes."
+msgstr "An internal error occurred. Try again shortly."
+
+msgid "Um serviço necessário respondeu com erro."
+msgstr "A required service responded with an error."
+
+#| msgid "Método de pagamento indisponível."
+msgid "Serviço temporariamente indisponível."
+msgstr "Payment method unavailable."
+
+msgid "Um serviço necessário demorou demais para responder."
+msgstr "A required service took too long to respond."
+
+msgid "Use apenas letras e números, sem espaços ou símbolos."
+msgstr "Use only letters and numbers, without spaces or symbols."
+
+msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
+msgstr "Username must be between 3 and 16 characters."
+
+#| msgid "Usuário não encontrado."
+msgid "recurso não encontrado"
+msgstr "User not found."
 
 msgid "Identificador público. Sempre UUID v4."
 msgstr "Public identifier. Always UUID v4."

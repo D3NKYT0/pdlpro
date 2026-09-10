@@ -1,6 +1,7 @@
 import secrets
 
 from django.middleware.csrf import get_token
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -147,7 +148,7 @@ class RegisterView(InjectedAPIView):
 
         if settings.HCAPTCHA_ENABLED and not verify_hcaptcha(data.get("hcaptcha_token", ""), request.META.get("REMOTE_ADDR", "")):
             return Response(
-                {"message": "Resolva o CAPTCHA para criar sua conta.", "details": {"captcha_required": True}},
+                {"message": _("Resolva o CAPTCHA para criar sua conta."), "details": {"captcha_required": True}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = self.resolve(RegisterUserUseCase).execute(
@@ -187,7 +188,7 @@ class LoginView(InjectedAPIView):
         needs_captcha = captcha_required(request, data["login"])
         if needs_captcha and not verify_hcaptcha(data.get("hcaptcha_token", ""), request.META.get("REMOTE_ADDR", "")):
             return Response(
-                {"message": "Resolva o CAPTCHA para continuar.", "details": {"captcha_required": True}},
+                {"message": _("Resolva o CAPTCHA para continuar."), "details": {"captcha_required": True}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
@@ -356,17 +357,17 @@ class RefreshView(InjectedAPIView):
     def post(self, request):
         raw = request.data.get("refresh") or request.COOKIES.get(get_refresh_cookie_name())
         if not request.data.get("refresh") and raw and csrf_failed_reason(request):
-            return Response({"message": "Validação CSRF necessária."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({"message": _("Validação CSRF necessária.")}, status=status.HTTP_403_FORBIDDEN)
         if not raw:
             return Response(
-                {"error_code": "AUTHENTICATION_REQUIRED", "message": "Refresh token ausente."},
+                {"error_code": "AUTHENTICATION_REQUIRED", "message": _("Refresh token ausente.")},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         try:
             refresh = self.resolve(RotateRefreshUseCase).execute(RotateRefreshInput(raw=raw))
         except SessionAuthenticationError:
             return Response(
-                {"error_code": "AUTHENTICATION_FAILED", "message": "Refresh token inválido."},
+                {"error_code": "AUTHENTICATION_FAILED", "message": _("Refresh token inválido.")},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         response = Response({"ok": True})
@@ -557,7 +558,7 @@ class TwoFactorView(InjectedAPIView):
             )
         from common.architecture.exceptions import ValidationDomainError
 
-        raise ValidationDomainError("Ação 2FA inválida.")
+        raise ValidationDomainError(_("Ação 2FA inválida."))
 
 
 class GamerProfileView(ItemCatalogAPIView):

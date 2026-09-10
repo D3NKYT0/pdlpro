@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
@@ -50,7 +51,7 @@ class PackageSerializer(serializers.Serializer):
 
     def validate_items(self, items):
         if items is not None and not items:
-            raise serializers.ValidationError("Inclua pelo menos um item.")
+            raise serializers.ValidationError(_("Inclua pelo menos um item."))
         return items
 
 
@@ -78,7 +79,7 @@ class PromoSerializer(serializers.Serializer):
             end = data.get("ends_at", self.instance.get("ends_at"))
         if start and end and start >= end:
             raise serializers.ValidationError(
-                "A data final deve ser posterior à inicial."
+                _("A data final deve ser posterior à inicial.")
             )
         return data
 
@@ -215,7 +216,7 @@ class StaffCommerceView(InjectedAPIView):
             data = serializer.validated_data
             items = data.get("items")
             if not items:
-                raise serializers.ValidationError({"items": "Inclua pelo menos um item."})
+                raise serializers.ValidationError({"items": _("Inclua pelo menos um item.")})
             pack = self.resolve(CreateStaffPackageUseCase).execute(
                 CreateStaffPackageInput(
                     name=data["name"],

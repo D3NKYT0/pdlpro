@@ -60,5 +60,7 @@ class UUIDLookupMixin(_ViewBase):
         except (ValueError, AttributeError):
             from rest_framework.exceptions import ValidationError
 
-            raise ValidationError({"detail": "recurso não encontrado"}, code="not_found")
+            from django.utils.translation import gettext as _
+
+            raise ValidationError({"detail": _("recurso não encontrado")}, code="not_found")
         return super().get_object()

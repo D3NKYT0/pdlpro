@@ -1,4 +1,5 @@
 from django.utils.cache import patch_cache_control
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers, status
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
@@ -26,7 +27,7 @@ class ThemeUploadSerializer(serializers.Serializer):
 
     def validate_package(self, value):
         if not value.name.lower().endswith(".zip"):
-            raise serializers.ValidationError("Envie um arquivo .zip.")
+            raise serializers.ValidationError(_("Envie um arquivo .zip."))
         return value
 
 

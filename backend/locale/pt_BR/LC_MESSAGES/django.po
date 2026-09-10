@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 23:25-0300\n"
+"POT-Creation-Date: 2026-09-10 00:33-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: Portuguese\n"
@@ -184,6 +184,27 @@ msgid "Recompensa"
 msgstr ""
 
 msgid "Recompensa resgatada"
+msgstr ""
+
+msgid "Resolva o CAPTCHA para criar sua conta."
+msgstr ""
+
+msgid "Resolva o CAPTCHA para continuar."
+msgstr ""
+
+msgid "Validação CSRF necessária."
+msgstr ""
+
+msgid "Refresh token ausente."
+msgstr ""
+
+msgid "Refresh token inválido."
+msgstr ""
+
+msgid "Ação 2FA inválida."
+msgstr ""
+
+msgid "Não foi possível autenticar com esta chave."
 msgstr ""
 
 msgid "Leilão"
@@ -394,6 +415,9 @@ msgstr ""
 msgid "Calendário"
 msgstr ""
 
+msgid "Use um nome de até 30 letras, sem termos ofensivos."
+msgstr ""
+
 msgid "Jogos"
 msgstr ""
 
@@ -556,6 +580,12 @@ msgstr ""
 msgid "Iscas do jogador"
 msgstr ""
 
+msgid "Selecione uma recompensa."
+msgstr ""
+
+msgid "Configuração desconhecida."
+msgstr ""
+
 msgid "Inventário"
 msgstr ""
 
@@ -631,6 +661,9 @@ msgstr ""
 msgid "Logs de webhook"
 msgstr ""
 
+msgid "Assinatura inválida."
+msgstr ""
+
 msgid "Programas e recursos"
 msgstr ""
 
@@ -668,6 +701,12 @@ msgid "Recurso do sistema"
 msgstr ""
 
 msgid "Recursos do sistema"
+msgstr ""
+
+msgid "A imagem deve ter no máximo 5 MB."
+msgstr ""
+
+msgid "A descrição é obrigatória."
 msgstr ""
 
 msgid "Identidade"
@@ -833,6 +872,9 @@ msgstr ""
 msgid "Operações de serviço"
 msgstr ""
 
+msgid "Use 3 a 16 letras ou números, sem espaços."
+msgstr ""
+
 msgid "Loja"
 msgstr ""
 
@@ -884,6 +926,12 @@ msgstr ""
 msgid "Códigos promocionais"
 msgstr ""
 
+msgid "Inclua pelo menos um item."
+msgstr ""
+
+msgid "A data final deve ser posterior à inicial."
+msgstr ""
+
 msgid "Staff"
 msgstr ""
 
@@ -891,6 +939,37 @@ msgid "Log de auditoria"
 msgstr ""
 
 msgid "Logs de auditoria"
+msgstr ""
+
+msgid "O máximo deve ser maior ou igual ao mínimo."
+msgstr ""
+
+msgid "A data final deve ser igual ou posterior à inicial."
+msgstr ""
+
+msgid "A imagem deve ter no máximo 2 MB."
+msgstr ""
+
+msgid "Use PNG, JPEG ou WebP estático."
+msgstr ""
+
+msgid "Dimensões máximas: 1024 × 1024 pixels."
+msgstr ""
+
+msgid "Imagem inválida."
+msgstr ""
+
+msgid "Você não tem permissão para esta ação."
+msgstr ""
+
+msgid "Imagem obrigatória."
+msgstr ""
+
+msgid ""
+"Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."
+msgstr ""
+
+msgid "ID de item inválido."
 msgstr ""
 
 msgid "Atendimento"
@@ -962,6 +1041,9 @@ msgstr ""
 msgid "Tema"
 msgstr ""
 
+msgid "Envie um arquivo .zip."
+msgstr ""
+
 msgid "Carteira"
 msgstr ""
 
@@ -1001,7 +1083,13 @@ msgstr ""
 msgid "Pacotes de moedas"
 msgstr ""
 
+msgid "Conecte o banco do jogo para transferir moedas."
+msgstr ""
+
 msgid "Common"
+msgstr ""
+
+msgid "Não foi possível processar a solicitação."
 msgstr ""
 
 msgid "nome@exemplo.com"
@@ -1024,9 +1112,6 @@ msgstr ""
 
 #, python-format
 msgid "Informe %(label)s"
-msgstr ""
-
-msgid "Não foi possível processar a solicitação."
 msgstr ""
 
 msgid "O recurso solicitado não foi encontrado."
@@ -1062,9 +1147,6 @@ msgid "Código 2FA inválido."
 msgstr ""
 
 msgid "Sessão não encontrada."
-msgstr ""
-
-msgid "Refresh token inválido."
 msgstr ""
 
 msgid "Não foi possível validar esta chave de acesso."
@@ -1191,6 +1273,42 @@ msgid "Chamado não encontrado."
 msgstr ""
 
 msgid "Esta ação não está disponível para o chamado."
+msgstr ""
+
+msgid "Autenticação necessária."
+msgstr ""
+
+msgid "Método não permitido."
+msgstr ""
+
+msgid "O conteúdo enviado excede o tamanho permitido."
+msgstr ""
+
+msgid "Formato de conteúdo não suportado."
+msgstr ""
+
+msgid "Muitas tentativas. Aguarde um momento e tente novamente."
+msgstr ""
+
+msgid "Ocorreu um erro interno. Tente novamente em instantes."
+msgstr ""
+
+msgid "Um serviço necessário respondeu com erro."
+msgstr ""
+
+msgid "Serviço temporariamente indisponível."
+msgstr ""
+
+msgid "Um serviço necessário demorou demais para responder."
+msgstr ""
+
+msgid "Use apenas letras e números, sem espaços ou símbolos."
+msgstr ""
+
+msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
+msgstr ""
+
+msgid "recurso não encontrado"
 msgstr ""
 
 msgid "Identificador público. Sempre UUID v4."

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 
@@ -123,7 +124,7 @@ class RegisterGameAccountSerializer(serializers.Serializer):
         if not login:
             return ""
         if not login.isalnum() or not (3 <= len(login) <= 16):
-            raise serializers.ValidationError("Use 3 a 16 letras ou números, sem espaços.")
+            raise serializers.ValidationError(_("Use 3 a 16 letras ou números, sem espaços."))
         return login
 
 

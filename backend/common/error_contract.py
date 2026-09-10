@@ -73,8 +73,12 @@ def status_error_code(status_code: int) -> str:
 def status_error_message(status_code: int) -> str:
     """Retorna uma mensagem pública padrão para o status HTTP informado."""
 
-    return STATUS_ERROR_MESSAGES.get(
-        status_code, "Não foi possível processar a solicitação."
+    from django.utils.translation import gettext as _
+
+    return _(
+        STATUS_ERROR_MESSAGES.get(
+            status_code, "Não foi possível processar a solicitação."
+        )
     )
 
 

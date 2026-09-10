@@ -1,5 +1,6 @@
 import logging
 
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -129,7 +130,7 @@ class CategorySerializer(serializers.Serializer):
             or len(set(value)) != len(value)
         ):
             raise serializers.ValidationError(
-                "Informe uma lista de até 2000 IDs positivos, sem repetições."
+                _("Informe uma lista de até 2000 IDs positivos, sem repetições.")
             )
         return value
 
@@ -168,7 +169,7 @@ class ObservationView(InjectedAPIView):
 
     def require(self, permission):
         if not self.request.user.has_perm(f"server.{permission}"):
-            raise PermissionDenied("Você não tem permissão para esta ação.")
+            raise PermissionDenied(_("Você não tem permissão para esta ação."))
 
     def safely(self, callback, unavailable_status=503):
         try:
@@ -180,7 +181,7 @@ class ObservationView(InjectedAPIView):
         except Exception as exc:
             logger.exception("Falha na observação de itens L2")
             raise DomainError(
-                "Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL.",
+                _("Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."),
                 error_code="ITEM_OBSERVATION_UNAVAILABLE",
                 status_code=503,
             ) from exc
@@ -264,7 +265,7 @@ class ObservationFavoriteView(ObservationView):
     )
     def put(self, request, item_id):
         if not 0 < item_id <= 2147483647:
-            raise serializers.ValidationError({"item_id": "ID de item inválido."})
+            raise serializers.ValidationError({"item_id": _("ID de item inválido.")})
         serializer = FavoriteInput(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(

@@ -2,6 +2,7 @@ import json
 from io import BytesIO
 
 from django.core.files.base import ContentFile
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from PIL import Image, ImageOps
 from rest_framework import serializers
@@ -51,27 +52,27 @@ class CustomItemSerializer(serializers.Serializer):
 
     def validate_metadata(self, value):
         if not isinstance(value, dict):
-            raise serializers.ValidationError("Os metadados devem ser um objeto JSON.")
+            raise serializers.ValidationError(_("Os metadados devem ser um objeto JSON."))
         try:
             size = len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode("utf-8"))
         except (TypeError, ValueError, RecursionError) as exc:
-            raise serializers.ValidationError("Metadados JSON inválidos.") from exc
+            raise serializers.ValidationError(_("Metadados JSON inválidos.")) from exc
         if size > 16384:
-            raise serializers.ValidationError("Metadados limitados a 16 KB.")
+            raise serializers.ValidationError(_("Metadados limitados a 16 KB."))
         return value
 
     def validate_image(self, value):
         if value is None:
             return value
         if value.size > 2 * 1024 * 1024:
-            raise serializers.ValidationError("A imagem deve ter no máximo 2 MB.")
+            raise serializers.ValidationError(_("A imagem deve ter no máximo 2 MB."))
         try:
             value.seek(0)
             with Image.open(value) as img:
                 if img.format not in {"PNG", "JPEG", "WEBP"} or getattr(img, "is_animated", False):
-                    raise serializers.ValidationError("Use PNG, JPEG ou WebP estático.")
+                    raise serializers.ValidationError(_("Use PNG, JPEG ou WebP estático."))
                 if max(img.size) > 1024:
-                    raise serializers.ValidationError("Dimensões máximas: 1024 × 1024 pixels.")
+                    raise serializers.ValidationError(_("Dimensões máximas: 1024 × 1024 pixels."))
                 clean = ImageOps.exif_transpose(img).convert("RGBA")
                 sanitized = Image.new("RGBA", clean.size)
                 sanitized.paste(clean)
@@ -79,7 +80,7 @@ class CustomItemSerializer(serializers.Serializer):
                 sanitized.save(output, format="PNG")
             return ContentFile(output.getvalue(), name="icon.png")
         except (OSError, ValueError, Image.DecompressionBombError):
-            raise serializers.ValidationError("Imagem inválida.") from None
+            raise serializers.ValidationError(_("Imagem inválida.")) from None
 
 
 class CustomItemQuery(serializers.Serializer):
@@ -97,7 +98,7 @@ class CustomItemsView(InjectedAPIView):
 
     def require(self, request, action):
         if not request.user.has_perm(f"server.{action}_customcatalogitem"):
-            raise PermissionDenied("Você não tem permissão para esta ação.")
+            raise PermissionDenied(_("Você não tem permissão para esta ação."))
 
     @extend_schema(
         tags=["Staff - Itens customizados"],
@@ -139,7 +140,7 @@ class CustomItemsView(InjectedAPIView):
         serializer = CustomItemSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if "image" not in serializer.validated_data:
-            raise serializers.ValidationError({"image": "Imagem obrigatória."})
+            raise serializers.ValidationError({"image": _("Imagem obrigatória.")})
         row = self.resolve(UpsertCustomItemUseCase).execute(
             UpsertCustomItemInput(validated_data=serializer.validated_data)
         )

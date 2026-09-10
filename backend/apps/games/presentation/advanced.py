@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -45,7 +46,7 @@ class BattleActionSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data["action"] != "auto-claim" and not data.get("entry_id"):
-            raise serializers.ValidationError("Selecione uma recompensa.")
+            raise serializers.ValidationError(_("Selecione uma recompensa."))
         return data
 
 
@@ -202,7 +203,7 @@ _FIELD_TYPES = {
 
 def config_serializer(kind):
     if not known_content_kind(kind):
-        raise serializers.ValidationError("Configuração desconhecida.")
+        raise serializers.ValidationError(_("Configuração desconhecida."))
     fields = CONFIG_FIELDS[kind]
     attrs = {"id": serializers.UUIDField(read_only=True)}
     for field in fields:

@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -165,7 +166,7 @@ class PasskeyLoginCompleteView(InjectedAPIView):
             )
         except WebAuthnError:
             return Response(
-                {"message": "Não foi possível autenticar com esta chave."},
+                {"message": _("Não foi possível autenticar com esta chave.")},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         from apps.server.application.access import (

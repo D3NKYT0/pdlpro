@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -30,7 +31,7 @@ class MercadoPagoWebhookView(InjectedAPIView):
     def post(self, request):
         signatures = self.resolve(WebhookSignatureService)
         if not signatures.mercado_pago_valid(request):
-            return Response({"detail": "Assinatura inválida."}, status=400)
+            return Response({"detail": _("Assinatura inválida.")}, status=400)
         payload = request.data if isinstance(request.data, dict) else {}
         self.resolve(HandleMercadoPagoWebhookUseCase).execute(
             HandleMercadoPagoWebhookInput(
@@ -62,6 +63,6 @@ class StripeWebhookView(InjectedAPIView):
             request.body, request.META.get("HTTP_STRIPE_SIGNATURE", "")
         )
         if event is None:
-            return Response({"detail": "Assinatura inválida."}, status=400)
+            return Response({"detail": _("Assinatura inválida.")}, status=400)
         self.resolve(HandleStripeWebhookUseCase).execute(HandleStripeWebhookInput(event=event))
         return Response({"ok": True})

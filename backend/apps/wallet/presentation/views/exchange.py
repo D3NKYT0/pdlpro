@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
@@ -65,7 +66,7 @@ class GameExchangeView(InjectedAPIView):
         serializer.is_valid(raise_exception=True)
         if not settings.LINEAGE_DB_ENABLED and not getattr(settings, "TESTING", False):
             raise serializers.ValidationError(
-                "Conecte o banco do jogo para transferir moedas."
+                _("Conecte o banco do jogo para transferir moedas.")
             )
         return Response(
             self.resolve(ExchangeCoinsUseCase).execute(
