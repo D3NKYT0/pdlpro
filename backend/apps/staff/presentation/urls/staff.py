@@ -23,12 +23,6 @@ from apps.staff.presentation.views.financial_reports import (
     PaymentReportView,
     ReconciliationReportView,
 )
-from apps.staff.presentation.views.operational_reports import (
-    AuctionsOperationalReportView,
-    InventoryOperationalReportView,
-    MarketplaceOperationalReportView,
-    PurchasesOperationalReportView,
-)
 from apps.staff.presentation.views.item_observation import (
     ObservationAccessView,
     ObservationCategoriesView,
@@ -38,6 +32,12 @@ from apps.staff.presentation.views.item_observation import (
     ObservationLiveView,
     ObservationSnapshotsView,
     ObservationSnapshotView,
+)
+from apps.staff.presentation.views.operational_reports import (
+    AuctionsOperationalReportView,
+    InventoryOperationalReportView,
+    MarketplaceOperationalReportView,
+    PurchasesOperationalReportView,
 )
 from apps.themes.presentation.urls import staff_urlpatterns
 

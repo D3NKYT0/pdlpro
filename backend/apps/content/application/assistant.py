@@ -86,7 +86,7 @@ BLOCKED = {
     "es": {
         "cabron", "cabrones", "cojones", "coño", "culero", "gilipollas", "hijoputa",
         "idiota", "imbecil", "joder", "jolines", "mamada", "maricón", "maricon", "mierda",
-        "ojete", "pendejo", "pendeja", "polla", "puta", "puto", "putas", "puto", "verga",
+        "ojete", "pendejo", "pendeja", "polla", "puta", "puto", "putas", "verga",
         "zorra", "zoofilia", "estupro", "violacion", "violador", "pedofilo", "pedofilia",
         "porno", "pornografia", "nazi", "nazis", "retrasado", "retrasada",
     },

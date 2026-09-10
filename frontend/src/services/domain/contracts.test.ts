@@ -102,7 +102,7 @@ const contracts: Contract[] = [
   ['content.careDenkynho', () => contentApi.careDenkynho('feed', 'b6e8f0b4-7f4c-4e8f-8ce2-604a7659198e'), '/shared/content/assistant/pet/', 'POST', { action: 'feed', idempotency_key: 'b6e8f0b4-7f4c-4e8f-8ce2-604a7659198e' }],
   ['content.downloads', () => contentApi.downloads(), '/public/downloads/'],
   ['content.wiki', () => contentApi.wiki(), '/public/wiki/'],
-  ['content.search', () => contentApi.wiki('a & b'), '/public/wiki/?q=a%20%26%20b'],
+  ['content.search', () => contentApi.wiki('a & b'), '/public/wiki/?q=a+%26+b'],
   ['content.page', () => contentApi.wikiPage('guide'), '/public/wiki/guide/'],
   ['content.calendar', () => contentApi.calendar(), '/public/calendar/'],
   ['content.legal', () => contentApi.legal(), '/public/legal/'],

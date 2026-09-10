@@ -120,6 +120,12 @@ JAZZMIN_ICONS_PDL = {
     "staff": "fas fa-user-shield",
     "staff.auditlog": "fas fa-clipboard-check",
 
+    # Programs (supporters, roadmap, feature flags).
+    "programs": "fas fa-project-diagram",
+    "programs.supporter": "fas fa-handshake",
+    "programs.roadmapentry": "fas fa-road",
+    "programs.systemresource": "fas fa-toggle-on",
+
     # Pacotes visuais instaláveis.
     "themes": "fas fa-palette",
     "themes.themepackage": "fas fa-palette",

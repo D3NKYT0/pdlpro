@@ -31,7 +31,8 @@ import esAdmin from './locales/es/admin.json'
 import esHelp from './locales/es/help.json'
 import esPersonality from './locales/es/personality.json'
 
-const initialLanguage: AppLanguage = readStoredLanguage() || detectBrowserLanguage()
+const initialLanguage: AppLanguage =
+  import.meta.env.MODE === 'test' ? 'pt' : readStoredLanguage() || detectBrowserLanguage()
 
 void i18n.use(initReactI18next).init({
   resources: {

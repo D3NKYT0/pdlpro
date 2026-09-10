@@ -245,8 +245,8 @@ class GetRoadmapInput:
 def localize_roadmap_entry(row: Any, language: str = "pt") -> dict:
     """Serializa uma entrada do roadmap com título/descrição no idioma pedido."""
 
-    from common.i18n import localized_text, resolve_language
     from apps.programs.serializers import RoadmapSerializer
+    from common.i18n import localized_text, resolve_language
 
     language = resolve_language(language)
     data = dict(RoadmapSerializer(row).data)

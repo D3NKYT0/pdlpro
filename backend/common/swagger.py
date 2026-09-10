@@ -191,6 +191,12 @@ pdl_swagger_tags: list[dict[str, str]] = [
         "description": "Relatórios de saldo, reconciliação, fluxo de caixa e pagamentos.",
     },
     {
+        "name": "Staff / Relatórios",
+        "description": (
+            "Relatórios operacionais de inventário, leilões, compras da loja e marketplace."
+        ),
+    },
+    {
         "name": "Staff - Itens customizados",
         "description": "CRUD administrativo do catálogo de itens customizados (metadados e ícones).",
     },
