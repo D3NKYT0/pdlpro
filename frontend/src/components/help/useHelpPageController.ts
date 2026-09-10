@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   contentApi,
@@ -36,15 +37,82 @@ import { copy, dialogueWithPreferences, idempotencyKey, MAX_CHAT_MESSAGE_LENGTH,
 
 type Message = HelpChatMessage
 
+function resolveHelpLanguage(value: string | undefined): HelpLanguage {
+  if (value === 'en' || value === 'es' || value === 'pt') return value
+  return 'pt'
+}
+
 /** Orquestra estado, efeitos e handlers da página de ajuda; o JSX fica em HelpPage. */
 export function useHelpPageController() {
+  const { t, i18n } = useTranslation('help')
   const { user } = useAuth()
   const location = useLocation()
   const queryClient = useQueryClient()
   const identity = helpIdentity(user)
+  const siteLanguage = resolveHelpLanguage(i18n.language)
   const [preferences, setPreferences] = useState<Preferences | null>(() => loadHelpPreferences(user?.id))
-  const [language, setLanguage] = useState<HelpLanguage>(() => loadHelpPreferences(user?.id)?.language ?? 'pt')
-  const labels = copy[language]
+  const [language, setLanguage] = useState<HelpLanguage>(siteLanguage)
+  const labels = useMemo(() => {
+    const fallback = copy[language === 'es' ? 'en' : language]
+    const page = (key: string, fallbackValue: string) => {
+      const full = `page.${key}`
+      const value = t(full)
+      return value === full ? fallbackValue : value
+    }
+    return {
+      title: page('title', fallback.title),
+      eyebrow: page('eyebrow', fallback.eyebrow),
+      description: page('description', fallback.description),
+      support: page('support', fallback.support),
+      companion: page('companion', fallback.companion),
+      ask: page('ask', fallback.ask),
+      searching: page('searching', fallback.searching),
+      talking: page('talking', fallback.talking),
+      idle: page('idle', fallback.idle),
+      caring: page('caring', fallback.caring),
+      animate: page('animate', fallback.animate),
+      reduced: page('reduced', fallback.reduced),
+      faq: page('faq', fallback.faq),
+      chat: page('chat', fallback.chat),
+      context: page('context', fallback.context),
+      fresh: page('fresh', fallback.fresh),
+      assistant: page('assistant', fallback.assistant),
+      chatLabel: page('chatLabel', fallback.chatLabel),
+      messages: page('messages', fallback.messages),
+      you: page('you', fallback.you),
+      full: page('full', fallback.full),
+      source: page('source', fallback.source),
+      related: page('related', fallback.related),
+      topic: page('topic', fallback.topic),
+      all: page('all', fallback.all),
+      loading: page('loading', fallback.loading),
+      empty: page('empty', fallback.empty),
+      consulting: page('consulting', fallback.consulting),
+      error: page('error', fallback.error),
+      petLoading: page('petLoading', fallback.petLoading),
+      petError: page('petError', fallback.petError),
+      pet: page('pet', fallback.pet),
+      level: page('level', fallback.level),
+      xp: page('xp', fallback.xp),
+      attributes: page('attributes', fallback.attributes),
+      satiety: page('satiety', fallback.satiety),
+      energy: page('energy', fallback.energy),
+      happiness: page('happiness', fallback.happiness),
+      hygiene: page('hygiene', fallback.hygiene),
+      emotion: page('emotion', fallback.emotion),
+      empathy: page('empathy', fallback.empathy),
+      needsMood: page('needsMood', fallback.needsMood),
+      reveal: page('reveal', fallback.reveal),
+      message: page('message', fallback.message),
+      placeholder: page('placeholder', fallback.placeholder),
+      hint: page('hint', fallback.hint),
+      thinking: page('thinking', fallback.thinking),
+      send: page('send', fallback.send),
+      invalid: page('invalid', fallback.invalid),
+      blocked: page('blocked', fallback.blocked),
+      language: page('language', fallback.language),
+    }
+  }, [language, t])
   const faq = useQuery({
     queryKey: ['help-faq', user?.id, language],
     queryFn: async () => helpArticles(await contentApi.authenticatedFaq(language)),
@@ -100,6 +168,9 @@ export function useHelpPageController() {
   const busy = action.pending || Boolean(revealing)
 
   function changeLanguage(next: HelpLanguage) {
+    if (resolveHelpLanguage(i18n.language) !== next) {
+      void i18n.changeLanguage(next)
+    }
     setLanguage(next)
     setContext('')
     setLimited(false)
@@ -120,6 +191,12 @@ export function useHelpPageController() {
   }
 
   useEffect(() => {
+    if (siteLanguage === language) return
+    changeLanguage(siteLanguage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only react to site language swings
+  }, [siteLanguage])
+
+  useEffect(() => {
     mounted.current = true
     return () => {
       mounted.current = false
@@ -135,8 +212,8 @@ export function useHelpPageController() {
   }, [pet.data?.emotion])
   useEffect(() => {
     const saved = loadHelpPreferences(user?.id)
-    const nextLanguage = saved?.language ?? 'pt'
-    setPreferences(saved)
+    const nextLanguage = siteLanguage
+    setPreferences(saved ? { ...saved, language: nextLanguage } : saved)
     setLanguage(nextLanguage)
     session.current++
     setContext('')
@@ -163,10 +240,10 @@ export function useHelpPageController() {
     setPreferences({
       preferred_name: stored.preferred_name || saved?.preferred_name || '',
       detail: stored.detail || saved?.detail || 'balanced',
-      language: saved?.language ?? language,
+      language: siteLanguage,
       remember: Boolean(saved?.remember || stored.preferred_name),
     })
-  }, [pet.data?.preferences, user?.id, language])
+  }, [pet.data?.preferences, user?.id, siteLanguage])
   useEffect(() => {
     if (!action.pending) {
       setThinkFor(0)

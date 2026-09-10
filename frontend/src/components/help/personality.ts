@@ -7,12 +7,25 @@ interface WelcomeIdentity { suggestedName?: string; roleLabel: string }
 
 export function denkynhoWelcome(date = new Date(), identity?: WelcomeIdentity, language: HelpLanguage = 'pt'): string {
   const hour = date.getHours()
-  if (language !== 'pt') {
+  if (language === 'es') {
+    const greeting = hour < 12 ? 'Buenos días' : hour < 18 ? 'Buenas tardes' : 'Buenas noches'
+    if (identity) {
+      const recognized = identity.suggestedName ? `, ${identity.suggestedName}` : ''
+      const role = identity.roleLabel === 'superadministrador' ? 'superadministrador' : identity.roleLabel === 'equipe' ? 'miembro del equipo' : identity.roleLabel
+      const preference = identity.suggestedName ? `¿Puedo llamarte ${identity.suggestedName} o prefieres otro nombre?` : '¿Cómo prefieres que te llame?'
+      return `${greeting}${recognized}! Reconocí tu sesión de ${role}. Soy Denkynho, tu compañero en el PDL. ${preference}`
+    }
+    return `${greeting}! Soy Denkynho, tu compañero en el PDL. Cuéntame tu duda o elige una pregunta abajo. ¡Encontremos el camino juntos!`
+  }
+  if (language === 'en') {
     const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
-    const recognized = identity?.suggestedName ? `, ${identity.suggestedName}` : ''
-    const role = identity?.roleLabel === 'superadministrador' ? 'superadministrator' : identity?.roleLabel === 'equipe' ? 'staff member' : 'player'
-    const preference = identity?.suggestedName ? `May I call you ${identity.suggestedName}, or do you prefer another name?` : 'What would you like me to call you?'
-    return `${greeting}${recognized}! I recognized your ${role} session. I'm Denkynho, your PDL companion. ${preference}`
+    if (identity) {
+      const recognized = identity.suggestedName ? `, ${identity.suggestedName}` : ''
+      const role = identity.roleLabel === 'superadministrador' ? 'superadministrator' : identity.roleLabel === 'equipe' ? 'staff member' : 'player'
+      const preference = identity.suggestedName ? `May I call you ${identity.suggestedName}, or do you prefer another name?` : 'What would you like me to call you?'
+      return `${greeting}${recognized}! I recognized your ${role} session. I'm Denkynho, your PDL companion. ${preference}`
+    }
+    return `${greeting}! I'm Denkynho, your PDL companion. Ask a question or pick one below — let's find the way together!`
   }
   const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite'
   if (identity) {

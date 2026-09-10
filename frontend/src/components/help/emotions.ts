@@ -29,6 +29,10 @@ const labels = {
     calm: 'Calm', joyful: 'Joyful', amused: 'Amused', sad: 'Sad', sleepy: 'Sleepy',
     surprised: 'Surprised', confused: 'Confused', frustrated: 'Frustrated',
   },
+  es: {
+    calm: 'Tranquilo', joyful: 'Alegre', amused: 'Divertido', sad: 'Triste', sleepy: 'Con sueño',
+    surprised: 'Sorprendido', confused: 'Confundido', frustrated: 'Frustrado',
+  },
 } as const
 
 const userStatus = {
@@ -51,6 +55,16 @@ const userStatus = {
     surprised: 'Surprised by what you shared.',
     confused: 'Trying to follow how you feel.',
     frustrated: 'Noticed your frustration.',
+  },
+  es: {
+    calm: 'Disfrutando de un momento tranquilo.',
+    joyful: '¡Celebrando contigo!',
+    amused: '¡Riendo junto a ti!',
+    sad: 'Está a tu lado en este momento.',
+    sleepy: 'Notó que estás cansado.',
+    surprised: 'Sorprendido por lo que contaste.',
+    confused: 'Intentando seguir lo que sientes.',
+    frustrated: 'Percibió tu frustración.',
   },
 } as const
 
@@ -75,6 +89,16 @@ const needsStatus = {
     confused: 'A little lost right now.',
     frustrated: 'Needs some care to feel better.',
   },
+  es: {
+    calm: 'Disfrutando de un momento tranquilo.',
+    joyful: 'Lleno de energía y alegría.',
+    amused: 'De buen humor.',
+    sad: 'Necesita un poco de cuidado.',
+    sleepy: 'Está con poca energía.',
+    surprised: 'Atento a lo que ocurre.',
+    confused: 'Un poco perdido ahora.',
+    frustrated: 'Necesita cariño para sentirse mejor.',
+  },
 } as const
 
 export const defaultDenkynhoEmotion: DenkynhoEmotion = {
@@ -86,13 +110,13 @@ export const defaultDenkynhoEmotion: DenkynhoEmotion = {
 
 /** Rótulo curto do humor atual, para o painel do mascote. */
 export function emotionLabel(id: DenkynhoEmotionId, language: HelpEmotionLanguage): string {
-  return labels[language === 'pt' ? 'pt' : 'en'][id]
+  return (labels[language] ?? labels.en)[id]
 }
 
 /** Frase de status: empatia com o usuário ou necessidade do próprio mascote. */
 export function emotionStatus(emotion: DenkynhoEmotion, language: HelpEmotionLanguage): string {
   const table = emotion.source === 'user' ? userStatus : needsStatus
-  return table[language === 'pt' ? 'pt' : 'en'][emotion.id]
+  return (table[language] ?? table.en)[emotion.id]
 }
 
 export function isDenkynhoEmotion(value: unknown): value is DenkynhoEmotion {

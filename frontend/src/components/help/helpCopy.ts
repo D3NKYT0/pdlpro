@@ -15,7 +15,9 @@ export const welcome = (identity: HelpIdentity, language: HelpLanguage, preferen
   text: preferences?.preferred_name
     ? language === 'pt'
       ? `Olá, ${preferences.preferred_name}! Sou o Denkynho. Vamos continuar sua jornada no PDL?`
-      : `Hi, ${preferences.preferred_name}! I'm Denkynho. Let's continue your PDL journey.`
+      : language === 'es'
+        ? `¡Hola, ${preferences.preferred_name}! Soy Denkynho. ¿Seguimos tu viaje en el PDL?`
+        : `Hi, ${preferences.preferred_name}! I'm Denkynho. Let's continue your PDL journey.`
     : denkynhoWelcome(new Date(), identity, language),
   pose: '01-boas-vindas',
 })
