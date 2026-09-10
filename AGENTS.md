@@ -3,7 +3,8 @@
 ## Arquitetura (obrigatória)
 
 O detalhe vive em [Visão geral](docs/arquitetura/visao-geral.md), [Apps](docs/arquitetura/apps.md),
-[Frontend](docs/desenvolvimento/frontend.md) e [Temas](docs/funcionalidades/temas.md).
+[Frontend](docs/desenvolvimento/frontend.md), [Temas](docs/funcionalidades/temas.md) e
+[Internacionalização](docs/desenvolvimento/i18n.md).
 Registros da migração: [backend PDF](docs/arquitetura/migracao-clean-architecture-di.pdf),
 [frontend PDF](docs/arquitetura/migracao-frontend-camadas.pdf).
 
@@ -35,6 +36,21 @@ lib/ = helpers puros (sem HTTP)
 - Páginas finas: orquestração + Query; UI em `components/<feature>/`; hooks de feature quando o estado cresce.
 - Invalidação TanStack sempre com `queryKey` escopada (`useProgramAction` exige a lista).
 - Sem container DI no React: `AppProviders` + objetos `*Api`. Regra de negócio permanece no backend.
+
+### Internacionalização (obrigatória na SPA)
+
+Detalhe em [Internacionalização](docs/desenvolvimento/i18n.md). Idiomas: `pt`, `en`, `es`.
+
+- Toda UI nova ou alterada (público, auth, painel, admin, help, chrome de tema) entra no
+  i18n no mesmo conjunto de alterações: chave nos três JSON em
+  `frontend/src/i18n/locales/{pt,en,es}/` e `useTranslation('namespace')` na tela.
+- Não deixe literais de interface hardcoded; não use mapas inline `pt`/`en`/`es` no
+  componente quando o namespace já existe.
+- Conteúdo CMS (notícias, wiki, FAQ, legais, roadmap) passa `?lang=` / `contentLang`
+  conforme o idioma ativo; datas e números usam os formatadores do projeto (sem
+  `pt-BR` fixo).
+- Namespaces: `common`, `public`, `auth`, `panel`, `admin`, `help` (e `personality`
+  quando aplicável).
 
 ### Temas (público + painel)
 
