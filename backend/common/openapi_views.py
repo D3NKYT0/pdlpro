@@ -31,8 +31,9 @@ class PublicOrStaffDocsPermission(BasePermission):
 
 
 def docs_chrome_context(request=None):
-    from common.i18n import from_django_language
     from django.utils import translation
+
+    from common.i18n import from_django_language
 
     language = None
     if request is not None:
