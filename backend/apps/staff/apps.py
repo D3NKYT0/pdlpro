@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class StaffConfig(AppConfig):
@@ -11,7 +12,7 @@ class StaffConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.staff"
     label = "staff"
-    verbose_name = "Staff"
+    verbose_name=_("Staff")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

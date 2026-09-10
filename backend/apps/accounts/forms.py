@@ -1,5 +1,6 @@
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.infrastructure.models import User
 from common.forms import PDLAdminFormMixin
@@ -13,30 +14,30 @@ class PDLUserLabelsMixin:
     """
 
     field_labels = {
-        "username": "Usuário",
-        "password": "Senha",
-        "password1": "Senha",
-        "password2": "Confirmação da senha",
-        "email": "E-mail",
-        "display_name": "Nome de exibição",
-        "bio": "Biografia",
-        "avatar": "Avatar",
-        "role": "Função",
-        "is_active": "Conta ativa",
-        "is_staff": "Acesso administrativo",
-        "is_superuser": "Superadministrador",
-        "groups": "Grupos",
-        "user_permissions": "Permissões específicas",
-        "is_email_verified": "E-mail verificado",
-        "is_2fa_enabled": "Autenticação em dois fatores",
-        "totp_secret": "Segredo TOTP",
-        "last_login": "Último acesso",
-        "fichas": "Fichas",
-        "terms_accepted_at": "Aceite dos termos",
-        "terms_and_privacy_version": "Versão dos termos e privacidade",
-        "id": "Identificador",
-        "created_at": "Criado em",
-        "updated_at": "Atualizado em",
+        "username": _("Usuário"),
+        "password": _("Senha"),
+        "password1": _("Senha"),
+        "password2": _("Confirmação da senha"),
+        "email": _("E-mail"),
+        "display_name": _("Nome de exibição"),
+        "bio": _("Biografia"),
+        "avatar": _("Avatar"),
+        "role": _("Função"),
+        "is_active": _("Conta ativa"),
+        "is_staff": _("Acesso administrativo"),
+        "is_superuser": _("Superadministrador"),
+        "groups": _("Grupos"),
+        "user_permissions": _("Permissões específicas"),
+        "is_email_verified": _("E-mail verificado"),
+        "is_2fa_enabled": _("Autenticação em dois fatores"),
+        "totp_secret": _("Segredo TOTP"),
+        "last_login": _("Último acesso"),
+        "fichas": _("Fichas"),
+        "terms_accepted_at": _("Aceite dos termos"),
+        "terms_and_privacy_version": _("Versão dos termos e privacidade"),
+        "id": _("Identificador"),
+        "created_at": _("Criado em"),
+        "updated_at": _("Atualizado em"),
     }
 
     def __init__(self, *args, **kwargs):
@@ -47,12 +48,12 @@ class PDLUserLabelsMixin:
 
         transfer_fields = {
             "groups": (
-                "grupos",
-                "Pesquise os grupos disponíveis e use as setas para atribuir ou remover.",
+                _("grupos"),
+                _("Pesquise os grupos disponíveis e use as setas para atribuir ou remover."),
             ),
             "user_permissions": (
-                "permissões",
-                "Pesquise as permissões disponíveis e use as setas para atribuir ou remover.",
+                _("permissões"),
+                _("Pesquise as permissões disponíveis e use as setas para atribuir ou remover."),
             ),
         }
         for field_name, (verbose_name, help_text) in transfer_fields.items():

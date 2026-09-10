@@ -14,6 +14,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `ApiLanguageMiddleware`, catálogos em `backend/locale/`, `POST /i18n/setlang/`
   e tradução das mensagens base de `DomainError` na borda HTTP; a SPA envia
   `Accept-Language`.
+- Cobertura gettext ampla do admin/Jazzmin: `verbose_name` / choices / help_text
+  dos modelos, `AppConfig`, fieldsets, formulários, e-mails de conta/vinculação,
+  `welcome_sign` do Jazzmin e catálogo de msgids de domínio (~300 strings EN/ES).
 
 ### Alterado
 

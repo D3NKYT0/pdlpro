@@ -8,6 +8,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 from common.validators import validate_ascii_username
@@ -54,11 +55,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         persistido e o rótulo é usado na apresentação.
         """
 
-        PLAYER = "player", "Jogador"
-        SUPPORTER = "supporter", "Apoiador"
-        MODERATOR = "moderator", "Moderador"
-        STAFF = "staff", "Equipe"
-        ADMIN = "admin", "Administrador"
+        PLAYER = "player", _("Jogador")
+        SUPPORTER = "supporter", _("Apoiador")
+        MODERATOR = "moderator", _("Moderador")
+        STAFF = "staff", _("Equipe")
+        ADMIN = "admin", _("Administrador")
 
     id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     seq_id = models.BigAutoField(primary_key=True, editable=False)
@@ -88,8 +89,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects: ClassVar[UserManager] = UserManager()
 
     class Meta:
-        verbose_name = "Usuário"
-        verbose_name_plural = "Usuários"
+        verbose_name=_("Usuário")
+        verbose_name_plural=_("Usuários")
         ordering = ["-created_at"]
 
     def __str__(self) -> str:
@@ -119,7 +120,7 @@ class GamerProfile(BaseModel):
     level = models.PositiveIntegerField(default=1)
 
     class Meta:
-        verbose_name = "Perfil gamer"
+        verbose_name=_("Perfil gamer")
 
 
 class WebAuthnCredential(BaseModel):
@@ -144,8 +145,8 @@ class WebAuthnCredential(BaseModel):
     last_used_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = "Chave de acesso"
-        verbose_name_plural = "Chaves de acesso"
+        verbose_name=_("Chave de acesso")
+        verbose_name_plural=_("Chaves de acesso")
         ordering = ["-created_at"]
         indexes = [models.Index(fields=["user", "created_at"], name="pdl_webauthn_user_created")]
 
@@ -161,7 +162,7 @@ class Achievement(BaseModel):
     description = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        verbose_name = "Conquista"
+        verbose_name=_("Conquista")
 
 
 class UserAchievement(BaseModel):
@@ -176,7 +177,7 @@ class UserAchievement(BaseModel):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name="unlocks")
 
     class Meta:
-        verbose_name = "Conquista do jogador"
+        verbose_name=_("Conquista do jogador")
         unique_together = ("user", "achievement")
 
 
@@ -194,8 +195,8 @@ class RewardDefinition(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        LEVEL = "level", "Nível"
-        ACHIEVEMENT = "achievement", "Conquista"
+        LEVEL = "level", _("Nível")
+        ACHIEVEMENT = "achievement", _("Conquista")
 
     kind = models.CharField(max_length=20, choices=Kind.choices)
     reference = models.CharField(max_length=40)
@@ -206,7 +207,7 @@ class RewardDefinition(BaseModel):
     description = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        verbose_name = "Recompensa"
+        verbose_name=_("Recompensa")
 
 
 class RewardClaim(BaseModel):
@@ -221,5 +222,5 @@ class RewardClaim(BaseModel):
     reward = models.ForeignKey(RewardDefinition, on_delete=models.CASCADE, related_name="claims")
 
     class Meta:
-        verbose_name = "Recompensa resgatada"
+        verbose_name=_("Recompensa resgatada")
         unique_together = ("user", "reward")

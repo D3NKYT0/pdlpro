@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from apps.content.infrastructure.models import (
     CalendarEvent,
@@ -25,10 +26,10 @@ class NewsAdmin(PDLModelAdmin):
     list_filter = ("is_published",)
     search_fields = ("title", "title_en", "title_es", "excerpt", "body")
     fieldsets = (
-        ("Publicação", {"fields": ("is_published", "published_at", "slug", "image", "author")}),
-        ("Português", {"fields": ("title", "excerpt", "body")}),
-        ("English", {"fields": ("title_en", "excerpt_en", "body_en")}),
-        ("Español", {"fields": ("title_es", "excerpt_es", "body_es")}),
+        (_("Publicação"), {"fields": ("is_published", "published_at", "slug", "image", "author")}),
+        (_("Português"), {"fields": ("title", "excerpt", "body")}),
+        (_("English"), {"fields": ("title_en", "excerpt_en", "body_en")}),
+        (_("Español"), {"fields": ("title_es", "excerpt_es", "body_es")}),
     )
 
 
@@ -48,13 +49,16 @@ class FaqAdmin(PDLModelAdmin):
         "question_es", "short_answer_es", "answer_es", "keywords_es",
     )
     fieldsets = (
-        ("Publicação", {
+        (_("Publicação"), {
             "fields": ("is_published", "audience", "assistant_only", "category", "order"),
-            "description": "Marque Somente assistente para um passo a passo do Denkynho. Não é necessária uma migration: o artigo entra na consulta no próximo salvamento.",
+            "description": _(
+                "Marque Somente assistente para um passo a passo do Denkynho. "
+                "Não é necessária uma migration: o artigo entra na consulta no próximo salvamento."
+            ),
         }),
-        ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
-        ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
-        ("Español", {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
+        (_("Português"), {"fields": ("question", "short_answer", "answer", "keywords")}),
+        (_("English"), {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+        (_("Español"), {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
     )
 
 
@@ -74,13 +78,16 @@ class DenkynhoHandbookAdmin(PDLModelAdmin):
         "question_es", "short_answer_es", "answer_es", "keywords_es",
     )
     fieldsets = (
-        ("Destino", {
+        (_("Destino"), {
             "fields": ("is_published", "audience", "category", "order"),
-            "description": "Este artigo fica só na consulta do Denkynho. Jogadores recebem audiência Todos; a equipe e os superadministradores usam os níveis correspondentes.",
+            "description": _(
+                "Este artigo fica só na consulta do Denkynho. Jogadores recebem audiência Todos; "
+                "a equipe e os superadministradores usam os níveis correspondentes."
+            ),
         }),
-        ("Português", {"fields": ("question", "short_answer", "answer", "keywords")}),
-        ("English", {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
-        ("Español", {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
+        (_("Português"), {"fields": ("question", "short_answer", "answer", "keywords")}),
+        (_("English"), {"fields": ("question_en", "short_answer_en", "answer_en", "keywords_en")}),
+        (_("Español"), {"fields": ("question_es", "short_answer_es", "answer_es", "keywords_es")}),
     )
 
     def get_queryset(self, request):
@@ -117,10 +124,10 @@ class WikiPageAdmin(PDLModelAdmin):
     list_filter = ("category", "is_published")
     search_fields = ("title", "title_en", "title_es", "summary", "body")
     fieldsets = (
-        ("Publicação", {"fields": ("is_published", "is_menu_item", "category", "icon", "order", "slug")}),
-        ("Português", {"fields": ("title", "summary", "body")}),
-        ("English", {"fields": ("title_en", "summary_en", "body_en")}),
-        ("Español", {"fields": ("title_es", "summary_es", "body_es")}),
+        (_("Publicação"), {"fields": ("is_published", "is_menu_item", "category", "icon", "order", "slug")}),
+        (_("Português"), {"fields": ("title", "summary", "body")}),
+        (_("English"), {"fields": ("title_en", "summary_en", "body_en")}),
+        (_("Español"), {"fields": ("title_es", "summary_es", "body_es")}),
     )
 
 

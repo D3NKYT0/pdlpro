@@ -4,6 +4,7 @@ from uuid import uuid4
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.server.domain.item_catalog import ITEM_CATEGORIES, ITEM_GRADES
 from common.models import BaseModel
@@ -15,13 +16,13 @@ def custom_item_image_path(instance, filename):
 
 def validate_custom_metadata(value):
     if not isinstance(value, dict):
-        raise ValidationError("Os metadados devem ser um objeto JSON.")
+        raise ValidationError(_("Os metadados devem ser um objeto JSON."))
     try:
         size = len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode("utf-8"))
     except (TypeError, ValueError, RecursionError):
-        raise ValidationError("Metadados JSON inválidos.") from None
+        raise ValidationError(_("Metadados JSON inválidos.")) from None
     if size > 16384:
-        raise ValidationError("Metadados limitados a 16 KB.")
+        raise ValidationError(_("Metadados limitados a 16 KB."))
 
 
 class CustomCatalogItem(BaseModel):
@@ -30,20 +31,28 @@ class CustomCatalogItem(BaseModel):
     operações de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
     """
 
-    item_id = models.PositiveIntegerField("ID no jogo", unique=True,
-        validators=[MinValueValidator(1), MaxValueValidator(2147483647)])
-    name = models.CharField("Nome", max_length=255)
-    image = models.ImageField("Imagem", upload_to=custom_item_image_path)
-    category = models.CharField("Tipo", max_length=24, choices=ITEM_CATEGORIES, default="COMUM")
-    grade = models.CharField("Grau", max_length=2, choices=ITEM_GRADES, default="NG")
-    tradeable = models.BooleanField("Negociável", default=True)
-    metadata = models.JSONField("Metadados públicos", default=dict, blank=True, validators=[validate_custom_metadata])
-    active = models.BooleanField("Ativo", default=True)
+    item_id = models.PositiveIntegerField(
+        _("ID no jogo"),
+        unique=True,
+        validators=[MinValueValidator(1), MaxValueValidator(2147483647)],
+    )
+    name = models.CharField(_("Nome"), max_length=255)
+    image = models.ImageField(_("Imagem"), upload_to=custom_item_image_path)
+    category = models.CharField(_("Tipo"), max_length=24, choices=ITEM_CATEGORIES, default="COMUM")
+    grade = models.CharField(_("Grau"), max_length=2, choices=ITEM_GRADES, default="NG")
+    tradeable = models.BooleanField(_("Negociável"), default=True)
+    metadata = models.JSONField(
+        _("Metadados públicos"),
+        default=dict,
+        blank=True,
+        validators=[validate_custom_metadata],
+    )
+    active = models.BooleanField(_("Ativo"), default=True)
 
     class Meta:
         ordering = ["item_id"]
-        verbose_name = "Item customizado"
-        verbose_name_plural = "Itens customizados"
+        verbose_name = _("Item customizado")
+        verbose_name_plural = _("Itens customizados")
 
     def __str__(self):
         return f"{self.item_id} — {self.name}"

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -18,11 +19,11 @@ class PedidoPagamento(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        PENDING = "pending", "Pendente"
-        PROCESSING = "processing", "Processando"
-        CONFIRMED = "confirmed", "Confirmado"
-        CANCELLED = "cancelled", "Cancelado"
-        FAILED = "failed", "Falhou"
+        PENDING = "pending", _("Pendente")
+        PROCESSING = "processing", _("Processando")
+        CONFIRMED = "confirmed", _("Confirmado")
+        CANCELLED = "cancelled", _("Cancelado")
+        FAILED = "failed", _("Falhou")
 
     class Currency(models.TextChoices):
         """Valores aceitos para Currency em PedidoPagamento.
@@ -31,8 +32,8 @@ class PedidoPagamento(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        BRL = "BRL", "Real"
-        USD = "USD", "Dólar"
+        BRL = "BRL", _("Real")
+        USD = "USD", _("Dólar")
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="payment_orders")
     amount = models.DecimalField(max_digits=12, decimal_places=2)
@@ -50,8 +51,8 @@ class PedidoPagamento(BaseModel):
     gateway_data = models.JSONField(default=dict, blank=True)
 
     class Meta:
-        verbose_name = "Pedido de pagamento"
-        verbose_name_plural = "Pedidos de pagamento"
+        verbose_name=_("Pedido de pagamento")
+        verbose_name_plural=_("Pedidos de pagamento")
         ordering = ["-created_at"]
 
 
@@ -67,5 +68,5 @@ class WebhookLog(BaseModel):
     payload = models.JSONField(default=dict)
 
     class Meta:
-        verbose_name = "Log de webhook"
-        verbose_name_plural = "Logs de webhook"
+        verbose_name=_("Log de webhook")
+        verbose_name_plural=_("Logs de webhook")

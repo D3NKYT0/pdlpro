@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import InternalModel
 
@@ -30,8 +31,8 @@ class AuditLog(InternalModel):
     payload = models.JSONField(default=dict, blank=True)
 
     class Meta:
-        verbose_name = "Log de auditoria"
-        verbose_name_plural = "Logs de auditoria"
+        verbose_name=_("Log de auditoria")
+        verbose_name_plural=_("Logs de auditoria")
 
     def save(self, *args, **kwargs):
         if self.pk:

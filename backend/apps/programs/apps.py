@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class ProgramsConfig(AppConfig):
@@ -10,7 +11,7 @@ class ProgramsConfig(AppConfig):
     """
 
     name = "apps.programs"
-    verbose_name = "Programas e recursos"
+    verbose_name=_("Programas e recursos")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

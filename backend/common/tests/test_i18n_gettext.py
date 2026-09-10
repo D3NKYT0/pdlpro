@@ -1,7 +1,9 @@
-from django.test import RequestFactory, SimpleTestCase, override_settings
+from django.conf import settings
+from django.test import RequestFactory, SimpleTestCase
 from django.utils import translation
 from django.utils.translation import gettext as _
 
+from apps.accounts.infrastructure.models import User
 from common.architecture.exceptions import EntityNotFoundError
 from common.exceptions import custom_exception_handler
 from common.i18n import (
@@ -57,3 +59,16 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
             response.data["message"],
             "No se encontró el recurso solicitado.",
         )
+
+
+class CatalogResolutionTests(SimpleTestCase):
+    def test_model_verbose_name_and_jazzmin_welcome_resolve_in_english(self):
+        activate_language("en")
+        try:
+            self.assertEqual(str(User._meta.verbose_name), "User")
+            self.assertEqual(
+                str(settings.JAZZMIN_SETTINGS["welcome_sign"]),
+                "Administrative panel access",
+            )
+        finally:
+            translation.deactivate()

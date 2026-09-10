@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.contrib.admin.apps import AdminConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class MFAAdminConfig(AdminConfig):
@@ -18,7 +19,7 @@ class AccountsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.accounts"
     label = "accounts"
-    verbose_name = "Contas"
+    verbose_name=_("Contas")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

@@ -2,6 +2,7 @@ from typing import ClassVar
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -24,16 +25,16 @@ class CharacterServiceOperation(BaseModel):
         max_length=12,
         default="pending",
         choices=[
-            ("pending", "Pendente"),
-            ("completed", "Concluído"),
-            ("rejected", "Estornado"),
+            ("pending", _("Pendente")),
+            ("completed", _("Concluído")),
+            ("rejected", _("Estornado")),
         ],
     )
     resolution_note = models.TextField(blank=True)
 
     class Meta:
-        verbose_name = "Operação de serviço"
-        verbose_name_plural = "Operações de serviço"
+        verbose_name = _("Operação de serviço")
+        verbose_name_plural = _("Operações de serviço")
         constraints: ClassVar = [
             models.UniqueConstraint(
                 fields=["user", "request_key"], name="pdl_character_service_key"

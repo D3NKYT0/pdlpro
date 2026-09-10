@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -18,8 +19,8 @@ class GameConfig(BaseModel):
     settings = models.JSONField(default=dict, blank=True)
 
     class Meta:
-        verbose_name = "Configuração de jogo"
-        verbose_name_plural = "Configurações de jogos"
+        verbose_name=_("Configuração de jogo")
+        verbose_name_plural=_("Configurações de jogos")
 
 
 class Prize(BaseModel):
@@ -36,8 +37,8 @@ class Prize(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Prêmio da roleta"
-        verbose_name_plural = "Prêmios da roleta"
+        verbose_name=_("Prêmio da roleta")
+        verbose_name_plural=_("Prêmios da roleta")
 
 
 class SpinHistory(BaseModel):
@@ -54,8 +55,8 @@ class SpinHistory(BaseModel):
     seed = models.BigIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Giro da roleta"
-        verbose_name_plural = "Giros da roleta"
+        verbose_name=_("Giro da roleta")
+        verbose_name_plural=_("Giros da roleta")
 
 
 class Bag(BaseModel):
@@ -69,8 +70,8 @@ class Bag(BaseModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="game_bag")
 
     class Meta:
-        verbose_name = "Bag"
-        verbose_name_plural = "Bags"
+        verbose_name=_("Bag")
+        verbose_name_plural=_("Bags")
 
 
 class BagItem(BaseModel):
@@ -88,7 +89,7 @@ class BagItem(BaseModel):
     enchant = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Item da bag"
+        verbose_name=_("Item da bag")
         unique_together = ("bag", "item_id", "enchant")
 
 
@@ -105,7 +106,7 @@ class DailyBonusClaim(BaseModel):
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
 
     class Meta:
-        verbose_name = "Resgate de bônus diário"
+        verbose_name=_("Resgate de bônus diário")
         unique_together = ("user", "claimed_on")
 
 
@@ -123,8 +124,8 @@ class CatalogItem(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Item de catálogo"
-        verbose_name_plural = "Itens de catálogo"
+        verbose_name=_("Item de catálogo")
+        verbose_name_plural=_("Itens de catálogo")
 
     def __str__(self) -> str:
         return f"{self.name} +{self.enchant}"
@@ -145,8 +146,8 @@ class BoxType(BaseModel):
     items = models.ManyToManyField(CatalogItem, blank=True, related_name="box_types")
 
     class Meta:
-        verbose_name = "Tipo de caixa"
-        verbose_name_plural = "Tipos de caixa"
+        verbose_name=_("Tipo de caixa")
+        verbose_name_plural=_("Tipos de caixa")
 
     def __str__(self) -> str:
         return self.name
@@ -164,8 +165,8 @@ class Box(BaseModel):
     box_type = models.ForeignKey(BoxType, on_delete=models.CASCADE, related_name="boxes")
 
     class Meta:
-        verbose_name = "Caixa"
-        verbose_name_plural = "Caixas"
+        verbose_name=_("Caixa")
+        verbose_name_plural=_("Caixas")
 
 
 class BoxSlot(BaseModel):
@@ -185,7 +186,7 @@ class BoxSlot(BaseModel):
     opened = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Booster da caixa"
+        verbose_name=_("Booster da caixa")
 
 
 class DiceHistory(BaseModel):
@@ -204,7 +205,7 @@ class DiceHistory(BaseModel):
     payout = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Jogada de dados"
+        verbose_name=_("Jogada de dados")
 
 
 class SlotHistory(BaseModel):
@@ -221,7 +222,7 @@ class SlotHistory(BaseModel):
     payout = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Giro de slots"
+        verbose_name=_("Giro de slots")
 
 
 class FishingRod(BaseModel):
@@ -237,7 +238,7 @@ class FishingRod(BaseModel):
     xp = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Vara de pesca"
+        verbose_name=_("Vara de pesca")
 
 
 class Fish(BaseModel):
@@ -259,7 +260,7 @@ class Fish(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Peixe"
+        verbose_name=_("Peixe")
 
 
 class FishingCatch(BaseModel):
@@ -276,7 +277,7 @@ class FishingCatch(BaseModel):
     rod_level = models.PositiveIntegerField(default=1)
 
     class Meta:
-        verbose_name = "Pescaria"
+        verbose_name=_("Pescaria")
 
 
 class EconomyWeapon(BaseModel):
@@ -292,7 +293,7 @@ class EconomyWeapon(BaseModel):
     fragments = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Arma da economia"
+        verbose_name=_("Arma da economia")
 
 
 class Monster(BaseModel):
@@ -314,7 +315,7 @@ class Monster(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Monstro"
+        verbose_name=_("Monstro")
 
 
 class EconomyFightLog(BaseModel):
@@ -332,7 +333,7 @@ class EconomyFightLog(BaseModel):
     fragments_earned = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Combate da economia"
+        verbose_name=_("Combate da economia")
 
 
 class BattlePassSeason(BaseModel):
@@ -348,7 +349,7 @@ class BattlePassSeason(BaseModel):
     premium_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("50.00"))
 
     class Meta:
-        verbose_name = "Temporada do passe"
+        verbose_name=_("Temporada do passe")
 
 
 class BattlePassLevel(BaseModel):
@@ -364,7 +365,7 @@ class BattlePassLevel(BaseModel):
     required_xp = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Nível do passe"
+        verbose_name=_("Nível do passe")
         unique_together = ("season", "level")
         ordering = ["level"]
 
@@ -386,7 +387,7 @@ class BattlePassReward(BaseModel):
     description = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        verbose_name = "Recompensa do passe"
+        verbose_name=_("Recompensa do passe")
 
 
 class UserBattlePassProgress(BaseModel):
@@ -404,7 +405,7 @@ class UserBattlePassProgress(BaseModel):
     auto_claim = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Progresso do passe"
+        verbose_name=_("Progresso do passe")
         unique_together = ("user", "season")
 
 
@@ -420,7 +421,7 @@ class UserBattlePassClaim(BaseModel):
     reward = models.ForeignKey(BattlePassReward, on_delete=models.CASCADE, related_name="claims")
 
     class Meta:
-        verbose_name = "Resgate do passe"
+        verbose_name=_("Resgate do passe")
         unique_together = ("user", "reward")
 
 
@@ -438,8 +439,20 @@ class BattlePassQuest(BaseModel):
     event = models.CharField(max_length=20, choices=[(s, s) for s in ("roulette", "dice", "slots", "fishing", "economy", "daily_bonus")])
     target = models.PositiveIntegerField(default=1)
     xp = models.PositiveIntegerField(default=25)
-    period = models.CharField(max_length=10, choices=[("daily", "Diária"), ("weekly", "Semanal"), ("season", "Temporada")], default="daily")
+    period = models.CharField(
+        max_length=10,
+        choices=[
+            ("daily", _("Diária")),
+            ("weekly", _("Semanal")),
+            ("season", _("Temporada")),
+        ],
+        default="daily",
+    )
     active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Missão do passe")
+        verbose_name_plural = _("Missões do passe")
 
 
 class BattlePassQuestClaim(BaseModel):
@@ -455,6 +468,8 @@ class BattlePassQuestClaim(BaseModel):
     period_start = models.DateField()
 
     class Meta:
+        verbose_name = _("Resgate de missão do passe")
+        verbose_name_plural = _("Resgates de missão do passe")
         constraints = [models.UniqueConstraint(fields=["user", "quest", "period_start"], name="unique_quest_period_claim")]
 
 
@@ -475,6 +490,10 @@ class BattlePassExchange(BaseModel):
     limit_per_user = models.PositiveIntegerField(default=1)
     active = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name = _("Troca do passe")
+        verbose_name_plural = _("Trocas do passe")
+
 
 class BattlePassMilestone(BaseModel):
     """Marco de progresso configurado para uma temporada do passe.
@@ -488,6 +507,10 @@ class BattlePassMilestone(BaseModel):
     name = models.CharField(max_length=120)
     required_xp = models.PositiveIntegerField()
     rewards = models.JSONField(default=list)
+
+    class Meta:
+        verbose_name = _("Marco do passe")
+        verbose_name_plural = _("Marcos do passe")
 
 
 class GameRewardLog(BaseModel):
@@ -505,6 +528,10 @@ class GameRewardLog(BaseModel):
     label = models.CharField(max_length=200)
     rewards = models.JSONField(default=list)
 
+    class Meta:
+        verbose_name = _("Log de recompensa de jogo")
+        verbose_name_plural = _("Logs de recompensa de jogo")
+
 
 class DailyBonusSeason(BaseModel):
     """Temporada que organiza o calendário de recompensas diárias. Herda BaseModel: use ``id``
@@ -516,6 +543,10 @@ class DailyBonusSeason(BaseModel):
     starts_on = models.DateField()
     ends_on = models.DateField()
     active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Temporada de bônus diário")
+        verbose_name_plural = _("Temporadas de bônus diário")
 
 
 class DailyBonusDay(BaseModel):
@@ -531,6 +562,8 @@ class DailyBonusDay(BaseModel):
     rewards = models.JSONField(default=list)
 
     class Meta:
+        verbose_name = _("Dia de bônus diário")
+        verbose_name_plural = _("Dias de bônus diário")
         constraints = [models.UniqueConstraint(fields=["season", "day"], name="unique_daily_season_day")]
         ordering = ["day"]
 
@@ -548,6 +581,10 @@ class DailyBonusPoolEntry(BaseModel):
     weight = models.PositiveIntegerField(default=1)
     rewards = models.JSONField(default=list)
 
+    class Meta:
+        verbose_name = _("Entrada do pool de bônus")
+        verbose_name_plural = _("Entradas do pool de bônus")
+
 
 class FishingBait(BaseModel):
     """Tipo de isca com parâmetros de compra e efeito sobre a pesca. Herda BaseModel: use ``id``
@@ -560,6 +597,10 @@ class FishingBait(BaseModel):
     price = models.PositiveIntegerField(default=1)
     success_bonus = models.PositiveIntegerField(default=5)
     active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Isca de pesca")
+        verbose_name_plural = _("Iscas de pesca")
 
 
 class UserFishingBait(BaseModel):
@@ -575,4 +616,6 @@ class UserFishingBait(BaseModel):
     quantity = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _("Isca do jogador")
+        verbose_name_plural = _("Iscas do jogador")
         constraints = [models.UniqueConstraint(fields=["user", "bait"], name="unique_user_bait")]

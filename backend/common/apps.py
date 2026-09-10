@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class CommonConfig(AppConfig):
@@ -10,10 +11,12 @@ class CommonConfig(AppConfig):
 
     default_auto_field = "django.db.models.BigAutoField"
     name = "common"
-    verbose_name = "Common"
+    verbose_name=_("Common")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection
         from common.infrastructure.provider import CommonProvider
+        # Garante coleta de msgids de domínio no makemessages / carga do catálogo.
+        import common.i18n_msgid_catalog  # noqa: F401
 
         DependencyInjection.add_provider(CommonProvider())

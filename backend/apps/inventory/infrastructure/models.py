@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -16,8 +17,8 @@ class Inventory(BaseModel):
     account_name = models.CharField(max_length=45, blank=True)
 
     class Meta:
-        verbose_name = "Inventário"
-        verbose_name_plural = "Inventários"
+        verbose_name=_("Inventário")
+        verbose_name_plural=_("Inventários")
         unique_together = ("user", "character_name")
 
     def __str__(self) -> str:
@@ -53,8 +54,8 @@ class InventoryItem(BaseModel):
     character_name = models.CharField(max_length=35, blank=True)
 
     class Meta:
-        verbose_name = "Item de inventário"
-        verbose_name_plural = "Itens de inventário"
+        verbose_name=_("Item de inventário")
+        verbose_name_plural=_("Itens de inventário")
 
 
 class BlockedServerItem(BaseModel):
@@ -68,8 +69,8 @@ class BlockedServerItem(BaseModel):
     reason = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        verbose_name = "Item bloqueado"
-        verbose_name_plural = "Itens bloqueados"
+        verbose_name=_("Item bloqueado")
+        verbose_name_plural=_("Itens bloqueados")
 
 
 class InventoryLog(BaseModel):
@@ -90,5 +91,5 @@ class InventoryLog(BaseModel):
     destination = models.CharField(max_length=80, blank=True)
 
     class Meta:
-        verbose_name = "Log de inventário"
-        verbose_name_plural = "Logs de inventário"
+        verbose_name=_("Log de inventário")
+        verbose_name_plural=_("Logs de inventário")

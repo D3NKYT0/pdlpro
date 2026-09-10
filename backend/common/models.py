@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class BaseModel(models.Model):
@@ -16,12 +17,12 @@ class BaseModel(models.Model):
         unique=True,
         default=uuid.uuid4,
         editable=False,
-        help_text="Identificador público. Sempre UUID v4.",
+        help_text=_("Identificador público. Sempre UUID v4."),
     )
     seq_id = models.BigAutoField(
         primary_key=True,
         editable=False,
-        help_text="ID sequencial interno. Nunca expor via API.",
+        help_text=_("ID sequencial interno. Nunca expor via API."),
     )
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)

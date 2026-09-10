@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 22:00+0000\n"
+"POT-Creation-Date: 2026-09-09 23:25-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: Spanish\n"
@@ -14,6 +14,1136 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Acesso"
+msgstr "Acceso"
+
+msgid "Perfil"
+msgstr "Perfil"
+
+msgid "Status e permissões"
+msgstr "Estado y permisos"
+
+msgid "Segurança"
+msgstr "Seguridad"
+
+msgid "Economia"
+msgstr "Economía"
+
+msgid "Termos"
+msgstr "Términos"
+
+msgid "Metadados"
+msgstr "Metadatos"
+
+msgid "Nova conta"
+msgstr "Nueva cuenta"
+
+msgid "Confirme seu e-mail no PDL PRO"
+msgstr "Confirma tu correo en PDL PRO"
+
+#, python-format
+msgid ""
+"Olá, %(username)s.\n"
+"\n"
+"Confirme seu e-mail neste link (válido por 48h):\n"
+"%(link)s\n"
+msgstr ""
+"Hola, %(username)s.\n"
+"\n"
+"Confirma tu correo con este enlace (válido por 48h):\n"
+"%(link)s\n"
+
+msgid "Redefinir senha do PDL PRO"
+msgstr "Restablecer la contraseña de PDL PRO"
+
+#, python-format
+msgid ""
+"Olá, %(username)s.\n"
+"\n"
+"Redefina sua senha neste link (válido por 1 hora):\n"
+"%(link)s\n"
+msgstr ""
+"Hola, %(username)s.\n"
+"\n"
+"Restablece tu contraseña con este enlace (válido por 1 hora):\n"
+"%(link)s\n"
+
+msgid "Contas"
+msgstr "Cuentas"
+
+msgid "Usuário"
+msgstr "Usuario"
+
+msgid "Senha"
+msgstr "Contraseña"
+
+msgid "Confirmação da senha"
+msgstr "Confirmación de la contraseña"
+
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+msgid "Nome de exibição"
+msgstr "Nombre para mostrar"
+
+msgid "Biografia"
+msgstr "Biografía"
+
+msgid "Avatar"
+msgstr "Avatar"
+
+msgid "Função"
+msgstr "Función"
+
+msgid "Conta ativa"
+msgstr "Cuenta activa"
+
+msgid "Acesso administrativo"
+msgstr "Acceso administrativo"
+
+msgid "Superadministrador"
+msgstr "Superadministrador"
+
+msgid "Grupos"
+msgstr "Grupos"
+
+msgid "Permissões específicas"
+msgstr "Permisos específicos"
+
+msgid "E-mail verificado"
+msgstr "Correo verificado"
+
+msgid "Autenticação em dois fatores"
+msgstr "Autenticación en dos factores"
+
+msgid "Segredo TOTP"
+msgstr "Secreto TOTP"
+
+msgid "Último acesso"
+msgstr "Último acceso"
+
+msgid "Fichas"
+msgstr "Fichas"
+
+msgid "Aceite dos termos"
+msgstr "Aceptación de los términos"
+
+msgid "Versão dos termos e privacidade"
+msgstr "Versión de los términos y privacidad"
+
+msgid "Identificador"
+msgstr "Identificador"
+
+msgid "Criado em"
+msgstr "Creado el"
+
+msgid "Atualizado em"
+msgstr "Actualizado el"
+
+msgid "grupos"
+msgstr "grupos"
+
+msgid "Pesquise os grupos disponíveis e use as setas para atribuir ou remover."
+msgstr "Busca los grupos disponibles y usa las flechas para asignar o quitar."
+
+msgid "permissões"
+msgstr "permisos"
+
+msgid ""
+"Pesquise as permissões disponíveis e use as setas para atribuir ou remover."
+msgstr ""
+"Busca los permisos disponibles y usa las flechas para asignar o quitar."
+
+#, fuzzy
+#| msgid "Apoiador"
+msgid "Jogador"
+msgstr "Patrocinador"
+
+msgid "Apoiador"
+msgstr "Patrocinador"
+
+msgid "Moderador"
+msgstr ""
+
+msgid "Equipe"
+msgstr ""
+
+#, fuzzy
+#| msgid "Superadministrador"
+msgid "Administrador"
+msgstr "Superadministrador"
+
+msgid "Usuários"
+msgstr "Usuarios"
+
+msgid "Perfil gamer"
+msgstr "Perfil gamer"
+
+msgid "Chave de acesso"
+msgstr "Llave de acceso"
+
+msgid "Chaves de acesso"
+msgstr "Llaves de acceso"
+
+msgid "Conquista"
+msgstr "Logro"
+
+msgid "Conquista do jogador"
+msgstr "Logro del jugador"
+
+msgid "Nível"
+msgstr ""
+
+msgid "Recompensa"
+msgstr "Recompensa"
+
+msgid "Recompensa resgatada"
+msgstr "Recompensa canjeada"
+
+msgid "Leilão"
+msgstr "Subasta"
+
+msgid "Aberto"
+msgstr "Abierto"
+
+#, fuzzy
+#| msgid "Atualizado em"
+msgid "Finalizado"
+msgstr "Actualizado el"
+
+msgid "Cancelado"
+msgstr ""
+
+msgid "Leilões"
+msgstr "Subastas"
+
+msgid "Lance"
+msgstr "Puja"
+
+msgid "Lances"
+msgstr "Pujas"
+
+msgid "Comunicação"
+msgstr "Comunicación"
+
+msgid "Notificação"
+msgstr "Notificación"
+
+msgid "Notificações"
+msgstr "Notificaciones"
+
+msgid "Inscrição push"
+msgstr "Suscripción push"
+
+msgid "Inscrições push"
+msgstr "Suscripciones push"
+
+msgid "Publicação"
+msgstr "Publicación"
+
+msgid "Português"
+msgstr "Portugués"
+
+msgid "English"
+msgstr "English"
+
+msgid "Español"
+msgstr "Español"
+
+msgid ""
+"Marque Somente assistente para um passo a passo do Denkynho. Não é "
+"necessária uma migration: o artigo entra na consulta no próximo salvamento."
+msgstr ""
+"Marca Solo asistente para un paso a paso del Denkynho. No se necesita una "
+"migration: el artículo entra en la consulta en el próximo guardado."
+
+msgid "Destino"
+msgstr "Destino"
+
+msgid ""
+"Este artigo fica só na consulta do Denkynho. Jogadores recebem audiência "
+"Todos; a equipe e os superadministradores usam os níveis correspondentes."
+msgstr ""
+"Este artículo queda solo en la consulta del Denkynho. Los jugadores reciben "
+"la audiencia Todos; el equipo y los superadministradores usan los niveles "
+"correspondientes."
+
+msgid "Conteúdo"
+msgstr "Contenido"
+
+msgid "Notícia"
+msgstr "Noticia"
+
+msgid "Notícias"
+msgstr "Noticias"
+
+msgid "Primeiros passos"
+msgstr ""
+
+msgid "Conta e segurança"
+msgstr "Cuenta y seguridad"
+
+#, fuzzy
+#| msgid "Anúncios de personagem"
+msgid "Contas e personagens"
+msgstr "Anuncios de personaje"
+
+#, fuzzy
+#| msgid "Item de inventário"
+msgid "Carteira e inventário"
+msgstr "Ítem de inventario"
+
+msgid "Loja e comércio"
+msgstr ""
+
+#, fuzzy
+#| msgid "Recompensa"
+msgid "Jogos e recompensas"
+msgstr "Recompensa"
+
+msgid "Conteúdo e comunidade"
+msgstr ""
+
+#, fuzzy
+#| msgid "Atendimento"
+msgid "Ajuda e atendimento"
+msgstr "Atención"
+
+msgid "Todos os usuários"
+msgstr ""
+
+#, fuzzy
+#| msgid "Superadministrador"
+msgid "Superadministradores"
+msgstr "Superadministrador"
+
+msgid ""
+"Resposta rápida exibida primeiro pelo assistente; a resposta completa traz "
+"os detalhes."
+msgstr ""
+"Respuesta rápida mostrada primero por el asistente; la respuesta completa "
+"aporta los detalles."
+
+msgid ""
+"Termos alternativos separados por vírgulas usados para localizar esta "
+"orientação."
+msgstr ""
+"Términos alternativos separados por comas usados para localizar esta "
+"orientación."
+
+msgid "English alternative terms separated by commas."
+msgstr "Términos alternativos en inglés separados por comas."
+
+msgid "Términos alternativos en español separados por comas."
+msgstr "Términos alternativos en español separados por comas."
+
+msgid "Público mínimo autorizado a receber este artigo no assistente."
+msgstr "Público mínimo autorizado a recibir este artículo en el asistente."
+
+msgid ""
+"Se marcado, o artigo fica só na consulta do Denkynho e não aparece na página "
+"FAQ nem nas sugestões."
+msgstr ""
+"Si está marcado, el artículo queda solo en la consulta del Denkynho y no "
+"aparece en la página FAQ ni en las sugerencias."
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Passo a passo do Denkynho"
+msgstr "Paso a paso del Denkynho"
+
+msgid "Passos a passo do Denkynho"
+msgstr "Pasos a paso del Denkynho"
+
+msgid "Peças cosméticas liberadas e equipadas pelo usuário."
+msgstr "Piezas cosméticas liberadas y equipadas por el usuario."
+
+msgid ""
+"Sentimento do usuário que o mascote está acompanhando; vazio quando não há "
+"empatia ativa."
+msgstr ""
+"Sentimiento del usuario que la mascota está acompañando; vacío cuando no hay "
+"empatía activa."
+
+msgid ""
+"Quando a empatia expira, o humor volta a ser calculado só pelas necessidades "
+"do mascote."
+msgstr ""
+"Cuando la empatía expira, el humor vuelve a calcularse solo con las "
+"necesidades de la mascota."
+
+msgid "Apelido opcional da conversa; não armazena o histórico."
+msgstr "Apodo opcional de la conversación; no almacena el historial."
+
+msgid "Tamanho preferido das respostas: brief, balanced ou detailed."
+msgstr "Tamaño preferido de las respuestas: brief, balanced o detailed."
+
+msgid ""
+"Último dia em que o mascote registrou uma visita; o bônus diário não se "
+"acumula."
+msgstr ""
+"Último día en que la mascota registró una visita; el bono diario no se "
+"acumula."
+
+msgid "Perfil do Denkynho"
+msgstr "Perfil del Denkynho"
+
+msgid "Perfis do Denkynho"
+msgstr "Perfiles del Denkynho"
+
+#, fuzzy
+#| msgid "Atendimento"
+msgid "Alimentar"
+msgstr "Atención"
+
+msgid "Dormir"
+msgstr ""
+
+msgid "Brincar"
+msgstr ""
+
+#, fuzzy
+#| msgid "Carrinho"
+msgid "Dar carinho"
+msgstr "Carrito"
+
+msgid "Dar banho"
+msgstr ""
+
+msgid "Caminhar"
+msgstr ""
+
+msgid "Dançar juntos"
+msgstr ""
+
+msgid "Cuidado do Denkynho"
+msgstr "Cuidado del Denkynho"
+
+msgid "Cuidados do Denkynho"
+msgstr "Cuidados del Denkynho"
+
+msgid "Download"
+msgstr "Descarga"
+
+msgid "Downloads"
+msgstr "Descargas"
+
+msgid "Página do wiki"
+msgstr "Página del wiki"
+
+msgid "Wiki"
+msgstr "Wiki"
+
+msgid "Evento"
+msgstr "Evento"
+
+msgid "Calendário"
+msgstr "Calendario"
+
+msgid "Jogos"
+msgstr "Juegos"
+
+msgid "Configuração de jogo"
+msgstr "Configuración de juego"
+
+msgid "Configurações de jogos"
+msgstr "Configuraciones de juegos"
+
+msgid "Prêmio da roleta"
+msgstr "Premio de la ruleta"
+
+msgid "Prêmios da roleta"
+msgstr "Premios de la ruleta"
+
+msgid "Giro da roleta"
+msgstr "Giro de la ruleta"
+
+msgid "Giros da roleta"
+msgstr "Giros de la ruleta"
+
+msgid "Bag"
+msgstr "Bag"
+
+msgid "Bags"
+msgstr "Bags"
+
+msgid "Item da bag"
+msgstr "Ítem de la bag"
+
+msgid "Resgate de bônus diário"
+msgstr "Canje de bono diario"
+
+msgid "Item de catálogo"
+msgstr "Ítem de catálogo"
+
+msgid "Itens de catálogo"
+msgstr "Ítems de catálogo"
+
+msgid "Tipo de caixa"
+msgstr "Tipo de caja"
+
+msgid "Tipos de caixa"
+msgstr "Tipos de caja"
+
+msgid "Caixa"
+msgstr "Caja"
+
+msgid "Caixas"
+msgstr "Cajas"
+
+msgid "Booster da caixa"
+msgstr "Booster de la caja"
+
+msgid "Jogada de dados"
+msgstr "Tirada de dados"
+
+msgid "Giro de slots"
+msgstr "Giro de slots"
+
+msgid "Vara de pesca"
+msgstr "Caña de pescar"
+
+msgid "Peixe"
+msgstr "Pez"
+
+msgid "Pescaria"
+msgstr "Pesca"
+
+msgid "Arma da economia"
+msgstr "Arma de la economía"
+
+msgid "Monstro"
+msgstr "Monstruo"
+
+msgid "Combate da economia"
+msgstr "Combate de la economía"
+
+msgid "Temporada do passe"
+msgstr "Temporada del pase"
+
+msgid "Nível do passe"
+msgstr "Nivel del pase"
+
+msgid "Recompensa do passe"
+msgstr "Recompensa del pase"
+
+msgid "Progresso do passe"
+msgstr "Progreso del pase"
+
+msgid "Resgate do passe"
+msgstr "Canje del pase"
+
+msgid "Diária"
+msgstr ""
+
+msgid "Semanal"
+msgstr ""
+
+#, fuzzy
+#| msgid "Temporada do passe"
+msgid "Temporada"
+msgstr "Temporada del pase"
+
+#, fuzzy
+#| msgid "Progresso do passe"
+msgid "Missão do passe"
+msgstr "Progreso del pase"
+
+#, fuzzy
+#| msgid "Nível do passe"
+msgid "Missões do passe"
+msgstr "Nivel del pase"
+
+#, fuzzy
+#| msgid "Resgate do passe"
+msgid "Resgate de missão do passe"
+msgstr "Canje del pase"
+
+#, fuzzy
+#| msgid "Resgate do passe"
+msgid "Resgates de missão do passe"
+msgstr "Canje del pase"
+
+#, fuzzy
+#| msgid "Temporada do passe"
+msgid "Troca do passe"
+msgstr "Temporada del pase"
+
+#, fuzzy
+#| msgid "Temporada do passe"
+msgid "Trocas do passe"
+msgstr "Temporada del pase"
+
+#, fuzzy
+#| msgid "Progresso do passe"
+msgid "Marco do passe"
+msgstr "Progreso del pase"
+
+#, fuzzy
+#| msgid "Progresso do passe"
+msgid "Marcos do passe"
+msgstr "Progreso del pase"
+
+msgid "Log de recompensa de jogo"
+msgstr ""
+
+msgid "Logs de recompensa de jogo"
+msgstr ""
+
+#, fuzzy
+#| msgid "Resgate de bônus diário"
+msgid "Temporada de bônus diário"
+msgstr "Canje de bono diario"
+
+#, fuzzy
+#| msgid "Resgate de bônus diário"
+msgid "Temporadas de bônus diário"
+msgstr "Canje de bono diario"
+
+#, fuzzy
+#| msgid "Resgate de bônus diário"
+msgid "Dia de bônus diário"
+msgstr "Canje de bono diario"
+
+#, fuzzy
+#| msgid "Resgate de bônus diário"
+msgid "Dias de bônus diário"
+msgstr "Canje de bono diario"
+
+#, fuzzy
+#| msgid "Entrada do roadmap"
+msgid "Entrada do pool de bônus"
+msgstr "Entrada del roadmap"
+
+#, fuzzy
+#| msgid "Entradas do roadmap"
+msgid "Entradas do pool de bônus"
+msgstr "Entradas del roadmap"
+
+#, fuzzy
+#| msgid "Vara de pesca"
+msgid "Isca de pesca"
+msgstr "Caña de pescar"
+
+#, fuzzy
+#| msgid "Vara de pesca"
+msgid "Iscas de pesca"
+msgstr "Caña de pescar"
+
+#, fuzzy
+#| msgid "Conquista do jogador"
+msgid "Isca do jogador"
+msgstr "Logro del jugador"
+
+#, fuzzy
+#| msgid "Conquista do jogador"
+msgid "Iscas do jogador"
+msgstr "Logro del jugador"
+
+msgid "Inventário"
+msgstr "Inventario"
+
+msgid "Inventários"
+msgstr "Inventarios"
+
+msgid "Item de inventário"
+msgstr "Ítem de inventario"
+
+msgid "Itens de inventário"
+msgstr "Ítems de inventario"
+
+msgid "Item bloqueado"
+msgstr "Ítem bloqueado"
+
+msgid "Itens bloqueados"
+msgstr "Ítems bloqueados"
+
+msgid "Log de inventário"
+msgstr "Registro de inventario"
+
+msgid "Logs de inventário"
+msgstr "Registros de inventario"
+
+msgid "Marketplace"
+msgstr "Marketplace"
+
+msgid "À venda"
+msgstr ""
+
+msgid "Vendido"
+msgstr ""
+
+msgid "Em disputa"
+msgstr ""
+
+msgid "Anúncio de personagem"
+msgstr "Anuncio de personaje"
+
+msgid "Anúncios de personagem"
+msgstr "Anuncios de personaje"
+
+msgid "Pagamento"
+msgstr "Pago"
+
+msgid "Pendente"
+msgstr ""
+
+msgid "Processando"
+msgstr ""
+
+msgid "Confirmado"
+msgstr ""
+
+msgid "Falhou"
+msgstr ""
+
+msgid "Real"
+msgstr ""
+
+msgid "Dólar"
+msgstr ""
+
+msgid "Pedido de pagamento"
+msgstr "Pedido de pago"
+
+msgid "Pedidos de pagamento"
+msgstr "Pedidos de pago"
+
+msgid "Log de webhook"
+msgstr "Registro de webhook"
+
+msgid "Logs de webhook"
+msgstr "Registros de webhook"
+
+msgid "Programas e recursos"
+msgstr "Programas y recursos"
+
+msgid "Apoiadores"
+msgstr "Patrocinadores"
+
+msgid "Comissão"
+msgstr "Comisión"
+
+msgid "Comissões"
+msgstr "Comisiones"
+
+msgid "Repasse de comissão"
+msgstr "Transferencia de comisión"
+
+msgid "Repasses de comissão"
+msgstr "Transferencias de comisión"
+
+msgid "Planejado"
+msgstr "Planificado"
+
+msgid "Em andamento"
+msgstr "En curso"
+
+msgid "Concluído"
+msgstr "Completado"
+
+msgid "Entrada do roadmap"
+msgstr "Entrada del roadmap"
+
+msgid "Entradas do roadmap"
+msgstr "Entradas del roadmap"
+
+msgid "Recurso do sistema"
+msgstr "Recurso del sistema"
+
+msgid "Recursos do sistema"
+msgstr "Recursos del sistema"
+
+msgid "Identidade"
+msgstr "Identidad"
+
+msgid "Rates"
+msgstr "Rates"
+
+msgid "Coming Soon"
+msgstr "Coming Soon"
+
+msgid "Vinculação de conta Lineage"
+msgstr "Vinculación de cuenta Lineage"
+
+#, python-format
+msgid ""
+"Clique no link para vincular a conta %(login)s ao PDL PRO:\n"
+"\n"
+"%(link)s\n"
+"\n"
+"O link expira em 1 hora."
+msgstr ""
+"Haz clic en el enlace para vincular la cuenta %(login)s a PDL PRO:\n"
+"\n"
+"%(link)s\n"
+"\n"
+"El enlace caduca en 1 hora."
+
+msgid "Servidor Lineage"
+msgstr "Servidor Lineage"
+
+msgid "Os metadados devem ser um objeto JSON."
+msgstr ""
+
+#, fuzzy
+#| msgid "Valor inválido."
+msgid "Metadados JSON inválidos."
+msgstr "Importe no válido."
+
+msgid "Metadados limitados a 16 KB."
+msgstr ""
+
+msgid "ID no jogo"
+msgstr ""
+
+msgid "Nome"
+msgstr ""
+
+msgid "Imagem"
+msgstr ""
+
+msgid "Tipo"
+msgstr ""
+
+msgid "Grau"
+msgstr ""
+
+msgid "Negociável"
+msgstr ""
+
+#, fuzzy
+#| msgid "Metadados"
+msgid "Metadados públicos"
+msgstr "Metadatos"
+
+msgid "Ativo"
+msgstr ""
+
+#, fuzzy
+#| msgid "Item bloqueado"
+msgid "Item customizado"
+msgstr "Ítem bloqueado"
+
+#, fuzzy
+#| msgid "Itens bloqueados"
+msgid "Itens customizados"
+msgstr "Ítems bloqueados"
+
+msgid "Informe uma lista de até 2000 IDs positivos, sem repetições."
+msgstr ""
+
+#, fuzzy
+#| msgid "Inscrição push"
+msgid "Descrição"
+msgstr "Suscripción push"
+
+msgid "IDs dos itens"
+msgstr ""
+
+msgid ""
+"Exemplo: [57, 4037]. Em sobreposições, vale a primeira categoria na ordem."
+msgstr ""
+
+msgid "Ordem"
+msgstr ""
+
+#, fuzzy
+#| msgid "Preço de serviço"
+msgid "Categoria de observação"
+msgstr "Precio de servicio"
+
+#, fuzzy
+#| msgid "Preços de serviço"
+msgid "Categorias de observação"
+msgstr "Precios de servicio"
+
+msgid "Data"
+msgstr ""
+
+msgid "Origem L2"
+msgstr ""
+
+#, fuzzy
+#| msgid "Criado em"
+msgid "Criado por"
+msgstr "Creado el"
+
+msgid "Personagens"
+msgstr ""
+
+msgid "Stacks L2"
+msgstr ""
+
+#, fuzzy
+#| msgid "Identidade"
+msgid "Quantidade L2"
+msgstr "Identidad"
+
+msgid "Quantidade no painel"
+msgstr ""
+
+msgid "Notas"
+msgstr ""
+
+msgid "Snapshot de itens"
+msgstr ""
+
+msgid "Snapshots de itens"
+msgstr ""
+
+msgid "Pode capturar snapshot dos itens L2"
+msgstr ""
+
+msgid "Detalhe de observação"
+msgstr ""
+
+#, fuzzy
+#| msgid "Preços de serviço"
+msgid "Detalhes de observação"
+msgstr "Precios de servicio"
+
+#, fuzzy
+#| msgid "Preço de serviço"
+msgid "Favorito de observação"
+msgstr "Precio de servicio"
+
+#, fuzzy
+#| msgid "Preços de serviço"
+msgid "Favoritos de observação"
+msgstr "Precios de servicio"
+
+msgid "Conta Lineage"
+msgstr "Cuenta Lineage"
+
+msgid "Contas Lineage"
+msgstr "Cuentas Lineage"
+
+msgid "Slot de vínculo"
+msgstr "Ranura de vínculo"
+
+msgid "Slots de vínculo"
+msgstr "Ranuras de vínculo"
+
+msgid "Preço de serviço"
+msgstr "Precio de servicio"
+
+msgid "Preços de serviço"
+msgstr "Precios de servicio"
+
+msgid "Configuração do painel"
+msgstr "Configuración del panel"
+
+msgid "Configurações do painel"
+msgstr "Configuraciones del panel"
+
+msgid "Estornado"
+msgstr ""
+
+#, fuzzy
+#| msgid "Preço de serviço"
+msgid "Operação de serviço"
+msgstr "Precio de servicio"
+
+#, fuzzy
+#| msgid "Preços de serviço"
+msgid "Operações de serviço"
+msgstr "Precios de servicio"
+
+msgid "Loja"
+msgstr "Tienda"
+
+msgid "Item da loja"
+msgstr "Ítem de la tienda"
+
+msgid "Itens da loja"
+msgstr "Ítems de la tienda"
+
+msgid "Pacote"
+msgstr "Paquete"
+
+msgid "Pacotes"
+msgstr "Paquetes"
+
+msgid "Item do pacote"
+msgstr "Ítem del paquete"
+
+msgid "Itens do pacote"
+msgstr "Ítems del paquete"
+
+msgid "Carrinho"
+msgstr "Carrito"
+
+msgid "Carrinhos"
+msgstr "Carritos"
+
+msgid "Item do carrinho"
+msgstr "Ítem del carrito"
+
+msgid "Itens do carrinho"
+msgstr "Ítems del carrito"
+
+msgid "Compra da loja"
+msgstr "Compra de la tienda"
+
+msgid "Compras da loja"
+msgstr "Compras de la tienda"
+
+msgid "Pacote do carrinho"
+msgstr "Paquete del carrito"
+
+msgid "Pacotes do carrinho"
+msgstr "Paquetes del carrito"
+
+msgid "Código promocional"
+msgstr "Código promocional"
+
+msgid "Códigos promocionais"
+msgstr "Códigos promocionales"
+
+msgid "Staff"
+msgstr "Staff"
+
+msgid "Log de auditoria"
+msgstr "Registro de auditoría"
+
+msgid "Logs de auditoria"
+msgstr "Registros de auditoría"
+
+msgid "Atendimento"
+msgstr "Atención"
+
+msgid "Em atendimento"
+msgstr "En atención"
+
+msgid "Aguardando jogador"
+msgstr "Esperando al jugador"
+
+msgid "Aguardando equipe"
+msgstr "Esperando al equipo"
+
+msgid "Resolvido"
+msgstr "Resuelto"
+
+msgid "Fechado"
+msgstr "Cerrado"
+
+msgid "Problema técnico"
+msgstr "Problema técnico"
+
+msgid "Pagamento e loja"
+msgstr "Pago y tienda"
+
+msgid "Suporte ao jogo"
+msgstr "Soporte del juego"
+
+msgid "Relatar um bug"
+msgstr "Informar de un error"
+
+msgid "Denúncia"
+msgstr "Denuncia"
+
+msgid "Sugestão"
+msgstr "Sugerencia"
+
+msgid "Outro assunto"
+msgstr "Otro asunto"
+
+msgid "Baixa"
+msgstr "Baja"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Alta"
+msgstr "Alta"
+
+msgid "Urgente"
+msgstr "Urgente"
+
+msgid "Chamado"
+msgstr "Ticket"
+
+msgid "Chamados"
+msgstr "Tickets"
+
+msgid "Mensagem do chamado"
+msgstr "Mensaje del ticket"
+
+msgid "Mensagens dos chamados"
+msgstr "Mensajes de los tickets"
+
+msgid "Temas"
+msgstr "Temas"
+
+msgid "Tema"
+msgstr "Tema"
+
+msgid "Carteira"
+msgstr "Cartera"
+
+msgid "Carteiras"
+msgstr "Carteras"
+
+msgid "Entrada"
+msgstr "Entrada"
+
+msgid "Saída"
+msgstr "Salida"
+
+msgid "Transação"
+msgstr "Transacción"
+
+msgid "Transações"
+msgstr "Transacciones"
+
+msgid "Configuração de moeda"
+msgstr "Configuración de moneda"
+
+msgid "Configurações de moeda"
+msgstr "Configuraciones de moneda"
+
+msgid "Bônus de compra"
+msgstr "Bono de compra"
+
+msgid "Promoção de recarga"
+msgstr "Promoción de recarga"
+
+msgid "Promoções de recarga"
+msgstr "Promociones de recarga"
+
+msgid "Pacote de moedas"
+msgstr "Paquete de monedas"
+
+msgid "Pacotes de moedas"
+msgstr "Paquetes de monedas"
+
+msgid "Common"
+msgstr "Common"
+
+msgid "nome@exemplo.com"
+msgstr "nombre@ejemplo.com"
+
+msgid "dd/mm/aaaa"
+msgstr "dd/mm/aaaa"
+
+msgid "dd/mm/aaaa hh:mm"
+msgstr "dd/mm/aaaa hh:mm"
+
+msgid "hh:mm"
+msgstr "hh:mm"
+
+msgid "0,00"
+msgstr "0,00"
+
+msgid "{\"chave\": \"valor\"}"
+msgstr "{\"clave\": \"valor\"}"
+
+#, python-format
+msgid "Informe %(label)s"
+msgstr "Introduce %(label)s"
 
 msgid "Não foi possível processar a solicitação."
 msgstr "No se pudo procesar la solicitud."
@@ -29,3 +1159,169 @@ msgstr "No tienes permiso para realizar esta acción."
 
 msgid "Verifique os dados informados e tente novamente."
 msgstr "Revisa los datos informados e inténtalo de nuevo."
+
+msgid "Usuário não encontrado."
+msgstr "Usuario no encontrado."
+
+msgid "Este nome de usuário já está em uso."
+msgstr "Este nombre de usuario ya está en uso."
+
+msgid "Este e-mail já está em uso."
+msgstr "Este correo ya está en uso."
+
+msgid "Usuário ou senha inválidos."
+msgstr "Usuario o contraseña no válidos."
+
+msgid ""
+"O servidor está em período de lançamento. O login está restrito à equipe no "
+"momento."
+msgstr ""
+"El servidor está en período de lanzamiento. El inicio de sesión está "
+"restringido al equipo por ahora."
+
+msgid "Código 2FA inválido."
+msgstr "Código 2FA no válido."
+
+msgid "Sessão não encontrada."
+msgstr "Sesión no encontrada."
+
+msgid "Refresh token inválido."
+msgstr "Refresh token no válido."
+
+msgid "Não foi possível validar esta chave de acesso."
+msgstr "No se pudo validar esta llave de acceso."
+
+msgid "Não foi possível concluir a autenticação social."
+msgstr "No se pudo completar la autenticación social."
+
+msgid "Leilão não encontrado."
+msgstr "Subasta no encontrada."
+
+msgid "Este leilão não está ativo."
+msgstr "Esta subasta no está activa."
+
+msgid "Lance inválido."
+msgstr "Puja no válida."
+
+msgid "Você não pode dar lance no próprio leilão."
+msgstr "No puedes pujar en tu propia subasta."
+
+msgid "Duração do leilão inválida."
+msgstr "Duración de la subasta no válida."
+
+msgid "Fichas insuficientes."
+msgstr "Fichas insuficientes."
+
+msgid "Você já resgatou o bônus de hoje."
+msgstr "Ya canjeaste el bono de hoy."
+
+msgid "Este jogo não está ativo."
+msgstr "Este juego no está activo."
+
+msgid "Esta caixa não tem boosters restantes."
+msgstr "Esta caja no tiene boosters restantes."
+
+msgid "Essa caixa não pertence a você."
+msgstr "Esa caja no te pertenece."
+
+msgid "Recompensa inválida."
+msgstr "Recompensa no válida."
+
+msgid "Inventário não encontrado."
+msgstr "Inventario no encontrado."
+
+msgid "Este item não pode ser retirado do jogo."
+msgstr "Este ítem no se puede retirar del juego."
+
+msgid "Quantidade insuficiente no inventário do painel."
+msgstr "Cantidad insuficiente en el inventario del panel."
+
+msgid "Anúncio não encontrado."
+msgstr "Anuncio no encontrado."
+
+msgid "Este personagem não está à venda."
+msgstr "Este personaje no está a la venta."
+
+msgid "Você não pode comprar o próprio personagem."
+msgstr "No puedes comprar tu propio personaje."
+
+msgid "Este personagem já está listado para venda."
+msgstr "Este personaje ya está listado para la venta."
+
+msgid "A conta já atingiu o limite de personagens do cliente Lineage 2."
+msgstr "La cuenta ya alcanzó el límite de personajes del cliente Lineage 2."
+
+msgid "O preço deve ser maior que zero."
+msgstr "El precio debe ser mayor que cero."
+
+msgid "Pedido de pagamento não encontrado."
+msgstr "Pedido de pago no encontrado."
+
+msgid "Este pedido já foi confirmado."
+msgstr "Este pedido ya fue confirmado."
+
+msgid "Método de pagamento indisponível."
+msgstr "Método de pago no disponible."
+
+msgid "Este pedido não pode ser alterado."
+msgstr "Este pedido no se puede modificar."
+
+msgid "Valor inválido."
+msgstr "Importe no válido."
+
+msgid "Falha ao iniciar o pagamento."
+msgstr "Error al iniciar el pago."
+
+msgid "Cadastro de apoiador não encontrado."
+msgstr "Registro de patrocinador no encontrado."
+
+msgid "Pedido de repasse não encontrado."
+msgstr "Pedido de transferencia no encontrado."
+
+msgid "Entrada do roadmap não encontrada."
+msgstr "Entrada del roadmap no encontrada."
+
+msgid "Recurso do sistema não encontrado."
+msgstr "Recurso del sistema no encontrado."
+
+msgid "Não foi possível processar a solicitação do programa."
+msgstr "No se pudo procesar la solicitud del programa."
+
+msgid "O banco do servidor Lineage não está disponível."
+msgstr "La base de datos del servidor Lineage no está disponible."
+
+msgid "Conta Lineage não encontrada."
+msgstr "Cuenta Lineage no encontrada."
+
+msgid "Já existe uma conta Lineage com este login."
+msgstr "Ya existe una cuenta Lineage con este login."
+
+msgid "Esta conta Lineage já está vinculada."
+msgstr "Esta cuenta Lineage ya está vinculada."
+
+msgid "Limite de contas vinculadas atingido. Compre um slot extra."
+msgstr "Límite de cuentas vinculadas alcanzado. Compra una ranura extra."
+
+msgid "O personagem precisa estar offline."
+msgstr "El personaje debe estar desconectado."
+
+msgid "Este nick já está em uso."
+msgstr "Este nick ya está en uso."
+
+msgid "Chamado não encontrado."
+msgstr "Ticket no encontrado."
+
+msgid "Esta ação não está disponível para o chamado."
+msgstr "Esta acción no está disponible para el ticket."
+
+msgid "Identificador público. Sempre UUID v4."
+msgstr "Identificador público. Siempre UUID v4."
+
+msgid "ID sequencial interno. Nunca expor via API."
+msgstr "ID secuencial interno. Nunca exponer vía API."
+
+msgid "Acesso ao painel administrativo"
+msgstr "Acceso al panel administrativo"
+
+msgid "Log in"
+msgstr "Iniciar sesión"

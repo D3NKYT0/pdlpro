@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -31,6 +32,10 @@ class Supporter(BaseModel):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
 
+    class Meta:
+        verbose_name = _("Apoiador")
+        verbose_name_plural = _("Apoiadores")
+
 
 class Commission(BaseModel):
     """Comissão de uma compra da loja, vinculada ao apoiador e a um repasse quando solicitado.
@@ -53,6 +58,10 @@ class Commission(BaseModel):
         related_name="commissions",
     )
 
+    class Meta:
+        verbose_name = _("Comissão")
+        verbose_name_plural = _("Comissões")
+
 
 class CommissionPayout(BaseModel):
     """Solicitação de repasse que agrupa comissões de um apoiador e acompanha sua aprovação.
@@ -73,6 +82,10 @@ class CommissionPayout(BaseModel):
     )
     note = models.CharField(max_length=300, blank=True)
 
+    class Meta:
+        verbose_name = _("Repasse de comissão")
+        verbose_name_plural = _("Repasses de comissão")
+
 
 class RoadmapEntry(BaseModel):
     """Entrega planejada ou concluída com progresso e publicação no roadmap público. Herda
@@ -91,9 +104,9 @@ class RoadmapEntry(BaseModel):
     status = models.CharField(
         max_length=20,
         choices=[
-            ("planned", "Planejado"),
-            ("progress", "Em andamento"),
-            ("completed", "Concluído"),
+            ("planned", _("Planejado")),
+            ("progress", _("Em andamento")),
+            ("completed", _("Concluído")),
         ],
         default="planned",
     )
@@ -105,6 +118,8 @@ class RoadmapEntry(BaseModel):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        verbose_name = _("Entrada do roadmap")
+        verbose_name_plural = _("Entradas do roadmap")
         ordering = ["order", "-created_at"]
 
 
@@ -122,4 +137,6 @@ class SystemResource(BaseModel):
     description = models.CharField(max_length=250, blank=True)
 
     class Meta:
+        verbose_name = _("Recurso do sistema")
+        verbose_name_plural = _("Recursos do sistema")
         ordering = ["category", "name"]

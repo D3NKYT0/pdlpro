@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -32,8 +33,8 @@ class ThemePackage(BaseModel):
     )
 
     class Meta:
-        verbose_name = "Tema"
-        verbose_name_plural = "Temas"
+        verbose_name=_("Tema")
+        verbose_name_plural=_("Temas")
         ordering = ["name", "-created_at"]
         constraints = [
             models.UniqueConstraint(fields=("slug", "version"), name="themes_unique_slug_version"),

@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
+from django.utils.translation import gettext as _
+
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import IUserRepository
 from apps.server.domain.access import (
@@ -21,6 +23,7 @@ from apps.server.domain.gateways import GameAccount, GameCharacter, ILineageGate
 from apps.server.domain.repositories import IManagedLineageAccountRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
+from common.i18n import activate_language
 
 
 @dataclass(frozen=True, slots=True)
@@ -461,10 +464,17 @@ class RequestLinkByEmailUseCase(UseCase[RequestLinkByEmailInput, dict]):
         token = signing.dumps({"login": account.login, "email": email}, salt=LINK_BY_EMAIL_SALT)
         base = getattr(settings, "FRONTEND_URL", "") or getattr(settings, "PROJECT_URL", "http://localhost:3000")
         link = f"{base.rstrip('/')}/accounts?link_token={token}"
+        language = getattr(data.actor, "language", None) or getattr(data.actor, "preferred_language", None)
+        if language:
+            activate_language(language)
         self._mailer.send(
             email,
-            "Vinculação de conta Lineage",
-            f"Clique no link para vincular a conta {account.login} ao PDL PRO:\n\n{link}\n\nO link expira em 1 hora.",
+            _("Vinculação de conta Lineage"),
+            _(
+                "Clique no link para vincular a conta %(login)s ao PDL PRO:\n\n"
+                "%(link)s\n\nO link expira em 1 hora."
+            )
+            % {"login": account.login, "link": link},
         )
         return {"sent": True}
 

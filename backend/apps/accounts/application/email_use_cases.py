@@ -5,12 +5,14 @@ from uuid import UUID
 
 from django.conf import settings
 from django.core import signing
+from django.utils.translation import gettext as _
 
 from apps.accounts.domain.exceptions import UserNotFoundError
 from apps.accounts.domain.mailer import IMailer
 from apps.accounts.domain.repositories import IUserRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
+from common.i18n import activate_language
 
 EMAIL_VERIFY_SALT = "pdl-email-verify"
 PASSWORD_RESET_SALT = "pdl-password-reset"
@@ -21,6 +23,12 @@ PASSWORD_RESET_MAX_AGE = 60 * 60
 def _frontend_url(path: str) -> str:
     base = getattr(settings, "FRONTEND_URL", "") or getattr(settings, "PROJECT_URL", "http://localhost:3000")
     return f"{base.rstrip('/')}{path}"
+
+
+def _activate_user_language(user) -> None:
+    language = getattr(user, "language", None) or getattr(user, "preferred_language", None)
+    if language:
+        activate_language(language)
 
 
 class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
@@ -42,10 +50,15 @@ class RequestEmailVerificationUseCase(UseCase[UUID, dict]):
             return {"sent": False, "already_verified": True}
         token = signing.dumps({"uid": str(user.id)}, salt=EMAIL_VERIFY_SALT)
         link = _frontend_url(f"/verify-email?token={token}")
+        _activate_user_language(user)
         self._mailer.send(
             user.email,
-            "Confirme seu e-mail no PDL PRO",
-            f"Olá, {user.username}.\n\nConfirme seu e-mail neste link (válido por 48h):\n{link}\n",
+            _("Confirme seu e-mail no PDL PRO"),
+            _(
+                "Olá, %(username)s.\n\n"
+                "Confirme seu e-mail neste link (válido por 48h):\n%(link)s\n"
+            )
+            % {"username": user.username, "link": link},
         )
         return {"sent": True, "already_verified": False}
 
@@ -116,10 +129,15 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
         if token is None:
             return {"sent": True}
         link = _frontend_url(f"/reset-password?token={token}")
+        _activate_user_language(user)
         self._mailer.send(
             user.email,
-            "Redefinir senha do PDL PRO",
-            f"Olá, {user.username}.\n\nRedefina sua senha neste link (válido por 1 hora):\n{link}\n",
+            _("Redefinir senha do PDL PRO"),
+            _(
+                "Olá, %(username)s.\n\n"
+                "Redefina sua senha neste link (válido por 1 hora):\n%(link)s\n"
+            )
+            % {"username": user.username, "link": link},
         )
         return {"sent": True}
 

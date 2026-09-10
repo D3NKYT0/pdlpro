@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.forms import PDLUserChangeForm, PDLUserCreationForm
 from apps.accounts.infrastructure.models import (
@@ -28,10 +29,10 @@ class UserAdmin(PDLModelAdmin):
     list_filter = ("role", "is_active", "is_email_verified")
     readonly_fields = ("id", "last_login", "created_at", "updated_at")
     fieldsets = (
-        ("Acesso", {"fields": ("username", "password", "email")}),
-        ("Perfil", {"fields": ("display_name", "bio", "avatar", "role")}),
+        (_("Acesso"), {"fields": ("username", "password", "email")}),
+        (_("Perfil"), {"fields": ("display_name", "bio", "avatar", "role")}),
         (
-            "Status e permissões",
+            _("Status e permissões"),
             {
                 "fields": (
                     "is_active",
@@ -43,16 +44,16 @@ class UserAdmin(PDLModelAdmin):
             },
         ),
         (
-            "Segurança",
+            _("Segurança"),
             {"fields": ("is_email_verified", "is_2fa_enabled", "totp_secret", "last_login")},
         ),
-        ("Economia", {"fields": ("fichas",)}),
-        ("Termos", {"fields": ("terms_accepted_at", "terms_and_privacy_version")}),
-        ("Metadados", {"fields": ("id", "created_at", "updated_at"), "classes": ("collapse",)}),
+        (_("Economia"), {"fields": ("fichas",)}),
+        (_("Termos"), {"fields": ("terms_accepted_at", "terms_and_privacy_version")}),
+        (_("Metadados"), {"fields": ("id", "created_at", "updated_at"), "classes": ("collapse",)}),
     )
     add_fieldsets = (
         (
-            "Nova conta",
+            _("Nova conta"),
             {
                 "fields": (
                     "username",

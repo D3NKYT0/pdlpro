@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -19,9 +20,9 @@ class Auction(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        OPEN = "open", "Aberto"
-        FINISHED = "finished", "Finalizado"
-        CANCELLED = "cancelled", "Cancelado"
+        OPEN = "open", _("Aberto")
+        FINISHED = "finished", _("Finalizado")
+        CANCELLED = "cancelled", _("Cancelado")
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="auctions")
     item_id = models.PositiveIntegerField()
@@ -42,8 +43,8 @@ class Auction(BaseModel):
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.OPEN)
 
     class Meta:
-        verbose_name = "Leilão"
-        verbose_name_plural = "Leilões"
+        verbose_name=_("Leilão")
+        verbose_name_plural=_("Leilões")
         ordering = ["ends_at"]
 
 
@@ -61,6 +62,6 @@ class Bid(BaseModel):
     character_name = models.CharField(max_length=35)
 
     class Meta:
-        verbose_name = "Lance"
-        verbose_name_plural = "Lances"
+        verbose_name=_("Lance")
+        verbose_name_plural=_("Lances")
         ordering = ["-created_at"]

@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class PaymentConfig(AppConfig):
@@ -11,7 +12,7 @@ class PaymentConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.payment"
     label = "payment"
-    verbose_name = "Pagamento"
+    verbose_name=_("Pagamento")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

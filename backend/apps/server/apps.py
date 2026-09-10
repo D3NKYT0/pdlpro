@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class ServerConfig(AppConfig):
@@ -11,7 +12,7 @@ class ServerConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.server"
     label = "server"
-    verbose_name = "Servidor Lineage"
+    verbose_name=_("Servidor Lineage")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

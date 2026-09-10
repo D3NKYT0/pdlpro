@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -20,8 +21,8 @@ class ShopItem(BaseModel):
     image = models.ImageField(upload_to="shop/", null=True, blank=True)
 
     class Meta:
-        verbose_name = "Item da loja"
-        verbose_name_plural = "Itens da loja"
+        verbose_name=_("Item da loja")
+        verbose_name_plural=_("Itens da loja")
 
     def __str__(self) -> str:
         return self.name
@@ -38,8 +39,8 @@ class ShopPackage(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Pacote"
-        verbose_name_plural = "Pacotes"
+        verbose_name=_("Pacote")
+        verbose_name_plural=_("Pacotes")
 
 
 class ShopPackageItem(BaseModel):
@@ -53,6 +54,10 @@ class ShopPackageItem(BaseModel):
     package = models.ForeignKey(ShopPackage, on_delete=models.CASCADE, related_name="package_items")
     item = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = _("Item do pacote")
+        verbose_name_plural = _("Itens do pacote")
 
 
 class Cart(BaseModel):
@@ -68,8 +73,8 @@ class Cart(BaseModel):
     use_bonus = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Carrinho"
-        verbose_name_plural = "Carrinhos"
+        verbose_name=_("Carrinho")
+        verbose_name_plural=_("Carrinhos")
 
 
 class CartItem(BaseModel):
@@ -83,6 +88,10 @@ class CartItem(BaseModel):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
     item = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = _("Item do carrinho")
+        verbose_name_plural = _("Itens do carrinho")
 
 
 class ShopPurchase(BaseModel):
@@ -104,6 +113,8 @@ class ShopPurchase(BaseModel):
     request_key = models.UUIDField(null=True, blank=True)
 
     class Meta:
+        verbose_name = _("Compra da loja")
+        verbose_name_plural = _("Compras da loja")
         constraints = [models.UniqueConstraint(fields=["user", "request_key"], name="shop_checkout_idempotency")]
 
 
@@ -120,6 +131,8 @@ class CartPackage(BaseModel):
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
+        verbose_name = _("Pacote do carrinho")
+        verbose_name_plural = _("Pacotes do carrinho")
         constraints = [models.UniqueConstraint(fields=["cart", "package"], name="cart_unique_package")]
 
 
@@ -139,6 +152,10 @@ class PromotionCode(BaseModel):
     max_uses = models.PositiveIntegerField(default=0)
     uses = models.PositiveIntegerField(default=0)
     supporter = models.ForeignKey("programs.Supporter", on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("Código promocional")
+        verbose_name_plural = _("Códigos promocionais")
 
     def save(self, *args, **kwargs):
         self.code = self.code.strip().upper()

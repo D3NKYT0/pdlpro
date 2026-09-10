@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -19,10 +20,10 @@ class CharacterListing(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        FOR_SALE = "for_sale", "À venda"
-        SOLD = "sold", "Vendido"
-        CANCELLED = "cancelled", "Cancelado"
-        DISPUTED = "disputed", "Em disputa"
+        FOR_SALE = "for_sale", _("À venda")
+        SOLD = "sold", _("Vendido")
+        CANCELLED = "cancelled", _("Cancelado")
+        DISPUTED = "disputed", _("Em disputa")
 
     seller = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -55,8 +56,8 @@ class CharacterListing(BaseModel):
     sold_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = "Anúncio de personagem"
-        verbose_name_plural = "Anúncios de personagem"
+        verbose_name=_("Anúncio de personagem")
+        verbose_name_plural=_("Anúncios de personagem")
         ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["status", "-created_at"]),

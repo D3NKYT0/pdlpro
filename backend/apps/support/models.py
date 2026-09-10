@@ -3,6 +3,7 @@ import secrets
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -26,12 +27,12 @@ class Ticket(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        OPEN = "open", "Aberto"
-        IN_PROGRESS = "in_progress", "Em atendimento"
-        WAITING_USER = "waiting_user", "Aguardando jogador"
-        WAITING_TEAM = "waiting_team", "Aguardando equipe"
-        RESOLVED = "resolved", "Resolvido"
-        CLOSED = "closed", "Fechado"
+        OPEN = "open", _("Aberto")
+        IN_PROGRESS = "in_progress", _("Em atendimento")
+        WAITING_USER = "waiting_user", _("Aguardando jogador")
+        WAITING_TEAM = "waiting_team", _("Aguardando equipe")
+        RESOLVED = "resolved", _("Resolvido")
+        CLOSED = "closed", _("Fechado")
 
     class Category(models.TextChoices):
         """Valores aceitos para Category em Ticket.
@@ -40,14 +41,14 @@ class Ticket(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        TECHNICAL = "technical", "Problema técnico"
-        BILLING = "billing", "Pagamento e loja"
-        ACCOUNT = "account", "Conta e segurança"
-        GAME = "game", "Suporte ao jogo"
-        BUG = "bug", "Relatar um bug"
-        REPORT = "report", "Denúncia"
-        SUGGESTION = "suggestion", "Sugestão"
-        OTHER = "other", "Outro assunto"
+        TECHNICAL = "technical", _("Problema técnico")
+        BILLING = "billing", _("Pagamento e loja")
+        ACCOUNT = "account", _("Conta e segurança")
+        GAME = "game", _("Suporte ao jogo")
+        BUG = "bug", _("Relatar um bug")
+        REPORT = "report", _("Denúncia")
+        SUGGESTION = "suggestion", _("Sugestão")
+        OTHER = "other", _("Outro assunto")
 
     class Priority(models.TextChoices):
         """Valores aceitos para Priority em Ticket.
@@ -56,10 +57,10 @@ class Ticket(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        LOW = "low", "Baixa"
-        NORMAL = "normal", "Normal"
-        HIGH = "high", "Alta"
-        URGENT = "urgent", "Urgente"
+        LOW = "low", _("Baixa")
+        NORMAL = "normal", _("Normal")
+        HIGH = "high", _("Alta")
+        URGENT = "urgent", _("Urgente")
 
     protocol = models.CharField(max_length=24, unique=True, editable=False, default=make_protocol)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="support_tickets")
@@ -82,8 +83,8 @@ class Ticket(BaseModel):
     last_activity_at = models.DateTimeField(default=timezone.now, db_index=True)
 
     class Meta:
-        verbose_name = "Chamado"
-        verbose_name_plural = "Chamados"
+        verbose_name=_("Chamado")
+        verbose_name_plural=_("Chamados")
         ordering = ["-last_activity_at"]
         indexes = [
             models.Index(fields=["user", "status"], name="pdl_ticket_user_status"),
@@ -109,7 +110,7 @@ class TicketMessage(BaseModel):
     is_internal = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Mensagem do chamado"
-        verbose_name_plural = "Mensagens dos chamados"
+        verbose_name=_("Mensagem do chamado")
+        verbose_name_plural=_("Mensagens dos chamados")
         ordering = ["created_at"]
 

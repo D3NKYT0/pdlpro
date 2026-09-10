@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -20,8 +21,8 @@ class Notification(BaseModel):
     is_read = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Notificação"
-        verbose_name_plural = "Notificações"
+        verbose_name=_("Notificação")
+        verbose_name_plural=_("Notificações")
         ordering = ["-created_at"]
 
 
@@ -39,6 +40,6 @@ class PushSubscription(BaseModel):
     p256dh = models.CharField(max_length=255)
 
     class Meta:
-        verbose_name = "Inscrição push"
-        verbose_name_plural = "Inscrições push"
+        verbose_name=_("Inscrição push")
+        verbose_name_plural=_("Inscrições push")
         unique_together = ("user", "endpoint")

@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import models, transaction
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -20,8 +21,8 @@ class Wallet(BaseModel):
     bonus_balance = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
 
     class Meta:
-        verbose_name = "Carteira"
-        verbose_name_plural = "Carteiras"
+        verbose_name=_("Carteira")
+        verbose_name_plural=_("Carteiras")
 
     def __str__(self) -> str:
         return f"Carteira de {self.user}"
@@ -42,8 +43,8 @@ class WalletTransaction(BaseModel):
         persistido e o rótulo é usado na apresentação.
         """
 
-        CREDIT = "ENTRADA", "Entrada"
-        DEBIT = "SAIDA", "Saída"
+        CREDIT = "ENTRADA", _("Entrada")
+        DEBIT = "SAIDA", _("Saída")
 
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name="transactions")
     kind = models.CharField(max_length=10, choices=Kind.choices)
@@ -53,8 +54,8 @@ class WalletTransaction(BaseModel):
     destination = models.CharField(max_length=100, blank=True)
 
     class Meta:
-        verbose_name = "Transação"
-        verbose_name_plural = "Transações"
+        verbose_name=_("Transação")
+        verbose_name_plural=_("Transações")
 
 
 class CoinConfig(BaseModel):
@@ -72,8 +73,8 @@ class CoinConfig(BaseModel):
     withdraw_fee_percent = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("0.00"))
 
     class Meta:
-        verbose_name = "Configuração de moeda"
-        verbose_name_plural = "Configurações de moeda"
+        verbose_name=_("Configuração de moeda")
+        verbose_name_plural=_("Configurações de moeda")
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
@@ -97,8 +98,8 @@ class CoinPurchaseBonus(BaseModel):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Bônus de compra"
-        verbose_name_plural = "Bônus de compra"
+        verbose_name=_("Bônus de compra")
+        verbose_name_plural=_("Bônus de compra")
         ordering = ["order", "min_amount"]
 
     def __str__(self) -> str:
@@ -121,8 +122,8 @@ class CoinPurchasePromo(BaseModel):
     ends_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = "Promoção de recarga"
-        verbose_name_plural = "Promoções de recarga"
+        verbose_name=_("Promoção de recarga")
+        verbose_name_plural=_("Promoções de recarga")
         ordering = ["-updated_at"]
 
     def __str__(self) -> str:
@@ -172,8 +173,8 @@ class CoinPackage(BaseModel):
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Pacote de moedas"
-        verbose_name_plural = "Pacotes de moedas"
+        verbose_name=_("Pacote de moedas")
+        verbose_name_plural=_("Pacotes de moedas")
         ordering = ["sort_order", "coins"]
 
     def __str__(self) -> str:

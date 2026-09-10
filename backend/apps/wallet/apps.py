@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class WalletConfig(AppConfig):
@@ -11,7 +12,7 @@ class WalletConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.wallet"
     label = "wallet"
-    verbose_name = "Carteira"
+    verbose_name=_("Carteira")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 
@@ -19,8 +20,8 @@ class ManagedLineageAccount(BaseModel):
     is_primary = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Conta Lineage"
-        verbose_name_plural = "Contas Lineage"
+        verbose_name=_("Conta Lineage")
+        verbose_name_plural=_("Contas Lineage")
         unique_together = ("user", "login")
 
     def __str__(self) -> str:
@@ -39,8 +40,8 @@ class AccountLinkSlot(BaseModel):
     extra_slots = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Slot de vínculo"
-        verbose_name_plural = "Slots de vínculo"
+        verbose_name=_("Slot de vínculo")
+        verbose_name_plural=_("Slots de vínculo")
 
 
 class ServicePrice(BaseModel):
@@ -55,8 +56,8 @@ class ServicePrice(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Preço de serviço"
-        verbose_name_plural = "Preços de serviço"
+        verbose_name=_("Preço de serviço")
+        verbose_name_plural=_("Preços de serviço")
 
     def __str__(self) -> str:
         return self.name
@@ -87,8 +88,8 @@ class IndexConfig(BaseModel):
     coming_soon_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = "Configuração do painel"
-        verbose_name_plural = "Configurações do painel"
+        verbose_name=_("Configuração do painel")
+        verbose_name_plural=_("Configurações do painel")
 
     def __str__(self) -> str:
         return self.name or self.slogan or "Configuração do painel"

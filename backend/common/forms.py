@@ -4,6 +4,7 @@ from decimal import Decimal, InvalidOperation
 from django import forms
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.utils.html import strip_tags
+from django.utils.translation import gettext as _
 
 _MONEY_TERMS = (
     "price",
@@ -226,15 +227,17 @@ class PDLAdminFormMixin:
 
         kind = widget.attrs.get("data-pdl-kind")
         placeholders = {
-            "email": "nome@exemplo.com",
+            "email": _("nome@exemplo.com"),
             "url": "https://...",
-            "date": "dd/mm/aaaa",
-            "datetime": "dd/mm/aaaa hh:mm",
-            "time": "hh:mm",
-            "money": "0,00",
-            "json": '{"chave": "valor"}',
+            "date": _("dd/mm/aaaa"),
+            "datetime": _("dd/mm/aaaa hh:mm"),
+            "time": _("hh:mm"),
+            "money": _("0,00"),
+            "json": _('{"chave": "valor"}'),
         }
-        widget.attrs["placeholder"] = placeholders.get(kind, help_text or f"Informe {label.lower()}")
+        widget.attrs["placeholder"] = placeholders.get(
+            kind, help_text or _("Informe %(label)s") % {"label": label.lower()}
+        )
 
     def _field_kind(self, field_name, field, widget):
         name = field_name.lower()

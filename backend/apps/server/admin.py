@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from apps.server.infrastructure.models import (
     IndexConfig,
@@ -63,10 +64,10 @@ class IndexConfigAdmin(PDLModelAdmin):
 
     list_display = ("name", "chronicle", "coming_soon", "coming_soon_at", "is_active", "updated_at")
     fieldsets = (
-        ("Identidade", {"fields": ("name", "slogan", "description", "chronicle", "is_active")}),
-        ("Rates", {"fields": ("rates", "enchant", "max_level", "features", "notes")}),
+        (_("Identidade"), {"fields": ("name", "slogan", "description", "chronicle", "is_active")}),
+        (_("Rates"), {"fields": ("rates", "enchant", "max_level", "features", "notes")}),
         (
-            "Coming Soon",
+            _("Coming Soon"),
             {
                 "fields": (
                     "coming_soon",

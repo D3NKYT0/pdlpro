@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class AuctionConfig(AppConfig):
@@ -11,7 +12,7 @@ class AuctionConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.auction"
     label = "auction"
-    verbose_name = "Leilão"
+    verbose_name=_("Leilão")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

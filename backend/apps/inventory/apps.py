@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class InventoryConfig(AppConfig):
@@ -11,7 +12,7 @@ class InventoryConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.inventory"
     label = "inventory"
-    verbose_name = "Inventário"
+    verbose_name=_("Inventário")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

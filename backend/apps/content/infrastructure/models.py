@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel, InternalModel
 
@@ -34,8 +35,8 @@ class News(TitleSlugMixin, BaseModel):
     is_published = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Notícia"
-        verbose_name_plural = "Notícias"
+        verbose_name=_("Notícia")
+        verbose_name_plural=_("Notícias")
         ordering = ["-published_at"]
 
     def __str__(self) -> str:
@@ -52,25 +53,25 @@ class Faq(BaseModel):
     """
 
     class Category(models.TextChoices):
-        GETTING_STARTED = "getting_started", "Primeiros passos"
-        ACCOUNT_SECURITY = "account_security", "Conta e segurança"
-        GAME_ACCOUNTS = "game_accounts", "Contas e personagens"
-        ECONOMY = "economy", "Carteira e inventário"
-        COMMERCE = "commerce", "Loja e comércio"
-        GAMES_REWARDS = "games_rewards", "Jogos e recompensas"
-        COMMUNITY = "community", "Conteúdo e comunidade"
-        SUPPORT = "support", "Ajuda e atendimento"
+        GETTING_STARTED = "getting_started", _("Primeiros passos")
+        ACCOUNT_SECURITY = "account_security", _("Conta e segurança")
+        GAME_ACCOUNTS = "game_accounts", _("Contas e personagens")
+        ECONOMY = "economy", _("Carteira e inventário")
+        COMMERCE = "commerce", _("Loja e comércio")
+        GAMES_REWARDS = "games_rewards", _("Jogos e recompensas")
+        COMMUNITY = "community", _("Conteúdo e comunidade")
+        SUPPORT = "support", _("Ajuda e atendimento")
 
     class Audience(models.TextChoices):
-        PUBLIC = "public", "Todos os usuários"
-        STAFF = "staff", "Equipe"
-        SUPERADMIN = "superadmin", "Superadministradores"
+        PUBLIC = "public", _("Todos os usuários")
+        STAFF = "staff", _("Equipe")
+        SUPERADMIN = "superadmin", _("Superadministradores")
 
     question = models.CharField(max_length=250)
     short_answer = models.CharField(
         max_length=400,
         blank=True,
-        help_text="Resposta rápida exibida primeiro pelo assistente; a resposta completa traz os detalhes.",
+        help_text=_("Resposta rápida exibida primeiro pelo assistente; a resposta completa traz os detalhes."),
     )
     answer = models.TextField()
     question_en = models.CharField(max_length=250, blank=True)
@@ -83,34 +84,34 @@ class Faq(BaseModel):
     keywords = models.CharField(
         max_length=500,
         blank=True,
-        help_text="Termos alternativos separados por vírgulas usados para localizar esta orientação.",
+        help_text=_("Termos alternativos separados por vírgulas usados para localizar esta orientação."),
     )
     keywords_en = models.CharField(
         max_length=500,
         blank=True,
-        help_text="English alternative terms separated by commas.",
+        help_text=_("English alternative terms separated by commas."),
     )
     keywords_es = models.CharField(
         max_length=500,
         blank=True,
-        help_text="Términos alternativos en español separados por comas.",
+        help_text=_("Términos alternativos en español separados por comas."),
     )
     audience = models.CharField(
         max_length=16,
         choices=Audience.choices,
         default=Audience.PUBLIC,
-        help_text="Público mínimo autorizado a receber este artigo no assistente.",
+        help_text=_("Público mínimo autorizado a receber este artigo no assistente."),
     )
     assistant_only = models.BooleanField(
         default=False,
-        help_text="Se marcado, o artigo fica só na consulta do Denkynho e não aparece na página FAQ nem nas sugestões.",
+        help_text=_("Se marcado, o artigo fica só na consulta do Denkynho e não aparece na página FAQ nem nas sugestões."),
     )
     order = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "FAQ"
-        verbose_name_plural = "FAQ"
+        verbose_name=_("FAQ")
+        verbose_name_plural=_("FAQ")
         ordering = ["order", "question"]
 
     def __str__(self) -> str:
@@ -122,8 +123,8 @@ class DenkynhoHandbook(Faq):
 
     class Meta:
         proxy = True
-        verbose_name = "Passo a passo do Denkynho"
-        verbose_name_plural = "Passos a passo do Denkynho"
+        verbose_name=_("Passo a passo do Denkynho")
+        verbose_name_plural=_("Passos a passo do Denkynho")
 
 
 class DenkynhoProfile(BaseModel):
@@ -160,39 +161,39 @@ class DenkynhoProfile(BaseModel):
     )
     experience = models.PositiveIntegerField(default=0)
     level = models.PositiveSmallIntegerField(default=1)
-    appearance = models.JSONField(default=dict, blank=True, help_text="Peças cosméticas liberadas e equipadas pelo usuário.")
+    appearance = models.JSONField(default=dict, blank=True, help_text=_("Peças cosméticas liberadas e equipadas pelo usuário."))
     last_decay_at = models.DateTimeField(default=timezone.now)
     empathy = models.CharField(
         max_length=16,
         blank=True,
         default="",
-        help_text="Sentimento do usuário que o mascote está acompanhando; vazio quando não há empatia ativa.",
+        help_text=_("Sentimento do usuário que o mascote está acompanhando; vazio quando não há empatia ativa."),
     )
     empathy_expires_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text="Quando a empatia expira, o humor volta a ser calculado só pelas necessidades do mascote.",
+        help_text=_("Quando a empatia expira, o humor volta a ser calculado só pelas necessidades do mascote."),
     )
     preferred_name = models.CharField(
         max_length=30,
         blank=True,
         default="",
-        help_text="Apelido opcional da conversa; não armazena o histórico.",
+        help_text=_("Apelido opcional da conversa; não armazena o histórico."),
     )
     detail = models.CharField(
         max_length=10,
         blank=False,
         default="balanced",
-        help_text="Tamanho preferido das respostas: brief, balanced ou detailed.",
+        help_text=_("Tamanho preferido das respostas: brief, balanced ou detailed."),
     )
     last_visit_on = models.DateField(
         default=timezone.localdate,
-        help_text="Último dia em que o mascote registrou uma visita; o bônus diário não se acumula.",
+        help_text=_("Último dia em que o mascote registrou uma visita; o bônus diário não se acumula."),
     )
 
     class Meta:
-        verbose_name = "Perfil do Denkynho"
-        verbose_name_plural = "Perfis do Denkynho"
+        verbose_name=_("Perfil do Denkynho")
+        verbose_name_plural=_("Perfis do Denkynho")
 
 
 class DenkynhoCareAction(InternalModel):
@@ -203,13 +204,13 @@ class DenkynhoCareAction(InternalModel):
     """
 
     class Action(models.TextChoices):
-        FEED = "feed", "Alimentar"
-        SLEEP = "sleep", "Dormir"
-        PLAY = "play", "Brincar"
-        CARE = "care", "Dar carinho"
-        BATH = "bath", "Dar banho"
-        WALK = "walk", "Caminhar"
-        DANCE = "dance", "Dançar juntos"
+        FEED = "feed", _("Alimentar")
+        SLEEP = "sleep", _("Dormir")
+        PLAY = "play", _("Brincar")
+        CARE = "care", _("Dar carinho")
+        BATH = "bath", _("Dar banho")
+        WALK = "walk", _("Caminhar")
+        DANCE = "dance", _("Dançar juntos")
 
     profile = models.ForeignKey(
         DenkynhoProfile,
@@ -221,8 +222,8 @@ class DenkynhoCareAction(InternalModel):
     xp_gained = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Cuidado do Denkynho"
-        verbose_name_plural = "Cuidados do Denkynho"
+        verbose_name=_("Cuidado do Denkynho")
+        verbose_name_plural=_("Cuidados do Denkynho")
         constraints: ClassVar[list[models.UniqueConstraint]] = [
             models.UniqueConstraint(
                 fields=["profile", "idempotency_key"],
@@ -244,8 +245,8 @@ class DownloadLink(BaseModel):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Download"
-        verbose_name_plural = "Downloads"
+        verbose_name=_("Download")
+        verbose_name_plural=_("Downloads")
         ordering = ["order"]
 
     def __str__(self) -> str:
@@ -275,8 +276,8 @@ class WikiPage(TitleSlugMixin, BaseModel):
     is_menu_item = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Página do wiki"
-        verbose_name_plural = "Wiki"
+        verbose_name=_("Página do wiki")
+        verbose_name_plural=_("Wiki")
         ordering = ["order", "title"]
 
     def __str__(self) -> str:
@@ -297,8 +298,8 @@ class CalendarEvent(BaseModel):
     is_published = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Evento"
-        verbose_name_plural = "Calendário"
+        verbose_name=_("Evento")
+        verbose_name_plural=_("Calendário")
         ordering = ["starts_at"]
 
     def __str__(self) -> str:
