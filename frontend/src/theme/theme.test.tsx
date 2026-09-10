@@ -46,6 +46,7 @@ it('remapeia folhas estruturais via assets lógicos', () => {
   expect(PUBLIC_THEME_STYLES.map((href) => href)).toContain('/media/themes/demo/coming-soon.css')
   expect(PUBLIC_THEME_STYLES.map((href) => href)).toContain('/media/themes/demo/layout.css')
   expect(PANEL_THEME_STYLES.map((href) => href)).toContain('/theme/pages/panel.css')
+  expect(PANEL_THEME_STYLES.map((href) => href)).toContain('/theme/public/css/terms.css')
 })
 it('aplica superfícies e densidade a partir do layout do pacote', () => {
   configureRuntimeTheme({

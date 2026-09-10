@@ -110,6 +110,7 @@ it.each(['/terms', '/privacy', '/agreement', '/cookies', '/lgpd'])('documento le
   expect(contentApi.legalDocument).toHaveBeenCalledWith(slug, 'pt')
   expect(screen.getByText('Versão v2')).toBeTruthy()
   expect(screen.getByRole('heading', { name: 'Seção' })).toBeTruthy()
+  expect(document.querySelector('.public-body.public-body--rich')).toBeTruthy()
 })
 
 it('calendário mostra título e descrição do evento', async () => {

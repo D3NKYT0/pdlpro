@@ -159,6 +159,8 @@ function panelThemeStyles(): string[] {
     themeAsset('css/font/stylesheet.css'),
     themeAsset('css/font.css'),
     themeStylesheet('css/pages/panel.css', '/theme/pages/panel.css'),
+    /* Banner/gate legais também no painel (mesmo contrato remapeável do público). */
+    themeStylesheet('css/public/terms.css', '/theme/public/css/terms.css'),
   ]
 }
 

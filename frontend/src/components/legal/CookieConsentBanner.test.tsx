@@ -32,7 +32,10 @@ function mount() {
 
 it('mostra banner até aceitar e persiste consentimento versionado', async () => {
   const user = mount()
-  expect(screen.getByRole('dialog', { name: /cookies/i })).toBeTruthy()
+  const banner = screen.getByRole('dialog', { name: /cookies/i })
+  expect(banner).toBeTruthy()
+  expect(banner.getAttribute('data-theme-surface')).toBe('overlay')
+  expect(banner.getAttribute('data-theme-part')).toBe('cookie-banner')
   await user.click(screen.getByRole('button', { name: /aceitar todos/i }))
   expect(screen.queryByRole('dialog', { name: /cookies/i })).toBeNull()
   const stored = JSON.parse(localStorage.getItem(COOKIE_STORAGE_KEY) || '{}')

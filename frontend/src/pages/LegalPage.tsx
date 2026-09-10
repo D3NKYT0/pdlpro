@@ -69,7 +69,10 @@ export function LegalPage() {
           <article className="public-prose">
             {doc.data.version ? <span className="public-kicker">{t('legal.version', { version: doc.data.version })}</span> : null}
             {bodyHtml ? (
-              <div className="public-body" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+              <div
+                className="public-body public-body--rich"
+                dangerouslySetInnerHTML={{ __html: bodyHtml }}
+              />
             ) : (
               <div className="public-body">{doc.data.body}</div>
             )}

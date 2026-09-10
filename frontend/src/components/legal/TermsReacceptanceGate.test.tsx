@@ -56,7 +56,10 @@ it('bloqueia o painel até aceitar a nova versão dos documentos', async () => {
     </I18nextProvider>,
   )
 
-  expect(screen.getByRole('dialog', { name: /documentos legais/i })).toBeTruthy()
+  const gate = screen.getByRole('dialog', { name: /documentos legais/i })
+  expect(gate).toBeTruthy()
+  expect(gate.getAttribute('data-theme-surface')).toBe('overlay')
+  expect(gate.getAttribute('data-theme-part')).toBe('terms-gate')
   await user.click(screen.getByRole('button', { name: /aceitar e continuar/i }))
   expect(screen.getByRole('alert')).toBeTruthy()
   expect(acceptTerms).not.toHaveBeenCalled()

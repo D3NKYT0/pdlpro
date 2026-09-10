@@ -14,6 +14,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Chrome visual das áreas legais e cookies alinhado ao tema público (ouro/marrom,
+  `public-pages.css` + `terms.css` remapeável no público e no painel), no lugar
+  do CSS genérico empacotado no Vite.
+
 ## [2.3.0] - 2026-09-10
 
 Alterações desde **9 de setembro de 2026** (após `[2.2.0]`), consolidadas pelo histórico

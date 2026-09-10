@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
 import { useCookieConsent, type CookieConsent } from '../../contexts/CookieConsentContext'
-import './legal.css'
 
 const OPTIONAL: Array<keyof Omit<CookieConsent, 'essential'>> = ['functional', 'analytics', 'marketing']
 
@@ -42,7 +41,14 @@ export function CookieConsentBanner() {
   return (
     <>
       {showBanner ? (
-        <aside className="cookie-banner" role="dialog" aria-live="polite" aria-label={t('cookieConsent.bannerAria')}>
+        <aside
+          className="cookie-banner"
+          data-theme-surface="overlay"
+          data-theme-part="cookie-banner"
+          role="dialog"
+          aria-live="polite"
+          aria-label={t('cookieConsent.bannerAria')}
+        >
           <div className="cookie-banner-copy">
             <strong>{t('cookieConsent.bannerTitle')}</strong>
             <p>
@@ -69,6 +75,8 @@ export function CookieConsentBanner() {
       {isSettingsOpen ? (
         <div
           className="cookie-modal-backdrop"
+          data-theme-surface="overlay"
+          data-theme-part="cookie-modal"
           role="dialog"
           aria-modal="true"
           aria-label={t('cookieConsent.modalAria')}

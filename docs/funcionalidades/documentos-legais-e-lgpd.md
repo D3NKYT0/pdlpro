@@ -49,6 +49,11 @@ O banner de cookies é **client-only** (`localStorage` `PDL_cookie_consent`), co
 categorias essenciais / funcionais / analíticos / marketing. Cookies JWT de
 sessão são essenciais e não podem ser desligados pelo banner.
 
+O chrome visual (banner, modal de preferências e gate de reaceitação) vive em
+`css/public/terms.css` (carregado no tema público e no painel, remapeável). O
+corpo das páginas legais e o histórico usam `css/pages/public-pages.css`, no
+mesmo padrão de Wiki/FAQ/Notícias.
+
 ## Direitos do titular (nesta versão)
 
 Pedidos de acesso, correção, portabilidade e exclusão são atendidos via suporte

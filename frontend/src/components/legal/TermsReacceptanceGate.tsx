@@ -5,7 +5,6 @@ import { Button } from '../ui/Button'
 import { useAuth } from '../../contexts/AuthContext'
 import { authApi } from '../../services/api'
 import { apiErrorMessage } from '../../lib/errors'
-import './legal.css'
 
 export function TermsReacceptanceGate() {
   const { t } = useTranslation('public')
@@ -37,7 +36,14 @@ export function TermsReacceptanceGate() {
   }
 
   return (
-    <div className="terms-reacceptance-gate" role="dialog" aria-modal="true" aria-labelledby="terms-reacceptance-title">
+    <div
+      className="terms-reacceptance-gate"
+      data-theme-surface="overlay"
+      data-theme-part="terms-gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="terms-reacceptance-title"
+    >
       <div className="terms-reacceptance-panel">
         <h2 id="terms-reacceptance-title">
           {firstAcceptance ? t('legalGate.firstTitle') : t('legalGate.updateTitle')}

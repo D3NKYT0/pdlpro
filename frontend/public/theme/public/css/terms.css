@@ -1,1 +1,221 @@
-/* Legal pages use /theme/pages/public-pages.css */
+/* Banner de cookies, preferências e gate de reaceitação (público + painel). */
+
+.cookie-banner {
+  position: fixed;
+  z-index: 1200;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.15rem 1.4rem;
+  border: 1px solid #3d3223;
+  background: rgba(10, 9, 7, 0.96);
+  color: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+}
+
+.cookie-banner-copy {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.cookie-banner-copy strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #e6c77d;
+  font-family: Cambria, Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.cookie-banner-copy p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.cookie-banner-copy a {
+  color: #c5a161;
+}
+
+.cookie-banner-copy a:hover {
+  color: #fff;
+  text-shadow: 0 0 14px orange;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cookie-modal-backdrop,
+.terms-reacceptance-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(4, 3, 2, 0.78);
+}
+
+.terms-reacceptance-gate {
+  z-index: 1400;
+}
+
+.cookie-modal,
+.terms-reacceptance-panel {
+  width: min(34rem, 100%);
+  max-height: min(86vh, 720px);
+  overflow: auto;
+  padding: 1.5rem 1.6rem 1.4rem;
+  border: 1px solid rgba(230, 199, 125, 0.28);
+  background: rgba(12, 10, 8, 0.96);
+  color: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.cookie-modal header h2,
+.terms-reacceptance-panel h2 {
+  margin: 0 0 0.45rem;
+  color: #e6c77d;
+  font-family: Cambria, Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.cookie-modal header p,
+.terms-reacceptance-panel > p {
+  margin: 0 0 1.1rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.98rem;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.cookie-modal-categories {
+  list-style: none;
+  margin: 0 0 1.15rem;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border: 1px solid #3d3223;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.cookie-modal-categories li {
+  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+}
+
+.cookie-modal-categories li:last-child {
+  border-bottom: 0;
+}
+
+.cookie-modal-categories label {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+}
+
+.cookie-modal-categories input[type='checkbox'] {
+  margin-top: 0.2rem;
+  accent-color: #c5a161;
+}
+
+.cookie-modal-categories strong {
+  display: block;
+  color: #e6c77d;
+  font-weight: 400;
+}
+
+.cookie-modal-categories small {
+  display: block;
+  margin-top: 0.2rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.cookie-modal-actions,
+.terms-reacceptance-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.35rem;
+}
+
+.terms-reacceptance-links {
+  margin: 0 0 1rem;
+  padding: 0.85rem 0.85rem 0.85rem 1.6rem;
+  border: 1px solid #3d3223;
+  background: rgba(0, 0, 0, 0.35);
+  list-style: disc;
+}
+
+.terms-reacceptance-links li {
+  margin: 0.35rem 0;
+}
+
+.terms-reacceptance-links a {
+  color: #c5a161;
+}
+
+.terms-reacceptance-links a:hover {
+  color: #fff;
+  text-shadow: 0 0 14px orange;
+}
+
+.terms-reacceptance-panel .auth-check {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.terms-reacceptance-panel .auth-check a {
+  color: #c5a161;
+}
+
+.terms-reacceptance-panel .ui-error {
+  color: #e8a090;
+  margin: 0.65rem 0 0;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .cookie-banner {
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    padding: 1rem 1.05rem;
+  }
+
+  .cookie-banner-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .cookie-banner-actions .btn,
+  .cookie-banner-actions button {
+    flex: 1 1 auto;
+  }
+
+  .cookie-modal,
+  .terms-reacceptance-panel {
+    padding: 1.2rem 1.1rem 1.1rem;
+  }
+}

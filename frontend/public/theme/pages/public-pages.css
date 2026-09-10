@@ -374,6 +374,152 @@
   word-break: break-word;
 }
 
+.public-body.public-body--rich {
+  white-space: normal;
+}
+
+.public-prose a,
+.public-body a {
+  color: #c5a161;
+}
+
+.public-prose a:hover,
+.public-body a:hover {
+  color: #fff;
+  text-shadow: 0 0 14px orange;
+}
+
+.public-body h2,
+.public-body h3,
+.public-body h4 {
+  color: #e6c77d;
+  font-family: Cambria, Georgia, serif;
+  font-weight: 300;
+  line-height: 1.3;
+  margin: 1.6rem 0 0.55rem;
+}
+
+.public-body h2 {
+  font-size: 1.55rem;
+}
+
+.public-body h3 {
+  font-size: 1.25rem;
+}
+
+.public-body h4 {
+  font-size: 1.05rem;
+}
+
+.public-body p {
+  margin: 0 0 0.9rem;
+}
+
+.public-body ul,
+.public-body ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+}
+
+.public-body li {
+  margin: 0.25rem 0;
+}
+
+.public-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.25rem;
+  font-size: 0.95rem;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.public-body th,
+.public-body td {
+  border: 1px solid #3d3223;
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.public-body th {
+  color: #e6c77d;
+  font-weight: 400;
+  background: rgba(197, 161, 97, 0.08);
+}
+
+.public-prose .muted,
+.legal-history .muted {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.92rem;
+}
+
+.legal-history-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border: 1px solid #3d3223;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.legal-history-item {
+  padding: 1.35rem 1.4rem;
+  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+}
+
+.legal-history-item:last-child {
+  border-bottom: 0;
+}
+
+.legal-history-item h2 {
+  margin: 0 0 0.45rem;
+  color: #e6c77d;
+  font-family: Cambria, Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 300;
+}
+
+.legal-history-item h3 {
+  margin: 1rem 0 0.4rem;
+  color: #c5a161;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.legal-history-item .public-kicker {
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.legal-history-item ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.legal-history-item li {
+  margin: 0.3rem 0;
+}
+
+button.linkish {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #c5a161;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+  font: inherit;
+}
+
+button.linkish:hover {
+  color: #fff;
+  text-shadow: 0 0 14px orange;
+}
+
 .public-back {
   display: inline-flex;
   align-items: center;
