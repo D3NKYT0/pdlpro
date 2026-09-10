@@ -24,6 +24,7 @@
       "tickets": { "title": "Ticket queue", "description": "SLA, owners, replies and player history" },
       "resources": { "title": "Resource control", "description": "Enable or pause modules by category" },
       "themes": { "title": "Themes", "description": "Install, activate and restore the frontend look" },
+      "api": { "title": "API", "description": "OpenAPI documentation (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "Full system CRUD" },
       "coins": { "title": "Coins", "description": "Active currency, multiplier and rate" },
       "shop": { "title": "Shop", "description": "Items sold in the panel" },

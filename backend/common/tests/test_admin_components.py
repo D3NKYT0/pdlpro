@@ -28,6 +28,25 @@ def test_catalog_requires_active_staff(client, is_staff, is_active, allowed):
         assert client.post(reverse("admin-components")).status_code == 405
 
 
+@pytest.mark.django_db
+def test_admin_header_links_to_api_and_panel(client, settings):
+    panel_url = "https://painel.example.test"
+    settings.FRONTEND_URL = panel_url
+    settings.JAZZMIN_SETTINGS = {**settings.JAZZMIN_SETTINGS, "frontend_url": panel_url}
+    user = get_user_model().objects.create_superuser(
+        username="hub-nav",
+        email="hub-nav@example.com",
+        password="test-password",
+    )
+    client.force_login(user)
+    response = client.get(reverse("admin:index"))
+    assert response.status_code == 200
+    body = response.content.decode()
+    assert f'href="{reverse("swagger-ui")}"' in body
+    assert f'href="{panel_url}"' in body
+    assert f'href="{reverse("admin-components")}"' in body
+
+
 def test_catalog_redirects_visitor_to_admin_login(client):
     response = client.get(reverse("admin-components"))
     assert response.status_code == 302

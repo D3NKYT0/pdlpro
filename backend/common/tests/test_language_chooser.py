@@ -127,8 +127,14 @@ def test_openapi_schema_translates_with_lang_query():
     headers = {"HTTP_ACCEPT": "application/json"}
     pt = Client().get("/api/schema/?lang=pt", **headers).json()
     en = Client().get("/api/schema/?lang=en", **headers).json()
+    es = Client().get("/api/schema/?lang=es", **headers).json()
     assert pt["info"]["title"]
     assert en["info"]["title"]
+    assert "## Autenticação" in pt["info"]["description"]
+    assert "## Authentication" in en["info"]["description"]
+    assert "## Autenticación" in es["info"]["description"]
+    assert "API-only backend" in en["info"]["description"]
+    assert "Backend solo API" in es["info"]["description"]
     pt_tags = {tag["name"]: tag.get("description", "") for tag in pt.get("tags", [])}
     en_tags = {tag["name"]: tag.get("description", "") for tag in en.get("tags", [])}
     shared = set(pt_tags) & set(en_tags)

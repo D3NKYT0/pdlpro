@@ -6,7 +6,7 @@ O Django Admin/Jazzmin, o login administrativo e a documentação HTTP compartil
 
 ## Catálogo dentro do admin
 
-Abra **Componentes** na barra superior ou acesse `/admin/components/`. A página exige usuário ativo da equipe, aceita somente GET e demonstra ações locais sem alterar registros. Inclui variantes, tamanhos, ícone, link indisponível e estado de envio de um `input[type="submit"]`.
+A barra superior do Jazzmin inclui atalhos para a **API** (Swagger), o **Painel** (`FRONTEND_URL`) e **Componentes**. Abra **Componentes** ou acesse `/admin/components/`. A página exige usuário ativo da equipe, aceita somente GET e demonstra ações locais sem alterar registros. Inclui variantes, tamanhos, ícone, link indisponível e estado de envio de um `input[type="submit"]`.
 
 O catálogo usa o [template real do admin](../../backend/templates/admin/pdl_components.html). Sua proteção vem de `admin.site.admin_view`; não remova essa proteção ao acrescentar exemplos.
 

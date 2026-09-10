@@ -13,6 +13,8 @@ describe('AdminHubPage', () => {
     expect(html).toContain('Programas e expansão')
     expect(html).toContain('Fila de chamados')
     expect(html).toMatch(/data-tone="system"[\s\S]*Controle de recursos/)
+    expect(html).toMatch(/data-tone="system"[\s\S]*href="\/api\/docs\/swagger-ui\/"[\s\S]*API/)
+    expect(html).toContain('Documentação OpenAPI (Swagger)')
     expect(html).not.toMatch(/data-tone="programs"[\s\S]*Controle de recursos[\s\S]*data-tone="support"/)
     expect(html).toMatch(/data-tone="reports"[\s\S]*Relatórios/)
     expect(html).not.toMatch(/data-tone="finance"[\s\S]*Relatórios[\s\S]*data-tone="games"/)

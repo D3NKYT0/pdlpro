@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Atalhos **API** e **Painel** no header do Django Admin/Jazzmin (ao lado de
+  Componentes), espelhando a topbar da documentação OpenAPI.
+- Card **API** no hub `/panel/admin` (módulo Sistema), com link externo para
+  `/api/docs/swagger-ui/` e textos pt/en/es.
 - Área e guia de **extensões de cliente** (`backend/extensions/`,
   `frontend/src/extensions/` com catálogo + `VITE_PDL_EXTENSIONS` e montagem
   em `AppRoutes`, `PDL_EXTENSION_APPS`, `extensions.surface` e skeletons

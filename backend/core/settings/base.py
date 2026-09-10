@@ -216,6 +216,8 @@ SERVER_START_NOTE = env(
 )
 PROJECT_URL = env("PROJECT_URL", default="http://localhost")
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")
+# Exposed to Jazzmin chrome (admin header → Painel), matching OpenAPI docs topbar.
+JAZZMIN_SETTINGS["frontend_url"] = FRONTEND_URL
 WEBAUTHN_RP_ID = env("WEBAUTHN_RP_ID", default="")
 WEBAUTHN_RP_NAME = env("WEBAUTHN_RP_NAME", default="PDL PRO")
 WEBAUTHN_ORIGINS = env.list("WEBAUTHN_ORIGINS", default=[])

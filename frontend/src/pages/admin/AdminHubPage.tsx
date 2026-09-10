@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Bell,
+  Braces,
   ChartNoAxesCombined,
   CalendarDays,
   Coins,
@@ -47,6 +48,7 @@ const categories: Category[] = [
     entries: [
       { to: '/panel/admin/resources', key: 'resources', icon: Settings2 },
       { to: '/panel/admin/themes', key: 'themes', icon: Palette },
+      { to: '/api/docs/swagger-ui/', key: 'api', icon: Braces, external: true },
       { to: '/admin/', key: 'djangoAdmin', icon: ExternalLink, external: true },
     ],
   },

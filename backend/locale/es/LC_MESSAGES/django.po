@@ -4118,7 +4118,11 @@ msgstr "Alternar menú lateral"
 msgid "Central de operações"
 msgstr "Central de operaciones"
 
-#: .\templates\admin\base.html:99
+#: .\templates\admin\base.html:100
+msgid "API"
+msgstr "API"
+
+#: .\templates\admin\base.html:104
 msgid "Componentes"
 msgstr "Componentes"
 
@@ -4385,6 +4389,6 @@ msgstr "Schema"
 msgid "Admin"
 msgstr "Admin"
 
-#: .\templates\pdl_docs\_topbar.html
+#: .\templates\admin\base.html:102 .\templates\pdl_docs\_topbar.html
 msgid "Painel"
 msgstr "Panel"

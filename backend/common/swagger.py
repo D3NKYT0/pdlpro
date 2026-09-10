@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 OPENAPI_TITLE = "PDL PRO API"
 
+# Keep leading/trailing newlines: msgid must match locale/*.po exactly (no .strip()).
 OPENAPI_DESCRIPTION = _(
     """
 API REST do **PDL PRO** (Painel Definitivo Lineage 2.0).
@@ -34,7 +35,7 @@ Backend somente API. O frontend React consome estes contratos.
 
 - Identificadores públicos são UUID (`id`). O `seq_id` sequencial é interno.
 - Erros 4xx/5xx usam o envelope `error_code`, `message`, `details` e `request_id`.
-""".strip()
+"""
 )
 
 
@@ -69,7 +70,9 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Catálogo de itens",
-        "description": _("Consulta pública/autenticada ao catálogo de itens do servidor."),
+        "description": _(
+            "Consulta pública/autenticada ao catálogo de itens do servidor."
+        ),
     },
     {
         "name": "Carteira",
@@ -80,7 +83,9 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Loja",
-        "description": _("Catálogo de itens da loja, carrinho, atualização de itens e checkout."),
+        "description": _(
+            "Catálogo de itens da loja, carrinho, atualização de itens e checkout."
+        ),
     },
     {
         "name": "Comércio",
@@ -131,7 +136,9 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Marketplace",
-        "description": _("Listagens públicas e do jogador, compra e cancelamento no marketplace."),
+        "description": _(
+            "Listagens públicas e do jogador, compra e cancelamento no marketplace."
+        ),
     },
     {
         "name": "Leilão",
@@ -146,7 +153,9 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Webhooks",
-        "description": _("Callbacks de provedores de pagamento (Mercado Pago, Stripe)."),
+        "description": _(
+            "Callbacks de provedores de pagamento (Mercado Pago, Stripe)."
+        ),
     },
     {
         "name": "Notificações",
@@ -154,11 +163,15 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Push",
-        "description": _("Chave VAPID pública e inscrição/remoção de push no navegador."),
+        "description": _(
+            "Chave VAPID pública e inscrição/remoção de push no navegador."
+        ),
     },
     {
         "name": "Atendimento",
-        "description": _("Tickets de suporte do jogador: listagem, criação, detalhe e mensagens."),
+        "description": _(
+            "Tickets de suporte do jogador: listagem, criação, detalhe e mensagens."
+        ),
     },
     {
         "name": "Apoiadores",
@@ -169,11 +182,15 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Roadmap",
-        "description": _("Roadmap público do projeto e CRUD administrativo das entradas."),
+        "description": _(
+            "Roadmap público do projeto e CRUD administrativo das entradas."
+        ),
     },
     {
         "name": "Recursos",
-        "description": _("Flags/recursos do sistema (feature toggles) públicos e administrativos."),
+        "description": _(
+            "Flags/recursos do sistema (feature toggles) públicos e administrativos."
+        ),
     },
     {
         "name": "Temas",
@@ -196,7 +213,9 @@ pdl_swagger_tags: list[dict[str, Any]] = [
     },
     {
         "name": "Staff / Financeiro",
-        "description": _("Relatórios de saldo, reconciliação, fluxo de caixa e pagamentos."),
+        "description": _(
+            "Relatórios de saldo, reconciliação, fluxo de caixa e pagamentos."
+        ),
     },
     {
         "name": "Staff / Relatórios",

@@ -24,6 +24,7 @@
       "tickets": { "title": "Cola de tickets", "description": "SLA, responsables, respuestas e historial del jugador" },
       "resources": { "title": "Control de recursos", "description": "Activar o pausar módulos por categoría" },
       "themes": { "title": "Temas", "description": "Instalar, activar y restaurar la apariencia del frontend" },
+      "api": { "title": "API", "description": "Documentación OpenAPI (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo del sistema" },
       "coins": { "title": "Monedas", "description": "Moneda activa, multiplicador y tasa" },
       "shop": { "title": "Tienda", "description": "Ítems vendidos en el panel" },

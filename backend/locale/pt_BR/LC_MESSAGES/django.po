@@ -3797,7 +3797,11 @@ msgstr ""
 msgid "Central de operações"
 msgstr ""
 
-#: .\templates\admin\base.html:99
+#: .\templates\admin\base.html:100
+msgid "API"
+msgstr ""
+
+#: .\templates\admin\base.html:104
 msgid "Componentes"
 msgstr ""
 
@@ -4064,6 +4068,6 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: .\templates\pdl_docs\_topbar.html
+#: .\templates\admin\base.html:102 .\templates\pdl_docs\_topbar.html
 msgid "Painel"
 msgstr ""
