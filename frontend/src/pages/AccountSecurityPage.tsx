@@ -269,7 +269,16 @@ export function AccountSecurityPage() {
             <header><span><Link2 /></span><div><h2>{t('security.connectionsTitle')}</h2><p>{t('security.connectionsSubtitle')}</p></div></header>
             <div className="security-provider"><GoogleIcon /><span><strong>Google</strong><small>{googleConnected ? t('security.providerConnected') : capabilities.data?.google ? t('security.providerAvailable') : t('security.providerUnavailable')}</small></span><Button type="submit" className="ghost" disabled={googleConnected || !capabilities.data?.google} onClick={() => void beginOAuth('google', 'link')}>{googleConnected ? t('security.connected') : t('security.connect')}</Button></div>
             <div className="security-provider"><DiscordIcon /><span><strong>Discord</strong><small>{discordConnected ? t('security.providerConnected') : capabilities.data?.discord ? t('security.providerAvailable') : t('security.providerUnavailable')}</small></span><Button type="submit" className="ghost" disabled={discordConnected || !capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'link')}>{discordConnected ? t('security.connected') : t('security.connect')}</Button></div>
-            <div className="security-provider"><ShieldCheck /><span><strong>{t('security.captchaTitle')}</strong><small>{capabilities.data?.captcha ? t('security.captchaOn') : t('security.captchaOff')}</small></span><b className={capabilities.data?.captcha ? 'is-on' : 'is-off'}>{capabilities.data?.captcha ? t('security.active') : t('security.captchaConfigure')}</b></div>
+            <div className="security-provider">
+              <ShieldCheck />
+              <span>
+                <strong>{t('security.captchaTitle')}</strong>
+                <small>{capabilities.data?.captcha ? t('security.captchaOn') : t('security.captchaOff')}</small>
+              </span>
+              <b className={capabilities.data?.captcha ? 'is-on' : 'is-off'}>
+                {capabilities.data?.captcha ? t('security.active') : t('security.inactive')}
+              </b>
+            </div>
           </Card>
         </div>
       </div>
