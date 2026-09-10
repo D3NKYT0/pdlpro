@@ -36,12 +36,12 @@ afterEach(() => {
 
 it('aplica o default preservado retornado pela API', async () => {
   vi.mocked(themeApi.active).mockResolvedValue({
-    id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL',
+    id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
     description: '', active: true, builtin: true, base_url: '/theme/default/',
     stylesheet_url: null, assets: {}, layout: null,
   })
   render(<ThemeProvider><Consumer /></ThemeProvider>)
-  expect(await screen.findByText(/PDL Default/)).toHaveTextContent('/theme/default/images/logo.png')
+  expect(await screen.findByText(/PDL Classic/)).toHaveTextContent('/theme/default/images/logo.png')
   expect(document.documentElement.dataset.pdlTheme).toBe('default')
   expect(document.documentElement.dataset.panelDensity).toBe('comfortable')
   expect(document.documentElement.style.getPropertyValue('--theme-button-primary')).toContain('/theme/default/images/button/1.png')
@@ -99,7 +99,7 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
     .mockResolvedValueOnce(themed)
     .mockResolvedValueOnce({
       ...themed,
-      id: 'default', package_id: null, name: 'PDL Default', builtin: true,
+      id: 'default', package_id: null, name: 'PDL Classic', builtin: true,
       base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null, layout: null,
     })
 
@@ -110,7 +110,7 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
   expect(favicon.getAttribute('href')).toBe('/media/themes/valorem/images/favicon.png')
 
   fireEvent(window, new Event('pdl-theme-refresh'))
-  await screen.findByText(/PDL Default/)
+  await screen.findByText(/PDL Classic/)
   expect(favicon.getAttribute('href')).toBe('/favicon-original.png')
   expect(document.querySelector('link[data-pdl-installed-theme]')).toBeNull()
   expect(document.documentElement).not.toHaveAttribute('data-pdl-renderer')

@@ -1,78 +1,23 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
+import { Trans, useTranslation } from 'react-i18next'
 import { contentApi, serverApi } from '../services/api'
 import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
 
-const wikiLinks = [
-  { to: '/info#rates', label: 'Rates e progressão' },
-  { to: '/info#enchant', label: 'Encantamento' },
-  { to: '/info#pvp', label: 'Siege e castelos' },
-  { to: '/info#comecar', label: 'Primeiros passos' },
-  { to: '/faq', label: 'Perguntas frequentes' },
-]
-
-const chronicleCards = [
-  {
-    to: '/news',
-    image: 'home/archive-v2.webp',
-    kicker: 'Crônica',
-    title: 'Notícias do reino',
-  },
-  {
-    to: '/roadmap',
-    image: 'home/cinematic-v2.webp',
-    kicker: 'Temporada',
-    title: 'Roadmap e próximos passos',
-  },
-]
-
-const rankingLinks = [
-  { to: '/rankings?tab=pvp', label: 'PvP', icon: 'fa-khanda' },
-  { to: '/rankings?tab=pk', label: 'PK', icon: 'fa-skull' },
-  { to: '/rankings?tab=adena', label: 'Adena', icon: 'fa-coins' },
-  { to: '/rankings?tab=clans', label: 'Clãs', icon: 'fa-shield-halved' },
-  { to: '/rankings?tab=level', label: 'Nível', icon: 'fa-star' },
-  { to: '/rankings?tab=olympiad', label: 'Olimpíada', icon: 'fa-trophy' },
-]
-
-function formatScore(value: number) {
-  return value.toLocaleString('pt-BR')
-}
-
 function clanInitial(name: string) {
   return (name.trim()[0] || '?').toUpperCase()
 }
-
-const features = [
-  {
-    to: '/info#rates',
-    image: 'home/chronicle-rates-v2.webp',
-    title: 'Crônica e Rates',
-    blurb: 'Progressão, economia e o ritmo do reino',
-  },
-  {
-    to: '/info#pvp',
-    image: 'home/castle-siege-v2.webp',
-    title: 'Guerra de Castelos',
-    blurb: 'Siege, clãs e o domínio de Aden',
-  },
-  {
-    to: '/rankings',
-    image: 'home/hall-of-fame-v2.webp',
-    title: 'Hall da Fama',
-    blurb: 'PvP, olimpíada e os melhores clãs',
-  },
-]
 
 function sectionArt(image: string) {
   return { '--section-art': `url(${themeImage(image)})` } as CSSProperties
 }
 
 function DefaultHomePage() {
+  const { t, i18n } = useTranslation('public')
   const theme = useTheme()
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const news = useQuery({ queryKey: ['news'], queryFn: () => contentApi.news() })
@@ -81,14 +26,68 @@ function DefaultHomePage() {
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
   const trailerId = (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
   const [trailerPlaying, setTrailerPlaying] = useState(false)
-  const serverName =
-    (import.meta.env.VITE_SERVER_NAME as string | undefined) ||
-    theme.name ||
-    'Inicie sua Jornada em Lineage Agora!'
-  const serverDescription =
-    (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined) ||
-    theme.description ||
-    'Onde Lendas Nascem, Heróis Lutam e a Glória é Eterna.'
+  const numberLocale = i18n.language === 'en' ? 'en-US' : i18n.language === 'es' ? 'es-ES' : 'pt-BR'
+  const formatScore = (value: number) => value.toLocaleString(numberLocale)
+
+  const wikiLinks = [
+    { to: '/info#rates', label: t('home.wikiRates') },
+    { to: '/info#enchant', label: t('home.wikiEnchant') },
+    { to: '/info#pvp', label: t('home.wikiSiege') },
+    { to: '/info#comecar', label: t('home.wikiStart') },
+    { to: '/faq', label: t('home.wikiFaq') },
+  ]
+
+  const chronicleCards = [
+    {
+      to: '/news',
+      image: 'home/archive-v2.webp',
+      kicker: t('home.chronicleKicker'),
+      title: t('home.chronicleNews'),
+    },
+    {
+      to: '/roadmap',
+      image: 'home/cinematic-v2.webp',
+      kicker: t('home.seasonKicker'),
+      title: t('home.seasonRoadmap'),
+    },
+  ]
+
+  const rankingLinks = [
+    { to: '/rankings?tab=pvp', label: t('home.rankTabPvp'), icon: 'fa-khanda' },
+    { to: '/rankings?tab=pk', label: t('home.rankTabPk'), icon: 'fa-skull' },
+    { to: '/rankings?tab=adena', label: t('home.rankTabAdena'), icon: 'fa-coins' },
+    { to: '/rankings?tab=clans', label: t('home.rankTabClans'), icon: 'fa-shield-halved' },
+    { to: '/rankings?tab=level', label: t('home.rankTabLevel'), icon: 'fa-star' },
+    { to: '/rankings?tab=olympiad', label: t('home.rankTabOlympiad'), icon: 'fa-trophy' },
+  ]
+
+  const features = [
+    {
+      to: '/info#rates',
+      image: 'home/chronicle-rates-v2.webp',
+      title: t('home.featureRatesTitle'),
+      blurb: t('home.featureRatesBlurb'),
+    },
+    {
+      to: '/info#pvp',
+      image: 'home/castle-siege-v2.webp',
+      title: t('home.featureSiegeTitle'),
+      blurb: t('home.featureSiegeBlurb'),
+    },
+    {
+      to: '/rankings',
+      image: 'home/hall-of-fame-v2.webp',
+      title: t('home.featureFameTitle'),
+      blurb: t('home.featureFameBlurb'),
+    },
+  ]
+
+  const envName = (import.meta.env.VITE_SERVER_NAME as string | undefined)?.trim()
+  const envDescription = (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined)?.trim()
+  const packagedName = !theme.builtin ? theme.name?.trim() : ''
+  const packagedDescription = !theme.builtin ? theme.description?.trim() : ''
+  const serverName = envName || packagedName || t('home.defaultTitle')
+  const serverDescription = envDescription || packagedDescription || t('home.defaultDescription')
   const wikiItems = wiki.data?.length
     ? wiki.data.slice(0, 5).map((page) => ({ to: `/wiki/${page.slug}`, label: page.title }))
     : wikiLinks
@@ -96,7 +95,7 @@ function DefaultHomePage() {
     ? (news.data ?? []).slice(0, 2).map((item, index) => ({
         to: `/news/${item.slug}`,
         image: chronicleCards[index % chronicleCards.length].image,
-        kicker: 'Atualização',
+        kicker: t('home.updateKicker'),
         title: item.title,
       }))
     : chronicleCards
@@ -112,8 +111,8 @@ function DefaultHomePage() {
         <h1>{serverName}</h1>
         <p className="hero-description">"{serverDescription}"</p>
         <div className="h-link">
-          <Link to="/downloads">Baixe o Jogo</Link>
-          <Link to="/register">Crie sua conta mestra</Link>
+          <Link to="/downloads">{t('home.downloadGame')}</Link>
+          <Link to="/register">{t('home.createMaster')}</Link>
         </div>
         <div className="h-scroll">
           <a href="#features">
@@ -126,16 +125,16 @@ function DefaultHomePage() {
         <div className="f-title title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            No mundo de Aden
+            {t('home.featuresKicker')}
           </span>
-          <h1>Crônica, castelos e a glória que definem o Lineage</h1>
+          <h1>{t('home.featuresTitle')}</h1>
         </div>
         <div className="character" aria-hidden="true">
           <img src={themeImage('home/aden-guardian-v2.webp')} alt="" />
         </div>
         <div className="f-list container">
           {features.map((item, index) => (
-            <Link className={`f${index + 1}`} key={item.title} to={item.to}>
+            <Link className={`f${index + 1}`} key={item.to} to={item.to}>
               <div style={{ background: `url(${themeImage(item.image)}) center / cover no-repeat` }}>
                 <span>
                   <p>{item.title}</p>
@@ -152,9 +151,9 @@ function DefaultHomePage() {
         <div className="w-title title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Arquivos do reino
+            {t('home.wikiKicker')}
           </span>
-          <h1>Guias, crônica e o que move Aden</h1>
+          <h1>{t('home.wikiTitle')}</h1>
         </div>
         <div className="w-list container">
           <span className="line">
@@ -163,8 +162,8 @@ function DefaultHomePage() {
           <div className="wiki">
             <div>
               <span>
-                Guias
-                <Link to="/wiki" aria-label="Abrir wiki completa">
+                {t('home.wikiGuides')}
+                <Link to="/wiki" aria-label={t('home.wikiOpen')}>
                   <img src={themeImage('icons/more.png')} alt="" />
                 </Link>
               </span>
@@ -197,9 +196,9 @@ function DefaultHomePage() {
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Melhores Clãs
+            {t('home.clansKicker')}
           </span>
-          <h1>Os clãs que dominam o reino</h1>
+          <h1>{t('home.clansTitle')}</h1>
         </div>
 
         {clans.isLoading ? (
@@ -207,7 +206,7 @@ function DefaultHomePage() {
             <span className="home-crest" aria-hidden="true">
               <i className="fa-solid fa-shield-halved" />
             </span>
-            <p>Consultando o hall da fama...</p>
+            <p>{t('home.clansLoading')}</p>
           </div>
         ) : clans.data?.length ? (
           <>
@@ -217,14 +216,14 @@ function DefaultHomePage() {
                   <div className="clan-card-inner">
                     <span className="clan-place">
                       {index === 0 ? <i className="fa-solid fa-crown" /> : null}
-                      {clan.position}º
+                      {t('home.clansPlace', { n: clan.position })}
                     </span>
                     <span className="home-crest" aria-hidden="true">
                       <span>{clanInitial(clan.name)}</span>
                     </span>
                     <h3>{clan.name}</h3>
                     <strong>{formatScore(clan.value)}</strong>
-                    <em>Reputação</em>
+                    <em>{t('home.clansReputation')}</em>
                   </div>
                 </article>
               ))}
@@ -245,7 +244,7 @@ function DefaultHomePage() {
             ) : null}
             <div className="home-more container">
               <Link to="/rankings?tab=clans">
-                Ver ranking completo
+                {t('home.clansFullRanking')}
                 <img src={themeImage('icons/more.png')} alt="" />
               </Link>
             </div>
@@ -255,8 +254,8 @@ function DefaultHomePage() {
             <span className="home-crest" aria-hidden="true">
               <i className="fa-solid fa-shield-halved" />
             </span>
-            <p>O hall da fama ainda aguarda o primeiro clã.</p>
-            <Link to="/rankings?tab=clans">Ver rankings</Link>
+            <p>{t('home.clansEmpty')}</p>
+            <Link to="/rankings?tab=clans">{t('home.clansSeeRankings')}</Link>
           </div>
         )}
       </section>
@@ -265,14 +264,14 @@ function DefaultHomePage() {
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Rankings do Servidor
+            {t('home.rankingsKicker')}
           </span>
-          <h1>Prove seu valor no campo de batalha</h1>
+          <h1>{t('home.rankingsTitle')}</h1>
         </div>
 
         <div className="ranking-tiles container">
           {rankingLinks.map((item) => (
-            <Link className="ranking-tile" key={item.label} to={item.to}>
+            <Link className="ranking-tile" key={item.to} to={item.to}>
               <span className="ranking-tile-inner">
                 <i className={`fa-solid ${item.icon}`} />
                 <strong>{item.label}</strong>
@@ -284,34 +283,34 @@ function DefaultHomePage() {
         <div className="server-plaque container">
           <div>
             <strong>{status.data?.players_online ?? 0}</strong>
-            <span>Online</span>
+            <span>{t('home.statOnline')}</span>
           </div>
           <div>
             <strong>{clans.data?.length ?? 0}</strong>
-            <span>Clãs</span>
+            <span>{t('home.statClans')}</span>
           </div>
           <div>
             <strong>24/7</strong>
-            <span>Uptime</span>
+            <span>{t('home.statUptime')}</span>
           </div>
           <div>
             <strong className={status.data?.game_online ? 'is-online' : 'is-offline'}>
               <i className="fas fa-circle" />
-              {status.data?.game_online ? 'Online' : 'Offline'}
+              {status.data?.game_online ? t('home.statOnline') : t('home.statOffline')}
             </strong>
-            <span>Servidor</span>
+            <span>{t('home.statServer')}</span>
           </div>
         </div>
 
         <div className="home-cta container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Seja o melhor
+            {t('home.ctaKicker')}
           </span>
-          <p>Entre para a competição e mostre suas habilidades no nosso servidor.</p>
+          <p>{t('home.ctaBlurb')}</p>
           <div className="home-cta-links">
-            <Link to="/downloads">Baixar Jogo</Link>
-            <Link to="/register">Criar Conta</Link>
+            <Link to="/downloads">{t('home.downloadShort')}</Link>
+            <Link to="/register">{t('home.createAccount')}</Link>
           </div>
         </div>
       </section>
@@ -319,7 +318,7 @@ function DefaultHomePage() {
       <div className="apoiadores-banner" aria-hidden="true">
         <div className="banner-track">
           {Array.from({ length: 16 }, (_, index) => (
-            <span key={index}>Apoiadores</span>
+            <span key={index}>{t('home.supporters')}</span>
           ))}
         </div>
       </div>
@@ -328,16 +327,16 @@ function DefaultHomePage() {
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
-            Cinematic
+            {t('home.trailerKicker')}
           </span>
-          <h1>Trailer Oficial</h1>
+          <h1>{t('home.trailerTitle')}</h1>
         </div>
         <div className="trailer-frame container">
           <div className="trailer-frame-inner">
             {trailerPlaying ? (
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${trailerId}?autoplay=1`}
-                title="Trailer oficial"
+                title={t('home.trailerIframe')}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 referrerPolicy="strict-origin-when-cross-origin"
@@ -347,7 +346,7 @@ function DefaultHomePage() {
                 type="button"
                 className="trailer-facade"
                 onClick={() => setTrailerPlaying(true)}
-                aria-label="Reproduzir trailer oficial"
+                aria-label={t('home.trailerPlay')}
               >
                 <img
                   src={`https://i.ytimg.com/vi/${trailerId}/hqdefault.jpg`}
@@ -360,7 +359,7 @@ function DefaultHomePage() {
             )}
           </div>
         </div>
-        <p className="trailer-description">Assista ao trailer e mergulhe no mundo épico do nosso servidor.</p>
+        <p className="trailer-description">{t('home.trailerBlurb')}</p>
       </section>
 
       {discord ? (
@@ -368,10 +367,10 @@ function DefaultHomePage() {
           <div className="c-title title container">
             <span>
               <img src={themeImage('icons/text.png')} alt="" />
-              Faça parte da nossa comunidade
+              {t('home.communityKicker')}
             </span>
             <h1>
-              Junte-se à nossa <strong>comunidade</strong> e fique por dentro
+              <Trans i18nKey="home.communityTitle" ns="public" components={{ strong: <strong /> }} />
             </h1>
           </div>
           <div className="c-link">

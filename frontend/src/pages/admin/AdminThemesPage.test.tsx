@@ -13,7 +13,7 @@ import { AdminThemesPage } from './AdminThemesPage'
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../../services/domain/theme.service', () => ({ themeApi: { list: vi.fn(), install: vi.fn(), activate: vi.fn(), remove: vi.fn() } }))
 
-const defaultTheme: ApiTheme = { id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL', description: 'Original', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
+const defaultTheme: ApiTheme = { id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL', description: 'Original', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
 const valorem: ApiTheme = { id: 'valorem', package_id: 'id-1', name: 'Valorem', version: '1.0.0', author: 'PDL Team', description: 'Dark fantasy', active: false, builtin: false, base_url: '/media/themes/valorem/', stylesheet_url: '/media/themes/valorem/theme.css', assets: {} }
 
 let client: QueryClient
@@ -46,7 +46,7 @@ it('lista, instala e impede envio repetido enquanto valida o ZIP', async () => {
   const pending = new Promise<ApiTheme>((resolve) => { finish = resolve })
   vi.mocked(themeApi.install).mockReturnValue(pending)
   const user = mount()
-  expect(await screen.findByText('PDL Default')).toBeVisible()
+  expect(await screen.findByText('PDL Classic')).toBeVisible()
   const file = new File(['package'], 'valorem.zip', { type: 'application/zip' })
   await user.upload(screen.getByLabelText(/Arquivo do tema/), file)
   const install = screen.getByRole('button', { name: 'Instalar pacote' })
@@ -83,5 +83,5 @@ it('oferece retry quando a listagem falha', async () => {
   const user = mount()
   expect(await screen.findByRole('alert')).toHaveTextContent('Catálogo indisponível')
   await user.click(screen.getByRole('button', { name: 'Tentar novamente' }))
-  expect(await screen.findByText('PDL Default')).toBeVisible()
+  expect(await screen.findByText('PDL Classic')).toBeVisible()
 })

@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { LanguageSwitcher } from '../components/i18n/LanguageSwitcher'
 import { ButtonLink } from '../components/ui/Button'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage } from '../theme/assets'
@@ -47,12 +49,9 @@ function useSecondTick(secs: string, enabled: boolean) {
   return ticking
 }
 
-const UNITS = [
-  ['days', 'Dias'],
-  ['hours', 'Horas'],
-  ['mins', 'Min'],
-  ['secs', 'Seg'],
-] as const
+const UNIT_KEYS = ['days', 'hours', 'mins', 'secs'] as const
+
+const GENERIC_TITLES = new Set(['em breve', 'coming soon', 'próximamente', 'proximamente'])
 
 function LaunchParticles({ count = 68 }: { count?: number }) {
   const particles = useMemo(
@@ -169,22 +168,31 @@ function LaunchFireworks({ shells = 7, sparksPerShell = 18 }: { shells?: number;
   )
 }
 
-function resolveHeroTitle(info: ApiServerInfo) {
+function resolveHeroTitle(info: ApiServerInfo, waitingKicker: string) {
   const configured = info.coming_soon_title?.trim() || ''
   const brand = info.name?.trim() || 'PDL'
-  if (!configured || configured.toLocaleLowerCase('pt-BR') === 'em breve') return brand
+  if (!configured) return brand
+  const normalized = configured.toLocaleLowerCase()
+  if (GENERIC_TITLES.has(normalized) || normalized === waitingKicker.toLocaleLowerCase()) return brand
   return configured
 }
 
 export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
-  const title = resolveHeroTitle(info)
+  const { t } = useTranslation('public')
+  const title = resolveHeroTitle(info, t('comingSoon.kickerWaiting'))
   const subtitle =
     info.coming_soon_subtitle?.trim() ||
     info.description ||
-    'O reino está sendo preparado. A contagem marca a abertura.'
+    t('comingSoon.subtitleFallback')
   const countdown = useLaunchCountdown(info.coming_soon_at)
   const finished = countdown.finished && Boolean(info.coming_soon_at)
   const ticking = useSecondTick(countdown.secs, !finished)
+  const unitLabels = {
+    days: t('comingSoon.unitDays'),
+    hours: t('comingSoon.unitHours'),
+    mins: t('comingSoon.unitMins'),
+    secs: t('comingSoon.unitSecs'),
+  } as const
 
   useEffect(() => {
     const html = document.documentElement
@@ -222,6 +230,10 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         {finished ? <LaunchFireworks /> : null}
       </div>
 
+      <div className="launch-gate__locale">
+        <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
+      </div>
+
       <main className="launch-gate__stage">
         <div className={`launch-gate__tableau${finished ? ' is-held' : ''}`}>
           <div className="launch-gate__panel">
@@ -239,25 +251,27 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
             <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
             <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
 
-            <p className="launch-gate__kicker">{finished ? 'Servidor aberto' : 'Em breve'}</p>
+            <p className="launch-gate__kicker">
+              {finished ? t('comingSoon.kickerOpen') : t('comingSoon.kickerWaiting')}
+            </p>
             <h1 className="launch-gate__title">{title}</h1>
             <p className="launch-gate__subtitle">
-              {finished ? 'As portas se abriram. Entre e comece sua jornada.' : subtitle}
+              {finished ? t('comingSoon.subtitleOpen') : subtitle}
             </p>
 
             {finished ? (
               <div className="launch-gate__finale" role="status">
                 <span className="launch-gate__finale-ring" aria-hidden="true" />
-                <p className="launch-gate__ready">O momento chegou</p>
+                <p className="launch-gate__ready">{t('comingSoon.momentArrived')}</p>
               </div>
             ) : (
-              <div className="launch-gate__countdown" aria-label="Contagem regressiva do lançamento">
-                {UNITS.map(([key, label], index) => (
+              <div className="launch-gate__countdown" aria-label={t('comingSoon.countdownLabel')}>
+                {UNIT_KEYS.map((key, index) => (
                   <div key={key} className="launch-gate__unit">
                     {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
                     <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
                       <span className="launch-gate__value">{countdown[key]}</span>
-                      <span className="launch-gate__label">{label}</span>
+                      <span className="launch-gate__label">{unitLabels[key]}</span>
                     </div>
                   </div>
                 ))}
@@ -266,10 +280,10 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
 
             <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
               <ButtonLink to="/login" size="lg">
-                Entrar
+                {t('nav.signIn')}
               </ButtonLink>
               <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
-                Downloads
+                {t('nav.download')}
               </ButtonLink>
             </div>
 

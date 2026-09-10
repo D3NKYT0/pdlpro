@@ -8,6 +8,19 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Alterado
+
+- Tema builtin renomeado para **PDL Classic**, com descrição voltada à identidade
+  visual (Aden, tipografia e look original), em vez de “PDL Default / tema preservado”.
+
+### Corrigido
+
+- Tela **Coming Soon** / abertura do servidor passa a usar i18n pt/en/es (kicker,
+  subtítulo de abertura, contagem e CTAs), em vez de textos fixos em português, e
+  inclui seletor de idioma (a página substitui o layout público sem nav/footer).
+- **Landing** (`HomePage` default): copy da UI em pt/en/es; o hero do tema builtin
+  usa o marketing traduzível (não o nome/descrição técnicos do pacote).
+
 ## [2.2.0] - 2026-09-09
 
 Alterações desde **2 de setembro de 2026** (após `[2.1.0]`), consolidadas pelo histórico

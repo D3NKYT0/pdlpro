@@ -50,8 +50,8 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
     response = api.get("/api/v1/public/theme/")
     assert response.status_code == 200
     assert response.data == {
-        "id": "default", "package_id": None, "name": "PDL Default", "version": "2.0.0",
-        "author": "PDL", "description": "Tema original preservado do PDL PRO.",
+        "id": "default", "package_id": None, "name": "PDL Classic", "version": "2.0.0",
+        "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
         "presentation": None, "layout": None,

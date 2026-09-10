@@ -21,6 +21,17 @@
   overflow: hidden;
 }
 
+.launch-gate__locale {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+  z-index: 4;
+}
+
+.launch-gate__language .ui-select {
+  min-width: 7.5rem;
+}
+
 .launch-gate__sky {
   position: absolute;
   inset: 0;

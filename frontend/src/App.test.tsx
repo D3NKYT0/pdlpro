@@ -7,7 +7,7 @@ import { ApiError, request } from './services/api'
 import { queryClient } from './services/infra/queryClient'
 import App from './App'
 
-const defaultTheme = { id: 'default', package_id: null, name: 'PDL Default', version: '2.0.0', author: 'PDL', description: '', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
+const defaultTheme = { id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL', description: '', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
 
 vi.mock('./services/infra/http', async original => ({ ...await original<object>(), request: vi.fn() }))
 beforeEach(() => {

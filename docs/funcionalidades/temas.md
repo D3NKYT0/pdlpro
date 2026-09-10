@@ -21,7 +21,7 @@ Somente um superadministrador pode alterar a aparência global:
 3. Instale o pacote. A instalação não o ativa automaticamente.
 4. Confira nome, autor e versão e pressione **Ativar**.
 
-Para reverter, ative **PDL Default**. Um pacote ativo não pode ser removido; primeiro ative o
+Para reverter, ative **PDL Classic**. Um pacote ativo não pode ser removido; primeiro ative o
 default ou outra versão. A ativação é transacional e nunca deixa dois temas ativos.
 
 O pacote Valorem de referência pode ser gerado e mantido localmente em

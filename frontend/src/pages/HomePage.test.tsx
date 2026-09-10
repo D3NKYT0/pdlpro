@@ -164,10 +164,11 @@ it('prioriza páginas e notícias publicadas na seção de crônica', async () =
   expect(screen.queryByRole('link', { name: /Notícias do reino/i })).not.toBeInTheDocument()
 })
 
-it('marca a home default com data-theme-part e usa nome/descrição do tema', async () => {
+it('marca a home default com data-theme-part e usa nome/descrição de pacote customizado', async () => {
   const { useTheme } = await import('../theme/ThemeProvider')
   vi.mocked(useTheme).mockReturnValue({
     presentation: null,
+    builtin: false,
     name: 'Reino Temático',
     description: 'Descrição do pacote de tema',
   } as never)
@@ -178,4 +179,21 @@ it('marca a home default com data-theme-part e usa nome/descrição do tema', as
   expect(document.querySelector('[data-theme-part="home"]')).toBeTruthy()
   expect(screen.getByRole('heading', { level: 1, name: 'Reino Temático' })).toBeVisible()
   expect(screen.getByText(/Descrição do pacote de tema/)).toBeVisible()
+})
+
+it('no tema builtin usa o copy de marketing traduzível, não o nome do pacote', async () => {
+  const { useTheme } = await import('../theme/ThemeProvider')
+  vi.mocked(useTheme).mockReturnValue({
+    presentation: null,
+    builtin: true,
+    name: 'PDL Classic',
+    description: 'Visual clássico do PDL PRO — Aden, tipografia e a identidade original.',
+  } as never)
+
+  mount()
+  await screen.findByRole('link', { name: /Baixe o Jogo/i })
+
+  expect(screen.getByRole('heading', { level: 1, name: 'Inicie sua Jornada em Lineage Agora!' })).toBeVisible()
+  expect(screen.getByText(/Onde Lendas Nascem/)).toBeVisible()
+  expect(screen.queryByText('PDL Classic')).not.toBeInTheDocument()
 })

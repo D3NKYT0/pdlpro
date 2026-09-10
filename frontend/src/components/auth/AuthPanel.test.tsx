@@ -44,7 +44,7 @@ it('renderiza o shell de autenticação declarado pelo tema sem executar HTML do
 
 it('marca a superfície auth no caminho default sem portal', () => {
   themeState.id = 'default'
-  themeState.name = 'PDL Default'
+  themeState.name = 'PDL Classic'
   themeState.presentation = null
 
   render(<AuthPanel title="Entrar"><form><button type="submit">Continuar</button></form></AuthPanel>)
