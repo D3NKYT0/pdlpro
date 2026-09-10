@@ -9,7 +9,7 @@ import {
   X,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
-import { formatCurrency, formatDateTime as formatDate } from '../../lib/formatters'
+import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import type { ApiAuction } from '../../services/api'
 import { auctionStatusFor, formatRemaining, nextBidFor } from './auctionHelpers'
 
@@ -53,7 +53,7 @@ export function AuctionDetail({
             <span className="panel-eyebrow">{t('auctions.detail.eyebrow')}</span>
             <h2>{auction.item_name}</h2>
             <p>
-              {t('auctions.detail.quantityLine', { quantity: auction.quantity.toLocaleString('pt-BR') })}
+              {t('auctions.detail.quantityLine', { quantity: formatNumber(auction.quantity) })}
               {auction.item_enchant > 0
                 ? t('auctions.detail.enchantSuffix', { enchant: auction.item_enchant })
                 : t('auctions.detail.noEnchantSuffix')}
@@ -73,7 +73,7 @@ export function AuctionDetail({
         <div className="auction-item-information">
           <dl className="marketplace-character-stats auction-item-stats">
             <div><dt>{t('auctions.detail.itemId')}</dt><dd>{auction.item_id}</dd></div>
-            <div><dt>{t('auctions.detail.quantity')}</dt><dd>{auction.quantity.toLocaleString('pt-BR')}</dd></div>
+            <div><dt>{t('auctions.detail.quantity')}</dt><dd>{formatNumber(auction.quantity)}</dd></div>
             <div><dt>{t('auctions.detail.enchant')}</dt><dd>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : t('auctions.detail.noEnchant')}</dd></div>
             <div><dt>{t('auctions.detail.seller')}</dt><dd>{auction.seller_username}</dd></div>
             <div><dt>{t('auctions.detail.sourceInventory')}</dt><dd>{auction.character_name || t('auctions.detail.notInformed')}</dd></div>

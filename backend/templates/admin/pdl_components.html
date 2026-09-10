@@ -1,33 +1,33 @@
 {% extends "admin/base_site.html" %}
-{% load static %}
-{% block content_title %}Componentes de interface{% endblock %}
+{% load i18n static %}
+{% block content_title %}{% translate "Componentes de interface" %}{% endblock %}
 {% block content %}
 <div class="pdl-components">
-  <p>Componentes reais do admin. As ações desta página são exemplos locais e não alteram registros.</p>
+  <p>{% translate "Componentes reais do admin. As ações desta página são exemplos locais e não alteram registros." %}</p>
   <section class="card"><div class="card-body">
-    <h2>Botões e variantes</h2>
+    <h2>{% translate "Botões e variantes" %}</h2>
     <div class="pdl-component-actions">
-      <button type="button" class="btn btn-primary" data-demo-action="Exemplo salvo.">Salvar</button>
-      <button type="button" class="btn btn-secondary" data-demo-action="Exemplo cancelado.">Cancelar</button>
-      <button type="button" class="btn btn-success" data-demo-action="Exemplo aprovado."><i class="fas fa-check" aria-hidden="true"></i> Aprovar</button>
-      <button type="button" class="btn btn-warning" data-demo-action="Exemplo enviado para revisão.">Revisar</button>
-      <button type="button" class="btn btn-danger" data-demo-action="Exclusão demonstrada; nenhum registro foi removido.">Remover</button>
+      <button type="button" class="btn btn-primary" data-demo-action="{% translate 'Exemplo salvo.' %}">{% translate "Salvar" %}</button>
+      <button type="button" class="btn btn-secondary" data-demo-action="{% translate 'Exemplo cancelado.' %}">{% translate "Cancelar" %}</button>
+      <button type="button" class="btn btn-success" data-demo-action="{% translate 'Exemplo aprovado.' %}"><i class="fas fa-check" aria-hidden="true"></i> {% translate "Aprovar" %}</button>
+      <button type="button" class="btn btn-warning" data-demo-action="{% translate 'Exemplo enviado para revisão.' %}">{% translate "Revisar" %}</button>
+      <button type="button" class="btn btn-danger" data-demo-action="{% translate 'Exclusão demonstrada; nenhum registro foi removido.' %}">{% translate "Remover" %}</button>
     </div>
-    <h3>Tamanho conforme o conteúdo</h3>
+    <h3>{% translate "Tamanho conforme o conteúdo" %}</h3>
     <div class="pdl-component-actions">
-      <button type="button" class="btn btn-primary btn-sm" data-demo-action="Edição demonstrativa.">Editar</button>
-      <button type="button" class="btn btn-primary" data-demo-action="Criação demonstrativa.">Criar novo registro</button>
-      <button type="button" class="btn btn-primary btn-lg" data-demo-action="Exportação demonstrativa.">Exportar relatório</button>
-      <button type="button" class="btn btn-secondary pdl-button--icon" aria-label="Atualizar lista" title="Atualizar lista" data-demo-action="Lista demonstrativa atualizada."><i class="fas fa-sync" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-primary btn-sm" data-demo-action="{% translate 'Edição demonstrativa.' %}">{% translate "Editar" %}</button>
+      <button type="button" class="btn btn-primary" data-demo-action="{% translate 'Criação demonstrativa.' %}">{% translate "Criar novo registro" %}</button>
+      <button type="button" class="btn btn-primary btn-lg" data-demo-action="{% translate 'Exportação demonstrativa.' %}">{% translate "Exportar relatório" %}</button>
+      <button type="button" class="btn btn-secondary pdl-button--icon" aria-label="{% translate 'Atualizar lista' %}" title="{% translate 'Atualizar lista' %}" data-demo-action="{% translate 'Lista demonstrativa atualizada.' %}"><i class="fas fa-sync" aria-hidden="true"></i></button>
     </div>
-    <h3>Estados e links</h3>
+    <h3>{% translate "Estados e links" %}</h3>
     <div class="pdl-component-actions">
-      <button type="button" class="btn btn-primary" disabled>Indisponível</button>
-      <a class="btn btn-secondary" href="{% url 'admin:index' %}">Voltar ao admin</a>
-      <a class="btn btn-secondary" href="{% url 'admin:index' %}" aria-disabled="true">Link indisponível</a>
-      <input type="submit" class="btn btn-success btn-sm" name="_continue" value="Salvar e continuar" data-demo-pending>
+      <button type="button" class="btn btn-primary" disabled>{% translate "Indisponível" %}</button>
+      <a class="btn btn-secondary" href="{% url 'admin:index' %}">{% translate "Voltar ao admin" %}</a>
+      <a class="btn btn-secondary" href="{% url 'admin:index' %}" aria-disabled="true">{% translate "Link indisponível" %}</a>
+      <input type="submit" class="btn btn-success btn-sm" name="_continue" value="{% translate 'Salvar e continuar' %}" data-demo-pending>
     </div>
-    <p id="pdl-demo-result" role="status">Escolha uma ação para experimentar.</p>
+    <p id="pdl-demo-result" role="status">{% translate "Escolha uma ação para experimentar." %}</p>
   </div></section>
 </div>
 <script src="{% static 'pdl_admin/js/button_examples.js' %}" defer></script>

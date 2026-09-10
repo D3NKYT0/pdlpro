@@ -1,3 +1,5 @@
+import i18n from '../../i18n'
+
 export class ApiError extends Error {
   status: number
   errorCode: string
@@ -39,7 +41,7 @@ async function send(input: string, init: RequestInit): Promise<Response> {
   try {
     return await fetch(input, init)
   } catch {
-    throw new ApiError('Não foi possível conectar ao servidor.', 0, 'NETWORK_ERROR')
+    throw new ApiError(i18n.t('networkError', { ns: 'common' }), 0, 'NETWORK_ERROR')
   }
 }
 
@@ -103,7 +105,7 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
   }
 
   if (!response) {
-    throw new ApiError('Não foi possível conectar ao servidor.', 0, 'NETWORK_ERROR')
+    throw new ApiError(i18n.t('networkError', { ns: 'common' }), 0, 'NETWORK_ERROR')
   }
 
   if (response.status === 401 && !path.startsWith('/auth/') && !authRetry) {
@@ -119,7 +121,7 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
       payload = {}
     }
     throw new ApiError(
-      payload.message || 'Não foi possível processar a solicitação.',
+      payload.message || i18n.t('requestError', { ns: 'common' }),
       response.status,
       payload.error_code || 'ERROR',
       payload.details || {},

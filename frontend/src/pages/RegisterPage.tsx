@@ -10,11 +10,12 @@ import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel
 import { useAuth } from '../contexts/AuthContext'
 import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
+import { hcaptchaLanguage } from '../i18n/locale'
 
 const SESSION_MANAGER_PATH = '/panel/security'
 
 export function RegisterPage() {
-  const { t } = useTranslation('auth')
+  const { t, i18n } = useTranslation('auth')
   const { user, loading, register } = useAuth()
   const navigate = useNavigate()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
@@ -71,7 +72,7 @@ export function RegisterPage() {
         </label>
         {capabilities.data?.captcha && capabilities.data.hcaptcha_site_key ? (
           <div className="auth-captcha">
-            <HCaptcha sitekey={capabilities.data.hcaptcha_site_key} theme="dark" languageOverride="pt-BR" onVerify={setCaptchaToken} onExpire={() => setCaptchaToken('')} />
+            <HCaptcha sitekey={capabilities.data.hcaptcha_site_key} theme="dark" languageOverride={hcaptchaLanguage(i18n.language)} onVerify={setCaptchaToken} onExpire={() => setCaptchaToken('')} />
           </div>
         ) : null}
         <div className="h-link">

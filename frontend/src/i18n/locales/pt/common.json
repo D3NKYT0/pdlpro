@@ -22,5 +22,16 @@
   "unavailableDate": "Data indisponível",
   "errorGeneric": "Não foi possível concluir a operação.",
   "staff": "Staff",
-  "pageOf": "Página {{page}} de {{total}}"
+  "pageOf": "Página {{page}} de {{total}}",
+  "loadingSession": "Carregando sessão...",
+  "networkError": "Não foi possível conectar ao servidor.",
+  "requestError": "Não foi possível processar a solicitação.",
+  "oauthStartError": "Não foi possível iniciar a conexão.",
+  "paymentSdkError": "Falha ao carregar SDK de pagamento",
+  "mercadoPagoError": "Erro no Mercado Pago",
+  "itemCatalogLoading": "Carregando catálogo…",
+  "itemCatalogPlaceholder": "ID ou nome do item",
+  "itemCatalogUnavailable": "Catálogo indisponível.",
+  "itemCatalogEmpty": "Nenhum item encontrado no catálogo.",
+  "itemIdMeta": "ID {{id}} · {{grade}}"
 }

@@ -17,6 +17,7 @@ import {
   Status,
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
+import { formatDateTime } from "../lib/formatters";
 
 export function GameExchangePage() {
   const { t } = useTranslation("panel");
@@ -247,7 +248,7 @@ export function GameExchangePage() {
               <tbody>
                 {query.data.history.map((r) => (
                   <tr key={r.id}>
-                    <td>{new Date(r.created_at).toLocaleString("pt-BR")}</td>
+                    <td>{formatDateTime(r.created_at)}</td>
                     <td>{r.character_name}</td>
                     <td>
                       {r.direction === "to_game"

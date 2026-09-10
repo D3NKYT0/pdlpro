@@ -1,5 +1,16 @@
+import i18n from '../i18n'
+import { isAppLanguage } from '../i18n/locale'
+
 const MP_SRC = 'https://sdk.mercadopago.com/js/v2'
 const STRIPE_SRC = 'https://js.stripe.com/v3/'
+
+/** Mercado Pago brick locale mapped from the app language. */
+export function mercadoPagoLocale(language = i18n.language) {
+  if (!isAppLanguage(language)) return 'pt-BR'
+  if (language === 'en') return 'en-US'
+  if (language === 'es') return 'es-AR'
+  return 'pt-BR'
+}
 
 export function sanitizeDocument(value: string) {
   return value.replace(/\D/g, '')
@@ -20,14 +31,14 @@ export function loadScript(src: string) {
         return
       }
       existing.addEventListener('load', () => resolve(), { once: true })
-      existing.addEventListener('error', () => reject(new Error('Falha ao carregar SDK de pagamento')), { once: true })
+      existing.addEventListener('error', () => reject(new Error(i18n.t('paymentSdkError', { ns: 'common' }))), { once: true })
       return
     }
     const script = document.createElement('script')
     script.src = src
     script.async = true
     script.onload = () => resolve()
-    script.onerror = () => reject(new Error('Falha ao carregar SDK de pagamento'))
+    script.onerror = () => reject(new Error(i18n.t('paymentSdkError', { ns: 'common' })))
     document.body.appendChild(script)
   })
 }
@@ -52,7 +63,7 @@ export async function mountMercadoPagoBrick(options: {
 }) {
   await loadMercadoPagoSdk()
   const MercadoPago = (window as any).MercadoPago
-  const mp = new MercadoPago(options.publicKey, { locale: 'pt-BR' })
+  const mp = new MercadoPago(options.publicKey, { locale: mercadoPagoLocale() })
   const docType = inferDocumentType(sanitizeDocument(options.document))
   const controller = await mp.bricks().create('payment', options.containerId, {
     initialization: {
@@ -72,7 +83,8 @@ export async function mountMercadoPagoBrick(options: {
         await options.onSubmit(formData)
         return null
       },
-      onError: (error: { message?: string }) => options.onError(error?.message || 'Erro no Mercado Pago'),
+      onError: (error: { message?: string }) =>
+        options.onError(error?.message || i18n.t('mercadoPagoError', { ns: 'common' })),
     },
   })
   return controller as { unmount: () => Promise<void> | void }

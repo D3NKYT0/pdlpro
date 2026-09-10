@@ -22,5 +22,16 @@
   "unavailableDate": "Date unavailable",
   "errorGeneric": "Could not complete the operation.",
   "staff": "Staff",
-  "pageOf": "Page {{page}} of {{total}}"
+  "pageOf": "Page {{page}} of {{total}}",
+  "loadingSession": "Loading session...",
+  "networkError": "Could not connect to the server.",
+  "requestError": "Could not process the request.",
+  "oauthStartError": "Could not start the connection.",
+  "paymentSdkError": "Failed to load the payment SDK",
+  "mercadoPagoError": "Mercado Pago error",
+  "itemCatalogLoading": "Loading catalog…",
+  "itemCatalogPlaceholder": "Item ID or name",
+  "itemCatalogUnavailable": "Catalog unavailable.",
+  "itemCatalogEmpty": "No items found in the catalog.",
+  "itemIdMeta": "ID {{id}} · {{grade}}"
 }

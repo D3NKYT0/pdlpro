@@ -9,6 +9,7 @@ import {
   UserRound,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
+import { formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
 
 interface CharacterOption {
@@ -95,8 +96,8 @@ export function MarketplaceSellForm({
               </span>
             </div>
             <dl className="marketplace-character-preview-stats">
-              <div><dt>{t('marketplace.sell.pvp')}</dt><dd>{selectedCharacter.pvp.toLocaleString('pt-BR')}</dd></div>
-              <div><dt>{t('marketplace.sell.pk')}</dt><dd>{selectedCharacter.pk.toLocaleString('pt-BR')}</dd></div>
+              <div><dt>{t('marketplace.sell.pvp')}</dt><dd>{formatNumber(selectedCharacter.pvp)}</dd></div>
+              <div><dt>{t('marketplace.sell.pk')}</dt><dd>{formatNumber(selectedCharacter.pk)}</dd></div>
               <div><dt>{t('marketplace.sell.clan')}</dt><dd>{selectedCharacter.clan_name || t('marketplace.sell.noClan')}</dd></div>
               <div><dt>{t('marketplace.sell.titleLabel')}</dt><dd>{selectedCharacter.title || t('marketplace.sell.noTitle')}</dd></div>
             </dl>

@@ -1,5 +1,6 @@
 import { Field } from './ui/Field'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ItemIcon } from './ItemIcon'
 import { useItemCatalog, type L2CatalogItem } from '../hooks/useItemCatalog'
 
@@ -10,13 +11,15 @@ interface ItemIdFieldProps {
   label?: string
 }
 
-export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemIdFieldProps) {
+export function ItemIdField({ value, onChange, required, label }: ItemIdFieldProps) {
+  const { t } = useTranslation('common')
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const containerRef = useRef<HTMLLabelElement>(null)
   const catalog = useItemCatalog()
   const selected = catalog.getById(value)
   const suggestions = catalog.search(open ? query : value)
+  const fieldLabel = label ?? 'Item'
 
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -28,12 +31,12 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
 
   return (
     <Field className="item-id-field" ref={containerRef}>
-      {label}
+      {fieldLabel}
       <div className="item-id-control">
         <ItemIcon itemId={value} name={selected?.name} size={34} />
         <input
           value={open ? query : selected ? `${selected.id} — ${selected.name}` : value}
-          placeholder={catalog.isPending ? 'Carregando catálogo…' : 'ID ou nome do item'}
+          placeholder={catalog.isPending ? t('itemCatalogLoading') : t('itemCatalogPlaceholder')}
           autoComplete="off"
           required={required}
           onFocus={() => {
@@ -50,8 +53,17 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
           }}
         />
       </div>
-      {catalog.isError && <small role="alert">Catálogo indisponível. <button type="button" onClick={() => void catalog.refetch()}>Tentar novamente</button></small>}
-      {open && !catalog.isPending && !catalog.isError && query.trim() && !suggestions.length && <small>Nenhum item encontrado no catálogo.</small>}
+      {catalog.isError && (
+        <small role="alert">
+          {t('itemCatalogUnavailable')}{' '}
+          <button type="button" onClick={() => void catalog.refetch()}>
+            {t('retry')}
+          </button>
+        </small>
+      )}
+      {open && !catalog.isPending && !catalog.isError && query.trim() && !suggestions.length && (
+        <small>{t('itemCatalogEmpty')}</small>
+      )}
       {open && suggestions.length > 0 ? (
         <div className="item-id-suggestions">
           {suggestions.map((item) => (
@@ -68,7 +80,7 @@ export function ItemIdField({ value, onChange, required, label = 'Item' }: ItemI
               <ItemIcon itemId={item.id} name={item.name} size={24} />
               <span>
                 <strong>{item.name}</strong>
-                <small>ID {item.id} · {item.grade}</small>
+                <small>{t('itemIdMeta', { id: item.id, grade: item.grade })}</small>
               </span>
             </button>
           ))}

@@ -4,6 +4,7 @@ import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { ItemIcon } from '../ItemIcon'
+import { formatNumber } from '../../lib/formatters'
 import type { useInventoryDashboard } from './useInventoryDashboard'
 
 type InventoryDashboard = ReturnType<typeof useInventoryDashboard>
@@ -38,7 +39,7 @@ export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }
         </div>
         <div className="inventory-bag-summary">
           <span>{t('inventory.bag.types', { total: bag.data?.length ?? 0 })}</span>
-          <strong>{t('inventory.bag.items', { total: bagItemsQuantity.toLocaleString('pt-BR') })}</strong>
+          <strong>{t('inventory.bag.items', { total: formatNumber(bagItemsQuantity) })}</strong>
         </div>
       </div>
 
@@ -56,7 +57,7 @@ export function InventoryBagTab({ inventory }: { inventory: InventoryDashboard }
               </div>
               <span className="inventory-bag-quantity">
                 <small>{t('inventory.bag.quantity')}</small>
-                <b>× {item.quantity.toLocaleString('pt-BR')}</b>
+                <b>× {formatNumber(item.quantity)}</b>
               </span>
             </article>
           )) : null}

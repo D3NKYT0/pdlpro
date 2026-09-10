@@ -961,6 +961,46 @@
       "enchant_one": "Encantar · {{count}} fragmento",
       "enchant_other": "Encantar · {{count}} fragmentos"
     },
+    "fishing": {
+      "eyebrow": "Lago del reino",
+      "title": "Pesca",
+      "rod": "Caña de pescar",
+      "rodLevel": "Nivel {{level}}",
+      "xp": "Experiencia",
+      "xpValue": "{{xp}} XP",
+      "tokens": "Fichas disponibles",
+      "bait": "Cebo",
+      "noBait": "Sin cebo especial",
+      "baitOption": "{{name}} · {{quantity}} en stock · +{{bonus}}%",
+      "castCost": "Cada lanzamiento cuesta {{cost}} ficha(s). El cebo seleccionado se consume aunque el pez escape.",
+      "cast": "Lanzar la línea",
+      "casting": "Espera…",
+      "castDone": "Lanzamiento concluido.",
+      "caught": "¡Pescaste {{name}}!",
+      "escaped": "El pez escapó. Inténtalo de nuevo.",
+      "escapedShort": "El pez escapó",
+      "unavailable": "La pesca no está disponible temporalmente.",
+      "insufficientTokens": "Fichas insuficientes para lanzar. Compra fichas en la pestaña Ruleta.",
+      "shopTitle": "Tienda de cebos",
+      "buyQuantity": "Cantidad por compra",
+      "baitChance": "+{{bonus}} puntos de probabilidad · Stock: {{quantity}}",
+      "buy": "Comprar · {{price}} fichas",
+      "bought": "Cebos añadidos al stock.",
+      "shopEmpty": "No hay cebos a la venta por ahora.",
+      "recentTitle": "Últimos lanzamientos",
+      "collectionTitle": "Tu colección",
+      "collectionHint": "Descubre todas las especies. Cada captura exitosa queda registrada en tu colección.",
+      "rarity": {
+        "common": "Común",
+        "rare": "Raro",
+        "epic": "Épico",
+        "legendary": "Legendario"
+      },
+      "captures_one": "{{count}} captura",
+      "captures_other": "{{count}} capturas",
+      "undiscovered": "Aún no descubierto",
+      "collectionMeta": "{{rarity}} · {{detail}}"
+    },
     "toast": {
       "noPrize": "Sin premio esta vez",
       "prizeWon": "Ganaste {{prize}}",
@@ -1297,5 +1337,27 @@
       "unstuckDone": "Personaje desatascado",
       "unstuckError": "No fue posible desatascar"
     }
+  },
+  "programs": {
+    "status": {
+      "pending": "En revisión",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "paid": "Acreditado",
+      "available": "Disponible",
+      "completed": "Completado",
+      "planned": "Planificado",
+      "progress": "En curso",
+      "daily": "Diaria",
+      "weekly": "Semanal",
+      "season": "Temporada"
+    },
+    "rewardKinds": {
+      "tokens": "Fichas",
+      "balance": "Saldo",
+      "bonus": "Bono",
+      "item": "Ítem"
+    },
+    "historyEmpty": "Tus canjes aparecerán aquí."
   }
 }

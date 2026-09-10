@@ -55,3 +55,10 @@ export function persistLanguage(language: AppLanguage) {
 export function contentLang(language: string): AppLanguage {
   return isAppLanguage(language) ? language : 'pt'
 }
+
+/** hCaptcha language codes. */
+export function hcaptchaLanguage(language: string): string {
+  if (language === 'en') return 'en'
+  if (language === 'es') return 'es'
+  return 'pt-BR'
+}

@@ -20,6 +20,7 @@ import {
 import { Empty, ErrorNotice, Loading } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
 import { ProgramHeader } from "../components/programs/ProgramHeader";
+import { formatDateTime, formatNumber } from "../lib/formatters";
 
 const SHOP_CART_KEYS = [["shop-quote"]] as const;
 const SHOP_CHECKOUT_KEYS = [
@@ -49,7 +50,7 @@ export function ShopPage() {
   const key = useRef<string | null>(null);
   const action = useProgramAction();
   const money = (v: string | number) =>
-    Number(v).toLocaleString("pt-BR", {
+    formatNumber(v, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
@@ -107,7 +108,7 @@ export function ShopPage() {
             <article className="program-item" key={p.id}>
               <div className="program-section-heading">
                 <strong>
-                  {new Date(p.created_at).toLocaleString("pt-BR")}
+                  {formatDateTime(p.created_at)}
                 </strong>
                 <span>{t("shop.coins", { value: money(p.total) })}</span>
               </div>

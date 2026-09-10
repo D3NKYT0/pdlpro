@@ -961,6 +961,46 @@
       "enchant_one": "Encantar · {{count}} fragmento",
       "enchant_other": "Encantar · {{count}} fragmentos"
     },
+    "fishing": {
+      "eyebrow": "Lago do reino",
+      "title": "Pesca",
+      "rod": "Vara de pesca",
+      "rodLevel": "Nível {{level}}",
+      "xp": "Experiência",
+      "xpValue": "{{xp}} XP",
+      "tokens": "Fichas disponíveis",
+      "bait": "Isca",
+      "noBait": "Sem isca especial",
+      "baitOption": "{{name}} · {{quantity}} no estoque · +{{bonus}}%",
+      "castCost": "Cada lançamento custa {{cost}} ficha(s). A isca selecionada é consumida mesmo quando o peixe escapa.",
+      "cast": "Lançar a linha",
+      "casting": "Aguarde…",
+      "castDone": "Lançamento concluído.",
+      "caught": "Você pescou {{name}}!",
+      "escaped": "O peixe escapou. Tente novamente.",
+      "escapedShort": "O peixe escapou",
+      "unavailable": "A pescaria está temporariamente indisponível.",
+      "insufficientTokens": "Fichas insuficientes para lançar a linha. Compre fichas na aba Roleta.",
+      "shopTitle": "Loja de iscas",
+      "buyQuantity": "Quantidade por compra",
+      "baitChance": "+{{bonus}} pontos de chance · Estoque: {{quantity}}",
+      "buy": "Comprar · {{price}} fichas",
+      "bought": "Iscas adicionadas ao estoque.",
+      "shopEmpty": "Nenhuma isca à venda no momento.",
+      "recentTitle": "Últimos lançamentos",
+      "collectionTitle": "Sua coleção",
+      "collectionHint": "Descubra todas as espécies. Cada captura bem-sucedida fica registrada na sua coleção.",
+      "rarity": {
+        "common": "Comum",
+        "rare": "Raro",
+        "epic": "Épico",
+        "legendary": "Lendário"
+      },
+      "captures_one": "{{count}} captura",
+      "captures_other": "{{count}} capturas",
+      "undiscovered": "Ainda não descoberto",
+      "collectionMeta": "{{rarity}} · {{detail}}"
+    },
     "toast": {
       "noPrize": "Sem prêmio desta vez",
       "prizeWon": "Você ganhou {{prize}}",
@@ -1297,5 +1337,27 @@
       "unstuckDone": "Personagem destravado",
       "unstuckError": "Não foi possível destravar"
     }
+  },
+  "programs": {
+    "status": {
+      "pending": "Em análise",
+      "approved": "Aprovado",
+      "rejected": "Recusado",
+      "paid": "Creditado",
+      "available": "Disponível",
+      "completed": "Concluído",
+      "planned": "Planejado",
+      "progress": "Em andamento",
+      "daily": "Diária",
+      "weekly": "Semanal",
+      "season": "Temporada"
+    },
+    "rewardKinds": {
+      "tokens": "Fichas",
+      "balance": "Saldo",
+      "bonus": "Bônus",
+      "item": "Item"
+    },
+    "historyEmpty": "Seus resgates aparecerão aqui."
   }
 }

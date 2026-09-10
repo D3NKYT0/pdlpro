@@ -4,7 +4,7 @@ import {
   Store,
   Sword,
 } from 'lucide-react'
-import { formatCurrency } from '../../lib/formatters'
+import { formatCurrency, formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
 
@@ -39,8 +39,8 @@ export function MarketplaceCatalog({ listings, username, loading, onSelect }: Ma
                 </div>
               </div>
               <div className="marketplace-listing-card-stats">
-                <span><b>{listing.char_pvp.toLocaleString('pt-BR')}</b> {t('marketplace.catalog.pvp')}</span>
-                <span><b>{listing.char_pk.toLocaleString('pt-BR')}</b> {t('marketplace.catalog.pk')}</span>
+                <span><b>{formatNumber(listing.char_pvp)}</b> {t('marketplace.catalog.pvp')}</span>
+                <span><b>{formatNumber(listing.char_pk)}</b> {t('marketplace.catalog.pk')}</span>
                 <span><b>{listing.equipment.length}</b> {t('marketplace.catalog.equips')}</span>
               </div>
               <div className="marketplace-listing-card-footer">

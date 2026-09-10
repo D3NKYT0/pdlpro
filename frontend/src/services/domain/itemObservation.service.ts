@@ -1,4 +1,6 @@
 import { request } from '../infra/http'
+import i18n from '../../i18n'
+import { INTL_LOCALES, isAppLanguage } from '../../i18n/locale'
 
 export type ObservationAccess = {
   capture: boolean; delete_snapshots: boolean; add_categories: boolean
@@ -45,7 +47,13 @@ export function observationParams(filters: ObservationFilters) {
 }
 
 export function formatItemQuantity(value: string | number) {
-  try { return BigInt(value).toLocaleString('pt-BR') } catch { return String(value) }
+  try {
+    const quantity = BigInt(value)
+    const locale = isAppLanguage(i18n.language) ? INTL_LOCALES[i18n.language] : 'pt-BR'
+    return quantity.toLocaleString(locale)
+  } catch {
+    return String(value)
+  }
 }
 
 const BASE = '/staff/item-observation'

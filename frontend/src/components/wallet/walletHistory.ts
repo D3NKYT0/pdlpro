@@ -1,4 +1,5 @@
 import type { ApiPaymentOrder, ApiWalletTransaction } from '../../services/types'
+import { formatCurrency, formatDateTime } from '../../lib/formatters'
 
 /** Tradutor do namespace `panel` recebido pelas telas da carteira. */
 export type WalletTranslate = (key: string, options?: Record<string, unknown>) => string
@@ -6,18 +7,12 @@ export type WalletTranslate = (key: string, options?: Record<string, unknown>) =
 const orderStatusKeys = ['pending', 'processing', 'confirmed', 'paid', 'failed', 'cancelled']
 
 export function formatWalletMoney(value: string, currency: 'BRL' | 'USD') {
-  const amount = Number(value)
-  return new Intl.NumberFormat(currency === 'USD' ? 'en-US' : 'pt-BR', {
-    style: 'currency',
-    currency,
-  }).format(Number.isFinite(amount) ? amount : 0)
+  return formatCurrency(value, currency)
 }
 
 export function formatWalletDate(value?: string | null) {
   if (!value) return '—'
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return value
-  return date.toLocaleString('pt-BR')
+  return formatDateTime(value)
 }
 
 export function getOrderStatus(status: string, t: WalletTranslate) {

@@ -10,6 +10,7 @@ import {
   UserRound,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
+import { formatNumber } from '../../lib/formatters'
 
 interface InventoryRow {
   inventory_id: string
@@ -122,7 +123,7 @@ export function AuctionCreateForm({
             <div>
               <span className="panel-eyebrow">{t('auctions.create.selectedItemEyebrow')}</span>
               <strong>{selectedItem.item_name || t('auctions.create.itemFallback', { id: selectedItem.item_id })}</strong>
-              <small>{t('auctions.create.selectedItemMeta', { id: selectedItem.item_id, quantity: selectedItem.quantity.toLocaleString('pt-BR') })}</small>
+              <small>{t('auctions.create.selectedItemMeta', { id: selectedItem.item_id, quantity: formatNumber(selectedItem.quantity) })}</small>
               <span>{selectedItem.enchant > 0 ? t('auctions.create.enchantValue', { enchant: selectedItem.enchant }) : t('auctions.create.noEnchant')}</span>
             </div>
           </div>

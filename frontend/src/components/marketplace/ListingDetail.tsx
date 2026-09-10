@@ -7,7 +7,7 @@ import {
   UserRound,
   X,
 } from 'lucide-react'
-import { formatCurrency } from '../../lib/formatters'
+import { formatCurrency, formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
 import { ListingEquipment } from './ListingEquipment'
@@ -52,8 +52,8 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
         <dl className="marketplace-character-stats">
           <div><dt>{t('marketplace.detail.class')}</dt><dd>{getClassName(listing.char_class)}</dd></div>
           <div><dt>{t('marketplace.detail.level')}</dt><dd>{listing.char_level}</dd></div>
-          <div><dt>{t('marketplace.detail.pvp')}</dt><dd>{listing.char_pvp.toLocaleString('pt-BR')}</dd></div>
-          <div><dt>{t('marketplace.detail.pk')}</dt><dd>{listing.char_pk.toLocaleString('pt-BR')}</dd></div>
+          <div><dt>{t('marketplace.detail.pvp')}</dt><dd>{formatNumber(listing.char_pvp)}</dd></div>
+          <div><dt>{t('marketplace.detail.pk')}</dt><dd>{formatNumber(listing.char_pk)}</dd></div>
           <div><dt>{t('marketplace.detail.sex')}</dt><dd>{listing.char_sex === 0 ? t('marketplace.detail.male') : t('marketplace.detail.female')}</dd></div>
           <div><dt>{t('marketplace.detail.clan')}</dt><dd>{listing.char_clan_name || t('marketplace.detail.noClan')}</dd></div>
         </dl>

@@ -786,7 +786,21 @@
     "rowLevel": "Nivel {{level}} · {{season}}",
     "rowSeason": "Temporada",
     "rowDay": "Día {{day}}",
-    "rowRecord": "Registro"
+    "rowRecord": "Registro",
+    "rewardsEditor": {
+      "title": "Recompensas",
+      "type": "Tipo",
+      "quantity": "Cantidad",
+      "itemId": "ID del ítem",
+      "name": "Nombre",
+      "enchant": "Encantamiento",
+      "kindItem": "Ítem en la bag",
+      "kindTokens": "Fichas",
+      "kindBalance": "Saldo",
+      "kindBonus": "Saldo bonus",
+      "remove": "Quitar recompensa",
+      "add": "Añadir recompensa"
+    }
   },
   "resources": {
     "kicker": "Sistema",

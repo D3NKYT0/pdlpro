@@ -4,7 +4,13 @@ import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { apiErrorMessage } from '../../lib/errors'
 import { gamesApi, inventoryApi, lineageApi } from '../../services/api'
+import i18n from '../../i18n'
+import { INTL_LOCALES, isAppLanguage } from '../../i18n/locale'
 import type { InventoryTab, PanelItemAction } from './types'
+
+function searchLocale() {
+  return isAppLanguage(i18n.language) ? INTL_LOCALES[i18n.language] : 'pt-BR'
+}
 
 export function useInventoryDashboard() {
   const { t } = useTranslation('panel')
@@ -64,10 +70,11 @@ export function useInventoryDashboard() {
     setGameItemsPage(1)
   }, [login, charId, gameItemSearch, gameItemsPageSize])
 
-  const normalizedGameItemSearch = gameItemSearch.trim().toLocaleLowerCase('pt-BR')
+  const locale = searchLocale()
+  const normalizedGameItemSearch = gameItemSearch.trim().toLocaleLowerCase(locale)
   const filteredGameItems = (gameItems.data ?? []).filter((item) => {
     if (!normalizedGameItemSearch) return true
-    return item.name.toLocaleLowerCase('pt-BR').includes(normalizedGameItemSearch)
+    return item.name.toLocaleLowerCase(locale).includes(normalizedGameItemSearch)
       || String(item.item_id).includes(normalizedGameItemSearch)
   })
   const gameItemsPageCount = Math.max(1, Math.ceil(filteredGameItems.length / gameItemsPageSize))

@@ -5,6 +5,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { contentApi, serverApi } from '../../services/api'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
+import { formatDate, formatNumber } from '../../lib/formatters'
 import { themeAsset } from '../../theme/assets'
 
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
@@ -200,7 +201,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
                 <thead><tr><th>{t('portal.colPosition')}</th><th>{t('portal.colCharacterClan')}</th><th>{t('portal.colScore')}</th></tr></thead>
                 <tbody>
                   {(rankings.data ?? []).map((row) => (
-                    <tr key={`${row.position}-${row.name}`}><td className="rank">{String(row.position).padStart(2, '0')}</td><td>{row.name}</td><td>{row.value.toLocaleString('pt-BR')}</td></tr>
+                    <tr key={`${row.position}-${row.name}`}><td className="rank">{String(row.position).padStart(2, '0')}</td><td>{row.name}</td><td>{formatNumber(row.value)}</td></tr>
                   ))}
                   {!rankings.data?.length ? <tr><td colSpan={3}>{t('portal.ratingEmpty')}</td></tr> : null}
                 </tbody>
@@ -230,7 +231,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             {(news.data ?? []).slice(0, 3).map((item) => (
               <Link className="news-item" key={item.id} to={`/news/${item.slug}`}>
                 <h3 className="news-item__title">{item.title}</h3>
-                <p className="news-item__meta">{new Date(item.published_at).toLocaleDateString('pt-BR')}</p>
+                <p className="news-item__meta">{formatDate(item.published_at)}</p>
                 <p>{item.excerpt || item.title}</p>
               </Link>
             ))}

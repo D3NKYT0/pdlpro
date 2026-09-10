@@ -26,9 +26,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   roadmap, supporters e demais módulos).
 - Summaries/descriptions OpenAPI e tags do Spectacular com `gettext_lazy`,
   catálogos EN/ES preenchidos.
+- Fechamento das lacunas de chrome i18n: Pesca (`FishingGame`), labels de
+  `ProgramUI`, fallbacks HTTP/OAuth/pagamentos/`ItemIdField`, templates Jazzmin
+  (`base.html` / `pdl_components.html`) e formatadores sem `pt-BR` fixo nas telas
+  do painel.
 
 ### Alterado
 
+- Dependências Python: `bleach` 6.4.0 (XSS/URI), `djangorestframework` 3.18.1,
+  `mercadopago` 3.6.0, `psycopg2-binary` 2.9.13, `sentry-sdk` 2.69.1; `pip-audit`
+  limpo. Django permanece em 6.0.8 (`django-celery-beat` <6.1).
 - Tema builtin renomeado para **PDL Classic**, com descrição voltada à identidade
   visual (Aden, tipografia e look original), em vez de “PDL Default / tema preservado”.
 

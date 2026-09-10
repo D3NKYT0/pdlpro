@@ -961,6 +961,46 @@
       "enchant_one": "Enchant · {{count}} fragment",
       "enchant_other": "Enchant · {{count}} fragments"
     },
+    "fishing": {
+      "eyebrow": "Kingdom lake",
+      "title": "Fishing",
+      "rod": "Fishing rod",
+      "rodLevel": "Level {{level}}",
+      "xp": "Experience",
+      "xpValue": "{{xp}} XP",
+      "tokens": "Available tokens",
+      "bait": "Bait",
+      "noBait": "No special bait",
+      "baitOption": "{{name}} · {{quantity}} in stock · +{{bonus}}%",
+      "castCost": "Each cast costs {{cost}} token(s). The selected bait is consumed even if the fish escapes.",
+      "cast": "Cast the line",
+      "casting": "Please wait…",
+      "castDone": "Cast completed.",
+      "caught": "You caught {{name}}!",
+      "escaped": "The fish got away. Try again.",
+      "escapedShort": "The fish got away",
+      "unavailable": "Fishing is temporarily unavailable.",
+      "insufficientTokens": "Not enough tokens to cast. Buy tokens on the Roulette tab.",
+      "shopTitle": "Bait shop",
+      "buyQuantity": "Quantity per purchase",
+      "baitChance": "+{{bonus}} chance points · Stock: {{quantity}}",
+      "buy": "Buy · {{price}} tokens",
+      "bought": "Bait added to your stock.",
+      "shopEmpty": "No bait for sale right now.",
+      "recentTitle": "Recent casts",
+      "collectionTitle": "Your collection",
+      "collectionHint": "Discover every species. Each successful catch is recorded in your collection.",
+      "rarity": {
+        "common": "Common",
+        "rare": "Rare",
+        "epic": "Epic",
+        "legendary": "Legendary"
+      },
+      "captures_one": "{{count}} catch",
+      "captures_other": "{{count}} catches",
+      "undiscovered": "Not discovered yet",
+      "collectionMeta": "{{rarity}} · {{detail}}"
+    },
     "toast": {
       "noPrize": "No prize this time",
       "prizeWon": "You won {{prize}}",
@@ -1297,5 +1337,27 @@
       "unstuckDone": "Character unstuck",
       "unstuckError": "Could not unstuck"
     }
+  },
+  "programs": {
+    "status": {
+      "pending": "Under review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "paid": "Credited",
+      "available": "Available",
+      "completed": "Completed",
+      "planned": "Planned",
+      "progress": "In progress",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "season": "Season"
+    },
+    "rewardKinds": {
+      "tokens": "Tokens",
+      "balance": "Balance",
+      "bonus": "Bonus",
+      "item": "Item"
+    },
+    "historyEmpty": "Your claims will appear here."
   }
 }

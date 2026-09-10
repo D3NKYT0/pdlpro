@@ -7,7 +7,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
-import { formatCurrency } from '../../lib/formatters'
+import { formatCurrency, formatNumber } from '../../lib/formatters'
 import type { ApiAuction } from '../../services/api'
 import { formatRemaining } from './auctionHelpers'
 
@@ -44,7 +44,7 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
                 </div>
               </div>
               <div className="auction-listing-stats">
-                <span><PackageOpen aria-hidden="true" /><b>{auction.quantity.toLocaleString('pt-BR')}</b> {t('auctions.list.units')}</span>
+                <span><PackageOpen aria-hidden="true" /><b>{formatNumber(auction.quantity)}</b> {t('auctions.list.units')}</span>
                 <span><Sparkles aria-hidden="true" /><b>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : '0'}</b> {t('auctions.list.enchant')}</span>
                 <span><Clock3 aria-hidden="true" /><b>{formatRemaining(auction.ends_at, t)}</b></span>
               </div>

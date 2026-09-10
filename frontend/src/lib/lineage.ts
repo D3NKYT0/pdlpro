@@ -1,3 +1,5 @@
+import { formatCurrency } from './formatters'
+
 const classNames: Record<number, string> = {
   0: 'Human Fighter',
   1: 'Human Warrior',
@@ -111,5 +113,5 @@ export function getClassName(classId: number | undefined) {
 export function formatServicePrice(value: string | undefined) {
   const amount = Number(value)
   if (!Number.isFinite(amount) || amount <= 0) return 'Grátis'
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount)
+  return formatCurrency(amount)
 }

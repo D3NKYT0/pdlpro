@@ -12,6 +12,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
+import { hcaptchaLanguage } from '../i18n/locale'
 
 const LANDING_PATH = '/home'
 
@@ -26,7 +27,7 @@ function alreadyLoggedInDestination(nextParam: string | null) {
 }
 
 export function LoginPage() {
-  const { t } = useTranslation('auth')
+  const { t, i18n } = useTranslation('auth')
   const { user, loading, login, verifyTwoFactor, refreshUser } = useAuth()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const navigate = useNavigate()
@@ -133,7 +134,7 @@ export function LoginPage() {
                 <HCaptcha
                   sitekey={capabilities.data.hcaptcha_site_key}
                   theme="dark"
-                  languageOverride="pt-BR"
+                  languageOverride={hcaptchaLanguage(i18n.language)}
                   onVerify={setCaptchaToken}
                   onExpire={() => setCaptchaToken('')}
                 />

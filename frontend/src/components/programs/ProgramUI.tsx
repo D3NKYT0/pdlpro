@@ -1,46 +1,46 @@
-import type { ReactNode } from "react";
-import {
-  CheckCircle2,
-  CircleDashed,
-  Gift,
-} from "lucide-react";
-import type {
-  Reward,
-  RewardHistory,
-} from "../../services/api";
-import { ItemIcon } from "../ItemIcon";
-import "./programs.css";
+import { useTranslation } from 'react-i18next'
+import { CheckCircle2, CircleDashed, Gift } from 'lucide-react'
+import type { Reward, RewardHistory } from '../../services/api'
+import { formatDateTime } from '../../lib/formatters'
+import { ItemIcon } from '../ItemIcon'
+import './programs.css'
 
+/** @deprecated Prefer Status with i18n; kept for callers that only need the PT map. */
 export const labels: Record<string, string> = {
-  pending: "Em análise",
-  approved: "Aprovado",
-  rejected: "Recusado",
-  paid: "Creditado",
-  available: "Disponível",
-  completed: "Concluído",
-  planned: "Planejado",
-  progress: "Em andamento",
-  daily: "Diária",
-  weekly: "Semanal",
-  season: "Temporada",
-};
+  pending: 'Em análise',
+  approved: 'Aprovado',
+  rejected: 'Recusado',
+  paid: 'Creditado',
+  available: 'Disponível',
+  completed: 'Concluído',
+  planned: 'Planejado',
+  progress: 'Em andamento',
+  daily: 'Diária',
+  weekly: 'Semanal',
+  season: 'Temporada',
+}
+
 export function Status({ value, label }: { value: string; label?: string }) {
+  const { t } = useTranslation('panel')
   return (
     <span className={`program-status status-${value}`}>
       <CircleDashed size={13} />
-      {label ?? labels[value] ?? value}
+      {label ?? t(`programs.status.${value}`, { defaultValue: labels[value] ?? value })}
     </span>
-  );
+  )
 }
+
 // Compatibilidade dos imports existentes; implementação visual única em ui/.
-export { EmptyState as Empty, ErrorNotice, LoadingState as Loading } from '../ui/Feedback';
-import { EmptyState as Empty } from '../ui/Feedback';
+export { EmptyState as Empty, ErrorNotice, LoadingState as Loading } from '../ui/Feedback'
+import { EmptyState as Empty } from '../ui/Feedback'
+
 export function RewardList({ rewards }: { rewards: Reward[] }) {
+  const { t } = useTranslation('panel')
   return (
     <div className="program-rewards">
       {rewards.map((reward, i) => (
         <span key={i} className="program-reward">
-          {reward.kind === "item" ? (
+          {reward.kind === 'item' ? (
             <ItemIcon itemId={reward.item_id || 0} size={28} />
           ) : (
             <Gift size={20} />
@@ -48,22 +48,23 @@ export function RewardList({ rewards }: { rewards: Reward[] }) {
           <span>
             <strong>
               {reward.name ||
-                { tokens: "Fichas", balance: "Saldo", bonus: "Bônus" }[
-                  reward.kind
-                ] ||
-                "Item"}
+                t(`programs.rewardKinds.${reward.kind}`, {
+                  defaultValue: t('programs.rewardKinds.item'),
+                })}
             </strong>
             <small>
               × {reward.quantity}
-              {reward.enchant ? ` · +${reward.enchant}` : ""}
+              {reward.enchant ? ` · +${reward.enchant}` : ''}
             </small>
           </span>
         </span>
       ))}
     </div>
-  );
+  )
 }
+
 export function RewardHistoryList({ history }: { history: RewardHistory[] }) {
+  const { t } = useTranslation('panel')
   return history.length ? (
     <div className="program-timeline">
       {history.map((row) => (
@@ -71,16 +72,17 @@ export function RewardHistoryList({ history }: { history: RewardHistory[] }) {
           <CheckCircle2 size={18} />
           <div>
             <strong>{row.label}</strong>
-            <small>{new Date(row.created_at).toLocaleString("pt-BR")}</small>
+            <small>{formatDateTime(row.created_at)}</small>
             <RewardList rewards={row.rewards} />
           </div>
         </article>
       ))}
     </div>
   ) : (
-    <Empty>Seus resgates aparecerão aqui.</Empty>
-  );
+    <Empty>{t('programs.historyEmpty')}</Empty>
+  )
 }
+
 export function Meter({ value, max }: { value: number; max: number }) {
   return (
     <div
@@ -96,5 +98,5 @@ export function Meter({ value, max }: { value: number; max: number }) {
         }}
       />
     </div>
-  );
+  )
 }

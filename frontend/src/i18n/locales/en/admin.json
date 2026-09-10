@@ -786,7 +786,21 @@
     "rowLevel": "Level {{level}} · {{season}}",
     "rowSeason": "Season",
     "rowDay": "Day {{day}}",
-    "rowRecord": "Record"
+    "rowRecord": "Record",
+    "rewardsEditor": {
+      "title": "Rewards",
+      "type": "Type",
+      "quantity": "Quantity",
+      "itemId": "Item ID",
+      "name": "Name",
+      "enchant": "Enchant",
+      "kindItem": "Item in bag",
+      "kindTokens": "Tokens",
+      "kindBalance": "Balance",
+      "kindBonus": "Bonus balance",
+      "remove": "Remove reward",
+      "add": "Add reward"
+    }
   },
   "resources": {
     "kicker": "System",

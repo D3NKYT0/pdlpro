@@ -12,10 +12,11 @@ import { useAuth } from '../contexts/AuthContext'
 import { credentialJSON, creationOptions } from '../lib/webauthn'
 import { authApi } from '../services/api'
 import { beginOAuth } from '../lib/oauth'
+import { formatDate, formatDateTime } from '../lib/formatters'
 
 function formatSessionWhen(value: string | null, unknownLabel: string) {
   if (!value) return unknownLabel
-  return new Date(value).toLocaleString('pt-BR')
+  return formatDateTime(value)
 }
 
 export function AccountSecurityPage() {
@@ -194,7 +195,7 @@ export function AccountSecurityPage() {
             <header><span><Fingerprint /></span><div><h2>{t('security.passkeysTitle')}</h2><p>{t('security.passkeysSubtitle')}</p></div><b className={passkeys.data?.length ? 'is-on' : 'is-off'}>{passkeys.data?.length ?? 0}</b></header>
             <div className="security-add-passkey"><Field>{t('security.deviceName')}<input value={nickname} maxLength={64} onChange={(event) => setNickname(event.target.value)} /></Field><Button type="submit" disabled={busy === 'passkey'} onClick={() => void addPasskey()}><Fingerprint /> {t('security.addPasskey')}</Button></div>
             <div className="security-passkey-list">
-              {(passkeys.data ?? []).map((row) => <article key={row.id}><Fingerprint /><span><strong>{row.nickname || t('security.passkeyFallbackName')}</strong><small>{t('security.passkeyCreatedAt', { date: new Date(row.created_at).toLocaleDateString('pt-BR') })}</small></span><button type="button" title={t('security.removePasskey')} onClick={() => void removePasskey(row.id)}><Trash2 /></button></article>)}
+              {(passkeys.data ?? []).map((row) => <article key={row.id}><Fingerprint /><span><strong>{row.nickname || t('security.passkeyFallbackName')}</strong><small>{t('security.passkeyCreatedAt', { date: formatDate(row.created_at) })}</small></span><button type="button" title={t('security.removePasskey')} onClick={() => void removePasskey(row.id)}><Trash2 /></button></article>)}
               {!passkeys.data?.length ? <p className="muted">{t('security.noPasskeys')}</p> : null}
             </div>
           </Card>
