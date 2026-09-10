@@ -10,6 +10,8 @@ from apps.content.application.legal import (
     GetLegalDocumentUseCase,
     ListLegalDocumentsInput,
     ListLegalDocumentsUseCase,
+    ListLegalHistoryInput,
+    ListLegalHistoryUseCase,
 )
 from apps.content.application.use_cases import (
     GetNewsInput,
@@ -218,6 +220,28 @@ class LegalListView(InjectedAPIView):
             self.resolve(ListLegalDocumentsUseCase).execute(
                 ListLegalDocumentsInput(language=language)
             )
+        )
+
+
+class LegalHistoryView(InjectedAPIView):
+    """Entrada HTTP para ``ListLegalHistoryUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [AllowAny]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(
+        tags=["Legal"],
+        summary=gettext_lazy("Histórico de versões legais"),
+        description=gettext_lazy("Lista o histórico público de versões dos documentos legais."),
+    )
+    def get(self, request):
+        language = resolve_language(request.query_params.get("lang"))
+        return Response(
+            self.resolve(ListLegalHistoryUseCase).execute(ListLegalHistoryInput(language=language))
         )
 
 

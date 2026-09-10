@@ -77,6 +77,8 @@ export const authApi = {
   revokeSession: (id: string) => request<{ ok: boolean; current: boolean }>(`/auth/sessions/${id}/`, { method: 'DELETE' }),
   revokeOtherSessions: () => request<{ ok: boolean; revoked: number }>('/auth/sessions/revoke-others/', { method: 'POST' }),
   me: () => request<ApiUser>('/shared/me/'),
+  acceptTerms: (payload: { terms_accepted: boolean }) =>
+    request<ApiUser>('/shared/me/accept-terms/', { method: 'POST', body: JSON.stringify(payload) }),
   updateMe: (payload: { display_name?: string; bio?: string } | FormData) =>
     request<ApiUser>('/shared/me/', {
       method: 'PATCH',

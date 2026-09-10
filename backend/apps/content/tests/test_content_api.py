@@ -254,14 +254,26 @@ def test_legal_documents(api):
     listed = api.get("/api/v1/public/legal/")
     assert listed.status_code == 200
     slugs = {item["slug"] for item in listed.data["documents"]}
-    assert slugs == {"terms", "privacy", "agreement"}
+    assert slugs == {"terms", "privacy", "agreement", "cookies", "lgpd"}
+    assert listed.data["version"]
     terms = api.get("/api/v1/public/legal/terms/")
     assert terms.status_code == 200
     assert terms.data["title"]
     assert terms.data["body"]
+    assert terms.data["format"] == "html"
+    assert "<h2>" in terms.data["body"]
     assert terms.data["language"] == "pt"
 
     terms_es = api.get("/api/v1/public/legal/terms/?lang=es")
     assert terms_es.status_code == 200
     assert terms_es.data["language"] == "es"
     assert "Términos" in terms_es.data["title"]
+
+    cookies = api.get("/api/v1/public/legal/cookies/")
+    assert cookies.status_code == 200
+    assert cookies.data["format"] == "html"
+
+    history = api.get("/api/v1/public/legal/history/")
+    assert history.status_code == 200
+    assert history.data["history"]
+    assert any(entry["is_current"] for entry in history.data["history"])

@@ -52,6 +52,7 @@ from apps.accounts.application.sessions import (
     RotateRefreshUseCase,
     refresh_jti,
 )
+from apps.accounts.application.terms_consent import client_ip, client_user_agent
 from apps.accounts.application.twofa import (
     ConfirmTwoFactorInput,
     ConfirmTwoFactorUseCase,
@@ -63,6 +64,8 @@ from apps.accounts.application.twofa import (
     make_login_challenge,
 )
 from apps.accounts.application.use_cases import (
+    AcceptTermsInput,
+    AcceptTermsUseCase,
     AuthenticateUserInput,
     AuthenticateUserUseCase,
     CompleteCredentialsInput,
@@ -87,6 +90,7 @@ from apps.accounts.presentation.auth_cookies import (
 )
 from apps.accounts.presentation.csrf import csrf_failed_reason
 from apps.accounts.presentation.serializers import (
+    AcceptTermsSerializer,
     AuthSessionSerializer,
     CompleteCredentialsSerializer,
     LoginSerializer,
@@ -159,6 +163,8 @@ class RegisterView(InjectedAPIView):
                 password=data["password"],
                 display_name=data.get("display_name", ""),
                 accept_terms=data["accept_terms"],
+                ip=client_ip(request),
+                user_agent=client_user_agent(request),
             )
         )
         return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
@@ -335,6 +341,8 @@ class CompleteCredentialsView(InjectedAPIView):
                 username=data["username"],
                 password=data["password"],
                 accept_terms=data["accept_terms"],
+                ip=client_ip(request),
+                user_agent=client_user_agent(request),
             )
         )
         return build_auth_response(request, self.resolve(IAuthSessionService).require_user(user.id))
@@ -502,6 +510,38 @@ class MeView(InjectedAPIView):
         serializer.is_valid(raise_exception=True)
         user = self.resolve(UpdateProfileUseCase).execute(
             UpdateProfileInput(user_id=request.user.id, **serializer.validated_data)
+        )
+        return Response(UserSerializer(user).data)
+
+
+class AcceptTermsView(InjectedAPIView):
+    """Entrada HTTP para ``AcceptTermsUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Perfil"],
+        request=AcceptTermsSerializer,
+        responses=UserSerializer,
+        summary=gettext_lazy("Aceitar documentos legais"),
+        description=gettext_lazy(
+            "Registra o aceite explícito da versão vigente dos Termos, Privacidade e Acordo."
+        ),
+    )
+    def post(self, request):
+        serializer = AcceptTermsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.resolve(AcceptTermsUseCase).execute(
+            AcceptTermsInput(
+                user_id=request.user.id,
+                terms_accepted=serializer.validated_data["terms_accepted"],
+                ip=client_ip(request),
+                user_agent=client_user_agent(request),
+            )
         )
         return Response(UserSerializer(user).data)
 

@@ -38,6 +38,9 @@ export function SiteFooter() {
     { to: '/agreement', label: t('footer.agreement') },
     { to: '/terms', label: t('footer.terms') },
     { to: '/privacy', label: t('footer.privacy') },
+    { to: '/cookies', label: t('footer.cookies') },
+    { to: '/lgpd', label: t('footer.lgpd') },
+    { to: '/legal/history', label: t('footer.legalHistory') },
   ]
 
   return (

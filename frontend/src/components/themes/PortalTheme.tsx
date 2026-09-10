@@ -72,7 +72,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
           </nav>
           <p className="site-footer__copy">{presentation.footer.copyright}</p>
           <p className="site-footer__copy portal-legal-links">
-            <Link to="/terms">{t('footer.terms')}</Link> · <Link to="/privacy">{t('footer.privacy')}</Link> · <Link to="/agreement">{t('footer.agreement')}</Link>
+            <Link to="/terms">{t('footer.terms')}</Link> · <Link to="/privacy">{t('footer.privacy')}</Link> · <Link to="/agreement">{t('footer.agreement')}</Link> · <Link to="/cookies">{t('footer.cookies')}</Link> · <Link to="/lgpd">{t('footer.lgpd')}</Link>
           </p>
         </div>
       </footer>

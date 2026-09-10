@@ -13,6 +13,10 @@ export interface ApiUser {
   is_superuser?: boolean
   is_staff_member?: boolean
   has_usable_password?: boolean
+  terms_accepted_at?: string | null
+  terms_and_privacy_version?: string
+  current_legal_docs_version?: string
+  needs_terms_acceptance?: boolean
 }
 
 export interface ApiServerInfo {

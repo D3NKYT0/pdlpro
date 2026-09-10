@@ -81,6 +81,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     fichas = models.PositiveIntegerField(default=0)
     terms_accepted_at = models.DateTimeField(null=True, blank=True)
     terms_and_privacy_version = models.CharField(max_length=64, blank=True, default="")
+    terms_accepted_ip = models.GenericIPAddressField(null=True, blank=True)
+    terms_accepted_user_agent = models.CharField(max_length=500, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

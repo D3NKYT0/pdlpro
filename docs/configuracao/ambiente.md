@@ -21,7 +21,15 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `PROJECT_TITLE` | Nome exibido pelo projeto | `PDL PRO` |
 | `PROJECT_URL` | URL pública do backend/proxy | `http://localhost` |
 | `FRONTEND_URL` | URL usada em links enviados ao usuário | `http://localhost:3000` |
-| `LEGAL_DOCS_VERSION` | Versão aceita dos documentos legais | Data ou versão publicada |
+| `LEGAL_DOCS_VERSION` | Versão aceita dos documentos legais (bump força reaceitação) | `2026-09-10` |
+| `LEGAL_CONTROLLER_NAME` | Razão social / nome do controlador LGPD | `Operador do servidor` |
+| `LEGAL_TRADE_NAME` | Nome fantasia / marca do painel no deploy | `PDL PRO` |
+| `LEGAL_CNPJ` | CNPJ do controlador | `00.000.000/0000-00` |
+| `LEGAL_ADDRESS` | Endereço do controlador | `Brasil` |
+| `LEGAL_CONTACT_EMAIL` | E-mail de contato geral | `contato@example.com` |
+| `LEGAL_DPO_EMAIL` | E-mail do encarregado (DPO) | `dpo@example.com` |
+| `LEGAL_LEGAL_EMAIL` | E-mail jurídico | `juridico@example.com` |
+| `LEGAL_FORUM` | Foro eleito nos Termos | `Brasil` |
 | `PDL_EXTENSION_APPS` | AppConfigs de cliente sob `extensions.*` (vírgula) | vazio no core; ver [Extensões](../arquitetura/extensoes.md) |
 
 `DB_NAME`, `DB_USER` e `DB_PASSWORD` configuram o serviço PostgreSQL do Compose. Fora dele, prefira uma `DATABASE_URL` completa.

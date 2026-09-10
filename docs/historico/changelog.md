@@ -10,6 +10,22 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+### Alterado
+
+### Corrigido
+
+## [2.3.0] - 2026-09-10
+
+Alterações desde **9 de setembro de 2026** (após `[2.2.0]`), consolidadas pelo histórico
+Git até **10 de setembro de 2026**.
+
+### Adicionado
+
+- Pacote legal completo (Termos, Privacidade, Acordo, Cookies, LGPD) em pt/en/es,
+  histórico público `/legal/history`, banner de cookies versionado e reaceitação
+  obrigatória no painel quando `LEGAL_DOCS_VERSION` muda; identidade do
+  controlador configurável por env. Ver
+  [Documentos legais e LGPD](../funcionalidades/documentos-legais-e-lgpd.md).
 - Atalhos **API** e **Painel** no header do Django Admin/Jazzmin (ao lado de
   Componentes), espelhando a topbar da documentação OpenAPI.
 - Card **API** no hub `/panel/admin` (módulo Sistema), com link externo para

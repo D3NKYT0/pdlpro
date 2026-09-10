@@ -3,9 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID
 
-from django.conf import settings
-
 from apps.accounts.application.email_use_cases import RequestEmailVerificationUseCase
+from apps.accounts.application.terms_consent import current_legal_docs_version
 from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import (
     EmailTakenError,
@@ -32,6 +31,8 @@ class RegisterUserInput:
     password: str
     display_name: str = ""
     accept_terms: bool = False
+    ip: str | None = None
+    user_agent: str = ""
 
 
 class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
@@ -68,7 +69,12 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
                 password=data.password,
                 display_name=data.display_name.strip() or username,
             )
-            user = self._users.accept_terms(user.id, getattr(settings, "LEGAL_DOCS_VERSION", "2026-08-31"))
+            user = self._users.accept_terms(
+                user.id,
+                current_legal_docs_version(),
+                ip=data.ip,
+                user_agent=data.user_agent,
+            )
         self._request_email_verification.execute(user.id)
         return user
 
@@ -189,6 +195,8 @@ class CompleteCredentialsInput:
     username: str
     password: str
     accept_terms: bool = False
+    ip: str | None = None
+    user_agent: str = ""
 
 
 class CompleteCredentialsUseCase(UseCase[CompleteCredentialsInput, UserEntity]):
@@ -219,4 +227,45 @@ class CompleteCredentialsUseCase(UseCase[CompleteCredentialsInput, UserEntity]):
             if username.lower() != user.username.lower():
                 user = self._users.update_username(data.user_id, username)
             self._users.set_password(data.user_id, data.password)
-            return self._users.accept_terms(data.user_id, getattr(settings, "LEGAL_DOCS_VERSION", "2026-08-31"))
+            return self._users.accept_terms(
+                data.user_id,
+                current_legal_docs_version(),
+                ip=data.ip,
+                user_agent=data.user_agent,
+            )
+
+
+@dataclass(frozen=True, slots=True)
+class AcceptTermsInput:
+    """Dados de entrada de ``AcceptTermsUseCase.execute``."""
+
+    user_id: UUID
+    terms_accepted: bool = False
+    ip: str | None = None
+    user_agent: str = ""
+
+
+class AcceptTermsUseCase(UseCase[AcceptTermsInput, UserEntity]):
+    """Registra o aceite explícito da versão vigente dos documentos legais.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``AcceptTermsInput``. O retorno é
+    ``UserEntity``.
+    """
+
+    def __init__(self, users: IUserRepository, unit_of_work: UnitOfWork) -> None:
+        self._users = users
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: AcceptTermsInput) -> UserEntity:
+        if not data.terms_accepted:
+            raise ValidationDomainError("Aceite os termos de uso e a política de privacidade.")
+        user = self._users.get_by_id(data.user_id)
+        if user is None:
+            raise UserNotFoundError()
+        with self._unit_of_work:
+            return self._users.accept_terms(
+                data.user_id,
+                current_legal_docs_version(),
+                ip=data.ip,
+                user_agent=data.user_agent,
+            )

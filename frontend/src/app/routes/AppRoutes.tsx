@@ -14,6 +14,7 @@ import { GamesPage } from '../../pages/GamesPage'
 import { HomePage } from '../../pages/HomePage'
 import { InventoryPage } from '../../pages/InventoryPage'
 import { LegalPage } from '../../pages/LegalPage'
+import { LegalHistoryPage } from '../../pages/LegalHistoryPage'
 import { LoginPage } from '../../pages/LoginPage'
 import { MarketplacePage } from '../../pages/MarketplacePage'
 import { NewsDetailPage } from '../../pages/NewsDetailPage'
@@ -100,6 +101,9 @@ export function AppRoutes() {
             <Route path="/terms" element={<LegalPage />} />
             <Route path="/privacy" element={<LegalPage />} />
             <Route path="/agreement" element={<LegalPage />} />
+            <Route path="/cookies" element={<LegalPage />} />
+            <Route path="/lgpd" element={<LegalPage />} />
+            <Route path="/legal/history" element={<LegalHistoryPage />} />
           </Route>
         </Route>
 

@@ -56,6 +56,7 @@ class DjangoUserRepository(IUserRepository):
 
     def _to_entity(self, user) -> UserEntity:
         avatar_url = user.avatar.url if user.avatar else None
+        accepted_at = user.terms_accepted_at.isoformat() if user.terms_accepted_at else None
         return UserEntity(
             id=user.id,
             username=user.username,
@@ -71,6 +72,8 @@ class DjangoUserRepository(IUserRepository):
             is_superuser=bool(user.is_superuser),
             is_staff_member=bool(user.is_staff_member),
             has_usable_password=user.has_usable_password(),
+            terms_accepted_at=accepted_at,
+            terms_and_privacy_version=user.terms_and_privacy_version or "",
         )
 
     def get_by_id(self, user_id: UUID) -> UserEntity | None:
@@ -152,11 +155,28 @@ class DjangoUserRepository(IUserRepository):
         user.save(update_fields=["username", "updated_at"])
         return self._to_entity(user)
 
-    def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
+    def accept_terms(
+        self,
+        user_id: UUID,
+        version: str,
+        *,
+        ip: str | None = None,
+        user_agent: str = "",
+    ) -> UserEntity:
         user = User.objects.get(id=user_id)
         user.terms_accepted_at = timezone.now()
         user.terms_and_privacy_version = version
-        user.save(update_fields=["terms_accepted_at", "terms_and_privacy_version", "updated_at"])
+        user.terms_accepted_ip = ip or None
+        user.terms_accepted_user_agent = (user_agent or "")[:500]
+        user.save(
+            update_fields=[
+                "terms_accepted_at",
+                "terms_and_privacy_version",
+                "terms_accepted_ip",
+                "terms_accepted_user_agent",
+                "updated_at",
+            ]
+        )
         return self._to_entity(user)
 
     def get_totp_state(self, user_id: UUID) -> TotpState | None:

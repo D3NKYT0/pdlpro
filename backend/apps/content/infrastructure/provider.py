@@ -8,6 +8,7 @@ from apps.content.application.denkynho import (
 from apps.content.application.legal import (
     GetLegalDocumentUseCase,
     ListLegalDocumentsUseCase,
+    ListLegalHistoryUseCase,
 )
 from apps.content.application.use_cases import (
     GetNewsUseCase,
@@ -75,5 +76,6 @@ class ContentProvider(AppProvider):
             ListCalendarEventsUseCase,
             ListLegalDocumentsUseCase,
             GetLegalDocumentUseCase,
+            ListLegalHistoryUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

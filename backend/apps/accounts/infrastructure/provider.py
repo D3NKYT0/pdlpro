@@ -26,6 +26,7 @@ from apps.accounts.application.twofa import (
     VerifyTwoFactorLoginUseCase,
 )
 from apps.accounts.application.use_cases import (
+    AcceptTermsUseCase,
     AuthenticateUserUseCase,
     CompleteCredentialsUseCase,
     GetCurrentUserUseCase,
@@ -93,6 +94,7 @@ class AccountsProvider(AppProvider):
         container.register(IAuthSessionService, AuthSessionService, lifetime=Lifetime.SCOPED)
         container.register_self(RegisterUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(CompleteCredentialsUseCase, lifetime=Lifetime.TRANSIENT)
+        container.register_self(AcceptTermsUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(AuthenticateUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(GetCurrentUserUseCase, lifetime=Lifetime.TRANSIENT)
         container.register_self(UpdateProfileUseCase, lifetime=Lifetime.TRANSIENT)

@@ -48,7 +48,15 @@ ASGI_APPLICATION = "core.asgi.application"
 
 SITE_ID = env.int("SITE_ID", default=1)
 AUTH_USER_MODEL = "accounts.User"
-LEGAL_DOCS_VERSION = env("LEGAL_DOCS_VERSION", default="2026-08-31")
+LEGAL_DOCS_VERSION = env("LEGAL_DOCS_VERSION", default="2026-09-10")
+LEGAL_CONTROLLER_NAME = env("LEGAL_CONTROLLER_NAME", default="Operador do servidor")
+LEGAL_TRADE_NAME = env("LEGAL_TRADE_NAME", default="PDL PRO")
+LEGAL_CNPJ = env("LEGAL_CNPJ", default="00.000.000/0000-00")
+LEGAL_ADDRESS = env("LEGAL_ADDRESS", default="Brasil")
+LEGAL_CONTACT_EMAIL = env("LEGAL_CONTACT_EMAIL", default="contato@example.com")
+LEGAL_DPO_EMAIL = env("LEGAL_DPO_EMAIL", default="dpo@example.com")
+LEGAL_LEGAL_EMAIL = env("LEGAL_LEGAL_EMAIL", default="juridico@example.com")
+LEGAL_FORUM = env("LEGAL_FORUM", default="Brasil")
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",

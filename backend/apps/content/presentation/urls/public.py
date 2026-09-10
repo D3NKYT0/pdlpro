@@ -5,6 +5,7 @@ from apps.content.presentation.views.public import (
     DownloadListView,
     FaqListView,
     LegalDetailView,
+    LegalHistoryView,
     LegalListView,
     NewsDetailView,
     NewsListView,
@@ -21,5 +22,6 @@ urlpatterns = [
     path("wiki/<slug:slug>/", WikiDetailView.as_view(), name="public-wiki-detail"),
     path("calendar/", CalendarEventListView.as_view(), name="public-calendar"),
     path("legal/", LegalListView.as_view(), name="public-legal"),
+    path("legal/history/", LegalHistoryView.as_view(), name="public-legal-history"),
     path("legal/<slug:slug>/", LegalDetailView.as_view(), name="public-legal-detail"),
 ]

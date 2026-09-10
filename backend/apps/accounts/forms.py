@@ -35,6 +35,8 @@ class PDLUserLabelsMixin:
         "fichas": _("Fichas"),
         "terms_accepted_at": _("Aceite dos termos"),
         "terms_and_privacy_version": _("Versão dos termos e privacidade"),
+        "terms_accepted_ip": _("IP do aceite"),
+        "terms_accepted_user_agent": _("User-agent do aceite"),
         "id": _("Identificador"),
         "created_at": _("Criado em"),
         "updated_at": _("Atualizado em"),

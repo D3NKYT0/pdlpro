@@ -114,7 +114,14 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def accept_terms(self, user_id: UUID, version: str) -> UserEntity:
+    def accept_terms(
+        self,
+        user_id: UUID,
+        version: str,
+        *,
+        ip: str | None = None,
+        user_agent: str = "",
+    ) -> UserEntity:
         raise NotImplementedError
 
     @abstractmethod

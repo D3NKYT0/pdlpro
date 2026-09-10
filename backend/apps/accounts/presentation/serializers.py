@@ -33,7 +33,9 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
 
     Campos declarados: ``id``, ``username``, ``email``, ``display_name``, ``role``,
     ``is_email_verified``, ``fichas``, ``is_2fa_enabled``, ``is_staff``, ``is_superuser``,
-    ``is_staff_member``, ``has_usable_password``, ``avatar``, ``bio``.
+    ``is_staff_member``, ``has_usable_password``, ``avatar``, ``bio``,
+    ``terms_accepted_at``, ``terms_and_privacy_version``, ``current_legal_docs_version``,
+    ``needs_terms_acceptance``.
     """
 
     id = serializers.UUIDField(read_only=True)
@@ -50,9 +52,28 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     has_usable_password = serializers.BooleanField(read_only=True)
     avatar = serializers.ImageField(read_only=True, allow_null=True)
     bio = serializers.CharField(required=False, allow_blank=True)
+    terms_accepted_at = serializers.CharField(read_only=True, allow_null=True, required=False)
+    terms_and_privacy_version = serializers.CharField(read_only=True, required=False)
+    current_legal_docs_version = serializers.CharField(read_only=True, required=False)
+    needs_terms_acceptance = serializers.BooleanField(read_only=True, required=False)
 
     def to_representation(self, instance):
+        from datetime import datetime
+
+        from apps.accounts.application.terms_consent import (
+            current_legal_docs_version,
+            user_needs_terms_acceptance,
+        )
+
         if isinstance(instance, UserEntity):
+            accepted_at = instance.terms_accepted_at
+            version = instance.terms_and_privacy_version or ""
+            parsed_accepted = None
+            if accepted_at:
+                try:
+                    parsed_accepted = datetime.fromisoformat(accepted_at)
+                except ValueError:
+                    parsed_accepted = None
             return {
                 "id": str(instance.id),
                 "username": instance.username,
@@ -68,6 +89,13 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "is_superuser": instance.is_superuser,
                 "is_staff_member": instance.is_staff_member,
                 "has_usable_password": instance.has_usable_password,
+                "terms_accepted_at": accepted_at,
+                "terms_and_privacy_version": version,
+                "current_legal_docs_version": current_legal_docs_version(),
+                "needs_terms_acceptance": user_needs_terms_acceptance(
+                    terms_accepted_at=parsed_accepted,
+                    terms_and_privacy_version=version,
+                ),
             }
         data = super().to_representation(instance)
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None
@@ -75,8 +103,26 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
         data["is_superuser"] = bool(getattr(instance, "is_superuser", False))
         data["is_staff_member"] = bool(getattr(instance, "is_staff_member", False))
         data["has_usable_password"] = bool(instance.has_usable_password())
+        accepted_at = instance.terms_accepted_at
+        version = getattr(instance, "terms_and_privacy_version", "") or ""
+        data["terms_accepted_at"] = accepted_at.isoformat() if accepted_at else None
+        data["terms_and_privacy_version"] = version
+        data["current_legal_docs_version"] = current_legal_docs_version()
+        data["needs_terms_acceptance"] = user_needs_terms_acceptance(
+            terms_accepted_at=accepted_at,
+            terms_and_privacy_version=version,
+        )
         data.pop("avatar", None)
         return data
+
+
+class AcceptTermsSerializer(serializers.Serializer):
+    """Payload de reaceitação dos documentos legais vigentes.
+
+    Campos declarados: ``terms_accepted``.
+    """
+
+    terms_accepted = serializers.BooleanField()
 
 
 class RegisterSerializer(serializers.Serializer):

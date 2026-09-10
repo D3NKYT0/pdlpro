@@ -48,7 +48,7 @@ class UserAdmin(PDLModelAdmin):
             {"fields": ("is_email_verified", "is_2fa_enabled", "totp_secret", "last_login")},
         ),
         (_("Economia"), {"fields": ("fichas",)}),
-        (_("Termos"), {"fields": ("terms_accepted_at", "terms_and_privacy_version")}),
+        (_("Termos"), {"fields": ("terms_accepted_at", "terms_and_privacy_version", "terms_accepted_ip", "terms_accepted_user_agent")}),
         (_("Metadados"), {"fields": ("id", "created_at", "updated_at"), "classes": ("collapse",)}),
     )
     add_fieldsets = (

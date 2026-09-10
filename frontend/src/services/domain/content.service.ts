@@ -126,5 +126,20 @@ export const contentApi = {
   calendar: () => request<ApiCalendarEvent[]>('/public/calendar/'),
   legal: (language: ContentLanguage = 'pt') => request<{ version: string; documents: Array<{ slug: string; title: string }> }>(withLang('/public/legal/', language)),
   legalDocument: (slug: string, language: ContentLanguage = 'pt') =>
-    request<{ slug: string; title: string; body: string; version: string }>(withLang(`/public/legal/${slug}/`, language)),
+    request<{ slug: string; title: string; body: string; version: string; format?: string; language?: string }>(
+      withLang(`/public/legal/${slug}/`, language),
+    ),
+  legalHistory: (language: ContentLanguage = 'pt') =>
+    request<{
+      version: string
+      language: string
+      history: Array<{
+        version: string
+        effective_from: string
+        effective_until: string | null
+        title: string
+        is_current: boolean
+        changes: Array<{ area: string; reason: string }>
+      }>
+    }>(withLang('/public/legal/history/', language)),
 }

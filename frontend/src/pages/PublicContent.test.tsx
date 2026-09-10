@@ -14,12 +14,13 @@ import { WikiPage } from './WikiPage'
 import { WikiDetailPage } from './WikiDetailPage'
 import { CalendarPage } from './CalendarPage'
 import { LegalPage } from './LegalPage'
+import { CookieConsentProvider } from '../contexts/CookieConsentContext'
 
-vi.mock('../services/domain/content.service', () => ({ contentApi: { faq: vi.fn(), downloads: vi.fn(), news: vi.fn(), newsDetail: vi.fn(), wiki: vi.fn(), wikiPage: vi.fn(), calendar: vi.fn(), legalDocument: vi.fn() } }))
+vi.mock('../services/domain/content.service', () => ({ contentApi: { faq: vi.fn(), downloads: vi.fn(), news: vi.fn(), newsDetail: vi.fn(), wiki: vi.fn(), wikiPage: vi.fn(), calendar: vi.fn(), legalDocument: vi.fn(), legalHistory: vi.fn() } }))
 beforeEach(() => { vi.resetAllMocks() })
 afterEach(cleanup)
 function mount(page: ReactElement, url = '/', path = '*') {
-  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={[url]}><Routes><Route path={path} element={page} /></Routes></MemoryRouter></QueryClientProvider>)
+  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={[url]}><CookieConsentProvider><Routes><Route path={path} element={page} /></Routes></CookieConsentProvider></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 
@@ -95,12 +96,20 @@ it('detalhe da wiki apresenta conteúdo como texto escapado', async () => {
   expect(document.querySelector('script')).toBeNull()
 })
 
-it.each(['/terms', '/privacy', '/agreement'])('documento legal acompanha rota %s', async url => {
-  vi.mocked(contentApi.legalDocument).mockResolvedValue({ slug: url.slice(1), title: 'Documento', body: 'Texto oficial', version: 'v2' })
+it.each(['/terms', '/privacy', '/agreement', '/cookies', '/lgpd'])('documento legal acompanha rota %s', async url => {
+  const slug = url === '/lgpd' ? 'lgpd' : url.slice(1)
+  vi.mocked(contentApi.legalDocument).mockResolvedValue({
+    slug,
+    title: 'Documento',
+    body: '<p>Texto oficial</p><h2>Seção</h2>',
+    version: 'v2',
+    format: 'html',
+  })
   mount(<LegalPage />, url)
   expect(await screen.findByText('Texto oficial')).toBeTruthy()
-  expect(contentApi.legalDocument).toHaveBeenCalledWith(url.slice(1), 'pt')
+  expect(contentApi.legalDocument).toHaveBeenCalledWith(slug, 'pt')
   expect(screen.getByText('Versão v2')).toBeTruthy()
+  expect(screen.getByRole('heading', { name: 'Seção' })).toBeTruthy()
 })
 
 it('calendário mostra título e descrição do evento', async () => {

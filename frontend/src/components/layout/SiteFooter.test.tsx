@@ -39,6 +39,9 @@ it('apresenta marca, navegação útil e documentos legais sem atalhos decorativ
   expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
   expect(screen.getByRole('link', { name: 'Criar conta' })).toHaveAttribute('href', '/register')
   expect(screen.getByRole('link', { name: 'Política de Privacidade' })).toHaveAttribute('href', '/privacy')
+  expect(screen.getByRole('link', { name: 'Cookies' })).toHaveAttribute('href', '/cookies')
+  expect(screen.getByRole('link', { name: 'LGPD' })).toHaveAttribute('href', '/lgpd')
+  expect(screen.getByRole('link', { name: 'Histórico legal' })).toHaveAttribute('href', '/legal/history')
 
   const columns = [...container.querySelectorAll('.site-footer-col')]
   expect(columns).toHaveLength(3)
