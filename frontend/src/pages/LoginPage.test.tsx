@@ -21,11 +21,15 @@ vi.mock('../services/domain/auth.service', async original => ({ ...await origina
 vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify }: { onVerify: (token: string) => void }) => <button type="button" onClick={() => onVerify('captcha-token')}>Resolver CAPTCHA</button> }))
 beforeEach(() => {
   vi.clearAllMocks()
+  sessionStorage.clear()
   session.user = null
   session.loading = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ google: false, discord: false, hcaptcha_site_key: 'sitekey' } as any)
 })
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  sessionStorage.clear()
+})
 function Destination() { const location = useLocation(); return <h1>{location.pathname}{location.search}</h1> }
 function mount(path = '/login') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
@@ -65,6 +69,13 @@ it('mostra espera enquanto a sessão carrega', () => {
   expect(screen.getByRole('heading', { name: 'Entre no Reino' })).toBeTruthy()
   expect(screen.getByText('Aguarde um momento.')).toBeTruthy()
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
+})
+
+it('explica que a sessão expirou ao voltar para o login', () => {
+  sessionStorage.setItem('pdl.sessionExpired', '1')
+  mount('/login')
+  expect(screen.getByText('Sua sessão expirou. Entre novamente para continuar.')).toBeTruthy()
+  expect(sessionStorage.getItem('pdl.sessionExpired')).toBeNull()
 })
 
 it.each(['/panel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redireciona apenas para destino local: %s', async next => {

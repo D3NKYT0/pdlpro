@@ -1,5 +1,8 @@
 import i18n from '../../i18n'
 import { acceptLanguageHeader, activeAppLanguage } from '../../i18n/locale'
+import { announceSessionExpired } from '../../lib/sessionNotice'
+
+export type SessionRefreshResult = 'refreshed' | 'expired' | 'unavailable'
 
 export class ApiError extends Error {
   status: number
@@ -32,7 +35,7 @@ const BASE = '/api/v1'
 const SAFE = new Set(['GET', 'HEAD', 'OPTIONS'])
 const TRANSIENT_HTTP = new Set([408, 425, 429, 500, 502, 503, 504])
 let csrfToken: string | null = null
-let refreshPromise: Promise<boolean> | null = null
+let refreshPromise: Promise<SessionRefreshResult> | null = null
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -109,7 +112,8 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
 
   if (response.status === 401 && !path.startsWith('/auth/') && !authRetry) {
     const refreshed = await refreshSession()
-    if (refreshed) return request<T>(path, { ...init, authRetry: true })
+    if (refreshed === 'refreshed') return request<T>(path, { ...init, authRetry: true })
+    if (refreshed === 'expired') announceSessionExpired()
   }
 
   if (!response.ok) {
@@ -132,7 +136,7 @@ export async function request<T>(path: string, init: RequestOptions = {}): Promi
   return (await response.json()) as T
 }
 
-export async function refreshSession(): Promise<boolean> {
+export async function refreshSession(): Promise<SessionRefreshResult> {
   if (!refreshPromise) {
     refreshPromise = (async () => {
       const headers = new Headers({
@@ -148,10 +152,14 @@ export async function refreshSession(): Promise<boolean> {
           headers,
           body: '{}',
         })
-        if (response.ok) csrfToken = null
-        return response.ok
+        if (response.ok) {
+          csrfToken = null
+          return 'refreshed'
+        }
+        // 401 = refresh inválido/blacklistado; 403 CSRF e demais ficam como indisponível.
+        return response.status === 401 ? 'expired' : 'unavailable'
       } catch {
-        return false
+        return 'unavailable'
       }
     })().finally(() => {
       refreshPromise = null

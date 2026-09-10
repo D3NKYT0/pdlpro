@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+import toast from 'react-hot-toast'
 import { AuthProvider, useAuth } from './AuthContext'
 import { authApi, restoreSession, refreshSession } from '../services/api'
+import { SESSION_EXPIRED_EVENT } from '../lib/sessionNotice'
 
 vi.mock('../services/infra/session', () => ({ restoreSession: vi.fn() }))
 vi.mock('../services/infra/http', async importOriginal => ({ ...await importOriginal<object>(), refreshSession: vi.fn() }))
@@ -10,12 +12,20 @@ vi.mock('../services/domain/auth.service', async importOriginal => ({
   ...await importOriginal<object>(),
   authApi: { me: vi.fn(), login: vi.fn(), register: vi.fn(), verifyTwoFactor: vi.fn(), logout: vi.fn() },
 }))
+vi.mock('react-hot-toast', () => ({ default: { error: vi.fn(), success: vi.fn() } }))
+
 const user = { id: 'hero-id', username: 'hero' } as any
 beforeEach(() => {
   vi.clearAllMocks()
+  sessionStorage.clear()
   vi.mocked(restoreSession).mockResolvedValue({ user: null, retry: false })
+  vi.mocked(refreshSession).mockResolvedValue('refreshed')
 })
-afterEach(() => { cleanup(); vi.useRealTimers() })
+afterEach(() => {
+  cleanup()
+  vi.useRealTimers()
+  sessionStorage.clear()
+})
 const mount = () => renderHook(() => useAuth(), { wrapper: AuthProvider })
 
 it('restaura sessão e encerra estado de carregamento', async () => {
@@ -24,6 +34,7 @@ it('restaura sessão e encerra estado de carregamento', async () => {
   expect(result.current.loading).toBe(true)
   await waitFor(() => expect(result.current.user).toEqual(user))
   expect(result.current.loading).toBe(false)
+  expect(sessionStorage.getItem('pdl.hadSession')).toBe('1')
 })
 
 it('mantém anonimato até concluir o segundo fator', async () => {
@@ -47,6 +58,9 @@ it('login bem-sucedido e logout atualizam a sessão', async () => {
   expect(result.current.user).toEqual(user)
   await act(async () => { await result.current.logout() })
   expect(result.current.user).toBeNull()
+  expect(sessionStorage.getItem('pdl.hadSession')).toBeNull()
+  expect(sessionStorage.getItem('pdl.sessionExpired')).toBeNull()
+  expect(toast.error).not.toHaveBeenCalled()
 })
 
 it('erro de login não autentica usuário', async () => {
@@ -81,6 +95,40 @@ it('repete restauração transitória e remove timers ao desmontar', async () =>
   expect(refreshSession).toHaveBeenCalledTimes(1)
   unmount()
   expect(vi.getTimerCount()).toBe(0)
+})
+
+it('encerra sessão com aviso quando o keep-alive detecta refresh expirado', async () => {
+  vi.useFakeTimers()
+  vi.mocked(restoreSession).mockResolvedValue({ user, retry: false })
+  vi.mocked(refreshSession).mockResolvedValue('expired')
+  const { result } = mount()
+  await act(async () => { await Promise.resolve() })
+  expect(result.current.user).toEqual(user)
+  await act(async () => { await vi.advanceTimersByTimeAsync(600000) })
+  expect(result.current.user).toBeNull()
+  expect(toast.error).toHaveBeenCalledWith('Sua sessão expirou. Entre novamente para continuar.')
+  expect(sessionStorage.getItem('pdl.sessionExpired')).toBe('1')
+})
+
+it('encerra sessão ao receber evento de refresh expirado da camada HTTP', async () => {
+  vi.mocked(restoreSession).mockResolvedValue({ user, retry: false })
+  const { result } = mount()
+  await waitFor(() => expect(result.current.user).toEqual(user))
+  await act(async () => {
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT))
+  })
+  expect(result.current.user).toBeNull()
+  expect(toast.error).toHaveBeenCalledWith('Sua sessão expirou. Entre novamente para continuar.')
+})
+
+it('na restauração sem usuário, preserva aviso de expiração sem toast imediato', async () => {
+  sessionStorage.setItem('pdl.hadSession', '1')
+  vi.mocked(restoreSession).mockResolvedValue({ user: null, retry: false })
+  const { result } = mount()
+  await waitFor(() => expect(result.current.loading).toBe(false))
+  expect(result.current.user).toBeNull()
+  expect(toast.error).not.toHaveBeenCalled()
+  expect(sessionStorage.getItem('pdl.sessionExpired')).toBe('1')
 })
 
 it('descarta resposta de restauração recebida após desmontar', async () => {

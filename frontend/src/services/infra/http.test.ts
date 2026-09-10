@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ApiError, request, resetHttpClient } from './http'
+import { SESSION_EXPIRED_EVENT } from '../../lib/sessionNotice'
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -42,6 +43,21 @@ describe('request session recovery', () => {
     await expect(request<{ username: string }>('/shared/me/')).resolves.toEqual({ username: 'hero' })
     const urls = fetchMock.mock.calls.map(([input]) => String(input))
     expect(urls.some((url) => url.endsWith('/auth/refresh/'))).toBe(true)
+  })
+
+  it('announces session expiry when refresh returns 401', async () => {
+    const dispatchEvent = vi.fn()
+    vi.stubGlobal('window', { dispatchEvent })
+    const fetchMock = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input)
+      if (url.endsWith('/auth/csrf/')) return jsonResponse({ csrfToken: 'token' })
+      if (url.endsWith('/auth/refresh/')) return jsonResponse({ message: 'invalid' }, 401)
+      return jsonResponse({ message: 'expired' }, 401)
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(request('/shared/me/')).rejects.toMatchObject({ status: 401 })
+    expect(dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({ type: SESSION_EXPIRED_EVENT }))
   })
 
   it('preserves the request ID returned by an API error for support correlation', async () => {

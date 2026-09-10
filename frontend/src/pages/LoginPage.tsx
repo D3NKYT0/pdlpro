@@ -1,4 +1,5 @@
 import { apiErrorMessage } from '../lib/errors'
+import { consumeSessionExpiredNotice } from '../lib/sessionNotice'
 import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
@@ -41,6 +42,7 @@ export function LoginPage() {
   const [captchaRequired, setCaptchaRequired] = useState(false)
   const [captchaToken, setCaptchaToken] = useState('')
   const [passkeyLoading, setPasskeyLoading] = useState(false)
+  const [sessionExpired] = useState(() => consumeSessionExpiredNotice())
 
   if (loading) {
     return (
@@ -109,7 +111,7 @@ export function LoginPage() {
   return (
     <AuthPanel
       title={challenge ? t('login.title2fa') : t('login.title')}
-      lead={challenge ? t('login.lead2fa') : undefined}
+      lead={challenge ? t('login.lead2fa') : sessionExpired ? t('login.sessionExpired') : undefined}
       footer={
         <p>
           <Link to="/forgot-password">{t('login.forgotLink')}</Link>

@@ -93,7 +93,11 @@ describe('cookies, CSRF e renovação de sessão', () => {
 
   it('compartilha uma única renovação entre chamadas simultâneas', async () => {
     fetchMock.mockResolvedValueOnce(json({ csrfToken: 'csrf' })).mockResolvedValue(json({}))
-    expect(await Promise.all([refreshSession(), refreshSession(), refreshSession()])).toEqual([true, true, true])
+    expect(await Promise.all([refreshSession(), refreshSession(), refreshSession()])).toEqual([
+      'refreshed',
+      'refreshed',
+      'refreshed',
+    ])
     expect(fetchMock.mock.calls.filter(([url]) => url.endsWith('/auth/refresh/'))).toHaveLength(1)
   })
 
@@ -112,6 +116,19 @@ describe('cookies, CSRF e renovação de sessão', () => {
 
   it('renovação indisponível informa falha sem lançar exceção', async () => {
     fetchMock.mockRejectedValue(new TypeError('offline'))
-    await expect(refreshSession()).resolves.toBe(false)
+    await expect(refreshSession()).resolves.toBe('unavailable')
+  })
+
+  it('refresh 401 é expirado; CSRF 403 permanece indisponível', async () => {
+    fetchMock
+      .mockResolvedValueOnce(json({ csrfToken: 'csrf' }))
+      .mockResolvedValueOnce(json({ message: 'invalid' }, 401))
+    await expect(refreshSession()).resolves.toBe('expired')
+
+    resetHttpClient()
+    fetchMock
+      .mockResolvedValueOnce(json({ csrfToken: 'csrf' }))
+      .mockResolvedValueOnce(json({ message: 'csrf' }, 403))
+    await expect(refreshSession()).resolves.toBe('unavailable')
   })
 })

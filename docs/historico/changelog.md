@@ -13,6 +13,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Self-service LGPD em `/panel/security`: exportação de dados por e-mail,
   exclusão/anonimização com OTP, preferências de cookies e enforcement real
   (analytics → Sentry; funcionais → persistência de idioma).
+- Aviso explícito de **sessão expirada** (toast + lead no login) quando o refresh
+  JWT falha de forma definitiva; logout manual não dispara a mensagem.
 
 ### Alterado
 
