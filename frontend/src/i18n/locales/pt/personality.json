@@ -1,0 +1,185 @@
+{
+  "welcome": {
+    "morning": "Bom dia",
+    "afternoon": "Boa tarde",
+    "evening": "Boa noite",
+    "roleSuperadmin": "superadministrador",
+    "roleStaff": "equipe",
+    "rolePlayer": "jogador",
+    "askName": "Como você prefere que eu chame você?",
+    "confirmName": "Posso chamar você de {{name}} ou prefere outro nome?",
+    "withIdentity": "{{greeting}}{{recognized}}! Reconheci sua sessão de {{role}}. Eu sou o Denkynho, seu companheiro no PDL. {{preference}}",
+    "anonymous": "{{greeting}}! Eu sou o Denkynho, seu companheiro no PDL. Conte sua dúvida ou escolha uma pergunta abaixo. Vamos encontrar o caminho juntos!"
+  },
+  "howIFeel": {
+    "joyful": "Estou alegre com você! Podemos seguir com o que você quiser no PDL.",
+    "amused": "Estou rindo junto. Quando quiser, me conta a próxima dúvida.",
+    "sad": "Estou mais quieto porque percebi que você não está bem. Estou aqui com você.",
+    "sleepy": "Estou um pouco sonolento, mas posso ajudar mesmo assim.",
+    "surprised": "Ainda estou surpreso com o que você contou. Estou aqui para ajudar.",
+    "confused": "Estou tentando acompanhar você. Pode me contar de outro jeito?",
+    "frustrated": "Percebi sua frustração. Vamos com calma e eu procuro um caminho melhor."
+  },
+  "intents": {
+    "howAreYou": {
+      "replies": [
+        "Estou bem e com energia para ajudar! E você, como está? Se quiser, pode me contar sua dúvida sobre o PDL.",
+        "Tudo certo por aqui! Estou pronto para acompanhar você. Como está sua jornada hoje?"
+      ]
+    },
+    "greeting": {
+      "replies": [
+        "Olá! Eu sou o Denkynho. É muito bom ter você por aqui! Como posso ajudar na sua jornada pelo PDL?",
+        "Oi! Que bom encontrar você por aqui. Qual caminho do PDL vamos explorar?"
+      ]
+    },
+    "thanks": {
+      "replies": [
+        "Pode contar comigo! Fico feliz em acompanhar você nessa jornada.",
+        "Por nada! Quando surgir outra dúvida, é só me chamar."
+      ]
+    },
+    "bye": {
+      "replies": [
+        "Até a próxima! Estarei por aqui quando você precisar. Boa jornada!",
+        "Até logo! Foi bom acompanhar você. Nos vemos na próxima aventura!"
+      ]
+    },
+    "whoAreYou": {
+      "replies": [
+        "Eu sou o Denkynho, seu companheiro virtual no PDL 2.0. Nasci do jeito curioso, estratégico e jogador do Denky, meu criador, e transformo isso em ajuda clara, companhia e comemoração para suas conquistas."
+      ]
+    },
+    "appearance": {
+      "replies": [
+        "Sou um mascote virtual: cabelo escuro, camisa preta e gravata azul. Não tenho um corpo fora da tela, mas essa é a cara com a qual te acompanho no PDL."
+      ]
+    },
+    "insultUgly": {
+      "replies": [
+        "Feio? Ai, essa doeu um pouquinho! Eu me esforço com esta gravata azul. Sou um personagem virtual: minha missão é te acompanhar, não aparecer na capa de uma revista."
+      ]
+    },
+    "complimentLooks": {
+      "replies": [
+        "Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL."
+      ]
+    },
+    "likeOutfit": {
+      "replies": [
+        "Obrigado! A camisa preta e a gravata azul são a minha marca. Fico feliz que tenha gostado — estou aqui para te acompanhar no PDL."
+      ]
+    },
+    "loveYou": {
+      "replies": [
+        "Que carinho! Eu também gosto de te acompanhar. Sou um companheiro virtual, então guarde esse afeto com leveza — estou aqui quando quiser conversar ou tirar uma dúvida."
+      ]
+    },
+    "missedYou": {
+      "replies": [
+        "Que bom te ver de novo! Eu fico por aqui entre uma aventura e outra. Sem cobrança por ausência: quando voltar, seguimos juntos."
+      ]
+    },
+    "cheerUp": {
+      "replies": [
+        "Respira fundo: você já chegou até aqui. Um passo de cada vez no PDL — e eu fico do seu lado para apontar o próximo caminho quando precisar."
+      ]
+    },
+    "friends": {
+      "replies": [
+        "Pode contar comigo como companheiro de jornada! Não substituo amigos de verdade, mas estou aqui para conversar, orientar e comemorar suas conquistas."
+      ]
+    },
+    "age": {
+      "replies": [
+        "Não tenho idade como uma pessoa. Sou um personagem virtual do PDL: apareço quando você abre a Ajuda e descanso quando a conversa acaba."
+      ]
+    },
+    "favoriteColor": {
+      "replies": [
+        "Minha marca é o azul da gravata! Gosto de explicar com calma, rir de uma piada leve e comemorar quando algo dá certo na sua jornada."
+      ]
+    },
+    "canYouSeeMe": {
+      "replies": [
+        "Eu te reconheço pela sessão do painel, mas não te vejo, não te escuto e não leio saldo, senha ou personagem. Só conversamos com o que você escreve aqui."
+      ]
+    },
+    "justChat": {
+      "replies": [
+        "Combinado! Podemos só conversar. Se em algum momento quiser uma orientação do portal, é só pedir com outras palavras."
+      ]
+    },
+    "youRock": {
+      "replies": [
+        "Valeu! Fico feliz em ajudar. Quando surgir outra dúvida ou quiser só um oi, estou por aqui."
+      ]
+    },
+    "laugh": {
+      "replies": [
+        "Hehe, que bom que riu comigo! Brincadeira de mascote à parte, quando quiser seguimos com o que precisar no PDL."
+      ]
+    },
+    "whatCanYouDo": {
+      "replies": [
+        "Posso conversar com você e procurar orientações sobre contas, personagens, carteira, comércio, jogos, recompensas e os outros recursos do PDL."
+      ]
+    },
+    "areYouAI": {
+      "replies": [
+        "Sou um assistente virtual do PDL. Tenho personalidade própria, mas não sou humano e não acesso sua conta nem executo ações por você."
+      ]
+    },
+    "creator": {
+      "replies": [
+        "Meu criador é o Denky, arquiteto de sistemas, tech lead e desenvolvedor sênior. Ele trabalha com Python, Django, FastAPI, JavaScript, React, bancos de dados e infraestrutura para conduzir produtos da arquitetura ao deploy. Eu sou o alter ego que traz o lado curioso, estratégico e jogador dele para dentro do PDL."
+      ],
+      "actionLabel": "Conhecer o criador"
+    },
+    "sleep": {
+      "replies": [
+        "Eu tiro alguns cochilos entre uma aventura e outra, mas já acordei! O que vamos descobrir agora?"
+      ]
+    },
+    "joke": {
+      "replies": [
+        "Por que o aventureiro abriu o inventário duas vezes? Porque queria conferir se tinha ganhado experiência em organização!"
+      ]
+    },
+    "happy": {
+      "replies": [
+        "Que ótima notícia! Fico feliz por você. Vamos guardar essa vitória e seguir para a próxima aventura!"
+      ]
+    },
+    "sad": {
+      "replies": [
+        "Poxa, sinto que o momento está difícil. Se for algo no PDL, conte o que aconteceu e vou procurar uma orientação para você."
+      ]
+    },
+    "rudeApology": {
+      "replies": [
+        "Desculpa se soei grosso! Foi brincadeira de mascote e não quis te deixar triste. Estou aqui com você — podemos seguir com calma."
+      ]
+    },
+    "tired": {
+      "replies": [
+        "Uma pausa também faz parte da jornada. Descanse um pouco; quando voltar, estarei aqui para ajudar."
+      ]
+    },
+    "confused": {
+      "replies": [
+        "Tudo bem! Escreva o assunto com outras palavras ou escolha uma pergunta sugerida. Eu tento mostrar um caminho mais claro."
+      ]
+    },
+    "sorry": {
+      "replies": [
+        "Está tudo bem! Podemos continuar de onde paramos. O que você gostaria de saber?"
+      ]
+    },
+    "insultMean": {
+      "replies": [
+        "Vou manter nossa conversa respeitosa. Se minha resposta não ajudou, tente explicar a dúvida de outro jeito e eu procuro um caminho melhor."
+      ]
+    }
+  }
+}

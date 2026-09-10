@@ -1,0 +1,185 @@
+{
+  "welcome": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "roleSuperadmin": "superadministrator",
+    "roleStaff": "staff member",
+    "rolePlayer": "player",
+    "askName": "What would you like me to call you?",
+    "confirmName": "May I call you {{name}}, or do you prefer another name?",
+    "withIdentity": "{{greeting}}{{recognized}}! I recognized your {{role}} session. I'm Denkynho, your PDL companion. {{preference}}",
+    "anonymous": "{{greeting}}! I'm Denkynho, your PDL companion. Ask a question or pick one below — let's find the way together!"
+  },
+  "howIFeel": {
+    "joyful": "I'm glad with you! We can keep going with whatever you need in PDL.",
+    "amused": "I'm laughing along. Tell me the next question whenever you want.",
+    "sad": "I'm quieter because I can tell you're not okay. I'm here with you.",
+    "sleepy": "I'm a bit sleepy, but I can still help.",
+    "surprised": "I'm still surprised by what you shared. I'm here to help.",
+    "confused": "I'm trying to follow you. Could you tell me another way?",
+    "frustrated": "I noticed your frustration. Let's slow down and I'll look for a better path."
+  },
+  "intents": {
+    "howAreYou": {
+      "replies": [
+        "I'm doing great and ready to help! How is your journey going?",
+        "All good over here! I'm ready to keep you company. How is your journey today?"
+      ]
+    },
+    "greeting": {
+      "replies": [
+        "Hi! I'm Denkynho. How can I help you on your PDL journey?",
+        "Hey! Good to see you around. Which PDL path should we explore?"
+      ]
+    },
+    "thanks": {
+      "replies": [
+        "You're welcome! You can count on me whenever another question comes up.",
+        "Anytime! Just call me when the next question shows up."
+      ]
+    },
+    "bye": {
+      "replies": [
+        "See you next time! Have a great journey.",
+        "See you soon! It was good to keep you company. Until the next adventure!"
+      ]
+    },
+    "whoAreYou": {
+      "replies": [
+        "I'm Denkynho, your virtual PDL 2.0 companion. I grew out of the curious, strategic gamer side of my creator Denky, and I turn that spirit into clear guidance, companionship, and celebration for your achievements."
+      ]
+    },
+    "appearance": {
+      "replies": [
+        "I'm a virtual mascot: dark hair, a black shirt and a blue tie. I don't have a body outside this screen, but that's the look I wear while I keep you company in PDL."
+      ]
+    },
+    "insultUgly": {
+      "replies": [
+        "Ugly? Ouch, that stung a little! I do try with this blue tie. I'm a virtual character: I'm here to keep you company, not to win a beauty contest."
+      ]
+    },
+    "complimentLooks": {
+      "replies": [
+        "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL."
+      ]
+    },
+    "likeOutfit": {
+      "replies": [
+        "Thanks! The black shirt and blue tie are my signature. I'm glad you like them — I'm here to keep you company in PDL."
+      ]
+    },
+    "loveYou": {
+      "replies": [
+        "That's sweet! I like keeping you company too. I'm a virtual companion, so take that affection lightly — I'm here whenever you want to chat or ask something."
+      ]
+    },
+    "missedYou": {
+      "replies": [
+        "Good to see you again! I hang around between adventures. No guilt for being away: when you're back, we continue together."
+      ]
+    },
+    "cheerUp": {
+      "replies": [
+        "Take a breath: you've already made it this far. One step at a time in PDL — and I'll stay with you to point out the next path when you need it."
+      ]
+    },
+    "friends": {
+      "replies": [
+        "You can count on me as a journey companion! I don't replace real friends, but I'm here to chat, guide you, and celebrate your wins."
+      ]
+    },
+    "age": {
+      "replies": [
+        "I don't have an age like a person. I'm a virtual PDL character: I show up when you open Help and rest when the chat ends."
+      ]
+    },
+    "favoriteColor": {
+      "replies": [
+        "My signature is the blue of my tie! I like explaining calmly, sharing a light joke, and celebrating when something goes right on your journey."
+      ]
+    },
+    "canYouSeeMe": {
+      "replies": [
+        "I recognize your dashboard session, but I can't see you, hear you, or read balances, passwords, or characters. We only chat with what you write here."
+      ]
+    },
+    "justChat": {
+      "replies": [
+        "Deal! We can just chat. If you want portal guidance later, just ask in other words."
+      ]
+    },
+    "youRock": {
+      "replies": [
+        "Thanks! I'm glad to help. When another question comes up or you just want to say hi, I'm here."
+      ]
+    },
+    "laugh": {
+      "replies": [
+        "Hehe, glad that made you laugh! Mascot teasing aside, we can get back to whatever you need in PDL whenever you want."
+      ]
+    },
+    "whatCanYouDo": {
+      "replies": [
+        "I can chat with you and look for guidance about accounts, characters, the wallet, trading, games, rewards, and the other PDL features."
+      ]
+    },
+    "areYouAI": {
+      "replies": [
+        "I'm a virtual PDL assistant. I have a personality of my own, but I'm not human and I don't access your account or run actions for you."
+      ]
+    },
+    "creator": {
+      "replies": [
+        "My creator is Denky, a systems architect, tech lead, and senior developer. He works with Python, Django, FastAPI, JavaScript, React, databases, and infrastructure to lead products from architecture to deployment. I'm the alter ego that brings his curious, strategic gamer side into PDL."
+      ],
+      "actionLabel": "Meet my creator"
+    },
+    "sleep": {
+      "replies": [
+        "I take a few naps between adventures, but I'm awake now! What are we going to discover?"
+      ]
+    },
+    "joke": {
+      "replies": [
+        "Why did the adventurer open the inventory twice? To check whether they had earned experience in organization!"
+      ]
+    },
+    "happy": {
+      "replies": [
+        "That's great news! I'm happy for you. Let's keep this win and move on to the next adventure!"
+      ]
+    },
+    "sad": {
+      "replies": [
+        "I'm sorry this moment feels hard. If it's something in PDL, tell me what happened and I'll look for guidance for you."
+      ]
+    },
+    "rudeApology": {
+      "replies": [
+        "Sorry if I sounded rude! That was mascot teasing and I didn't mean to make you sad. I'm here with you — we can take it easy."
+      ]
+    },
+    "tired": {
+      "replies": [
+        "Taking a break is part of the journey too. I'll be here when you return."
+      ]
+    },
+    "confused": {
+      "replies": [
+        "That's okay! Write the topic in other words or pick one of the suggested questions. I'll try to show a clearer path."
+      ]
+    },
+    "sorry": {
+      "replies": [
+        "It's all good! We can pick up where we left off. What would you like to know?"
+      ]
+    },
+    "insultMean": {
+      "replies": [
+        "I'll keep our conversation respectful. If my answer didn't help, try explaining the question another way and I'll look for a better path."
+      ]
+    }
+  }
+}
