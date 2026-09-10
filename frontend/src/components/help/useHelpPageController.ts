@@ -33,7 +33,7 @@ import {
   startAmbient,
   type AmbientState,
 } from './idleRoutine'
-import { copy, dialogueWithPreferences, idempotencyKey, MAX_CHAT_MESSAGE_LENGTH, welcome } from './helpCopy'
+import { dialogueWithPreferences, idempotencyKey, MAX_CHAT_MESSAGE_LENGTH, welcome } from './helpCopy'
 
 type Message = HelpChatMessage
 
@@ -53,64 +53,66 @@ export function useHelpPageController() {
   const [preferences, setPreferences] = useState<Preferences | null>(() => loadHelpPreferences(user?.id))
   const [language, setLanguage] = useState<HelpLanguage>(siteLanguage)
   const labels = useMemo(() => {
-    const fallback = copy[language === 'es' ? 'en' : language]
-    const page = (key: string, fallbackValue: string) => {
-      const full = `page.${key}`
-      const value = t(full)
-      return value === full ? fallbackValue : value
-    }
+    const page = (key: string) => t(`page.${key}`)
     return {
-      title: page('title', fallback.title),
-      eyebrow: page('eyebrow', fallback.eyebrow),
-      description: page('description', fallback.description),
-      support: page('support', fallback.support),
-      companion: page('companion', fallback.companion),
-      ask: page('ask', fallback.ask),
-      searching: page('searching', fallback.searching),
-      talking: page('talking', fallback.talking),
-      idle: page('idle', fallback.idle),
-      caring: page('caring', fallback.caring),
-      animate: page('animate', fallback.animate),
-      reduced: page('reduced', fallback.reduced),
-      faq: page('faq', fallback.faq),
-      chat: page('chat', fallback.chat),
-      context: page('context', fallback.context),
-      fresh: page('fresh', fallback.fresh),
-      assistant: page('assistant', fallback.assistant),
-      chatLabel: page('chatLabel', fallback.chatLabel),
-      messages: page('messages', fallback.messages),
-      you: page('you', fallback.you),
-      full: page('full', fallback.full),
-      source: page('source', fallback.source),
-      related: page('related', fallback.related),
-      topic: page('topic', fallback.topic),
-      all: page('all', fallback.all),
-      loading: page('loading', fallback.loading),
-      empty: page('empty', fallback.empty),
-      consulting: page('consulting', fallback.consulting),
-      error: page('error', fallback.error),
-      petLoading: page('petLoading', fallback.petLoading),
-      petError: page('petError', fallback.petError),
-      pet: page('pet', fallback.pet),
-      level: page('level', fallback.level),
-      xp: page('xp', fallback.xp),
-      attributes: page('attributes', fallback.attributes),
-      satiety: page('satiety', fallback.satiety),
-      energy: page('energy', fallback.energy),
-      happiness: page('happiness', fallback.happiness),
-      hygiene: page('hygiene', fallback.hygiene),
-      emotion: page('emotion', fallback.emotion),
-      empathy: page('empathy', fallback.empathy),
-      needsMood: page('needsMood', fallback.needsMood),
-      reveal: page('reveal', fallback.reveal),
-      message: page('message', fallback.message),
-      placeholder: page('placeholder', fallback.placeholder),
-      hint: page('hint', fallback.hint),
-      thinking: page('thinking', fallback.thinking),
-      send: page('send', fallback.send),
-      invalid: page('invalid', fallback.invalid),
-      blocked: page('blocked', fallback.blocked),
-      language: page('language', fallback.language),
+      title: page('title'),
+      eyebrow: page('eyebrow'),
+      description: page('description'),
+      support: page('support'),
+      companion: page('companion'),
+      ask: page('ask'),
+      searching: page('searching'),
+      talking: page('talking'),
+      idle: page('idle'),
+      caring: page('caring'),
+      animate: page('animate'),
+      reduced: page('reduced'),
+      faq: page('faq'),
+      chat: page('chat'),
+      context: page('context'),
+      fresh: page('fresh'),
+      assistant: page('assistant'),
+      chatLabel: page('chatLabel'),
+      messages: page('messages'),
+      you: page('you'),
+      full: page('full'),
+      source: page('source'),
+      related: page('related'),
+      topic: page('topic'),
+      all: page('all'),
+      loading: page('loading'),
+      empty: page('empty'),
+      consulting: page('consulting'),
+      error: page('error'),
+      petLoading: page('petLoading'),
+      petError: page('petError'),
+      pet: page('pet'),
+      level: page('level'),
+      xp: page('xp'),
+      attributes: page('attributes'),
+      satiety: page('satiety'),
+      energy: page('energy'),
+      happiness: page('happiness'),
+      hygiene: page('hygiene'),
+      emotion: page('emotion'),
+      empathy: page('empathy'),
+      needsMood: page('needsMood'),
+      reveal: page('reveal'),
+      message: page('message'),
+      placeholder: page('placeholder'),
+      hint: page('hint'),
+      thinking: page('thinking'),
+      send: page('send'),
+      invalid: page('invalid'),
+      blocked: page('blocked'),
+      language: page('language'),
+      basicMode: page('basicMode'),
+      replyFailed: page('replyFailed'),
+      retry: page('retry'),
+      busyPlaceholder: page('busyPlaceholder'),
+      suggestions: page('suggestions'),
+      careGains: [page('careGain1'), page('careGain2'), page('careGain3')],
+      careLevelUp: (level: number) => t('page.careLevelUp', { level }),
     }
   }, [language, t])
   const faq = useQuery({
@@ -557,7 +559,11 @@ export function useHelpPageController() {
         ? thinkingPhrase(thinkFor, language)
         : revealing
           ? labels.talking
-          : (currentActivity?.status[language] ?? (emotion.id !== 'calm' ? emotionStatus(emotion, language) : labels.ask))
+          : currentActivity
+            ? t(`activities.${currentActivity.action}.status`)
+            : emotion.id !== 'calm'
+              ? emotionStatus(emotion, language)
+              : labels.ask
   const ambientMouth = ambientTalking ? speechFrame(ambient!.line, ambientSpeech, ambient!.pose).mouthOpen : false
   const mouthOpen = revealing ? speechFrame(revealing.text, shown, revealing.pose).mouthOpen : ambientMouth
   const dancing = activity === '13-dancando' || Boolean(ambient?.dancing)

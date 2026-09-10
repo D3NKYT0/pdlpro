@@ -36,7 +36,6 @@ export function HelpPage() {
               <BookOpen aria-hidden="true" /> {c.labels.faq}
             </ButtonLink>
           }
-          language={c.language}
           onChat={c.focusChat}
           status={c.companionStatus}
           mascot={

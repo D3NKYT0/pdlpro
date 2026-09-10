@@ -7,6 +7,7 @@ import { SpeechBubble } from './SpeechBubble'
 import './companion-controls.css'
 
 const TIP_KEYS = ['companion.tip1', 'companion.tip2', 'companion.tip3'] as const
+
 const bounds = () => {
   const viewport = window.visualViewport
   return { left: viewport?.offsetLeft ?? 0, top: viewport?.offsetTop ?? 0, width: viewport?.width ?? window.innerWidth, height: viewport?.height ?? window.innerHeight }
@@ -61,12 +62,12 @@ export function HelpCompanion({ mascot, status, children, onChat, faqLink }: { m
     return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape) }
   }, [open, mobile, collapsed])
   if (mobile && collapsed) return <div className="help-companion-compact" ref={root}>
-    <Button ref={restoreButton} size="sm" variant="secondary" onClick={() => { setOpen(false); restoreFocus.current = true; setCollapsed(false) }}>{text.showCharacter}</Button>
+    <Button ref={restoreButton} size="sm" variant="secondary" onClick={() => { setOpen(false); restoreFocus.current = true; setCollapsed(false) }}>{t('companion.showCharacter')}</Button>
   </div>
   return <div ref={root} className={`help-companion-host${mobile ? ' is-floating' : ''}`} style={{ ...(mobile ? { left: position.x, top: position.y } : {}), '--companion-menu-top': `${area.top + 8}px`, '--companion-menu-left': `${area.left + 8}px`, '--companion-menu-width': `${Math.max(0, area.width - 16)}px`, '--companion-menu-height': `${Math.max(0, area.height - 16)}px` } as CSSProperties}>
-    <Card as="aside" className="help-companion" aria-label={text.assistant}>
-      <div className="help-companion-intro"><span className="panel-eyebrow">{text.companion}</span><h2>Denkynho</h2></div>
-      <button ref={trigger} type="button" className="help-character-handle" aria-label={text.handle} aria-expanded={open} aria-controls={open ? id : undefined} aria-haspopup="dialog" aria-describedby={`${id}-hint`}
+    <Card as="aside" className="help-companion" aria-label={t('companion.assistant')}>
+      <div className="help-companion-intro"><span className="panel-eyebrow">{t('page.companion')}</span><h2>Denkynho</h2></div>
+      <button ref={trigger} type="button" className="help-character-handle" aria-label={t('companion.actions')} aria-expanded={open} aria-controls={open ? id : undefined} aria-haspopup="dialog" aria-describedby={`${id}-hint`}
         onClick={() => { if (suppressClick.current) { suppressClick.current = false; return } setOpen(value => !value) }}
         onPointerDown={event => {
           suppressClick.current = false
@@ -91,18 +92,18 @@ export function HelpCompanion({ mascot, status, children, onChat, faqLink }: { m
           event.preventDefault()
           setPosition(point => clamp({ x: point.x + (event.key === 'ArrowLeft' ? -20 : event.key === 'ArrowRight' ? 20 : 0), y: point.y + (event.key === 'ArrowUp' ? -20 : event.key === 'ArrowDown' ? 20 : 0) }))
         }}>{mascot}<span className="help-character-badge" aria-hidden="true">•••</span></button>
-      <small id={`${id}-hint`} className={mobile ? 'help-sr' : 'muted'}>{mobile ? text.tapHint : text.clickHint}</small>
+      <small id={`${id}-hint`} className={mobile ? 'help-sr' : 'muted'}>{mobile ? t('companion.tapHint') : t('companion.clickHint')}</small>
       <div className="help-companion-status" aria-live="polite"><SpeechBubble speaker="status">{status}</SpeechBubble></div>
     </Card>
-    {open && <Card className="help-companion-menu" role="dialog" aria-label={text.actionsDialog} id={id}>
-      <header><strong>Denkynho</strong><Button ref={closeButton} size="sm" variant="ghost" onClick={() => { setOpen(false); trigger.current?.focus() }}>{text.close}</Button></header>
+    {open && <Card className="help-companion-menu" role="dialog" aria-label={t('companion.actionsDialog')} id={id}>
+      <header><strong>Denkynho</strong><Button ref={closeButton} size="sm" variant="ghost" onClick={() => { setOpen(false); trigger.current?.focus() }}>{t('companion.close')}</Button></header>
       <SpeechBubble speaker="status">{status}</SpeechBubble>
       {children(() => { if (mobile) setOpen(false) })}
-      <div className="help-companion-footer" role="group" aria-label={text.quickHelp}>{faqLink}<Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % tips[language].length)}>{text.giveTip}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{text.chat}</Button></div>
-      {tip >= 0 && <p role="status">{tips[language][tip]}</p>}
+      <div className="help-companion-footer" role="group" aria-label={t('companion.quickHelp')}>{faqLink}<Button size="sm" variant="secondary" onClick={() => setTip(value => (value + 1) % TIP_KEYS.length)}>{t('companion.giveTip')}</Button><Button size="sm" variant="secondary" onClick={() => { setOpen(false); onChat() }}>{t('companion.chat')}</Button></div>
+      {tip >= 0 && <p role="status">{t(TIP_KEYS[tip])}</p>}
       {mobile && <div className="help-activities">
-        <Button size="sm" variant="ghost" onClick={() => setPosition(clamp({ x: bounds().left + bounds().width - 88, y: bounds().top + 120 }))}>{text.resetPosition}</Button>
-        <Button size="sm" variant="secondary" onClick={() => { drag.current = null; setOpen(false); restoreFocus.current = true; setCollapsed(true) }}>{text.hideCharacter}</Button>
+        <Button size="sm" variant="ghost" onClick={() => setPosition(clamp({ x: bounds().left + bounds().width - 88, y: bounds().top + 120 }))}>{t('companion.resetPosition')}</Button>
+        <Button size="sm" variant="secondary" onClick={() => { drag.current = null; setOpen(false); restoreFocus.current = true; setCollapsed(true) }}>{t('companion.hideCharacter')}</Button>
       </div>}
     </Card>}
   </div>

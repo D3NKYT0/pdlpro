@@ -13,6 +13,7 @@ export type {
   ContentLanguage,
   DenkynhoAction,
   DenkynhoAppearance,
+  DenkynhoUnlock,
 } from './domain/content.service'
 export { lineageApi, inventoryApi } from './domain/lineage.service'
 export type {

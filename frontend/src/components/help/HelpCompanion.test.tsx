@@ -2,7 +2,9 @@
 import '@testing-library/jest-dom/vitest'
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { I18nextProvider } from 'react-i18next'
 import { afterEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { HelpCompanion } from './HelpCompanion'
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
@@ -10,7 +12,7 @@ function mount(mobile = false) {
   vi.stubGlobal('innerWidth', mobile ? 390 : 1200)
   vi.stubGlobal('innerHeight', 844)
   const chat = vi.fn()
-  const view = render(<HelpCompanion faqLink={<a href="/faq">Consultar o FAQ</a>} language="pt" status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion>)
+  const view = render(<I18nextProvider i18n={i18n}><HelpCompanion faqLink={<a href="/faq">Consultar o FAQ</a>} status="Pronto" mascot={<span>Personagem</span>} onChat={chat}>{onActivity => <button onClick={onActivity}>Comer</button>}</HelpCompanion></I18nextProvider>)
   return { ...view, chat, user: userEvent.setup(), trigger: screen.getByRole('button', { name: 'Denkynho: ações e dicas' }) }
 }
 it('mostra o status em balão de fala', () => {

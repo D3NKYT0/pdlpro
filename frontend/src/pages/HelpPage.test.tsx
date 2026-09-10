@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HelpPage } from './HelpPage'
+import i18n from '../i18n'
 import { resetHttpClient } from '../services/api'
 import type { AmbientActivity } from '../components/help/idleRoutine'
 import { estimateSpeechMs } from '../components/help/idleRoutine'
@@ -44,7 +45,7 @@ beforeEach(() => {
   vi.stubGlobal('fetch', fetcher)
   vi.stubGlobal('Image', class { onload: null | (() => void) = null; onerror = null; set src(_: string) { Promise.resolve().then(() => this.onload?.()) } })
 })
-afterEach(() => { ambientPlan.current = null; cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+afterEach(async () => { ambientPlan.current = null; cleanup(); client.clear(); resetHttpClient(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 async function openCompanion(user = userEvent.setup()) { if (!screen.queryByRole('dialog')) await user.click(screen.getByRole('button', { name: /Denkynho: / })) }
 function mount() { render(<QueryClientProvider client={client}><MemoryRouter><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
 it('mostra atributos persistentes, envia um cuidado idempotente e bloqueia duplo clique', async () => {

@@ -3,12 +3,13 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { PetProgress } from './PetProgress'
 import { resetHttpClient } from '../../services/api'
 import type { ApiDenkynhoProfile } from '../../services/api'
 const profile: ApiDenkynhoProfile = { level: 2, experience: 7, experience_next: 150, attributes: { energy: 75, satiety: 100, happiness: 80, hygiene: 75 }, appearance: { accessory: '', outfit: '', object: '' }, unlocks: [{ id: 'star-pin', slot: 'accessory', level: 2, unlocked: true, label: { pt: 'Broche de estrela', en: 'Star pin' } }, { id: 'dance', slot: 'interaction', level: 3, unlocked: false, label: { pt: 'Dançar juntos', en: 'Dance together' } }] }
 const response = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
-afterEach(() => { cleanup(); resetHttpClient(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+afterEach(async () => { cleanup(); resetHttpClient(); vi.unstubAllGlobals(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 it('mostra ganhos confirmados, bloqueia duplicação e equipa e remove via HTTP', async () => {
   const user = userEvent.setup(), changed = vi.fn()
   let resolve!: (value: Response) => void
@@ -33,6 +34,7 @@ it('preserva a aparência no erro e recusa resposta inválida', async () => {
   const changed = vi.fn(), user = userEvent.setup()
   const fetcher = vi.fn((url: RequestInfo | URL) => Promise.resolve(response(String(url).includes('/csrf/') ? { csrfToken: 'test' } : { invalid: true })))
   vi.stubGlobal('fetch', fetcher)
+  await i18n.changeLanguage('en')
   render(<PetProgress profile={profile} language="en" onProfileChange={changed} />)
   await user.click(screen.getByRole('button', { name: 'Equip Star pin' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('Invalid wardrobe response')
@@ -70,6 +72,7 @@ it('inicia no fundo equipado, circula pelas prévias sem salvar e aceita catálo
     { id: 'garden', slot: 'scene', level: 1, unlocked: true, label: { pt: 'Jardim', en: 'Garden' } },
     { id: 'camp', slot: 'scene', level: 5, unlocked: true, label: { pt: 'Acampamento', en: 'Camp' } },
   ] }
+  await i18n.changeLanguage('en')
   const { rerender } = render(<PetProgress profile={state} language="en" onProfileChange={changed} />)
   expect(screen.getByRole('button', { name: 'Remove Camp' })).toHaveAttribute('aria-pressed', 'true')
   await user.click(screen.getByRole('button', { name: 'Next scene' }))

@@ -46,6 +46,13 @@ export type HelpChatLabels = {
   hint: string
   thinking: string
   send: string
+  basicMode: string
+  replyFailed: string
+  retry: string
+  busyPlaceholder: string
+  suggestions: string
+  careGains: string[]
+  careLevelUp: (level: number) => string
 }
 
 interface HelpChatProps {
@@ -137,13 +144,7 @@ export function HelpChat({
         <div>
           <h2>{labels.chat}</h2>
           <p className="muted">{labels.context}</p>
-          {limited && (
-            <p role="status">
-              {language === 'pt'
-                ? 'Estou no modo de ajuda básica. A conversa com IA está indisponível no momento.'
-                : 'Basic help mode is active. AI conversation is currently unavailable.'}
-            </p>
-          )}
+          {limited && <p role="status">{labels.basicMode}</p>}
         </div>
         <Button size="sm" variant="secondary" disabled={busy} onClick={onFresh}>
           {labels.fresh}
@@ -197,9 +198,9 @@ export function HelpChat({
                 )}
                 {message.status === 'failed' && (
                   <div className="help-message-retry">
-                    <small>{language === 'pt' ? 'Não foi possível responder.' : 'Could not get a reply.'}</small>
+                    <small>{labels.replyFailed}</small>
                     <Button size="sm" variant="secondary" disabled={busy} onClick={() => void onSend(message.text, message.id)}>
-                      {language === 'pt' ? 'Reenviar mensagem' : 'Retry message'}
+                      {labels.retry}
                     </Button>
                   </div>
                 )}
@@ -257,7 +258,7 @@ export function HelpChat({
           </div>
         )}
         {messages.length === 1 && suggestions.length > 0 && (
-          <div className="help-suggestions" aria-label="Perguntas sugeridas">
+          <div className="help-suggestions" aria-label={labels.suggestions}>
             {suggestions.map((item) => (
               <Button key={item.id} variant="secondary" size="sm" disabled={busy} onClick={() => void onSend(item.question)}>
                 {item.question}
@@ -270,15 +271,8 @@ export function HelpChat({
       <div className="help-chat-status">
         {activity && careResult && !careResult.replayed && (
           <p role="status" className="denk-care-gains">
-            {language === 'pt'
-              ? ['Que boa pausa!', 'Adorei esse cuidado!', 'Pronto para continuar!'][careResult.experience % 3]
-              : ['That was a good break!', 'Thanks for the care!', 'Ready to carry on!'][careResult.experience % 3]}{' '}
-            +{careResult.xp_gained} XP
-            {careResult.level_up
-              ? language === 'pt'
-                ? ` · Cheguei ao nível ${careResult.level}!`
-                : ` · I reached level ${careResult.level}!`
-              : ''}
+            {labels.careGains[careResult.experience % 3]} +{careResult.xp_gained} XP
+            {careResult.level_up ? ` · ${labels.careLevelUp(careResult.level)}` : ''}
           </p>
         )}
         {faqLoading && <LoadingState>{labels.loading}</LoadingState>}
@@ -309,13 +303,7 @@ export function HelpChat({
             onKeyDown={onDraftKey}
             maxLength={maxLength}
             rows={2}
-            placeholder={
-              busy
-                ? language === 'pt'
-                  ? 'Você já pode escrever a próxima mensagem…'
-                  : 'You can draft your next message…'
-                : labels.placeholder
-            }
+            placeholder={busy ? labels.busyPlaceholder : labels.placeholder}
             enterKeyHint="send"
             aria-invalid={Boolean(validation)}
             aria-describedby={validation ? 'help-validation' : undefined}

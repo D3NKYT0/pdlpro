@@ -2,10 +2,12 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { HelpPreferences } from './HelpPreferences'
 import { defaultHelpPreferences, loadHelpPreferences, storeHelpPreferences } from './preferences'
-afterEach(() => { cleanup(); localStorage.clear(); vi.restoreAllMocks() })
+beforeEach(() => { localStorage.clear() })
+afterEach(async () => { cleanup(); localStorage.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 it('aplica sem persistir, salva somente com consentimento e apaga as escolhas', async () => {
   const apply = vi.fn(), user = userEvent.setup()
   render(<HelpPreferences userId="one" language="pt" value={null} disabled={false} onApply={apply} />)
@@ -48,6 +50,7 @@ it('informa falha da conta e não aplica a conversa', async () => {
 })
 it('recusa nome inválido, respeita bloqueio e informa armazenamento indisponível', async () => {
   const apply = vi.fn(), user = userEvent.setup()
+  await i18n.changeLanguage('en')
   const { rerender } = render(<HelpPreferences userId="one" language="en" value={null} disabled={false} onApply={apply} />)
   await user.type(screen.getByRole('textbox'), '123')
   await user.click(screen.getByRole('button', { name: 'Apply preferences' }))
