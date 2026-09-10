@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom'
-import { tabs, type Tab } from './rankingsMeta'
+import { useTranslation } from 'react-i18next'
+import type { Tab } from './rankingsMeta'
+import { useRankingTabs } from './useRankingTabs'
 
 export function RankingsNav({ activeTab }: { activeTab: Tab }) {
+  const { t } = useTranslation('public')
+  const items = useRankingTabs()
+
   return (
-    <nav className="rankings-nav container" aria-label="Rankings">
-      {tabs.map((item) => {
+    <nav className="rankings-nav container" aria-label={t('rankings.navAria')}>
+      {items.map((item) => {
         const TabIcon = item.icon
         const active = activeTab.id === item.id
         return (

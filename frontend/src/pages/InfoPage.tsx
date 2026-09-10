@@ -18,34 +18,55 @@ import {
   Zap,
   type LucideIcon,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { serverApi } from '../services/api'
 
-const rateCards: Array<{ key: string; label: string; detail: string; icon: LucideIcon }> = [
-  { key: 'xp', label: 'Experiência', detail: 'Progressão de nível', icon: Zap },
-  { key: 'sp', label: 'Skill Points', detail: 'Evolução de habilidades', icon: Sparkles },
-  { key: 'adena', label: 'Adena', detail: 'Economia do servidor', icon: Coins },
-  { key: 'drop', label: 'Drop', detail: 'Itens dos monstros', icon: PackageOpen },
-  { key: 'spoil', label: 'Spoil', detail: 'Coleta de materiais', icon: Gem },
-]
+const RATE_IDS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
+const RATE_ICONS: Record<(typeof RATE_IDS)[number], LucideIcon> = {
+  xp: Zap,
+  sp: Sparkles,
+  adena: Coins,
+  drop: PackageOpen,
+  spoil: Gem,
+}
 
-const sections: Array<{ id: string; label: string; icon: LucideIcon }> = [
-  { id: 'geral', label: 'Visão geral', icon: Server },
-  { id: 'rates', label: 'Rates', icon: Activity },
-  { id: 'enchant', label: 'Encantamento', icon: ShieldCheck },
-  { id: 'features', label: 'Recursos', icon: Sparkles },
-  { id: 'pvp', label: 'PvP', icon: Swords },
-  { id: 'comecar', label: 'Começar', icon: Rocket },
-]
+const SECTION_IDS = ['geral', 'rates', 'enchant', 'features', 'pvp', 'comecar'] as const
+const SECTION_ICONS: Record<(typeof SECTION_IDS)[number], LucideIcon> = {
+  geral: Server,
+  rates: Activity,
+  enchant: ShieldCheck,
+  features: Sparkles,
+  pvp: Swords,
+  comecar: Rocket,
+}
 
 export function InfoPage() {
+  const { t } = useTranslation('public')
   const { hash } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
   const data = info.data
   const [activeSection, setActiveSection] = useState(hash.replace('#', '') || 'geral')
-  const statusLabel = status.isLoading ? 'Verificando' : status.data?.game_online ? 'Online' : 'Offline'
+  const statusLabel = status.isLoading
+    ? t('info.statusChecking')
+    : status.data?.game_online
+      ? t('info.statusOnline')
+      : t('info.statusOffline')
   const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
+
+  const rateCards = RATE_IDS.map((key) => ({
+    key,
+    label: t(`info.rate.${key}.label`),
+    detail: t(`info.rate.${key}.detail`),
+    icon: RATE_ICONS[key],
+  }))
+
+  const sections = SECTION_IDS.map((id) => ({
+    id,
+    label: t(`info.nav.${id}`),
+    icon: SECTION_ICONS[id],
+  }))
 
   useEffect(() => {
     const id = hash.replace('#', '')
@@ -61,9 +82,9 @@ export function InfoPage() {
 
     const updateActiveSection = () => {
       const marker = window.scrollY + Math.min(window.innerHeight * 0.32, 280)
-      let currentSection = sections[0].id
+      let currentSection: (typeof SECTION_IDS)[number] = SECTION_IDS[0]
 
-      sections.forEach(({ id }) => {
+      SECTION_IDS.forEach((id) => {
         const element = document.getElementById(id)
         if (!element) return
 
@@ -98,30 +119,30 @@ export function InfoPage() {
           <div className="info-hero-copy">
             <span className="info-eyebrow">
               <Crown aria-hidden="true" />
-              Guia oficial do servidor
+              {t('info.eyebrow')}
             </span>
             <h1>
-              Conheça o <em>reino</em>
+              {t('info.titleBefore')} <em>{t('info.titleEm')}</em>
             </h1>
-            <p>Rates, progressão e regras essenciais reunidos em uma visão clara antes de começar sua jornada.</p>
+            <p>{t('info.lead')}</p>
             <div className="info-hero-actions">
               <Link className="info-action info-action-primary" to="/downloads">
                 <Download aria-hidden="true" />
-                Baixar o jogo
+                {t('info.downloadGame')}
               </Link>
               <Link className="info-action info-action-secondary" to="/register">
                 <UserPlus aria-hidden="true" />
-                Criar conta
+                {t('info.createAccount')}
               </Link>
             </div>
           </div>
 
-          <aside className="info-hero-card" aria-label="Resumo do servidor">
+          <aside className="info-hero-card" aria-label={t('info.serverSummaryAria')}>
             <div className="info-server-mark">
               <Server aria-hidden="true" />
             </div>
             <div className="info-server-heading">
-              <span>Servidor principal</span>
+              <span>{t('info.mainServer')}</span>
               <strong>{data?.name ?? 'PDL PRO'}</strong>
             </div>
             <div className={`info-live-status ${statusClass}`}>
@@ -130,11 +151,11 @@ export function InfoPage() {
             </div>
             <dl className="info-hero-metrics">
               <div>
-                <dt>Crônica</dt>
+                <dt>{t('info.chronicle')}</dt>
                 <dd>{data?.chronicle ?? '—'}</dd>
               </div>
               <div>
-                <dt>Nível máximo</dt>
+                <dt>{t('info.maxLevel')}</dt>
                 <dd>{data?.max_level ?? '—'}</dd>
               </div>
             </dl>
@@ -142,7 +163,7 @@ export function InfoPage() {
         </div>
       </header>
 
-      <nav className="info-nav container" aria-label="Seções">
+      <nav className="info-nav container" aria-label={t('info.sectionsAria')}>
         {sections.map(({ id, label, icon: Icon }) => (
           <a
             key={id}
@@ -160,12 +181,12 @@ export function InfoPage() {
         {info.isLoading ? (
           <div className="info-empty">
             <span className="info-diamond" aria-hidden="true" />
-            <p>Consultando a ficha do servidor...</p>
+            <p>{t('info.loading')}</p>
           </div>
         ) : info.isError ? (
           <div className="info-empty">
             <span className="info-diamond" aria-hidden="true" />
-            <p>Não foi possível carregar as informações agora.</p>
+            <p>{t('info.error')}</p>
           </div>
         ) : (
           <>
@@ -173,40 +194,40 @@ export function InfoPage() {
               <div className="info-section-heading">
                 <span>01</span>
                 <div>
-                  <small>O essencial</small>
-                  <h2>Visão geral</h2>
+                  <small>{t('info.overviewKicker')}</small>
+                  <h2>{t('info.overviewTitle')}</h2>
                 </div>
               </div>
               <div className="info-overview-grid">
                 <article className="info-story-card">
-                  <span className="info-card-kicker">Um clássico vivo</span>
+                  <span className="info-card-kicker">{t('info.storyKicker')}</span>
                   <h3>{data?.name ?? 'PDL PRO'}</h3>
-                  <p>{data?.description || 'Uma experiência Lineage II criada para valorizar cada conquista e cada rivalidade.'}</p>
+                  <p>{data?.description || t('info.descriptionFallback')}</p>
                   <div className="info-story-line">
                     <span />
-                    Crônica {data?.chronicle ?? '—'}
+                    {t('info.chronicleLine', { chronicle: data?.chronicle ?? '—' })}
                   </div>
                 </article>
 
                 <div className="info-plaque">
                   <div>
                     <Server aria-hidden="true" />
-                    <span>Servidor</span>
+                    <span>{t('info.server')}</span>
                     <strong>{data?.name ?? '—'}</strong>
                   </div>
                   <div>
                     <BookOpen aria-hidden="true" />
-                    <span>Crônica</span>
+                    <span>{t('info.chronicle')}</span>
                     <strong>{data?.chronicle ?? '—'}</strong>
                   </div>
                   <div>
                     <Crown aria-hidden="true" />
-                    <span>Nível máximo</span>
+                    <span>{t('info.maxLevel')}</span>
                     <strong>{data?.max_level ?? '—'}</strong>
                   </div>
                   <div>
                     <Activity aria-hidden="true" />
-                    <span>Status</span>
+                    <span>{t('info.status')}</span>
                     <strong className={statusClass}>{statusLabel}</strong>
                   </div>
                 </div>
@@ -217,8 +238,8 @@ export function InfoPage() {
               <div className="info-section-heading">
                 <span>02</span>
                 <div>
-                  <small>Ritmo da jornada</small>
-                  <h2>Rates do servidor</h2>
+                  <small>{t('info.ratesKicker')}</small>
+                  <h2>{t('info.ratesTitle')}</h2>
                 </div>
               </div>
               <div className="info-rate-grid">
@@ -239,8 +260,8 @@ export function InfoPage() {
               <div className="info-section-heading">
                 <span>03</span>
                 <div>
-                  <small>Fortaleça seu equipamento</small>
-                  <h2>Encantamento</h2>
+                  <small>{t('info.enchantKicker')}</small>
+                  <h2>{t('info.enchantTitle')}</h2>
                 </div>
               </div>
               <div className="info-enchant">
@@ -249,8 +270,8 @@ export function InfoPage() {
                     <ShieldCheck aria-hidden="true" />
                   </div>
                   <div>
-                    <span>Encantamento seguro</span>
-                    <p>Até este valor, seu equipamento evolui sem risco.</p>
+                    <span>{t('info.enchantSafe')}</span>
+                    <p>{t('info.enchantSafeBlurb')}</p>
                   </div>
                   <strong>{data?.enchant.safe ?? '—'}</strong>
                 </article>
@@ -259,8 +280,8 @@ export function InfoPage() {
                     <Sparkles aria-hidden="true" />
                   </div>
                   <div>
-                    <span>Limite máximo</span>
-                    <p>O ápice de poder permitido para cada equipamento.</p>
+                    <span>{t('info.enchantMax')}</span>
+                    <p>{t('info.enchantMaxBlurb')}</p>
                   </div>
                   <strong>{data?.enchant.max ?? '—'}</strong>
                 </article>
@@ -271,8 +292,8 @@ export function InfoPage() {
               <div className="info-section-heading">
                 <span>04</span>
                 <div>
-                  <small>O que espera por você</small>
-                  <h2>Recursos do reino</h2>
+                  <small>{t('info.featuresKicker')}</small>
+                  <h2>{t('info.featuresTitle')}</h2>
                 </div>
               </div>
               {(data?.features ?? []).length ? (
@@ -286,7 +307,7 @@ export function InfoPage() {
                   ))}
                 </ul>
               ) : (
-                <p className="info-lead">Nenhum recurso listado no momento.</p>
+                <p className="info-lead">{t('info.featuresEmpty')}</p>
               )}
             </section>
 
@@ -295,18 +316,18 @@ export function InfoPage() {
                 <div className="info-panel-icon">
                   <Swords aria-hidden="true" />
                 </div>
-                <small>Conquiste seu nome</small>
-                <h2>PvP e castelos</h2>
-                <p>{data?.notes.pvp || 'Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.'}</p>
+                <small>{t('info.pvpKicker')}</small>
+                <h2>{t('info.pvpTitle')}</h2>
+                <p>{data?.notes.pvp || t('info.pvpFallback')}</p>
                 <span className="info-panel-number">05</span>
               </section>
               <section className="info-panel" id="comecar">
                 <div className="info-panel-icon">
                   <Rocket aria-hidden="true" />
                 </div>
-                <small>Prepare sua jornada</small>
-                <h2>Como começar</h2>
-                <p>{data?.notes.start || 'Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.'}</p>
+                <small>{t('info.startKicker')}</small>
+                <h2>{t('info.startTitle')}</h2>
+                <p>{data?.notes.start || t('info.startFallback')}</p>
                 <span className="info-panel-number">06</span>
               </section>
             </div>
@@ -315,23 +336,23 @@ export function InfoPage() {
               <div>
                 <span className="info-eyebrow">
                   <Crown aria-hidden="true" />
-                  Sua lenda começa agora
+                  {t('info.ctaEyebrow')}
                 </span>
-                <h2>Pronto para entrar no reino?</h2>
-                <p>Crie sua conta, prepare o cliente e consulte a wiki sempre que precisar.</p>
+                <h2>{t('info.ctaTitle')}</h2>
+                <p>{t('info.ctaLead')}</p>
               </div>
               <div className="info-cta-actions">
                 <Link className="info-action info-action-primary" to="/register">
                   <UserPlus aria-hidden="true" />
-                  Criar conta
+                  {t('info.createAccount')}
                 </Link>
                 <Link className="info-action info-action-secondary" to="/downloads">
                   <Download aria-hidden="true" />
-                  Baixar jogo
+                  {t('info.downloadShort')}
                 </Link>
                 <Link className="info-wiki-link" to="/wiki">
                   <BookOpen aria-hidden="true" />
-                  Abrir wiki
+                  {t('info.openWiki')}
                 </Link>
               </div>
             </section>

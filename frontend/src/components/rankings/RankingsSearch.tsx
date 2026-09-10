@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { formatWorldCell, initial } from './rankingsFormat'
 import type { WorldRow } from './rankingsMeta'
 
@@ -10,29 +11,31 @@ type RankingsSearchProps = {
 }
 
 export function RankingsSearch({ search, onSearchChange, isLoading, results }: RankingsSearchProps) {
+  const { t } = useTranslation('public')
+
   return (
-    <section className="rankings-search" aria-label="Buscar personagem">
+    <section className="rankings-search" aria-label={t('rankings.search.aria')}>
       <div className="rankings-heading">
         <span>
           <Search aria-hidden="true" />
         </span>
         <div>
-          <small>Consulta</small>
-          <h2>Buscar personagem</h2>
+          <small>{t('rankings.search.kicker')}</small>
+          <h2>{t('rankings.search.title')}</h2>
         </div>
       </div>
       <label className="rankings-search-field">
-        <span className="sr-only">Nome do personagem</span>
+        <span className="sr-only">{t('rankings.search.nameSr')}</span>
         <Search aria-hidden="true" />
         <input
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Digite ao menos 2 letras..."
+          placeholder={t('rankings.search.placeholder')}
         />
       </label>
       {search.trim().length >= 2 ? (
         isLoading ? (
-          <p className="rankings-search-hint">Procurando no mundo...</p>
+          <p className="rankings-search-hint">{t('rankings.search.loading')}</p>
         ) : results.length ? (
           <ol className="rankings-board">
             {results.map((row, index) => (
@@ -43,19 +46,19 @@ export function RankingsSearch({ search, onSearchChange, isLoading, results }: R
                 </span>
                 <span className="rankings-board-name">
                   {String(row.name ?? '—')}
-                  <small>{String(row.clan_name ?? 'Sem clã')}</small>
+                  <small>{String(row.clan_name ?? t('rankings.search.noClan'))}</small>
                 </span>
                 <span className={`rankings-board-score ${Number(row.online) ? 'is-live' : 'is-down'}`}>
-                  {Number(row.online) ? 'Online' : 'Offline'}
+                  {Number(row.online) ? t('rankings.status.online') : t('rankings.status.offline')}
                 </span>
               </li>
             ))}
           </ol>
         ) : (
-          <p className="rankings-search-hint">Nenhum personagem encontrado com esse nome.</p>
+          <p className="rankings-search-hint">{t('rankings.search.empty')}</p>
         )
       ) : (
-        <p className="rankings-search-hint">Use o nome do personagem para localizar clã, nível e status.</p>
+        <p className="rankings-search-hint">{t('rankings.search.hint')}</p>
       )}
     </section>
   )

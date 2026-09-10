@@ -1,9 +1,11 @@
 import { Crown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { ApiRankingEntry } from '../../services/types'
 import { formatValue, initial } from './rankingsFormat'
-import type { Tab } from './rankingsMeta'
+import type { LocalizedTab } from './rankingsMeta'
 
-export function RankingPodium({ tab, rows }: { tab: Tab; rows: ApiRankingEntry[] }) {
+export function RankingPodium({ tab, rows }: { tab: LocalizedTab; rows: ApiRankingEntry[] }) {
+  const { t } = useTranslation('public')
   const rest = rows.slice(3)
 
   return (
@@ -14,7 +16,7 @@ export function RankingPodium({ tab, rows }: { tab: Tab; rows: ApiRankingEntry[]
             <div className="rankings-card-inner">
               <span className="rankings-place">
                 {index === 0 ? <Crown aria-hidden="true" /> : null}
-                {row.position}º
+                {t('rankings.place', { n: row.position })}
               </span>
               <span className="rankings-crest" aria-hidden="true">
                 <span>{initial(row.name)}</span>

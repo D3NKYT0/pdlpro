@@ -110,5 +110,305 @@
     "unitHours": "Hours",
     "unitMins": "Min",
     "unitSecs": "Sec"
+  },
+  "rankings": {
+    "eyebrow": "Hall of fame",
+    "titleBefore": "The strongest of the",
+    "titleEm": "realm",
+    "lead": "PvP, wealth, clans, and olympiad — the honor board of those who write the server's history.",
+    "categoryAria": "Current category",
+    "firstPlace": "1st place",
+    "players": "Players",
+    "list": "List",
+    "valueFallback": "Value",
+    "navAria": "Rankings",
+    "loading": "Checking the hall of fame...",
+    "error": "Could not load this ranking right now.",
+    "emptyRanking": "The hall of fame still awaits the first names.",
+    "emptyWorld": "No data for this query at the moment.",
+    "fortresses": "{{count}} fortresses",
+    "place": "#{{n}}",
+    "grandBoss": "Grand Boss",
+    "status": {
+      "checking": "Checking",
+      "online": "Online",
+      "offline": "Offline"
+    },
+    "tabs": {
+      "pvp": {
+        "label": "PvP",
+        "kicker": "Battlefield",
+        "blurb": "Warriors with the most combat victories.",
+        "valueLabel": "Kills"
+      },
+      "pk": {
+        "label": "PK",
+        "kicker": "The feared",
+        "blurb": "Those who command respect across the realm.",
+        "valueLabel": "Kills"
+      },
+      "adena": {
+        "label": "Adena",
+        "kicker": "Wealth",
+        "blurb": "The richest on the continent.",
+        "valueLabel": "Adena"
+      },
+      "clans": {
+        "label": "Clans",
+        "kicker": "Honor",
+        "blurb": "The houses that dominate the territory.",
+        "valueLabel": "Reputation"
+      },
+      "level": {
+        "label": "Level",
+        "kicker": "Progression",
+        "blurb": "Those who have gone farthest on the journey.",
+        "valueLabel": "Level"
+      },
+      "online": {
+        "label": "Online",
+        "kicker": "Dedication",
+        "blurb": "Accumulated playtime on the server.",
+        "valueLabel": "Time"
+      },
+      "olympiad": {
+        "label": "Olympiad",
+        "kicker": "Nobles",
+        "blurb": "Nobles at the top of the arena.",
+        "valueLabel": "Points"
+      },
+      "grandboss": {
+        "label": "Bosses",
+        "kicker": "Epics",
+        "blurb": "Status of the world's grand bosses."
+      },
+      "siege": {
+        "label": "Siege",
+        "kicker": "Castles",
+        "blurb": "Who rules the fortresses of the realm."
+      }
+    },
+    "columns": {
+      "name": "Name",
+      "value": "Value",
+      "online": "Status",
+      "clan_name": "Clan",
+      "class_id": "Class",
+      "boss_id": "Boss",
+      "respawn": "Respawn",
+      "castle_id": "Castle",
+      "sdate": "Siege",
+      "stax": "Treasury",
+      "leader": "Leader",
+      "ally_name": "Alliance",
+      "clan_id": "Clan ID",
+      "char_id": "ID"
+    },
+    "search": {
+      "aria": "Search character",
+      "kicker": "Lookup",
+      "title": "Search character",
+      "nameSr": "Character name",
+      "placeholder": "Type at least 2 letters...",
+      "loading": "Searching the world...",
+      "empty": "No character found with that name.",
+      "hint": "Use the character name to find clan, level, and status.",
+      "noClan": "No clan"
+    },
+    "siege": {
+      "occupied": "Occupied",
+      "free": "Free",
+      "atWar": "At war",
+      "none": "None",
+      "noOwner": "No owner",
+      "owned": "Held",
+      "ownerClan": "Owner clan",
+      "attackers": "Attackers",
+      "defenders": "Defenders",
+      "treasury": "Treasury",
+      "tax": "Tax",
+      "nextSiege": "Next siege",
+      "nextWar": "Next war",
+      "schedule": "Siege forces",
+      "forcesCount": "{{attackers}} attackers · {{defenders}} defenders",
+      "emptyAttackers": "No clan registered",
+      "emptyDefenders": "No clan registered",
+      "noLeader": "No leader",
+      "noAlliance": "No alliance",
+      "loadingParticipants": "Checking clans registered for the siege...",
+      "castleAlt": "{{title}} Castle",
+      "castleHeading": "{{title}} Castle"
+    },
+    "format": {
+      "noDate": "No date set",
+      "underSiege": "Under siege",
+      "awaitingSchedule": "Awaiting schedule",
+      "adenRealm": "Aden realm",
+      "fortressBlurb": "A fortress of the realm.",
+      "emptyTreasury": "Empty",
+      "alive": "Alive",
+      "yes": "Yes",
+      "no": "No",
+      "castleFallback": "Castle {{id}}",
+      "bossFallback": "Boss #{{id}}",
+      "adenaUnit": "adena"
+    },
+    "castles": {
+      "gludio": {
+        "territory": "Gludio Territory",
+        "blurb": "The western fortress, gateway to the continent."
+      },
+      "dion": {
+        "territory": "Dion Territory",
+        "blurb": "Castle of the southern lands, between Gludio and Giran."
+      },
+      "giran": {
+        "territory": "Giran Territory",
+        "blurb": "The commercial heart of the realm and one of the most contested."
+      },
+      "oren": {
+        "territory": "Oren Territory",
+        "blurb": "Northern domain, in the shadow of the Ivory Tower."
+      },
+      "aden": {
+        "territory": "Capital of Aden",
+        "blurb": "The royal fortress, ultimate symbol of power on the continent."
+      },
+      "innadril": {
+        "territory": "Innadril Territory",
+        "blurb": "The castle of the waters, in Heine."
+      },
+      "goddard": {
+        "territory": "Goddard Territory",
+        "blurb": "The northern fortress, path to the frozen lands."
+      },
+      "rune": {
+        "territory": "Rune Territory",
+        "blurb": "Bastion of the far north, neighbor to Elmore."
+      },
+      "schuttgart": {
+        "territory": "Schuttgart Territory",
+        "blurb": "Citadel of the snowy mountains."
+      }
+    }
+  },
+  "info": {
+    "eyebrow": "Official server guide",
+    "titleBefore": "Discover the",
+    "titleEm": "realm",
+    "lead": "Rates, progression, and essential rules gathered in a clear overview before you begin your journey.",
+    "downloadGame": "Download the game",
+    "createAccount": "Create account",
+    "downloadShort": "Download game",
+    "serverSummaryAria": "Server summary",
+    "mainServer": "Main server",
+    "statusChecking": "Checking",
+    "statusOnline": "Online",
+    "statusOffline": "Offline",
+    "chronicle": "Chronicle",
+    "maxLevel": "Max level",
+    "sectionsAria": "Sections",
+    "nav": {
+      "geral": "Overview",
+      "rates": "Rates",
+      "enchant": "Enchanting",
+      "features": "Features",
+      "pvp": "PvP",
+      "comecar": "Getting started"
+    },
+    "loading": "Loading the server sheet...",
+    "error": "Could not load the information right now.",
+    "overviewKicker": "The essentials",
+    "overviewTitle": "Overview",
+    "storyKicker": "A living classic",
+    "descriptionFallback": "A Lineage II experience built to honor every victory and every rivalry.",
+    "chronicleLine": "Chronicle {{chronicle}}",
+    "server": "Server",
+    "status": "Status",
+    "ratesKicker": "Pace of the journey",
+    "ratesTitle": "Server rates",
+    "rate": {
+      "xp": { "label": "Experience", "detail": "Level progression" },
+      "sp": { "label": "Skill Points", "detail": "Skill advancement" },
+      "adena": { "label": "Adena", "detail": "Server economy" },
+      "drop": { "label": "Drop", "detail": "Monster loot" },
+      "spoil": { "label": "Spoil", "detail": "Material gathering" }
+    },
+    "enchantKicker": "Strengthen your gear",
+    "enchantTitle": "Enchanting",
+    "enchantSafe": "Safe enchant",
+    "enchantSafeBlurb": "Up to this value, your equipment upgrades without risk.",
+    "enchantMax": "Maximum limit",
+    "enchantMaxBlurb": "The peak of power allowed for each piece of equipment.",
+    "featuresKicker": "What awaits you",
+    "featuresTitle": "Realm features",
+    "featuresEmpty": "No features listed at the moment.",
+    "pvpKicker": "Claim your name",
+    "pvpTitle": "PvP and castles",
+    "pvpFallback": "Free combat in PvP zones. Castles follow the siege calendar.",
+    "startKicker": "Prepare your journey",
+    "startTitle": "How to start",
+    "startFallback": "Create your master account, download the client, and link your Lineage login in the panel.",
+    "ctaEyebrow": "Your legend begins now",
+    "ctaTitle": "Ready to enter the realm?",
+    "ctaLead": "Create your account, prepare the client, and check the wiki whenever you need.",
+    "openWiki": "Open wiki"
+  },
+  "wiki": {
+    "kicker": "Guides",
+    "title": "Wiki",
+    "description": "Commands, classes, and game content. Rates and chronicle live under Information.",
+    "searchPlaceholder": "Search commands, siege, classes...",
+    "searchAria": "Search the wiki",
+    "loading": "Loading the wiki...",
+    "empty": "No pages published.",
+    "emptyRetry": " Try another search.",
+    "emptyHintBefore": " For rates and chronicle, see ",
+    "seeInfo": "Information",
+    "emptyHintAfter": ".",
+    "back": "← Wiki",
+    "detailLoading": "Loading the page...",
+    "notFound": "This wiki page was not found."
+  },
+  "news": {
+    "kicker": "Community",
+    "title": "News",
+    "description": "Updates, events, and what is happening in the realm.",
+    "loading": "Loading the latest news...",
+    "itemFallback": "News",
+    "readMore": "Read more",
+    "empty": "No news published at the moment.",
+    "back": "← News",
+    "detailLoading": "Loading the article...",
+    "notFound": "This news article was not found."
+  },
+  "legal": {
+    "agreement": "Agreement",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "kicker": "Legal",
+    "titleFallback": "Document",
+    "navAria": "Legal documents",
+    "loading": "Loading the document...",
+    "version": "Version {{version}}",
+    "unavailable": "This document is not available right now."
+  },
+  "roadmap": {
+    "eyebrow": "The next chapter",
+    "title": "Server roadmap",
+    "lead": "Follow what we are preparing, what is in development, and the updates already delivered.",
+    "updateOne": "update",
+    "updateMany": "updates",
+    "progressDone": "{{pct}}% complete",
+    "forecast": "Forecast {{date}}",
+    "viewUpdate": "View update",
+    "emptyStage": "No updates in this stage.",
+    "back": "Back to roadmap",
+    "forecastLabel": "Forecast:",
+    "status": {
+      "planned": "Planned",
+      "progress": "In progress",
+      "completed": "Completed"
+    }
   }
 }

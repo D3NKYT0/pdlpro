@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { RankingsHero } from '../components/rankings/RankingsHero'
 import { RankingsNav } from '../components/rankings/RankingsNav'
@@ -7,11 +8,13 @@ import { RankingsSearch } from '../components/rankings/RankingsSearch'
 import { RankingsSection } from '../components/rankings/RankingsSection'
 import { asRankingRows } from '../components/rankings/rankingsFormat'
 import { tabFromParam } from '../components/rankings/rankingsMeta'
+import { useRankingTab } from '../components/rankings/useRankingTabs'
 import { serverApi } from '../services/api'
 
 export function RankingsPage() {
+  const { t } = useTranslation('public')
   const [searchParams] = useSearchParams()
-  const tab = tabFromParam(searchParams.get('tab'))
+  const tab = useRankingTab(tabFromParam(searchParams.get('tab')))
   const Icon = tab.icon
   const [search, setSearch] = useState('')
 
@@ -38,7 +41,11 @@ export function RankingsPage() {
   const isLoading = tab.type === 'ranking' ? rankings.isLoading : world.isLoading
   const isError = tab.type === 'ranking' ? rankings.isError : world.isError
   const leader = rankingRows[0]
-  const statusLabel = status.isLoading ? 'Verificando' : status.data?.game_online ? 'Online' : 'Offline'
+  const statusLabel = status.isLoading
+    ? t('rankings.status.checking')
+    : status.data?.game_online
+      ? t('rankings.status.online')
+      : t('rankings.status.offline')
   const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
 
   return (

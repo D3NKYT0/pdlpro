@@ -20,6 +20,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   inclui seletor de idioma (a página substitui o layout público sem nav/footer).
 - **Landing** (`HomePage` default): copy da UI em pt/en/es; o hero do tema builtin
   usa o marketing traduzível (não o nome/descrição técnicos do pacote).
+- Páginas públicas **Info**, **Rankings**, **Wiki**, **News**, **Roadmap** e
+  **Legal** (acordo/termos/privacidade) com chrome i18n pt/en/es; wiki/news/legal
+  pedem `?lang=` conforme o idioma ativo.
 
 ## [2.2.0] - 2026-09-09
 

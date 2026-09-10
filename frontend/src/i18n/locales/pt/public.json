@@ -110,5 +110,305 @@
     "unitHours": "Horas",
     "unitMins": "Min",
     "unitSecs": "Seg"
+  },
+  "rankings": {
+    "eyebrow": "Hall da fama",
+    "titleBefore": "Os mais fortes do",
+    "titleEm": "reino",
+    "lead": "PvP, riqueza, clãs e olimpíada — o quadro de honra de quem escreve a história no servidor.",
+    "categoryAria": "Categoria atual",
+    "firstPlace": "1º lugar",
+    "players": "Jogadores",
+    "list": "Lista",
+    "valueFallback": "Valor",
+    "navAria": "Rankings",
+    "loading": "Consultando o hall da fama...",
+    "error": "Não foi possível carregar este ranking agora.",
+    "emptyRanking": "O hall da fama ainda aguarda os primeiros nomes.",
+    "emptyWorld": "Sem dados desta consulta no momento.",
+    "fortresses": "{{count}} fortalezas",
+    "place": "{{n}}º",
+    "grandBoss": "Grand Boss",
+    "status": {
+      "checking": "Verificando",
+      "online": "Online",
+      "offline": "Offline"
+    },
+    "tabs": {
+      "pvp": {
+        "label": "PvP",
+        "kicker": "Campo de batalha",
+        "blurb": "Os guerreiros com mais vitórias em combate.",
+        "valueLabel": "Kills"
+      },
+      "pk": {
+        "label": "PK",
+        "kicker": "Os temidos",
+        "blurb": "Quem impõe respeito nas terras do reino.",
+        "valueLabel": "Kills"
+      },
+      "adena": {
+        "label": "Adena",
+        "kicker": "Riqueza",
+        "blurb": "Os mais ricos do continente.",
+        "valueLabel": "Adena"
+      },
+      "clans": {
+        "label": "Clãs",
+        "kicker": "Honra",
+        "blurb": "As casas que dominam o território.",
+        "valueLabel": "Reputação"
+      },
+      "level": {
+        "label": "Nível",
+        "kicker": "Progressão",
+        "blurb": "Quem chegou mais longe na jornada.",
+        "valueLabel": "Nível"
+      },
+      "online": {
+        "label": "Online",
+        "kicker": "Dedicação",
+        "blurb": "Tempo de jogo acumulado no servidor.",
+        "valueLabel": "Tempo"
+      },
+      "olympiad": {
+        "label": "Olimpíada",
+        "kicker": "Nobles",
+        "blurb": "Os nobres no topo da arena.",
+        "valueLabel": "Pontos"
+      },
+      "grandboss": {
+        "label": "Bosses",
+        "kicker": "Épicos",
+        "blurb": "O status dos grandes chefes do mundo."
+      },
+      "siege": {
+        "label": "Siege",
+        "kicker": "Castelos",
+        "blurb": "Quem governa as fortalezas do reino."
+      }
+    },
+    "columns": {
+      "name": "Nome",
+      "value": "Valor",
+      "online": "Status",
+      "clan_name": "Clã",
+      "class_id": "Classe",
+      "boss_id": "Boss",
+      "respawn": "Respawn",
+      "castle_id": "Castelo",
+      "sdate": "Siege",
+      "stax": "Tesouro",
+      "leader": "Líder",
+      "ally_name": "Aliança",
+      "clan_id": "ID do clã",
+      "char_id": "ID"
+    },
+    "search": {
+      "aria": "Buscar personagem",
+      "kicker": "Consulta",
+      "title": "Buscar personagem",
+      "nameSr": "Nome do personagem",
+      "placeholder": "Digite ao menos 2 letras...",
+      "loading": "Procurando no mundo...",
+      "empty": "Nenhum personagem encontrado com esse nome.",
+      "hint": "Use o nome do personagem para localizar clã, nível e status.",
+      "noClan": "Sem clã"
+    },
+    "siege": {
+      "occupied": "Ocupados",
+      "free": "Livres",
+      "atWar": "Em guerra",
+      "none": "Nenhum",
+      "noOwner": "Sem dono",
+      "owned": "Dominado",
+      "ownerClan": "Clã dono",
+      "attackers": "Atacantes",
+      "defenders": "Defensores",
+      "treasury": "Tesouro",
+      "tax": "Taxa",
+      "nextSiege": "Próximo cerco",
+      "nextWar": "Próxima guerra",
+      "schedule": "Forças do cerco",
+      "forcesCount": "{{attackers}} atacantes · {{defenders}} defensores",
+      "emptyAttackers": "Nenhum clã registrado",
+      "emptyDefenders": "Nenhum clã registrado",
+      "noLeader": "Sem líder",
+      "noAlliance": "Sem aliança",
+      "loadingParticipants": "Consultando clãs inscritos no cerco...",
+      "castleAlt": "Castelo de {{title}}",
+      "castleHeading": "{{title}} Castle"
+    },
+    "format": {
+      "noDate": "Sem data marcada",
+      "underSiege": "Sob cerco",
+      "awaitingSchedule": "Aguardando calendário",
+      "adenRealm": "Reino de Aden",
+      "fortressBlurb": "Fortaleza do reino.",
+      "emptyTreasury": "Vazio",
+      "alive": "Vivo",
+      "yes": "Sim",
+      "no": "Não",
+      "castleFallback": "Castelo {{id}}",
+      "bossFallback": "Boss #{{id}}",
+      "adenaUnit": "adena"
+    },
+    "castles": {
+      "gludio": {
+        "territory": "Território de Gludio",
+        "blurb": "A fortaleza do oeste, porta de entrada do continente."
+      },
+      "dion": {
+        "territory": "Território de Dion",
+        "blurb": "Castelo das terras ao sul, entre Gludio e Giran."
+      },
+      "giran": {
+        "territory": "Território de Giran",
+        "blurb": "O coração comercial do reino e um dos mais disputados."
+      },
+      "oren": {
+        "territory": "Território de Oren",
+        "blurb": "Domínio ao norte, à sombra da Ivory Tower."
+      },
+      "aden": {
+        "territory": "Capital de Aden",
+        "blurb": "A fortaleza real, símbolo máximo de poder no continente."
+      },
+      "innadril": {
+        "territory": "Território de Innadril",
+        "blurb": "O castelo das águas, em Heine."
+      },
+      "goddard": {
+        "territory": "Território de Goddard",
+        "blurb": "A fortaleza do norte, caminho para as terras geladas."
+      },
+      "rune": {
+        "territory": "Território de Rune",
+        "blurb": "O bastião do extremo norte, vizinho de Elmore."
+      },
+      "schuttgart": {
+        "territory": "Território de Schuttgart",
+        "blurb": "A cidadela das montanhas nevadas."
+      }
+    }
+  },
+  "info": {
+    "eyebrow": "Guia oficial do servidor",
+    "titleBefore": "Conheça o",
+    "titleEm": "reino",
+    "lead": "Rates, progressão e regras essenciais reunidos em uma visão clara antes de começar sua jornada.",
+    "downloadGame": "Baixar o jogo",
+    "createAccount": "Criar conta",
+    "downloadShort": "Baixar jogo",
+    "serverSummaryAria": "Resumo do servidor",
+    "mainServer": "Servidor principal",
+    "statusChecking": "Verificando",
+    "statusOnline": "Online",
+    "statusOffline": "Offline",
+    "chronicle": "Crônica",
+    "maxLevel": "Nível máximo",
+    "sectionsAria": "Seções",
+    "nav": {
+      "geral": "Visão geral",
+      "rates": "Rates",
+      "enchant": "Encantamento",
+      "features": "Recursos",
+      "pvp": "PvP",
+      "comecar": "Começar"
+    },
+    "loading": "Consultando a ficha do servidor...",
+    "error": "Não foi possível carregar as informações agora.",
+    "overviewKicker": "O essencial",
+    "overviewTitle": "Visão geral",
+    "storyKicker": "Um clássico vivo",
+    "descriptionFallback": "Uma experiência Lineage II criada para valorizar cada conquista e cada rivalidade.",
+    "chronicleLine": "Crônica {{chronicle}}",
+    "server": "Servidor",
+    "status": "Status",
+    "ratesKicker": "Ritmo da jornada",
+    "ratesTitle": "Rates do servidor",
+    "rate": {
+      "xp": { "label": "Experiência", "detail": "Progressão de nível" },
+      "sp": { "label": "Skill Points", "detail": "Evolução de habilidades" },
+      "adena": { "label": "Adena", "detail": "Economia do servidor" },
+      "drop": { "label": "Drop", "detail": "Itens dos monstros" },
+      "spoil": { "label": "Spoil", "detail": "Coleta de materiais" }
+    },
+    "enchantKicker": "Fortaleça seu equipamento",
+    "enchantTitle": "Encantamento",
+    "enchantSafe": "Encantamento seguro",
+    "enchantSafeBlurb": "Até este valor, seu equipamento evolui sem risco.",
+    "enchantMax": "Limite máximo",
+    "enchantMaxBlurb": "O ápice de poder permitido para cada equipamento.",
+    "featuresKicker": "O que espera por você",
+    "featuresTitle": "Recursos do reino",
+    "featuresEmpty": "Nenhum recurso listado no momento.",
+    "pvpKicker": "Conquiste seu nome",
+    "pvpTitle": "PvP e castelos",
+    "pvpFallback": "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.",
+    "startKicker": "Prepare sua jornada",
+    "startTitle": "Como começar",
+    "startFallback": "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.",
+    "ctaEyebrow": "Sua lenda começa agora",
+    "ctaTitle": "Pronto para entrar no reino?",
+    "ctaLead": "Crie sua conta, prepare o cliente e consulte a wiki sempre que precisar.",
+    "openWiki": "Abrir wiki"
+  },
+  "wiki": {
+    "kicker": "Guias",
+    "title": "Wiki",
+    "description": "Comandos, classes e conteúdo do jogo. Rates e crônica ficam em Informações.",
+    "searchPlaceholder": "Buscar comandos, siege, classes...",
+    "searchAria": "Buscar na wiki",
+    "loading": "Consultando a wiki...",
+    "empty": "Nenhuma página publicada.",
+    "emptyRetry": " Tente outra busca.",
+    "emptyHintBefore": " Para rates e crônica, veja ",
+    "seeInfo": "Informações",
+    "emptyHintAfter": ".",
+    "back": "← Wiki",
+    "detailLoading": "Carregando a página...",
+    "notFound": "Esta página da wiki não foi encontrada."
+  },
+  "news": {
+    "kicker": "Comunidade",
+    "title": "Notícias",
+    "description": "Atualizações, eventos e o que acontece no reino.",
+    "loading": "Consultando as últimas notícias...",
+    "itemFallback": "Notícia",
+    "readMore": "Ler mais",
+    "empty": "Nenhuma notícia publicada no momento.",
+    "back": "← Notícias",
+    "detailLoading": "Carregando a notícia...",
+    "notFound": "Esta notícia não foi encontrada."
+  },
+  "legal": {
+    "agreement": "Acordo",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "kicker": "Legal",
+    "titleFallback": "Documento",
+    "navAria": "Documentos legais",
+    "loading": "Carregando o documento...",
+    "version": "Versão {{version}}",
+    "unavailable": "Este documento não está disponível no momento."
+  },
+  "roadmap": {
+    "eyebrow": "O próximo capítulo",
+    "title": "Roadmap do servidor",
+    "lead": "Acompanhe o que estamos preparando, o que está em desenvolvimento e as novidades já entregues.",
+    "updateOne": "atualização",
+    "updateMany": "atualizações",
+    "progressDone": "{{pct}}% concluído",
+    "forecast": "Previsão {{date}}",
+    "viewUpdate": "Ver atualização",
+    "emptyStage": "Nenhuma atualização nesta etapa.",
+    "back": "Voltar ao roadmap",
+    "forecastLabel": "Previsão:",
+    "status": {
+      "planned": "Planejado",
+      "progress": "Em andamento",
+      "completed": "Concluído"
+    }
   }
 }

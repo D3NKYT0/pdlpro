@@ -1,30 +1,37 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { PublicEmpty, PublicHero } from '../components/public/PublicChrome'
 import { contentApi } from '../services/api'
+import { contentLang } from '../i18n/locale'
 
 export function WikiPage() {
+  const { t, i18n } = useTranslation('public')
   const [query, setQuery] = useState('')
-  const pages = useQuery({ queryKey: ['wiki', query], queryFn: () => contentApi.wiki(query || undefined) })
+  const language = contentLang(i18n.language)
+  const pages = useQuery({
+    queryKey: ['wiki', query, language],
+    queryFn: () => contentApi.wiki(query || undefined, language),
+  })
 
   return (
     <div className="public-page">
       <PublicHero
-        kicker="Guias"
-        title="Wiki"
-        description="Comandos, classes e conteúdo do jogo. Rates e crônica ficam em Informações."
+        kicker={t('wiki.kicker')}
+        title={t('wiki.title')}
+        description={t('wiki.description')}
       />
       <div className="container">
         <input
           className="public-search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Buscar comandos, siege, classes..."
-          aria-label="Buscar na wiki"
+          placeholder={t('wiki.searchPlaceholder')}
+          aria-label={t('wiki.searchAria')}
         />
         {pages.isLoading ? (
-          <PublicEmpty>Consultando a wiki...</PublicEmpty>
+          <PublicEmpty>{t('wiki.loading')}</PublicEmpty>
         ) : (pages.data ?? []).length ? (
           <div className="public-rows">
             {(pages.data ?? []).map((page) => (
@@ -37,9 +44,11 @@ export function WikiPage() {
           </div>
         ) : (
           <PublicEmpty>
-            Nenhuma página publicada.
-            {query ? ' Tente outra busca.' : null} Para rates e crônica, veja{' '}
-            <Link to="/info">Informações</Link>.
+            {t('wiki.empty')}
+            {query ? t('wiki.emptyRetry') : null}
+            {t('wiki.emptyHintBefore')}
+            <Link to="/info">{t('wiki.seeInfo')}</Link>
+            {t('wiki.emptyHintAfter')}
           </PublicEmpty>
         )}
       </div>

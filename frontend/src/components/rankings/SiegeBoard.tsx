@@ -1,5 +1,6 @@
 import { useQueries } from '@tanstack/react-query'
 import { Castle, Shield, Swords, Users } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { serverApi } from '../../services/api'
 import {
   castleIdOf,
@@ -17,6 +18,7 @@ import {
 import type { WorldRow } from './rankingsMeta'
 
 export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
+  const { t } = useTranslation('public')
   const castles = withCastleCatalog(rows)
   const participants = useQueries({
     queries: castles.map((row) => {
@@ -39,21 +41,21 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
     <div className="rankings-siege">
       <dl className="rankings-siege-summary">
         <div>
-          <dt>Ocupados</dt>
+          <dt>{t('rankings.siege.occupied')}</dt>
           <dd>
             {occupied}/{castles.length}
           </dd>
         </div>
         <div>
-          <dt>Livres</dt>
+          <dt>{t('rankings.siege.free')}</dt>
           <dd>{castles.length - occupied}</dd>
         </div>
         <div>
-          <dt>Em guerra</dt>
-          <dd>{liveCount || 'Nenhum'}</dd>
+          <dt>{t('rankings.siege.atWar')}</dt>
+          <dd>{liveCount || t('rankings.siege.none')}</dd>
         </div>
         <div>
-          <dt>Próximo cerco</dt>
+          <dt>{t('rankings.siege.nextSiege')}</dt>
           <dd>{nextSiege ? formatRelative(nextSiege) : '—'}</dd>
         </div>
       </dl>
@@ -62,16 +64,23 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
         {castles.map((row, index) => {
           const info = castleInfo(row)
           const owner = displayName(row.clan_name, '')
-          const leader = displayName(row.leader ?? row.char_name, 'Sem líder')
-          const ally = displayName(row.ally_name, 'Sem aliança')
+          const leader = displayName(row.leader ?? row.char_name, t('rankings.siege.noLeader'))
+          const ally = displayName(row.ally_name, t('rankings.siege.noAlliance'))
           const siege = siegeState(row.sdate)
           const sides = splitParticipants(participants[index]?.data ?? [], owner)
           const owned = Boolean(owner)
 
           return (
-            <article className={`rankings-castle${owned ? ' is-owned' : ''}${siege.kind === 'live' ? ' is-live' : ''}`} key={info.slug || String(info.id)}>
+            <article
+              className={`rankings-castle${owned ? ' is-owned' : ''}${siege.kind === 'live' ? ' is-live' : ''}`}
+              key={info.slug || String(info.id)}
+            >
               <div className="rankings-castle-visual">
-                <img src={info.image} alt={`Castelo de ${info.title}`} onError={(event) => event.currentTarget.remove()} />
+                <img
+                  src={info.image}
+                  alt={t('rankings.siege.castleAlt', { title: info.title })}
+                  onError={(event) => event.currentTarget.remove()}
+                />
                 <span className="rankings-castle-fallback" aria-hidden="true">
                   <Castle />
                 </span>
@@ -80,54 +89,61 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
                   <strong>{info.title}</strong>
                 </div>
                 <em className={`rankings-castle-status is-${siege.kind}`}>
-                  {siege.kind === 'live' ? 'Sob cerco' : owned ? 'Dominado' : 'Sem dono'}
+                  {siege.kind === 'live'
+                    ? t('rankings.format.underSiege')
+                    : owned
+                      ? t('rankings.siege.owned')
+                      : t('rankings.siege.noOwner')}
                 </em>
               </div>
 
               <div className="rankings-castle-body">
                 <header>
                   <span>{info.territory}</span>
-                  <h3>{info.title} Castle</h3>
+                  <h3>{t('rankings.siege.castleHeading', { title: info.title })}</h3>
                   <p>{info.blurb}</p>
                 </header>
 
                 <dl className="rankings-castle-meta">
                   <div>
-                    <dt>Clã dono</dt>
+                    <dt>{t('rankings.siege.ownerClan')}</dt>
                     <dd>
                       <span className="rankings-crest sm" aria-hidden="true">
                         <span>{initial(owner || info.title)}</span>
                       </span>
-                      {owner || 'Sem dono'}
+                      {owner || t('rankings.siege.noOwner')}
                     </dd>
                   </div>
                   <div>
-                    <dt>Líder</dt>
+                    <dt>{t('rankings.columns.leader')}</dt>
                     <dd>{leader}</dd>
                   </div>
                   <div>
-                    <dt>Aliança</dt>
+                    <dt>{t('rankings.columns.ally_name')}</dt>
                     <dd>{ally}</dd>
                   </div>
                   <div>
-                    <dt>Tesouro</dt>
+                    <dt>{t('rankings.siege.treasury')}</dt>
                     <dd>{formatTreasury(row.stax)}</dd>
                   </div>
                   <div>
-                    <dt>Taxa</dt>
+                    <dt>{t('rankings.siege.tax')}</dt>
                     <dd>{formatTax(row.tax)}</dd>
                   </div>
                   <div>
-                    <dt>Próxima guerra</dt>
+                    <dt>{t('rankings.siege.nextWar')}</dt>
                     <dd>
                       {siege.detail}
                       {siege.kind === 'soon' ? <small>{siege.label}</small> : null}
                     </dd>
                   </div>
                   <div>
-                    <dt>Forças do cerco</dt>
+                    <dt>{t('rankings.siege.schedule')}</dt>
                     <dd>
-                      {sides.attackers.length} atacantes · {sides.defenders.length} defensores
+                      {t('rankings.siege.forcesCount', {
+                        attackers: sides.attackers.length,
+                        defenders: sides.defenders.length,
+                      })}
                     </dd>
                   </div>
                 </dl>
@@ -137,7 +153,7 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
                     <div>
                       <h4>
                         <Swords aria-hidden="true" />
-                        Atacantes
+                        {t('rankings.siege.attackers')}
                       </h4>
                       {sides.attackers.length ? (
                         <ul>
@@ -146,13 +162,13 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
                           ))}
                         </ul>
                       ) : (
-                        <p>Nenhum clã registrado</p>
+                        <p>{t('rankings.siege.emptyAttackers')}</p>
                       )}
                     </div>
                     <div>
                       <h4>
                         <Shield aria-hidden="true" />
-                        Defensores
+                        {t('rankings.siege.defenders')}
                       </h4>
                       {sides.defenders.length ? (
                         <ul>
@@ -161,14 +177,14 @@ export function SiegeBoard({ rows }: { rows: WorldRow[] }) {
                           ))}
                         </ul>
                       ) : (
-                        <p>Nenhum clã registrado</p>
+                        <p>{t('rankings.siege.emptyDefenders')}</p>
                       )}
                     </div>
                   </div>
                 ) : participants[index]?.isLoading ? (
                   <p className="rankings-castle-hint">
                     <Users aria-hidden="true" />
-                    Consultando clãs inscritos no cerco...
+                    {t('rankings.siege.loadingParticipants')}
                   </p>
                 ) : null}
               </div>

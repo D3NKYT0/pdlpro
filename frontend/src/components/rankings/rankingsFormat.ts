@@ -1,13 +1,23 @@
+import i18n from '../../i18n'
+import { contentLang, INTL_LOCALES } from '../../i18n/locale'
 import type { ApiRankingEntry } from '../../services/types'
 import { themeImage } from '../../theme/assets'
-import { bossNames, CASTLE_CATALOG, type Tab, type WorldRow, worldColumnLabels } from './rankingsMeta'
+import { bossNames, CASTLE_CATALOG, type Tab, type WorldRow } from './rankingsMeta'
+
+function intlLocale() {
+  return INTL_LOCALES[contentLang(i18n.language)]
+}
+
+function tPublic(key: string, options?: Record<string, unknown>) {
+  return i18n.t(key, { ns: 'public', ...options })
+}
 
 export function initial(name: string) {
   return (name.trim()[0] || '?').toUpperCase()
 }
 
 export function formatScore(value: number) {
-  return value.toLocaleString('pt-BR')
+  return value.toLocaleString(intlLocale())
 }
 
 export function formatDuration(seconds: number) {
@@ -40,14 +50,20 @@ export function parseDate(value: unknown): Date | null {
 export function formatDate(value: unknown) {
   const date = parseDate(value)
   return date
-    ? date.toLocaleString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    ? date.toLocaleString(intlLocale(), {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
     : '—'
 }
 
 export function formatRelative(date: Date) {
   const diffSec = Math.round((date.getTime() - Date.now()) / 1000)
   const abs = Math.abs(diffSec)
-  const rtf = new Intl.RelativeTimeFormat('pt-BR', { numeric: 'auto' })
+  const rtf = new Intl.RelativeTimeFormat(intlLocale(), { numeric: 'auto' })
   if (abs < 3600) return rtf.format(Math.round(diffSec / 60), 'minute')
   if (abs < 86400) return rtf.format(Math.round(diffSec / 3600), 'hour')
   return rtf.format(Math.round(diffSec / 86400), 'day')
@@ -75,25 +91,27 @@ export function castleInfo(row: WorldRow) {
   return {
     id,
     slug: resolvedSlug,
-    title: meta?.title ?? (rawName || `Castelo ${id || ''}`.trim()),
-    territory: meta?.territory ?? 'Reino de Aden',
-    blurb: meta?.blurb ?? 'Fortaleza do reino.',
+    title: meta?.title ?? (rawName || tPublic('rankings.format.castleFallback', { id: id || '' }).trim()),
+    territory: meta
+      ? tPublic(`rankings.castles.${meta.slug}.territory`)
+      : tPublic('rankings.format.adenRealm'),
+    blurb: meta ? tPublic(`rankings.castles.${meta.slug}.blurb`) : tPublic('rankings.format.fortressBlurb'),
     image: themeImage(`castles/${resolvedSlug}.jpg`),
   }
 }
 
 export function siegeState(value: unknown) {
   const date = parseDate(value)
-  if (!date) return { kind: 'idle' as const, label: 'Sem data marcada', detail: '—' }
+  if (!date) return { kind: 'idle' as const, label: tPublic('rankings.format.noDate'), detail: '—' }
   const diff = date.getTime() - Date.now()
   const twoHours = 2 * 60 * 60 * 1000
   if (diff <= 0 && diff > -twoHours) {
-    return { kind: 'live' as const, label: 'Sob cerco', detail: formatDate(value) }
+    return { kind: 'live' as const, label: tPublic('rankings.format.underSiege'), detail: formatDate(value) }
   }
   if (diff > 0) {
     return { kind: 'soon' as const, label: formatRelative(date), detail: formatDate(value) }
   }
-  return { kind: 'idle' as const, label: 'Aguardando calendário', detail: formatDate(value) }
+  return { kind: 'idle' as const, label: tPublic('rankings.format.awaitingSchedule'), detail: formatDate(value) }
 }
 
 export function withCastleCatalog(rows: WorldRow[]): WorldRow[] {
@@ -113,14 +131,14 @@ export function formatTax(value: unknown) {
   if (value == null || value === '') return '—'
   const amount = Number(value)
   if (!Number.isFinite(amount)) return '—'
-  return `${amount.toLocaleString('pt-BR')}%`
+  return `${amount.toLocaleString(intlLocale())}%`
 }
 
 export function formatTreasury(value: unknown) {
-  if (value == null || value === '') return 'Vazio'
+  if (value == null || value === '') return tPublic('rankings.format.emptyTreasury')
   const amount = Number(value)
-  if (!Number.isFinite(amount) || amount <= 0) return 'Vazio'
-  return `${amount.toLocaleString('pt-BR')} adena`
+  if (!Number.isFinite(amount) || amount <= 0) return tPublic('rankings.format.emptyTreasury')
+  return `${amount.toLocaleString(intlLocale())} ${tPublic('rankings.format.adenaUnit')}`
 }
 
 export function splitParticipants(rows: WorldRow[], ownerName: string) {
@@ -143,9 +161,9 @@ export function splitParticipants(rows: WorldRow[], ownerName: string) {
 
 export function formatRespawn(value: unknown) {
   const date = parseDate(value)
-  if (!date) return { live: true, label: 'Vivo' }
-  if (date.getTime() <= Date.now()) return { live: true, label: 'Vivo' }
-  return { live: false, label: date.toLocaleString('pt-BR') }
+  if (!date) return { live: true, label: tPublic('rankings.format.alive') }
+  if (date.getTime() <= Date.now()) return { live: true, label: tPublic('rankings.format.alive') }
+  return { live: false, label: date.toLocaleString(intlLocale()) }
 }
 
 export function asRankingRows(rows: WorldRow[]): ApiRankingEntry[] {
@@ -160,13 +178,13 @@ export function asRankingRows(rows: WorldRow[]): ApiRankingEntry[] {
 
 export function formatWorldCell(key: string, value: unknown) {
   if (value == null || value === '') return '—'
-  if (key === 'online') return Number(value) ? 'Online' : 'Offline'
+  if (key === 'online') return Number(value) ? tPublic('rankings.status.online') : tPublic('rankings.status.offline')
   if (key === 'respawn') return formatRespawn(value).label
   if (key === 'sdate') return formatDate(value)
-  if (key === 'boss_id') return bossNames[String(value)] ?? `Boss #${value}`
-  if (typeof value === 'boolean') return value ? 'Sim' : 'Não'
+  if (key === 'boss_id') return bossNames[String(value)] ?? tPublic('rankings.format.bossFallback', { id: value })
+  if (typeof value === 'boolean') return value ? tPublic('rankings.format.yes') : tPublic('rankings.format.no')
   if (typeof value === 'number' || (typeof value === 'string' && /^-?\d+(\.\d+)?$/.test(value))) {
-    return Number(value).toLocaleString('pt-BR')
+    return Number(value).toLocaleString(intlLocale())
   }
   return String(value)
 }
@@ -177,5 +195,6 @@ export function worldKeys(rows: WorldRow[]) {
 }
 
 export function worldColumnLabel(key: string) {
-  return worldColumnLabels[key] ?? key
+  const fullKey = `rankings.columns.${key}`
+  return i18n.exists(fullKey, { ns: 'public' }) ? tPublic(fullKey) : key
 }

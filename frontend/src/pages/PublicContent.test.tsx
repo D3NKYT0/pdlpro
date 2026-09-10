@@ -60,7 +60,7 @@ it('busca da wiki atualiza consulta e links', async () => {
   const user = mount(<WikiPage />)
   expect((await screen.findByRole('link', { name: /Guia Siege/ })).getAttribute('href')).toBe('/wiki/siege')
   await user.type(screen.getByRole('textbox', { name: 'Buscar na wiki' }), 'siege')
-  await waitFor(() => expect(contentApi.wiki).toHaveBeenLastCalledWith('siege'))
+  await waitFor(() => expect(contentApi.wiki).toHaveBeenLastCalledWith('siege', 'pt'))
 })
 
 it.each([
@@ -83,7 +83,7 @@ it('detalhe de notícia renderiza HTML seguro e remove script', async () => {
   } as any)
   mount(<NewsDetailPage />, '/news/guide', '/news/:slug')
   expect(await screen.findByText('Olá mundo')).toBeTruthy()
-  expect(contentApi.newsDetail).toHaveBeenCalledWith('guide')
+  expect(contentApi.newsDetail).toHaveBeenCalledWith('guide', 'pt')
   expect(document.querySelector('script')).toBeNull()
 })
 
@@ -91,7 +91,7 @@ it('detalhe da wiki apresenta conteúdo como texto escapado', async () => {
   vi.mocked(contentApi.wikiPage).mockResolvedValue({ title: 'Guia', body: '<script>alert(1)</script>', summary: 'Resumo', category: 'Geral' } as any)
   mount(<WikiDetailPage />, '/wiki/guide', '/wiki/:slug')
   expect(await screen.findByText('<script>alert(1)</script>')).toBeTruthy()
-  expect(contentApi.wikiPage).toHaveBeenCalledWith('guide')
+  expect(contentApi.wikiPage).toHaveBeenCalledWith('guide', 'pt')
   expect(document.querySelector('script')).toBeNull()
 })
 
@@ -99,7 +99,7 @@ it.each(['/terms', '/privacy', '/agreement'])('documento legal acompanha rota %s
   vi.mocked(contentApi.legalDocument).mockResolvedValue({ slug: url.slice(1), title: 'Documento', body: 'Texto oficial', version: 'v2' })
   mount(<LegalPage />, url)
   expect(await screen.findByText('Texto oficial')).toBeTruthy()
-  expect(contentApi.legalDocument).toHaveBeenCalledWith(url.slice(1))
+  expect(contentApi.legalDocument).toHaveBeenCalledWith(url.slice(1), 'pt')
   expect(screen.getByText('Versão v2')).toBeTruthy()
 })
 

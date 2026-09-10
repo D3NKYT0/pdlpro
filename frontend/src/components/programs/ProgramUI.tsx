@@ -24,11 +24,11 @@ export const labels: Record<string, string> = {
   weekly: "Semanal",
   season: "Temporada",
 };
-export function Status({ value }: { value: string }) {
+export function Status({ value, label }: { value: string; label?: string }) {
   return (
     <span className={`program-status status-${value}`}>
       <CircleDashed size={13} />
-      {labels[value] || value}
+      {label ?? labels[value] ?? value}
     </span>
   );
 }

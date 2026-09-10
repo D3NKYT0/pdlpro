@@ -1,10 +1,11 @@
 import { Trophy, type LucideIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { ApiRankingEntry } from '../../services/types'
 import { formatValue } from './rankingsFormat'
-import type { Tab } from './rankingsMeta'
+import type { LocalizedTab } from './rankingsMeta'
 
 type RankingsHeroProps = {
-  tab: Tab
+  tab: LocalizedTab
   Icon: LucideIcon
   statusLabel: string
   statusClass: string
@@ -26,6 +27,8 @@ export function RankingsHero({
   playersOnline,
   isLoading,
 }: RankingsHeroProps) {
+  const { t } = useTranslation('public')
+
   return (
     <header className="rankings-hero">
       <div className="rankings-hero-glow" aria-hidden="true" />
@@ -33,15 +36,15 @@ export function RankingsHero({
         <div className="rankings-hero-copy">
           <span className="rankings-eyebrow">
             <Trophy aria-hidden="true" />
-            Hall da fama
+            {t('rankings.eyebrow')}
           </span>
           <h1>
-            Os mais fortes do <em>reino</em>
+            {t('rankings.titleBefore')} <em>{t('rankings.titleEm')}</em>
           </h1>
-          <p>PvP, riqueza, clãs e olimpíada — o quadro de honra de quem escreve a história no servidor.</p>
+          <p>{t('rankings.lead')}</p>
         </div>
 
-        <aside className="rankings-hero-card" aria-label="Categoria atual">
+        <aside className="rankings-hero-card" aria-label={t('rankings.categoryAria')}>
           <div className="rankings-mark">
             <Icon aria-hidden="true" />
           </div>
@@ -55,22 +58,22 @@ export function RankingsHero({
           {leader ? (
             <dl className="rankings-hero-metrics">
               <div>
-                <dt>1º lugar</dt>
+                <dt>{t('rankings.firstPlace')}</dt>
                 <dd>{leader.name}</dd>
               </div>
               <div>
-                <dt>{tab.valueLabel ?? 'Valor'}</dt>
+                <dt>{tab.valueLabel ?? t('rankings.valueFallback')}</dt>
                 <dd>{formatValue(tab, leader.value)}</dd>
               </div>
             </dl>
           ) : (
             <dl className="rankings-hero-metrics">
               <div>
-                <dt>Jogadores</dt>
+                <dt>{t('rankings.players')}</dt>
                 <dd>{playersOnline ?? '—'}</dd>
               </div>
               <div>
-                <dt>Lista</dt>
+                <dt>{t('rankings.list')}</dt>
                 <dd>{isLoading ? '…' : rankingCount || worldCount || '—'}</dd>
               </div>
             </dl>

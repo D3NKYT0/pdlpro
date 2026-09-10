@@ -1,14 +1,15 @@
 import type { LucideIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { ApiRankingEntry } from '../../services/types'
 import { EmptyWorld } from './EmptyWorld'
 import { RankingPodium } from './RankingPodium'
-import type { Tab, WorldRow } from './rankingsMeta'
+import type { LocalizedTab, WorldRow } from './rankingsMeta'
 import { SiegeBoard } from './SiegeBoard'
 import { WorldBossGrid } from './WorldBossGrid'
 import { WorldTable } from './WorldTable'
 
 type RankingsSectionProps = {
-  tab: Tab
+  tab: LocalizedTab
   Icon: LucideIcon
   isLoading: boolean
   isError: boolean
@@ -24,6 +25,8 @@ export function RankingsSection({
   rankingRows,
   worldRows,
 }: RankingsSectionProps) {
+  const { t } = useTranslation('public')
+
   return (
     <section className="rankings-section">
       <div className="rankings-heading">
@@ -37,19 +40,19 @@ export function RankingsSection({
         {tab.valueLabel ? (
           <em>{tab.valueLabel}</em>
         ) : tab.id === 'siege' && worldRows.length ? (
-          <em>{worldRows.length} fortalezas</em>
+          <em>{t('rankings.fortresses', { count: worldRows.length })}</em>
         ) : null}
       </div>
 
       {isLoading ? (
         <div className="rankings-empty">
           <span className="rankings-diamond" aria-hidden="true" />
-          <p>Consultando o hall da fama...</p>
+          <p>{t('rankings.loading')}</p>
         </div>
       ) : isError ? (
         <div className="rankings-empty">
           <span className="rankings-diamond" aria-hidden="true" />
-          <p>Não foi possível carregar este ranking agora.</p>
+          <p>{t('rankings.error')}</p>
         </div>
       ) : rankingRows.length ? (
         <RankingPodium tab={tab} rows={rankingRows} />
