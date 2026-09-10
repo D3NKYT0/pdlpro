@@ -42,7 +42,15 @@ PUBLIC_ALIASES = {
     ("get", "/api/v1/shared/content/news/"),
     ("get", "/api/v1/customer/server/status/"),
 }
-ENDPOINTS = [endpoint for endpoint in private_endpoints() if endpoint not in PUBLIC_ALIASES]
+# Rotas AllowAny sob prefixo privado com token assinado (404 sem token válido).
+PUBLIC_SIGNED_ENDPOINTS = {
+    ("get", "/api/v1/shared/lgpd-export/sample/download/"),
+}
+ENDPOINTS = [
+    endpoint
+    for endpoint in private_endpoints()
+    if endpoint not in PUBLIC_ALIASES and endpoint not in PUBLIC_SIGNED_ENDPOINTS
+]
 
 
 @pytest.mark.django_db
@@ -73,3 +81,10 @@ def test_matrix_covers_all_private_prefixes():
 @pytest.mark.parametrize("method,path", sorted(PUBLIC_ALIASES))
 def test_legacy_public_alias_remains_readable(method, path):
     assert getattr(APIClient(), method)(path).status_code == 200
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("method,path", sorted(PUBLIC_SIGNED_ENDPOINTS))
+def test_signed_public_endpoint_does_not_require_session(method, path):
+    response = getattr(APIClient(), method)(path)
+    assert response.status_code not in (401, 403), (method, path, response.status_code)

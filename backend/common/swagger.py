@@ -114,6 +114,13 @@ pdl_swagger_tags: list[dict[str, Any]] = [
         "description": _("Documentos legais públicos (termos, privacidade e afins)."),
     },
     {
+        "name": "Privacidade (LGPD)",
+        "description": _(
+            "Portabilidade e exclusão de dados pessoais: exportação com link "
+            "assinado, código OTP e anonimização da conta."
+        ),
+    },
+    {
         "name": "Conta Lineage",
         "description": _(
             "Vínculo e desvínculo de contas do jogo, personagens, senha, "

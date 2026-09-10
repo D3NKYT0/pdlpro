@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.throttling import UserRateThrottle
 
 from apps.accounts.application.lgpd_use_cases import (
     DeleteAccountInput,
@@ -24,15 +23,8 @@ from apps.accounts.presentation.serializers import (
     DeleteAccountSerializer,
     LgpdActionResponseSerializer,
 )
+from apps.accounts.presentation.throttling import LgpdDeleteThrottle, LgpdExportThrottle
 from common.views import InjectedAPIView
-
-
-class LgpdExportThrottle(UserRateThrottle):
-    rate = "5/hour"
-
-
-class LgpdDeleteThrottle(UserRateThrottle):
-    rate = "10/hour"
 
 
 class RequestDataExportView(InjectedAPIView):

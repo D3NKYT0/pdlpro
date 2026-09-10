@@ -3,6 +3,7 @@ import json
 
 import pytest
 from django.core import mail
+from django.core.cache import cache
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import DataExportLog, User
@@ -16,6 +17,13 @@ def api():
 @pytest.fixture
 def user(db):
     return User.objects.create_user("lgpdhero", "lgpdhero@pdl.dev", password="Secret123!")
+
+
+@pytest.fixture(autouse=True)
+def clear_lgpd_throttle_cache():
+    cache.clear()
+    yield
+    cache.clear()
 
 
 @pytest.mark.django_db
@@ -70,19 +78,8 @@ def test_delete_account_requires_valid_code_then_anonymizes(api, user, settings)
 def test_export_download_serves_signed_file(api, settings, tmp_path):
     settings.MEDIA_ROOT = tmp_path
     settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
-    settings.REST_FRAMEWORK = {
-        **settings.REST_FRAMEWORK,
-        "DEFAULT_THROTTLE_RATES": {
-            **settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {}),
-            "user": "1000/hour",
-        },
-    }
     user = User.objects.create_user("lgpddl", "lgpddl@pdl.dev", password="Secret123!")
     api.force_authenticate(user=user)
-    # Evita throttle compartilhado com outros testes da suíte.
-    from django.core.cache import cache
-
-    cache.clear()
     created = api.post("/api/v1/shared/me/export-data/", {}, format="json")
     assert created.status_code == 200, created.data
     url = created.data["download_url"]

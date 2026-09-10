@@ -601,6 +601,49 @@ msgstr "Eliminar passkey"
 msgid "Remove uma credencial passkey pertencente ao usuário autenticado."
 msgstr "Elimina una credencial passkey perteneciente al usuario autenticado."
 
+#: .\apps\accounts\presentation\views\lgpd.py:39
+msgid "Exportar meus dados"
+msgstr "Exportar mis datos"
+
+#: .\apps\accounts\presentation\views\lgpd.py:41
+msgid ""
+"Gera um pacote JSON compactado com os dados pessoais da conta e envia o link "
+"por e-mail."
+msgstr ""
+"Genera un paquete JSON comprimido con los datos personales de la cuenta y "
+"envía el enlace por correo."
+
+#: .\apps\accounts\presentation\views\lgpd.py:69
+msgid "Enviar código de exclusão"
+msgstr "Enviar código de eliminación"
+
+#: .\apps\accounts\presentation\views\lgpd.py:71
+msgid ""
+"Envia um código de 6 dígitos para o e-mail cadastrado, válido por 15 minutos."
+msgstr ""
+"Envía un código de 6 dígitos al correo registrado, válido por 15 minutos."
+
+#: .\apps\accounts\presentation\views\lgpd.py:91
+msgid "Excluir minha conta"
+msgstr "Eliminar mi cuenta"
+
+#: .\apps\accounts\presentation\views\lgpd.py:93
+msgid ""
+"Confirma a exclusão com o código recebido por e-mail e anonimiza os dados "
+"pessoais."
+msgstr ""
+"Confirma la eliminación con el código recibido por correo y anonimiza los "
+"datos personales."
+
+#: .\apps\accounts\presentation\views\lgpd.py:116
+msgid "Baixar pacote LGPD"
+msgstr "Descargar paquete LGPD"
+
+#: .\apps\accounts\presentation\views\lgpd.py:117
+msgid "Baixa o arquivo .json.gz mediante token assinado enviado por e-mail."
+msgstr ""
+"Descarga el archivo .json.gz mediante el token firmado enviado por correo."
+
 #: .\apps\auction\apps.py:15 .\apps\auction\infrastructure\models.py:46
 msgid "Leilão"
 msgstr "Subasta"
@@ -3967,7 +4010,15 @@ msgstr "Eventos del calendario público del servidor."
 msgid "Documentos legais públicos (termos, privacidade e afins)."
 msgstr "Documentos legales públicos (términos, privacidad y similares)."
 
-#: .\common\swagger.py:114
+#: .\common\swagger.py:119
+msgid ""
+"Portabilidade e exclusão de dados pessoais: exportação com link assinado, "
+"código OTP e anonimização da conta."
+msgstr ""
+"Portabilidad y eliminación de datos personales: exportación con enlace "
+"firmado, código OTP y anonimización de la cuenta."
+
+#: .\common\swagger.py:126
 msgid ""
 "Vínculo e desvínculo de contas do jogo, personagens, senha, nickname, sexo, "
 "unstuck, slots e preços de serviços."

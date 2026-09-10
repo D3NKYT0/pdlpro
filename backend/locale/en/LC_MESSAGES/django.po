@@ -589,6 +589,47 @@ msgstr "Delete passkey"
 msgid "Remove uma credencial passkey pertencente ao usuário autenticado."
 msgstr "Removes a passkey credential belonging to the authenticated user."
 
+#: .\apps\accounts\presentation\views\lgpd.py:39
+msgid "Exportar meus dados"
+msgstr "Export my data"
+
+#: .\apps\accounts\presentation\views\lgpd.py:41
+msgid ""
+"Gera um pacote JSON compactado com os dados pessoais da conta e envia o link "
+"por e-mail."
+msgstr ""
+"Generates a compressed JSON package with the account's personal data and "
+"emails the download link."
+
+#: .\apps\accounts\presentation\views\lgpd.py:69
+msgid "Enviar código de exclusão"
+msgstr "Send deletion code"
+
+#: .\apps\accounts\presentation\views\lgpd.py:71
+msgid ""
+"Envia um código de 6 dígitos para o e-mail cadastrado, válido por 15 minutos."
+msgstr ""
+"Sends a 6-digit code to the registered email, valid for 15 minutes."
+
+#: .\apps\accounts\presentation\views\lgpd.py:91
+msgid "Excluir minha conta"
+msgstr "Delete my account"
+
+#: .\apps\accounts\presentation\views\lgpd.py:93
+msgid ""
+"Confirma a exclusão com o código recebido por e-mail e anonimiza os dados "
+"pessoais."
+msgstr ""
+"Confirms deletion with the email code and anonymizes personal data."
+
+#: .\apps\accounts\presentation\views\lgpd.py:116
+msgid "Baixar pacote LGPD"
+msgstr "Download LGPD package"
+
+#: .\apps\accounts\presentation\views\lgpd.py:117
+msgid "Baixa o arquivo .json.gz mediante token assinado enviado por e-mail."
+msgstr "Downloads the .json.gz file using the signed token sent by email."
+
 #: .\apps\auction\apps.py:15 .\apps\auction\infrastructure\models.py:46
 msgid "Leilão"
 msgstr "Auction"
@@ -3879,7 +3920,15 @@ msgstr "Events from the public server calendar."
 msgid "Documentos legais públicos (termos, privacidade e afins)."
 msgstr "Public legal documents (terms, privacy and the like)."
 
-#: .\common\swagger.py:114
+#: .\common\swagger.py:119
+msgid ""
+"Portabilidade e exclusão de dados pessoais: exportação com link assinado, "
+"código OTP e anonimização da conta."
+msgstr ""
+"Personal data portability and erasure: export with a signed link, OTP code "
+"and account anonymization."
+
+#: .\common\swagger.py:126
 msgid ""
 "Vínculo e desvínculo de contas do jogo, personagens, senha, nickname, sexo, "
 "unstuck, slots e preços de serviços."
@@ -3887,7 +3936,7 @@ msgstr ""
 "Linking and unlinking game accounts, characters, password, nickname, gender, "
 "unstuck, slots and service prices."
 
-#: .\common\swagger.py:121
+#: .\common\swagger.py:133
 msgid ""
 "Dashboard do inventário no painel, itens/equipamentos do personagem, "
 "retirada, depósito e troca."
@@ -3895,7 +3944,7 @@ msgstr ""
 "Panel inventory dashboard, character items/equipment, withdrawal, deposit "
 "and transfer."
 
-#: .\common\swagger.py:128
+#: .\common\swagger.py:140
 msgid ""
 "Roleta, bônus diário, bag, caixas, minigames, dados, slots, pesca, economia, "
 "monstro, encantamento, battle pass, detalhes avançados e estatísticas."
@@ -3903,12 +3952,12 @@ msgstr ""
 "Roulette, daily bonus, bag, boxes, minigames, dice, slots, fishing, economy, "
 "monster, enchanting, battle pass, advanced details and statistics."
 
-#: .\common\swagger.py:134
+#: .\common\swagger.py:146
 msgid "Listagens públicas e do jogador, compra e cancelamento no marketplace."
 msgstr ""
 "Public and player listings, purchase and cancellation on the marketplace."
 
-#: .\common\swagger.py:138
+#: .\common\swagger.py:150
 msgid "Leilões públicos, meus leilões, criação e lances."
 msgstr "Public auctions, my auctions, creation and bids."
 
