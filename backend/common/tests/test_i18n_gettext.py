@@ -88,3 +88,21 @@ class CatalogResolutionTests(SimpleTestCase):
         assert response is not None
         self.assertIn("CAPTCHA", response.data["message"])
         self.assertNotIn("Resolva", response.data["message"])
+
+    def test_fuzzy_lookalikes_do_not_steal_api_msgstr(self):
+        """msgmerge fuzzy leftovers used to map similar msgids to the wrong EN string."""
+        activate_language("en")
+        try:
+            self.assertEqual(_("Refresh token ausente."), "Refresh token missing.")
+            self.assertEqual(_("ID de item inválido."), "Invalid item ID.")
+            self.assertEqual(_("Ação 2FA inválida."), "Invalid 2FA action.")
+            self.assertEqual(_("Autenticação necessária."), "Authentication required.")
+            self.assertEqual(_("Assinatura inválida."), "Invalid signature.")
+            self.assertEqual(_("recurso não encontrado"), "resource not found")
+            self.assertEqual(_("Carteira não encontrada."), "Wallet not found.")
+            self.assertEqual(
+                _("Informe um código válido do autenticador."),
+                "Enter a valid authenticator code.",
+            )
+        finally:
+            translation.deactivate()

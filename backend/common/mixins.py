@@ -58,9 +58,8 @@ class UUIDLookupMixin(_ViewBase):
         try:
             uuid.UUID(str(pk))
         except (ValueError, AttributeError):
-            from rest_framework.exceptions import ValidationError
-
             from django.utils.translation import gettext as _
+            from rest_framework.exceptions import ValidationError
 
             raise ValidationError({"detail": _("recurso não encontrado")}, code="not_found")
         return super().get_object()

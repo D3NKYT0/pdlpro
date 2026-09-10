@@ -84,59 +84,18 @@ def transform_file(path: Path) -> bool:
     new_tree = Transform().visit(tree)
     ast.fix_missing_locations(new_tree)
     try:
-        transformed = ast.unparse(new_tree)
-    except Exception as exc:
+        ast.unparse(new_tree)
+    except (ValueError, TypeError, RecursionError) as exc:
         print("SKIP unparse", path, exc)
         return False
-    # ast.unparse drops encoding/comments — only use if we detect wraps needed
-    if "_(" not in transformed and "gettext_lazy" not in original:
-        # Check if any wraps were applied by comparing Constant vs Call for verbose_name
-        pass
     # Safer: regex approach for assignments and keywords only
     return transform_file_regex(path, original)
 
 
 def transform_file_regex(path: Path, original: str | None = None) -> bool:
     source = original if original is not None else path.read_text(encoding="utf-8")
-    updated = source
 
-    def wrap_match(match: re.Match[str]) -> str:
-        key, quote, value = match.group(1), match.group(2), match.group(3)
-        # already wrapped
-        if match.group(0).startswith(f"{key}=_(") or match.group(0).startswith(f"{key} = _("):
-            return match.group(0)
-        return f"{key}={quote}{value}{quote}" if False else f"{key}=_({quote}{value}{quote})"
-
-    # keyword style: verbose_name="..." or verbose_name='...'
-    pattern = re.compile(
-        r"\b(verbose_name_plural|verbose_name|help_text)\s*=\s*(['\"])(.*?)\2",
-        re.DOTALL,
-    )
-
-    def replacer(match: re.Match[str]) -> str:
-        key, quote, value = match.group(1), match.group(2), match.group(3)
-        full = match.group(0)
-        # skip if already _(...)
-        prefix = source[max(0, match.start() - 2) : match.start()]
-        # look behind for _(
-        start = match.start()
-        before = source[max(0, start - 3) : start]
-        # Check left side assignment already has _(
-        left = source[max(0, match.start() - 5) : match.start()]
-        # If pattern is name=_("x") the = is followed by _(
-        after_eq = source[match.start() : match.end()]
-        if re.match(rf"{key}\s*=\s*_\(", after_eq):
-            return full
-        # Avoid wrapping if value already looks like _(
-        if value.startswith("_("):
-            return full
-        return f"{key}=_({quote}{value}{quote})"
-
-    # Only wrap if not already wrapped: negative lookbehind for _(
-    pattern2 = re.compile(
-        r"(?<!_\()\b(verbose_name_plural|verbose_name|help_text)\s*=\s*(['\"])((?:\\.|)*?)\2"
-    )
-    # Simpler line-oriented for non-multiline
+    # Line-oriented wrap for non-multiline string literals
     pattern3 = re.compile(
         r"(?<!_\()\b(verbose_name_plural|verbose_name|help_text)\s*=\s*(\"([^\"]*)\"|'([^']*)')"
     )

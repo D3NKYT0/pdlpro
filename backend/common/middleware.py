@@ -71,7 +71,11 @@ class ApiLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        from common.i18n import activate_language, from_django_language, resolve_language
+        from common.i18n import (
+            activate_language,
+            from_django_language,
+            resolve_language,
+        )
 
         explicit = request.GET.get("lang") or request.headers.get("X-Language")
         if explicit:

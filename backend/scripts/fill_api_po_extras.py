@@ -218,7 +218,7 @@ def apply(path: Path, lang_index: int) -> int:
         r'^msgid "(?P<id>[^"]+)"\nmsgstr "(?P<str>[^"]*)"$',
         repl,
         text,
-        flags=re.M,
+        flags=re.MULTILINE,
     )
     # remove fuzzy for refresh token if present
     new_text = new_text.replace("#, fuzzy\n", "")

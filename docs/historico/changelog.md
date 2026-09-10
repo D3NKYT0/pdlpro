@@ -19,6 +19,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `welcome_sign` do Jazzmin e catálogo de msgids de domínio (~300 strings EN/ES).
 - Mensagens de **API** (auth, validators, serializers, staff e envelope de erro)
   com gettext; o exception handler também traduz `message`/`details` no idioma ativo.
+- Correção dos catálogos EN/ES: remoção de restos *fuzzy* (`#|`) que mapeavam
+  msgids parecidos para `msgstr` errados (ex.: refresh ausente, ID de item, 2FA).
 
 ### Alterado
 

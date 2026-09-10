@@ -5,7 +5,6 @@ Usage (from backend/):
 """
 from __future__ import annotations
 
-import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -658,8 +657,7 @@ def write_po(path: Path, leading: list[str], entries: list[PoEntry]) -> None:
     for idx, entry in enumerate(entries):
         if idx > 0:
             out.append("")
-        for line in entry.prefix_lines:
-            out.append(line)
+        out.extend(entry.prefix_lines)
         flags = [f for f in entry.flags if f != "fuzzy"]
         if flags:
             out.append("#, " + ", ".join(flags))

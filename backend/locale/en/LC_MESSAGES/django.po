@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 00:33-0300\n"
+"POT-Creation-Date: 2026-09-10 00:47-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: English\n"
@@ -15,33 +15,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: .\apps\accounts\admin.py:32
 msgid "Acesso"
 msgstr "Access"
 
+#: .\apps\accounts\admin.py:33
 msgid "Perfil"
 msgstr "Profile"
 
+#: .\apps\accounts\admin.py:35
 msgid "Status e permissões"
 msgstr "Status and permissions"
 
+#: .\apps\accounts\admin.py:47
 msgid "Segurança"
 msgstr "Security"
 
+#: .\apps\accounts\admin.py:50
 msgid "Economia"
 msgstr "Economy"
 
+#: .\apps\accounts\admin.py:51
 msgid "Termos"
 msgstr "Terms"
 
+#: .\apps\accounts\admin.py:52
 msgid "Metadados"
 msgstr "Metadata"
 
+#: .\apps\accounts\admin.py:56
 msgid "Nova conta"
 msgstr "New account"
 
+#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:115
+msgid "Informe um código válido do autenticador."
+msgstr "Enter a valid authenticator code."
+
+#: .\apps\accounts\application\email_use_cases.py:56
 msgid "Confirme seu e-mail no PDL PRO"
 msgstr "Confirm your email on PDL PRO"
 
+#: .\apps\accounts\application\email_use_cases.py:58
 #, python-format
 msgid ""
 "Olá, %(username)s.\n"
@@ -54,9 +68,11 @@ msgstr ""
 "Confirm your email with this link (valid for 48h):\n"
 "%(link)s\n"
 
+#: .\apps\accounts\application\email_use_cases.py:135
 msgid "Redefinir senha do PDL PRO"
 msgstr "Reset your PDL PRO password"
 
+#: .\apps\accounts\application\email_use_cases.py:137
 #, python-format
 msgid ""
 "Olá, %(username)s.\n"
@@ -69,209 +85,287 @@ msgstr ""
 "Reset your password with this link (valid for 1 hour):\n"
 "%(link)s\n"
 
+#: .\apps\accounts\apps.py:22
 msgid "Contas"
 msgstr "Accounts"
 
+#: .\apps\accounts\forms.py:17 .\apps\accounts\infrastructure\models.py:92
 msgid "Usuário"
 msgstr "User"
 
+#: .\apps\accounts\forms.py:18 .\apps\accounts\forms.py:19
 msgid "Senha"
 msgstr "Password"
 
+#: .\apps\accounts\forms.py:20
 msgid "Confirmação da senha"
 msgstr "Password confirmation"
 
+#: .\apps\accounts\forms.py:21
 msgid "E-mail"
 msgstr "Email"
 
+#: .\apps\accounts\forms.py:22
 msgid "Nome de exibição"
 msgstr "Display name"
 
+#: .\apps\accounts\forms.py:23
 msgid "Biografia"
 msgstr "Bio"
 
+#: .\apps\accounts\forms.py:24
 msgid "Avatar"
 msgstr "Avatar"
 
+#: .\apps\accounts\forms.py:25
 msgid "Função"
 msgstr "Role"
 
+#: .\apps\accounts\forms.py:26
 msgid "Conta ativa"
 msgstr "Active account"
 
+#: .\apps\accounts\forms.py:27
 msgid "Acesso administrativo"
 msgstr "Staff access"
 
+#: .\apps\accounts\forms.py:28
 msgid "Superadministrador"
 msgstr "Superuser"
 
+#: .\apps\accounts\forms.py:29
 msgid "Grupos"
 msgstr "Groups"
 
+#: .\apps\accounts\forms.py:30
 msgid "Permissões específicas"
 msgstr "Specific permissions"
 
+#: .\apps\accounts\forms.py:31
 msgid "E-mail verificado"
 msgstr "Verified email"
 
+#: .\apps\accounts\forms.py:32
 msgid "Autenticação em dois fatores"
 msgstr "Two-factor authentication"
 
+#: .\apps\accounts\forms.py:33
 msgid "Segredo TOTP"
 msgstr "TOTP secret"
 
+#: .\apps\accounts\forms.py:34
 msgid "Último acesso"
 msgstr "Last login"
 
+#: .\apps\accounts\forms.py:35
 msgid "Fichas"
 msgstr "Tokens"
 
+#: .\apps\accounts\forms.py:36
 msgid "Aceite dos termos"
 msgstr "Terms acceptance"
 
+#: .\apps\accounts\forms.py:37
 msgid "Versão dos termos e privacidade"
 msgstr "Terms and privacy version"
 
+#: .\apps\accounts\forms.py:38
 msgid "Identificador"
 msgstr "Identifier"
 
+#: .\apps\accounts\forms.py:39
 msgid "Criado em"
 msgstr "Created at"
 
+#: .\apps\accounts\forms.py:40
 msgid "Atualizado em"
 msgstr "Updated at"
 
+#: .\apps\accounts\forms.py:51
 msgid "grupos"
 msgstr "groups"
 
+#: .\apps\accounts\forms.py:52
 msgid "Pesquise os grupos disponíveis e use as setas para atribuir ou remover."
 msgstr "Search available groups and use the arrows to assign or remove them."
 
+#: .\apps\accounts\forms.py:55
 msgid "permissões"
 msgstr "permissions"
 
+#: .\apps\accounts\forms.py:56
 msgid ""
 "Pesquise as permissões disponíveis e use as setas para atribuir ou remover."
 msgstr ""
 "Search available permissions and use the arrows to assign or remove them."
 
-#| msgid "Apoiador"
+#: .\apps\accounts\infrastructure\models.py:58
 msgid "Jogador"
-msgstr "Supporter"
+msgstr "Player"
 
+#: .\apps\accounts\infrastructure\models.py:59 .\apps\programs\models.py:36
 msgid "Apoiador"
 msgstr "Supporter"
 
+#: .\apps\accounts\infrastructure\models.py:60
 msgid "Moderador"
 msgstr "Moderator"
 
+#: .\apps\accounts\infrastructure\models.py:61
+#: .\apps\content\infrastructure\models.py:67
 msgid "Equipe"
 msgstr "Staff"
 
-#| msgid "Superadministrador"
+#: .\apps\accounts\infrastructure\models.py:62
 msgid "Administrador"
-msgstr "Superuser"
+msgstr "Administrator"
 
+#: .\apps\accounts\infrastructure\models.py:93
 msgid "Usuários"
 msgstr "Users"
 
+#: .\apps\accounts\infrastructure\models.py:123
 msgid "Perfil gamer"
 msgstr "Gamer profile"
 
+#: .\apps\accounts\infrastructure\models.py:148
 msgid "Chave de acesso"
 msgstr "Passkey"
 
+#: .\apps\accounts\infrastructure\models.py:149
 msgid "Chaves de acesso"
 msgstr "Passkeys"
 
+#: .\apps\accounts\infrastructure\models.py:165
+#: .\apps\accounts\infrastructure\models.py:199
 msgid "Conquista"
 msgstr "Achievement"
 
+#: .\apps\accounts\infrastructure\models.py:180
 msgid "Conquista do jogador"
 msgstr "Player achievement"
 
+#: .\apps\accounts\infrastructure\models.py:198
 msgid "Nível"
 msgstr "Level"
 
+#: .\apps\accounts\infrastructure\models.py:210
 msgid "Recompensa"
 msgstr "Reward"
 
+#: .\apps\accounts\infrastructure\models.py:225
 msgid "Recompensa resgatada"
 msgstr "Claimed reward"
 
+#: .\apps\accounts\presentation\views\auth.py:151
+#: .\common\i18n_msgid_catalog.py:99
 msgid "Resolva o CAPTCHA para criar sua conta."
 msgstr "Solve the CAPTCHA to create your account."
 
+#: .\apps\accounts\presentation\views\auth.py:191
+#: .\common\i18n_msgid_catalog.py:100
 msgid "Resolva o CAPTCHA para continuar."
 msgstr "Solve the CAPTCHA to continue."
 
+#: .\apps\accounts\presentation\views\auth.py:360
+#: .\common\i18n_msgid_catalog.py:101
 msgid "Validação CSRF necessária."
 msgstr "CSRF validation required."
 
-#| msgid "Refresh token inválido."
+#: .\apps\accounts\presentation\views\auth.py:363
+#: .\common\i18n_msgid_catalog.py:102
 msgid "Refresh token ausente."
-msgstr "Invalid refresh token."
+msgstr "Refresh token missing."
 
+#: .\apps\accounts\presentation\views\auth.py:370
+#: .\common\i18n_msgid_catalog.py:25
 msgid "Refresh token inválido."
 msgstr "Invalid refresh token."
 
-#| msgid "Código 2FA inválido."
+#: .\apps\accounts\presentation\views\auth.py:561
+#: .\common\i18n_msgid_catalog.py:117
 msgid "Ação 2FA inválida."
-msgstr "Invalid 2FA code."
+msgstr "Invalid 2FA action."
 
-#| msgid "Não foi possível validar esta chave de acesso."
+#: .\apps\accounts\presentation\views\passkeys.py:169
+#: .\common\i18n_msgid_catalog.py:103
 msgid "Não foi possível autenticar com esta chave."
-msgstr "Unable to validate this passkey."
+msgstr "Could not authenticate with this key."
 
+#: .\apps\auction\apps.py:15 .\apps\auction\infrastructure\models.py:46
 msgid "Leilão"
 msgstr "Auction"
 
+#: .\apps\auction\infrastructure\models.py:23 .\apps\support\models.py:30
 msgid "Aberto"
 msgstr "Open"
 
-#| msgid "Atualizado em"
+#: .\apps\auction\infrastructure\models.py:24
 msgid "Finalizado"
-msgstr "Updated at"
+msgstr "Finished"
 
+#: .\apps\auction\infrastructure\models.py:25
+#: .\apps\marketplace\infrastructure\models.py:25
+#: .\apps\payment\infrastructure\models.py:25
 msgid "Cancelado"
 msgstr "Cancelled"
 
+#: .\apps\auction\infrastructure\models.py:47
 msgid "Leilões"
 msgstr "Auctions"
 
+#: .\apps\auction\infrastructure\models.py:65
 msgid "Lance"
 msgstr "Bid"
 
+#: .\apps\auction\infrastructure\models.py:66
 msgid "Lances"
 msgstr "Bids"
 
+#: .\apps\communication\apps.py:15
 msgid "Comunicação"
 msgstr "Communication"
 
+#: .\apps\communication\infrastructure\models.py:24
 msgid "Notificação"
 msgstr "Notification"
 
+#: .\apps\communication\infrastructure\models.py:25
 msgid "Notificações"
 msgstr "Notifications"
 
+#: .\apps\communication\infrastructure\models.py:43
 msgid "Inscrição push"
 msgstr "Push subscription"
 
+#: .\apps\communication\infrastructure\models.py:44
 msgid "Inscrições push"
 msgstr "Push subscriptions"
 
+#: .\apps\content\admin.py:29 .\apps\content\admin.py:52
+#: .\apps\content\admin.py:127 .\apps\programs\admin.py:16
 msgid "Publicação"
 msgstr "Publication"
 
+#: .\apps\content\admin.py:30 .\apps\content\admin.py:59
+#: .\apps\content\admin.py:88 .\apps\content\admin.py:128
+#: .\apps\programs\admin.py:17
 msgid "Português"
 msgstr "Portuguese"
 
+#: .\apps\content\admin.py:31 .\apps\content\admin.py:60
+#: .\apps\content\admin.py:89 .\apps\content\admin.py:129
+#: .\apps\programs\admin.py:18
 msgid "English"
 msgstr "English"
 
+#: .\apps\content\admin.py:32 .\apps\content\admin.py:61
+#: .\apps\content\admin.py:90 .\apps\content\admin.py:130
+#: .\apps\programs\admin.py:19
 msgid "Español"
 msgstr "Spanish"
 
+#: .\apps\content\admin.py:55
 msgid ""
 "Marque Somente assistente para um passo a passo do Denkynho. Não é "
 "necessária uma migration: o artigo entra na consulta no próximo salvamento."
@@ -279,9 +373,11 @@ msgstr ""
 "Check Assistant only for a Denkynho step-by-step. No migration is required: "
 "the article enters the query on the next save."
 
+#: .\apps\content\admin.py:81
 msgid "Destino"
 msgstr "Destination"
 
+#: .\apps\content\admin.py:84
 msgid ""
 "Este artigo fica só na consulta do Denkynho. Jogadores recebem audiência "
 "Todos; a equipe e os superadministradores usam os níveis correspondentes."
@@ -289,50 +385,59 @@ msgstr ""
 "This article is only in the Denkynho query. Players get the Everyone "
 "audience; staff and superusers use the matching levels."
 
+#: .\apps\content\apps.py:15
 msgid "Conteúdo"
 msgstr "Content"
 
+#: .\apps\content\infrastructure\models.py:38
 msgid "Notícia"
 msgstr "News item"
 
+#: .\apps\content\infrastructure\models.py:39
 msgid "Notícias"
 msgstr "News"
 
+#: .\apps\content\infrastructure\models.py:56
 msgid "Primeiros passos"
 msgstr "Getting started"
 
+#: .\apps\content\infrastructure\models.py:57 .\apps\support\models.py:46
 msgid "Conta e segurança"
 msgstr "Account and security"
 
-#| msgid "Anúncios de personagem"
+#: .\apps\content\infrastructure\models.py:58
 msgid "Contas e personagens"
-msgstr "Character listings"
+msgstr "Accounts and characters"
 
-#| msgid "Item de inventário"
+#: .\apps\content\infrastructure\models.py:59
 msgid "Carteira e inventário"
-msgstr "Inventory item"
+msgstr "Wallet and inventory"
 
+#: .\apps\content\infrastructure\models.py:60
 msgid "Loja e comércio"
 msgstr "Shop and trade"
 
-#| msgid "Recompensa"
+#: .\apps\content\infrastructure\models.py:61
 msgid "Jogos e recompensas"
-msgstr "Reward"
+msgstr "Games and rewards"
 
+#: .\apps\content\infrastructure\models.py:62
 msgid "Conteúdo e comunidade"
 msgstr "Content and community"
 
-#| msgid "Atendimento"
+#: .\apps\content\infrastructure\models.py:63
 msgid "Ajuda e atendimento"
-msgstr "Support"
+msgstr "Help and support"
 
+#: .\apps\content\infrastructure\models.py:66
 msgid "Todos os usuários"
 msgstr "All users"
 
-#| msgid "Superadministrador"
+#: .\apps\content\infrastructure\models.py:68
 msgid "Superadministradores"
-msgstr "Superuser"
+msgstr "Superusers"
 
+#: .\apps\content\infrastructure\models.py:74
 msgid ""
 "Resposta rápida exibida primeiro pelo assistente; a resposta completa traz "
 "os detalhes."
@@ -340,20 +445,25 @@ msgstr ""
 "Short answer shown first by the assistant; the full answer provides the "
 "details."
 
+#: .\apps\content\infrastructure\models.py:87
 msgid ""
 "Termos alternativos separados por vírgulas usados para localizar esta "
 "orientação."
 msgstr "Alternative terms separated by commas used to find this guidance."
 
+#: .\apps\content\infrastructure\models.py:92
 msgid "English alternative terms separated by commas."
 msgstr "English alternative terms separated by commas."
 
+#: .\apps\content\infrastructure\models.py:97
 msgid "Términos alternativos en español separados por comas."
 msgstr "Spanish alternative terms separated by commas."
 
+#: .\apps\content\infrastructure\models.py:103
 msgid "Público mínimo autorizado a receber este artigo no assistente."
 msgstr "Minimum audience authorized to receive this article in the assistant."
 
+#: .\apps\content\infrastructure\models.py:107
 msgid ""
 "Se marcado, o artigo fica só na consulta do Denkynho e não aparece na página "
 "FAQ nem nas sugestões."
@@ -361,421 +471,534 @@ msgstr ""
 "If checked, the article stays only in the Denkynho query and does not appear "
 "on the FAQ page or in suggestions."
 
+#: .\apps\content\infrastructure\models.py:113
+#: .\apps\content\infrastructure\models.py:114
 msgid "FAQ"
 msgstr "FAQ"
 
+#: .\apps\content\infrastructure\models.py:126
 msgid "Passo a passo do Denkynho"
 msgstr "Denkynho step-by-step"
 
+#: .\apps\content\infrastructure\models.py:127
 msgid "Passos a passo do Denkynho"
 msgstr "Denkynho step-by-step guides"
 
+#: .\apps\content\infrastructure\models.py:164
 msgid "Peças cosméticas liberadas e equipadas pelo usuário."
 msgstr "Cosmetic pieces unlocked and equipped by the user."
 
+#: .\apps\content\infrastructure\models.py:170
 msgid ""
 "Sentimento do usuário que o mascote está acompanhando; vazio quando não há "
 "empatia ativa."
 msgstr ""
 "User feeling the mascot is mirroring; empty when there is no active empathy."
 
+#: .\apps\content\infrastructure\models.py:175
 msgid ""
 "Quando a empatia expira, o humor volta a ser calculado só pelas necessidades "
 "do mascote."
 msgstr ""
 "When empathy expires, mood is calculated only from the mascot's needs again."
 
+#: .\apps\content\infrastructure\models.py:181
 msgid "Apelido opcional da conversa; não armazena o histórico."
 msgstr "Optional conversation nickname; does not store history."
 
+#: .\apps\content\infrastructure\models.py:187
 msgid "Tamanho preferido das respostas: brief, balanced ou detailed."
 msgstr "Preferred response length: brief, balanced, or detailed."
 
+#: .\apps\content\infrastructure\models.py:191
 msgid ""
 "Último dia em que o mascote registrou uma visita; o bônus diário não se "
 "acumula."
 msgstr "Last day the mascot recorded a visit; the daily bonus does not stack."
 
+#: .\apps\content\infrastructure\models.py:195
 msgid "Perfil do Denkynho"
 msgstr "Denkynho profile"
 
+#: .\apps\content\infrastructure\models.py:196
 msgid "Perfis do Denkynho"
 msgstr "Denkynho profiles"
 
-#| msgid "Atendimento"
+#: .\apps\content\infrastructure\models.py:207
 msgid "Alimentar"
-msgstr "Support"
+msgstr "Feed"
 
+#: .\apps\content\infrastructure\models.py:208
 msgid "Dormir"
 msgstr "Sleep"
 
+#: .\apps\content\infrastructure\models.py:209
 msgid "Brincar"
 msgstr "Play"
 
-#| msgid "Carrinho"
+#: .\apps\content\infrastructure\models.py:210
 msgid "Dar carinho"
-msgstr "Cart"
+msgstr "Pet"
 
+#: .\apps\content\infrastructure\models.py:211
 msgid "Dar banho"
 msgstr "Bathe"
 
+#: .\apps\content\infrastructure\models.py:212
 msgid "Caminhar"
 msgstr "Walk"
 
+#: .\apps\content\infrastructure\models.py:213
 msgid "Dançar juntos"
 msgstr "Dance together"
 
+#: .\apps\content\infrastructure\models.py:225
 msgid "Cuidado do Denkynho"
 msgstr "Denkynho care action"
 
+#: .\apps\content\infrastructure\models.py:226
 msgid "Cuidados do Denkynho"
 msgstr "Denkynho care actions"
 
+#: .\apps\content\infrastructure\models.py:248
 msgid "Download"
 msgstr "Download"
 
+#: .\apps\content\infrastructure\models.py:249
 msgid "Downloads"
 msgstr "Downloads"
 
+#: .\apps\content\infrastructure\models.py:279
 msgid "Página do wiki"
 msgstr "Wiki page"
 
+#: .\apps\content\infrastructure\models.py:280
 msgid "Wiki"
 msgstr "Wiki"
 
+#: .\apps\content\infrastructure\models.py:301
 msgid "Evento"
 msgstr "Event"
 
+#: .\apps\content\infrastructure\models.py:302
 msgid "Calendário"
 msgstr "Calendar"
 
+#: .\apps\content\presentation\views\shared.py:61
+#: .\apps\content\presentation\views\shared.py:129
+#: .\common\i18n_msgid_catalog.py:107
 msgid "Use um nome de até 30 letras, sem termos ofensivos."
 msgstr "Use a name of up to 30 letters, without offensive terms."
 
+#: .\apps\games\apps.py:15
 msgid "Jogos"
 msgstr "Games"
 
+#: .\apps\games\infrastructure\models.py:22
 msgid "Configuração de jogo"
 msgstr "Game configuration"
 
+#: .\apps\games\infrastructure\models.py:23
 msgid "Configurações de jogos"
 msgstr "Game configurations"
 
+#: .\apps\games\infrastructure\models.py:40
 msgid "Prêmio da roleta"
 msgstr "Roulette prize"
 
+#: .\apps\games\infrastructure\models.py:41
 msgid "Prêmios da roleta"
 msgstr "Roulette prizes"
 
+#: .\apps\games\infrastructure\models.py:58
 msgid "Giro da roleta"
 msgstr "Roulette spin"
 
+#: .\apps\games\infrastructure\models.py:59
 msgid "Giros da roleta"
 msgstr "Roulette spins"
 
+#: .\apps\games\infrastructure\models.py:73
 msgid "Bag"
 msgstr "Bag"
 
+#: .\apps\games\infrastructure\models.py:74
 msgid "Bags"
 msgstr "Bags"
 
+#: .\apps\games\infrastructure\models.py:92
 msgid "Item da bag"
 msgstr "Bag item"
 
+#: .\apps\games\infrastructure\models.py:109
 msgid "Resgate de bônus diário"
 msgstr "Daily bonus claim"
 
+#: .\apps\games\infrastructure\models.py:127
 msgid "Item de catálogo"
 msgstr "Catalog item"
 
+#: .\apps\games\infrastructure\models.py:128
 msgid "Itens de catálogo"
 msgstr "Catalog items"
 
+#: .\apps\games\infrastructure\models.py:149
 msgid "Tipo de caixa"
 msgstr "Box type"
 
+#: .\apps\games\infrastructure\models.py:150
 msgid "Tipos de caixa"
 msgstr "Box types"
 
+#: .\apps\games\infrastructure\models.py:168
 msgid "Caixa"
 msgstr "Box"
 
+#: .\apps\games\infrastructure\models.py:169
 msgid "Caixas"
 msgstr "Boxes"
 
+#: .\apps\games\infrastructure\models.py:189
 msgid "Booster da caixa"
 msgstr "Box booster"
 
+#: .\apps\games\infrastructure\models.py:208
 msgid "Jogada de dados"
 msgstr "Dice roll"
 
+#: .\apps\games\infrastructure\models.py:225
 msgid "Giro de slots"
 msgstr "Slots spin"
 
+#: .\apps\games\infrastructure\models.py:241
 msgid "Vara de pesca"
 msgstr "Fishing rod"
 
+#: .\apps\games\infrastructure\models.py:263
 msgid "Peixe"
 msgstr "Fish"
 
+#: .\apps\games\infrastructure\models.py:280
 msgid "Pescaria"
 msgstr "Fishing trip"
 
+#: .\apps\games\infrastructure\models.py:296
 msgid "Arma da economia"
 msgstr "Economy weapon"
 
+#: .\apps\games\infrastructure\models.py:318
 msgid "Monstro"
 msgstr "Monster"
 
+#: .\apps\games\infrastructure\models.py:336
 msgid "Combate da economia"
 msgstr "Economy combat"
 
+#: .\apps\games\infrastructure\models.py:352
 msgid "Temporada do passe"
 msgstr "Pass season"
 
+#: .\apps\games\infrastructure\models.py:368
 msgid "Nível do passe"
 msgstr "Pass level"
 
+#: .\apps\games\infrastructure\models.py:390
 msgid "Recompensa do passe"
 msgstr "Pass reward"
 
+#: .\apps\games\infrastructure\models.py:408
 msgid "Progresso do passe"
 msgstr "Pass progress"
 
+#: .\apps\games\infrastructure\models.py:424
 msgid "Resgate do passe"
 msgstr "Pass claim"
 
+#: .\apps\games\infrastructure\models.py:445
 msgid "Diária"
 msgstr "Daily"
 
+#: .\apps\games\infrastructure\models.py:446
 msgid "Semanal"
 msgstr "Weekly"
 
-#| msgid "Temporada do passe"
+#: .\apps\games\infrastructure\models.py:447
 msgid "Temporada"
-msgstr "Pass season"
+msgstr "Season"
 
-#| msgid "Progresso do passe"
+#: .\apps\games\infrastructure\models.py:454
 msgid "Missão do passe"
-msgstr "Pass progress"
+msgstr "Pass mission"
 
-#| msgid "Nível do passe"
+#: .\apps\games\infrastructure\models.py:455
 msgid "Missões do passe"
-msgstr "Pass level"
+msgstr "Pass missions"
 
-#| msgid "Resgate do passe"
+#: .\apps\games\infrastructure\models.py:471
 msgid "Resgate de missão do passe"
-msgstr "Pass claim"
+msgstr "Pass mission claim"
 
-#| msgid "Resgate do passe"
+#: .\apps\games\infrastructure\models.py:472
 msgid "Resgates de missão do passe"
-msgstr "Pass claim"
+msgstr "Pass mission claims"
 
-#| msgid "Temporada do passe"
+#: .\apps\games\infrastructure\models.py:494
 msgid "Troca do passe"
-msgstr "Pass season"
+msgstr "Pass exchange"
 
-#| msgid "Temporada do passe"
+#: .\apps\games\infrastructure\models.py:495
 msgid "Trocas do passe"
-msgstr "Pass season"
+msgstr "Pass exchanges"
 
-#| msgid "Progresso do passe"
+#: .\apps\games\infrastructure\models.py:512
 msgid "Marco do passe"
-msgstr "Pass progress"
+msgstr "Pass milestone"
 
-#| msgid "Progresso do passe"
+#: .\apps\games\infrastructure\models.py:513
 msgid "Marcos do passe"
-msgstr "Pass progress"
+msgstr "Pass milestones"
 
+#: .\apps\games\infrastructure\models.py:532
 msgid "Log de recompensa de jogo"
 msgstr "Game reward log"
 
+#: .\apps\games\infrastructure\models.py:533
 msgid "Logs de recompensa de jogo"
 msgstr "Game reward logs"
 
-#| msgid "Resgate de bônus diário"
+#: .\apps\games\infrastructure\models.py:548
 msgid "Temporada de bônus diário"
-msgstr "Daily bonus claim"
+msgstr "Daily bonus season"
 
-#| msgid "Resgate de bônus diário"
+#: .\apps\games\infrastructure\models.py:549
 msgid "Temporadas de bônus diário"
-msgstr "Daily bonus claim"
+msgstr "Daily bonus seasons"
 
-#| msgid "Resgate de bônus diário"
+#: .\apps\games\infrastructure\models.py:565
 msgid "Dia de bônus diário"
-msgstr "Daily bonus claim"
+msgstr "Daily bonus day"
 
-#| msgid "Resgate de bônus diário"
+#: .\apps\games\infrastructure\models.py:566
 msgid "Dias de bônus diário"
-msgstr "Daily bonus claim"
+msgstr "Daily bonus days"
 
-#| msgid "Entrada do roadmap"
+#: .\apps\games\infrastructure\models.py:585
 msgid "Entrada do pool de bônus"
-msgstr "Roadmap entry"
+msgstr "Bonus pool entry"
 
-#| msgid "Entradas do roadmap"
+#: .\apps\games\infrastructure\models.py:586
 msgid "Entradas do pool de bônus"
-msgstr "Roadmap entries"
+msgstr "Bonus pool entries"
 
-#| msgid "Vara de pesca"
+#: .\apps\games\infrastructure\models.py:602
 msgid "Isca de pesca"
-msgstr "Fishing rod"
+msgstr "Fishing bait"
 
-#| msgid "Vara de pesca"
+#: .\apps\games\infrastructure\models.py:603
 msgid "Iscas de pesca"
-msgstr "Fishing rod"
+msgstr "Fishing baits"
 
-#| msgid "Conquista do jogador"
+#: .\apps\games\infrastructure\models.py:619
 msgid "Isca do jogador"
-msgstr "Player achievement"
+msgstr "Player bait"
 
-#| msgid "Conquista do jogador"
+#: .\apps\games\infrastructure\models.py:620
 msgid "Iscas do jogador"
-msgstr "Player achievement"
+msgstr "Player baits"
 
+#: .\apps\games\presentation\advanced.py:49 .\common\i18n_msgid_catalog.py:106
 msgid "Selecione uma recompensa."
 msgstr "Select a reward."
 
-#| msgid "Configuração de moeda"
+#: .\apps\games\presentation\advanced.py:206 .\common\i18n_msgid_catalog.py:121
 msgid "Configuração desconhecida."
-msgstr "Currency setting"
+msgstr "Unknown configuration."
 
+#: .\apps\inventory\apps.py:15 .\apps\inventory\infrastructure\models.py:20
 msgid "Inventário"
 msgstr "Inventory"
 
+#: .\apps\inventory\infrastructure\models.py:21
 msgid "Inventários"
 msgstr "Inventories"
 
+#: .\apps\inventory\infrastructure\models.py:57
 msgid "Item de inventário"
 msgstr "Inventory item"
 
+#: .\apps\inventory\infrastructure\models.py:58
 msgid "Itens de inventário"
 msgstr "Inventory items"
 
+#: .\apps\inventory\infrastructure\models.py:72
 msgid "Item bloqueado"
 msgstr "Locked item"
 
+#: .\apps\inventory\infrastructure\models.py:73
 msgid "Itens bloqueados"
 msgstr "Locked items"
 
+#: .\apps\inventory\infrastructure\models.py:94
 msgid "Log de inventário"
 msgstr "Inventory log"
 
+#: .\apps\inventory\infrastructure\models.py:95
 msgid "Logs de inventário"
 msgstr "Inventory logs"
 
+#: .\apps\marketplace\apps.py:15
 msgid "Marketplace"
 msgstr "Marketplace"
 
+#: .\apps\marketplace\infrastructure\models.py:23
 msgid "À venda"
 msgstr "For sale"
 
+#: .\apps\marketplace\infrastructure\models.py:24
 msgid "Vendido"
 msgstr "Sold"
 
+#: .\apps\marketplace\infrastructure\models.py:26
 msgid "Em disputa"
 msgstr "In dispute"
 
+#: .\apps\marketplace\infrastructure\models.py:59
 msgid "Anúncio de personagem"
 msgstr "Character listing"
 
+#: .\apps\marketplace\infrastructure\models.py:60
 msgid "Anúncios de personagem"
 msgstr "Character listings"
 
+#: .\apps\payment\apps.py:15
 msgid "Pagamento"
 msgstr "Payment"
 
+#: .\apps\payment\infrastructure\models.py:22
+#: .\apps\server\infrastructure\service_models.py:28
 msgid "Pendente"
 msgstr "Pending"
 
+#: .\apps\payment\infrastructure\models.py:23
 msgid "Processando"
 msgstr "Processing"
 
+#: .\apps\payment\infrastructure\models.py:24
 msgid "Confirmado"
 msgstr "Confirmed"
 
+#: .\apps\payment\infrastructure\models.py:26
 msgid "Falhou"
 msgstr "Failed"
 
+#: .\apps\payment\infrastructure\models.py:35
 msgid "Real"
 msgstr "Brazilian real"
 
+#: .\apps\payment\infrastructure\models.py:36
 msgid "Dólar"
 msgstr "US dollar"
 
+#: .\apps\payment\infrastructure\models.py:54
 msgid "Pedido de pagamento"
 msgstr "Payment order"
 
+#: .\apps\payment\infrastructure\models.py:55
 msgid "Pedidos de pagamento"
 msgstr "Payment orders"
 
+#: .\apps\payment\infrastructure\models.py:71
 msgid "Log de webhook"
 msgstr "Webhook log"
 
+#: .\apps\payment\infrastructure\models.py:72
 msgid "Logs de webhook"
 msgstr "Webhook logs"
 
-#| msgid "Valor inválido."
+#: .\apps\payment\presentation\views\webhooks.py:34
+#: .\apps\payment\presentation\views\webhooks.py:66
+#: .\common\i18n_msgid_catalog.py:119
 msgid "Assinatura inválida."
-msgstr "Invalid amount."
+msgstr "Invalid signature."
 
+#: .\apps\programs\apps.py:14
 msgid "Programas e recursos"
 msgstr "Programs and features"
 
+#: .\apps\programs\models.py:37
 msgid "Apoiadores"
 msgstr "Supporters"
 
+#: .\apps\programs\models.py:62
 msgid "Comissão"
 msgstr "Commission"
 
+#: .\apps\programs\models.py:63
 msgid "Comissões"
 msgstr "Commissions"
 
+#: .\apps\programs\models.py:86
 msgid "Repasse de comissão"
 msgstr "Commission payout"
 
+#: .\apps\programs\models.py:87
 msgid "Repasses de comissão"
 msgstr "Commission payouts"
 
+#: .\apps\programs\models.py:107
 msgid "Planejado"
 msgstr "Planned"
 
+#: .\apps\programs\models.py:108
 msgid "Em andamento"
 msgstr "In progress"
 
+#: .\apps\programs\models.py:109
+#: .\apps\server\infrastructure\service_models.py:29
 msgid "Concluído"
 msgstr "Completed"
 
+#: .\apps\programs\models.py:121
 msgid "Entrada do roadmap"
 msgstr "Roadmap entry"
 
+#: .\apps\programs\models.py:122
 msgid "Entradas do roadmap"
 msgstr "Roadmap entries"
 
+#: .\apps\programs\models.py:140
 msgid "Recurso do sistema"
 msgstr "System feature"
 
+#: .\apps\programs\models.py:141
 msgid "Recursos do sistema"
 msgstr "System features"
 
+#: .\apps\programs\serializers.py:26
 msgid "A imagem deve ter no máximo 5 MB."
 msgstr "The image must be at most 5 MB."
 
+#: .\apps\programs\serializers.py:135
 msgid "A descrição é obrigatória."
 msgstr "Description is required."
 
+#: .\apps\server\admin.py:67
 msgid "Identidade"
 msgstr "Identity"
 
+#: .\apps\server\admin.py:68
 msgid "Rates"
 msgstr "Rates"
 
+#: .\apps\server\admin.py:70
 msgid "Coming Soon"
 msgstr "Coming Soon"
 
+#: .\apps\server\application\account_use_cases.py:472
 msgid "Vinculação de conta Lineage"
 msgstr "Lineage account linking"
 
+#: .\apps\server\application\account_use_cases.py:474
 #, python-format
 msgid ""
 "Clique no link para vincular a conta %(login)s ao PDL PRO:\n"
@@ -790,618 +1013,840 @@ msgstr ""
 "\n"
 "The link expires in 1 hour."
 
+#: .\apps\server\apps.py:15
 msgid "Servidor Lineage"
 msgstr "Lineage server"
 
+#: .\apps\server\infrastructure\custom_item_models.py:19
+#: .\apps\staff\presentation\views\custom_items.py:55
 msgid "Os metadados devem ser um objeto JSON."
 msgstr "Metadata must be a JSON object."
 
-#| msgid "Valor inválido."
+#: .\apps\server\infrastructure\custom_item_models.py:23
+#: .\apps\staff\presentation\views\custom_items.py:59
+#: .\common\i18n_msgid_catalog.py:120
 msgid "Metadados JSON inválidos."
-msgstr "Invalid amount."
+msgstr "Invalid JSON metadata."
 
+#: .\apps\server\infrastructure\custom_item_models.py:25
+#: .\apps\staff\presentation\views\custom_items.py:61
 msgid "Metadados limitados a 16 KB."
 msgstr "Metadata limited to 16 KB."
 
+#: .\apps\server\infrastructure\custom_item_models.py:35
 msgid "ID no jogo"
 msgstr "In-game ID"
 
+#: .\apps\server\infrastructure\custom_item_models.py:39
+#: .\apps\server\infrastructure\item_observation_models.py:22
 msgid "Nome"
 msgstr "Name"
 
+#: .\apps\server\infrastructure\custom_item_models.py:40
 msgid "Imagem"
 msgstr "Image"
 
+#: .\apps\server\infrastructure\custom_item_models.py:41
 msgid "Tipo"
 msgstr "Type"
 
+#: .\apps\server\infrastructure\custom_item_models.py:42
 msgid "Grau"
 msgstr "Grade"
 
+#: .\apps\server\infrastructure\custom_item_models.py:43
 msgid "Negociável"
 msgstr "Tradable"
 
-#| msgid "Metadados"
+#: .\apps\server\infrastructure\custom_item_models.py:45
 msgid "Metadados públicos"
-msgstr "Metadata"
+msgstr "Public metadata"
 
+#: .\apps\server\infrastructure\custom_item_models.py:50
 msgid "Ativo"
 msgstr "Active"
 
-#| msgid "Item bloqueado"
+#: .\apps\server\infrastructure\custom_item_models.py:54
 msgid "Item customizado"
-msgstr "Locked item"
+msgstr "Custom item"
 
-#| msgid "Itens bloqueados"
+#: .\apps\server\infrastructure\custom_item_models.py:55
 msgid "Itens customizados"
-msgstr "Locked items"
+msgstr "Custom items"
 
+#: .\apps\server\infrastructure\item_observation_models.py:13
+#: .\apps\staff\presentation\views\item_observation.py:133
 msgid "Informe uma lista de até 2000 IDs positivos, sem repetições."
 msgstr "Provide a list of up to 2000 positive IDs, without duplicates."
 
-#| msgid "Inscrição push"
+#: .\apps\server\infrastructure\item_observation_models.py:23
 msgid "Descrição"
-msgstr "Push subscription"
+msgstr "Description"
 
+#: .\apps\server\infrastructure\item_observation_models.py:25
 msgid "IDs dos itens"
 msgstr "Item IDs"
 
+#: .\apps\server\infrastructure\item_observation_models.py:29
 msgid ""
 "Exemplo: [57, 4037]. Em sobreposições, vale a primeira categoria na ordem."
-msgstr ""
+msgstr "Example: [57, 4037]. On overlaps, the first category in order wins."
 
+#: .\apps\server\infrastructure\item_observation_models.py:31
 msgid "Ordem"
 msgstr "Order"
 
-#| msgid "Preço de serviço"
+#: .\apps\server\infrastructure\item_observation_models.py:34
 msgid "Categoria de observação"
-msgstr "Service price"
+msgstr "Observation category"
 
-#| msgid "Preços de serviço"
+#: .\apps\server\infrastructure\item_observation_models.py:35
 msgid "Categorias de observação"
-msgstr "Service prices"
+msgstr "Observation categories"
 
+#: .\apps\server\infrastructure\item_observation_models.py:50
 msgid "Data"
 msgstr "Date"
 
+#: .\apps\server\infrastructure\item_observation_models.py:51
 msgid "Origem L2"
 msgstr "L2 origin"
 
-#| msgid "Criado em"
+#: .\apps\server\infrastructure\item_observation_models.py:56
 msgid "Criado por"
-msgstr "Created at"
+msgstr "Created by"
 
+#: .\apps\server\infrastructure\item_observation_models.py:58
 msgid "Personagens"
 msgstr "Characters"
 
+#: .\apps\server\infrastructure\item_observation_models.py:59
 msgid "Stacks L2"
 msgstr "L2 stacks"
 
-#| msgid "Identidade"
+#: .\apps\server\infrastructure\item_observation_models.py:60
 msgid "Quantidade L2"
-msgstr "Identity"
+msgstr "L2 quantity"
 
+#: .\apps\server\infrastructure\item_observation_models.py:61
 msgid "Quantidade no painel"
 msgstr "Panel quantity"
 
+#: .\apps\server\infrastructure\item_observation_models.py:62
 msgid "Notas"
 msgstr "Notes"
 
+#: .\apps\server\infrastructure\item_observation_models.py:65
 msgid "Snapshot de itens"
 msgstr "Item snapshot"
 
+#: .\apps\server\infrastructure\item_observation_models.py:66
 msgid "Snapshots de itens"
 msgstr "Item snapshots"
 
+#: .\apps\server\infrastructure\item_observation_models.py:69
 msgid "Pode capturar snapshot dos itens L2"
 msgstr "Can capture L2 item snapshot"
 
+#: .\apps\server\infrastructure\item_observation_models.py:93
 msgid "Detalhe de observação"
 msgstr "Observation detail"
 
-#| msgid "Preços de serviço"
+#: .\apps\server\infrastructure\item_observation_models.py:94
 msgid "Detalhes de observação"
-msgstr "Service prices"
+msgstr "Observation details"
 
-#| msgid "Preço de serviço"
+#: .\apps\server\infrastructure\item_observation_models.py:113
 msgid "Favorito de observação"
-msgstr "Service price"
+msgstr "Observation favorite"
 
-#| msgid "Preços de serviço"
+#: .\apps\server\infrastructure\item_observation_models.py:114
 msgid "Favoritos de observação"
-msgstr "Service prices"
+msgstr "Observation favorites"
 
+#: .\apps\server\infrastructure\models.py:23
 msgid "Conta Lineage"
 msgstr "Lineage account"
 
+#: .\apps\server\infrastructure\models.py:24
 msgid "Contas Lineage"
 msgstr "Lineage accounts"
 
+#: .\apps\server\infrastructure\models.py:43
 msgid "Slot de vínculo"
 msgstr "Link slot"
 
+#: .\apps\server\infrastructure\models.py:44
 msgid "Slots de vínculo"
 msgstr "Link slots"
 
+#: .\apps\server\infrastructure\models.py:59
 msgid "Preço de serviço"
 msgstr "Service price"
 
+#: .\apps\server\infrastructure\models.py:60
 msgid "Preços de serviço"
 msgstr "Service prices"
 
+#: .\apps\server\infrastructure\models.py:91
 msgid "Configuração do painel"
 msgstr "Panel setting"
 
+#: .\apps\server\infrastructure\models.py:92
 msgid "Configurações do painel"
 msgstr "Panel settings"
 
+#: .\apps\server\infrastructure\service_models.py:30
 msgid "Estornado"
 msgstr "Refunded"
 
-#| msgid "Preço de serviço"
+#: .\apps\server\infrastructure\service_models.py:36
 msgid "Operação de serviço"
-msgstr "Service price"
+msgstr "Service operation"
 
-#| msgid "Preços de serviço"
+#: .\apps\server\infrastructure\service_models.py:37
 msgid "Operações de serviço"
-msgstr "Service prices"
+msgstr "Service operations"
 
+#: .\apps\server\presentation\serializers.py:127
+#: .\common\i18n_msgid_catalog.py:104
 msgid "Use 3 a 16 letras ou números, sem espaços."
 msgstr "Use 3 to 16 letters or numbers, without spaces."
 
+#: .\apps\shop\apps.py:15
 msgid "Loja"
 msgstr "Shop"
 
+#: .\apps\shop\infrastructure\models.py:24
 msgid "Item da loja"
 msgstr "Shop item"
 
+#: .\apps\shop\infrastructure\models.py:25
 msgid "Itens da loja"
 msgstr "Shop items"
 
+#: .\apps\shop\infrastructure\models.py:42
 msgid "Pacote"
 msgstr "Bundle"
 
+#: .\apps\shop\infrastructure\models.py:43
 msgid "Pacotes"
 msgstr "Bundles"
 
+#: .\apps\shop\infrastructure\models.py:59
 msgid "Item do pacote"
 msgstr "Bundle item"
 
+#: .\apps\shop\infrastructure\models.py:60
 msgid "Itens do pacote"
 msgstr "Bundle items"
 
+#: .\apps\shop\infrastructure\models.py:76
 msgid "Carrinho"
 msgstr "Cart"
 
+#: .\apps\shop\infrastructure\models.py:77
 msgid "Carrinhos"
 msgstr "Carts"
 
+#: .\apps\shop\infrastructure\models.py:93
 msgid "Item do carrinho"
 msgstr "Cart item"
 
+#: .\apps\shop\infrastructure\models.py:94
 msgid "Itens do carrinho"
 msgstr "Cart items"
 
+#: .\apps\shop\infrastructure\models.py:116
 msgid "Compra da loja"
 msgstr "Shop purchase"
 
+#: .\apps\shop\infrastructure\models.py:117
 msgid "Compras da loja"
 msgstr "Shop purchases"
 
+#: .\apps\shop\infrastructure\models.py:134
 msgid "Pacote do carrinho"
 msgstr "Cart bundle"
 
+#: .\apps\shop\infrastructure\models.py:135
 msgid "Pacotes do carrinho"
 msgstr "Cart bundles"
 
+#: .\apps\shop\infrastructure\models.py:157
 msgid "Código promocional"
 msgstr "Promo code"
 
+#: .\apps\shop\infrastructure\models.py:158
 msgid "Códigos promocionais"
 msgstr "Promo codes"
 
+#: .\apps\shop\presentation\commerce.py:54
+#: .\apps\shop\presentation\commerce.py:219
 msgid "Inclua pelo menos um item."
 msgstr "Include at least one item."
 
+#: .\apps\shop\presentation\commerce.py:82
 msgid "A data final deve ser posterior à inicial."
 msgstr "The end date must be after the start date."
 
+#: .\apps\staff\apps.py:15
 msgid "Staff"
 msgstr "Staff"
 
+#: .\apps\staff\infrastructure\models.py:34
 msgid "Log de auditoria"
 msgstr "Audit log"
 
+#: .\apps\staff\infrastructure\models.py:35
 msgid "Logs de auditoria"
 msgstr "Audit logs"
 
-#| msgid "O preço deve ser maior que zero."
+#: .\apps\staff\presentation\financial_serializers.py:34
 msgid "O máximo deve ser maior ou igual ao mínimo."
-msgstr "The price must be greater than zero."
+msgstr "The maximum must be greater than or equal to the minimum."
 
+#: .\apps\staff\presentation\financial_serializers.py:52
+#: .\apps\staff\presentation\operational_serializers.py:18
 msgid "A data final deve ser igual ou posterior à inicial."
 msgstr "The end date must be on or after the start date."
 
+#: .\apps\staff\presentation\views\custom_items.py:68
 msgid "A imagem deve ter no máximo 2 MB."
 msgstr "The image must be at most 2 MB."
 
+#: .\apps\staff\presentation\views\custom_items.py:73
 msgid "Use PNG, JPEG ou WebP estático."
 msgstr "Use PNG, JPEG or static WebP."
 
+#: .\apps\staff\presentation\views\custom_items.py:75
 msgid "Dimensões máximas: 1024 × 1024 pixels."
 msgstr "Maximum dimensions: 1024 × 1024 pixels."
 
-#| msgid "Lance inválido."
+#: .\apps\staff\presentation\views\custom_items.py:83
+#: .\common\i18n_msgid_catalog.py:122
 msgid "Imagem inválida."
-msgstr "Invalid bid."
+msgstr "Invalid image."
 
-#| msgid "Você não tem permissão para realizar esta ação."
+#: .\apps\staff\presentation\views\custom_items.py:101
+#: .\apps\staff\presentation\views\item_observation.py:172
+#: .\common\i18n_msgid_catalog.py:123
 msgid "Você não tem permissão para esta ação."
-msgstr "You do not have permission to perform this action."
+msgstr "You do not have permission for this action."
 
+#: .\apps\staff\presentation\views\custom_items.py:143
 msgid "Imagem obrigatória."
 msgstr "Image required."
 
+#: .\apps\staff\presentation\views\item_observation.py:184
+#: .\common\i18n_msgid_catalog.py:125
 msgid ""
 "Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."
-msgstr ""
+msgstr "Could not query items. Check the L2 connection and SQL module."
 
-#| msgid "Refresh token inválido."
+#: .\apps\staff\presentation\views\item_observation.py:268
+#: .\common\i18n_msgid_catalog.py:118
 msgid "ID de item inválido."
-msgstr "Invalid refresh token."
+msgstr "Invalid item ID."
 
+#: .\apps\support\apps.py:14
 msgid "Atendimento"
 msgstr "Support"
 
+#: .\apps\support\models.py:31
 msgid "Em atendimento"
 msgstr "In progress"
 
+#: .\apps\support\models.py:32
 msgid "Aguardando jogador"
 msgstr "Waiting for player"
 
+#: .\apps\support\models.py:33
 msgid "Aguardando equipe"
 msgstr "Waiting for staff"
 
+#: .\apps\support\models.py:34
 msgid "Resolvido"
 msgstr "Resolved"
 
+#: .\apps\support\models.py:35
 msgid "Fechado"
 msgstr "Closed"
 
+#: .\apps\support\models.py:44
 msgid "Problema técnico"
 msgstr "Technical issue"
 
+#: .\apps\support\models.py:45
 msgid "Pagamento e loja"
 msgstr "Payment and shop"
 
+#: .\apps\support\models.py:47
 msgid "Suporte ao jogo"
 msgstr "Game support"
 
+#: .\apps\support\models.py:48
 msgid "Relatar um bug"
 msgstr "Report a bug"
 
+#: .\apps\support\models.py:49
 msgid "Denúncia"
 msgstr "Report"
 
+#: .\apps\support\models.py:50
 msgid "Sugestão"
 msgstr "Suggestion"
 
+#: .\apps\support\models.py:51
 msgid "Outro assunto"
 msgstr "Other topic"
 
+#: .\apps\support\models.py:60
 msgid "Baixa"
 msgstr "Low"
 
+#: .\apps\support\models.py:61
 msgid "Normal"
 msgstr "Normal"
 
+#: .\apps\support\models.py:62
 msgid "Alta"
 msgstr "High"
 
+#: .\apps\support\models.py:63
 msgid "Urgente"
 msgstr "Urgent"
 
+#: .\apps\support\models.py:86
 msgid "Chamado"
 msgstr "Ticket"
 
+#: .\apps\support\models.py:87
 msgid "Chamados"
 msgstr "Tickets"
 
+#: .\apps\support\models.py:113
 msgid "Mensagem do chamado"
 msgstr "Ticket message"
 
+#: .\apps\support\models.py:114
 msgid "Mensagens dos chamados"
 msgstr "Ticket messages"
 
+#: .\apps\themes\apps.py:14 .\apps\themes\infrastructure\models.py:37
 msgid "Temas"
 msgstr "Themes"
 
+#: .\apps\themes\infrastructure\models.py:36
 msgid "Tema"
 msgstr "Theme"
 
+#: .\apps\themes\presentation\views.py:30
 msgid "Envie um arquivo .zip."
 msgstr "Upload a .zip file."
 
+#: .\apps\wallet\apps.py:15 .\apps\wallet\infrastructure\models.py:24
 msgid "Carteira"
 msgstr "Wallet"
 
+#: .\apps\wallet\infrastructure\models.py:25
 msgid "Carteiras"
 msgstr "Wallets"
 
+#: .\apps\wallet\infrastructure\models.py:46
 msgid "Entrada"
 msgstr "Credit"
 
+#: .\apps\wallet\infrastructure\models.py:47
 msgid "Saída"
 msgstr "Debit"
 
+#: .\apps\wallet\infrastructure\models.py:57
 msgid "Transação"
 msgstr "Transaction"
 
+#: .\apps\wallet\infrastructure\models.py:58
 msgid "Transações"
 msgstr "Transactions"
 
+#: .\apps\wallet\infrastructure\models.py:76
 msgid "Configuração de moeda"
 msgstr "Currency setting"
 
+#: .\apps\wallet\infrastructure\models.py:77
 msgid "Configurações de moeda"
 msgstr "Currency settings"
 
+#: .\apps\wallet\infrastructure\models.py:101
+#: .\apps\wallet\infrastructure\models.py:102
 msgid "Bônus de compra"
 msgstr "Purchase bonus"
 
+#: .\apps\wallet\infrastructure\models.py:125
 msgid "Promoção de recarga"
 msgstr "Top-up promotion"
 
+#: .\apps\wallet\infrastructure\models.py:126
 msgid "Promoções de recarga"
 msgstr "Top-up promotions"
 
+#: .\apps\wallet\infrastructure\models.py:176
 msgid "Pacote de moedas"
 msgstr "Coin package"
 
+#: .\apps\wallet\infrastructure\models.py:177
 msgid "Pacotes de moedas"
 msgstr "Coin packages"
 
+#: .\apps\wallet\presentation\views\exchange.py:69
+#: .\common\i18n_msgid_catalog.py:105
 msgid "Conecte o banco do jogo para transferir moedas."
 msgstr "Connect the game database to transfer coins."
 
+#: .\common\apps.py:14
 msgid "Common"
 msgstr "Common"
 
+#: .\common\exceptions.py:125 .\common\i18n_msgid_catalog.py:11
 msgid "Não foi possível processar a solicitação."
 msgstr "Unable to process the request."
 
+#: .\common\forms.py:230
 msgid "nome@exemplo.com"
 msgstr "name@example.com"
 
+#: .\common\forms.py:232
 msgid "dd/mm/aaaa"
 msgstr "dd/mm/yyyy"
 
+#: .\common\forms.py:233
 msgid "dd/mm/aaaa hh:mm"
 msgstr "dd/mm/yyyy hh:mm"
 
+#: .\common\forms.py:234
 msgid "hh:mm"
 msgstr "hh:mm"
 
+#: .\common\forms.py:235
 msgid "0,00"
 msgstr "0.00"
 
+#: .\common\forms.py:236
 msgid "{\"chave\": \"valor\"}"
 msgstr "{\"key\": \"value\"}"
 
+#: .\common\forms.py:239
 #, python-format
 msgid "Informe %(label)s"
 msgstr "Enter %(label)s"
 
+#: .\common\i18n_msgid_catalog.py:12 .\common\tests\test_i18n_gettext.py:40
 msgid "O recurso solicitado não foi encontrado."
 msgstr "The requested resource was not found."
 
+#: .\common\i18n_msgid_catalog.py:13
 msgid "A solicitação conflita com o estado atual do recurso."
 msgstr "The request conflicts with the current resource state."
 
+#: .\common\i18n_msgid_catalog.py:14
 msgid "Você não tem permissão para realizar esta ação."
 msgstr "You do not have permission to perform this action."
 
+#: .\common\i18n_msgid_catalog.py:15
 msgid "Verifique os dados informados e tente novamente."
 msgstr "Check the provided data and try again."
 
+#: .\common\i18n_msgid_catalog.py:18
 msgid "Usuário não encontrado."
 msgstr "User not found."
 
+#: .\common\i18n_msgid_catalog.py:19
 msgid "Este nome de usuário já está em uso."
 msgstr "This username is already in use."
 
+#: .\common\i18n_msgid_catalog.py:20
 msgid "Este e-mail já está em uso."
 msgstr "This email is already in use."
 
+#: .\common\i18n_msgid_catalog.py:21
 msgid "Usuário ou senha inválidos."
 msgstr "Invalid username or password."
 
+#: .\common\i18n_msgid_catalog.py:22
 msgid ""
 "O servidor está em período de lançamento. O login está restrito à equipe no "
 "momento."
 msgstr ""
 "The server is in a launch period. Login is currently restricted to staff."
 
+#: .\common\i18n_msgid_catalog.py:23
 msgid "Código 2FA inválido."
 msgstr "Invalid 2FA code."
 
+#: .\common\i18n_msgid_catalog.py:24
 msgid "Sessão não encontrada."
 msgstr "Session not found."
 
+#: .\common\i18n_msgid_catalog.py:26
 msgid "Não foi possível validar esta chave de acesso."
 msgstr "Unable to validate this passkey."
 
+#: .\common\i18n_msgid_catalog.py:27
 msgid "Não foi possível concluir a autenticação social."
 msgstr "Unable to complete social authentication."
 
+#: .\common\i18n_msgid_catalog.py:30
 msgid "Leilão não encontrado."
 msgstr "Auction not found."
 
+#: .\common\i18n_msgid_catalog.py:31
 msgid "Este leilão não está ativo."
 msgstr "This auction is not active."
 
+#: .\common\i18n_msgid_catalog.py:32
 msgid "Lance inválido."
 msgstr "Invalid bid."
 
+#: .\common\i18n_msgid_catalog.py:33
 msgid "Você não pode dar lance no próprio leilão."
 msgstr "You cannot bid on your own auction."
 
+#: .\common\i18n_msgid_catalog.py:34
 msgid "Duração do leilão inválida."
 msgstr "Invalid auction duration."
 
+#: .\common\i18n_msgid_catalog.py:37
 msgid "Fichas insuficientes."
 msgstr "Insufficient tokens."
 
+#: .\common\i18n_msgid_catalog.py:38
 msgid "Você já resgatou o bônus de hoje."
 msgstr "You have already claimed today's bonus."
 
+#: .\common\i18n_msgid_catalog.py:39
 msgid "Este jogo não está ativo."
 msgstr "This game is not active."
 
+#: .\common\i18n_msgid_catalog.py:40
 msgid "Esta caixa não tem boosters restantes."
 msgstr "This box has no boosters left."
 
+#: .\common\i18n_msgid_catalog.py:41
 msgid "Essa caixa não pertence a você."
 msgstr "That box does not belong to you."
 
+#: .\common\i18n_msgid_catalog.py:42
 msgid "Recompensa inválida."
 msgstr "Invalid reward."
 
+#: .\common\i18n_msgid_catalog.py:45
 msgid "Inventário não encontrado."
 msgstr "Inventory not found."
 
+#: .\common\i18n_msgid_catalog.py:46
 msgid "Este item não pode ser retirado do jogo."
 msgstr "This item cannot be withdrawn from the game."
 
+#: .\common\i18n_msgid_catalog.py:47
 msgid "Quantidade insuficiente no inventário do painel."
 msgstr "Insufficient quantity in the panel inventory."
 
+#: .\common\i18n_msgid_catalog.py:50
 msgid "Anúncio não encontrado."
 msgstr "Listing not found."
 
+#: .\common\i18n_msgid_catalog.py:51
 msgid "Este personagem não está à venda."
 msgstr "This character is not for sale."
 
+#: .\common\i18n_msgid_catalog.py:52
 msgid "Você não pode comprar o próprio personagem."
 msgstr "You cannot buy your own character."
 
+#: .\common\i18n_msgid_catalog.py:53
 msgid "Este personagem já está listado para venda."
 msgstr "This character is already listed for sale."
 
+#: .\common\i18n_msgid_catalog.py:54
 msgid "A conta já atingiu o limite de personagens do cliente Lineage 2."
 msgstr "The account has already reached the Lineage 2 client character limit."
 
+#: .\common\i18n_msgid_catalog.py:55
 msgid "O preço deve ser maior que zero."
 msgstr "The price must be greater than zero."
 
+#: .\common\i18n_msgid_catalog.py:58
 msgid "Pedido de pagamento não encontrado."
 msgstr "Payment order not found."
 
+#: .\common\i18n_msgid_catalog.py:59
 msgid "Este pedido já foi confirmado."
 msgstr "This order has already been confirmed."
 
+#: .\common\i18n_msgid_catalog.py:60
 msgid "Método de pagamento indisponível."
 msgstr "Payment method unavailable."
 
+#: .\common\i18n_msgid_catalog.py:61
 msgid "Este pedido não pode ser alterado."
 msgstr "This order cannot be changed."
 
+#: .\common\i18n_msgid_catalog.py:62
 msgid "Valor inválido."
 msgstr "Invalid amount."
 
+#: .\common\i18n_msgid_catalog.py:63
 msgid "Falha ao iniciar o pagamento."
 msgstr "Failed to start payment."
 
+#: .\common\i18n_msgid_catalog.py:66
 msgid "Cadastro de apoiador não encontrado."
 msgstr "Supporter registration not found."
 
+#: .\common\i18n_msgid_catalog.py:67
 msgid "Pedido de repasse não encontrado."
 msgstr "Payout request not found."
 
+#: .\common\i18n_msgid_catalog.py:68
 msgid "Entrada do roadmap não encontrada."
 msgstr "Roadmap entry not found."
 
+#: .\common\i18n_msgid_catalog.py:69
 msgid "Recurso do sistema não encontrado."
 msgstr "System feature not found."
 
+#: .\common\i18n_msgid_catalog.py:70
 msgid "Não foi possível processar a solicitação do programa."
 msgstr "Unable to process the program request."
 
+#: .\common\i18n_msgid_catalog.py:73
 msgid "O banco do servidor Lineage não está disponível."
 msgstr "The Lineage server database is not available."
 
+#: .\common\i18n_msgid_catalog.py:74
 msgid "Conta Lineage não encontrada."
 msgstr "Lineage account not found."
 
+#: .\common\i18n_msgid_catalog.py:75
 msgid "Já existe uma conta Lineage com este login."
 msgstr "A Lineage account with this login already exists."
 
+#: .\common\i18n_msgid_catalog.py:76
 msgid "Esta conta Lineage já está vinculada."
 msgstr "This Lineage account is already linked."
 
+#: .\common\i18n_msgid_catalog.py:77
 msgid "Limite de contas vinculadas atingido. Compre um slot extra."
 msgstr "Linked account limit reached. Buy an extra slot."
 
+#: .\common\i18n_msgid_catalog.py:78
 msgid "O personagem precisa estar offline."
 msgstr "The character must be offline."
 
+#: .\common\i18n_msgid_catalog.py:79
 msgid "Este nick já está em uso."
 msgstr "This nickname is already in use."
 
+#: .\common\i18n_msgid_catalog.py:82
 msgid "Chamado não encontrado."
 msgstr "Ticket not found."
 
+#: .\common\i18n_msgid_catalog.py:83
 msgid "Esta ação não está disponível para o chamado."
 msgstr "This action is not available for the ticket."
 
-#| msgid "Autenticação em dois fatores"
+#: .\common\i18n_msgid_catalog.py:86
 msgid "Autenticação necessária."
-msgstr "Two-factor authentication"
+msgstr "Authentication required."
 
+#: .\common\i18n_msgid_catalog.py:87
 msgid "Método não permitido."
 msgstr "Method not allowed."
 
+#: .\common\i18n_msgid_catalog.py:88
 msgid "O conteúdo enviado excede o tamanho permitido."
 msgstr "The uploaded content exceeds the allowed size."
 
-#| msgid "Cadastro de apoiador não encontrado."
+#: .\common\i18n_msgid_catalog.py:89
 msgid "Formato de conteúdo não suportado."
-msgstr "Supporter registration not found."
+msgstr "Unsupported content type."
 
+#: .\common\i18n_msgid_catalog.py:90
 msgid "Muitas tentativas. Aguarde um momento e tente novamente."
 msgstr "Too many attempts. Wait a moment and try again."
 
+#: .\common\i18n_msgid_catalog.py:91
 msgid "Ocorreu um erro interno. Tente novamente em instantes."
 msgstr "An internal error occurred. Try again shortly."
 
+#: .\common\i18n_msgid_catalog.py:92
 msgid "Um serviço necessário respondeu com erro."
 msgstr "A required service responded with an error."
 
-#| msgid "Método de pagamento indisponível."
+#: .\common\i18n_msgid_catalog.py:93
 msgid "Serviço temporariamente indisponível."
-msgstr "Payment method unavailable."
+msgstr "Service temporarily unavailable."
 
+#: .\common\i18n_msgid_catalog.py:94
 msgid "Um serviço necessário demorou demais para responder."
 msgstr "A required service took too long to respond."
 
+#: .\common\i18n_msgid_catalog.py:97 .\common\validators.py:14
 msgid "Use apenas letras e números, sem espaços ou símbolos."
 msgstr "Use only letters and numbers, without spaces or symbols."
 
+#: .\common\i18n_msgid_catalog.py:98 .\common\validators.py:16
 msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
 msgstr "Username must be between 3 and 16 characters."
 
-#| msgid "Usuário não encontrado."
-msgid "recurso não encontrado"
-msgstr "User not found."
+#: .\common\i18n_msgid_catalog.py:108
+msgid "Personagem não encontrado nesta conta."
+msgstr "Character not found on this account."
 
+#: .\common\i18n_msgid_catalog.py:109
+msgid "Transferência de moedas indisponível neste servidor."
+msgstr "Coin transfer unavailable on this server."
+
+#: .\common\i18n_msgid_catalog.py:110
+msgid "Observação de itens indisponível neste gateway."
+msgstr "Item observation unavailable on this gateway."
+
+#: .\common\i18n_msgid_catalog.py:111
+msgid "Carteira não encontrada."
+msgstr "Wallet not found."
+
+#: .\common\i18n_msgid_catalog.py:112
+msgid "Saldo insuficiente."
+msgstr "Insufficient balance."
+
+#: .\common\i18n_msgid_catalog.py:113
+msgid "Transferência inválida."
+msgstr "Invalid transfer."
+
+#: .\common\i18n_msgid_catalog.py:114
+msgid "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
+msgstr "Insufficient balance. Bonus cannot be sent to the game."
+
+#: .\common\i18n_msgid_catalog.py:116
+msgid "Código do autenticador"
+msgstr "Authenticator code"
+
+#: .\common\i18n_msgid_catalog.py:124 .\common\mixins.py:65
+msgid "recurso não encontrado"
+msgstr "resource not found"
+
+#: .\common\models.py:20
 msgid "Identificador público. Sempre UUID v4."
 msgstr "Public identifier. Always UUID v4."
 
+#: .\common\models.py:25
 msgid "ID sequencial interno. Nunca expor via API."
 msgstr "Internal sequential ID. Never expose via API."
 
+#: .\core\settings\jazzmin.py:9
 msgid "Acesso ao painel administrativo"
 msgstr "Administrative panel access"
 
+#: .\templates\admin\mfa_login.html:16
 msgid "Log in"
 msgstr "Log in"
