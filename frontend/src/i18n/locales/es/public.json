@@ -34,9 +34,18 @@
     "rights": "© {{year}} PDL PRO. Todos los derechos reservados."
   },
   "faq": {
+    "kicker": "Ayuda",
     "title": "Preguntas frecuentes",
-    "empty": "No se encontraron preguntas.",
-    "language": "Idioma de las respuestas"
+    "description": "Dudas comunes de la comunidad, reunidas en un solo lugar.",
+    "language": "Idioma",
+    "languageAnswers": "Idioma de las respuestas",
+    "search": "Buscar en el FAQ",
+    "placeholder": "Ej.: contraseña, personaje, cartera",
+    "topic": "Tema",
+    "all": "Todos los temas",
+    "loading": "Consultando el centro de ayuda...",
+    "noMatch": "Ninguna pregunta coincide con los filtros.",
+    "empty": "No hay preguntas publicadas por ahora."
   },
   "home": {
     "defaultTitle": "¡Comienza tu aventura en Lineage ahora!",
@@ -328,11 +337,26 @@
     "ratesKicker": "Ritmo del viaje",
     "ratesTitle": "Rates del servidor",
     "rate": {
-      "xp": { "label": "Experiencia", "detail": "Progresión de nivel" },
-      "sp": { "label": "Skill Points", "detail": "Evolución de habilidades" },
-      "adena": { "label": "Adena", "detail": "Economía del servidor" },
-      "drop": { "label": "Drop", "detail": "Objetos de los monstruos" },
-      "spoil": { "label": "Spoil", "detail": "Recolección de materiales" }
+      "xp": {
+        "label": "Experiencia",
+        "detail": "Progresión de nivel"
+      },
+      "sp": {
+        "label": "Skill Points",
+        "detail": "Evolución de habilidades"
+      },
+      "adena": {
+        "label": "Adena",
+        "detail": "Economía del servidor"
+      },
+      "drop": {
+        "label": "Drop",
+        "detail": "Objetos de los monstruos"
+      },
+      "spoil": {
+        "label": "Spoil",
+        "detail": "Recolección de materiales"
+      }
     },
     "enchantKicker": "Fortalece tu equipo",
     "enchantTitle": "Encantamiento",
@@ -410,5 +434,41 @@
       "progress": "En curso",
       "completed": "Completado"
     }
+  },
+  "portal": {
+    "login": "LOGIN",
+    "createAccount": "CREAR CUENTA",
+    "dashboard": "PANEL",
+    "homeAria": "Página de inicio",
+    "mobileNav": "Navegación móvil",
+    "footerNav": "Enlaces del pie",
+    "unitDays": "DÍAS",
+    "unitHours": "HORAS",
+    "unitMins": "MIN",
+    "unitSecs": "SEG",
+    "ratingLoading": "Cargando ranking...",
+    "ratingError": "Ranking no disponible.",
+    "ratingEmpty": "Aún no hay datos de ranking.",
+    "colPosition": "Nº",
+    "colCharacterClan": "PERSONAJE / CLAN",
+    "colScore": "PUNTUACIÓN"
+  },
+  "downloads": {
+    "kicker": "Cliente",
+    "title": "Descargas",
+    "description": "Descarga el cliente, parches y lo necesario para entrar al servidor.",
+    "defaultCategory": "Cliente",
+    "loading": "Consultando los archivos...",
+    "empty": "Ninguna descarga publicada por ahora.",
+    "download": "Descargar"
+  },
+  "calendar": {
+    "title": "Calendario",
+    "empty": "Ningún evento publicado.",
+    "range": "{{start}} — {{end}}"
+  },
+  "resourceGate": {
+    "title": "Recurso temporalmente desactivado",
+    "body": "El equipo pausó este módulo. Tus datos y tu progreso siguen preservados."
   }
 }

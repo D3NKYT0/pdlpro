@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { contentApi, serverApi } from '../../services/api'
@@ -13,6 +14,7 @@ function activeRoute(pathname: string, target: string) {
 }
 
 export function PortalPublicLayout({ presentation }: { presentation: ThemePresentation }) {
+  const { t } = useTranslation('public')
   const { user } = useAuth()
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,10 +29,10 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
     <div className="portal-shell" data-theme-surface="public">
       <header className="site-header">
         <div className="site-header__inner container">
-          <Link to="/" className="logo" aria-label="Página inicial">
+          <Link to="/" className="logo" aria-label={t('portal.homeAria')}>
             <img src={themeAsset('images/logo-text.png')} alt="Valorem" />
           </Link>
-          <nav className="nav-main" aria-label="Navegação principal">
+          <nav className="nav-main" aria-label={t('nav.main')}>
             {presentation.navigation.map((item) => (
               <Link className={activeRoute(pathname, item.to) ? 'is-active' : undefined} key={`${item.to}-${item.label}`} to={item.to}>
                 {item.label}
@@ -38,9 +40,9 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
             ))}
           </nav>
           <div className="header-actions">
-            <Link className="btn-text" to={user ? '/panel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
-            <Link className="btn-gem btn-gem--sm" to="/register">CREATE ACCOUNT</Link>
-            <button className="hamburger" type="button" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+            <Link className="btn-text" to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
+            <Link className="btn-gem btn-gem--sm" to="/register">{t('portal.createAccount')}</Link>
+            <button className="hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
           </div>
@@ -48,11 +50,11 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
       </header>
 
       <div className={`mobile-nav${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen}>
-        <button className="mobile-nav__close" type="button" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>×</button>
-        <nav aria-label="Navegação móvel">
+        <button className="mobile-nav__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
+        <nav aria-label={t('portal.mobileNav')}>
           {presentation.navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/panel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
-          {!user ? <Link to="/register">CREATE ACCOUNT</Link> : null}
+          <Link to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
+          {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
         </nav>
       </div>
 
@@ -64,12 +66,12 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
             <img src={themeAsset('images/logo-footer.png')} alt="Valorem" />
           </Link>
           <p className="site-footer__tagline">{presentation.footer.tagline}</p>
-          <nav className="footer-nav" aria-label="Links do rodapé">
+          <nav className="footer-nav" aria-label={t('portal.footerNav')}>
             {presentation.navigation.slice(0, 5).map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
           </nav>
           <p className="site-footer__copy">{presentation.footer.copyright}</p>
           <p className="site-footer__copy portal-legal-links">
-            <Link to="/terms">Terms of Service</Link> · <Link to="/privacy">Privacy Policy</Link> · <Link to="/agreement">User Agreement</Link>
+            <Link to="/terms">{t('footer.terms')}</Link> · <Link to="/privacy">{t('footer.privacy')}</Link> · <Link to="/agreement">{t('footer.agreement')}</Link>
           </p>
         </div>
       </footer>
@@ -112,6 +114,7 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 }
 
 export function PortalHomePage({ presentation }: { presentation: ThemePresentation }) {
+  const { t } = useTranslation('public')
   const { hero, features, ranking, cta, news: newsContent } = presentation.home
   const sections = presentation.home.sections ?? DEFAULT_HOME_SECTIONS
   const countdown = useCountdown(hero.countdownAt)
@@ -142,11 +145,14 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             <p className="countdown__label">{hero.countdownLabel}</p>
             <div className="countdown__grid">
               {([
-                ['days', 'DAYS'], ['hours', 'HOURS'], ['mins', 'MIN'], ['secs', 'SECONDS'],
-              ] as const).map(([key, label]) => (
+                ['days', 'portal.unitDays'],
+                ['hours', 'portal.unitHours'],
+                ['mins', 'portal.unitMins'],
+                ['secs', 'portal.unitSecs'],
+              ] as const).map(([key, labelKey]) => (
                 <div className="countdown__item" key={key}>
                   <span className="countdown__value">{countdown[key]}</span>
-                  <span className="countdown__unit">{label}</span>
+                  <span className="countdown__unit">{t(labelKey)}</span>
                 </div>
               ))}
             </div>
@@ -189,14 +195,14 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
             ))}
           </div>
           <div className="rating-panel is-active" role="tabpanel">
-            {rankings.isLoading ? <p className="portal-state">Loading rating...</p> : rankings.isError ? <p className="portal-state">Rating unavailable.</p> : (
+            {rankings.isLoading ? <p className="portal-state">{t('portal.ratingLoading')}</p> : rankings.isError ? <p className="portal-state">{t('portal.ratingError')}</p> : (
               <table className="rating-table">
-                <thead><tr><th>Nº</th><th>CHARACTER / CLAN</th><th>SCORE</th></tr></thead>
+                <thead><tr><th>{t('portal.colPosition')}</th><th>{t('portal.colCharacterClan')}</th><th>{t('portal.colScore')}</th></tr></thead>
                 <tbody>
                   {(rankings.data ?? []).map((row) => (
                     <tr key={`${row.position}-${row.name}`}><td className="rank">{String(row.position).padStart(2, '0')}</td><td>{row.name}</td><td>{row.value.toLocaleString('pt-BR')}</td></tr>
                   ))}
-                  {!rankings.data?.length ? <tr><td colSpan={3}>No ranking data yet.</td></tr> : null}
+                  {!rankings.data?.length ? <tr><td colSpan={3}>{t('portal.ratingEmpty')}</td></tr> : null}
                 </tbody>
               </table>
             )}

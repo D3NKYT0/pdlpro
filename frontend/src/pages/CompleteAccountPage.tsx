@@ -1,5 +1,6 @@
 import { apiErrorMessage } from '../lib/errors'
 import { useEffect, useState, type FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
@@ -7,6 +8,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { authApi } from '../services/api'
 
 export function CompleteAccountPage() {
+  const { t } = useTranslation('auth')
   const { user, loading, refreshUser } = useAuth()
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
@@ -21,8 +23,8 @@ export function CompleteAccountPage() {
 
   if (loading) {
     return (
-      <AuthPanel title="Finalizando cadastro" lead="Carregando sua sessão...">
-        <p className="muted">Aguarde um momento.</p>
+      <AuthPanel title={t('complete.titleLoading')} lead={t('common.loadingSession')}>
+        <p className="muted">{t('common.waitMoment')}</p>
       </AuthPanel>
     )
   }
@@ -38,17 +40,17 @@ export function CompleteAccountPage() {
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     if (password !== confirmPassword) {
-      toast.error('As senhas não conferem.')
+      toast.error(t('complete.passwordMismatch'))
       return
     }
     setBusy(true)
     try {
       await authApi.completeCredentials({ username, password, accept_terms: acceptTerms })
       await refreshUser()
-      toast.success('Login e senha definidos. Bem-vindo ao reino.')
+      toast.success(t('complete.success'))
       navigate('/panel', { replace: true })
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível concluir o cadastro.'))
+      toast.error(apiErrorMessage(error, t('complete.error')))
     } finally {
       setBusy(false)
     }
@@ -56,11 +58,11 @@ export function CompleteAccountPage() {
 
   return (
     <AuthPanel
-      title="Defina seu login e senha"
-      lead="Contas via Google ou Discord precisam de usuário e senha próprios para segurança e acesso ao reino."
+      title={t('complete.title')}
+      lead={t('complete.lead')}
     >
       <form className="auth-form" onSubmit={onSubmit}>
-        <AuthField label="Usuário">
+        <AuthField label={t('common.username')}>
           <input
             type="text"
             value={username}
@@ -71,10 +73,10 @@ export function CompleteAccountPage() {
             autoComplete="username"
           />
         </AuthField>
-        <AuthField label="Senha">
+        <AuthField label={t('common.password')}>
           <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
         </AuthField>
-        <AuthField label="Confirmar senha">
+        <AuthField label={t('common.confirmPassword')}>
           <AuthPassword value={confirmPassword} onChange={setConfirmPassword} required minLength={8} autoComplete="new-password" />
         </AuthField>
         <label className="auth-check">
@@ -84,16 +86,16 @@ export function CompleteAccountPage() {
             onChange={(event) => setAcceptTerms(event.target.checked)}
             required
           />
-          Eu concordo com os <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
+          {t('common.acceptTermsPrefix')} <Link to="/terms">{t('common.terms')}</Link> {t('common.acceptTermsAnd')} <Link to="/privacy">{t('common.privacy')}</Link>
         </label>
         <div className="h-link">
           <button type="submit" disabled={busy || !acceptTerms}>
-            {busy ? 'Salvando...' : 'Concluir cadastro'}
+            {busy ? t('complete.submitting') : t('complete.submit')}
           </button>
         </div>
       </form>
       <p className="auth-security-note">
-        <i className="fa-solid fa-shield-halved" /> O e-mail verificado do provedor já está vinculado; este passo cria suas credenciais locais.
+        <i className="fa-solid fa-shield-halved" /> {t('complete.securityNote')}
       </p>
     </AuthPanel>
   )

@@ -2,6 +2,7 @@ import { apiErrorMessage } from '../lib/errors'
 import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
@@ -13,6 +14,7 @@ import { authApi } from '../services/api'
 const SESSION_MANAGER_PATH = '/panel/security'
 
 export function RegisterPage() {
+  const { t } = useTranslation('auth')
   const { user, loading, register } = useAuth()
   const navigate = useNavigate()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
@@ -24,8 +26,8 @@ export function RegisterPage() {
 
   if (loading) {
     return (
-      <AuthPanel title="Crie sua conta mestre" lead="Carregando sua sessão...">
-        <p className="muted">Aguarde um momento.</p>
+      <AuthPanel title={t('register.title')} lead={t('common.loadingSession')}>
+        <p className="muted">{t('common.waitMoment')}</p>
       </AuthPanel>
     )
   }
@@ -41,31 +43,31 @@ export function RegisterPage() {
     event.preventDefault()
     try {
       await register({ username, email, password, accept_terms: acceptTerms, hcaptcha_token: captchaToken })
-      toast.success('Conta criada. Confirme o e-mail enviado.')
+      toast.success(t('register.success'))
       navigate('/panel')
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Falha no cadastro'))
+      toast.error(apiErrorMessage(error, t('register.error')))
     }
   }
 
   return (
     <AuthPanel
-      title="Crie sua conta mestre"
-      lead="Cadastre-se com usuário e senha ou continue com Google ou Discord."
+      title={t('register.title')}
+      lead={t('register.lead')}
     >
       <form className="auth-form" onSubmit={onSubmit}>
-        <AuthField label="Usuário">
+        <AuthField label={t('common.username')}>
           <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} maxLength={16} autoComplete="username" />
         </AuthField>
-        <AuthField label="E-mail">
+        <AuthField label={t('common.email')}>
           <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />
         </AuthField>
-        <AuthField label="Senha">
+        <AuthField label={t('common.password')}>
           <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
         </AuthField>
         <label className="auth-check">
           <input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} required />
-          Eu concordo com os <Link to="/terms">termos</Link> e a <Link to="/privacy">privacidade</Link>
+          {t('common.acceptTermsPrefix')} <Link to="/terms">{t('common.terms')}</Link> {t('common.acceptTermsAnd')} <Link to="/privacy">{t('common.privacy')}</Link>
         </label>
         {capabilities.data?.captcha && capabilities.data.hcaptcha_site_key ? (
           <div className="auth-captcha">
@@ -73,33 +75,33 @@ export function RegisterPage() {
           </div>
         ) : null}
         <div className="h-link">
-          <button type="submit" disabled={Boolean(capabilities.data?.captcha && !captchaToken)}>Crie sua conta mestra</button>
-          <Link to="/login">Entrar no Reino</Link>
+          <button type="submit" disabled={Boolean(capabilities.data?.captcha && !captchaToken)}>{t('register.submit')}</button>
+          <Link to="/login">{t('common.enterRealm')}</Link>
         </div>
       </form>
-      <div className="auth-divider"><span>ou continue com</span></div>
+      <div className="auth-divider"><span>{t('common.orContinueWith')}</span></div>
       <div className="auth-methods">
         <button
           type="button"
           className="auth-method"
           disabled={!capabilities.data?.google}
           onClick={() => void beginOAuth('google', 'login')}
-          title={!capabilities.data?.google ? 'Configure as credenciais Google no ambiente' : undefined}
+          title={!capabilities.data?.google ? t('common.googleNotConfigured') : undefined}
         >
-          <GoogleIcon /> Google
+          <GoogleIcon /> {t('common.google')}
         </button>
         <button
           type="button"
           className="auth-method"
           disabled={!capabilities.data?.discord}
           onClick={() => void beginOAuth('discord', 'login')}
-          title={!capabilities.data?.discord ? 'Configure as credenciais Discord no ambiente' : undefined}
+          title={!capabilities.data?.discord ? t('common.discordNotConfigured') : undefined}
         >
-          <DiscordIcon /> Discord
+          <DiscordIcon /> {t('common.discord')}
         </button>
       </div>
       <p className="auth-security-note">
-        <i className="fa-solid fa-shield-halved" /> Sem conta prévia, Google e Discord criam a conta mestra automaticamente com e-mail verificado.
+        <i className="fa-solid fa-shield-halved" /> {t('register.securityNote')}
       </p>
     </AuthPanel>
   )

@@ -23,6 +23,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Páginas públicas **Info**, **Rankings**, **Wiki**, **News**, **Roadmap** e
   **Legal** (acordo/termos/privacidade) com chrome i18n pt/en/es; wiki/news/legal
   pedem `?lang=` conforme o idioma ativo.
+- Cobertura i18n restante do público: **Downloads**, **Calendário**, **FAQ**
+  (`public.json`), fluxo de **auth** (`auth.json`), chrome do tema **portal-v1**
+  e mensagem do **ResourceGate**.
 
 ## [2.2.0] - 2026-09-09
 

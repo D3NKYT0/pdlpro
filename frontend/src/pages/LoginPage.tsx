@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { useQuery } from '@tanstack/react-query'
 import { Fingerprint } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
@@ -25,6 +26,7 @@ function alreadyLoggedInDestination(nextParam: string | null) {
 }
 
 export function LoginPage() {
+  const { t } = useTranslation('auth')
   const { user, loading, login, verifyTwoFactor, refreshUser } = useAuth()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const navigate = useNavigate()
@@ -41,8 +43,8 @@ export function LoginPage() {
 
   if (loading) {
     return (
-      <AuthPanel title="Entre no Reino" lead="Carregando sua sessão...">
-        <p className="muted">Aguarde um momento.</p>
+      <AuthPanel title={t('login.title')} lead={t('common.loadingSession')}>
+        <p className="muted">{t('common.waitMoment')}</p>
       </AuthPanel>
     )
   }
@@ -65,7 +67,7 @@ export function LoginPage() {
       const result = await login(loginValue, password, captchaToken)
       if (isTwoFactorChallenge(result)) {
         setChallenge(result.challenge)
-        toast.success('Informe o código do autenticador')
+        toast.success(t('login.toast2fa'))
         return
       }
       navigate(next)
@@ -74,30 +76,30 @@ export function LoginPage() {
         setCaptchaRequired(true)
         setCaptchaToken('')
       }
-      toast.error(apiErrorMessage(error, 'Falha no login'))
+      toast.error(apiErrorMessage(error, t('login.error')))
     }
   }
 
   async function loginWithPasskey() {
     if (!window.PublicKeyCredential) {
-      toast.error('Este navegador não oferece suporte a chaves de acesso.')
+      toast.error(t('login.passkeyUnsupported'))
       return
     }
     setPasskeyLoading(true)
     try {
       const begin = await authApi.beginPasskeyLogin(loginValue)
       const credential = await navigator.credentials.get({ publicKey: requestOptions(begin.options) }) as PublicKeyCredential | null
-      if (!credential) throw new Error('Operação cancelada')
+      if (!credential) throw new Error(t('login.passkeyCancelled'))
       const result = await authApi.completePasskeyLogin(begin.state, credentialJSON(credential))
       if (isTwoFactorChallenge(result)) {
         setChallenge(result.challenge)
-        toast.success('Informe o código do autenticador')
+        toast.success(t('login.toast2fa'))
         return
       }
       await refreshUser()
       navigate(next)
     } catch (error) {
-      toast.error(apiErrorMessage(error, 'Não foi possível entrar com a chave de acesso.'))
+      toast.error(apiErrorMessage(error, t('login.passkeyError')))
     } finally {
       setPasskeyLoading(false)
     }
@@ -105,25 +107,25 @@ export function LoginPage() {
 
   return (
     <AuthPanel
-      title={challenge ? 'Verificação 2FA' : 'Entre no Reino'}
-      lead={challenge ? 'Informe o código do autenticador para continuar.' : undefined}
+      title={challenge ? t('login.title2fa') : t('login.title')}
+      lead={challenge ? t('login.lead2fa') : undefined}
       footer={
         <p>
-          <Link to="/forgot-password">Esqueceu a senha?</Link>
+          <Link to="/forgot-password">{t('login.forgotLink')}</Link>
         </p>
       }
     >
       <form className="auth-form" onSubmit={onSubmit}>
         {challenge ? (
-          <AuthField label="Código do autenticador">
+          <AuthField label={t('login.codeLabel')}>
             <input value={code} onChange={(event) => setCode(event.target.value)} required autoFocus inputMode="numeric" />
           </AuthField>
         ) : (
           <>
-            <AuthField label="Usuário">
+            <AuthField label={t('common.username')}>
               <input type="text" value={loginValue} onChange={(event) => setLoginValue(event.target.value)} required autoComplete="username" />
             </AuthField>
-            <AuthField label="Senha">
+            <AuthField label={t('common.password')}>
               <AuthPassword value={password} onChange={setPassword} required autoComplete="current-password" />
             </AuthField>
             {captchaRequired && capabilities.data?.hcaptcha_site_key ? (
@@ -140,25 +142,25 @@ export function LoginPage() {
           </>
         )}
         <div className="h-link">
-          <button type="submit">{challenge ? 'Confirmar' : 'Entrar no Reino'}</button>
-          <Link to="/register">Crie sua conta mestra</Link>
+          <button type="submit">{challenge ? t('login.confirm') : t('login.submit')}</button>
+          <Link to="/register">{t('login.createAccount')}</Link>
         </div>
       </form>
       {!challenge ? (
         <>
-          <div className="auth-divider"><span>ou continue com</span></div>
+          <div className="auth-divider"><span>{t('common.orContinueWith')}</span></div>
           <div className="auth-methods">
             <button type="button" className="auth-method auth-method-passkey" disabled={passkeyLoading} onClick={() => void loginWithPasskey()}>
-              <Fingerprint aria-hidden="true" /> {passkeyLoading ? 'Aguardando...' : 'Chave de acesso'}
+              <Fingerprint aria-hidden="true" /> {passkeyLoading ? t('login.passkeyWaiting') : t('login.passkey')}
             </button>
-            <button type="button" className="auth-method" disabled={!capabilities.data?.google} onClick={() => void beginOAuth('google', 'login')} title={!capabilities.data?.google ? 'Configure as credenciais Google no ambiente' : undefined}>
-              <GoogleIcon /> Google
+            <button type="button" className="auth-method" disabled={!capabilities.data?.google} onClick={() => void beginOAuth('google', 'login')} title={!capabilities.data?.google ? t('common.googleNotConfigured') : undefined}>
+              <GoogleIcon /> {t('common.google')}
             </button>
-            <button type="button" className="auth-method" disabled={!capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'login')} title={!capabilities.data?.discord ? 'Configure as credenciais Discord no ambiente' : undefined}>
-              <DiscordIcon /> Discord
+            <button type="button" className="auth-method" disabled={!capabilities.data?.discord} onClick={() => void beginOAuth('discord', 'login')} title={!capabilities.data?.discord ? t('common.discordNotConfigured') : undefined}>
+              <DiscordIcon /> {t('common.discord')}
             </button>
           </div>
-          <p className="auth-security-note"><i className="fa-solid fa-shield-halved" /> Protegido por CAPTCHA adaptativo, verificação de e-mail e 2FA.</p>
+          <p className="auth-security-note"><i className="fa-solid fa-shield-halved" /> {t('login.securityNote')}</p>
         </>
       ) : null}
     </AuthPanel>

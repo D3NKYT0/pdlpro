@@ -34,9 +34,18 @@
     "rights": "© {{year}} PDL PRO. Todos os direitos reservados."
   },
   "faq": {
+    "kicker": "Ajuda",
     "title": "Perguntas Frequentes",
-    "empty": "Nenhuma pergunta encontrada.",
-    "language": "Idioma das respostas"
+    "description": "Dúvidas comuns da comunidade, reunidas num só lugar.",
+    "language": "Idioma",
+    "languageAnswers": "Idioma das respostas",
+    "search": "Buscar no FAQ",
+    "placeholder": "Ex.: senha, personagem, carteira",
+    "topic": "Assunto",
+    "all": "Todos os assuntos",
+    "loading": "Consultando a central de ajuda...",
+    "noMatch": "Nenhuma pergunta corresponde aos filtros.",
+    "empty": "Nenhuma pergunta publicada no momento."
   },
   "home": {
     "defaultTitle": "Inicie sua Jornada em Lineage Agora!",
@@ -328,11 +337,26 @@
     "ratesKicker": "Ritmo da jornada",
     "ratesTitle": "Rates do servidor",
     "rate": {
-      "xp": { "label": "Experiência", "detail": "Progressão de nível" },
-      "sp": { "label": "Skill Points", "detail": "Evolução de habilidades" },
-      "adena": { "label": "Adena", "detail": "Economia do servidor" },
-      "drop": { "label": "Drop", "detail": "Itens dos monstros" },
-      "spoil": { "label": "Spoil", "detail": "Coleta de materiais" }
+      "xp": {
+        "label": "Experiência",
+        "detail": "Progressão de nível"
+      },
+      "sp": {
+        "label": "Skill Points",
+        "detail": "Evolução de habilidades"
+      },
+      "adena": {
+        "label": "Adena",
+        "detail": "Economia do servidor"
+      },
+      "drop": {
+        "label": "Drop",
+        "detail": "Itens dos monstros"
+      },
+      "spoil": {
+        "label": "Spoil",
+        "detail": "Coleta de materiais"
+      }
     },
     "enchantKicker": "Fortaleça seu equipamento",
     "enchantTitle": "Encantamento",
@@ -410,5 +434,41 @@
       "progress": "Em andamento",
       "completed": "Concluído"
     }
+  },
+  "portal": {
+    "login": "LOGIN",
+    "createAccount": "CRIAR CONTA",
+    "dashboard": "PAINEL",
+    "homeAria": "Página inicial",
+    "mobileNav": "Navegação móvel",
+    "footerNav": "Links do rodapé",
+    "unitDays": "DIAS",
+    "unitHours": "HORAS",
+    "unitMins": "MIN",
+    "unitSecs": "SEG",
+    "ratingLoading": "Carregando ranking...",
+    "ratingError": "Ranking indisponível.",
+    "ratingEmpty": "Ainda sem dados de ranking.",
+    "colPosition": "Nº",
+    "colCharacterClan": "PERSONAGEM / CLÃ",
+    "colScore": "PONTUAÇÃO"
+  },
+  "downloads": {
+    "kicker": "Cliente",
+    "title": "Downloads",
+    "description": "Baixe o cliente, patches e o que for preciso para entrar no servidor.",
+    "defaultCategory": "Cliente",
+    "loading": "Consultando os arquivos...",
+    "empty": "Nenhum download publicado no momento.",
+    "download": "Baixar"
+  },
+  "calendar": {
+    "title": "Calendário",
+    "empty": "Nenhum evento publicado.",
+    "range": "{{start}} — {{end}}"
+  },
+  "resourceGate": {
+    "title": "Recurso temporariamente desativado",
+    "body": "A equipe pausou este módulo. Seus dados e seu progresso continuam preservados."
   }
 }

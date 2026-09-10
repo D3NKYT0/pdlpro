@@ -34,9 +34,18 @@
     "rights": "© {{year}} PDL PRO. All rights reserved."
   },
   "faq": {
+    "kicker": "Help",
     "title": "Frequently Asked Questions",
-    "empty": "No questions found.",
-    "language": "Answer language"
+    "description": "Common community questions, gathered in one place.",
+    "language": "Language",
+    "languageAnswers": "Answer language",
+    "search": "Search the FAQ",
+    "placeholder": "E.g. password, character, wallet",
+    "topic": "Topic",
+    "all": "All topics",
+    "loading": "Loading the help center...",
+    "noMatch": "No questions match the filters.",
+    "empty": "No published questions right now."
   },
   "home": {
     "defaultTitle": "Begin your Lineage journey now!",
@@ -328,11 +337,26 @@
     "ratesKicker": "Pace of the journey",
     "ratesTitle": "Server rates",
     "rate": {
-      "xp": { "label": "Experience", "detail": "Level progression" },
-      "sp": { "label": "Skill Points", "detail": "Skill advancement" },
-      "adena": { "label": "Adena", "detail": "Server economy" },
-      "drop": { "label": "Drop", "detail": "Monster loot" },
-      "spoil": { "label": "Spoil", "detail": "Material gathering" }
+      "xp": {
+        "label": "Experience",
+        "detail": "Level progression"
+      },
+      "sp": {
+        "label": "Skill Points",
+        "detail": "Skill advancement"
+      },
+      "adena": {
+        "label": "Adena",
+        "detail": "Server economy"
+      },
+      "drop": {
+        "label": "Drop",
+        "detail": "Monster loot"
+      },
+      "spoil": {
+        "label": "Spoil",
+        "detail": "Material gathering"
+      }
     },
     "enchantKicker": "Strengthen your gear",
     "enchantTitle": "Enchanting",
@@ -410,5 +434,41 @@
       "progress": "In progress",
       "completed": "Completed"
     }
+  },
+  "portal": {
+    "login": "LOGIN",
+    "createAccount": "CREATE ACCOUNT",
+    "dashboard": "DASHBOARD",
+    "homeAria": "Home page",
+    "mobileNav": "Mobile navigation",
+    "footerNav": "Footer links",
+    "unitDays": "DAYS",
+    "unitHours": "HOURS",
+    "unitMins": "MIN",
+    "unitSecs": "SECONDS",
+    "ratingLoading": "Loading rating...",
+    "ratingError": "Rating unavailable.",
+    "ratingEmpty": "No ranking data yet.",
+    "colPosition": "Nº",
+    "colCharacterClan": "CHARACTER / CLAN",
+    "colScore": "SCORE"
+  },
+  "downloads": {
+    "kicker": "Client",
+    "title": "Downloads",
+    "description": "Download the client, patches and everything you need to join the server.",
+    "defaultCategory": "Client",
+    "loading": "Loading files...",
+    "empty": "No downloads published right now.",
+    "download": "Download"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "empty": "No events published.",
+    "range": "{{start}} — {{end}}"
+  },
+  "resourceGate": {
+    "title": "Feature temporarily disabled",
+    "body": "The team paused this module. Your data and progress remain preserved."
   }
 }

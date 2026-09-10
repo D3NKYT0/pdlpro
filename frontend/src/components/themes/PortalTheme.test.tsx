@@ -2,8 +2,11 @@
 import '@testing-library/jest-dom/vitest'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import type { ReactElement } from 'react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { I18nextProvider } from 'react-i18next'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+import i18n from '../../i18n'
 import { contentApi, serverApi } from '../../services/api'
 import type { ThemePresentation } from '../../services/api'
 import { PortalHomePage, PortalPublicLayout } from './PortalTheme'
@@ -43,6 +46,10 @@ function queryClient() {
   return new QueryClient({ defaultOptions: { queries: { retry: false } } })
 }
 
+function wrap(ui: ReactElement) {
+  return <I18nextProvider i18n={i18n}>{ui}</I18nextProvider>
+}
+
 beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-02T00:00:00Z').getTime())
   vi.mocked(serverApi.rankings).mockReset()
@@ -58,13 +65,13 @@ afterEach(() => {
 })
 
 it('executa countdown e troca o ranking usando dados reais da API', async () => {
-  render(
+  render(wrap(
     <QueryClientProvider client={queryClient()}>
       <MemoryRouter><PortalHomePage presentation={presentation} /></MemoryRouter>
     </QueryClientProvider>,
-  )
+  ))
   expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
-  expect(screen.getByLabelText('SERVER IS OPENING IN')).toHaveTextContent('01DAYS')
+  expect(screen.getByLabelText('SERVER IS OPENING IN')).toHaveTextContent('01DIAS')
   expect(await screen.findByText('Equinox')).toBeInTheDocument()
   expect(serverApi.rankings).toHaveBeenCalledWith('pvp', 5)
 
@@ -73,7 +80,7 @@ it('executa countdown e troca o ranking usando dados reais da API', async () => 
 })
 
 it('entrega o chrome completo e o comportamento do menu móvel', () => {
-  render(
+  render(wrap(
     <MemoryRouter>
       <Routes>
         <Route element={<PortalPublicLayout presentation={presentation} />}>
@@ -81,7 +88,7 @@ it('entrega o chrome completo e o comportamento do menu móvel', () => {
         </Route>
       </Routes>
     </MemoryRouter>,
-  )
+  ))
   fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
   expect(screen.getByText('Conteúdo').closest('[data-theme-surface="public"]')).not.toBeNull()
   expect(screen.getByRole('navigation', { name: 'Navegação móvel' })).toBeVisible()
@@ -91,7 +98,7 @@ it('entrega o chrome completo e o comportamento do menu móvel', () => {
 })
 
 it('respeita ordem e omissão de seções declaradas no presentation', async () => {
-  render(
+  render(wrap(
     <QueryClientProvider client={queryClient()}>
       <MemoryRouter>
         <PortalHomePage presentation={{
@@ -100,7 +107,7 @@ it('respeita ordem e omissão de seções declaradas no presentation', async () 
         }} />
       </MemoryRouter>
     </QueryClientProvider>,
-  )
+  ))
   expect(screen.getByText('Ready for Battle?')).toBeInTheDocument()
   expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
   expect(screen.queryByText('Unique Systems')).not.toBeInTheDocument()
