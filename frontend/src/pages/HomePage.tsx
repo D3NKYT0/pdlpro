@@ -7,6 +7,7 @@ import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
+import { ThemeHeroVideo } from '../components/ThemeHeroVideo'
 
 function clanInitial(name: string) {
   return (name.trim()[0] || '?').toUpperCase()
@@ -102,11 +103,8 @@ function DefaultHomePage() {
 
   return (
     <div data-theme-part="home">
-      <div className="video">
-        <video autoPlay muted loop playsInline src={themeImage('video.mp4')} onError={(event) => event.currentTarget.remove()} />
-      </div>
-
       <section className="h">
+        <ThemeHeroVideo />
         <div className="h-logo"><PdlHeroEmblem /></div>
         <h1>{serverName}</h1>
         <p className="hero-description">"{serverDescription}"</p>

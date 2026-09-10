@@ -71,3 +71,27 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 768px) {
+  .apoiadores-banner {
+    padding: 12px 0;
+  }
+
+  .banner-track span {
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 0 18px;
+  }
+
+  .banner-track span::after {
+    margin-left: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-track span {
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 0 12px;
+  }
+}

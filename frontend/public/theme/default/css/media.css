@@ -3,6 +3,9 @@
     font-size: 40px;
     line-height: 40px;
   }
+  html.pdl-public [data-theme-part="home"] {
+    overflow-x: clip;
+  }
   .loading .l-logo .letters img {
     width: 250px;
   }
@@ -33,9 +36,27 @@
   }
   .h {
     height: auto;
-    min-height: 0;
+    min-height: min(100svh, 920px);
     padding: 96px 18px 56px;
     box-sizing: border-box;
+    background-size: cover, cover;
+    background-position: center, center top;
+  }
+
+  .video {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
   }
   .h h1 {
     font-size: clamp(1.75rem, 7.5vw, 2.35rem);
@@ -67,23 +88,40 @@
             flex-direction: column;
     -webkit-transform: none;
             transform: none;
-    gap: 12px;
-    margin: 28px 0 24px;
+    gap: 10px;
+    margin: 28px auto 24px;
     width: 100%;
+    max-width: 248px;
+    padding: 0;
+    box-sizing: border-box;
   }
   .h .h-link a {
-    width: min(100%, 320px);
-    max-width: 100%;
-    height: 72px;
-    margin: 0;
-    font-size: 17px;
-    background-size: 100% 100%;
+    width: 100%;
+    max-width: 240px;
+    height: 62px;
+    margin: 0 auto;
+    padding: 0 28px;
+    font-size: 14px;
+    line-height: 1.15;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+  /* O shorthand de .h .h-link a:nth-child(n) reseta background-size; forçar arte completa. */
+  .h .h-link a:nth-child(1) {
+    background: var(--theme-button-primary, url(../images/button/1.png)) center / 100% 100% no-repeat;
+  }
+  .h .h-link a:nth-child(2) {
+    background: var(--theme-button-secondary, url(../images/button/2.png)) center / 100% 100% no-repeat;
   }
   .hero-description {
     font-size: 1rem;
     line-height: 1.5;
     max-width: 34ch;
     padding: 0 8px;
+  }
+  .h-scroll {
+    margin-top: 8px;
   }
   nav .open {
     margin-left: 15px;
@@ -172,6 +210,48 @@
   }
   nav div .download {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .h {
+    padding: 88px 14px 44px;
+  }
+
+  .h h1 {
+    font-size: clamp(1.45rem, 8vw, 1.85rem);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    padding: 0 4px;
+  }
+
+  .pdl-emblem-stage {
+    width: 132px;
+    height: 132px;
+  }
+
+  .pdl-emblem-symbol {
+    width: 100px;
+    height: 100px;
+  }
+
+  .h .h-link {
+    gap: 8px;
+    margin: 20px auto 18px;
+    max-width: 228px;
+  }
+
+  .h .h-link a {
+    max-width: 220px;
+    height: 56px;
+    padding: 0 24px;
+    font-size: 13px;
+  }
+
+  .hero-description {
+    font-size: 0.92rem;
+    max-width: 100%;
+    padding: 0 4px;
   }
 }
 /*# sourceMappingURL=media.css.map */

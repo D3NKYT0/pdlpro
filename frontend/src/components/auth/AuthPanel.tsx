@@ -1,8 +1,9 @@
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { themeAsset, themeImage } from '../../theme/assets'
+import { themeAsset } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
 import { PdlHeroEmblem } from '../PdlSymbol'
+import { ThemeHeroVideo } from '../ThemeHeroVideo'
 
 type AuthPanelProps = {
   title: string
@@ -37,10 +38,8 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
   }
   return (
     <div data-theme-surface="auth">
-      <div className="video">
-        <video autoPlay muted loop playsInline src={themeImage('video.mp4')} onError={(event) => event.currentTarget.remove()} />
-      </div>
       <section className="h auth-hero">
+        <ThemeHeroVideo />
         <div className="auth-split">
           <div className="auth-brand">
             <div className="h-logo">

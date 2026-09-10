@@ -397,14 +397,18 @@
   justify-content: center;
   font-size: 21px;
   font-weight: 300;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(0);
+  opacity: 1;
 }
 
 .home-cta-links a:first-child {
-  background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) top no-repeat;
+  background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) center / 100% 100% no-repeat;
 }
 
 .home-cta-links a:last-child {
-  background: var(--theme-button-secondary, url(/theme/default/images/button/2.png)) top no-repeat;
+  background: var(--theme-button-secondary, url(/theme/default/images/button/2.png)) center / 100% 100% no-repeat;
 }
 
 .home-cta-links a:hover {
@@ -547,46 +551,197 @@
   .home-clans,
   .home-rankings,
   .trailer-section {
-    padding: 72px 0 64px;
+    padding: 64px 0 56px;
+    overflow-x: clip;
+  }
+
+  .home-clans .title h1,
+  .home-rankings .title h1,
+  .trailer-section .title h1 {
+    font-size: clamp(1.65rem, 7vw, 2.35rem);
+    line-height: 1.2;
+    letter-spacing: -1px;
+    padding: 0 12px;
+    max-width: 100%;
   }
 
   .clan-podium {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 36px;
+    gap: 8px;
+    padding: 0 12px;
   }
 
   .clan-card,
   .clan-card.place-1,
   .clan-card.place-2,
   .clan-card.place-3 {
-    order: 0;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .clan-card.place-2 {
+    order: 1;
     transform: none;
-    width: 100%;
-    max-width: 420px;
   }
 
   .clan-card.place-1 {
-    order: -1;
+    order: 2;
+    transform: translateY(-10px);
+  }
+
+  .clan-card.place-3 {
+    order: 3;
+    transform: none;
+  }
+
+  .clan-card:hover,
+  .clan-card.place-1:hover {
+    transform: none;
+  }
+
+  .clan-card.place-1:hover {
+    transform: translateY(-10px);
+  }
+
+  .clan-card-inner,
+  .clan-card.place-1 .clan-card-inner {
+    min-height: 0;
+    padding: 14px 8px 12px;
+  }
+
+  .clan-card.place-1 .clan-card-inner {
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .clan-place {
+    gap: 4px;
+    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .clan-podium .home-crest {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+
+  .clan-card h3 {
+    margin: 12px 0 6px;
+    font-size: 13px;
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .clan-card strong {
+    font-size: 13px;
+    line-height: 1.2;
+    word-break: break-all;
+  }
+
+  .clan-card em {
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    margin-top: 2px;
+  }
+
+  .clan-board {
+    margin: 28px 16px 0;
+    max-width: none;
   }
 
   .clan-board li {
-    grid-template-columns: 32px 48px 1fr;
-    padding: 12px 16px;
+    grid-template-columns: 28px 40px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .clan-board-name {
+    font-size: 15px;
+    overflow-wrap: anywhere;
   }
 
   .clan-board-score {
-    grid-column: 3;
-    justify-self: end;
-    font-size: 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .ranking-tiles {
+    margin-top: 36px;
+    gap: 12px;
+    padding: 0 16px;
   }
 
   .ranking-tile-inner {
-    min-height: 120px;
+    min-height: 108px;
+    padding: 22px 16px;
+  }
+
+  .home-cta {
+    margin-top: 40px;
+    padding: 0 16px;
+  }
+
+  .home-cta span {
+    font-size: 18px;
+  }
+
+  .home-cta p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .home-cta-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
   }
 
   .home-cta-links a {
-    width: 100%;
+    width: min(100%, 240px);
+    max-width: 240px;
+    height: 62px;
+    font-size: 14px;
+    line-height: 1.15;
+    padding: 0 28px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .home-cta-links a:first-child {
+    background: var(--theme-button-primary, url(/theme/default/images/button/1.png)) center / 100% 100% no-repeat;
+  }
+
+  .home-cta-links a:last-child {
+    background: var(--theme-button-secondary, url(/theme/default/images/button/2.png)) center / 100% 100% no-repeat;
+  }
+
+  .home-cta-links a:hover {
+    transform: none;
+  }
+
+  .trailer-frame {
+    margin: 36px 16px 0;
+    padding: 10px;
+  }
+
+  .server-plaque {
+    margin-inline: 16px;
+  }
+
+  .home-more {
+    margin-top: 28px;
+    padding: 0 16px;
   }
 }
 
@@ -594,8 +749,8 @@
   .home-clans .title h1,
   .home-rankings .title h1,
   .trailer-section .title h1 {
-    font-size: 32px;
-    letter-spacing: -1px;
+    font-size: 1.55rem;
+    letter-spacing: -0.5px;
   }
 
   .ranking-tiles {
@@ -613,6 +768,60 @@
 
   .server-plaque > div:last-child {
     border-bottom: 0;
+  }
+
+  .clan-board li {
+    grid-template-columns: 24px 36px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .clan-board-score {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .clan-podium {
+    gap: 6px;
+    padding: 0 10px;
+  }
+
+  .clan-card-inner,
+  .clan-card.place-1 .clan-card-inner {
+    padding: 12px 6px 10px;
+  }
+
+  .clan-podium .home-crest {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .clan-card h3 {
+    font-size: 11px;
+  }
+
+  .clan-card strong {
+    font-size: 11px;
+  }
+
+  .clan-place {
+    font-size: 9px;
+  }
+
+  .home-cta-links a {
+    max-width: 220px;
+    height: 56px;
+    font-size: 13px;
+    padding: 0 24px;
+  }
+
+  .home-empty {
+    margin: 40px 16px 0;
+    padding: 36px 20px;
+  }
+
+  .home-empty p {
+    font-size: 16px;
   }
 }
 
@@ -923,7 +1132,14 @@
 @media (max-width: 768px) {
   .video {
     height: 100%;
-    min-height: 100dvh;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .video video {
+    object-fit: cover;
+    object-position: center center;
   }
 
   .f.home-features {
@@ -1014,8 +1230,8 @@
   }
 
   .home-wiki .w-list a.update > div > div {
-    padding-top: 132px;
-    padding-bottom: 22px;
+    padding-top: 96px;
+    padding-bottom: 18px;
   }
 
   .home-wiki .w-list a.update > div > div p {
@@ -1024,23 +1240,37 @@
     white-space: normal;
   }
 
+  .home-wiki .w-list .wiki,
+  .home-wiki .w-list .wiki div,
+  .home-wiki .w-list a.update,
+  .home-wiki .w-list a.update > div {
+    min-height: 180px;
+  }
+
   .c {
     height: auto;
     min-height: 0;
-    padding: 72px 20px 64px;
+    padding: 64px 16px 56px;
   }
 
   .c .title h1 {
     width: 100%;
-    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    font-size: clamp(1.55rem, 7vw, 2.1rem);
     line-height: 1.2;
   }
 
+  .c .c-link {
+    transform: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .c .c-link a {
-    width: min(100%, 280px);
-    height: 84px;
-    background-size: contain;
+    width: min(100%, 260px);
+    height: 64px;
+    background-size: 100% 100%;
     background-position: center;
+    background-repeat: no-repeat;
   }
 }
 
@@ -1055,5 +1285,26 @@
   .home-features .f-list a:hover,
   .home-wiki .w-list a.update:hover {
     transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .f.home-features,
+  .w.home-wiki {
+    padding: 56px 0 48px;
+  }
+
+  .home-features .f-title h1,
+  .home-wiki .w-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .home-features .f-list a,
+  .home-features .f-list a div {
+    min-height: 148px;
+  }
+
+  .home-features .f-list a div span {
+    padding: 22px 14px 18px;
   }
 }

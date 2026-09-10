@@ -201,7 +201,7 @@ div {
 
 .video {
   width: 100%;
-  height: 1080px;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -212,8 +212,10 @@ div {
       -ms-flex-pack: center;
           justify-content: center;
   position: absolute;
+  inset: 0;
   overflow: hidden;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .video video {
@@ -223,6 +225,26 @@ div {
      object-fit: cover;
   -o-object-position: center center;
      object-position: center center;
+}
+
+.h {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.42) 48%, rgba(0, 0, 0, 0.72) 100%),
+    url(../images/bg/1.png) top no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-position-y: 100px;
+  height: 975px;
+  width: 100%;
+  padding-top: 160px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.h > :not(.video) {
+  position: relative;
+  z-index: 1;
 }
 
 nav {
@@ -532,16 +554,6 @@ nav ul li a {
   }
 }
 
-.h {
-  background: url(../images/bg/1.png) top no-repeat;
-  background-color: rgba(0, 0, 0, 0.8);
-  background-position-y: 100px;
-  height: 975px;
-  width: 100%;
-  padding-top: 160px;
-  text-align: center;
-}
-
 .h .h-logo {
   position: relative;
   display: -webkit-box;
@@ -650,14 +662,16 @@ nav ul li a {
           justify-content: center;
   margin-top: 36px;
   margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 .h .h-link a:nth-child(1) {
-  background: url(../images/button/1.png) top no-repeat;
+  background: var(--theme-button-primary, url(../images/button/1.png)) center / 100% 100% no-repeat;
 }
 
 .h .h-link a:nth-child(2) {
-  background: url(../images/button/2.png) top no-repeat;
+  background: var(--theme-button-secondary, url(../images/button/2.png)) center / 100% 100% no-repeat;
 }
 
 .h .h-link a {
@@ -677,12 +691,19 @@ nav ul li a {
   font-size: 21px;
   line-height: 25px;
   font-weight: 300;
+  position: relative;
+  z-index: 2;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  opacity: 1;
+  -webkit-filter: none;
+          filter: none;
 }
 
 .h .h-link a:hover {
   text-shadow: 0px 0px 20px orange;
-  -webkit-transform: translateY(-10px);
-          transform: translateY(-10px);
+  -webkit-transform: translate3d(0, -10px, 0);
+          transform: translate3d(0, -10px, 0);
   -webkit-filter: brightness(140%);
           filter: brightness(140%);
 }
