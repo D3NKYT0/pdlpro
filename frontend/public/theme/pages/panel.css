@@ -6687,8 +6687,11 @@ html.pdl-panel .security-lgpd-actions {
 html.pdl-panel .security-lgpd-delete-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
+  gap: 12px;
   align-items: end;
+}
+html.pdl-panel .security-lgpd-delete-row .field {
+  margin: 0;
 }
 html.pdl-panel .security-cookie-summary {
   display: grid;

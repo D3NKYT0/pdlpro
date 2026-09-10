@@ -168,7 +168,6 @@ export function PrivacyLgpdPanel({
           </Field>
           <Button
             type="button"
-            size="sm"
             variant="danger"
             disabled={deleting || exporting || deleteCode.trim().length < 6}
             onClick={onDeleteAccount}
