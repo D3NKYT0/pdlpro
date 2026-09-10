@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 export function AdminHeader({ kicker, title, description }: { kicker: string; title: string; description?: string }) {
   return (
     <PageHeader className="account-hero" eyebrow={kicker} title={title} description={description} leading={
-        <Link className="character-back" to="/painel/admin">
+        <Link className="character-back" to="/panel/admin">
           <ArrowLeft aria-hidden="true" />
           Central
         </Link>

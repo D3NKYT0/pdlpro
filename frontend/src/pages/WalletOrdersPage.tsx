@@ -25,7 +25,7 @@ export function WalletOrdersPage() {
   return (
     <div className="wallet-page wallet-history-page">
       <div className="program-actions">
-        <ButtonLink to="/painel/wallet" variant="ghost" size="sm">
+        <ButtonLink to="/panel/wallet" variant="ghost" size="sm">
           <ArrowLeft aria-hidden="true" /> {t('wallet.history.back')}
         </ButtonLink>
       </div>

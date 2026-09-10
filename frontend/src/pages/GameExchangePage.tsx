@@ -54,7 +54,7 @@ export function GameExchangePage() {
     <div className="program-page">
       <Card as="header" className="program-hero">
         <div>
-          <Link to="/painel/wallet" className="character-back">
+          <Link to="/panel/wallet" className="character-back">
             ← {t("exchange.back")}
           </Link>
           <span className="panel-eyebrow">{t("exchange.eyebrow")}</span>

@@ -96,9 +96,9 @@ it('filtra chamados finalizados sem misturar a lista de ativos', async () => {
   expect(within(inbox).getByText(ticket.subject)).toBeVisible()
 })
 it('abre o formulário com assunto da tela e não envia o histórico do chat', async () => {
-  mount('/painel/support?subject=Ajuda:%20Carteira&from=%2Fpainel%2Fwallet')
+  mount('/panel/support?subject=Ajuda:%20Carteira&from=%2Fpanel%2Fwallet')
   expect(await screen.findByRole('textbox', { name: 'Assunto' })).toHaveValue('Ajuda: Carteira')
-  expect(screen.getByRole('textbox', { name: 'Detalhes' })).toHaveValue('Estou na tela Carteira (/painel/wallet) e preciso de ajuda da equipe.')
+  expect(screen.getByRole('textbox', { name: 'Detalhes' })).toHaveValue('Estou na tela Carteira (/panel/wallet) e preciso de ajuda da equipe.')
   expect(supportApi.create).not.toHaveBeenCalled()
 })
 it('traduz filtros, categorias e prioridade no idioma ativo', async () => {

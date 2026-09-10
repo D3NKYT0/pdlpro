@@ -115,7 +115,7 @@ export function AdminSupportPage() {
     <div className="staff-support-page">
       <Card as="header" className="staff-support-hero">
         <div>
-          <a className="character-back" href="/painel/admin"><ArrowLeft /> {t('support.back')}</a>
+          <a className="character-back" href="/panel/admin"><ArrowLeft /> {t('support.back')}</a>
           <span className="panel-eyebrow"><Headphones /> {t('support.eyebrow')}</span>
           <h1>{t('support.title')}</h1>
           <p className="muted">{t('support.subtitle')}</p>

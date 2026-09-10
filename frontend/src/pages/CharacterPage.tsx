@@ -197,7 +197,7 @@ export function CharacterPage() {
     <div className="account-page character-page">
       <Card as="header" className="account-hero">
         <div>
-          <Link className="character-back" to="/painel/accounts">
+          <Link className="character-back" to="/panel/accounts">
             <ArrowLeft aria-hidden="true" />
             {t('character.backToAccounts')}
           </Link>
@@ -424,11 +424,11 @@ export function CharacterPage() {
                 </div>
               </div>
               <div className="character-shortcut-list">
-                <Link className="btn ghost" to="/painel/inventory">
+                <Link className="btn ghost" to="/panel/inventory">
                   <Package aria-hidden="true" />
                   {t('character.services.shortcuts.inventory')}
                 </Link>
-                <Link className="btn ghost" to="/painel/marketplace">
+                <Link className="btn ghost" to="/panel/marketplace">
                   <Store aria-hidden="true" />
                   {t('character.services.shortcuts.marketplace')}
                 </Link>

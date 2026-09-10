@@ -48,7 +48,7 @@ describe('proteção de rotas', () => {
   it.each([null, { role: 'player' }])('impede acesso administrativo de %j', user => {
     Object.assign(session, { user, loading: false })
     mount(true)
-    expect(screen.getByRole('status').textContent).toBe('/painel')
+    expect(screen.getByRole('status').textContent).toBe('/panel')
   })
   it.each([{ is_staff: true }, { is_superuser: true }, { is_staff_member: true }, { role: 'staff' }, { role: 'admin' }, { role: 'moderator' }])('libera equipe %j', user => {
     Object.assign(session, { user, loading: false })

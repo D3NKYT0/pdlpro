@@ -22,7 +22,7 @@ const presentation: ThemePresentation = {
     },
     features: {
       title: 'Unique Systems', subtitle: 'Exclusive mechanics', actionLabel: 'SEE ALL FEATURES',
-      actionTo: '/informacoes', items: [{ title: 'Balanced Economy', description: 'Fair market', asset: 'feat-1' }],
+      actionTo: '/info', items: [{ title: 'Balanced Economy', description: 'Fair market', asset: 'feat-1' }],
     },
     ranking: {
       title: 'RATING', subtitle: 'Server Information', actionLabel: 'FULL RATING', actionTo: '/rankings',

@@ -76,7 +76,7 @@ export function AdminWalletPage() {
             <div>
               <span className="panel-eyebrow">Promoção de recarga</span>
               <h2>Banner na carteira</h2>
-              <p>Quando ativa e dentro da vigência, aparece em /painel/wallet e eleva o piso do bônus de moedas.</p>
+              <p>Quando ativa e dentro da vigência, aparece em /panel/wallet e eleva o piso do bônus de moedas.</p>
             </div>
           </header>
           <div className="account-form-fields">

@@ -195,10 +195,10 @@
       "price": "Preço"
     },
     "categories": {
-      "financeiro": { "title": "Financeiro", "description": "Saldos, fluxo de caixa, pedidos e reconciliação de carteiras." },
-      "inventario": { "title": "Inventário", "description": "Movimentações do inventário do painel, tops de itens e usuários." },
-      "leiloes": { "title": "Leilões", "description": "Status dos leilões, lances e itens com mais atividade." },
-      "compras": { "title": "Compras da loja", "description": "Receita da loja, carrinhos abandonados e tops de itens e cupons." },
+      "financial": { "title": "Financeiro", "description": "Saldos, fluxo de caixa, pedidos e reconciliação de carteiras." },
+      "inventory": { "title": "Inventário", "description": "Movimentações do inventário do painel, tops de itens e usuários." },
+      "auctions": { "title": "Leilões", "description": "Status dos leilões, lances e itens com mais atividade." },
+      "purchases": { "title": "Compras da loja", "description": "Receita da loja, carrinhos abandonados e tops de itens e cupons." },
       "marketplace": { "title": "Marketplace", "description": "Anúncios de personagens, vendas e ranking de vendedores." }
     },
     "finance": {

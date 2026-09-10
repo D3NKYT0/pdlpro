@@ -5,6 +5,6 @@ import { canAccessStaff } from '../../lib/staff'
 export function RequireStaff() {
   const { user, loading } = useAuth()
   if (loading) return <p className="muted">Carregando sessão...</p>
-  if (!canAccessStaff(user)) return <Navigate to="/painel" replace />
+  if (!canAccessStaff(user)) return <Navigate to="/panel" replace />
   return <Outlet />
 }

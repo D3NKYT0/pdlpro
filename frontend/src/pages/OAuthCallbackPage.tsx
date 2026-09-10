@@ -28,7 +28,7 @@ export function OAuthCallbackPage() {
     void authApi.completeOAuth(provider as OAuthProvider, code, state).then(async (result) => {
       if ('linked' in result && result.linked) {
         toast.success('Conta conectada com sucesso.')
-        navigate('/painel/security', { replace: true })
+        navigate('/panel/security', { replace: true })
         return
       }
       if (isTwoFactorChallenge(result)) {
@@ -40,7 +40,7 @@ export function OAuthCallbackPage() {
       navigate(
         'has_usable_password' in result && result.has_usable_password === false
           ? '/complete-account'
-          : '/painel',
+          : '/panel',
         { replace: true },
       )
     }).catch((error) => {

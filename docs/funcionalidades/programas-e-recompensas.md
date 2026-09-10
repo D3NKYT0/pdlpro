@@ -8,18 +8,18 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 
 | Módulo | Jogador/site | Administração |
 | --- | --- | --- |
-| Apoiadores e comissões | `/painel/apoiadores` | `/painel/admin/apoiadores` |
-| Roadmap e detalhes | `/roadmap` | `/painel/admin/roadmap` (descrição em rich text) |
-| Disponibilidade de módulos | Navegação e bloqueio da API | `/painel/admin/recursos` |
-| Conta L2, perfil e progresso | `/painel/accounts`, `/painel/profile`, `/painel/progress` | Controle de recursos |
-| Avisos, atendimento e ajuda | `/painel/notifications`, `/painel/support`, `/painel/ajuda` | Controle de recursos |
+| Apoiadores e comissões | `/panel/supporters` | `/panel/admin/supporters` |
+| Roadmap e detalhes | `/roadmap` | `/panel/admin/roadmap` (descrição em rich text) |
+| Disponibilidade de módulos | Navegação e bloqueio da API | `/panel/admin/resources` |
+| Conta L2, perfil e progresso | `/panel/accounts`, `/panel/profile`, `/panel/progress` | Controle de recursos |
+| Avisos, atendimento e ajuda | `/panel/notifications`, `/panel/support`, `/panel/help` | Controle de recursos |
 | Conteúdo público do site | Rankings, notícias, wiki, FAQ, downloads, calendário | Controle de recursos |
-| Carteira ↔ jogo | `/painel/wallet/jogo` | Configuração da moeda + integração Lineage |
-| Pacotes, cupons, bônus e histórico | `/painel/shop` | `/painel/admin/comercio` |
-| Passe, bônus diário e rankings | `/painel/recompensas` | `/painel/admin/recompensas` |
-| Pesca, iscas e coleção | `/painel/games?tab=fishing` | `/painel/admin/recompensas` |
+| Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
+| Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |
+| Passe, bônus diário e rankings | `/panel/rewards` | `/panel/admin/rewards` |
+| Pesca, iscas e coleção | `/panel/games?tab=fishing` | `/panel/admin/rewards` |
 
-A pescaria tem uma única interface em Jogos, incluindo vara, experiência, iscas, coleção e últimos lançamentos. O endereço antigo `/painel/recompensas?tab=fishing` redireciona para a aba Pesca em Jogos, sem alterar o progresso.
+A pescaria tem uma única interface em Jogos, incluindo vara, experiência, iscas, coleção e últimos lançamentos. O endereço antigo `/panel/rewards?tab=fishing` redireciona para a aba Pesca em Jogos, sem alterar o progresso.
 
 O controle central oferece 23 módulos organizados por categoria (economia, jogos, conta, comunicação e conteúdo do site). Desativar bloqueia os endpoints correspondentes e a tela; não apaga dados nem bloqueia a administração. Perfil e segurança de autenticação ficam acessíveis no menu conforme a política de cada módulo; Conta e segurança permanece sempre disponível. Os jogos continuam respeitando também suas configurações individuais.
 

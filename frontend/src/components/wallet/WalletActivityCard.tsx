@@ -67,7 +67,7 @@ export function WalletActivityCard({
         ) : (
           <div className="wallet-empty-state"><ReceiptText aria-hidden="true" /><span><strong>{t('wallet.activity.ordersEmptyTitle')}</strong><small>{t('wallet.activity.ordersEmptyText')}</small></span></div>
         )}
-        <ButtonLink to="/painel/wallet/pedidos" variant="ghost" size="sm" className="wallet-history-link">{t('wallet.activity.ordersLink')}</ButtonLink>
+        <ButtonLink to="/panel/wallet/orders" variant="ghost" size="sm" className="wallet-history-link">{t('wallet.activity.ordersLink')}</ButtonLink>
       </div>
 
       <div className="wallet-activity-section">
@@ -103,7 +103,7 @@ export function WalletActivityCard({
         ) : (
           <div className="wallet-empty-state"><History aria-hidden="true" /><span><strong>{t('wallet.activity.transactionsEmptyTitle')}</strong><small>{t('wallet.activity.transactionsEmptyText')}</small></span></div>
         )}
-        <ButtonLink to="/painel/wallet/extrato" variant="ghost" size="sm" className="wallet-history-link">{t('wallet.activity.transactionsLink')}</ButtonLink>
+        <ButtonLink to="/panel/wallet/statement" variant="ghost" size="sm" className="wallet-history-link">{t('wallet.activity.transactionsLink')}</ButtonLink>
       </div>
     </Card>
   )

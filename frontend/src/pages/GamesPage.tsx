@@ -156,7 +156,7 @@ export function GamesPage() {
 
   return (
     <div className="games-page">
-      <div className="program-actions"><Link className="btn ghost" to="/painel/recompensas">{t('games.rewardsLink')}</Link></div>
+      <div className="program-actions"><Link className="btn ghost" to="/panel/rewards">{t('games.rewardsLink')}</Link></div>
       <Card as="header" className="games-hero">
         <div className="games-hero-copy">
           <span className="panel-eyebrow">{t('games.eyebrow')}</span>

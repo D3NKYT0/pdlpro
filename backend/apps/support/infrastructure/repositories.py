@@ -159,7 +159,7 @@ class DjangoTicketRepository(ITicketRepository):
                 title=f"Jogador respondeu {ticket.protocol}",
                 body=body[:180],
                 kind="support",
-                link=f"/painel/admin/atendimento?ticket={ticket.id}",
+                link=f"/panel/admin/support?ticket={ticket.id}",
             )
         return ticket
 
@@ -248,7 +248,7 @@ class DjangoTicketRepository(ITicketRepository):
                 title=f"Nova resposta em {ticket.protocol}",
                 body=body[:180],
                 kind="support",
-                link=f"/painel/support?ticket={ticket.id}",
+                link=f"/panel/support?ticket={ticket.id}",
             )
         ticket.last_activity_at = now
         ticket.save(
@@ -332,6 +332,6 @@ class DjangoTicketRepository(ITicketRepository):
                 title=f"Chamado {ticket.protocol} atualizado",
                 body=f"Novo status: {ticket.get_status_display()}.",
                 kind="support",
-                link=f"/painel/support?ticket={ticket.id}",
+                link=f"/panel/support?ticket={ticket.id}",
             )
         return ticket

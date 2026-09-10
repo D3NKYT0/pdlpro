@@ -69,23 +69,23 @@ describe('panel and admin locale bundles', () => {
 
 describe('panel engagement pages follow the active language', () => {
   it('renders the games hub in pt, en and es', async () => {
-    expect(await withLanguage('pt', () => render(<GamesPage />, ['/painel/games']))).toContain('Central de jogos')
-    const english = await withLanguage('en', () => render(<GamesPage />, ['/painel/games']))
+    expect(await withLanguage('pt', () => render(<GamesPage />, ['/panel/games']))).toContain('Central de jogos')
+    const english = await withLanguage('en', () => render(<GamesPage />, ['/panel/games']))
     expect(english).toContain('Games hub')
     expect(english).toContain('Available balance')
     expect(english).not.toContain('Central de jogos')
-    expect(await withLanguage('es', () => render(<GamesPage />, ['/painel/games']))).toContain('Centro de juegos')
+    expect(await withLanguage('es', () => render(<GamesPage />, ['/panel/games']))).toContain('Centro de juegos')
   })
 
   it('renders the rewards tabs in the active language', async () => {
-    const english = await withLanguage('en', () => render(<RewardsPage />, ['/painel/recompensas']))
+    const english = await withLanguage('en', () => render(<RewardsPage />, ['/panel/rewards']))
     expect(english).toContain('Journey and rewards')
     expect(english).toContain('Battle pass')
     expect(english).not.toContain('Passe de batalha')
   })
 
   it('renders the supporters program in the active language', async () => {
-    const spanish = await withLanguage('es', () => render(<SupportersPage />, ['/painel/apoiadores']))
+    const spanish = await withLanguage('es', () => render(<SupportersPage />, ['/panel/supporters']))
     expect(spanish).toContain('Programa de patrocinadores')
     expect(spanish).not.toContain('Programa de apoiadores')
   })
@@ -93,10 +93,10 @@ describe('panel engagement pages follow the active language', () => {
   it('renders the character sheet chrome in the active language', async () => {
     const characterRoute = (
       <Routes>
-        <Route path="/painel/personagem/:login/:charId" element={<CharacterPage />} />
+        <Route path="/panel/accounts/:login/:charId" element={<CharacterPage />} />
       </Routes>
     )
-    const english = await withLanguage('en', () => render(characterRoute, ['/painel/personagem/hero/7']))
+    const english = await withLanguage('en', () => render(characterRoute, ['/panel/accounts/hero/7']))
     expect(english).toContain('Character sheet')
     expect(english).toContain('Accounts')
     expect(english).not.toContain('Ficha do personagem')
@@ -119,10 +119,10 @@ describe('admin hub and reports follow the active language', () => {
   it('translates the operational report hub categories', async () => {
     const reportsRoute = (
       <Routes>
-        <Route path="/painel/admin/relatorios" element={<AdminReportsPage />} />
+        <Route path="/panel/admin/reports" element={<AdminReportsPage />} />
       </Routes>
     )
-    const english = await withLanguage('en', () => render(reportsRoute, ['/painel/admin/relatorios']))
+    const english = await withLanguage('en', () => render(reportsRoute, ['/panel/admin/reports']))
     expect(english).toContain('Shop purchases')
     expect(english).not.toContain('Compras da loja')
   })

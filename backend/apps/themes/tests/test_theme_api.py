@@ -73,7 +73,7 @@ def test_declarative_presentation_is_validated_and_published(api, admin, tmp_pat
             },
             "features": {
                 "title": "Systems", "subtitle": "Exclusive mechanics", "actionLabel": "SEE ALL",
-                "actionTo": "/informacoes", "items": [
+                "actionTo": "/info", "items": [
                     {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
                 ],
             },
@@ -272,7 +272,7 @@ def test_presentation_sections_order_is_published(api, admin, tmp_path, settings
             },
             "features": {
                 "title": "Systems", "subtitle": "Exclusive mechanics", "actionLabel": "SEE ALL",
-                "actionTo": "/informacoes", "items": [
+                "actionTo": "/info", "items": [
                     {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
                 ],
             },
@@ -322,7 +322,7 @@ def test_presentation_rejects_duplicate_or_unknown_sections(api, admin, tmp_path
                         },
                         "features": {
                             "title": "Systems", "subtitle": "Exclusive", "actionLabel": "SEE ALL",
-                            "actionTo": "/informacoes",
+                            "actionTo": "/info",
                             "items": [{"title": "Economy", "description": "Balanced", "asset": "images/logo.png"}],
                         },
                         "ranking": {

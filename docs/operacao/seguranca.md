@@ -16,7 +16,7 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 - O usuário autenticado lista sessões ativas em `GET /api/v1/auth/sessions/`, revoga uma em
   `DELETE /api/v1/auth/sessions/<jti>/` e encerra as demais em
   `POST /api/v1/auth/sessions/revoke-others/`. A interface fica em Conta e segurança
-  (`/painel/security`). Quem já está logado em `/register` é enviado a essa tela.
+  (`/panel/security`). Quem já está logado em `/register` é enviado a essa tela.
 - Access e refresh não são expostos no JSON de autenticação; ficam somente nos cookies `HttpOnly`.
 - O link de recuperação usa token vinculado à senha e validade de uma hora. O consumo e a alteração de senha são serializados: repetir o link, inclusive simultaneamente, é rejeitado.
 - OAuth mantém estado descartável associado à sessão do navegador. Cookies de sessão devem acompanhar início e callback. Vincular um provedor exige o mesmo usuário autenticado e a mesma credencial de sessão.

@@ -10,8 +10,8 @@ import { PdlSymbol } from '../PdlSymbol'
 
 function navActive(path: string, to: string, end?: boolean) {
   if (end) {
-    // Landing cancela em `/` (site aberto) ou fica em `/inicio` (Coming Soon / pós-login).
-    if (to === '/') return path === '/' || path === '/inicio'
+    // Landing cancela em `/` (site aberto) ou fica em `/home` (Coming Soon / pós-login).
+    if (to === '/') return path === '/' || path === '/home'
     return path === to
   }
   return path === to || path.startsWith(`${to}/`)
@@ -30,7 +30,7 @@ export function SiteNav() {
   })
   const links = [
     { to: '/', label: t('nav.home'), end: true },
-    { to: '/informacoes', label: t('nav.info') },
+    { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
     { to: '/news', label: t('nav.news'), resource: 'news' },
@@ -97,7 +97,7 @@ export function SiteNav() {
         <div className="site-nav-actions">
           <LanguageSwitcher className="language-switcher site-nav-language" id="nav-language" />
           {user ? (
-            <Link className="user" to="/painel">
+            <Link className="user" to="/panel">
               <CircleUserRound aria-hidden="true" />
               <span>{t('nav.myAccount')}</span>
             </Link>

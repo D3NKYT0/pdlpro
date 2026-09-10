@@ -21,10 +21,10 @@ import './financial-reports.css'
 type AdminT = TFunction<'admin'>
 
 const reports = [
-  { slug: 'saldos', kind: 'balances', labelKey: 'balances', icon: Wallet },
-  { slug: 'fluxo-caixa', kind: 'cash-flow', labelKey: 'cashFlow', icon: ChartNoAxesCombined },
-  { slug: 'pagamentos', kind: 'payments', labelKey: 'payments', icon: ReceiptText },
-  { slug: 'reconciliacao', kind: 'reconciliation', labelKey: 'reconciliation', icon: Scale },
+  { slug: 'balances', kind: 'balances', labelKey: 'balances', icon: Wallet },
+  { slug: 'cash-flow', kind: 'cash-flow', labelKey: 'cashFlow', icon: ChartNoAxesCombined },
+  { slug: 'payments', kind: 'payments', labelKey: 'payments', icon: ReceiptText },
+  { slug: 'reconciliation', kind: 'reconciliation', labelKey: 'reconciliation', icon: Scale },
 ] satisfies { slug: string; kind: FinancialReportKind; labelKey: string; icon: typeof Wallet }[]
 
 const quantity = (value: string | number) => formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -135,7 +135,7 @@ function CashFlowChart({ data, t }: { data: Extract<FinancialReport, { kind: 'ca
 
 export function AdminFinancialReportsPage() {
   const { t } = useTranslation('admin')
-  const { report = 'saldos' } = useParams()
+  const { report = 'balances' } = useParams()
   const selected = reports.find((item) => item.slug === report)
   const kind = selected?.kind || 'balances'
   const [params, setParams] = useSearchParams()
@@ -144,7 +144,7 @@ export function AdminFinancialReportsPage() {
     queryFn: ({ signal }) => financialReportsApi.get(kind, params, signal),
     enabled: Boolean(selected),
   })
-  if (!selected) return <Navigate to="/painel/admin/relatorios/financeiro/saldos" replace />
+  if (!selected) return <Navigate to="/panel/admin/reports/financial/balances" replace />
   function changePage(page: number) { const next = new URLSearchParams(params); next.set('page', String(page)); setParams(next) }
   const page = Number(params.get('page') || 1)
   const data = query.data
@@ -152,7 +152,7 @@ export function AdminFinancialReportsPage() {
   const selectedDescription = t(`reports.finance.descriptions.${selected.labelKey}`)
   return <div className="account-page financial-reports">
     <AdminHeader kicker={t('reports.kicker')} title={t('reports.finance.title')} description={t('reports.finance.description')} />
-    <nav className="finance-tabs" aria-label={t('reports.finance.navLabel')}>{reports.map((item) => { const Icon = item.icon; return <NavLink key={item.slug} to={`/painel/admin/relatorios/financeiro/${item.slug}`} className={() => item.kind === kind ? 'is-active' : ''}><Icon size={18} />{t(`reports.finance.${item.labelKey}`)}</NavLink> })}</nav>
+    <nav className="finance-tabs" aria-label={t('reports.finance.navLabel')}>{reports.map((item) => { const Icon = item.icon; return <NavLink key={item.slug} to={`/panel/admin/reports/financial/${item.slug}`} className={() => item.kind === kind ? 'is-active' : ''}><Icon size={18} />{t(`reports.finance.${item.labelKey}`)}</NavLink> })}</nav>
     <div className="finance-section-heading"><div><h2>{selectedTitle}</h2><p className="muted">{selectedDescription}</p></div><Button type="submit" className="secondary" onClick={() => void query.refetch()} disabled={query.isFetching}><RefreshCw size={16} />{query.isFetching ? t('reports.refreshing') : t('reports.refresh')}</Button></div>
     <Filters key={`${kind}:${params}`} kind={kind} params={params} apply={setParams} t={t} />
     <p className="finance-explanation">{kind === 'payments'

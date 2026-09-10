@@ -65,7 +65,7 @@ it('oculta links de conteúdo quando o recurso está pausado', () => {
   expect(screen.getByRole('link', { name: 'Wiki' })).toBeVisible()
 })
 
-it.each(['/', '/inicio'])('marca Início como página atual em %s', (path) => {
+it.each(['/', '/home'])('marca Início como página atual em %s', (path) => {
   const { container } = mount(path)
   const home = screen.getByRole('link', { name: 'Início' })
   expect(home).toHaveAttribute('aria-current', 'page')

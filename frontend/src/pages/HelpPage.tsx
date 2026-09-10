@@ -24,7 +24,7 @@ export function HelpPage() {
         }
         description={c.labels.description}
         actions={
-          <ButtonLink to={supportTicketPrefill(c.screenContext?.path, c.language)?.to ?? '/painel/support'} variant="secondary" size="sm">
+          <ButtonLink to={supportTicketPrefill(c.screenContext?.path, c.language)?.to ?? '/panel/support'} variant="secondary" size="sm">
             <Headphones aria-hidden="true" /> {c.labels.support}
           </ButtonLink>
         }

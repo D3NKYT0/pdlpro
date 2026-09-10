@@ -43,22 +43,22 @@ const links: Array<{
   icon: LucideIcon;
   end?: boolean;
 }> = [
-  { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard, end: true },
-  { to: "/painel/profile", labelKey: "nav.profile", icon: CircleUserRound },
-  { to: "/painel/security", labelKey: "nav.security", icon: ShieldCheck },
-  { to: "/painel/accounts", labelKey: "nav.accounts", icon: UserRoundCog },
-  { to: "/painel/inventory", labelKey: "nav.inventory", icon: Package },
-  { to: "/painel/wallet", labelKey: "nav.wallet", icon: WalletCards },
-  { to: "/painel/shop", labelKey: "nav.shop", icon: ShoppingBag },
-  { to: "/painel/marketplace", labelKey: "nav.marketplace", icon: Store },
-  { to: "/painel/auctions", labelKey: "nav.auctions", icon: Gavel },
-  { to: "/painel/games", labelKey: "nav.games", icon: Gamepad2 },
-  { to: "/painel/recompensas", labelKey: "nav.rewards", icon: Gift },
-  { to: "/painel/apoiadores", labelKey: "nav.supporters", icon: Handshake },
-  { to: "/painel/progress", labelKey: "nav.progress", icon: Trophy },
-  { to: "/painel/notifications", labelKey: "nav.notifications", icon: Bell },
-  { to: "/painel/support", labelKey: "nav.support", icon: Headphones },
-  { to: "/painel/ajuda", labelKey: "nav.help", icon: MessageCircle },
+  { to: "/panel", labelKey: "nav.dashboard", icon: LayoutDashboard, end: true },
+  { to: "/panel/profile", labelKey: "nav.profile", icon: CircleUserRound },
+  { to: "/panel/security", labelKey: "nav.security", icon: ShieldCheck },
+  { to: "/panel/accounts", labelKey: "nav.accounts", icon: UserRoundCog },
+  { to: "/panel/inventory", labelKey: "nav.inventory", icon: Package },
+  { to: "/panel/wallet", labelKey: "nav.wallet", icon: WalletCards },
+  { to: "/panel/shop", labelKey: "nav.shop", icon: ShoppingBag },
+  { to: "/panel/marketplace", labelKey: "nav.marketplace", icon: Store },
+  { to: "/panel/auctions", labelKey: "nav.auctions", icon: Gavel },
+  { to: "/panel/games", labelKey: "nav.games", icon: Gamepad2 },
+  { to: "/panel/rewards", labelKey: "nav.rewards", icon: Gift },
+  { to: "/panel/supporters", labelKey: "nav.supporters", icon: Handshake },
+  { to: "/panel/progress", labelKey: "nav.progress", icon: Trophy },
+  { to: "/panel/notifications", labelKey: "nav.notifications", icon: Bell },
+  { to: "/panel/support", labelKey: "nav.support", icon: Headphones },
+  { to: "/panel/help", labelKey: "nav.help", icon: MessageCircle },
 ];
 
 export function PrivateLayout() {
@@ -78,12 +78,12 @@ export function PrivateLayout() {
     marketplace: "marketplace",
     auctions: "auction",
     games: "games",
-    recompensas: "games",
-    apoiadores: "supporters",
+    rewards: "games",
+    supporters: "supporters",
     progress: "progress",
     notifications: "notifications",
     support: "support",
-    ajuda: "help",
+    help: "help",
   };
   const resourceEnabled = (code: string) =>
     !resources.data?.some((r) => r.code === code && !r.enabled);
@@ -92,7 +92,7 @@ export function PrivateLayout() {
   const location = useLocation();
   const theme = useTheme();
   const isPortal = theme.presentation?.renderer === "portal-v1";
-  const isAdmin = location.pathname.startsWith("/painel/admin");
+  const isAdmin = location.pathname.startsWith("/panel/admin");
   const shellCopy = isPortal
     ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)
     : undefined;
@@ -181,17 +181,17 @@ export function PrivateLayout() {
                     <NavLink key={link.to} to={link.to} end={link.end}>
                       <Icon aria-hidden="true" />
                       <span>{t(link.labelKey)}</span>
-                      {link.to === "/painel/notifications" && unread ? (
+                      {link.to === "/panel/notifications" && unread ? (
                         <b className="menu-badge">{unread}</b>
                       ) : null}
-                      {link.to === "/painel/support" && waitingSupport ? (
+                      {link.to === "/panel/support" && waitingSupport ? (
                         <b className="menu-badge">{waitingSupport}</b>
                       ) : null}
                     </NavLink>
                   );
                 })}
               {canAccessStaff(user) ? (
-                <NavLink to="/painel/admin">
+                <NavLink to="/panel/admin">
                   <SlidersHorizontal aria-hidden="true" />
                   <span>{t("nav.admin")}</span>
                 </NavLink>
@@ -203,7 +203,7 @@ export function PrivateLayout() {
                 <div className="panel-user-account">
                   <NavLink
                     className="panel-user-avatar"
-                    to="/painel/profile"
+                    to="/panel/profile"
                     aria-label={t("shell.openProfile")}
                   >
                     {user.avatar_url ? (
@@ -212,7 +212,7 @@ export function PrivateLayout() {
                       <CircleUserRound />
                     )}
                   </NavLink>
-                  <NavLink className="panel-user-copy" to="/painel/profile">
+                  <NavLink className="panel-user-copy" to="/panel/profile">
                     <strong>{user.display_name || user.username}</strong>
                     <span>
                       {user.is_email_verified
@@ -244,7 +244,7 @@ export function PrivateLayout() {
           onClick={() => setMenuOpen(false)}
         />
         <main className="content">
-          {!location.pathname.startsWith("/painel/ajuda") ? (
+          {!location.pathname.startsWith("/panel/help") ? (
             <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
           ) : null}
           <Outlet />

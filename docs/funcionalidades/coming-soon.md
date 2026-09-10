@@ -3,7 +3,7 @@
 [Índice](../README.md) · [Temas](temas.md) · [Painel e servidor](../desenvolvimento/interface-admin.md)
 
 O Coming Soon exibe uma **página de lançamento própria** em `/`, sem o chrome público
-(nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/inicio`
+(nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/home`
 enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o modo em
 **Painel > Administração > Painel e servidor**.
 
@@ -22,7 +22,7 @@ A ativação sem data de lançamento é rejeitada pela API.
 ## Comportamento público
 
 1. Visitantes em `/` veem a tela full-bleed com contagem regressiva.
-2. A landing permanece em `/inicio` (com chrome público). Sem Coming Soon, `/inicio`
+2. A landing permanece em `/home` (com chrome público). Sem Coming Soon, `/home`
    redireciona para `/`.
 3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
 4. Entrar é a ação principal; Downloads fica secundário.
@@ -30,7 +30,7 @@ A ativação sem data de lançamento é rejeitada pela API.
 6. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
 7. Com restrição de staff, senha/passkey/OAuth/2FA respondem
    `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns.
-8. Quem já está autenticado em `/login` é enviado à landing (`/inicio`), salvo `?next=`
+8. Quem já está autenticado em `/login` é enviado à landing (`/home`), salvo `?next=`
    local válido. Conta social sem senha utilizável vai para `/complete-account`.
 
 No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
@@ -61,5 +61,5 @@ hero do tema.
 - Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, admin em
   `AdminSettings.test.tsx`.
 - Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
-  abrir `/inicio` e confirmar a landing; tentar login de jogador com restrição de staff;
-  visitar `/login` já autenticado e confirmar o redirect para `/inicio`.
+  abrir `/home` e confirmar a landing; tentar login de jogador com restrição de staff;
+  visitar `/login` já autenticado e confirmar o redirect para `/home`.

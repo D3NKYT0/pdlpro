@@ -683,11 +683,11 @@ def test_lexical_retrieval_keeps_current_topic_and_source_limit(chat, settings):
 
 def test_known_screen_reaches_the_prompt_and_unknown_paths_are_dropped(chat):
     api, _, model = chat
-    post(api, "Onde estou?", screen="/painel/wallet")
+    post(api, "Onde estou?", screen="/panel/wallet")
     system = model.call_args.kwargs["messages"][0]["content"]
     tela = json.loads(system.split("\nTELA: ")[1].split("\nFONTES: ")[0])
-    assert tela == {"path": "/painel/wallet", "title": "Carteira"}
-    post(api, "Onde estou?", screen="https://evil.test/painel/wallet")
+    assert tela == {"path": "/panel/wallet", "title": "Carteira"}
+    post(api, "Onde estou?", screen="https://evil.test/panel/wallet")
     tela = json.loads(model.call_args.kwargs["messages"][0]["content"].split("\nTELA: ")[1].split("\nFONTES: ")[0])
     assert tela == {}
 

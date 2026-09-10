@@ -63,7 +63,7 @@ export function useHelpPageController() {
     queryFn: programsApi.resources,
     staleTime: 15000,
     retry: false,
-    enabled: Boolean(location.search) || messages.some((message) => message.role === 'assistant' && message.text.includes('/painel')),
+    enabled: Boolean(location.search) || messages.some((message) => message.role === 'assistant' && message.text.includes('/panel')),
   })
   const screenContext = getHelpContext(
     new URLSearchParams(location.search).get('from'),
@@ -341,7 +341,7 @@ export function useHelpPageController() {
         preferences && (!context || preferencesDirty.current)
           ? { preferred_name: preferences.preferred_name, detail: preferences.detail }
           : undefined,
-        screenContext?.path ?? '/painel/ajuda',
+        screenContext?.path ?? '/panel/help',
       )
       if (
         !server ||

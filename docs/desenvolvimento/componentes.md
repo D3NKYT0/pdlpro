@@ -20,7 +20,7 @@ O código está em [dev/ui.tsx](../../frontend/dev/ui.tsx). O catálogo é uma e
 
 Na ajuda, [HelpCompanion](../../frontend/src/components/help/HelpCompanion.tsx) combina o renderizador Denkynho com um menu de ações e dicas. [SpeechBubble](../../frontend/src/components/help/SpeechBubble.tsx) desenha o balão de fala do chat e do status. No celular, sua alça nativa especializada permite arraste e movimentação por teclado; botões, campos e superfícies do menu continuam usando a biblioteca compartilhada. Consulte [Interação com o personagem](../funcionalidades/ajuda.md#interação-com-o-personagem).
 
-[ContextualHelp](../../frontend/src/components/help/ContextualHelp.tsx) compõe o mini-mascote no shell do painel, o humor, o selo de necessidade e destinos autorizados; some em `/painel/ajuda`. `contextual.ts` centraliza rotas, dicas, `from` e o chamado pré-preenchido sem histórico. [HelpPreferences](../../frontend/src/components/help/HelpPreferences.tsx) concentra nome e tamanho das respostas no perfil da conta, com cópia opcional neste navegador. [PetProgress](../../frontend/src/components/help/PetProgress.tsx) apresenta ganhos confirmados, desbloqueios e armário com `useAsyncAction`. Todos compõem os controles compartilhados. A demonstração `/denkynho.html`, disponível só em desenvolvimento, permite revisar a página de Ajuda e esses componentes com o tema real e dados simulados.
+[ContextualHelp](../../frontend/src/components/help/ContextualHelp.tsx) compõe o mini-mascote no shell do painel, o humor, o selo de necessidade e destinos autorizados; some em `/panel/help`. `contextual.ts` centraliza rotas, dicas, `from` e o chamado pré-preenchido sem histórico. [HelpPreferences](../../frontend/src/components/help/HelpPreferences.tsx) concentra nome e tamanho das respostas no perfil da conta, com cópia opcional neste navegador. [PetProgress](../../frontend/src/components/help/PetProgress.tsx) apresenta ganhos confirmados, desbloqueios e armário com `useAsyncAction`. Todos compõem os controles compartilhados. A demonstração `/denkynho.html`, disponível só em desenvolvimento, permite revisar a página de Ajuda e esses componentes com o tema real e dados simulados.
 
 | Peça | Uso e contrato |
 | --- | --- |
@@ -69,7 +69,7 @@ import { Button, ButtonLink, IconButton } from '../../components/ui/Button'
 <IconButton label="Excluir item" variant="danger" onClick={remove}>
   <Trash2 aria-hidden="true" />
 </IconButton>
-<ButtonLink to="/painel" variant="secondary">Voltar ao painel</ButtonLink>
+<ButtonLink to="/panel" variant="secondary">Voltar ao painel</ButtonLink>
 ```
 
 `ButtonLink` precisa do Router da aplicação e mantém semântica de link, inclusive abrir em outra aba. Não use um botão com `window.location` para navegação interna. `IconButton` exige `label`; a cor e o ícone não substituem a descrição da ação. A variante de perigo não implementa confirmação ou exclusão: a tela continua responsável por essas regras.

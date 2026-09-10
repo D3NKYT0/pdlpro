@@ -38,7 +38,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
             ))}
           </nav>
           <div className="header-actions">
-            <Link className="btn-text" to={user ? '/painel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
+            <Link className="btn-text" to={user ? '/panel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
             <Link className="btn-gem btn-gem--sm" to="/register">CREATE ACCOUNT</Link>
             <button className="hamburger" type="button" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
@@ -51,7 +51,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
         <button className="mobile-nav__close" type="button" aria-label="Fechar menu" onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label="Navegação móvel">
           {presentation.navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/painel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
+          <Link to={user ? '/panel' : '/login'}>{user ? 'DASHBOARD' : 'LOGIN'}</Link>
           {!user ? <Link to="/register">CREATE ACCOUNT</Link> : null}
         </nav>
       </div>

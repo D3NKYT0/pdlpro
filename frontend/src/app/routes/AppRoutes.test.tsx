@@ -23,13 +23,13 @@ afterEach(() => {
 })
 
 const pages = [
-  ['/inicio', 'Inicie sua Jornada em Lineage Agora!'],
+  ['/home', 'PDL Default'],
   ['/forgot-password', 'Esqueceu sua senha?'],
   ['/reset-password', 'Nova senha'],
   ['/verify-email', 'Verificar e-mail'],
   ['/roadmap', 'Roadmap do servidor'],
   ['/rankings', 'Os mais fortes do reino'],
-  ['/informacoes', 'Conheça o reino'],
+  ['/info', 'Conheça o reino'],
   ['/news', 'Notícias'],
   ['/news/update', 'Notícia'],
   ['/wiki', 'Wiki'],
@@ -40,59 +40,59 @@ const pages = [
   ['/terms', 'Documento'],
   ['/privacy', 'Documento'],
   ['/agreement', 'Documento'],
-  ['/painel', 'Olá, Tester'],
-  ['/painel/profile', 'Tester'],
-  ['/painel/security', 'Conta e segurança'],
-  ['/painel/accounts', 'Conta Lineage'],
-  ['/painel/accounts/hero/7', 'Personagem'],
-  ['/painel/wallet', 'Banco PDL'],
-  ['/painel/wallet/jogo', 'Carteira ↔ jogo'],
-  ['/painel/wallet/pedidos', 'Pedidos'],
-  ['/painel/wallet/extrato', 'Extrato'],
-  ['/painel/inventory', 'Inventário'],
-  ['/painel/games', 'Jogos e recompensas'],
-  ['/painel/progress', 'Seu progresso'],
-  ['/painel/notifications', 'Avisos'],
-  ['/painel/support', 'Como podemos ajudar?'],
-  ['/painel/ajuda', 'Ajuda'],
-  ['/painel/shop', 'Loja do servidor'],
-  ['/painel/marketplace', 'Marketplace'],
-  ['/painel/auctions', 'Leilões'],
-  ['/painel/apoiadores', 'Programa de apoiadores'],
-  ['/painel/recompensas', 'Jornada e recompensas'],
-  ['/painel/admin', 'Central de configurações'],
-  ['/painel/admin/recursos', 'Controle de recursos'],
-  ['/painel/admin/roadmap', 'Gerenciar roadmap'],
-  ['/painel/admin/apoiadores', 'Apoiadores e comissões'],
-  ['/painel/admin/comercio', 'Pacotes e cupons'],
-  ['/painel/admin/recompensas', 'Oficina de recompensas'],
-  ['/painel/admin/relatorios', 'Relatórios'],
-  ['/painel/admin/relatorios/financeiro/saldos', 'Financeiro'],
-  ['/painel/admin/itens', 'Observar itens'],
-  ['/painel/admin/itens/customs', 'Itens customizados'],
-  ['/painel/admin/servidor', 'Painel e servidor'],
-  ['/painel/admin/contas', 'Contas Lineage'],
-  ['/painel/admin/servicos', 'Serviços'],
-  ['/painel/admin/moedas', 'Moedas'],
-  ['/painel/admin/carteira', 'Configuração da carteira'],
-  ['/painel/admin/loja', 'Loja'],
-  ['/painel/admin/noticias', 'Notícias'],
-  ['/painel/admin/jogos', 'Módulos de jogos'],
-  ['/painel/admin/atendimento', 'Fila de chamados'],
-  ['/painel/admin/temas', 'Temas do PDL'],
+  ['/panel', 'Olá, Tester'],
+  ['/panel/profile', 'Tester'],
+  ['/panel/security', 'Conta e segurança'],
+  ['/panel/accounts', 'Conta Lineage'],
+  ['/panel/accounts/hero/7', 'Personagem'],
+  ['/panel/wallet', 'Banco PDL'],
+  ['/panel/wallet/game', 'Carteira ↔ jogo'],
+  ['/panel/wallet/orders', 'Pedidos'],
+  ['/panel/wallet/statement', 'Extrato'],
+  ['/panel/inventory', 'Inventário'],
+  ['/panel/games', 'Jogos e recompensas'],
+  ['/panel/progress', 'Seu progresso'],
+  ['/panel/notifications', 'Avisos'],
+  ['/panel/support', 'Como podemos ajudar?'],
+  ['/panel/help', 'Ajuda'],
+  ['/panel/shop', 'Loja do servidor'],
+  ['/panel/marketplace', 'Marketplace'],
+  ['/panel/auctions', 'Leilões'],
+  ['/panel/supporters', 'Programa de apoiadores'],
+  ['/panel/rewards', 'Jornada e recompensas'],
+  ['/panel/admin', 'Central de configurações'],
+  ['/panel/admin/resources', 'Controle de recursos'],
+  ['/panel/admin/roadmap', 'Gerenciar roadmap'],
+  ['/panel/admin/supporters', 'Apoiadores e comissões'],
+  ['/panel/admin/commerce', 'Pacotes e cupons'],
+  ['/panel/admin/rewards', 'Oficina de recompensas'],
+  ['/panel/admin/reports', 'Relatórios'],
+  ['/panel/admin/reports/financial/balances', 'Financeiro'],
+  ['/panel/admin/items', 'Observar itens'],
+  ['/panel/admin/items/customs', 'Itens customizados'],
+  ['/panel/admin/server', 'Painel e servidor'],
+  ['/panel/admin/accounts', 'Contas Lineage'],
+  ['/panel/admin/services', 'Serviços'],
+  ['/panel/admin/coins', 'Moedas'],
+  ['/panel/admin/wallet', 'Configuração da carteira'],
+  ['/panel/admin/shop', 'Loja'],
+  ['/panel/admin/news', 'Notícias'],
+  ['/panel/admin/games', 'Módulos de jogos'],
+  ['/panel/admin/support', 'Fila de chamados'],
+  ['/panel/admin/themes', 'Temas do PDL'],
 ]
 
 it('leva /login autenticado para a landing', () => {
   window.history.replaceState({}, '', '/login')
   render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
-  expect(window.location.pathname).toBe('/inicio')
-  expect(screen.getByRole('heading', { level: 1, name: 'Inicie sua Jornada em Lineage Agora!' })).toBeTruthy()
+  expect(window.location.pathname).toBe('/home')
+  expect(screen.getByRole('heading', { level: 1, name: 'PDL Default' })).toBeTruthy()
 })
 
 it('leva /register autenticado para o gerenciador de sessões', () => {
   window.history.replaceState({}, '', '/register')
   render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
-  expect(window.location.pathname).toBe('/painel/security')
+  expect(window.location.pathname).toBe('/panel/security')
   expect(screen.getByRole('heading', { level: 1, name: 'Conta e segurança' })).toBeTruthy()
 })
 

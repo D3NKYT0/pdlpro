@@ -13,7 +13,7 @@ Git até **9 de setembro de 2026**.
 
 ### Adicionado
 
-- Área unificada de **Relatórios** na staff (`/painel/admin/relatorios`) com categorias
+- Área unificada de **Relatórios** na staff (`/panel/admin/reports`) com categorias
   Financeiro, Inventário, Leilões, Compras da loja e Marketplace; APIs em
   `/api/v1/staff/operational-reports/`.
 - Internacionalização **pt / en / es** na SPA (`i18next`), seletor de idioma persistente,
@@ -37,7 +37,7 @@ Git até **9 de setembro de 2026**.
   ambiente, poses/overlays PNG, cenas de guarda-roupa (jardim, biblioteca, acampamento,
   lago) e ícones de atividade.
 - Página **Coming Soon** com título/subtítulo/data de lançamento, countdown, efeitos
-  visuais, restrição de login para não-staff e coexistência da landing em `/inicio`.
+  visuais, restrição de login para não-staff e coexistência da landing em `/home`.
 - Gestão de sessões ativas: listar, revogar uma sessão e revogar as demais.
 - Conclusão de credenciais para usuários OAuth (`CompleteCredentialsUseCase`).
 - Promoções de compra de moedas (`CoinPurchasePromo`) no catálogo de pagamento e
@@ -78,6 +78,9 @@ Git até **9 de setembro de 2026**.
   tokens de tema.
 - Arquivos `.log` passam a residir apenas em `backend/log/` e `frontend/log/`
   (handler rotativo no Django de desenvolvimento; Vite espelha warn/error e proxy).
+- URLs da SPA padronizadas em inglês (`/panel`, `/info`, `/home`, `/panel/help`,
+  `/panel/admin/reports/...`); paths em português redirecionam para os equivalentes.
+  Catálogo de telas do Denkynho, links de notificação de suporte e handbook alinhados.
 
 ### Corrigido
 

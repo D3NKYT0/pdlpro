@@ -24,13 +24,13 @@ import { authApi, serverApi } from '../services/api'
 import { programsApi } from '../services/api'
 
 const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: string }> = [
-  { to: '/painel/profile', key: 'profile', icon: CircleUserRound, resource: 'profile' },
-  { to: '/painel/accounts', key: 'accounts', icon: UserRoundCog, resource: 'accounts' },
-  { to: '/painel/inventory', key: 'inventory', icon: Package, resource: 'inventory' },
-  { to: '/painel/wallet', key: 'wallet', icon: WalletCards, resource: 'wallet' },
-  { to: '/painel/shop', key: 'shop', icon: ShoppingBag, resource: 'shop' },
-  { to: '/painel/games', key: 'games', icon: Gamepad2, resource: 'games' },
-  { to: '/painel/progress', key: 'progress', icon: Trophy, resource: 'progress' },
+  { to: '/panel/profile', key: 'profile', icon: CircleUserRound, resource: 'profile' },
+  { to: '/panel/accounts', key: 'accounts', icon: UserRoundCog, resource: 'accounts' },
+  { to: '/panel/inventory', key: 'inventory', icon: Package, resource: 'inventory' },
+  { to: '/panel/wallet', key: 'wallet', icon: WalletCards, resource: 'wallet' },
+  { to: '/panel/shop', key: 'shop', icon: ShoppingBag, resource: 'shop' },
+  { to: '/panel/games', key: 'games', icon: Gamepad2, resource: 'games' },
+  { to: '/panel/progress', key: 'progress', icon: Trophy, resource: 'progress' },
 ]
 
 export function PainelPage() {
@@ -51,7 +51,7 @@ export function PainelPage() {
   })
   const baseShortcuts = shortcuts.filter((item) => resourceEnabled(item.resource))
   const dashboardShortcuts = canAccessStaff(user)
-    ? [...baseShortcuts, { to: '/painel/admin', key: 'admin', icon: SlidersHorizontal }]
+    ? [...baseShortcuts, { to: '/panel/admin', key: 'admin', icon: SlidersHorizontal }]
     : baseShortcuts
 
   return (

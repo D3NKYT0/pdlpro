@@ -19,9 +19,9 @@ function renderOps(data: OperationalReport, category: string, search = '') {
     return renderToStaticMarkup(
       wrap(
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={[`/painel/admin/relatorios/${category}?${search}`]}>
+          <MemoryRouter initialEntries={[`/panel/admin/reports/${category}?${search}`]}>
             <Routes>
-              <Route path="/painel/admin/relatorios/:category/:report?" element={<AdminReportsPage />} />
+              <Route path="/panel/admin/reports/:category/:report?" element={<AdminReportsPage />} />
             </Routes>
           </MemoryRouter>
         </QueryClientProvider>,
@@ -38,9 +38,9 @@ describe('operational reports area', () => {
     const html = renderToStaticMarkup(
       wrap(
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/painel/admin/relatorios']}>
+          <MemoryRouter initialEntries={['/panel/admin/reports']}>
             <Routes>
-              <Route path="/painel/admin/relatorios" element={<AdminReportsPage />} />
+              <Route path="/panel/admin/reports" element={<AdminReportsPage />} />
             </Routes>
           </MemoryRouter>
         </QueryClientProvider>,
@@ -73,7 +73,7 @@ describe('operational reports area', () => {
         },
         results: [{ day: '2026-09-01', actions: { RETIROU_DO_JOGO: 100 }, total_quantity: 100, event_count: 1 }],
       },
-      'inventario',
+      'inventory',
     )
     expect(html).toContain('01/09/2026')
     expect(html).toContain('Retirou do jogo')
@@ -91,7 +91,7 @@ describe('operational reports area', () => {
         summary: { auction_count: 0, open_count: 0, finished_count: 0, bid_count: 0 },
         results: [],
       },
-      'leiloes',
+      'auctions',
     )
     expect(auctions).toContain('Nenhum registro encontrado')
     const market = renderOps(

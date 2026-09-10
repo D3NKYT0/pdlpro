@@ -51,8 +51,8 @@ it('exibe pilares autênticos do Lineage com destinos reais', async () => {
   const siege = screen.getByRole('link', { name: /Guerra de Castelos/i })
   const fame = screen.getByRole('link', { name: /Hall da Fama/i })
 
-  expect(rates).toHaveAttribute('href', '/informacoes#rates')
-  expect(siege).toHaveAttribute('href', '/informacoes#pvp')
+  expect(rates).toHaveAttribute('href', '/info#rates')
+  expect(siege).toHaveAttribute('href', '/info#pvp')
   expect(fame).toHaveAttribute('href', '/rankings')
 
   expect(screen.getByText('Progressão, economia e o ritmo do reino')).toBeVisible()
@@ -132,10 +132,10 @@ it('mostra guias e crônica autênticos quando wiki e notícias estão vazios', 
   expect(await screen.findByRole('heading', { name: /Guias, crônica e o que move Aden/i })).toBeVisible()
   expect(screen.getByText('Arquivos do reino')).toBeVisible()
 
-  expect(screen.getByRole('link', { name: /Rates e progressão/i })).toHaveAttribute('href', '/informacoes#rates')
-  expect(screen.getByRole('link', { name: /Encantamento/i })).toHaveAttribute('href', '/informacoes#enchant')
-  expect(screen.getByRole('link', { name: /Siege e castelos/i })).toHaveAttribute('href', '/informacoes#pvp')
-  expect(screen.getByRole('link', { name: /Primeiros passos/i })).toHaveAttribute('href', '/informacoes#comecar')
+  expect(screen.getByRole('link', { name: /Rates e progressão/i })).toHaveAttribute('href', '/info#rates')
+  expect(screen.getByRole('link', { name: /Encantamento/i })).toHaveAttribute('href', '/info#enchant')
+  expect(screen.getByRole('link', { name: /Siege e castelos/i })).toHaveAttribute('href', '/info#pvp')
+  expect(screen.getByRole('link', { name: /Primeiros passos/i })).toHaveAttribute('href', '/info#comecar')
   expect(screen.getByRole('link', { name: /Perguntas frequentes/i })).toHaveAttribute('href', '/faq')
 
   expect(screen.getByRole('link', { name: /Notícias do reino/i })).toHaveAttribute('href', '/news')

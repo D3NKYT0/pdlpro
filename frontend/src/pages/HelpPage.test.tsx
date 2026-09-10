@@ -282,7 +282,7 @@ it('carrega a base por HTTP e oferece chat, FAQ e atendimento', async () => {
   expect(String(fetcher.mock.calls[0][0])).toContain('/shared/content/faq/')
   expect(screen.getByText(/(Bom dia|Boa tarde|Boa noite), Daniel!/)).toBeVisible()
   expect(screen.getByText(/sessão de jogador/i)).toBeVisible()
-  expect(screen.getByRole('link', { name: 'Atendimento da equipe' })).toHaveAttribute('href', '/painel/support')
+  expect(screen.getByRole('link', { name: 'Atendimento da equipe' })).toHaveAttribute('href', '/panel/support')
   expect(screen.getByRole('textbox', { name: 'Sua mensagem' })).toBeVisible()
   expect(screen.getByRole('button', { name: 'Enviar mensagem' })).toBeVisible()
   expect(screen.getByText(/Enter envia/)).toBeInTheDocument()
@@ -535,7 +535,7 @@ it('aceita reparação social do backend sem repetir fonte e resposta do FAQ ant
   expect(screen.getAllByText(articles[0].short_answer)).toHaveLength(1)
   expect(screen.getAllByText(`Fonte: ${articles[0].question}`)).toHaveLength(1)
   const call = fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).at(-1)!
-  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '', screen: '/painel/ajuda' })
+  expect(JSON.parse(call[1].body)).toEqual({ message: 'mas eu pedi pra vc me falar sobre voce', language: 'pt', conversation: true, context: '', screen: '/panel/help' })
 })
 
 it('mostra a biografia profissional do criador e abre somente o portfólio público', async () => {
@@ -581,8 +581,8 @@ it('usa geração também para cumprimentos, mantém contexto e o limpa em nova 
   await waitFor(() => expect(screen.getAllByText(generated.answer.text)).toHaveLength(2))
   const calls = () => fetcher.mock.calls.filter(call => String(call[0]).includes('/assistant/reply/')).map(call => JSON.parse(call[1].body))
   expect(calls()).toEqual([
-    { message: 'Oi', language: 'pt', conversation: true, context: '', screen: '/painel/ajuda' },
-    { message: 'estou cansado', language: 'pt', conversation: true, context: 'signed-turn-1', screen: '/painel/ajuda' },
+    { message: 'Oi', language: 'pt', conversation: true, context: '', screen: '/panel/help' },
+    { message: 'estou cansado', language: 'pt', conversation: true, context: 'signed-turn-1', screen: '/panel/help' },
   ])
   await user.click(screen.getByRole('button', { name: 'Nova conversa' }))
   await user.type(screen.getByRole('textbox', { name: 'Sua mensagem' }), 'oi{Enter}')

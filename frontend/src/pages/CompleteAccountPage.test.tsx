@@ -33,7 +33,7 @@ function mount() {
     <MemoryRouter initialEntries={['/complete-account']}>
       <Routes>
         <Route path="/complete-account" element={<CompleteAccountPage />} />
-        <Route path="/painel" element={<h1>Painel autenticado</h1>} />
+        <Route path="/panel" element={<h1>Painel autenticado</h1>} />
         <Route path="/login" element={<h1>Login</h1>} />
       </Routes>
     </MemoryRouter>,

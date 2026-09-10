@@ -24,7 +24,7 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); client.clear() })
 function mount(tab: string) {
-  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/painel/games?tab=${tab}`]}><GamesPage /></MemoryRouter></QueryClientProvider>)
+  render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/panel/games?tab=${tab}`]}><GamesPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
 const actions = [

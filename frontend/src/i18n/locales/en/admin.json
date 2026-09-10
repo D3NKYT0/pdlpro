@@ -195,10 +195,10 @@
       "price": "Price"
     },
     "categories": {
-      "financeiro": { "title": "Finance", "description": "Balances, cash flow, orders and wallet reconciliation." },
-      "inventario": { "title": "Inventory", "description": "Panel inventory moves, top items and users." },
-      "leiloes": { "title": "Auctions", "description": "Auction status, bids and most active items." },
-      "compras": { "title": "Shop purchases", "description": "Shop revenue, abandoned carts and top items/coupons." },
+      "financial": { "title": "Finance", "description": "Balances, cash flow, orders and wallet reconciliation." },
+      "inventory": { "title": "Inventory", "description": "Panel inventory moves, top items and users." },
+      "auctions": { "title": "Auctions", "description": "Auction status, bids and most active items." },
+      "purchases": { "title": "Shop purchases", "description": "Shop revenue, abandoned carts and top items/coupons." },
       "marketplace": { "title": "Marketplace", "description": "Character listings, sales and top sellers." }
     },
     "finance": {

@@ -5,45 +5,45 @@ from __future__ import annotations
 import re
 
 SCREENS: dict[str, dict[str, str]] = {
-    "/painel": {"pt": "Painel", "en": "Dashboard", "es": "Panel"},
-    "/painel/ajuda": {"pt": "Ajuda", "en": "Help", "es": "Ayuda"},
-    "/painel/accounts": {
+    "/panel": {"pt": "Painel", "en": "Dashboard", "es": "Panel"},
+    "/panel/help": {"pt": "Ajuda", "en": "Help", "es": "Ayuda"},
+    "/panel/accounts": {
         "pt": "Contas e personagens",
         "en": "Accounts and characters",
         "es": "Cuentas y personajes",
     },
-    "/painel/wallet": {"pt": "Carteira", "en": "Wallet", "es": "Cartera"},
-    "/painel/wallet/jogo": {"pt": "Troca para o jogo", "en": "Game exchange", "es": "Cambio al juego"},
-    "/painel/inventory": {"pt": "Inventário", "en": "Inventory", "es": "Inventario"},
-    "/painel/shop": {"pt": "Loja", "en": "Shop", "es": "Tienda"},
-    "/painel/marketplace": {"pt": "Marketplace", "en": "Marketplace", "es": "Marketplace"},
-    "/painel/auctions": {"pt": "Leilões", "en": "Auctions", "es": "Subastas"},
-    "/painel/games": {"pt": "Jogos", "en": "Games", "es": "Juegos"},
-    "/painel/recompensas": {
+    "/panel/wallet": {"pt": "Carteira", "en": "Wallet", "es": "Cartera"},
+    "/panel/wallet/game": {"pt": "Troca para o jogo", "en": "Game exchange", "es": "Cambio al juego"},
+    "/panel/inventory": {"pt": "Inventário", "en": "Inventory", "es": "Inventario"},
+    "/panel/shop": {"pt": "Loja", "en": "Shop", "es": "Tienda"},
+    "/panel/marketplace": {"pt": "Marketplace", "en": "Marketplace", "es": "Marketplace"},
+    "/panel/auctions": {"pt": "Leilões", "en": "Auctions", "es": "Subastas"},
+    "/panel/games": {"pt": "Jogos", "en": "Games", "es": "Juegos"},
+    "/panel/rewards": {
         "pt": "Jornada e recompensas",
         "en": "Journey and rewards",
         "es": "Jornada y recompensas",
     },
-    "/painel/apoiadores": {"pt": "Apoiadores", "en": "Supporters", "es": "Patrocinadores"},
-    "/painel/profile": {"pt": "Meu perfil", "en": "My profile", "es": "Mi perfil"},
-    "/painel/security": {"pt": "Conta e segurança", "en": "Account and security", "es": "Cuenta y seguridad"},
-    "/painel/progress": {"pt": "Progresso", "en": "Progress", "es": "Progreso"},
-    "/painel/notifications": {"pt": "Avisos", "en": "Notifications", "es": "Avisos"},
-    "/painel/support": {"pt": "Atendimento", "en": "Support", "es": "Atención"},
-    "/painel/admin": {"pt": "Administração", "en": "Administration", "es": "Administración"},
+    "/panel/supporters": {"pt": "Apoiadores", "en": "Supporters", "es": "Patrocinadores"},
+    "/panel/profile": {"pt": "Meu perfil", "en": "My profile", "es": "Mi perfil"},
+    "/panel/security": {"pt": "Conta e segurança", "en": "Account and security", "es": "Cuenta y seguridad"},
+    "/panel/progress": {"pt": "Progresso", "en": "Progress", "es": "Progreso"},
+    "/panel/notifications": {"pt": "Avisos", "en": "Notifications", "es": "Avisos"},
+    "/panel/support": {"pt": "Atendimento", "en": "Support", "es": "Atención"},
+    "/panel/admin": {"pt": "Administração", "en": "Administration", "es": "Administración"},
 }
-_ACCOUNT_DETAIL = re.compile(r"^/painel/accounts/[a-zA-Z0-9_-]+/[0-9]+$")
+_ACCOUNT_DETAIL = re.compile(r"^/panel/accounts/[a-zA-Z0-9_-]+/[0-9]+$")
 
 
 def canonical_screen(path: str) -> str | None:
     """Devolve só um caminho do catálogo; URLs, query strings e destinos inventados saem vazios."""
 
-    if not path or not path.startswith("/painel") or "://" in path or "?" in path or "#" in path:
+    if not path or not path.startswith("/panel") or "://" in path or "?" in path or "#" in path:
         return None
     if _ACCOUNT_DETAIL.fullmatch(path):
-        path = "/painel/accounts"
-    elif path.startswith("/painel/admin"):
-        path = "/painel/admin"
+        path = "/panel/accounts"
+    elif path.startswith("/panel/admin"):
+        path = "/panel/admin"
     return path if path in SCREENS else None
 
 

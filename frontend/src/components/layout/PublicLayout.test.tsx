@@ -20,7 +20,7 @@ function mount(path = '/') {
         <Routes>
           <Route element={<PublicLayout />}>
             <Route index element={<h1>Home normal</h1>} />
-            <Route path="inicio" element={<h1>Landing</h1>} />
+            <Route path="home" element={<h1>Landing</h1>} />
             <Route path="news" element={<h1>Notícias</h1>} />
           </Route>
         </Routes>
@@ -61,14 +61,14 @@ it('substitui o chrome público pela página de lançamento na home', async () =
   expect(screen.queryByText('Home normal')).not.toBeInTheDocument()
 })
 
-it('mantém a landing acessível em /inicio durante o Coming Soon', async () => {
-  mount('/inicio')
+it('mantém a landing acessível em /home durante o Coming Soon', async () => {
+  mount('/home')
   expect(await screen.findByRole('heading', { name: 'Landing' })).toBeVisible()
   expect(screen.getByText('Site nav')).toBeVisible()
   expect(screen.queryByLabelText('Contagem regressiva do lançamento')).not.toBeInTheDocument()
 })
 
-it('redireciona /inicio para a home quando o Coming Soon está desligado', async () => {
+it('redireciona /home para a home quando o Coming Soon está desligado', async () => {
   vi.mocked(serverApi.info).mockResolvedValue({
     name: 'Imperium',
     description: 'Reino',
@@ -83,7 +83,7 @@ it('redireciona /inicio para a home quando o Coming Soon está desligado', async
     coming_soon_subtitle: '',
     coming_soon_at: null,
   } as never)
-  mount('/inicio')
+  mount('/home')
   expect(await screen.findByRole('heading', { name: 'Home normal' })).toBeVisible()
 })
 

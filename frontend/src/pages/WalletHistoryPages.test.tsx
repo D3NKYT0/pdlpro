@@ -52,7 +52,7 @@ it('pedidos pagina, abre modal e volta à carteira', async () => {
   })
   const user = mount(<WalletOrdersPage />)
   expect(await screen.findByRole('heading', { level: 1, name: 'Pedidos' })).toBeTruthy()
-  expect(screen.getByRole('link', { name: /Voltar à carteira/ }).getAttribute('href')).toBe('/painel/wallet')
+  expect(screen.getByRole('link', { name: /Voltar à carteira/ }).getAttribute('href')).toBe('/panel/wallet')
   await user.click(await screen.findByRole('button', { name: /25.00 moedas/ }))
   expect(await screen.findByRole('dialog', { name: 'Detalhe do pedido' })).toBeTruthy()
   expect(screen.getByText('ord-1')).toBeTruthy()

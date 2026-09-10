@@ -37,7 +37,12 @@ import { WalletTransactionsPage } from '../../pages/WalletTransactionsPage'
 import { InfoPage } from '../../pages/InfoPage'
 import { WikiDetailPage } from '../../pages/WikiDetailPage'
 import { WikiPage } from '../../pages/WikiPage'
-import { LEGACY_PANEL_REDIRECTS } from './legacyRedirects'
+import {
+  LEGACY_EXACT_REDIRECTS,
+  LegacyAccountDetailRedirect,
+  LegacyFinancialRedirect,
+  LegacyReportsRedirect,
+} from './legacyRedirects'
 import { AdminAccountsPage } from '../../pages/admin/AdminAccountsPage'
 import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
 import { AdminReportsPage, AdminFinancialReportsRedirect } from '../../pages/admin/AdminReportsPage'
@@ -70,7 +75,7 @@ export function AppRoutes() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/inicio" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/complete-account" element={<CompleteAccountPage />} />
@@ -84,7 +89,7 @@ export function AppRoutes() {
             <Route path="/rankings" element={<ResourceGate code="rankings"><RankingsPage /></ResourceGate>} />
             <Route path="/news" element={<ResourceGate code="news"><NewsPage /></ResourceGate>} />
             <Route path="/news/:slug" element={<ResourceGate code="news"><NewsDetailPage /></ResourceGate>} />
-            <Route path="/informacoes" element={<InfoPage />} />
+            <Route path="/info" element={<InfoPage />} />
             <Route path="/wiki" element={<ResourceGate code="wiki"><WikiPage /></ResourceGate>} />
             <Route path="/wiki/:slug" element={<ResourceGate code="wiki"><WikiDetailPage /></ResourceGate>} />
             <Route path="/calendar" element={<ResourceGate code="calendar"><CalendarPage /></ResourceGate>} />
@@ -98,55 +103,58 @@ export function AppRoutes() {
 
         <Route element={<RequireAuth />}>
           <Route element={<PrivateLayout />}>
-            <Route path="/painel/apoiadores" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
-            <Route path="/painel/recompensas" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
-            <Route path="/painel/wallet/jogo" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
-            <Route path="/painel/wallet/pedidos" element={<ResourceGate code="wallet"><WalletOrdersPage /></ResourceGate>} />
-            <Route path="/painel/wallet/extrato" element={<ResourceGate code="wallet"><WalletTransactionsPage /></ResourceGate>} />
-            <Route path="/painel" element={<PainelPage />} />
-            <Route path="/painel/profile" element={<ResourceGate code="profile"><ProfilePage /></ResourceGate>} />
-            <Route path="/painel/security" element={<AccountSecurityPage />} />
-            <Route path="/painel/wallet" element={<ResourceGate code="wallet"><WalletPage /></ResourceGate>} />
-            <Route path="/painel/accounts" element={<ResourceGate code="accounts"><AccountsPage /></ResourceGate>} />
-            <Route path="/painel/accounts/:login/:charId" element={<ResourceGate code="accounts"><CharacterPage /></ResourceGate>} />
-            <Route path="/painel/inventory" element={<ResourceGate code="inventory"><InventoryPage /></ResourceGate>} />
-            <Route path="/painel/games" element={<ResourceGate code="games"><GamesPage /></ResourceGate>} />
-            <Route path="/painel/progress" element={<ResourceGate code="progress"><ProgressPage /></ResourceGate>} />
-            <Route path="/painel/notifications" element={<ResourceGate code="notifications"><NotificationsPage /></ResourceGate>} />
-            <Route path="/painel/support" element={<ResourceGate code="support"><SupportPage /></ResourceGate>} />
-            <Route path="/painel/ajuda" element={<ResourceGate code="help"><HelpPage /></ResourceGate>} />
-            <Route path="/painel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />
-            <Route path="/painel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
-            <Route path="/painel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />
+            <Route path="/panel/supporters" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
+            <Route path="/panel/rewards" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
+            <Route path="/panel/wallet/game" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
+            <Route path="/panel/wallet/orders" element={<ResourceGate code="wallet"><WalletOrdersPage /></ResourceGate>} />
+            <Route path="/panel/wallet/statement" element={<ResourceGate code="wallet"><WalletTransactionsPage /></ResourceGate>} />
+            <Route path="/panel" element={<PainelPage />} />
+            <Route path="/panel/profile" element={<ResourceGate code="profile"><ProfilePage /></ResourceGate>} />
+            <Route path="/panel/security" element={<AccountSecurityPage />} />
+            <Route path="/panel/wallet" element={<ResourceGate code="wallet"><WalletPage /></ResourceGate>} />
+            <Route path="/panel/accounts" element={<ResourceGate code="accounts"><AccountsPage /></ResourceGate>} />
+            <Route path="/panel/accounts/:login/:charId" element={<ResourceGate code="accounts"><CharacterPage /></ResourceGate>} />
+            <Route path="/panel/inventory" element={<ResourceGate code="inventory"><InventoryPage /></ResourceGate>} />
+            <Route path="/panel/games" element={<ResourceGate code="games"><GamesPage /></ResourceGate>} />
+            <Route path="/panel/progress" element={<ResourceGate code="progress"><ProgressPage /></ResourceGate>} />
+            <Route path="/panel/notifications" element={<ResourceGate code="notifications"><NotificationsPage /></ResourceGate>} />
+            <Route path="/panel/support" element={<ResourceGate code="support"><SupportPage /></ResourceGate>} />
+            <Route path="/panel/help" element={<ResourceGate code="help"><HelpPage /></ResourceGate>} />
+            <Route path="/panel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />
+            <Route path="/panel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
+            <Route path="/panel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />
             <Route element={<RequireStaff />}>
-              <Route path="/painel/admin/recursos" element={<AdminResourcesPage />} />
-              <Route path="/painel/admin/roadmap" element={<AdminRoadmapPage />} />
-              <Route path="/painel/admin/apoiadores" element={<AdminSupportersPage />} />
-              <Route path="/painel/admin/comercio" element={<AdminCommercePage />} />
-              <Route path="/painel/admin/recompensas" element={<AdminGameContentPage />} />
-              <Route path="/painel/admin" element={<AdminHubPage />} />
-              <Route path="/painel/admin/relatorios" element={<AdminReportsPage />} />
-              <Route path="/painel/admin/relatorios/:category/:report?" element={<AdminReportsPage />} />
-              <Route path="/painel/admin/financeiro/:report?" element={<AdminFinancialReportsRedirect />} />
-              <Route path="/painel/admin/itens" element={<AdminItemObservationPage />} />
-              <Route path="/painel/admin/itens/customs" element={<AdminCustomItemsPage />} />
-              <Route path="/painel/admin/servidor" element={<AdminServerPage />} />
-              <Route path="/painel/admin/contas" element={<AdminAccountsPage />} />
-              <Route path="/painel/admin/servicos" element={<AdminServicesPage />} />
-              <Route path="/painel/admin/moedas" element={<AdminCoinsPage />} />
-              <Route path="/painel/admin/carteira" element={<AdminWalletPage />} />
-              <Route path="/painel/admin/loja" element={<AdminShopPage />} />
-              <Route path="/painel/admin/noticias" element={<AdminNewsPage />} />
-              <Route path="/painel/admin/jogos" element={<AdminGamesPage />} />
-              <Route path="/painel/admin/atendimento" element={<AdminSupportPage />} />
-              <Route path="/painel/admin/temas" element={<AdminThemesPage />} />
+              <Route path="/panel/admin/resources" element={<AdminResourcesPage />} />
+              <Route path="/panel/admin/roadmap" element={<AdminRoadmapPage />} />
+              <Route path="/panel/admin/supporters" element={<AdminSupportersPage />} />
+              <Route path="/panel/admin/commerce" element={<AdminCommercePage />} />
+              <Route path="/panel/admin/rewards" element={<AdminGameContentPage />} />
+              <Route path="/panel/admin" element={<AdminHubPage />} />
+              <Route path="/panel/admin/reports" element={<AdminReportsPage />} />
+              <Route path="/panel/admin/reports/:category/:report?" element={<AdminReportsPage />} />
+              <Route path="/panel/admin/financial/:report?" element={<AdminFinancialReportsRedirect />} />
+              <Route path="/panel/admin/items" element={<AdminItemObservationPage />} />
+              <Route path="/panel/admin/items/customs" element={<AdminCustomItemsPage />} />
+              <Route path="/panel/admin/server" element={<AdminServerPage />} />
+              <Route path="/panel/admin/accounts" element={<AdminAccountsPage />} />
+              <Route path="/panel/admin/services" element={<AdminServicesPage />} />
+              <Route path="/panel/admin/coins" element={<AdminCoinsPage />} />
+              <Route path="/panel/admin/wallet" element={<AdminWalletPage />} />
+              <Route path="/panel/admin/shop" element={<AdminShopPage />} />
+              <Route path="/panel/admin/news" element={<AdminNewsPage />} />
+              <Route path="/panel/admin/games" element={<AdminGamesPage />} />
+              <Route path="/panel/admin/support" element={<AdminSupportPage />} />
+              <Route path="/panel/admin/themes" element={<AdminThemesPage />} />
             </Route>
           </Route>
         </Route>
 
-        {LEGACY_PANEL_REDIRECTS.map((item) => (
+        {LEGACY_EXACT_REDIRECTS.map((item) => (
           <Route key={item.from} path={item.from} element={<Navigate to={item.to} replace />} />
         ))}
+        <Route path="/painel/accounts/:login/:charId" element={<LegacyAccountDetailRedirect />} />
+        <Route path="/painel/admin/relatorios/:category/:report?" element={<LegacyReportsRedirect />} />
+        <Route path="/painel/admin/financeiro/:report?" element={<LegacyFinancialRedirect />} />
       </Routes>
     </BrowserRouter>
   )

@@ -12,11 +12,11 @@ import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
 
-const LANDING_PATH = '/inicio'
+const LANDING_PATH = '/home'
 
 function safeNext(value: string | null) {
   if (value && value.startsWith('/') && !value.startsWith('//')) return value
-  return '/painel'
+  return '/panel'
 }
 
 function alreadyLoggedInDestination(nextParam: string | null) {

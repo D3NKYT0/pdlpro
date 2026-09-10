@@ -14,7 +14,7 @@ export function PublicLayout() {
   const { pathname } = useLocation()
   const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const launchGate = pathname === '/' && Boolean(info.data?.coming_soon)
-  const landingAlias = pathname === '/inicio'
+  const landingAlias = pathname === '/home'
 
   if (pathname === '/' && info.isPending) {
     return null

@@ -33,7 +33,7 @@ export function WalletHero({ balance, bonusBalance }: WalletHeroProps) {
             <small>{t('wallet.hero.availableBalance')}</small>
             <strong>{balance ?? '0.00'} <span>{t('wallet.hero.coins')}</span></strong>
           </div>
-          <Link className="wallet-game-exchange" to="/painel/wallet/jogo">
+          <Link className="wallet-game-exchange" to="/panel/wallet/game">
             <ArrowUpRight aria-hidden="true" />
             {t('wallet.hero.gameExchange')}
           </Link>

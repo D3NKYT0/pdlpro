@@ -49,7 +49,7 @@ definição do XML prevalece.
 Itens customizados são gerenciados em:
 
 ```text
-/painel/admin/itens/customs
+/panel/admin/items/customs
 ```
 
 O cadastro aceita nome, imagem, categoria, grade, negociação e metadados adicionais.
@@ -124,7 +124,7 @@ consulte a [documentação de configuração](../configuracao/ambiente.md).
 
 ## Administração de itens customizados
 
-Em **Servidor → Itens customizados** (`/painel/admin/itens/customs`), informe ID no jogo,
+Em **Servidor → Itens customizados** (`/panel/admin/items/customs`), informe ID no jogo,
 nome, imagem, tipo, grau, negociação e metadados adicionais em JSON. O JSON é público:
 não inclua senhas, tokens ou informações privadas. Limite: objeto de até 16 KB.
 

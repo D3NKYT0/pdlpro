@@ -43,14 +43,14 @@ async function fill(user: ReturnType<typeof userEvent.setup>) {
 it('leva quem já está logado para a landing', async () => {
   session.user = { username: 'hero', has_usable_password: true }
   mount('/login')
-  expect(await screen.findByRole('heading', { name: '/inicio' })).toBeTruthy()
+  expect(await screen.findByRole('heading', { name: '/home' })).toBeTruthy()
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
 })
 
 it('respeita next quando o visitante já está logado', async () => {
   session.user = { username: 'hero', has_usable_password: true }
-  mount(`/login?next=${encodeURIComponent('/painel/wallet')}`)
-  expect(await screen.findByRole('heading', { name: '/painel/wallet' })).toBeTruthy()
+  mount(`/login?next=${encodeURIComponent('/panel/wallet')}`)
+  expect(await screen.findByRole('heading', { name: '/panel/wallet' })).toBeTruthy()
 })
 
 it('envia conta social sem senha para completar o cadastro', async () => {
@@ -67,12 +67,12 @@ it('mostra espera enquanto a sessão carrega', () => {
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
 })
 
-it.each(['/painel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redireciona apenas para destino local: %s', async next => {
+it.each(['/panel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redireciona apenas para destino local: %s', async next => {
   session.login.mockResolvedValue({ username: 'hero' })
   const user = mount(`/login?next=${encodeURIComponent(next)}`)
   await fill(user)
   expect(session.login).toHaveBeenCalledWith('hero', 'secret', '')
-  expect(await screen.findByRole('heading', { name: next.startsWith('/painel') ? next : '/painel' })).toBeTruthy()
+  expect(await screen.findByRole('heading', { name: next.startsWith('/panel') ? next : '/panel' })).toBeTruthy()
 })
 
 it('pede o segundo fator antes de abrir a área privada', async () => {
@@ -81,10 +81,10 @@ it('pede o segundo fator antes de abrir a área privada', async () => {
   const user = mount()
   await fill(user)
   await user.type(await screen.findByLabelText('Código do autenticador'), '123456')
-  expect(screen.queryByRole('heading', { name: '/painel' })).toBeNull()
+  expect(screen.queryByRole('heading', { name: '/panel' })).toBeNull()
   await user.click(screen.getByRole('button', { name: 'Confirmar' }))
   expect(session.verifyTwoFactor).toHaveBeenCalledWith('signed', '123456')
-  expect(await screen.findByRole('heading', { name: '/painel' })).toBeTruthy()
+  expect(await screen.findByRole('heading', { name: '/panel' })).toBeTruthy()
 })
 
 it('mostra erro da API e envia CAPTCHA quando solicitado', async () => {

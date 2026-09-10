@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
 
-const SESSION_MANAGER_PATH = '/painel/security'
+const SESSION_MANAGER_PATH = '/panel/security'
 
 export function RegisterPage() {
   const { user, loading, register } = useAuth()
@@ -42,7 +42,7 @@ export function RegisterPage() {
     try {
       await register({ username, email, password, accept_terms: acceptTerms, hcaptcha_token: captchaToken })
       toast.success('Conta criada. Confirme o e-mail enviado.')
-      navigate('/painel')
+      navigate('/panel')
     } catch (error) {
       toast.error(apiErrorMessage(error, 'Falha no cadastro'))
     }

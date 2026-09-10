@@ -29,7 +29,7 @@ beforeEach(() => {
   vi.stubGlobal('Image', class { onload: null | (() => void) = null; set src(_: string) { this.onload?.() } })
 })
 afterEach(() => { cleanup(); client.clear(); resetHttpClient(); localStorage.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
-function mount(path = '/painel/ajuda') { render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
+function mount(path = '/panel/help') { render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[path]}><HelpPage /></MemoryRouter></QueryClientProvider>); return userEvent.setup() }
 async function start() {
   const user = mount()
   await screen.findByRole('button', { name: article.question })
@@ -105,18 +105,18 @@ it('mostra a espera viva, a pose de pensar e envia a tela conhecida', async () =
   expect(within(screen.getByRole('log')).queryByText('Estou pensando…')).not.toBeInTheDocument()
   expect(screen.getByRole('img')).toHaveAttribute('data-pose', '03-pensando')
   const payload = JSON.parse((fetcher.mock.calls.find(([url]) => String(url).includes('/assistant/reply/'))![1] as RequestInit).body as string)
-  expect(payload.screen).toBe('/painel/ajuda')
+  expect(payload.screen).toBe('/panel/help')
   resolveReply(response(reply))
   await screen.findByRole('button', { name: 'Mostrar resposta completa' })
 }, 15000)
 it('oferece a pergunta da tela sem enviar automaticamente e ignora contexto externo', async () => {
-  const user = mount('/painel/ajuda?from=%2Fpainel%2Faccounts')
+  const user = mount('/panel/help?from=%2Fpanel%2Faccounts')
   const suggestion = await screen.findByRole('button', { name: 'Como encontro minhas contas L2 e meus personagens?' })
   await user.click(suggestion)
   expect(screen.getByRole('textbox', { name: 'Sua mensagem' })).toHaveValue('Como encontro minhas contas L2 e meus personagens?')
   expect(fetcher.mock.calls.some(([url]) => String(url).includes('/assistant/reply/'))).toBe(false)
   cleanup(); client.clear()
-  mount('/painel/ajuda?from=https://evil.test/painel/accounts')
+  mount('/panel/help?from=https://evil.test/panel/accounts')
   await screen.findByRole('button', { name: article.question })
   expect(screen.queryByRole('button', { name: 'Como encontro minhas contas L2 e meus personagens?' })).not.toBeInTheDocument()
 })

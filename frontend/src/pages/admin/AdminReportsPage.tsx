@@ -27,7 +27,7 @@ import { AdminHeader } from './AdminChrome'
 import { AdminFinancialReportsPage } from './AdminFinancialReportsPage'
 import './financial-reports.css'
 
-type CategorySlug = 'financeiro' | 'inventario' | 'leiloes' | 'compras' | 'marketplace'
+type CategorySlug = 'financial' | 'inventory' | 'auctions' | 'purchases' | 'marketplace'
 
 const categories: {
   slug: CategorySlug
@@ -35,36 +35,36 @@ const categories: {
   to: string
 }[] = [
   {
-    slug: 'financeiro',
+    slug: 'financial',
     icon: ChartNoAxesCombined,
-    to: '/painel/admin/relatorios/financeiro/saldos',
+    to: '/panel/admin/reports/financial/balances',
   },
   {
-    slug: 'inventario',
+    slug: 'inventory',
     icon: Package,
-    to: '/painel/admin/relatorios/inventario',
+    to: '/panel/admin/reports/inventory',
   },
   {
-    slug: 'leiloes',
+    slug: 'auctions',
     icon: Gavel,
-    to: '/painel/admin/relatorios/leiloes',
+    to: '/panel/admin/reports/auctions',
   },
   {
-    slug: 'compras',
+    slug: 'purchases',
     icon: ShoppingBag,
-    to: '/painel/admin/relatorios/compras',
+    to: '/panel/admin/reports/purchases',
   },
   {
     slug: 'marketplace',
     icon: Store,
-    to: '/painel/admin/relatorios/marketplace',
+    to: '/panel/admin/reports/marketplace',
   },
 ]
 
-const categoryToKind: Record<Exclude<CategorySlug, 'financeiro'>, OperationalReportKind> = {
-  inventario: 'inventory',
-  leiloes: 'auctions',
-  compras: 'purchases',
+const categoryToKind: Record<Exclude<CategorySlug, 'financial'>, OperationalReportKind> = {
+  inventory: 'inventory',
+  auctions: 'auctions',
+  purchases: 'purchases',
   marketplace: 'marketplace',
 }
 
@@ -395,7 +395,7 @@ function OperationalTable({ data, t }: { data: OperationalReport; t: AdminT }) {
   )
 }
 
-function OperationalReportPanel({ category }: { category: Exclude<CategorySlug, 'financeiro'> }) {
+function OperationalReportPanel({ category }: { category: Exclude<CategorySlug, 'financial'> }) {
   const { t } = useTranslation('admin')
   const kind = categoryToKind[category]
   const title = t(`reports.categories.${category}.title`)
@@ -495,19 +495,26 @@ function OperationalReportPanel({ category }: { category: Exclude<CategorySlug, 
 export function AdminReportsPage() {
   const { category, report } = useParams<{ category?: string; report?: string }>()
   if (!category) return <ReportsHub />
-  if (category === 'financeiro') {
-    if (!report) return <Navigate to="/painel/admin/relatorios/financeiro/saldos" replace />
+  if (category === 'financial') {
+    if (!report) return <Navigate to="/panel/admin/reports/financial/balances" replace />
     return <AdminFinancialReportsPage />
   }
   if (category in categoryToKind) {
-    return <OperationalReportPanel category={category as Exclude<CategorySlug, 'financeiro'>} />
+    return <OperationalReportPanel category={category as Exclude<CategorySlug, 'financial'>} />
   }
-  return <Navigate to="/painel/admin/relatorios" replace />
+  return <Navigate to="/panel/admin/reports" replace />
 }
 
 export function AdminFinancialReportsRedirect() {
   const { report } = useParams()
   const [params] = useSearchParams()
   const search = params.toString()
-  return <Navigate to={`/painel/admin/relatorios/financeiro/${report || 'saldos'}${search ? `?${search}` : ''}`} replace />
+  const reportMap: Record<string, string> = {
+    saldos: 'balances',
+    'fluxo-caixa': 'cash-flow',
+    pagamentos: 'payments',
+    reconciliacao: 'reconciliation',
+  }
+  const mapped = report ? reportMap[report] ?? report : 'balances'
+  return <Navigate to={`/panel/admin/reports/financial/${mapped}${search ? `?${search}` : ''}`} replace />
 }

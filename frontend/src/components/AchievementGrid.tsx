@@ -11,7 +11,7 @@ const PAGE_SIZE = 12
 
 export function AchievementGrid({
   achievements,
-  rewardsTo = '/painel/progress',
+  rewardsTo = '/panel/progress',
   showRewardsLink = true,
 }: {
   achievements: AchievementRow[]

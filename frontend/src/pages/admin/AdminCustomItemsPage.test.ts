@@ -35,7 +35,7 @@ describe('native custom item administration', () => {
   })
   it('is discoverable from the admin hub', () => {
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
-    expect(html).toContain('href="/painel/admin/itens/customs"')
+    expect(html).toContain('href="/panel/admin/items/customs"')
     expect(html).toContain('Itens customizados')
   })
 })

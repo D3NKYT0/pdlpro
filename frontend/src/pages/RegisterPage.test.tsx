@@ -35,8 +35,8 @@ function mount() {
       <MemoryRouter initialEntries={['/register']}>
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/painel" element={<h1>Painel autenticado</h1>} />
-          <Route path="/painel/security" element={<h1>Gerenciador de sessões</h1>} />
+          <Route path="/panel" element={<h1>Painel autenticado</h1>} />
+          <Route path="/panel/security" element={<h1>Gerenciador de sessões</h1>} />
           <Route path="/complete-account" element={<h1>Completar conta</h1>} />
         </Routes>
       </MemoryRouter>

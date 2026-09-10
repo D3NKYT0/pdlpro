@@ -55,12 +55,12 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); client.clear() })
 
-function mount(path = '/painel/admin/atendimento?ticket=ticket-6') {
+function mount(path = '/panel/admin/support?ticket=ticket-6') {
   render(
     <QueryClientProvider client={client}>
       <MemoryRouter initialEntries={[path]}>
         <Routes>
-          <Route path="/painel/admin/atendimento" element={<AdminSupportPage />} />
+          <Route path="/panel/admin/support" element={<AdminSupportPage />} />
         </Routes>
       </MemoryRouter>
     </QueryClientProvider>,

@@ -2,8 +2,8 @@
 
 [← Índice da documentação](../README.md)
 
-Disponíveis na central administrativa em `/painel/admin/relatorios/financeiro/saldos`
-(atalho legado `/painel/admin/financeiro/` redireciona).
+Disponíveis na central administrativa em `/panel/admin/reports/financial/balances`
+(atalho legado `/panel/admin/financial/` redireciona).
 As quatro APIs abaixo aceitam apenas leitura e exigem sessão com acesso de equipe
 (`IsStaffMember`, incluindo os papéis de staff, admin e moderador do PRO).
 

@@ -2,7 +2,7 @@
 
 [← Índice da documentação](../README.md)
 
-Em `/painel/admin`, acesse **Servidor → Observar itens** (`/painel/admin/itens`).
+Em `/panel/admin`, acesse **Servidor → Observar itens** (`/panel/admin/items`).
 Esta é uma tela operacional nativa do frontend, não uma tela do Django Admin.
 O painel traz a
 observação de inflação do projeto SITE: totais por localização, busca por nome/ID,

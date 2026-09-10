@@ -286,18 +286,18 @@ export function AccountsPage() {
                     key={char.char_id}
                     role="link"
                     tabIndex={0}
-                    onClick={() => navigate(`/painel/accounts/${selectedLogin}/${char.char_id}`)}
+                    onClick={() => navigate(`/panel/accounts/${selectedLogin}/${char.char_id}`)}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === ' ') {
                         event.preventDefault()
-                        navigate(`/painel/accounts/${selectedLogin}/${char.char_id}`)
+                        navigate(`/panel/accounts/${selectedLogin}/${char.char_id}`)
                       }
                     }}
                   >
                     <td>
                       <Link
                         className="account-character-link"
-                        to={`/painel/accounts/${selectedLogin}/${char.char_id}`}
+                        to={`/panel/accounts/${selectedLogin}/${char.char_id}`}
                         onClick={(event) => event.stopPropagation()}
                       >
                         {char.name}
@@ -309,7 +309,7 @@ export function AccountsPage() {
                     <td>
                       <Link
                         className="account-character-open"
-                        to={`/painel/accounts/${selectedLogin}/${char.char_id}`}
+                        to={`/panel/accounts/${selectedLogin}/${char.char_id}`}
                         aria-label={t('accounts.openCharacter', { name: char.name })}
                         onClick={(event) => event.stopPropagation()}
                       >

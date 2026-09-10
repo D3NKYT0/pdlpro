@@ -15,7 +15,7 @@ function renderReport(data: FinancialReport, slug: string, search = '') {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: Infinity } } })
   client.setQueryData(['staff-financial-report', data.kind, search], data)
   try {
-    return renderToStaticMarkup(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/painel/admin/relatorios/financeiro/${slug}?${search}`]}><Routes><Route path="/painel/admin/relatorios/:category/:report" element={<AdminFinancialReportsPage />} /></Routes></MemoryRouter></QueryClientProvider>)
+    return renderToStaticMarkup(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/panel/admin/reports/financial/${slug}?${search}`]}><Routes><Route path="/panel/admin/reports/:category/:report" element={<AdminFinancialReportsPage />} /></Routes></MemoryRouter></QueryClientProvider>)
   } finally {
     client.clear()
   }
@@ -23,7 +23,7 @@ function renderReport(data: FinancialReport, slug: string, search = '') {
 
 describe('financial report rendering', () => {
   it('renders wallet balances with bonuses and restores URL filters', () => {
-    const html = renderReport(balanceData, 'saldos', 'username=jogador&minimum=0')
+    const html = renderReport(balanceData, 'balances', 'username=jogador&minimum=0')
     expect(html).toContain('jogador_teste')
     expect(html).toContain('90,00')
     expect(html).toContain('value="jogador"')
@@ -33,7 +33,7 @@ describe('financial report rendering', () => {
   })
 
   it('renders reconciliation entries, exits and a signed discrepancy', () => {
-    const html = renderReport({ ...balanceData, kind: 'reconciliation', results: [{ ...balanceData.results[0], difference: '-2.00', report_status: 'discrepancy' }] }, 'reconciliacao')
+    const html = renderReport({ ...balanceData, kind: 'reconciliation', results: [{ ...balanceData.results[0], difference: '-2.00', report_status: 'discrepancy' }] }, 'reconciliation')
     expect(html).toContain('Entradas</th>')
     expect(html).toContain('Saídas</th>')
     expect(html).toContain('-2,00')
@@ -48,7 +48,7 @@ describe('financial report rendering', () => {
         { currency: 'USD', count: 1, total_amount: '20.00', confirmed_amount: '20.00', pending_amount: '0.00' },
       ], statuses: { confirmed: 1 }, coins: '200.00', bonus_applied: '20.00', total_credited: '220.00' },
       results: [{ id: 'test-order', username: 'jogador_teste', amount: '100.00', currency: 'BRL', coins: '100.00', bonus_applied: '10.00', total_credited: '110.00', status: 'confirmed', method: 'mock', payment_source: 'simulation', created_at: '2026-09-01T16:00:00Z', paid_at: null }],
-    }, 'pagamentos')
+    }, 'payments')
     expect(html).toContain('Reais · BRL')
     expect(html).toContain('Dólares · USD')
     expect(html).toContain('220,00')
@@ -62,11 +62,11 @@ describe('financial report rendering', () => {
       summary: { credits: '50.00', debits: '20.00', net: '30.00', transaction_count: 2, days: 1, average_credits: '50.00', average_debits: '20.00' },
       results: [{ day: '2026-09-01', credits: '50.00', debits: '20.00', net: '30.00', accumulated: '30.00', transaction_count: 2, credit_count: 1, debit_count: 1 }],
     }
-    const html = renderReport(data, 'fluxo-caixa')
+    const html = renderReport(data, 'cash-flow')
     expect(html).toContain('01/09/2026')
     expect(html).toContain('height:40%')
     expect(html).toContain('30,00')
-    const empty = renderReport({ ...data, results: [], count: 0 }, 'fluxo-caixa')
+    const empty = renderReport({ ...data, results: [], count: 0 }, 'cash-flow')
     expect(empty).toContain('Nenhum registro encontrado')
     expect(empty).not.toContain('finance-bars')
   })

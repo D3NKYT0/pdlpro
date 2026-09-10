@@ -64,7 +64,7 @@ describe('panel item observation entry', () => {
   })
   it('links from the central panel to the native React route', () => {
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
-    expect(html).toContain('href="/painel/admin/itens"')
+    expect(html).toContain('href="/panel/admin/items"')
     expect(html).toContain('Observar itens')
   })
   it('renders the live panel with read-only data and exact quantities', () => {

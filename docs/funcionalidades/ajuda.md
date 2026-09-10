@@ -18,7 +18,7 @@ A pergunta aparece imediatamente com o estado de espera viva: pose **pensando** 
 
 Ao falar de si, o Denkynho se apresenta como o alter ego virtual do Denky e relaciona sua curiosidade, visão estratégica e espírito jogador à missão de acompanhar a comunidade. Perguntas sobre o criador recebem apenas uma síntese profissional pública — arquitetura de sistemas, liderança técnica, desenvolvimento e tecnologias — sem nome civil, empregador, localização, telefone ou outros dados pessoais. A resposta oferece **Conhecer o criador**, sempre apontando para `https://denky.dev.br/` em nova aba; nenhuma URL produzida pelo modelo é transformada nesse botão.
 
-Fora de `/painel/ajuda`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a
+Fora de `/panel/help`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a
 ajuda contextual da tela em um painel com visual próprio (fundo teal/dourado, distinto do chrome do
 painel), fechamento pelo botão vermelho com **X**, barras de necessidade, atalhos para o cantinho
 do mascote e, quando há aviso de necessidade, um atalho de cuidado correspondente. A última coluna
@@ -64,7 +64,7 @@ Para revisão local sem credenciais nem operações reais, `npm run dev` disponi
 
 Testes adicionais: `HelpPage.experience.test.tsx`, `HelpPreferences.test.tsx`, `ContextualHelp.test.tsx`, `PrivateLayout.test.tsx`, `PetProgress.test.tsx`, `SupportPage.test.tsx`, `test_chat.py`, `test_denkynho_pet_api.py`, `test_denkynho_handbook_admin.py` e `test_denkynho_wardrobe_api.py`. Cobrem envio imediato, espera viva, rascunho seguinte, recuperação, preferências na conta, mini-mascote no shell, chamado pré-preenchido, navegação autorizada, visita diária, equipar/retirar, desbloqueios, insuficiência, idempotência e rollback.
 
-Entre no painel e abra **Ajuda** (`/painel/ajuda`). A rota usa a autenticação e o tema do painel. Em desktop e no celular, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível; no celular o envio cabe em uma linha, com o rótulo e a dica só para leitores de tela. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
+Entre no painel e abra **Ajuda** (`/panel/help`). A rota usa a autenticação e o tema do painel. Em desktop e no celular, a tela ocupa a altura da janela: o histórico da conversa é a única área com rolagem. O cabeçalho permanece compacto e o campo de mensagem fica visível; no celular o envio cabe em uma linha, com o rótulo e a dica só para leitores de tela. Escreva uma dúvida e pressione **Enter** para enviar; **Shift+Enter** quebra a linha. Você também pode filtrar as sugestões por assunto ou escolher uma pergunta. O histórico mostra a pergunta, a orientação e sua fonte. **Mostrar resposta completa** encerra a revelação gradual; **Ver orientação completa** abre os detalhes do artigo; **Nova conversa** limpa o histórico e o rascunho desta tela.
 
 O Denkynho reconhece o usuário da sessão e informa se está conversando com jogador, equipe ou superadministrador. Sugere o primeiro nome de exibição e pergunta como a pessoa prefere ser chamada; o apelido só passa a ser usado depois de uma resposta válida. A pessoa pode conversar em português ou inglês. O frontend envia cada mensagem aceita ao endpoint autenticado `POST /api/v1/shared/content/assistant/reply/`, com a rota conhecida em `screen`. A mensagem é interpretada na requisição e não é gravada. O histórico é temporário e desaparece ao sair da tela ou recarregá-la. O apelido e o tamanho das respostas ficam no perfil do mascote somente quando a pessoa pede para lembrar.
 
@@ -192,7 +192,7 @@ Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta
 
 A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. Perguntas com correspondência segura recebem resposta curta, detalhes e fonte; as demais pedem esclarecimento. [dialogue.ts](../../frontend/src/components/help/dialogue.ts) e [personality.ts](../../frontend/src/components/help/personality.ts) mantêm o repertório de contingência e as boas-vindas.
 
-**Atendimento da equipe** abre `/painel/support`. A partir da ajuda contextual, o assunto e a tela de origem podem vir pré-preenchidos; o histórico do chat nunca é enviado junto.
+**Atendimento da equipe** abre `/panel/support`. A partir da ajuda contextual, o assunto e a tela de origem podem vir pré-preenchidos; o histórico do chat nunca é enviado junto.
 
 ## Catálogo inicial
 
@@ -204,7 +204,7 @@ A migration `content.0009_seed_english_faq` acrescenta as versões em inglês do
 
 A migration `content.0013_seed_denkynho_handbook` publica 61 orientações de passo a passo marcadas como `assistant_only`. Elas alimentam só a consulta do assistente: não entram em `/faq`, nas sugestões da Ajuda nem nas APIs de listagem, mesmo para superadministradores. O Denkynho continua filtrando por papel: jogadores recebem os 45 artigos públicos do handbook; a equipe recebe também os 13 de staff; superadministradores recebem os 3 exclusivos de temas e permissões.
 
-O handbook descreve rotas reais do painel (`/painel/wallet`, `/painel/accounts`, `/painel/admin/atendimento` e correlatas), sem fixar preços, taxas ou prazos configuráveis. No Django Admin, o proxy **DenkynhoHandbook** e o filtro **Somente assistente** separam esses artigos do FAQ listado. Novos passo a passo usam o fluxo editorial: marque `assistant_only` e mantenha as versões em português e inglês; a migração `content.0018` cria só o proxy, sem republicar o catálogo.
+O handbook descreve rotas reais do painel (`/panel/wallet`, `/panel/accounts`, `/panel/admin/support` e correlatas), sem fixar preços, taxas ou prazos configuráveis. No Django Admin, o proxy **DenkynhoHandbook** e o filtro **Somente assistente** separam esses artigos do FAQ listado. Novos passo a passo usam o fluxo editorial: marque `assistant_only` e mantenha as versões em português e inglês; a migração `content.0018` cria só o proxy, sem republicar o catálogo.
 
 ## Moderação da conversa
 

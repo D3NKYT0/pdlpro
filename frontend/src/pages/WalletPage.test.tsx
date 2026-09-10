@@ -48,8 +48,8 @@ it('abre modal de pedido e aponta para histórico completo', async () => {
     }],
   })
   const user = mount()
-  expect((await screen.findByRole('link', { name: 'Ver todos os pedidos' })).getAttribute('href')).toBe('/painel/wallet/pedidos')
-  expect(screen.getByRole('link', { name: 'Ver todo o extrato' }).getAttribute('href')).toBe('/painel/wallet/extrato')
+  expect((await screen.findByRole('link', { name: 'Ver todos os pedidos' })).getAttribute('href')).toBe('/panel/wallet/orders')
+  expect(screen.getByRole('link', { name: 'Ver todo o extrato' }).getAttribute('href')).toBe('/panel/wallet/statement')
   await user.click(await screen.findByRole('button', { name: /25.00 moedas/ }))
   expect(await screen.findByRole('dialog', { name: 'Detalhe do pedido' })).toBeTruthy()
   expect(screen.getByText('ord-1')).toBeTruthy()
@@ -58,7 +58,7 @@ it('abre modal de pedido e aponta para histórico completo', async () => {
 it('coloca o atalho de troca com o jogo ao lado do saldo', async () => {
   mount()
   const link = await screen.findByRole('link', { name: 'Transferir moedas entre carteira e jogo' })
-  expect(link.getAttribute('href')).toBe('/painel/wallet/jogo')
+  expect(link.getAttribute('href')).toBe('/panel/wallet/game')
   expect(link.classList.contains('wallet-game-exchange')).toBe(true)
   expect(link.closest('.wallet-balance-card')).toBeTruthy()
   expect(link.closest('.wallet-balance-card')?.querySelector('.wallet-balance-copy')).toBeTruthy()

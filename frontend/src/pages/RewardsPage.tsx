@@ -12,7 +12,7 @@ export function RewardsPage() {
   const { t } = useTranslation('panel')
   const [params, setParams] = useSearchParams()
   const tab = params.get('tab') || 'battle'
-  if (tab === 'fishing') return <Navigate to="/painel/games?tab=fishing" replace />
+  if (tab === 'fishing') return <Navigate to="/panel/games?tab=fishing" replace />
   return (
     <div className="program-page">
       <ProgramHeader

@@ -8,6 +8,7 @@ import type { ReactElement } from 'react'
 import toast from 'react-hot-toast'
 import { ApiError, auctionApi, inventoryApi, lineageApi, marketplaceApi } from '../services/api'
 import type { ApiAuction, ApiCharacterListing } from '../services/types'
+import i18n from '../i18n'
 import { MarketplacePage } from './MarketplacePage'
 import { AuctionPage } from './AuctionPage'
 
@@ -40,7 +41,7 @@ beforeEach(() => {
   vi.mocked(auctionApi.create).mockResolvedValue(auction)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
-afterEach(() => { cleanup(); client.clear(); vi.restoreAllMocks() })
+afterEach(async () => { cleanup(); client.clear(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
 function mount(page: ReactElement) {
   render(<QueryClientProvider client={client}>{page}</QueryClientProvider>)
   return userEvent.setup()
@@ -164,4 +165,34 @@ it.each([false, true])('cria leilão do item/enchant e quantidade escolhidos; er
     expect(toast.error).toHaveBeenCalledWith('Estoque alterado')
     expect(quantity).toHaveValue(2)
   } else expect(screen.getByRole('combobox', { name: 'Inventário do personagem' })).toHaveValue('')
+})
+it('marketplace segue o idioma ativo no catálogo, no anúncio e na venda', async () => {
+  await i18n.changeLanguage('en')
+  const user = mount(<MarketplacePage />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Marketplace' })).toBeVisible()
+  expect(screen.getByText('On sale now')).toBeVisible()
+  await user.click(await screen.findByRole('button', { name: /View character/ }))
+  expect(screen.getByRole('article', { name: 'Details of Elf' })).toBeVisible()
+  expect(screen.getByText('For sale')).toBeVisible()
+  expect(screen.getByText('Seller: seller')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Buy character' })).toBeVisible()
+  expect(screen.getByRole('combobox', { name: 'Character' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Publish listing' })).toBeVisible()
+  expect(screen.queryByText('À venda agora')).not.toBeInTheDocument()
+  expect(screen.queryByText('Comprar personagem')).not.toBeInTheDocument()
+})
+it('leilão segue o idioma ativo, incluindo status e tempo restante', async () => {
+  await i18n.changeLanguage('es')
+  const user = mount(<AuctionPage />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Subastas' })).toBeVisible()
+  expect(screen.getByText('Subastas abiertas')).toBeVisible()
+  expect(await screen.findByText('1d 0h restantes')).toBeVisible()
+  await user.click(screen.getByRole('button', { name: /Ver subasta/ }))
+  expect(screen.getByRole('article', { name: 'Detalles de Adena' })).toBeVisible()
+  expect(screen.getByText('Abierta')).toBeVisible()
+  expect(screen.getByText('Todavía sin pujas')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Pujar' })).toBeVisible()
+  expect(screen.getByRole('combobox', { name: 'Personaje que recibirá el objeto' })).toBeVisible()
+  expect(screen.queryByText('Leilões abertos')).not.toBeInTheDocument()
+  expect(screen.queryByText('Dar lance')).not.toBeInTheDocument()
 })

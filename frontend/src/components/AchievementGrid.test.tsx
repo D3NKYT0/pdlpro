@@ -43,7 +43,7 @@ it('mostra chrome de conquistas em português e pagina a lista', async () => {
   mount(rows(13))
   expect(screen.getByText('Marcos da conta')).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Conquistas' })).toBeVisible()
-  expect(screen.getByRole('link', { name: /Ver prêmios/ })).toHaveAttribute('href', '/painel/progress')
+  expect(screen.getByRole('link', { name: /Ver prêmios/ })).toHaveAttribute('href', '/panel/progress')
   expect(screen.getAllByText('Conquista bloqueada').length).toBeGreaterThan(0)
   expect(screen.getByText('1 / 2')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Próxima' }))

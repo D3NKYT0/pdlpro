@@ -39,7 +39,7 @@ export function WikiPage() {
           <PublicEmpty>
             Nenhuma página publicada.
             {query ? ' Tente outra busca.' : null} Para rates e crônica, veja{' '}
-            <Link to="/informacoes">Informações</Link>.
+            <Link to="/info">Informações</Link>.
           </PublicEmpty>
         )}
       </div>

@@ -8,10 +8,10 @@ import { PortalHomePage } from '../components/themes/PortalTheme'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
 
 const wikiLinks = [
-  { to: '/informacoes#rates', label: 'Rates e progressão' },
-  { to: '/informacoes#enchant', label: 'Encantamento' },
-  { to: '/informacoes#pvp', label: 'Siege e castelos' },
-  { to: '/informacoes#comecar', label: 'Primeiros passos' },
+  { to: '/info#rates', label: 'Rates e progressão' },
+  { to: '/info#enchant', label: 'Encantamento' },
+  { to: '/info#pvp', label: 'Siege e castelos' },
+  { to: '/info#comecar', label: 'Primeiros passos' },
   { to: '/faq', label: 'Perguntas frequentes' },
 ]
 
@@ -49,13 +49,13 @@ function clanInitial(name: string) {
 
 const features = [
   {
-    to: '/informacoes#rates',
+    to: '/info#rates',
     image: 'home/chronicle-rates-v2.webp',
     title: 'Crônica e Rates',
     blurb: 'Progressão, economia e o ritmo do reino',
   },
   {
-    to: '/informacoes#pvp',
+    to: '/info#pvp',
     image: 'home/castle-siege-v2.webp',
     title: 'Guerra de Castelos',
     blurb: 'Siege, clãs e o domínio de Aden',

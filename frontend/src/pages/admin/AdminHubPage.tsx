@@ -30,23 +30,23 @@ type Category = {
 
 const categories: Category[] = [
   {key: 'programs', tone: 'programs', entries: [
-    {to:'/painel/admin/apoiadores',key:'supporters',icon:Coins},
-    {to:'/painel/admin/comercio',key:'commerce',icon:ShoppingBag},
-    {to:'/painel/admin/recompensas',key:'rewardsWorkshop',icon:Gamepad2},
+    {to:'/panel/admin/supporters',key:'supporters',icon:Coins},
+    {to:'/panel/admin/commerce',key:'commerce',icon:ShoppingBag},
+    {to:'/panel/admin/rewards',key:'rewardsWorkshop',icon:Gamepad2},
   ]},
   {
     key: 'support',
     tone: 'support',
     entries: [
-      { to: '/painel/admin/atendimento', key: 'tickets', icon: Headphones },
+      { to: '/panel/admin/support', key: 'tickets', icon: Headphones },
     ],
   },
   {
     key: 'system',
     tone: 'system',
     entries: [
-      { to: '/painel/admin/recursos', key: 'resources', icon: Settings2 },
-      { to: '/painel/admin/temas', key: 'themes', icon: Palette },
+      { to: '/panel/admin/resources', key: 'resources', icon: Settings2 },
+      { to: '/panel/admin/themes', key: 'themes', icon: Palette },
       { to: '/admin/', key: 'djangoAdmin', icon: ExternalLink, external: true },
     ],
   },
@@ -54,41 +54,41 @@ const categories: Category[] = [
     key: 'reports',
     tone: 'reports',
     entries: [
-      { to: '/painel/admin/relatorios', key: 'reports', icon: ChartNoAxesCombined },
+      { to: '/panel/admin/reports', key: 'reports', icon: ChartNoAxesCombined },
     ],
   },
   {
     key: 'finance',
     tone: 'finance',
     entries: [
-      { to: '/painel/admin/moedas', key: 'coins', icon: Coins },
-      { to: '/painel/admin/loja', key: 'shop', icon: ShoppingBag },
-      { to: '/painel/admin/carteira', key: 'wallet', icon: WalletCards },
+      { to: '/panel/admin/coins', key: 'coins', icon: Coins },
+      { to: '/panel/admin/shop', key: 'shop', icon: ShoppingBag },
+      { to: '/panel/admin/wallet', key: 'wallet', icon: WalletCards },
     ],
   },
   {
     key: 'games',
     tone: 'games',
-    entries: [{ to: '/painel/admin/jogos', key: 'gameModules', icon: Gamepad2 }],
+    entries: [{ to: '/panel/admin/games', key: 'gameModules', icon: Gamepad2 }],
   },
   {
     key: 'content',
     tone: 'content',
     entries: [
-      { to: '/painel/admin/noticias', key: 'news', icon: Newspaper },
-      { to: '/painel/admin/roadmap', key: 'roadmap', icon: CalendarDays },
-      { to: '/painel/admin/servidor', key: 'comingSoon', icon: CalendarDays },
+      { to: '/panel/admin/news', key: 'news', icon: Newspaper },
+      { to: '/panel/admin/roadmap', key: 'roadmap', icon: CalendarDays },
+      { to: '/panel/admin/server', key: 'comingSoon', icon: CalendarDays },
     ],
   },
   {
     key: 'server',
     tone: 'server',
     entries: [
-      { to: '/painel/admin/servidor', key: 'server', icon: Server },
-      { to: '/painel/admin/itens', key: 'itemWatch', icon: ChartNoAxesCombined },
-      { to: '/painel/admin/itens/customs', key: 'customItems', icon: PackagePlus },
-      { to: '/painel/admin/servicos', key: 'services', icon: Settings2 },
-      { to: '/painel/admin/contas', key: 'lineageAccounts', icon: Unlink },
+      { to: '/panel/admin/server', key: 'server', icon: Server },
+      { to: '/panel/admin/items', key: 'itemWatch', icon: ChartNoAxesCombined },
+      { to: '/panel/admin/items/customs', key: 'customItems', icon: PackagePlus },
+      { to: '/panel/admin/services', key: 'services', icon: Settings2 },
+      { to: '/panel/admin/accounts', key: 'lineageAccounts', icon: Unlink },
     ],
   },
 ]

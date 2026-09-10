@@ -73,7 +73,7 @@ function renderAt(path: string) {
     <I18nextProvider i18n={i18n}>
       <MemoryRouter initialEntries={[path]}>
         <Routes>
-          <Route path="/painel" element={<PrivateLayout />}>
+          <Route path="/panel" element={<PrivateLayout />}>
             <Route path="*" element={<h1>Conteúdo privado</h1>} />
           </Route>
         </Routes>
@@ -83,7 +83,7 @@ function renderAt(path: string) {
 }
 
 it('aplica o shell Valorem à área do jogador', () => {
-  renderAt('/painel/profile')
+  renderAt('/panel/profile')
   const surface = screen.getByRole('heading', { name: 'Conteúdo privado' }).closest('[data-theme-surface]')
   expect(surface).toHaveAttribute('data-theme-surface', 'panel')
   expect(surface).toHaveAttribute('data-theme-renderer', 'portal-v1')
@@ -92,7 +92,7 @@ it('aplica o shell Valorem à área do jogador', () => {
 })
 
 it('distingue visualmente a administração dentro do mesmo renderer', () => {
-  renderAt('/painel/admin')
+  renderAt('/panel/admin')
   const surface = screen.getByRole('heading', { name: 'Conteúdo privado' }).closest('[data-theme-surface]')
   expect(surface).toHaveAttribute('data-theme-surface', 'admin')
   expect(surface).toHaveClass('is-admin-shell')
@@ -101,16 +101,16 @@ it('distingue visualmente a administração dentro do mesmo renderer', () => {
 })
 
 it('mostra o mini-mascote fora da Ajuda e o oculta na conversa', () => {
-  renderAt('/painel/profile')
+  renderAt('/panel/profile')
   expect(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' })).toBeVisible()
   cleanup()
-  renderAt('/painel/ajuda')
+  renderAt('/panel/help')
   expect(screen.queryByRole('button', { name: 'Denkynho: ajuda nesta tela' })).not.toBeInTheDocument()
 })
 
 it('preserva o shell original quando o tema default está ativo', () => {
   themeMock.current.presentation = null
-  const { container } = renderAt('/painel/admin')
+  const { container } = renderAt('/panel/admin')
   const surface = screen.getByRole('heading', { name: 'Conteúdo privado' }).closest('[data-theme-surface]')
   expect(surface).not.toHaveClass('portal-panel-shell', 'is-admin-shell')
   expect(screen.getByText('Área do jogador')).toBeVisible()
@@ -124,7 +124,7 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
     { code: 'support', enabled: false },
     { code: 'help', enabled: false },
   ]
-  renderAt('/painel/profile')
+  renderAt('/panel/profile')
   expect(screen.queryByRole('link', { name: 'Conta L2' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
@@ -132,7 +132,7 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
 })
 
 it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () => {
-  const { container } = renderAt('/painel/profile')
+  const { container } = renderAt('/panel/profile')
   const panelUser = container.querySelector('.panel-user')
   const language = container.querySelector('.panel-language')
   const account = container.querySelector('.panel-user-account')
@@ -149,7 +149,7 @@ it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () 
 it('traduz o rodapé e o cabeçalho do menu quando o idioma muda', async () => {
   themeMock.current.presentation = null
   await i18n.changeLanguage('en')
-  renderAt('/painel/profile')
+  renderAt('/panel/profile')
   expect(screen.getByText('Player area')).toBeVisible()
   expect(screen.getByText('Menu')).toBeVisible()
   expect(screen.getByRole('link', { name: 'Open my profile' })).toBeVisible()

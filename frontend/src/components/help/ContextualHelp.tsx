@@ -44,7 +44,7 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
   const supportEnabled = !resources?.some((resource) => resource.code === 'support' && !resource.enabled)
   const ticket = supportEnabled ? supportTicketPrefill(context?.path ?? path, activeLanguage) : null
   const triggerLabel = cue ? cueMessage(cue, activeLanguage) : t('contextual.triggerHelp')
-  const helpPath = context ? `/painel/ajuda?from=${encodeURIComponent(context.path)}` : '/painel/ajuda'
+  const helpPath = context ? `/panel/help?from=${encodeURIComponent(context.path)}` : '/panel/help'
   const petCareKey = helpEnabled && cue && CARE_KEYS.includes(cue.id as CareKey) ? (cue.id as CareKey) : null
   const attributes = pet ? CARE_KEYS.map((attr) => ({
     id: attr,

@@ -2,7 +2,7 @@
 
 [← Índice da API](README.md) · [Relatórios financeiros](relatorios-financeiros.md)
 
-A área `/painel/admin/relatorios` agrupa consultas agregadas do painel por categoria. As APIs financeiras permanecem em `/api/v1/staff/financial-reports/`; as operacionais usam `/api/v1/staff/operational-reports/`.
+A área `/panel/admin/reports` agrupa consultas agregadas do painel por categoria. As APIs financeiras permanecem em `/api/v1/staff/financial-reports/`; as operacionais usam `/api/v1/staff/operational-reports/`.
 
 ## Categorias
 
@@ -27,8 +27,8 @@ Todas exigem staff autenticado, respondem com `Cache-Control: no-store` e usam o
 
 ## UI
 
-- Hub: `/painel/admin/relatorios`
-- Detalhe: `/painel/admin/relatorios/:category/:report?`
-- Compatibilidade: `/painel/admin/financeiro/:report?` redireciona para a categoria financeira
+- Hub: `/panel/admin/reports`
+- Detalhe: `/panel/admin/reports/:category/:report?`
+- Compatibilidade: `/panel/admin/financial/:report?` redireciona para a categoria financeira
 
 Os totais do `summary` cobrem todos os registros filtrados, não só a página atual. Não há relatório de rede social (módulo removido no 2.1).

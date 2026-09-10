@@ -21,7 +21,7 @@ export function SiteFooter() {
 
   const exploreLinks = [
     { to: '/', label: t('nav.home') },
-    { to: '/informacoes', label: t('nav.info') },
+    { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
     { to: '/news', label: t('nav.news'), resource: 'news' },
@@ -29,7 +29,7 @@ export function SiteFooter() {
 
   const accountLinks = [
     { to: '/login', label: t('nav.signIn') },
-    { to: '/painel', label: t('footer.panel') },
+    { to: '/panel', label: t('footer.panel') },
     { to: '/roadmap', label: t('nav.roadmap'), resource: 'roadmap' },
     { to: '/faq', label: t('footer.faq'), resource: 'faq' },
   ]

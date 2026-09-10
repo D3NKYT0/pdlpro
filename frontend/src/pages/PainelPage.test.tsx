@@ -41,7 +41,7 @@ it('apresenta saudação, status do servidor e atalhos habilitados', async () =>
   expect(await screen.findByText('42')).toBeVisible()
   expect(screen.getByText('Online')).toBeVisible()
   expect(screen.getByText('Offline')).toBeVisible()
-  expect(screen.getByRole('link', { name: /Carteira/ })).toHaveAttribute('href', '/painel/wallet')
+  expect(screen.getByRole('link', { name: /Carteira/ })).toHaveAttribute('href', '/panel/wallet')
 })
 
 it('esconde o atalho do recurso pausado', async () => {

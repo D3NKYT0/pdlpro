@@ -207,7 +207,7 @@ def test_assistant_consults_unlisted_handbook_hidden_from_faq(api, player, mocke
     article = Faq.objects.create(
         question="Passo a passo handbook da carteira",
         short_answer="Abra Carteira no painel.",
-        answer="Abra /painel/wallet e revise o saldo antes de qualquer operação.",
+        answer="Abra /panel/wallet e revise o saldo antes de qualquer operação.",
         keywords="handbook-wallet-xyz",
         assistant_only=True,
     )

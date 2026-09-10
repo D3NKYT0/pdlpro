@@ -32,7 +32,7 @@ export function CompleteAccountPage() {
   }
 
   if (user.has_usable_password !== false) {
-    return <Navigate to="/painel" replace />
+    return <Navigate to="/panel" replace />
   }
 
   async function onSubmit(event: FormEvent) {
@@ -46,7 +46,7 @@ export function CompleteAccountPage() {
       await authApi.completeCredentials({ username, password, accept_terms: acceptTerms })
       await refreshUser()
       toast.success('Login e senha definidos. Bem-vindo ao reino.')
-      navigate('/painel', { replace: true })
+      navigate('/panel', { replace: true })
     } catch (error) {
       toast.error(apiErrorMessage(error, 'Não foi possível concluir o cadastro.'))
     } finally {
