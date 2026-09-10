@@ -14,6 +14,8 @@ interface ImportMetaEnv {
   readonly VITE_SENTRY_ENVIRONMENT?: string
   readonly VITE_SENTRY_RELEASE?: string
   readonly VITE_SENTRY_TRACES_SAMPLE_RATE?: string
+  /** Lista de IDs de extensão SPA (vírgula). Ex.: `example` ou `acme`. */
+  readonly VITE_PDL_EXTENSIONS?: string
 }
 
 interface ImportMeta {

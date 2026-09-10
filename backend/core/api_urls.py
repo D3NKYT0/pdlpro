@@ -9,6 +9,7 @@ from apps.games.presentation.advanced import (
 )
 from apps.shop.presentation.commerce import CommerceView, StaffCommerceView
 from apps.wallet.presentation.views.exchange import GameExchangeView
+from extensions.loader import extension_urlpatterns
 
 urlpatterns = [
     path("shared/wallet/game-exchange/", GameExchangeView.as_view()),
@@ -31,3 +32,7 @@ urlpatterns = [
     path("staff/", include("core.routing.staff")),
     path("system/", include("core.routing.system")),
 ]
+
+# Extensões de cliente: /api/v1/extensions/<label>/…
+# Descoberta via apps instalados (PDL_EXTENSION_APPS). Ver docs/arquitetura/extensoes.md.
+urlpatterns += extension_urlpatterns()

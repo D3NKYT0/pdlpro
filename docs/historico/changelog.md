@@ -10,6 +10,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Área e guia de **extensões de cliente** (`backend/extensions/`,
+  `frontend/src/extensions/` com catálogo + `VITE_PDL_EXTENSIONS` e montagem
+  em `AppRoutes`, `PDL_EXTENSION_APPS`, `extensions.surface` e skeletons
+  `_example`) para overlay sem patchar o core; ver
+  [Extensões de cliente](../arquitetura/extensoes.md).
 - Django **gettext** no backend: `LANGUAGES` pt-br/en/es, `LocaleMiddleware`,
   `ApiLanguageMiddleware`, catálogos em `backend/locale/`, `POST /i18n/setlang/`
   e tradução das mensagens base de `DomainError` na borda HTTP; a SPA envia

@@ -84,6 +84,10 @@ Não mantenha estado específico de usuário em singletons.
 
 `common/` contém capacidades transversais, como container de DI, middleware, paginação, permissões, contrato de erro e suporte a OpenAPI.
 
+Código exclusivo de um cliente **não** entra em `apps/`. Use
+[`backend/extensions/`](../../backend/extensions/) e o guia
+[Extensões de cliente](extensoes.md) (`PDL_EXTENSION_APPS`, `extensions.surface`).
+
 ## Integração com o Lineage 2
 
 `ILineageGateway` isola a aplicação do schema do servidor:

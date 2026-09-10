@@ -46,4 +46,6 @@ LOCAL_APPS = [
     "apps.themes.apps.ThemesConfig",
 ]
 
+# Núcleo do produto. Extensões de cliente entram em base.py via PDL_EXTENSION_APPS
+# (depois do carregamento do .env). Ver docs/arquitetura/extensoes.md.
 INSTALLED_APPS_PDL = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

@@ -22,6 +22,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `PROJECT_URL` | URL pública do backend/proxy | `http://localhost` |
 | `FRONTEND_URL` | URL usada em links enviados ao usuário | `http://localhost:3000` |
 | `LEGAL_DOCS_VERSION` | Versão aceita dos documentos legais | Data ou versão publicada |
+| `PDL_EXTENSION_APPS` | AppConfigs de cliente sob `extensions.*` (vírgula) | vazio no core; ver [Extensões](../arquitetura/extensoes.md) |
 
 `DB_NAME`, `DB_USER` e `DB_PASSWORD` configuram o serviço PostgreSQL do Compose. Fora dele, prefira uma `DATABASE_URL` completa.
 

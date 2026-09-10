@@ -35,7 +35,12 @@ USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 TRUSTED_PROXY_COUNT = env.int("TRUSTED_PROXY_COUNT", default=1)
 
-INSTALLED_APPS = INSTALLED_APPS_PDL
+from extensions.loader import merge_extension_apps, parse_extension_apps
+
+INSTALLED_APPS = merge_extension_apps(
+    INSTALLED_APPS_PDL,
+    parse_extension_apps(env.list("PDL_EXTENSION_APPS", default=[])),
+)
 MIDDLEWARE = MIDDLEWARE_PDL
 ROOT_URLCONF = "core.urls"
 WSGI_APPLICATION = "core.wsgi.application"

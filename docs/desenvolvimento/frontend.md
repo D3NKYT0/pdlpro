@@ -21,6 +21,7 @@ A interface é uma SPA React com TypeScript e Vite. Site público, autenticaçã
 | `services/types.ts` | Tipos dos contratos de API |
 | `lib/` | Helpers puros (formatação, indexação); **sem HTTP** |
 | `theme/`, `components/themes/` | Provider global, resolução de assets e renderers homologados |
+| `extensions/` | Overlay de cliente: módulos + `VITE_PDL_EXTENSIONS` (ver [Extensões](../arquitetura/extensoes.md)) |
 | `styles/`, `public/theme/` | Estilos estruturais e tema default embarcado |
 
 ### Regras de camada (SPA)

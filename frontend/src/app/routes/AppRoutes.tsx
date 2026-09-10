@@ -67,6 +67,7 @@ import { AdminCommercePage } from '../../pages/admin/AdminCommercePage'
 import { AdminGameContentPage } from '../../pages/admin/AdminGameContentPage'
 import { AdminThemesPage } from '../../pages/admin/AdminThemesPage'
 import { AdminWalletPage } from '../../pages/admin/AdminWalletPage'
+import { extensionRouteElements } from '../../extensions'
 
 export function AppRoutes() {
   return (
@@ -83,6 +84,7 @@ export function AppRoutes() {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/auth/callback/:provider" element={<OAuthCallbackPage />} />
+          {extensionRouteElements('public')}
           <Route element={<PublicContent />}>
             <Route path="/roadmap" element={<ResourceGate code="roadmap"><RoadmapPage /></ResourceGate>} />
             <Route path="/roadmap/:id" element={<ResourceGate code="roadmap"><RoadmapDetailPage /></ResourceGate>} />
@@ -103,6 +105,7 @@ export function AppRoutes() {
 
         <Route element={<RequireAuth />}>
           <Route element={<PrivateLayout />}>
+            {extensionRouteElements('panel')}
             <Route path="/panel/supporters" element={<ResourceGate code="supporters"><SupportersPage /></ResourceGate>} />
             <Route path="/panel/rewards" element={<ResourceGate code="games"><RewardsPage /></ResourceGate>} />
             <Route path="/panel/wallet/game" element={<ResourceGate code="wallet"><GameExchangePage /></ResourceGate>} />
@@ -124,6 +127,7 @@ export function AppRoutes() {
             <Route path="/panel/marketplace" element={<ResourceGate code="marketplace"><MarketplacePage /></ResourceGate>} />
             <Route path="/panel/auctions" element={<ResourceGate code="auction"><AuctionPage /></ResourceGate>} />
             <Route element={<RequireStaff />}>
+              {extensionRouteElements('staff')}
               <Route path="/panel/admin/resources" element={<AdminResourcesPage />} />
               <Route path="/panel/admin/roadmap" element={<AdminRoadmapPage />} />
               <Route path="/panel/admin/supporters" element={<AdminSupportersPage />} />

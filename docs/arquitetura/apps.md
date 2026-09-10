@@ -23,6 +23,7 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `application/use_cases.py`, `infrastructure/provider.py`, `views.py`, `middleware.py` |
 | `support` | Chamados, respostas e atribuição de atendimento | `application/use_cases.py`, `domain/repositories.py`, `presentation/views/` |
 | `themes` | Instalação, validação, ativação e publicação de temas globais | `application/use_cases.py`, `application/theme_packages.py`, `infrastructure/provider.py` |
+| `extensions/<cliente>` | Overlay exclusivo da instalação (fora do core) | Ver [Extensões de cliente](extensoes.md); template em `backend/extensions/_example/` |
 
 ## Responsabilidade das classes
 

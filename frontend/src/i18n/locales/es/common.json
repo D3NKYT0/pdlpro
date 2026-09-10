@@ -33,5 +33,9 @@
   "itemCatalogPlaceholder": "ID o nombre del ítem",
   "itemCatalogUnavailable": "Catálogo no disponible.",
   "itemCatalogEmpty": "Ningún ítem encontrado en el catálogo.",
-  "itemIdMeta": "ID {{id}} · {{grade}}"
+  "itemIdMeta": "ID {{id}} · {{grade}}",
+  "extensionExample": {
+    "pingTitle": "Extensión de ejemplo",
+    "pingBody": "Skeleton del overlay SPA. Active con VITE_PDL_EXTENSIONS=example."
+  }
 }

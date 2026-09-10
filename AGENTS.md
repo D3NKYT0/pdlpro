@@ -3,8 +3,8 @@
 ## Arquitetura (obrigatória)
 
 O detalhe vive em [Visão geral](docs/arquitetura/visao-geral.md), [Apps](docs/arquitetura/apps.md),
-[Frontend](docs/desenvolvimento/frontend.md), [Temas](docs/funcionalidades/temas.md) e
-[Internacionalização](docs/desenvolvimento/i18n.md).
+[Extensões de cliente](docs/arquitetura/extensoes.md), [Frontend](docs/desenvolvimento/frontend.md),
+[Temas](docs/funcionalidades/temas.md) e [Internacionalização](docs/desenvolvimento/i18n.md).
 Registros da migração: [backend PDF](docs/arquitetura/migracao-clean-architecture-di.pdf),
 [frontend PDF](docs/arquitetura/migracao-frontend-camadas.pdf).
 
@@ -22,6 +22,9 @@ infrastructure → domain
 - Cada app registra um `AppProvider`. Views usam `InjectedAPIView` / `self.resolve(...)`. Sem service locator na application.
 - Comandos management resolvem portas pelo container (ex.: `IPreviewSeedService`); ORM fica no adaptador.
 - Staff consome portas dos apps donos; `common/` só para capacidades transversais.
+- Código exclusivo de cliente: `backend/extensions/<cliente>/` + `PDL_EXTENSION_APPS`;
+  SPA em `frontend/src/extensions/` + `VITE_PDL_EXTENSIONS` (catálogo, sem editar
+  `AppRoutes` por cliente). Imports estáveis via `extensions.surface`. Não patchar o core no fork.
 
 ### Frontend (SPA em camadas)
 
