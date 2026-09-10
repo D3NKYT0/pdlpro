@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { GlobalLoadingOverlay } from '../../components/layout/GlobalLoadingOverlay'
+import { CookieConsentBanner } from '../../components/legal/CookieConsentBanner'
+import { TermsReacceptanceGate } from '../../components/legal/TermsReacceptanceGate'
 import { PrivateLayout } from '../../components/layout/PrivateLayout'
 import { PublicContent, PublicLayout } from '../../components/layout/PublicLayout'
 import { AccountsPage } from '../../pages/AccountsPage'
@@ -164,6 +166,8 @@ export function AppRoutes() {
         <Route path="/painel/admin/relatorios/:category/:report?" element={<LegacyReportsRedirect />} />
         <Route path="/painel/admin/financeiro/:report?" element={<LegacyFinancialRedirect />} />
       </Routes>
+      <CookieConsentBanner />
+      <TermsReacceptanceGate />
     </BrowserRouter>
   )
 }

@@ -3,6 +3,7 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+import { CookieConsentProvider } from '../../contexts/CookieConsentContext'
 import { AppRoutes } from './AppRoutes'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'user', username: 'Tester', display_name: 'Tester', email: 'tester@test.dev', is_staff: true, is_email_verified: true }, loading: false, logout: vi.fn(), refreshUser: vi.fn() }) }))
@@ -13,6 +14,7 @@ beforeEach(() => {
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
   client = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: Infinity } } })
   client.setQueryData(['resources'], [])
+  localStorage.clear()
 })
 afterEach(() => {
   cleanup()
@@ -22,6 +24,15 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
+function mountRoutes() {
+  return render(
+    <QueryClientProvider client={client}>
+      <CookieConsentProvider>
+        <AppRoutes />
+      </CookieConsentProvider>
+    </QueryClientProvider>,
+  )
+}
 const pages = [
   ['/home', 'Inicie sua Jornada em Lineage Agora!'],
   ['/forgot-password', 'Esqueceu sua senha?'],
@@ -87,21 +98,21 @@ const pages = [
 
 it('leva /login autenticado para a landing', () => {
   window.history.replaceState({}, '', '/login')
-  render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
+  mountRoutes()
   expect(window.location.pathname).toBe('/home')
   expect(screen.getByRole('heading', { level: 1, name: 'Inicie sua Jornada em Lineage Agora!' })).toBeTruthy()
 })
 
 it('leva /register autenticado para o gerenciador de sessões', () => {
   window.history.replaceState({}, '', '/register')
-  render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
+  mountRoutes()
   expect(window.location.pathname).toBe('/panel/security')
   expect(screen.getByRole('heading', { level: 1, name: 'Conta e segurança' })).toBeTruthy()
 })
 
 it.each(pages)('abre %s com API pendente', (path, heading) => {
   window.history.replaceState({}, '', path)
-  render(<QueryClientProvider client={client}><AppRoutes /></QueryClientProvider>)
+  mountRoutes()
   expect(screen.getByRole('heading', { level: 1, name: heading })).toBeTruthy()
   expect(window.location.pathname).toBe(path)
 })

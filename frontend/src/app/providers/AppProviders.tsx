@@ -1,8 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import { I18nextProvider } from 'react-i18next'
-import { CookieConsentBanner } from '../../components/legal/CookieConsentBanner'
-import { TermsReacceptanceGate } from '../../components/legal/TermsReacceptanceGate'
 import { AuthProvider } from '../../contexts/AuthContext'
 import { CookieConsentProvider } from '../../contexts/CookieConsentContext'
 import i18n from '../../i18n'
@@ -18,8 +16,6 @@ export function AppProviders() {
           <CookieConsentProvider>
             <AuthProvider>
               <AppRoutes />
-              <CookieConsentBanner />
-              <TermsReacceptanceGate />
               <div data-theme-part="toast-host" data-theme-surface="overlay">
                 <Toaster position="top-right" containerClassName="pdl-toast" toastOptions={{ className: 'pdl-toast' }} />
               </div>
