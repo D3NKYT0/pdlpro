@@ -107,6 +107,22 @@ def test_swagger_schema_url_follows_django_language_cookie():
 
 
 @override_settings(OPENAPI_DOCS_PUBLIC=True)
+def test_swagger_language_cookie_beats_browser_accept_language():
+    """Regressão: Accept-Language pt-BR não deve forçar ?lang=pt após setlang."""
+    browser = Client()
+    browser.cookies["django_language"] = "en"
+    response = browser.get(
+        "/api/docs/swagger-ui/",
+        headers={"Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8"},
+    )
+    assert response.status_code == 200
+    body = response.content.decode().replace("\\u003D", "=")
+    assert "lang=en" in body
+    assert "lang=pt" not in body
+    assert "API documentation" in body
+
+
+@override_settings(OPENAPI_DOCS_PUBLIC=True)
 def test_openapi_schema_translates_with_lang_query():
     headers = {"HTTP_ACCEPT": "application/json"}
     pt = Client().get("/api/schema/?lang=pt", **headers).json()

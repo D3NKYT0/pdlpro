@@ -59,13 +59,28 @@ class SecurityHeadersMiddleware:
         return response
 
 
+def _api_accept_language_applies(path: str) -> bool:
+    """``Accept-Language`` só prevalece sobre o cookie em contratos JSON da API.
+
+    Swagger/ReDoc vivem sob ``/api/docs/`` mas usam o seletor ``setlang`` (cookie),
+    como o admin. Sem esta exclusão, o idioma do navegador (ex.: ``pt-BR``) anula
+    a escolha do usuário e o schema volta com ``?lang=pt``.
+    """
+    if not path.startswith("/api/"):
+        return False
+    if path.startswith("/api/docs/"):
+        return False
+    return True
+
+
 class ApiLanguageMiddleware:
     """Ativa o gettext Django a partir de ``?lang=``, ``X-Language`` ou ``Accept-Language``.
 
     Prioridade na API: query ``lang`` → ``X-Language`` → ``Accept-Language`` →
     idioma já escolhido pelo ``LocaleMiddleware`` (cookie / sessão). Fora de
-    ``/api/``, ``Accept-Language`` não sobrescreve o cookie do admin (setlang).
-    O domínio permanece sem Django; a borda HTTP e templates admin usam o locale ativo.
+    ``/api/`` e em ``/api/docs/``, ``Accept-Language`` não sobrescreve o cookie
+    do admin/docs (setlang). O domínio permanece sem Django; a borda HTTP e
+    templates admin usam o locale ativo.
     """
 
     def __init__(self, get_response):
@@ -80,7 +95,7 @@ class ApiLanguageMiddleware:
         )
 
         accept = None
-        if request.path.startswith("/api/"):
+        if _api_accept_language_applies(request.path):
             accept = parse_accept_language(request.headers.get("Accept-Language"))
 
         explicit = (

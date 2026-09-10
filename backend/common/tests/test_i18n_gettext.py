@@ -115,6 +115,27 @@ class ApiLanguageMiddlewareTests(SimpleTestCase):
         self.assertEqual(request.pdl_language, "pt")
         self.assertEqual(response.content.decode(), "pt-br")
 
+    def test_api_docs_keep_cookie_over_accept_language(self):
+        """Swagger/ReDoc usam setlang; o Accept-Language do browser não pode anular."""
+        factory = RequestFactory()
+        request = factory.get(
+            "/api/docs/swagger-ui/",
+            HTTP_ACCEPT_LANGUAGE="pt-BR,pt;q=0.9",
+        )
+        request.COOKIES["django_language"] = "en"
+
+        def view(_request):
+            from django.http import HttpResponse
+            from django.utils import translation
+
+            return HttpResponse(translation.get_language())
+
+        from django.middleware.locale import LocaleMiddleware
+
+        response = LocaleMiddleware(ApiLanguageMiddleware(view))(request)
+        self.assertEqual(request.pdl_language, "en")
+        self.assertEqual(response.content.decode(), "en")
+
     def test_domain_error_message_is_translated_in_handler(self):
         activate_language("es")
         try:
