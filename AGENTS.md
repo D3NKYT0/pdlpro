@@ -40,12 +40,16 @@ lib/ = helpers puros (sem HTTP)
 - Invalidação TanStack sempre com `queryKey` escopada (`useProgramAction` exige a lista).
 - Sem container DI no React: `AppProviders` + objetos `*Api`. Regra de negócio permanece no backend.
 
-### Internacionalização (obrigatória na SPA)
+### Internacionalização (obrigatória — SPA e backend)
 
 Detalhe em [Internacionalização](docs/desenvolvimento/i18n.md). Idiomas: `pt`, `en`, `es`.
+Toda feature nova ou alterada cobre **as duas camadas** no mesmo conjunto de
+alterações quando expõe texto ao usuário (API, admin, e-mail ou UI).
 
-- Toda UI nova ou alterada (público, auth, painel, admin, help, chrome de tema) entra no
-  i18n no mesmo conjunto de alterações: chave nos três JSON em
+**Frontend (SPA)**
+
+- Toda UI nova ou alterada (público, auth, painel, admin, help, chrome de tema,
+  `frontend/src/extensions/*`) entra no i18n: chave nos três JSON em
   `frontend/src/i18n/locales/{pt,en,es}/` e `useTranslation('namespace')` na tela.
 - Não deixe literais de interface hardcoded; não use mapas inline `pt`/`en`/`es` no
   componente quando o namespace já existe.
@@ -54,11 +58,19 @@ Detalhe em [Internacionalização](docs/desenvolvimento/i18n.md). Idiomas: `pt`,
   `pt-BR` fixo).
 - Namespaces: `common`, `public`, `auth`, `panel`, `admin`, `help` (e `personality`
   quando aplicável).
-- No **backend**, mensagens de sistema (erros de domínio na borda HTTP, e-mails,
-  templates admin) usam Django gettext (`locale/`, `makemessages` /
-  `compilemessages`). O domínio permanece sem Django: strings PT como msgid;
-  ative o locale com `activate_language` / `ApiLanguageMiddleware` e aplique
-  `gettext` na apresentação. Conteúdo editorial continua em campos `*_en`/`*_es`.
+
+**Backend (Django gettext — mesmo rigor que a SPA)**
+
+- Mensagens de sistema visíveis ao usuário (erros de domínio na borda HTTP,
+  validators, serializers, e-mails, templates admin/Jazzmin, OpenAPI summaries e
+  `verbose_name` / help_text / choices) usam gettext (`gettext` / `gettext_lazy`),
+  catálogos em `backend/locale/`, `makemessages` / `compilemessages`.
+- Inclui apps do core **e** `backend/extensions/<cliente>/`: sem string de UI/API
+  hardcoded só em PT; msgid em PT, `msgstr` em EN/ES no mesmo PR/conjunto.
+- O domínio permanece sem Django: strings PT como msgid; ative o locale com
+  `activate_language` / `ApiLanguageMiddleware` e aplique `gettext` na apresentação.
+- Conteúdo editorial continua em campos `*_en`/`*_es`.
+- Não entregue endpoint ou admin novo sem as entradas EN/ES correspondentes.
 
 ### Temas (público + painel)
 

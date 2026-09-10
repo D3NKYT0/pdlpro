@@ -152,6 +152,8 @@ Escopos:
 - Não altere `AppRoutes` por cliente — só o catálogo + env.
 - i18n: namespaces próprios ou chaves da instalação; o skeleton usa
   `common.extensionExample.*` só como fumaça do core.
+- Backend da mesma extensão: gettext (msgid PT + catálogos EN/ES) com o mesmo
+  rigor da SPA — ver `AGENTS.md` (Internacionalização).
 - Visual de marca: prefira [tema ZIP](../funcionalidades/temas.md).
 
 Alinhamento com o backend: SPA `/ext/<id>/…` ↔ API
