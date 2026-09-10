@@ -49,6 +49,32 @@ export function persistLanguage(language: AppLanguage) {
   } catch {
     /* ignore quota / private mode */
   }
+  persistDjangoLanguageCookie(language)
+}
+
+/** Align Django LocaleMiddleware cookie with the SPA product language. */
+export function persistDjangoLanguageCookie(language: AppLanguage) {
+  if (typeof document === 'undefined') return
+  const django = language === 'pt' ? 'pt-br' : language
+  document.cookie = `django_language=${encodeURIComponent(django)}; path=/; max-age=31536000; SameSite=Lax`
+}
+
+/** Read product language from the Django language cookie, if present. */
+export function readDjangoLanguageCookie(): AppLanguage | null {
+  if (typeof document === 'undefined') return null
+  const match = document.cookie.match(/(?:^|; )django_language=([^;]*)/)
+  if (!match) return null
+  try {
+    const raw = decodeURIComponent(match[1] || '')
+      .trim()
+      .toLowerCase()
+      .replace('_', '-')
+    if (raw === 'pt-br' || raw === 'pt') return 'pt'
+    if (raw === 'en' || raw === 'es') return raw
+  } catch {
+    return null
+  }
+  return null
 }
 
 /** Language code for content APIs (`?lang=`). */

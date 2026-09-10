@@ -1,19 +1,21 @@
-{% load static %}
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
 <header class="pdl-docs-topbar">
     <a class="pdl-docs-brand" href="{% url 'swagger-ui' %}">
         <img src="{% static 'pdl_admin/img/logo.png' %}" alt="" class="pdl-docs-crest">
         <span>
-            <small>Documentação da API</small>
+            <small>{% translate "Documentação da API" %}</small>
             <strong>{{ docs_product }}</strong>
         </span>
     </a>
-    <nav class="pdl-docs-nav" aria-label="Documentação">
+    <nav class="pdl-docs-nav" aria-label="{% translate 'Documentação' %}">
+        {% include "pdl_ui/_language_form.html" with language_form_id="pdl-docs-language" language_form_class="pdl-language-form--docs" language_select_class="pdl-docs-language-select" %}
         <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'swagger-ui' %}" {% if docs_active == 'swagger' %}aria-current="page"{% endif %}>Swagger</a>
         <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'redoc' %}" {% if docs_active == 'redoc' %}aria-current="page"{% endif %}>ReDoc</a>
-        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'schema' %}">Schema</a>
-        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'admin:index' %}">Admin</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'schema' %}">{% translate "Schema" %}</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
         {% if docs_frontend_url %}
-        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{{ docs_frontend_url }}">Painel</a>
+        <a class="pdl-button pdl-button--sm pdl-button--secondary" href="{{ docs_frontend_url }}">{% translate "Painel" %}</a>
         {% endif %}
     </nav>
 </header>

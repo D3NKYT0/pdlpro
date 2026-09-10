@@ -1285,6 +1285,19 @@ body.login-page::after {
   width: min(430px, calc(100vw - 34px));
 }
 
+.pdl-language-form--login {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 0.85rem;
+}
+
+.pdl-language-form--login .form-select {
+  max-width: 11rem;
+  color: var(--pdl-text, #f4ead4);
+  background-color: rgba(20, 17, 13, 0.92);
+  border-color: var(--pdl-border, rgba(212, 175, 55, 0.24));
+}
+
 .login-logo {
   position: relative;
   display: grid;

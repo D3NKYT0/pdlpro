@@ -133,8 +133,32 @@ a:hover {
 .pdl-docs-nav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
   gap: 0.3rem;
+}
+
+.pdl-language-form--docs {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.35rem;
+}
+
+.pdl-docs-language-select {
+  min-width: 7.5rem;
+  height: 2rem;
+  padding: 0.15rem 0.55rem;
+  color: var(--pdl-text);
+  font: inherit;
+  font-size: 0.82rem;
+  background: rgba(20, 17, 13, 0.92);
+  border: 1px solid var(--pdl-border);
+  border-radius: 0.35rem;
+}
+
+.pdl-docs-language-select:focus {
+  outline: 1px solid var(--pdl-gold);
+  outline-offset: 2px;
 }
 
 /* Swagger UI — prefixed so these rules beat swagger-ui.css */

@@ -44,6 +44,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Idioma da SPA e da API sincronizados: o cliente envia `X-Language` e, nas
   rotas `/api/`, `Accept-Language` prevalece sobre o cookie `django_language`
   (antes o setlang do Jazzmin travava o gettext da API no idioma do admin).
+- Seletor de idioma no **admin** (Jazzmin + login) e na documentação **Swagger/ReDoc**,
+  com sync bidirecional cookie `django_language` ↔ `localStorage` `pdl.language`.
 - Migrações pendentes de `Meta.verbose_name` (gettext) em `games`, `programs`,
   `server` e `shop` — `makemigrations --check` volta a passar.
 - Tela **Coming Soon** / abertura do servidor passa a usar i18n pt/en/es (kicker,

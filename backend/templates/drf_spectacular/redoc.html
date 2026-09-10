@@ -1,10 +1,12 @@
-{% load static %}
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="pt-br" class="pdl-docs pdl-docs--redoc">
+<html lang="{{ LANGUAGE_CODE|default:'pt-br' }}" class="pdl-docs pdl-docs--redoc">
   <head>
     {% include "pdl_docs/_head.html" %}
     <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}">
     {% include "pdl_ui/_button_assets.html" %}
+    {% include "pdl_ui/_language_sync.html" %}
   </head>
   <body>
     {% include "pdl_docs/_topbar.html" with docs_active="redoc" %}
@@ -13,7 +15,7 @@
     <script src="{{ redoc_standalone }}"></script>
     <script>
       const redocSettings = {{ settings|safe }};
-      Redoc.init("{{ schema_url }}", redocSettings, document.getElementById('redoc-container'))
+      Redoc.init("{{ schema_url|escapejs }}", redocSettings, document.getElementById('redoc-container'))
     </script>
     {% else %}
     <redoc spec-url="{{ schema_url }}"></redoc>

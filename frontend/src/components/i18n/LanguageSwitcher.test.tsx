@@ -32,5 +32,6 @@ it('persists language choice and updates document lang', async () => {
   expect(i18n.language).toBe('es')
   expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe('es')
   expect(document.documentElement.lang).toBe('es')
+  expect(document.cookie).toContain('django_language=es')
   expect(screen.getByRole('combobox', { name: 'Idioma del sitio' })).toBeTruthy()
 })

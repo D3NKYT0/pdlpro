@@ -2,7 +2,9 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import {
   detectBrowserLanguage,
+  LANGUAGE_STORAGE_KEY,
   persistLanguage,
+  readDjangoLanguageCookie,
   readStoredLanguage,
   type AppLanguage,
 } from './locale'
@@ -32,7 +34,9 @@ import esHelp from './locales/es/help.json'
 import esPersonality from './locales/es/personality.json'
 
 const initialLanguage: AppLanguage =
-  import.meta.env.MODE === 'test' ? 'pt' : readStoredLanguage() || detectBrowserLanguage()
+  import.meta.env.MODE === 'test'
+    ? 'pt'
+    : readStoredLanguage() || readDjangoLanguageCookie() || detectBrowserLanguage()
 
 // Keep storage aligned with the active UI language so HTTP headers follow the SPA.
 if (import.meta.env.MODE !== 'test') {
@@ -61,6 +65,18 @@ i18n.on('languageChanged', (language) => {
     }
   }
 })
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key !== LANGUAGE_STORAGE_KEY) return
+    const next = event.newValue
+    if (next === 'pt' || next === 'en' || next === 'es') {
+      if (i18n.language !== next) {
+        void i18n.changeLanguage(next)
+      }
+    }
+  })
+}
 
 if (typeof document !== 'undefined') {
   document.documentElement.lang = initialLanguage === 'pt' ? 'pt-BR' : initialLanguage

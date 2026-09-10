@@ -73,7 +73,13 @@ O chamador trata sucesso, falha e concorrência da operação. `setBusy` é apre
 
 ## Swagger e ReDoc
 
-Ambos carregam os assets compartilhados. Os links da barra superior e as ações `.btn` do Swagger usam o sistema; a interface de autorização e as chamadas HTTP continuam pertencendo ao Swagger. As abas, menus, expansores e controles internos do ReDoc mantêm o contrato do SDK. O bloqueio automático de POST do admin não intercepta esses SDKs.
+Ambos carregam os assets compartilhados e o seletor de idioma (`pdl_ui/_language_form.html`
++ `language-sync.js`), alinhado ao admin e à SPA via cookie `django_language` /
+`localStorage` `pdl.language`. O schema OpenAPI é pedido com `?lang=` conforme o
+idioma ativo. Os links da barra superior e as ações `.btn` do Swagger usam o sistema;
+a interface de autorização e as chamadas HTTP continuam pertencendo ao Swagger. As
+abas, menus, expansores e controles internos do ReDoc mantêm o contrato do SDK. O
+bloqueio automático de POST do admin não intercepta esses SDKs.
 
 As classes de compatibilidade ficam em um único CSS, evitando cópias de estilos em `admin.css`, `forms.css` e `docs.css`. Para mudar uma variante, atualize a base e compare os catálogos do backend e React.
 
@@ -81,6 +87,7 @@ As classes de compatibilidade ficam em um único CSS, evitando cópias de estilo
 
 - [test_admin_components.py](../../backend/common/tests/test_admin_components.py): acesso ao catálogo, login, validação e destino de “Salvar e continuar”.
 - [test_openapi_docs.py](../../backend/common/tests/test_openapi_docs.py): carregamento dos assets nas páginas de documentação.
+- [test_language_chooser.py](../../backend/common/tests/test_language_chooser.py): seletor de idioma no admin/Swagger e schema com `?lang=`.
 - [admin-buttons.test.ts](../../frontend/src/lib/admin-buttons.test.ts): executa o JavaScript entregue pelo backend em jsdom; cobre repetição, FormData, AJAX, teclado, histórico e validação nativa. Roda com o Vitest do frontend. A cobertura percentual do frontend continua medindo `frontend/src`, não este script estático do backend.
 
 Antes de concluir mudanças, execute as verificações completas do [guia de testes](testes.md) e confira catálogo, formulário real e documentação em desktop/celular. Na implantação, publique também os arquivos estáticos via `collectstatic`, conforme o [guia de implantação](../operacao/implantacao.md).

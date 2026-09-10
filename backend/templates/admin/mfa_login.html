@@ -1,8 +1,8 @@
 {% extends "registration/base.html" %}
 {% load i18n %}
-{% block extrahead %}{{ block.super }}{% include "pdl_ui/_button_assets.html" %}{% endblock %}
 {% block content %}
-<p class="login-box-msg">Acesso administrativo</p>
+{% include "pdl_ui/_language_form.html" with language_form_id="pdl-login-language" language_form_class="pdl-language-form--login" language_select_class="form-select form-select-sm" %}
+<p class="login-box-msg">{% translate "Acesso administrativo" %}</p>
 <form action="{{ app_path }}" method="post">
   {% csrf_token %}
   {{ form.non_field_errors }}
@@ -11,8 +11,8 @@
     {{ field.label_tag }} {{ field }} {{ field.errors }}
   </div>
   {% endfor %}
-  <p>Preencha o código do autenticador se o segundo fator estiver ativado.</p>
+  <p>{% translate "Preencha o código do autenticador se o segundo fator estiver ativado." %}</p>
   <input type="hidden" name="next" value="{{ next }}">
-  <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
+  <button type="submit" class="btn btn-primary">{% translate "Acessar" %}</button>
 </form>
 {% endblock %}

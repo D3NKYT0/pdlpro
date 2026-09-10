@@ -4267,3 +4267,27 @@ msgstr "Save and continue"
 #: .\templates\admin\pdl_components.html:30
 msgid "Escolha uma ação para experimentar."
 msgstr "Choose an action to try."
+
+#: .\templates\admin\mfa_login.html
+msgid "Preencha o código do autenticador se o segundo fator estiver ativado."
+msgstr "Enter the authenticator code if two-factor authentication is enabled."
+
+#: .\templates\admin\mfa_login.html
+msgid "Acessar"
+msgstr "Sign in"
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Documentação da API"
+msgstr "API documentation"
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Schema"
+msgstr "Schema"
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Admin"
+msgstr "Admin"
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Painel"
+msgstr "Panel"

@@ -17,6 +17,7 @@ JAZZMIN_SETTINGS_PDL = {
     "custom_js": "pdl_admin/js/forms.js",
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
+    "language_chooser": True,
     "navigation_expanded": False,
     "search_model": [
         "accounts.User",

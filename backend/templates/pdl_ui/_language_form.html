@@ -1,0 +1,26 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+<form
+  class="pdl-language-form{% if language_form_class %} {{ language_form_class }}{% endif %}"
+  action="{% url 'set_language' %}"
+  method="post"
+  data-pdl-language-form
+  data-pdl-language-autosubmit="1"
+>
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ language_next|default:request.get_full_path }}">
+  <select
+    class="{{ language_select_class|default:'form-select form-select-sm' }}"
+    id="{{ language_form_id|default:'pdl-backend-language' }}"
+    name="language"
+    aria-label="{% translate 'Idioma' %}"
+  >
+    {% for language in languages %}
+    <option value="{{ language.code }}" lang="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+      {{ language.name_local|title }}
+    </option>
+    {% endfor %}
+  </select>
+</form>

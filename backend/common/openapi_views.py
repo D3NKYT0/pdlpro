@@ -30,11 +30,27 @@ class PublicOrStaffDocsPermission(BasePermission):
         )
 
 
-def docs_chrome_context():
+def docs_chrome_context(request=None):
+    from common.i18n import from_django_language
+    from django.utils import translation
+
+    language = None
+    if request is not None:
+        language = getattr(request, "pdl_language", None)
+    if not language:
+        language = from_django_language(translation.get_language())
     return {
         "docs_product": settings.PROJECT_TITLE,
         "docs_frontend_url": settings.FRONTEND_URL,
+        "docs_language": language,
     }
+
+
+def _schema_url_with_lang(schema_url: str, language: str) -> str:
+    if not schema_url:
+        return schema_url
+    separator = "&" if "?" in schema_url else "?"
+    return f"{schema_url}{separator}lang={language}"
 
 
 class DocsChromeMixin:
@@ -42,7 +58,13 @@ class DocsChromeMixin:
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
-        response.data.update(docs_chrome_context())
+        chrome = docs_chrome_context(request)
+        response.data.update(chrome)
+        schema_url = response.data.get("schema_url")
+        if schema_url:
+            response.data["schema_url"] = _schema_url_with_lang(
+                schema_url, chrome["docs_language"]
+            )
         return response
 
 

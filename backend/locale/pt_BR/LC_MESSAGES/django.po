@@ -4039,3 +4039,27 @@ msgstr ""
 #: .\templates\admin\pdl_components.html:30
 msgid "Escolha uma ação para experimentar."
 msgstr ""
+
+#: .\templates\admin\mfa_login.html
+msgid "Preencha o código do autenticador se o segundo fator estiver ativado."
+msgstr ""
+
+#: .\templates\admin\mfa_login.html
+msgid "Acessar"
+msgstr ""
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Documentação da API"
+msgstr ""
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Schema"
+msgstr ""
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Admin"
+msgstr ""
+
+#: .\templates\pdl_docs\_topbar.html
+msgid "Painel"
+msgstr ""

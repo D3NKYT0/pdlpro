@@ -52,6 +52,7 @@
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
     {% include "pdl_ui/_button_assets.html" %}
+    {% include "pdl_ui/_language_sync.html" %}
 </head>
 <body class="layout-fixed{% if jazzmin_settings.show_sidebar %} sidebar-expand-lg sidebar-open{% else %} no-sidebar{% endif %} bg-body-tertiary {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now 'Z' %}">
 <div class="app-wrapper pdl-admin-shell">
@@ -158,14 +159,14 @@
                 {% endif %}
 
                 {% if jazzmin_settings.language_chooser %}
-                <div class="dropdown">
-                    <button class="pdl-icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{% translate 'Idioma' %}">
+                <div class="dropdown pdl-language-menu">
+                    <button class="pdl-icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{% translate 'Idioma' %}" aria-label="{% translate 'Idioma' %}">
                         <i class="fas fa-globe" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end pdl-compact-menu">
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
-                        <form action="{% url 'set_language' %}" method="post">
+                        <form action="{% url 'set_language' %}" method="post" data-pdl-language-form>
                             {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.get_full_path|remove_lang:LANGUAGE_CODE }}">
                             {% for language in languages %}
