@@ -83,11 +83,14 @@ bloqueio automático de POST do admin não intercepta esses SDKs.
 
 As classes de compatibilidade ficam em um único CSS, evitando cópias de estilos em `admin.css`, `forms.css` e `docs.css`. Para mudar uma variante, atualize a base e compare os catálogos do backend e React.
 
+O item ativo da topbar (`aria-current="page"`) usa o tom verde de sucesso com brilho suave, sem contorno retangular. Enquanto o schema carrega, Swagger e ReDoc mostram o overlay em `pdl_docs/_loader.html` (`docs-loader.js`), que some quando a UI pinta conteúdo útil.
+
 ## Verificação e publicação
 
 - [test_admin_components.py](../../backend/common/tests/test_admin_components.py): acesso ao catálogo, login, validação e destino de “Salvar e continuar”.
 - [test_openapi_docs.py](../../backend/common/tests/test_openapi_docs.py): carregamento dos assets nas páginas de documentação.
-- [test_language_chooser.py](../../backend/common/tests/test_language_chooser.py): seletor de idioma no admin/Swagger e schema com `?lang=`.
+- [test_language_chooser.py](../../backend/common/tests/test_language_chooser.py): seletor de idioma no admin/Swagger, schema com `?lang=`, POST/GET de `set_language` e proxy Nginx de `/i18n/`.
 - [admin-buttons.test.ts](../../frontend/src/lib/admin-buttons.test.ts): executa o JavaScript entregue pelo backend em jsdom; cobre repetição, FormData, AJAX, teclado, histórico e validação nativa. Roda com o Vitest do frontend. A cobertura percentual do frontend continua medindo `frontend/src`, não este script estático do backend.
+- [docs-loader.test.ts](../../frontend/src/lib/docs-loader.test.ts): dismiss do overlay de carregamento das docs (Swagger/ReDoc) e timeout de segurança.
 
 Antes de concluir mudanças, execute as verificações completas do [guia de testes](testes.md) e confira catálogo, formulário real e documentação em desktop/celular. Na implantação, publique também os arquivos estáticos via `collectstatic`, conforme o [guia de implantação](../operacao/implantacao.md).

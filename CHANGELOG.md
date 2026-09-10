@@ -4,5 +4,6 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 
 Última atualização: **10 de setembro de 2026** — **[Não publicado]**: extensões
 de cliente (backend + SPA `/ext/*` via `VITE_PDL_EXTENSIONS`); seletor de idioma
-no admin/Swagger com sync SPA↔backend; i18n pt/en/es ampliado; tema
-**PDL Classic**. Publicado: **[2.2.0]** (9 set 2026).
+no admin/Swagger com sync SPA↔backend; proxy Nginx de `/i18n/` (corrige 405 no
+setlang); i18n pt/en/es ampliado; tema **PDL Classic**. Publicado: **[2.2.0]**
+(9 set 2026).

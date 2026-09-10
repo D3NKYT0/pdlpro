@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import Client, override_settings
 from drf_spectacular.generators import SchemaGenerator
@@ -48,6 +49,9 @@ def test_swagger_ui_uses_pdl_theme():
     assert "pdl_admin/css/docs.css" in body
     assert "pdl_admin/css/buttons.css" in body
     assert "pdl-docs-topbar" in body
+    assert 'id="pdl-docs-loader"' in body
+    assert "pdl_admin/js/docs-loader.js" in body
+    assert "Carregando documentação" in body or "Loading documentation" in body
     assert "PDL PRO" in body
     assert "Documentação da API" in body
 
@@ -60,8 +64,33 @@ def test_redoc_uses_pdl_theme():
     assert "pdl_admin/css/docs.css" in body
     assert "pdl_admin/css/buttons.css" in body
     assert "pdl-docs-topbar" in body
+    assert 'id="pdl-docs-loader"' in body
+    assert "pdl_admin/js/docs-loader.js" in body
     assert "PDL PRO" in body
     assert 'aria-current="page"' in body
+
+
+def test_docs_nav_active_uses_green_glow_not_outline():
+    from pathlib import Path
+
+    css = (Path(settings.BASE_DIR) / "static/pdl_admin/css/buttons.css").read_text(
+        encoding="utf-8"
+    )
+    assert '.pdl-docs-nav .pdl-button[aria-current="page"]' in css
+    assert "hue-rotate(65deg)" in css
+    assert "text-shadow" in css
+    assert 'outline: 1px solid var(--pdl-gold' not in css
+
+
+def test_docs_css_defines_branded_loader():
+    from pathlib import Path
+
+    css = (Path(settings.BASE_DIR) / "static/pdl_admin/css/docs.css").read_text(
+        encoding="utf-8"
+    )
+    assert ".pdl-docs-loader" in css
+    assert ".pdl-docs-loader--done" in css
+    assert "pdl-docs-loader-spin" in css
 
 
 @pytest.mark.django_db

@@ -4,12 +4,13 @@
 <html lang="{{ LANGUAGE_CODE|default:'pt-br' }}" class="pdl-docs pdl-docs--redoc">
   <head>
     {% include "pdl_docs/_head.html" %}
-    <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}">
+    <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}?v=20260910.1">
     {% include "pdl_ui/_button_assets.html" %}
     {% include "pdl_ui/_language_sync.html" %}
   </head>
   <body>
     {% include "pdl_docs/_topbar.html" with docs_active="redoc" %}
+    {% include "pdl_docs/_loader.html" %}
     {% if settings %}
     <div id="redoc-container"></div>
     <script src="{{ redoc_standalone }}"></script>

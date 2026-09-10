@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -7,6 +9,41 @@ from django.urls import reverse
 
 def test_jazzmin_language_chooser_is_enabled():
     assert settings.JAZZMIN_SETTINGS.get("language_chooser") is True
+
+
+def test_edge_nginx_proxies_i18n_to_backend():
+    """POST /i18n/setlang/ must reach Django; SPA try_files would answer 405."""
+    repo = Path(settings.BASE_DIR).parent
+    prod = (repo / "frontend/nginx.production.conf").read_text(encoding="utf-8")
+    dev = (repo / "nginx/nginx.conf").read_text(encoding="utf-8")
+    assert "i18n" in prod
+    assert "location ~ ^/(api|admin|i18n)(/|$)" in prod
+    assert "location ^~ /i18n/" in dev
+
+
+@pytest.mark.django_db
+def test_set_language_post_sets_cookie_and_get_redirects_without_changing():
+    browser = Client(enforce_csrf_checks=True)
+    login = browser.get(reverse("admin:login"))
+    assert login.status_code == 200
+    csrf = browser.cookies.get("csrftoken")
+    assert csrf is not None
+    response = browser.post(
+        reverse("set_language"),
+        {
+            "language": "en",
+            "next": "/admin/login/",
+            "csrfmiddlewaretoken": csrf.value,
+        },
+    )
+    assert response.status_code in (301, 302)
+    assert browser.cookies.get(settings.LANGUAGE_COOKIE_NAME).value == "en"
+
+    browser.cookies[settings.LANGUAGE_COOKIE_NAME] = "pt"
+    get_response = browser.get(reverse("set_language"))
+    assert get_response.status_code in (301, 302)
+    # GET must not overwrite the language cookie.
+    assert browser.cookies.get(settings.LANGUAGE_COOKIE_NAME).value == "pt"
 
 
 @pytest.mark.django_db
@@ -44,7 +81,18 @@ def test_swagger_topbar_exposes_language_selector_and_localized_schema_url():
     assert 'data-pdl-language-form' in body
     assert "pdl_admin/js/language-sync.js" in body
     assert 'id="pdl-docs-language"' in body
+    assert 'class="pdl-docs-language-select"' in body
+    assert "pdl-language-form--docs" in body
     assert "lang=pt" in body or "lang=en" in body or "lang=es" in body
+
+
+def test_docs_css_styles_language_select_independently():
+    css = (Path(settings.BASE_DIR) / "static/pdl_admin/css/docs.css").read_text(
+        encoding="utf-8"
+    )
+    assert ".pdl-docs-language-select" in css
+    assert "html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select" in css
+    assert "appearance: none" in css
 
 
 @override_settings(OPENAPI_DOCS_PUBLIC=True)

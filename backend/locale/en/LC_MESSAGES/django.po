@@ -4280,6 +4280,10 @@ msgstr "Sign in"
 msgid "Documentação da API"
 msgstr "API documentation"
 
+#: .\templates\pdl_docs\_loader.html
+msgid "Carregando documentação…"
+msgstr "Loading documentation…"
+
 #: .\templates\pdl_docs\_topbar.html
 msgid "Schema"
 msgstr "Schema"

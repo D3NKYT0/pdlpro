@@ -4052,6 +4052,10 @@ msgstr ""
 msgid "Documentação da API"
 msgstr ""
 
+#: .\templates\pdl_docs\_loader.html
+msgid "Carregando documentação…"
+msgstr ""
+
 #: .\templates\pdl_docs\_topbar.html
 msgid "Schema"
 msgstr ""

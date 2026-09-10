@@ -1,0 +1,19 @@
+{% load i18n static %}
+<div
+  class="pdl-docs-loader"
+  id="pdl-docs-loader"
+  data-pdl-docs-loader
+  role="status"
+  aria-live="polite"
+  aria-busy="true"
+>
+  <div class="pdl-docs-loader__panel">
+    <div class="pdl-docs-loader__crest" aria-hidden="true">
+      <span class="pdl-docs-loader__ring"></span>
+      <img src="{% static 'pdl_admin/img/logo.png' %}" alt="" width="72" height="72">
+    </div>
+    <p class="pdl-docs-loader__label">{% translate "Carregando documentação…" %}</p>
+    <div class="pdl-docs-loader__bar" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+<script src="{% static 'pdl_admin/js/docs-loader.js' %}?v=20260910.1" defer></script>

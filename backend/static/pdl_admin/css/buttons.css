@@ -94,7 +94,17 @@
   text-shadow: none;
 }
 :is(.pdl-backend, .login-page, .pdl-docs, #jazzy-actions) [aria-busy="true"]:is(.btn, .pdl-button, input[type="submit"]) { cursor: progress; }
-.pdl-docs-nav .pdl-button[aria-current="page"] { outline: 1px solid var(--pdl-gold, #d4af37); outline-offset: 2px; }
+/* Docs topbar: active page uses success green + soft glow (not a border outline). */
+.pdl-docs-nav .pdl-button[aria-current="page"] {
+  --pdl-button-tone: hue-rotate(65deg) saturate(1.45) brightness(1.12);
+  filter: var(--pdl-button-tone);
+  text-shadow: 0 0 10px rgba(140, 220, 120, 0.55), 0 0 22px rgba(90, 190, 100, 0.4);
+  outline: none;
+}
+.pdl-docs-nav .pdl-button[aria-current="page"]:hover:not(:disabled):not(.disabled):not([aria-disabled="true"]) {
+  filter: var(--pdl-button-tone) brightness(1.28);
+  text-shadow: 0 0 14px rgba(160, 235, 140, 0.7), 0 0 28px rgba(100, 200, 110, 0.5);
+}
 .pdl-docs .swagger-ui .btn svg { fill: currentColor; }
 .pdl-backend .btn-group { gap: 3px; flex-wrap: wrap; }
 .pdl-backend .btn-group > .btn { flex-grow: 0; }

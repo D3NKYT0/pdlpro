@@ -15,9 +15,10 @@ pode estar na própria rede ou em outro servidor com acesso restrito.
 O build de `frontend/dist` pode ser publicado como conteúdo estático em cPanel, CDN
 ou storage estático. O backend permanece em uma VPS ou infraestrutura centralizada.
 
-Nesse modelo, configure HTTPS, fallback da SPA e encaminhamento de `/api/`, `/ws/` e
-`/media/` para o backend. Também ajuste `ALLOWED_HOSTS`, CORS, CSRF, WebAuthn e as URLs
-públicas para os domínios reais.
+Nesse modelo, configure HTTPS, fallback da SPA e encaminhamento de `/api/`, `/admin/`,
+`/i18n/`, `/ws/` e `/media/` para o backend. Sem `/i18n/`, o seletor de idioma do admin
+(POST `/i18n/setlang/`) cai no estático da SPA e o Nginx responde **405**. Também ajuste
+`ALLOWED_HOSTS`, CORS, CSRF, WebAuthn e as URLs públicas para os domínios reais.
 
 As próximas seções detalham a implantação pelo Compose de produção. Para recuperar dados, consulte [Backup e restauração](backup-e-restauracao.md).
 

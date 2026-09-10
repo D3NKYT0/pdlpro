@@ -5,12 +5,13 @@
   <head>
     {% include "pdl_docs/_head.html" %}
     <link rel="stylesheet" href="{{ swagger_ui_css }}">
-    <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}">
+    <link rel="stylesheet" href="{% static 'pdl_admin/css/docs.css' %}?v=20260910.1">
     {% include "pdl_ui/_button_assets.html" %}
     {% include "pdl_ui/_language_sync.html" %}
   </head>
   <body>
     {% include "pdl_docs/_topbar.html" with docs_active="swagger" %}
+    {% include "pdl_docs/_loader.html" %}
     <div id="swagger-ui"></div>
     <script src="{{ swagger_ui_bundle }}"></script>
     <script src="{{ swagger_ui_standalone }}"></script>

@@ -46,6 +46,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Edge Nginx (dev e produção) passa a encaminhar `/i18n/` ao Django; sem isso o
+  `POST /i18n/setlang/` do seletor de idioma caía no estático da SPA e respondia
+  **405 Not Allowed**.
 - Idioma da SPA e da API sincronizados: o cliente envia `X-Language` e, nas
   rotas `/api/`, `Accept-Language` prevalece sobre o cookie `django_language`
   (antes o setlang do Jazzmin travava o gettext da API no idioma do admin).

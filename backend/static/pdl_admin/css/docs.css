@@ -138,27 +138,187 @@ a:hover {
   gap: 0.3rem;
 }
 
+/* Branded shell loader while Swagger / ReDoc fetch and paint the schema */
+.pdl-docs-loader {
+  position: fixed;
+  inset: var(--pdl-docs-topbar) 0 0 0;
+  z-index: 9990;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(8, 7, 5, 0.78), rgba(8, 7, 5, 0.9)),
+    rgba(11, 10, 8, 0.82);
+  backdrop-filter: blur(10px);
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.pdl-docs-loader--done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pdl-docs-loader__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 18rem;
+  text-align: center;
+}
+
+.pdl-docs-loader__crest {
+  position: relative;
+  display: grid;
+  width: 96px;
+  height: 96px;
+  place-items: center;
+}
+
+.pdl-docs-loader__ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-top-color: var(--pdl-gold-bright);
+  border-right-color: rgba(212, 175, 55, 0.35);
+  border-radius: 50%;
+  animation: pdl-docs-loader-spin 0.9s linear infinite;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.18);
+}
+
+.pdl-docs-loader__crest img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: brightness(1.1) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+}
+
+.pdl-docs-loader__label {
+  margin: 0;
+  color: var(--pdl-gold-soft);
+  font-family: var(--pdl-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.pdl-docs-loader__bar {
+  width: min(12rem, 70vw);
+  height: 3px;
+  overflow: hidden;
+  background: rgba(212, 175, 55, 0.12);
+  border-radius: 999px;
+}
+
+.pdl-docs-loader__bar span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--pdl-gold),
+    var(--pdl-gold-bright),
+    transparent
+  );
+  animation: pdl-docs-loader-bar 1.15s ease-in-out infinite;
+}
+
+@keyframes pdl-docs-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pdl-docs-loader-bar {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdl-docs-loader__ring,
+  .pdl-docs-loader__bar span {
+    animation: none;
+  }
+
+  .pdl-docs-loader__ring {
+    border-color: rgba(212, 175, 55, 0.45);
+  }
+
+  .pdl-docs-loader__bar span {
+    width: 100%;
+    transform: none;
+    opacity: 0.65;
+  }
+}
+
 .pdl-language-form--docs {
   display: inline-flex;
   align-items: center;
   margin-right: 0.35rem;
 }
 
-.pdl-docs-language-select {
-  min-width: 7.5rem;
-  height: 2rem;
-  padding: 0.15rem 0.55rem;
+/* Topbar language select — own chrome (not swagger-ui / form-select / native) */
+html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
+  min-width: 11.5rem;
+  height: 36px;
+  margin: 0;
+  padding: 0 2rem 0 0.75rem;
   color: var(--pdl-text);
-  font: inherit;
-  font-size: 0.82rem;
-  background: rgba(20, 17, 13, 0.92);
-  border: 1px solid var(--pdl-border);
-  border-radius: 0.35rem;
+  font-family: var(--pdl-font);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  background-color: rgba(20, 17, 13, 0.96);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--pdl-gold-soft) 50%),
+    linear-gradient(135deg, var(--pdl-gold-soft) 50%, transparent 50%),
+    linear-gradient(rgba(20, 17, 13, 0.96), rgba(20, 17, 13, 0.96));
+  background-position:
+    calc(100% - 14px) calc(50% - 2px),
+    calc(100% - 9px) calc(50% - 2px),
+    0 0;
+  background-size: 5px 5px, 5px 5px, 100% 100%;
+  background-repeat: no-repeat;
+  border: 1px solid var(--pdl-border-strong);
+  border-radius: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
-.pdl-docs-language-select:focus {
+html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select:hover {
+  color: var(--pdl-gold-bright);
+  border-color: rgba(239, 204, 123, 0.55);
+}
+
+html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select:focus,
+html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select:focus-visible {
+  color: var(--pdl-gold-bright);
+  border-color: var(--pdl-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(212, 175, 55, 0.35);
   outline: 1px solid var(--pdl-gold);
   outline-offset: 2px;
+}
+
+html.pdl-docs .pdl-language-form--docs .pdl-docs-language-select option {
+  color: var(--pdl-text);
+  background-color: var(--pdl-surface-raised);
 }
 
 /* Swagger UI — prefixed so these rules beat swagger-ui.css */
@@ -700,6 +860,10 @@ html.pdl-docs .swagger-ui .dialog-ux .modal-ux-content {
 
 html.pdl-docs .swagger-ui .auth-container {
   border-bottom: 1px solid var(--pdl-border);
+}
+
+html.pdl-docs .swagger-ui .loading-container {
+  display: none;
 }
 
 html.pdl-docs .swagger-ui .loading-container .loading:after {
