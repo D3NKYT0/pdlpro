@@ -6,6 +6,7 @@ from apps.staff.presentation.views.accounts import (
 )
 from apps.staff.presentation.views.config import (
     StaffCoinConfigView,
+    StaffGamesAutoconfigView,
     StaffGamesView,
     StaffNewsView,
     StaffPanelSettingsView,
@@ -69,5 +70,6 @@ urlpatterns = [
     path("wallet-promo/", StaffWalletPromoView.as_view(), name="staff-wallet-promo"),
     path("shop/", StaffShopItemsView.as_view(), name="staff-shop"),
     path("news/", StaffNewsView.as_view(), name="staff-news"),
+    path("games/autoconfig/", StaffGamesAutoconfigView.as_view(), name="staff-games-autoconfig"),
     path("games/", StaffGamesView.as_view(), name="staff-games"),
 ]

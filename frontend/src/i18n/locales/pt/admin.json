@@ -29,7 +29,7 @@
       "coins": { "title": "Moedas", "description": "Moeda ativa, multiplicador e taxa" },
       "shop": { "title": "Loja", "description": "Itens vendidos no painel" },
       "wallet": { "title": "Configuração da carteira", "description": "Banner promocional e bônus mínimo nas recargas" },
-      "gameModules": { "title": "Módulos de jogos", "description": "Ligar ou desligar roleta, caixas e o restante" },
+      "gameModules": { "title": "Módulos de jogos", "description": "Ligar, desligar e preencher o conteúdo dos minigames" },
       "news": { "title": "Notícias", "description": "Publicar avisos do servidor" },
       "roadmap": { "title": "Roadmap", "description": "Planejamento, etapas e novidades do servidor" },
       "comingSoon": { "title": "Coming Soon", "description": "Contagem regressiva da home" },
@@ -152,10 +152,10 @@
   "games": {
     "kicker": "Jogos",
     "title": "Módulos de jogos",
-    "description": "Ligue ou desligue os minigames do painel.",
+    "description": "Ligue ou desligue os minigames e preencha o conteúdo jogável com um clique.",
     "eyebrow": "Disponibilidade",
     "panelTitle": "Experiências do painel",
-    "panelText": "Os módulos ativos ficam acessíveis na central de jogos dos jogadores.",
+    "panelText": "Os módulos ativos ficam na central de jogos. Preencher conteúdo cria prêmios, iscas, baús e o que faltar, sem sobrescrever nomes já definidos.",
     "activeCount": "ativos de {{total}}",
     "descriptions": {
       "daily_bonus": "Entrega uma recompensa diária aos jogadores.",
@@ -164,17 +164,23 @@
       "fishing": "Pescaria no lago com vara, iscas e coleção.",
       "roulette": "Giro da roda da fortuna com fichas do painel.",
       "slots": "Cilindros da taverna com prêmios configuráveis.",
+      "boxes": "Baús com boosters sorteados a partir do catálogo.",
       "fallback": "Módulo de entretenimento configurável do painel."
     },
     "updating": "Atualizando",
     "active": "Ativo",
     "inactive": "Inativo",
+    "autoconfig": "Preencher conteúdo",
+    "autoconfigAll": "Configurar todos",
+    "autoconfigBusy": "Preenchendo…",
     "emptyTitle": "Nenhum jogo cadastrado",
-    "emptyText": "Crie as configurações no Django Admin; depois elas aparecem aqui para ligar e desligar.",
+    "emptyText": "Use Configurar todos para criar os módulos e o conteúdo jogável, ou cadastre no Django Admin.",
     "toast": {
       "enabled": "Jogo ativado",
       "disabled": "Jogo desativado",
-      "error": "Não foi possível atualizar"
+      "error": "Não foi possível atualizar",
+      "autoconfig": "Conteúdo padrão aplicado",
+      "autoconfigAll": "Jogos configurados"
     }
   },
   "accounts": {

@@ -1477,6 +1477,10 @@ msgstr ""
 msgid "Configuração desconhecida."
 msgstr "Configuración desconocida."
 
+#: .\apps\games\application\staff_autoconfig.py:24 .\common\i18n_msgid_catalog.py:122
+msgid "Jogo desconhecido."
+msgstr "Juego desconocido."
+
 #: .\apps\games\presentation\advanced.py:227
 msgid "Listar conteúdo de jogos"
 msgstr "Listar contenido de juegos"
@@ -2928,6 +2932,14 @@ msgstr "Alternar juego"
 #: .\apps\staff\presentation\views\config.py:227
 msgid "Ativa ou desativa um jogo do painel conforme o payload informado."
 msgstr "Activa o desactiva un juego del panel según el payload indicado."
+
+#: .\apps\staff\presentation\views\config.py:246
+msgid "Preencher jogos"
+msgstr "Rellenar juegos"
+
+#: .\apps\staff\presentation\views\config.py:247
+msgid "Cria configuração e conteúdo padrão dos minijogos sem sobrescrever nomes ou chaves já definidas."
+msgstr "Crea la configuración y el contenido predeterminado de los minijuegos sin sobrescribir nombres o claves ya definidas."
 
 #: .\apps\staff\presentation\views\custom_items.py:69
 msgid "A imagem deve ter no máximo 2 MB."

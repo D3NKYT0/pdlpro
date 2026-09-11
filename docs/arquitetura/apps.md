@@ -16,7 +16,7 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | `inventory` | Inventários do painel e movimentação de itens | `application/use_cases.py`, `domain/repositories.py` |
 | `marketplace` | Custódia, anúncios e venda de personagens | `application/use_cases.py` |
 | `auction` | Leilões, lances e entrega de itens | `application/use_cases.py`, `tasks.py` |
-| `games` | Roleta, caixas, pesca, economia e passe | `application/*_use_cases.py`, `application/staff_content_use_cases.py` |
+| `games` | Roleta, caixas, pesca, economia e passe | `application/*_use_cases.py`, `application/staff_content_use_cases.py`, `application/staff_autoconfig.py` |
 | `content` | Notícias, wiki, FAQ, downloads e documentos legais | `application/use_cases.py`, `domain/repositories.py` |
 | `communication` | Notificações persistidas e Web Push | `application/notify.py`, `application/push_use_cases.py` |
 | `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py` (consome portas admin dos apps donos), `presentation/views/` |

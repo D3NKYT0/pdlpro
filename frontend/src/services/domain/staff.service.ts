@@ -74,6 +74,15 @@ export interface ApiStaffGame {
   settings: Record<string, unknown>
 }
 
+export interface ApiStaffGameAutoconfig {
+  games: Array<{
+    code: string
+    name: string
+    activated: boolean
+    created: Record<string, number>
+  }>
+}
+
 export interface ApiStaffGameAccount {
   login: string
   email: string
@@ -110,6 +119,11 @@ export const staffApi = {
   games: () => request<ApiStaffGame[]>('/staff/games/'),
   saveGame: (payload: Partial<ApiStaffGame>) =>
     request<ApiStaffGame>('/staff/games/', { method: 'PUT', body: JSON.stringify(payload) }),
+  autoconfigGames: (code?: string) =>
+    request<ApiStaffGameAutoconfig>('/staff/games/autoconfig/', {
+      method: 'POST',
+      body: JSON.stringify(code ? { code } : {}),
+    }),
   inspectAccount: (login: string) =>
     request<ApiStaffGameAccount>(`/staff/accounts/?login=${encodeURIComponent(login)}`),
   unlinkAccount: (login: string) =>

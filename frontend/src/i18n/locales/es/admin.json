@@ -29,7 +29,7 @@
       "coins": { "title": "Monedas", "description": "Moneda activa, multiplicador y tasa" },
       "shop": { "title": "Tienda", "description": "Ítems vendidos en el panel" },
       "wallet": { "title": "Configuración de la cartera", "description": "Banner promocional y bono mínimo en las recargas" },
-      "gameModules": { "title": "Módulos de juegos", "description": "Encender o apagar la ruleta, las cajas y lo demás" },
+      "gameModules": { "title": "Módulos de juegos", "description": "Encender, apagar y rellenar el contenido de los minijuegos" },
       "news": { "title": "Noticias", "description": "Publicar avisos del servidor" },
       "roadmap": { "title": "Roadmap", "description": "Planificación, etapas y novedades del servidor" },
       "comingSoon": { "title": "Coming Soon", "description": "Cuenta regresiva de la portada" },
@@ -152,10 +152,10 @@
   "games": {
     "kicker": "Juegos",
     "title": "Módulos de juegos",
-    "description": "Enciende o apaga los minijuegos del panel.",
+    "description": "Enciende o apaga los minijuegos y rellena el contenido jugable con un clic.",
     "eyebrow": "Disponibilidad",
     "panelTitle": "Experiencias del panel",
-    "panelText": "Los módulos activos quedan accesibles en la central de juegos de los jugadores.",
+    "panelText": "Los módulos activos quedan accesibles en la central de juegos. Rellenar contenido crea premios, cebos y cofres que falten, sin sobrescribir nombres ya definidos.",
     "activeCount": "activos de {{total}}",
     "descriptions": {
       "daily_bonus": "Entrega una recompensa diaria a los jugadores.",
@@ -164,17 +164,23 @@
       "fishing": "Pesca del lago con caña, cebos y colección.",
       "roulette": "Giro de la rueda de la fortuna con fichas del panel.",
       "slots": "Cilindros de la taberna con premios configurables.",
+      "boxes": "Cofres con boosters sorteados del catálogo.",
       "fallback": "Módulo de entretenimiento configurable del panel."
     },
     "updating": "Actualizando",
     "active": "Activo",
     "inactive": "Inactivo",
+    "autoconfig": "Rellenar contenido",
+    "autoconfigAll": "Configurar todos",
+    "autoconfigBusy": "Rellenando…",
     "emptyTitle": "Ningún juego registrado",
-    "emptyText": "Crea las configuraciones en el Django Admin; después aparecen aquí para encender y apagar.",
+    "emptyText": "Usa Configurar todos para crear los módulos y el contenido jugable, o regístralos en el Django Admin.",
     "toast": {
       "enabled": "Juego activado",
       "disabled": "Juego desactivado",
-      "error": "No se pudo actualizar"
+      "error": "No se pudo actualizar",
+      "autoconfig": "Contenido predeterminado aplicado",
+      "autoconfigAll": "Juegos configurados"
     }
   },
   "accounts": {

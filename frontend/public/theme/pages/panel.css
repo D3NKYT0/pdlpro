@@ -1427,6 +1427,13 @@ html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control { bord
 html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control i { background: var(--panel-gold-bright); transform: translateX(21px); box-shadow: 0 0 10px rgba(223,185,107,.42); }
 html.pdl-panel .admin-game-switch > span:last-child { margin-left: auto; color: var(--panel-text); font-weight: 700; }
 html.pdl-panel .admin-game-switch.is-busy { opacity: .55; cursor: wait; }
+html.pdl-panel .admin-games-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
+html.pdl-panel .admin-game-card-actions { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.1); }
+html.pdl-panel .admin-game-card-actions .admin-game-switch { grid-column: auto; margin-top: 0; padding-top: 0; border-top: 0; flex: 1; min-width: 0; }
+
+@media (max-width: 560px) {
+  html.pdl-panel .admin-games-toolbar { grid-column: 1 / -1; justify-content: space-between; }
+}
 
 html.pdl-panel .admin-news-editor { display: grid; grid-template-columns: minmax(0,1fr) 330px; align-items: start; gap: 20px; }
 html.pdl-panel .admin-news-editor textarea { min-height: 205px; line-height: 1.6; }

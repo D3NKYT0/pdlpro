@@ -516,6 +516,12 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Acceso al panel administrativo",
     ),
     "Log in": ("Log in", "Iniciar sesión"),
+    "Jogo desconhecido.": ("Unknown game.", "Juego desconocido."),
+    "Preencher jogos": ("Fill games", "Rellenar juegos"),
+    "Cria configuração e conteúdo padrão dos minijogos sem sobrescrever nomes ou chaves já definidas.": (
+        "Creates default minigame configuration and content without overwriting existing names or keys.",
+        "Crea la configuración y el contenido predeterminado de los minijuegos sin sobrescribir nombres o claves ya definidas.",
+    ),
 }
 
 

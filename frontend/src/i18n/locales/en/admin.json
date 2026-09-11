@@ -29,7 +29,7 @@
       "coins": { "title": "Coins", "description": "Active currency, multiplier and rate" },
       "shop": { "title": "Shop", "description": "Items sold in the panel" },
       "wallet": { "title": "Wallet settings", "description": "Promo banner and minimum top-up bonus" },
-      "gameModules": { "title": "Game modules", "description": "Turn roulette, boxes and the rest on or off" },
+      "gameModules": { "title": "Game modules", "description": "Turn minigames on or off and fill their playable content" },
       "news": { "title": "News", "description": "Publish server announcements" },
       "roadmap": { "title": "Roadmap", "description": "Planning, milestones and server news" },
       "comingSoon": { "title": "Coming Soon", "description": "Home page countdown" },
@@ -152,10 +152,10 @@
   "games": {
     "kicker": "Games",
     "title": "Game modules",
-    "description": "Turn the panel minigames on or off.",
+    "description": "Turn the panel minigames on or off and fill playable content in one click.",
     "eyebrow": "Availability",
     "panelTitle": "Panel experiences",
-    "panelText": "Active modules become available in the players' game hub.",
+    "panelText": "Active modules become available in the players' game hub. Fill content creates missing prizes, baits and chests without overwriting custom names.",
     "activeCount": "active of {{total}}",
     "descriptions": {
       "daily_bonus": "Delivers a daily reward to players.",
@@ -164,17 +164,23 @@
       "fishing": "Lake fishing with rod, bait and a collection.",
       "roulette": "Spin the wheel of fortune with panel tokens.",
       "slots": "Tavern reels with configurable prizes.",
+      "boxes": "Chests with boosters drawn from the catalog.",
       "fallback": "Configurable entertainment module of the panel."
     },
     "updating": "Updating",
     "active": "Active",
     "inactive": "Inactive",
+    "autoconfig": "Fill content",
+    "autoconfigAll": "Set up all",
+    "autoconfigBusy": "Filling…",
     "emptyTitle": "No games registered",
-    "emptyText": "Create the settings in Django Admin; they then show up here to turn on and off.",
+    "emptyText": "Use Set up all to create the modules and playable content, or add them in Django Admin.",
     "toast": {
       "enabled": "Game enabled",
       "disabled": "Game disabled",
-      "error": "Could not update"
+      "error": "Could not update",
+      "autoconfig": "Default content applied",
+      "autoconfigAll": "Games configured"
     }
   },
   "accounts": {

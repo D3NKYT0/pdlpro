@@ -32,6 +32,7 @@ from apps.games.application.minigame_use_cases import (
     PlayDiceUseCase,
     SpinSlotsUseCase,
 )
+from apps.games.application.staff_autoconfig import BootstrapStaffGamesUseCase
 from apps.games.application.staff_content_use_cases import (
     GetGameContentUseCase,
     ListGameContentUseCase,
@@ -45,6 +46,7 @@ from apps.games.application.use_cases import (
     GetRouletteStateUseCase,
     SpinRouletteUseCase,
 )
+from apps.games.domain.autoconfig import IGameAutoconfigService
 from apps.games.domain.repositories import (
     IBagRepository,
     IBattlePassRepository,
@@ -57,6 +59,7 @@ from apps.games.domain.repositories import (
     IGameContentAdminRepository,
     IMinigameRepository,
 )
+from apps.games.infrastructure.autoconfig import DjangoGameAutoconfigService
 from apps.games.infrastructure.repositories import (
     DjangoBagRepository,
     DjangoBattlePassRepository,
@@ -83,6 +86,9 @@ class GamesProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(
+            IGameAutoconfigService, DjangoGameAutoconfigService, lifetime=Lifetime.SCOPED
+        )
         container.register(
             IGameConfigAdminRepository, DjangoGameConfigAdminRepository, lifetime=Lifetime.SCOPED
         )
@@ -141,5 +147,6 @@ class GamesProvider(AppProvider):
             ListGameContentUseCase,
             GetGameContentUseCase,
             UpsertGameContentUseCase,
+            BootstrapStaffGamesUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

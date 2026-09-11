@@ -17,6 +17,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
 | Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |
 | Passe, bônus diário e rankings | `/panel/rewards` | `/panel/admin/rewards` |
+| Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar e **Configurar todos** / Preencher conteúdo) |
 | Pesca, iscas e coleção | `/panel/games?tab=fishing` | `/panel/admin/rewards` |
 
 A pescaria tem uma única interface em Jogos (`Pescaria`), incluindo vara, experiência, iscas, coleção e últimos lançamentos. O endereço antigo `/panel/rewards?tab=fishing` redireciona para a aba Pescaria em Jogos, sem alterar o progresso.
@@ -24,6 +25,8 @@ A pescaria tem uma única interface em Jogos (`Pescaria`), incluindo vara, exper
 `/panel/games` usa arte do tema ativo (`images/games/*`, tokens `--theme-art-games-*`) e anima o palco de cada minigame (giro, abertura de baú, dado/slots, lago e combate). Os nomes de vitrine são **Roda da Fortuna**, **Baús Encantados**, **Mesa da Taverna**, **Pescaria** e **Arena das Feras**. Pacotes podem remapear esses arquivos no mapa `assets` sem alterar o HTML.
 
 O controle central oferece 23 módulos organizados por categoria (economia, jogos, conta, comunicação e conteúdo do site). Desativar bloqueia os endpoints correspondentes e a tela; não apaga dados nem bloqueia a administração. Perfil e segurança de autenticação ficam acessíveis no menu conforme a política de cada módulo; Conta e segurança permanece sempre disponível. Os jogos continuam respeitando também suas configurações individuais.
+
+Em `/panel/admin/games`, **Configurar todos** (e **Preencher conteúdo** em cada card) cria a configuração e o catálogo jogável que faltam — prêmios da roleta, iscas, peixes, monstros, temporada diária e baús — sem sobrescrever nomes customizados nem chaves de `settings` já definidas. A operação é idempotente; baús não têm `GameConfig` e só entram no preenchimento geral ou com o código `boxes`.
 
 ## Regras importantes
 

@@ -28,7 +28,7 @@ vi.mock('../../components/ui/RichText', () => ({
   isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
 }))
 vi.mock('../../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
-vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), autoconfigGames: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
 
 beforeEach(() => {
   vi.resetAllMocks()
@@ -46,6 +46,7 @@ beforeEach(() => {
   })
   vi.mocked(staffApi.services).mockResolvedValue([{ code: 'UNSTUCK', name: 'Destravar', price: '5.00', active: true }])
   vi.mocked(staffApi.games).mockResolvedValue([{ id: 'dice', code: 'dice', name: 'Dados', active: true, settings: {} }])
+  vi.mocked(staffApi.autoconfigGames).mockResolvedValue({ games: [] })
   vi.mocked(staffApi.shop).mockResolvedValue([{ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 1, active: true }])
   vi.mocked(staffApi.news).mockResolvedValue([])
   vi.mocked(staffApi.panel).mockResolvedValue({
@@ -122,6 +123,29 @@ it.each([false, true])('jogos envia toggle e apresenta resultado; erro=%s', asyn
   expect(staffApi.saveGame).toHaveBeenCalledWith({ id: 'dice', active: false })
   if (fail) expect(toast.error).toHaveBeenCalledWith('Falha ao salvar')
   else expect(toast.success).toHaveBeenCalledWith('Jogo desativado')
+})
+
+it('preenche conteúdo de um jogo e bloqueia clique duplicado', async () => {
+  let resolveFn: (value: { games: [] }) => void = () => {}
+  const pending = new Promise<{ games: [] }>((resolve) => {
+    resolveFn = resolve
+  })
+  vi.mocked(staffApi.autoconfigGames).mockReturnValue(pending)
+  const user = mount(<AdminGamesPage />)
+  const button = await screen.findByRole('button', { name: 'Preencher conteúdo' })
+  await user.click(button)
+  await user.click(button)
+  expect(staffApi.autoconfigGames).toHaveBeenCalledTimes(1)
+  expect(staffApi.autoconfigGames).toHaveBeenCalledWith('dice')
+  resolveFn({ games: [] })
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Conteúdo padrão aplicado'))
+})
+
+it('configura todos os jogos a partir do painel', async () => {
+  const user = mount(<AdminGamesPage />)
+  await user.click(await screen.findByRole('button', { name: 'Configurar todos' }))
+  expect(staffApi.autoconfigGames).toHaveBeenCalledWith(undefined)
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Jogos configurados'))
 })
 
 it('edição da loja preserva UUID e converte quantidade para número', async () => {

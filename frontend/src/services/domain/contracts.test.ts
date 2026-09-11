@@ -222,6 +222,8 @@ const contracts: Contract[] = [
   ['staff.updateNews', () => staffApi.saveNews({ id: 'news', is_published: false }), '/staff/news/', 'PUT', { id: 'news', is_published: false }],
   ['staff.games', () => staffApi.games(), '/staff/games/'],
   ['staff.saveGame', () => staffApi.saveGame({ active: false }), '/staff/games/', 'PUT', { active: false }],
+  ['staff.autoconfigGames', () => staffApi.autoconfigGames(), '/staff/games/autoconfig/', 'POST', {}],
+  ['staff.autoconfigGame', () => staffApi.autoconfigGames('roulette'), '/staff/games/autoconfig/', 'POST', { code: 'roulette' }],
   ['staff.inspect', () => staffApi.inspectAccount('a&b'), '/staff/accounts/?login=a%26b'],
   ['staff.unlink', () => staffApi.unlinkAccount('hero'), '/staff/accounts/unlink/', 'POST', { login: 'hero' }],
   ['push.vapid', () => pushApi.vapid(), '/customer/push/vapid/'],

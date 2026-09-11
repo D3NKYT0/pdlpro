@@ -47,6 +47,7 @@ export type {
   ApiStaffCoin,
   ApiStaffGame,
   ApiStaffGameAccount,
+  ApiStaffGameAutoconfig,
   ApiStaffNews,
   ApiStaffService,
   ApiStaffShopItem,

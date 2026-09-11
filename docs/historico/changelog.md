@@ -30,6 +30,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Arte original dos minigames no tema default (`images/games/*`) e palcos
   animados em `/panel/games` (roleta, baús por raridade, dados/slots, lago e
   arena), remapeáveis por `--theme-art-games-*`.
+- Autoconfiguração dos minigames em `/panel/admin/games` (**Configurar todos**
+  e **Preencher conteúdo**): `POST /api/v1/staff/games/autoconfig/` cria o
+  catálogo jogável ausente (prêmios, iscas, baús, peixes e monstros) sem
+  sobrescrever nomes ou chaves já definidas.
 
 ### Alterado
 
