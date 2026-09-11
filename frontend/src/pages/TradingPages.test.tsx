@@ -38,7 +38,14 @@ const characterAuction: ApiAuction = {
   char_pvp: 40,
   char_pk: 0,
   char_clan_name: 'Reino',
-  equipment: [{ item_id: 57, name: 'Adena', enchant: 0, slot: 1 }],
+  equipment: [
+    { item_id: 2416, name: 'Blue Wolf Helmet', enchant: 5, slot: 6, quantity: 1 },
+    { item_id: 175, name: 'Art of Battle Axe', enchant: 6, slot: 7, quantity: 1 },
+  ],
+  bag_items: [
+    { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, location: 'INVENTORY' },
+    { item_id: 6673, name: 'Festival Adena', quantity: 5, enchant: 0, location: 'WAREHOUSE' },
+  ],
 }
 const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, online: false, pvp: 40, pk: 0, clan_name: '', title: '' }
 let client: QueryClient
@@ -197,6 +204,13 @@ it('lance em personagem não pede inventário de destino', async () => {
   vi.mocked(auctionApi.open).mockResolvedValue([characterAuction])
   const user = mount(<AuctionPage />)
   await user.click(await screen.findByRole('button', { name: /Ver leilão/ }))
+  expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
+  expect(screen.getByLabelText('Elmo: Blue Wolf Helmet +5')).toBeVisible()
+  expect(screen.getByLabelText('Grade do inventário')).toBeVisible()
+  expect(screen.getByLabelText('Adena · sem encanto · qtd 100')).toBeVisible()
+  await user.click(screen.getByRole('tab', { name: /Warehouse/i }))
+  expect(screen.getByLabelText('Grade do warehouse')).toBeVisible()
+  expect(screen.getByLabelText('Festival Adena · sem encanto · qtd 5')).toBeVisible()
   expect(screen.getByText(/transferido para a sua conta/i)).toBeVisible()
   expect(screen.queryByRole('combobox', { name: 'Personagem que receberá o item' })).not.toBeInTheDocument()
   expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(10.01)

@@ -47,6 +47,7 @@ class DjangoAuctionRepository(IAuctionRepository):
             char_clan_name=row.char_clan_name,
             char_is_clan_leader=row.char_is_clan_leader,
             equipment=list(row.equipment or []),
+            bag_items=list(row.bag_items or []),
             old_account=row.old_account,
         )
 
@@ -108,6 +109,7 @@ class DjangoAuctionRepository(IAuctionRepository):
         char_clan_name: str = "",
         char_is_clan_leader: bool = False,
         equipment: list | None = None,
+        bag_items: list | None = None,
         old_account: str = "",
     ) -> AuctionEntity:
         from django.contrib.auth import get_user_model
@@ -134,6 +136,7 @@ class DjangoAuctionRepository(IAuctionRepository):
             char_clan_name=char_clan_name,
             char_is_clan_leader=char_is_clan_leader,
             equipment=equipment or [],
+            bag_items=bag_items or [],
             old_account=old_account,
         )
         return self._auction(row)

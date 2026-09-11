@@ -1,11 +1,12 @@
 import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
-import type { FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Clock3,
   Eye,
   Gavel,
+  Package,
   UserRound,
   X,
 } from 'lucide-react'
@@ -13,6 +14,16 @@ import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
 import type { ApiAuction } from '../../services/api'
+import {
+  CharacterPaperdoll,
+  toPaperdollItems,
+} from '../character/CharacterPaperdoll'
+import { CharacterBagPanel } from '../character/CharacterBagPanel'
+import {
+  CharacterItemDetailModal,
+  type CharacterItemDetail,
+} from '../character/CharacterItemDetailModal'
+import type { ApiGameItem } from '../../services/api'
 import { auctionDisplayName, auctionStatusFor, formatRemaining, isCharacterAuction, nextBidFor } from './auctionHelpers'
 
 interface AuctionDetailProps {
@@ -45,6 +56,18 @@ export function AuctionDetail({
   const activeValue = auction.current_bid ?? auction.min_bid
   const character = isCharacterAuction(auction)
   const name = auctionDisplayName(auction)
+  const [selectedItem, setSelectedItem] = useState<CharacterItemDetail | null>(null)
+  const equipment = character ? toPaperdollItems(auction.equipment ?? []) : []
+  const bagItems: ApiGameItem[] = character
+    ? (auction.bag_items ?? []).map((item) => ({
+        item_id: item.item_id,
+        name: item.name || `Item ${item.item_id}`,
+        quantity: item.quantity ?? 1,
+        enchant: item.enchant ?? 0,
+        tradeable: item.tradeable ?? true,
+        location: item.location ?? 'INVENTORY',
+      }))
+    : []
 
   return (
     <article className="marketplace-listing-detail auction-detail" aria-label={t('auctions.detail.aria', { name })}>
@@ -91,63 +114,135 @@ export function AuctionDetail({
         </div>
       </div>
 
-      <div className="auction-detail-grid">
-        <div className="auction-item-information">
-          <dl className="marketplace-character-stats auction-item-stats">
-            {character ? (
-              <>
-                <div><dt>{t('auctions.detail.level')}</dt><dd>{auction.char_level ?? 1}</dd></div>
-                <div><dt>{t('auctions.detail.class')}</dt><dd>{getClassName(auction.char_class ?? 0)}</dd></div>
-                <div><dt>{t('auctions.detail.pvp')}</dt><dd>{formatNumber(auction.char_pvp ?? 0)}</dd></div>
-                <div><dt>{t('auctions.detail.pk')}</dt><dd>{formatNumber(auction.char_pk ?? 0)}</dd></div>
-                <div><dt>{t('auctions.detail.clan')}</dt><dd>{auction.char_clan_name || t('auctions.detail.notInformed')}</dd></div>
-                <div><dt>{t('auctions.detail.title')}</dt><dd>{auction.char_title || t('auctions.detail.notInformed')}</dd></div>
-              </>
-            ) : (
-              <>
-                <div><dt>{t('auctions.detail.itemId')}</dt><dd>{auction.item_id}</dd></div>
-                <div><dt>{t('auctions.detail.quantity')}</dt><dd>{formatNumber(auction.quantity)}</dd></div>
-                <div><dt>{t('auctions.detail.enchant')}</dt><dd>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : t('auctions.detail.noEnchant')}</dd></div>
-                <div><dt>{t('auctions.detail.sourceInventory')}</dt><dd>{auction.character_name || t('auctions.detail.notInformed')}</dd></div>
-              </>
-            )}
-            <div><dt>{t('auctions.detail.seller')}</dt><dd>{auction.seller_username}</dd></div>
-            <div><dt>{t('auctions.detail.highestBid')}</dt><dd>{auction.highest_bidder_username || t('auctions.detail.noBids')}</dd></div>
-          </dl>
-          {character && (auction.equipment?.length ?? 0) > 0 ? (
-            <div className="auction-equipment-preview" aria-label={t('auctions.detail.equipment')}>
-              <span className="panel-eyebrow">{t('auctions.detail.equipment')}</span>
-              <ul>
-                {auction.equipment!.map((item) => (
-                  <li key={`${item.item_id}-${item.slot ?? 0}-${item.enchant ?? 0}`}>
-                    <ItemIcon itemId={item.item_id} name={item.name} size={28} />
-                    <span>{item.name || t('auctions.create.itemFallback', { id: item.item_id })}</span>
-                    {item.enchant ? <small>+{item.enchant}</small> : null}
-                  </li>
-                ))}
-              </ul>
+      {character ? (
+        <div className="auction-character-layout">
+          <section className="character-equipment auction-character-equipment">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">{t('character.equipment.eyebrow')}</span>
+                <h3>{t('character.equipment.title')}</h3>
+              </div>
+              <span className="character-readonly-chip">
+                <Eye aria-hidden="true" />
+                {t('character.equipment.readonly')}
+              </span>
             </div>
-          ) : null}
-          <div className="auction-ending-card">
-            <Clock3 aria-hidden="true" />
-            <div>
-              <span className="panel-eyebrow">{t('auctions.detail.endingEyebrow')}</span>
-              <strong>{formatDate(auction.ends_at)}</strong>
-              <small>{formatRemaining(auction.ends_at, t)}</small>
+            <div className="character-equipment-summary">
+              <Package aria-hidden="true" />
+              <strong>{equipment.length}</strong>
+              <span>{t('character.equipment.equipped', { count: equipment.length })}</span>
+            </div>
+            <CharacterPaperdoll items={equipment} onSelect={setSelectedItem} />
+            <CharacterBagPanel items={bagItems} loading={false} error={false} tabsId="auction-character-bag" />
+          </section>
+
+          <div className="auction-character-side">
+            <dl className="character-stats">
+              <div>
+                <dt>{t('character.stats.title')}</dt>
+                <dd>{auction.char_title || '—'}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.level')}</dt>
+                <dd>{auction.char_level ?? 1}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.baseClass')}</dt>
+                <dd>{getClassName(auction.char_class ?? 0)}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.sex')}</dt>
+                <dd>{auction.char_sex === 1 ? t('character.female') : t('character.male')}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.clan')}</dt>
+                <dd>{auction.char_clan_name || t('character.stats.noClan')}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.pvp')}</dt>
+                <dd>{formatNumber(auction.char_pvp ?? 0)}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.pk')}</dt>
+                <dd>{formatNumber(auction.char_pk ?? 0)}</dd>
+              </div>
+              <div>
+                <dt>{t('auctions.detail.seller')}</dt>
+                <dd>{auction.seller_username}</dd>
+              </div>
+              <div>
+                <dt>{t('auctions.detail.highestBid')}</dt>
+                <dd>{auction.highest_bidder_username || t('auctions.detail.noBids')}</dd>
+              </div>
+            </dl>
+
+            <aside className="marketplace-purchase-summary auction-bid-summary">
+              <span>{auction.current_bid ? t('auctions.detail.currentBid') : t('auctions.detail.startingValue')}</span>
+              <strong>{formatCurrency(activeValue)}</strong>
+              <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
+
+              {!isOwner && auction.status === 'open' ? (
+                <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
+                  <p className="muted">{t('auctions.detail.characterBidHint')}</p>
+                  <Field>
+                    {t('auctions.detail.yourBid')}
+                    <input
+                      type="number"
+                      min={nextBidFor(auction)}
+                      step="0.01"
+                      inputMode="decimal"
+                      value={bidAmount}
+                      onChange={(event) => onAmountChange(event.target.value)}
+                      required
+                    />
+                  </Field>
+                  <Button type="submit" disabled={pending}>
+                    <Gavel aria-hidden="true" /> {pending ? t('auctions.detail.sending') : t('auctions.detail.bid')}
+                  </Button>
+                </form>
+              ) : null}
+
+              {isOwner ? <small className="marketplace-owner-note">{t('auctions.detail.ownerNote')}</small> : null}
+            </aside>
+
+            <div className="auction-ending-card">
+              <Clock3 aria-hidden="true" />
+              <div>
+                <span className="panel-eyebrow">{t('auctions.detail.endingEyebrow')}</span>
+                <strong>{formatDate(auction.ends_at)}</strong>
+                <small>{formatRemaining(auction.ends_at, t)}</small>
+              </div>
             </div>
           </div>
         </div>
+      ) : (
+        <div className="auction-detail-grid">
+          <div className="auction-item-information">
+            <dl className="marketplace-character-stats auction-item-stats">
+              <div><dt>{t('auctions.detail.itemId')}</dt><dd>{auction.item_id}</dd></div>
+              <div><dt>{t('auctions.detail.quantity')}</dt><dd>{formatNumber(auction.quantity)}</dd></div>
+              <div><dt>{t('auctions.detail.enchant')}</dt><dd>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : t('auctions.detail.noEnchant')}</dd></div>
+              <div><dt>{t('auctions.detail.sourceInventory')}</dt><dd>{auction.character_name || t('auctions.detail.notInformed')}</dd></div>
+              <div><dt>{t('auctions.detail.seller')}</dt><dd>{auction.seller_username}</dd></div>
+              <div><dt>{t('auctions.detail.highestBid')}</dt><dd>{auction.highest_bidder_username || t('auctions.detail.noBids')}</dd></div>
+            </dl>
+            <div className="auction-ending-card">
+              <Clock3 aria-hidden="true" />
+              <div>
+                <span className="panel-eyebrow">{t('auctions.detail.endingEyebrow')}</span>
+                <strong>{formatDate(auction.ends_at)}</strong>
+                <small>{formatRemaining(auction.ends_at, t)}</small>
+              </div>
+            </div>
+          </div>
 
-        <aside className="marketplace-purchase-summary auction-bid-summary">
-          <span>{auction.current_bid ? t('auctions.detail.currentBid') : t('auctions.detail.startingValue')}</span>
-          <strong>{formatCurrency(activeValue)}</strong>
-          <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
+          <aside className="marketplace-purchase-summary auction-bid-summary">
+            <span>{auction.current_bid ? t('auctions.detail.currentBid') : t('auctions.detail.startingValue')}</span>
+            <strong>{formatCurrency(activeValue)}</strong>
+            <small>{t('auctions.detail.minBid', { value: formatCurrency(nextBidFor(auction)) })}</small>
 
-          {!isOwner && auction.status === 'open' ? (
-            <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
-              {character ? (
-                <p className="muted">{t('auctions.detail.characterBidHint')}</p>
-              ) : (
+            {!isOwner && auction.status === 'open' ? (
+              <form className="auction-bid-form" onSubmit={(event) => onBid(event, auction.id)}>
                 <Field>
                   {t('auctions.detail.bidCharacter')}
                   <select value={bidCharacter} onChange={(event) => onCharacterChange(event.target.value)} required>
@@ -159,28 +254,30 @@ export function AuctionDetail({
                     ))}
                   </select>
                 </Field>
-              )}
-              <Field>
-                {t('auctions.detail.yourBid')}
-                <input
-                  type="number"
-                  min={nextBidFor(auction)}
-                  step="0.01"
-                  inputMode="decimal"
-                  value={bidAmount}
-                  onChange={(event) => onAmountChange(event.target.value)}
-                  required
-                />
-              </Field>
-              <Button type="submit" disabled={pending || (!character && !bidCharacter)}>
-                <Gavel aria-hidden="true" /> {pending ? t('auctions.detail.sending') : t('auctions.detail.bid')}
-              </Button>
-            </form>
-          ) : null}
+                <Field>
+                  {t('auctions.detail.yourBid')}
+                  <input
+                    type="number"
+                    min={nextBidFor(auction)}
+                    step="0.01"
+                    inputMode="decimal"
+                    value={bidAmount}
+                    onChange={(event) => onAmountChange(event.target.value)}
+                    required
+                  />
+                </Field>
+                <Button type="submit" disabled={pending || !bidCharacter}>
+                  <Gavel aria-hidden="true" /> {pending ? t('auctions.detail.sending') : t('auctions.detail.bid')}
+                </Button>
+              </form>
+            ) : null}
 
-          {isOwner ? <small className="marketplace-owner-note">{t('auctions.detail.ownerNote')}</small> : null}
-        </aside>
-      </div>
+            {isOwner ? <small className="marketplace-owner-note">{t('auctions.detail.ownerNote')}</small> : null}
+          </aside>
+        </div>
+      )}
+
+      <CharacterItemDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
     </article>
   )
 }

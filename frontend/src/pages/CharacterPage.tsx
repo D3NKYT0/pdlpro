@@ -7,7 +7,6 @@ import { useRef, useState, type FormEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import type { TFunction } from 'i18next'
 import toast from 'react-hot-toast'
 import {
   ArrowLeft,
@@ -25,46 +24,12 @@ import { formatServicePrice, getClassName } from '../lib/lineage'
 import { formatCompactQuantity } from '../lib/formatters'
 import { formatDate, formatDuration } from '../components/rankings/rankingsFormat'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
-import type { ApiCharacterEquipmentItem } from '../services/api'
-import { ItemIcon } from '../components/ItemIcon'
-import {
-  EQUIPMENT_SLOT_ICONS,
-  type EquipmentSlotIconKey,
-} from '../components/character/EquipmentSlotIcons'
 import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
+import { CharacterPaperdoll } from '../components/character/CharacterPaperdoll'
 import {
   CharacterItemDetailModal,
   type CharacterItemDetail,
 } from '../components/character/CharacterItemDetailModal'
-
-interface EquipmentSlotDefinition {
-  key: EquipmentSlotIconKey
-  labelKey: string
-  slotIds: number[]
-}
-
-/** Layout próximo ao inventário L2 Classic/HF (paperdoll). */
-const PAPERDOLL_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'face', labelKey: 'face', slotIds: [16] },
-  { key: 'head', labelKey: 'head', slotIds: [6] },
-  { key: 'hair', labelKey: 'hair', slotIds: [15, 17] },
-  { key: 'gloves', labelKey: 'gloves', slotIds: [9] },
-  { key: 'chest', labelKey: 'chest', slotIds: [10] },
-  { key: 'feet', labelKey: 'feet', slotIds: [12] },
-  { key: 'cloak', labelKey: 'cloak', slotIds: [13] },
-  { key: 'legs', labelKey: 'legs', slotIds: [11] },
-  { key: 'belt', labelKey: 'belt', slotIds: [24, 18] },
-  { key: 'weapon', labelKey: 'weapon', slotIds: [14, 7] },
-  { key: 'offhand', labelKey: 'offhand', slotIds: [8] },
-  { key: 'left-ear', labelKey: 'earring', slotIds: [2] },
-  { key: 'neck', labelKey: 'necklace', slotIds: [3] },
-  { key: 'right-ear', labelKey: 'earring', slotIds: [1] },
-  { key: 'left-ring', labelKey: 'ring', slotIds: [5] },
-  { key: 'underwear', labelKey: 'underwear', slotIds: [0] },
-  { key: 'right-ring', labelKey: 'ring', slotIds: [4] },
-]
-
-const DISPLAYED_EQUIPMENT_SLOTS = new Set(PAPERDOLL_SLOTS.flatMap((slot) => slot.slotIds))
 
 function CrestLabel({ crest, label, alt }: { crest?: string | null; label: string; alt: string }) {
   return (
@@ -72,90 +37,6 @@ function CrestLabel({ crest, label, alt }: { crest?: string | null; label: strin
       {crest ? <img src={`data:image/png;base64,${crest}`} alt={alt} className="character-crest" /> : null}
       <span>{label}</span>
     </span>
-  )
-}
-
-function findEquippedItem(
-  items: ApiCharacterEquipmentItem[],
-  definition: EquipmentSlotDefinition,
-  claimed: Set<number>,
-) {
-  for (const slotId of definition.slotIds) {
-    if (claimed.has(slotId)) continue
-    const item = items.find((entry) => entry.slot === slotId)
-    if (item) {
-      claimed.add(slotId)
-      return item
-    }
-  }
-  return undefined
-}
-
-function EquipmentSlot({
-  definition,
-  item,
-  t,
-  onSelect,
-}: {
-  definition: EquipmentSlotDefinition
-  item?: ApiCharacterEquipmentItem
-  t: TFunction<'panel'>
-  onSelect?: (item: CharacterItemDetail) => void
-}) {
-  const Icon = EQUIPMENT_SLOT_ICONS[definition.key]
-  const label = t(`character.slots.${definition.labelKey}`)
-  const enchantLabel = item && item.enchant > 0 ? `+${item.enchant}` : ''
-  const title = item
-    ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''} · ${t('character.equipment.itemId', { id: item.item_id })}`
-    : label
-  const interactive = Boolean(item && onSelect)
-
-  function openDetail() {
-    if (!item || !onSelect) return
-    onSelect({
-      item_id: item.item_id,
-      name: item.name,
-      quantity: item.quantity,
-      enchant: item.enchant,
-      tradeable: item.tradeable,
-      slot: item.slot,
-      slotLabel: label,
-      location: 'PAPERDOLL',
-    })
-  }
-
-  return (
-    <article
-      className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : 'is-empty'}${interactive ? ' is-interactive' : ''}`}
-      aria-label={t('character.equipment.slotAria', {
-        label,
-        value: item ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''}` : t('character.equipment.emptySlot'),
-      })}
-      title={title}
-      role={interactive ? 'button' : undefined}
-      tabIndex={interactive ? 0 : undefined}
-      onClick={interactive ? openDetail : undefined}
-      onKeyDown={
-        interactive
-          ? (event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                openDetail()
-              }
-            }
-          : undefined
-      }
-    >
-      <span className="character-equipment-slot-label">{label}</span>
-      <div className="character-equipment-slot-cell">
-        {item ? (
-          <ItemIcon itemId={item.item_id} name={item.name} size={42} />
-        ) : (
-          <Icon />
-        )}
-        {enchantLabel ? <span className="character-equipment-slot-enchant">{enchantLabel}</span> : null}
-      </div>
-    </article>
   )
 }
 
@@ -195,12 +76,6 @@ export function CharacterPage() {
   const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
   const equippedItems = equipment.data ?? []
-  const claimedSlots = new Set<number>()
-  const paperdollItems = PAPERDOLL_SLOTS.map((definition) => ({
-    definition,
-    item: findEquippedItem(equippedItems, definition, claimedSlots),
-  }))
-  const additionalEquipment = equippedItems.filter((item) => !DISPLAYED_EQUIPMENT_SLOTS.has(item.slot))
 
   async function refreshCharacter() {
     await queryClient.invalidateQueries({ queryKey: ['characters', login] })
@@ -394,68 +269,12 @@ export function CharacterPage() {
               <span>{t('character.equipment.equipped', { count: equippedItems.length })}</span>
             </div>
 
-            {equipment.isLoading ? <div className="character-equipment-message">{t('character.equipment.loading')}</div> : null}
-            {equipment.isError ? (
-              <div className="character-equipment-message is-error">
-                {t('character.equipment.error')}
-              </div>
-            ) : null}
-
-            {!equipment.isLoading && !equipment.isError ? (
-              <div className="character-paperdoll" aria-label={t('character.equipment.paperdollLabel')}>
-                <div className="character-paperdoll-frame" aria-hidden="true">
-                  <span className="character-paperdoll-corner is-tl" />
-                  <span className="character-paperdoll-corner is-tr" />
-                  <span className="character-paperdoll-corner is-bl" />
-                  <span className="character-paperdoll-corner is-br" />
-                </div>
-                <div className="character-paperdoll-band is-armor" aria-hidden="true" />
-                <div className="character-paperdoll-band is-weapons" aria-hidden="true" />
-                <div className="character-paperdoll-band is-jewels" aria-hidden="true" />
-                <div className="character-equipment-slots">
-                  {paperdollItems.map(({ definition, item }) => (
-                    <EquipmentSlot
-                      key={definition.key}
-                      definition={definition}
-                      item={item}
-                      t={t}
-                      onSelect={setSelectedItem}
-                    />
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            {additionalEquipment.length ? (
-              <div className="character-equipment-additional">
-                <span>{t('character.equipment.additional')}</span>
-                <div>
-                  {additionalEquipment.map((item) => (
-                    <button
-                      type="button"
-                      key={`${item.slot}-${item.item_id}`}
-                      onClick={() =>
-                        setSelectedItem({
-                          item_id: item.item_id,
-                          name: item.name,
-                          quantity: item.quantity,
-                          enchant: item.enchant,
-                          tradeable: item.tradeable,
-                          slot: item.slot,
-                          location: 'PAPERDOLL',
-                        })
-                      }
-                    >
-                      <ItemIcon itemId={item.item_id} name={item.name} size={28} />
-                      <span>
-                        <strong>{item.name}</strong>
-                        <small>{t('character.equipment.slotInfo', { slot: item.slot, id: item.item_id })}{item.enchant > 0 ? ` · +${item.enchant}` : ''}</small>
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
+            <CharacterPaperdoll
+              items={equippedItems}
+              loading={equipment.isLoading}
+              error={equipment.isError}
+              onSelect={setSelectedItem}
+            />
 
             <CharacterBagPanel
               items={bagItems.data ?? []}

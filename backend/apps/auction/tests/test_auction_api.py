@@ -89,7 +89,15 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
-    char = gateway.seed_character("aseller", "SirChar")
+    char = gateway.seed_character(
+        "aseller",
+        "SirChar",
+        items=[
+            GameItem(2416, "Blue Wolf Helmet", 1, 5, slot=6, location="PAPERDOLL"),
+            GameItem(57, "Adena", 100, 0, location="INVENTORY"),
+            GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
+        ],
+    )
     created = api.post(
         "/api/v1/customer/auctions/",
         {"kind": "character", "char_id": char.char_id, "min_bid": "20.00", "hours": 24},
@@ -99,6 +107,13 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     assert created.data["kind"] == "character"
     assert created.data["char_name"] == "SirChar"
     assert created.data["char_id"] == char.char_id
+    assert [(row["item_id"], row["location"], row["quantity"]) for row in created.data["bag_items"]] == [
+        (57, "INVENTORY", 100),
+        (6673, "WAREHOUSE", 5),
+    ]
+    assert [(row["item_id"], row["slot"], row["enchant"]) for row in created.data["equipment"]] == [
+        (2416, 6, 5),
+    ]
     assert gateway.get_character("aseller", char.char_id) is None
     master = "MARKETPLACE_SYSTEM"
     assert gateway.verify_character_ownership(char.char_id, master)

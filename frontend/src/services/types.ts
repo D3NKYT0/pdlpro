@@ -371,6 +371,14 @@ export interface ApiAuction {
     enchant?: number
     slot?: number | null
   }>
+  bag_items?: Array<{
+    item_id: number
+    name?: string | null
+    quantity?: number
+    enchant?: number
+    location?: string | null
+    tradeable?: boolean | null
+  }>
   old_account?: string
 }
 

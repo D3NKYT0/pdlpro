@@ -54,10 +54,12 @@ export function CharacterBagPanel({
   items,
   loading,
   error,
+  tabsId = 'character-bag',
 }: {
   items: ApiGameItem[]
   loading: boolean
   error: boolean
+  tabsId?: string
 }) {
   const { t } = useTranslation('panel')
   const [tab, setTab] = useState<CharacterBagTab>('inventory')
@@ -76,7 +78,7 @@ export function CharacterBagPanel({
   return (
     <section className="character-bag" aria-label={t('character.bag.sectionLabel')}>
       <Tabs
-        id="character-bag"
+        id={tabsId}
         label={t('character.bag.tabsLabel')}
         className="character-bag-tabs"
         value={tab}
@@ -96,9 +98,9 @@ export function CharacterBagPanel({
       />
 
       <div
-        id={`character-bag-panel-${tab}`}
+        id={`${tabsId}-panel-${tab}`}
         role="tabpanel"
-        aria-labelledby={`character-bag-tab-${tab}`}
+        aria-labelledby={`${tabsId}-tab-${tab}`}
         className="character-bag-panel"
       >
         {loading ? <div className="character-bag-message">{t('character.bag.loading')}</div> : null}
