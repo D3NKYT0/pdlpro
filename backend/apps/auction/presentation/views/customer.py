@@ -9,6 +9,8 @@ from apps.auction.application.use_cases import (
     CloseExpiredAuctionsUseCase,
     CreateAuctionInput,
     CreateAuctionUseCase,
+    CreateCharacterAuctionInput,
+    CreateCharacterAuctionUseCase,
     ListMyAuctionsInput,
     ListMyAuctionsUseCase,
     ListOpenAuctionsUseCase,
@@ -67,7 +69,7 @@ class PublicAuctionListView(ItemCatalogAPIView):
 
 
 class MyAuctionsView(ItemCatalogAPIView):
-    """Entrada HTTP para ``ListMyAuctionsUseCase``, ``CreateAuctionUseCase``.
+    """Entrada HTTP para ``ListMyAuctionsUseCase``, criação de leilão de item ou personagem.
 
     Implementa GET, POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso
     declarado: [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a
@@ -88,24 +90,39 @@ class MyAuctionsView(ItemCatalogAPIView):
     @extend_schema(
         tags=["Leilão"],
         summary=gettext_lazy("Criar leilão"),
-        description=gettext_lazy("Cria um novo leilão a partir de um item do inventário do usuário autenticado."),
+        description=gettext_lazy(
+            "Cria um leilão de item do inventário (kind=item) ou de personagem L2 (kind=character)."
+        ),
         request=CreateAuctionSerializer,
     )
     def post(self, request):
         serializer = CreateAuctionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        auction = self.resolve(CreateAuctionUseCase).execute(
-            CreateAuctionInput(
-                user_id=request.user.id,
-                inventory_id=data["inventory_id"],
-                item_id=data["item_id"],
-                quantity=data["quantity"],
-                enchant=data.get("enchant") or 0,
-                min_bid=data["min_bid"],
-                hours=data.get("hours") or 24,
+        kind = data.get("kind") or "item"
+        if kind == "character":
+            auction = self.resolve(CreateCharacterAuctionUseCase).execute(
+                CreateCharacterAuctionInput(
+                    user_id=request.user.id,
+                    username=request.user.username,
+                    login=(data.get("login") or request.user.username).strip(),
+                    char_id=data["char_id"],
+                    min_bid=data["min_bid"],
+                    hours=data.get("hours") or 24,
+                )
             )
-        )
+        else:
+            auction = self.resolve(CreateAuctionUseCase).execute(
+                CreateAuctionInput(
+                    user_id=request.user.id,
+                    inventory_id=data["inventory_id"],
+                    item_id=data["item_id"],
+                    quantity=data["quantity"],
+                    enchant=data.get("enchant") or 0,
+                    min_bid=data["min_bid"],
+                    hours=data.get("hours") or 24,
+                )
+            )
         return Response(dump_auction(auction))
 
 
@@ -130,9 +147,10 @@ class PlaceBidView(ItemCatalogAPIView):
         bid = self.resolve(PlaceBidUseCase).execute(
             PlaceBidInput(
                 user_id=request.user.id,
+                username=request.user.username,
                 auction_id=auction_id,
                 amount=serializer.validated_data["amount"],
-                character_name=serializer.validated_data["character_name"],
+                character_name=serializer.validated_data.get("character_name") or "",
             )
         )
         return Response(dump_bid(bid))

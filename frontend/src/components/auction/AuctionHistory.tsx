@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
-import { Eye, History } from 'lucide-react'
+import { Eye, History, UserRound } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import type { ApiAuction } from '../../services/api'
-import { auctionStatusFor } from './auctionHelpers'
+import { auctionDisplayName, auctionStatusFor, isCharacterAuction } from './auctionHelpers'
 
 interface AuctionHistoryProps {
   auctions: ApiAuction[]
@@ -28,15 +28,25 @@ export function AuctionHistory({ auctions, loading, onView }: AuctionHistoryProp
       <div className="marketplace-sales-list">
         {auctions.map((auction) => {
           const status = auctionStatusFor(auction.status, t)
+          const character = isCharacterAuction(auction)
+          const name = auctionDisplayName(auction)
           return (
             <article className="marketplace-sale-row auction-history-row" key={auction.id}>
               <div className="marketplace-sale-main">
                 <div className="auction-item-icon small">
-                  <ItemIcon itemId={auction.item_id} name={auction.item_name} size={34} />
+                  {character ? (
+                    <UserRound aria-hidden="true" size={34} />
+                  ) : (
+                    <ItemIcon itemId={auction.item_id ?? 0} name={auction.item_name} size={34} />
+                  )}
                 </div>
                 <div>
-                  <strong>{auction.item_name}</strong>
-                  <small>x{formatNumber(auction.quantity)} {auction.item_enchant > 0 ? `· +${auction.item_enchant}` : ''}</small>
+                  <strong>{name}</strong>
+                  <small>
+                    {character
+                      ? t('auctions.kind.character')
+                      : `x${formatNumber(auction.quantity)} ${auction.item_enchant > 0 ? `· +${auction.item_enchant}` : ''}`}
+                  </small>
                 </div>
               </div>
               <div className="marketplace-sale-meta">

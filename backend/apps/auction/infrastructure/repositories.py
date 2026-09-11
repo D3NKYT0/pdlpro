@@ -22,6 +22,7 @@ class DjangoAuctionRepository(IAuctionRepository):
             id=row.id,
             seller_id=row.seller.id,
             seller_username=row.seller.username,
+            kind=row.kind,
             item_id=row.item_id,
             item_name=row.item_name,
             item_enchant=row.item_enchant,
@@ -35,6 +36,18 @@ class DjangoAuctionRepository(IAuctionRepository):
             status=row.status,
             created_at=row.created_at,
             updated_at=row.updated_at,
+            char_id=row.char_id,
+            char_name=row.char_name,
+            char_level=row.char_level,
+            char_class=row.char_class,
+            char_title=row.char_title,
+            char_sex=row.char_sex,
+            char_pvp=row.char_pvp,
+            char_pk=row.char_pk,
+            char_clan_name=row.char_clan_name,
+            char_is_clan_leader=row.char_is_clan_leader,
+            equipment=list(row.equipment or []),
+            old_account=row.old_account,
         )
 
     def _bid(self, row: Bid) -> BidEntity:
@@ -64,23 +77,45 @@ class DjangoAuctionRepository(IAuctionRepository):
         rows = Auction.objects.select_related("seller", "highest_bidder").filter(seller__id=user_id)
         return [self._auction(row) for row in rows]
 
+    def find_open_character_auction(self, char_id: int) -> AuctionEntity | None:
+        row = (
+            Auction.objects.select_related("seller", "highest_bidder")
+            .filter(kind=Auction.Kind.CHARACTER, status=Auction.Status.OPEN, char_id=char_id)
+            .first()
+        )
+        return self._auction(row) if row else None
+
     def create(
         self,
         seller_id: UUID,
         *,
-        item_id: int,
-        item_name: str,
-        item_enchant: int,
-        quantity: int,
+        kind: str = "item",
+        item_id: int | None = None,
+        item_name: str = "",
+        item_enchant: int = 0,
+        quantity: int = 1,
         min_bid: Decimal,
-        character_name: str,
+        character_name: str = "",
         ends_at: datetime,
+        char_id: int | None = None,
+        char_name: str = "",
+        char_level: int = 1,
+        char_class: int = 0,
+        char_title: str = "",
+        char_sex: int = 0,
+        char_pvp: int = 0,
+        char_pk: int = 0,
+        char_clan_name: str = "",
+        char_is_clan_leader: bool = False,
+        equipment: list | None = None,
+        old_account: str = "",
     ) -> AuctionEntity:
         from django.contrib.auth import get_user_model
 
         seller = get_user_model().objects.get(id=seller_id)
         row = Auction.objects.create(
             seller=seller,
+            kind=kind,
             item_id=item_id,
             item_name=item_name,
             item_enchant=item_enchant,
@@ -88,6 +123,18 @@ class DjangoAuctionRepository(IAuctionRepository):
             min_bid=min_bid,
             character_name=character_name,
             ends_at=ends_at,
+            char_id=char_id,
+            char_name=char_name,
+            char_level=char_level,
+            char_class=char_class,
+            char_title=char_title,
+            char_sex=char_sex,
+            char_pvp=char_pvp,
+            char_pk=char_pk,
+            char_clan_name=char_clan_name,
+            char_is_clan_leader=char_is_clan_leader,
+            equipment=equipment or [],
+            old_account=old_account,
         )
         return self._auction(row)
 

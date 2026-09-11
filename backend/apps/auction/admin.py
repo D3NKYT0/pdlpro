@@ -13,8 +13,8 @@ class AuctionAdmin(PDLModelAdmin):
     no admin; regras reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("item_name", "seller", "min_bid", "current_bid", "status", "ends_at")
-    list_filter = ("status",)
+    list_display = ("kind", "item_name", "char_name", "seller", "min_bid", "current_bid", "status", "ends_at")
+    list_filter = ("status", "kind")
 
 
 @admin.register(Bid)

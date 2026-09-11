@@ -6,7 +6,7 @@ from common.models import BaseModel
 
 
 class Auction(BaseModel):
-    """Oferta de itens em leilão com prazo, maior lance e estado de encerramento.
+    """Oferta em leilão (item do inventário ou personagem L2) com prazo e maior lance.
 
     Relaciona os registros por ``seller``, ``highest_bidder``. Herda BaseModel: use ``id``
     (UUID) nas APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações
@@ -24,9 +24,16 @@ class Auction(BaseModel):
         FINISHED = "finished", _("Finalizado")
         CANCELLED = "cancelled", _("Cancelado")
 
+    class Kind(models.TextChoices):
+        """Tipo de ativo leiloado."""
+
+        ITEM = "item", _("Item")
+        CHARACTER = "character", _("Personagem")
+
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="auctions")
-    item_id = models.PositiveIntegerField()
-    item_name = models.CharField(max_length=80)
+    kind = models.CharField(max_length=20, choices=Kind.choices, default=Kind.ITEM)
+    item_id = models.PositiveIntegerField(null=True, blank=True)
+    item_name = models.CharField(max_length=80, blank=True, default="")
     item_enchant = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=1)
     min_bid = models.DecimalField(max_digits=12, decimal_places=2)
@@ -39,13 +46,29 @@ class Auction(BaseModel):
         related_name="auction_winning_bids",
     )
     character_name = models.CharField(max_length=35, blank=True, default="")
+    char_id = models.PositiveIntegerField(null=True, blank=True)
+    char_name = models.CharField(max_length=35, blank=True, default="")
+    char_level = models.PositiveIntegerField(default=1)
+    char_class = models.PositiveIntegerField(default=0)
+    char_title = models.CharField(max_length=35, blank=True, default="")
+    char_sex = models.PositiveSmallIntegerField(default=0)
+    char_pvp = models.PositiveIntegerField(default=0)
+    char_pk = models.PositiveIntegerField(default=0)
+    char_clan_name = models.CharField(max_length=45, blank=True, default="")
+    char_is_clan_leader = models.BooleanField(default=False)
+    equipment = models.JSONField(default=list, blank=True)
+    old_account = models.CharField(max_length=45, blank=True, default="")
     ends_at = models.DateTimeField()
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.OPEN)
 
     class Meta:
-        verbose_name=_("Leilão")
-        verbose_name_plural=_("Leilões")
+        verbose_name = _("Leilão")
+        verbose_name_plural = _("Leilões")
         ordering = ["ends_at"]
+        indexes = [
+            models.Index(fields=["kind", "status"]),
+            models.Index(fields=["char_id", "status"]),
+        ]
 
 
 class Bid(BaseModel):
@@ -59,9 +82,9 @@ class Bid(BaseModel):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     bidder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="auction_bids")
     amount = models.DecimalField(max_digits=12, decimal_places=2)
-    character_name = models.CharField(max_length=35)
+    character_name = models.CharField(max_length=35, blank=True, default="")
 
     class Meta:
-        verbose_name=_("Lance")
-        verbose_name_plural=_("Lances")
+        verbose_name = _("Lance")
+        verbose_name_plural = _("Lances")
         ordering = ["-created_at"]

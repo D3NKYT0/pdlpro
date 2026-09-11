@@ -1,6 +1,7 @@
 from apps.auction.application.use_cases import (
     CloseExpiredAuctionsUseCase,
     CreateAuctionUseCase,
+    CreateCharacterAuctionUseCase,
     ListMyAuctionsUseCase,
     ListOpenAuctionsUseCase,
     PlaceBidUseCase,
@@ -26,6 +27,7 @@ class AuctionProvider(AppProvider):
             ListOpenAuctionsUseCase,
             ListMyAuctionsUseCase,
             CreateAuctionUseCase,
+            CreateCharacterAuctionUseCase,
             PlaceBidUseCase,
             CloseExpiredAuctionsUseCase,
         ):

@@ -16,6 +16,7 @@ from apps.marketplace.domain.exceptions import (
     ListingNotFoundError,
 )
 from apps.marketplace.domain.repositories import ICharacterListingRepository
+from apps.auction.domain.repositories import IAuctionRepository
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.exceptions import (
     CharacterOfflineRequiredError,
@@ -97,11 +98,13 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
     def __init__(
         self,
         listings: ICharacterListingRepository,
+        auctions: IAuctionRepository,
         lineage: ILineageGateway,
         access: IAccountAccessService,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._listings = listings
+        self._auctions = auctions
         self._lineage = lineage
         self._access = access
         self._unit_of_work = unit_of_work
@@ -118,6 +121,8 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
         if char.online:
             raise CharacterOfflineRequiredError()
         if self._listings.find_active_by_char(data.char_id):
+            raise CharacterAlreadyListedError()
+        if self._auctions.find_open_character_auction(data.char_id):
             raise CharacterAlreadyListedError()
         equipment = [asdict(item) for item in self._lineage.list_character_equipment(char.char_id)]
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")

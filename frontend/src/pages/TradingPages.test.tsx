@@ -21,7 +21,25 @@ vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { characters:
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
 const listing: ApiCharacterListing = { id: 'listing', seller_username: 'seller', char_id: 7, char_name: 'Elf', char_level: 80, char_class: 99, char_title: 'Campeão', char_sex: 0, char_pvp: 40, char_pk: 0, char_clan_name: 'Reino', char_is_clan_leader: false, equipment: [{ item_id: 57, name: 'Adena', quantity: 10, enchant: 0, slot: 1 }], price: '150.25', status: 'for_sale', notes: 'Pronto para jogar', created_at: '2026-09-02T10:00:00Z', updated_at: '2026-09-02T10:00:00Z', sold_at: null }
-const auction: ApiAuction = { id: 'auction', seller_id: 'seller', seller_username: 'seller', item_id: 57, item_name: 'Adena', item_enchant: 3, quantity: 10, min_bid: '10.00', current_bid: '12.00', highest_bidder_id: null, highest_bidder_username: null, character_name: 'Elf', ends_at: '2026-09-03T10:00:00Z', status: 'open', created_at: '2026-09-02T10:00:00Z', updated_at: '2026-09-02T10:00:00Z' }
+const auction: ApiAuction = { id: 'auction', seller_id: 'seller', seller_username: 'seller', kind: 'item', item_id: 57, item_name: 'Adena', item_enchant: 3, quantity: 10, min_bid: '10.00', current_bid: '12.00', highest_bidder_id: null, highest_bidder_username: null, character_name: 'Elf', ends_at: '2026-09-03T10:00:00Z', status: 'open', created_at: '2026-09-02T10:00:00Z', updated_at: '2026-09-02T10:00:00Z' }
+const characterAuction: ApiAuction = {
+  ...auction,
+  id: 'char-auction',
+  kind: 'character',
+  item_id: null,
+  item_name: 'Elf',
+  item_enchant: 0,
+  quantity: 1,
+  current_bid: null,
+  char_id: 7,
+  char_name: 'Elf',
+  char_level: 80,
+  char_class: 99,
+  char_pvp: 40,
+  char_pk: 0,
+  char_clan_name: 'Reino',
+  equipment: [{ item_id: 57, name: 'Adena', enchant: 0, slot: 1 }],
+}
 const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, online: false, pvp: 40, pk: 0, clan_name: '', title: '' }
 let client: QueryClient
 beforeEach(() => {
@@ -160,11 +178,30 @@ it.each([false, true])('cria leilão do item/enchant e quantidade escolhidos; er
   await user.type(screen.getByRole('spinbutton', { name: 'Lance inicial' }), '15.50')
   await user.selectOptions(screen.getByRole('combobox', { name: 'Duração' }), '48')
   await user.click(screen.getByRole('button', { name: 'Publicar leilão' }))
-  expect(auctionApi.create).toHaveBeenCalledWith({ inventory_id: 'bag', item_id: 57, quantity: 2, enchant: 3, min_bid: '15.5', hours: 48 })
+  expect(auctionApi.create).toHaveBeenCalledWith({ kind: 'item', inventory_id: 'bag', item_id: 57, quantity: 2, enchant: 3, min_bid: '15.5', hours: 48 })
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Estoque alterado')
     expect(quantity).toHaveValue(2)
   } else expect(screen.getByRole('combobox', { name: 'Inventário do personagem' })).toHaveValue('')
+})
+it('cria leilão de personagem offline', async () => {
+  vi.mocked(auctionApi.create).mockResolvedValue(characterAuction)
+  const user = mount(<AuctionPage />)
+  await user.selectOptions(await screen.findByRole('combobox', { name: 'Tipo de leilão' }), 'character')
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Personagem' }), '7')
+  await user.type(screen.getByRole('spinbutton', { name: 'Lance inicial' }), '99')
+  await user.click(screen.getByRole('button', { name: 'Publicar leilão' }))
+  expect(auctionApi.create).toHaveBeenCalledWith({ kind: 'character', char_id: 7, min_bid: '99', hours: 24 })
+})
+it('lance em personagem não pede inventário de destino', async () => {
+  vi.mocked(auctionApi.open).mockResolvedValue([characterAuction])
+  const user = mount(<AuctionPage />)
+  await user.click(await screen.findByRole('button', { name: /Ver leilão/ }))
+  expect(screen.getByText(/transferido para a sua conta/i)).toBeVisible()
+  expect(screen.queryByRole('combobox', { name: 'Personagem que receberá o item' })).not.toBeInTheDocument()
+  expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(10.01)
+  await user.click(screen.getByRole('button', { name: 'Dar lance' }))
+  expect(auctionApi.bid).toHaveBeenCalledWith('char-auction', '10.01', '')
 })
 it('marketplace segue o idioma ativo no catálogo, no anúncio e na venda', async () => {
   await i18n.changeLanguage('en')
@@ -190,9 +227,9 @@ it('leilão segue o idioma ativo, incluindo status e tempo restante', async () =
   await user.click(screen.getByRole('button', { name: /Ver subasta/ }))
   expect(screen.getByRole('article', { name: 'Detalles de Adena' })).toBeVisible()
   expect(screen.getByText('Abierta')).toBeVisible()
-  expect(screen.getByText('Todavía sin pujas')).toBeVisible()
+  expect(screen.getByText('Aún sin pujas')).toBeVisible()
   expect(screen.getByRole('button', { name: 'Pujar' })).toBeVisible()
-  expect(screen.getByRole('combobox', { name: 'Personaje que recibirá el objeto' })).toBeVisible()
+  expect(screen.getByRole('combobox', { name: 'Personaje que recibirá el ítem' })).toBeVisible()
   expect(screen.queryByText('Leilões abertos')).not.toBeInTheDocument()
   expect(screen.queryByText('Dar lance')).not.toBeInTheDocument()
 })

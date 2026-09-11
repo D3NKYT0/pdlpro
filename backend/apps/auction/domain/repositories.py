@@ -33,17 +33,34 @@ class IAuctionRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def find_open_character_auction(self, char_id: int) -> AuctionEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
     def create(
         self,
         seller_id: UUID,
         *,
-        item_id: int,
-        item_name: str,
-        item_enchant: int,
-        quantity: int,
+        kind: str = "item",
+        item_id: int | None = None,
+        item_name: str = "",
+        item_enchant: int = 0,
+        quantity: int = 1,
         min_bid: Decimal,
-        character_name: str,
+        character_name: str = "",
         ends_at: datetime,
+        char_id: int | None = None,
+        char_name: str = "",
+        char_level: int = 1,
+        char_class: int = 0,
+        char_title: str = "",
+        char_sex: int = 0,
+        char_pvp: int = 0,
+        char_pk: int = 0,
+        char_clan_name: str = "",
+        char_is_clan_leader: bool = False,
+        equipment: list | None = None,
+        old_account: str = "",
     ) -> AuctionEntity:
         raise NotImplementedError
 

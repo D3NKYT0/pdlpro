@@ -472,17 +472,21 @@
   },
   "auctions": {
     "hero": {
-      "eyebrow": "Item trading",
+      "eyebrow": "Trading",
       "title": "Auctions",
-      "subtitle": "Check the item, follow the bids and choose who takes the prize."
+      "subtitle": "Auction inventory items or your own character, follow bids and finish the sale."
     },
     "refresh": "Refresh",
     "catalog": {
-      "eyebrow": "Available items",
+      "eyebrow": "Available offers",
       "title": "Open auctions",
       "count": "{{total}} listings"
     },
     "authRequired": "Sign in to create auctions or place bids.",
+    "kind": {
+      "item": "Item",
+      "character": "Character"
+    },
     "status": {
       "open": "Open",
       "finished": "Finished",
@@ -498,8 +502,11 @@
       "ownerEyebrow": "Your auction",
       "sellerEyebrow": "Seller: {{name}}",
       "itemId": "ID {{id}}",
+      "characterMeta": "{{className}} · Lv. {{level}}",
       "units": "units",
       "enchant": "enchant",
+      "pvp": "PvP",
+      "pk": "PK",
       "currentBid": "Current bid",
       "startingValue": "Starting value",
       "view": "View auction",
@@ -509,7 +516,9 @@
     "detail": {
       "aria": "Details of {{name}}",
       "eyebrow": "Item on auction",
+      "characterEyebrow": "Character on auction",
       "quantityLine": "Quantity {{quantity}}",
+      "characterLine": "{{className}} · Lv. {{level}}",
       "enchantSuffix": " · enchantment +{{enchant}}",
       "noEnchantSuffix": " · no enchantment",
       "ownerBadge": "Your auction",
@@ -518,6 +527,13 @@
       "quantity": "Quantity",
       "enchant": "Enchantment",
       "noEnchant": "None",
+      "level": "Level",
+      "class": "Class",
+      "pvp": "PvP",
+      "pk": "PK",
+      "clan": "Clan",
+      "title": "Title",
+      "equipment": "Equipment",
       "seller": "Seller",
       "sourceInventory": "Source inventory",
       "notInformed": "Not informed",
@@ -528,6 +544,7 @@
       "startingValue": "Starting value",
       "minBid": "Minimum accepted bid: {{value}}",
       "bidCharacter": "Character that will receive the item",
+      "characterBidHint": "If you win, the character is transferred to your panel game account.",
       "selectCharacter": "Select the character",
       "characterOption": "{{name}} — level {{level}}",
       "yourBid": "Your bid",
@@ -538,6 +555,9 @@
     "create": {
       "eyebrow": "New listing",
       "title": "Create auction",
+      "kind": "Auction type",
+      "kindItem": "Inventory item",
+      "kindCharacter": "Character",
       "inventory": "Character inventory",
       "selectInventory": "Select the inventory",
       "inventoryOption": "{{character}} — {{total}} items",
@@ -550,6 +570,13 @@
       "selectedItemMeta": "ID {{id}} · available x{{quantity}}",
       "enchantValue": "Enchantment +{{enchant}}",
       "noEnchant": "No enchantment",
+      "character": "Character",
+      "selectCharacter": "Select the character",
+      "characterOption": "{{name}} — level {{level}}",
+      "selectedCharacterEyebrow": "Selected character",
+      "classLevel": "{{className}} · Lv. {{level}}",
+      "online": "Online",
+      "offline": "Offline",
       "quantity": "Quantity",
       "duration": "Duration",
       "duration1h": "1 hour",
@@ -562,6 +589,7 @@
       "minBid": "Starting bid",
       "minBidPlaceholder": "0.00",
       "securityNote": "The item leaves the panel inventory and stays reserved until the auction closes.",
+      "securityNoteCharacter": "The character must be offline and will be moved to the custody account until the auction closes.",
       "publishing": "Publishing...",
       "publish": "Publish auction"
     },

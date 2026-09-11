@@ -5,11 +5,13 @@ import {
   Gavel,
   PackageOpen,
   Sparkles,
+  UserRound,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { getClassName } from '../../lib/lineage'
 import type { ApiAuction } from '../../services/api'
-import { formatRemaining } from './auctionHelpers'
+import { auctionDisplayName, formatRemaining, isCharacterAuction } from './auctionHelpers'
 
 interface AuctionOpenListProps {
   auctions: ApiAuction[]
@@ -26,6 +28,8 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
       <div className="auction-listing-grid">
         {auctions.map((auction) => {
           const isOwner = Boolean(username && auction.seller_username === username)
+          const character = isCharacterAuction(auction)
+          const name = auctionDisplayName(auction)
           return (
             <button
               className={`auction-listing-card${isOwner ? ' is-owner' : ''}`}
@@ -35,17 +39,44 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
             >
               <div className="auction-listing-card-head">
                 <div className="auction-item-icon">
-                  <ItemIcon itemId={auction.item_id} name={auction.item_name} size={48} />
+                  {character ? (
+                    <UserRound aria-hidden="true" size={48} />
+                  ) : (
+                    <ItemIcon itemId={auction.item_id ?? 0} name={auction.item_name} size={48} />
+                  )}
                 </div>
                 <div>
-                  <span className="panel-eyebrow">{isOwner ? t('auctions.list.ownerEyebrow') : t('auctions.list.sellerEyebrow', { name: auction.seller_username })}</span>
-                  <h3>{auction.item_name}</h3>
-                  <p>{t('auctions.list.itemId', { id: auction.item_id })}</p>
+                  <span className="panel-eyebrow">
+                    {isOwner
+                      ? t('auctions.list.ownerEyebrow')
+                      : t('auctions.list.sellerEyebrow', { name: auction.seller_username })}
+                  </span>
+                  <h3>{name}</h3>
+                  <p>
+                    {character
+                      ? t('auctions.list.characterMeta', {
+                          className: getClassName(auction.char_class ?? 0),
+                          level: auction.char_level ?? 1,
+                        })
+                      : t('auctions.list.itemId', { id: auction.item_id })}
+                  </p>
                 </div>
+                <span className="auction-kind-badge">
+                  {character ? t('auctions.kind.character') : t('auctions.kind.item')}
+                </span>
               </div>
               <div className="auction-listing-stats">
-                <span><PackageOpen aria-hidden="true" /><b>{formatNumber(auction.quantity)}</b> {t('auctions.list.units')}</span>
-                <span><Sparkles aria-hidden="true" /><b>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : '0'}</b> {t('auctions.list.enchant')}</span>
+                {character ? (
+                  <>
+                    <span><Sparkles aria-hidden="true" /><b>{formatNumber(auction.char_pvp ?? 0)}</b> {t('auctions.list.pvp')}</span>
+                    <span><PackageOpen aria-hidden="true" /><b>{formatNumber(auction.char_pk ?? 0)}</b> {t('auctions.list.pk')}</span>
+                  </>
+                ) : (
+                  <>
+                    <span><PackageOpen aria-hidden="true" /><b>{formatNumber(auction.quantity)}</b> {t('auctions.list.units')}</span>
+                    <span><Sparkles aria-hidden="true" /><b>{auction.item_enchant > 0 ? `+${auction.item_enchant}` : '0'}</b> {t('auctions.list.enchant')}</span>
+                  </>
+                )}
                 <span><Clock3 aria-hidden="true" /><b>{formatRemaining(auction.ends_at, t)}</b></span>
               </div>
               <div className="auction-listing-card-footer">

@@ -472,17 +472,21 @@
   },
   "auctions": {
     "hero": {
-      "eyebrow": "Negociação de itens",
+      "eyebrow": "Negociação",
       "title": "Leilões",
-      "subtitle": "Confira o item, acompanhe os lances e escolha quem receberá o prêmio."
+      "subtitle": "Leiloe itens do inventário ou o próprio personagem, acompanhe os lances e finalize a venda."
     },
     "refresh": "Atualizar",
     "catalog": {
-      "eyebrow": "Itens disponíveis",
+      "eyebrow": "Ofertas disponíveis",
       "title": "Leilões abertos",
       "count": "{{total}} anúncios"
     },
     "authRequired": "Entre para criar leilões ou dar lances.",
+    "kind": {
+      "item": "Item",
+      "character": "Personagem"
+    },
     "status": {
       "open": "Aberto",
       "finished": "Finalizado",
@@ -498,8 +502,11 @@
       "ownerEyebrow": "Seu leilão",
       "sellerEyebrow": "Vendedor: {{name}}",
       "itemId": "ID {{id}}",
+      "characterMeta": "{{className}} · Nv. {{level}}",
       "units": "unidades",
       "enchant": "enchant",
+      "pvp": "PvP",
+      "pk": "PK",
       "currentBid": "Lance atual",
       "startingValue": "Valor inicial",
       "view": "Ver leilão",
@@ -509,7 +516,9 @@
     "detail": {
       "aria": "Detalhes de {{name}}",
       "eyebrow": "Item em leilão",
+      "characterEyebrow": "Personagem em leilão",
       "quantityLine": "Quantidade {{quantity}}",
+      "characterLine": "{{className}} · Nv. {{level}}",
       "enchantSuffix": " · encantamento +{{enchant}}",
       "noEnchantSuffix": " · sem encantamento",
       "ownerBadge": "Seu leilão",
@@ -518,6 +527,13 @@
       "quantity": "Quantidade",
       "enchant": "Encantamento",
       "noEnchant": "Nenhum",
+      "level": "Nível",
+      "class": "Classe",
+      "pvp": "PvP",
+      "pk": "PK",
+      "clan": "Clã",
+      "title": "Título",
+      "equipment": "Equipamentos",
       "seller": "Vendedor",
       "sourceInventory": "Inventário de origem",
       "notInformed": "Não informado",
@@ -528,6 +544,7 @@
       "startingValue": "Valor inicial",
       "minBid": "Lance mínimo aceito: {{value}}",
       "bidCharacter": "Personagem que receberá o item",
+      "characterBidHint": "Se vencer, o personagem será transferido para a sua conta de jogo do painel.",
       "selectCharacter": "Selecione o personagem",
       "characterOption": "{{name}} — nível {{level}}",
       "yourBid": "Seu lance",
@@ -538,6 +555,9 @@
     "create": {
       "eyebrow": "Novo anúncio",
       "title": "Criar leilão",
+      "kind": "Tipo de leilão",
+      "kindItem": "Item do inventário",
+      "kindCharacter": "Personagem",
       "inventory": "Inventário do personagem",
       "selectInventory": "Selecione o inventário",
       "inventoryOption": "{{character}} — {{total}} itens",
@@ -550,6 +570,13 @@
       "selectedItemMeta": "ID {{id}} · disponível x{{quantity}}",
       "enchantValue": "Encantamento +{{enchant}}",
       "noEnchant": "Sem encantamento",
+      "character": "Personagem",
+      "selectCharacter": "Selecione o personagem",
+      "characterOption": "{{name}} — nível {{level}}",
+      "selectedCharacterEyebrow": "Personagem selecionado",
+      "classLevel": "{{className}} · Nv. {{level}}",
+      "online": "Online",
+      "offline": "Offline",
       "quantity": "Quantidade",
       "duration": "Duração",
       "duration1h": "1 hora",
@@ -562,6 +589,7 @@
       "minBid": "Lance inicial",
       "minBidPlaceholder": "0,00",
       "securityNote": "O item sai do inventário do painel e fica reservado até o encerramento.",
+      "securityNoteCharacter": "O personagem precisa estar offline e será transferido para a conta de custódia até o encerramento.",
       "publishing": "Publicando...",
       "publish": "Publicar leilão"
     },

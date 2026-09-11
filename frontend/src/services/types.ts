@@ -340,7 +340,8 @@ export interface ApiAuction {
   id: string
   seller_id: string
   seller_username: string
-  item_id: number
+  kind: 'item' | 'character'
+  item_id: number | null
   item_name: string
   item_enchant: number
   quantity: number
@@ -353,6 +354,24 @@ export interface ApiAuction {
   status: string
   created_at: string
   updated_at: string
+  char_id?: number | null
+  char_name?: string
+  char_level?: number
+  char_class?: number
+  char_title?: string
+  char_sex?: number
+  char_pvp?: number
+  char_pk?: number
+  char_clan_name?: string
+  char_is_clan_leader?: boolean
+  equipment?: Array<{
+    item_id: number
+    name?: string | null
+    quantity?: number
+    enchant?: number
+    slot?: number | null
+  }>
+  old_account?: string
 }
 
 export interface ApiSupportMessage {

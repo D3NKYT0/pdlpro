@@ -13,7 +13,7 @@ import { AuctionDetail } from '../components/auction/AuctionDetail'
 import { AuctionOpenList } from '../components/auction/AuctionOpenList'
 import { AuctionCreateForm } from '../components/auction/AuctionCreateForm'
 import { AuctionHistory } from '../components/auction/AuctionHistory'
-import { nextBidFor } from '../components/auction/auctionHelpers'
+import { isCharacterAuction, nextBidFor } from '../components/auction/auctionHelpers'
 
 export function AuctionPage() {
   const { user } = useAuth()
@@ -31,8 +31,10 @@ export function AuctionPage() {
     queryFn: () => lineageApi.characters(),
     enabled: Boolean(user),
   })
+  const [kind, setKind] = useState<'item' | 'character'>('item')
   const [inventoryId, setInventoryId] = useState('')
   const [itemKey, setItemKey] = useState('')
+  const [charId, setCharId] = useState('')
   const [quantity, setQuantity] = useState('1')
   const [minBid, setMinBid] = useState('')
   const [hours, setHours] = useState('24')
@@ -55,6 +57,7 @@ export function AuctionPage() {
       queryClient.invalidateQueries({ queryKey: ['auctions'] }),
       queryClient.invalidateQueries({ queryKey: ['auctions-mine'] }),
       queryClient.invalidateQueries({ queryKey: ['inventory'] }),
+      queryClient.invalidateQueries({ queryKey: ['auction-characters'] }),
       queryClient.invalidateQueries({ queryKey: ['wallet'] }),
     ])
   }
@@ -62,26 +65,37 @@ export function AuctionPage() {
   function viewAuction(auction: ApiAuction) {
     setSelectedAuctionId(auction.id)
     setBidAmount(nextBidFor(auction))
-    if (!bidCharacter && characters.data?.length === 1) setBidCharacter(characters.data[0].name)
+    if (!isCharacterAuction(auction) && !bidCharacter && characters.data?.length === 1) {
+      setBidCharacter(characters.data[0].name)
+    }
   }
 
   async function onCreate(event: FormEvent) {
     event.preventDefault()
-    if (!selectedItem) return
     setCreating(true)
     try {
-      const created = await auctionApi.create({
-        inventory_id: inventoryId,
-        item_id: selectedItem.item_id,
-        quantity: Number(quantity),
-        enchant: selectedItem.enchant,
-        min_bid: minBid,
-        hours: Number(hours),
-      })
+      const created =
+        kind === 'character'
+          ? await auctionApi.create({
+              kind: 'character',
+              char_id: Number(charId),
+              min_bid: minBid,
+              hours: Number(hours),
+            })
+          : await auctionApi.create({
+              kind: 'item',
+              inventory_id: inventoryId,
+              item_id: selectedItem!.item_id,
+              quantity: Number(quantity),
+              enchant: selectedItem!.enchant,
+              min_bid: minBid,
+              hours: Number(hours),
+            })
       toast.success(t('auctions.toast.created'))
       setSelectedAuctionId(created.id)
       setInventoryId('')
       setItemKey('')
+      setCharId('')
       setQuantity('1')
       setMinBid('')
       await refresh()
@@ -96,7 +110,12 @@ export function AuctionPage() {
     event.preventDefault()
     setBidding(true)
     try {
-      await auctionApi.bid(auctionId, bidAmount, bidCharacter)
+      const auction = selectedAuction
+      await auctionApi.bid(
+        auctionId,
+        bidAmount,
+        auction && isCharacterAuction(auction) ? '' : bidCharacter,
+      )
       toast.success(t('auctions.toast.bidSent'))
       await refresh()
     } catch (error) {
@@ -154,13 +173,17 @@ export function AuctionPage() {
       {user ? (
         <aside className="marketplace-side-column auction-side-column">
           <AuctionCreateForm
+            kind={kind}
             inventory={inventory.data ?? []}
+            characters={characters.data ?? []}
             inventoryId={inventoryId}
             itemKey={itemKey}
+            charId={charId}
             quantity={quantity}
             minBid={minBid}
             hours={hours}
             creating={creating}
+            onKindChange={setKind}
             onInventoryChange={(value) => {
               setInventoryId(value)
               setItemKey('')
@@ -170,6 +193,7 @@ export function AuctionPage() {
               setItemKey(value)
               setQuantity('1')
             }}
+            onCharChange={setCharId}
             onQuantityChange={setQuantity}
             onMinBidChange={setMinBid}
             onHoursChange={setHours}

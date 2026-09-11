@@ -81,3 +81,103 @@ def test_create_bid_and_close_auction(api, seller, bidder):
     inv = api.get("/api/v1/customer/inventory/")
     items = inv.data[0]["items"] if inv.data else []
     assert any(item["item_id"] == 57 and item["quantity"] == 20 for item in items)
+
+
+@pytest.mark.django_db
+def test_create_bid_and_close_character_auction(api, seller, bidder):
+    api.force_authenticate(user=seller)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character("aseller", "SirChar")
+    created = api.post(
+        "/api/v1/customer/auctions/",
+        {"kind": "character", "char_id": char.char_id, "min_bid": "20.00", "hours": 24},
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert created.data["kind"] == "character"
+    assert created.data["char_name"] == "SirChar"
+    assert created.data["char_id"] == char.char_id
+    assert gateway.get_character("aseller", char.char_id) is None
+    master = "MARKETPLACE_SYSTEM"
+    assert gateway.verify_character_ownership(char.char_id, master)
+    auction_id = created.data["id"]
+
+    api.force_authenticate(user=bidder)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    order = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
+    api.post(f"/api/v1/customer/payments/{order.data['id']}/confirm/", format="json")
+    bid = api.post(
+        f"/api/v1/customer/auctions/{auction_id}/bid/",
+        {"amount": "25.00"},
+        format="json",
+    )
+    assert bid.status_code == 200, bid.data
+    Auction.objects.filter(id=auction_id).update(ends_at=timezone.now() - timedelta(minutes=1))
+    listed = api.get("/api/v1/public/auctions/")
+    assert listed.status_code == 200
+    assert listed.data == []
+    assert gateway.verify_character_ownership(char.char_id, "abidder")
+    assert gateway.get_character("abidder", char.char_id) is not None
+
+
+@pytest.mark.django_db
+def test_character_auction_returns_without_bids(api, seller):
+    api.force_authenticate(user=seller)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character("aseller", "SirBack")
+    created = api.post(
+        "/api/v1/customer/auctions/",
+        {"kind": "character", "char_id": char.char_id, "min_bid": "10.00", "hours": 24},
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    Auction.objects.filter(id=created.data["id"]).update(ends_at=timezone.now() - timedelta(minutes=1))
+    api.get("/api/v1/public/auctions/")
+    assert gateway.verify_character_ownership(char.char_id, "aseller")
+
+
+@pytest.mark.django_db
+def test_marketplace_blocked_when_character_auction_open(api, seller):
+    api.force_authenticate(user=seller)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character("aseller", "SirDup")
+    Auction.objects.create(
+        seller=seller,
+        kind=Auction.Kind.CHARACTER,
+        char_id=char.char_id,
+        char_name=char.name,
+        item_name=char.name,
+        min_bid="10.00",
+        ends_at=timezone.now() + timedelta(hours=24),
+        old_account="aseller",
+    )
+    listed = api.post(
+        "/api/v1/customer/marketplace/",
+        {"char_id": char.char_id, "price": "30.00", "notes": ""},
+        format="json",
+    )
+    assert listed.status_code == 409, listed.data
+
+
+@pytest.mark.django_db
+def test_character_auction_rejects_online_character(api, seller):
+    api.force_authenticate(user=seller)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character("aseller", "SirOn")
+    from dataclasses import replace
+
+    gateway._replace_character("aseller", char.char_id, replace(char, online=True))
+    created = api.post(
+        "/api/v1/customer/auctions/",
+        {"kind": "character", "char_id": char.char_id, "min_bid": "10.00", "hours": 24},
+        format="json",
+    )
+    assert created.status_code == 400, created.data
