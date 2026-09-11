@@ -152,11 +152,20 @@
   "games": {
     "kicker": "Juegos",
     "title": "Módulos de juegos",
-    "description": "Enciende o apaga los minijuegos y rellena el contenido jugable con un clic.",
+    "description": "Enciende o apaga los minijuegos, edita parámetros y rellena un catálogo real de Lineage.",
     "eyebrow": "Disponibilidad",
     "panelTitle": "Experiencias del panel",
-    "panelText": "Los módulos activos quedan accesibles en la central de juegos. Rellenar contenido crea premios, cebos y cofres que falten, sin sobrescribir nombres ya definidos.",
+    "panelText": "Los módulos activos aparecen en la central de juegos. Configurar todos rellena soulshots, pergaminos, gemas y cofres del catálogo Interlude, sin sobrescribir nombres ya definidos.",
     "activeCount": "activos de {{total}}",
+    "names": {
+      "roulette": "Rueda de la Fortuna",
+      "daily_bonus": "Bono diario",
+      "dice": "Mesa de la Taberna",
+      "slots": "Cilindros",
+      "fishing": "Pesca del Lago",
+      "economy": "Arena de Bestias",
+      "boxes": "Cofres Encantados"
+    },
     "descriptions": {
       "daily_bonus": "Entrega una recompensa diaria a los jugadores.",
       "dice": "Apuestas rápidas en los dados de la taberna.",
@@ -173,14 +182,27 @@
     "autoconfig": "Rellenar contenido",
     "autoconfigAll": "Configurar todos",
     "autoconfigBusy": "Rellenando…",
+    "configure": "Configurar",
+    "configureBoxes": "Configurar cofres",
+    "saveSettings": "Guardar parámetros",
+    "contentKind": "Catálogo",
+    "settingsOnly": "Este módulo solo tiene parámetros. El botín jugable está en los otros juegos.",
+    "settings": {
+      "cost": "Coste en fichas",
+      "fail_chance": "Probabilidad de fallo (%)",
+      "min_bet": "Apuesta mínima",
+      "cost_per_cast": "Coste por lance",
+      "amount": "Importe del bono"
+    },
     "emptyTitle": "Ningún juego registrado",
     "emptyText": "Usa Configurar todos para crear los módulos y el contenido jugable, o regístralos en el Django Admin.",
     "toast": {
       "enabled": "Juego activado",
       "disabled": "Juego desactivado",
       "error": "No se pudo actualizar",
-      "autoconfig": "Contenido predeterminado aplicado",
-      "autoconfigAll": "Juegos configurados"
+      "autoconfig": "Catálogo Lineage aplicado",
+      "autoconfigAll": "Juegos configurados",
+      "settingsSaved": "Parámetros guardados"
     }
   },
   "accounts": {
@@ -743,7 +765,11 @@
       "daily-seasons": "Temporadas del bono",
       "daily-days": "Recompensas por día",
       "daily-pool": "Sorteos del bono",
-      "baits": "Cebos de pesca"
+      "baits": "Cebos de pesca",
+      "prizes": "Premios de la ruleta",
+      "fish": "Peces",
+      "monsters": "Monstruos de la arena",
+      "box-items": "Ítems de los cofres"
     },
     "fields": {
       "name": "Nombre",
@@ -775,7 +801,30 @@
       "day": "Día de la temporada",
       "weight": "Peso en el sorteo",
       "price": "Precio en fichas",
-      "success_bonus": "Bono de probabilidad (puntos porcentuales)"
+      "success_bonus": "Bono de probabilidad (puntos porcentuales)",
+      "rarity": "Rareza",
+      "min_rod_level": "Nivel mínimo de la caña",
+      "xp_reward": "XP al pescar",
+      "fichas_reward": "Fichas al pescar",
+      "required_weapon_level": "Nivel de arma exigido",
+      "fragment_reward": "Fragmentos",
+      "hp": "HP",
+      "attack": "Ataque",
+      "defense": "Defensa",
+      "respawn_seconds": "Reaparición (s)"
+    },
+    "prizeRarity": {
+      "comum": "Común",
+      "incomum": "Poco común",
+      "raro": "Raro",
+      "epico": "Épico",
+      "lendario": "Legendario"
+    },
+    "lootRarity": {
+      "common": "Común",
+      "rare": "Raro",
+      "epic": "Épico",
+      "legendary": "Legendario"
     },
     "events": {
       "roulette": "Girar la rueda",

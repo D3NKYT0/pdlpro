@@ -155,8 +155,17 @@
     "description": "Ligue ou desligue os minigames e preencha o conteúdo jogável com um clique.",
     "eyebrow": "Disponibilidade",
     "panelTitle": "Experiências do painel",
-    "panelText": "Os módulos ativos ficam na central de jogos. Preencher conteúdo cria prêmios, iscas, baús e o que faltar, sem sobrescrever nomes já definidos.",
+    "panelText": "Os módulos ativos ficam na central de jogos. Configurar todos preenche soulshots, scrolls, gemas e baús do catálogo Interlude, sem sobrescrever nomes já definidos.",
     "activeCount": "ativos de {{total}}",
+    "names": {
+      "roulette": "Roda da Fortuna",
+      "daily_bonus": "Bônus diário",
+      "dice": "Mesa da Taverna",
+      "slots": "Cilindros",
+      "fishing": "Pescaria",
+      "economy": "Arena das Feras",
+      "boxes": "Baús Encantados"
+    },
     "descriptions": {
       "daily_bonus": "Entrega uma recompensa diária aos jogadores.",
       "dice": "Apostas rápidas nos dados da taverna.",
@@ -173,14 +182,27 @@
     "autoconfig": "Preencher conteúdo",
     "autoconfigAll": "Configurar todos",
     "autoconfigBusy": "Preenchendo…",
+    "configure": "Configurar",
+    "configureBoxes": "Configurar baús",
+    "saveSettings": "Salvar parâmetros",
+    "contentKind": "Catálogo",
+    "settingsOnly": "Este módulo só tem parâmetros. O conteúdo jogável fica nos outros jogos.",
+    "settings": {
+      "cost": "Custo em fichas",
+      "fail_chance": "Chance de falha (%)",
+      "min_bet": "Aposta mínima",
+      "cost_per_cast": "Custo por lançamento",
+      "amount": "Valor do bônus"
+    },
     "emptyTitle": "Nenhum jogo cadastrado",
     "emptyText": "Use Configurar todos para criar os módulos e o conteúdo jogável, ou cadastre no Django Admin.",
     "toast": {
       "enabled": "Jogo ativado",
       "disabled": "Jogo desativado",
       "error": "Não foi possível atualizar",
-      "autoconfig": "Conteúdo padrão aplicado",
-      "autoconfigAll": "Jogos configurados"
+      "autoconfig": "Catálogo Lineage aplicado",
+      "autoconfigAll": "Jogos configurados",
+      "settingsSaved": "Parâmetros salvos"
     }
   },
   "accounts": {
@@ -743,7 +765,11 @@
       "daily-seasons": "Temporadas do bônus",
       "daily-days": "Recompensas por dia",
       "daily-pool": "Sorteios do bônus",
-      "baits": "Iscas de pesca"
+      "baits": "Iscas de pesca",
+      "prizes": "Prêmios da roleta",
+      "fish": "Peixes",
+      "monsters": "Monstros da arena",
+      "box-items": "Itens dos baús"
     },
     "fields": {
       "name": "Nome",
@@ -775,7 +801,30 @@
       "day": "Dia da temporada",
       "weight": "Peso no sorteio",
       "price": "Preço em fichas",
-      "success_bonus": "Bônus de chance (pontos percentuais)"
+      "success_bonus": "Bônus de chance (pontos percentuais)",
+      "rarity": "Raridade",
+      "min_rod_level": "Nível mínimo da vara",
+      "xp_reward": "XP ao pescar",
+      "fichas_reward": "Fichas ao pescar",
+      "required_weapon_level": "Nível de arma exigido",
+      "fragment_reward": "Fragmentos",
+      "hp": "HP",
+      "attack": "Ataque",
+      "defense": "Defesa",
+      "respawn_seconds": "Respawn (s)"
+    },
+    "prizeRarity": {
+      "comum": "Comum",
+      "incomum": "Incomum",
+      "raro": "Raro",
+      "epico": "Épico",
+      "lendario": "Lendário"
+    },
+    "lootRarity": {
+      "common": "Comum",
+      "rare": "Raro",
+      "epic": "Épico",
+      "legendary": "Lendário"
     },
     "events": {
       "roulette": "Girar a roda",

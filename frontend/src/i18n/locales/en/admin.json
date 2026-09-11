@@ -152,11 +152,20 @@
   "games": {
     "kicker": "Games",
     "title": "Game modules",
-    "description": "Turn the panel minigames on or off and fill playable content in one click.",
+    "description": "Turn minigames on or off, edit parameters and fill a real Lineage catalog.",
     "eyebrow": "Availability",
     "panelTitle": "Panel experiences",
-    "panelText": "Active modules become available in the players' game hub. Fill content creates missing prizes, baits and chests without overwriting custom names.",
+    "panelText": "Active modules appear in the players' hub. Set up all fills soulshots, enchant scrolls, gemstones and chests from the Interlude catalog, without overwriting custom names.",
     "activeCount": "active of {{total}}",
+    "names": {
+      "roulette": "Wheel of Fortune",
+      "daily_bonus": "Daily bonus",
+      "dice": "Tavern Table",
+      "slots": "Reels",
+      "fishing": "Lake Fishing",
+      "economy": "Beast Arena",
+      "boxes": "Enchanted Chests"
+    },
     "descriptions": {
       "daily_bonus": "Delivers a daily reward to players.",
       "dice": "Quick wagers on the tavern dice.",
@@ -173,14 +182,27 @@
     "autoconfig": "Fill content",
     "autoconfigAll": "Set up all",
     "autoconfigBusy": "Filling…",
+    "configure": "Configure",
+    "configureBoxes": "Configure chests",
+    "saveSettings": "Save parameters",
+    "contentKind": "Catalog",
+    "settingsOnly": "This module only has parameters. Playable loot lives in the other games.",
+    "settings": {
+      "cost": "Token cost",
+      "fail_chance": "Fail chance (%)",
+      "min_bet": "Minimum bet",
+      "cost_per_cast": "Cost per cast",
+      "amount": "Bonus amount"
+    },
     "emptyTitle": "No games registered",
     "emptyText": "Use Set up all to create the modules and playable content, or add them in Django Admin.",
     "toast": {
       "enabled": "Game enabled",
       "disabled": "Game disabled",
       "error": "Could not update",
-      "autoconfig": "Default content applied",
-      "autoconfigAll": "Games configured"
+      "autoconfig": "Lineage catalog applied",
+      "autoconfigAll": "Games configured",
+      "settingsSaved": "Parameters saved"
     }
   },
   "accounts": {
@@ -743,7 +765,11 @@
       "daily-seasons": "Bonus seasons",
       "daily-days": "Daily rewards",
       "daily-pool": "Bonus draws",
-      "baits": "Fishing baits"
+      "baits": "Fishing baits",
+      "prizes": "Roulette prizes",
+      "fish": "Fish",
+      "monsters": "Arena monsters",
+      "box-items": "Chest items"
     },
     "fields": {
       "name": "Name",
@@ -775,7 +801,30 @@
       "day": "Season day",
       "weight": "Draw weight",
       "price": "Price in tokens",
-      "success_bonus": "Chance bonus (percentage points)"
+      "success_bonus": "Chance bonus (percentage points)",
+      "rarity": "Rarity",
+      "min_rod_level": "Minimum rod level",
+      "xp_reward": "Fishing XP",
+      "fichas_reward": "Tokens on catch",
+      "required_weapon_level": "Required weapon level",
+      "fragment_reward": "Fragments",
+      "hp": "HP",
+      "attack": "Attack",
+      "defense": "Defense",
+      "respawn_seconds": "Respawn (s)"
+    },
+    "prizeRarity": {
+      "comum": "Common",
+      "incomum": "Uncommon",
+      "raro": "Rare",
+      "epico": "Epic",
+      "lendario": "Legendary"
+    },
+    "lootRarity": {
+      "common": "Common",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendary": "Legendary"
     },
     "events": {
       "roulette": "Spin the wheel",

@@ -8,7 +8,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { ReactElement } from 'react'
 import toast from 'react-hot-toast'
 import i18n from '../../i18n'
-import { ApiError, staffApi } from '../../services/api'
+import { ApiError, staffApi, staffGameContentApi } from '../../services/api'
 import { AdminCoinsPage } from './AdminCoinsPage'
 import { AdminWalletPage } from './AdminWalletPage'
 import { AdminServicesPage } from './AdminServicesPage'
@@ -27,8 +27,9 @@ vi.mock('../../components/ui/RichText', () => ({
   RichTextContent: ({ html }: { html: string }) => <div>{html}</div>,
   isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
 }))
-vi.mock('../../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => id === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : null, search: () => [] }) }))
+vi.mock('../../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => String(id) === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : String(id) === '1835' ? { id: '1835', name: 'Soulshot: No Grade', grade: 'NG' } : null, search: () => [], refetch: vi.fn() }) }))
 vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), autoconfigGames: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/staffGameContent.service', () => ({ staffGameContentApi: { configs: vi.fn(), saveConfig: vi.fn() } }))
 
 beforeEach(() => {
   vi.resetAllMocks()
@@ -47,6 +48,8 @@ beforeEach(() => {
   vi.mocked(staffApi.services).mockResolvedValue([{ code: 'UNSTUCK', name: 'Destravar', price: '5.00', active: true }])
   vi.mocked(staffApi.games).mockResolvedValue([{ id: 'dice', code: 'dice', name: 'Dados', active: true, settings: {} }])
   vi.mocked(staffApi.autoconfigGames).mockResolvedValue({ games: [] })
+  vi.mocked(staffGameContentApi.configs).mockResolvedValue([])
+  vi.mocked(staffGameContentApi.saveConfig).mockResolvedValue({ id: 'p1' })
   vi.mocked(staffApi.shop).mockResolvedValue([{ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 1, active: true }])
   vi.mocked(staffApi.news).mockResolvedValue([])
   vi.mocked(staffApi.panel).mockResolvedValue({
@@ -125,6 +128,19 @@ it.each([false, true])('jogos envia toggle e apresenta resultado; erro=%s', asyn
   else expect(toast.success).toHaveBeenCalledWith('Jogo desativado')
 })
 
+it('mostra os nomes da central de jogos em vez do título antigo do banco', async () => {
+  vi.mocked(staffApi.games).mockResolvedValue([
+    { id: 'r1', code: 'roulette', name: 'Roleta', active: true, settings: {} },
+    { id: 'd1', code: 'dice', name: 'Dados', active: true, settings: {} },
+    { id: 'e1', code: 'economy', name: 'Economia', active: true, settings: {} },
+  ])
+  mount(<AdminGamesPage />)
+  expect(await screen.findByRole('heading', { name: 'Roda da Fortuna' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Mesa da Taverna' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Arena das Feras' })).toBeVisible()
+  expect(screen.queryByRole('heading', { name: 'Roleta' })).not.toBeInTheDocument()
+})
+
 it('preenche conteúdo de um jogo e bloqueia clique duplicado', async () => {
   let resolveFn: (value: { games: [] }) => void = () => {}
   const pending = new Promise<{ games: [] }>((resolve) => {
@@ -132,13 +148,54 @@ it('preenche conteúdo de um jogo e bloqueia clique duplicado', async () => {
   })
   vi.mocked(staffApi.autoconfigGames).mockReturnValue(pending)
   const user = mount(<AdminGamesPage />)
-  const button = await screen.findByRole('button', { name: 'Preencher conteúdo' })
-  await user.click(button)
-  await user.click(button)
+  await user.click(await screen.findByRole('button', { name: /^Configurar$/ }))
+  const fill = await screen.findByRole('button', { name: 'Preencher conteúdo' })
+  await user.click(fill)
+  await user.click(fill)
   expect(staffApi.autoconfigGames).toHaveBeenCalledTimes(1)
   expect(staffApi.autoconfigGames).toHaveBeenCalledWith('dice')
   resolveFn({ games: [] })
-  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Conteúdo padrão aplicado'))
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Catálogo Lineage aplicado'))
+})
+
+it('abre o configurador e salva parâmetros do jogo', async () => {
+  const user = mount(<AdminGamesPage />)
+  await user.click(await screen.findByRole('button', { name: /^Configurar$/ }))
+  const bet = await screen.findByLabelText('Aposta mínima')
+  await user.clear(bet)
+  await user.type(bet, '4')
+  await user.click(screen.getByRole('button', { name: 'Salvar parâmetros' }))
+  expect(staffApi.saveGame).toHaveBeenCalledWith({ id: 'dice', settings: { min_bet: 4 } })
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Parâmetros salvos'))
+})
+
+it('configurador da roleta grava prêmio com ID de item Lineage', async () => {
+  vi.mocked(staffApi.games).mockResolvedValue([{ id: 'r1', code: 'roulette', name: 'Roda', active: true, settings: { cost: 1, fail_chance: 20 } }])
+  const user = mount(<AdminGamesPage />)
+  await user.click(await screen.findByRole('button', { name: /^Configurar$/ }))
+  await user.click(await screen.findByRole('button', { name: 'Novo registro' }))
+  await user.clear(screen.getByLabelText('Nome'))
+  await user.type(screen.getByLabelText('Nome'), 'Soulshot: No Grade')
+  await user.click(screen.getByRole('button', { name: 'Salvar configuração' }))
+  expect(staffGameContentApi.saveConfig).toHaveBeenCalledWith(
+    'prizes',
+    expect.objectContaining({ item_id: 1835, name: 'Soulshot: No Grade', active: true }),
+    undefined,
+  )
+})
+
+it('configurador do bônus diário troca para o pool de itens Lineage', async () => {
+  vi.mocked(staffApi.games).mockResolvedValue([{ id: 'd1', code: 'daily_bonus', name: 'Bônus', active: true, settings: { amount: '10.00' } }])
+  vi.mocked(staffGameContentApi.configs).mockImplementation(async (kind: string) => {
+    if (kind === 'daily-pool') {
+      return [{ id: 'p1', name: 'Moeda da Sorte', weight: 4, rewards: [{ kind: 'item', item_id: 4037, name: 'Coin of Luck', quantity: 1 }] }]
+    }
+    return []
+  })
+  const user = mount(<AdminGamesPage />)
+  await user.click(await screen.findByRole('button', { name: /^Configurar$/ }))
+  await user.selectOptions(await screen.findByLabelText('Catálogo'), 'daily-pool')
+  expect(await screen.findByText('Moeda da Sorte')).toBeVisible()
 })
 
 it('configura todos os jogos a partir do painel', async () => {

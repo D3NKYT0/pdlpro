@@ -18,32 +18,60 @@ from apps.games.infrastructure.models import (
     Monster,
     Prize,
 )
+from apps.server.domain.item_catalog import IItemCatalog
 
-ADENA_ITEM_ID = 57
-ADENA_NAME = "Adena"
+# Nomes antigos do seed; o autoconfig só troca esses, nunca um título customizado.
+LEGACY_GAME_NAMES: dict[str, frozenset[str]] = {
+    "roulette": frozenset({"Roleta"}),
+    "dice": frozenset({"Dados", "Dados da Taverna"}),
+    "slots": frozenset({"Slots"}),
+    "fishing": frozenset({"Pesca"}),
+    "economy": frozenset({"Economia"}),
+}
 
 GAME_DEFAULTS: dict[str, dict] = {
     "roulette": {"name": "Roda da Fortuna", "settings": {"cost": 1, "fail_chance": 20}},
     "daily_bonus": {"name": "Bônus diário", "settings": {"amount": "10.00"}},
-    "dice": {"name": "Dados da Taverna", "settings": {"min_bet": 1}},
+    "dice": {"name": "Mesa da Taverna", "settings": {"min_bet": 1}},
     "slots": {"name": "Cilindros", "settings": {"cost": 1}},
     "fishing": {"name": "Pescaria", "settings": {"cost_per_cast": 1}},
     "economy": {"name": "Arena das Feras", "settings": {}},
     "boxes": {"name": "Baús Encantados", "settings": None},
 }
 
+# IDs Interlude do catálogo XML (`data/items`). Nomes vêm do catálogo na hora do seed.
 ROULETTE_PRIZES = (
-    ("Saco de Adena", 40, "comum"),
-    ("Bolsa de Adena", 25, "incomum"),
-    ("Cofre de Adena", 10, "raro"),
-    ("Tesouro de Adena", 4, "epico"),
+    (1835, 36, "comum"),
+    (1463, 24, "comum"),
+    (736, 20, "comum"),
+    (737, 14, "incomum"),
+    (1538, 12, "incomum"),
+    (3936, 10, "incomum"),
+    (955, 8, "incomum"),
+    (951, 6, "raro"),
+    (2131, 5, "raro"),
+    (3470, 4, "raro"),
+    (4037, 3, "raro"),
+    (729, 2, "epico"),
+    (8752, 2, "epico"),
+    (6577, 1, "epico"),
+    (8762, 1, "lendario"),
+    (6657, 1, "lendario"),
 )
 
-CATALOG_ITEMS = (
-    ("Pedaço de Adena", 0, "common", 40),
-    ("Saco de Adena", 0, "rare", 20),
-    ("Baú de Adena", 0, "epic", 8),
-    ("Relíquia de Adena", 0, "legendary", 2),
+BOX_ITEMS = (
+    (1835, 0, "common", 40),
+    (1463, 0, "common", 28),
+    (736, 0, "common", 22),
+    (1538, 0, "rare", 16),
+    (951, 0, "rare", 12),
+    (3470, 0, "rare", 10),
+    (4037, 0, "epic", 6),
+    (729, 0, "epic", 4),
+    (8752, 0, "epic", 3),
+    (6577, 0, "legendary", 2),
+    (8762, 0, "legendary", 1),
+    (6657, 0, "legendary", 1),
 )
 
 BOX_TYPES = (
@@ -54,16 +82,18 @@ BOX_TYPES = (
 )
 
 FISH_SPECIES = (
-    ("Lambari", "common", 1, 40, 8, 0, 0, ""),
-    ("Dourado", "rare", 1, 15, 20, 1, 0, ""),
-    ("Piraíba", "epic", 2, 5, 40, 0, ADENA_ITEM_ID, ADENA_NAME),
-    ("Pirarucu Ancestral", "legendary", 3, 2, 80, 3, ADENA_ITEM_ID, ADENA_NAME),
+    ("Lambari", "common", 1, 40, 8, 0, 1835),
+    ("Dourado", "rare", 1, 15, 20, 1, 1463),
+    ("Piraíba", "epic", 2, 5, 40, 0, 3470),
+    ("Pirarucu Ancestral", "legendary", 3, 2, 80, 3, 6577),
 )
 
 MONSTERS = (
+    ("Elder Keltir", 1, 0, 3, 16, 3, 1, 12),
     ("Goblin", 1, 0, 5, 20, 4, 1, 15),
     ("Orc", 3, 2, 8, 50, 10, 3, 30),
-    ("Dragão Negro", 8, 5, 20, 120, 18, 8, 60),
+    ("Ant Recruit", 5, 3, 12, 70, 12, 4, 40),
+    ("Drake", 8, 5, 20, 120, 18, 8, 60),
 )
 
 BAITS = (
@@ -71,13 +101,45 @@ BAITS = (
     ("Isca encantada", 8, 15, "Atrai peixes raros nas águas mais profundas."),
 )
 
+DAILY_POOL = (
+    (
+        "Moeda da Sorte",
+        4,
+        [{"kind": "item", "item_id": 4037, "name": "Coin of Luck", "quantity": 1, "enchant": 0}],
+    ),
+    (
+        "Barra de Ouro",
+        3,
+        [{"kind": "item", "item_id": 3470, "name": "Gold Bar", "quantity": 1, "enchant": 0}],
+    ),
+    (
+        "Escape Abençoado",
+        5,
+        [
+            {
+                "kind": "item",
+                "item_id": 1538,
+                "name": "Blessed Scroll of Escape",
+                "quantity": 1,
+                "enchant": 0,
+            }
+        ],
+    ),
+)
+
 
 class DjangoGameAutoconfigService(IGameAutoconfigService):
-    """Preenche GameConfig e catálogos jogáveis com ``get_or_create``; não apaga o que já existe."""
+    """Preenche GameConfig e catálogos jogáveis com itens Interlude; não apaga o que já existe."""
+
+    def __init__(self, catalog: IItemCatalog) -> None:
+        self._catalog = catalog
 
     def bootstrap(self, code: str | None) -> dict:
         targets = (code,) if code else KNOWN_GAME_CODES
         return {"games": [self._bootstrap_one(item) for item in targets]}
+
+    def _item_name(self, item_id: int) -> str:
+        return self._catalog.display_name(item_id, fallback=f"Item {item_id}")
 
     def _bootstrap_one(self, code: str) -> dict:
         created: dict[str, int] = {}
@@ -122,18 +184,22 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
         if not row.active:
             row.active = True
             changed = True
+        if row.name in LEGACY_GAME_NAMES.get(code, frozenset()):
+            row.name = name
+            changed = True
         if changed:
             row.settings = merged
-            row.save(update_fields=["active", "settings"])
+            row.save(update_fields=["active", "settings", "name"])
         return row, created
 
     def _ensure_prizes(self) -> int:
         created = 0
-        for name, weight, rarity in ROULETTE_PRIZES:
+        for item_id, weight, rarity in ROULETTE_PRIZES:
             _, was = Prize.objects.get_or_create(
-                name=name,
+                item_id=item_id,
+                enchant=0,
                 defaults={
-                    "item_id": ADENA_ITEM_ID,
+                    "name": self._item_name(item_id),
                     "weight": weight,
                     "rarity": rarity,
                     "active": True,
@@ -155,41 +221,45 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
             )
             counts["seasons"] = 1
         for day in range(1, 8):
+            rewards = (
+                [{"kind": "tokens", "quantity": day * 5}]
+                if day < 7
+                else [
+                    {
+                        "kind": "item",
+                        "item_id": 3470,
+                        "name": self._item_name(3470),
+                        "quantity": 1,
+                        "enchant": 0,
+                    }
+                ]
+            )
             _, was = DailyBonusDay.objects.get_or_create(
                 season=season,
                 day=day,
-                defaults={"rewards": [{"kind": "tokens", "quantity": day * 5}]},
+                defaults={"rewards": rewards},
             )
             counts["season_days"] += int(was)
-        _, was = DailyBonusPoolEntry.objects.get_or_create(
-            season=season,
-            name="Um toque de sorte",
-            defaults={
-                "weight": 3,
-                "rewards": [
-                    {
-                        "kind": "item",
-                        "item_id": ADENA_ITEM_ID,
-                        "name": ADENA_NAME,
-                        "quantity": 100,
-                        "enchant": 0,
-                    }
-                ],
-            },
-        )
-        counts["pool"] += int(was)
-        _, was = DailyBonusPoolEntry.objects.get_or_create(
-            season=season,
-            name="Reserva para a jornada",
-            defaults={"weight": 7, "rewards": [{"kind": "bonus", "quantity": "5.00"}]},
-        )
-        counts["pool"] += int(was)
+        for name, weight, rewards in DAILY_POOL:
+            labeled = []
+            for reward in rewards:
+                entry = dict(reward)
+                if entry.get("kind") == "item" and entry.get("item_id"):
+                    entry["name"] = self._item_name(int(entry["item_id"]))
+                labeled.append(entry)
+            _, was = DailyBonusPoolEntry.objects.get_or_create(
+                season=season,
+                name=name,
+                defaults={"weight": weight, "rewards": labeled},
+            )
+            counts["pool"] += int(was)
         return counts
 
     def _ensure_fish(self) -> int:
         created = 0
-        for name, rarity, rod, weight, xp, fichas, item_id, item_name in FISH_SPECIES:
-            _, was = Fish.objects.get_or_create(
+        for name, rarity, rod, weight, xp, fichas, item_id in FISH_SPECIES:
+            item_name = self._item_name(item_id)
+            fish, was = Fish.objects.get_or_create(
                 name=name,
                 defaults={
                     "rarity": rarity,
@@ -203,6 +273,11 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 },
             )
             created += int(was)
+            if not was and not fish.item_id:
+                fish.item_id = item_id
+                fish.item_name = item_name
+                fish.save(update_fields=["item_id", "item_name"])
+                created += 1
         return created
 
     def _ensure_baits(self) -> int:
@@ -242,12 +317,12 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
     def _ensure_boxes(self) -> dict[str, int]:
         counts = {"catalog_items": 0, "box_types": 0, "box_links": 0}
         catalog: list[CatalogItem] = []
-        for name, enchant, rarity, weight in CATALOG_ITEMS:
+        for item_id, enchant, rarity, weight in BOX_ITEMS:
             item, was = CatalogItem.objects.get_or_create(
-                name=name,
+                item_id=item_id,
+                enchant=enchant,
                 defaults={
-                    "item_id": ADENA_ITEM_ID,
-                    "enchant": enchant,
+                    "name": self._item_name(item_id),
                     "rarity": rarity,
                     "weight": weight,
                     "active": True,

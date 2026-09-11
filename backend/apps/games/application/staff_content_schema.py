@@ -30,6 +30,31 @@ CONFIG_FIELDS: dict[str, list[str]] = {
     "daily-days": ["season", "day", "rewards"],
     "daily-pool": ["season", "name", "weight", "rewards"],
     "baits": ["name", "description", "price", "success_bonus", "active"],
+    "prizes": ["name", "item_id", "enchant", "weight", "rarity", "active"],
+    "fish": [
+        "name",
+        "rarity",
+        "min_rod_level",
+        "weight",
+        "xp_reward",
+        "fichas_reward",
+        "item_id",
+        "item_name",
+        "enchant",
+        "active",
+    ],
+    "monsters": [
+        "name",
+        "level",
+        "required_weapon_level",
+        "fragment_reward",
+        "hp",
+        "attack",
+        "defense",
+        "respawn_seconds",
+        "active",
+    ],
+    "box-items": ["name", "item_id", "enchant", "rarity", "weight", "active"],
 }
 
 RELATED_FIELDS = frozenset({"season", "level_row"})

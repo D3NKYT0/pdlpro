@@ -199,6 +199,16 @@ _FIELD_TYPES = {
     "weight": serializers.IntegerField(min_value=1),
     "price": serializers.IntegerField(min_value=0),
     "success_bonus": serializers.IntegerField(min_value=0, max_value=90, required=False, default=0),
+    "rarity": serializers.CharField(max_length=20, required=False, default="common"),
+    "min_rod_level": serializers.IntegerField(min_value=1, required=False, default=1),
+    "xp_reward": serializers.IntegerField(min_value=0, required=False, default=0),
+    "fichas_reward": serializers.IntegerField(min_value=0, required=False, default=0),
+    "required_weapon_level": serializers.IntegerField(min_value=0, required=False, default=0),
+    "fragment_reward": serializers.IntegerField(min_value=0, required=False, default=0),
+    "hp": serializers.IntegerField(min_value=1, required=False, default=40),
+    "attack": serializers.IntegerField(min_value=0, required=False, default=8),
+    "defense": serializers.IntegerField(min_value=0, required=False, default=2),
+    "respawn_seconds": serializers.IntegerField(min_value=0, required=False, default=30),
 }
 
 

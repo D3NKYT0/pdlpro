@@ -525,6 +525,10 @@ def test_statistics_endpoints(api, kind):
         "daily-days",
         "daily-pool",
         "baits",
+        "prizes",
+        "fish",
+        "monsters",
+        "box-items",
     ],
 )
 def test_game_admin_reads_and_permissions(api, staff, kind):

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from '../../ui/Button'
 import { Card } from '../../ui/Card'
+import { ItemIdField } from '../../ItemIdField'
 import { RewardsEditor } from '../../programs/RewardsEditor'
 import type { ConfigRow, Reward } from '../../../services/api'
 import { localDate, type GameContentField } from './gameContentConfig'
@@ -53,7 +54,27 @@ export function GameContentEditor({
         <div className="program-fields">
           {fields
             .filter((f) => f.type !== 'rewards')
-            .map((f) => (
+            .map((f) =>
+              f.type === 'item' ? (
+                <ItemIdField
+                  key={f.key}
+                  label={f.label}
+                  value={String(draft[f.key] ?? '')}
+                  required
+                  onChange={(id, item) =>
+                    onDraftChange({
+                      ...draft,
+                      [f.key]: id ? Number(id) : '',
+                      ...(item && f.key === 'item_id'
+                        ? {
+                            item_name: item.name,
+                            name: draft.name ? draft.name : item.name,
+                          }
+                        : {}),
+                    })
+                  }
+                />
+              ) : (
               <label
                 key={f.key}
                 className={f.type === 'checkbox' ? 'program-check' : ''}
@@ -129,7 +150,8 @@ export function GameContentEditor({
                   </>
                 )}
               </label>
-            ))}
+              )
+            )}
         </div>
         {fields.some((f) => f.type === 'rewards') && (
           <RewardsEditor

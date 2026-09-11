@@ -8,10 +8,14 @@ from apps.games.infrastructure.models import (
     BattlePassQuest,
     BattlePassReward,
     BattlePassSeason,
+    CatalogItem,
     DailyBonusDay,
     DailyBonusPoolEntry,
     DailyBonusSeason,
+    Fish,
     FishingBait,
+    Monster,
+    Prize,
 )
 
 CONFIG_MODELS = {
@@ -27,6 +31,10 @@ CONFIG_MODELS = {
         ("daily-days", DailyBonusDay),
         ("daily-pool", DailyBonusPoolEntry),
         ("baits", FishingBait),
+        ("prizes", Prize),
+        ("fish", Fish),
+        ("monsters", Monster),
+        ("box-items", CatalogItem),
     )
 }
 

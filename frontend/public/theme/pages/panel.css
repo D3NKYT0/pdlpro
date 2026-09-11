@@ -1430,6 +1430,14 @@ html.pdl-panel .admin-game-switch.is-busy { opacity: .55; cursor: wait; }
 html.pdl-panel .admin-games-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
 html.pdl-panel .admin-game-card-actions { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.1); }
 html.pdl-panel .admin-game-card-actions .admin-game-switch { grid-column: auto; margin-top: 0; padding-top: 0; border-top: 0; flex: 1; min-width: 0; }
+html.pdl-panel .admin-game-configurator { width: min(100%, 760px); max-height: min(90vh, 860px); }
+html.pdl-panel .admin-game-settings { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin: 0 0 16px; }
+html.pdl-panel .admin-game-settings .field { flex: 1 1 140px; margin: 0; }
+html.pdl-panel .admin-game-settings > .btn { flex: 0 0 auto; height: 45px; }
+html.pdl-panel .admin-game-config-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+html.pdl-panel .admin-game-config-hint { margin: 8px 0 0; color: var(--panel-muted); font-size: 13px; }
+html.pdl-panel .admin-game-loot-preview { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+html.pdl-panel .admin-game-loot-preview li { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid rgba(197,161,97,.18); background: rgba(0,0,0,.18); font-size: 12px; }
 
 @media (max-width: 560px) {
   html.pdl-panel .admin-games-toolbar { grid-column: 1 / -1; justify-content: space-between; }

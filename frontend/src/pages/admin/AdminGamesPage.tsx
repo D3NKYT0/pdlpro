@@ -4,12 +4,13 @@ import { apiErrorMessage } from '../../lib/errors'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Boxes, CircleDollarSign, CircleDot, Dices, Fish, Gamepad2, Gift, WandSparkles } from 'lucide-react'
+import { Boxes, CircleDollarSign, CircleDot, Dices, Fish, Gamepad2, Gift, Settings2, WandSparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { staffApi } from '../../services/api'
+import { staffApi, type ApiStaffGame } from '../../services/api'
 import { AdminHeader } from './AdminChrome'
 import { Toggle } from '../../components/ui/Toggle'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
+import { GameConfigurator } from '../../components/admin/games/GameConfigurator'
 
 const GAME_ICONS = {
   daily_bonus: Gift,
@@ -18,6 +19,7 @@ const GAME_ICONS = {
   fishing: Fish,
   roulette: CircleDot,
   slots: Boxes,
+  boxes: Boxes,
 }
 
 export function AdminGamesPage() {
@@ -27,6 +29,9 @@ export function AdminGamesPage() {
   const [updating, setUpdating] = useState<string | null>(null)
   const action = useAsyncAction()
   const [target, setTarget] = useState<string | null>(null)
+  const [editing, setEditing] = useState<ApiStaffGame | null>(null)
+  const labelFor = (game: Pick<ApiStaffGame, 'code' | 'name'>) =>
+    t(`games.names.${game.code}`, { defaultValue: game.name })
 
   async function toggle(id: string, active: boolean) {
     setUpdating(id)
@@ -46,6 +51,7 @@ export function AdminGamesPage() {
     const result = await action.run(async () => {
       const payload = await staffApi.autoconfigGames(code)
       await queryClient.invalidateQueries({ queryKey: ['staff-games'] })
+      await queryClient.invalidateQueries({ queryKey: ['game-config'] })
       return payload
     })
     setTarget(null)
@@ -58,6 +64,13 @@ export function AdminGamesPage() {
 
   const filling = action.pending
   const list = games.data ?? []
+  const boxesGame: ApiStaffGame = {
+    id: '',
+    code: 'boxes',
+    name: t('games.names.boxes'),
+    active: true,
+    settings: {},
+  }
 
   return (
     <div className="account-page">
@@ -68,6 +81,10 @@ export function AdminGamesPage() {
           <div><span className="panel-eyebrow">{t('games.eyebrow')}</span><h2>{t('games.panelTitle')}</h2><p>{t('games.panelText')}</p></div>
           <div className="admin-games-toolbar">
             <div className="admin-services-summary"><strong>{list.filter((game) => game.active).length}</strong><small>{t('games.activeCount', { total: list.length })}</small></div>
+            <Button className="ghost" type="button" size="sm" onClick={() => setEditing(boxesGame)}>
+              <Boxes aria-hidden="true" />
+              {t('games.configureBoxes')}
+            </Button>
             <Button type="button" size="sm" onClick={() => void bootstrap()} disabled={filling && target !== '*'} busy={filling && target === '*'} busyLabel={t('games.autoconfigBusy')}>
               <WandSparkles aria-hidden="true" />
               {t('games.autoconfigAll')}
@@ -82,18 +99,11 @@ export function AdminGamesPage() {
               return (
                 <article className={`admin-game-card${game.active ? ' is-active' : ' is-inactive'}`} key={game.id}>
                   <span className="admin-game-icon"><Icon /></span>
-                  <div><h3>{game.name}</h3><code>{game.code}</code><p>{description}</p></div>
+                  <div><h3>{labelFor(game)}</h3><code>{game.code}</code><p>{description}</p></div>
                   <div className="admin-game-card-actions">
-                    <Button
-                      className="ghost"
-                      size="sm"
-                      type="button"
-                      onClick={() => void bootstrap(game.code)}
-                      disabled={filling && target !== game.code}
-                      busy={filling && target === game.code}
-                      busyLabel={t('games.autoconfigBusy')}
-                    >
-                      {t('games.autoconfig')}
+                    <Button className="ghost" size="sm" type="button" onClick={() => setEditing(game)}>
+                      <Settings2 aria-hidden="true" />
+                      {t('games.configure')}
                     </Button>
                     <Toggle className="admin-game-switch" busy={updating === game.id} label={updating === game.id ? t('games.updating') : game.active ? t('games.active') : t('games.inactive')} checked={game.active} onChange={(event) => void toggle(game.id, event.target.checked)} />
                   </div>
@@ -108,6 +118,16 @@ export function AdminGamesPage() {
           </div>
         )}
       </Card>
+      {editing ? (
+        <GameConfigurator
+          key={`${editing.code}-${editing.id}`}
+          game={{ ...(list.find((game) => game.id === editing.id) ?? editing), name: labelFor(editing) }}
+          open
+          onClose={() => setEditing(null)}
+          onAutoconfig={() => void bootstrap(editing.code)}
+          autoconfigBusy={filling && target === editing.code}
+        />
+      ) : null}
     </div>
   )
 }

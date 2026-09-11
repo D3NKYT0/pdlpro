@@ -31,14 +31,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   animados em `/panel/games` (roleta, baús por raridade, dados/slots, lago e
   arena), remapeáveis por `--theme-art-games-*`.
 - Autoconfiguração dos minigames em `/panel/admin/games` (**Configurar todos**
-  e **Preencher conteúdo**): `POST /api/v1/staff/games/autoconfig/` cria o
-  catálogo jogável ausente (prêmios, iscas, baús, peixes e monstros) sem
-  sobrescrever nomes ou chaves já definidas.
+  e o **configurador** por jogo): `POST /api/v1/staff/games/autoconfig/` cria
+  um catálogo Interlude (soulshots, scrolls de encantamento, gemas, Gold Bar,
+  Coin of Luck, life stones) e a tela permite editar parâmetros, prêmios,
+  peixes, monstros e itens de baú pelo catálogo de itens.
 
 ### Alterado
 
-- Nomes de vitrine dos minigames em `/panel/games` (pt/en/es): Roda da Fortuna,
-  Baús Encantados, Mesa da Taverna, Pescaria e Arena das Feras.
+- Nomes de vitrine dos minigames em `/panel/games` e `/panel/admin/games`
+  (pt/en/es): Roda da Fortuna, Baús Encantados, Mesa da Taverna, Cilindros,
+  Pescaria, Arena das Feras e Bônus diário.
 
 ### Corrigido
 
