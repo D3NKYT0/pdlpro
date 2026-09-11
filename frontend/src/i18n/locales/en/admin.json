@@ -159,11 +159,11 @@
     "activeCount": "active of {{total}}",
     "descriptions": {
       "daily_bonus": "Delivers a daily reward to players.",
-      "dice": "Quick matches based on dice rolls.",
-      "economy": "Tools and challenges tied to the economy.",
-      "fishing": "Fishing activity with items and rewards.",
-      "roulette": "Prize roulette that consumes panel tokens.",
-      "slots": "Slot machine with configurable rewards.",
+      "dice": "Quick wagers on the tavern dice.",
+      "economy": "Hunt monsters and enchant your weapon with fragments.",
+      "fishing": "Lake fishing with rod, bait and a collection.",
+      "roulette": "Spin the wheel of fortune with panel tokens.",
+      "slots": "Tavern reels with configurable prizes.",
       "fallback": "Configurable entertainment module of the panel."
     },
     "updating": "Updating",
@@ -772,11 +772,11 @@
       "success_bonus": "Chance bonus (percentage points)"
     },
     "events": {
-      "roulette": "Spin the roulette",
+      "roulette": "Spin the wheel",
       "dice": "Roll the dice",
-      "slots": "Spin the slots",
-      "fishing": "Go fishing",
-      "economy": "Fight",
+      "slots": "Spin the reels",
+      "fishing": "Fish the lake",
+      "economy": "Fight in the arena",
       "daily_bonus": "Claim the daily bonus"
     },
     "periods": {

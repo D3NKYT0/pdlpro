@@ -159,11 +159,11 @@
     "activeCount": "activos de {{total}}",
     "descriptions": {
       "daily_bonus": "Entrega una recompensa diaria a los jugadores.",
-      "dice": "Partidas rápidas basadas en el lanzamiento de dados.",
-      "economy": "Herramientas y desafíos ligados a la economía.",
-      "fishing": "Actividad de pesca con ítems y recompensas.",
-      "roulette": "Ruleta de premios que consume fichas del panel.",
-      "slots": "Máquina de slots con recompensas configurables.",
+      "dice": "Apuestas rápidas en los dados de la taberna.",
+      "economy": "Cacería de monstruos y encantamiento del arma con fragmentos.",
+      "fishing": "Pesca del lago con caña, cebos y colección.",
+      "roulette": "Giro de la rueda de la fortuna con fichas del panel.",
+      "slots": "Cilindros de la taberna con premios configurables.",
       "fallback": "Módulo de entretenimiento configurable del panel."
     },
     "updating": "Actualizando",
@@ -772,11 +772,11 @@
       "success_bonus": "Bono de probabilidad (puntos porcentuales)"
     },
     "events": {
-      "roulette": "Girar la ruleta",
-      "dice": "Tirar los dados",
-      "slots": "Girar los slots",
-      "fishing": "Pescar",
-      "economy": "Combatir",
+      "roulette": "Girar la rueda",
+      "dice": "Lanzar los dados",
+      "slots": "Girar los cilindros",
+      "fishing": "Pescar en el lago",
+      "economy": "Combatir en la arena",
       "daily_bonus": "Reclamar el bono diario"
     },
     "periods": {

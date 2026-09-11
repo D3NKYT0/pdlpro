@@ -653,7 +653,7 @@
       "inventory": { "label": "Inventory", "text": "Withdraw and deposit items" },
       "wallet": { "label": "Wallet", "text": "Balance, PIX and transfers" },
       "shop": { "label": "Shop", "text": "Items from the panel shop" },
-      "games": { "label": "Games", "text": "Roulette, boxes, fishing and more" },
+      "games": { "label": "Games", "text": "Fortune, chests, lake and arena" },
       "progress": { "label": "Achievements", "text": "Account milestones and prizes" },
       "admin": { "label": "Admin", "text": "Configure the panel, rates and shop" }
     }
@@ -964,28 +964,28 @@
     "actionError": "Could not update the ticket"
   },
   "games": {
-    "eyebrow": "Games hub",
-    "title": "Games and rewards",
-    "description": "Spend your tokens, win prizes and strengthen your character.",
+    "eyebrow": "Hall of games",
+    "title": "Kingdom pastimes",
+    "description": "Spin fortune, open chests, bet at the tavern, cast your line and fight in the arena.",
     "rewardsLink": "Quests, daily bonus and rankings ↗",
     "balance": "Available balance",
     "tokens_one": "{{count}} token",
     "tokens_other": "{{count}} tokens",
-    "tabsLabel": "Choose a game",
+    "tabsLabel": "Choose a pastime",
     "tabs": {
-      "roulette": "Roulette",
-      "boxes": "Boxes",
-      "chance": "Dice and slots",
-      "fishing": "Fishing",
-      "economy": "Economy"
+      "roulette": "Wheel of Fortune",
+      "boxes": "Enchanted Chests",
+      "chance": "Tavern Table",
+      "fishing": "Lake Fishing",
+      "economy": "Beast Arena"
     },
     "roulette": {
-      "eyebrow": "Try your luck",
-      "title": "Roulette",
+      "eyebrow": "The treasure turns",
+      "title": "Wheel of Fortune",
       "cost_one": "{{count}} token per spin",
       "cost_other": "{{count}} tokens per spin",
       "failChance": "Chance of no prize: {{percent}}%",
-      "spin": "Spin now",
+      "spin": "Spin the wheel",
       "buyLabel": "Buy tokens",
       "buyHint": "1 token = R$ 1",
       "buy": "Buy",
@@ -1000,18 +1000,18 @@
       "claim": "Claim bonus"
     },
     "boxes": {
-      "eyebrow": "Surprise items",
-      "title": "Boxes",
+      "eyebrow": "Sealed relics",
+      "title": "Enchanted Chests",
       "boosters": "{{count}} boosters",
       "buy": "Buy",
       "remaining": "{{remaining}} of {{total}} left",
       "open_one": "Open · {{count}} token",
       "open_other": "Open · {{count}} tokens",
-      "empty": "No box available right now."
+      "empty": "No chest available right now."
     },
     "chance": {
-      "eyebrow": "Minigames",
-      "title": "Dice and slots",
+      "eyebrow": "Bet at the tavern",
+      "title": "Tavern Table",
       "betType": "Bet type",
       "even": "Even",
       "odd": "Odd",
@@ -1019,12 +1019,12 @@
       "low": "Low (1-3)",
       "tokens": "Tokens",
       "playDice": "Roll the dice",
-      "playSlots_one": "Spin slots · {{count}} token",
-      "playSlots_other": "Spin slots · {{count}} tokens"
+      "playSlots_one": "Spin the reels · {{count}} token",
+      "playSlots_other": "Spin the reels · {{count}} tokens"
     },
     "economy": {
-      "eyebrow": "Combat arena",
-      "title": "Economy",
+      "eyebrow": "Hunt and forge",
+      "title": "Beast Arena",
       "weapon": "Weapon",
       "fragments": "/ {{max}} fragments",
       "requiredWeapon": "Requires weapon +{{level}}",
@@ -1036,7 +1036,7 @@
     },
     "fishing": {
       "eyebrow": "Kingdom lake",
-      "title": "Fishing",
+      "title": "Lake Fishing",
       "rod": "Fishing rod",
       "rodLevel": "Level {{level}}",
       "xp": "Experience",
@@ -1053,7 +1053,7 @@
       "escaped": "The fish got away. Try again.",
       "escapedShort": "The fish got away",
       "unavailable": "Fishing is temporarily unavailable.",
-      "insufficientTokens": "Not enough tokens to cast. Buy tokens on the Roulette tab.",
+      "insufficientTokens": "Not enough tokens to cast. Buy tokens on the Wheel of Fortune tab.",
       "shopTitle": "Bait shop",
       "buyQuantity": "Quantity per purchase",
       "baitChance": "+{{bonus}} chance points · Stock: {{quantity}}",
@@ -1182,11 +1182,11 @@
     },
     "stats": {
       "games": {
-        "roulette": "Roulette",
-        "dice": "Dice",
-        "slots": "Slots",
-        "fishing": "Fishing",
-        "economy": "Economy"
+        "roulette": "Wheel of Fortune",
+        "dice": "Tavern Dice",
+        "slots": "Reels",
+        "fishing": "Lake Fishing",
+        "economy": "Beast Arena"
       },
       "plays": "Your rounds",
       "wins": "Positive results",

@@ -64,7 +64,7 @@ const pages = [
   ['/panel/wallet/orders', 'Pedidos'],
   ['/panel/wallet/statement', 'Extrato'],
   ['/panel/inventory', 'Inventário'],
-  ['/panel/games', 'Jogos e recompensas'],
+  ['/panel/games', 'Diversões do reino'],
   ['/panel/progress', 'Seu progresso'],
   ['/panel/notifications', 'Avisos'],
   ['/panel/support', 'Como podemos ajudar?'],

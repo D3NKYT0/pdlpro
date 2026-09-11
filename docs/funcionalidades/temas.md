@@ -128,7 +128,9 @@ Exemplo:
 
 O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
 de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
-`assets`, mesmo sem `layout`. Variantes de chrome do painel (`topnav`) ficam para um bump futuro
+`assets`, mesmo sem `layout`. A central de jogos usa `images/games/box-{common,rare,epic,legendary}.webp`,
+`images/games/fishing-pond.webp` e `images/games/monster-default.webp` como `--theme-art-games-*`.
+Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 
 ## Estrutura e comportamento

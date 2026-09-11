@@ -63,4 +63,14 @@ it('aplica superfícies e densidade a partir do layout do pacote', () => {
   expect(style.getPropertyValue('--panel-shell-gap')).toBe('36px')
   expect(style.getPropertyValue('--theme-button-primary')).toContain('btn-a.png')
   expect(style.getPropertyValue('--theme-art-bg-3')).toContain('art-3.jpg')
+  expect(style.getPropertyValue('--theme-art-games-monster')).toContain('games/monster-default.webp')
+})
+it('remapeia arte dos jogos pelo mapa de assets do pacote', () => {
+  configureRuntimeTheme({
+    'images/games/box-legendary.webp': '/media/themes/demo/chest.webp',
+  })
+  applyThemeSurfaceVars()
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-box-legendary')).toContain(
+    'chest.webp',
+  )
 })

@@ -653,7 +653,7 @@
       "inventory": { "label": "Inventario", "text": "Retirar y depositar objetos" },
       "wallet": { "label": "Cartera", "text": "Saldo, PIX y transferencias" },
       "shop": { "label": "Tienda", "text": "Objetos de la tienda del panel" },
-      "games": { "label": "Juegos", "text": "Ruleta, cajas, pesca y más" },
+      "games": { "label": "Juegos", "text": "Fortuna, cofres, lago y arena" },
       "progress": { "label": "Logros", "text": "Hitos de la cuenta y premios" },
       "admin": { "label": "Admin", "text": "Configurar el panel, rates y tienda" }
     }
@@ -964,28 +964,28 @@
     "actionError": "No fue posible actualizar el ticket"
   },
   "games": {
-    "eyebrow": "Centro de juegos",
-    "title": "Juegos y recompensas",
-    "description": "Usa tus fichas, gana premios y fortalece tu personaje.",
+    "eyebrow": "Salón de juegos",
+    "title": "Diversiones del reino",
+    "description": "Gira la fortuna, abre cofres, apuesta en la taberna, lanza la línea y lucha en la arena.",
     "rewardsLink": "Misiones, bono diario y rankings ↗",
     "balance": "Saldo disponible",
     "tokens_one": "{{count}} ficha",
     "tokens_other": "{{count}} fichas",
-    "tabsLabel": "Elige un juego",
+    "tabsLabel": "Elige una diversión",
     "tabs": {
-      "roulette": "Ruleta",
-      "boxes": "Cajas",
-      "chance": "Dados y slots",
-      "fishing": "Pesca",
-      "economy": "Economía"
+      "roulette": "Rueda de la Fortuna",
+      "boxes": "Cofres Encantados",
+      "chance": "Mesa de la Taberna",
+      "fishing": "Pesca del Lago",
+      "economy": "Arena de Bestias"
     },
     "roulette": {
-      "eyebrow": "Prueba tu suerte",
-      "title": "Ruleta",
+      "eyebrow": "El tesoro gira",
+      "title": "Rueda de la Fortuna",
       "cost_one": "{{count}} ficha por giro",
       "cost_other": "{{count}} fichas por giro",
       "failChance": "Probabilidad de no recibir premio: {{percent}}%",
-      "spin": "Girar ahora",
+      "spin": "Girar la rueda",
       "buyLabel": "Comprar fichas",
       "buyHint": "1 ficha = R$ 1",
       "buy": "Comprar",
@@ -1000,31 +1000,31 @@
       "claim": "Reclamar bono"
     },
     "boxes": {
-      "eyebrow": "Ítems sorpresa",
-      "title": "Cajas",
+      "eyebrow": "Reliquias selladas",
+      "title": "Cofres Encantados",
       "boosters": "{{count}} boosters",
       "buy": "Comprar",
       "remaining": "{{remaining}} de {{total}} restantes",
       "open_one": "Abrir · {{count}} ficha",
       "open_other": "Abrir · {{count}} fichas",
-      "empty": "No hay cajas disponibles por ahora."
+      "empty": "No hay cofres disponibles por ahora."
     },
     "chance": {
-      "eyebrow": "Minijuegos",
-      "title": "Dados y slots",
+      "eyebrow": "Apuesta en la taberna",
+      "title": "Mesa de la Taberna",
       "betType": "Tipo de apuesta",
       "even": "Par",
       "odd": "Impar",
       "high": "Alto (4-6)",
       "low": "Bajo (1-3)",
       "tokens": "Fichas",
-      "playDice": "Tirar el dado",
-      "playSlots_one": "Girar slots · {{count}} ficha",
-      "playSlots_other": "Girar slots · {{count}} fichas"
+      "playDice": "Lanzar los dados",
+      "playSlots_one": "Girar cilindros · {{count}} ficha",
+      "playSlots_other": "Girar cilindros · {{count}} fichas"
     },
     "economy": {
-      "eyebrow": "Arena de combate",
-      "title": "Economía",
+      "eyebrow": "Cacería y forja",
+      "title": "Arena de Bestias",
       "weapon": "Arma",
       "fragments": "/ {{max}} fragmentos",
       "requiredWeapon": "Requiere arma +{{level}}",
@@ -1036,7 +1036,7 @@
     },
     "fishing": {
       "eyebrow": "Lago del reino",
-      "title": "Pesca",
+      "title": "Pesca del Lago",
       "rod": "Caña de pescar",
       "rodLevel": "Nivel {{level}}",
       "xp": "Experiencia",
@@ -1053,7 +1053,7 @@
       "escaped": "El pez escapó. Inténtalo de nuevo.",
       "escapedShort": "El pez escapó",
       "unavailable": "La pesca no está disponible temporalmente.",
-      "insufficientTokens": "Fichas insuficientes para lanzar. Compra fichas en la pestaña Ruleta.",
+      "insufficientTokens": "Fichas insuficientes para lanzar. Compra fichas en la pestaña Rueda de la Fortuna.",
       "shopTitle": "Tienda de cebos",
       "buyQuantity": "Cantidad por compra",
       "baitChance": "+{{bonus}} puntos de probabilidad · Stock: {{quantity}}",
@@ -1182,11 +1182,11 @@
     },
     "stats": {
       "games": {
-        "roulette": "Ruleta",
-        "dice": "Dados",
-        "slots": "Slots",
-        "fishing": "Pesca",
-        "economy": "Economía"
+        "roulette": "Rueda de la Fortuna",
+        "dice": "Dados de la Taberna",
+        "slots": "Cilindros",
+        "fishing": "Pesca del Lago",
+        "economy": "Arena de Bestias"
       },
       "plays": "Tus partidas",
       "wins": "Resultados positivos",

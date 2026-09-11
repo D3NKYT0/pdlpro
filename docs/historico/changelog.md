@@ -27,8 +27,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Snapshot de **bag_items** no leilão de personagem (inventário + warehouse no
   momento da publicação); o detalhe do leilão reutiliza o paperdoll e a grade de
   bag/baú da ficha para o comprador ver o conteúdo anunciado.
+- Arte original dos minigames no tema default (`images/games/*`) e palcos
+  animados em `/panel/games` (roleta, baús por raridade, dados/slots, lago e
+  arena), remapeáveis por `--theme-art-games-*`.
 
 ### Alterado
+
+- Nomes de vitrine dos minigames em `/panel/games` (pt/en/es): Roda da Fortuna,
+  Baús Encantados, Mesa da Taverna, Pescaria e Arena das Feras.
 
 ### Corrigido
 

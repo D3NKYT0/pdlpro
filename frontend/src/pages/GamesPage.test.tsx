@@ -15,7 +15,12 @@ vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() 
 let client: QueryClient
 beforeEach(() => {
   vi.resetAllMocks()
-  vi.mocked(gamesApi.roulette).mockResolvedValue({ fichas: 10, cost: 1, fail_chance: 20, prizes: [] } as any)
+  vi.mocked(gamesApi.roulette).mockResolvedValue({
+    fichas: 10,
+    cost: 1,
+    fail_chance: 20,
+    prizes: [{ id: 'p1', name: 'Adena', rarity: 'common', item_id: 57, weight: 10 }],
+  } as any)
   vi.mocked(gamesApi.dailyBonus).mockResolvedValue({ claimed: false, amount: '5.00' } as any)
   vi.mocked(gamesApi.boxes).mockResolvedValue({ types: [{ id: 'type', name: 'Caixa rara', price: '10.00', boosters_amount: 2 }], boxes: [{ id: 'box', type_name: 'Caixa adquirida', remaining: 1, total: 2 }] })
   vi.mocked(gamesApi.minigames).mockResolvedValue({ fichas: 10, dice: { active: true, min_bet: 1 }, slots: { active: true, cost: 1, symbols: ['A'] } })
@@ -28,13 +33,13 @@ function mount(tab: string) {
   return userEvent.setup()
 }
 const actions = [
-  { method: 'spin', tab: 'roulette', button: 'Girar agora', args: [], result: { failed: false, prize: { name: 'Adena' } }, message: 'Você ganhou Adena' },
+  { method: 'spin', tab: 'roulette', button: 'Girar a roda', args: [], result: { failed: false, prize: { name: 'Adena' } }, message: 'Você ganhou Adena' },
   { method: 'buyTokens', tab: 'roulette', button: 'Comprar', args: [5], result: { fichas: 15 }, message: 'Fichas creditadas' },
   { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de R$ 5.00 creditado' },
   { method: 'buyBox', tab: 'boxes', button: 'Comprar', args: ['type'], result: { id: 'new-box', remaining: 2 }, message: 'Caixa comprada' },
   { method: 'openBox', tab: 'boxes', button: 'Abrir · 1 ficha', args: ['box'], result: { item: { name: 'Espada', enchant: 3 }, remaining: 0 }, message: 'Espada (+3)' },
-  { method: 'dice', tab: 'chance', button: 'Jogar dado', args: [{ bet_type: 'even', amount: 1 }], result: { won: true, roll: 4, payout: 2 }, message: 'Dado 4 · +2' },
-  { method: 'slots', tab: 'chance', button: 'Girar slots · 1 ficha', args: [], result: { won: true, reels: ['A', 'A', 'A'], payout: 5 }, message: 'A | A | A · +5' },
+  { method: 'dice', tab: 'chance', button: 'Lançar os dados', args: [{ bet_type: 'even', amount: 1 }], result: { won: true, roll: 4, payout: 2 }, message: 'Dado 4 · +2' },
+  { method: 'slots', tab: 'chance', button: 'Girar cilindros · 1 ficha', args: [], result: { won: true, reels: ['A', 'A', 'A'], payout: 5 }, message: 'A | A | A · +5' },
   { method: 'fight', tab: 'economy', button: 'Lutar · 1 ficha', args: ['monster'], result: { won: true, fragments_earned: 2 }, message: 'Vitória · +2 fragmentos' },
   { method: 'enchant', tab: 'economy', button: 'Encantar · 10 fragmentos', args: [], result: { success: true, weapon: { level: 4 } }, message: 'Arma +4' },
 ] as const
@@ -43,7 +48,7 @@ it('bloqueia repetição e outras ações enquanto o giro está pendente', async
   vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
   const user = mount('roulette')
   await screen.findByText('10 fichas')
-  const spin = await screen.findByRole('button', { name: 'Girar agora' })
+  const spin = await screen.findByRole('button', { name: 'Girar a roda' })
   await user.dblClick(spin)
   expect(gamesApi.spin).toHaveBeenCalledTimes(1)
   expect(spin).toBeDisabled()
@@ -89,12 +94,12 @@ it.each([
 it('troca aba e envia valor/tipo da aposta alterados', async () => {
   vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 5, payout: 8, fichas: 14 })
   const user = mount('roulette')
-  await user.click(screen.getByRole('tab', { name: 'Dados e slots' }))
+  await user.click(screen.getByRole('tab', { name: 'Mesa da Taverna' }))
   await user.selectOptions(screen.getByRole('combobox', { name: 'Tipo de aposta' }), 'odd')
   const input = screen.getByRole('textbox', { name: 'Fichas' })
   await user.clear(input)
   await user.type(input, '4')
-  await user.click(screen.getByRole('button', { name: 'Jogar dado' }))
+  await user.click(screen.getByRole('button', { name: 'Lançar os dados' }))
   expect(gamesApi.dice).toHaveBeenCalledWith({ bet_type: 'odd', amount: 4 })
 })
 it('bônus resgatado e monstro em respawn não oferecem nova ação', async () => {
@@ -102,7 +107,42 @@ it('bônus resgatado e monstro em respawn não oferecem nova ação', async () =
   const user = mount('roulette')
   await screen.findByText('Bônus já resgatado hoje')
   expect(screen.queryByRole('button', { name: 'Resgatar bônus' })).not.toBeInTheDocument()
-  await user.click(screen.getByRole('tab', { name: 'Economia' }))
+  await user.click(screen.getByRole('tab', { name: 'Arena das Feras' }))
   expect(screen.getByText('Retorna em 60s')).toBeVisible()
   expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })).toHaveLength(1)
+})
+it('gira a roleta no palco e marca o prêmio ao concluir', async () => {
+  let finish!: (value: any) => void
+  vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
+  const user = mount('roulette')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
+  expect(document.querySelector('.roulette-orbit.is-spinning')).toBeTruthy()
+  finish({ failed: false, prize: { name: 'Adena' } })
+  await waitFor(() => expect(document.querySelector('.roulette-orbit.is-win')).toBeTruthy())
+  expect(document.querySelector('.prize-item.is-hit')).toBeTruthy()
+})
+it('mostra baús do tema nas caixas e anima a abertura', async () => {
+  let finish!: (value: any) => void
+  vi.mocked(gamesApi.openBox).mockReturnValue(new Promise(resolve => { finish = resolve }))
+  const user = mount('boxes')
+  expect(await screen.findByText('Caixa rara')).toBeVisible()
+  expect(document.querySelector('.game-chest[data-rarity="rare"]')).toBeTruthy()
+  await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
+  expect(document.querySelector('.game-chest.is-opening')).toBeTruthy()
+  finish({ item: { name: 'Espada', enchant: 3 }, remaining: 0 })
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Espada (+3)'))
+})
+it('mostra o dado sorteado no palco', async () => {
+  vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)
+  const user = mount('chance')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
+  await waitFor(() => expect(document.querySelector('.chance-dice b')?.textContent).toBe('⚃'))
+})
+it('usa retrato de monstro na arena', async () => {
+  mount('economy')
+  await screen.findByText('Orc')
+  expect(document.querySelectorAll('.monster-portrait')).toHaveLength(2)
+  expect(document.querySelector('.monster-portrait.is-down')).toBeTruthy()
 })

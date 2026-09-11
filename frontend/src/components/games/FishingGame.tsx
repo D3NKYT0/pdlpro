@@ -7,6 +7,7 @@ import { Fish } from 'lucide-react'
 import { gamesApi } from '../../services/api'
 import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
+import { FishingPond } from './GameVisuals'
 
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
 
@@ -24,6 +25,7 @@ export function FishingGame() {
   const [bait, setBait] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [result, setResult] = useState('')
+  const [splash, setSplash] = useState<'idle' | 'caught' | 'escaped'>('idle')
   const selectedBait = query.data?.baits.find((b) => b.id === bait && b.quantity > 0)
   const canCast =
     !!fishing.data?.active &&
@@ -36,6 +38,7 @@ export function FishingGame() {
     <div className="program-page fishing-game">
       <ErrorNotice error={query.error || fishing.error || action.error} />
       {(query.isPending || fishing.isPending) && <Loading />}
+      <FishingPond state={action.busy ? 'casting' : splash} />
       <div className="program-two">
         <Card className="program-section">
           <div>
@@ -64,6 +67,7 @@ export function FishingGame() {
               void action.run(async () => {
                 const r = await gamesApi.cast(selectedBait?.id)
                 if (selectedBait?.quantity === 1) setBait('')
+                setSplash(r.success ? 'caught' : 'escaped')
                 setResult(
                   r.success
                     ? t('games.fishing.caught', { name: r.fish?.name })

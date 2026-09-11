@@ -69,12 +69,12 @@ describe('panel and admin locale bundles', () => {
 
 describe('panel engagement pages follow the active language', () => {
   it('renders the games hub in pt, en and es', async () => {
-    expect(await withLanguage('pt', () => render(<GamesPage />, ['/panel/games']))).toContain('Central de jogos')
+    expect(await withLanguage('pt', () => render(<GamesPage />, ['/panel/games']))).toContain('Salão de jogos')
     const english = await withLanguage('en', () => render(<GamesPage />, ['/panel/games']))
-    expect(english).toContain('Games hub')
+    expect(english).toContain('Hall of games')
     expect(english).toContain('Available balance')
-    expect(english).not.toContain('Central de jogos')
-    expect(await withLanguage('es', () => render(<GamesPage />, ['/panel/games']))).toContain('Centro de juegos')
+    expect(english).not.toContain('Salão de jogos')
+    expect(await withLanguage('es', () => render(<GamesPage />, ['/panel/games']))).toContain('Salón de juegos')
   })
 
   it('renders the rewards tabs in the active language', async () => {

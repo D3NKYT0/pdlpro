@@ -22,7 +22,22 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-bg-2',
   '--theme-art-bg-3',
   '--theme-art-bg-4',
+  '--theme-art-games-box-common',
+  '--theme-art-games-box-rare',
+  '--theme-art-games-box-epic',
+  '--theme-art-games-box-legendary',
+  '--theme-art-games-fishing',
+  '--theme-art-games-monster',
 ] as const
+
+const GAME_ART = {
+  '--theme-art-games-box-common': 'games/box-common.webp',
+  '--theme-art-games-box-rare': 'games/box-rare.webp',
+  '--theme-art-games-box-epic': 'games/box-epic.webp',
+  '--theme-art-games-box-legendary': 'games/box-legendary.webp',
+  '--theme-art-games-fishing': 'games/fishing-pond.webp',
+  '--theme-art-games-monster': 'games/monster-default.webp',
+} as const
 
 const DENSITY_PRESETS = {
   compact: {
@@ -93,6 +108,9 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   style.setProperty('--theme-art-bg-2', cssUrl(themeImage('bg/2.jpg')))
   style.setProperty('--theme-art-bg-3', cssUrl(themeImage('bg/3.jpg')))
   style.setProperty('--theme-art-bg-4', cssUrl(themeImage('bg/4.jpg')))
+  for (const [key, path] of Object.entries(GAME_ART)) {
+    style.setProperty(key, cssUrl(themeImage(path)))
+  }
 
   const density = layout?.panel?.density ?? 'comfortable'
   root.dataset.panelDensity = density

@@ -3,9 +3,8 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **11 de setembro de 2026** — Em progresso: ficha L2
-(paperdoll, bag/baú, crest/extras); leilão de personagem com custódia e snapshot
-de inventário/warehouse; LGPD self-service + cookies reais; sessão expirada no
-login. Publicado: **[2.3.0]** — pacote legal/LGPD (textos reais, cookies,
+(paperdoll, bag/baú, crest/extras); leilão de personagem; LGPD self-service;
+arte e animações dos minigames em `/panel/games`. Publicado: **[2.3.0]** — pacote legal/LGPD (textos reais, cookies,
 histórico, reaceitação); atalhos **API**/**Painel** no Jazzmin e card API no hub
 admin; extensões de cliente; i18n pt/en/es ampliado (SPA + gettext); sync de
 idioma SPA↔API; proxy Nginx `/i18n/`; tema **PDL Classic**.

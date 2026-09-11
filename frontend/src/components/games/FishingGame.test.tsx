@@ -64,6 +64,7 @@ it('exibe coleção e lista somente iscas em estoque para lançar', async () => 
   expect(screen.getByText('Épico · Ainda não descoberto')).toBeVisible()
   expect(screen.getAllByRole('option')).toHaveLength(2)
   expect(screen.getByText('Nível 3')).toBeVisible()
+  expect(document.querySelector('.fishing-pond.is-idle')).toBeTruthy()
 })
 
 it.each([true, false])('lança com a última isca e apresenta captura=%s', async (success) => {
@@ -81,6 +82,7 @@ it.each([true, false])('lança com a última isca e apresenta captura=%s', async
   expect(
     await screen.findByText(success ? 'Você pescou Truta!' : 'O peixe escapou. Tente novamente.'),
   ).toBeVisible()
+  expect(document.querySelector(success ? '.fishing-pond.is-caught' : '.fishing-pond.is-escaped')).toBeTruthy()
 })
 
 it('compra isca e atualiza o estoque', async () => {

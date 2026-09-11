@@ -69,9 +69,9 @@ it('traduz as opções de objetivo e repetição no editor de missões', async (
   const client = renderPage()
   await user.selectOptions(await screen.findByLabelText('Configuration area'), 'quests')
   await user.click(screen.getByRole('button', { name: 'New record' }))
-  expect(await screen.findByRole('option', { name: 'Spin the roulette' })).toBeInTheDocument()
+  expect(await screen.findByRole('option', { name: 'Spin the wheel' })).toBeInTheDocument()
   expect(screen.getByRole('option', { name: 'Once per season' })).toBeInTheDocument()
-  expect(screen.queryByRole('option', { name: 'Girar roleta' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('option', { name: 'Girar a roda' })).not.toBeInTheDocument()
   client.clear()
 })
 

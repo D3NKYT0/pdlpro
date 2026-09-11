@@ -653,7 +653,7 @@
       "inventory": { "label": "Inventário", "text": "Retirar e depositar itens" },
       "wallet": { "label": "Carteira", "text": "Saldo, PIX e transferências" },
       "shop": { "label": "Loja", "text": "Itens da loja do painel" },
-      "games": { "label": "Jogos", "text": "Roleta, caixas, pesca e mais" },
+      "games": { "label": "Jogos", "text": "Fortuna, baús, lago e arena" },
       "progress": { "label": "Conquistas", "text": "Marcos da conta e prêmios" },
       "admin": { "label": "Admin", "text": "Configurar o painel, rates e loja" }
     }
@@ -964,28 +964,28 @@
     "actionError": "Não foi possível atualizar o chamado"
   },
   "games": {
-    "eyebrow": "Central de jogos",
-    "title": "Jogos e recompensas",
-    "description": "Use suas fichas, conquiste prêmios e fortaleça seu personagem.",
+    "eyebrow": "Salão de jogos",
+    "title": "Diversões do reino",
+    "description": "Gire a fortuna, abra baús, aposte na taverna, lance a linha e lute na arena.",
     "rewardsLink": "Missões, bônus diário e rankings ↗",
     "balance": "Saldo disponível",
     "tokens_one": "{{count}} ficha",
     "tokens_other": "{{count}} fichas",
-    "tabsLabel": "Escolha um jogo",
+    "tabsLabel": "Escolha uma diversão",
     "tabs": {
-      "roulette": "Roleta",
-      "boxes": "Caixas",
-      "chance": "Dados e slots",
-      "fishing": "Pesca",
-      "economy": "Economia"
+      "roulette": "Roda da Fortuna",
+      "boxes": "Baús Encantados",
+      "chance": "Mesa da Taverna",
+      "fishing": "Pescaria",
+      "economy": "Arena das Feras"
     },
     "roulette": {
-      "eyebrow": "Tente a sorte",
-      "title": "Roleta",
+      "eyebrow": "O tesouro gira",
+      "title": "Roda da Fortuna",
       "cost_one": "{{count}} ficha por giro",
       "cost_other": "{{count}} fichas por giro",
       "failChance": "Chance de não receber prêmio: {{percent}}%",
-      "spin": "Girar agora",
+      "spin": "Girar a roda",
       "buyLabel": "Comprar fichas",
       "buyHint": "1 ficha = R$ 1",
       "buy": "Comprar",
@@ -1000,31 +1000,31 @@
       "claim": "Resgatar bônus"
     },
     "boxes": {
-      "eyebrow": "Itens surpresa",
-      "title": "Caixas",
+      "eyebrow": "Relíquias seladas",
+      "title": "Baús Encantados",
       "boosters": "{{count}} boosters",
       "buy": "Comprar",
       "remaining": "{{remaining}} de {{total}} restantes",
       "open_one": "Abrir · {{count}} ficha",
       "open_other": "Abrir · {{count}} fichas",
-      "empty": "Nenhuma caixa disponível no momento."
+      "empty": "Nenhum baú disponível no momento."
     },
     "chance": {
-      "eyebrow": "Minigames",
-      "title": "Dados e slots",
+      "eyebrow": "Aposte na taverna",
+      "title": "Mesa da Taverna",
       "betType": "Tipo de aposta",
       "even": "Par",
       "odd": "Ímpar",
       "high": "Alto (4-6)",
       "low": "Baixo (1-3)",
       "tokens": "Fichas",
-      "playDice": "Jogar dado",
-      "playSlots_one": "Girar slots · {{count}} ficha",
-      "playSlots_other": "Girar slots · {{count}} fichas"
+      "playDice": "Lançar os dados",
+      "playSlots_one": "Girar cilindros · {{count}} ficha",
+      "playSlots_other": "Girar cilindros · {{count}} fichas"
     },
     "economy": {
-      "eyebrow": "Arena de combate",
-      "title": "Economia",
+      "eyebrow": "Caçada e forja",
+      "title": "Arena das Feras",
       "weapon": "Arma",
       "fragments": "/ {{max}} fragmentos",
       "requiredWeapon": "Requer arma +{{level}}",
@@ -1036,7 +1036,7 @@
     },
     "fishing": {
       "eyebrow": "Lago do reino",
-      "title": "Pesca",
+      "title": "Pescaria",
       "rod": "Vara de pesca",
       "rodLevel": "Nível {{level}}",
       "xp": "Experiência",
@@ -1053,7 +1053,7 @@
       "escaped": "O peixe escapou. Tente novamente.",
       "escapedShort": "O peixe escapou",
       "unavailable": "A pescaria está temporariamente indisponível.",
-      "insufficientTokens": "Fichas insuficientes para lançar a linha. Compre fichas na aba Roleta.",
+      "insufficientTokens": "Fichas insuficientes para lançar a linha. Compre fichas na aba Roda da Fortuna.",
       "shopTitle": "Loja de iscas",
       "buyQuantity": "Quantidade por compra",
       "baitChance": "+{{bonus}} pontos de chance · Estoque: {{quantity}}",
@@ -1182,11 +1182,11 @@
     },
     "stats": {
       "games": {
-        "roulette": "Roleta",
-        "dice": "Dados",
-        "slots": "Slots",
-        "fishing": "Pesca",
-        "economy": "Economia"
+        "roulette": "Roda da Fortuna",
+        "dice": "Dados da Taverna",
+        "slots": "Cilindros",
+        "fishing": "Pescaria",
+        "economy": "Arena das Feras"
       },
       "plays": "Suas partidas",
       "wins": "Resultados positivos",

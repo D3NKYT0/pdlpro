@@ -13,18 +13,26 @@ import {
   Dices,
   Fish,
   Gift,
-  PackageOpen,
   RotateCw,
   Sparkles,
   Sword,
-  Trophy,
   type LucideIcon,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { gamesApi } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
+import { BoxChest, ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
 import { ResourceGate } from '../components/programs/ResourceGate'
+
+type PlayFx = {
+  playing?: 'spin' | 'open' | 'dice' | 'slots' | 'fight'
+  targetId?: string
+  spinFailed?: boolean
+  prizeName?: string | null
+  diceRoll?: number
+  slotsReels?: string[]
+}
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
 
@@ -48,6 +56,7 @@ export function GamesPage() {
   const [amount, setAmount] = useState('5')
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
+  const [fx, setFx] = useState<PlayFx>({})
   const [params, setParams] = useSearchParams()
   const requestedGame = params.get('tab')
   const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
@@ -72,12 +81,16 @@ export function GamesPage() {
   }
 
   async function spin() {
-    await action.run(async () => {
+    setFx({ playing: 'spin' })
+    const outcome = await action.run(async () => {
       const result = await gamesApi.spin()
       if (result.failed) toast.error(t('games.toast.noPrize'))
       else toast.success(t('games.toast.prizeWon', { prize: result.prize?.name }))
       await refresh()
+      return result
     }, t('games.toast.spinError'))
+    if (outcome.ok) setFx({ spinFailed: outcome.value.failed, prizeName: outcome.value.prize?.name ?? null })
+    else setFx({})
   }
 
   async function buy(event: FormEvent) {
@@ -106,40 +119,54 @@ export function GamesPage() {
   }
 
   async function openBox(id: string) {
-    await action.run(async () => {
+    setFx({ playing: 'open', targetId: id })
+    const outcome = await action.run(async () => {
       const result = await gamesApi.openBox(id)
       toast.success(t('games.toast.boxOpened', { name: result.item.name, enchant: result.item.enchant }))
       await refresh()
+      return result
     }, t('games.toast.openBoxError'))
+    setFx(outcome.ok ? { targetId: id } : {})
   }
 
   async function playDice(event: FormEvent) {
     event.preventDefault()
-    await action.run(async () => {
+    setFx((current) => ({ playing: 'dice', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    const outcome = await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
-      const outcome = result.won ? t('games.toast.diceWin', { payout: result.payout }) : t('games.toast.diceLoss')
-      toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome }))
+      const summary = result.won ? t('games.toast.diceWin', { payout: result.payout }) : t('games.toast.diceLoss')
+      toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome: summary }))
       await refresh()
+      return result
     }, t('games.toast.diceError'))
+    if (outcome.ok) setFx((current) => ({ diceRoll: outcome.value.roll, slotsReels: current.slotsReels }))
+    else setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
   }
 
   async function playSlots() {
-    await action.run(async () => {
+    setFx((current) => ({ playing: 'slots', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
-      const outcome = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
-      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', { reels: result.reels.join(' | '), outcome }))
+      const summary = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
+      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', { reels: result.reels.join(' | '), outcome: summary }))
       await refresh()
+      return result
     }, t('games.toast.slotsError'))
+    if (outcome.ok) setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: outcome.value.reels }))
+    else setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
   }
 
   async function fight(monsterId: string) {
-    await action.run(async () => {
+    setFx({ playing: 'fight', targetId: monsterId })
+    const outcome = await action.run(async () => {
       const result = await gamesApi.fight(monsterId)
       toast[result.won ? 'success' : 'error'](
         result.won ? t('games.toast.fightWin', { fragments: result.fragments_earned }) : t('games.toast.fightLoss'),
       )
       await refresh()
+      return result
     }, t('games.toast.fightError'))
+    setFx(outcome.ok ? { targetId: monsterId } : {})
   }
 
   async function enchant() {
@@ -192,10 +219,12 @@ export function GamesPage() {
 
           <div className="roulette-content">
             <div className="roulette-action">
-              <div className="roulette-orbit" aria-hidden="true">
-                <Trophy />
-                <span>{tokens}</span>
-              </div>
+              <RouletteWheel
+                tokens={tokens}
+                spinning={fx.playing === 'spin'}
+                missed={fx.spinFailed === true}
+                prizeName={fx.prizeName}
+              />
               <p className="muted">{t('games.roulette.failChance', { percent: roulette.data?.fail_chance ?? 20 })}</p>
               <Button type="button" onClick={() => void spin()}>
                 <Sparkles aria-hidden="true" /> {t('games.roulette.spin')}
@@ -217,7 +246,7 @@ export function GamesPage() {
                 <h3>{t('games.roulette.prizes')}</h3>
                 <div className="prize-list">
                   {(roulette.data?.prizes ?? []).map((prize) => (
-                    <div className="prize-item" key={prize.id}>
+                    <div className={`prize-item${fx.prizeName === prize.name ? ' is-hit' : ''}`} key={prize.id}>
                       <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
                       <span><strong>{prize.name}</strong><small>{prize.rarity}</small></span>
                       <b>{prize.weight}</b>
@@ -266,18 +295,18 @@ export function GamesPage() {
               <h2>{t('games.boxes.title')}</h2>
             </div>
           </div>
-          <div className="game-item-list">
+          <div className="game-box-grid">
             {(boxes.data?.types ?? []).map((row) => (
-              <article className="game-list-item" key={row.id}>
-                <PackageOpen aria-hidden="true" />
+              <article className="game-box-card" key={row.id}>
+                <BoxChest name={row.name} price={row.price} />
                 <span><strong>{row.name}</strong><small>{t('games.boxes.boosters', { count: row.boosters_amount })}</small></span>
                 <b>R$ {row.price}</b>
                 <Button className="ghost" type="button" onClick={() => void buyBox(row.id)}>{t('games.boxes.buy')}</Button>
               </article>
             ))}
             {(boxes.data?.boxes ?? []).map((row) => (
-              <article className="game-list-item" key={row.id}>
-                <Box aria-hidden="true" />
+              <article className={`game-box-card is-owned${fx.playing === 'open' && fx.targetId === row.id ? ' is-opening' : ''}`} key={row.id}>
+                <BoxChest name={row.type_name} opening={fx.playing === 'open' && fx.targetId === row.id} />
                 <span><strong>{row.type_name}</strong><small>{t('games.boxes.remaining', { remaining: row.remaining, total: row.total })}</small></span>
                 <Button type="button" onClick={() => void openBox(row.id)}>{t('games.boxes.open', { count: 1 })}</Button>
               </article>
@@ -302,6 +331,13 @@ export function GamesPage() {
               <h2>{t('games.chance.title')}</h2>
             </div>
           </div>
+          <ChanceStage
+            rolling={fx.playing === 'dice'}
+            roll={fx.diceRoll}
+            spinningSlots={fx.playing === 'slots'}
+            reels={fx.slotsReels}
+            symbols={minigames.data?.slots.symbols}
+          />
           <form className="game-form-grid" onSubmit={playDice}>
             <Field>
               {t('games.chance.betType')}
@@ -359,8 +395,12 @@ export function GamesPage() {
           </div>
           <div className="monster-list">
             {(economy.data?.monsters ?? []).map((monster) => (
-              <article className="monster-item" key={monster.id}>
-                <Sword aria-hidden="true" />
+              <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}`} key={monster.id}>
+                <MonsterPortrait
+                  id={monster.id}
+                  down={!monster.alive}
+                  fighting={fx.playing === 'fight' && fx.targetId === monster.id}
+                />
                 <span><strong>{monster.name}</strong><small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small></span>
                 {monster.alive ? (
                   <Button className="ghost" type="button" onClick={() => void fight(monster.id)}>{t('games.economy.fight', { count: 1 })}</Button>
