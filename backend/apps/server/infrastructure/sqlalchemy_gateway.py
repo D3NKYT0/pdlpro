@@ -292,12 +292,14 @@ class SqlAlchemyLineageGateway(ILineageGateway):
 
     def _game_item(self, row, slot: int | None = None) -> GameItem:
         item_id = int(row["item_id"])
+        location = row.get("location")
         return GameItem(
             item_id=item_id,
             name=item_display_name(item_id),
             quantity=int(row["quantity"] or 1),
             enchant=int(row["enchant"] or 0),
             slot=slot,
+            location=str(location).upper() if location else None,
         )
 
     def list_character_items(self, char_id: int) -> list[GameItem]:

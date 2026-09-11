@@ -94,7 +94,8 @@ class GameItem:
     presente.
 
     É um objeto de dados; não carrega métodos de persistência do ORM. Consulte os campos tipados
-    abaixo ao montar ou consumir o resultado.
+    abaixo ao montar ou consumir o resultado. ``location`` distingue INVENTORY / WAREHOUSE /
+    PAPERDOLL quando a consulta devolve o campo.
     """
 
     item_id: int
@@ -102,6 +103,7 @@ class GameItem:
     quantity: int
     enchant: int
     slot: int | None = None
+    location: str | None = None
 
 
 class ILineageGateway(ABC):

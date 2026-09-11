@@ -1,7 +1,7 @@
 -- Lucera v2 — itens (item_type / amount / location).
 
 -- name: list_character_items
-SELECT item_type AS item_id, amount AS quantity, enchant
+SELECT item_type AS item_id, amount AS quantity, enchant, location
 FROM items
 WHERE owner_id = :char_id
   AND location IN ('INVENTORY', 'WAREHOUSE')

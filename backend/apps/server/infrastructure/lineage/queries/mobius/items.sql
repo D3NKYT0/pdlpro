@@ -1,7 +1,7 @@
 -- Mobius — itens (item_id / count / enchant_level / loc).
 
 -- name: list_character_items
-SELECT item_id, count AS quantity, enchant_level AS enchant
+SELECT item_id, count AS quantity, enchant_level AS enchant, loc AS location
 FROM items
 WHERE owner_id = :char_id
   AND loc IN ('INVENTORY', 'WAREHOUSE')

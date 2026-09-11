@@ -61,6 +61,7 @@ export interface ApiGameItem {
   quantity: number
   enchant: number
   tradeable: boolean
+  location?: string | null
 }
 
 export interface ApiCharacterEquipmentItem extends ApiGameItem {

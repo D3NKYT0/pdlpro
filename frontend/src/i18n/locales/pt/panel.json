@@ -1318,16 +1318,21 @@
       "accessories": "Acessórios"
     },
     "slots": {
+      "face": "Rosto",
       "head": "Elmo",
+      "hair": "Cabelo",
       "gloves": "Luvas",
       "chest": "Armadura",
       "feet": "Botas",
+      "cloak": "Capa",
       "legs": "Calças",
+      "belt": "Cinto",
       "weapon": "Arma",
       "offhand": "Mão secundária",
       "earring": "Brinco",
       "necklace": "Colar",
-      "ring": "Anel"
+      "ring": "Anel",
+      "underwear": "Roupa íntima"
     },
     "equipment": {
       "eyebrow": "Visual do personagem",
@@ -1343,6 +1348,40 @@
       "itemId": "ID {{id}}",
       "additional": "Outros slots equipados",
       "slotInfo": "Slot {{slot}} · ID {{id}}"
+    },
+    "bag": {
+      "sectionLabel": "Inventário e warehouse do personagem",
+      "tabsLabel": "Inventário do personagem",
+      "tabs": {
+        "inventory": "Inventário",
+        "warehouse": "Warehouse"
+      },
+      "gridLabel": {
+        "inventory": "Grade do inventário",
+        "warehouse": "Grade do warehouse"
+      },
+      "loading": "Carregando itens...",
+      "error": "Não foi possível carregar os itens deste personagem.",
+      "itemId": "ID {{id}}",
+      "noEnchant": "sem encanto",
+      "slotAria": "{{name}} · {{enchant}} · qtd {{quantity}}"
+    },
+    "itemModal": {
+      "title": "Detalhes do item",
+      "noEnchant": "Sem encanto",
+      "equipped": "Equipado",
+      "tradeableYes": "Sim",
+      "tradeableNo": "Não",
+      "fields": {
+        "id": "ID",
+        "quantity": "Quantidade",
+        "enchant": "Encanto",
+        "slot": "Slot",
+        "location": "Local",
+        "tradeable": "Negociável",
+        "grade": "Grade",
+        "category": "Categoria"
+      }
     },
     "services": {
       "nickname": {

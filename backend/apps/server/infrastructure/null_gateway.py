@@ -165,9 +165,9 @@ class NullLineageGateway(ILineageGateway):
         for index, item in enumerate(items):
             if item.slot is None and item.item_id == item_id and item.quantity >= quantity:
                 remaining = item.quantity - quantity
-                withdrawn = GameItem(item.item_id, item.name, quantity, item.enchant)
+                withdrawn = GameItem(item.item_id, item.name, quantity, item.enchant, location=item.location)
                 if remaining:
-                    items[index] = GameItem(item.item_id, item.name, remaining, item.enchant)
+                    items[index] = GameItem(item.item_id, item.name, remaining, item.enchant, location=item.location)
                 else:
                     items.pop(index)
                 return withdrawn
@@ -179,10 +179,16 @@ class NullLineageGateway(ILineageGateway):
         char = self._find_char_by_name(char_name)
         items = self._items.setdefault(char.char_id, [])
         for index, item in enumerate(items):
-            if item.item_id == item_id and item.enchant == enchant:
-                items[index] = GameItem(item.item_id, item.name, item.quantity + quantity, item.enchant)
+            if item.item_id == item_id and item.enchant == enchant and item.slot is None:
+                items[index] = GameItem(
+                    item.item_id,
+                    item.name,
+                    item.quantity + quantity,
+                    item.enchant,
+                    location=item.location or "INVENTORY",
+                )
                 return
-        items.append(GameItem(item_id, f"Item {item_id}", quantity, enchant))
+        items.append(GameItem(item_id, f"Item {item_id}", quantity, enchant, location="INVENTORY"))
 
     def nickname_exists(self, name: str) -> bool:
         lowered = name.lower()
@@ -273,8 +279,15 @@ class NullLineageGateway(ILineageGateway):
         char = GameCharacter(self._next_char_id, name, 1, False, 0)
         self._next_char_id += 1
         self._characters.setdefault(key, []).append(char)
-        self._items[char.char_id] = list(items or [])
+        self._items[char.char_id] = [self._normalize_item(item) for item in items or []]
         return char
+
+    @staticmethod
+    def _normalize_item(item: GameItem) -> GameItem:
+        if item.location:
+            return item
+        location = "PAPERDOLL" if item.slot is not None else "INVENTORY"
+        return GameItem(item.item_id, item.name, item.quantity, item.enchant, item.slot, location)
 
     def _require_account(self, login: str) -> dict:
         row = self._accounts.get(login.lower())

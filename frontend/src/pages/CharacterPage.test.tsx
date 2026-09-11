@@ -20,7 +20,7 @@ vi.mock('../services/api', async (importOriginal) => {
       changeSex: vi.fn(),
       unstuck: vi.fn(),
     },
-    inventoryApi: { equipment: vi.fn() },
+    inventoryApi: { equipment: vi.fn(), gameItems: vi.fn() },
   }
 })
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
@@ -31,6 +31,7 @@ beforeEach(() => {
   vi.mocked(lineageApi.characters).mockResolvedValue([character])
   vi.mocked(lineageApi.servicePrices).mockResolvedValue({ CHANGE_NICKNAME: '10', CHANGE_SEX: '10', UNSTUCK: '0', LINK_SLOT: '10' })
   vi.mocked(inventoryApi.equipment).mockResolvedValue([])
+  vi.mocked(inventoryApi.gameItems).mockResolvedValue([])
 })
 afterEach(() => { cleanup(); query?.clear(); vi.restoreAllMocks() })
 function mount() {
@@ -57,6 +58,58 @@ it.each(['nickname', 'sex'] as const)('serializa %s, preserva chave após erro e
   await user.click(screen.getByRole('button', { name: service === 'nickname' ? 'Alterar nickname' : 'Alterar sexo' }))
   await waitFor(() => expect(toast.success).toHaveBeenCalled())
   expect(send.mock.calls[1][3]).toBe(key)
+})
+it('mostra paperdoll com slots L2 e item equipado', async () => {
+  vi.mocked(inventoryApi.equipment).mockResolvedValue([
+    { item_id: 2416, name: 'Blue Wolf Helmet', quantity: 1, enchant: 5, tradeable: true, slot: 6 },
+    { item_id: 175, name: 'Art of Battle Axe', quantity: 1, enchant: 6, tradeable: true, slot: 7 },
+  ])
+  mount()
+  expect(await screen.findByLabelText('Equipamentos atuais do personagem')).toBeVisible()
+  expect(screen.getByLabelText('Elmo: Blue Wolf Helmet +5')).toBeVisible()
+  expect(screen.getByLabelText('Arma: Art of Battle Axe +6')).toBeVisible()
+  expect(screen.getByLabelText('Capa: vazio')).toBeVisible()
+  expect(screen.getByLabelText('Cinto: vazio')).toBeVisible()
+  expect(screen.getByText('+5')).toBeVisible()
+  expect(screen.getByText('+6')).toBeVisible()
+})
+it('mostra inventário e warehouse em abas com grade', async () => {
+  vi.mocked(inventoryApi.gameItems).mockResolvedValue([
+    { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, tradeable: true, location: 'INVENTORY' },
+    { item_id: 6673, name: 'Festival Adena', quantity: 5, enchant: 0, tradeable: true, location: 'WAREHOUSE' },
+  ])
+  const user = mount()
+  expect(await screen.findByLabelText('Grade do inventário')).toBeVisible()
+  expect(screen.getByLabelText('Adena · sem encanto · qtd 100')).toBeVisible()
+  await user.click(screen.getByRole('tab', { name: /Warehouse/i }))
+  expect(screen.getByLabelText('Grade do warehouse')).toBeVisible()
+  expect(screen.getByLabelText('Festival Adena · sem encanto · qtd 5')).toBeVisible()
+})
+it('abre modal com detalhes ao clicar no item do inventário', async () => {
+  vi.mocked(inventoryApi.gameItems).mockResolvedValue([
+    { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, tradeable: true, location: 'INVENTORY' },
+  ])
+  const user = mount()
+  await user.click(await screen.findByLabelText('Adena · sem encanto · qtd 100'))
+  const dialog = screen.getByRole('dialog', { name: 'Adena' })
+  expect(dialog).toBeVisible()
+  expect(dialog).toHaveTextContent('ID')
+  expect(dialog).toHaveTextContent('57')
+  expect(dialog).toHaveTextContent('Quantidade')
+  expect(dialog).toHaveTextContent('100')
+  await user.click(screen.getAllByRole('button', { name: 'Fechar' })[1])
+  expect(screen.queryByRole('dialog', { name: 'Adena' })).not.toBeInTheDocument()
+})
+it('abre modal ao clicar em item equipado', async () => {
+  vi.mocked(inventoryApi.equipment).mockResolvedValue([
+    { item_id: 2416, name: 'Blue Wolf Helmet', quantity: 1, enchant: 5, tradeable: true, slot: 6 },
+  ])
+  const user = mount()
+  await user.click(await screen.findByLabelText('Elmo: Blue Wolf Helmet +5'))
+  const dialog = screen.getByRole('dialog', { name: 'Blue Wolf Helmet +5' })
+  expect(dialog).toBeVisible()
+  expect(dialog).toHaveTextContent('Elmo')
+  expect(dialog).toHaveTextContent('Equipado')
 })
 it('mostra carregamento sem permitir serviço', () => {
   vi.mocked(lineageApi.characters).mockImplementation(() => new Promise(() => {}))

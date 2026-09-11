@@ -1318,16 +1318,21 @@
       "accessories": "Accesorios"
     },
     "slots": {
+      "face": "Rostro",
       "head": "Casco",
+      "hair": "Cabello",
       "gloves": "Guantes",
       "chest": "Armadura",
       "feet": "Botas",
+      "cloak": "Capa",
       "legs": "Pantalones",
+      "belt": "Cinturón",
       "weapon": "Arma",
       "offhand": "Mano secundaria",
       "earring": "Pendiente",
       "necklace": "Collar",
-      "ring": "Anillo"
+      "ring": "Anillo",
+      "underwear": "Ropa interior"
     },
     "equipment": {
       "eyebrow": "Aspecto del personaje",
@@ -1343,6 +1348,40 @@
       "itemId": "ID {{id}}",
       "additional": "Otros espacios equipados",
       "slotInfo": "Espacio {{slot}} · ID {{id}}"
+    },
+    "bag": {
+      "sectionLabel": "Inventario y warehouse del personaje",
+      "tabsLabel": "Inventario del personaje",
+      "tabs": {
+        "inventory": "Inventario",
+        "warehouse": "Warehouse"
+      },
+      "gridLabel": {
+        "inventory": "Cuadrícula del inventario",
+        "warehouse": "Cuadrícula del warehouse"
+      },
+      "loading": "Cargando ítems...",
+      "error": "No fue posible cargar los ítems de este personaje.",
+      "itemId": "ID {{id}}",
+      "noEnchant": "sin encantamiento",
+      "slotAria": "{{name}} · {{enchant}} · cant {{quantity}}"
+    },
+    "itemModal": {
+      "title": "Detalles del ítem",
+      "noEnchant": "Sin encantamiento",
+      "equipped": "Equipado",
+      "tradeableYes": "Sí",
+      "tradeableNo": "No",
+      "fields": {
+        "id": "ID",
+        "quantity": "Cantidad",
+        "enchant": "Encantamiento",
+        "slot": "Espacio",
+        "location": "Ubicación",
+        "tradeable": "Negociable",
+        "grade": "Grado",
+        "category": "Categoría"
+      }
     },
     "services": {
       "nickname": {

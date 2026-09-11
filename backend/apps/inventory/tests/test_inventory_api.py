@@ -158,3 +158,29 @@ def test_character_equipment_is_read_only_and_scoped_to_the_account(api, player)
         assert row["name"] == item_metadata(row["item_id"])["name"]
         assert row["item_metadata"] == item_metadata(row["item_id"])
     assert api.post(f"/api/v1/customer/inventory/characters/{char.char_id}/equipment/").status_code == 405
+
+
+@pytest.mark.django_db
+def test_character_items_expose_inventory_and_warehouse_locations(api, player):
+    api.force_authenticate(user=player)
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    from common.di.bootstrap import DependencyInjection
+
+    gateway = DependencyInjection.root().resolve(ILineageGateway)
+    assert isinstance(gateway, NullLineageGateway)
+    char = gateway.seed_character(
+        "hero",
+        "SirHero",
+        items=[
+            GameItem(57, "Adena", 100, 0, location="INVENTORY"),
+            GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
+        ],
+    )
+
+    response = api.get(f"/api/v1/customer/inventory/characters/{char.char_id}/items/")
+
+    assert response.status_code == 200
+    assert [(row["item_id"], row["location"], row["quantity"]) for row in response.data] == [
+        (57, "INVENTORY", 100),
+        (6673, "WAREHOUSE", 5),
+    ]

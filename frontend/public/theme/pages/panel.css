@@ -1595,157 +1595,235 @@ html.pdl-panel .character-equipment-summary span {
 }
 
 html.pdl-panel .character-paperdoll {
-  width: min(100%, 400px);
+  position: relative;
+  width: min(100%, 340px);
   margin: 0 auto;
-  padding: 26px 24px 24px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  padding: 24px 22px 22px;
+  isolation: isolate;
+  border: 1px solid rgba(198, 176, 130, 0.42);
+  outline: 1px solid rgba(90, 78, 54, 0.85);
+  outline-offset: 3px;
   background:
-    radial-gradient(circle at 50% 29%, rgba(197, 161, 97, 0.07), transparent 28%),
-    linear-gradient(145deg, rgba(197, 161, 97, 0.035), transparent 46%),
-    rgba(7, 6, 5, 0.56);
-  box-shadow: inset 0 0 38px rgba(197, 161, 97, 0.025);
+    radial-gradient(ellipse at 50% 18%, rgba(120, 104, 72, 0.16), transparent 42%),
+    radial-gradient(ellipse at 50% 78%, rgba(70, 58, 40, 0.2), transparent 48%),
+    repeating-linear-gradient(
+      -32deg,
+      rgba(255, 255, 255, 0.012) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(180deg, #2a2620 0%, #1a1713 42%, #12100d 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 28px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(230, 199, 125, 0.08);
 }
 
-html.pdl-panel .character-equipment-group + .character-equipment-group {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(197, 161, 97, 0.13);
+html.pdl-panel .character-paperdoll-frame {
+  pointer-events: none;
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(168, 148, 108, 0.22);
+  z-index: 0;
 }
 
-html.pdl-panel .character-equipment-group h3 {
-  margin: 0 0 15px;
-  color: rgba(255, 255, 255, 0.54);
-  font-family: inherit;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-align: center;
-  text-shadow: none;
-  text-transform: uppercase;
+html.pdl-panel .character-paperdoll-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(214, 188, 128, 0.72);
+  border-style: solid;
+  border-width: 0;
+}
+
+html.pdl-panel .character-paperdoll-corner.is-tl {
+  top: -1px;
+  left: -1px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+  box-shadow: -3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+}
+
+html.pdl-panel .character-paperdoll-corner.is-tr {
+  top: -1px;
+  right: -1px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  box-shadow: 3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+}
+
+html.pdl-panel .character-paperdoll-corner.is-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  box-shadow: -3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+}
+
+html.pdl-panel .character-paperdoll-corner.is-br {
+  right: -1px;
+  bottom: -1px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  box-shadow: 3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+}
+
+html.pdl-panel .character-paperdoll-band {
+  pointer-events: none;
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  height: 34px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center, rgba(90, 78, 56, 0.45), transparent 72%);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+html.pdl-panel .character-paperdoll-band.is-armor {
+  top: 92px;
+}
+
+html.pdl-panel .character-paperdoll-band.is-weapons {
+  top: 228px;
+}
+
+html.pdl-panel .character-paperdoll-band.is-jewels {
+  top: 300px;
 }
 
 html.pdl-panel .character-equipment-slots {
+  position: relative;
   display: grid;
-  gap: 10px;
-  justify-content: center;
-}
-
-html.pdl-panel .character-equipment-group-body .character-equipment-slots {
   grid-template-areas:
-    '. head .'
+    'face head hair'
     'gloves chest feet'
-    '. legs .';
-  grid-template-columns: repeat(3, minmax(0, 96px));
-}
-
-html.pdl-panel .character-equipment-group-weapons .character-equipment-slots {
-  grid-template-columns: repeat(2, minmax(0, 112px));
-  justify-content: space-between;
-}
-
-html.pdl-panel .character-equipment-group-accessories .character-equipment-slots {
-  grid-template-areas:
+    'cloak legs belt'
+    '. weapon offhand'
     'left-ear neck right-ear'
-    'left-ring . right-ring';
-  grid-template-columns: repeat(3, minmax(0, 96px));
+    'left-ring underwear right-ring';
+  grid-template-columns: repeat(3, 58px);
+  gap: 9px 11px;
+  justify-content: center;
+  z-index: 1;
 }
 
 html.pdl-panel .character-equipment-slot {
-  display: flex;
+  position: relative;
+  display: block;
   min-width: 0;
-  gap: 5px;
-  color: rgba(255, 255, 255, 0.32);
-  flex-direction: column;
+  color: rgba(210, 205, 195, 0.28);
+}
+
+html.pdl-panel .character-equipment-slot.is-interactive {
+  cursor: pointer;
+}
+
+html.pdl-panel .character-equipment-slot.is-interactive:hover .character-equipment-slot-cell,
+html.pdl-panel .character-equipment-slot.is-interactive:focus-visible .character-equipment-slot-cell {
+  border-color: rgba(230, 199, 125, 0.72);
+  box-shadow:
+    inset 0 0 14px rgba(197, 161, 97, 0.14),
+    0 0 14px rgba(197, 161, 97, 0.16);
+  transform: translateY(-1px);
+}
+
+html.pdl-panel .character-equipment-slot.is-interactive:focus-visible {
+  outline: none;
 }
 
 html.pdl-panel .character-equipment-slot-cell {
   position: relative;
   display: grid;
-  width: 100%;
-  aspect-ratio: 1;
+  width: 58px;
+  height: 58px;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(197, 161, 97, 0.16);
-  border-radius: 3px;
-  background: rgba(7, 6, 5, 0.46);
+  border: 1px solid rgba(150, 140, 120, 0.28);
+  border-radius: 2px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.03), transparent 46%),
+    rgba(8, 7, 6, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 0 10px rgba(0, 0, 0, 0.55);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: rgba(214, 188, 128, 0.55);
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.12), transparent 58%),
-    rgba(10, 8, 6, 0.76);
-  box-shadow: inset 0 0 24px rgba(197, 161, 97, 0.05), 0 0 18px rgba(197, 161, 97, 0.025);
-  color: var(--panel-gold-bright);
+    linear-gradient(145deg, rgba(197, 161, 97, 0.14), transparent 58%),
+    rgba(12, 10, 8, 0.88);
+  box-shadow:
+    inset 0 0 14px rgba(197, 161, 97, 0.08),
+    0 0 10px rgba(197, 161, 97, 0.06);
 }
 
 html.pdl-panel .character-equipment-slot-cell > svg,
-html.pdl-panel .character-equipment-slot-cell > .l2-item-icon {
-  width: 40px;
-  height: 40px;
-  color: currentColor;
-  opacity: 0.58;
-  stroke-width: 1.45;
+html.pdl-panel .character-equipment-slot-cell > .l2-item-icon,
+html.pdl-panel .character-equipment-slot-silhouette {
+  width: 46px;
+  height: 46px;
+  color: rgba(198, 192, 180, 0.62);
+  opacity: 1;
+}
+
+html.pdl-panel .character-equipment-slot.is-empty .character-equipment-slot-silhouette {
+  color: rgba(206, 200, 188, 0.58);
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.45));
 }
 
 html.pdl-panel .character-equipment-slot-cell > .l2-item-icon {
+  width: 42px;
+  height: 42px;
   opacity: 1;
   object-fit: contain;
   image-rendering: pixelated;
 }
 
-html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell > svg,
-html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell > .l2-item-icon {
-  transform: translateY(-9px);
+html.pdl-panel .character-equipment-slot-enchant {
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  color: #e8d39a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  line-height: 1;
 }
 
 html.pdl-panel .character-equipment-slot-label {
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 7px;
-  letter-spacing: 0.08em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-html.pdl-panel .character-equipment-slot-copy {
   position: absolute;
-  right: 5px;
-  bottom: 7px;
-  left: 5px;
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-}
-
-html.pdl-panel .character-equipment-slot-copy strong {
-  max-width: 100%;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 8px;
-  font-weight: 600;
-  text-overflow: ellipsis;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
   white-space: nowrap;
 }
 
-html.pdl-panel .character-equipment-slot-copy small {
-  overflow: hidden;
-  color: rgba(230, 199, 125, 0.58);
-  font-size: 6px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+html.pdl-panel .equipment-slot-face { grid-area: face; }
 html.pdl-panel .equipment-slot-head { grid-area: head; }
+html.pdl-panel .equipment-slot-hair { grid-area: hair; }
 html.pdl-panel .equipment-slot-gloves { grid-area: gloves; }
 html.pdl-panel .equipment-slot-chest { grid-area: chest; }
 html.pdl-panel .equipment-slot-feet { grid-area: feet; }
+html.pdl-panel .equipment-slot-cloak { grid-area: cloak; }
 html.pdl-panel .equipment-slot-legs { grid-area: legs; }
+html.pdl-panel .equipment-slot-belt { grid-area: belt; }
+html.pdl-panel .equipment-slot-weapon { grid-area: weapon; }
+html.pdl-panel .equipment-slot-offhand { grid-area: offhand; }
 html.pdl-panel .equipment-slot-left-ear { grid-area: left-ear; }
 html.pdl-panel .equipment-slot-neck { grid-area: neck; }
 html.pdl-panel .equipment-slot-right-ear { grid-area: right-ear; }
 html.pdl-panel .equipment-slot-left-ring { grid-area: left-ring; }
+html.pdl-panel .equipment-slot-underwear { grid-area: underwear; }
 html.pdl-panel .equipment-slot-right-ring { grid-area: right-ring; }
 
 html.pdl-panel .character-equipment-message {
@@ -1781,13 +1859,30 @@ html.pdl-panel .character-equipment-additional > div {
   margin-top: 9px;
 }
 
-html.pdl-panel .character-equipment-additional article {
+html.pdl-panel .character-equipment-additional article,
+html.pdl-panel .character-equipment-additional button {
   display: flex;
   align-items: center;
   gap: 9px;
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid rgba(197, 161, 97, 0.14);
   background: rgba(5, 5, 4, 0.34);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+html.pdl-panel .character-equipment-additional button:hover,
+html.pdl-panel .character-equipment-additional button:focus-visible {
+  border-color: rgba(230, 199, 125, 0.48);
+  background: rgba(197, 161, 97, 0.08);
+  box-shadow: 0 0 12px rgba(197, 161, 97, 0.1);
 }
 
 html.pdl-panel .character-equipment-additional svg {
@@ -1814,6 +1909,219 @@ html.pdl-panel .character-equipment-additional strong {
 html.pdl-panel .character-equipment-additional small {
   color: rgba(230, 199, 125, 0.5);
   font-size: 8px;
+}
+
+html.pdl-panel .character-bag {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(197, 161, 97, 0.14);
+}
+
+html.pdl-panel .character-bag-tabs {
+  margin-bottom: 14px;
+}
+
+html.pdl-panel .character-bag-tabs.ui-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+html.pdl-panel .character-bag-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(197, 161, 97, 0.18);
+  background: rgba(5, 5, 4, 0.42);
+  color: var(--panel-muted);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .character-bag-tabs button > svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.5;
+}
+
+html.pdl-panel .character-bag-tabs button:hover {
+  border-color: rgba(197, 161, 97, 0.34);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+html.pdl-panel .character-bag-tabs button.active {
+  border-color: rgba(230, 199, 125, 0.42);
+  background:
+    linear-gradient(180deg, rgba(197, 161, 97, 0.14), rgba(197, 161, 97, 0.04)),
+    rgba(10, 8, 6, 0.88);
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .character-bag-panel {
+  padding: 10px;
+  border: 1px solid rgba(90, 82, 70, 0.55);
+  background: #0a0a0a;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.65);
+}
+
+html.pdl-panel .character-bag-grid {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.55);
+}
+
+html.pdl-panel .character-bag-slot {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border-top: 1px solid #2c2c2c;
+  border-left: 1px solid #2c2c2c;
+  border-right: 1px solid #050505;
+  border-bottom: 1px solid #050505;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.02), transparent 42%),
+    #121212;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.03), inset -1px -1px 0 rgba(0, 0, 0, 0.55);
+  color: inherit;
+  cursor: default;
+  font: inherit;
+}
+
+html.pdl-panel .character-bag-slot.is-filled {
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(70, 110, 120, 0.16), transparent 62%),
+    #121212;
+  transition:
+    outline-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+html.pdl-panel .character-bag-slot.is-filled:hover,
+html.pdl-panel .character-bag-slot.is-filled:focus-visible {
+  z-index: 1;
+  outline: 1px solid rgba(230, 199, 125, 0.62);
+  outline-offset: -1px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(197, 161, 97, 0.18), transparent 64%),
+    #171411;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.06),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.55),
+    0 0 12px rgba(197, 161, 97, 0.14);
+  transform: translateY(-1px);
+}
+
+html.pdl-panel .character-bag-slot > .l2-item-icon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+html.pdl-panel .character-bag-slot-enchant {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  color: #e8d39a;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow:
+    0 0 2px #000,
+    0 1px 2px #000,
+    1px 0 1px #000,
+    -1px 0 1px #000,
+    0 -1px 1px #000,
+    1px 1px 1px #000,
+    -1px 1px 1px #000;
+}
+
+html.pdl-panel .character-bag-slot-qty {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  color: #f2f2f2;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow:
+    0 0 2px #000,
+    0 1px 2px #000,
+    1px 0 1px #000,
+    -1px 0 1px #000,
+    0 -1px 1px #000,
+    1px 1px 1px #000,
+    -1px 1px 1px #000;
+}
+
+html.pdl-panel .character-bag-message {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+html.pdl-panel .character-bag-message.is-error {
+  color: #dc8a68;
+}
+
+html.pdl-panel .character-item-modal-body {
+  display: grid;
+  gap: 16px;
+}
+
+html.pdl-panel .character-item-modal-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(197, 161, 97, 0.18);
+  background:
+    linear-gradient(90deg, rgba(197, 161, 97, 0.1), transparent 55%),
+    rgba(5, 5, 4, 0.42);
+}
+
+html.pdl-panel .character-item-modal-hero > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+html.pdl-panel .character-item-modal-hero strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .character-item-modal-hero span {
+  color: var(--panel-gold-bright);
+  font-size: 12px;
+}
+
+html.pdl-panel .character-item-modal-hero .l2-item-icon {
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 html.pdl-panel .character-services .account-action-form {
@@ -7350,7 +7658,38 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .character-paperdoll {
-    padding: 12px;
+    width: min(100%, 312px);
+    padding: 16px 14px 14px;
+  }
+
+  html.pdl-panel .character-equipment-slots {
+    grid-template-columns: repeat(3, 52px);
+    gap: 8px 9px;
+  }
+
+  html.pdl-panel .character-equipment-slot-cell {
+    width: 52px;
+    height: 52px;
+  }
+
+  html.pdl-panel .character-equipment-slot-cell > svg,
+  html.pdl-panel .character-equipment-slot-silhouette {
+    width: 42px;
+    height: 42px;
+  }
+
+  html.pdl-panel .character-equipment-slot-cell > .l2-item-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  html.pdl-panel .character-bag-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  html.pdl-panel .character-bag-slot > .l2-item-icon {
+    width: 28px;
+    height: 28px;
   }
 
   html.pdl-panel .inventory-withdraw-form {
@@ -7398,11 +7737,6 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .inventory-deposit-confirmation {
     grid-template-columns: 1fr;
-  }
-
-  html.pdl-panel .character-equipment-group-body .character-equipment-slots,
-  html.pdl-panel .character-equipment-group-accessories .character-equipment-slots {
-    gap: 8px;
   }
 
   html.pdl-panel .admin-entry-grid,

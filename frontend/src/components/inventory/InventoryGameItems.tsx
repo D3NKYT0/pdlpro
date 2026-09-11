@@ -131,7 +131,7 @@ export function InventoryGameItems({
                 </span>
                 <span className="inventory-game-item-data inventory-game-item-quantity" role="cell" data-label={t('inventory.gameItems.columnQuantity')}>
                   <small>{t('inventory.gameItems.columnQuantity')}</small>
-                  <b>{formatNumber(item.quantity)}</b>
+                  <b>{formatCompactQuantity(item.quantity)}</b>
                 </span>
                 <Button
                   className="ghost inventory-game-select"

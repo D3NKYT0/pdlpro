@@ -11,104 +11,138 @@ import type { TFunction } from 'i18next'
 import toast from 'react-hot-toast'
 import {
   ArrowLeft,
-  CircleDot,
   Crown,
   Eye,
-  Footprints,
-  Gem,
-  Hand,
   MapPin,
   Package,
   Pencil,
-  Shield,
-  Shirt,
-  Sparkles,
   Store,
-  Sword,
   Undo2,
   UsersRound,
   VenusAndMars,
-  type LucideIcon,
 } from 'lucide-react'
 import { formatServicePrice, getClassName } from '../lib/lineage'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
 import type { ApiCharacterEquipmentItem } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
+import {
+  EQUIPMENT_SLOT_ICONS,
+  type EquipmentSlotIconKey,
+} from '../components/character/EquipmentSlotIcons'
+import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
+import {
+  CharacterItemDetailModal,
+  type CharacterItemDetail,
+} from '../components/character/CharacterItemDetailModal'
 
 interface EquipmentSlotDefinition {
-  key: string
+  key: EquipmentSlotIconKey
   labelKey: string
   slotIds: number[]
-  icon: LucideIcon
 }
 
-const BODY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'head', labelKey: 'head', slotIds: [6], icon: Crown },
-  { key: 'gloves', labelKey: 'gloves', slotIds: [9], icon: Hand },
-  { key: 'chest', labelKey: 'chest', slotIds: [10], icon: Shirt },
-  { key: 'feet', labelKey: 'feet', slotIds: [12], icon: Footprints },
-  { key: 'legs', labelKey: 'legs', slotIds: [11], icon: Shirt },
+/** Layout próximo ao inventário L2 Classic/HF (paperdoll). */
+const PAPERDOLL_SLOTS: EquipmentSlotDefinition[] = [
+  { key: 'face', labelKey: 'face', slotIds: [16] },
+  { key: 'head', labelKey: 'head', slotIds: [6] },
+  { key: 'hair', labelKey: 'hair', slotIds: [15, 17] },
+  { key: 'gloves', labelKey: 'gloves', slotIds: [9] },
+  { key: 'chest', labelKey: 'chest', slotIds: [10] },
+  { key: 'feet', labelKey: 'feet', slotIds: [12] },
+  { key: 'cloak', labelKey: 'cloak', slotIds: [13] },
+  { key: 'legs', labelKey: 'legs', slotIds: [11] },
+  { key: 'belt', labelKey: 'belt', slotIds: [24, 18] },
+  { key: 'weapon', labelKey: 'weapon', slotIds: [14, 7] },
+  { key: 'offhand', labelKey: 'offhand', slotIds: [8] },
+  { key: 'left-ear', labelKey: 'earring', slotIds: [2] },
+  { key: 'neck', labelKey: 'necklace', slotIds: [3] },
+  { key: 'right-ear', labelKey: 'earring', slotIds: [1] },
+  { key: 'left-ring', labelKey: 'ring', slotIds: [5] },
+  { key: 'underwear', labelKey: 'underwear', slotIds: [0] },
+  { key: 'right-ring', labelKey: 'ring', slotIds: [4] },
 ]
 
-const WEAPON_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'weapon', labelKey: 'weapon', slotIds: [14, 7], icon: Sword },
-  { key: 'offhand', labelKey: 'offhand', slotIds: [8], icon: Shield },
-]
+const DISPLAYED_EQUIPMENT_SLOTS = new Set(PAPERDOLL_SLOTS.flatMap((slot) => slot.slotIds))
 
-const ACCESSORY_EQUIPMENT_SLOTS: EquipmentSlotDefinition[] = [
-  { key: 'left-ear', labelKey: 'earring', slotIds: [2], icon: Gem },
-  { key: 'neck', labelKey: 'necklace', slotIds: [3], icon: Gem },
-  { key: 'right-ear', labelKey: 'earring', slotIds: [1], icon: Gem },
-  { key: 'left-ring', labelKey: 'ring', slotIds: [5], icon: CircleDot },
-  { key: 'right-ring', labelKey: 'ring', slotIds: [4], icon: CircleDot },
-]
-
-const EQUIPMENT_SLOT_GROUPS = [
-  { key: 'body', labelKey: 'body', slots: BODY_EQUIPMENT_SLOTS },
-  { key: 'weapons', labelKey: 'weapons', slots: WEAPON_EQUIPMENT_SLOTS },
-  { key: 'accessories', labelKey: 'accessories', slots: ACCESSORY_EQUIPMENT_SLOTS },
-]
-
-const EQUIPMENT_SLOTS = EQUIPMENT_SLOT_GROUPS.flatMap((group) => group.slots)
-
-const DISPLAYED_EQUIPMENT_SLOTS = new Set(EQUIPMENT_SLOTS.flatMap((slot) => slot.slotIds))
+function findEquippedItem(
+  items: ApiCharacterEquipmentItem[],
+  definition: EquipmentSlotDefinition,
+  claimed: Set<number>,
+) {
+  for (const slotId of definition.slotIds) {
+    if (claimed.has(slotId)) continue
+    const item = items.find((entry) => entry.slot === slotId)
+    if (item) {
+      claimed.add(slotId)
+      return item
+    }
+  }
+  return undefined
+}
 
 function EquipmentSlot({
   definition,
   item,
   t,
+  onSelect,
 }: {
   definition: EquipmentSlotDefinition
   item?: ApiCharacterEquipmentItem
   t: TFunction<'panel'>
+  onSelect?: (item: CharacterItemDetail) => void
 }) {
-  const Icon = definition.icon
+  const Icon = EQUIPMENT_SLOT_ICONS[definition.key]
   const label = t(`character.slots.${definition.labelKey}`)
-  const enchant = item && item.enchant > 0 ? ` · +${item.enchant}` : ''
+  const enchantLabel = item && item.enchant > 0 ? `+${item.enchant}` : ''
+  const title = item
+    ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''} · ${t('character.equipment.itemId', { id: item.item_id })}`
+    : label
+  const interactive = Boolean(item && onSelect)
+
+  function openDetail() {
+    if (!item || !onSelect) return
+    onSelect({
+      item_id: item.item_id,
+      name: item.name,
+      quantity: item.quantity,
+      enchant: item.enchant,
+      tradeable: item.tradeable,
+      slot: item.slot,
+      slotLabel: label,
+      location: 'PAPERDOLL',
+    })
+  }
+
   return (
     <article
-      className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : ''}`}
+      className={`character-equipment-slot equipment-slot-${definition.key} ${item ? 'is-filled' : 'is-empty'}${interactive ? ' is-interactive' : ''}`}
       aria-label={t('character.equipment.slotAria', {
         label,
-        value: item ? item.name : t('character.equipment.emptySlot'),
+        value: item ? `${item.name}${enchantLabel ? ` ${enchantLabel}` : ''}` : t('character.equipment.emptySlot'),
       })}
-      title={item ? `${item.name} · ${t('character.equipment.itemId', { id: item.item_id })}${enchant}` : label}
+      title={title}
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      onClick={interactive ? openDetail : undefined}
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                openDetail()
+              }
+            }
+          : undefined
+      }
     >
       <span className="character-equipment-slot-label">{label}</span>
       <div className="character-equipment-slot-cell">
         {item ? (
-          <ItemIcon itemId={item.item_id} name={item.name} size={38} />
+          <ItemIcon itemId={item.item_id} name={item.name} size={42} />
         ) : (
-          <Icon aria-hidden="true" />
+          <Icon />
         )}
-        {item ? (
-          <span className="character-equipment-slot-copy">
-            <strong>{item.name}</strong>
-            <small>
-              {t('character.equipment.itemId', { id: item.item_id })}{enchant}
-            </small>
-          </span>
-        ) : null}
+        {enchantLabel ? <span className="character-equipment-slot-enchant">{enchantLabel}</span> : null}
       </div>
     </article>
   )
@@ -130,9 +164,15 @@ export function CharacterPage() {
     queryFn: () => inventoryApi.equipment(id, login),
     enabled: Boolean(login) && Number.isFinite(id) && id > 0,
   })
+  const bagItems = useQuery({
+    queryKey: ['character-bag-items', login, id],
+    queryFn: () => inventoryApi.gameItems(id, login),
+    enabled: Boolean(login) && Number.isFinite(id) && id > 0,
+  })
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
   const [submitting, setSubmitting] = useState<'nick' | 'sex' | 'unstuck' | null>(null)
+  const [selectedItem, setSelectedItem] = useState<CharacterItemDetail | null>(null)
   const action = useAsyncAction()
   const operation = useRef<{ payload: string; key: string } | null>(null)
   function requestKey(service: string, value: string) {
@@ -144,6 +184,11 @@ export function CharacterPage() {
   const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
   const equippedItems = equipment.data ?? []
+  const claimedSlots = new Set<number>()
+  const paperdollItems = PAPERDOLL_SLOTS.map((definition) => ({
+    definition,
+    item: findEquippedItem(equippedItems, definition, claimedSlots),
+  }))
   const additionalEquipment = equippedItems.filter((item) => !DISPLAYED_EQUIPMENT_SLOTS.has(item.slot))
 
   async function refreshCharacter() {
@@ -315,21 +360,26 @@ export function CharacterPage() {
 
             {!equipment.isLoading && !equipment.isError ? (
               <div className="character-paperdoll" aria-label={t('character.equipment.paperdollLabel')}>
-                {EQUIPMENT_SLOT_GROUPS.map((group) => (
-                  <section className={`character-equipment-group character-equipment-group-${group.key}`} key={group.key}>
-                    <h3>{t(`character.groups.${group.labelKey}`)}</h3>
-                    <div className="character-equipment-slots">
-                      {group.slots.map((definition) => (
-                        <EquipmentSlot
-                          key={definition.key}
-                          definition={definition}
-                          item={equippedItems.find((item) => definition.slotIds.includes(item.slot))}
-                          t={t}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                ))}
+                <div className="character-paperdoll-frame" aria-hidden="true">
+                  <span className="character-paperdoll-corner is-tl" />
+                  <span className="character-paperdoll-corner is-tr" />
+                  <span className="character-paperdoll-corner is-bl" />
+                  <span className="character-paperdoll-corner is-br" />
+                </div>
+                <div className="character-paperdoll-band is-armor" aria-hidden="true" />
+                <div className="character-paperdoll-band is-weapons" aria-hidden="true" />
+                <div className="character-paperdoll-band is-jewels" aria-hidden="true" />
+                <div className="character-equipment-slots">
+                  {paperdollItems.map(({ definition, item }) => (
+                    <EquipmentSlot
+                      key={definition.key}
+                      definition={definition}
+                      item={item}
+                      t={t}
+                      onSelect={setSelectedItem}
+                    />
+                  ))}
+                </div>
               </div>
             ) : null}
 
@@ -338,17 +388,37 @@ export function CharacterPage() {
                 <span>{t('character.equipment.additional')}</span>
                 <div>
                   {additionalEquipment.map((item) => (
-                    <article key={`${item.slot}-${item.item_id}`}>
+                    <button
+                      type="button"
+                      key={`${item.slot}-${item.item_id}`}
+                      onClick={() =>
+                        setSelectedItem({
+                          item_id: item.item_id,
+                          name: item.name,
+                          quantity: item.quantity,
+                          enchant: item.enchant,
+                          tradeable: item.tradeable,
+                          slot: item.slot,
+                          location: 'PAPERDOLL',
+                        })
+                      }
+                    >
                       <ItemIcon itemId={item.item_id} name={item.name} size={28} />
                       <span>
                         <strong>{item.name}</strong>
                         <small>{t('character.equipment.slotInfo', { slot: item.slot, id: item.item_id })}{item.enchant > 0 ? ` · +${item.enchant}` : ''}</small>
                       </span>
-                    </article>
+                    </button>
                   ))}
                 </div>
               </div>
             ) : null}
+
+            <CharacterBagPanel
+              items={bagItems.data ?? []}
+              loading={bagItems.isLoading}
+              error={bagItems.isError}
+            />
           </Card>
 
           <div className="grid cols-2 character-services">
@@ -437,6 +507,7 @@ export function CharacterPage() {
           </div>
         </div>
       ) : null}
+      <CharacterItemDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
     </div>
   )
 }

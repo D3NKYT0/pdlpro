@@ -116,7 +116,10 @@ def test_adena_sums_template_amounts_across_stacks(schema):
 
 def test_inventory_and_equipment_use_distinct_locations(schema):
     inventory = schema.execute(CATALOG["list_character_items"], {"char_id": 101}).fetchall()
-    assert [row["quantity"] for row in inventory] == [100, 250]
+    assert [dict(row) for row in inventory] == [
+        {"item_id": 57, "quantity": 100, "enchant": 0, "location": "INVENTORY"},
+        {"item_id": 57, "quantity": 250, "enchant": 0, "location": "WAREHOUSE"},
+    ]
     equipment = schema.execute(CATALOG["list_character_equipment"], {"char_id": 101}).fetchall()
     assert [dict(row) for row in equipment] == [
         {"item_id": 100, "quantity": 1, "enchant": 7, "slot": 10}

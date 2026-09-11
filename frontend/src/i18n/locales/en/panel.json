@@ -1318,16 +1318,21 @@
       "accessories": "Accessories"
     },
     "slots": {
+      "face": "Face",
       "head": "Helmet",
+      "hair": "Hair",
       "gloves": "Gloves",
       "chest": "Chest",
       "feet": "Boots",
+      "cloak": "Cloak",
       "legs": "Legs",
+      "belt": "Belt",
       "weapon": "Weapon",
       "offhand": "Off-hand",
       "earring": "Earring",
       "necklace": "Necklace",
-      "ring": "Ring"
+      "ring": "Ring",
+      "underwear": "Underwear"
     },
     "equipment": {
       "eyebrow": "Character look",
@@ -1343,6 +1348,40 @@
       "itemId": "ID {{id}}",
       "additional": "Other equipped slots",
       "slotInfo": "Slot {{slot}} · ID {{id}}"
+    },
+    "bag": {
+      "sectionLabel": "Character inventory and warehouse",
+      "tabsLabel": "Character inventory",
+      "tabs": {
+        "inventory": "Inventory",
+        "warehouse": "Warehouse"
+      },
+      "gridLabel": {
+        "inventory": "Inventory grid",
+        "warehouse": "Warehouse grid"
+      },
+      "loading": "Loading items...",
+      "error": "Could not load this character's items.",
+      "itemId": "ID {{id}}",
+      "noEnchant": "no enchant",
+      "slotAria": "{{name}} · {{enchant}} · qty {{quantity}}"
+    },
+    "itemModal": {
+      "title": "Item details",
+      "noEnchant": "No enchant",
+      "equipped": "Equipped",
+      "tradeableYes": "Yes",
+      "tradeableNo": "No",
+      "fields": {
+        "id": "ID",
+        "quantity": "Quantity",
+        "enchant": "Enchant",
+        "slot": "Slot",
+        "location": "Location",
+        "tradeable": "Tradeable",
+        "grade": "Grade",
+        "category": "Category"
+      }
     },
     "services": {
       "nickname": {

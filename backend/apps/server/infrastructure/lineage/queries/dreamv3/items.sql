@@ -1,10 +1,10 @@
 -- Dream v3 (l2jdreamv3): item_id identifies a stack; item_type is the template.
 
 -- name: list_character_items
-SELECT item_type AS item_id, amount AS quantity, enchant
+SELECT item_type AS item_id, amount AS quantity, enchant, location
 FROM items
 WHERE owner_id = :char_id AND location IN ('INVENTORY', 'WAREHOUSE')
-ORDER BY item_id
+ORDER BY location, item_id
 
 -- name: list_character_equipment
 SELECT item_type AS item_id, amount AS quantity, enchant, slot
