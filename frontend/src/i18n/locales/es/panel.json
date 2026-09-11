@@ -1309,8 +1309,17 @@
       "sex": "Sexo",
       "online": "En línea",
       "clan": "Clan",
+      "ally": "Alianza",
+      "adena": "Adena",
+      "karma": "Karma",
+      "onlineTime": "Tiempo en línea",
+      "lastAccess": "Último acceso",
       "pvp": "PvP",
-      "pk": "PK"
+      "pk": "PK",
+      "noClan": "Sin clan",
+      "noAlly": "Sin alianza",
+      "clanCrest": "Emblema del clan",
+      "allyCrest": "Emblema de la alianza"
     },
     "groups": {
       "body": "Equipamiento",

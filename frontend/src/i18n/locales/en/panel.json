@@ -1309,8 +1309,17 @@
       "sex": "Sex",
       "online": "Online",
       "clan": "Clan",
+      "ally": "Alliance",
+      "adena": "Adena",
+      "karma": "Karma",
+      "onlineTime": "Online time",
+      "lastAccess": "Last access",
       "pvp": "PvP",
-      "pk": "PK"
+      "pk": "PK",
+      "noClan": "No clan",
+      "noAlly": "No alliance",
+      "clanCrest": "Clan crest",
+      "allyCrest": "Alliance crest"
     },
     "groups": {
       "body": "Armor",

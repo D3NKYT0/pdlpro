@@ -1309,8 +1309,17 @@
       "sex": "Sexo",
       "online": "Online",
       "clan": "Clã",
+      "ally": "Aliança",
+      "adena": "Adena",
+      "karma": "Karma",
+      "onlineTime": "Tempo online",
+      "lastAccess": "Último acesso",
       "pvp": "PvP",
-      "pk": "PK"
+      "pk": "PK",
+      "noClan": "Sem clã",
+      "noAlly": "Sem aliança",
+      "clanCrest": "Bandeira do clã",
+      "allyCrest": "Bandeira da aliança"
     },
     "groups": {
       "body": "Equipamentos",

@@ -1533,6 +1533,20 @@ html.pdl-panel .character-stats dd {
   font-size: 14px;
 }
 
+html.pdl-panel .character-crest-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+html.pdl-panel .character-crest {
+  flex: 0 0 auto;
+  height: 14px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
 html.pdl-panel .character-offline-hint {
   margin: 16px 0 0;
   color: #dc6b5b;

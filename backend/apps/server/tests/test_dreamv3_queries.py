@@ -34,19 +34,19 @@ def schema():
             obj_Id INTEGER PRIMARY KEY, account_name TEXT, char_name TEXT,
             online INTEGER, sex INTEGER, pvpkills INTEGER, pkkills INTEGER,
             title TEXT, clanid INTEGER, accesslevel INTEGER, onlinetime INTEGER,
-            x INTEGER, y INTEGER, z INTEGER
+            karma INTEGER, lastAccess INTEGER, x INTEGER, y INTEGER, z INTEGER
         );
         CREATE TABLE character_subclasses (
             char_obj_id INTEGER, level INTEGER, class_id INTEGER, isBase INTEGER
         );
         CREATE TABLE clan_data (
             clan_id INTEGER PRIMARY KEY, clan_level INTEGER,
-            reputation_score INTEGER, ally_id INTEGER, hasCastle INTEGER
+            reputation_score INTEGER, ally_id INTEGER, hasCastle INTEGER, crest BLOB
         );
         CREATE TABLE clan_subpledges (
             clan_id INTEGER, type INTEGER, name TEXT, leader_id INTEGER
         );
-        CREATE TABLE ally_data (ally_id INTEGER, ally_name TEXT);
+        CREATE TABLE ally_data (ally_id INTEGER, ally_name TEXT, crest BLOB);
         CREATE TABLE items (
             item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER,
             amount INTEGER, location TEXT, enchant INTEGER, slot INTEGER
@@ -69,10 +69,11 @@ def schema():
         CREATE TABLE siege_clans (type TEXT, clan_id INTEGER, residence_id INTEGER);
 
         INSERT INTO characters VALUES
-            (101, 'player', 'Knight', 0, 0, 10, 2, 'Title', 7, 0, 3600, 0, 0, 0);
+            (101, 'player', 'Knight', 0, 0, 10, 2, 'Title', 7, 0, 3600, 150, 1700000000000, 0, 0, 0);
         INSERT INTO character_subclasses VALUES (101, 80, 88, 1), (101, 40, 1, 0);
-        INSERT INTO clan_data VALUES (7, 5, 200, 0, 1);
+        INSERT INTO clan_data VALUES (7, 5, 200, 3, 1, NULL);
         INSERT INTO clan_subpledges VALUES (7, 0, 'Guild', 101);
+        INSERT INTO ally_data VALUES (3, 'Alliance', NULL);
         INSERT INTO items VALUES
             (1001, 101, 57, 100, 'INVENTORY', 0, -1),
             (1002, 101, 57, 250, 'WAREHOUSE', 0, -1),
@@ -105,6 +106,9 @@ def test_character_uses_base_class_and_main_clan(schema):
         "char_id": 101, "name": "Knight", "level": 80, "online": 0, "sex": 0,
         "pvp": 10, "pk": 2, "class_id": 88, "title": "Title",
         "clan_name": "Guild", "is_clan_leader": 1,
+        "karma": 150, "adena": 350, "online_time": 3600, "last_access": 1700000000000,
+        "clan_id": 7, "ally_id": 3, "ally_name": "Alliance",
+        "clan_crest": None, "ally_crest": None,
     }
 
 

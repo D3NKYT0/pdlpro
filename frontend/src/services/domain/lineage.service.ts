@@ -31,6 +31,15 @@ export interface ApiGameCharacter {
   title: string
   clan_name: string
   is_clan_leader: boolean
+  karma: number
+  adena: number
+  online_time: number
+  last_access: number
+  clan_id: number
+  ally_id: number
+  ally_name: string
+  clan_crest_base64: string
+  ally_crest_base64: string
 }
 
 export interface ApiServicePrices {

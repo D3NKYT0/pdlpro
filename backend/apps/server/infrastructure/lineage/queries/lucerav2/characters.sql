@@ -12,10 +12,27 @@ SELECT
     COALESCE(CS.class_id, 0) AS class_id,
     COALESCE(C.title, '') AS title,
     COALESCE(D.name, '') AS clan_name,
-    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader,
+    COALESCE(C.karma, 0) AS karma,
+    COALESCE(I.adenas, 0) AS adena,
+    COALESCE(C.onlinetime, 0) AS online_time,
+    COALESCE(C.lastAccess, 0) AS last_access,
+    COALESCE(C.clanid, 0) AS clan_id,
+    COALESCE(CD.ally_id, 0) AS ally_id,
+    COALESCE(A.ally_name, '') AS ally_name,
+    CD.crest AS clan_crest,
+    A.crest AS ally_crest
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
 LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
+LEFT JOIN clan_data CD ON CD.clan_id = C.clanid
+LEFT JOIN ally_data A ON A.ally_id = CD.ally_id
+LEFT JOIN (
+    SELECT owner_id, SUM(amount) AS adenas
+    FROM items
+    WHERE item_type = '57'
+    GROUP BY owner_id
+) I ON I.owner_id = C.obj_Id
 WHERE C.account_name = :login
 ORDER BY CS.level DESC, C.char_name ASC
 
@@ -31,10 +48,27 @@ SELECT
     COALESCE(CS.class_id, 0) AS class_id,
     COALESCE(C.title, '') AS title,
     COALESCE(D.name, '') AS clan_name,
-    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader
+    CASE WHEN D.leader_id = C.obj_Id THEN 1 ELSE 0 END AS is_clan_leader,
+    COALESCE(C.karma, 0) AS karma,
+    COALESCE(I.adenas, 0) AS adena,
+    COALESCE(C.onlinetime, 0) AS online_time,
+    COALESCE(C.lastAccess, 0) AS last_access,
+    COALESCE(C.clanid, 0) AS clan_id,
+    COALESCE(CD.ally_id, 0) AS ally_id,
+    COALESCE(A.ally_name, '') AS ally_name,
+    CD.crest AS clan_crest,
+    A.crest AS ally_crest
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
 LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
+LEFT JOIN clan_data CD ON CD.clan_id = C.clanid
+LEFT JOIN ally_data A ON A.ally_id = CD.ally_id
+LEFT JOIN (
+    SELECT owner_id, SUM(amount) AS adenas
+    FROM items
+    WHERE item_type = '57'
+    GROUP BY owner_id
+) I ON I.owner_id = C.obj_Id
 WHERE C.account_name = :login AND C.obj_Id = :char_id
 LIMIT 1
 

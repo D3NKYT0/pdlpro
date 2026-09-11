@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
-import { formatNumber } from '../../lib/formatters'
+import { formatCompactQuantity, formatNumber } from '../../lib/formatters'
 import type { ApiGameItem } from '../../services/api'
 
 interface InventoryGameItemsProps {

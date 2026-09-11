@@ -40,11 +40,20 @@ def test_list_and_get_character_includes_sheet_fields(api, player):
     assert listed.data[0]["class_id"] == 0
     assert listed.data[0]["title"] == ""
     assert listed.data[0]["is_clan_leader"] is False
+    assert listed.data[0]["adena"] == 0
+    assert listed.data[0]["ally_name"] == ""
+    assert listed.data[0]["clan_crest_base64"] == ""
+    assert listed.data[0]["ally_crest_base64"] == ""
 
     detail = api.get(f"/api/v1/customer/server/characters/{char.char_id}/?login=hero")
     assert detail.status_code == 200
     assert detail.data["char_id"] == char.char_id
     assert detail.data["name"] == "SirHero"
+    assert detail.data["karma"] == 0
+    assert detail.data["online_time"] == 0
+    assert detail.data["last_access"] == 0
+    assert detail.data["clan_id"] == 0
+    assert detail.data["ally_id"] == 0
 
 
 @pytest.mark.django_db

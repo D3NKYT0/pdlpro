@@ -25,6 +25,7 @@ from apps.server.domain.gateways import (
     ServerStatus,
 )
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
+from apps.server.infrastructure.lineage.crests import crest_to_png_base64
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.server.infrastructure.null_gateway import SocketStatusProbe
 from apps.server.infrastructure.passwords import LineagePasswordHasher
@@ -174,6 +175,15 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             title=str(row.get("title") or "").strip(),
             clan_name=str(row.get("clan_name") or "").strip(),
             is_clan_leader=bool(int(row.get("is_clan_leader") or 0)),
+            karma=int(row.get("karma") or 0),
+            adena=int(row.get("adena") or 0),
+            online_time=int(row.get("online_time") or 0),
+            last_access=int(row.get("last_access") or 0),
+            clan_id=int(row.get("clan_id") or 0),
+            ally_id=int(row.get("ally_id") or 0),
+            ally_name=str(row.get("ally_name") or "").strip(),
+            clan_crest_base64=crest_to_png_base64(row.get("clan_crest"), "clan"),
+            ally_crest_base64=crest_to_png_base64(row.get("ally_crest"), "ally"),
         )
 
     def get_status(self) -> ServerStatus:

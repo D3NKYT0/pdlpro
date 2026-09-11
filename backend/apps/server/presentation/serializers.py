@@ -91,7 +91,9 @@ class GameCharacterSerializer(serializers.Serializer):
     ``many=True`` representa uma coleção.
 
     Campos declarados: ``char_id``, ``name``, ``level``, ``online``, ``sex``, ``pvp``, ``pk``,
-    ``class_id``, ``title``, ``clan_name``, ``is_clan_leader``.
+    ``class_id``, ``title``, ``clan_name``, ``is_clan_leader``, ``karma``, ``adena``,
+    ``online_time``, ``last_access``, ``clan_id``, ``ally_id``, ``ally_name``,
+    ``clan_crest_base64``, ``ally_crest_base64``.
     """
 
     char_id = serializers.IntegerField()
@@ -105,6 +107,15 @@ class GameCharacterSerializer(serializers.Serializer):
     title = serializers.CharField(allow_blank=True)
     clan_name = serializers.CharField(allow_blank=True)
     is_clan_leader = serializers.BooleanField()
+    karma = serializers.IntegerField()
+    adena = serializers.IntegerField()
+    online_time = serializers.IntegerField()
+    last_access = serializers.IntegerField()
+    clan_id = serializers.IntegerField()
+    ally_id = serializers.IntegerField()
+    ally_name = serializers.CharField(allow_blank=True)
+    clan_crest_base64 = serializers.CharField(allow_blank=True)
+    ally_crest_base64 = serializers.CharField(allow_blank=True)
 
 
 class RegisterGameAccountSerializer(serializers.Serializer):

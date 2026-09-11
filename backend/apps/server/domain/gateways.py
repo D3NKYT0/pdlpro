@@ -86,6 +86,15 @@ class GameCharacter:
     title: str = ""
     clan_name: str = ""
     is_clan_leader: bool = False
+    karma: int = 0
+    adena: int = 0
+    online_time: int = 0
+    last_access: int = 0
+    clan_id: int = 0
+    ally_id: int = 0
+    ally_name: str = ""
+    clan_crest_base64: str = ""
+    ally_crest_base64: str = ""
 
 
 @dataclass(frozen=True, slots=True)

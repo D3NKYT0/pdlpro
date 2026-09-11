@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import socket
+from dataclasses import replace
 
 from django.conf import settings
 
@@ -198,43 +199,11 @@ class NullLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         if self.nickname_exists(name):
             raise NicknameTakenError()
-        self._replace_character(
-            login,
-            char_id,
-            GameCharacter(
-                char.char_id,
-                name,
-                char.level,
-                False,
-                char.sex,
-                char.pvp,
-                char.pk,
-                char.class_id,
-                char.title,
-                char.clan_name,
-                char.is_clan_leader,
-            ),
-        )
+        self._replace_character(login, char_id, replace(char, name=name, online=False))
 
     def change_sex(self, login: str, char_id: int, sex: int) -> None:
         char = self._require_offline(login, char_id)
-        self._replace_character(
-            login,
-            char_id,
-            GameCharacter(
-                char.char_id,
-                char.name,
-                char.level,
-                False,
-                sex,
-                char.pvp,
-                char.pk,
-                char.class_id,
-                char.title,
-                char.clan_name,
-                char.is_clan_leader,
-            ),
-        )
+        self._replace_character(login, char_id, replace(char, sex=sex, online=False))
 
     def unstuck(self, login: str, char_id: int) -> None:
         self._require_offline(login, char_id)

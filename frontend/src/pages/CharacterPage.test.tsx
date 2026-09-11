@@ -24,7 +24,28 @@ vi.mock('../services/api', async (importOriginal) => {
   }
 })
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
-const character = { char_id: 7, name: 'Hero', level: 80, online: false, sex: 0, pvp: 0, pk: 0, class_id: 0, title: '', clan_name: '', is_clan_leader: false }
+const character = {
+  char_id: 7,
+  name: 'Hero',
+  level: 80,
+  online: false,
+  sex: 0,
+  pvp: 12,
+  pk: 1,
+  class_id: 0,
+  title: 'THEONE',
+  clan_name: 'Guild',
+  is_clan_leader: false,
+  karma: 0,
+  adena: 2_500_000,
+  online_time: 90000,
+  last_access: 1_700_000_000_000,
+  clan_id: 7,
+  ally_id: 3,
+  ally_name: 'Alliance',
+  clan_crest_base64: '',
+  ally_crest_base64: '',
+}
 let query: QueryClient
 beforeEach(() => {
   vi.resetAllMocks()
@@ -72,6 +93,14 @@ it('mostra paperdoll com slots L2 e item equipado', async () => {
   expect(screen.getByLabelText('Cinto: vazio')).toBeVisible()
   expect(screen.getByText('+5')).toBeVisible()
   expect(screen.getByText('+6')).toBeVisible()
+})
+it('mostra ficha com adena compacta, clã, aliança e tempo online', async () => {
+  mount()
+  expect(await screen.findByText('Guild')).toBeVisible()
+  expect(screen.getByText('Alliance')).toBeVisible()
+  expect(screen.getByText('2,5KK')).toBeVisible()
+  expect(screen.getByText('1d 1h')).toBeVisible()
+  expect(screen.getByText('THEONE')).toBeVisible()
 })
 it('mostra inventário e warehouse em abas com grade', async () => {
   vi.mocked(inventoryApi.gameItems).mockResolvedValue([

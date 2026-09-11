@@ -22,6 +22,8 @@ import {
   VenusAndMars,
 } from 'lucide-react'
 import { formatServicePrice, getClassName } from '../lib/lineage'
+import { formatCompactQuantity } from '../lib/formatters'
+import { formatDate, formatDuration } from '../components/rankings/rankingsFormat'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
 import type { ApiCharacterEquipmentItem } from '../services/api'
 import { ItemIcon } from '../components/ItemIcon'
@@ -63,6 +65,15 @@ const PAPERDOLL_SLOTS: EquipmentSlotDefinition[] = [
 ]
 
 const DISPLAYED_EQUIPMENT_SLOTS = new Set(PAPERDOLL_SLOTS.flatMap((slot) => slot.slotIds))
+
+function CrestLabel({ crest, label, alt }: { crest?: string | null; label: string; alt: string }) {
+  return (
+    <span className="character-crest-value">
+      {crest ? <img src={`data:image/png;base64,${crest}`} alt={alt} className="character-crest" /> : null}
+      <span>{label}</span>
+    </span>
+  )
+}
 
 function findEquippedItem(
   items: ApiCharacterEquipmentItem[],
@@ -317,7 +328,39 @@ export function CharacterPage() {
               </div>
               <div>
                 <dt>{t('character.stats.clan')}</dt>
-                <dd>{char.clan_name || '—'}</dd>
+                <dd>
+                  <CrestLabel
+                    crest={char.clan_crest_base64}
+                    label={char.clan_name || t('character.stats.noClan')}
+                    alt={t('character.stats.clanCrest')}
+                  />
+                </dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.ally')}</dt>
+                <dd>
+                  <CrestLabel
+                    crest={char.ally_crest_base64}
+                    label={char.ally_name || t('character.stats.noAlly')}
+                    alt={t('character.stats.allyCrest')}
+                  />
+                </dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.adena')}</dt>
+                <dd title={String(char.adena ?? 0)}>{formatCompactQuantity(char.adena ?? 0)}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.karma')}</dt>
+                <dd>{char.karma ?? 0}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.onlineTime')}</dt>
+                <dd>{formatDuration(char.online_time ?? 0)}</dd>
+              </div>
+              <div>
+                <dt>{t('character.stats.lastAccess')}</dt>
+                <dd>{formatDate(char.last_access ?? 0)}</dd>
               </div>
               <div>
                 <dt>{t('character.stats.pvp')}</dt>
