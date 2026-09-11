@@ -8,6 +8,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
+  ArrowUpRight,
   Box,
   Coins,
   Dices,
@@ -183,12 +184,15 @@ export function GamesPage() {
 
   return (
     <div className="games-page">
-      <div className="program-actions"><Link className="btn ghost" to="/panel/rewards">{t('games.rewardsLink')}</Link></div>
       <Card as="header" className="games-hero">
         <div className="games-hero-copy">
           <span className="panel-eyebrow">{t('games.eyebrow')}</span>
           <h1>{t('games.title')}</h1>
           <p className="muted">{t('games.description')}</p>
+          <Link className="games-hero-jump" to="/panel/rewards">
+            {t('games.rewardsLink')}
+            <ArrowUpRight aria-hidden="true" />
+          </Link>
         </div>
         <div className="token-balance">
           <Coins aria-hidden="true" />

@@ -6169,6 +6169,7 @@ html.pdl-panel .games-page {
 }
 
 html.pdl-panel .games-hero {
+  position: relative;
   display: flex;
   min-height: 152px;
   align-items: center;
@@ -6203,6 +6204,34 @@ html.pdl-panel .games-hero h1 {
 
 html.pdl-panel .games-hero p {
   margin: 0;
+}
+
+html.pdl-panel .games-hero-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-top: 14px;
+  padding: 8px 12px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(6, 6, 5, 0.5);
+  color: var(--panel-gold-bright);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+html.pdl-panel .games-hero-jump svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.7;
+}
+
+html.pdl-panel .games-hero-jump:hover {
+  border-color: rgba(230, 199, 125, 0.42);
+  background: rgba(197, 161, 97, 0.08);
+  color: #fff;
 }
 
 html.pdl-panel .token-balance {

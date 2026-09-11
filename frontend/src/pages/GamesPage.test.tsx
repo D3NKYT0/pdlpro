@@ -146,3 +146,12 @@ it('usa retrato de monstro na arena', async () => {
   expect(document.querySelectorAll('.monster-portrait')).toHaveLength(2)
   expect(document.querySelector('.monster-portrait.is-down')).toBeTruthy()
 })
+it('mantém o atalho de recompensas dentro do hero', async () => {
+  mount('roulette')
+  const header = await screen.findByRole('banner')
+  const jump = screen.getByRole('link', { name: 'Missões, bônus diário e rankings' })
+  expect(header).toContainElement(jump)
+  expect(jump).toHaveAttribute('href', '/panel/rewards')
+  expect(jump).toHaveClass('games-hero-jump')
+  expect(document.querySelector('.program-actions')).toBeNull()
+})
