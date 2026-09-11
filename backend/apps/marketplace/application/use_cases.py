@@ -6,6 +6,7 @@ from uuid import UUID
 
 from django.conf import settings
 
+from apps.auction.domain.repositories import IAuctionRepository
 from apps.marketplace.domain.entities import CharacterListingEntity
 from apps.marketplace.domain.exceptions import (
     CannotBuyOwnListingError,
@@ -16,7 +17,6 @@ from apps.marketplace.domain.exceptions import (
     ListingNotFoundError,
 )
 from apps.marketplace.domain.repositories import ICharacterListingRepository
-from apps.auction.domain.repositories import IAuctionRepository
 from apps.server.domain.access import IAccountAccessService
 from apps.server.domain.exceptions import (
     CharacterOfflineRequiredError,

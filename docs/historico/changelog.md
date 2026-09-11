@@ -15,6 +15,18 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   (analytics → Sentry; funcionais → persistência de idioma).
 - Aviso explícito de **sessão expirada** (toast + lead no login) quando o refresh
   JWT falha de forma definitiva; logout manual não dispara a mensagem.
+- Ficha do personagem (`/panel/accounts/...`): paperdoll no estilo do inventário
+  L2 (slots, silhuetas SVG, modal de item), grade de **inventário** e **warehouse**
+  (baú) com localização dos itens, e extras de ficha (Adena, karma, tempo online,
+  último acesso, clã/ally com crest).
+- **Leilão de personagem** em `/panel/auctions` (`kind: item | character`): criação
+  com custódia na conta master, lances sem inventário de destino, fechamento
+  automático no vencimento (transferência ao vencedor ou devolução ao vendedor),
+  guards de offline/propriedade/listagem duplicada vs marketplace, e UI/i18n
+  pt/en/es.
+- Snapshot de **bag_items** no leilão de personagem (inventário + warehouse no
+  momento da publicação); o detalhe do leilão reutiliza o paperdoll e a grade de
+  bag/baú da ficha para o comprador ver o conteúdo anunciado.
 
 ### Alterado
 
