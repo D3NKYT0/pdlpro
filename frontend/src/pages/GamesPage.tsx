@@ -149,7 +149,10 @@ export function GamesPage() {
     const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
       const summary = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
-      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', { reels: result.reels.join(' | '), outcome: summary }))
+      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', {
+        reels: result.reels.map((symbol) => t(`games.chance.symbols.${symbol}`, { defaultValue: symbol })).join(' | '),
+        outcome: summary,
+      }))
       await refresh()
       return result
     }, t('games.toast.slotsError'))
@@ -341,28 +344,34 @@ export function GamesPage() {
             spinningSlots={fx.playing === 'slots'}
             reels={fx.slotsReels}
             symbols={minigames.data?.slots.symbols}
+            diceLabel={t('games.chance.diceBoard')}
+            slotsLabel={t('games.chance.slotsBoard')}
+            symbolLabel={(symbol) => t(`games.chance.symbols.${symbol}`, { defaultValue: symbol })}
           />
-          <form className="game-form-grid" onSubmit={playDice}>
-            <Field>
-              {t('games.chance.betType')}
-              <select value={diceType} onChange={(event) => setDiceType(event.target.value)}>
-                <option value="even">{t('games.chance.even')}</option>
-                <option value="odd">{t('games.chance.odd')}</option>
-                <option value="high">{t('games.chance.high')}</option>
-                <option value="low">{t('games.chance.low')}</option>
-              </select>
-            </Field>
-            <Field>
-              {t('games.chance.tokens')}
-              <input value={diceAmount} onChange={(event) => setDiceAmount(event.target.value)} inputMode="numeric" />
-            </Field>
-            <div className="game-actions">
+          <div className="chance-controls">
+            <form className="chance-dice-form" onSubmit={playDice}>
+              <Field>
+                {t('games.chance.betType')}
+                <select value={diceType} onChange={(event) => setDiceType(event.target.value)}>
+                  <option value="even">{t('games.chance.even')}</option>
+                  <option value="odd">{t('games.chance.odd')}</option>
+                  <option value="high">{t('games.chance.high')}</option>
+                  <option value="low">{t('games.chance.low')}</option>
+                </select>
+              </Field>
+              <Field>
+                {t('games.chance.tokens')}
+                <input value={diceAmount} onChange={(event) => setDiceAmount(event.target.value)} inputMode="numeric" />
+              </Field>
               <Button type="submit"><Dices aria-hidden="true" /> {t('games.chance.playDice')}</Button>
+            </form>
+            <div className="chance-slots-play">
+              <p className="muted">{t('games.chance.slotsHint')}</p>
               <Button className="ghost" type="button" onClick={() => void playSlots()}>
                 {t('games.chance.playSlots', { count: minigames.data?.slots.cost ?? 1 })}
               </Button>
             </div>
-          </form>
+          </div>
         </Card>
 
         <div

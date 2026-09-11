@@ -1,6 +1,22 @@
 import type { CSSProperties } from 'react'
-import { Trophy } from 'lucide-react'
-import { DICE_FACES, inferBoxRarity, monsterHue, type GameRarity } from './gameArt'
+import { Coins, Crown, Gem, ScrollText, Shield, Sword, Trophy, type LucideIcon } from 'lucide-react'
+import {
+  DICE_PIP_FACES,
+  inferBoxRarity,
+  isSlotSymbol,
+  monsterHue,
+  visibleSlotReels,
+  type GameRarity,
+  type SlotSymbol,
+} from './gameArt'
+
+const SLOT_ICONS: Record<SlotSymbol, LucideIcon> = {
+  sword: Sword,
+  shield: Shield,
+  crown: Crown,
+  adena: Coins,
+  scroll: ScrollText,
+}
 
 export function RouletteWheel({
   tokens,
@@ -45,33 +61,57 @@ export function BoxChest({
   )
 }
 
+function DicePips({ face }: { face: number }) {
+  const pips = DICE_PIP_FACES[face] ?? DICE_PIP_FACES[5]
+  return (
+    <span className="chance-die" data-face={face} aria-hidden="true">
+      {Array.from({ length: 9 }, (_, index) => (
+        <i key={index} data-pip={index + 1} className={pips.includes(index + 1) ? 'is-on' : undefined} />
+      ))}
+    </span>
+  )
+}
+
 export function ChanceStage({
   rolling = false,
   roll,
   spinningSlots = false,
   reels,
   symbols = [],
+  diceLabel,
+  slotsLabel,
+  symbolLabel,
 }: {
   rolling?: boolean
   roll?: number
   spinningSlots?: boolean
   reels?: string[]
   symbols?: string[]
+  diceLabel: string
+  slotsLabel: string
+  symbolLabel: (symbol: string) => string
 }) {
-  const face = roll && roll >= 1 && roll <= 6 ? DICE_FACES[roll] : '🎲'
-  const shown = reels?.length ? reels : symbols.slice(0, 3)
-  const slots = shown.length ? shown : ['♦', '♦', '♦']
+  const face = roll && roll >= 1 && roll <= 6 ? roll : 5
+  const slots = visibleSlotReels(reels, symbols)
   return (
     <div className="chance-stage" data-theme-part="game-stage">
-      <div className={`chance-dice${rolling ? ' is-rolling' : ''}`} aria-hidden="true">
-        <b>{face}</b>
+      <div className={`chance-dice${rolling ? ' is-rolling' : roll ? '' : ' is-idle'}`}>
+        <span className="panel-eyebrow">{diceLabel}</span>
+        <DicePips face={face} />
       </div>
-      <div className={`chance-slots${spinningSlots ? ' is-spinning' : ''}`} aria-hidden="true">
-        {slots.map((symbol, index) => (
-          <span className="chance-reel" key={`${symbol}-${index}`}>
-            {symbol}
-          </span>
-        ))}
+      <div className={`chance-slots${spinningSlots ? ' is-spinning' : ''}`}>
+        <span className="panel-eyebrow">{slotsLabel}</span>
+        <div className="chance-reels">
+          {slots.map((symbol, index) => {
+            const Icon = isSlotSymbol(symbol) ? SLOT_ICONS[symbol] : Gem
+            return (
+              <span className="chance-reel" data-symbol={symbol} key={`${symbol}-${index}`}>
+                <Icon aria-hidden="true" />
+                <small>{symbolLabel(symbol)}</small>
+              </span>
+            )
+          })}
+        </div>
       </div>
     </div>
   )

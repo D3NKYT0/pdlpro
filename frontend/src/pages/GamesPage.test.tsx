@@ -138,7 +138,20 @@ it('mostra o dado sorteado no palco', async () => {
   const user = mount('chance')
   await screen.findByText('10 fichas')
   await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
-  await waitFor(() => expect(document.querySelector('.chance-dice b')?.textContent).toBe('⚃'))
+  await waitFor(() => expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4'))
+})
+it('mostra os cilindros com ícone e nome completo, sem cortar o id inglês', async () => {
+  vi.mocked(gamesApi.minigames).mockResolvedValue({
+    fichas: 10,
+    dice: { active: true, min_bet: 1 },
+    slots: { active: true, cost: 1, symbols: ['sword', 'shield', 'crown'] },
+  } as any)
+  mount('chance')
+  expect(await screen.findByText('Espada')).toBeVisible()
+  expect(screen.getByText('Escudo')).toBeVisible()
+  expect(screen.getByText('Coroa')).toBeVisible()
+  expect(document.querySelector('[data-symbol="sword"]')).toBeTruthy()
+  expect(screen.queryByText('sword')).not.toBeInTheDocument()
 })
 it('usa retrato de monstro na arena', async () => {
   mount('economy')

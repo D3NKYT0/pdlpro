@@ -1020,7 +1020,17 @@
       "tokens": "Fichas",
       "playDice": "Lanzar los dados",
       "playSlots_one": "Girar cilindros · {{count}} ficha",
-      "playSlots_other": "Girar cilindros · {{count}} fichas"
+      "playSlots_other": "Girar cilindros · {{count}} fichas",
+      "diceBoard": "Dados",
+      "slotsBoard": "Cilindros",
+      "slotsHint": "Tres iguales pagan 10×. Un par paga 2×.",
+      "symbols": {
+        "sword": "Espada",
+        "shield": "Escudo",
+        "crown": "Corona",
+        "adena": "Adena",
+        "scroll": "Pergamino"
+      }
     },
     "economy": {
       "eyebrow": "Cacería y forja",

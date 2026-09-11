@@ -1020,7 +1020,17 @@
       "tokens": "Tokens",
       "playDice": "Roll the dice",
       "playSlots_one": "Spin the reels · {{count}} token",
-      "playSlots_other": "Spin the reels · {{count}} tokens"
+      "playSlots_other": "Spin the reels · {{count}} tokens",
+      "diceBoard": "Dice",
+      "slotsBoard": "Reels",
+      "slotsHint": "Three of a kind pay 10×. A pair pays 2×.",
+      "symbols": {
+        "sword": "Sword",
+        "shield": "Shield",
+        "crown": "Crown",
+        "adena": "Adena",
+        "scroll": "Scroll"
+      }
     },
     "economy": {
       "eyebrow": "Hunt and forge",

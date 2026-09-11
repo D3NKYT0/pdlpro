@@ -30,3 +30,26 @@ export function monsterHue(id: string) {
 }
 
 export const DICE_FACES = ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'] as const
+
+/** Pips 1–9 no grid 3×3 do dado (linha a linha). */
+export const DICE_PIP_FACES: Record<number, number[]> = {
+  1: [5],
+  2: [1, 9],
+  3: [1, 5, 9],
+  4: [1, 3, 7, 9],
+  5: [1, 3, 5, 7, 9],
+  6: [1, 3, 4, 6, 7, 9],
+}
+
+export const SLOT_SYMBOLS = ['sword', 'shield', 'crown', 'adena', 'scroll'] as const
+export type SlotSymbol = (typeof SLOT_SYMBOLS)[number]
+
+export function isSlotSymbol(value: string): value is SlotSymbol {
+  return (SLOT_SYMBOLS as readonly string[]).includes(value)
+}
+
+export function visibleSlotReels(reels?: string[], symbols: string[] = []): string[] {
+  const source = reels?.length ? reels : symbols
+  const fallback = source.length ? source : [...SLOT_SYMBOLS]
+  return Array.from({ length: 3 }, (_, index) => fallback[index % fallback.length])
+}

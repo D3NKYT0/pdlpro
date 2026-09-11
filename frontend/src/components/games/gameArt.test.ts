@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { inferBoxRarity, monsterHue } from './gameArt'
+import { inferBoxRarity, monsterHue, visibleSlotReels } from './gameArt'
 
 describe('inferBoxRarity', () => {
   it('lê a raridade no nome editorial, com ou sem acento', () => {
@@ -20,4 +20,10 @@ describe('inferBoxRarity', () => {
 it('varia o tom do monstro a partir do id', () => {
   expect(monsterHue('orc')).not.toBe(monsterHue('troll'))
   expect(monsterHue('orc')).toBe(monsterHue('orc'))
+})
+
+it('monta três cilindros visíveis a partir do catálogo', () => {
+  expect(visibleSlotReels(undefined, ['sword', 'shield', 'crown', 'adena'])).toEqual(['sword', 'shield', 'crown'])
+  expect(visibleSlotReels(['adena', 'scroll', 'sword'])).toEqual(['adena', 'scroll', 'sword'])
+  expect(visibleSlotReels()).toHaveLength(3)
 })

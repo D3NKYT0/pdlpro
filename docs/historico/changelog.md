@@ -38,9 +38,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
-- Nomes de vitrine dos minigames em `/panel/games` e `/panel/admin/games`
-  (pt/en/es): Roda da Fortuna, Baús Encantados, Mesa da Taverna, Cilindros,
-  Pescaria, Arena das Feras e Bônus diário.
+- Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
+  nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
 
 ### Corrigido
 
