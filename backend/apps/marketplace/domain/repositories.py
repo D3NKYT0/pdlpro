@@ -50,6 +50,8 @@ class ICharacterListingRepository(ABC):
         old_account: str,
         price: Decimal,
         notes: str,
+        bag_items: list | None = None,
+        skills: list | None = None,
     ) -> CharacterListingEntity:
         raise NotImplementedError
 

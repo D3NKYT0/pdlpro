@@ -1,3 +1,5 @@
+import type { ApiGameSkill } from './domain/lineage.service'
+
 export interface ApiUser {
   id: string
   username: string
@@ -182,6 +184,15 @@ export interface ApiCharacterListing {
     enchant: number
     slot: number | null
   }>
+  bag_items?: Array<{
+    item_id: number
+    name?: string | null
+    quantity?: number
+    enchant?: number
+    location?: string | null
+    tradeable?: boolean | null
+  }>
+  skills?: ApiGameSkill[]
   price: string
   status: string
   notes: string

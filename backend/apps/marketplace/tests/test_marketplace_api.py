@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
-from apps.server.domain.gateways import GameItem, ILineageGateway
+from apps.server.domain.gateways import GameItem, GameSkill, ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
 
@@ -33,7 +33,12 @@ def test_list_and_buy_character(api, seller, buyer):
     char = gateway.seed_character(
         "seller",
         "SirSell",
-        items=[GameItem(2413, "Helmet", 1, 3, slot=6)],
+        items=[
+            GameItem(2413, "Helmet", 1, 3, slot=6),
+            GameItem(57, "Adena", 100, 0, location="INVENTORY"),
+            GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
+        ],
+        skills=[GameSkill(1, 52)],
     )
 
     listed = api.post(
@@ -53,11 +58,27 @@ def test_list_and_buy_character(api, seller, buyer):
     assert equipment[0]["quantity"] == 1
     assert equipment[0]["enchant"] == 3
     assert equipment[0]["slot"] == 6
+    assert [(row["item_id"], row["location"], row["quantity"]) for row in listed.data["bag_items"]] == [
+        (57, "INVENTORY", 100),
+        (6673, "WAREHOUSE", 5),
+    ]
+    from apps.server.infrastructure.lineage.skill_catalog import skill_progress
+    skill = listed.data["skills"][0]
+    progress = skill_progress(1, 52)
+    assert skill["skill_id"] == 1
+    assert skill["level"] == progress["level"]
+    assert skill["enchant"] == progress["enchant"]
+    assert skill["icon_url"] == "/skill-icons/1.png"
     assert listed.data["created_at"]
     listing_id = listed.data["id"]
     catalog = api.get("/api/v1/public/marketplace/")
     assert catalog.status_code == 200
     assert catalog.data[0]["char_name"] == "SirSell"
+    assert [(row["item_id"], row["location"]) for row in catalog.data[0]["bag_items"]] == [
+        (57, "INVENTORY"),
+        (6673, "WAREHOUSE"),
+    ]
+    assert catalog.data[0]["skills"][0]["skill_id"] == 1
 
     api.force_authenticate(user=buyer)
     assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json").status_code == 200

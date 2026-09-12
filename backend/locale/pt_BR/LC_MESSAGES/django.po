@@ -1679,7 +1679,15 @@ msgstr ""
 msgid "Em disputa"
 msgstr ""
 
-#: .\apps\marketplace\infrastructure\models.py:59
+#: .\apps\marketplace\infrastructure\models.py:51
+msgid "Itens da bag e warehouse"
+msgstr ""
+
+#: .\apps\marketplace\infrastructure\models.py:52
+msgid "Skills do personagem"
+msgstr ""
+
+#: .\apps\marketplace\infrastructure\models.py:61
 msgid "Anúncio de personagem"
 msgstr ""
 

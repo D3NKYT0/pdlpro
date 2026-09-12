@@ -48,6 +48,8 @@ class CharacterListing(BaseModel):
     char_clan_name = models.CharField(max_length=45, blank=True, default="")
     char_is_clan_leader = models.BooleanField(default=False)
     equipment = models.JSONField(default=list, blank=True)
+    bag_items = models.JSONField(_("Itens da bag e warehouse"), default=list, blank=True)
+    skills = models.JSONField(_("Skills do personagem"), default=list, blank=True)
     old_account = models.CharField(max_length=45, blank=True, default="")
     new_account = models.CharField(max_length=45, blank=True)
     price = models.DecimalField(max_digits=12, decimal_places=2)

@@ -20,7 +20,48 @@ vi.mock('../services/domain/auction.service', () => ({ auctionApi: { open: vi.fn
 vi.mock('../services/domain/lineage.service', () => ({ lineageApi: { characters: vi.fn() }, inventoryApi: { dashboard: vi.fn(), equipment: vi.fn() } }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
-const listing: ApiCharacterListing = { id: 'listing', seller_username: 'seller', char_id: 7, char_name: 'Elf', char_level: 80, char_class: 99, char_title: 'Campeão', char_sex: 0, char_pvp: 40, char_pk: 0, char_clan_name: 'Reino', char_is_clan_leader: false, equipment: [{ item_id: 57, name: 'Adena', quantity: 10, enchant: 0, slot: 1 }], price: '150.25', status: 'for_sale', notes: 'Pronto para jogar', created_at: '2026-09-02T10:00:00Z', updated_at: '2026-09-02T10:00:00Z', sold_at: null }
+const listing: ApiCharacterListing = {
+  id: 'listing',
+  seller_username: 'seller',
+  char_id: 7,
+  char_name: 'Elf',
+  char_level: 80,
+  char_class: 99,
+  char_title: 'Campeão',
+  char_sex: 0,
+  char_pvp: 40,
+  char_pk: 0,
+  char_clan_name: 'Reino',
+  char_is_clan_leader: false,
+  equipment: [{ item_id: 57, name: 'Adena', quantity: 10, enchant: 0, slot: 1 }],
+  bag_items: [
+    { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, location: 'INVENTORY' },
+    { item_id: 6673, name: 'Festival Adena', quantity: 5, enchant: 0, location: 'WAREHOUSE' },
+  ],
+  skills: [
+    {
+      skill_id: 1,
+      name: 'Triple Slash',
+      level: 37,
+      class_index: 0,
+      icon_url: '/skill-icons/1.png',
+      operate: 'active',
+      kind: 'attack',
+      group: 'physical',
+      skill_type: 'PDAM',
+      enchant: 15,
+      enchant_route: 1,
+      enchant_max: 30,
+      enchantable: true,
+    },
+  ],
+  price: '150.25',
+  status: 'for_sale',
+  notes: 'Pronto para jogar',
+  created_at: '2026-09-02T10:00:00Z',
+  updated_at: '2026-09-02T10:00:00Z',
+  sold_at: null,
+}
 const auction: ApiAuction = { id: 'auction', seller_id: 'seller', seller_username: 'seller', kind: 'item', item_id: 57, item_name: 'Adena', item_enchant: 3, quantity: 10, min_bid: '10.00', current_bid: '12.00', highest_bidder_id: null, highest_bidder_username: null, character_name: 'Elf', ends_at: '2026-09-03T10:00:00Z', status: 'open', created_at: '2026-09-02T10:00:00Z', updated_at: '2026-09-02T10:00:00Z' }
 const characterAuction: ApiAuction = {
   ...auction,
@@ -85,6 +126,12 @@ it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', asyn
   expect(screen.getByText('Pronto para jogar')).toBeVisible()
   expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
   expect(screen.getByLabelText('Brinco: Adena')).toBeVisible()
+  expect(screen.getByLabelText('Grade do inventário')).toBeVisible()
+  expect(screen.getByLabelText('Adena · sem encanto · qtd 100')).toBeVisible()
+  expect(screen.getByLabelText('Triple Slash · Nv. 37 · +15')).toBeVisible()
+  await user.click(screen.getByRole('tab', { name: /Warehouse/i }))
+  expect(screen.getByLabelText('Grade do warehouse')).toBeVisible()
+  expect(screen.getByLabelText('Festival Adena · sem encanto · qtd 5')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Comprar personagem' }))
   expect(marketplaceApi.buy).toHaveBeenCalledWith('listing')
   if (fail) {

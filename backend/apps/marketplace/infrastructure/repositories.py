@@ -36,6 +36,8 @@ class DjangoCharacterListingRepository(ICharacterListingRepository):
             char_clan_name=row.char_clan_name,
             char_is_clan_leader=row.char_is_clan_leader,
             equipment=list(row.equipment or []),
+            bag_items=list(row.bag_items or []),
+            skills=list(row.skills or []),
             old_account=row.old_account,
             new_account=row.new_account,
             price=row.price,
@@ -84,6 +86,8 @@ class DjangoCharacterListingRepository(ICharacterListingRepository):
         old_account: str,
         price: Decimal,
         notes: str,
+        bag_items: list | None = None,
+        skills: list | None = None,
     ) -> CharacterListingEntity:
         from django.contrib.auth import get_user_model
 
@@ -101,6 +105,8 @@ class DjangoCharacterListingRepository(ICharacterListingRepository):
             char_clan_name=char_clan_name,
             char_is_clan_leader=char_is_clan_leader,
             equipment=equipment,
+            bag_items=bag_items or [],
+            skills=skills or [],
             old_account=old_account,
             price=price,
             notes=notes,

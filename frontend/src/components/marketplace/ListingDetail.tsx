@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { formatCurrency, formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
-import type { ApiCharacterListing } from '../../services/api'
+import type { ApiCharacterListing, ApiGameItem } from '../../services/api'
 import { ListingEquipment } from './ListingEquipment'
 import { listingStatusFor } from './marketplaceHelpers'
 import {
@@ -31,6 +31,16 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
   const { t } = useTranslation('panel')
   const status = listingStatusFor(listing.status, t)
   const [selectedItem, setSelectedItem] = useState<CharacterItemDetail | null>(null)
+
+  const bagItems: ApiGameItem[] = (listing.bag_items ?? []).map((item) => ({
+    item_id: item.item_id,
+    name: item.name || `Item ${item.item_id}`,
+    quantity: item.quantity ?? 1,
+    enchant: item.enchant ?? 0,
+    tradeable: item.tradeable ?? true,
+    location: item.location ?? 'INVENTORY',
+  }))
+  const skills = listing.skills ?? []
 
   return (
     <article className="marketplace-listing-detail" aria-label={t('marketplace.detail.aria', { name: listing.char_name })}>
@@ -55,7 +65,12 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
       </div>
 
       <div className="marketplace-character-layout">
-        <ListingEquipment equipment={listing.equipment} onSelect={setSelectedItem} />
+        <ListingEquipment
+          equipment={listing.equipment}
+          bagItems={bagItems}
+          skills={skills}
+          onSelect={setSelectedItem}
+        />
 
         <div className="marketplace-character-side">
           <dl className="character-stats">

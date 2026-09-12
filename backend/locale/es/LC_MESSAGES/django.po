@@ -1823,7 +1823,15 @@ msgstr "Vendido"
 msgid "Em disputa"
 msgstr "En disputa"
 
-#: .\apps\marketplace\infrastructure\models.py:59
+#: .\apps\marketplace\infrastructure\models.py:51
+msgid "Itens da bag e warehouse"
+msgstr "Ítems de bag y warehouse"
+
+#: .\apps\marketplace\infrastructure\models.py:52
+msgid "Skills do personagem"
+msgstr "Skills del personaje"
+
+#: .\apps\marketplace\infrastructure\models.py:61
 msgid "Anúncio de personagem"
 msgstr "Anuncio de personaje"
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
@@ -34,6 +34,8 @@ class CharacterListingEntity:
     price: Decimal
     status: str
     notes: str
+    bag_items: list[dict] = field(default_factory=list)
+    skills: list[dict] = field(default_factory=list)
     created_at: datetime | None = None
     updated_at: datetime | None = None
     sold_at: datetime | None = None

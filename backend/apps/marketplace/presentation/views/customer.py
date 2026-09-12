@@ -18,15 +18,27 @@ from apps.marketplace.application.use_cases import (
 )
 from apps.marketplace.domain.entities import CharacterListingEntity
 from apps.marketplace.presentation.serializers import CreateListingSerializer
+from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
+from apps.server.presentation.skill_metadata import dump_learned_skill
 
 
-def dump_listing(listing: CharacterListingEntity) -> dict:
+def dump_listing(listing: CharacterListingEntity, skill_catalog: ISkillCatalog) -> dict:
     payload = asdict(listing)
     payload["id"] = str(payload["id"])
     payload["seller_id"] = str(payload["seller_id"])
     payload["buyer_id"] = str(payload["buyer_id"]) if payload["buyer_id"] else None
     payload["price"] = str(payload["price"])
+    payload["skills"] = [
+        dump_learned_skill(
+            int(row.get("skill_id") or 0),
+            int(row.get("level") or 1),
+            int(row.get("class_index") or 0),
+            skill_catalog,
+        )
+        for row in payload.get("skills") or []
+        if row.get("skill_id")
+    ]
     return payload
 
 
@@ -46,7 +58,8 @@ class PublicMarketplaceView(ItemCatalogAPIView):
     )
     def get(self, request):
         listings = self.resolve(ListPublicListingsUseCase).execute(None)
-        return Response([dump_listing(listing) for listing in listings])
+        catalog = self.resolve(ISkillCatalog)
+        return Response([dump_listing(listing, catalog) for listing in listings])
 
 
 class MyListingsView(ItemCatalogAPIView):
@@ -66,7 +79,8 @@ class MyListingsView(ItemCatalogAPIView):
     )
     def get(self, request):
         listings = self.resolve(ListMyListingsUseCase).execute(ListMyListingsInput(user_id=request.user.id))
-        return Response([dump_listing(listing) for listing in listings])
+        catalog = self.resolve(ISkillCatalog)
+        return Response([dump_listing(listing, catalog) for listing in listings])
 
     @extend_schema(
         tags=["Marketplace"],
@@ -88,7 +102,7 @@ class MyListingsView(ItemCatalogAPIView):
                 notes=data.get("notes") or "",
             )
         )
-        return Response(dump_listing(listing))
+        return Response(dump_listing(listing, self.resolve(ISkillCatalog)))
 
 
 class PurchaseListingView(ItemCatalogAPIView):
@@ -113,7 +127,7 @@ class PurchaseListingView(ItemCatalogAPIView):
                 listing_id=listing_id,
             )
         )
-        return Response(dump_listing(listing))
+        return Response(dump_listing(listing, self.resolve(ISkillCatalog)))
 
 
 class CancelListingView(ItemCatalogAPIView):
@@ -134,4 +148,4 @@ class CancelListingView(ItemCatalogAPIView):
         listing = self.resolve(CancelListingUseCase).execute(
             CancelListingInput(user_id=request.user.id, listing_id=listing_id)
         )
-        return Response(dump_listing(listing))
+        return Response(dump_listing(listing, self.resolve(ISkillCatalog)))

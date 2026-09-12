@@ -4045,7 +4045,9 @@ html.pdl-panel .marketplace-character-equipment h3 {
   font-size: 18px;
 }
 
-html.pdl-panel .auction-character-equipment .character-bag {
+html.pdl-panel .auction-character-equipment .character-bag,
+html.pdl-panel .marketplace-character-equipment .character-bag,
+html.pdl-panel .marketplace-character-equipment .character-skills {
   margin-top: 16px;
 }
 

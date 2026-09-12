@@ -49,8 +49,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
-- Detalhe do marketplace (`/panel/marketplace`): paperdoll e stats no mesmo
-  visual da ficha do personagem (somente leitura, sem bag/skills).
+- Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e
+  skills no mesmo visual da ficha; o anúncio grava o snapshot na publicação
+  para o comprador ver o personagem em custódia.
 - Grades de inventário/warehouse e de skills na ficha: o mesmo quadrado
   (`48px`, ícone `32px`) nas duas janelas.
 

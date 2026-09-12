@@ -50,6 +50,7 @@ from apps.server.presentation.serializers import (
     UnstuckSerializer,
     UpdateGamePasswordSerializer,
 )
+from apps.server.presentation.skill_metadata import dump_learned_skill
 from common.views import InjectedAPIView
 
 
@@ -232,28 +233,12 @@ class CharacterSkillsView(InjectedAPIView):
             GetCharacterInput(actor=actor_from(request), login=login, char_id=char_id)
         )
         catalog = self.resolve(ISkillCatalog)
-        payload = []
-        for skill in skills:
-            meta = catalog.metadata(skill.skill_id)
-            progress = catalog.progress(skill.skill_id, skill.level)
-            payload.append(
-                {
-                    "skill_id": skill.skill_id,
-                    "level": progress["level"],
-                    "enchant": progress["enchant"],
-                    "enchant_route": progress["enchant_route"],
-                    "enchant_max": progress["enchant_max"],
-                    "enchantable": progress["enchantable"],
-                    "class_index": skill.class_index,
-                    "name": meta["name"],
-                    "icon_url": meta["icon_url"],
-                    "operate": meta["operate"],
-                    "kind": meta["kind"],
-                    "group": meta["group"],
-                    "skill_type": meta["skill_type"],
-                }
-            )
-        return Response(payload)
+        return Response(
+            [
+                dump_learned_skill(skill.skill_id, skill.level, skill.class_index, catalog)
+                for skill in skills
+            ]
+        )
 
 
 class UpdateGamePasswordView(InjectedAPIView):
