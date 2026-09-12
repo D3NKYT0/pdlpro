@@ -131,6 +131,41 @@ def test_buy_and_open_box(api, player):
 
 
 @pytest.mark.django_db
+def test_bought_box_always_contains_one_hunt_item(api, player):
+    from apps.games.infrastructure.models import BoxSlot, BoxType, CatalogItem
+
+    hunt = CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    filler = CatalogItem.objects.create(name="Adena", item_id=57, quantity=80_000, rarity="common", weight=28)
+    box_type = BoxType.objects.create(name="Baú Lendário", price=Decimal("10.00"), boosters_amount=8)
+    box_type.items.add(hunt, filler)
+    Wallet.objects.create(user=player, balance=Decimal("20.00"))
+    player.fichas = 8
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert bought.status_code == 200, bought.data
+    slots = list(BoxSlot.objects.filter(box__id=bought.data["id"]))
+    assert len(slots) == 8
+    assert sum(1 for slot in slots if slot.item_id == 6658) == 1
+    listed = api.get("/api/v1/customer/games/boxes/")
+    assert listed.data["boxes"][0]["hunt_remaining"] is True
+    hunts = 0
+    for _ in range(8):
+        opened = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
+        assert opened.status_code == 200, opened.data
+        hunts += int(opened.data["hunt"])
+        if opened.data["hunt"]:
+            listed = api.get("/api/v1/customer/games/boxes/")
+            if opened.data["remaining"] == 0:
+                assert listed.data["boxes"] == []
+            else:
+                assert listed.data["boxes"][0]["hunt_remaining"] is False
+        if opened.data["remaining"] == 0:
+            break
+    assert hunts == 1
+
+
+@pytest.mark.django_db
 def test_list_boxes_shows_the_hunt_item(api, player):
     from apps.games.infrastructure.models import BoxType, CatalogItem
 

@@ -137,6 +137,7 @@ export const gamesApi = {
         type_name: string
         remaining: number
         total: number
+        hunt_remaining?: boolean
         featured?: BoxHuntPreview | null
         items?: BoxHuntPreview[]
       }>
@@ -150,6 +151,7 @@ export const gamesApi = {
     request<{
       item: { item_id: number; name: string; rarity: string; enchant: number; quantity?: number }
       remaining: number
+      hunt?: boolean
       fichas: number
     }>(`/customer/games/boxes/${boxId}/open/`, { method: 'POST' }),
   minigames: () =>

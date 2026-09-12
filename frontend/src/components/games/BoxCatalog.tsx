@@ -24,6 +24,7 @@ export function BoxHuntCard({
   total,
   opening = false,
   resetting = false,
+  huntRemaining,
   onAction,
   actionLabel,
 }: {
@@ -37,6 +38,7 @@ export function BoxHuntCard({
   total?: number
   opening?: boolean
   resetting?: boolean
+  huntRemaining?: boolean
   onAction: () => void
   actionLabel: string
 }) {
@@ -45,10 +47,10 @@ export function BoxHuntCard({
   const rarity = inferBoxRarity(name, price)
   return (
     <article
-      className={`game-box-card${owned ? ' is-owned' : ''}${opening ? ' is-opening' : ''}`}
+      className={`game-box-card${owned ? ' is-owned' : ''}${owned && huntRemaining === false ? ' is-claimed' : ''}${opening ? ' is-opening' : ''}`}
       data-rarity={rarity}
     >
-      <BoxChest name={name} price={price} opening={opening} />
+      <BoxChest name={name} price={price} opening={opening} claimed={owned && huntRemaining === false} />
       <header className="game-box-copy">
         <strong>{name}</strong>
         <small>
@@ -59,7 +61,9 @@ export function BoxHuntCard({
       </header>
       {featured ? (
         <div className="game-box-hunt">
-          <span>{t('games.boxes.hunt')}</span>
+          <span>
+            {owned ? t(huntRemaining ? 'games.boxes.huntWaiting' : 'games.boxes.huntTaken') : t('games.boxes.guarantee')}
+          </span>
           <div>
             <ItemIcon itemId={featured.item_id} name={featured.name} size={40} />
             <b>{featured.name}</b>
@@ -80,12 +84,14 @@ export function BoxHuntCard({
         </div>
       ) : null}
       {owned ? null : <b className="game-box-price">{t('games.boxes.price', { price })}</b>}
-      <small className="game-box-hint">
-        {resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
-      </small>
-      <Button variant={owned ? 'primary' : resetting ? 'warning' : 'ghost'} type="button" onClick={onAction}>
-        {actionLabel}
-      </Button>
+      <footer className="game-box-actions">
+        <small className="game-box-hint">
+          {resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
+        </small>
+        <Button variant={owned ? 'success' : resetting ? 'warning' : 'ghost'} type="button" onClick={onAction}>
+          {actionLabel}
+        </Button>
+      </footer>
     </article>
   )
 }

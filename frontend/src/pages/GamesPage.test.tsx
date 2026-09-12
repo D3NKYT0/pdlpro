@@ -86,6 +86,7 @@ beforeEach(() => {
       type_name: 'Caixa adquirida',
       remaining: 1,
       total: 2,
+      hunt_remaining: true,
       featured: { name: 'Enchant Weapon C', item_id: 951, quantity: 1 },
     }],
   })
@@ -254,7 +255,7 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   expect(await screen.findByText('Caixa rara')).toBeVisible()
   expect(document.querySelector('.game-chest[data-rarity="rare"]')).toBeTruthy()
   expect(document.querySelector('.game-chest-art')).toBeTruthy()
-  expect(screen.getAllByText('Cada abertura custa 1 ficha.').length).toBeGreaterThan(0)
+  expect(screen.getAllByText('Cada pacote custa 1 ficha. O item em mira sai em algum deles.').length).toBeGreaterThan(0)
   await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
   expect(document.querySelector('.game-box-card .game-chest.is-opening')).toBeTruthy()
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
@@ -287,14 +288,53 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
 })
 it('explica o item em mira e o que mais pode sair do baú', async () => {
   mount('boxes')
-  expect((await screen.findAllByText('Item em mira')).length).toBeGreaterThan(0)
-  expect(screen.getByText('Compre o baú pelo item que você quer — arma S, joia de boss, encantamento. Nas outras aberturas, o caminho rende o resto do catálogo.')).toBeVisible()
+  expect(await screen.findByText('Garantido neste baú')).toBeVisible()
+  expect(screen.getByText('Ainda está no baú')).toBeVisible()
+  expect(screen.getByText('Diferente da roleta: o item em mira já está em um dos pacotes. Você sempre leva — a sorte só decide se sai no primeiro ou no último.')).toBeVisible()
   expect(screen.getAllByText('Enchant Weapon C').length).toBeGreaterThan(0)
-  expect(screen.getByText('2 aberturas')).toBeVisible()
+  expect(screen.getByText('2 pacotes')).toBeVisible()
   expect(screen.getByText('Também pode sair')).toBeVisible()
   expect(screen.getByText('Baús à venda')).toBeVisible()
   expect(screen.getByText('Seus baús selados')).toBeVisible()
+  expect(document.querySelector('.game-box-card.is-owned')).toBeTruthy()
+  expect(document.querySelector('.game-box-card:not(.is-owned)')).toBeTruthy()
+  expect(document.querySelector('.game-chest.is-claimed')).toBeNull()
+  const open = screen.getByRole('button', { name: 'Abrir · 1 ficha' })
+  expect(open).toHaveClass('ui-button--success')
+  expect(open.closest('.game-box-actions')).toBeTruthy()
+  expect(screen.getByRole('button', { name: 'Comprar' }).closest('.game-box-actions')).toBeTruthy()
   expect(screen.queryByText(/boosters/i)).not.toBeInTheDocument()
+})
+it('risca o baú que já entregou o item em mira', async () => {
+  vi.mocked(gamesApi.boxes).mockResolvedValue({
+    types: [],
+    boxes: [{
+      id: 'box',
+      type_id: 'owned-type',
+      type_name: 'Caixa adquirida',
+      remaining: 1,
+      total: 2,
+      hunt_remaining: false,
+      featured: { name: 'Enchant Weapon C', item_id: 951, quantity: 1 },
+    }],
+  } as any)
+  mount('boxes')
+  expect(await screen.findByText('Já saiu neste baú')).toBeVisible()
+  expect(document.querySelector('.game-box-card.is-claimed')).toBeTruthy()
+  expect(document.querySelector('.game-chest.is-claimed')).toBeTruthy()
+  expect(document.querySelector('.game-chest-claimed')).toBeTruthy()
+})
+it('celebra o item em mira quando o pacote é o da caçada', async () => {
+  vi.mocked(gamesApi.openBox).mockResolvedValue({
+    item: { item_id: 951, name: 'Enchant Weapon C', quantity: 1 },
+    remaining: 1,
+    hunt: true,
+    fichas: 9,
+  } as any)
+  const user = mount('boxes')
+  await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
+  expect(await screen.findByRole('dialog', { name: 'Você encontrou o item em mira' })).toBeVisible()
+  expect(toast.success).not.toHaveBeenCalled()
 })
 it('oferece resetar o baú já selado em vez de comprar de novo', async () => {
   vi.mocked(gamesApi.boxes).mockResolvedValue({

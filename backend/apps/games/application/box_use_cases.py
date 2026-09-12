@@ -6,7 +6,7 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.games.application.bag import add_to_bag
-from apps.games.application.box_catalog import box_catalog_preview
+from apps.games.application.box_catalog import box_catalog_preview, pick_featured_box_item
 from apps.games.domain.exceptions import (
     BoxEmptyError,
     BoxNotOwnedError,
@@ -29,20 +29,44 @@ def _catalog_for(box_type, boxes: IBoxRepository) -> list:
     return items
 
 
+def _slot_fields(item) -> dict:
+    return {
+        "item_id": item.item_id,
+        "item_name": item.name,
+        "enchant": item.enchant,
+        "quantity": max(1, getattr(item, "quantity", 1)),
+        "rarity": item.rarity,
+        "probability": max(getattr(item, "weight", 1), 1),
+    }
+
+
+def _is_same_item(left, right) -> bool:
+    return left.item_id == right.item_id and getattr(left, "quantity", 1) == getattr(right, "quantity", 1)
+
+
+def _hunt_still_closed(box, featured, boxes: IBoxRepository) -> bool:
+    if featured is None:
+        return False
+    return any(_is_same_item(slot, featured) for slot in boxes.list_closed_slots(box))
+
+
 def _populate(box, boxes: IBoxRepository) -> None:
+    """Semeia os pacotes com o item em mira em um slot aleatório. O resto vem do catálogo.
+
+    Diferente da roleta: o jogador sempre leva o item em mira se abrir todos os pacotes.
+    """
     items = _catalog_for(box.box_type, boxes)
-    weights = [max(item.weight, 1) for item in items]
-    for _ in range(box.box_type.boosters_amount):
-        chosen = random.choices(items, weights=weights, k=1)[0]
-        boxes.create_slot(
-            box,
-            item_id=chosen.item_id,
-            item_name=chosen.name,
-            enchant=chosen.enchant,
-            quantity=max(1, getattr(chosen, "quantity", 1)),
-            rarity=chosen.rarity,
-            probability=chosen.weight,
-        )
+    featured = pick_featured_box_item(items)
+    if featured is None:
+        raise ValidationDomainError("Não há itens no catálogo para popular a caixa.")
+    fillers = [item for item in items if not _is_same_item(item, featured)]
+    pool = fillers or items
+    weights = [max(getattr(item, "weight", 1), 1) for item in pool]
+    count = max(1, box.box_type.boosters_amount)
+    hunt_at = random.randrange(count)
+    for index in range(count):
+        chosen = featured if index == hunt_at else random.choices(pool, weights=weights, k=1)[0]
+        boxes.create_slot(box, **_slot_fields(chosen))
 
 
 class ListBoxTypesUseCase(UseCase[UUID, dict]):
@@ -73,7 +97,8 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
             remaining = self._boxes.count_closed_slots(box)
             if remaining == 0:
                 continue
-            featured, preview = box_catalog_preview(self._boxes.list_active_type_items(box.box_type))
+            type_items = self._boxes.list_active_type_items(box.box_type)
+            featured, preview = box_catalog_preview(type_items)
             boxes.append(
                 {
                     "id": str(box.id),
@@ -83,6 +108,7 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
                     "total": self._boxes.count_slots(box),
                     "featured": featured,
                     "items": preview,
+                    "hunt_remaining": _hunt_still_closed(box, pick_featured_box_item(type_items), self._boxes),
                 }
             )
         return {"types": types, "boxes": boxes}
@@ -159,8 +185,9 @@ class OpenBoxInput:
 
 
 class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
-    """Consome fichas e sorteia um slot fechado da caixa do usuário, transfere o prêmio à bag e
-    remove a caixa quando esgotada.
+    """Consome 1 ficha e abre um pacote fechado ao acaso. O item em mira já foi semeado na
+    compra; quem abrir todos os pacotes sempre o leva. Transfere o prêmio à bag e remove a
+    caixa quando esgotada.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``OpenBoxInput``. O retorno é
     ``dict``.
@@ -191,9 +218,7 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 raise BoxEmptyError()
             user.fichas -= 1
             user.save(update_fields=["fichas", "updated_at"])
-            chosen = random.choices(
-                slots, weights=[max(slot.probability, 1) for slot in slots], k=1
-            )[0]
+            chosen = random.choice(slots)
             chosen.opened = True
             self._boxes.save_slot(chosen, update_fields=["opened", "updated_at"])
             add_to_bag(
@@ -205,6 +230,8 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 bags=self._bags,
             )
             remaining = self._boxes.count_closed_slots(box)
+            featured = pick_featured_box_item(self._boxes.list_active_type_items(box.box_type))
+            hunt = featured is not None and _is_same_item(chosen, featured)
             if remaining == 0:
                 self._boxes.delete_box(box)
         return {
@@ -216,6 +243,7 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 "rarity": chosen.rarity,
             },
             "remaining": remaining,
+            "hunt": hunt,
             "fichas": user.fichas,
         }
 

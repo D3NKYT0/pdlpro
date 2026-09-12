@@ -12,6 +12,7 @@ export function BoxRevealModal({
   prizeItemId,
   prizeQuantity,
   prizeEnchant,
+  hunt = false,
   onClose,
 }: {
   open: boolean
@@ -21,6 +22,7 @@ export function BoxRevealModal({
   prizeItemId?: number
   prizeQuantity?: number
   prizeEnchant?: number
+  hunt?: boolean
   onClose: () => void
 }) {
   const { t } = useTranslation('panel')
@@ -37,7 +39,7 @@ export function BoxRevealModal({
     <Modal
       className={`game-box-reveal-modal${opening ? ' is-opening' : ''}${won ? ' is-win' : ''}`}
       open={open}
-      title={won ? t('games.boxes.revealFound') : t('games.boxes.revealTitle')}
+      title={won ? t(hunt ? 'games.boxes.revealHunt' : 'games.boxes.revealFound') : t('games.boxes.revealTitle')}
       onClose={won ? onClose : () => undefined}
     >
       <BoxChest

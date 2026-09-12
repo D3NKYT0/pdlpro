@@ -42,6 +42,7 @@ type PlayFx = {
   prizeEnchant?: number
   overlay?: boolean
   boxName?: string
+  hunt?: boolean
   slowing?: boolean
   diceRoll?: number
   slotsReels?: string[]
@@ -155,6 +156,7 @@ export function GamesPage() {
         prizeQuantity: result.item.quantity ?? 1,
         prizeItemId: result.item.item_id,
         prizeEnchant: result.item.enchant,
+        hunt: result.hunt === true,
       })
       await refresh()
       return result
@@ -374,6 +376,7 @@ export function GamesPage() {
                     owned
                     remaining={row.remaining}
                     total={row.total}
+                    huntRemaining={row.hunt_remaining !== false}
                     opening={fx.playing === 'open' && fx.targetId === row.id && !fx.overlay}
                     onAction={() => void openBox(row.id)}
                     actionLabel={t('games.boxes.open', { count: 1 })}
@@ -417,6 +420,7 @@ export function GamesPage() {
           prizeItemId={fx.prizeItemId}
           prizeQuantity={fx.prizeQuantity}
           prizeEnchant={fx.prizeEnchant}
+          hunt={fx.hunt === true}
           onClose={() => setFx({})}
         />
 

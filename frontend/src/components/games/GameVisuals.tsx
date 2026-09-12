@@ -153,6 +153,7 @@ export function BoxChest({
   name,
   price,
   opening = false,
+  claimed = false,
   variant = 'card',
   prizeName,
   prizeItemId,
@@ -161,6 +162,7 @@ export function BoxChest({
   name: string
   price?: string | number
   opening?: boolean
+  claimed?: boolean
   variant?: 'card' | 'hero'
   prizeName?: string | null
   prizeItemId?: number
@@ -203,7 +205,7 @@ export function BoxChest({
   ) : null
   return (
     <div
-      className={`game-chest rarity-${rarity}${hero ? ' is-hero' : ''}${opening ? ' is-opening' : ''}${won ? ' is-win' : ''}`}
+      className={`game-chest rarity-${rarity}${hero ? ' is-hero' : ''}${opening ? ' is-opening' : ''}${won ? ' is-win' : ''}${claimed && !hero ? ' is-claimed' : ''}`}
       data-theme-part="game-chest"
       data-rarity={rarity}
       aria-hidden={won ? undefined : true}
@@ -219,6 +221,7 @@ export function BoxChest({
         <>
           <i className="game-chest-glow" />
           <i className="game-chest-art" />
+          {claimed ? <i className="game-chest-claimed" aria-hidden="true" /> : null}
           {burst}
         </>
       )}
