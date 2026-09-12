@@ -1515,24 +1515,15 @@ html.pdl-panel .character-stats {
 
 html.pdl-panel .character-overview-grid {
   display: grid;
-  grid-template-areas:
-    'equipment info'
-    'equipment services';
-  grid-template-columns: minmax(460px, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: minmax(380px, 0.92fr) minmax(0, 1.08fr);
   align-items: start;
   gap: 18px;
 }
 
-html.pdl-panel .character-overview-grid .character-equipment {
-  grid-area: equipment;
-}
-
-html.pdl-panel .character-overview-grid .character-sheet {
-  grid-area: info;
-}
-
-html.pdl-panel .character-overview-grid .character-services {
-  grid-area: services;
+html.pdl-panel .character-overview-side {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
 }
 
 html.pdl-panel .character-stats > div {
@@ -1632,7 +1623,7 @@ html.pdl-panel .character-equipment-summary span {
 html.pdl-panel .character-paperdoll {
   position: relative;
   width: min(100%, 340px);
-  margin: 0 auto;
+  margin: 0;
   padding: 24px 22px 22px;
   isolation: isolate;
   border: 1px solid rgba(198, 176, 130, 0.42);
@@ -1947,7 +1938,7 @@ html.pdl-panel .character-equipment-additional small {
 }
 
 html.pdl-panel .character-bag {
-  margin-top: 20px;
+  margin-top: 18px;
   padding-top: 18px;
   border-top: 1px solid rgba(197, 161, 97, 0.14);
 }
@@ -2372,6 +2363,10 @@ html.pdl-panel .character-item-modal-hero .l2-item-icon,
 html.pdl-panel .character-item-modal-hero .l2-skill-icon {
   object-fit: contain;
   image-rendering: pixelated;
+}
+
+html.pdl-panel .character-services {
+  gap: 18px;
 }
 
 html.pdl-panel .character-services .account-action-form {
@@ -8147,11 +8142,28 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .character-overview-grid {
-    grid-template-areas:
-      'info'
-      'equipment'
-      'services';
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+
+  html.pdl-panel .character-overview-side {
+    display: contents;
+  }
+
+  html.pdl-panel .character-sheet {
+    order: 0;
+  }
+
+  html.pdl-panel .character-equipment {
+    order: 1;
+  }
+
+  html.pdl-panel .character-services {
+    order: 2;
+  }
+
+  html.pdl-panel .character-paperdoll {
+    margin: 0 auto;
   }
 }
 

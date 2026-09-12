@@ -173,7 +173,46 @@ export function CharacterPage() {
 
       {char ? (
         <div className="character-overview-grid">
-          <Card className="character-sheet">
+          <Card className="character-equipment">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">{t('character.equipment.eyebrow')}</span>
+                <h2>{t('character.equipment.title')}</h2>
+              </div>
+              <span className="character-readonly-chip">
+                <Eye aria-hidden="true" />
+                {t('character.equipment.readonly')}
+              </span>
+            </div>
+
+            <div className="character-equipment-summary">
+              <Package aria-hidden="true" />
+              <strong>{equippedItems.length}</strong>
+              <span>{t('character.equipment.equipped', { count: equippedItems.length })}</span>
+            </div>
+
+            <CharacterPaperdoll
+              items={equippedItems}
+              loading={equipment.isLoading}
+              error={equipment.isError}
+              onSelect={setSelectedItem}
+            />
+
+            <CharacterBagPanel
+              items={bagItems.data ?? []}
+              loading={bagItems.isLoading}
+              error={bagItems.isError}
+            />
+
+            <CharacterSkillsPanel
+              skills={skills.data ?? []}
+              loading={skills.isLoading}
+              error={skills.isError}
+            />
+          </Card>
+
+          <div className="character-overview-side">
+            <Card className="character-sheet">
             <div className="account-section-heading">
               <div>
                 <span className="panel-eyebrow">{t('character.infoEyebrow')}</span>
@@ -255,44 +294,6 @@ export function CharacterPage() {
             {!offline ? (
               <p className="character-offline-hint">{t('character.offlineHint')}</p>
             ) : null}
-          </Card>
-
-          <Card className="character-equipment">
-            <div className="account-section-heading">
-              <div>
-                <span className="panel-eyebrow">{t('character.equipment.eyebrow')}</span>
-                <h2>{t('character.equipment.title')}</h2>
-              </div>
-              <span className="character-readonly-chip">
-                <Eye aria-hidden="true" />
-                {t('character.equipment.readonly')}
-              </span>
-            </div>
-
-            <div className="character-equipment-summary">
-              <Package aria-hidden="true" />
-              <strong>{equippedItems.length}</strong>
-              <span>{t('character.equipment.equipped', { count: equippedItems.length })}</span>
-            </div>
-
-            <CharacterPaperdoll
-              items={equippedItems}
-              loading={equipment.isLoading}
-              error={equipment.isError}
-              onSelect={setSelectedItem}
-            />
-
-            <CharacterBagPanel
-              items={bagItems.data ?? []}
-              loading={bagItems.isLoading}
-              error={bagItems.isError}
-            />
-
-            <CharacterSkillsPanel
-              skills={skills.data ?? []}
-              loading={skills.isLoading}
-              error={skills.isError}
-            />
           </Card>
 
           <div className="grid cols-2 character-services">
@@ -378,6 +379,7 @@ export function CharacterPage() {
                 </Link>
               </div>
             </Card>
+          </div>
           </div>
         </div>
       ) : null}
