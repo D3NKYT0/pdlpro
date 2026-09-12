@@ -49,7 +49,7 @@ npm run test:run
 npm run build
 ```
 
-O build gera `frontend/dist`. `npm run preview` serve esse build para uma conferência local; não substitui a configuração de proxy, TLS e mídia necessária em produção. Os hooks `predev` e `prebuild` restauram o pacote de [ícones](../integracoes/icones.md).
+O build gera `frontend/dist`. `npm run preview` serve esse build para uma conferência local; não substitui a configuração de proxy, TLS e mídia necessária em produção. Os hooks `predev` e `prebuild` restauram os pacotes de [ícones de itens e skills](../integracoes/icones.md).
 
 ## Adicionar uma funcionalidade
 

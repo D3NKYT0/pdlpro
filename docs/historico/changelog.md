@@ -35,6 +35,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   um catálogo Interlude (soulshots, scrolls de encantamento, gemas, Gold Bar,
   Coin of Luck, life stones) e a tela permite editar parâmetros, prêmios,
   peixes, monstros e itens de baú pelo catálogo de itens.
+- Pacote instalável de ícones de skills (`frontend/assets/skill-icons.tar.gz`):
+  os PNGs entram em `frontend/public/skill-icons/` como `/skill-icons/<ID>.png`,
+  fora do Git; `predev`/`prebuild` restauram o pacote. Ver
+  [Ícones de itens e skills](../integracoes/icones.md).
 
 ### Alterado
 

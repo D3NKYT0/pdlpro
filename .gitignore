@@ -76,3 +76,8 @@ celerybeat.pid
 /frontend/public/item-icons/*
 !/frontend/public/item-icons/README.md
 !/frontend/public/item-icons/default.jpg
+
+# L2 skill art (regenerate with `npm run skill-icons`)
+/frontend/public/skill-icons/*
+!/frontend/public/skill-icons/README.md
+!/frontend/public/skill-icons/default.png

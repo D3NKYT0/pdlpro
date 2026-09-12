@@ -93,7 +93,7 @@ Em produção, confirme HTTPS e `X-Forwarded-Proto` no proxy. Cookies seguros n�
 
 ## Itens e imagens
 
-Confira o item em `/api/v1/public/items/catalog/` e abra a `icon_url` retornada. Alterações em XML exigem recarregar os processos do backend; customs ativos são consultados pelo catálogo composto. Novos JPGs estáticos precisam entrar no pacote de assets. Não corrija nomes ou ícones criando outro catálogo no frontend.
+Confira o item em `/api/v1/public/items/catalog/` e abra a `icon_url` retornada. Alterações em XML exigem recarregar os processos do backend; customs ativos são consultados pelo catálogo composto. Novos JPGs estáticos precisam entrar no pacote de assets. Ícones de skills ficam em `/skill-icons/<ID>.png` e usam o mesmo fluxo de pacote. Não corrija nomes ou ícones criando outro catálogo no frontend.
 
 Veja [Catálogo de itens](../integracoes/catalogo-de-itens.md) e [Ícones](../integracoes/icones.md).
 

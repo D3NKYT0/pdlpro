@@ -30,7 +30,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     setupFiles: ['src/test/setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}', 'dev/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}', 'dev/**/*.test.{ts,tsx,mjs}'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
@@ -50,7 +50,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     watch: {
-      ignored: ['**/public/item-icons/**'],
+      ignored: ['**/public/item-icons/**', '**/public/skill-icons/**'],
     },
     proxy: {
       '/api': {
