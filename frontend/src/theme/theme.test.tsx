@@ -68,9 +68,13 @@ it('aplica superfícies e densidade a partir do layout do pacote', () => {
 it('remapeia arte dos jogos pelo mapa de assets do pacote', () => {
   configureRuntimeTheme({
     'images/games/box-legendary.webp': '/media/themes/demo/chest.webp',
+    'images/games/box-legendary-open.webp': '/media/themes/demo/chest-open.webp',
   })
   applyThemeSurfaceVars()
   expect(document.documentElement.style.getPropertyValue('--theme-art-games-box-legendary')).toContain(
     'chest.webp',
+  )
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-box-legendary-open')).toContain(
+    'chest-open.webp',
   )
 })

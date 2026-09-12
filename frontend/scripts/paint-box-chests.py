@@ -299,13 +299,217 @@ def paint(rarity: str) -> Image.Image:
     return image.resize((W * SCALE, H * SCALE), Image.NEAREST)
 
 
+def render(grid) -> Image.Image:
+    height = len(grid)
+    width = len(grid[0])
+    image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    for y, row in enumerate(grid):
+        for x, color in enumerate(row):
+            if color:
+                image.putpixel((x, y), color)
+    return image.resize((width * SCALE, height * SCALE), Image.NEAREST)
+
+
+def glow_color(rarity: str):
+    if rarity == "epic":
+        return EPIC_GEM, EPIC_GEM_H
+    if rarity == "legendary":
+        return GOLD_B, GEM_H
+    if rarity == "rare":
+        return GOLD_B, GOLD
+    return (196, 168, 112, 255), WOOD_H
+
+
+def paint_body(grid, dy: int, rarity: str) -> None:
+    tone = PALETTES[rarity]
+    metal, metal_d, metal_h = tone["metal"], tone["metal_d"], tone["metal_h"]
+    y = lambda value: value + dy
+    fill(grid, 10, y(45), 34, 4, SHADE)
+    fill(grid, 16, y(48), 26, 2, SHADE)
+    fill(grid, 40, y(24), 10, 20, SIDE_D)
+    fill(grid, 41, y(25), 8, 18, SIDE)
+    for row in (28, 34, 40):
+        hline(grid, 41, y(row), 8, SIDE_D)
+    vline(grid, 49, y(24), 20, INK)
+    fill(grid, 8, y(24), 33, 20, WOOD_D)
+    fill(grid, 9, y(25), 31, 18, WOOD)
+    fill(grid, 10, y(26), 5, 16, WOOD_H)
+    for x in (14, 19, 24, 29, 34):
+        vline(grid, x, y(26), 16, WOOD_D)
+    hline(grid, 9, y(31), 31, WOOD_D)
+    hline(grid, 9, y(38), 31, WOOD_M)
+    fill(grid, 9, y(43), 5, 3, metal_d)
+    fill(grid, 34, y(43), 5, 3, metal_d)
+    fill(grid, 44, y(43), 5, 3, metal_d)
+    hline(grid, 9, y(43), 5, metal)
+    hline(grid, 34, y(43), 5, metal)
+    fill(grid, 8, y(30), 33, 3, metal_d)
+    hline(grid, 9, y(31), 31, metal)
+    hline(grid, 10, y(30), 8, metal_h)
+    fill(grid, 41, y(30), 9, 3, metal_d)
+    fill(grid, 22, y(24), 5, 20, metal_d)
+    fill(grid, 23, y(24), 3, 20, metal)
+    fill(grid, 45, y(24), 3, 20, metal_d)
+    vline(grid, 46, y(24), 20, metal)
+    for x, row in ((10, 30), (17, 30), (31, 30), (37, 30)):
+        rivet(grid, x, y(row), metal_h, metal_d)
+    fill(grid, 20, y(33), 10, 9, metal_d)
+    fill(grid, 21, y(34), 8, 7, metal)
+    fill(grid, 22, y(35), 6, 5, metal_d)
+    fill(grid, 24, y(37), 2, 3, INK)
+    pixel(grid, 24, y(36), INK)
+    pixel(grid, 25, y(36), INK)
+    rivet(grid, 21, y(34), metal_h, metal_d)
+    rivet(grid, 26, y(34), metal_h, metal_d)
+    if rarity == "epic":
+        fill(grid, 8, y(37), 33, 3, metal_d)
+        hline(grid, 9, y(38), 31, EPIC_GEM)
+        hline(grid, 10, y(37), 8, EPIC_GEM_H)
+        fill(grid, 41, y(37), 8, 3, EPIC_GEM)
+        fill(grid, 17, y(32), 16, 12, metal_d)
+        fill(grid, 18, y(33), 14, 10, metal)
+        fill(grid, 20, y(35), 10, 7, metal_d)
+        fill(grid, 24, y(38), 2, 3, INK)
+    elif rarity == "legendary":
+        fill(grid, 8, y(37), 33, 3, GOLD_D)
+        hline(grid, 9, y(38), 31, GOLD_B)
+        fill(grid, 41, y(37), 8, 3, GOLD)
+        fill(grid, 16, y(31), 18, 13, GOLD_D)
+        fill(grid, 17, y(32), 16, 11, GOLD)
+        fill(grid, 19, y(34), 12, 8, GOLD_D)
+        fill(grid, 24, y(38), 3, 3, INK)
+    hline(grid, 8, y(24), 33, INK)
+    hline(grid, 8, y(43), 33, INK)
+    vline(grid, 8, y(24), 20, INK)
+    vline(grid, 40, y(24), 20, INK)
+    vline(grid, 49, y(24), 20, INK)
+    hline(grid, 40, y(43), 10, INK)
+
+
+def paint_interior(grid, dy: int, rarity: str, opened: bool) -> None:
+    glow, gleam = glow_color(rarity)
+    y = lambda value: value + dy
+    fill(grid, 10, y(20), 29, 5, (18, 12, 8, 255))
+    fill(grid, 11, y(21), 27, 3, (32, 22, 14, 255))
+    fill(grid, 40, y(20), 8, 5, (14, 10, 7, 255))
+    if opened:
+        fill(grid, 14, y(21), 20, 3, glow)
+        pixel(grid, 23, y(22), gleam)
+        pixel(grid, 27, y(21), gleam)
+        pixel(grid, 19, y(22), gleam)
+        hline(grid, 16, y(20), 16, gleam)
+    else:
+        hline(grid, 12, y(22), 24, glow)
+        pixel(grid, 24, y(21), gleam)
+    hline(grid, 10, y(20), 29, INK)
+    hline(grid, 40, y(20), 8, INK)
+
+
+def paint_lid_ajar(grid, dy: int, rarity: str) -> None:
+    tone = PALETTES[rarity]
+    metal, metal_d, metal_h = tone["metal"], tone["metal_d"], tone["metal_h"]
+    lid_top = tone["lid_top"]
+    y = lambda value: value + dy - 5
+    lid_quad(grid, y(9), y(16), 16, 46, 8, 40, WOOD_D)
+    lid_quad(grid, y(10), y(15), 17, 44, 10, 38, lid_top)
+    lid_quad(grid, y(11), y(14), 18, 26, 12, 18, WOOD_H)
+    fill(grid, 8, y(16), 33, 8, WOOD_D)
+    fill(grid, 9, y(17), 31, 6, WOOD_M)
+    fill(grid, 10, y(17), 6, 5, WOOD_H)
+    fill(grid, 41, y(16), 9, 8, SIDE_D)
+    fill(grid, 42, y(17), 7, 6, SIDE)
+    fill(grid, 8, y(20), 33, 3, metal_d)
+    hline(grid, 9, y(21), 31, metal)
+    fill(grid, 41, y(20), 9, 3, metal_d)
+    fill(grid, 22, y(16), 5, 8, metal_d)
+    fill(grid, 23, y(16), 3, 8, metal)
+    fill(grid, 20, y(9), 4, 3, metal_d)
+    fill(grid, 32, y(9), 4, 3, metal_d)
+    fill(grid, 21, y(23), 3, 4, metal_d)
+    fill(grid, 33, y(23), 3, 4, metal_d)
+    vline(grid, 22, y(22), 6, metal)
+    vline(grid, 34, y(22), 6, metal)
+    if rarity == "epic":
+        fill(grid, 8, y(16), 33, 2, EPIC_GEM)
+        diamond(grid, 24, y(13), EPIC_GEM, EPIC_GEM_H)
+        pixel(grid, 27, y(6), EPIC_GEM_H)
+    elif rarity == "legendary":
+        fill(grid, 8, y(16), 33, 2, GOLD_B)
+        fill(grid, 21, y(5), 17, 3, GOLD)
+        fill(grid, 24, y(3), 3, 3, GOLD_B)
+        fill(grid, 28, y(2), 3, 4, GOLD_B)
+        fill(grid, 32, y(3), 3, 3, GOLD_B)
+        pixel(grid, 29, y(1), GOLD_B)
+    hline(grid, 8, y(16), 33, INK)
+    lid_quad(grid, y(9), y(9), 16, 46, 16, 46, INK)
+    for row in range(y(9), y(17)):
+        t = (row - y(9)) / 7
+        pixel(grid, round(16 + (8 - 16) * t), row, INK)
+        pixel(grid, round(46 + (40 - 46) * t), row, INK)
+    vline(grid, 49, y(16), 8, INK)
+
+
+def paint_lid_open(grid, dy: int, rarity: str) -> None:
+    tone = PALETTES[rarity]
+    metal, metal_d, metal_h = tone["metal"], tone["metal_d"], tone["metal_h"]
+    y = lambda value: value + dy
+    # tampa aberta para trás: vemos o verso em 3/4, dobradiça no fundo
+    lid_quad(grid, y(2), y(18), 18, 48, 14, 42, WOOD_D)
+    lid_quad(grid, y(3), y(17), 19, 46, 16, 40, WOOD)
+    lid_quad(grid, y(5), y(15), 22, 32, 18, 24, WOOD_M)
+    fill(grid, 14, y(18), 29, 3, WOOD_D)
+    fill(grid, 15, y(19), 27, 2, metal_d)
+    hline(grid, 16, y(19), 24, metal)
+    fill(grid, 42, y(8), 7, 12, SIDE_D)
+    fill(grid, 43, y(9), 5, 10, SIDE)
+    fill(grid, 21, y(18), 4, 3, metal_d)
+    fill(grid, 33, y(18), 4, 3, metal_d)
+    pixel(grid, 22, y(18), metal_h)
+    pixel(grid, 34, y(18), metal_h)
+    if rarity == "epic":
+        hline(grid, 16, y(19), 24, EPIC_GEM)
+        diamond(grid, 28, y(10), EPIC_GEM, EPIC_GEM_H)
+        pixel(grid, 29, y(4), EPIC_GEM_H)
+    elif rarity == "legendary":
+        hline(grid, 16, y(19), 24, GOLD_B)
+        fill(grid, 24, y(1), 3, 3, GOLD_B)
+        fill(grid, 28, y(0), 3, 4, GOLD_B)
+        fill(grid, 32, y(1), 3, 3, GOLD_B)
+        pixel(grid, 29, y(0), GOLD_B)
+        diamond(grid, 28, y(10), GEM_H, GOLD_B)
+    lid_quad(grid, y(2), y(2), 18, 48, 18, 48, INK)
+    for row in range(y(2), y(19)):
+        t = (row - y(2)) / 16
+        pixel(grid, round(18 + (14 - 18) * t), row, INK)
+        pixel(grid, round(48 + (42 - 48) * t), row, INK)
+    hline(grid, 14, y(20), 29, INK)
+    vline(grid, 48, y(8), 12, INK)
+
+
+def paint_opening(rarity: str, pose: str) -> Image.Image:
+    dy = 14
+    grid: list[list] = [[None] * W for _ in range(H + dy)]
+    paint_body(grid, dy, rarity)
+    paint_interior(grid, dy, rarity, opened=pose == "open")
+    if pose == "ajar":
+        paint_lid_ajar(grid, dy, rarity)
+    else:
+        paint_lid_open(grid, dy, rarity)
+    return render(grid)
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for rarity in PALETTES:
-        sprite = paint(rarity)
+        closed = paint(rarity)
         webp = OUT / f"box-{rarity}.webp"
-        sprite.save(webp, "WEBP", lossless=True, quality=100)
+        closed.save(webp, "WEBP", lossless=True, quality=100)
         print(webp)
+        for pose in ("ajar", "open"):
+            sprite = paint_opening(rarity, pose)
+            frame = OUT / f"box-{rarity}-{pose}.webp"
+            sprite.save(frame, "WEBP", lossless=True, quality=100)
+            print(frame)
 
 
 if __name__ == "__main__":

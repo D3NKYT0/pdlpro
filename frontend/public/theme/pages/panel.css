@@ -33,9 +33,17 @@ html.pdl-panel {
   --theme-art-bg-4: url(/theme/default/images/bg/4.jpg);
   --theme-art-wallet-promo: url(/theme/default/images/bg/wallet-promo-banner.png);
   --theme-art-games-box-common: url(/theme/default/images/games/box-common.webp);
+  --theme-art-games-box-common-ajar: url(/theme/default/images/games/box-common-ajar.webp);
+  --theme-art-games-box-common-open: url(/theme/default/images/games/box-common-open.webp);
   --theme-art-games-box-rare: url(/theme/default/images/games/box-rare.webp);
+  --theme-art-games-box-rare-ajar: url(/theme/default/images/games/box-rare-ajar.webp);
+  --theme-art-games-box-rare-open: url(/theme/default/images/games/box-rare-open.webp);
   --theme-art-games-box-epic: url(/theme/default/images/games/box-epic.webp);
+  --theme-art-games-box-epic-ajar: url(/theme/default/images/games/box-epic-ajar.webp);
+  --theme-art-games-box-epic-open: url(/theme/default/images/games/box-epic-open.webp);
   --theme-art-games-box-legendary: url(/theme/default/images/games/box-legendary.webp);
+  --theme-art-games-box-legendary-ajar: url(/theme/default/images/games/box-legendary-ajar.webp);
+  --theme-art-games-box-legendary-open: url(/theme/default/images/games/box-legendary-open.webp);
   --theme-art-games-fishing: url(/theme/default/images/games/fishing-pond.webp);
   --theme-art-games-monster: url(/theme/default/images/games/monster-default.webp);
   color: var(--panel-text);
@@ -7626,6 +7634,9 @@ html.pdl-panel .game-box-grid > .game-empty {
 }
 
 html.pdl-panel .game-chest {
+  --chest-frame-closed: var(--theme-art-games-box-common);
+  --chest-frame-ajar: var(--theme-art-games-box-common-ajar);
+  --chest-frame-open: var(--theme-art-games-box-common-open);
   position: relative;
   display: grid;
   min-height: 148px;
@@ -7658,24 +7669,30 @@ html.pdl-panel .game-chest.rarity-legendary {
   box-shadow: inset 0 0 24px color-mix(in srgb, var(--panel-box-legendary) 20%, transparent);
 }
 
+html.pdl-panel .game-chest.rarity-rare {
+  --chest-frame-closed: var(--theme-art-games-box-rare);
+  --chest-frame-ajar: var(--theme-art-games-box-rare-ajar);
+  --chest-frame-open: var(--theme-art-games-box-rare-open);
+}
+
+html.pdl-panel .game-chest.rarity-epic {
+  --chest-frame-closed: var(--theme-art-games-box-epic);
+  --chest-frame-ajar: var(--theme-art-games-box-epic-ajar);
+  --chest-frame-open: var(--theme-art-games-box-epic-open);
+}
+
+html.pdl-panel .game-chest.rarity-legendary {
+  --chest-frame-closed: var(--theme-art-games-box-legendary);
+  --chest-frame-ajar: var(--theme-art-games-box-legendary-ajar);
+  --chest-frame-open: var(--theme-art-games-box-legendary-open);
+}
+
 html.pdl-panel .game-chest-art {
   width: min(100%, 180px);
   height: 156px;
-  background: var(--theme-art-games-box-common) center / contain no-repeat;
+  background: var(--chest-frame-closed) center bottom / contain no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-}
-
-html.pdl-panel .game-chest.rarity-rare .game-chest-art {
-  background-image: var(--theme-art-games-box-rare);
-}
-
-html.pdl-panel .game-chest.rarity-epic .game-chest-art {
-  background-image: var(--theme-art-games-box-epic);
-}
-
-html.pdl-panel .game-chest.rarity-legendary .game-chest-art {
-  background-image: var(--theme-art-games-box-legendary);
 }
 
 html.pdl-panel .game-chest-glow {
@@ -7713,34 +7730,22 @@ html.pdl-panel .game-chest.is-hero {
     color-mix(in srgb, var(--panel-surface) 88%, #000);
 }
 
-html.pdl-panel .game-chest-stage,
-html.pdl-panel .game-chest-rig {
+html.pdl-panel .game-chest-stage {
   position: relative;
   display: grid;
-  width: min(100%, 220px);
-  height: 200px;
+  width: min(100%, 240px);
+  height: 220px;
   place-items: center;
   overflow: hidden;
 }
 
-html.pdl-panel .game-chest-rig {
-  z-index: 2;
-}
-
 html.pdl-panel .game-chest.is-hero .game-chest-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-html.pdl-panel .game-chest-lid {
-  clip-path: inset(0 6% 46% 6%);
-  transform-origin: 50% 40%;
-}
-
-html.pdl-panel .game-chest-body {
-  clip-path: inset(50% 6% 0 6%);
+  position: relative;
+  z-index: 2;
+  width: min(100%, 228px);
+  height: 210px;
+  background-image: var(--chest-frame-closed);
+  background-position: center bottom;
 }
 
 html.pdl-panel .game-chest-beam {
@@ -7765,24 +7770,16 @@ html.pdl-panel .game-chest.is-hero.is-opening .game-chest-glow {
   animation: game-chest-glow 2.8s ease both;
 }
 
-html.pdl-panel .game-chest.is-hero.is-opening .game-chest-lid {
-  animation: game-chest-lid-open 2.8s ease both;
-}
-
-html.pdl-panel .game-chest.is-hero.is-opening .game-chest-body {
-  animation: game-chest-body-open 2.8s ease both;
+html.pdl-panel .game-chest.is-hero.is-opening .game-chest-art {
+  animation: game-chest-frames 2.8s steps(1, end) both;
 }
 
 html.pdl-panel .game-chest.is-hero.is-opening .game-chest-beam {
   animation: game-chest-beam 2.8s ease both;
 }
 
-html.pdl-panel .game-chest.is-hero.is-win .game-chest-lid {
-  transform: rotate(-22deg) translate(4px, -22px);
-}
-
-html.pdl-panel .game-chest.is-hero.is-win .game-chest-body {
-  transform: translateY(4px) scale(1.02);
+html.pdl-panel .game-chest.is-hero.is-win .game-chest-art {
+  background-image: var(--chest-frame-open);
 }
 
 html.pdl-panel .game-chest.is-hero.is-win .game-chest-beam,
@@ -8152,18 +8149,10 @@ html.pdl-panel .monster-item.is-fighting {
   72% { transform: translate(4px, -1px) rotate(3deg); }
 }
 
-@keyframes game-chest-lid-open {
-  0%, 18% { transform: rotate(0) translate(0, 0); }
-  28% { transform: translate(-4px, 2px) rotate(-5deg); }
-  38% { transform: translate(4px, -2px) rotate(4deg); }
-  52% { transform: rotate(-12deg) translate(2px, -12px); }
-  72%, 100% { transform: rotate(-22deg) translate(4px, -22px); }
-}
-
-@keyframes game-chest-body-open {
-  0%, 40% { transform: translate(0, 0) scale(1); }
-  52% { transform: translate(-3px, 2px) scale(1.01); }
-  68%, 100% { transform: translateY(6px) scale(1.02); }
+@keyframes game-chest-frames {
+  0%, 32% { background-image: var(--chest-frame-closed); }
+  33%, 64% { background-image: var(--chest-frame-ajar); }
+  65%, 100% { background-image: var(--chest-frame-open); }
 }
 
 @keyframes game-chest-beam {
@@ -8239,8 +8228,7 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .game-chest.is-opening,
   html.pdl-panel .game-chest.is-opening .game-chest-art,
   html.pdl-panel .game-chest.is-opening .game-chest-glow,
-  html.pdl-panel .game-chest.is-opening .game-chest-lid,
-  html.pdl-panel .game-chest.is-opening .game-chest-body,
+  html.pdl-panel .game-chest.is-opening .game-chest-art,
   html.pdl-panel .game-chest.is-opening .game-chest-beam,
   html.pdl-panel .game-chest-flash,
   html.pdl-panel .game-chest-ring,

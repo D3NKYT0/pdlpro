@@ -211,10 +211,7 @@ export function BoxChest({
         <span className="game-chest-stage">
           <i className="game-chest-glow" />
           <i className="game-chest-beam" />
-          <span className="game-chest-rig">
-            <i className="game-chest-art game-chest-lid" />
-            <i className="game-chest-art game-chest-body" />
-          </span>
+          <i className="game-chest-art" />
           {burst}
         </span>
       ) : (

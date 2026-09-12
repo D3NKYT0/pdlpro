@@ -59,8 +59,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Baús Encantados em `/panel/games`: cada baú mostra o item em mira e o que
   mais pode sair; as aberturas deixam de se chamar boosters; a arte passa a
   ser pixel art da paleta do painel (sem foto de IA). Abrir um slot gasta 1
-  ficha: o baú do card treme e um modal no centro faz a abertura grande
-  (tampa, feixe e pop do item, sem toast). O autoconfig
+  ficha: o baú do card treme e um modal no centro anima frames reais
+  (fechado, entreaberto e aberto) por raridade, com fogos e o item,
+  sem toast. O autoconfig
   separa o catálogo por raridade e inclui Ring of Baium no baú lendário.
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.

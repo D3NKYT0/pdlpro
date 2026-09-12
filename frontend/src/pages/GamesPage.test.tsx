@@ -269,7 +269,7 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   releaseReveal()
   await waitFor(() => expect(document.querySelector('.game-chest.is-hero.is-win')).toBeTruthy())
   expect(screen.getByRole('dialog', { name: 'Você encontrou' })).toBeVisible()
-  expect(document.querySelector('.game-chest-lid')).toBeTruthy()
+  expect(document.querySelector('.game-chest.is-hero .game-chest-art')).toBeTruthy()
   expect(document.querySelector('.game-chest-burst')).toBeTruthy()
   expect(document.querySelectorAll('.game-chest-spark').length).toBeGreaterThan(12)
   expect(document.querySelectorAll('.game-chest-ring').length).toBe(3)
