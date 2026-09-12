@@ -6,11 +6,13 @@ import { ItemIcon } from '../ItemIcon'
 import type { ApiGameItem } from '../../services/api'
 import { formatCompactQuantity, formatNumber } from '../../lib/formatters'
 import { CharacterItemDetailModal } from './CharacterItemDetailModal'
+import {
+  CHARACTER_BAG_COLUMNS,
+  CHARACTER_BAG_MIN_SLOTS,
+  CHARACTER_SLOT_ICON_PX,
+} from './characterSlotGrid'
 
 export type CharacterBagTab = 'inventory' | 'warehouse'
-
-const GRID_COLUMNS = 10
-const GRID_MIN_SLOTS = 80
 
 function normalizeLocation(location: string | null | undefined): CharacterBagTab {
   return location?.toUpperCase() === 'WAREHOUSE' ? 'warehouse' : 'inventory'
@@ -43,7 +45,7 @@ function BagSlot({
       })}
       onClick={() => onSelect(item)}
     >
-      <ItemIcon itemId={item.item_id} name={item.name} size={34} />
+      <ItemIcon itemId={item.item_id} name={item.name} size={CHARACTER_SLOT_ICON_PX} />
       {enchant ? <span className="character-bag-slot-enchant">{enchant}</span> : null}
       {item.quantity > 1 ? <span className="character-bag-slot-qty">{compactQty}</span> : null}
     </button>
@@ -71,7 +73,10 @@ export function CharacterBagPanel({
   )
 
   const slots = useMemo(() => {
-    const size = Math.max(GRID_MIN_SLOTS, Math.ceil(visibleItems.length / GRID_COLUMNS) * GRID_COLUMNS)
+    const size = Math.max(
+      CHARACTER_BAG_MIN_SLOTS,
+      Math.ceil(visibleItems.length / CHARACTER_BAG_COLUMNS) * CHARACTER_BAG_COLUMNS,
+    )
     return Array.from({ length: size }, (_, index) => visibleItems[index])
   }, [visibleItems])
 
@@ -106,11 +111,7 @@ export function CharacterBagPanel({
         {loading ? <div className="character-bag-message">{t('character.bag.loading')}</div> : null}
         {error ? <div className="character-bag-message is-error">{t('character.bag.error')}</div> : null}
         {!loading && !error ? (
-          <div
-            className="character-bag-grid"
-            style={{ gridTemplateColumns: `repeat(${GRID_COLUMNS}, minmax(0, 1fr))` }}
-            aria-label={t(`character.bag.gridLabel.${tab}`)}
-          >
+          <div className="character-bag-grid" aria-label={t(`character.bag.gridLabel.${tab}`)}>
             {slots.map((item, index) => (
               <BagSlot
                 key={item ? `${item.location}-${item.item_id}-${item.enchant}-${index}` : `empty-${index}`}

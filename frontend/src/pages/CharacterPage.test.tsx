@@ -104,6 +104,37 @@ it('mostra ficha com adena compacta, clã, aliança e tempo online', async () =>
   expect(screen.getByText('1d 1h')).toBeVisible()
   expect(screen.getByText('THEONE')).toBeVisible()
 })
+it('usa a mesma célula quadrada no inventário e nas skills', async () => {
+  vi.mocked(inventoryApi.gameItems).mockResolvedValue([
+    { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, tradeable: true, location: 'INVENTORY' },
+  ])
+  vi.mocked(lineageApi.characterSkills).mockResolvedValue([
+    {
+      skill_id: 1,
+      level: 37,
+      class_index: 0,
+      name: 'Triple Slash',
+      icon_url: '/skill-icons/1.png',
+      operate: 'active',
+      kind: 'attack',
+      group: 'physical',
+      skill_type: 'PDAM',
+      enchant: 15,
+      enchant_route: 1,
+      enchant_max: 30,
+      enchantable: true,
+    },
+  ])
+  mount()
+  const bagSlot = await screen.findByLabelText('Adena · sem encanto · qtd 100')
+  const skillSlot = await screen.findByLabelText('Triple Slash · Nv. 37 · +15')
+  expect(bagSlot).toHaveClass('character-bag-slot')
+  expect(skillSlot).toHaveClass('character-bag-slot')
+  expect(bagSlot.closest('.character-bag-grid')).not.toHaveAttribute('style')
+  expect(skillSlot.closest('.character-bag-grid')).not.toHaveAttribute('style')
+  expect(bagSlot.querySelector('.l2-item-icon')).toHaveStyle({ width: '32px', height: '32px' })
+  expect(skillSlot.querySelector('.l2-skill-icon')).toHaveStyle({ width: '32px', height: '32px' })
+})
 it('mostra inventário e warehouse em abas com grade', async () => {
   vi.mocked(inventoryApi.gameItems).mockResolvedValue([
     { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, tradeable: true, location: 'INVENTORY' },

@@ -4,14 +4,17 @@ import { SkillIcon } from '../SkillIcon'
 import { Modal } from '../ui/Modal'
 import { Tabs } from '../ui/Tabs'
 import type { ApiGameSkill, SkillGroup } from '../../services/api'
+import { CHARACTER_SKILL_COLUMNS, CHARACTER_SLOT_ICON_PX } from './characterSlotGrid'
 
-const GRID_COLUMNS = 8
 const SKILL_GROUPS: SkillGroup[] = ['physical', 'magic', 'reinforcement', 'weaken', 'special', 'other']
 
 type OperateTab = 'active' | 'passive'
 
 function padRow<T>(items: T[]): Array<T | undefined> {
-  const size = Math.max(GRID_COLUMNS, Math.ceil(items.length / GRID_COLUMNS) * GRID_COLUMNS)
+  const size = Math.max(
+    CHARACTER_SKILL_COLUMNS,
+    Math.ceil(items.length / CHARACTER_SKILL_COLUMNS) * CHARACTER_SKILL_COLUMNS,
+  )
   return Array.from({ length: size }, (_, index) => items[index])
 }
 
@@ -37,7 +40,7 @@ function SkillSlot({
       aria-label={title}
       onClick={() => onSelect(skill)}
     >
-      <SkillIcon skillId={skill.skill_id} name={skill.name} iconUrl={skill.icon_url} size={32} />
+      <SkillIcon skillId={skill.skill_id} name={skill.name} iconUrl={skill.icon_url} size={CHARACTER_SLOT_ICON_PX} />
       {skill.enchant > 0 ? (
         <span className="character-bag-slot-enchant">{t('character.skills.enchantBadge', { value: skill.enchant })}</span>
       ) : (
@@ -142,7 +145,6 @@ export function CharacterSkillsPanel({
                       <div
                         id={`character-skills-group-${group.id}`}
                         className="character-bag-grid character-skills-grid"
-                        style={{ gridTemplateColumns: `repeat(${GRID_COLUMNS}, minmax(0, 1fr))` }}
                         aria-label={label}
                       >
                         {slots.map((skill, index) => (

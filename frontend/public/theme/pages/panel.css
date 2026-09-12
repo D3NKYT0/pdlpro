@@ -20,6 +20,8 @@ html.pdl-panel {
   --panel-shell-pad-bottom: 42px;
   --panel-sidebar-gap: 18px;
   --panel-radius: 3px;
+  --character-slot-size: 48px;
+  --character-slot-icon: 32px;
   --theme-button-primary: url(/theme/default/images/button/1.png);
   --theme-button-secondary: url(/theme/default/images/button/2.png);
   --theme-art-bg-2: url(/theme/default/images/bg/2.jpg);
@@ -2006,6 +2008,8 @@ html.pdl-panel .character-bag-panel {
 
 html.pdl-panel .character-bag-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fill, var(--character-slot-size));
+  grid-auto-rows: var(--character-slot-size);
   gap: 0;
   width: 100%;
   background: #1a1a1a;
@@ -2015,10 +2019,14 @@ html.pdl-panel .character-bag-grid {
 
 html.pdl-panel .character-bag-slot {
   position: relative;
+  box-sizing: border-box;
   display: grid;
+  width: var(--character-slot-size);
+  height: var(--character-slot-size);
+  min-width: var(--character-slot-size);
+  min-height: var(--character-slot-size);
   aspect-ratio: 1;
   place-items: center;
-  min-width: 0;
   padding: 0;
   border-top: 1px solid #2c2c2c;
   border-left: 1px solid #2c2c2c;
@@ -2062,8 +2070,8 @@ html.pdl-panel .character-bag-slot.is-filled:focus-visible {
 
 html.pdl-panel .character-bag-slot > .l2-item-icon,
 html.pdl-panel .character-bag-slot > .l2-skill-icon {
-  width: 34px;
-  height: 34px;
+  width: var(--character-slot-icon) !important;
+  height: var(--character-slot-icon) !important;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -2317,10 +2325,6 @@ html.pdl-panel .character-skills-body .character-bag-message {
 
 html.pdl-panel .character-skills-grid {
   margin-top: 2px;
-}
-
-html.pdl-panel .character-skills-grid .character-bag-slot {
-  min-height: 0;
 }
 
 @media (max-width: 720px) {
@@ -8424,14 +8428,9 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     height: 38px;
   }
 
-  html.pdl-panel .character-bag-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-  }
-
-  html.pdl-panel .character-bag-slot > .l2-item-icon,
-  html.pdl-panel .character-bag-slot > .l2-skill-icon {
-    width: 28px;
-    height: 28px;
+  html.pdl-panel {
+    --character-slot-size: 44px;
+    --character-slot-icon: 28px;
   }
 
   html.pdl-panel .inventory-withdraw-form {
