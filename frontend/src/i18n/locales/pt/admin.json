@@ -173,7 +173,7 @@
       "fishing": "Pescaria no lago com vara, iscas e coleção.",
       "roulette": "Giro da roda da fortuna com fichas do painel.",
       "slots": "Cilindros da taverna com prêmios configuráveis.",
-      "boxes": "Baús com boosters sorteados a partir do catálogo.",
+      "boxes": "Baús comprados por um item em mira; as outras aberturas sorteiam o restante do catálogo.",
       "fallback": "Módulo de entretenimento configurável do painel."
     },
     "updating": "Atualizando",

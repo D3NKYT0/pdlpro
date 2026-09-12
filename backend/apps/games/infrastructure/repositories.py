@@ -246,7 +246,7 @@ class DjangoBoxRepository(IBoxRepository):
         return User.objects.select_for_update().get(id=user_id)
 
     def list_active_types(self) -> list[BoxType]:
-        return list(BoxType.objects.filter(active=True).order_by("name"))
+        return list(BoxType.objects.filter(active=True).order_by("price", "name"))
 
     def get_active_type(self, box_type_id: UUID) -> BoxType | None:
         return BoxType.objects.filter(id=box_type_id, active=True).first()

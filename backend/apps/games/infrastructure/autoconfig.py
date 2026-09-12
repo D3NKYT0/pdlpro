@@ -83,10 +83,19 @@ BOX_ITEMS = (
     (951, 0, 1, "epic", 4),
     (4037, 0, 10, "epic", 3),
     (8748, 0, 1, "epic", 2),
-    (947, 0, 1, "legendary", 1),
+    (947, 0, 1, "epic", 2),
     (6577, 0, 1, "legendary", 1),
+    (6658, 0, 1, "legendary", 1),
     (57, 0, 3_000_000, "legendary", 1),
 )
+
+# Raridades do catálogo em cada baú default; nomes customizados não entram neste mapa.
+BOX_TIER_RARITIES = {
+    "Baú Comum": frozenset({"common", "rare"}),
+    "Baú Raro": frozenset({"rare", "epic"}),
+    "Baú Épico": frozenset({"epic"}),
+    "Baú Lendário": frozenset({"epic", "legendary"}),
+}
 
 # IDs antigos do primeiro seed + atuais; o sync desativa sobras desses IDs.
 _LEGACY_ROULETTE_ITEM_IDS = frozenset(
@@ -380,7 +389,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
         counts = {"catalog_items": 0, "box_types": 0, "box_links": 0}
         catalog: list[CatalogItem] = []
         kept: list = []
-        known_ids = _LEGACY_BOX_ITEM_IDS | {item_id for item_id, *_ in BOX_ITEMS}
+        known_ids = _LEGACY_BOX_ITEM_IDS | {item_id for item_id, *_ in BOX_ITEMS} | {6658}
         for item_id, enchant, quantity, rarity, weight in BOX_ITEMS:
             item, was = CatalogItem.objects.get_or_create(
                 item_id=item_id,
@@ -418,13 +427,12 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 defaults={"price": price, "boosters_amount": boosters, "active": True},
             )
             counts["box_types"] += int(was)
-            if catalog:
+            allowed = BOX_TIER_RARITIES.get(name)
+            tier = [item for item in catalog if allowed is None or item.rarity in allowed]
+            if tier:
                 current = set(box.items.values_list("pk", flat=True))
-                missing = [item for item in catalog if item.pk not in current]
-                if not box.items.exists():
-                    box.items.set(catalog)
-                    counts["box_links"] += 1
-                elif missing:
-                    box.items.add(*missing)
+                wanted = {item.pk for item in tier}
+                if current != wanted:
+                    box.items.set(tier)
                     counts["box_links"] += 1
         return counts

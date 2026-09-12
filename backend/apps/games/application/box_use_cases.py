@@ -6,6 +6,7 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.games.application.bag import add_to_bag
+from apps.games.application.box_catalog import box_catalog_preview
 from apps.games.domain.exceptions import (
     BoxEmptyError,
     BoxNotOwnedError,
@@ -56,12 +57,15 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
     def execute(self, data: UUID) -> dict:
         types = []
         for row in self._boxes.list_active_types():
+            featured, preview = box_catalog_preview(self._boxes.list_active_type_items(row))
             types.append(
                 {
                     "id": str(row.id),
                     "name": row.name,
                     "price": str(row.price),
                     "boosters_amount": row.boosters_amount,
+                    "featured": featured,
+                    "items": preview,
                 }
             )
         boxes = []
@@ -69,12 +73,15 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
             remaining = self._boxes.count_closed_slots(box)
             if remaining == 0:
                 continue
+            featured, preview = box_catalog_preview(self._boxes.list_active_type_items(box.box_type))
             boxes.append(
                 {
                     "id": str(box.id),
                     "type_name": box.box_type.name,
                     "remaining": remaining,
                     "total": self._boxes.count_slots(box),
+                    "featured": featured,
+                    "items": preview,
                 }
             )
         return {"types": types, "boxes": boxes}

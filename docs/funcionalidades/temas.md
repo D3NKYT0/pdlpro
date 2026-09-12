@@ -128,8 +128,10 @@ Exemplo:
 
 O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
 de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
-`assets`, mesmo sem `layout`. A central de jogos usa `images/games/box-{common,rare,epic,legendary}.webp`,
-`images/games/fishing-pond.webp` e `images/games/monster-default.webp` como `--theme-art-games-*`.
+`assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús
+(`images/games/box-{common,rare,epic,legendary}.webp`, tokens `--theme-art-games-box-*`)
+e as artes `images/games/fishing-pond.webp` e `images/games/monster-default.webp` como
+`--theme-art-games-*`. O script `frontend/scripts/paint-box-chests.py` regenera os baús.
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 
@@ -167,6 +169,8 @@ O seletor raiz recomendado é:
   --panel-muted: #aaa298;
   --panel-gold: #d4af61;
   --panel-gold-bright: #e6c77d;
+  --panel-box-epic: #c4a6e8;
+  --panel-box-legendary: var(--panel-gold-bright);
   --panel-surface: #151515;
   --panel-border: rgba(212, 175, 97, .25);
   --theme-text: var(--panel-text);

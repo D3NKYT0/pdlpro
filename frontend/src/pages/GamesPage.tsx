@@ -24,7 +24,9 @@ import { gamesApi } from '../services/api'
 import { formatCompactQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
-import { BoxChest, ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
+import { BoxHuntCard } from '../components/games/BoxCatalog'
+import { sortBoxesByRarity } from '../components/games/gameArt'
+import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 
@@ -203,6 +205,11 @@ export function GamesPage() {
   }, [fx.playing])
 
   const tokens = roulette.data?.fichas ?? minigames.data?.fichas ?? 0
+  const shopBoxes = sortBoxesByRarity(boxes.data?.types ?? [], (row) => row.name, (row) => row.price)
+  const ownedBoxes = sortBoxesByRarity(
+    boxes.data?.boxes ?? [],
+    (row) => row.type_name,
+  )
 
   return (
     <div className="games-page">
@@ -330,28 +337,52 @@ export function GamesPage() {
             <div>
               <span className="panel-eyebrow">{t('games.boxes.eyebrow')}</span>
               <h2>{t('games.boxes.title')}</h2>
+              <p className="muted">{t('games.boxes.lead')}</p>
             </div>
           </div>
-          <div className="game-box-grid">
-            {(boxes.data?.types ?? []).map((row) => (
-              <article className="game-box-card" key={row.id}>
-                <BoxChest name={row.name} price={row.price} />
-                <span><strong>{row.name}</strong><small>{t('games.boxes.boosters', { count: row.boosters_amount })}</small></span>
-                <b>R$ {row.price}</b>
-                <Button className="ghost" type="button" onClick={() => void buyBox(row.id)}>{t('games.boxes.buy')}</Button>
-              </article>
-            ))}
-            {(boxes.data?.boxes ?? []).map((row) => (
-              <article className={`game-box-card is-owned${fx.playing === 'open' && fx.targetId === row.id ? ' is-opening' : ''}`} key={row.id}>
-                <BoxChest name={row.type_name} opening={fx.playing === 'open' && fx.targetId === row.id} />
-                <span><strong>{row.type_name}</strong><small>{t('games.boxes.remaining', { remaining: row.remaining, total: row.total })}</small></span>
-                <Button type="button" onClick={() => void openBox(row.id)}>{t('games.boxes.open', { count: 1 })}</Button>
-              </article>
-            ))}
-            {!boxes.data?.types.length && !boxes.data?.boxes.length ? (
-              <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
-            ) : null}
-          </div>
+          {ownedBoxes.length ? (
+            <div className="game-subsection">
+              <h3>{t('games.boxes.ownedTitle')}</h3>
+              <div className="game-box-grid">
+                {ownedBoxes.map((row) => (
+                  <BoxHuntCard
+                    key={row.id}
+                    name={row.type_name}
+                    featured={row.featured}
+                    items={row.items}
+                    owned
+                    remaining={row.remaining}
+                    total={row.total}
+                    opening={fx.playing === 'open' && fx.targetId === row.id}
+                    onAction={() => void openBox(row.id)}
+                    actionLabel={t('games.boxes.open', { count: 1 })}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {shopBoxes.length ? (
+            <div className="game-subsection">
+              <h3>{t('games.boxes.shopTitle')}</h3>
+              <div className="game-box-grid">
+                {shopBoxes.map((row) => (
+                  <BoxHuntCard
+                    key={row.id}
+                    name={row.name}
+                    price={row.price}
+                    opens={row.boosters_amount}
+                    featured={row.featured}
+                    items={row.items}
+                    onAction={() => void buyBox(row.id)}
+                    actionLabel={t('games.boxes.buy')}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {!boxes.data?.types.length && !boxes.data?.boxes.length ? (
+            <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
+          ) : null}
         </Card>
 
         <Card

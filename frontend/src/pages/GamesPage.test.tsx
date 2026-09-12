@@ -45,7 +45,23 @@ beforeEach(() => {
     prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
   } as any)
   vi.mocked(gamesApi.dailyBonus).mockResolvedValue({ claimed: false, amount: '5.00' } as any)
-  vi.mocked(gamesApi.boxes).mockResolvedValue({ types: [{ id: 'type', name: 'Caixa rara', price: '10.00', boosters_amount: 2 }], boxes: [{ id: 'box', type_name: 'Caixa adquirida', remaining: 1, total: 2 }] })
+  vi.mocked(gamesApi.boxes).mockResolvedValue({
+    types: [{
+      id: 'type',
+      name: 'Caixa rara',
+      price: '10.00',
+      boosters_amount: 2,
+      featured: { name: 'Enchant Weapon C', item_id: 951, quantity: 1 },
+      items: [{ name: 'Adena', item_id: 57, quantity: 80000 }],
+    }],
+    boxes: [{
+      id: 'box',
+      type_name: 'Caixa adquirida',
+      remaining: 1,
+      total: 2,
+      featured: { name: 'Enchant Weapon C', item_id: 951, quantity: 1 },
+    }],
+  })
   vi.mocked(gamesApi.minigames).mockResolvedValue({ fichas: 10, dice: { active: true, min_bet: 1 }, slots: { active: true, cost: 1, symbols: ['A'] } })
   vi.mocked(gamesApi.economy).mockResolvedValue({ fichas: 10, weapon: { level: 3, fragments: 10 }, monsters: [{ id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0 }, { id: 'resting', name: 'Troll', alive: false, level: 2, required_weapon_level: 2, fragment_reward: 3, respawn_in: 60 }] })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
@@ -204,10 +220,43 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   const user = mount('boxes')
   expect(await screen.findByText('Caixa rara')).toBeVisible()
   expect(document.querySelector('.game-chest[data-rarity="rare"]')).toBeTruthy()
+  expect(document.querySelector('.game-chest-art')).toBeTruthy()
   await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
   expect(document.querySelector('.game-chest.is-opening')).toBeTruthy()
   finish({ item: { name: 'Espada', enchant: 3 }, remaining: 0 })
   await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Espada (+3)'))
+})
+it('explica o item em mira e o que mais pode sair do baú', async () => {
+  mount('boxes')
+  expect((await screen.findAllByText('Item em mira')).length).toBeGreaterThan(0)
+  expect(screen.getByText('Compre o baú pelo item que você quer — arma S, joia de boss, encantamento. Nas outras aberturas, o caminho rende o resto do catálogo.')).toBeVisible()
+  expect(screen.getAllByText('Enchant Weapon C').length).toBeGreaterThan(0)
+  expect(screen.getByText('2 aberturas')).toBeVisible()
+  expect(screen.getByText('Também pode sair')).toBeVisible()
+  expect(screen.getByText('Baús à venda')).toBeVisible()
+  expect(screen.getByText('Seus baús selados')).toBeVisible()
+  expect(screen.queryByText(/boosters/i)).not.toBeInTheDocument()
+})
+it('lista os baús do comum ao lendário e pinta a coluna pela raridade', async () => {
+  vi.mocked(gamesApi.boxes).mockResolvedValue({
+    types: [
+      { id: 'leg', name: 'Baú Lendário', price: '100.00', boosters_amount: 12 },
+      { id: 'com', name: 'Baú Comum', price: '10.00', boosters_amount: 5 },
+      { id: 'epi', name: 'Baú Épico', price: '50.00', boosters_amount: 9 },
+      { id: 'rar', name: 'Baú Raro', price: '25.00', boosters_amount: 7 },
+    ],
+    boxes: [],
+  } as any)
+  mount('boxes')
+  expect(await screen.findByText('Baú Comum')).toBeVisible()
+  const cards = [...document.querySelectorAll('.game-box-card')]
+  expect(cards.map((card) => card.getAttribute('data-rarity'))).toEqual(['common', 'rare', 'epic', 'legendary'])
+  expect(cards.map((card) => card.querySelector('strong')?.textContent)).toEqual([
+    'Baú Comum',
+    'Baú Raro',
+    'Baú Épico',
+    'Baú Lendário',
+  ])
 })
 it('mostra o dado sorteado no palco', async () => {
   vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)

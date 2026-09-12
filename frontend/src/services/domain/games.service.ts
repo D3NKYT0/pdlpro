@@ -10,6 +10,14 @@ import type {
 } from '../types'
 import { sendJson } from './jsonRequest'
 
+export type BoxHuntPreview = {
+  name: string
+  item_id: number
+  enchant?: number
+  quantity?: number
+  rarity?: string
+}
+
 export type Reward = {
   kind: string
   quantity: number | string
@@ -115,8 +123,22 @@ export const gamesApi = {
     }),
   boxes: () =>
     request<{
-      types: Array<{ id: string; name: string; price: string; boosters_amount: number }>
-      boxes: Array<{ id: string; type_name: string; remaining: number; total: number }>
+      types: Array<{
+        id: string
+        name: string
+        price: string
+        boosters_amount: number
+        featured?: BoxHuntPreview | null
+        items?: BoxHuntPreview[]
+      }>
+      boxes: Array<{
+        id: string
+        type_name: string
+        remaining: number
+        total: number
+        featured?: BoxHuntPreview | null
+        items?: BoxHuntPreview[]
+      }>
     }>('/customer/games/boxes/'),
   buyBox: (box_type_id: string) =>
     request<{ id: string; remaining: number }>('/customer/games/boxes/', {

@@ -6,6 +6,10 @@ html.pdl-panel {
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
+  --panel-box-common: var(--panel-muted);
+  --panel-box-rare: var(--panel-gold);
+  --panel-box-epic: var(--theme-epic, #c4a6e8);
+  --panel-box-legendary: var(--theme-legendary, var(--panel-gold-bright));
   --theme-text: var(--panel-text);
   --theme-muted: var(--panel-muted);
   --theme-accent: var(--panel-gold);
@@ -6643,6 +6647,10 @@ html.pdl-panel .game-module-heading {
   border-bottom: 1px solid rgba(197, 161, 97, 0.13);
 }
 
+html.pdl-panel .game-boxes .game-module-heading {
+  align-items: flex-start;
+}
+
 html.pdl-panel .game-module-heading > div:not(.weapon-level) {
   min-width: 0;
 }
@@ -6650,6 +6658,11 @@ html.pdl-panel .game-module-heading > div:not(.weapon-level) {
 html.pdl-panel .game-module-heading h2 {
   margin: 3px 0 0;
   font-size: 25px;
+}
+
+html.pdl-panel .game-module-heading p.muted {
+  margin: 8px 0 0;
+  max-width: 54ch;
 }
 
 html.pdl-panel .game-module-icon {
@@ -7489,49 +7502,119 @@ html.pdl-panel .respawn {
 
 html.pdl-panel .game-box-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
 }
 
 html.pdl-panel .game-box-card {
+  --box-accent: var(--panel-box-common);
   display: grid;
-  gap: 8px;
+  align-content: start;
+  gap: 10px;
   min-width: 0;
-  padding: 12px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--box-accent) 42%, transparent);
   background:
-    linear-gradient(180deg, rgba(197, 161, 97, 0.06), transparent 42%),
-    rgba(5, 5, 4, 0.42);
+    linear-gradient(180deg, color-mix(in srgb, var(--box-accent) 16%, transparent), transparent 46%),
+    color-mix(in srgb, var(--panel-surface) 70%, #000);
+}
+
+html.pdl-panel .game-box-card[data-rarity='rare'] {
+  --box-accent: var(--panel-box-rare);
+}
+
+html.pdl-panel .game-box-card[data-rarity='epic'] {
+  --box-accent: var(--panel-box-epic);
+}
+
+html.pdl-panel .game-box-card[data-rarity='legendary'] {
+  --box-accent: var(--panel-box-legendary);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--panel-box-legendary) 26%, transparent);
 }
 
 html.pdl-panel .game-box-card.is-owned {
-  border-color: rgba(230, 199, 125, 0.28);
+  border-color: color-mix(in srgb, var(--box-accent) 55%, transparent);
 }
 
 html.pdl-panel .game-box-card.is-opening {
-  box-shadow: 0 0 28px rgba(230, 199, 125, 0.22);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--box-accent) 28%, transparent);
 }
 
-html.pdl-panel .game-box-card > span {
-  display: flex;
+html.pdl-panel .game-box-copy {
+  display: grid;
   min-width: 0;
-  flex-direction: column;
+  gap: 2px;
 }
 
 html.pdl-panel .game-box-card strong {
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--panel-text);
   font-size: 14px;
 }
 
 html.pdl-panel .game-box-card small {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--panel-muted);
   font-size: 10px;
 }
 
-html.pdl-panel .game-box-card > b {
-  color: var(--panel-gold-bright);
+html.pdl-panel .game-box-hunt,
+html.pdl-panel .game-box-also {
+  display: grid;
+  gap: 6px;
+}
+
+html.pdl-panel .game-box-hunt > span,
+html.pdl-panel .game-box-also > span {
+  color: var(--box-accent);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .game-box-hunt > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+}
+
+html.pdl-panel .game-box-hunt img {
+  grid-row: 1 / span 2;
+}
+
+html.pdl-panel .game-box-hunt b {
+  color: var(--box-accent);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+html.pdl-panel .game-box-also ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html.pdl-panel .game-box-also li {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--box-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--box-accent) 10%, #0a0806);
+}
+
+html.pdl-panel .game-box-price {
+  color: var(--box-accent);
   font-size: 13px;
   font-weight: 500;
+}
+
+html.pdl-panel .game-box-hint {
+  color: var(--panel-muted);
 }
 
 html.pdl-panel .game-box-card .btn {
@@ -7543,23 +7626,48 @@ html.pdl-panel .game-box-grid > .game-empty {
 }
 
 html.pdl-panel .game-chest {
+  display: grid;
   min-height: 148px;
-  border: 1px solid rgba(230, 199, 125, 0.16);
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--box-accent, var(--panel-gold)) 36%, transparent);
   background:
-    var(--theme-art-games-box-common) center 46% / cover no-repeat,
-    rgba(0, 0, 0, 0.4);
-  box-shadow: inset 0 -28px 36px rgba(0, 0, 0, 0.35);
-}
-
-html.pdl-panel .game-chest.rarity-rare {
-  background-image: var(--theme-art-games-box-rare);
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 62%),
+    color-mix(in srgb, var(--panel-surface) 82%, #000);
 }
 
 html.pdl-panel .game-chest.rarity-epic {
-  background-image: var(--theme-art-games-box-epic);
+  border-color: color-mix(in srgb, var(--panel-box-epic) 48%, transparent);
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--panel-box-epic) 22%, transparent), transparent 62%),
+    color-mix(in srgb, var(--panel-surface) 82%, #000);
+  box-shadow: inset 0 0 24px color-mix(in srgb, var(--panel-box-epic) 18%, transparent);
 }
 
 html.pdl-panel .game-chest.rarity-legendary {
+  border-color: color-mix(in srgb, var(--panel-box-legendary) 55%, transparent);
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--panel-box-legendary) 24%, transparent), transparent 62%),
+    color-mix(in srgb, var(--panel-surface) 82%, #000);
+  box-shadow: inset 0 0 24px color-mix(in srgb, var(--panel-box-legendary) 20%, transparent);
+}
+
+html.pdl-panel .game-chest-art {
+  width: min(100%, 180px);
+  height: 156px;
+  background: var(--theme-art-games-box-common) center / contain no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+html.pdl-panel .game-chest.rarity-rare .game-chest-art {
+  background-image: var(--theme-art-games-box-rare);
+}
+
+html.pdl-panel .game-chest.rarity-epic .game-chest-art {
+  background-image: var(--theme-art-games-box-epic);
+}
+
+html.pdl-panel .game-chest.rarity-legendary .game-chest-art {
   background-image: var(--theme-art-games-box-legendary);
 }
 

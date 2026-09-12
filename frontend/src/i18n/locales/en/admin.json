@@ -173,7 +173,7 @@
       "fishing": "Lake fishing with rod, bait and a collection.",
       "roulette": "Spin the wheel of fortune with panel tokens.",
       "slots": "Tavern reels with configurable prizes.",
-      "boxes": "Chests with boosters drawn from the catalog.",
+      "boxes": "Chests bought for a hunt item; the other openings draw the rest of the catalog.",
       "fallback": "Configurable entertainment module of the panel."
     },
     "updating": "Updating",

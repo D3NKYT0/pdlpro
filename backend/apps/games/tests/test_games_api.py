@@ -121,6 +121,23 @@ def test_buy_and_open_box(api, player):
 
 
 @pytest.mark.django_db
+def test_list_boxes_shows_the_hunt_item(api, player):
+    from apps.games.infrastructure.models import BoxType, CatalogItem
+
+    hunt = CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    filler = CatalogItem.objects.create(name="Adena", item_id=57, quantity=80_000, rarity="common", weight=28)
+    box_type = BoxType.objects.create(name="Baú Lendário", price=Decimal("100.00"), boosters_amount=12)
+    box_type.items.add(hunt, filler)
+    api.force_authenticate(user=player)
+    listed = api.get("/api/v1/customer/games/boxes/")
+    assert listed.status_code == 200
+    row = listed.data["types"][0]
+    assert row["featured"]["item_id"] == 6658
+    assert row["featured"]["name"] == "Ring of Baium"
+    assert {item["item_id"] for item in row["items"]} == {57}
+
+
+@pytest.mark.django_db
 def test_dice_and_slots(api, player):
     GameConfig.objects.update_or_create(code="dice", defaults={"name": "Dados", "active": True, "settings": {"min_bet": 1}})
     GameConfig.objects.update_or_create(code="slots", defaults={"name": "Slots", "active": True, "settings": {"cost": 1}})

@@ -173,7 +173,7 @@
       "fishing": "Pesca del lago con caña, cebos y colección.",
       "roulette": "Giro de la rueda de la fortuna con fichas del panel.",
       "slots": "Cilindros de la taberna con premios configurables.",
-      "boxes": "Cofres con boosters sorteados del catálogo.",
+      "boxes": "Cofres comprados por un ítem objetivo; las otras aperturas sortean el resto del catálogo.",
       "fallback": "Módulo de entretenimiento configurable del panel."
     },
     "updating": "Actualizando",

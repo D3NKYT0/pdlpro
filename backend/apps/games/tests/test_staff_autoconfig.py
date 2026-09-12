@@ -157,6 +157,11 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     ]
     assert BoxType.objects.filter(active=True).count() >= 1
     assert CatalogItem.objects.filter(item_id=6577, active=True).exists()
+    assert CatalogItem.objects.filter(item_id=6658, active=True).exists()
+    common = BoxType.objects.get(name="Baú Comum")
+    legendary = BoxType.objects.get(name="Baú Lendário")
+    assert not common.items.filter(item_id=6658).exists()
+    assert legendary.items.filter(item_id=6658).exists()
     assert CatalogItem.objects.filter(item_id=57, quantity=80_000, active=True).exists()
     luck = DailyBonusPoolEntry.objects.get(name="Moeda da Sorte")
     assert luck.rewards[0]["item_id"] == 4037

@@ -152,7 +152,9 @@ export function BoxChest({
       data-theme-part="game-chest"
       data-rarity={rarity}
       aria-hidden="true"
-    />
+    >
+      <i className="game-chest-art" />
+    </div>
   )
 }
 

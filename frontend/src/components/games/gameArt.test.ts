@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   findRoulettePrizeIndex,
   inferBoxRarity,
+  sortBoxesByRarity,
   monsterHue,
   normalizeRouletteRarity,
   rouletteReelStrip,
@@ -22,6 +23,21 @@ describe('inferBoxRarity', () => {
     expect(inferBoxRarity('Baú do reino', '20')).toBe('rare')
     expect(inferBoxRarity('Baú do reino', '40')).toBe('epic')
     expect(inferBoxRarity('Baú do reino', '80')).toBe('legendary')
+  })
+
+  it('ordena baús da raridade menor para a maior', () => {
+    expect(
+      sortBoxesByRarity(
+        [
+          { name: 'Baú Lendário', price: '100.00' },
+          { name: 'Baú Comum', price: '10.00' },
+          { name: 'Baú Épico', price: '50.00' },
+          { name: 'Baú Raro', price: '25.00' },
+        ],
+        (row) => row.name,
+        (row) => row.price,
+      ).map((row) => row.name),
+    ).toEqual(['Baú Comum', 'Baú Raro', 'Baú Épico', 'Baú Lendário'])
   })
 })
 

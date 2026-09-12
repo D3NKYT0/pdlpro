@@ -7,6 +7,13 @@ const RARITY_PATTERNS: Array<{ rarity: GameRarity; pattern: RegExp }> = [
   { rarity: 'common', pattern: /common|comum/i },
 ]
 
+const RARITY_ORDER: Record<GameRarity, number> = {
+  common: 0,
+  rare: 1,
+  epic: 2,
+  legendary: 3,
+}
+
 /** Infere a arte do baú pelo nome editorial ou, na falta dele, pela faixa de preço. */
 export function inferBoxRarity(name: string, price?: string | number): GameRarity {
   const text = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -18,6 +25,23 @@ export function inferBoxRarity(name: string, price?: string | number): GameRarit
   if (value >= 40) return 'epic'
   if (value >= 15) return 'rare'
   return 'common'
+}
+
+export function boxRarityRank(name: string, price?: string | number) {
+  return RARITY_ORDER[inferBoxRarity(name, price)]
+}
+
+export function sortBoxesByRarity<T>(
+  rows: T[],
+  nameOf: (row: T) => string,
+  priceOf?: (row: T) => string | number | undefined,
+) {
+  return [...rows].sort((left, right) => {
+    const diff =
+      boxRarityRank(nameOf(left), priceOf?.(left)) - boxRarityRank(nameOf(right), priceOf?.(right))
+    if (diff !== 0) return diff
+    return Number(priceOf?.(left) ?? 0) - Number(priceOf?.(right) ?? 0)
+  })
 }
 
 /** Variação leve entre monstros a partir do id, sem arte extra. */
