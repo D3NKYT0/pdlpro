@@ -22,7 +22,7 @@
       "noteMercadoPagoTitle": "Pagamento nacional via Mercado Pago",
       "noteUnavailableTitle": "Recargas temporariamente indisponíveis",
       "noteAutoConfirm": "O crédito automático está habilitado neste ambiente.",
-      "noteManualConfirm": "O saldo será adicionado somente após a aprovação do pedido.",
+      "noteManualConfirm": "Pagamento simulado: o saldo só entra depois que a equipe confirmar o pedido no admin. Jogadores não conseguem creditar sozinhos.",
       "noteStripe": "Cartão processado com segurança no próprio site.",
       "noteMercadoPago": "Pague com cartão, PIX ou boleto sem sair do painel.",
       "noteUnavailable": "Nenhuma cobrança será criada enquanto o serviço de pagamento estiver indisponível.",
@@ -113,7 +113,7 @@
     "toast": {
       "rechargeUnavailable": "As recargas estão temporariamente indisponíveis. Tente novamente mais tarde.",
       "coinsCredited": "{{coins}} moedas creditadas",
-      "orderPending": "Pedido criado e aguardando confirmação.",
+      "orderPending": "Pedido simulado criado. A equipe precisa confirmar no admin para o saldo entrar.",
       "paymentStartFailed": "Não foi possível iniciar o pagamento",
       "pixGenerated": "PIX gerado. Pague para creditar as moedas.",
       "mercadoPagoFailed": "Falha ao abrir o Mercado Pago",
@@ -1005,7 +1005,7 @@
     "boxes": {
       "eyebrow": "Relíquias seladas",
       "title": "Baús Encantados",
-      "lead": "Diferente da roleta: o item em mira já está em um dos pacotes. Você sempre leva — a sorte só decide se sai no primeiro ou no último.",
+      "lead": "Diferente da roleta: o item em mira é sempre lendário e já está em um dos pacotes. Você sempre leva — a sorte só decide se sai no primeiro ou no último.",
       "hunt": "Item em mira",
       "guarantee": "Garantido neste baú",
       "huntWaiting": "Ainda está no baú",

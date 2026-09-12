@@ -3671,7 +3671,19 @@ msgstr "Invalid amount."
 msgid "Falha ao iniciar o pagamento."
 msgstr "Failed to start payment."
 
+#: .\common\i18n_msgid_catalog.py:65
+msgid "A confirmação de simulação só pode ser feita pela equipe."
+msgstr "Simulation confirmation can only be done by staff."
+
 #: .\common\i18n_msgid_catalog.py:66
+msgid "Simulações não são processadas pelo jogador. A equipe confirma o pedido."
+msgstr "Simulations are not processed by the player. Staff confirms the order."
+
+#: .\common\i18n_msgid_catalog.py:67
+msgid "Este pedido não pode ser confirmado manualmente."
+msgstr "This order cannot be confirmed manually."
+
+#: .\common\i18n_msgid_catalog.py:69
 msgid "Cadastro de apoiador não encontrado."
 msgstr "Supporter registration not found."
 

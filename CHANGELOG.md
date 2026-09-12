@@ -2,7 +2,8 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **12 de setembro de 2026** — Em progresso: ficha L2
+Última atualização: **12 de setembro de 2026** — Em progresso: confirmação
+de simulação só no admin (aviso vermelho); ficha L2
 (paperdoll, bag/baú, crest/extras, skills com ícones); marketplace com paperdoll,
 bag/warehouse e skills da ficha; leilão de personagem com o mesmo snapshot; LGPD self-service;
 arte e animações dos minigames em `/panel/games`; autoconfig e configurador

@@ -177,7 +177,10 @@ class ConfirmPaymentOrderView(InjectedAPIView):
     @extend_schema(
         tags=["Pagamento"],
         summary=gettext_lazy("Confirmar pagamento"),
-        description=gettext_lazy("Confirma o pagamento do pedido informado para o usuário autenticado."),
+        description=gettext_lazy(
+            "Recusado para o jogador. Simulações são confirmadas pela equipe em "
+            "POST /api/v1/staff/payments/{id}/confirm-mock/."
+        ),
     )
     def post(self, request, order_id):
         order = self.resolve(ConfirmPaymentUseCase).execute(

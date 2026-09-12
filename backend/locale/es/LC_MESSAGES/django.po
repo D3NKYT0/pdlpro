@@ -3757,7 +3757,19 @@ msgstr "Importe no válido."
 msgid "Falha ao iniciar o pagamento."
 msgstr "Error al iniciar el pago."
 
+#: .\common\i18n_msgid_catalog.py:65
+msgid "A confirmação de simulação só pode ser feita pela equipe."
+msgstr "La confirmación de simulación solo puede hacerla el equipo."
+
 #: .\common\i18n_msgid_catalog.py:66
+msgid "Simulações não são processadas pelo jogador. A equipe confirma o pedido."
+msgstr "Las simulaciones no las procesa el jugador. El equipo confirma el pedido."
+
+#: .\common\i18n_msgid_catalog.py:67
+msgid "Este pedido não pode ser confirmado manualmente."
+msgstr "Este pedido no se puede confirmar de forma manual."
+
+#: .\common\i18n_msgid_catalog.py:69
 msgid "Cadastro de apoiador não encontrado."
 msgstr "Registro de patrocinador no encontrado."
 

@@ -99,7 +99,7 @@ def consultar_carteira(user_id):
 - **Autorização:** dataclasses e resolução de dependências não validam acesso. A view controla a sessão e a permissão inicial; operações sobre contas e recursos devem aplicar as verificações previstas na aplicação.
 - **Transações:** `DjangoUnitOfWork` abrange o banco Django. Uma chamada SQLAlchemy ao Lineage ou HTTP ao provedor tem efeitos independentes. Um erro posterior no painel não implica reversão dessas chamadas.
 - **Câmbio:** em `ExchangeCoinsUseCase`, reutilize `request_key` e os mesmos parâmetros para retomar uma operação `pending`. O recibo no banco do jogo permite reconhecer uma aplicação anterior. Não trate timeout como rejeição definitiva.
-- **Pagamento:** `SettlePaymentUseCase` efetua crédito e deve receber confirmação confiável. `ApplyGatewayPaymentUseCase` não valida assinatura. `GetPaymentStatusUseCase` também pode liquidar um pedido; o nome de consulta não significa ausência de escrita.
+- **Pagamento:** `SettlePaymentUseCase` efetua crédito e deve receber confirmação confiável. `ConfirmPaymentUseCase` recusa o jogador; simulações só liquidam em `StaffConfirmMockPaymentUseCase`. `ApplyGatewayPaymentUseCase` não valida assinatura. `GetPaymentStatusUseCase` também pode liquidar um pedido; o nome de consulta não significa ausência de escrita.
 - **Administração:** os casos de uso de `staff` pressupõem a autorização feita pela apresentação. Ao reutilizá-los fora de HTTP, aplique controle equivalente no chamador.
 - **Temas:** apenas superadministradores instalam, ativam ou removem pacotes. O app `themes`
   valida o ZIP e publica arquivos em `MEDIA_ROOT`; o frontend executa somente renderers React

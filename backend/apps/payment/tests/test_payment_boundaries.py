@@ -8,6 +8,7 @@ from rest_framework.test import APIClient
 
 from apps.payment.application.pricing import CoinPricingService
 from apps.payment.infrastructure.models import PedidoPagamento
+from apps.payment.tests.helpers import confirm_mock_payment
 from apps.wallet.domain.repositories import IWalletRepository
 from apps.wallet.infrastructure.models import (
     CoinConfig,
@@ -38,9 +39,25 @@ def order(owner):
     return PedidoPagamento.objects.create(user=owner, amount=20, coins=20, currency="BRL", method="mock", status="pending")
 
 
-def test_confirmation_repeated_does_not_credit_twice(api, order):
+def test_player_cannot_confirm_own_mock_order(api, order):
+    response = api.post(f"/api/v1/customer/payments/{order.id}/confirm/")
+    assert response.status_code == 403, response.data
+    order.refresh_from_db()
+    assert order.status == "pending"
+    assert not WalletTransaction.objects.exists()
+
+
+def test_player_cannot_process_own_mock_order(api, order):
+    response = api.post(f"/api/v1/customer/payments/{order.id}/process/", {}, format="json")
+    assert response.status_code == 400, response.data
+    order.refresh_from_db()
+    assert order.status == "pending"
+    assert not WalletTransaction.objects.exists()
+
+
+def test_confirmation_repeated_does_not_credit_twice(order):
     for _ in range(3):
-        response = api.post(f"/api/v1/customer/payments/{order.id}/confirm/")
+        response = confirm_mock_payment(order.id)
         assert response.status_code == 200, response.data
     assert Wallet.objects.get(user=order.user).balance == 20
     assert WalletTransaction.objects.filter(wallet__user=order.user, kind="ENTRADA").count() == 1
@@ -64,16 +81,20 @@ def test_foreign_order_cannot_be_used(api, order, action, method):
     assert not WalletTransaction.objects.exists()
 
 
-@pytest.mark.parametrize("action,method", [("confirm", "post"), ("cancel", "post"), ("status", "get"), ("process", "post")])
+@pytest.mark.parametrize("action,method", [("cancel", "post"), ("status", "get"), ("process", "post")])
 def test_missing_order_returns_not_found(api, action, method):
     assert getattr(api, method)(f"/api/v1/customer/payments/{uuid4()}/{action}/", {}, format="json").status_code == 404
 
 
+def test_player_confirm_is_forbidden_even_when_order_is_missing(api):
+    assert api.post(f"/api/v1/customer/payments/{uuid4()}/confirm/", {}, format="json").status_code == 403
+
+
 @pytest.mark.parametrize("status", ["cancelled", "failed"])
-def test_terminal_order_cannot_be_confirmed(api, order, status):
+def test_terminal_order_cannot_be_confirmed(order, status):
     order.status = status
     order.save()
-    assert api.post(f"/api/v1/customer/payments/{order.id}/confirm/").status_code == 400
+    assert confirm_mock_payment(order.id).status_code == 400
     assert not WalletTransaction.objects.exists()
 
 
@@ -84,13 +105,13 @@ def test_cancel_pending_order_prevents_future_confirmation(api, order, status):
     response = api.post(f"/api/v1/customer/payments/{order.id}/cancel/")
     assert response.status_code == 200
     assert response.data["status"] == "cancelled"
-    assert api.post(f"/api/v1/customer/payments/{order.id}/confirm/").status_code == 400
+    assert confirm_mock_payment(order.id).status_code == 400
     assert not WalletTransaction.objects.exists()
 
 
 def test_mock_cannot_be_used_when_disabled(api, order, settings):
     settings.PAYMENT_ALLOW_MOCK = False
-    assert api.post(f"/api/v1/customer/payments/{order.id}/confirm/").status_code == 400
+    assert api.post(f"/api/v1/customer/payments/{order.id}/confirm/").status_code == 403
     response = api.post("/api/v1/customer/payments/", {"amount": "20", "method": "mock"}, format="json")
     assert response.status_code == 400
     assert not WalletTransaction.objects.exists()

@@ -1033,7 +1033,7 @@
         "reconciliation": "Compare o saldo atual das carteiras com as entradas e saídas registradas."
       },
       "explanations": {
-        "payments": "Período pela data de criação do pedido. Totais em BRL e USD são independentes. Moedas e bônus creditados consideram apenas pedidos confirmados; simulações são identificadas na origem.",
+        "payments": "Período pela data de criação do pedido. Totais em BRL e USD são independentes. Moedas e bônus creditados consideram apenas pedidos confirmados. Simulações ficam pendentes até a equipe confirmar no admin; jogadores não creditam sozinhos.",
         "cashFlow": "Valores em moedas da carteira. Inclui bônus e transferências internas; não representa receita em dinheiro. O acumulado começa em zero no início do período filtrado.",
         "balances": "Valores em moedas da carteira. Saldo total = principal + bônus; saldo pelo histórico = entradas − saídas. Diferenças até 0,01 são consistentes; até 1,00 ficam em análise. A consulta não altera saldos."
       },
@@ -1128,6 +1128,7 @@
         "methodSource": "Método / origem",
         "createdAt": "Criado em",
         "paidAt": "Pago em",
+        "action": "Ação",
         "day": "Dia",
         "dayNet": "Saldo do dia",
         "accumulated": "Acumulado no período"
@@ -1139,6 +1140,18 @@
         "debits": "Saídas",
         "aria": "Entradas e saídas por dia. Valores disponíveis na tabela abaixo.",
         "barTitle": "{{day}}: entradas {{credits}}, saídas {{debits}}"
+      },
+      "mockConfirm": {
+        "action": "Confirmar simulação",
+        "title": "Você vai creditar moedas sem pagamento real",
+        "attention": "Atenção",
+        "lead": "Esta ação libera saldo de verdade na carteira do jogador, sem cobrança em Mercado Pago, Stripe ou qualquer provedor.",
+        "body": "O pedido {{id}} de {{username}} credita {{coins}} moedas ({{amount}}) como se o pagamento tivesse sido recebido. Se o mock estiver ligado, um jogador pode criar esses pedidos à vontade.",
+        "confirm": "Entendi o risco. Creditar mesmo assim",
+        "cancel": "Cancelar",
+        "busy": "Creditando…",
+        "success": "Simulação confirmada: {{coins}} moedas creditadas para {{username}}.",
+        "error": "Não foi possível confirmar a simulação."
       }
     }
   }

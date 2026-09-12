@@ -64,6 +64,16 @@
 .finance-bar-pair span { display: block; width: 14px; max-width: 40%; border-radius: 3px 3px 0 0; background: var(--finance-ok); }
 .finance-bar-pair span:last-child { background: var(--finance-accent-bright); }
 .finance-bar-day small { display: block; color: var(--muted); font-size: .64rem; margin-top: 8px; }
+.finance-mock-confirm { border: 3px solid #e02424; box-shadow: 0 0 0 4px #e0242433, 0 24px 48px #2a050580; }
+.finance-mock-confirm .ui-modal-header h2 { color: #ff2d2d; }
+.finance-mock-alert { margin: 0 0 14px; padding: 14px 16px; border: 2px solid #e02424; background: #4a0b0b; color: #ff3b3b; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; text-align: center; }
+.finance-mock-blink { display: inline-block; animation: finance-mock-blink .7s step-end infinite; }
+@keyframes finance-mock-blink { 50% { opacity: .18; color: #fff; } }
+@media (prefers-reduced-motion: reduce) {
+  .finance-mock-blink { animation: none; text-decoration: underline; }
+}
+.finance-mock-lead, .finance-mock-body { margin: 0 0 12px; color: #ffb4b4; font-size: .92rem; line-height: 1.55; }
+.finance-mock-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 @media (max-width: 640px) {
   .finance-tabs a { flex: 1 1 40%; padding: 12px 8px; font-size: .75rem; }
   .finance-metrics { grid-template-columns: 1fr; }

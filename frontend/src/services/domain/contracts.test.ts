@@ -228,6 +228,7 @@ const contracts: Contract[] = [
   ['staff.autoconfigGame', () => staffApi.autoconfigGames('roulette'), '/staff/games/autoconfig/', 'POST', { code: 'roulette' }],
   ['staff.inspect', () => staffApi.inspectAccount('a&b'), '/staff/accounts/?login=a%26b'],
   ['staff.unlink', () => staffApi.unlinkAccount('hero'), '/staff/accounts/unlink/', 'POST', { login: 'hero' }],
+  ['staff.confirmMockPayment', () => staffApi.confirmMockPayment('order'), '/staff/payments/order/confirm-mock/', 'POST'],
   ['push.vapid', () => pushApi.vapid(), '/customer/push/vapid/'],
   ['push.subscribe', () => pushApi.subscribe({ endpoint: 'https://push.test/key' }), '/customer/push/subscribe/', 'POST', { endpoint: 'https://push.test/key' }],
   ['push.unsubscribe', () => pushApi.unsubscribe('https://push.test/key'), '/customer/push/subscribe/', 'DELETE', { endpoint: 'https://push.test/key' }],

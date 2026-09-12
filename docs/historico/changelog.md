@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Confirmação de pagamento **mock só no admin** (`POST /api/v1/staff/payments/{id}/confirm-mock/`
+  e botão em `/panel/admin/reports/financial/payments`), com aviso vermelho piscando
+  de que o crédito não é um pagamento real. O jogador cria o pedido simulado e
+  não consegue confirmar nem processar sozinho, mesmo com `PAYMENT_MOCK_AUTO_CONFIRM`.
 - Self-service LGPD em `/panel/security`: exportação de dados por e-mail,
   exclusão/anonimização com OTP, preferências de cookies e enforcement real
   (analytics → Sentry; funcionais → persistência de idioma).
@@ -66,8 +70,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   autoconfig separa o catálogo por raridade e inclui Ring of Baium no baú
   lendário. Os baús selados (ativos) usam um fundo mais marcado que os da
   loja, com o botão de abrir em verde; os CTAs ficam no rodapé do card,
-  centralizados. Quando o item em mira já saiu, uma faixa vermelha cruza
-  a arte do baú.
+  centralizados.   Quando o item em mira já saiu, uma faixa vermelha cruza
+  a arte do baú. O autoconfig passa a selar 20–50 pacotes por
+  baú (comum 20, raro 30, épico 40, lendário 50). O item em mira é
+  sempre lendário; os outros pacotes não repetem outro lendário.
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e

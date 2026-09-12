@@ -147,6 +147,35 @@ it('desabilita novo envio enquanto transferência está pendente', async () => {
   await screen.findByRole('button', { name: 'Transferir moedas' })
 })
 
+it('cria pedido mock sem confirmar saldo automaticamente mesmo com auto_confirm', async () => {
+  vi.mocked(paymentApi.catalog).mockResolvedValue({
+    methods: [{ id: 'mock', currencies: ['BRL'], auto_confirm: true }],
+    packages: [],
+    allow_custom_amount: true,
+    promo: null,
+  } as Awaited<ReturnType<typeof paymentApi.catalog>>)
+  vi.mocked(paymentApi.create).mockResolvedValue({
+    id: 'ord-mock',
+    amount: '10.00',
+    coins: '10.00',
+    currency: 'BRL',
+    package_code: '',
+    method: 'mock',
+    status: 'pending',
+    checkout_url: '',
+    bonus_applied: '0.00',
+    total_credited: '0.00',
+    created_at: '2026-09-12T12:00:00Z',
+    paid_at: null,
+  })
+  const user = mount()
+  await user.type(await screen.findByLabelText('Valor em BRL'), '10')
+  await user.click(screen.getByRole('button', { name: 'Comprar agora' }))
+  await waitFor(() => expect(paymentApi.create).toHaveBeenCalled())
+  expect(paymentApi.confirm).not.toHaveBeenCalled()
+  expect(toast.success).toHaveBeenCalledWith('Pedido simulado criado. A equipe precisa confirmar no admin para o saldo entrar.')
+})
+
 it('informa indisponibilidade de recarga sem criar pedido', async () => {
   mount()
   expect(await screen.findByText('Recargas temporariamente indisponíveis')).toBeTruthy()

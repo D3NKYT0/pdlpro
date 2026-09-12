@@ -21,7 +21,6 @@ type WalletPurchaseCardProps = {
   onCurrencyChange: (currency: 'BRL' | 'USD') => void
   paymentAvailable: boolean
   simulatedPayment: boolean
-  mockAutoConfirm?: boolean
   packages: ApiCoinPackage[]
   promo: ApiWalletPromo | null | undefined
   catalogLoading: boolean
@@ -40,7 +39,6 @@ export function WalletPurchaseCard({
   onCurrencyChange,
   paymentAvailable,
   simulatedPayment,
-  mockAutoConfirm,
   packages,
   promo,
   catalogLoading,
@@ -64,7 +62,7 @@ export function WalletPurchaseCard({
         : 'MercadoPago'
   const noteTitle = t(`wallet.purchase.note${noteVariant}Title`)
   const noteText = noteVariant === 'Simulated'
-    ? t(mockAutoConfirm ? 'wallet.purchase.noteAutoConfirm' : 'wallet.purchase.noteManualConfirm')
+    ? t('wallet.purchase.noteManualConfirm')
     : t(`wallet.purchase.note${noteVariant}`)
 
   return (

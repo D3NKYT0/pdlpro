@@ -1033,7 +1033,7 @@
         "reconciliation": "Compare the current wallet balance with the recorded credits and debits."
       },
       "explanations": {
-        "payments": "Period based on the order creation date. BRL and USD totals are independent. Credited coins and bonuses only count confirmed orders; simulations are flagged in the source.",
+        "payments": "Period based on the order creation date. BRL and USD totals are independent. Credited coins and bonuses only count confirmed orders. Simulations stay pending until staff confirms them in admin; players cannot credit themselves.",
         "cashFlow": "Values in wallet coins. Includes bonuses and internal transfers; it does not represent cash revenue. The accumulated total starts at zero at the beginning of the filtered period.",
         "balances": "Values in wallet coins. Total balance = principal + bonus; balance by history = credits − debits. Differences up to 0.01 are consistent; up to 1.00 are under review. This query does not change balances."
       },
@@ -1128,6 +1128,7 @@
         "methodSource": "Method / source",
         "createdAt": "Created at",
         "paidAt": "Paid at",
+        "action": "Action",
         "day": "Day",
         "dayNet": "Day balance",
         "accumulated": "Accumulated in the period"
@@ -1139,6 +1140,18 @@
         "debits": "Debits",
         "aria": "Credits and debits per day. Values are available in the table below.",
         "barTitle": "{{day}}: credits {{credits}}, debits {{debits}}"
+      },
+      "mockConfirm": {
+        "action": "Confirm simulation",
+        "title": "You are about to credit coins without a real payment",
+        "attention": "Warning",
+        "lead": "This action releases real wallet balance for the player, with no charge on Mercado Pago, Stripe, or any provider.",
+        "body": "Order {{id}} for {{username}} credits {{coins}} coins ({{amount}}) as if payment had been received. If mock is enabled, a player can create these orders at will.",
+        "confirm": "I understand the risk. Credit anyway",
+        "cancel": "Cancel",
+        "busy": "Crediting…",
+        "success": "Simulation confirmed: {{coins}} coins credited to {{username}}.",
+        "error": "The simulation could not be confirmed."
       }
     }
   }

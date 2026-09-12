@@ -290,7 +290,7 @@ it('explica o item em mira e o que mais pode sair do baú', async () => {
   mount('boxes')
   expect(await screen.findByText('Garantido neste baú')).toBeVisible()
   expect(screen.getByText('Ainda está no baú')).toBeVisible()
-  expect(screen.getByText('Diferente da roleta: o item em mira já está em um dos pacotes. Você sempre leva — a sorte só decide se sai no primeiro ou no último.')).toBeVisible()
+  expect(screen.getByText('Diferente da roleta: o item em mira é sempre lendário e já está em um dos pacotes. Você sempre leva — a sorte só decide se sai no primeiro ou no último.')).toBeVisible()
   expect(screen.getAllByText('Enchant Weapon C').length).toBeGreaterThan(0)
   expect(screen.getByText('2 pacotes')).toBeVisible()
   expect(screen.getByText('Também pode sair')).toBeVisible()
@@ -355,10 +355,10 @@ it('oferece resetar o baú já selado em vez de comprar de novo', async () => {
 it('lista os baús do comum ao lendário e pinta a coluna pela raridade', async () => {
   vi.mocked(gamesApi.boxes).mockResolvedValue({
     types: [
-      { id: 'leg', name: 'Baú Lendário', price: '100.00', boosters_amount: 12 },
-      { id: 'com', name: 'Baú Comum', price: '10.00', boosters_amount: 5 },
-      { id: 'epi', name: 'Baú Épico', price: '50.00', boosters_amount: 9 },
-      { id: 'rar', name: 'Baú Raro', price: '25.00', boosters_amount: 7 },
+      { id: 'leg', name: 'Baú Lendário', price: '100.00', boosters_amount: 50 },
+      { id: 'com', name: 'Baú Comum', price: '10.00', boosters_amount: 20 },
+      { id: 'epi', name: 'Baú Épico', price: '50.00', boosters_amount: 40 },
+      { id: 'rar', name: 'Baú Raro', price: '25.00', boosters_amount: 30 },
     ],
     boxes: [],
   } as any)

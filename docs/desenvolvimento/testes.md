@@ -52,7 +52,7 @@ O argumento `--ds` explicita o ambiente de teste mesmo quando o container está 
 | Celery | Execução eager; broker e resultado em memória |
 | E-mail e arquivos | Armazenamento em memória |
 | Senhas | Hasher rápido exclusivo do ambiente de teste |
-| Pagamentos | Mock habilitado e confirmação simulada |
+| Pagamentos | Mock habilitado; confirmação só pela equipe |
 
 A fixture automática em [conftest.py](../../backend/conftest.py) limpa contas, personagens e itens do `NullLineageGateway` antes de cada teste. Ao substituir serviços, restaure o estado depois da execução; não deixe instâncias globais ou mocks interferirem no teste seguinte.
 

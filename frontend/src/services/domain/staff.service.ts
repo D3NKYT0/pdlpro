@@ -1,4 +1,5 @@
 import { request } from '../infra/http'
+import type { ApiPaymentOrder } from '../types'
 
 export interface ApiPanelSettings {
   id: string | null
@@ -131,4 +132,6 @@ export const staffApi = {
       method: 'POST',
       body: JSON.stringify({ login }),
     }),
+  confirmMockPayment: (orderId: string) =>
+    request<ApiPaymentOrder>(`/staff/payments/${orderId}/confirm-mock/`, { method: 'POST' }),
 }

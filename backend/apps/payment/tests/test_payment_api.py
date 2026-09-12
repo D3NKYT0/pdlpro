@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APIClient
 
+from apps.payment.tests.helpers import confirm_mock_payment
 from apps.wallet.infrastructure.bonus import DjangoPurchaseBonusPolicy
 from apps.wallet.infrastructure.models import CoinPurchaseBonus, CoinPurchasePromo
 
@@ -34,7 +35,9 @@ def test_create_and_confirm_payment_credits_wallet_and_bonus(api, player):
     created = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
     assert created.status_code == 200, created.data
     order_id = created.data["id"]
-    confirmed = api.post(f"/api/v1/customer/payments/{order_id}/confirm/", format="json")
+    blocked = api.post(f"/api/v1/customer/payments/{order_id}/confirm/", format="json")
+    assert blocked.status_code == 403, blocked.data
+    confirmed = confirm_mock_payment(order_id)
     assert confirmed.status_code == 200, confirmed.data
     assert confirmed.data["status"] == "confirmed"
     assert confirmed.data["bonus_applied"] == "5.00"
@@ -70,7 +73,7 @@ def test_payment_catalog_and_package_credits_coins(api, player):
     assert created.status_code == 200, created.data
     assert created.data["coins"] == "120.00"
     assert created.data["amount"] == "100.00"
-    confirmed = api.post(f"/api/v1/customer/payments/{created.data['id']}/confirm/")
+    confirmed = confirm_mock_payment(created.data["id"])
     assert confirmed.status_code == 200
     wallet = api.get("/api/v1/shared/wallet/")
     assert wallet.data["balance"] == "120.00"
@@ -120,7 +123,7 @@ def test_confirm_payment_applies_promo_bonus_without_tier(api, player):
     api.force_authenticate(user=player)
     created = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
     assert created.status_code == 200, created.data
-    confirmed = api.post(f"/api/v1/customer/payments/{created.data['id']}/confirm/", format="json")
+    confirmed = confirm_mock_payment(created.data["id"])
     assert confirmed.status_code == 200, confirmed.data
     assert confirmed.data["bonus_applied"] == "10.00"
     wallet = api.get("/api/v1/shared/wallet/")
@@ -178,7 +181,7 @@ def test_usd_custom_amount_converts_to_coins(api, player):
     assert created.status_code == 200, created.data
     assert created.data["currency"] == "USD"
     assert created.data["coins"] == "50.00"
-    confirmed = api.post(f"/api/v1/customer/payments/{created.data['id']}/confirm/")
+    confirmed = confirm_mock_payment(created.data["id"])
     assert confirmed.status_code == 200
     wallet = api.get("/api/v1/shared/wallet/")
     assert wallet.data["balance"] == "50.00"
@@ -223,4 +226,6 @@ def test_real_methods_cannot_be_confirmed_manually(api, player):
     )
     api.force_authenticate(user=player)
     response = api.post(f"/api/v1/customer/payments/{order.id}/confirm/")
-    assert response.status_code == 400
+    assert response.status_code == 403
+    staff_response = confirm_mock_payment(order.id)
+    assert staff_response.status_code == 400

@@ -5,7 +5,8 @@
 Disponíveis na central administrativa em `/panel/admin/reports/financial/balances`
 (atalho legado `/panel/admin/financial/` redireciona).
 As quatro APIs abaixo aceitam apenas leitura e exigem sessão com acesso de equipe
-(`IsStaffMember`, incluindo os papéis de staff, admin e moderador do PRO).
+(`IsStaffMember`, incluindo os papéis de staff, admin e moderador do PRO). A
+confirmação de um pedido mock é um POST à parte: `POST /api/v1/staff/payments/{id}/confirm-mock/`.
 
 | GET `/api/v1/staff/financial-reports/` + | Relatório | Filtros específicos |
 |---|---|---|
@@ -41,7 +42,8 @@ Regras de cálculo:
   `total_amount`, `confirmed_amount` e `pending_amount` (pendente + processando).
   `coins`, `bonus_applied` e `total_credited` no resumo incluem apenas pedidos confirmados.
 - A origem indica `simulation` para mock, `gateway` quando há referência externa
-  ou `unidentified` quando ela falta. Não se presume confirmação manual. Tokens,
+  ou `unidentified` quando ela falta. A confirmação de simulação no admin é explícita
+  e avisa que o crédito não corresponde a um pagamento real. Tokens,
   payloads de gateway, URLs de checkout e IDs sequenciais internos não são expostos.
 
 Os relatórios usam os dados existentes no PRO; não importam o histórico do SITE 1.x.

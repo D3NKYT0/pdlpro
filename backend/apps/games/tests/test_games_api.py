@@ -102,6 +102,7 @@ def test_buy_and_open_box(api, player):
     from apps.games.infrastructure.models import BoxType, CatalogItem
 
     CatalogItem.objects.create(name="Scroll", item_id=736, quantity=20, rarity="common", weight=10)
+    CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
     box_type = BoxType.objects.create(name="Bronze", price=Decimal("5.00"), boosters_amount=2)
     Wallet.objects.create(user=player, balance=Decimal("20.00"))
     player.fichas = 3
@@ -116,13 +117,15 @@ def test_buy_and_open_box(api, player):
     assert opened.status_code == 200, opened.data
     from apps.server.infrastructure.lineage.item_catalog import item_metadata
     assert opened.data["item"]["name"] == item_metadata(opened.data["item"]["item_id"])["name"]
-    assert opened.data["item"]["quantity"] == 20
+    assert opened.data["item"]["item_id"] in {736, 6658}
+    expected_qty = 20 if opened.data["item"]["item_id"] == 736 else 1
+    assert opened.data["item"]["quantity"] == expected_qty
     assert opened.data["remaining"] == 1
     assert opened.data["fichas"] == 2
     player.refresh_from_db()
     assert player.fichas == 2
     bag = api.get("/api/v1/customer/games/bag/")
-    assert bag.data[0]["quantity"] == 20
+    assert bag.data[0]["quantity"] == expected_qty
     player.fichas = 0
     player.save(update_fields=["fichas"])
     refused = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
@@ -163,6 +166,42 @@ def test_bought_box_always_contains_one_hunt_item(api, player):
         if opened.data["remaining"] == 0:
             break
     assert hunts == 1
+
+
+@pytest.mark.django_db
+def test_fillers_never_include_another_legendary(api, player):
+    from apps.games.infrastructure.models import BoxSlot, BoxType, CatalogItem
+
+    hunt = CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    extra = CatalogItem.objects.create(name="Blessed Enchant S", item_id=6577, rarity="legendary", weight=1)
+    filler = CatalogItem.objects.create(name="Adena", item_id=57, quantity=80_000, rarity="common", weight=28)
+    box_type = BoxType.objects.create(name="Baú Comum", price=Decimal("10.00"), boosters_amount=20)
+    box_type.items.add(hunt, extra, filler)
+    Wallet.objects.create(user=player, balance=Decimal("20.00"))
+    api.force_authenticate(user=player)
+    bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert bought.status_code == 200, bought.data
+    slots = list(BoxSlot.objects.filter(box__id=bought.data["id"]))
+    assert len(slots) == 20
+    assert sum(1 for slot in slots if slot.item_id == 6658) == 1
+    assert sum(1 for slot in slots if slot.item_id == 6577) == 0
+    assert sum(1 for slot in slots if slot.rarity == "legendary") == 1
+
+
+@pytest.mark.django_db
+def test_shop_shows_legendary_hunt_on_common_box(api, player):
+    from apps.games.infrastructure.models import BoxType, CatalogItem
+
+    CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    filler = CatalogItem.objects.create(name="Adena", item_id=57, quantity=80_000, rarity="common", weight=28)
+    box_type = BoxType.objects.create(name="Baú Comum", price=Decimal("10.00"), boosters_amount=20)
+    box_type.items.add(filler)
+    api.force_authenticate(user=player)
+    listed = api.get("/api/v1/customer/games/boxes/")
+    assert listed.status_code == 200
+    row = next(item for item in listed.data["types"] if item["id"] == str(box_type.id))
+    assert row["featured"]["item_id"] == 6658
+    assert row["featured"]["rarity"] == "legendary"
 
 
 @pytest.mark.django_db

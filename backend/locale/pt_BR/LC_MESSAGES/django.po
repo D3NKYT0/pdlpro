@@ -3498,7 +3498,19 @@ msgstr ""
 msgid "Falha ao iniciar o pagamento."
 msgstr ""
 
+#: .\common\i18n_msgid_catalog.py:65
+msgid "A confirmação de simulação só pode ser feita pela equipe."
+msgstr ""
+
 #: .\common\i18n_msgid_catalog.py:66
+msgid "Simulações não são processadas pelo jogador. A equipe confirma o pedido."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:67
+msgid "Este pedido não pode ser confirmado manualmente."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:69
 msgid "Cadastro de apoiador não encontrado."
 msgstr ""
 

@@ -2,6 +2,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
+from apps.payment.tests.helpers import confirm_mock_payment
 from apps.server.domain.gateways import GameItem, GameSkill, ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
@@ -83,7 +84,7 @@ def test_list_and_buy_character(api, seller, buyer):
     api.force_authenticate(user=buyer)
     assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json").status_code == 200
     order = api.post("/api/v1/customer/payments/", {"amount": "40.00", "method": "mock"}, format="json")
-    api.post(f"/api/v1/customer/payments/{order.data['id']}/confirm/", format="json")
+    confirm_mock_payment(order.data["id"])
     bought = api.post(f"/api/v1/customer/marketplace/{listing_id}/buy/", format="json")
     assert bought.status_code == 200, bought.data
     assert bought.data["status"] == "sold"

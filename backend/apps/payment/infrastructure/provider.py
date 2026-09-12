@@ -10,6 +10,7 @@ from apps.payment.application.use_cases import (
     PreviewPaymentBonusUseCase,
     ProcessPaymentUseCase,
     SettlePaymentUseCase,
+    StaffConfirmMockPaymentUseCase,
 )
 from apps.payment.application.webhooks import (
     HandleMercadoPagoWebhookUseCase,
@@ -61,6 +62,7 @@ class PaymentProvider(AppProvider):
             CancelPaymentOrderUseCase,
             SettlePaymentUseCase,
             ConfirmPaymentUseCase,
+            StaffConfirmMockPaymentUseCase,
             ProcessPaymentUseCase,
             GetPaymentStatusUseCase,
             ApplyGatewayPaymentUseCase,

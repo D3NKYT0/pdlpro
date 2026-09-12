@@ -40,6 +40,7 @@ from apps.staff.presentation.views.operational_reports import (
     MarketplaceOperationalReportView,
     PurchasesOperationalReportView,
 )
+from apps.staff.presentation.views.payments import StaffConfirmMockPaymentView
 from apps.themes.presentation.urls import staff_urlpatterns
 
 urlpatterns = [
@@ -47,6 +48,7 @@ urlpatterns = [
     path("financial-reports/balances/", BalanceReportView.as_view(), name="staff-report-balances"),
     path("financial-reports/cash-flow/", CashFlowReportView.as_view(), name="staff-report-cash-flow"),
     path("financial-reports/payments/", PaymentReportView.as_view(), name="staff-report-payments"),
+    path("payments/<uuid:order_id>/confirm-mock/", StaffConfirmMockPaymentView.as_view(), name="staff-confirm-mock-payment"),
     path("financial-reports/reconciliation/", ReconciliationReportView.as_view(), name="staff-report-reconciliation"),
     path("operational-reports/inventory/", InventoryOperationalReportView.as_view(), name="staff-ops-inventory"),
     path("operational-reports/auctions/", AuctionsOperationalReportView.as_view(), name="staff-ops-auctions"),

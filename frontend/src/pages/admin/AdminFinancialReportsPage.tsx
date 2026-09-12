@@ -1,19 +1,24 @@
 import { Card } from '../../components/ui/Card'
 import { Field } from '../../components/ui/Field'
 import { Button } from '../../components/ui/Button'
-import { type FormEvent, type ReactNode } from 'react'
+import { MockPaymentConfirmModal } from '../../components/admin/MockPaymentConfirmModal'
+import { type FormEvent, type ReactNode, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { NavLink, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
+import toast from 'react-hot-toast'
 import { ArrowDownLeft, ArrowUpRight, ChartNoAxesCombined, ReceiptText, RefreshCw, Scale, Search, Wallet } from 'lucide-react'
 import {
   financialReportsApi,
   isApiError,
+  staffApi,
   type FinancialReport,
   type FinancialReportKind,
   type BalanceReportRow,
+  type PaymentReportRow,
 } from '../../services/api'
+import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { formatCurrency, formatDateTime, formatNumber } from '../../lib/formatters'
 import { AdminHeader } from './AdminChrome'
 import './financial-reports.css'
@@ -113,9 +118,13 @@ function BalanceRows({ rows, reconciliation, t }: { rows: BalanceReportRow[]; re
   </tbody></table>
 }
 
-function ReportTable({ data, t }: { data: FinancialReport; t: AdminT }) {
-  if (data.kind === 'payments') return <table><thead><tr><th>{t('reports.finance.tables.orderUser')}</th><th>{t('reports.finance.tables.amount')}</th><th>{t('reports.finance.tables.baseCoins')}</th><th>{t('reports.finance.tables.bonus')}</th><th>{t('reports.finance.tables.credited')}</th><th>{t('reports.finance.tables.status')}</th><th>{t('reports.finance.tables.methodSource')}</th><th>{t('reports.finance.tables.createdAt')}</th><th>{t('reports.finance.tables.paidAt')}</th></tr></thead><tbody>
-    {data.results.map((row) => <tr key={row.id}><td><strong>{row.username}</strong><small className="finance-order-id">{row.id}</small></td><td>{money(row.amount, row.currency)}<small>{row.currency}</small></td><td>{quantity(row.coins)}</td><td>{quantity(row.bonus_applied)}</td><td>{quantity(row.total_credited)}</td><td><Status value={row.status} t={t} /></td><td>{t(`reports.finance.methods.${row.method}`, { defaultValue: row.method })}<small>{t(`reports.finance.sources.${row.payment_source}`)}</small></td><td>{dateTime(row.created_at)}</td><td>{dateTime(row.paid_at)}</td></tr>)}
+function canConfirmMock(row: PaymentReportRow) {
+  return row.method === 'mock' && (row.status === 'pending' || row.status === 'processing')
+}
+
+function ReportTable({ data, t, onConfirmMock }: { data: FinancialReport; t: AdminT; onConfirmMock?: (row: PaymentReportRow) => void }) {
+  if (data.kind === 'payments') return <table><thead><tr><th>{t('reports.finance.tables.orderUser')}</th><th>{t('reports.finance.tables.amount')}</th><th>{t('reports.finance.tables.baseCoins')}</th><th>{t('reports.finance.tables.bonus')}</th><th>{t('reports.finance.tables.credited')}</th><th>{t('reports.finance.tables.status')}</th><th>{t('reports.finance.tables.methodSource')}</th><th>{t('reports.finance.tables.createdAt')}</th><th>{t('reports.finance.tables.paidAt')}</th><th>{t('reports.finance.tables.action')}</th></tr></thead><tbody>
+    {data.results.map((row) => <tr key={row.id}><td><strong>{row.username}</strong><small className="finance-order-id">{row.id}</small></td><td>{money(row.amount, row.currency)}<small>{row.currency}</small></td><td>{quantity(row.coins)}</td><td>{quantity(row.bonus_applied)}</td><td>{quantity(row.total_credited)}</td><td><Status value={row.status} t={t} /></td><td>{t(`reports.finance.methods.${row.method}`, { defaultValue: row.method })}<small>{t(`reports.finance.sources.${row.payment_source}`)}</small></td><td>{dateTime(row.created_at)}</td><td>{dateTime(row.paid_at)}</td><td>{canConfirmMock(row) ? <Button variant="danger" size="sm" onClick={() => onConfirmMock?.(row)}>{t('reports.finance.mockConfirm.action')}</Button> : '—'}</td></tr>)}
   </tbody></table>
   if (data.kind === 'cash-flow') return <table><thead><tr><th>{t('reports.finance.tables.day')}</th><th>{t('reports.finance.tables.credits')}</th><th>{t('reports.finance.tables.debits')}</th><th>{t('reports.finance.tables.dayNet')}</th><th>{t('reports.finance.tables.accumulated')}</th><th>{t('reports.finance.tables.transactions')}</th></tr></thead><tbody>
     {data.results.map((row) => <tr key={row.day}><td>{dayLabel(row.day)}</td><td className="finance-positive">{quantity(row.credits)}</td><td>{quantity(row.debits)}</td><td>{quantity(row.net)}</td><td>{quantity(row.accumulated)}</td><td>{row.transaction_count}<small>{t('reports.finance.tables.transactionSplit', { credits: row.credit_count, debits: row.debit_count })}</small></td></tr>)}
@@ -139,12 +148,23 @@ export function AdminFinancialReportsPage() {
   const selected = reports.find((item) => item.slug === report)
   const kind = selected?.kind || 'balances'
   const [params, setParams] = useSearchParams()
+  const [mockOrder, setMockOrder] = useState<PaymentReportRow | null>(null)
+  const action = useFeedbackAction()
   const query = useQuery({
     queryKey: ['staff-financial-report', kind, params.toString()],
     queryFn: ({ signal }) => financialReportsApi.get(kind, params, signal),
     enabled: Boolean(selected),
   })
   if (!selected) return <Navigate to="/panel/admin/reports/financial/balances" replace />
+  async function confirmMock() {
+    if (!mockOrder) return
+    await action.run(async () => {
+      const confirmed = await staffApi.confirmMockPayment(mockOrder.id)
+      toast.success(t('reports.finance.mockConfirm.success', { coins: confirmed.coins, username: mockOrder.username }))
+      setMockOrder(null)
+      await query.refetch()
+    }, t('reports.finance.mockConfirm.error'))
+  }
   function changePage(page: number) { const next = new URLSearchParams(params); next.set('page', String(page)); setParams(next) }
   const page = Number(params.get('page') || 1)
   const data = query.data
@@ -167,9 +187,15 @@ export function AdminFinancialReportsPage() {
       {data.kind === 'cash-flow' && data.results.length > 0 && <CashFlowChart data={data} t={t} />}
       <Card className="finance-results" aria-busy={query.isFetching}>
         <div className="finance-section-heading"><div><h3>{t('reports.detail')}</h3><p className="muted">{t('reports.detailHint', { count: data.count })}</p></div></div>
-        {data.results.length ? <div className="finance-table" tabIndex={0} role="region" aria-label={t('reports.tableLabel', { title: selectedTitle })}><ReportTable data={data} t={t} /></div> : <div className="finance-empty"><Search size={28} /><h3>{t('reports.emptyTitle')}</h3><p className="muted">{t('reports.emptyHint')}</p></div>}
+        {data.results.length ? <div className="finance-table" tabIndex={0} role="region" aria-label={t('reports.tableLabel', { title: selectedTitle })}><ReportTable data={data} t={t} onConfirmMock={setMockOrder} /></div> : <div className="finance-empty"><Search size={28} /><h3>{t('reports.emptyTitle')}</h3><p className="muted">{t('reports.emptyHint')}</p></div>}
         <div className="finance-pagination"><span>{t('common:pageOf', { page, total: data.total_pages })}</span><div><Button type="submit" className="secondary" disabled={!data.previous || query.isFetching} onClick={() => changePage(page - 1)}>{t('common:previous')}</Button><Button type="submit" className="secondary" disabled={!data.next || query.isFetching} onClick={() => changePage(page + 1)}>{t('common:next')}</Button></div></div>
       </Card>
     </>}
+    <MockPaymentConfirmModal
+      order={mockOrder}
+      pending={action.pending}
+      onClose={() => { if (!action.pending) setMockOrder(null) }}
+      onConfirm={() => void confirmMock()}
+    />
   </div>
 }

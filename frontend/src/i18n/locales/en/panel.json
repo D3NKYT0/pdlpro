@@ -22,7 +22,7 @@
       "noteMercadoPagoTitle": "Local payment via Mercado Pago",
       "noteUnavailableTitle": "Top-ups temporarily unavailable",
       "noteAutoConfirm": "Automatic crediting is enabled in this environment.",
-      "noteManualConfirm": "The balance is only added after the order is approved.",
+      "noteManualConfirm": "Simulated payment: the balance is added only after staff confirms the order in admin. Players cannot credit themselves.",
       "noteStripe": "Card processed securely on this site.",
       "noteMercadoPago": "Pay by card, PIX or bank slip without leaving the panel.",
       "noteUnavailable": "No charge will be created while the payment service is unavailable.",
@@ -113,7 +113,7 @@
     "toast": {
       "rechargeUnavailable": "Top-ups are temporarily unavailable. Please try again later.",
       "coinsCredited": "{{coins}} coins credited",
-      "orderPending": "Order created and awaiting confirmation.",
+      "orderPending": "Simulated order created. Staff must confirm it in admin before the balance is added.",
       "paymentStartFailed": "Could not start the payment",
       "pixGenerated": "PIX generated. Pay it to receive the coins.",
       "mercadoPagoFailed": "Could not open Mercado Pago",
@@ -1005,7 +1005,7 @@
     "boxes": {
       "eyebrow": "Sealed relics",
       "title": "Enchanted Chests",
-      "lead": "Unlike the wheel: the hunt item is already in one of the packs. You always get it — luck only decides if it drops first or last.",
+      "lead": "Unlike the wheel: the hunt item is always legendary and already in one of the packs. You always get it — luck only decides if it drops first or last.",
       "hunt": "Hunt for",
       "guarantee": "Guaranteed in this chest",
       "huntWaiting": "Still in the chest",

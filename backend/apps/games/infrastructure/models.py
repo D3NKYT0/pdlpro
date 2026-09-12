@@ -143,7 +143,7 @@ class BoxType(BaseModel):
 
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    boosters_amount = models.PositiveIntegerField(default=5)
+    boosters_amount = models.PositiveIntegerField(default=20)
     active = models.BooleanField(default=True)
     items = models.ManyToManyField(CatalogItem, blank=True, related_name="box_types")
 

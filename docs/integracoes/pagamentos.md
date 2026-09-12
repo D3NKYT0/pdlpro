@@ -30,7 +30,7 @@ Campanhas de banner na carteira usam o modelo `CoinPurchasePromo`. Configure em 
 - O efeito econômico é **bônus de moedas** via `IPurchaseBonusPolicy`: a promo eleva o piso do percentual (`max` entre faixa `CoinPurchaseBonus` e a campanha). O valor cobrado no gateway (`amount`) não muda.
 - A liquidação já existente credita o bônus em `bonus_balance` com a descrição da campanha ou da faixa, conforme o percentual efetivo.
 
-Configure a campanha em `/panel/admin/wallet`, confira o banner em `/panel/wallet` e valide o crédito com o método mock em ambiente de teste.
+Configure a campanha em `/panel/admin/wallet`, confira o banner em `/panel/wallet` e valide o crédito confirmando a simulação no admin financeiro.
 
 ## Configuração
 
@@ -42,7 +42,7 @@ Use `PAYMENT_METHODS` para selecionar métodos expostos e configure as chaves e 
 
 - `ApplyGatewayPaymentUseCase` localiza o pedido e encaminha eventos aprovados, mas não valida assinatura sozinho.
 - `SettlePaymentUseCase` devolve pedidos já confirmados sem aplicar outro crédito nessa execução. A correção sob concorrência depende também do repositório e da transação; não presuma uma garantia distribuída apenas por essa checagem.
-- Confirmação manual pelo fluxo atual é restrita ao método mock habilitado. Não use esse caminho para simular recebimento financeiro real em produção.
+- Confirmação de simulação é exclusiva da equipe: `POST /api/v1/staff/payments/{id}/confirm-mock/`. O jogador não confirma nem processa mock; o pedido fica pendente até um membro da equipe creditar no admin (`/panel/admin/reports/financial/payments`). Não use esse caminho para simular recebimento financeiro real em produção.
 - `CancelPaymentOrderUseCase` cancela o estado local do pedido. Isso não equivale a cancelar ou estornar uma cobrança no provedor.
 - Chamadas HTTP ao gateway não participam do rollback de `DjangoUnitOfWork`. Uma falha após a chamada externa exige verificar o estado no provedor antes de tentar corrigir o pedido.
 

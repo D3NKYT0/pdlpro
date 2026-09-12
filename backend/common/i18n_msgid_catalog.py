@@ -61,6 +61,9 @@ _("Método de pagamento indisponível.")
 _("Este pedido não pode ser alterado.")
 _("Valor inválido.")
 _("Falha ao iniciar o pagamento.")
+_("A confirmação de simulação só pode ser feita pela equipe.")
+_("Simulações não são processadas pelo jogador. A equipe confirma o pedido.")
+_("Este pedido não pode ser confirmado manualmente.")
 
 # apps.programs.domain.exceptions
 _("Cadastro de apoiador não encontrado.")

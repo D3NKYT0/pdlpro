@@ -160,8 +160,14 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert CatalogItem.objects.filter(item_id=6658, active=True).exists()
     common = BoxType.objects.get(name="Baú Comum")
     legendary = BoxType.objects.get(name="Baú Lendário")
-    assert not common.items.filter(item_id=6658).exists()
+    assert common.boosters_amount == 20
+    assert BoxType.objects.get(name="Baú Raro").boosters_amount == 30
+    assert BoxType.objects.get(name="Baú Épico").boosters_amount == 40
+    assert legendary.boosters_amount == 50
+    assert common.items.filter(item_id=6658).exists()
+    assert not common.items.filter(item_id=6577).exists()
     assert legendary.items.filter(item_id=6658).exists()
+    assert not legendary.items.filter(item_id=6577).exists()
     assert CatalogItem.objects.filter(item_id=57, quantity=80_000, active=True).exists()
     luck = DailyBonusPoolEntry.objects.get(name="Moeda da Sorte")
     assert luck.rewards[0]["item_id"] == 4037
@@ -177,11 +183,14 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     listed = api.get("/api/v1/staff/games/")
     assert listed.status_code == 200
     assert {item["code"] for item in listed.data} >= {"roulette", "fishing", "economy"}
+    common.boosters_amount = 5
+    common.save(update_fields=["boosters_amount"])
     repeat = api.post(AUTOCONFIG, {}, format="json")
     assert repeat.status_code == 200
     boxes = next(item for item in repeat.data["games"] if item["code"] == "boxes")
     assert boxes["created"]["box_types"] == 0
     assert boxes["created"]["catalog_items"] == 0
+    assert BoxType.objects.get(name="Baú Comum").boosters_amount == 20
 
 
 @pytest.mark.django_db

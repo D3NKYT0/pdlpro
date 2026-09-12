@@ -31,6 +31,11 @@ def _rarity_rank(value: str) -> int:
     return _RARITY_RANK.get(key, 9)
 
 
+def is_legendary_box_item(item: Any) -> bool:
+    """Lendário de verdade: raridade lendária, sem usar Adena como item em mira."""
+    return item.item_id != 57 and _rarity_rank(getattr(item, "rarity", "") or "") == 0
+
+
 def serialize_box_item(item: Any) -> dict:
     """Serializa um item de catálogo para a vitrine do jogador."""
     return {
@@ -43,11 +48,12 @@ def serialize_box_item(item: Any) -> dict:
 
 
 def pick_featured_box_item(items: list[Any]) -> Any | None:
-    """Escolhe o item que o jogador está caçando: o mais raro, sem preferir Adena."""
+    """Escolhe o item em mira: lendário quando existir, sem preferir Adena."""
     if not items:
         return None
+    pool = [item for item in items if is_legendary_box_item(item)] or items
     return min(
-        items,
+        pool,
         key=lambda item: (
             item.item_id == 57,
             _rarity_rank(getattr(item, "rarity", "") or ""),

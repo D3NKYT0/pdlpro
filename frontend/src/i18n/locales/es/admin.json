@@ -1033,7 +1033,7 @@
         "reconciliation": "Compara el saldo actual de las carteras con las entradas y salidas registradas."
       },
       "explanations": {
-        "payments": "Período según la fecha de creación del pedido. Los totales en BRL y USD son independientes. Las monedas y bonos acreditados solo consideran pedidos confirmados; las simulaciones se identifican en el origen.",
+        "payments": "Período según la fecha de creación del pedido. Los totales en BRL y USD son independientes. Las monedas y bonos acreditados solo consideran pedidos confirmados. Las simulaciones quedan pendientes hasta que el equipo las confirme en el admin; los jugadores no se acreditan solos.",
         "cashFlow": "Valores en monedas de la cartera. Incluye bonos y transferencias internas; no representa ingresos en dinero. El acumulado empieza en cero al inicio del período filtrado.",
         "balances": "Valores en monedas de la cartera. Saldo total = principal + bono; saldo por historial = entradas − salidas. Las diferencias de hasta 0,01 son consistentes; hasta 1,00 quedan en análisis. La consulta no altera saldos."
       },
@@ -1128,6 +1128,7 @@
         "methodSource": "Método / origen",
         "createdAt": "Creado el",
         "paidAt": "Pagado el",
+        "action": "Acción",
         "day": "Día",
         "dayNet": "Saldo del día",
         "accumulated": "Acumulado en el período"
@@ -1139,6 +1140,18 @@
         "debits": "Salidas",
         "aria": "Entradas y salidas por día. Los valores están disponibles en la tabla de abajo.",
         "barTitle": "{{day}}: entradas {{credits}}, salidas {{debits}}"
+      },
+      "mockConfirm": {
+        "action": "Confirmar simulación",
+        "title": "Vas a acreditar monedas sin un pago real",
+        "attention": "Atención",
+        "lead": "Esta acción libera saldo real en la cartera del jugador, sin cobro en Mercado Pago, Stripe ni ningún proveedor.",
+        "body": "El pedido {{id}} de {{username}} acredita {{coins}} monedas ({{amount}}) como si el pago se hubiera recibido. Si el mock está activo, un jugador puede crear estos pedidos a voluntad.",
+        "confirm": "Entiendo el riesgo. Acreditar de todos modos",
+        "cancel": "Cancelar",
+        "busy": "Acreditando…",
+        "success": "Simulación confirmada: {{coins}} monedas acreditadas a {{username}}.",
+        "error": "No se pudo confirmar la simulación."
       }
     }
   }

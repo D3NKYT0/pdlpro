@@ -22,7 +22,7 @@
       "noteMercadoPagoTitle": "Pago nacional con Mercado Pago",
       "noteUnavailableTitle": "Recargas temporalmente no disponibles",
       "noteAutoConfirm": "El acreditamiento automático está habilitado en este entorno.",
-      "noteManualConfirm": "El saldo se añade solo después de aprobar el pedido.",
+      "noteManualConfirm": "Pago simulado: el saldo entra solo después de que el equipo confirme el pedido en el admin. Los jugadores no pueden acreditarse solos.",
       "noteStripe": "Tarjeta procesada con seguridad en el propio sitio.",
       "noteMercadoPago": "Paga con tarjeta, PIX o boleto sin salir del panel.",
       "noteUnavailable": "No se creará ningún cobro mientras el servicio de pago no esté disponible.",
@@ -113,7 +113,7 @@
     "toast": {
       "rechargeUnavailable": "Las recargas no están disponibles temporalmente. Inténtalo más tarde.",
       "coinsCredited": "{{coins}} monedas acreditadas",
-      "orderPending": "Pedido creado y esperando confirmación.",
+      "orderPending": "Pedido simulado creado. El equipo debe confirmarlo en el admin para que entre el saldo.",
       "paymentStartFailed": "No se pudo iniciar el pago",
       "pixGenerated": "PIX generado. Págalo para acreditar las monedas.",
       "mercadoPagoFailed": "No se pudo abrir Mercado Pago",
@@ -1005,7 +1005,7 @@
     "boxes": {
       "eyebrow": "Reliquias selladas",
       "title": "Cofres Encantados",
-      "lead": "A diferencia de la ruleta: el ítem objetivo ya está en uno de los paquetes. Siempre lo llevas — la suerte solo decide si sale en el primero o en el último.",
+      "lead": "A diferencia de la ruleta: el ítem objetivo siempre es legendario y ya está en uno de los paquetes. Siempre lo llevas — la suerte solo decide si sale en el primero o en el último.",
       "hunt": "Objetivo",
       "guarantee": "Garantizado en este cofre",
       "huntWaiting": "Sigue en el cofre",

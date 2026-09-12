@@ -360,20 +360,42 @@ class ConfirmPaymentInput:
 
 
 class ConfirmPaymentUseCase(UseCase[ConfirmPaymentInput, PaymentOrderEntity]):
-    """Encaminha a confirmação manual para a liquidação, autorizando somente mock quando
-    PAYMENT_ALLOW_MOCK está ativo.
+    """Bloqueia a confirmação manual pelo jogador. Simulações só são liquidadas pela equipe
+    em ``StaffConfirmMockPaymentUseCase``.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmPaymentInput``. O retorno
     é ``PaymentOrderEntity``.
     """
 
+    def execute(self, data: ConfirmPaymentInput) -> PaymentOrderEntity:
+        raise AuthorizationError("A confirmação de simulação só pode ser feita pela equipe.")
+
+
+@dataclass(frozen=True, slots=True)
+class StaffConfirmMockPaymentInput:
+    """Dados de entrada de ``StaffConfirmMockPaymentUseCase.execute``.
+
+    Construa após validar a requisição. A dataclass transporta o pedido; a autorização de
+    equipe fica na view. Não liquida métodos reais.
+    """
+
+    order_id: UUID
+
+
+class StaffConfirmMockPaymentUseCase(UseCase[StaffConfirmMockPaymentInput, PaymentOrderEntity]):
+    """Liquida um pedido mock em nome da equipe, sem checar o jogador dono. Recusa Stripe,
+    Mercado Pago e qualquer método que não seja simulação.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``StaffConfirmMockPaymentInput``.
+    O retorno é ``PaymentOrderEntity``.
+    """
+
     def __init__(self, settle: SettlePaymentUseCase) -> None:
         self._settle = settle
 
-    def execute(self, data: ConfirmPaymentInput) -> PaymentOrderEntity:
-        allowed = ("mock",) if getattr(settings, "PAYMENT_ALLOW_MOCK", False) else ()
+    def execute(self, data: StaffConfirmMockPaymentInput) -> PaymentOrderEntity:
         return self._settle.execute(
-            SettlePaymentInput(order_id=data.order_id, user_id=data.user_id, allow_methods=allowed)
+            SettlePaymentInput(order_id=data.order_id, user_id=None, allow_methods=("mock",))
         )
 
 
@@ -418,6 +440,10 @@ class ProcessPaymentUseCase(UseCase[ProcessPaymentInput, dict]):
             raise PaymentOrderNotFoundError()
         if order.user_id != data.user_id:
             raise AuthorizationError()
+        if order.method == "mock":
+            raise PaymentMethodUnavailableError(
+                "Simulações não são processadas pelo jogador. A equipe confirma o pedido."
+            )
         if order.status == "confirmed":
             return {"order": order, "result": ProcessResult(status="approved", external_id=order.external_id)}
         if order.status not in {"pending", "processing", "failed"}:

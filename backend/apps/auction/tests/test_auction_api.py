@@ -6,6 +6,7 @@ from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.auction.infrastructure.models import Auction
+from apps.payment.tests.helpers import confirm_mock_payment
 from apps.server.domain.gateways import GameItem, GameSkill, ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
@@ -66,7 +67,7 @@ def test_create_bid_and_close_auction(api, seller, bidder):
     api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
     gateway.seed_character("abidder", "SirBid")
     order = api.post("/api/v1/customer/payments/", {"amount": "30.00", "method": "mock"}, format="json")
-    api.post(f"/api/v1/customer/payments/{order.data['id']}/confirm/", format="json")
+    confirm_mock_payment(order.data["id"])
     bid = api.post(
         f"/api/v1/customer/auctions/{auction_id}/bid/",
         {"amount": "15.00", "character_name": "SirBid"},
@@ -130,7 +131,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     api.force_authenticate(user=bidder)
     api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
     order = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
-    api.post(f"/api/v1/customer/payments/{order.data['id']}/confirm/", format="json")
+    confirm_mock_payment(order.data["id"])
     bid = api.post(
         f"/api/v1/customer/auctions/{auction_id}/bid/",
         {"amount": "25.00"},

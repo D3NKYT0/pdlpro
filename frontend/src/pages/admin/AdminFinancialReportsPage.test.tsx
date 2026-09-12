@@ -54,6 +54,17 @@ describe('financial report rendering', () => {
     expect(html).toContain('220,00')
     expect(html).toContain('Simulação')
     expect(html).not.toContain('NaN')
+    expect(html).not.toContain('Confirmar simulação')
+  })
+
+  it('offers staff confirmation only for pending mock orders', () => {
+    const html = renderReport({
+      kind: 'payments', count: 1, total_pages: 1, next: null, previous: null,
+      summary: { currencies: [{ currency: 'BRL', count: 1, total_amount: '50.00', confirmed_amount: '0.00', pending_amount: '50.00' }], statuses: { pending: 1 }, coins: '0.00', bonus_applied: '0.00', total_credited: '0.00' },
+      results: [{ id: 'pending-mock', username: 'jogador_teste', amount: '50.00', currency: 'BRL', coins: '50.00', bonus_applied: '0.00', total_credited: '0.00', status: 'pending', method: 'mock', payment_source: 'simulation', created_at: '2026-09-01T16:00:00Z', paid_at: null }],
+    }, 'payments')
+    expect(html).toContain('Confirmar simulação')
+    expect(html).toContain('pending-mock')
   })
 
   it('shows a cash flow chart with real values and handles no matching days', () => {

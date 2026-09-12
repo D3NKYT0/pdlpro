@@ -27,17 +27,15 @@ def test_simultaneous_confirmations_credit_exactly_once():
             with connection.cursor() as cursor:
                 cursor.execute("SET application_name = 'pdl_payment_audit'")
             from apps.payment.application.use_cases import (
-                ConfirmPaymentInput,
-                ConfirmPaymentUseCase,
+                StaffConfirmMockPaymentInput,
+                StaffConfirmMockPaymentUseCase,
             )
             from common.di.bootstrap import DependencyInjection
 
             use_case = (
-                DependencyInjection.root().create_scope().resolve(ConfirmPaymentUseCase)
+                DependencyInjection.root().create_scope().resolve(StaffConfirmMockPaymentUseCase)
             )
-            return use_case.execute(
-                ConfirmPaymentInput(order_id=order.id, user_id=user.id)
-            ).status
+            return use_case.execute(StaffConfirmMockPaymentInput(order_id=order.id)).status
         finally:
             connections.close_all()
 

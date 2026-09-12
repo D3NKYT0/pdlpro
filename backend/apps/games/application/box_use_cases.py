@@ -6,7 +6,11 @@ from decimal import Decimal
 from uuid import UUID
 
 from apps.games.application.bag import add_to_bag
-from apps.games.application.box_catalog import box_catalog_preview, pick_featured_box_item
+from apps.games.application.box_catalog import (
+    box_catalog_preview,
+    is_legendary_box_item,
+    pick_featured_box_item,
+)
 from apps.games.domain.exceptions import (
     BoxEmptyError,
     BoxNotOwnedError,
@@ -26,6 +30,24 @@ def _catalog_for(box_type, boxes: IBoxRepository) -> list:
         items = boxes.list_active_catalog_items()
     if not items:
         raise ValidationDomainError("Não há itens no catálogo para popular a caixa.")
+    return items
+
+
+def _resolve_hunt(items: list, boxes: IBoxRepository):
+    featured = pick_featured_box_item(items)
+    if featured is not None and is_legendary_box_item(featured):
+        return featured
+    featured = pick_featured_box_item(boxes.list_active_catalog_items())
+    if featured is None or not is_legendary_box_item(featured):
+        raise ValidationDomainError("O item em mira precisa ser lendário.")
+    return featured
+
+
+def _vitrine_items(box_type, boxes: IBoxRepository) -> list:
+    items = list(_catalog_for(box_type, boxes))
+    hunt = _resolve_hunt(items, boxes)
+    if not any(_is_same_item(item, hunt) for item in items):
+        items.append(hunt)
     return items
 
 
@@ -51,16 +73,15 @@ def _hunt_still_closed(box, featured, boxes: IBoxRepository) -> bool:
 
 
 def _populate(box, boxes: IBoxRepository) -> None:
-    """Semeia os pacotes com o item em mira em um slot aleatório. O resto vem do catálogo.
+    """Semeia os pacotes com um lendário em mira em um slot aleatório. O resto vem do
+    catálogo do tier, sem outro lendário.
 
     Diferente da roleta: o jogador sempre leva o item em mira se abrir todos os pacotes.
     """
     items = _catalog_for(box.box_type, boxes)
-    featured = pick_featured_box_item(items)
-    if featured is None:
-        raise ValidationDomainError("Não há itens no catálogo para popular a caixa.")
-    fillers = [item for item in items if not _is_same_item(item, featured)]
-    pool = fillers or items
+    featured = _resolve_hunt(items, boxes)
+    fillers = [item for item in items if not is_legendary_box_item(item)]
+    pool = fillers or [item for item in items if not _is_same_item(item, featured)] or items
     weights = [max(getattr(item, "weight", 1), 1) for item in pool]
     count = max(1, box.box_type.boosters_amount)
     hunt_at = random.randrange(count)
@@ -81,7 +102,7 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
     def execute(self, data: UUID) -> dict:
         types = []
         for row in self._boxes.list_active_types():
-            featured, preview = box_catalog_preview(self._boxes.list_active_type_items(row))
+            featured, preview = box_catalog_preview(_vitrine_items(row, self._boxes))
             types.append(
                 {
                     "id": str(row.id),
@@ -97,7 +118,7 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
             remaining = self._boxes.count_closed_slots(box)
             if remaining == 0:
                 continue
-            type_items = self._boxes.list_active_type_items(box.box_type)
+            type_items = _vitrine_items(box.box_type, self._boxes)
             featured, preview = box_catalog_preview(type_items)
             boxes.append(
                 {
@@ -230,7 +251,7 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 bags=self._bags,
             )
             remaining = self._boxes.count_closed_slots(box)
-            featured = pick_featured_box_item(self._boxes.list_active_type_items(box.box_type))
+            featured = pick_featured_box_item(_vitrine_items(box.box_type, self._boxes))
             hunt = featured is not None and _is_same_item(chosen, featured)
             if remaining == 0:
                 self._boxes.delete_box(box)

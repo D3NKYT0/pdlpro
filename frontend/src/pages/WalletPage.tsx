@@ -70,12 +70,7 @@ export function WalletPage() {
         method: paymentMethod,
       })
       setOrder(created)
-      if (created.method === 'mock' && mock?.auto_confirm) {
-        const confirmed = await paymentApi.confirm(created.id)
-        toast.success(t('wallet.toast.coinsCredited', { coins: confirmed.coins }))
-        setOrder(null)
-        await refreshWallet()
-      } else if (created.method === 'mock') {
+      if (created.method === 'mock') {
         toast.success(t('wallet.toast.orderPending'))
       }
     } catch (error) {
@@ -217,7 +212,6 @@ export function WalletPage() {
           onCurrencyChange={setCurrency}
           paymentAvailable={paymentAvailable}
           simulatedPayment={simulatedPayment}
-          mockAutoConfirm={mock?.auto_confirm}
           packages={packages}
           promo={catalog.data?.promo}
           catalogLoading={catalog.isLoading}

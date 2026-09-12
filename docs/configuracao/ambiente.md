@@ -99,7 +99,7 @@ de 10/minuto e 10/hora. A CSP é definida em `core.settings.base`, recebe
 | `STRIPE_WEBHOOK_SECRET` | Segredo de assinatura do endpoint |
 | `STRIPE_ACTIVATE_PAYMENTS` | Libera processamento real no provedor |
 
-Mantenha as flags de ativação como `false` até as credenciais, URLs públicas, assinaturas de webhook e fluxos de estorno terem sido testados. O provedor `mock` é somente para desenvolvimento e testes.
+Mantenha as flags de ativação como `false` até as credenciais, URLs públicas, assinaturas de webhook e fluxos de estorno terem sido testados. O provedor `mock` é somente para desenvolvimento e testes: mesmo habilitado, só a equipe confirma o crédito no admin financeiro (`/panel/admin/reports/financial/payments`). `PAYMENT_MOCK_AUTO_CONFIRM` não credita o jogador.
 
 ## E-mail e Web Push
 

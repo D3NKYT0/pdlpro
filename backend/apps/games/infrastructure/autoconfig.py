@@ -94,7 +94,7 @@ BOX_TIER_RARITIES = {
     "Baú Comum": frozenset({"common", "rare"}),
     "Baú Raro": frozenset({"rare", "epic"}),
     "Baú Épico": frozenset({"epic"}),
-    "Baú Lendário": frozenset({"epic", "legendary"}),
+    "Baú Lendário": frozenset({"epic"}),
 }
 
 # IDs antigos do primeiro seed + atuais; o sync desativa sobras desses IDs.
@@ -106,10 +106,10 @@ _LEGACY_BOX_ITEM_IDS = frozenset(
 )
 
 BOX_TYPES = (
-    ("Baú Comum", Decimal("10.00"), 5),
-    ("Baú Raro", Decimal("25.00"), 7),
-    ("Baú Épico", Decimal("50.00"), 9),
-    ("Baú Lendário", Decimal("100.00"), 12),
+    ("Baú Comum", Decimal("10.00"), 20),
+    ("Baú Raro", Decimal("25.00"), 30),
+    ("Baú Épico", Decimal("50.00"), 40),
+    ("Baú Lendário", Decimal("100.00"), 50),
 )
 
 # Tupla: (name, rarity, rod, weight, xp, fichas, item_id, quantity)
@@ -427,8 +427,20 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 defaults={"price": price, "boosters_amount": boosters, "active": True},
             )
             counts["box_types"] += int(was)
+            if box.boosters_amount != boosters:
+                box.boosters_amount = boosters
+                box.save(update_fields=["boosters_amount", "updated_at"])
             allowed = BOX_TIER_RARITIES.get(name)
-            tier = [item for item in catalog if allowed is None or item.rarity in allowed]
+            fillers = [item for item in catalog if allowed is None or item.rarity in allowed]
+            hunts = [
+                item
+                for item in catalog
+                if item.rarity in {"legendary", "lendario", "legendario"} and item.item_id != 57
+            ]
+            hunt = next((item for item in hunts if item.item_id == 6658), hunts[0] if hunts else None)
+            tier = list(fillers)
+            if hunt is not None and hunt not in tier:
+                tier.append(hunt)
             if tier:
                 current = set(box.items.values_list("pk", flat=True))
                 wanted = {item.pk for item in tier}
