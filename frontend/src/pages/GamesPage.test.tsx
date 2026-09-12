@@ -56,6 +56,7 @@ beforeEach(() => {
     }],
     boxes: [{
       id: 'box',
+      type_id: 'owned-type',
       type_name: 'Caixa adquirida',
       remaining: 1,
       total: 2,
@@ -236,6 +237,22 @@ it('explica o item em mira e o que mais pode sair do baú', async () => {
   expect(screen.getByText('Baús à venda')).toBeVisible()
   expect(screen.getByText('Seus baús selados')).toBeVisible()
   expect(screen.queryByText(/boosters/i)).not.toBeInTheDocument()
+})
+it('oferece resetar o baú já selado em vez de comprar de novo', async () => {
+  vi.mocked(gamesApi.boxes).mockResolvedValue({
+    types: [{ id: 'type', name: 'Caixa rara', price: '10.00', boosters_amount: 2 }],
+    boxes: [{ id: 'box', type_id: 'type', type_name: 'Caixa rara', remaining: 1, total: 2 }],
+  } as any)
+  vi.mocked(gamesApi.buyBox).mockResolvedValue({ id: 'box', remaining: 2 } as any)
+  const user = mount('boxes')
+  const reset = await screen.findByRole('button', { name: 'Resetar' })
+  expect(reset).toBeVisible()
+  expect(reset).toHaveClass('ui-button--warning')
+  expect(screen.getByText('Substitui o baú selado deste tipo. O que ainda não abriu se perde.')).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Comprar' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Resetar' }))
+  expect(gamesApi.buyBox).toHaveBeenCalledWith('type')
+  expect(toast.success).toHaveBeenCalledWith('Baú resetado')
 })
 it('lista os baús do comum ao lendário e pinta a coluna pela raridade', async () => {
   vi.mocked(gamesApi.boxes).mockResolvedValue({

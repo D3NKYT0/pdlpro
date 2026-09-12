@@ -124,12 +124,12 @@ export function GamesPage() {
     }, t('games.toast.claimError'))
   }
 
-  async function buyBox(id: string) {
+  async function buyBox(id: string, reset = false) {
     await action.run(async () => {
       await gamesApi.buyBox(id)
-      toast.success(t('games.toast.boxBought'))
+      toast.success(t(reset ? 'games.toast.boxReset' : 'games.toast.boxBought'))
       await refresh()
-    }, t('games.toast.buyBoxError'))
+    }, t(reset ? 'games.toast.resetBoxError' : 'games.toast.buyBoxError'))
   }
 
   async function openBox(id: string) {
@@ -210,6 +210,8 @@ export function GamesPage() {
     boxes.data?.boxes ?? [],
     (row) => row.type_name,
   )
+  const ownedTypeIds = new Set(ownedBoxes.map((row) => row.type_id).filter(Boolean))
+  const ownedTypeNames = new Set(ownedBoxes.map((row) => row.type_name))
 
   return (
     <div className="games-page">
@@ -365,18 +367,22 @@ export function GamesPage() {
             <div className="game-subsection">
               <h3>{t('games.boxes.shopTitle')}</h3>
               <div className="game-box-grid">
-                {shopBoxes.map((row) => (
-                  <BoxHuntCard
-                    key={row.id}
-                    name={row.name}
-                    price={row.price}
-                    opens={row.boosters_amount}
-                    featured={row.featured}
-                    items={row.items}
-                    onAction={() => void buyBox(row.id)}
-                    actionLabel={t('games.boxes.buy')}
-                  />
-                ))}
+                {shopBoxes.map((row) => {
+                  const resetting = ownedTypeIds.has(row.id) || ownedTypeNames.has(row.name)
+                  return (
+                    <BoxHuntCard
+                      key={row.id}
+                      name={row.name}
+                      price={row.price}
+                      opens={row.boosters_amount}
+                      featured={row.featured}
+                      items={row.items}
+                      resetting={resetting}
+                      onAction={() => void buyBox(row.id, resetting)}
+                      actionLabel={t(resetting ? 'games.boxes.reset' : 'games.boxes.buy')}
+                    />
+                  )
+                })}
               </div>
             </div>
           ) : null}

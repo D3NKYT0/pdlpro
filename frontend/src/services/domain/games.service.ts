@@ -133,6 +133,7 @@ export const gamesApi = {
       }>
       boxes: Array<{
         id: string
+        type_id?: string
         type_name: string
         remaining: number
         total: number

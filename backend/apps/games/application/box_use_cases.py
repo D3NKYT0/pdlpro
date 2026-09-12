@@ -77,6 +77,7 @@ class ListBoxTypesUseCase(UseCase[UUID, dict]):
             boxes.append(
                 {
                     "id": str(box.id),
+                    "type_id": str(box.box_type.id),
                     "type_name": box.box_type.name,
                     "remaining": remaining,
                     "total": self._boxes.count_slots(box),

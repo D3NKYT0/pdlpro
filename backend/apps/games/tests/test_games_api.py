@@ -110,6 +110,8 @@ def test_buy_and_open_box(api, player):
     bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
     assert bought.status_code == 200, bought.data
     assert bought.data["remaining"] == 2
+    listed = api.get("/api/v1/customer/games/boxes/")
+    assert listed.data["boxes"][0]["type_id"] == str(box_type.id)
     opened = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
     assert opened.status_code == 200, opened.data
     from apps.server.infrastructure.lineage.item_catalog import item_metadata
@@ -132,6 +134,7 @@ def test_list_boxes_shows_the_hunt_item(api, player):
     listed = api.get("/api/v1/customer/games/boxes/")
     assert listed.status_code == 200
     row = listed.data["types"][0]
+    assert row["id"] == str(box_type.id)
     assert row["featured"]["item_id"] == 6658
     assert row["featured"]["name"] == "Ring of Baium"
     assert {item["item_id"] for item in row["items"]} == {57}

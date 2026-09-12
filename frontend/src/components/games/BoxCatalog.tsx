@@ -23,6 +23,7 @@ export function BoxHuntCard({
   remaining,
   total,
   opening = false,
+  resetting = false,
   onAction,
   actionLabel,
 }: {
@@ -35,6 +36,7 @@ export function BoxHuntCard({
   remaining?: number
   total?: number
   opening?: boolean
+  resetting?: boolean
   onAction: () => void
   actionLabel: string
 }) {
@@ -78,8 +80,10 @@ export function BoxHuntCard({
         </div>
       ) : null}
       {owned ? null : <b className="game-box-price">{t('games.boxes.price', { price })}</b>}
-      <small className="game-box-hint">{t('games.boxes.openHint')}</small>
-      <Button className={owned ? undefined : 'ghost'} type="button" onClick={onAction}>
+      <small className="game-box-hint">
+        {resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
+      </small>
+      <Button variant={owned ? 'primary' : resetting ? 'warning' : 'ghost'} type="button" onClick={onAction}>
         {actionLabel}
       </Button>
     </article>
