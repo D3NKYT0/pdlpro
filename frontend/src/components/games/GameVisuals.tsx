@@ -136,18 +136,23 @@ export function RouletteWheel({
   )
 }
 
-const BOX_SPARKS = 10
+const BOX_SPARKS = 22
 const BOX_BOOMS = [
-  { x: '20%', y: '18%' },
-  { x: '80%', y: '22%' },
-  { x: '24%', y: '72%' },
-  { x: '76%', y: '68%' },
+  { x: '14%', y: '16%' },
+  { x: '50%', y: '8%' },
+  { x: '86%', y: '18%' },
+  { x: '10%', y: '48%' },
+  { x: '90%', y: '46%' },
+  { x: '22%', y: '78%' },
+  { x: '50%', y: '86%' },
+  { x: '78%', y: '76%' },
 ] as const
 
 export function BoxChest({
   name,
   price,
   opening = false,
+  variant = 'card',
   prizeName,
   prizeItemId,
   prizeCaption,
@@ -155,43 +160,73 @@ export function BoxChest({
   name: string
   price?: string | number
   opening?: boolean
+  variant?: 'card' | 'hero'
   prizeName?: string | null
   prizeItemId?: number
   prizeCaption?: string
 }) {
   const rarity: GameRarity = inferBoxRarity(name, price)
+  const hero = variant === 'hero'
   const won = Boolean(prizeName) && !opening
+  const burst = won ? (
+    <div className="game-chest-burst" aria-hidden="true">
+      <i className="game-chest-flash" />
+      <i className="game-chest-flash is-late" />
+      {hero ? (
+        <>
+          <i className="game-chest-ring" />
+          <i className="game-chest-ring" />
+          <i className="game-chest-ring" />
+        </>
+      ) : null}
+      {Array.from({ length: hero ? BOX_SPARKS : 10 }, (_, index) => (
+        <i
+          key={index}
+          className="game-chest-spark"
+          style={
+            {
+              '--spark-a': `${index * (360 / (hero ? BOX_SPARKS : 10))}deg`,
+              '--spark-d': `${(index % 7) * 70}ms`,
+            } as CSSProperties
+          }
+        />
+      ))}
+      {BOX_BOOMS.map((boom, index) => (
+        <i
+          key={`${boom.x}-${boom.y}`}
+          className="game-chest-boom"
+          style={{ top: boom.y, left: boom.x, animationDelay: `${index * 70}ms` }}
+        />
+      ))}
+    </div>
+  ) : null
   return (
     <div
-      className={`game-chest rarity-${rarity}${opening ? ' is-opening' : ''}${won ? ' is-win' : ''}`}
+      className={`game-chest rarity-${rarity}${hero ? ' is-hero' : ''}${opening ? ' is-opening' : ''}${won ? ' is-win' : ''}`}
       data-theme-part="game-chest"
       data-rarity={rarity}
       aria-hidden={won ? undefined : true}
     >
-      <i className="game-chest-glow" />
-      <i className="game-chest-art" />
-      {won ? (
-        <div className="game-chest-burst" aria-hidden="true">
-          <i className="game-chest-flash" />
-          {Array.from({ length: BOX_SPARKS }, (_, index) => (
-            <i
-              key={index}
-              className="game-chest-spark"
-              style={{ '--spark-a': `${index * (360 / BOX_SPARKS)}deg` } as CSSProperties}
-            />
-          ))}
-          {BOX_BOOMS.map((boom) => (
-            <i
-              key={`${boom.x}-${boom.y}`}
-              className="game-chest-boom"
-              style={{ top: boom.y, left: boom.x }}
-            />
-          ))}
-        </div>
-      ) : null}
+      {hero ? (
+        <span className="game-chest-stage">
+          <i className="game-chest-glow" />
+          <i className="game-chest-beam" />
+          <span className="game-chest-rig">
+            <i className="game-chest-art game-chest-lid" />
+            <i className="game-chest-art game-chest-body" />
+          </span>
+          {burst}
+        </span>
+      ) : (
+        <>
+          <i className="game-chest-glow" />
+          <i className="game-chest-art" />
+          {burst}
+        </>
+      )}
       {won ? (
         <div className="game-chest-prize" role="status">
-          <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
+          <ItemIcon itemId={prizeItemId} name={prizeName} size={hero ? 64 : 48} />
           <strong>{prizeName}</strong>
           {prizeCaption ? <small>{prizeCaption}</small> : null}
         </div>

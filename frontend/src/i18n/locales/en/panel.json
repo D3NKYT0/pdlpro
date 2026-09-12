@@ -1021,6 +1021,9 @@
       "open_one": "Open · {{count}} token",
       "open_other": "Open · {{count}} tokens",
       "prizeEnchant": "+{{enchant}}",
+      "revealTitle": "The chest opens…",
+      "revealFound": "You found",
+      "continue": "Continue",
       "empty": "No chest available right now."
     },
     "chance": {

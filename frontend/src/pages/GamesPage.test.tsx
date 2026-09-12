@@ -34,25 +34,29 @@ vi.mock('../components/games/rouletteReveal', () => ({
   waitForRouletteReveal: () => rouletteReveal.wait(),
 }))
 const boxReveal = vi.hoisted(() => {
+  let shake = () => Promise.resolve()
   let wait = () => Promise.resolve()
-  let hold = () => Promise.resolve()
   return {
+    shake: () => shake(),
     wait: () => wait(),
-    hold: () => hold(),
+    setShake: (value: () => Promise<void>) => {
+      shake = value
+    },
     setWait: (value: () => Promise<void>) => {
       wait = value
     },
     reset: () => {
+      shake = () => Promise.resolve()
       wait = () => Promise.resolve()
-      hold = () => Promise.resolve()
     },
   }
 })
 vi.mock('../components/games/boxReveal', () => ({
+  BOX_SHAKE_MS: 0,
+  BOX_OVERLAY_MS: 0,
   BOX_REVEAL_MS: 0,
-  BOX_HOLD_MS: 0,
+  waitForBoxShake: () => boxReveal.shake(),
   waitForBoxReveal: () => boxReveal.wait(),
-  waitForBoxHold: () => boxReveal.hold(),
 }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
@@ -239,8 +243,11 @@ it('monta o tambor da roleta sem fatias de todos os prêmios', async () => {
 })
 it('mostra baús do tema nas caixas e anima a abertura', async () => {
   let finish!: (value: any) => void
+  let releaseShake!: () => void
   let releaseReveal!: () => void
+  const shakeGate = new Promise<void>(resolve => { releaseShake = resolve })
   const revealGate = new Promise<void>(resolve => { releaseReveal = resolve })
+  boxReveal.setShake(() => shakeGate)
   boxReveal.setWait(() => revealGate)
   vi.mocked(gamesApi.openBox).mockReturnValue(new Promise(resolve => { finish = resolve }))
   const user = mount('boxes')
@@ -249,20 +256,30 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   expect(document.querySelector('.game-chest-art')).toBeTruthy()
   expect(screen.getAllByText('Cada abertura custa 1 ficha.').length).toBeGreaterThan(0)
   await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
-  expect(document.querySelector('.game-chest.is-opening')).toBeTruthy()
+  expect(document.querySelector('.game-box-card .game-chest.is-opening')).toBeTruthy()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  releaseShake()
+  expect(await screen.findByRole('dialog', { name: 'O baú se abre…' })).toBeVisible()
+  expect(document.querySelector('.game-chest.is-hero.is-opening')).toBeTruthy()
+  expect(document.querySelector('.game-box-card .game-chest.is-opening')).toBeNull()
   finish({ item: { item_id: 2, name: 'Espada', enchant: 3, quantity: 1 }, remaining: 0, fichas: 9 })
-  expect(document.querySelector('.game-chest.is-opening')).toBeTruthy()
+  expect(document.querySelector('.game-chest.is-hero.is-opening')).toBeTruthy()
   expect(screen.queryByRole('status')).not.toBeInTheDocument()
   releaseReveal()
-  await waitFor(() => expect(document.querySelector('.game-chest.is-win')).toBeTruthy())
-  expect(document.querySelector('.game-chest.is-opening')).toBeNull()
+  await waitFor(() => expect(document.querySelector('.game-chest.is-hero.is-win')).toBeTruthy())
+  expect(screen.getByRole('dialog', { name: 'Você encontrou' })).toBeVisible()
+  expect(document.querySelector('.game-chest-lid')).toBeTruthy()
   expect(document.querySelector('.game-chest-burst')).toBeTruthy()
+  expect(document.querySelectorAll('.game-chest-spark').length).toBeGreaterThan(12)
+  expect(document.querySelectorAll('.game-chest-ring').length).toBe(3)
   expect(screen.getByRole('status')).toHaveTextContent('Espada')
   expect(screen.getByRole('status')).toHaveTextContent('+3')
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
   expect(gamesApi.openBox).toHaveBeenCalledWith('box')
+  await user.click(screen.getByRole('button', { name: 'Continuar' }))
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 })
 it('explica o item em mira e o que mais pode sair do baú', async () => {
   mount('boxes')

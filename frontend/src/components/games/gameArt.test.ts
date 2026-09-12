@@ -8,7 +8,7 @@ import {
   rouletteReelStrip,
   visibleSlotReels,
 } from './gameArt'
-import { BOX_HOLD_MS, BOX_REVEAL_MS, waitForBoxHold, waitForBoxReveal } from './boxReveal'
+import { BOX_REVEAL_MS, BOX_SHAKE_MS, boxOpenPhase, waitForBoxReveal, waitForBoxShake } from './boxReveal'
 import { ROULETTE_REVEAL_MS, ROULETTE_SLOW_MS, rouletteSpinPhase, waitForRouletteReveal } from './rouletteReveal'
 
 describe('inferBoxRarity', () => {
@@ -78,6 +78,13 @@ it('repete o catálogo no tambor sem exigir ver todos os itens de uma vez', () =
 
 it('segura o revelar do baú pelo tempo do palco', async () => {
   vi.useFakeTimers()
+  const shake = waitForBoxShake(0, 0)
+  const shaken = vi.fn()
+  void shake.then(shaken)
+  await vi.advanceTimersByTimeAsync(BOX_SHAKE_MS - 1)
+  expect(shaken).not.toHaveBeenCalled()
+  await vi.advanceTimersByTimeAsync(1)
+  expect(shaken).toHaveBeenCalledTimes(1)
   const pending = waitForBoxReveal(0, 0)
   const done = vi.fn()
   void pending.then(done)
@@ -85,14 +92,15 @@ it('segura o revelar do baú pelo tempo do palco', async () => {
   expect(done).not.toHaveBeenCalled()
   await vi.advanceTimersByTimeAsync(1)
   expect(done).toHaveBeenCalledTimes(1)
-  const hold = waitForBoxHold()
-  const held = vi.fn()
-  void hold.then(held)
-  await vi.advanceTimersByTimeAsync(BOX_HOLD_MS - 1)
-  expect(held).not.toHaveBeenCalled()
-  await vi.advanceTimersByTimeAsync(1)
-  expect(held).toHaveBeenCalledTimes(1)
   vi.useRealTimers()
+})
+
+it('marca o tremor do card, o overlay e o fim da abertura', () => {
+  expect(boxOpenPhase(0)).toBe('shake')
+  expect(boxOpenPhase(BOX_SHAKE_MS - 1)).toBe('shake')
+  expect(boxOpenPhase(BOX_SHAKE_MS)).toBe('overlay')
+  expect(boxOpenPhase(BOX_REVEAL_MS - 1)).toBe('overlay')
+  expect(boxOpenPhase(BOX_REVEAL_MS)).toBe('done')
 })
 
 it('segura o revelar do giro pelo tempo do palco', async () => {

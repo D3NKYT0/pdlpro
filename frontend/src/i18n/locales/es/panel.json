@@ -1021,6 +1021,9 @@
       "open_one": "Abrir · {{count}} ficha",
       "open_other": "Abrir · {{count}} fichas",
       "prizeEnchant": "+{{enchant}}",
+      "revealTitle": "El cofre se abre…",
+      "revealFound": "Encontraste",
+      "continue": "Continuar",
       "empty": "No hay cofres disponibles por ahora."
     },
     "chance": {

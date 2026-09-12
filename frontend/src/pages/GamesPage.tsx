@@ -25,9 +25,10 @@ import { formatCompactQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
+import { BoxRevealModal } from '../components/games/BoxRevealModal'
 import { sortBoxesByRarity } from '../components/games/gameArt'
 import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
-import { waitForBoxHold, waitForBoxReveal } from '../components/games/boxReveal'
+import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 
@@ -39,6 +40,8 @@ type PlayFx = {
   prizeQuantity?: number
   prizeItemId?: number
   prizeEnchant?: number
+  overlay?: boolean
+  boxName?: string
   slowing?: boolean
   diceRoll?: number
   slotsReels?: string[]
@@ -135,19 +138,24 @@ export function GamesPage() {
   }
 
   async function openBox(id: string) {
-    setFx({ playing: 'open', targetId: id })
+    const boxName = ownedBoxes.find((row) => row.id === id)?.type_name
+    setFx({ playing: 'open', targetId: id, boxName })
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
-      const result = await gamesApi.openBox(id)
+      const pending = gamesApi.openBox(id)
+      await waitForBoxShake(startedAt)
+      setFx((current) => ({ ...current, overlay: true }))
+      const result = await pending
       await waitForBoxReveal(startedAt)
       setFx({
         targetId: id,
+        boxName,
+        overlay: true,
         prizeName: result.item.name,
         prizeQuantity: result.item.quantity ?? 1,
         prizeItemId: result.item.item_id,
         prizeEnchant: result.item.enchant,
       })
-      await waitForBoxHold()
       await refresh()
       return result
     }, t('games.toast.openBoxError'))
@@ -366,11 +374,7 @@ export function GamesPage() {
                     owned
                     remaining={row.remaining}
                     total={row.total}
-                    opening={fx.playing === 'open' && fx.targetId === row.id}
-                    prizeName={fx.targetId === row.id ? fx.prizeName : undefined}
-                    prizeItemId={fx.targetId === row.id ? fx.prizeItemId : undefined}
-                    prizeQuantity={fx.targetId === row.id ? fx.prizeQuantity : undefined}
-                    prizeEnchant={fx.targetId === row.id ? fx.prizeEnchant : undefined}
+                    opening={fx.playing === 'open' && fx.targetId === row.id && !fx.overlay}
                     onAction={() => void openBox(row.id)}
                     actionLabel={t('games.boxes.open', { count: 1 })}
                   />
@@ -405,6 +409,16 @@ export function GamesPage() {
             <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
           ) : null}
         </Card>
+        <BoxRevealModal
+          open={fx.overlay === true}
+          name={fx.boxName ?? ''}
+          opening={fx.playing === 'open'}
+          prizeName={fx.prizeName}
+          prizeItemId={fx.prizeItemId}
+          prizeQuantity={fx.prizeQuantity}
+          prizeEnchant={fx.prizeEnchant}
+          onClose={() => setFx({})}
+        />
 
         <Card
           className="game-module game-chance"

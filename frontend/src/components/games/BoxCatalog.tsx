@@ -24,10 +24,6 @@ export function BoxHuntCard({
   total,
   opening = false,
   resetting = false,
-  prizeName,
-  prizeItemId,
-  prizeQuantity,
-  prizeEnchant,
   onAction,
   actionLabel,
 }: {
@@ -41,37 +37,18 @@ export function BoxHuntCard({
   total?: number
   opening?: boolean
   resetting?: boolean
-  prizeName?: string | null
-  prizeItemId?: number
-  prizeQuantity?: number
-  prizeEnchant?: number
   onAction: () => void
   actionLabel: string
 }) {
   const { t } = useTranslation('panel')
   const extras = items.filter((item) => item.item_id !== featured?.item_id || item.quantity !== featured?.quantity)
   const rarity = inferBoxRarity(name, price)
-  const prizeCaption = prizeName
-    ? [
-        prizeEnchant ? t('games.boxes.prizeEnchant', { enchant: prizeEnchant }) : null,
-        t('games.roulette.prizeQty', { quantity: formatCompactQuantity(prizeQuantity ?? 1) }),
-      ]
-        .filter(Boolean)
-        .join(' · ')
-    : undefined
   return (
     <article
-      className={`game-box-card${owned ? ' is-owned' : ''}${opening ? ' is-opening' : ''}${prizeName && !opening ? ' is-revealed' : ''}`}
+      className={`game-box-card${owned ? ' is-owned' : ''}${opening ? ' is-opening' : ''}`}
       data-rarity={rarity}
     >
-      <BoxChest
-        name={name}
-        price={price}
-        opening={opening}
-        prizeName={prizeName}
-        prizeItemId={prizeItemId}
-        prizeCaption={prizeCaption}
-      />
+      <BoxChest name={name} price={price} opening={opening} />
       <header className="game-box-copy">
         <strong>{name}</strong>
         <small>

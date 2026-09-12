@@ -1021,6 +1021,9 @@
       "open_one": "Abrir · {{count}} ficha",
       "open_other": "Abrir · {{count}} fichas",
       "prizeEnchant": "+{{enchant}}",
+      "revealTitle": "O baú se abre…",
+      "revealFound": "Você encontrou",
+      "continue": "Continuar",
       "empty": "Nenhum baú disponível no momento."
     },
     "chance": {
