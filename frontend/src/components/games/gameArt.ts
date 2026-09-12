@@ -53,3 +53,44 @@ export function visibleSlotReels(reels?: string[], symbols: string[] = []): stri
   const fallback = source.length ? source : [...SLOT_SYMBOLS]
   return Array.from({ length: 3 }, (_, index) => fallback[index % fallback.length])
 }
+
+export type RouletteRarity = 'comum' | 'incomum' | 'raro' | 'epico' | 'lendario'
+
+export type RouletteReelPrize = {
+  id: string
+  name: string
+  rarity: string
+  quantity?: number
+  item_id?: number
+}
+
+/** Normaliza raridade da API (pt/en) para o tambor da roleta. */
+export function normalizeRouletteRarity(value: string): RouletteRarity {
+  const key = value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+  if (key.startsWith('lend') || key.startsWith('legend')) return 'lendario'
+  if (key.startsWith('epic')) return 'epico'
+  if (key.startsWith('rar')) return 'raro'
+  if (key.startsWith('incom') || key.startsWith('uncommon')) return 'incomum'
+  return 'comum'
+}
+
+export function findRoulettePrizeIndex(
+  prizes: Array<{ name: string; quantity?: number }>,
+  prizeName?: string | null,
+  prizeQuantity?: number,
+) {
+  if (!prizeName) return -1
+  return prizes.findIndex(
+    (prize) => prize.name === prizeName && (prize.quantity ?? 1) === (prizeQuantity ?? 1),
+  )
+}
+
+/** Repete o catálogo para o tambor circular sem expor todos os itens ao mesmo tempo. */
+export function rouletteReelStrip<T>(prizes: T[], copies?: number): T[] {
+  if (!prizes.length) return []
+  const times = copies ?? (prizes.length >= 8 ? 2 : 4)
+  return Array.from({ length: times }, () => prizes).flat()
+}

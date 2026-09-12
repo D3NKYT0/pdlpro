@@ -3,7 +3,7 @@ import { Tabs } from '../components/ui/Tabs'
 import { useFeedbackAction } from '../hooks/useFeedbackAction'
 import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -25,6 +25,7 @@ import { formatCompactQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
 import { BoxChest, ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
+import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 
 type PlayFx = {
@@ -33,6 +34,8 @@ type PlayFx = {
   spinFailed?: boolean
   prizeName?: string | null
   prizeQuantity?: number
+  prizeItemId?: number
+  slowing?: boolean
   diceRoll?: number
   slotsReels?: string[]
 }
@@ -86,29 +89,20 @@ export function GamesPage() {
   async function spin() {
     setFx({ playing: 'spin' })
     const outcome = await action.run(async () => {
+      const startedAt = Date.now()
       const result = await gamesApi.spin()
-      if (result.failed) toast.error(t('games.toast.noPrize'))
-      else {
-        const quantity = result.prize?.quantity ?? 1
-        const prizeLabel =
-          quantity > 1
-            ? t('games.roulette.prizeStack', {
-                name: result.prize?.name,
-                quantity: formatCompactQuantity(quantity),
-              })
-            : result.prize?.name
-        toast.success(t('games.toast.prizeWon', { prize: prizeLabel }))
-      }
-      await refresh()
+      await waitForRouletteReveal(startedAt)
       return result
     }, t('games.toast.spinError'))
-    if (outcome.ok)
+    if (outcome.ok) {
       setFx({
         spinFailed: outcome.value.failed,
-        prizeName: outcome.value.prize?.name ?? null,
+        prizeName: outcome.value.failed ? null : outcome.value.prize?.name ?? null,
         prizeQuantity: outcome.value.prize?.quantity ?? 1,
+        prizeItemId: outcome.value.prize?.item_id,
       })
-    else setFx({})
+      await refresh()
+    } else setFx({})
   }
 
   async function buy(event: FormEvent) {
@@ -200,6 +194,14 @@ export function GamesPage() {
     }, t('games.toast.enchantError'))
   }
 
+  useEffect(() => {
+    if (fx.playing !== 'spin') return
+    const timer = window.setTimeout(() => {
+      setFx((current) => (current.playing === 'spin' ? { ...current, slowing: true } : current))
+    }, ROULETTE_SLOW_MS)
+    return () => window.clearTimeout(timer)
+  }, [fx.playing])
+
   const tokens = roulette.data?.fichas ?? minigames.data?.fichas ?? 0
 
   return (
@@ -246,8 +248,13 @@ export function GamesPage() {
               <RouletteWheel
                 tokens={tokens}
                 spinning={fx.playing === 'spin'}
+                slowing={fx.slowing === true}
                 missed={fx.spinFailed === true}
                 prizeName={fx.prizeName}
+                prizeQuantity={fx.prizeQuantity}
+                prizeItemId={fx.prizeItemId}
+                prizes={roulette.data?.prizes ?? []}
+                missLabel={t('games.roulette.missed')}
               />
               <p className="muted">{t('games.roulette.failChance', { percent: roulette.data?.fail_chance ?? 20 })}</p>
               <Button type="button" onClick={() => void spin()}>

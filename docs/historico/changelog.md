@@ -52,6 +52,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   encantamentos D–B); a arena no +10 rende 250k Adena. A lista em
   `/panel/games` mostra a quantidade; o autoconfig desativa o catálogo antigo
   de unidade isolada.
+- Roda da Fortuna em `/panel/games`: tambor circular que mostra poucos itens
+  por vez; o pedido vai à API na hora, o giro começa rápido e desacelera, e
+  o palco só revela o prêmio (pop + fogos, sem toast) depois de 5s; a derrota
+  pinta o círculo em vermelho, treme e marca o X.
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e

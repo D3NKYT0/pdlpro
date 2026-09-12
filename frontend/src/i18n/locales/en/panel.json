@@ -992,6 +992,7 @@
       "prizes": "Available prizes",
       "prizeQty": "× {{quantity}}",
       "prizeStack": "{{name}} × {{quantity}}",
+      "missed": "The wheel did not land on a prize.",
       "noPrizes": "No prize configured."
     },
     "daily": {

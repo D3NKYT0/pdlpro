@@ -11,9 +11,32 @@ import { GamesPage } from './GamesPage'
 
 vi.mock('../components/ItemIcon', () => ({ ItemIcon: () => null }))
 vi.mock('../services/domain/games.service', () => ({ gamesApi: Object.fromEntries(['roulette', 'dailyBonus', 'boxes', 'minigames', 'economy', 'spin', 'buyTokens', 'claimDailyBonus', 'buyBox', 'openBox', 'dice', 'slots', 'fight', 'enchant'].map(name => [name, vi.fn()])) }))
+const rouletteReveal = vi.hoisted(() => {
+  let slowMs = 60_000
+  let wait = () => Promise.resolve()
+  return {
+    getSlowMs: () => slowMs,
+    setSlowMs: (value: number) => {
+      slowMs = value
+    },
+    wait: () => wait(),
+    reset: () => {
+      slowMs = 60_000
+      wait = () => Promise.resolve()
+    },
+  }
+})
+vi.mock('../components/games/rouletteReveal', () => ({
+  ROULETTE_REVEAL_MS: 0,
+  get ROULETTE_SLOW_MS() {
+    return rouletteReveal.getSlowMs()
+  },
+  waitForRouletteReveal: () => rouletteReveal.wait(),
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
+  rouletteReveal.reset()
   vi.resetAllMocks()
   vi.mocked(gamesApi.roulette).mockResolvedValue({
     fichas: 10,
@@ -33,7 +56,6 @@ function mount(tab: string) {
   return userEvent.setup()
 }
 const actions = [
-  { method: 'spin', tab: 'roulette', button: 'Girar a roda', args: [], result: { failed: false, prize: { name: 'Adena', quantity: 50000 } }, message: 'Você ganhou Adena × 50K' },
   { method: 'buyTokens', tab: 'roulette', button: 'Comprar', args: [5], result: { fichas: 15 }, message: 'Fichas creditadas' },
   { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de R$ 5.00 creditado' },
   { method: 'buyBox', tab: 'boxes', button: 'Comprar', args: ['type'], result: { id: 'new-box', remaining: 2 }, message: 'Caixa comprada' },
@@ -56,9 +78,10 @@ it('bloqueia repetição e outras ações enquanto o giro está pendente', async
   expect(buy).toBeDisabled()
   await user.click(buy)
   expect(gamesApi.buyTokens).not.toHaveBeenCalled()
-  finish({ failed: false, prize: { name: 'Adena', quantity: 50000 } })
+  finish({ failed: false, prize: { name: 'Adena', quantity: 50000, item_id: 57 } })
   await waitFor(() => expect(spin).toBeEnabled())
-  expect(toast.success).toHaveBeenCalledWith('Você ganhou Adena × 50K')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(screen.getByRole('status')).toHaveTextContent('Adena')
 })
 it.each(actions)('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
@@ -69,6 +92,15 @@ it.each(actions)('$method envia ação, mostra resultado e atualiza saldo', asyn
   expect(toast.success).toHaveBeenCalledWith(scenario.message)
   await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
 })
+it('recusa de rede no giro avisa e não revela prêmio', async () => {
+  vi.mocked(gamesApi.spin).mockRejectedValue(new ApiError('Operação recusada', 400, 'INVALID'))
+  const user = mount('roulette')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
+  expect(toast.error).toHaveBeenCalledWith('Operação recusada')
+  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  expect(document.querySelector('.roulette-orbit.is-spinning')).toBeNull()
+})
 it.each(actions)('$method apresenta recusa sem anunciar sucesso', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockRejectedValue(new ApiError('Operação recusada', 400, 'INVALID'))
   const user = mount(scenario.tab)
@@ -78,11 +110,10 @@ it.each(actions)('$method apresenta recusa sem anunciar sucesso', async scenario
   expect(toast.success).not.toHaveBeenCalled()
 })
 it.each([
-  { ...actions[0], result: { failed: true }, message: 'Sem prêmio desta vez' },
-  { ...actions[5], result: { won: false, roll: 3 }, message: 'Dado 3 · perdeu' },
-  { ...actions[6], result: { won: false, reels: ['A', 'B', 'C'] }, message: 'A | B | C · nada' },
-  { ...actions[7], result: { won: false }, message: 'Derrota' },
-  { ...actions[8], result: { success: false }, message: 'O encantamento falhou' },
+  { ...actions[4], result: { won: false, roll: 3 }, message: 'Dado 3 · perdeu' },
+  { ...actions[5], result: { won: false, reels: ['A', 'B', 'C'] }, message: 'A | B | C · nada' },
+  { ...actions[6], result: { won: false }, message: 'Derrota' },
+  { ...actions[7], result: { success: false }, message: 'O encantamento falhou' },
 ])('$method diferencia derrota de falha de rede', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
   const user = mount(scenario.tab)
@@ -111,6 +142,20 @@ it('bônus resgatado e monstro em respawn não oferecem nova ação', async () =
   expect(screen.getByText('Retorna em 60s')).toBeVisible()
   expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })).toHaveLength(1)
 })
+it('desacelera o tambor enquanto o giro ainda corre', async () => {
+  rouletteReveal.setSlowMs(20)
+  let finish!: (value: any) => void
+  vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
+  const user = mount('roulette')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
+  expect(document.querySelector('.roulette-orbit.is-spinning')).toBeTruthy()
+  expect(document.querySelector('.roulette-orbit.is-slowing')).toBeNull()
+  await waitFor(() => expect(document.querySelector('.roulette-orbit.is-slowing')).toBeTruthy())
+  finish({ failed: false, prize: { name: 'Adena', quantity: 50000, item_id: 57 } })
+  await waitFor(() => expect(document.querySelector('.roulette-orbit.is-win')).toBeTruthy())
+  expect(document.querySelector('.roulette-orbit.is-slowing')).toBeNull()
+})
 it('gira a roleta no palco e marca o prêmio ao concluir', async () => {
   let finish!: (value: any) => void
   vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
@@ -118,14 +163,40 @@ it('gira a roleta no palco e marca o prêmio ao concluir', async () => {
   await screen.findByText('10 fichas')
   await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
   expect(document.querySelector('.roulette-orbit.is-spinning')).toBeTruthy()
-  finish({ failed: false, prize: { name: 'Adena', quantity: 50000 } })
+  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  finish({ failed: false, prize: { name: 'Adena', quantity: 50000, item_id: 57 } })
   await waitFor(() => expect(document.querySelector('.roulette-orbit.is-win')).toBeTruthy())
   expect(document.querySelector('.prize-item.is-hit')).toBeTruthy()
+  expect(document.querySelector('.roulette-burst')).toBeTruthy()
+  expect(document.querySelector('.roulette-prize')).toHaveTextContent('Adena')
+  expect(screen.getByRole('status')).toHaveTextContent('Adena')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+})
+it('revela a falha do giro no palco sem notificação', async () => {
+  vi.mocked(gamesApi.spin).mockResolvedValue({ failed: true, prize: null } as any)
+  const user = mount('roulette')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
+  expect(await screen.findByRole('status')).toHaveTextContent('A roda não parou em prêmio.')
+  expect(document.querySelector('.roulette-orbit.is-miss')).toBeTruthy()
+  expect(document.querySelector('.roulette-miss-burst')).toBeTruthy()
+  expect(document.querySelector('.roulette-burst')).toBeNull()
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
 })
 it('mostra a quantidade do prêmio da roleta no estilo do servidor', async () => {
   mount('roulette')
   expect(await screen.findByText('Adena')).toBeVisible()
   expect(screen.getByText('× 50K')).toBeVisible()
+})
+it('monta o tambor da roleta sem fatias de todos os prêmios', async () => {
+  mount('roulette')
+  await screen.findByText('Adena')
+  expect(document.querySelector('.roulette-stage')).toBeTruthy()
+  expect(document.querySelector('.roulette-reel')).toBeTruthy()
+  expect(document.querySelector('.roulette-slice')).toBeNull()
+  expect(document.querySelector('.roulette-pointer')).toBeNull()
 })
 it('mostra baús do tema nas caixas e anima a abertura', async () => {
   let finish!: (value: any) => void

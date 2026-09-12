@@ -992,6 +992,7 @@
       "prizes": "Premios disponibles",
       "prizeQty": "× {{quantity}}",
       "prizeStack": "{{name}} × {{quantity}}",
+      "missed": "La rueda no se detuvo en un premio.",
       "noPrizes": "Ningún premio configurado."
     },
     "daily": {

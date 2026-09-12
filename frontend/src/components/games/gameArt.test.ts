@@ -1,5 +1,13 @@
-import { describe, expect, it } from 'vitest'
-import { inferBoxRarity, monsterHue, visibleSlotReels } from './gameArt'
+import { describe, expect, it, vi } from 'vitest'
+import {
+  findRoulettePrizeIndex,
+  inferBoxRarity,
+  monsterHue,
+  normalizeRouletteRarity,
+  rouletteReelStrip,
+  visibleSlotReels,
+} from './gameArt'
+import { ROULETTE_REVEAL_MS, ROULETTE_SLOW_MS, rouletteSpinPhase, waitForRouletteReveal } from './rouletteReveal'
 
 describe('inferBoxRarity', () => {
   it('lê a raridade no nome editorial, com ou sem acento', () => {
@@ -26,4 +34,47 @@ it('monta três cilindros visíveis a partir do catálogo', () => {
   expect(visibleSlotReels(undefined, ['sword', 'shield', 'crown', 'adena'])).toEqual(['sword', 'shield', 'crown'])
   expect(visibleSlotReels(['adena', 'scroll', 'sword'])).toEqual(['adena', 'scroll', 'sword'])
   expect(visibleSlotReels()).toHaveLength(3)
+})
+
+it('normaliza raridade da roleta e localiza o prêmio empilhado', () => {
+  expect(normalizeRouletteRarity('comum')).toBe('comum')
+  expect(normalizeRouletteRarity('uncommon')).toBe('incomum')
+  expect(normalizeRouletteRarity('Épico')).toBe('epico')
+  expect(normalizeRouletteRarity('legendary')).toBe('lendario')
+  expect(
+    findRoulettePrizeIndex(
+      [
+        { name: 'Adena', quantity: 50000 },
+        { name: 'Adena', quantity: 200000 },
+      ],
+      'Adena',
+      200000,
+    ),
+  ).toBe(1)
+})
+
+it('repete o catálogo no tambor sem exigir ver todos os itens de uma vez', () => {
+  expect(rouletteReelStrip(['a', 'b'], 2)).toEqual(['a', 'b', 'a', 'b'])
+  expect(rouletteReelStrip(['x'])).toHaveLength(4)
+  expect(rouletteReelStrip([])).toEqual([])
+})
+
+it('segura o revelar do giro pelo tempo do palco', async () => {
+  vi.useFakeTimers()
+  const pending = waitForRouletteReveal(0, 0)
+  const done = vi.fn()
+  void pending.then(done)
+  await vi.advanceTimersByTimeAsync(ROULETTE_REVEAL_MS - 1)
+  expect(done).not.toHaveBeenCalled()
+  await vi.advanceTimersByTimeAsync(1)
+  expect(done).toHaveBeenCalledTimes(1)
+  vi.useRealTimers()
+})
+
+it('marca o giro rápido, a desaceleração e o fim', () => {
+  expect(rouletteSpinPhase(0)).toBe('fast')
+  expect(rouletteSpinPhase(ROULETTE_SLOW_MS - 1)).toBe('fast')
+  expect(rouletteSpinPhase(ROULETTE_SLOW_MS)).toBe('slow')
+  expect(rouletteSpinPhase(ROULETTE_REVEAL_MS - 1)).toBe('slow')
+  expect(rouletteSpinPhase(ROULETTE_REVEAL_MS)).toBe('done')
 })

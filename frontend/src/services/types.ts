@@ -266,7 +266,7 @@ export interface ApiRouletteState {
 export interface ApiSpinResult {
   failed: boolean
   fichas: number
-  prize: { name: string; rarity: string; enchant: number; quantity?: number } | null
+  prize: { name: string; rarity: string; enchant: number; quantity?: number; item_id?: number } | null
 }
 
 export interface ApiDailyBonus {

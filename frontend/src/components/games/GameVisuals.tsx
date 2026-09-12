@@ -1,13 +1,18 @@
 import type { CSSProperties } from 'react'
-import { Coins, Crown, Gem, ScrollText, Shield, Sword, Trophy, type LucideIcon } from 'lucide-react'
+import { Coins, Crown, Gem, ScrollText, Shield, Sword, Trophy, X, type LucideIcon } from 'lucide-react'
+import { ItemIcon } from '../ItemIcon'
+import { formatCompactQuantity } from '../../lib/formatters'
 import {
   DICE_PIP_FACES,
   inferBoxRarity,
   isSlotSymbol,
   monsterHue,
-  visibleSlotReels,
+  normalizeRouletteRarity,
+  rouletteReelStrip,
   type GameRarity,
+  type RouletteReelPrize,
   type SlotSymbol,
+  visibleSlotReels,
 } from './gameArt'
 
 const SLOT_ICONS: Record<SlotSymbol, LucideIcon> = {
@@ -18,25 +23,115 @@ const SLOT_ICONS: Record<SlotSymbol, LucideIcon> = {
   scroll: ScrollText,
 }
 
+const ROULETTE_SPARKS = 12
+const ROULETTE_BOOMS = [
+  { x: '22%', y: '18%' },
+  { x: '78%', y: '20%' },
+  { x: '16%', y: '62%' },
+  { x: '84%', y: '58%' },
+  { x: '38%', y: '12%' },
+  { x: '64%', y: '80%' },
+] as const
+
 export function RouletteWheel({
   tokens,
   spinning = false,
+  slowing = false,
   missed = false,
   prizeName,
+  prizeQuantity,
+  prizeItemId,
+  prizes = [],
+  missLabel,
 }: {
   tokens: number
   spinning?: boolean
+  slowing?: boolean
   missed?: boolean
   prizeName?: string | null
+  prizeQuantity?: number
+  prizeItemId?: number
+  prizes?: RouletteReelPrize[]
+  missLabel: string
 }) {
-  const state = spinning ? 'is-spinning' : missed ? 'is-miss' : prizeName ? 'is-win' : ''
+  const won = Boolean(prizeName) && !spinning
+  const state = [
+    spinning ? 'is-spinning' : '',
+    spinning && slowing ? 'is-slowing' : '',
+    missed && !spinning ? 'is-miss' : '',
+    won ? 'is-win' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+  const strip = rouletteReelStrip(prizes)
+  const quantity = prizeQuantity ?? 1
   return (
-    <div className={`roulette-orbit ${state}`.trim()} data-theme-part="game-stage" aria-hidden="true">
-      <i className="roulette-orbit-ring">
-        <i className="roulette-orbit-flare" />
-      </i>
-      <Trophy />
-      <span>{tokens}</span>
+    <div className={`roulette-stage ${state}`.trim()} data-theme-part="game-stage">
+      <div className={`roulette-orbit ${state}`.trim()} aria-hidden={won || missed ? undefined : true}>
+        <div className="roulette-reel">
+          <div className="roulette-reel-track">
+            {strip.map((prize, index) => (
+              <span
+                className="roulette-reel-item"
+                data-rarity={normalizeRouletteRarity(prize.rarity)}
+                key={`${prize.id}-${index}`}
+              >
+                <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
+              </span>
+            ))}
+          </div>
+        </div>
+        <i className="roulette-window" />
+        <i className="roulette-orbit-ring">
+          <i className="roulette-orbit-flare" />
+        </i>
+        {won ? (
+          <div className="roulette-burst" aria-hidden="true">
+            <i className="roulette-flash" />
+            {Array.from({ length: ROULETTE_SPARKS }, (_, index) => (
+              <i
+                key={index}
+                className="roulette-spark"
+                style={{ '--spark-a': `${index * (360 / ROULETTE_SPARKS)}deg` } as CSSProperties}
+              />
+            ))}
+            {ROULETTE_BOOMS.map((boom) => (
+              <i
+                key={`${boom.x}-${boom.y}`}
+                className="roulette-boom"
+                style={{ top: boom.y, left: boom.x }}
+              />
+            ))}
+          </div>
+        ) : null}
+        {won ? (
+          <div className="roulette-prize" role="status">
+            <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
+            <strong>{prizeName}</strong>
+            <small>{formatCompactQuantity(quantity)}</small>
+          </div>
+        ) : null}
+        {missed && !spinning ? (
+          <>
+            <div className="roulette-miss-burst" aria-hidden="true">
+              <i className="roulette-miss-flash" />
+              <i className="roulette-miss-ember" />
+              <i className="roulette-miss-ember" />
+              <i className="roulette-miss-ember" />
+            </div>
+            <p className="roulette-prize is-miss" role="status">
+              <X aria-hidden="true" />
+              <span>{missLabel}</span>
+            </p>
+          </>
+        ) : null}
+        {!spinning && !prizeName && !missed ? (
+          <div className="roulette-hub">
+            <Trophy />
+            <span>{tokens}</span>
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }
