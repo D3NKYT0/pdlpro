@@ -7634,6 +7634,7 @@ html.pdl-panel .game-box-grid > .game-empty {
 }
 
 html.pdl-panel .game-chest {
+  --box-accent: var(--panel-box-common);
   --chest-frame-closed: var(--theme-art-games-box-common);
   --chest-frame-ajar: var(--theme-art-games-box-common-ajar);
   --chest-frame-open: var(--theme-art-games-box-common-open);
@@ -7670,18 +7671,21 @@ html.pdl-panel .game-chest.rarity-legendary {
 }
 
 html.pdl-panel .game-chest.rarity-rare {
+  --box-accent: var(--panel-box-rare);
   --chest-frame-closed: var(--theme-art-games-box-rare);
   --chest-frame-ajar: var(--theme-art-games-box-rare-ajar);
   --chest-frame-open: var(--theme-art-games-box-rare-open);
 }
 
 html.pdl-panel .game-chest.rarity-epic {
+  --box-accent: var(--panel-box-epic);
   --chest-frame-closed: var(--theme-art-games-box-epic);
   --chest-frame-ajar: var(--theme-art-games-box-epic-ajar);
   --chest-frame-open: var(--theme-art-games-box-epic-open);
 }
 
 html.pdl-panel .game-chest.rarity-legendary {
+  --box-accent: var(--panel-box-legendary);
   --chest-frame-closed: var(--theme-art-games-box-legendary);
   --chest-frame-ajar: var(--theme-art-games-box-legendary-ajar);
   --chest-frame-open: var(--theme-art-games-box-legendary-open);
@@ -7815,6 +7819,76 @@ html.pdl-panel .game-chest.is-hero .game-chest-prize {
   inset: auto;
   z-index: 5;
   padding: 0 8px;
+}
+
+html.pdl-panel .game-chest-prize-icon {
+  position: relative;
+  display: grid;
+  width: 96px;
+  height: 96px;
+  place-items: center;
+}
+
+html.pdl-panel .game-chest-prize-icon > .l2-item-icon {
+  position: relative;
+  z-index: 1;
+}
+
+html.pdl-panel .game-chest-prize-aura {
+  position: absolute;
+  inset: -36px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+html.pdl-panel .game-chest-rays {
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--box-accent, var(--panel-gold-bright)) 58%, transparent) 0deg 7deg,
+    transparent 7deg 14deg
+  );
+  mask-image: radial-gradient(circle, #000 12%, transparent 68%);
+  animation: game-chest-rays-spin 7s linear infinite;
+}
+
+html.pdl-panel .game-chest-rays.is-cross {
+  background: repeating-conic-gradient(
+    from 9deg,
+    color-mix(in srgb, var(--panel-gold-bright) 42%, transparent) 0deg 4deg,
+    transparent 4deg 18deg
+  );
+  animation-duration: 11s;
+  animation-direction: reverse;
+  opacity: 0.85;
+}
+
+html.pdl-panel .game-chest-mote {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--box-accent, var(--panel-gold-bright)) 70%, transparent);
+  animation: game-chest-mote-drift 2.2s ease-in-out infinite;
+  animation-delay: var(--mote-d, 0ms);
+}
+
+html.pdl-panel .game-chest-mote:nth-child(3n) {
+  width: 3px;
+  height: 3px;
+  background: color-mix(in srgb, var(--box-accent, var(--panel-gold)) 80%, #fff);
+}
+
+html.pdl-panel .game-chest-mote:nth-child(4n) {
+  width: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel-gold-bright) 70%, #fff);
 }
 
 html.pdl-panel .game-box-reveal-modal .game-chest-prize strong {
@@ -8190,6 +8264,26 @@ html.pdl-panel .monster-item.is-fighting {
   }
 }
 
+@keyframes game-chest-rays-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes game-chest-mote-drift {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--mote-a)) translateY(16px) scale(0.35);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(calc(var(--mote-a) + 70deg)) translateY(-58px) scale(1.05);
+  }
+}
+
 @keyframes game-dice-roll {
   0% { transform: rotate(-18deg) scale(0.86); }
   40% { transform: rotate(22deg) scale(1.08); }
@@ -8234,6 +8328,8 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .game-chest-ring,
   html.pdl-panel .game-chest-spark,
   html.pdl-panel .game-chest-boom,
+  html.pdl-panel .game-chest-rays,
+  html.pdl-panel .game-chest-mote,
   html.pdl-panel .game-chest-prize,
   html.pdl-panel .chance-dice.is-rolling .chance-die,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,

@@ -137,6 +137,7 @@ export function RouletteWheel({
 }
 
 const BOX_SPARKS = 22
+const PRIZE_MOTES = 16
 const BOX_BOOMS = [
   { x: '14%', y: '16%' },
   { x: '50%', y: '8%' },
@@ -223,7 +224,29 @@ export function BoxChest({
       )}
       {won ? (
         <div className="game-chest-prize" role="status">
-          <ItemIcon itemId={prizeItemId} name={prizeName} size={hero ? 64 : 48} />
+          {hero ? (
+            <span className="game-chest-prize-icon">
+              <span className="game-chest-prize-aura" aria-hidden="true">
+                <i className="game-chest-rays" />
+                <i className="game-chest-rays is-cross" />
+                {Array.from({ length: PRIZE_MOTES }, (_, index) => (
+                  <i
+                    key={index}
+                    className="game-chest-mote"
+                    style={
+                      {
+                        '--mote-a': `${index * (360 / PRIZE_MOTES)}deg`,
+                        '--mote-d': `${(index % 8) * 90}ms`,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </span>
+              <ItemIcon itemId={prizeItemId} name={prizeName} size={64} />
+            </span>
+          ) : (
+            <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
+          )}
           <strong>{prizeName}</strong>
           {prizeCaption ? <small>{prizeCaption}</small> : null}
         </div>

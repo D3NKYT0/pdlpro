@@ -273,6 +273,8 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   expect(document.querySelector('.game-chest-burst')).toBeTruthy()
   expect(document.querySelectorAll('.game-chest-spark').length).toBeGreaterThan(12)
   expect(document.querySelectorAll('.game-chest-ring').length).toBe(3)
+  expect(document.querySelector('.game-chest-rays')).toBeTruthy()
+  expect(document.querySelectorAll('.game-chest-mote').length).toBeGreaterThan(10)
   expect(screen.getByRole('status')).toHaveTextContent('Espada')
   expect(screen.getByRole('status')).toHaveTextContent('+3')
   expect(toast.success).not.toHaveBeenCalled()
