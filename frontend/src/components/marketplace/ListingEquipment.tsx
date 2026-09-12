@@ -1,25 +1,40 @@
 import { useTranslation } from 'react-i18next'
-import { ItemIcon } from '../ItemIcon'
+import { Eye, Package } from 'lucide-react'
+import {
+  CharacterPaperdoll,
+  toPaperdollItems,
+} from '../character/CharacterPaperdoll'
+import type { CharacterItemDetail } from '../character/CharacterItemDetailModal'
 import type { ListingEquipmentItem } from './marketplaceHelpers'
 
-export function ListingEquipment({ equipment }: { equipment: ListingEquipmentItem[] }) {
+export function ListingEquipment({
+  equipment,
+  onSelect,
+}: {
+  equipment: ListingEquipmentItem[]
+  onSelect?: (item: CharacterItemDetail) => void
+}) {
   const { t } = useTranslation('panel')
-
-  if (!equipment.length) {
-    return <div className="marketplace-equipment-empty">{t('marketplace.equipment.empty')}</div>
-  }
+  const items = toPaperdollItems(equipment)
 
   return (
-    <div className="marketplace-equipment-list">
-      {equipment.map((item, index) => (
-        <div className="marketplace-equipment-item" title={item.name} key={`${item.item_id}-${item.slot ?? index}`}>
-          <ItemIcon itemId={item.item_id} name={item.name} size={38} />
-          <span>
-            <strong>{item.name}</strong>
-            <small>{item.enchant > 0 ? `+${item.enchant}` : t('marketplace.equipment.noEnchant')}</small>
-          </span>
+    <section className="character-equipment marketplace-character-equipment">
+      <div className="account-section-heading">
+        <div>
+          <span className="panel-eyebrow">{t('character.equipment.eyebrow')}</span>
+          <h3>{t('character.equipment.title')}</h3>
         </div>
-      ))}
-    </div>
+        <span className="character-readonly-chip">
+          <Eye aria-hidden="true" />
+          {t('character.equipment.readonly')}
+        </span>
+      </div>
+      <div className="character-equipment-summary">
+        <Package aria-hidden="true" />
+        <strong>{items.length}</strong>
+        <span>{t('character.equipment.equipped', { count: items.length })}</span>
+      </div>
+      <CharacterPaperdoll items={items} onSelect={onSelect} />
+    </section>
   )
 }

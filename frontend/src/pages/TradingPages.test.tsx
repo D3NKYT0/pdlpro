@@ -83,6 +83,8 @@ it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', asyn
   const user = mount(<MarketplacePage />)
   await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
   expect(screen.getByText('Pronto para jogar')).toBeVisible()
+  expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
+  expect(screen.getByLabelText('Brinco: Adena')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Comprar personagem' }))
   expect(marketplaceApi.buy).toHaveBeenCalledWith('listing')
   if (fail) {
@@ -224,6 +226,8 @@ it('marketplace segue o idioma ativo no catálogo, no anúncio e na venda', asyn
   expect(screen.getByText('On sale now')).toBeVisible()
   await user.click(await screen.findByRole('button', { name: /View character/ }))
   expect(screen.getByRole('article', { name: 'Details of Elf' })).toBeVisible()
+  expect(screen.getByLabelText("Character's current equipment")).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Equipped items' })).toBeVisible()
   expect(screen.getByText('For sale')).toBeVisible()
   expect(screen.getByText('Seller: seller')).toBeVisible()
   expect(screen.getByRole('button', { name: 'Buy character' })).toBeVisible()

@@ -1566,7 +1566,14 @@ html.pdl-panel .character-offline-hint {
 }
 
 html.pdl-panel .character-equipment {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+
+html.pdl-panel .character-equipment .character-paperdoll {
+  flex: 0 0 auto;
+  align-self: center;
 }
 
 html.pdl-panel .character-readonly-chip {
@@ -1623,7 +1630,7 @@ html.pdl-panel .character-equipment-summary span {
 html.pdl-panel .character-paperdoll {
   position: relative;
   width: min(100%, 340px);
-  margin: 0;
+  margin: 0 auto;
   padding: 24px 22px 22px;
   isolation: isolate;
   border: 1px solid rgba(198, 176, 130, 0.42);
@@ -4011,7 +4018,8 @@ html.pdl-panel .auction-item-icon {
   color: rgba(230, 199, 125, 0.88);
 }
 
-html.pdl-panel .auction-character-layout {
+html.pdl-panel .auction-character-layout,
+html.pdl-panel .marketplace-character-layout {
   display: grid;
   grid-template-columns: minmax(320px, 0.9fr) minmax(260px, 1fr);
   gap: 18px;
@@ -4019,13 +4027,15 @@ html.pdl-panel .auction-character-layout {
   margin-top: 16px;
 }
 
-html.pdl-panel .auction-character-equipment {
+html.pdl-panel .auction-character-equipment,
+html.pdl-panel .marketplace-character-equipment {
   padding: 14px;
   border: 1px solid rgba(197, 161, 97, 0.16);
   background: rgba(5, 5, 4, 0.28);
 }
 
-html.pdl-panel .auction-character-equipment h3 {
+html.pdl-panel .auction-character-equipment h3,
+html.pdl-panel .marketplace-character-equipment h3 {
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
   font-size: 18px;
@@ -4035,21 +4045,33 @@ html.pdl-panel .auction-character-equipment .character-bag {
   margin-top: 16px;
 }
 
-html.pdl-panel .auction-character-side {
+html.pdl-panel .auction-character-side,
+html.pdl-panel .marketplace-character-side {
   display: grid;
   gap: 14px;
+  min-width: 0;
 }
 
 html.pdl-panel .auction-character-side .character-stats {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+html.pdl-panel .marketplace-character-side .character-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+html.pdl-panel .marketplace-character-side .marketplace-detail-copy {
+  margin: 0;
+}
+
 @media (max-width: 960px) {
-  html.pdl-panel .auction-character-layout {
+  html.pdl-panel .auction-character-layout,
+  html.pdl-panel .marketplace-character-layout {
     grid-template-columns: 1fr;
   }
 
-  html.pdl-panel .auction-character-side .character-stats {
+  html.pdl-panel .auction-character-side .character-stats,
+  html.pdl-panel .marketplace-character-side .character-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

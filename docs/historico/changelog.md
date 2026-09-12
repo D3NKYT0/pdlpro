@@ -49,9 +49,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
+- Detalhe do marketplace (`/panel/marketplace`): paperdoll e stats no mesmo
+  visual da ficha do personagem (somente leitura, sem bag/skills).
 
 ### Corrigido
 
+- Paperdoll da ficha (`Itens equipados`) voltou a ficar centralizado na coluna.
 - Chrome visual das áreas legais e cookies alinhado ao tema público (ouro/marrom,
   `public-pages.css` + `terms.css` remapeável no público e no painel), no lugar
   do CSS genérico empacotado no Vite.
