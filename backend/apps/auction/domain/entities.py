@@ -43,6 +43,7 @@ class AuctionEntity:
     char_is_clan_leader: bool = False
     equipment: list = field(default_factory=list)
     bag_items: list = field(default_factory=list)
+    skills: list = field(default_factory=list)
     old_account: str = ""
 
 

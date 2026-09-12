@@ -13,17 +13,17 @@ import {
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
 import { getClassName } from '../../lib/lineage'
-import type { ApiAuction } from '../../services/api'
+import type { ApiAuction, ApiGameItem } from '../../services/api'
 import {
   CharacterPaperdoll,
   toPaperdollItems,
 } from '../character/CharacterPaperdoll'
 import { CharacterBagPanel } from '../character/CharacterBagPanel'
+import { CharacterSkillsPanel } from '../character/CharacterSkillsPanel'
 import {
   CharacterItemDetailModal,
   type CharacterItemDetail,
 } from '../character/CharacterItemDetailModal'
-import type { ApiGameItem } from '../../services/api'
 import { auctionDisplayName, auctionStatusFor, formatRemaining, isCharacterAuction, nextBidFor } from './auctionHelpers'
 
 interface AuctionDetailProps {
@@ -134,6 +134,7 @@ export function AuctionDetail({
             </div>
             <CharacterPaperdoll items={equipment} onSelect={setSelectedItem} />
             <CharacterBagPanel items={bagItems} loading={false} error={false} tabsId="auction-character-bag" />
+            <CharacterSkillsPanel skills={auction.skills ?? []} loading={false} error={false} />
           </section>
 
           <div className="auction-character-side">

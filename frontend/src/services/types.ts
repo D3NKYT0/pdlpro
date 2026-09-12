@@ -390,6 +390,7 @@ export interface ApiAuction {
     location?: string | null
     tradeable?: boolean | null
   }>
+  skills?: ApiGameSkill[]
   old_account?: string
 }
 

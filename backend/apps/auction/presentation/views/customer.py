@@ -22,10 +22,12 @@ from apps.auction.presentation.serializers import (
     CreateAuctionSerializer,
     PlaceBidSerializer,
 )
+from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
+from apps.server.presentation.skill_metadata import dump_learned_skill
 
 
-def dump_auction(auction: AuctionEntity) -> dict:
+def dump_auction(auction: AuctionEntity, skill_catalog: ISkillCatalog) -> dict:
     payload = asdict(auction)
     payload["id"] = str(payload["id"])
     payload["seller_id"] = str(payload["seller_id"])
@@ -35,6 +37,16 @@ def dump_auction(auction: AuctionEntity) -> dict:
     payload["ends_at"] = payload["ends_at"].isoformat()
     payload["created_at"] = payload["created_at"].isoformat()
     payload["updated_at"] = payload["updated_at"].isoformat()
+    payload["skills"] = [
+        dump_learned_skill(
+            int(row.get("skill_id") or 0),
+            int(row.get("level") or 1),
+            int(row.get("class_index") or 0),
+            skill_catalog,
+        )
+        for row in payload.get("skills") or []
+        if row.get("skill_id")
+    ]
     return payload
 
 
@@ -65,7 +77,8 @@ class PublicAuctionListView(ItemCatalogAPIView):
     def get(self, request):
         self.resolve(CloseExpiredAuctionsUseCase).execute(None)
         auctions = self.resolve(ListOpenAuctionsUseCase).execute(None)
-        return Response([dump_auction(auction) for auction in auctions])
+        catalog = self.resolve(ISkillCatalog)
+        return Response([dump_auction(auction, catalog) for auction in auctions])
 
 
 class MyAuctionsView(ItemCatalogAPIView):
@@ -85,7 +98,8 @@ class MyAuctionsView(ItemCatalogAPIView):
     )
     def get(self, request):
         auctions = self.resolve(ListMyAuctionsUseCase).execute(ListMyAuctionsInput(user_id=request.user.id))
-        return Response([dump_auction(auction) for auction in auctions])
+        catalog = self.resolve(ISkillCatalog)
+        return Response([dump_auction(auction, catalog) for auction in auctions])
 
     @extend_schema(
         tags=["Leilão"],
@@ -123,7 +137,7 @@ class MyAuctionsView(ItemCatalogAPIView):
                     hours=data.get("hours") or 24,
                 )
             )
-        return Response(dump_auction(auction))
+        return Response(dump_auction(auction, self.resolve(ISkillCatalog)))
 
 
 class PlaceBidView(ItemCatalogAPIView):

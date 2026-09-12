@@ -24,9 +24,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   automático no vencimento (transferência ao vencedor ou devolução ao vendedor),
   guards de offline/propriedade/listagem duplicada vs marketplace, e UI/i18n
   pt/en/es.
-- Snapshot de **bag_items** no leilão de personagem (inventário + warehouse no
-  momento da publicação); o detalhe do leilão reutiliza o paperdoll e a grade de
-  bag/baú da ficha para o comprador ver o conteúdo anunciado.
+- Snapshot de **bag_items** e **skills** no leilão de personagem (inventário,
+  warehouse e janela de skills no momento da publicação); o detalhe reutiliza
+  paperdoll, bag/baú e skills da ficha.
 - Arte original dos minigames no tema default (`images/games/*`) e palcos
   animados em `/panel/games` (roleta, baús por raridade, dados/slots, lago e
   arena), remapeáveis por `--theme-art-games-*`.

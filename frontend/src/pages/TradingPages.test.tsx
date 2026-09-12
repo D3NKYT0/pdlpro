@@ -87,6 +87,23 @@ const characterAuction: ApiAuction = {
     { item_id: 57, name: 'Adena', quantity: 100, enchant: 0, location: 'INVENTORY' },
     { item_id: 6673, name: 'Festival Adena', quantity: 5, enchant: 0, location: 'WAREHOUSE' },
   ],
+  skills: [
+    {
+      skill_id: 1,
+      name: 'Triple Slash',
+      level: 37,
+      class_index: 0,
+      icon_url: '/skill-icons/1.png',
+      operate: 'active',
+      kind: 'attack',
+      group: 'physical',
+      skill_type: 'PDAM',
+      enchant: 15,
+      enchant_route: 1,
+      enchant_max: 30,
+      enchantable: true,
+    },
+  ],
 }
 const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, online: false, pvp: 40, pk: 0, clan_name: '', title: '' }
 let client: QueryClient
@@ -260,6 +277,7 @@ it('lance em personagem não pede inventário de destino', async () => {
   await user.click(screen.getByRole('tab', { name: /Warehouse/i }))
   expect(screen.getByLabelText('Grade do warehouse')).toBeVisible()
   expect(screen.getByLabelText('Festival Adena · sem encanto · qtd 5')).toBeVisible()
+  expect(screen.getByLabelText('Triple Slash · Nv. 37 · +15')).toBeVisible()
   expect(screen.getByText(/transferido para a sua conta/i)).toBeVisible()
   expect(screen.queryByRole('combobox', { name: 'Personagem que receberá o item' })).not.toBeInTheDocument()
   expect(screen.getByRole('spinbutton', { name: 'Seu lance' })).toHaveValue(10.01)

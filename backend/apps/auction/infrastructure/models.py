@@ -58,6 +58,7 @@ class Auction(BaseModel):
     char_is_clan_leader = models.BooleanField(default=False)
     equipment = models.JSONField(default=list, blank=True)
     bag_items = models.JSONField(default=list, blank=True)
+    skills = models.JSONField(_("Skills do personagem"), default=list, blank=True)
     old_account = models.CharField(max_length=45, blank=True, default="")
     ends_at = models.DateTimeField()
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.OPEN)

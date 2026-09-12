@@ -4047,7 +4047,8 @@ html.pdl-panel .marketplace-character-equipment h3 {
 
 html.pdl-panel .auction-character-equipment .character-bag,
 html.pdl-panel .marketplace-character-equipment .character-bag,
-html.pdl-panel .marketplace-character-equipment .character-skills {
+html.pdl-panel .marketplace-character-equipment .character-skills,
+html.pdl-panel .auction-character-equipment .character-skills {
   margin-top: 16px;
 }
 

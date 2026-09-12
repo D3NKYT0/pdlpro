@@ -6,7 +6,7 @@ from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.auction.infrastructure.models import Auction
-from apps.server.domain.gateways import GameItem, ILineageGateway
+from apps.server.domain.gateways import GameItem, GameSkill, ILineageGateway
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from common.di.bootstrap import DependencyInjection
 
@@ -97,6 +97,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
             GameItem(57, "Adena", 100, 0, location="INVENTORY"),
             GameItem(6673, "Festival Adena", 5, 0, location="WAREHOUSE"),
         ],
+        skills=[GameSkill(1, 52)],
     )
     created = api.post(
         "/api/v1/customer/auctions/",
@@ -114,6 +115,13 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     assert [(row["item_id"], row["slot"], row["enchant"]) for row in created.data["equipment"]] == [
         (2416, 6, 5),
     ]
+    from apps.server.infrastructure.lineage.skill_catalog import skill_progress
+    skill = created.data["skills"][0]
+    progress = skill_progress(1, 52)
+    assert skill["skill_id"] == 1
+    assert skill["level"] == progress["level"]
+    assert skill["enchant"] == progress["enchant"]
+    assert skill["icon_url"] == "/skill-icons/1.png"
     assert gateway.get_character("aseller", char.char_id) is None
     master = "MARKETPLACE_SYSTEM"
     assert gateway.verify_character_ownership(char.char_id, master)

@@ -61,6 +61,7 @@ class IAuctionRepository(ABC):
         char_is_clan_leader: bool = False,
         equipment: list | None = None,
         bag_items: list | None = None,
+        skills: list | None = None,
         old_account: str = "",
     ) -> AuctionEntity:
         raise NotImplementedError

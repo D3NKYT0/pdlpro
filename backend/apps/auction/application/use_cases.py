@@ -199,6 +199,7 @@ class CreateCharacterAuctionUseCase(UseCase[CreateCharacterAuctionInput, Auction
             raise CharacterAlreadyListedError()
         equipment = [asdict(item) for item in self._lineage.list_character_equipment(char.char_id)]
         bag_items = [asdict(item) for item in self._lineage.list_character_items(char.char_id)]
+        skills = [asdict(skill) for skill in self._lineage.list_character_skills(char.char_id)]
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
         with self._unit_of_work:
             self._lineage.transfer_character(data.char_id, master)
@@ -224,6 +225,7 @@ class CreateCharacterAuctionUseCase(UseCase[CreateCharacterAuctionInput, Auction
                 char_is_clan_leader=char.is_clan_leader,
                 equipment=equipment,
                 bag_items=bag_items,
+                skills=skills,
                 old_account=login,
             )
 

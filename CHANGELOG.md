@@ -4,7 +4,7 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 
 Última atualização: **11 de setembro de 2026** — Em progresso: ficha L2
 (paperdoll, bag/baú, crest/extras, skills com ícones); marketplace com paperdoll,
-bag/warehouse e skills da ficha; leilão de personagem; LGPD self-service;
+bag/warehouse e skills da ficha; leilão de personagem com o mesmo snapshot; LGPD self-service;
 arte e animações dos minigames em `/panel/games`; autoconfig e configurador
 dos jogos no admin com catálogo Interlude; pacote instalável de ícones de
 skills. Publicado: **[2.3.0]** — pacote legal/LGPD (textos reais, cookies,
