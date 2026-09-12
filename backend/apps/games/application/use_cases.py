@@ -49,6 +49,8 @@ class GetRouletteStateUseCase(UseCase[UUID, dict]):
                     "weight": prize.weight,
                     "rarity": prize.rarity,
                     "item_id": prize.item_id,
+                    "quantity": prize.quantity,
+                    "enchant": prize.enchant,
                 }
                 for prize in prizes
             ],
@@ -118,7 +120,7 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
                 item_id=chosen.item_id or 0,
                 item_name=chosen.name,
                 enchant=chosen.enchant,
-                quantity=1,
+                quantity=max(1, chosen.quantity),
             )
             self._catalog.create_spin_history(user=user, prize=chosen, failed=False, seed=seed)
             return {
@@ -129,6 +131,7 @@ class SpinRouletteUseCase(UseCase[SpinRouletteInput, dict]):
                     "name": chosen.name,
                     "rarity": chosen.rarity,
                     "enchant": chosen.enchant,
+                    "quantity": chosen.quantity,
                 },
             }
 

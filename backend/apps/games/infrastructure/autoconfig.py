@@ -40,38 +40,60 @@ GAME_DEFAULTS: dict[str, dict] = {
 }
 
 # IDs Interlude do catálogo XML (`data/items`). Nomes vêm do catálogo na hora do seed.
+# Tupla: (item_id, quantity, weight, rarity) — stacks de low-rate, não unidade isolada.
 ROULETTE_PRIZES = (
-    (1835, 36, "comum"),
-    (1463, 24, "comum"),
-    (736, 20, "comum"),
-    (737, 14, "incomum"),
-    (1538, 12, "incomum"),
-    (3936, 10, "incomum"),
-    (955, 8, "incomum"),
-    (951, 6, "raro"),
-    (2131, 5, "raro"),
-    (3470, 4, "raro"),
-    (4037, 3, "raro"),
-    (729, 2, "epico"),
-    (8752, 2, "epico"),
-    (6577, 1, "epico"),
-    (8762, 1, "lendario"),
-    (6657, 1, "lendario"),
+    (57, 50_000, 22, "comum"),
+    (1835, 2_000, 16, "comum"),
+    (2509, 1_000, 10, "comum"),
+    (1061, 80, 8, "comum"),
+    (736, 20, 6, "comum"),
+    (57, 200_000, 10, "incomum"),
+    (1463, 1_000, 8, "incomum"),
+    (1539, 50, 6, "incomum"),
+    (1538, 10, 5, "incomum"),
+    (3936, 5, 4, "incomum"),
+    (1458, 40, 4, "incomum"),
+    (57, 500_000, 5, "raro"),
+    (955, 1, 4, "raro"),
+    (956, 2, 3, "raro"),
+    (2130, 20, 3, "raro"),
+    (3470, 1, 2, "raro"),
+    (4037, 5, 2, "raro"),
+    (8723, 1, 2, "raro"),
+    (57, 1_500_000, 2, "epico"),
+    (951, 1, 2, "epico"),
+    (1464, 500, 1, "epico"),
+    (8748, 1, 1, "epico"),
+    (57, 5_000_000, 1, "lendario"),
+    (947, 1, 1, "lendario"),
+    (6577, 1, 1, "lendario"),
 )
 
+# Tupla: (item_id, enchant, quantity, rarity, weight)
 BOX_ITEMS = (
-    (1835, 0, "common", 40),
-    (1463, 0, "common", 28),
-    (736, 0, "common", 22),
-    (1538, 0, "rare", 16),
-    (951, 0, "rare", 12),
-    (3470, 0, "rare", 10),
-    (4037, 0, "epic", 6),
-    (729, 0, "epic", 4),
-    (8752, 0, "epic", 3),
-    (6577, 0, "legendary", 2),
-    (8762, 0, "legendary", 1),
-    (6657, 0, "legendary", 1),
+    (57, 0, 80_000, "common", 28),
+    (1835, 0, 3_000, "common", 20),
+    (1463, 0, 1_500, "common", 14),
+    (1539, 0, 80, "common", 12),
+    (1538, 0, 15, "rare", 10),
+    (1458, 0, 60, "rare", 8),
+    (955, 0, 1, "rare", 7),
+    (3470, 0, 1, "rare", 6),
+    (57, 0, 750_000, "rare", 5),
+    (951, 0, 1, "epic", 4),
+    (4037, 0, 10, "epic", 3),
+    (8748, 0, 1, "epic", 2),
+    (947, 0, 1, "legendary", 1),
+    (6577, 0, 1, "legendary", 1),
+    (57, 0, 3_000_000, "legendary", 1),
+)
+
+# IDs antigos do primeiro seed + atuais; o sync desativa sobras desses IDs.
+_LEGACY_ROULETTE_ITEM_IDS = frozenset(
+    {1835, 1463, 736, 737, 1538, 3936, 955, 951, 2131, 3470, 4037, 729, 8752, 6577, 8762, 6657}
+)
+_LEGACY_BOX_ITEM_IDS = frozenset(
+    {1835, 1463, 736, 1538, 951, 3470, 4037, 729, 8752, 6577, 8762, 6657}
 )
 
 BOX_TYPES = (
@@ -81,11 +103,12 @@ BOX_TYPES = (
     ("Baú Lendário", Decimal("100.00"), 12),
 )
 
+# Tupla: (name, rarity, rod, weight, xp, fichas, item_id, quantity)
 FISH_SPECIES = (
-    ("Lambari", "common", 1, 40, 8, 0, 1835),
-    ("Dourado", "rare", 1, 15, 20, 1, 1463),
-    ("Piraíba", "epic", 2, 5, 40, 0, 3470),
-    ("Pirarucu Ancestral", "legendary", 3, 2, 80, 3, 6577),
+    ("Lambari", "common", 1, 40, 8, 0, 1835, 800),
+    ("Dourado", "rare", 1, 15, 20, 1, 1463, 500),
+    ("Piraíba", "epic", 2, 5, 40, 0, 57, 150_000),
+    ("Pirarucu Ancestral", "legendary", 3, 2, 80, 3, 955, 1),
 )
 
 MONSTERS = (
@@ -103,9 +126,14 @@ BAITS = (
 
 DAILY_POOL = (
     (
+        "Adena do dia",
+        6,
+        [{"kind": "item", "item_id": 57, "name": "Adena", "quantity": 100_000, "enchant": 0}],
+    ),
+    (
         "Moeda da Sorte",
         4,
-        [{"kind": "item", "item_id": 4037, "name": "Coin of Luck", "quantity": 1, "enchant": 0}],
+        [{"kind": "item", "item_id": 4037, "name": "Coin of Luck", "quantity": 3, "enchant": 0}],
     ),
     (
         "Barra de Ouro",
@@ -120,7 +148,7 @@ DAILY_POOL = (
                 "kind": "item",
                 "item_id": 1538,
                 "name": "Blessed Scroll of Escape",
-                "quantity": 1,
+                "quantity": 5,
                 "enchant": 0,
             }
         ],
@@ -194,10 +222,13 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
 
     def _ensure_prizes(self) -> int:
         created = 0
-        for item_id, weight, rarity in ROULETTE_PRIZES:
-            _, was = Prize.objects.get_or_create(
+        kept: list = []
+        known_ids = _LEGACY_ROULETTE_ITEM_IDS | {item_id for item_id, *_ in ROULETTE_PRIZES}
+        for item_id, quantity, weight, rarity in ROULETTE_PRIZES:
+            row, was = Prize.objects.get_or_create(
                 item_id=item_id,
                 enchant=0,
+                quantity=quantity,
                 defaults={
                     "name": self._item_name(item_id),
                     "weight": weight,
@@ -206,6 +237,23 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 },
             )
             created += int(was)
+            if not was:
+                changed = False
+                if not row.active:
+                    row.active = True
+                    changed = True
+                if row.weight != weight:
+                    row.weight = weight
+                    changed = True
+                if row.rarity != rarity:
+                    row.rarity = rarity
+                    changed = True
+                if changed:
+                    row.save(update_fields=["active", "weight", "rarity", "updated_at"])
+            kept.append(row.pk)
+        Prize.objects.filter(item_id__in=known_ids, active=True).exclude(pk__in=kept).update(
+            active=False
+        )
         return created
 
     def _ensure_daily_season(self) -> dict[str, int]:
@@ -247,17 +295,21 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 if entry.get("kind") == "item" and entry.get("item_id"):
                     entry["name"] = self._item_name(int(entry["item_id"]))
                 labeled.append(entry)
-            _, was = DailyBonusPoolEntry.objects.get_or_create(
+            row, was = DailyBonusPoolEntry.objects.get_or_create(
                 season=season,
                 name=name,
                 defaults={"weight": weight, "rewards": labeled},
             )
             counts["pool"] += int(was)
+            if not was and row.rewards != labeled:
+                row.rewards = labeled
+                row.weight = weight
+                row.save(update_fields=["rewards", "weight", "updated_at"])
         return counts
 
     def _ensure_fish(self) -> int:
         created = 0
-        for name, rarity, rod, weight, xp, fichas, item_id in FISH_SPECIES:
+        for name, rarity, rod, weight, xp, fichas, item_id, quantity in FISH_SPECIES:
             item_name = self._item_name(item_id)
             fish, was = Fish.objects.get_or_create(
                 name=name,
@@ -269,15 +321,25 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                     "fichas_reward": fichas,
                     "item_id": item_id,
                     "item_name": item_name,
+                    "quantity": quantity,
                     "active": True,
                 },
             )
             created += int(was)
-            if not was and not fish.item_id:
-                fish.item_id = item_id
-                fish.item_name = item_name
-                fish.save(update_fields=["item_id", "item_name"])
-                created += 1
+            if not was:
+                fields: list[str] = []
+                if fish.item_id != item_id:
+                    fish.item_id = item_id
+                    fields.append("item_id")
+                if fish.item_name != item_name:
+                    fish.item_name = item_name
+                    fields.append("item_name")
+                if fish.quantity != quantity:
+                    fish.quantity = quantity
+                    fields.append("quantity")
+                if fields:
+                    fish.save(update_fields=[*fields, "updated_at"])
+                    created += 1
         return created
 
     def _ensure_baits(self) -> int:
@@ -317,10 +379,13 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
     def _ensure_boxes(self) -> dict[str, int]:
         counts = {"catalog_items": 0, "box_types": 0, "box_links": 0}
         catalog: list[CatalogItem] = []
-        for item_id, enchant, rarity, weight in BOX_ITEMS:
+        kept: list = []
+        known_ids = _LEGACY_BOX_ITEM_IDS | {item_id for item_id, *_ in BOX_ITEMS}
+        for item_id, enchant, quantity, rarity, weight in BOX_ITEMS:
             item, was = CatalogItem.objects.get_or_create(
                 item_id=item_id,
                 enchant=enchant,
+                quantity=quantity,
                 defaults={
                     "name": self._item_name(item_id),
                     "rarity": rarity,
@@ -329,14 +394,37 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 },
             )
             counts["catalog_items"] += int(was)
+            if not was:
+                changed = False
+                if not item.active:
+                    item.active = True
+                    changed = True
+                if item.weight != weight:
+                    item.weight = weight
+                    changed = True
+                if item.rarity != rarity:
+                    item.rarity = rarity
+                    changed = True
+                if changed:
+                    item.save(update_fields=["active", "weight", "rarity", "updated_at"])
             catalog.append(item)
+            kept.append(item.pk)
+        CatalogItem.objects.filter(item_id__in=known_ids, active=True).exclude(pk__in=kept).update(
+            active=False
+        )
         for name, price, boosters in BOX_TYPES:
             box, was = BoxType.objects.get_or_create(
                 name=name,
                 defaults={"price": price, "boosters_amount": boosters, "active": True},
             )
             counts["box_types"] += int(was)
-            if not box.items.exists() and catalog:
-                box.items.set(catalog)
-                counts["box_links"] += 1
+            if catalog:
+                current = set(box.items.values_list("pk", flat=True))
+                missing = [item for item in catalog if item.pk not in current]
+                if not box.items.exists():
+                    box.items.set(catalog)
+                    counts["box_links"] += 1
+                elif missing:
+                    box.items.add(*missing)
+                    counts["box_links"] += 1
         return counts

@@ -28,10 +28,13 @@ O controle central oferece 23 módulos organizados por categoria (economia, jogo
 
 Em `/panel/admin/games`, cada card abre um **configurador** (parâmetros +
 catálogo jogável). **Preencher conteúdo** / **Configurar todos** aplica IDs
-reais do XML Interlude (Soulshot NG/D, Scroll of Escape/Resurrection e versões
-abençoadas, Enchant Weapon D/C/A, Gemstone C, Gold Bar, Coin of Luck,
-Blessed Enchant Weapon S, life stones 76 e Necklace of Valakas) sem
-sobrescrever nomes customizados nem chaves de `settings` já definidas.
+reais do XML Interlude em stacks de servidor **low rate** (Adena 50k–5M,
+Soulshot NG/D/C, Spiritshot, poções, Blessed SoE/SoR, Crystal/Gemstone D,
+Enchant Weapon/Armor D–B, Life Stone 46/61, Gold Bar, Coin of Luck e
+Blessed Enchant Weapon S), com quantidade no prêmio da roleta, do baú e do
+peixe. Não sobrescreve nomes customizados nem chaves de `settings` já
+definidas; desativa sobras do catálogo antigo (unidade isolada e Necklace of
+Valakas).
 A operação é idempotente. Baús também têm **Configurar baús**, porque não
 usam `GameConfig`.
 

@@ -38,6 +38,7 @@ def _populate(box, boxes: IBoxRepository) -> None:
             item_id=chosen.item_id,
             item_name=chosen.name,
             enchant=chosen.enchant,
+            quantity=max(1, getattr(chosen, "quantity", 1)),
             rarity=chosen.rarity,
             probability=chosen.weight,
         )
@@ -192,6 +193,7 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 item_id=chosen.item_id,
                 item_name=chosen.item_name,
                 enchant=chosen.enchant,
+                quantity=max(1, getattr(chosen, "quantity", 1)),
                 bags=self._bags,
             )
             remaining = self._boxes.count_closed_slots(box)
@@ -202,6 +204,7 @@ class OpenBoxUseCase(UseCase[OpenBoxInput, dict]):
                 "item_id": chosen.item_id,
                 "name": chosen.item_name,
                 "enchant": chosen.enchant,
+                "quantity": chosen.quantity,
                 "rarity": chosen.rarity,
             },
             "remaining": remaining,

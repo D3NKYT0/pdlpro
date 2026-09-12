@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { gamesApi } from '../services/api'
+import { formatCompactQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
 import { BoxChest, ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
@@ -31,6 +32,7 @@ type PlayFx = {
   targetId?: string
   spinFailed?: boolean
   prizeName?: string | null
+  prizeQuantity?: number
   diceRoll?: number
   slotsReels?: string[]
 }
@@ -86,11 +88,26 @@ export function GamesPage() {
     const outcome = await action.run(async () => {
       const result = await gamesApi.spin()
       if (result.failed) toast.error(t('games.toast.noPrize'))
-      else toast.success(t('games.toast.prizeWon', { prize: result.prize?.name }))
+      else {
+        const quantity = result.prize?.quantity ?? 1
+        const prizeLabel =
+          quantity > 1
+            ? t('games.roulette.prizeStack', {
+                name: result.prize?.name,
+                quantity: formatCompactQuantity(quantity),
+              })
+            : result.prize?.name
+        toast.success(t('games.toast.prizeWon', { prize: prizeLabel }))
+      }
       await refresh()
       return result
     }, t('games.toast.spinError'))
-    if (outcome.ok) setFx({ spinFailed: outcome.value.failed, prizeName: outcome.value.prize?.name ?? null })
+    if (outcome.ok)
+      setFx({
+        spinFailed: outcome.value.failed,
+        prizeName: outcome.value.prize?.name ?? null,
+        prizeQuantity: outcome.value.prize?.quantity ?? 1,
+      })
     else setFx({})
   }
 
@@ -253,10 +270,16 @@ export function GamesPage() {
                 <h3>{t('games.roulette.prizes')}</h3>
                 <div className="prize-list">
                   {(roulette.data?.prizes ?? []).map((prize) => (
-                    <div className={`prize-item${fx.prizeName === prize.name ? ' is-hit' : ''}`} key={prize.id}>
+                    <div
+                      className={`prize-item${fx.prizeName === prize.name && (fx.prizeQuantity ?? 1) === (prize.quantity ?? 1) ? ' is-hit' : ''}`}
+                      key={prize.id}
+                    >
                       <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
-                      <span><strong>{prize.name}</strong><small>{prize.rarity}</small></span>
-                      <b>{prize.weight}</b>
+                      <span>
+                        <strong>{prize.name}</strong>
+                        <small>{prize.rarity}</small>
+                      </span>
+                      <b>{t('games.roulette.prizeQty', { quantity: formatCompactQuantity(prize.quantity ?? 1) })}</b>
                     </div>
                   ))}
                   {!roulette.data?.prizes.length ? <p className="game-empty">{t('games.roulette.noPrizes')}</p> : null}

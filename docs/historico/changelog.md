@@ -32,8 +32,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   arena), remapeáveis por `--theme-art-games-*`.
 - Autoconfiguração dos minigames em `/panel/admin/games` (**Configurar todos**
   e o **configurador** por jogo): `POST /api/v1/staff/games/autoconfig/` cria
-  um catálogo Interlude (soulshots, scrolls de encantamento, gemas, Gold Bar,
-  Coin of Luck, life stones) e a tela permite editar parâmetros, prêmios,
+  um catálogo Interlude low rate com stacks (Adena, soulshots, poções,
+  scrolls e encantamentos) e a tela permite editar parâmetros, prêmios,
   peixes, monstros e itens de baú pelo catálogo de itens.
 - Pacote instalável de ícones de skills (`frontend/assets/skill-icons.tar.gz`):
   os PNGs entram em `frontend/public/skill-icons/` como `/skill-icons/<ID>.png`,
@@ -47,6 +47,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Prêmios dos minigames no estilo **Interlude low rate**: roleta, baús e
+  pescaria entregam stacks (Adena 50k–5M, soulshots, poções, scrolls e
+  encantamentos D–B); a arena no +10 rende 250k Adena. A lista em
+  `/panel/games` mostra a quantidade; o autoconfig desativa o catálogo antigo
+  de unidade isolada.
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e

@@ -34,7 +34,7 @@ GAME_CONTENT_FIELDS: dict[str, list[str]] = {
     "daily-days": ["season", "day", "rewards"],
     "daily-pool": ["season", "name", "weight", "rewards"],
     "baits": ["name", "description", "price", "success_bonus", "active"],
-    "prizes": ["name", "item_id", "enchant", "weight", "rarity", "active"],
+    "prizes": ["name", "item_id", "enchant", "quantity", "weight", "rarity", "active"],
     "fish": [
         "name",
         "rarity",
@@ -45,6 +45,7 @@ GAME_CONTENT_FIELDS: dict[str, list[str]] = {
         "item_id",
         "item_name",
         "enchant",
+        "quantity",
         "active",
     ],
     "monsters": [
@@ -58,7 +59,7 @@ GAME_CONTENT_FIELDS: dict[str, list[str]] = {
         "respawn_seconds",
         "active",
     ],
-    "box-items": ["name", "item_id", "enchant", "rarity", "weight", "active"],
+    "box-items": ["name", "item_id", "enchant", "quantity", "rarity", "weight", "active"],
 }
 
 GAME_CONTENT_KINDS = frozenset(GAME_CONTENT_FIELDS)

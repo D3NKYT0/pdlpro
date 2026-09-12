@@ -77,27 +77,31 @@ def test_buy_tokens_and_spin_roulette(api, player):
         code="roulette",
         defaults={"name": "Roleta", "active": True, "settings": {"cost": 1, "fail_chance": 0}},
     )
-    Prize.objects.create(name="Adena", item_id=57, weight=10, rarity="comum")
+    Prize.objects.create(name="Adena", item_id=57, quantity=50_000, weight=10, rarity="comum")
     Wallet.objects.create(user=player, balance=Decimal("20.00"))
     api.force_authenticate(user=player)
     bought = api.post("/api/v1/customer/games/tokens/", {"amount": 5}, format="json")
     assert bought.status_code == 200, bought.data
     assert bought.data["fichas"] == 5
+    listed = api.get("/api/v1/customer/games/roulette/")
+    assert listed.status_code == 200
+    assert listed.data["prizes"][0]["quantity"] == 50_000
     spin = api.post("/api/v1/customer/games/roulette/")
     assert spin.status_code == 200, spin.data
     assert spin.data["failed"] is False
     assert spin.data["prize"]["name"] == "Adena"
+    assert spin.data["prize"]["quantity"] == 50_000
     bag = api.get("/api/v1/customer/games/bag/")
     assert bag.status_code == 200
     assert bag.data[0]["item_name"] == "Adena"
-    assert bag.data[0]["quantity"] == 1
+    assert bag.data[0]["quantity"] == 50_000
 
 
 @pytest.mark.django_db
 def test_buy_and_open_box(api, player):
     from apps.games.infrastructure.models import BoxType, CatalogItem
 
-    CatalogItem.objects.create(name="Scroll", item_id=736, rarity="common", weight=10)
+    CatalogItem.objects.create(name="Scroll", item_id=736, quantity=20, rarity="common", weight=10)
     box_type = BoxType.objects.create(name="Bronze", price=Decimal("5.00"), boosters_amount=2)
     Wallet.objects.create(user=player, balance=Decimal("20.00"))
     player.fichas = 3
@@ -110,7 +114,10 @@ def test_buy_and_open_box(api, player):
     assert opened.status_code == 200, opened.data
     from apps.server.infrastructure.lineage.item_catalog import item_metadata
     assert opened.data["item"]["name"] == item_metadata(opened.data["item"]["item_id"])["name"]
+    assert opened.data["item"]["quantity"] == 20
     assert opened.data["remaining"] == 1
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert bag.data[0]["quantity"] == 20
 
 
 @pytest.mark.django_db
@@ -137,7 +144,16 @@ def test_fishing_cast(api, player):
     GameConfig.objects.update_or_create(
         code="fishing", defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1}}
     )
-    fish = Fish.objects.create(name="Lambari Teste", rarity="common", min_rod_level=1, weight=10, xp_reward=10)
+    fish = Fish.objects.create(
+        name="Lambari Teste",
+        rarity="common",
+        min_rod_level=1,
+        weight=10,
+        xp_reward=10,
+        item_id=1835,
+        item_name="Soulshot: No Grade",
+        quantity=800,
+    )
     player.fichas = 5
     player.save(update_fields=["fichas"])
     api.force_authenticate(user=player)
@@ -152,6 +168,9 @@ def test_fishing_cast(api, player):
     state = api.get("/api/v1/customer/games/fishing/")
     assert state.status_code == 200
     assert state.data["rod"]["xp"] >= 10
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert bag.data[0]["item_id"] == 1835
+    assert bag.data[0]["quantity"] == 800
 
 
 @pytest.mark.django_db
@@ -185,6 +204,16 @@ def test_economy_fight_and_enchant(api, player):
     weapon = EconomyWeapon.objects.get(user=player)
     assert weapon.level == 1
     assert weapon.fragments == 2
+    weapon.level = 9
+    weapon.fragments = 10
+    weapon.save(update_fields=["level", "fragments"])
+    with patch("apps.games.application.economy_use_cases.random.randint", return_value=1):
+        jackpot = api.post("/api/v1/customer/games/economy/enchant/")
+    assert jackpot.status_code == 200
+    assert jackpot.data["success"] is True
+    assert jackpot.data["weapon"]["level"] == 0
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
 
 
 @pytest.mark.django_db

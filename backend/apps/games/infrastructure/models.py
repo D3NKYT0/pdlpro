@@ -32,6 +32,7 @@ class Prize(BaseModel):
     name = models.CharField(max_length=120)
     item_id = models.PositiveIntegerField(default=0)
     enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
     weight = models.PositiveIntegerField(default=1)
     rarity = models.CharField(max_length=20, default="comum")
     active = models.BooleanField(default=True)
@@ -119,6 +120,7 @@ class CatalogItem(BaseModel):
     name = models.CharField(max_length=120)
     item_id = models.PositiveIntegerField()
     enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
     rarity = models.CharField(max_length=20, default="common")
     weight = models.PositiveIntegerField(default=10)
     active = models.BooleanField(default=True)
@@ -181,6 +183,7 @@ class BoxSlot(BaseModel):
     item_id = models.PositiveIntegerField()
     item_name = models.CharField(max_length=120)
     enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
     rarity = models.CharField(max_length=20, default="common")
     probability = models.PositiveIntegerField(default=1)
     opened = models.BooleanField(default=False)
@@ -257,6 +260,7 @@ class Fish(BaseModel):
     item_id = models.PositiveIntegerField(default=0)
     item_name = models.CharField(max_length=120, blank=True)
     enchant = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
     active = models.BooleanField(default=True)
 
     class Meta:

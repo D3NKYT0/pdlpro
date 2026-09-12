@@ -19,7 +19,7 @@ beforeEach(() => {
     fichas: 10,
     cost: 1,
     fail_chance: 20,
-    prizes: [{ id: 'p1', name: 'Adena', rarity: 'common', item_id: 57, weight: 10 }],
+    prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
   } as any)
   vi.mocked(gamesApi.dailyBonus).mockResolvedValue({ claimed: false, amount: '5.00' } as any)
   vi.mocked(gamesApi.boxes).mockResolvedValue({ types: [{ id: 'type', name: 'Caixa rara', price: '10.00', boosters_amount: 2 }], boxes: [{ id: 'box', type_name: 'Caixa adquirida', remaining: 1, total: 2 }] })
@@ -33,7 +33,7 @@ function mount(tab: string) {
   return userEvent.setup()
 }
 const actions = [
-  { method: 'spin', tab: 'roulette', button: 'Girar a roda', args: [], result: { failed: false, prize: { name: 'Adena' } }, message: 'Você ganhou Adena' },
+  { method: 'spin', tab: 'roulette', button: 'Girar a roda', args: [], result: { failed: false, prize: { name: 'Adena', quantity: 50000 } }, message: 'Você ganhou Adena × 50K' },
   { method: 'buyTokens', tab: 'roulette', button: 'Comprar', args: [5], result: { fichas: 15 }, message: 'Fichas creditadas' },
   { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de R$ 5.00 creditado' },
   { method: 'buyBox', tab: 'boxes', button: 'Comprar', args: ['type'], result: { id: 'new-box', remaining: 2 }, message: 'Caixa comprada' },
@@ -56,9 +56,9 @@ it('bloqueia repetição e outras ações enquanto o giro está pendente', async
   expect(buy).toBeDisabled()
   await user.click(buy)
   expect(gamesApi.buyTokens).not.toHaveBeenCalled()
-  finish({ failed: false, prize: { name: 'Adena' } })
+  finish({ failed: false, prize: { name: 'Adena', quantity: 50000 } })
   await waitFor(() => expect(spin).toBeEnabled())
-  expect(toast.success).toHaveBeenCalledWith('Você ganhou Adena')
+  expect(toast.success).toHaveBeenCalledWith('Você ganhou Adena × 50K')
 })
 it.each(actions)('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
@@ -118,9 +118,14 @@ it('gira a roleta no palco e marca o prêmio ao concluir', async () => {
   await screen.findByText('10 fichas')
   await user.click(await screen.findByRole('button', { name: 'Girar a roda' }))
   expect(document.querySelector('.roulette-orbit.is-spinning')).toBeTruthy()
-  finish({ failed: false, prize: { name: 'Adena' } })
+  finish({ failed: false, prize: { name: 'Adena', quantity: 50000 } })
   await waitFor(() => expect(document.querySelector('.roulette-orbit.is-win')).toBeTruthy())
   expect(document.querySelector('.prize-item.is-hit')).toBeTruthy()
+})
+it('mostra a quantidade do prêmio da roleta no estilo do servidor', async () => {
+  mount('roulette')
+  expect(await screen.findByText('Adena')).toBeVisible()
+  expect(screen.getByText('× 50K')).toBeVisible()
 })
 it('mostra baús do tema nas caixas e anima a abertura', async () => {
   let finish!: (value: any) => void

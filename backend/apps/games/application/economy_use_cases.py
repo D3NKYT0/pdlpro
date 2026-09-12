@@ -19,6 +19,8 @@ from apps.games.domain.repositories import (
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
 
+ARENA_ENCHANT_ADENA = 250_000
+
 
 def _monster_alive(monster) -> bool:
     if monster.defeated_at is None:
@@ -206,7 +208,7 @@ class EnchantWeaponUseCase(UseCase[EnchantWeaponInput, dict]):
                         user,
                         item_id=57,
                         item_name="Adena",
-                        quantity=500,
+                        quantity=ARENA_ENCHANT_ADENA,
                         bags=self._bags,
                     )
                     weapon.level = 0

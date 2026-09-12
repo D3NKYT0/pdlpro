@@ -109,6 +109,7 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
       name,
       field(t, 'item_id', { type: 'item', initial: 1835 }),
       number(t, 'enchant', 0),
+      number(t, 'quantity', 1, 1),
       number(t, 'weight', 10, 1),
       field(t, 'rarity', {
         options: options(t, 'prizeRarity', ['comum', 'incomum', 'raro', 'epico', 'lendario']),
@@ -129,6 +130,7 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
       field(t, 'item_id', { type: 'item', initial: 1835 }),
       field(t, 'item_name'),
       number(t, 'enchant', 0),
+      number(t, 'quantity', 1, 1),
       active,
     ]),
     section('monsters', [
@@ -146,6 +148,7 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
       name,
       field(t, 'item_id', { type: 'item', initial: 1835 }),
       number(t, 'enchant', 0),
+      number(t, 'quantity', 1, 1),
       field(t, 'rarity', {
         options: options(t, 'lootRarity', ['common', 'rare', 'epic', 'legendary']),
         initial: 'common',

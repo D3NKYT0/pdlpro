@@ -179,7 +179,10 @@ export function GameConfigurator({
           {query.data.slice(0, 8).map((row) => (
             <li key={row.id}>
               <ItemIcon itemId={String(row.item_id)} name={String(row.name || row.item_name || '')} size={28} />
-              <span>{String(row.name || row.item_name || row.item_id)}</span>
+              <span>
+                {String(row.name || row.item_name || row.item_id)}
+                {Number(row.quantity) > 1 ? ` × ${row.quantity}` : ''}
+              </span>
             </li>
           ))}
         </ul>

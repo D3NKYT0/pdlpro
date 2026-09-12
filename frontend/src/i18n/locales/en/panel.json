@@ -990,6 +990,8 @@
       "buyHint": "1 token = R$ 1",
       "buy": "Buy",
       "prizes": "Available prizes",
+      "prizeQty": "× {{quantity}}",
+      "prizeStack": "{{name}} × {{quantity}}",
       "noPrizes": "No prize configured."
     },
     "daily": {

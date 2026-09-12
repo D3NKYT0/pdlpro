@@ -210,6 +210,7 @@ class IBoxRepository(ABC):
         enchant: int,
         rarity: str,
         probability: int,
+        quantity: int = 1,
     ) -> Any:
         raise NotImplementedError
 

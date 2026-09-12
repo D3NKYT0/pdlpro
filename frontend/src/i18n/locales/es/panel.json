@@ -990,6 +990,8 @@
       "buyHint": "1 ficha = R$ 1",
       "buy": "Comprar",
       "prizes": "Premios disponibles",
+      "prizeQty": "× {{quantity}}",
+      "prizeStack": "{{name}} × {{quantity}}",
       "noPrizes": "Ningún premio configurado."
     },
     "daily": {

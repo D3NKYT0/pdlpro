@@ -143,6 +143,7 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
                         item_id=fish.item_id,
                         item_name=fish.item_name or fish.name,
                         enchant=fish.enchant,
+                        quantity=max(1, fish.quantity),
                         bags=self._bags,
                     )
                 add_xp(user, 8, self._progress)

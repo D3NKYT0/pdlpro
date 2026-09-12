@@ -75,20 +75,24 @@ def test_roulette_autoconfig_creates_prizes_and_is_idempotent(api, staff):
     assert row.active is True
     assert row.settings["cost"] == 9
     assert row.settings["fail_chance"] == 20
-    prize_count = Prize.objects.count()
-    ids = set(Prize.objects.values_list("item_id", flat=True))
+    prize_count = Prize.objects.filter(active=True).count()
+    ids = set(Prize.objects.filter(active=True).values_list("item_id", flat=True))
     assert 1835 in ids
+    assert 57 in ids
     assert 3470 in ids
     assert 4037 in ids
     assert 6577 in ids
-    assert 6657 in ids
-    assert Prize.objects.get(item_id=1835).name == "Soulshot: No Grade"
-    assert Prize.objects.get(item_id=3470).name == "Gold Bar"
-    assert Prize.objects.filter(item_id=57).count() == 0
+    assert 6657 not in ids
+    soulshot = Prize.objects.get(item_id=1835, active=True)
+    assert soulshot.name == "Soulshot: No Grade"
+    assert soulshot.quantity == 2000
+    assert Prize.objects.get(item_id=3470, active=True).name == "Gold Bar"
+    assert Prize.objects.filter(item_id=57, active=True, quantity=50_000).exists()
+    assert Prize.objects.filter(item_id=57, active=True, quantity=5_000_000).exists()
     second = api.post(AUTOCONFIG, {"code": "roulette"}, format="json")
     assert second.status_code == 200
     assert second.data["games"][0]["created"]["prizes"] == 0
-    assert Prize.objects.count() == prize_count
+    assert Prize.objects.filter(active=True).count() == prize_count
 
 
 @pytest.mark.django_db
@@ -153,12 +157,17 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     ]
     assert BoxType.objects.filter(active=True).count() >= 1
     assert CatalogItem.objects.filter(item_id=6577, active=True).exists()
+    assert CatalogItem.objects.filter(item_id=57, quantity=80_000, active=True).exists()
     luck = DailyBonusPoolEntry.objects.get(name="Moeda da Sorte")
     assert luck.rewards[0]["item_id"] == 4037
+    assert luck.rewards[0]["quantity"] == 3
     assert FishingBait.objects.filter(active=True).count() >= 1
-    assert Fish.objects.get(name="Pirarucu Ancestral").item_id == 6577
+    ancestral = Fish.objects.get(name="Pirarucu Ancestral")
+    assert ancestral.item_id == 955
+    assert ancestral.quantity == 1
     lambari = Fish.objects.get(name="Lambari")
     assert lambari.item_id == 1835
+    assert lambari.quantity == 800
     assert Monster.objects.filter(name="Drake").exists()
     listed = api.get("/api/v1/staff/games/")
     assert listed.status_code == 200
@@ -179,6 +188,7 @@ def test_staff_can_configure_roulette_prize(api, staff):
             "name": "Soulshot: No Grade",
             "item_id": 1835,
             "enchant": 0,
+            "quantity": 2000,
             "weight": 12,
             "rarity": "comum",
             "active": True,
@@ -187,6 +197,24 @@ def test_staff_can_configure_roulette_prize(api, staff):
     )
     assert created.status_code == 201, created.data
     assert created.data["item_id"] == 1835
+    assert created.data["quantity"] == 2000
     listed = api.get("/api/v1/staff/game-content/prizes/")
     assert listed.status_code == 200
-    assert any(row["item_id"] == 1835 for row in listed.data)
+    assert any(row["item_id"] == 1835 and row["quantity"] == 2000 for row in listed.data)
+
+
+@pytest.mark.django_db
+def test_autoconfig_replaces_unit_prizes_with_low_rate_stacks(api, staff):
+    leftover = Prize.objects.create(
+        name="Soulshot: No Grade", item_id=1835, enchant=0, quantity=1, weight=36, rarity="comum"
+    )
+    Prize.objects.create(name="Necklace of Valakas", item_id=6657, enchant=0, quantity=1, weight=1, rarity="lendario")
+    api.force_authenticate(user=staff)
+    response = api.post(AUTOCONFIG, {"code": "roulette"}, format="json")
+    assert response.status_code == 200, response.data
+    leftover.refresh_from_db()
+    assert leftover.active is False
+    assert Prize.objects.filter(item_id=6657, active=True).count() == 0
+    stacked = Prize.objects.get(item_id=1835, quantity=2000, active=True)
+    assert stacked.weight == 16
+    assert Prize.objects.filter(item_id=57, quantity=50_000, active=True).exists()

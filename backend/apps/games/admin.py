@@ -48,7 +48,7 @@ class PrizeAdmin(PDLModelAdmin):
     reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "item_id", "weight", "rarity", "active")
+    list_display = ("name", "item_id", "quantity", "weight", "rarity", "active")
 
 
 @admin.register(SpinHistory)
@@ -106,7 +106,7 @@ class CatalogItemAdmin(PDLModelAdmin):
     reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "item_id", "rarity", "weight", "active")
+    list_display = ("name", "item_id", "quantity", "rarity", "weight", "active")
 
 
 @admin.register(BoxType)
@@ -190,7 +190,7 @@ class FishAdmin(PDLModelAdmin):
     reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "rarity", "min_rod_level", "weight", "active")
+    list_display = ("name", "rarity", "item_id", "quantity", "min_rod_level", "weight", "active")
 
 
 @admin.register(FishingCatch)

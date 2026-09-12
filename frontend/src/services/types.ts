@@ -252,6 +252,8 @@ export interface ApiRoulettePrize {
   weight: number
   rarity: string
   item_id?: number
+  quantity?: number
+  enchant?: number
 }
 
 export interface ApiRouletteState {
@@ -264,7 +266,7 @@ export interface ApiRouletteState {
 export interface ApiSpinResult {
   failed: boolean
   fichas: number
-  prize: { name: string; rarity: string; enchant: number } | null
+  prize: { name: string; rarity: string; enchant: number; quantity?: number } | null
 }
 
 export interface ApiDailyBonus {

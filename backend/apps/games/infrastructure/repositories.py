@@ -275,12 +275,14 @@ class DjangoBoxRepository(IBoxRepository):
         enchant: int,
         rarity: str,
         probability: int,
+        quantity: int = 1,
     ) -> BoxSlot:
         return BoxSlot.objects.create(
             box=box,
             item_id=item_id,
             item_name=item_name,
             enchant=enchant,
+            quantity=max(1, quantity),
             rarity=rarity,
             probability=probability,
         )
