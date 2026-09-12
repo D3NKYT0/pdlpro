@@ -26,6 +26,7 @@ import { formatDate, formatDuration } from '../components/rankings/rankingsForma
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
 import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
 import { CharacterPaperdoll } from '../components/character/CharacterPaperdoll'
+import { CharacterSkillsPanel } from '../components/character/CharacterSkillsPanel'
 import {
   CharacterItemDetailModal,
   type CharacterItemDetail,
@@ -59,6 +60,11 @@ export function CharacterPage() {
   const bagItems = useQuery({
     queryKey: ['character-bag-items', login, id],
     queryFn: () => inventoryApi.gameItems(id, login),
+    enabled: Boolean(login) && Number.isFinite(id) && id > 0,
+  })
+  const skills = useQuery({
+    queryKey: ['character-skills', login, id],
+    queryFn: () => lineageApi.characterSkills(id, login),
     enabled: Boolean(login) && Number.isFinite(id) && id > 0,
   })
   const [nickname, setNickname] = useState('')
@@ -280,6 +286,12 @@ export function CharacterPage() {
               items={bagItems.data ?? []}
               loading={bagItems.isLoading}
               error={bagItems.isError}
+            />
+
+            <CharacterSkillsPanel
+              skills={skills.data ?? []}
+              loading={skills.isLoading}
+              error={skills.isError}
             />
           </Card>
 

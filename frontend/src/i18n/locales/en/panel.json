@@ -1413,6 +1413,27 @@
       "noEnchant": "no enchant",
       "slotAria": "{{name}} · {{enchant}} · qty {{quantity}}"
     },
+    "skills": {
+      "title": "Skills",
+      "sectionLabel": "Character skills",
+      "gridLabel": "Skills grid",
+      "loading": "Loading skills...",
+      "error": "Could not load this character's skills.",
+      "empty": "No skills found.",
+      "count_one": "learned skill",
+      "count_other": "learned skills",
+      "itemId": "ID {{id}}",
+      "levelValue": "Lv. {{level}}",
+      "levelBadge": "{{level}}",
+      "slotAria": "{{name}} · Lv. {{level}}",
+      "modal": {
+        "title": "Skill details",
+        "fields": {
+          "id": "ID",
+          "level": "Level"
+        }
+      }
+    },
     "itemModal": {
       "title": "Item details",
       "noEnchant": "No enchant",

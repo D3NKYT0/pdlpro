@@ -39,6 +39,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   os PNGs entram em `frontend/public/skill-icons/` como `/skill-icons/<ID>.png`,
   fora do Git; `predev`/`prebuild` restauram o pacote. Ver
   [Ícones de itens e skills](../integracoes/icones.md).
+- Lista de **skills do personagem** na ficha (`/panel/accounts/...`): grade com
+  ícones, nível e nomes do XML; `GET /api/v1/customer/server/characters/<id>/skills/`.
 
 ### Alterado
 

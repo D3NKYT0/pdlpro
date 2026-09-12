@@ -1413,6 +1413,27 @@
       "noEnchant": "sem encanto",
       "slotAria": "{{name}} · {{enchant}} · qtd {{quantity}}"
     },
+    "skills": {
+      "title": "Skills",
+      "sectionLabel": "Skills do personagem",
+      "gridLabel": "Grade de skills",
+      "loading": "Carregando skills...",
+      "error": "Não foi possível carregar as skills deste personagem.",
+      "empty": "Nenhuma skill encontrada.",
+      "count_one": "skill aprendida",
+      "count_other": "skills aprendidas",
+      "itemId": "ID {{id}}",
+      "levelValue": "Nv. {{level}}",
+      "levelBadge": "{{level}}",
+      "slotAria": "{{name}} · Nv. {{level}}",
+      "modal": {
+        "title": "Detalhes da skill",
+        "fields": {
+          "id": "ID",
+          "level": "Nível"
+        }
+      }
+    },
     "itemModal": {
       "title": "Detalhes do item",
       "noEnchant": "Sem encanto",

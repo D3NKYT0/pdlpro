@@ -115,6 +115,19 @@ class GameItem:
     location: str | None = None
 
 
+@dataclass(frozen=True, slots=True)
+class GameSkill:
+    """Skill aprendida pelo personagem; skill_id é o identificador inteiro do Lineage.
+
+    ``level`` é o nível (ou encanto) gravado em character_skills. ``class_index`` distingue
+    a classe base das subclasses quando o servidor as armazena em linhas separadas.
+    """
+
+    skill_id: int
+    level: int
+    class_index: int = 0
+
+
 class ILineageGateway(ABC):
     """Porta de acesso a contas, personagens, itens e consultas do Lineage 2.
 
@@ -194,6 +207,9 @@ class ILineageGateway(ABC):
 
     @abstractmethod
     def list_character_equipment(self, char_id: int) -> list[GameItem]: ...
+
+    @abstractmethod
+    def list_character_skills(self, char_id: int) -> list[GameSkill]: ...
 
     @abstractmethod
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem: ...

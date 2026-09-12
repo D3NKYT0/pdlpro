@@ -139,7 +139,7 @@ Use apenas um controle por `Field`. Para erro, coloque um ID no conteúdo de `er
 
 `Tabs` recebe `id`, `label`, `items`, `value` e `onChange`. Para `id="inventory"` e item `bag`, o painel deve ter `id="inventory-panel-bag"`, `role="tabpanel"` e `aria-labelledby="inventory-tab-bag"`. O chamador controla visibilidade e conteúdo. Use o estilo de navegação existente (`game-tabs` ou `inventory-tabs`) para o contexto correspondente.
 
-`AdminHeader` e `ProgramHeader` compõem `PageHeader`; `AdminSaveBar` compõe `Button`. Os aliases `Empty`, `Loading` e `ErrorNotice` de `ProgramUI` reutilizam os estados comuns. Preserve componentes com contrato próprio, como `ItemIdField`, `ItemIcon`, `RewardsEditor` e `FishingGame`.
+`AdminHeader` e `ProgramHeader` compõem `PageHeader`; `AdminSaveBar` compõe `Button`. Os aliases `Empty`, `Loading` e `ErrorNotice` de `ProgramUI` reutilizam os estados comuns. Preserve componentes com contrato próprio, como `ItemIdField`, `ItemIcon`, `SkillIcon`, `RewardsEditor` e `FishingGame`.
 
 [TicketMessages](../../frontend/src/components/support/TicketMessages.tsx) e [TicketStatus](../../frontend/src/components/support/TicketStatus.tsx) compartilham a apresentação do atendimento. `staff` permite exibir notas internas recebidas da API; o modo padrão as filtra. Isso não substitui a autorização e a filtragem no servidor.
 

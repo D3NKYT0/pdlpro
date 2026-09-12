@@ -125,6 +125,8 @@ const contracts: Contract[] = [
   ['lineage.characters', () => lineageApi.characters(), '/customer/server/characters/'],
   ['lineage.accountCharacters', () => lineageApi.characters('a&b'), '/customer/server/characters/?login=a%26b'],
   ['lineage.character', () => lineageApi.character('a&b', 7), '/customer/server/characters/7/?login=a%26b'],
+  ['lineage.characterSkills', () => lineageApi.characterSkills(7), '/customer/server/characters/7/skills/'],
+  ['lineage.accountCharacterSkills', () => lineageApi.characterSkills(7, 'a&b'), '/customer/server/characters/7/skills/?login=a%26b'],
   ['lineage.prices', () => lineageApi.servicePrices(), '/customer/server/services/'],
   ['lineage.nickname', () => lineageApi.changeNickname('hero', 7, 'New'), '/customer/server/characters/nickname/', 'POST', { login: 'hero', char_id: 7, name: 'New' }],
   ['lineage.sex', () => lineageApi.changeSex('hero', 7, 'F'), '/customer/server/characters/sex/', 'POST', { login: 'hero', char_id: 7, sex: 'F' }],

@@ -15,6 +15,7 @@ from apps.server.application.account_use_cases import (
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
     ListCharactersInput,
+    ListCharacterSkillsUseCase,
     ListCharactersUseCase,
     RegisterGameAccountInput,
     RegisterGameAccountUseCase,
@@ -34,6 +35,7 @@ from apps.server.application.character_use_cases import (
     PurchaseLinkSlotUseCase,
     UnstuckCharacterUseCase,
 )
+from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.presentation.serializers import (
     AccessibleAccountSerializer,
     ChangeNicknameSerializer,
@@ -206,6 +208,41 @@ class CharacterDetailView(InjectedAPIView):
             GetCharacterInput(actor=actor_from(request), login=login, char_id=char_id)
         )
         return Response(GameCharacterSerializer(char).data)
+
+
+class CharacterSkillsView(InjectedAPIView):
+    """Entrada HTTP para ``ListCharacterSkillsUseCase``.
+
+    Implementa GET; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Skills do personagem"),
+        description=gettext_lazy("Lista as skills aprendidas pelo personagem informado, com nome e ícone do catálogo XML."),
+    )
+    def get(self, request, char_id: int):
+        login = request.query_params.get("login") or request.user.username
+        skills = self.resolve(ListCharacterSkillsUseCase).execute(
+            GetCharacterInput(actor=actor_from(request), login=login, char_id=char_id)
+        )
+        catalog = self.resolve(ISkillCatalog)
+        payload = []
+        for skill in skills:
+            meta = catalog.metadata(skill.skill_id)
+            payload.append(
+                {
+                    "skill_id": skill.skill_id,
+                    "level": skill.level,
+                    "class_index": skill.class_index,
+                    "name": meta["name"],
+                    "icon_url": meta["icon_url"],
+                }
+            )
+        return Response(payload)
 
 
 class UpdateGamePasswordView(InjectedAPIView):

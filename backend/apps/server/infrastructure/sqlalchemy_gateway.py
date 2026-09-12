@@ -20,6 +20,7 @@ from apps.server.domain.gateways import (
     GameAccount,
     GameCharacter,
     GameItem,
+    GameSkill,
     ILineageGateway,
     RankingEntry,
     ServerStatus,
@@ -321,6 +322,19 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             return []
         rows = self._fetch("list_character_equipment", {"char_id": char_id})
         return [self._game_item(row, slot=int(row["slot"])) for row in rows]
+
+    def list_character_skills(self, char_id: int) -> list[GameSkill]:
+        if not self._sql.has("list_character_skills"):
+            return []
+        rows = self._fetch("list_character_skills", {"char_id": char_id})
+        return [
+            GameSkill(
+                skill_id=int(row["skill_id"]),
+                level=int(row["level"] or 1),
+                class_index=int(row["class_index"] or 0),
+            )
+            for row in rows
+        ]
 
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
         items = [item for item in self.list_character_items(char_id) if item.item_id == item_id]

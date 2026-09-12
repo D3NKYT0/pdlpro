@@ -19,7 +19,12 @@ from apps.server.domain.exceptions import (
     GameAccountNotFoundError,
     LinkSlotLimitError,
 )
-from apps.server.domain.gateways import GameAccount, GameCharacter, ILineageGateway
+from apps.server.domain.gateways import (
+    GameAccount,
+    GameCharacter,
+    GameSkill,
+    ILineageGateway,
+)
 from apps.server.domain.repositories import IManagedLineageAccountRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
@@ -385,6 +390,29 @@ class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
         if char is None:
             raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
         return char
+
+
+class ListCharacterSkillsUseCase(UseCase[GetCharacterInput, list[GameSkill]]):
+    """Lista as skills do personagem após confirmar acesso à conta e propriedade.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``GetCharacterInput``. O retorno
+    é a lista de ``GameSkill`` do gateway.
+    """
+
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+        self._lineage = lineage
+        self._access = access
+
+    def execute(self, data: GetCharacterInput) -> list[GameSkill]:
+        login = data.login or data.actor.username
+        if self._lineage.get_account(login) is None:
+            raise GameAccountNotFoundError()
+        if not self._access.can_access(data.actor.user_id, data.actor.username, login):
+            raise AuthorizationError("Você não tem acesso a esta conta Lineage.")
+        char = self._lineage.get_character(login, data.char_id)
+        if char is None:
+            raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
+        return self._lineage.list_character_skills(data.char_id)
 
 
 @dataclass(frozen=True, slots=True)

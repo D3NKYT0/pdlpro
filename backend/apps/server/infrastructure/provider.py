@@ -9,6 +9,7 @@ from apps.server.application.account_use_cases import (
     InspectPrimaryLoginUseCase,
     LinkGameAccountUseCase,
     ListAccessibleAccountsUseCase,
+    ListCharacterSkillsUseCase,
     ListCharactersUseCase,
     RegisterGameAccountUseCase,
     RequestLinkByEmailUseCase,
@@ -62,6 +63,7 @@ from apps.server.domain.repositories import (
     IManagedLineageAccountRepository,
     IServicePriceRepository,
 )
+from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.infrastructure.access import DjangoAccountAccessService
 from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
@@ -75,6 +77,7 @@ from apps.server.infrastructure.repositories import (
     DjangoManagedLineageAccountRepository,
     DjangoServicePriceRepository,
 )
+from apps.server.infrastructure.skill_catalog_adapter import LineageSkillCatalogAdapter
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
 from common.di.container import Container
 from common.di.lifetime import Lifetime
@@ -115,6 +118,7 @@ class ServerProvider(AppProvider):
         item_catalog = LineageItemCatalogAdapter()
         container.register(IItemCatalog, instance=item_catalog, lifetime=Lifetime.SINGLETON)
         container.register(IItemDisplayName, instance=item_catalog, lifetime=Lifetime.SINGLETON)
+        container.register(ISkillCatalog, LineageSkillCatalogAdapter, lifetime=Lifetime.SINGLETON)
         container.register(IAccountAccessService, DjangoAccountAccessService, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetServerInfoUseCase,
@@ -131,6 +135,7 @@ class ServerProvider(AppProvider):
             UnlinkGameAccountUseCase,
             ListCharactersUseCase,
             GetCharacterUseCase,
+            ListCharacterSkillsUseCase,
             UpdateGamePasswordUseCase,
             ChangeNicknameUseCase,
             ChangeSexUseCase,

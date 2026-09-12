@@ -2292,6 +2292,14 @@ msgstr ""
 msgid "Retorna os dados do personagem informado na conta acessível ao usuário."
 msgstr ""
 
+#: .\apps\server\presentation\views\customer.py:224
+msgid "Skills do personagem"
+msgstr ""
+
+#: .\apps\server\presentation\views\customer.py:225
+msgid "Lista as skills aprendidas pelo personagem informado, com nome e ícone do catálogo XML."
+msgstr ""
+
 #: .\apps\server\presentation\views\customer.py:222
 msgid "Alterar senha do jogo"
 msgstr ""

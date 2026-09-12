@@ -95,7 +95,7 @@ Os marcadores `unit`, `integration` e `architecture` estão registrados no Pytes
 | Ferramentas da equipe | [staff/tests](../../backend/apps/staff/tests/), [support/tests](../../backend/apps/support/tests/) |
 | Sessão frontend | [http.test.ts](../../frontend/src/services/infra/http.test.ts), [session.test.ts](../../frontend/src/services/infra/session.test.ts) |
 | Catálogo frontend | [item-icons.test.ts](../../frontend/src/lib/item-icons.test.ts) |
-| Ícones de skills | [skill-icon-import.test.mjs](../../frontend/dev/skill-icon-import.test.mjs) |
+| Ícones de skills | [skill-icon-import.test.mjs](../../frontend/dev/skill-icon-import.test.mjs), [SkillIcon.test.tsx](../../frontend/src/components/SkillIcon.test.tsx) |
 | Representação de telas | [ProgramScreens.test.tsx](../../frontend/src/components/programs/ProgramScreens.test.tsx), [AdminFinancialReportsPage.test.tsx](../../frontend/src/pages/admin/AdminFinancialReportsPage.test.tsx) |
 | Interação de conta e perfil | [AccountSecurityPage.test.tsx](../../frontend/src/pages/AccountSecurityPage.test.tsx), [ProfilePage.test.tsx](../../frontend/src/pages/ProfilePage.test.tsx) |
 | Interação de comércio e inventário | [TradingPages.test.tsx](../../frontend/src/pages/TradingPages.test.tsx), [InventoryPage.test.tsx](../../frontend/src/pages/InventoryPage.test.tsx) |

@@ -17,6 +17,7 @@ from apps.server.domain.gateways import (
     GameAccount,
     GameCharacter,
     GameItem,
+    GameSkill,
     ILineageGateway,
     RankingEntry,
     ServerStatus,
@@ -59,6 +60,7 @@ class NullLineageGateway(ILineageGateway):
         self._accounts: dict[str, dict] = {}
         self._characters: dict[str, list[GameCharacter]] = {}
         self._items: dict[int, list[GameItem]] = {}
+        self._skills: dict[int, list[GameSkill]] = {}
         self._next_char_id = 1
 
     def get_status(self) -> ServerStatus:
@@ -161,6 +163,9 @@ class NullLineageGateway(ILineageGateway):
     def list_character_equipment(self, char_id: int) -> list[GameItem]:
         return [item for item in self._items.get(char_id, []) if item.slot is not None]
 
+    def list_character_skills(self, char_id: int) -> list[GameSkill]:
+        return list(self._skills.get(char_id, []))
+
     def withdraw_item(self, char_id: int, item_id: int, quantity: int) -> GameItem:
         items = self._items.setdefault(char_id, [])
         for index, item in enumerate(items):
@@ -238,7 +243,14 @@ class NullLineageGateway(ILineageGateway):
     def query(self, name: str, params: dict | None = None) -> list[dict]:
         return []
 
-    def seed_character(self, login: str, name: str, *, items: list[GameItem] | None = None) -> GameCharacter:
+    def seed_character(
+        self,
+        login: str,
+        name: str,
+        *,
+        items: list[GameItem] | None = None,
+        skills: list[GameSkill] | None = None,
+    ) -> GameCharacter:
         """Apenas testes/dev: cria um personagem no gateway em memória."""
         key = login.lower()
         self._accounts.setdefault(
@@ -249,6 +261,7 @@ class NullLineageGateway(ILineageGateway):
         self._next_char_id += 1
         self._characters.setdefault(key, []).append(char)
         self._items[char.char_id] = [self._normalize_item(item) for item in items or []]
+        self._skills[char.char_id] = list(skills or [])
         return char
 
     @staticmethod

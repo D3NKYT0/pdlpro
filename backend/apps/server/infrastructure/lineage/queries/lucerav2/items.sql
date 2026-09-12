@@ -7,6 +7,12 @@ WHERE owner_id = :char_id
   AND location IN ('INVENTORY', 'WAREHOUSE')
 ORDER BY location, item_type
 
+-- name: list_character_skills
+SELECT skill_id, skill_level AS level, class_index
+FROM character_skills
+WHERE char_obj_id = :char_id
+ORDER BY skill_id, class_index
+
 -- name: delete_item_stack
 DELETE FROM items
 WHERE owner_id = :char_id AND item_type = :item_id AND enchant = :enchant

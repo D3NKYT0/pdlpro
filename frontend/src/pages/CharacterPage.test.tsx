@@ -19,6 +19,7 @@ vi.mock('../services/api', async (importOriginal) => {
       changeNickname: vi.fn(),
       changeSex: vi.fn(),
       unstuck: vi.fn(),
+      characterSkills: vi.fn(),
     },
     inventoryApi: { equipment: vi.fn(), gameItems: vi.fn() },
   }
@@ -53,6 +54,7 @@ beforeEach(() => {
   vi.mocked(lineageApi.servicePrices).mockResolvedValue({ CHANGE_NICKNAME: '10', CHANGE_SEX: '10', UNSTUCK: '0', LINK_SLOT: '10' })
   vi.mocked(inventoryApi.equipment).mockResolvedValue([])
   vi.mocked(inventoryApi.gameItems).mockResolvedValue([])
+  vi.mocked(lineageApi.characterSkills).mockResolvedValue([])
 })
 afterEach(() => { cleanup(); query?.clear(); vi.restoreAllMocks() })
 function mount() {
@@ -139,6 +141,23 @@ it('abre modal ao clicar em item equipado', async () => {
   expect(dialog).toBeVisible()
   expect(dialog).toHaveTextContent('Elmo')
   expect(dialog).toHaveTextContent('Equipado')
+})
+it('mostra skills com ícone e nível', async () => {
+  vi.mocked(lineageApi.characterSkills).mockResolvedValue([
+    { skill_id: 1, level: 37, class_index: 0, name: 'Triple Slash', icon_url: '/skill-icons/1.png' },
+    { skill_id: 3, level: 9, class_index: 0, name: 'Power Strike', icon_url: '/skill-icons/3.png' },
+  ])
+  const user = mount()
+  expect(await screen.findByLabelText('Grade de skills')).toBeVisible()
+  expect(screen.getByLabelText('Triple Slash · Nv. 37')).toBeVisible()
+  expect(screen.getByRole('img', { name: 'Triple Slash' })).toHaveAttribute('src', '/skill-icons/1.png')
+  await user.click(screen.getByLabelText('Power Strike · Nv. 9'))
+  const dialog = screen.getByRole('dialog', { name: 'Power Strike' })
+  expect(dialog).toBeVisible()
+  expect(dialog).toHaveTextContent('ID')
+  expect(dialog).toHaveTextContent('3')
+  expect(dialog).toHaveTextContent('Nível')
+  expect(dialog).toHaveTextContent('9')
 })
 it('mostra carregamento sem permitir serviço', () => {
   vi.mocked(lineageApi.characters).mockImplementation(() => new Promise(() => {}))

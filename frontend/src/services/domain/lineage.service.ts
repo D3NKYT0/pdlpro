@@ -73,6 +73,14 @@ export interface ApiGameItem {
   location?: string | null
 }
 
+export interface ApiGameSkill {
+  skill_id: number
+  name: string
+  level: number
+  class_index: number
+  icon_url: string
+}
+
 export interface ApiCharacterEquipmentItem extends ApiGameItem {
   slot: number
 }
@@ -128,6 +136,10 @@ export const lineageApi = {
       method: 'POST',
       body: JSON.stringify({ login, char_id }),
     }),
+  characterSkills: (charId: number, login?: string) =>
+    request<ApiGameSkill[]>(
+      `/customer/server/characters/${charId}/skills/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
+    ),
 }
 
 export const inventoryApi = {

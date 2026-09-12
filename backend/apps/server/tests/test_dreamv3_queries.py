@@ -51,6 +51,9 @@ def schema():
             item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER,
             amount INTEGER, location TEXT, enchant INTEGER, slot INTEGER
         );
+        CREATE TABLE character_skills (
+            char_obj_id INTEGER, skill_id INTEGER, skill_level INTEGER, class_index INTEGER
+        );
         CREATE TABLE items_delayed (
             payment_id INTEGER PRIMARY KEY AUTOINCREMENT, owner_id INTEGER NOT NULL,
             item_id INTEGER NOT NULL, count INTEGER NOT NULL DEFAULT 1,
@@ -79,6 +82,7 @@ def schema():
             (1002, 101, 57, 250, 'WAREHOUSE', 0, -1),
             (1003, 101, 100, 1, 'PAPERDOLL', 7, 10),
             (1004, 101, 200, 1, 'MAIL', 0, -1);
+        INSERT INTO character_skills VALUES (101, 1, 37, 0), (101, 3, 9, 0);
     """)
     yield connection
     connection.close()
@@ -88,7 +92,8 @@ def test_complete_feature_catalog():
     assert set(CATALOG.REQUIRED) <= CATALOG._statements.keys()
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
-    assert len(CATALOG._statements) == 52
+    assert CATALOG.has("list_character_skills")
+    assert len(CATALOG._statements) == 53
 
 
 @pytest.mark.parametrize("name", READ_QUERIES)
@@ -127,6 +132,11 @@ def test_inventory_and_equipment_use_distinct_locations(schema):
     equipment = schema.execute(CATALOG["list_character_equipment"], {"char_id": 101}).fetchall()
     assert [dict(row) for row in equipment] == [
         {"item_id": 100, "quantity": 1, "enchant": 7, "slot": 10}
+    ]
+    skills = schema.execute(CATALOG["list_character_skills"], {"char_id": 101}).fetchall()
+    assert [dict(row) for row in skills] == [
+        {"skill_id": 1, "level": 37, "class_index": 0},
+        {"skill_id": 3, "level": 9, "class_index": 0},
     ]
 
 

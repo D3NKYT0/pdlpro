@@ -22,6 +22,7 @@ export type {
   ApiCharacterEquipmentItem,
   ApiGameCharacter,
   ApiGameItem,
+  ApiGameSkill,
   ApiInventoryRow,
 } from './domain/lineage.service'
 export { paymentApi } from './domain/payment.service'

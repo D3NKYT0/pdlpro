@@ -14,6 +14,7 @@ def test_lucerav2_catalog_loads_required_queries():
     assert "title" in catalog["list_characters"]
     assert "is_clan_leader" in catalog["get_character"]
     assert catalog["top_pvp"].lstrip().upper().startswith("SELECT")
+    assert "char_obj_id" in catalog["list_character_skills"]
 
 
 def test_dreamv3_catalog_matches_character_schema():
@@ -28,6 +29,7 @@ def test_mobius_catalog_exposes_read_only_paperdoll_query():
     catalog = LineageQueryCatalog.load("mobius")
     assert "PAPERDOLL" in catalog["list_character_equipment"]
     assert "loc_data AS slot" in catalog["list_character_equipment"]
+    assert "charId" in catalog["list_character_skills"]
 
 
 def test_mobius_deposit_matches_items_delayed_schema():

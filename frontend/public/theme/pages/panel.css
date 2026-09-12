@@ -2062,7 +2062,8 @@ html.pdl-panel .character-bag-slot.is-filled:focus-visible {
   transform: translateY(-1px);
 }
 
-html.pdl-panel .character-bag-slot > .l2-item-icon {
+html.pdl-panel .character-bag-slot > .l2-item-icon,
+html.pdl-panel .character-bag-slot > .l2-skill-icon {
   width: 34px;
   height: 34px;
   object-fit: contain;
@@ -2117,6 +2118,35 @@ html.pdl-panel .character-bag-message.is-error {
   color: #dc8a68;
 }
 
+html.pdl-panel .character-skills {
+  margin-top: 18px;
+}
+
+html.pdl-panel .character-skills-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--panel-muted, #cbb892);
+  font-size: 13px;
+}
+
+html.pdl-panel .character-skills-heading h3 {
+  margin: 0;
+  color: var(--panel-text, #f3e6c4);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+html.pdl-panel .character-skills-heading strong {
+  color: var(--panel-text, #f3e6c4);
+}
+
+html.pdl-panel .character-skills-heading svg {
+  width: 16px;
+  height: 16px;
+}
+
 html.pdl-panel .character-item-modal-body {
   display: grid;
   gap: 16px;
@@ -2154,7 +2184,8 @@ html.pdl-panel .character-item-modal-hero span {
   font-size: 12px;
 }
 
-html.pdl-panel .character-item-modal-hero .l2-item-icon {
+html.pdl-panel .character-item-modal-hero .l2-item-icon,
+html.pdl-panel .character-item-modal-hero .l2-skill-icon {
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -8179,7 +8210,8 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
   }
 
-  html.pdl-panel .character-bag-slot > .l2-item-icon {
+  html.pdl-panel .character-bag-slot > .l2-item-icon,
+  html.pdl-panel .character-bag-slot > .l2-skill-icon {
     width: 28px;
     height: 28px;
   }
