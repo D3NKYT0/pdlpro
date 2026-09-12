@@ -222,7 +222,9 @@ class CharacterSkillsView(InjectedAPIView):
     @extend_schema(
         tags=["Conta Lineage"],
         summary=gettext_lazy("Skills do personagem"),
-        description=gettext_lazy("Lista as skills aprendidas pelo personagem informado, com nome e ícone do catálogo XML."),
+        description=gettext_lazy(
+            "Lista as skills aprendidas pelo personagem informado, com nome, ícone e pastas da janela L2 (físicas, mágicas, reforço, enfraquecimento)."
+        ),
     )
     def get(self, request, char_id: int):
         login = request.query_params.get("login") or request.user.username
@@ -240,6 +242,10 @@ class CharacterSkillsView(InjectedAPIView):
                     "class_index": skill.class_index,
                     "name": meta["name"],
                     "icon_url": meta["icon_url"],
+                    "operate": meta["operate"],
+                    "kind": meta["kind"],
+                    "group": meta["group"],
+                    "skill_type": meta["skill_type"],
                 }
             )
         return Response(payload)

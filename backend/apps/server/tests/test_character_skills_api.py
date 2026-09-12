@@ -43,6 +43,10 @@ def test_character_skills_are_read_only_and_include_icon_urls(api, player):
         meta = skill_metadata(row["skill_id"])
         assert row["name"] == meta["name"]
         assert row["icon_url"] == f"/skill-icons/{row['skill_id']}.png"
+        assert row["operate"] == meta["operate"]
+        assert row["kind"] == meta["kind"]
+        assert row["group"] == meta["group"]
+        assert row["skill_type"] == meta["skill_type"]
     assert api.post(f"/api/v1/customer/server/characters/{char.char_id}/skills/").status_code == 405
 
 

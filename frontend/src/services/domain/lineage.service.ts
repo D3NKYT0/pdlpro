@@ -73,12 +73,20 @@ export interface ApiGameItem {
   location?: string | null
 }
 
+export type SkillOperate = 'active' | 'passive' | 'toggle'
+export type SkillKind = 'attack' | 'defense' | 'buff' | 'debuff' | 'heal' | 'summon' | 'utility'
+export type SkillGroup = 'physical' | 'magic' | 'reinforcement' | 'weaken' | 'special' | 'other'
+
 export interface ApiGameSkill {
   skill_id: number
   name: string
   level: number
   class_index: number
   icon_url: string
+  operate: SkillOperate
+  kind: SkillKind
+  group: SkillGroup
+  skill_type: string
 }
 
 export interface ApiCharacterEquipmentItem extends ApiGameItem {

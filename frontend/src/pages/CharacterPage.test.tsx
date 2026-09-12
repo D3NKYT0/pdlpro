@@ -142,22 +142,66 @@ it('abre modal ao clicar em item equipado', async () => {
   expect(dialog).toHaveTextContent('Elmo')
   expect(dialog).toHaveTextContent('Equipado')
 })
-it('mostra skills com ícone e nível', async () => {
+it('mostra a janela L2 de skills com pastas e abas Active/Passive', async () => {
   vi.mocked(lineageApi.characterSkills).mockResolvedValue([
-    { skill_id: 1, level: 37, class_index: 0, name: 'Triple Slash', icon_url: '/skill-icons/1.png' },
-    { skill_id: 3, level: 9, class_index: 0, name: 'Power Strike', icon_url: '/skill-icons/3.png' },
+    {
+      skill_id: 1,
+      level: 37,
+      class_index: 0,
+      name: 'Triple Slash',
+      icon_url: '/skill-icons/1.png',
+      operate: 'active',
+      kind: 'attack',
+      group: 'physical',
+      skill_type: 'PDAM',
+    },
+    {
+      skill_id: 4,
+      level: 2,
+      class_index: 0,
+      name: 'Dash',
+      icon_url: '/skill-icons/4.png',
+      operate: 'active',
+      kind: 'buff',
+      group: 'reinforcement',
+      skill_type: 'BUFF',
+    },
+    {
+      skill_id: 141,
+      level: 3,
+      class_index: 0,
+      name: 'Weapon Mastery',
+      icon_url: '/skill-icons/141.png',
+      operate: 'passive',
+      kind: 'buff',
+      group: 'physical',
+      skill_type: 'BUFF',
+    },
   ])
   const user = mount()
-  expect(await screen.findByLabelText('Grade de skills')).toBeVisible()
+  expect(await screen.findByRole('button', { name: 'Skills físicas' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Skills de reforço' })).toBeVisible()
   expect(screen.getByLabelText('Triple Slash · Nv. 37')).toBeVisible()
   expect(screen.getByRole('img', { name: 'Triple Slash' })).toHaveAttribute('src', '/skill-icons/1.png')
-  await user.click(screen.getByLabelText('Power Strike · Nv. 9'))
-  const dialog = screen.getByRole('dialog', { name: 'Power Strike' })
+  expect(screen.getByLabelText('Dash · Nv. 2')).toBeVisible()
+  expect(screen.queryByLabelText('Weapon Mastery · Nv. 3')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('tab', { name: 'Passivas' }))
+  expect(screen.queryByLabelText('Triple Slash · Nv. 37')).not.toBeInTheDocument()
+  expect(screen.getByLabelText('Weapon Mastery · Nv. 3')).toBeVisible()
+  await user.click(screen.getByRole('tab', { name: 'Ativas' }))
+  await user.click(screen.getByRole('button', { name: 'Skills físicas' }))
+  expect(screen.queryByLabelText('Triple Slash · Nv. 37')).not.toBeInTheDocument()
+  expect(screen.getByLabelText('Dash · Nv. 2')).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Skills físicas' }))
+  await user.click(screen.getByLabelText('Triple Slash · Nv. 37'))
+  const dialog = screen.getByRole('dialog', { name: 'Triple Slash' })
   expect(dialog).toBeVisible()
   expect(dialog).toHaveTextContent('ID')
-  expect(dialog).toHaveTextContent('3')
+  expect(dialog).toHaveTextContent('1')
   expect(dialog).toHaveTextContent('Nível')
-  expect(dialog).toHaveTextContent('9')
+  expect(dialog).toHaveTextContent('37')
+  expect(dialog).toHaveTextContent('Ativa')
+  expect(dialog).toHaveTextContent('Skills físicas')
 })
 it('mostra carregamento sem permitir serviço', () => {
   vi.mocked(lineageApi.characters).mockImplementation(() => new Promise(() => {}))

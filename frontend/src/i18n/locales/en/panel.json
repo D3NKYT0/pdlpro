@@ -1416,21 +1416,39 @@
     "skills": {
       "title": "Skills",
       "sectionLabel": "Character skills",
-      "gridLabel": "Skills grid",
       "loading": "Loading skills...",
       "error": "Could not load this character's skills.",
       "empty": "No skills found.",
-      "count_one": "learned skill",
-      "count_other": "learned skills",
+      "emptyFilter": "No skills in this tab.",
       "itemId": "ID {{id}}",
       "levelValue": "Lv. {{level}}",
       "levelBadge": "{{level}}",
       "slotAria": "{{name}} · Lv. {{level}}",
+      "tabsLabel": "Skill tabs",
+      "tabs": {
+        "active": "Active",
+        "passive": "Passive"
+      },
+      "groups": {
+        "physical": "Physical Skills",
+        "magic": "Magic Skills",
+        "reinforcement": "Reinforcement Skills",
+        "weaken": "Weaken Skills",
+        "special": "Clan/Hero/Mentoring Skills",
+        "other": "Other Skills"
+      },
+      "operate": {
+        "active": "Active",
+        "passive": "Passive",
+        "toggle": "Toggle"
+      },
       "modal": {
         "title": "Skill details",
         "fields": {
           "id": "ID",
-          "level": "Level"
+          "level": "Level",
+          "operate": "Mode",
+          "group": "Group"
         }
       }
     },

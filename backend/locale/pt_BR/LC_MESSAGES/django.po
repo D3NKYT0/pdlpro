@@ -2297,7 +2297,7 @@ msgid "Skills do personagem"
 msgstr ""
 
 #: .\apps\server\presentation\views\customer.py:225
-msgid "Lista as skills aprendidas pelo personagem informado, com nome e ícone do catálogo XML."
+msgid "Lista as skills aprendidas pelo personagem informado, com nome, ícone e pastas da janela L2 (físicas, mágicas, reforço, enfraquecimento)."
 msgstr ""
 
 #: .\apps\server\presentation\views\customer.py:222

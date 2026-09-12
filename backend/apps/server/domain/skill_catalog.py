@@ -12,7 +12,7 @@ class ISkillCatalog(ABC):
 
     @abstractmethod
     def metadata(self, skill_id: int) -> dict:
-        """Metadados públicos da skill (nome, ícone, presença no XML)."""
+        """Metadados públicos da skill (nome, ícone, pasta da janela L2 e presença no XML)."""
 
         raise NotImplementedError
 

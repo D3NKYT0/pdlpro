@@ -24,6 +24,9 @@ export type {
   ApiGameItem,
   ApiGameSkill,
   ApiInventoryRow,
+  SkillGroup,
+  SkillKind,
+  SkillOperate,
 } from './domain/lineage.service'
 export { paymentApi } from './domain/payment.service'
 export { marketplaceApi } from './domain/marketplace.service'

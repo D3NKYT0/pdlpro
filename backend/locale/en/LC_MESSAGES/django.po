@@ -2423,8 +2423,8 @@ msgid "Skills do personagem"
 msgstr "Character skills"
 
 #: .\apps\server\presentation\views\customer.py:225
-msgid "Lista as skills aprendidas pelo personagem informado, com nome e ícone do catálogo XML."
-msgstr "Lists the skills learned by the given character, with XML catalog name and icon."
+msgid "Lista as skills aprendidas pelo personagem informado, com nome, ícone e pastas da janela L2 (físicas, mágicas, reforço, enfraquecimento)."
+msgstr "Lists the skills learned by the given character, with XML catalog name, icon and L2 skill-window folders (physical, magic, reinforcement, weaken)."
 
 #: .\apps\server\presentation\views\customer.py:222
 msgid "Alterar senha do jogo"

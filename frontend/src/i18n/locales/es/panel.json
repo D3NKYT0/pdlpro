@@ -1416,21 +1416,39 @@
     "skills": {
       "title": "Skills",
       "sectionLabel": "Skills del personaje",
-      "gridLabel": "Cuadrícula de skills",
       "loading": "Cargando skills...",
       "error": "No fue posible cargar las skills de este personaje.",
       "empty": "No se encontraron skills.",
-      "count_one": "skill aprendida",
-      "count_other": "skills aprendidas",
+      "emptyFilter": "No hay skills en esta pestaña.",
       "itemId": "ID {{id}}",
       "levelValue": "Nv. {{level}}",
       "levelBadge": "{{level}}",
       "slotAria": "{{name}} · Nv. {{level}}",
+      "tabsLabel": "Pestañas de skills",
+      "tabs": {
+        "active": "Activas",
+        "passive": "Pasivas"
+      },
+      "groups": {
+        "physical": "Skills físicas",
+        "magic": "Skills mágicas",
+        "reinforcement": "Skills de refuerzo",
+        "weaken": "Skills de debilitación",
+        "special": "Skills de clan/héroe/mentoría",
+        "other": "Otras skills"
+      },
+      "operate": {
+        "active": "Activa",
+        "passive": "Pasiva",
+        "toggle": "Alternable"
+      },
       "modal": {
         "title": "Detalles de la skill",
         "fields": {
           "id": "ID",
-          "level": "Nivel"
+          "level": "Nivel",
+          "operate": "Modo",
+          "group": "Grupo"
         }
       }
     },
