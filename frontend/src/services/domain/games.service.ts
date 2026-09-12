@@ -148,7 +148,7 @@ export const gamesApi = {
     }),
   openBox: (boxId: string) =>
     request<{
-      item: { name: string; rarity: string; enchant: number }
+      item: { item_id: number; name: string; rarity: string; enchant: number; quantity?: number }
       remaining: number
       fichas: number
     }>(`/customer/games/boxes/${boxId}/open/`, { method: 'POST' }),

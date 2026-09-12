@@ -1020,6 +1020,7 @@
       "remaining": "{{remaining}} of {{total}} left",
       "open_one": "Open · {{count}} token",
       "open_other": "Open · {{count}} tokens",
+      "prizeEnchant": "+{{enchant}}",
       "empty": "No chest available right now."
     },
     "chance": {

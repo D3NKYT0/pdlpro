@@ -8,6 +8,7 @@ import {
   rouletteReelStrip,
   visibleSlotReels,
 } from './gameArt'
+import { BOX_HOLD_MS, BOX_REVEAL_MS, waitForBoxHold, waitForBoxReveal } from './boxReveal'
 import { ROULETTE_REVEAL_MS, ROULETTE_SLOW_MS, rouletteSpinPhase, waitForRouletteReveal } from './rouletteReveal'
 
 describe('inferBoxRarity', () => {
@@ -73,6 +74,25 @@ it('repete o catálogo no tambor sem exigir ver todos os itens de uma vez', () =
   expect(rouletteReelStrip(['a', 'b'], 2)).toEqual(['a', 'b', 'a', 'b'])
   expect(rouletteReelStrip(['x'])).toHaveLength(4)
   expect(rouletteReelStrip([])).toEqual([])
+})
+
+it('segura o revelar do baú pelo tempo do palco', async () => {
+  vi.useFakeTimers()
+  const pending = waitForBoxReveal(0, 0)
+  const done = vi.fn()
+  void pending.then(done)
+  await vi.advanceTimersByTimeAsync(BOX_REVEAL_MS - 1)
+  expect(done).not.toHaveBeenCalled()
+  await vi.advanceTimersByTimeAsync(1)
+  expect(done).toHaveBeenCalledTimes(1)
+  const hold = waitForBoxHold()
+  const held = vi.fn()
+  void hold.then(held)
+  await vi.advanceTimersByTimeAsync(BOX_HOLD_MS - 1)
+  expect(held).not.toHaveBeenCalled()
+  await vi.advanceTimersByTimeAsync(1)
+  expect(held).toHaveBeenCalledTimes(1)
+  vi.useRealTimers()
 })
 
 it('segura o revelar do giro pelo tempo do palco', async () => {

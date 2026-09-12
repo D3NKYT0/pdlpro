@@ -27,6 +27,7 @@ import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
 import { sortBoxesByRarity } from '../components/games/gameArt'
 import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
+import { waitForBoxHold, waitForBoxReveal } from '../components/games/boxReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 
@@ -37,6 +38,7 @@ type PlayFx = {
   prizeName?: string | null
   prizeQuantity?: number
   prizeItemId?: number
+  prizeEnchant?: number
   slowing?: boolean
   diceRoll?: number
   slotsReels?: string[]
@@ -135,12 +137,21 @@ export function GamesPage() {
   async function openBox(id: string) {
     setFx({ playing: 'open', targetId: id })
     const outcome = await action.run(async () => {
+      const startedAt = Date.now()
       const result = await gamesApi.openBox(id)
-      toast.success(t('games.toast.boxOpened', { name: result.item.name, enchant: result.item.enchant }))
+      await waitForBoxReveal(startedAt)
+      setFx({
+        targetId: id,
+        prizeName: result.item.name,
+        prizeQuantity: result.item.quantity ?? 1,
+        prizeItemId: result.item.item_id,
+        prizeEnchant: result.item.enchant,
+      })
+      await waitForBoxHold()
       await refresh()
       return result
     }, t('games.toast.openBoxError'))
-    setFx(outcome.ok ? { targetId: id } : {})
+    if (!outcome.ok) setFx({})
   }
 
   async function playDice(event: FormEvent) {
@@ -356,6 +367,10 @@ export function GamesPage() {
                     remaining={row.remaining}
                     total={row.total}
                     opening={fx.playing === 'open' && fx.targetId === row.id}
+                    prizeName={fx.targetId === row.id ? fx.prizeName : undefined}
+                    prizeItemId={fx.targetId === row.id ? fx.prizeItemId : undefined}
+                    prizeQuantity={fx.targetId === row.id ? fx.prizeQuantity : undefined}
+                    prizeEnchant={fx.targetId === row.id ? fx.prizeEnchant : undefined}
                     onAction={() => void openBox(row.id)}
                     actionLabel={t('games.boxes.open', { count: 1 })}
                   />

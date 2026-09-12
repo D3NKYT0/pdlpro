@@ -7537,7 +7537,11 @@ html.pdl-panel .game-box-card.is-owned {
 }
 
 html.pdl-panel .game-box-card.is-opening {
-  box-shadow: 0 0 28px color-mix(in srgb, var(--box-accent) 28%, transparent);
+  box-shadow: 0 0 36px color-mix(in srgb, var(--box-accent) 42%, transparent);
+}
+
+html.pdl-panel .game-box-card.is-revealed {
+  box-shadow: 0 0 40px color-mix(in srgb, var(--box-accent) 50%, transparent);
 }
 
 html.pdl-panel .game-box-copy {
@@ -7626,13 +7630,20 @@ html.pdl-panel .game-box-grid > .game-empty {
 }
 
 html.pdl-panel .game-chest {
+  position: relative;
   display: grid;
   min-height: 148px;
   place-items: center;
+  overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--box-accent, var(--panel-gold)) 36%, transparent);
   background:
     radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 62%),
     color-mix(in srgb, var(--panel-surface) 82%, #000);
+}
+
+html.pdl-panel .game-chest.is-opening,
+html.pdl-panel .game-chest.is-win {
+  overflow: visible;
 }
 
 html.pdl-panel .game-chest.rarity-epic {
@@ -7671,8 +7682,101 @@ html.pdl-panel .game-chest.rarity-legendary .game-chest-art {
   background-image: var(--theme-art-games-box-legendary);
 }
 
-html.pdl-panel .game-chest.is-opening {
-  animation: game-chest-open 720ms ease;
+html.pdl-panel .game-chest-glow {
+  position: absolute;
+  inset: 6%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--box-accent, var(--panel-gold)) 48%, transparent),
+    transparent 72%
+  );
+}
+
+html.pdl-panel .game-chest.is-opening .game-chest-glow {
+  animation: game-chest-glow 2.4s ease both;
+}
+
+html.pdl-panel .game-chest.is-opening .game-chest-art {
+  animation: game-chest-unseal 2.4s ease both;
+}
+
+html.pdl-panel .game-chest.is-win .game-chest-art {
+  transform: translateY(-10px) scale(1.04);
+  opacity: 0.46;
+  filter: brightness(1.2);
+}
+
+html.pdl-panel .game-chest-burst {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+html.pdl-panel .game-chest-flash {
+  position: absolute;
+  inset: 8%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--panel-gold-bright) 62%, transparent),
+    transparent 72%
+  );
+  animation: roulette-flash-pop 0.7s ease-out both;
+}
+
+html.pdl-panel .game-chest-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 16px;
+  margin: -8px -2px;
+  border-radius: 999px;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 12px var(--panel-gold-bright);
+  transform: rotate(var(--spark-a)) translateY(0);
+  animation: roulette-spark-fly 0.95s ease-out both;
+}
+
+html.pdl-panel .game-chest-spark:nth-child(odd) {
+  height: 22px;
+  animation-duration: 1.15s;
+}
+
+html.pdl-panel .game-chest-boom {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 14px var(--panel-gold-bright);
+  animation: roulette-boom-pop 0.85s ease-out both;
+}
+
+html.pdl-panel .game-chest-prize {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: 4px;
+  padding: 12px;
+  text-align: center;
+  color: var(--panel-gold-bright);
+  animation: roulette-prize-pop 0.55s cubic-bezier(0.2, 1.4, 0.35, 1) both;
+}
+
+html.pdl-panel .game-chest-prize strong {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+html.pdl-panel .game-chest-prize small {
+  color: var(--panel-muted);
+  font-size: 11px;
 }
 
 html.pdl-panel .chance-stage,
@@ -7885,10 +7989,24 @@ html.pdl-panel .monster-item.is-fighting {
   border-color: rgba(230, 199, 125, 0.42);
 }
 
-@keyframes game-chest-open {
-  0%, 100% { transform: translateY(0) scale(1); }
-  35% { transform: translateY(-7px) scale(1.04); }
-  60% { transform: translateY(2px) scale(0.99); }
+@keyframes game-chest-unseal {
+  0%, 6% { transform: translate(0, 0) rotate(0) scale(1); }
+  10% { transform: translate(-4px, 1px) rotate(-3deg); }
+  16% { transform: translate(4px, -2px) rotate(3deg); }
+  22% { transform: translate(-3px, 2px) rotate(-2deg); }
+  28% { transform: translate(3px, -1px) rotate(2deg); }
+  34% { transform: translate(-2px, 0) rotate(-1deg) scale(1.02); }
+  42% { transform: translate(2px, -4px) rotate(1deg) scale(1.04); }
+  55% { transform: translate(0, -8px) scale(1.06); filter: brightness(1.12); }
+  72% { transform: translate(0, -16px) scale(1.1); filter: brightness(1.28); }
+  100% { transform: translate(0, -10px) scale(1.04); filter: brightness(1.18); }
+}
+
+@keyframes game-chest-glow {
+  0% { opacity: 0; transform: scale(0.72); }
+  28% { opacity: 0.45; transform: scale(0.9); }
+  58% { opacity: 0.85; transform: scale(1.08); }
+  100% { opacity: 0.35; transform: scale(1.16); }
 }
 
 @keyframes game-dice-roll {
@@ -7927,6 +8045,12 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .roulette-miss-ember,
   html.pdl-panel .roulette-prize,
   html.pdl-panel .game-chest.is-opening,
+  html.pdl-panel .game-chest.is-opening .game-chest-art,
+  html.pdl-panel .game-chest.is-opening .game-chest-glow,
+  html.pdl-panel .game-chest-flash,
+  html.pdl-panel .game-chest-spark,
+  html.pdl-panel .game-chest-boom,
+  html.pdl-panel .game-chest-prize,
   html.pdl-panel .chance-dice.is-rolling .chance-die,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,
   html.pdl-panel .fishing-pond.is-casting .fishing-pond-ripple,
@@ -7935,7 +8059,8 @@ html.pdl-panel .monster-item.is-fighting {
   }
 
   html.pdl-panel .roulette-burst,
-  html.pdl-panel .roulette-miss-burst {
+  html.pdl-panel .roulette-miss-burst,
+  html.pdl-panel .game-chest-burst {
     display: none;
   }
 }

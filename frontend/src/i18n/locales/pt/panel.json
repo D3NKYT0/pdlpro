@@ -1020,6 +1020,7 @@
       "remaining": "{{remaining}} de {{total}} restantes",
       "open_one": "Abrir · {{count}} ficha",
       "open_other": "Abrir · {{count}} fichas",
+      "prizeEnchant": "+{{enchant}}",
       "empty": "Nenhum baú disponível no momento."
     },
     "chance": {

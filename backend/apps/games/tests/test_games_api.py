@@ -118,8 +118,16 @@ def test_buy_and_open_box(api, player):
     assert opened.data["item"]["name"] == item_metadata(opened.data["item"]["item_id"])["name"]
     assert opened.data["item"]["quantity"] == 20
     assert opened.data["remaining"] == 1
+    assert opened.data["fichas"] == 2
+    player.refresh_from_db()
+    assert player.fichas == 2
     bag = api.get("/api/v1/customer/games/bag/")
     assert bag.data[0]["quantity"] == 20
+    player.fichas = 0
+    player.save(update_fields=["fichas"])
+    refused = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
+    assert refused.status_code == 400
+    assert refused.data["error_code"] == "INSUFFICIENT_TOKENS"
 
 
 @pytest.mark.django_db
