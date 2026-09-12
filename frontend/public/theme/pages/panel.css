@@ -7824,14 +7824,42 @@ html.pdl-panel .game-chest.is-hero .game-chest-prize {
 html.pdl-panel .game-chest-prize-icon {
   position: relative;
   display: grid;
-  width: 96px;
-  height: 96px;
+  width: 112px;
+  height: 112px;
   place-items: center;
 }
 
-html.pdl-panel .game-chest-prize-icon > .l2-item-icon {
+html.pdl-panel .game-chest-prize-core {
   position: relative;
   z-index: 1;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  animation: game-chest-prize-rise 0.9s cubic-bezier(0.16, 1.45, 0.32, 1) both;
+}
+
+html.pdl-panel .game-chest-prize-core .l2-item-icon {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--box-accent, var(--panel-gold-bright)) 70%, transparent));
+  animation: game-chest-prize-float 2.3s ease-in-out 0.9s infinite;
+}
+
+html.pdl-panel .game-chest-prize-shine {
+  position: absolute;
+  inset: -20%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    color-mix(in srgb, #fff 78%, var(--panel-gold-bright)) 48%,
+    transparent 64%
+  );
+  animation: game-chest-prize-shine 1.05s ease 0.28s both;
+}
+
+html.pdl-panel .game-chest.is-hero .game-chest-prize strong,
+html.pdl-panel .game-chest.is-hero .game-chest-prize small {
+  animation: game-chest-prize-copy 0.45s ease 0.42s both;
 }
 
 html.pdl-panel .game-chest-prize-aura {
@@ -8270,6 +8298,63 @@ html.pdl-panel .monster-item.is-fighting {
   }
 }
 
+@keyframes game-chest-prize-rise {
+  0% {
+    transform: translateY(36px) scale(0.18) rotate(-14deg);
+    opacity: 0;
+    filter: brightness(2.6);
+  }
+  58% {
+    transform: translateY(-8px) scale(1.24) rotate(5deg);
+    opacity: 1;
+    filter: brightness(1.35);
+  }
+  78% {
+    transform: translateY(3px) scale(0.94) rotate(-2deg);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes game-chest-prize-float {
+  0%, 100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--box-accent, var(--panel-gold-bright)) 55%, transparent)) brightness(1);
+  }
+  50% {
+    transform: translateY(-7px);
+    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--box-accent, var(--panel-gold-bright)) 85%, transparent)) brightness(1.18);
+  }
+}
+
+@keyframes game-chest-prize-shine {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+    opacity: 0;
+  }
+  28% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(130%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes game-chest-prize-copy {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes game-chest-mote-drift {
   0% {
     opacity: 0;
@@ -8330,6 +8415,9 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .game-chest-boom,
   html.pdl-panel .game-chest-rays,
   html.pdl-panel .game-chest-mote,
+  html.pdl-panel .game-chest-prize-core,
+  html.pdl-panel .game-chest-prize-core .l2-item-icon,
+  html.pdl-panel .game-chest-prize-shine,
   html.pdl-panel .game-chest-prize,
   html.pdl-panel .chance-dice.is-rolling .chance-die,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,

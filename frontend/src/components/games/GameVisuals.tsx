@@ -242,7 +242,10 @@ export function BoxChest({
                   />
                 ))}
               </span>
-              <ItemIcon itemId={prizeItemId} name={prizeName} size={64} />
+              <span className="game-chest-prize-core">
+                <i className="game-chest-prize-shine" aria-hidden="true" />
+                <ItemIcon itemId={prizeItemId} name={prizeName} size={72} />
+              </span>
             </span>
           ) : (
             <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
