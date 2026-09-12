@@ -26,17 +26,23 @@ function SkillSlot({
   if (!skill) {
     return <div className="character-bag-slot is-empty" aria-hidden="true" />
   }
-  const title = `${skill.name} · ${t('character.skills.itemId', { id: skill.skill_id })} · ${t('character.skills.levelValue', { level: skill.level })}`
+  const title = skill.enchant > 0
+    ? t('character.skills.slotAriaEnchanted', { name: skill.name, level: skill.level, enchant: skill.enchant })
+    : t('character.skills.slotAria', { name: skill.name, level: skill.level })
   return (
     <button
       type="button"
       className="character-bag-slot is-filled"
       title={title}
-      aria-label={t('character.skills.slotAria', { name: skill.name, level: skill.level })}
+      aria-label={title}
       onClick={() => onSelect(skill)}
     >
       <SkillIcon skillId={skill.skill_id} name={skill.name} iconUrl={skill.icon_url} size={32} />
-      <span className="character-bag-slot-enchant">{t('character.skills.levelBadge', { level: skill.level })}</span>
+      {skill.enchant > 0 ? (
+        <span className="character-bag-slot-enchant">{t('character.skills.enchantBadge', { value: skill.enchant })}</span>
+      ) : (
+        <span className="character-bag-slot-enchant">{t('character.skills.levelBadge', { level: skill.level })}</span>
+      )}
     </button>
   )
 }
@@ -178,6 +184,18 @@ export function CharacterSkillsPanel({
                 <dt>{t('character.skills.modal.fields.level')}</dt>
                 <dd>{selected.level}</dd>
               </div>
+              {selected.enchantable ? (
+                <div>
+                  <dt>{t('character.skills.modal.fields.enchant')}</dt>
+                  <dd>{t('character.skills.enchantValue', { value: selected.enchant, max: selected.enchant_max })}</dd>
+                </div>
+              ) : null}
+              {selected.enchant_route > 0 ? (
+                <div>
+                  <dt>{t('character.skills.modal.fields.route')}</dt>
+                  <dd>{t('character.skills.routeValue', { route: selected.enchant_route })}</dd>
+                </div>
+              ) : null}
               <div>
                 <dt>{t('character.skills.modal.fields.operate')}</dt>
                 <dd>{t(`character.skills.operate.${selected.operate}`)}</dd>

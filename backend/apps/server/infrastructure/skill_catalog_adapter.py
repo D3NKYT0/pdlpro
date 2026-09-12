@@ -13,5 +13,8 @@ class LineageSkillCatalogAdapter(ISkillCatalog):
     def metadata(self, skill_id: int) -> dict:
         return catalog.skill_metadata(skill_id)
 
+    def progress(self, skill_id: int, stored_level: int) -> dict:
+        return catalog.skill_progress(skill_id, stored_level)
+
     def default_icon_url(self) -> str:
         return catalog.DEFAULT_SKILL_ICON

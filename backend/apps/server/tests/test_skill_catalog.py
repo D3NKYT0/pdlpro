@@ -7,13 +7,15 @@ from apps.server.infrastructure.lineage.skill_catalog import (
     classify_skill_group,
     classify_skill_kind,
     classify_skill_operate,
+    resolve_skill_progress,
     skill_display_name,
     skill_metadata,
+    skill_progress,
 )
 
 SAMPLE = """
 <list>
-  <skill id="1" levels="37" name="Triple Slash">
+  <skill id="1" levels="37" name="Triple Slash" enchantLevels1="30" enchantLevels2="30">
     <set name="skillType" val="PDAM"/>
     <set name="operateType" val="ACTIVE"/>
   </skill>
@@ -69,6 +71,25 @@ def test_classifies_operate_kind_and_l2_window_group():
     assert classify_skill_group(skill_type="RECALL", operate="active", is_magic=False, name="Recall") == "other"
 
 
+def test_decodes_l2j_skill_enchant_from_stored_level():
+    routes = (30, 30)
+    unenchanted = resolve_skill_progress(37, 37, routes)
+    assert unenchanted["level"] == 37
+    assert unenchanted["enchant"] == 0
+    assert unenchanted["enchantable"] is True
+    assert unenchanted["enchant_max"] == 30
+    plus_one = resolve_skill_progress(38, 37, routes)
+    assert plus_one == {"level": 37, "enchant": 1, "enchant_route": 1, "enchant_max": 30, "enchantable": True}
+    plus_thirty = resolve_skill_progress(67, 37, routes)
+    assert plus_thirty["enchant"] == 30
+    assert plus_thirty["enchant_route"] == 1
+    route_two = resolve_skill_progress(68, 37, routes)
+    assert route_two == {"level": 37, "enchant": 1, "enchant_route": 2, "enchant_max": 30, "enchantable": True}
+    plain = resolve_skill_progress(9, 9, ())
+    assert plain["enchant"] == 0
+    assert plain["enchantable"] is False
+
+
 def test_parses_skill_xml_catalog(tmp_path: Path):
     (tmp_path / "0000-0099.xml").write_text(SAMPLE, encoding="utf-8")
     catalog = LineageSkillCatalog.load(tmp_path)
@@ -79,6 +100,8 @@ def test_parses_skill_xml_catalog(tmp_path: Path):
     assert slash.kind == "attack"
     assert slash.group == "physical"
     assert slash.skill_type == "PDAM"
+    assert slash.max_level == 37
+    assert slash.enchant_routes == (30, 30)
     dash = catalog.get(4)
     assert dash is not None
     assert dash.group == "reinforcement"
@@ -108,6 +131,10 @@ def test_real_xml_has_triple_slash():
     assert skill.operate == "active"
     assert skill.kind == "attack"
     assert skill.group == "physical"
+    assert skill.max_level == 37
+    assert skill.enchant_routes == (30, 30)
+    assert skill_progress(1, 52)["enchant"] == 15
+    assert skill_progress(1, 52)["level"] == 37
     confusion = catalog.get(2)
     if confusion is not None:
         assert confusion.kind == "debuff"

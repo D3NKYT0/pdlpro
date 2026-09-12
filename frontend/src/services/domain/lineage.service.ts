@@ -87,6 +87,10 @@ export interface ApiGameSkill {
   kind: SkillKind
   group: SkillGroup
   skill_type: string
+  enchant: number
+  enchant_route: number
+  enchant_max: number
+  enchantable: boolean
 }
 
 export interface ApiCharacterEquipmentItem extends ApiGameItem {

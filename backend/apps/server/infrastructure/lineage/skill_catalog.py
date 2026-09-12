@@ -10,6 +10,8 @@ from django.conf import settings
 SKILL_RE = re.compile(r"<skill\b([^>]*)>([\s\S]*?)</skill>", re.IGNORECASE)
 ATTR_ID_RE = re.compile(r'\bid\s*=\s*"(\d+)"', re.IGNORECASE)
 ATTR_NAME_RE = re.compile(r'\bname\s*=\s*"([^"]*)"', re.IGNORECASE)
+ATTR_LEVELS_RE = re.compile(r'\blevels\s*=\s*"(\d+)"', re.IGNORECASE)
+ATTR_ENCHANT_RE = re.compile(r'\benchantLevels(\d+)\s*=\s*"(\d+)"', re.IGNORECASE)
 SET_RE = re.compile(r'<set\s+name="([^"]+)"\s+val="([^"]*)"\s*/>', re.IGNORECASE)
 SPECIAL_NAME_RE = re.compile(r"(?i)\b(clan|heroic|noblesse|mentor(?:ing)?)\b")
 
@@ -123,6 +125,41 @@ def classify_skill_group(*, skill_type: str, operate: str, is_magic: bool, name:
     return "other"
 
 
+def resolve_skill_progress(stored_level: int, max_level: int, enchant_routes: tuple[int, ...]) -> dict:
+    """Decodifica o skill_level do L2J: até ``max_level`` é o rank; acima disso é encanto por rota."""
+    stored = max(1, int(stored_level or 1))
+    base = max(1, int(max_level or stored))
+    routes = tuple(int(cap) for cap in enchant_routes if int(cap) > 0)
+    enchant_max = max(routes) if routes else 0
+    if stored <= base or not routes:
+        return {
+            "level": stored if not routes else min(stored, base),
+            "enchant": 0,
+            "enchant_route": 0,
+            "enchant_max": enchant_max,
+            "enchantable": enchant_max > 0,
+        }
+    remaining = stored - base
+    for index, cap in enumerate(routes, start=1):
+        if remaining <= cap:
+            return {
+                "level": base,
+                "enchant": remaining,
+                "enchant_route": index,
+                "enchant_max": cap,
+                "enchantable": True,
+            }
+        remaining -= cap
+    last = routes[-1]
+    return {
+        "level": base,
+        "enchant": last,
+        "enchant_route": len(routes),
+        "enchant_max": last,
+        "enchantable": True,
+    }
+
+
 @dataclass(frozen=True, slots=True)
 class L2Skill:
     """Metadados de uma skill carregada do catálogo XML do Lineage."""
@@ -134,6 +171,8 @@ class L2Skill:
     group: str = "other"
     is_magic: bool = False
     skill_type: str = ""
+    max_level: int = 1
+    enchant_routes: tuple[int, ...] = ()
 
 
 class LineageSkillCatalog:
@@ -186,6 +225,10 @@ class LineageSkillCatalog:
             skill_type = (sets.get("skilltype") or "").strip().upper()
             operate = classify_skill_operate(sets.get("operatetype", ""))
             is_magic = classify_is_magic(sets.get("ismagic", ""))
+            levels_match = ATTR_LEVELS_RE.search(attrs)
+            enchant_caps = {
+                int(index): int(cap) for index, cap in ATTR_ENCHANT_RE.findall(attrs) if int(cap) > 0
+            }
             parsed.append(
                 L2Skill(
                     id=int(raw_id.group(1)),
@@ -200,6 +243,8 @@ class LineageSkillCatalog:
                     ),
                     is_magic=is_magic,
                     skill_type=skill_type,
+                    max_level=int(levels_match.group(1)) if levels_match else 1,
+                    enchant_routes=tuple(enchant_caps[index] for index in sorted(enchant_caps)),
                 )
             )
         return parsed
@@ -227,4 +272,13 @@ def skill_metadata(skill_id: int) -> dict:
         "group": skill.group if skill else "other",
         "is_magic": skill.is_magic if skill else False,
         "skill_type": skill.skill_type if skill else "",
+        "max_level": skill.max_level if skill else 1,
+        "enchant_max": max(skill.enchant_routes) if skill and skill.enchant_routes else 0,
     }
+
+
+def skill_progress(skill_id: int, stored_level: int) -> dict:
+    skill = get_skill_catalog().get(int(skill_id))
+    if skill is None:
+        return resolve_skill_progress(stored_level, int(stored_level or 1), ())
+    return resolve_skill_progress(stored_level, skill.max_level, skill.enchant_routes)

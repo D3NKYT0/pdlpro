@@ -41,7 +41,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   [Ícones de itens e skills](../integracoes/icones.md).
 - Lista de **skills do personagem** na ficha (`/panel/accounts/...`): janela no
   estilo do cliente L2 (abas Active/Passive e pastas Physical, Magic,
-  Reinforcement, Weaken, Clan/Hero), com ícones, nível e nomes do XML; `GET
+  Reinforcement, Weaken, Clan/Hero), com ícones, nível, encanto (+0…+N
+  decodificado do `skill_level`) e nomes do XML; `GET
   /api/v1/customer/server/characters/<id>/skills/`.
 
 ### Alterado

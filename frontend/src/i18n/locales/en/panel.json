@@ -1424,6 +1424,10 @@
       "levelValue": "Lv. {{level}}",
       "levelBadge": "{{level}}",
       "slotAria": "{{name}} · Lv. {{level}}",
+      "slotAriaEnchanted": "{{name}} · Lv. {{level}} · +{{enchant}}",
+      "enchantBadge": "+{{value}}",
+      "enchantValue": "+{{value}} / +{{max}}",
+      "routeValue": "{{route}}",
       "tabsLabel": "Skill tabs",
       "tabs": {
         "active": "Active",
@@ -1448,7 +1452,9 @@
           "id": "ID",
           "level": "Level",
           "operate": "Mode",
-          "group": "Group"
+          "group": "Group",
+          "enchant": "Enchant",
+          "route": "Route"
         }
       }
     },

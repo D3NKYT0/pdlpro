@@ -17,5 +17,11 @@ class ISkillCatalog(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def progress(self, skill_id: int, stored_level: int) -> dict:
+        """Nível de exibição e encanto (+0…+N) decodificados do skill_level do jogo."""
+
+        raise NotImplementedError
+
+    @abstractmethod
     def default_icon_url(self) -> str:
         raise NotImplementedError

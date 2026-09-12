@@ -235,10 +235,15 @@ class CharacterSkillsView(InjectedAPIView):
         payload = []
         for skill in skills:
             meta = catalog.metadata(skill.skill_id)
+            progress = catalog.progress(skill.skill_id, skill.level)
             payload.append(
                 {
                     "skill_id": skill.skill_id,
-                    "level": skill.level,
+                    "level": progress["level"],
+                    "enchant": progress["enchant"],
+                    "enchant_route": progress["enchant_route"],
+                    "enchant_max": progress["enchant_max"],
+                    "enchantable": progress["enchantable"],
                     "class_index": skill.class_index,
                     "name": meta["name"],
                     "icon_url": meta["icon_url"],

@@ -1424,6 +1424,10 @@
       "levelValue": "Nv. {{level}}",
       "levelBadge": "{{level}}",
       "slotAria": "{{name}} · Nv. {{level}}",
+      "slotAriaEnchanted": "{{name}} · Nv. {{level}} · +{{enchant}}",
+      "enchantBadge": "+{{value}}",
+      "enchantValue": "+{{value}} / +{{max}}",
+      "routeValue": "{{route}}",
       "tabsLabel": "Abas de skills",
       "tabs": {
         "active": "Ativas",
@@ -1448,7 +1452,9 @@
           "id": "ID",
           "level": "Nível",
           "operate": "Modo",
-          "group": "Grupo"
+          "group": "Grupo",
+          "enchant": "Encanto",
+          "route": "Rota"
         }
       }
     },

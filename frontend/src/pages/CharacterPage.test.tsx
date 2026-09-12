@@ -154,6 +154,10 @@ it('mostra a janela L2 de skills com pastas e abas Active/Passive', async () => 
       kind: 'attack',
       group: 'physical',
       skill_type: 'PDAM',
+      enchant: 15,
+      enchant_route: 1,
+      enchant_max: 30,
+      enchantable: true,
     },
     {
       skill_id: 4,
@@ -165,6 +169,10 @@ it('mostra a janela L2 de skills com pastas e abas Active/Passive', async () => 
       kind: 'buff',
       group: 'reinforcement',
       skill_type: 'BUFF',
+      enchant: 0,
+      enchant_route: 0,
+      enchant_max: 30,
+      enchantable: true,
     },
     {
       skill_id: 141,
@@ -176,30 +184,36 @@ it('mostra a janela L2 de skills com pastas e abas Active/Passive', async () => 
       kind: 'buff',
       group: 'physical',
       skill_type: 'BUFF',
+      enchant: 0,
+      enchant_route: 0,
+      enchant_max: 0,
+      enchantable: false,
     },
   ])
   const user = mount()
   expect(await screen.findByRole('button', { name: 'Skills físicas' })).toBeVisible()
   expect(screen.getByRole('button', { name: 'Skills de reforço' })).toBeVisible()
-  expect(screen.getByLabelText('Triple Slash · Nv. 37')).toBeVisible()
+  expect(screen.getByLabelText('Triple Slash · Nv. 37 · +15')).toBeVisible()
   expect(screen.getByRole('img', { name: 'Triple Slash' })).toHaveAttribute('src', '/skill-icons/1.png')
   expect(screen.getByLabelText('Dash · Nv. 2')).toBeVisible()
   expect(screen.queryByLabelText('Weapon Mastery · Nv. 3')).not.toBeInTheDocument()
   await user.click(screen.getByRole('tab', { name: 'Passivas' }))
-  expect(screen.queryByLabelText('Triple Slash · Nv. 37')).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Triple Slash · Nv. 37 · +15')).not.toBeInTheDocument()
   expect(screen.getByLabelText('Weapon Mastery · Nv. 3')).toBeVisible()
   await user.click(screen.getByRole('tab', { name: 'Ativas' }))
   await user.click(screen.getByRole('button', { name: 'Skills físicas' }))
-  expect(screen.queryByLabelText('Triple Slash · Nv. 37')).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Triple Slash · Nv. 37 · +15')).not.toBeInTheDocument()
   expect(screen.getByLabelText('Dash · Nv. 2')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Skills físicas' }))
-  await user.click(screen.getByLabelText('Triple Slash · Nv. 37'))
+  await user.click(screen.getByLabelText('Triple Slash · Nv. 37 · +15'))
   const dialog = screen.getByRole('dialog', { name: 'Triple Slash' })
   expect(dialog).toBeVisible()
   expect(dialog).toHaveTextContent('ID')
   expect(dialog).toHaveTextContent('1')
   expect(dialog).toHaveTextContent('Nível')
   expect(dialog).toHaveTextContent('37')
+  expect(dialog).toHaveTextContent('Encanto')
+  expect(dialog).toHaveTextContent('+15 / +30')
   expect(dialog).toHaveTextContent('Ativa')
   expect(dialog).toHaveTextContent('Skills físicas')
 })
