@@ -48,6 +48,7 @@ import { BuyTokensModal } from '../components/games/BuyTokensModal'
 import { BoxHelpModal } from '../components/games/BoxHelpModal'
 import { ChanceRevealModal } from '../components/games/ChanceRevealModal'
 import { EnchantRevealModal } from '../components/games/EnchantRevealModal'
+import { latestGameTokens, writeCachedTokens } from '../components/games/gameTokens'
 import { waitForEnchantReveal } from '../components/games/enchantReveal'
 
 type PlayFx = {
@@ -134,9 +135,18 @@ export function GamesPage() {
     await queryClient.invalidateQueries({ queryKey: ['inventory'] })
   }
 
-  const knownTokens = roulette.data?.fichas ?? minigames.data?.fichas
+  const knownTokens = latestGameTokens([
+    { fichas: roulette.data?.fichas, updatedAt: roulette.dataUpdatedAt },
+    { fichas: minigames.data?.fichas, updatedAt: minigames.dataUpdatedAt },
+    { fichas: economy.data?.fichas, updatedAt: economy.dataUpdatedAt },
+  ])
   const tokens = knownTokens ?? 0
   const quietTokens = { quiet: isInsufficientTokens }
+
+  function applyTokens(fichas?: number) {
+    if (fichas == null) return
+    writeCachedTokens(queryClient, fichas)
+  }
 
   function needTokens(cost = 1) {
     if (knownTokens == null || knownTokens >= cost) return false
@@ -154,6 +164,7 @@ export function GamesPage() {
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
       const result = await gamesApi.spin()
+      applyTokens(result.fichas)
       await waitForRouletteReveal(startedAt)
       return result
     }, t('games.toast.spinError'), quietTokens)
@@ -174,7 +185,8 @@ export function GamesPage() {
   async function buy(event: FormEvent) {
     event.preventDefault()
     await action.run(async () => {
-      await gamesApi.buyTokens(Number(amount))
+      const credited = await gamesApi.buyTokens(Number(amount))
+      applyTokens(credited.fichas)
       toast.success(t('games.toast.tokensCredited'))
       setBuyTokensOpen(false)
       await refresh()
@@ -223,6 +235,7 @@ export function GamesPage() {
       await waitForBoxShake(startedAt)
       setFx((current) => ({ ...current, overlay: true }))
       const result = await pending
+      applyTokens(result.fichas)
       await waitForBoxReveal(startedAt)
       setFx({
         targetId: id,
@@ -257,6 +270,7 @@ export function GamesPage() {
     }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
+      applyTokens(result.fichas)
       setFx((current) => ({
         playing: 'dice',
         diceRoll: result.roll,
@@ -308,6 +322,7 @@ export function GamesPage() {
     }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
+      applyTokens(result.fichas)
       setFx((current) => ({
         playing: 'slots',
         diceRoll: current.diceRoll,
@@ -348,6 +363,7 @@ export function GamesPage() {
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
       const result = await gamesApi.fight(monsterId)
+      applyTokens(result.fichas)
       await waitForFightReveal(startedAt)
       await refresh()
       return result

@@ -220,6 +220,9 @@ export const gamesApi = {
   dailyDetails: () => request<DailyDetails>('/customer/games/daily-bonus/details/'),
   fishingDetails: () => request<FishingDetails>('/customer/games/fishing/details/'),
   buyBait: (bait_id: string, quantity: number) =>
-    sendJson('/customer/games/fishing/details/', { bait_id, quantity }),
+    sendJson<{ fichas: number; quantity: number; received: number }>('/customer/games/fishing/details/', {
+      bait_id,
+      quantity,
+    }),
   stats: (kind: string) => request<GameStats>(`/customer/games/statistics/${kind}/`),
 }

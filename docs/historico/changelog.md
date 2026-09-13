@@ -10,6 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Na central de jogos, o saldo de fichas do hero atualiza na hora em
+  que a jogada gasta ou credita fichas (roleta, baú, taverna, pesca e
+  arena), sem precisar recarregar a página.
 - A **Arena das Feras** divide o card em duas colunas: lista de feras,
   forja e palco só para o combate.   O encante atual fica no cabeçalho
   ao lado da trilha (+1 a +10).   Encantar abre um modal da tentativa

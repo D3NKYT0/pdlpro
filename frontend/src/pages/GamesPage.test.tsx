@@ -505,6 +505,18 @@ it('abre o modal de compra quando não há fichas para abrir o baú', async () =
     fail_chance: 20,
     prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
   } as any)
+  vi.mocked(gamesApi.minigames).mockResolvedValue({
+    fichas: 0,
+    dice: { active: true, min_bet: 1 },
+    slots: { active: true, cost: 1, symbols: ['A'] },
+  })
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 0,
+    weapon: { level: 3, fragments: 10 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0 },
+    ],
+  } as any)
   vi.mocked(gamesApi.buyTokens).mockResolvedValue({ fichas: 5 } as any)
   const user = mount('boxes')
   await screen.findByText('0 ficha')
@@ -764,6 +776,27 @@ it('abre a compra de fichas pelo Lutar amarelo e trava Encantar sem fragmentos',
   await user.click(ready)
   expect(gamesApi.fight).not.toHaveBeenCalled()
   expect(await screen.findByRole('dialog', { name: 'Comprar fichas' })).toBeVisible()
+})
+it('atualiza o saldo ao gastar ficha sem esperar um GET novo', async () => {
+  vi.mocked(gamesApi.fight).mockResolvedValue({
+    won: true,
+    rounds: 3,
+    fragments_earned: 2,
+    fichas: 9,
+  } as any)
+  const user = mount('economy')
+  await screen.findByText('10 fichas')
+  vi.mocked(gamesApi.roulette).mockImplementation(
+    () => new Promise(() => {}),
+  )
+  vi.mocked(gamesApi.minigames).mockImplementation(
+    () => new Promise(() => {}),
+  )
+  vi.mocked(gamesApi.economy).mockImplementation(
+    () => new Promise(() => {}),
+  )
+  await user.click(namedButton('Lutar · 1 ficha'))
+  await waitFor(() => expect(screen.getByText('9 fichas')).toBeVisible())
 })
 it('usa retrato de monstro na arena', async () => {
   mount('economy')

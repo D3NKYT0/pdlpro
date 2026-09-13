@@ -2,7 +2,7 @@ import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Fish } from 'lucide-react'
 import { gamesApi } from '../../services/api'
@@ -19,12 +19,14 @@ import {
 } from './GameVisuals'
 import { groupFishByRarity, splitFishRarityColumns } from './gameArt'
 import { waitForFishingBite, waitForFishingCast, waitForFishingReveal } from './fishingReveal'
+import { writeCachedTokens } from './gameTokens'
 
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
 
 export function FishingGame() {
   const { t, i18n } = useTranslation('panel')
   const language = contentLang(i18n.language)
+  const queryClient = useQueryClient()
   const query = useQuery({
     queryKey: ['fishing-details', language],
     queryFn: gamesApi.fishingDetails,
@@ -109,6 +111,7 @@ export function FishingGame() {
                       const started = Date.now()
                       try {
                         const r = await gamesApi.cast(usedBait.id)
+                        writeCachedTokens(queryClient, r.fichas)
                         if (usedBait.quantity <= castCost) setBait('')
                         if (r.fish) setCatchFish({ name: r.fish.name, rarity: r.fish.rarity, art: r.fish.art })
                         await waitForFishingCast(started)
@@ -205,7 +208,8 @@ export function FishingGame() {
                             }
                             onClick={() =>
                               void action.run(async () => {
-                                await gamesApi.buyBait(b.id, quantity)
+                                const bought = await gamesApi.buyBait(b.id, quantity)
+                                writeCachedTokens(queryClient, bought.fichas)
                                 setBait(b.id)
                               }, t('games.fishing.bought'), FISHING_KEYS)
                             }

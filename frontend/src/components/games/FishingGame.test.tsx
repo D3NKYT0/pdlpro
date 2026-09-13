@@ -150,6 +150,8 @@ it('mostra o texto da troca só ao apontar o botão da isca', async () => {
 })
 
 it('compra isca e atualiza o estoque', async () => {
+  client.setQueryData(['roulette'], { fichas: 20, cost: 1 })
+  vi.mocked(gamesApi.buyBait).mockResolvedValue({ fichas: 18, quantity: 21, received: 20 })
   const user = mount()
   await screen.findByRole('button', { name: /1 fichas → 10 iscas/i })
   const input = screen.getByDisplayValue('1')
@@ -157,6 +159,7 @@ it('compra isca e atualiza o estoque', async () => {
   expect(gamesApi.buyBait).not.toHaveBeenCalled()
   await user.click(screen.getByRole('button', { name: /2 fichas → 20 iscas/i }))
   expect(gamesApi.buyBait).toHaveBeenCalledWith('common', 2)
+  await waitFor(() => expect(client.getQueryData(['roulette'])).toMatchObject({ fichas: 18 }))
   await waitFor(() => expect(gamesApi.fishingDetails).toHaveBeenCalledTimes(2))
 })
 
