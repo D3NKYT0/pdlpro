@@ -58,11 +58,36 @@ vi.mock('../components/games/boxReveal', () => ({
   waitForBoxShake: () => boxReveal.shake(),
   waitForBoxReveal: () => boxReveal.wait(),
 }))
+const diceReveal = vi.hoisted(() => {
+  let wait = () => Promise.resolve()
+  let rest = () => new Promise<void>(() => {})
+  return {
+    wait: () => wait(),
+    rest: () => rest(),
+    setWait: (value: () => Promise<void>) => {
+      wait = value
+    },
+    setRest: (value: () => Promise<void>) => {
+      rest = value
+    },
+    reset: () => {
+      wait = () => Promise.resolve()
+      rest = () => new Promise<void>(() => {})
+    },
+  }
+})
+vi.mock('../components/games/diceReveal', () => ({
+  DICE_REVEAL_MS: 0,
+  DICE_CHOSEN_MS: 60_000,
+  waitForDiceReveal: () => diceReveal.wait(),
+  waitForDiceRest: () => diceReveal.rest(),
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
   rouletteReveal.reset()
   boxReveal.reset()
+  diceReveal.reset()
   vi.resetAllMocks()
   vi.mocked(gamesApi.roulette).mockResolvedValue({
     fichas: 10,
@@ -438,8 +463,60 @@ it('mostra o dado sorteado no palco', async () => {
   vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)
   const user = mount('chance')
   await screen.findByText('10 fichas')
+  expect(document.querySelector('.chance-dice-felt')).toBeTruthy()
+  expect(document.querySelector('.chance-die')?.tagName).toBe('DIV')
+  expect(document.querySelector('.chance-die-cube')).toBeTruthy()
+  expect(document.querySelectorAll('.chance-die-face')).toHaveLength(6)
+  expect(document.querySelector('.chance-slots-cabinet')).toBeTruthy()
+  expect(document.querySelectorAll('.chance-reel-window')).toHaveLength(3)
   await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
   await waitFor(() => expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4'))
+  expect(document.querySelector('.chance-dice.is-chosen.is-win')).toBeTruthy()
+  expect(document.querySelector('.chance-die-face.is-front')?.getAttribute('data-pip-face')).toBe('4')
+})
+it('volta o dado ao repouso depois do brilho da face escolhida', async () => {
+  let releaseRest!: () => void
+  diceReveal.setRest(() => new Promise<void>((resolve) => { releaseRest = resolve }))
+  vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)
+  const user = mount('chance')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
+  await waitFor(() => expect(document.querySelector('.chance-dice.is-chosen')).toBeTruthy())
+  releaseRest()
+  await waitFor(() => expect(document.querySelector('.chance-dice.is-rest')).toBeTruthy())
+  expect(document.querySelector('.chance-dice.is-chosen')).toBeNull()
+  expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4')
+})
+it('só anuncia o dado depois do cubo 3d pousar', async () => {
+  let release!: () => void
+  diceReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
+  vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)
+  const user = mount('chance')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
+  await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeTruthy())
+  await waitFor(() => expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4'))
+  expect(toast.success).not.toHaveBeenCalled()
+  release()
+  await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeNull())
+  expect(toast.success).toHaveBeenCalledWith('Dado 4 · +2')
+})
+it('marca o dado e os cilindros enquanto a jogada está pendente', async () => {
+  let finishDice!: (value: any) => void
+  let finishSlots!: (value: any) => void
+  vi.mocked(gamesApi.dice).mockReturnValue(new Promise(resolve => { finishDice = resolve }))
+  vi.mocked(gamesApi.slots).mockReturnValue(new Promise(resolve => { finishSlots = resolve }))
+  const user = mount('chance')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
+  expect(document.querySelector('.chance-dice.is-rolling')).toBeTruthy()
+  finishDice({ won: true, roll: 4, payout: 2 })
+  await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeNull())
+  await user.click(screen.getByRole('button', { name: 'Girar cilindros · 1 ficha' }))
+  expect(document.querySelector('.chance-slots.is-spinning')).toBeTruthy()
+  expect(document.querySelector('.chance-reel-strip')).toBeTruthy()
+  finishSlots({ won: true, reels: ['sword', 'sword', 'sword'], payout: 5 })
+  await waitFor(() => expect(document.querySelector('.chance-slots.is-spinning')).toBeNull())
 })
 it('mostra os cilindros com ícone e nome completo, sem cortar o id inglês', async () => {
   vi.mocked(gamesApi.minigames).mockResolvedValue({

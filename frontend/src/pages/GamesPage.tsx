@@ -4,7 +4,7 @@ import { useFeedbackAction } from '../hooks/useFeedbackAction'
 import { Button } from '../components/ui/Button'
 import { Modal } from '../components/ui/Modal'
 import { Field } from '../components/ui/Field'
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -31,6 +31,7 @@ import { BoxRevealModal } from '../components/games/BoxRevealModal'
 import { sortBoxesByRarity } from '../components/games/gameArt'
 import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
+import { waitForDiceReveal, waitForDiceRest } from '../components/games/diceReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 import { BuyTokensModal } from '../components/games/BuyTokensModal'
@@ -48,6 +49,8 @@ type PlayFx = {
   hunt?: boolean
   slowing?: boolean
   diceRoll?: number
+  diceWon?: boolean
+  diceChosen?: boolean
   slotsReels?: string[]
 }
 
@@ -74,6 +77,7 @@ export function GamesPage() {
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
   const [fx, setFx] = useState<PlayFx>({})
+  const diceRestSeq = useRef(0)
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [params, setParams] = useSearchParams()
@@ -211,16 +215,39 @@ export function GamesPage() {
   async function playDice(event: FormEvent) {
     event.preventDefault()
     if (needTokens(Number(diceAmount) || 1)) return
+    const startedAt = Date.now()
+    diceRestSeq.current += 1
+    const restSeq = diceRestSeq.current
     setFx((current) => ({ playing: 'dice', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
+      setFx((current) => ({
+        playing: 'dice',
+        diceRoll: result.roll,
+        diceWon: result.won,
+        slotsReels: current.slotsReels,
+      }))
+      await waitForDiceReveal(startedAt)
       const summary = result.won ? t('games.toast.diceWin', { payout: result.payout }) : t('games.toast.diceLoss')
       toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome: summary }))
       await refresh()
       return result
     }, t('games.toast.diceError'), quietTokens)
-    if (outcome.ok) setFx((current) => ({ diceRoll: outcome.value.roll, slotsReels: current.slotsReels }))
-    else {
+    if (outcome.ok) {
+      setFx((current) => ({
+        diceRoll: outcome.value.roll,
+        diceWon: outcome.value.won,
+        diceChosen: true,
+        slotsReels: current.slotsReels,
+      }))
+      void waitForDiceRest().then(() => {
+        if (diceRestSeq.current !== restSeq) return
+        setFx((current) => {
+          if (current.playing === 'dice') return current
+          return { diceRoll: current.diceRoll, slotsReels: current.slotsReels }
+        })
+      })
+    } else {
       noteTokenFailure(outcome.error)
       setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
     }
@@ -228,7 +255,13 @@ export function GamesPage() {
 
   async function playSlots() {
     if (needTokens(minigames.data?.slots.cost ?? 1)) return
-    setFx((current) => ({ playing: 'slots', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    setFx((current) => ({
+      playing: 'slots',
+      diceRoll: current.diceRoll,
+      diceWon: current.diceWon,
+      diceChosen: current.diceChosen,
+      slotsReels: current.slotsReels,
+    }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
       const summary = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
@@ -239,10 +272,21 @@ export function GamesPage() {
       await refresh()
       return result
     }, t('games.toast.slotsError'), quietTokens)
-    if (outcome.ok) setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: outcome.value.reels }))
-    else {
+    if (outcome.ok) {
+      setFx((current) => ({
+        diceRoll: current.diceRoll,
+        diceWon: current.diceWon,
+        diceChosen: current.diceChosen,
+        slotsReels: outcome.value.reels,
+      }))
+    } else {
       noteTokenFailure(outcome.error)
-      setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+      setFx((current) => ({
+        diceRoll: current.diceRoll,
+        diceWon: current.diceWon,
+        diceChosen: current.diceChosen,
+        slotsReels: current.slotsReels,
+      }))
     }
   }
 
@@ -520,6 +564,8 @@ export function GamesPage() {
           <ChanceStage
             rolling={fx.playing === 'dice'}
             roll={fx.diceRoll}
+            chosen={fx.diceChosen === true}
+            won={fx.diceWon === true}
             spinningSlots={fx.playing === 'slots'}
             reels={fx.slotsReels}
             symbols={minigames.data?.slots.symbols}

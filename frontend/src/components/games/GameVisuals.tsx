@@ -11,6 +11,7 @@ import {
   rouletteReelStrip,
   type GameRarity,
   type RouletteReelPrize,
+  SLOT_SYMBOLS,
   type SlotSymbol,
   visibleSlotReels,
 } from './gameArt'
@@ -263,10 +264,10 @@ export function BoxChest({
   )
 }
 
-function DicePips({ face }: { face: number }) {
+function DieFace({ face, chosen = false }: { face: number; chosen?: boolean }) {
   const pips = DICE_PIP_FACES[face] ?? DICE_PIP_FACES[5]
   return (
-    <span className="chance-die" data-face={face} aria-hidden="true">
+    <span className={`chance-die-face${chosen ? ' is-front' : ''}`} data-pip-face={face}>
       {Array.from({ length: 9 }, (_, index) => (
         <i key={index} data-pip={index + 1} className={pips.includes(index + 1) ? 'is-on' : undefined} />
       ))}
@@ -274,9 +275,23 @@ function DicePips({ face }: { face: number }) {
   )
 }
 
+function DiceCube({ face, chosen = false }: { face: number; chosen?: boolean }) {
+  return (
+    <div className="chance-die" data-face={face} aria-hidden="true">
+      <div className="chance-die-cube">
+        {([1, 2, 3, 4, 5, 6] as const).map((side) => (
+          <DieFace key={side} face={side} chosen={chosen && side === face} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function ChanceStage({
   rolling = false,
   roll,
+  chosen = false,
+  won = false,
   spinningSlots = false,
   reels,
   symbols = [],
@@ -286,6 +301,8 @@ export function ChanceStage({
 }: {
   rolling?: boolean
   roll?: number
+  chosen?: boolean
+  won?: boolean
   spinningSlots?: boolean
   reels?: string[]
   symbols?: string[]
@@ -295,24 +312,55 @@ export function ChanceStage({
 }) {
   const face = roll && roll >= 1 && roll <= 6 ? roll : 5
   const slots = visibleSlotReels(reels, symbols)
+  const strip = [...SLOT_SYMBOLS, ...SLOT_SYMBOLS]
+  const diceState = rolling
+    ? ' is-rolling'
+    : chosen
+      ? ` is-chosen${won ? ' is-win' : ''}`
+      : roll
+        ? ' is-rest'
+        : ' is-idle'
   return (
     <div className="chance-stage" data-theme-part="game-stage">
-      <div className={`chance-dice${rolling ? ' is-rolling' : roll ? '' : ' is-idle'}`}>
+      <div className={`chance-dice${diceState}`}>
         <span className="panel-eyebrow">{diceLabel}</span>
-        <DicePips face={face} />
+        <div className="chance-dice-felt">
+          <i className="chance-dice-glow" aria-hidden="true" />
+          <i className="chance-die-ring" aria-hidden="true" />
+          <DiceCube key={rolling ? 'rolling' : `rest-${face}`} face={face} chosen={chosen} />
+          <i className="chance-die-shadow" aria-hidden="true" />
+        </div>
       </div>
       <div className={`chance-slots${spinningSlots ? ' is-spinning' : ''}`}>
         <span className="panel-eyebrow">{slotsLabel}</span>
-        <div className="chance-reels">
-          {slots.map((symbol, index) => {
-            const Icon = isSlotSymbol(symbol) ? SLOT_ICONS[symbol] : Gem
-            return (
-              <span className="chance-reel" data-symbol={symbol} key={`${symbol}-${index}`}>
-                <Icon aria-hidden="true" />
-                <small>{symbolLabel(symbol)}</small>
-              </span>
-            )
-          })}
+        <div className="chance-slots-cabinet">
+          <span className="chance-slots-lamps" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <div className="chance-reels">
+            <i className="chance-slots-payline" aria-hidden="true" />
+            {slots.map((symbol, index) => {
+              const Icon = isSlotSymbol(symbol) ? SLOT_ICONS[symbol] : Gem
+              return (
+                <span className="chance-reel" data-symbol={symbol} key={`${symbol}-${index}`}>
+                  <span className="chance-reel-window">
+                    <span className="chance-reel-plate">
+                      <Icon aria-hidden="true" />
+                    </span>
+                    <span className="chance-reel-strip" aria-hidden="true">
+                      {strip.map((item, itemIndex) => {
+                        const StripIcon = isSlotSymbol(item) ? SLOT_ICONS[item] : Gem
+                        return <StripIcon key={`${item}-${itemIndex}`} />
+                      })}
+                    </span>
+                  </span>
+                  <small>{symbolLabel(symbol)}</small>
+                </span>
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>

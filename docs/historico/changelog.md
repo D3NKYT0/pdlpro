@@ -78,8 +78,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   do modal para um lavado dourado-violeta, com partículas e faixas em
   movimento, distinto do ouro dos outros pacotes. Resetar exige ter
   aberto um pacote e pede confirmação.
-- Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
-  nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
+- Mesa da Taverna em `/panel/games`: cubo de dado 3D no feltro (seis
+  faces, tombo até a face sorteada de frente, com brilho de escolha
+  e volta ao repouso em alguns segundos),
+  gabinete dourado dos cilindros (janela, payline e faixa de símbolos
+  no giro), ícone com nome (Espada, Escudo, Coroa…) e controles em
+  duas colunas.
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e
   skills no mesmo visual da ficha; o anúncio grava o snapshot na publicação
   para o comprador ver o personagem em custódia.
