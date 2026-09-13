@@ -131,17 +131,28 @@ Consulte o [guia de diagnóstico](../operacao/solucao-de-problemas.md) para falh
 ### Inicialização pelo BAT no Windows
 
 Execute `start-dev.bat` na raiz. Antes de iniciar os servidores, ele chama
-`scripts/setup-python.bat`, cria `backend/.venv` se necessário, atualiza o pip,
-executa `pip install --upgrade -r backend/requirements.txt` e verifica conflitos
-com `pip check`. Essa sincronização acontece em toda inicialização, mesmo quando
-o arquivo de dependências não mudou. Uma falha interrompe a inicialização.
+`scripts/setup-python.bat`: cria `backend/.venv` se necessário e só mexe no pip
+quando o ambiente é novo ou o `backend/requirements.txt` mudou (grava
+`backend/.venv/.pdl-req.sha256`). Ambiente novo atualiza o pip uma vez; as
+demais sincronizações fazem `pip install -r` + `pip check`. Sem mudança real,
+o pip é pulado. `PDL_FORCE_PIP=1` força a sincronização. Uma falha interrompe
+a inicialização.
+
+O mesmo BAT sonda `127.0.0.1:8000` e `:3000`. Se a API ou o Vite já respondem,
+não abre outra janela nem chama `start_denkynho` de novo. O `npm install` só
+roda sem `frontend/node_modules` ou quando o `package-lock.json` mudou. O
+`backend/run-dev.bat` também recusa um segundo `runserver` se a porta 8000
+já estiver ocupada.
 
 As versões fixadas com `==` no `requirements.txt` são respeitadas. Para adotar
 uma versão mais recente da aplicação, atualize esse arquivo e valide a suíte;
 o BAT instalará essa versão na próxima execução. A preparação exige acesso ao
-índice de pacotes. Para preparar somente o Python, execute `scripts/setup-python.bat`.
+índice de pacotes somente quando há sync. Para preparar somente o Python,
+execute `scripts/setup-python.bat`.
 
-O teste isolado do bootstrap roda com
-`backend\.venv\Scripts\python.exe scripts\test_setup_python.py` no Windows.
-Ele cria um ambiente temporário, simula somente o pip e verifica criação,
-repetição da sincronização e interrupção em falhas, sem instalar pacotes pela rede.
+Os testes isolados do bootstrap rodam com
+`backend\.venv\Scripts\python.exe scripts\test_setup_python.py`,
+`scripts\test_file_stamp.py` e `scripts\test_dev_tcp.py` no Windows.
+O do BAT cria um ambiente temporário, simula somente o pip e verifica criação,
+pulo quando o arquivo não mudou, sync após mudança e interrupção em falhas,
+sem instalar pacotes pela rede.

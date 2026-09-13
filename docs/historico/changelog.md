@@ -85,6 +85,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   para o comprador ver o personagem em custódia.
 - Grades de inventário/warehouse e de skills na ficha: o mesmo quadrado
   (`48px`, ícone `32px`) nas duas janelas.
+- `start-dev.bat` ficou seletivo: pip só em venv novo ou `requirements.txt`
+  diferente, `npm install` só se o lock mudou, e não abre outra janela se
+  API (`8000`) ou Vite (`3000`) já respondem. `PDL_FORCE_PIP=1` força o sync.
 
 ### Corrigido
 
