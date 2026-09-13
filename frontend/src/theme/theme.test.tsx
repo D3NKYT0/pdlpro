@@ -86,4 +86,7 @@ it('publica as sprites da pescaria no tema', () => {
   expect(document.documentElement.style.getPropertyValue('--theme-art-games-fish-pirarucu')).toContain(
     'games/fish-pirarucu.webp',
   )
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-fish-serafim')).toContain(
+    'games/fish-serafim.webp',
+  )
 })

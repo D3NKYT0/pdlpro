@@ -183,6 +183,12 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     lambari = Fish.objects.get(name="Lambari")
     assert lambari.item_id == 1835
     assert lambari.quantity == 800
+    tilapia = Fish.objects.get(name="Tilápia")
+    assert tilapia.rarity == "common"
+    serafim = Fish.objects.get(name="Serafim de Eva")
+    assert serafim.rarity == "divine"
+    assert serafim.item_id == 6577
+    assert serafim.min_rod_level == 5
     assert Monster.objects.filter(name="Drake").exists()
     listed = api.get("/api/v1/staff/games/")
     assert listed.status_code == 200

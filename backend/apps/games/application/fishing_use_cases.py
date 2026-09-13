@@ -17,7 +17,7 @@ from apps.games.domain.repositories import (
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
-SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18}
+SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18, "divine": 8}
 
 
 class GetFishingStateUseCase(UseCase[UUID, dict]):

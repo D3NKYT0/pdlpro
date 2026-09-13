@@ -131,7 +131,7 @@ de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-b
 `assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`)
 e as artes `images/games/fishing-pond.webp`,
-`images/games/fish-{lambari,dourado,piraiba,pirarucu}.webp` e
+`images/games/fish-{lambari,tilapia,traira,dourado,tucunare,tambaqui,piraiba,surubim,pirarucu,koi,boiuna,serafim}.webp` e
 `images/games/monster-default.webp` como `--theme-art-games-*`. A Mesa da Taverna aceita textura opcional em
 `--theme-art-games-chance-felt` e `--theme-art-games-chance-cabinet` (o default
 desenha feltro e gabinete só com tokens). O script `frontend/scripts/paint-box-chests.py` regenera os baús

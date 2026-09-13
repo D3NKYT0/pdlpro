@@ -1160,12 +1160,14 @@
       "shopEmpty": "Nenhuma isca à venda no momento.",
       "recentTitle": "Últimos lançamentos",
       "collectionTitle": "Sua coleção",
-      "collectionHint": "Descubra todas as espécies do lago. Cada captura bem-sucedida revela a arte do peixe na coleção.",
+      "collectionHint": "Descubra todas as espécies do lago, agrupadas por raridade. Cada captura bem-sucedida revela a arte do peixe na coleção.",
+      "tierProgress": "{{found}} / {{total}}",
       "rarity": {
         "common": "Comum",
         "rare": "Raro",
         "epic": "Épico",
-        "legendary": "Lendário"
+        "legendary": "Lendário",
+        "divine": "Divino"
       },
       "captures_one": "{{count}} captura",
       "captures_other": "{{count}} capturas",

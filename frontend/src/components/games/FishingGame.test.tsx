@@ -41,8 +41,9 @@ const details = {
     { id: 'empty', name: 'Mosca', description: '', quantity: 0, price: 5, success_bonus: 20 },
   ],
   collection: [
-    { id: 'fish', name: 'Truta', rarity: 'rare', count: 1 },
     { id: 'hidden', name: 'Carpa', rarity: 'epic', count: 0 },
+    { id: 'fish', name: 'Truta', rarity: 'rare', count: 1 },
+    { id: 'angel', name: 'Serafim de Eva', rarity: 'divine', count: 0 },
   ],
 }
 
@@ -76,8 +77,15 @@ function mount() {
 
 it('exibe coleção e lista somente iscas em estoque para lançar', async () => {
   mount()
-  expect(await screen.findByText('Raro · 1 captura')).toBeVisible()
-  expect(screen.getByText('Épico · Ainda não descoberto')).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Raro' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Épico' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Divino' })).toBeVisible()
+  expect(screen.getByText('1 captura')).toBeVisible()
+  expect(screen.getAllByText('Ainda não descoberto')).toHaveLength(2)
+  expect(document.querySelector('[data-side="left"] .fishing-tier[data-rarity="rare"]')).toBeTruthy()
+  expect(document.querySelector('[data-side="right"] .fishing-tier[data-rarity="epic"]')).toBeTruthy()
+  expect(document.querySelector('[data-side="right"] .fishing-tier[data-rarity="divine"] .fishing-fish[data-fish="serafim"]')).toBeTruthy()
+  expect(document.querySelector('[data-side="left"] .fishing-tier[data-rarity="epic"]')).toBeNull()
   expect(screen.getAllByRole('option')).toHaveLength(2)
   expect(screen.getByText('Nível 3')).toBeVisible()
   expect(document.querySelector('.fishing-pond.is-idle')).toBeTruthy()

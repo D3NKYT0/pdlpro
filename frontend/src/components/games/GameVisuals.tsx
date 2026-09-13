@@ -4,9 +4,10 @@ import { ItemIcon } from '../ItemIcon'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
   DICE_PIP_FACES,
+  fishArtVar,
   inferBoxRarity,
   monsterHue,
-  normalizeGameRarity,
+  normalizeFishRarity,
   normalizeRouletteRarity,
   resolveFishArt,
   rouletteReelStrip,
@@ -422,10 +423,12 @@ export function MonsterPortrait({ id, down = false, fighting = false }: { id: st
 }
 
 const POND_SCHOOL: Array<{ id: FishArtId; delay: string; duration: string; top: string; scale: number }> = [
-  { id: 'lambari', delay: '0s', duration: '12s', top: '58%', scale: 0.42 },
-  { id: 'dourado', delay: '-3.2s', duration: '15s', top: '70%', scale: 0.56 },
-  { id: 'piraiba', delay: '-6.4s', duration: '18s', top: '64%', scale: 0.72 },
-  { id: 'pirarucu', delay: '-9s', duration: '16s', top: '76%', scale: 0.64 },
+  { id: 'lambari', delay: '0s', duration: '12s', top: '58%', scale: 0.4 },
+  { id: 'tucunare', delay: '-2.4s', duration: '14s', top: '68%', scale: 0.52 },
+  { id: 'surubim', delay: '-4.8s', duration: '16s', top: '62%', scale: 0.66 },
+  { id: 'pirarucu', delay: '-7.2s', duration: '17s', top: '74%', scale: 0.6 },
+  { id: 'koi', delay: '-9.6s', duration: '15s', top: '56%', scale: 0.48 },
+  { id: 'serafim', delay: '-12s', duration: '18s', top: '78%', scale: 0.58 },
 ]
 
 export type FishingPondState = 'idle' | 'casting' | 'bite' | 'caught' | 'escaped'
@@ -446,7 +449,8 @@ export function FishPortrait({
     <span
       className={`fishing-fish is-${size}${discovered ? '' : ' is-locked'}`}
       data-fish={art}
-      data-rarity={normalizeGameRarity(rarity)}
+      data-rarity={normalizeFishRarity(rarity)}
+      style={{ '--fish-art': fishArtVar(art) } as CSSProperties}
       aria-hidden="true"
     >
       <i className="fishing-fish-art" />
@@ -480,6 +484,7 @@ export function FishingPond({
                 '--swim-duration': fish.duration,
                 '--swim-top': fish.top,
                 '--swim-scale': fish.scale,
+                '--fish-art': fishArtVar(fish.id),
               } as CSSProperties
             }
           >
@@ -498,7 +503,8 @@ export function FishingPond({
         <span
           className="fishing-catch"
           data-fish={featured}
-          data-rarity={normalizeGameRarity(fishRarity)}
+          data-rarity={normalizeFishRarity(fishRarity)}
+          style={{ '--fish-art': fishArtVar(featured) } as CSSProperties}
         >
           <i className="fishing-catch-glow" />
           <i className="fishing-catch-art" />

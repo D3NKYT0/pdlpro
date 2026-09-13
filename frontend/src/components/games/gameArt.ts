@@ -44,20 +44,42 @@ export function sortBoxesByRarity<T>(
   })
 }
 
-export type FishArtId = 'lambari' | 'dourado' | 'piraiba' | 'pirarucu'
+export type FishRarity = GameRarity | 'divine'
+export type FishArtId =
+  | 'lambari'
+  | 'tilapia'
+  | 'traira'
+  | 'dourado'
+  | 'tucunare'
+  | 'tambaqui'
+  | 'piraiba'
+  | 'surubim'
+  | 'pirarucu'
+  | 'koi'
+  | 'boiuna'
+  | 'serafim'
 
 const FISH_NAME_ART: Array<{ pattern: RegExp; id: FishArtId }> = [
+  { pattern: /serafim/i, id: 'serafim' },
+  { pattern: /boiuna/i, id: 'boiuna' },
+  { pattern: /\bkoi\b/i, id: 'koi' },
   { pattern: /pirarucu/i, id: 'pirarucu' },
+  { pattern: /surubim/i, id: 'surubim' },
   { pattern: /piraiba/i, id: 'piraiba' },
+  { pattern: /tambaqui/i, id: 'tambaqui' },
+  { pattern: /tucunare/i, id: 'tucunare' },
   { pattern: /dourado/i, id: 'dourado' },
+  { pattern: /traira/i, id: 'traira' },
+  { pattern: /tilapia/i, id: 'tilapia' },
   { pattern: /lambari/i, id: 'lambari' },
 ]
 
-const FISH_RARITY_ART: Record<GameRarity, FishArtId> = {
+const FISH_RARITY_ART: Record<FishRarity, FishArtId> = {
   common: 'lambari',
   rare: 'dourado',
   epic: 'piraiba',
   legendary: 'pirarucu',
+  divine: 'serafim',
 }
 
 export function normalizeGameRarity(value?: string | null): GameRarity {
@@ -65,12 +87,49 @@ export function normalizeGameRarity(value?: string | null): GameRarity {
   return RARITY_PATTERNS.find(({ pattern }) => pattern.test(text))?.rarity ?? 'common'
 }
 
+export function normalizeFishRarity(value?: string | null): FishRarity {
+  const text = (value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  if (/divin/i.test(text)) return 'divine'
+  return normalizeGameRarity(value)
+}
+
+export const FISH_RARITY_TIERS: FishRarity[] = ['common', 'rare', 'epic', 'legendary', 'divine']
+const FISH_RARITY_LEFT: FishRarity[] = ['common', 'rare']
+const FISH_RARITY_RIGHT: FishRarity[] = ['epic', 'legendary', 'divine']
+
+export type FishRarityGroup<T> = { rarity: FishRarity; items: T[] }
+
+/** Agrupa a coleção da comum à divina; omite faixas sem espécies. */
+export function groupFishByRarity<T extends { rarity: string }>(rows: T[]): FishRarityGroup<T>[] {
+  const buckets = new Map<FishRarity, T[]>(FISH_RARITY_TIERS.map((tier) => [tier, []]))
+  for (const row of rows) {
+    buckets.get(normalizeFishRarity(row.rarity))?.push(row)
+  }
+  return FISH_RARITY_TIERS.flatMap((rarity) => {
+    const items = buckets.get(rarity) ?? []
+    return items.length ? [{ rarity, items }] : []
+  })
+}
+
+/** Parte as faixas em duas colunas: águas rasas e águas profundas. */
+export function splitFishRarityColumns<T>(groups: FishRarityGroup<T>[]) {
+  return {
+    left: groups.filter((group) => FISH_RARITY_LEFT.includes(group.rarity)),
+    right: groups.filter((group) => FISH_RARITY_RIGHT.includes(group.rarity)),
+  }
+}
+
+/** Token CSS da sprite; o tema pode remapear `--theme-art-games-fish-*`. */
+export function fishArtVar(id: FishArtId) {
+  return `var(--theme-art-games-fish-${id})`
+}
+
 /** Escolhe a sprite pelo nome da espécie; espécies novas caem na raridade. */
 export function resolveFishArt(name?: string | null, rarity?: string | null): FishArtId {
   const text = (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   const named = FISH_NAME_ART.find(({ pattern }) => pattern.test(text))
   if (named) return named.id
-  return FISH_RARITY_ART[normalizeGameRarity(rarity ?? text)]
+  return FISH_RARITY_ART[normalizeFishRarity(rarity ?? text)]
 }
 
 /** Variação leve entre monstros a partir do id, sem arte extra. */

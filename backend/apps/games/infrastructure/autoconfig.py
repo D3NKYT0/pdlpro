@@ -135,9 +135,17 @@ BOX_TYPES = (
 # Tupla: (name, rarity, rod, weight, xp, fichas, item_id, quantity)
 FISH_SPECIES = (
     ("Lambari", "common", 1, 40, 8, 0, 1835, 800),
+    ("Tilápia", "common", 1, 36, 8, 0, 1835, 600),
+    ("Traíra", "common", 1, 28, 10, 0, 2509, 400),
     ("Dourado", "rare", 1, 15, 20, 1, 1463, 500),
+    ("Tucunaré", "rare", 1, 14, 22, 1, 1463, 400),
+    ("Tambaqui", "rare", 2, 12, 24, 1, 1061, 40),
     ("Piraíba", "epic", 2, 5, 40, 0, 57, 150_000),
+    ("Surubim", "epic", 2, 6, 42, 0, 57, 200_000),
     ("Pirarucu Ancestral", "legendary", 3, 2, 80, 3, 955, 1),
+    ("Koi Etéreo", "legendary", 3, 3, 90, 4, 3470, 1),
+    ("Boiúna", "divine", 4, 2, 130, 6, 4037, 5),
+    ("Serafim de Eva", "divine", 5, 1, 180, 10, 6577, 1),
 )
 
 MONSTERS = (

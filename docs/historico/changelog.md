@@ -14,7 +14,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   piraíba e pirarucu), cardume com esteiras no lago, sequências de lançamento
   e fisgada, e o salto ou a fuga do peixe no palco e na coleção. O layout passou
   a um módulo único (lago + HUD, loja ao lado, coleção em grade), sem o vazio
-  entre cards e sem timestamp ISO nos lances.
+  entre cards e sem timestamp ISO nos lances. O lago agora tem doze espécies,
+  inclusive Koi Etéreo, Boiúna e Serafim de Eva (raridade divina). A coleção
+  lista as espécies em duas colunas de raridade (comum/raro e
+  épico/lendário/divino).
 - Na **Roda da Fortuna**, o giro fica no centro vertical do card. O fundo da
   coluna anima com faixas e partículas; a roda deixa de ter o halo oval que
   vazava do círculo. A lista de prêmios usa a barra de rolagem do tema. O card

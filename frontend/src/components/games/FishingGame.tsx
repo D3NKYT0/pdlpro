@@ -10,6 +10,7 @@ import { formatDateTime } from '../../lib/formatters'
 import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
 import { FishPortrait, FishingPond, type FishingPondState } from './GameVisuals'
+import { groupFishByRarity, splitFishRarityColumns } from './gameArt'
 import { waitForFishingBite, waitForFishingCast } from './fishingReveal'
 
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
@@ -45,6 +46,7 @@ export function FishingGame() {
         ? t('games.fishing.casting')
         : t('games.fishing.cast')
   const recent = fishing.data?.recent ?? []
+  const rarityColumns = splitFishRarityColumns(groupFishByRarity(query.data?.collection ?? []))
   return (
     <Card className="game-module game-fishing fishing-game">
       <ErrorNotice error={query.error || fishing.error || action.error} />
@@ -218,24 +220,44 @@ export function FishingGame() {
       <div className="game-subsection">
         <h3>{t('games.fishing.collectionTitle')}</h3>
         <p className="muted">{t('games.fishing.collectionHint')}</p>
-        <div className="fishing-collection">
-          {query.data?.collection.map((f) => (
-            <article
-              className={`fishing-collection-card ${f.count ? '' : 'is-locked'}`}
-              key={f.id}
-            >
-              <FishPortrait name={f.name} rarity={f.rarity} discovered={f.count > 0} />
-              <h3>{f.name}</h3>
-              <small>
-                {t('games.fishing.collectionMeta', {
-                  rarity: t(`games.fishing.rarity.${f.rarity}`, { defaultValue: f.rarity }),
-                  detail: f.count
-                    ? t('games.fishing.captures', { count: f.count })
-                    : t('games.fishing.undiscovered'),
-                })}
-              </small>
-            </article>
-          ))}
+        <div className="fishing-tiers">
+          {(['left', 'right'] as const).map((side) => {
+            const tiers = rarityColumns[side]
+            if (!tiers.length) return null
+            return (
+              <div className="fishing-tiers-col" data-side={side} key={side}>
+                {tiers.map((tier) => (
+                  <section className="fishing-tier" data-rarity={tier.rarity} key={tier.rarity}>
+                    <header className="fishing-tier-head">
+                      <h4>{t(`games.fishing.rarity.${tier.rarity}`, { defaultValue: tier.rarity })}</h4>
+                      <small>
+                        {t('games.fishing.tierProgress', {
+                          found: tier.items.filter((f) => f.count > 0).length,
+                          total: tier.items.length,
+                        })}
+                      </small>
+                    </header>
+                    <div className="fishing-collection">
+                      {tier.items.map((f) => (
+                        <article
+                          className={`fishing-collection-card ${f.count ? '' : 'is-locked'}`}
+                          key={f.id}
+                        >
+                          <FishPortrait name={f.name} rarity={f.rarity} discovered={f.count > 0} />
+                          <h3>{f.name}</h3>
+                          <small>
+                            {f.count
+                              ? t('games.fishing.captures', { count: f.count })
+                              : t('games.fishing.undiscovered')}
+                          </small>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            )
+          })}
         </div>
       </div>
     </Card>

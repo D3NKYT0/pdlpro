@@ -1160,12 +1160,14 @@
       "shopEmpty": "No bait for sale right now.",
       "recentTitle": "Recent casts",
       "collectionTitle": "Your collection",
-      "collectionHint": "Discover every species in the lake. Each successful catch reveals that fish's art in your collection.",
+      "collectionHint": "Discover every species in the lake, grouped by rarity. Each successful catch reveals that fish's art in your collection.",
+      "tierProgress": "{{found}} / {{total}}",
       "rarity": {
         "common": "Common",
         "rare": "Rare",
         "epic": "Epic",
-        "legendary": "Legendary"
+        "legendary": "Legendary",
+        "divine": "Divine"
       },
       "captures_one": "{{count}} catch",
       "captures_other": "{{count}} catches",

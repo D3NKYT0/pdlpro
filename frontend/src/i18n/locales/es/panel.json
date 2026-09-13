@@ -1160,12 +1160,14 @@
       "shopEmpty": "No hay cebos a la venta por ahora.",
       "recentTitle": "Últimos lanzamientos",
       "collectionTitle": "Tu colección",
-      "collectionHint": "Descubre todas las especies del lago. Cada captura exitosa revela el arte del pez en tu colección.",
+      "collectionHint": "Descubre todas las especies del lago, agrupadas por rareza. Cada captura exitosa revela el arte del pez en tu colección.",
+      "tierProgress": "{{found}} / {{total}}",
       "rarity": {
         "common": "Común",
         "rare": "Raro",
         "epic": "Épico",
-        "legendary": "Legendario"
+        "legendary": "Legendario",
+        "divine": "Divino"
       },
       "captures_one": "{{count}} captura",
       "captures_other": "{{count}} capturas",

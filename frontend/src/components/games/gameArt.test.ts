@@ -6,6 +6,8 @@ import {
   monsterHue,
   normalizeGameRarity,
   normalizeRouletteRarity,
+  groupFishByRarity,
+  splitFishRarityColumns,
   resolveFishArt,
   rouletteReelStrip,
   visibleSlotReels,
@@ -46,11 +48,46 @@ describe('inferBoxRarity', () => {
 
 it('escolhe a sprite do peixe pelo nome da espécie ou pela raridade', () => {
   expect(resolveFishArt('Lambari', 'common')).toBe('lambari')
+  expect(resolveFishArt('Tilápia', 'common')).toBe('tilapia')
+  expect(resolveFishArt('Tucunaré', 'rare')).toBe('tucunare')
   expect(resolveFishArt('Piraíba do rio', 'epic')).toBe('piraiba')
+  expect(resolveFishArt('Koi Etéreo', 'legendary')).toBe('koi')
+  expect(resolveFishArt('Boiúna', 'divine')).toBe('boiuna')
+  expect(resolveFishArt('Serafim de Eva', 'divine')).toBe('serafim')
   expect(resolveFishArt('Pirarucu Ancestral', 'legendary')).toBe('pirarucu')
   expect(resolveFishArt('Truta', 'rare')).toBe('dourado')
   expect(resolveFishArt('Carpa', 'épico')).toBe('piraiba')
+  expect(resolveFishArt('Relíquia', 'divino')).toBe('serafim')
   expect(normalizeGameRarity('lendario')).toBe('legendary')
+})
+
+it('agrupa a coleção por raridade e omite faixas vazias', () => {
+  expect(
+    groupFishByRarity([
+      { name: 'Serafim de Eva', rarity: 'divine' },
+      { name: 'Lambari', rarity: 'common' },
+      { name: 'Tilápia', rarity: 'comum' },
+      { name: 'Dourado', rarity: 'rare' },
+    ]).map((tier) => [tier.rarity, tier.items.map((row) => row.name)]),
+  ).toEqual([
+    ['common', ['Lambari', 'Tilápia']],
+    ['rare', ['Dourado']],
+    ['divine', ['Serafim de Eva']],
+  ])
+})
+
+it('parte as faixas em duas colunas: rasas e profundas', () => {
+  const columns = splitFishRarityColumns(
+    groupFishByRarity([
+      { name: 'Serafim de Eva', rarity: 'divine' },
+      { name: 'Lambari', rarity: 'common' },
+      { name: 'Piraíba', rarity: 'epic' },
+      { name: 'Dourado', rarity: 'rare' },
+      { name: 'Pirarucu Ancestral', rarity: 'legendary' },
+    ]),
+  )
+  expect(columns.left.map((tier) => tier.rarity)).toEqual(['common', 'rare'])
+  expect(columns.right.map((tier) => tier.rarity)).toEqual(['epic', 'legendary', 'divine'])
 })
 
 it('varia o tom do monstro a partir do id', () => {

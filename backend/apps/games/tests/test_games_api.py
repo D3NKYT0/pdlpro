@@ -318,6 +318,12 @@ def test_fishing_cast(api, player):
     assert bag.data[0]["quantity"] == 800
 
 
+def test_divine_catch_is_rarer_than_legendary():
+    from apps.games.application.fishing_use_cases import SUCCESS_CHANCE
+
+    assert SUCCESS_CHANCE["divine"] < SUCCESS_CHANCE["legendary"]
+
+
 @pytest.mark.django_db
 def test_economy_fight_and_enchant(api, player):
     from unittest.mock import patch
