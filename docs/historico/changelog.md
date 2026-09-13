@@ -12,7 +12,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - A **Pescaria** ganhou sprites em pixel art das espécies (lambari, dourado,
   piraíba e pirarucu), cardume com esteiras no lago, sequências de lançamento
-  e fisgada, e o salto ou a fuga do peixe no palco e na coleção. O layout passou
+  e fisgada, e o salto ou a fuga do peixe no palco e na coleção, com bolhas,
+  splash, spray e o peixe no centro do lago, que some em seguida. O layout passou
   a um módulo único (lago + HUD, loja ao lado, coleção em grade), sem o vazio
   entre cards e sem timestamp ISO nos lances. O lago agora tem doze espécies,
   inclusive Koi Etéreo, Boiúna e Serafim de Eva (raridade divina). A coleção

@@ -11,7 +11,7 @@ import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
 import { FishPortrait, FishingPond, type FishingPondState } from './GameVisuals'
 import { groupFishByRarity, splitFishRarityColumns } from './gameArt'
-import { waitForFishingBite, waitForFishingCast } from './fishingReveal'
+import { waitForFishingBite, waitForFishingCast, waitForFishingReveal } from './fishingReveal'
 
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
 
@@ -100,6 +100,9 @@ export function FishingGame() {
                       ? t('games.fishing.caught', { name: r.fish?.name })
                       : t('games.fishing.escaped'),
                   )
+                  await waitForFishingReveal(started)
+                  setPond('idle')
+                  setCatchFish(null)
                 } catch (error) {
                   setPond('idle')
                   setCatchFish(null)

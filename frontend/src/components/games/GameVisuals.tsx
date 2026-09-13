@@ -430,6 +430,10 @@ const POND_SCHOOL: Array<{ id: FishArtId; delay: string; duration: string; top: 
   { id: 'koi', delay: '-9.6s', duration: '15s', top: '56%', scale: 0.48 },
   { id: 'serafim', delay: '-12s', duration: '18s', top: '78%', scale: 0.58 },
 ]
+const POND_BUBBLES = 10
+const POND_GLINTS = 7
+const POND_DROPLETS = 12
+const POND_SPARKS = 10
 
 export type FishingPondState = 'idle' | 'casting' | 'bite' | 'caught' | 'escaped'
 
@@ -468,10 +472,46 @@ export function FishingPond({
   fishRarity?: string | null
 }) {
   const featured = fishName ? resolveFishArt(fishName, fishRarity) : null
+  const rarity = featured ? normalizeFishRarity(fishRarity) : undefined
   return (
-    <div className={`fishing-pond is-${state}`} data-theme-part="game-stage" aria-hidden="true">
+    <div
+      className={`fishing-pond is-${state}`}
+      data-theme-part="game-stage"
+      data-rarity={rarity}
+      aria-hidden="true"
+    >
       <i className="fishing-pond-art" />
+      <i className="fishing-pond-caustic" />
       <i className="fishing-pond-mist" />
+      {Array.from({ length: POND_GLINTS }, (_, index) => (
+        <i
+          key={`glint-${index}`}
+          className="fishing-glint"
+          style={
+            {
+              '--glint-x': `${16 + ((index * 13) % 68)}%`,
+              '--glint-y': `${52 + (index % 4) * 8}%`,
+              '--glint-d': `${(index % 5) * 0.55}s`,
+            } as CSSProperties
+          }
+        />
+      ))}
+      <div className="fishing-bubbles">
+        {Array.from({ length: POND_BUBBLES }, (_, index) => (
+          <i
+            key={index}
+            className="fishing-bubble"
+            style={
+              {
+                '--bubble-x': `${10 + ((index * 19) % 78)}%`,
+                '--bubble-d': `${(index % 7) * 0.4}s`,
+                '--bubble-s': `${0.55 + (index % 4) * 0.2}`,
+                '--bubble-dur': `${5.2 + (index % 5) * 0.65}s`,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
       <div className="fishing-school">
         {POND_SCHOOL.map((fish) => (
           <span
@@ -494,20 +534,59 @@ export function FishingPond({
           </span>
         ))}
       </div>
+      <i className="fishing-lurk" />
       <i className="fishing-line" />
       <i className="fishing-bobber" />
+      <i className="fishing-impact" />
       <i className="fishing-pond-ripple" />
+      <i className="fishing-pond-ripple is-mid" />
       <i className="fishing-pond-ripple is-late" />
       <i className="fishing-splash" />
+      <i className="fishing-splash is-late" />
+      <i className="fishing-streak" />
+      <div className="fishing-spray">
+        {Array.from({ length: POND_DROPLETS }, (_, index) => (
+          <i
+            key={index}
+            className="fishing-droplet"
+            style={
+              {
+                '--drop-a': `${-118 + index * 19}deg`,
+                '--drop-d': `${(index % 6) * 35}ms`,
+                '--drop-y': `${-42 - (index % 5) * 14}px`,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
       {featured ? (
         <span
           className="fishing-catch"
           data-fish={featured}
-          data-rarity={normalizeFishRarity(fishRarity)}
+          data-rarity={rarity}
           style={{ '--fish-art': fishArtVar(featured) } as CSSProperties}
         >
           <i className="fishing-catch-glow" />
+          <i className="fishing-catch-sheen" />
           <i className="fishing-catch-art" />
+          {state === 'caught' ? (
+            <span className="fishing-catch-burst">
+              <i className="fishing-catch-flash" />
+              <i className="fishing-catch-rays" />
+              {Array.from({ length: POND_SPARKS }, (_, index) => (
+                <i
+                  key={index}
+                  className="fishing-catch-spark"
+                  style={
+                    {
+                      '--spark-a': `${index * (360 / POND_SPARKS)}deg`,
+                      '--spark-d': `${(index % 5) * 45}ms`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </span>
+          ) : null}
         </span>
       ) : null}
     </div>

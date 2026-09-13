@@ -2,8 +2,8 @@
 export const FISHING_CAST_MS = 1100
 /** O peixe se aproxima e a boia afunda. */
 export const FISHING_BITE_MS = 900
-/** Salto da captura ou fuga com a esteira. */
-export const FISHING_REVEAL_MS = 1400
+/** O peixe aparece no centro e some (captura ou fuga). */
+export const FISHING_REVEAL_MS = 1800
 /** Tempo total do palco, da linha ao troféu. */
 export const FISHING_TOTAL_MS = FISHING_CAST_MS + FISHING_BITE_MS + FISHING_REVEAL_MS
 
