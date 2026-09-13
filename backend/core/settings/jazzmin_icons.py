@@ -99,6 +99,7 @@ JAZZMIN_ICONS_PDL = {
     "games.fishingrod": "fas fa-fish",
     "games.fish": "fas fa-fish",
     "games.fishingcatch": "fas fa-anchor",
+    "games.fishingbait": "fas fa-bug",
     "games.economyweapon": "fas fa-shield-alt",
     "games.monster": "fas fa-dragon",
     "games.economyfightlog": "fas fa-fist-raised",

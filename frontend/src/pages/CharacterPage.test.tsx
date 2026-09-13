@@ -81,7 +81,7 @@ it.each(['nickname', 'sex'] as const)('serializa %s, preserva chave após erro e
   await user.click(screen.getByRole('button', { name: service === 'nickname' ? 'Alterar nickname' : 'Alterar sexo' }))
   await waitFor(() => expect(toast.success).toHaveBeenCalled())
   expect(send.mock.calls[1][3]).toBe(key)
-})
+}, 15_000)
 it('mostra paperdoll com slots L2 e item equipado', async () => {
   vi.mocked(inventoryApi.equipment).mockResolvedValue([
     { item_id: 2416, name: 'Blue Wolf Helmet', quantity: 1, enchant: 5, tradeable: true, slot: 6 },

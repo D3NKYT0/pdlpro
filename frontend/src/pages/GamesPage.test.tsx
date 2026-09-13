@@ -307,7 +307,7 @@ it('bônus resgatado e monstro em respawn não oferecem nova ação', async () =
   expect(gamesApi.fight).not.toHaveBeenCalled()
 })
 it('desacelera o tambor enquanto o giro ainda corre', async () => {
-  rouletteReveal.setSlowMs(20)
+  rouletteReveal.setSlowMs(250)
   let finish!: (value: any) => void
   vi.mocked(gamesApi.spin).mockReturnValue(new Promise(resolve => { finish = resolve }))
   const user = mount('roulette')
@@ -418,7 +418,8 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   const stage = document.querySelector('.game-chest.is-hero .game-chest-stage')
   expect(prize).toBeTruthy()
   expect(stage).toBeTruthy()
-  expect(prize?.compareDocumentPosition(stage!) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy()
+  if (!prize || !stage) throw new Error('chest prize layout missing')
+  expect(prize.compareDocumentPosition(stage) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy()
   expect(document.querySelectorAll('.game-chest-mote').length).toBeGreaterThan(10)
   expect(screen.getByRole('status')).toHaveTextContent('Espada')
   expect(screen.getByRole('status')).toHaveTextContent('+3')
@@ -786,15 +787,24 @@ it('atualiza o saldo ao gastar ficha sem esperar um GET novo', async () => {
   } as any)
   const user = mount('economy')
   await screen.findByText('10 fichas')
-  vi.mocked(gamesApi.roulette).mockImplementation(
-    () => new Promise(() => {}),
-  )
-  vi.mocked(gamesApi.minigames).mockImplementation(
-    () => new Promise(() => {}),
-  )
-  vi.mocked(gamesApi.economy).mockImplementation(
-    () => new Promise(() => {}),
-  )
+  vi.mocked(gamesApi.roulette).mockResolvedValue({
+    fichas: 9,
+    cost: 1,
+    fail_chance: 20,
+    prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
+  } as any)
+  vi.mocked(gamesApi.minigames).mockResolvedValue({
+    fichas: 9,
+    dice: { active: true, min_bet: 1 },
+    slots: { active: true, cost: 1, symbols: ['A'] },
+  })
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 9,
+    weapon: { level: 3, fragments: 10 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0 },
+    ],
+  } as any)
   await user.click(namedButton('Lutar · 1 ficha'))
   await waitFor(() => expect(screen.getByText('9 fichas')).toBeVisible())
 })

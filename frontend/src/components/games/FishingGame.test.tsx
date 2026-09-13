@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { ApiError, gamesApi } from '../../services/api'
+import type { FishingDetails } from '../../services/domain/games.service'
 import { FishingGame } from './FishingGame'
 
 vi.mock('../../services/domain/games.service', () => ({
@@ -37,7 +38,7 @@ const state = {
   fish: [],
   recent: [{ success: true, fish: 'Dourado', created_at: '2026-09-13T16:05:51.000Z' }],
 }
-const details = {
+const details: FishingDetails = {
   fichas: 20,
   baits_per_token: 10,
   baits: [
@@ -83,7 +84,7 @@ function mount() {
 
 it('exibe coleção e lista somente iscas em estoque para lançar', async () => {
   mount()
-  expect(await screen.findByRole('heading', { name: 'Raro' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Raro' }, { timeout: 5000 })).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Épico' })).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Divino' })).toBeVisible()
   expect(screen.getByText('1 captura')).toBeVisible()

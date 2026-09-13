@@ -1,6 +1,9 @@
 from types import SimpleNamespace
 
-from apps.games.application.box_catalog import box_catalog_preview, pick_featured_box_item
+from apps.games.application.box_catalog import (
+    box_catalog_preview,
+    pick_featured_box_item,
+)
 
 
 def _item(**fields):
