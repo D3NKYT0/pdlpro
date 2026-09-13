@@ -13,46 +13,6 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 Alterações desde **10 de setembro de 2026** (após `[2.3.0]`), consolidadas pelo histórico
 Git até **13 de setembro de 2026**.
 
-### Alterado
-
-- Na central de jogos, o saldo de fichas do hero atualiza na hora em
-  que a jogada gasta ou credita fichas (roleta, baú, taverna, pesca e
-  arena), sem precisar recarregar a página.
-- A **Arena das Feras** divide o card em duas colunas: lista de feras,
-  forja e palco só para o combate.   O encante atual fica no cabeçalho
-  ao lado da trilha (+1 a +10).   Encantar abre um modal da tentativa
-  e só então mostra vitória ou derrota (explosão dourada, cinzas na
-  falha e celebração extra no +10), sem toast. A arma ganha sprite
-  própria de +0 a +10 (luz de encante no estilo Lineage). A arena
-  tem dez oponentes, cada um com retrato próprio. A forja
-  mostra fragmentos e o botão. Lutar fica
-  desativado (com relógio circular) enquanto a fera não pode combater,
-  amarelo sem fichas, e Encantar fica verde com 10 fragmentos.
-  No celular o palco sobe para a animação ficar visível.
-- Na **Pescaria**, vara, lançar e troca de iscas ficam no mesmo painel;
-  a moldura da isca em uso fica marcada, e trocar já deixa essa isca
-  pronta para o lançamento. Nome, custo e dica só aparecem ao apontar
-  o mouse.
-- Na **Pescaria**, iscas e peixes passam a ter nome/descrição em pt, en e es
-  (campos `*_en` / `*_es`, editáveis no admin). A API devolve o texto do idioma
-  ativo; sem tradução, cai no português.
-- Na **Pescaria**, o lançamento gasta 1 isca (comum ou encantada), não fichas.
-  Fichas só compram isca comum (**1 ficha = 10**). As duas encantadas saem
-  das comuns: aprendiz por 3 e encantada por 8.
-- A **Pescaria** ganhou sprites em pixel art das espécies (lambari, dourado,
-  piraíba e pirarucu), cardume com esteiras no lago, sequências de lançamento
-  e fisgada, e o salto ou a fuga do peixe no palco e na coleção, com bolhas,
-  splash, spray e o peixe no centro do lago, que some em seguida. O layout passou
-  a um módulo único (lago + HUD, loja ao lado, coleção em grade), sem o vazio
-  entre cards e sem timestamp ISO nos lances. O lago agora tem doze espécies,
-  inclusive Koi Etéreo, Boiúna e Serafim de Eva (raridade divina). A coleção
-  lista as espécies em duas colunas de raridade (comum/raro e
-  épico/lendário/divino).
-- Na **Roda da Fortuna**, o giro fica no centro vertical do card. O fundo da
-  coluna anima com faixas e partículas; a roda deixa de ter o halo oval que
-  vazava do círculo. A lista de prêmios usa a barra de rolagem do tema. O card
-  do bônus diário ganhou o passo a passo e dicas.
-
 ### Adicionado
 
 - Palco de combate na **Arena das Feras**: golpes, barras e retrato da fera
@@ -98,6 +58,43 @@ Git até **13 de setembro de 2026**.
 
 ### Alterado
 
+- Na central de jogos, o saldo de fichas do hero atualiza na hora em
+  que a jogada gasta ou credita fichas (roleta, baú, taverna, pesca e
+  arena), sem precisar recarregar a página.
+- A **Arena das Feras** divide o card em duas colunas: lista de feras,
+  forja e palco só para o combate.   O encante atual fica no cabeçalho
+  ao lado da trilha (+1 a +10).   Encantar abre um modal da tentativa
+  e só então mostra vitória ou derrota (explosão dourada, cinzas na
+  falha e celebração extra no +10), sem toast. A arma ganha sprite
+  própria de +0 a +10 (luz de encante no estilo Lineage). A arena
+  tem dez oponentes, cada um com retrato próprio. A forja
+  mostra fragmentos e o botão. Lutar fica
+  desativado (com relógio circular) enquanto a fera não pode combater,
+  amarelo sem fichas, e Encantar fica verde com 10 fragmentos.
+  No celular o palco sobe para a animação ficar visível.
+- Na **Pescaria**, vara, lançar e troca de iscas ficam no mesmo painel;
+  a moldura da isca em uso fica marcada, e trocar já deixa essa isca
+  pronta para o lançamento. Nome, custo e dica só aparecem ao apontar
+  o mouse.
+- Na **Pescaria**, iscas e peixes passam a ter nome/descrição em pt, en e es
+  (campos `*_en` / `*_es`, editáveis no admin). A API devolve o texto do idioma
+  ativo; sem tradução, cai no português.
+- Na **Pescaria**, o lançamento gasta 1 isca (comum ou encantada), não fichas.
+  Fichas só compram isca comum (**1 ficha = 10**). As duas encantadas saem
+  das comuns: aprendiz por 3 e encantada por 8.
+- A **Pescaria** ganhou sprites em pixel art das espécies (lambari, dourado,
+  piraíba e pirarucu), cardume com esteiras no lago, sequências de lançamento
+  e fisgada, e o salto ou a fuga do peixe no palco e na coleção, com bolhas,
+  splash, spray e o peixe no centro do lago, que some em seguida. O layout passou
+  a um módulo único (lago + HUD, loja ao lado, coleção em grade), sem o vazio
+  entre cards e sem timestamp ISO nos lances. O lago agora tem doze espécies,
+  inclusive Koi Etéreo, Boiúna e Serafim de Eva (raridade divina). A coleção
+  lista as espécies em duas colunas de raridade (comum/raro e
+  épico/lendário/divino).
+- Na **Roda da Fortuna**, o giro fica no centro vertical do card. O fundo da
+  coluna anima com faixas e partículas; a roda deixa de ter o halo oval que
+  vazava do círculo. A lista de prêmios usa a barra de rolagem do tema. O card
+  do bônus diário ganhou o passo a passo e dicas.
 - Prêmios dos minigames no estilo **Interlude low rate**: roleta, baús e
   pescaria entregam stacks (Adena 50k–5M, soulshots, poções, scrolls e
   encantamentos D–B); a arena no +10 rende 250k Adena. A lista em
