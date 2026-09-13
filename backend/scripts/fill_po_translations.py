@@ -385,6 +385,15 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Duración de la subasta no válida.",
     ),
     "Fichas insuficientes.": ("Insufficient tokens.", "Fichas insuficientes."),
+    "Iscas insuficientes.": ("Not enough bait.", "Cebos insuficientes."),
+    "Selecione uma isca para lançar a linha.": (
+        "Choose bait to cast the line.",
+        "Elige un cebo para lanzar la línea.",
+    ),
+    "Não há isca comum para esta troca.": (
+        "There is no common bait for this exchange.",
+        "No hay cebo común para este canje.",
+    ),
     "Você já resgatou o bônus de hoje.": (
         "You have already claimed today's bonus.",
         "Ya canjeaste el bono de hoy.",

@@ -191,7 +191,8 @@
       "cost": "Token cost",
       "fail_chance": "Fail chance (%)",
       "min_bet": "Minimum bet",
-      "cost_per_cast": "Cost per cast",
+      "cost_per_cast": "Bait per cast",
+      "baits_per_token": "Bait per token",
       "amount": "Bonus amount"
     },
     "emptyTitle": "No games registered",
@@ -800,7 +801,8 @@
       "ends_on": "Last day",
       "day": "Season day",
       "weight": "Draw weight",
-      "price": "Price in tokens",
+      "paid_with": "Paid with",
+      "price": "Cost in common bait",
       "success_bonus": "Chance bonus (percentage points)",
       "rarity": "Rarity",
       "min_rod_level": "Minimum rod level",
@@ -825,6 +827,10 @@
       "rare": "Rare",
       "epic": "Epic",
       "legendary": "Legendary"
+    },
+    "baitPaidWith": {
+      "tokens": "Tokens",
+      "baits": "Common bait"
     },
     "events": {
       "roulette": "Spin the wheel",

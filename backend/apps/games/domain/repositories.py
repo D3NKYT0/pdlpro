@@ -343,6 +343,10 @@ class IFishingRepository(ABC):
     def get_active_bait(self, bait_id: UUID) -> Any | None:
         raise NotImplementedError
 
+    def get_token_bait(self) -> Any | None:
+        """Isca comum comprada com fichas (moeda das encantadas)."""
+        raise NotImplementedError
+
     @abstractmethod
     def bait_stock_map(self, user) -> dict:
         raise NotImplementedError

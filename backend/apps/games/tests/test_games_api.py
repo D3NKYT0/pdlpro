@@ -284,10 +284,11 @@ def test_dice_and_slots(api, player):
 def test_fishing_cast(api, player):
     from unittest.mock import patch
 
-    from apps.games.infrastructure.models import Fish
+    from apps.games.infrastructure.models import Fish, FishingBait, UserFishingBait
 
     GameConfig.objects.update_or_create(
-        code="fishing", defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1}}
+        code="fishing",
+        defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
     )
     fish = Fish.objects.create(
         name="Lambari Teste",
@@ -299,23 +300,133 @@ def test_fishing_cast(api, player):
         item_name="Soulshot: No Grade",
         quantity=800,
     )
-    player.fichas = 5
+    bait = FishingBait.objects.create(name="Minhoca", price=1, success_bonus=5, active=True)
+    UserFishingBait.objects.create(user=player, bait=bait, quantity=2)
+    player.fichas = 0
     player.save(update_fields=["fichas"])
     api.force_authenticate(user=player)
+    missing = api.post("/api/v1/customer/games/fishing/")
+    assert missing.status_code == 400
     with (
         patch("apps.games.application.fishing_use_cases.random.randint", return_value=1),
         patch("apps.games.application.fishing_use_cases.random.choices", return_value=[fish]),
     ):
-        cast = api.post("/api/v1/customer/games/fishing/")
+        cast = api.post("/api/v1/customer/games/fishing/", {"bait_id": str(bait.id)}, format="json")
     assert cast.status_code == 200, cast.data
     assert cast.data["success"] is True
     assert cast.data["fish"]["name"] == "Lambari Teste"
+    assert cast.data["baits"] == 1
+    assert cast.data["fichas"] == 0
+    assert UserFishingBait.objects.get(user=player, bait=bait).quantity == 1
     state = api.get("/api/v1/customer/games/fishing/")
     assert state.status_code == 200
     assert state.data["rod"]["xp"] >= 10
+    assert state.data["baits"] == 1
+    assert state.data["baits_per_token"] == 10
     bag = api.get("/api/v1/customer/games/bag/")
     assert bag.data[0]["item_id"] == 1835
     assert bag.data[0]["quantity"] == 800
+
+
+@pytest.mark.django_db
+def test_fishing_exchanges_tokens_for_bait_packs(api, player):
+    from apps.games.infrastructure.models import FishingBait, UserFishingBait
+
+    GameConfig.objects.update_or_create(
+        code="fishing",
+        defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
+    )
+    bait = FishingBait.objects.create(name="Pacote", price=8, success_bonus=0, active=True)
+    player.fichas = 3
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    bought = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(bait.id), "quantity": 1},
+        format="json",
+    )
+    assert bought.status_code == 200, bought.data
+    assert bought.data["fichas"] == 2
+    assert bought.data["received"] == 10
+    assert bought.data["quantity"] == 10
+    assert UserFishingBait.objects.get(user=player, bait=bait).quantity == 10
+    empty = api.post("/api/v1/customer/games/fishing/", {"bait_id": str(bait.id)}, format="json")
+    assert empty.status_code == 200
+    assert UserFishingBait.objects.get(user=player, bait=bait).quantity == 9
+    player.fichas = 0
+    player.save(update_fields=["fichas"])
+    refused = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(bait.id), "quantity": 1},
+        format="json",
+    )
+    assert refused.status_code == 400
+    broke = api.post(
+        "/api/v1/customer/games/fishing/",
+        {"bait_id": str(FishingBait.objects.create(name="Vazia", price=1, active=True).id)},
+        format="json",
+    )
+    assert broke.status_code == 400
+    assert broke.data["message"] == "Iscas insuficientes."
+
+
+@pytest.mark.django_db
+def test_fishing_trades_common_bait_for_both_enchanted_kinds(api, player):
+    from apps.games.infrastructure.models import FishingBait, UserFishingBait
+
+    GameConfig.objects.update_or_create(
+        code="fishing",
+        defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
+    )
+    FishingBait.objects.all().delete()
+    common = FishingBait.objects.create(
+        name="Isca comum", paid_with="tokens", price=1, success_bonus=0, active=True
+    )
+    apprentice = FishingBait.objects.create(
+        name="Isca do aprendiz", paid_with="baits", price=3, success_bonus=5, active=True
+    )
+    enchanted = FishingBait.objects.create(
+        name="Isca encantada", paid_with="baits", price=8, success_bonus=15, active=True
+    )
+    UserFishingBait.objects.create(user=player, bait=common, quantity=20)
+    player.fichas = 4
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    tokens = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(common.id), "quantity": 1},
+        format="json",
+    )
+    assert tokens.status_code == 200, tokens.data
+    assert tokens.data["fichas"] == 3
+    assert tokens.data["received"] == 10
+    assert UserFishingBait.objects.get(user=player, bait=common).quantity == 30
+    learner = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(apprentice.id), "quantity": 2},
+        format="json",
+    )
+    assert learner.status_code == 200, learner.data
+    assert learner.data["received"] == 2
+    assert learner.data["spent"] == 6
+    assert learner.data["fichas"] == 3
+    assert UserFishingBait.objects.get(user=player, bait=common).quantity == 24
+    assert UserFishingBait.objects.get(user=player, bait=apprentice).quantity == 2
+    rare = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(enchanted.id), "quantity": 1},
+        format="json",
+    )
+    assert rare.status_code == 200, rare.data
+    assert rare.data["received"] == 1
+    assert UserFishingBait.objects.get(user=player, bait=common).quantity == 16
+    assert UserFishingBait.objects.get(user=player, bait=enchanted).quantity == 1
+    poor = api.post(
+        "/api/v1/customer/games/fishing/details/",
+        {"bait_id": str(enchanted.id), "quantity": 3},
+        format="json",
+    )
+    assert poor.status_code == 400
 
 
 def test_divine_catch_is_rarer_than_legendary():

@@ -329,15 +329,45 @@ def buy_bait(user_id, bait_id, quantity, *, fishing: IFishingRepository, unit_of
         config = fishing.get_config()
         if config is None or not config.active:
             raise ValidationDomainError("Pesca desativada.")
-        cost = bait.price * quantity
-        if user.fichas < cost:
+        from apps.games.application.fishing_use_cases import fishing_economy
+
+        _cost, pack = fishing_economy(config)
+        if getattr(bait, "paid_with", "tokens") == "baits":
+            common = fishing.get_token_bait()
+            if common is None or common.id == bait.id:
+                raise ValidationDomainError("Não há isca comum para esta troca.")
+            cost = max(1, int(bait.price)) * quantity
+            common_stock = fishing.get_bait_stock_locked(user, common.id)
+            if not common_stock or common_stock.quantity < cost:
+                raise ValidationDomainError("Iscas insuficientes.")
+            common_stock.quantity -= cost
+            fishing.save_bait_stock(common_stock, update_fields=["quantity", "updated_at"])
+            stock = fishing.get_or_create_bait_stock(user, bait)
+            stock.quantity += quantity
+            fishing.save_bait_stock(stock)
+            return {
+                "quantity": stock.quantity,
+                "received": quantity,
+                "spent": cost,
+                "fichas": user.fichas,
+                "baits_per_token": pack,
+            }
+
+        tokens = quantity
+        received = pack * quantity
+        if user.fichas < tokens:
             raise ValidationDomainError("Fichas insuficientes.")
-        user.fichas -= cost
+        user.fichas -= tokens
         user.save(update_fields=["fichas", "updated_at"])
         stock = fishing.get_or_create_bait_stock(user, bait)
-        stock.quantity += quantity
+        stock.quantity += received
         fishing.save_bait_stock(stock)
-        return {"quantity": stock.quantity, "fichas": user.fichas}
+        return {
+            "quantity": stock.quantity,
+            "received": received,
+            "fichas": user.fichas,
+            "baits_per_token": pack,
+        }
 
 
 def game_statistics(user, kind, *, minigames: IMinigameRepository):

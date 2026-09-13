@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.games.application import advanced
+from apps.games.application.fishing_use_cases import fishing_economy
 from apps.games.application.use_cases import (
     ClaimDailyBonusInput,
     ClaimDailyBonusUseCase,
@@ -157,13 +158,17 @@ class GetFishingDetailsUseCase(UseCase[FishingDetailsInput, dict]):
         user = self._fishing.require_user(data.user_id)
         stock = self._fishing.bait_stock_map(user)
         catches = self._fishing.catch_collection_map(user)
+        _cost, pack = fishing_economy(self._fishing.get_config())
         return {
+            "fichas": user.fichas,
+            "baits_per_token": pack,
             "baits": [
                 {
                     "id": str(b.id),
                     "name": b.name,
                     "description": b.description,
                     "price": b.price,
+                    "paid_with": getattr(b, "paid_with", "tokens"),
                     "success_bonus": b.success_bonus,
                     "quantity": stock.get(b.pk, 0),
                 }
@@ -183,7 +188,7 @@ class GetFishingDetailsUseCase(UseCase[FishingDetailsInput, dict]):
 
 @dataclass(frozen=True, slots=True)
 class BuyBaitInput:
-    """Compra iscas de pesca com fichas."""
+    """Troca fichas por pacotes de iscas (1 ficha = N iscas na config do lago)."""
 
     user_id: UUID
     bait_id: str

@@ -87,11 +87,14 @@ export type DailyDetails = {
 }
 
 export type FishingDetails = {
+  fichas: number
+  baits_per_token: number
   baits: {
     id: string
     name: string
     description: string
     price: number
+    paid_with: 'tokens' | 'baits'
     success_bonus: number
     quantity: number
   }[]
@@ -176,12 +179,13 @@ export const gamesApi = {
       },
     ),
   fishing: () => request<ApiFishingState>('/customer/games/fishing/'),
-  cast: (bait_id?: string) =>
+  cast: (bait_id: string) =>
     request<{
       success: boolean
       fish: { name: string; rarity: string } | null
       rod: { level: number; xp: number }
       fichas: number
+      baits: number
     }>('/customer/games/fishing/', { method: 'POST', body: JSON.stringify({ bait_id }) }),
   economy: () => request<ApiEconomyState>('/customer/games/economy/'),
   fight: (monsterId: string) =>

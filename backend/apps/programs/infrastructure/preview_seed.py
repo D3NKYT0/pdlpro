@@ -188,13 +188,15 @@ class DjangoPreviewSeedService(IPreviewSeedService):
             name="Reserva para a jornada",
             defaults={"weight": 7, "rewards": [{"kind": "bonus", "quantity": "5.00"}]},
         )
-        for name, price, bonus in [
-            ("Isca do aprendiz", 3, 5),
-            ("Isca encantada", 8, 15),
+        for name, paid_with, price, bonus in [
+            ("Isca comum", "tokens", 1, 0),
+            ("Isca do aprendiz", "baits", 3, 5),
+            ("Isca encantada", "baits", 8, 15),
         ]:
             bait, _ = FishingBait.objects.get_or_create(
                 name=name,
                 defaults={
+                    "paid_with": paid_with,
                     "price": price,
                     "success_bonus": bonus,
                     "description": "Uma chance extra para trazer seu próximo troféu.",

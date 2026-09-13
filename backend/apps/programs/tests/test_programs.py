@@ -488,21 +488,22 @@ def test_daily_season_and_pool_reward_once(api, player):
 def test_bait_purchase_and_consumption(api, player):
     GameConfig.objects.update_or_create(
         code="fishing",
-        defaults={"name": "Fishing", "active": True, "settings": {"cost_per_cast": 1}},
+        defaults={"name": "Fishing", "active": True, "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
     )
-    bait = FishingBait.objects.create(name="Bait", price=5, success_bonus=20)
+    bait = FishingBait.objects.create(name="Bait", price=8, success_bonus=20)
     response = api.post(
         "/api/v1/customer/games/fishing/details/",
         {"bait_id": str(bait.id), "quantity": 2},
         format="json",
     )
     assert response.status_code == 200, response.data
-    assert response.data["fichas"] == 90
+    assert response.data["fichas"] == 98
+    assert response.data["received"] == 20
     response = api.post(
         "/api/v1/customer/games/fishing/", {"bait_id": str(bait.id)}, format="json"
     )
     assert response.status_code == 200, response.data
-    assert UserFishingBait.objects.get(user=player, bait=bait).quantity == 1
+    assert UserFishingBait.objects.get(user=player, bait=bait).quantity == 19
 
 
 @pytest.mark.parametrize("kind", ["roulette", "dice", "slots", "fishing", "economy"])

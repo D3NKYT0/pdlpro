@@ -309,11 +309,11 @@ class FishingView(ItemCatalogAPIView):
     @extend_schema(
         tags=["Jogos"],
         summary=gettext_lazy("Lançar linha"),
-        description=gettext_lazy("Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura."),
+        description=gettext_lazy("Lança a linha de pesca consumindo iscas e devolve o resultado da captura."),
     )
     def post(self, request):
         from rest_framework import serializers
-        bait_id = serializers.UUIDField(allow_null=True).run_validation(request.data.get("bait_id"))
+        bait_id = serializers.UUIDField().run_validation(request.data.get("bait_id"))
         return Response(self.resolve(CastLineUseCase).execute(CastLineInput(user_id=request.user.id, bait_id=bait_id)))
 
 

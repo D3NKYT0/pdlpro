@@ -177,6 +177,14 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert luck.rewards[0]["item_id"] == 4037
     assert luck.rewards[0]["quantity"] == 3
     assert FishingBait.objects.filter(active=True).count() >= 1
+    token_bait = FishingBait.objects.get(name="Isca comum")
+    assert token_bait.paid_with == "tokens"
+    apprentice = FishingBait.objects.get(name="Isca do aprendiz")
+    assert apprentice.paid_with == "baits"
+    assert apprentice.price == 3
+    enchanted = FishingBait.objects.get(name="Isca encantada")
+    assert enchanted.paid_with == "baits"
+    assert enchanted.price == 8
     ancestral = Fish.objects.get(name="Pirarucu Ancestral")
     assert ancestral.item_id == 955
     assert ancestral.quantity == 1

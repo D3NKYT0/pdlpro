@@ -20,7 +20,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar, **Configurar** por jogo e **Configurar todos**) |
 | Pesca, iscas e coleção | `/panel/games?tab=fishing` | `/panel/admin/rewards` |
 
-A pescaria tem uma única interface em Jogos (`Pescaria`), incluindo vara, experiência, iscas, coleção e últimos lançamentos. O endereço antigo `/panel/rewards?tab=fishing` redireciona para a aba Pescaria em Jogos, sem alterar o progresso. O lago mostra cardume em pixel art com esteiras, cáusticas e bolhas; o lançamento cai a boia com impacto e anéis, a fisgada afunda a linha e o peixe aparece no centro do lago com spray e brilho (ou foge) e some em seguida (`images/games/fish-*.webp`). A tela segue o módulo dos outros jogos: palco e HUD à esquerda, loja e últimos lances à direita, coleção embaixo. A coleção usa as mesmas artes, em duas colunas de raridade (comum e raro à esquerda; épico, lendário e divino à direita); espécies novas caem na sprite da faixa. O lago tem
+A pescaria tem uma única interface em Jogos (`Pescaria`), incluindo vara, experiência, iscas, coleção e últimos lançamentos. Pescar gasta 1 isca (comum ou uma das duas encantadas). Fichas só compram **isca comum** (**1 ficha = 10**). Isca do aprendiz custa **3 comuns**; isca encantada custa **8 comuns**. O endereço antigo `/panel/rewards?tab=fishing` redireciona para a aba Pescaria em Jogos, sem alterar o progresso. O lago mostra cardume em pixel art com esteiras, cáusticas e bolhas; o lançamento cai a boia com impacto e anéis, a fisgada afunda a linha e o peixe aparece no centro do lago com spray e brilho (ou foge) e some em seguida (`images/games/fish-*.webp`). A tela segue o módulo dos outros jogos: palco e HUD à esquerda, loja e últimos lances à direita, coleção embaixo. A coleção usa as mesmas artes, em duas colunas de raridade (comum e raro à esquerda; épico, lendário e divino à direita); espécies novas caem na sprite da faixa. O lago tem
 doze espécies: peixes reais do Brasil e três criaturas que não existem (Koi Etéreo,
 Boiúna e Serafim de Eva). As duas últimas são **divinas** — rara fisgada, vara alta
 e prêmio maior.
@@ -51,7 +51,7 @@ usam `GameConfig`.
 - O checkout compra itens e pacotes na mesma transação, preserva a composição histórica, entrega na bag e usa chave de idempotência. Alterar um pacote depois não altera compras anteriores.
 - Missões contam eventos reais do período diário, semanal ou da temporada. Trocas consomem o item e encantamento exatos da bag. Marcos e prêmios só são resgatados uma vez. Resgate automático atende prêmios de nível, respeitando premium.
 - Bônus sazonal usa o dia do calendário da temporada, não uma sequência pessoal de login. Um conjunto extra pode ser sorteado por peso. Sem temporada ativa, o bônus simples anterior permanece disponível. O limite é um resgate por data local.
-- Iscas custam fichas, ficam no estoque e são consumidas no lançamento, inclusive quando o peixe escapa. Coleção registra capturas bem-sucedidas. Rankings de cada minigame ordenam resultados positivos e partidas.
+- O lançamento consome 1 isca comum ou 1 das duas encantadas, não fichas. Fichas só compram isca comum (**1 ficha = 10**). Aprendiz e encantada saem das comuns (3 e 8). Sem isca no estoque a linha não sai. A isca é gasta mesmo quando o peixe escapa. Coleção registra capturas bem-sucedidas. Rankings de cada minigame ordenam resultados positivos e partidas.
 
 ## Integração da carteira
 

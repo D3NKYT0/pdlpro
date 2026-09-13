@@ -31,13 +31,20 @@ export function FishingGame() {
   const [result, setResult] = useState('')
   const [pond, setPond] = useState<FishingPondState>('idle')
   const [catchFish, setCatchFish] = useState<{ name: string; rarity: string } | null>(null)
-  const selectedBait = query.data?.baits.find((b) => b.id === bait && b.quantity > 0)
+  const packSize = fishing.data?.baits_per_token ?? query.data?.baits_per_token ?? 10
+  const castCost = fishing.data?.cost ?? 1
+  const baits = query.data?.baits ?? []
+  const commonBait = baits.find((row) => row.paid_with !== 'baits')
+  const commonStock = commonBait?.quantity ?? 0
+  const stockedBaits = baits.filter((row) => row.quantity >= castCost)
+  const selectedBait = stockedBaits.find((row) => row.id === bait) ?? stockedBaits[0]
+  const baitTotal = baits.reduce((sum, row) => sum + row.quantity, 0)
   const canCast =
     !!fishing.data?.active &&
     !fishing.isError &&
     !query.isError &&
     !query.isPending &&
-    (fishing.data?.fichas ?? 0) >= (fishing.data?.cost ?? 1)
+    !!selectedBait
   const validQuantity = Number.isInteger(quantity) && quantity >= 1 && quantity <= 999
   const castLabel =
     pond === 'bite'
@@ -59,7 +66,7 @@ export function FishingGame() {
           <span className="panel-eyebrow">{t('games.fishing.eyebrow')}</span>
           <h2>{t('games.fishing.title')}</h2>
         </div>
-        <span className="game-cost">{t('games.fishing.cost', { count: fishing.data?.cost || 1 })}</span>
+        <span className="game-cost">{t('games.fishing.cost', { count: castCost })}</span>
       </div>
       <div className="fishing-board">
         <div className="fishing-stage">
@@ -74,22 +81,23 @@ export function FishingGame() {
               <strong>{t('games.fishing.xpValue', { xp: fishing.data?.rod.xp ?? 0 })}</strong>
             </div>
             <div className="fishing-stat">
-              <small>{t('games.fishing.tokens')}</small>
-              <strong>{fishing.data?.fichas || 0}</strong>
+              <small>{t('games.fishing.baits')}</small>
+              <strong>{t('games.fishing.baitsValue', { count: baitTotal })}</strong>
             </div>
           </div>
           <form
             className="fishing-cast"
             onSubmit={(e) => {
               e.preventDefault()
-              if (!canCast || action.busy) return
+              if (!canCast || action.busy || !selectedBait) return
+              const usedBait = selectedBait
               void action.run(async () => {
                 setPond('casting')
                 setCatchFish(null)
                 const started = Date.now()
                 try {
-                  const r = await gamesApi.cast(selectedBait?.id)
-                  if (selectedBait?.quantity === 1) setBait('')
+                  const r = await gamesApi.cast(usedBait.id)
+                  if (usedBait.quantity <= castCost) setBait('')
                   if (r.fish) setCatchFish(r.fish)
                   await waitForFishingCast(started)
                   setPond('bite')
@@ -135,14 +143,14 @@ export function FishingGame() {
               {castLabel}
             </Button>
             <p className="muted fishing-cast-hint">
-              {t('games.fishing.castCost', { cost: fishing.data?.cost || 1 })}
+              {t('games.fishing.castCost', { count: castCost })}
             </p>
           </form>
           {fishing.data && !fishing.data.active && (
             <p className="muted">{t('games.fishing.unavailable')}</p>
           )}
-          {fishing.data?.active && fishing.data.fichas < fishing.data.cost && (
-            <p className="muted">{t('games.fishing.insufficientTokens')}</p>
+          {fishing.data?.active && !selectedBait && (
+            <p className="muted">{t('games.fishing.insufficientBait')}</p>
           )}
           {result && (
             <p className="program-note" role="status">
@@ -153,6 +161,9 @@ export function FishingGame() {
         <aside className="fishing-side">
           <div className="game-subsection">
             <h3>{t('games.fishing.shopTitle')}</h3>
+            <p className="muted">{t('games.fishing.exchangeRate', { count: packSize })}</p>
+            <p className="muted">{t('games.fishing.enchantedHint')}</p>
+            <p className="muted">{t('games.fishing.tokensWallet', { count: fishing.data?.fichas ?? 0 })}</p>
             <Field className="fishing-qty" label={t('games.fishing.buyQuantity')}>
               <input
                 type="number"
@@ -163,7 +174,13 @@ export function FishingGame() {
                 onChange={(e) => setQuantity(Number(e.target.value))}
               />
             </Field>
-            {query.data?.baits.map((b) => (
+            {baits.map((b) => {
+              const enchanted = b.paid_with === 'baits'
+              const cost = (enchanted ? b.price : 1) * quantity
+              const canAfford = enchanted
+                ? commonStock >= cost
+                : (fishing.data?.fichas ?? 0) >= quantity
+              return (
               <article className="fishing-bait" key={b.id}>
                 <div>
                   <h3>{b.name}</h3>
@@ -184,7 +201,7 @@ export function FishingGame() {
                     !fishing.data ||
                     query.isError ||
                     fishing.isError ||
-                    fishing.data.fichas < b.price * quantity
+                    !canAfford
                   }
                   onClick={() =>
                     void action.run(
@@ -194,10 +211,20 @@ export function FishingGame() {
                     )
                   }
                 >
-                  {t('games.fishing.buy', { price: b.price * quantity })}
+                  {enchanted
+                    ? t('games.fishing.buyEnchanted', {
+                        cost,
+                        count: quantity,
+                        name: b.name,
+                      })
+                    : t('games.fishing.buy', {
+                        tokens: quantity,
+                        baits: packSize * quantity,
+                      })}
                 </Button>
               </article>
-            ))}
+              )
+            })}
             {query.data?.baits.length === 0 && <Empty>{t('games.fishing.shopEmpty')}</Empty>}
           </div>
           {recent.length > 0 && (

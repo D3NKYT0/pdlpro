@@ -101,6 +101,10 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
     section('baits', [
       name,
       field(t, 'description', { type: 'textarea' }),
+      field(t, 'paid_with', {
+        options: options(t, 'baitPaidWith', ['tokens', 'baits']),
+        initial: 'tokens',
+      }),
       number(t, 'price'),
       number(t, 'success_bonus', 5),
       active,
@@ -167,7 +171,10 @@ export const GAME_SETTING_FIELDS: Record<string, { key: string; min?: number; st
   daily_bonus: [{ key: 'amount', min: 0, step: '0.01' }],
   dice: [{ key: 'min_bet', min: 0 }],
   slots: [{ key: 'cost', min: 0 }],
-  fishing: [{ key: 'cost_per_cast', min: 0 }],
+  fishing: [
+    { key: 'cost_per_cast', min: 1 },
+    { key: 'baits_per_token', min: 1 },
+  ],
   economy: [],
   boxes: [],
 }

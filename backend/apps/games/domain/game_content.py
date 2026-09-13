@@ -33,7 +33,7 @@ GAME_CONTENT_FIELDS: dict[str, list[str]] = {
     "daily-seasons": ["name", "starts_on", "ends_on", "active"],
     "daily-days": ["season", "day", "rewards"],
     "daily-pool": ["season", "name", "weight", "rewards"],
-    "baits": ["name", "description", "price", "success_bonus", "active"],
+    "baits": ["name", "description", "paid_with", "price", "success_bonus", "active"],
     "prizes": ["name", "item_id", "enchant", "quantity", "weight", "rarity", "active"],
     "fish": [
         "name",

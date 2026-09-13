@@ -34,7 +34,7 @@ GAME_DEFAULTS: dict[str, dict] = {
     "daily_bonus": {"name": "Bônus diário", "settings": {"amount": "10.00"}},
     "dice": {"name": "Mesa da Taverna", "settings": {"min_bet": 1}},
     "slots": {"name": "Cilindros", "settings": {"cost": 1}},
-    "fishing": {"name": "Pescaria", "settings": {"cost_per_cast": 1}},
+    "fishing": {"name": "Pescaria", "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
     "economy": {"name": "Arena das Feras", "settings": {}},
     "boxes": {"name": "Baús Encantados", "settings": None},
 }
@@ -156,9 +156,12 @@ MONSTERS = (
     ("Drake", 8, 5, 20, 120, 18, 8, 60),
 )
 
+# name, paid_with, price, bonus, description
+# Isca comum: 1 ficha = 10. Encantadas: preço antigo em iscas comuns (3 e 8).
 BAITS = (
-    ("Isca do aprendiz", 3, 5, "Uma chance extra para trazer seu próximo troféu."),
-    ("Isca encantada", 8, 15, "Atrai peixes raros nas águas mais profundas."),
+    ("Isca comum", "tokens", 1, 0, "Isca simples para lançar a linha."),
+    ("Isca do aprendiz", "baits", 3, 5, "Uma chance extra para trazer seu próximo troféu."),
+    ("Isca encantada", "baits", 8, 15, "Atrai peixes raros nas águas mais profundas."),
 )
 
 DAILY_POOL = (
@@ -381,10 +384,11 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
 
     def _ensure_baits(self) -> int:
         created = 0
-        for name, price, bonus, description in BAITS:
-            _, was = FishingBait.objects.get_or_create(
+        for name, paid_with, price, bonus, description in BAITS:
+            bait, was = FishingBait.objects.get_or_create(
                 name=name,
                 defaults={
+                    "paid_with": paid_with,
                     "price": price,
                     "success_bonus": bonus,
                     "description": description,
@@ -392,6 +396,25 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 },
             )
             created += int(was)
+            if not was:
+                fields: list[str] = []
+                if bait.paid_with != paid_with:
+                    bait.paid_with = paid_with
+                    fields.append("paid_with")
+                if bait.price != price:
+                    bait.price = price
+                    fields.append("price")
+                if bait.success_bonus != bonus:
+                    bait.success_bonus = bonus
+                    fields.append("success_bonus")
+                if bait.description != description:
+                    bait.description = description
+                    fields.append("description")
+                if not bait.active:
+                    bait.active = True
+                    fields.append("active")
+                if fields:
+                    bait.save(update_fields=[*fields, "updated_at"])
         return created
 
     def _ensure_monsters(self) -> int:

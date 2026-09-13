@@ -3678,6 +3678,17 @@ msgid "Fichas insuficientes."
 msgstr "Fichas insuficientes."
 
 #: .\common\i18n_msgid_catalog.py:38
+msgid "Iscas insuficientes."
+msgstr "Cebos insuficientes."
+
+#: .\common\i18n_msgid_catalog.py:39
+msgid "Selecione uma isca para lançar a linha."
+msgstr "Elige un cebo para lanzar la línea."
+
+msgid "Não há isca comum para esta troca."
+msgstr "No hay cebo común para este canje."
+
+#: .\common\i18n_msgid_catalog.py:40
 msgid "Você já resgatou o bônus de hoje."
 msgstr "Ya canjeaste el bono de hoy."
 

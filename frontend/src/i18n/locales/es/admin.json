@@ -191,7 +191,8 @@
       "cost": "Coste en fichas",
       "fail_chance": "Probabilidad de fallo (%)",
       "min_bet": "Apuesta mínima",
-      "cost_per_cast": "Coste por lance",
+      "cost_per_cast": "Cebos por lance",
+      "baits_per_token": "Cebos por ficha",
       "amount": "Importe del bono"
     },
     "emptyTitle": "Ningún juego registrado",
@@ -800,7 +801,8 @@
       "ends_on": "Último día",
       "day": "Día de la temporada",
       "weight": "Peso en el sorteo",
-      "price": "Precio en fichas",
+      "paid_with": "Se paga con",
+      "price": "Coste en cebos comunes",
       "success_bonus": "Bono de probabilidad (puntos porcentuales)",
       "rarity": "Rareza",
       "min_rod_level": "Nivel mínimo de la caña",
@@ -825,6 +827,10 @@
       "rare": "Raro",
       "epic": "Épico",
       "legendary": "Legendario"
+    },
+    "baitPaidWith": {
+      "tokens": "Fichas",
+      "baits": "Cebos comunes"
     },
     "events": {
       "roulette": "Girar la rueda",

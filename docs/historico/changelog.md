@@ -10,6 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Na **Pescaria**, o lançamento gasta 1 isca (comum ou encantada), não fichas.
+  Fichas só compram isca comum (**1 ficha = 10**). As duas encantadas saem
+  das comuns: aprendiz por 3 e encantada por 8.
 - A **Pescaria** ganhou sprites em pixel art das espécies (lambari, dourado,
   piraíba e pirarucu), cardume com esteiras no lago, sequências de lançamento
   e fisgada, e o salto ou a fuga do peixe no palco e na coleção, com bolhas,

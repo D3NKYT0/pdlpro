@@ -328,7 +328,9 @@ export interface ApiBattlePass {
 
 export interface ApiFishingState {
   fichas: number
+  baits: number
   cost: number
+  baits_per_token: number
   active: boolean
   rod: { level: number; xp: number }
   fish: Array<{ id: string; name: string; rarity: string; min_rod_level: number }>

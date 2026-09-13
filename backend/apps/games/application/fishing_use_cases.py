@@ -8,7 +8,7 @@ from apps.accounts.application.progress import add_xp
 from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
-from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
+from apps.games.domain.exceptions import GameInactiveError
 from apps.games.domain.repositories import (
     IBagRepository,
     IBattlePassRepository,
@@ -18,6 +18,22 @@ from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 SUCCESS_CHANCE = {"common": 85, "rare": 65, "epic": 40, "legendary": 18, "divine": 8}
+DEFAULT_CAST_BAIT_COST = 1
+DEFAULT_BAITS_PER_TOKEN = 10
+
+
+def fishing_economy(config) -> tuple[int, int]:
+    """Devolve (iscas por lançamento, iscas por ficha) a partir da config do lago."""
+    settings = getattr(config, "settings", None) or {}
+    try:
+        cost = int(settings.get("cost_per_cast", DEFAULT_CAST_BAIT_COST))
+    except (TypeError, ValueError):
+        cost = DEFAULT_CAST_BAIT_COST
+    try:
+        pack = int(settings.get("baits_per_token", DEFAULT_BAITS_PER_TOKEN))
+    except (TypeError, ValueError):
+        pack = DEFAULT_BAITS_PER_TOKEN
+    return max(1, cost), max(1, pack)
 
 
 class GetFishingStateUseCase(UseCase[UUID, dict]):
@@ -35,9 +51,13 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
         rod = self._fishing.get_or_create_rod(user)
         config = self._fishing.get_config()
         catches = self._fishing.list_recent_catches(user)
+        cost, pack = fishing_economy(config)
+        stock = self._fishing.bait_stock_map(user)
         return {
             "fichas": user.fichas,
-            "cost": int((config.settings or {}).get("cost_per_cast", 1)) if config else 1,
+            "baits": sum(stock.values()),
+            "cost": cost,
+            "baits_per_token": pack,
             "active": bool(config and config.active),
             "rod": {"level": rod.level, "xp": rod.xp},
             "fish": [
@@ -70,12 +90,11 @@ class CastLineInput:
     """
 
     user_id: UUID
-    bait_id: UUID | None = None
+    bait_id: UUID
 
 
 class CastLineUseCase(UseCase[CastLineInput, dict]):
-    """Consome fichas e eventual isca, sorteia a captura, atualiza a vara e registra prêmios e
-    progresso.
+    """Consome iscas, sorteia a captura, atualiza a vara e registra prêmios e progresso.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CastLineInput``. O retorno é
     ``dict``.
@@ -99,22 +118,19 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
         config = self._fishing.get_config()
         if config is None or not config.active:
             raise GameInactiveError()
-        cost = int((config.settings or {}).get("cost_per_cast", 1))
+        cost, _pack = fishing_economy(config)
         with self._unit_of_work:
             user = self._fishing.require_user_locked(data.user_id)
-            bonus = 0
-            if data.bait_id:
-                stock = self._fishing.get_bait_stock_locked(user, data.bait_id)
-                if not stock or stock.quantity < 1:
-                    raise ValidationDomainError("Você não possui esta isca.")
-                stock.quantity -= 1
-                self._fishing.save_bait_stock(
-                    stock, update_fields=["quantity", "updated_at"]
-                )
-                bonus = stock.bait.success_bonus
-            if user.fichas < cost:
-                raise InsufficientTokensError()
-            user.fichas -= cost
+            if not data.bait_id:
+                raise ValidationDomainError("Selecione uma isca para lançar a linha.")
+            stock = self._fishing.get_bait_stock_locked(user, data.bait_id)
+            if not stock or stock.quantity < cost:
+                raise ValidationDomainError("Iscas insuficientes.")
+            stock.quantity -= cost
+            self._fishing.save_bait_stock(
+                stock, update_fields=["quantity", "updated_at"]
+            )
+            bonus = stock.bait.success_bonus
             rod = self._fishing.get_or_create_rod_locked(user)
             pool = self._fishing.list_fish_for_rod(rod.level)
             if not pool:
@@ -154,9 +170,11 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
             self._fishing.create_catch(
                 user=user, fish=fish, success=success, rod_level=rod.level
             )
+            remaining = self._fishing.bait_stock_map(user)
         return {
             "success": success,
             "fish": {"name": fish.name, "rarity": fish.rarity} if fish else None,
             "rod": {"level": rod.level, "xp": rod.xp},
             "fichas": user.fichas,
+            "baits": sum(remaining.values()),
         }

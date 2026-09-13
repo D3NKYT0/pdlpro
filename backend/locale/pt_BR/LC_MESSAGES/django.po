@@ -3419,6 +3419,17 @@ msgid "Fichas insuficientes."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:38
+msgid "Iscas insuficientes."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:39
+msgid "Selecione uma isca para lançar a linha."
+msgstr ""
+
+msgid "Não há isca comum para esta troca."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:40
 msgid "Você já resgatou o bônus de hoje."
 msgstr ""
 

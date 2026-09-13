@@ -453,10 +453,29 @@ class DjangoFishingRepository(IFishingRepository):
             stock.save(update_fields=update_fields)
 
     def list_active_baits(self) -> list[FishingBait]:
-        return list(FishingBait.objects.filter(active=True))
+        from django.db.models import Case, IntegerField, When
+
+        return list(
+            FishingBait.objects.filter(active=True).order_by(
+                Case(
+                    When(paid_with=FishingBait.PAID_WITH_TOKENS, then=0),
+                    default=1,
+                    output_field=IntegerField(),
+                ),
+                "price",
+                "name",
+            )
+        )
 
     def get_active_bait(self, bait_id: UUID) -> FishingBait | None:
         return FishingBait.objects.filter(id=bait_id, active=True).first()
+
+    def get_token_bait(self) -> FishingBait | None:
+        return (
+            FishingBait.objects.filter(active=True, paid_with=FishingBait.PAID_WITH_TOKENS)
+            .order_by("name")
+            .first()
+        )
 
     def bait_stock_map(self, user) -> dict:
         return dict(UserFishingBait.objects.filter(user=user).values_list("bait_id", "quantity"))

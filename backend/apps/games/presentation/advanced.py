@@ -135,7 +135,7 @@ class FishingDetailsView(InjectedAPIView):
     @extend_schema(
         tags=["Jogos"],
         summary=gettext_lazy("Comprar iscas"),
-        description=gettext_lazy("Compra iscas de pesca para o jogador autenticado com a quantidade informada."),
+        description=gettext_lazy("Troca fichas por pacotes de iscas para o jogador autenticado."),
         request=BaitPurchaseSerializer,
     )
     def post(self, request):

@@ -191,7 +191,8 @@
       "cost": "Custo em fichas",
       "fail_chance": "Chance de falha (%)",
       "min_bet": "Aposta mínima",
-      "cost_per_cast": "Custo por lançamento",
+      "cost_per_cast": "Iscas por lançamento",
+      "baits_per_token": "Iscas por ficha",
       "amount": "Valor do bônus"
     },
     "emptyTitle": "Nenhum jogo cadastrado",
@@ -800,7 +801,8 @@
       "ends_on": "Último dia",
       "day": "Dia da temporada",
       "weight": "Peso no sorteio",
-      "price": "Preço em fichas",
+      "paid_with": "Pago com",
+      "price": "Custo em iscas comuns",
       "success_bonus": "Bônus de chance (pontos percentuais)",
       "rarity": "Raridade",
       "min_rod_level": "Nível mínimo da vara",
@@ -825,6 +827,10 @@
       "rare": "Raro",
       "epic": "Épico",
       "legendary": "Lendário"
+    },
+    "baitPaidWith": {
+      "tokens": "Fichas",
+      "baits": "Iscas comuns"
     },
     "events": {
       "roulette": "Girar a roda",

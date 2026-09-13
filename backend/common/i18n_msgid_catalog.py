@@ -35,6 +35,9 @@ _("Duração do leilão inválida.")
 
 # apps.games.domain.exceptions
 _("Fichas insuficientes.")
+_("Iscas insuficientes.")
+_("Selecione uma isca para lançar a linha.")
+_("Não há isca comum para esta troca.")
 _("Você já resgatou o bônus de hoje.")
 _("Este jogo não está ativo.")
 _("Esta caixa não tem boosters restantes.")

@@ -596,9 +596,25 @@ class FishingBait(BaseModel):
     de negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
     """
 
+    PAID_WITH_TOKENS = "tokens"
+    PAID_WITH_BAITS = "baits"
+    PAID_WITH_CHOICES = (
+        (PAID_WITH_TOKENS, _("Fichas")),
+        (PAID_WITH_BAITS, _("Iscas comuns")),
+    )
+
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=250, blank=True)
-    price = models.PositiveIntegerField(default=1)
+    paid_with = models.CharField(
+        max_length=10,
+        choices=PAID_WITH_CHOICES,
+        default=PAID_WITH_TOKENS,
+        help_text=_("Fichas compram isca comum; iscas comuns compram as encantadas."),
+    )
+    price = models.PositiveIntegerField(
+        default=1,
+        help_text=_("Custo em iscas comuns quando a isca é encantada."),
+    )
     success_bonus = models.PositiveIntegerField(default=5)
     active = models.BooleanField(default=True)
 
