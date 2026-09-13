@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+import { fishingBaitKind } from './GameVisuals'
 import {
   findRoulettePrizeIndex,
   inferBoxRarity,
@@ -44,6 +45,12 @@ describe('inferBoxRarity', () => {
       ).map((row) => row.name),
     ).toEqual(['Baú Comum', 'Baú Raro', 'Baú Épico', 'Baú Lendário'])
   })
+})
+
+it('escolhe o SVG da isca pelo pagamento e pelo preço', () => {
+  expect(fishingBaitKind('tokens', 1)).toBe('common')
+  expect(fishingBaitKind('baits', 3)).toBe('apprentice')
+  expect(fishingBaitKind('baits', 8)).toBe('enchanted')
 })
 
 it('escolhe a sprite do peixe pelo nome da espécie ou pela raridade', () => {

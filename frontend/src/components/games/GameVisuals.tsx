@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useId, type CSSProperties } from 'react'
 import { Trophy, X } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCompactQuantity } from '../../lib/formatters'
@@ -459,6 +459,141 @@ export function FishPortrait({
     >
       <i className="fishing-fish-art" />
     </span>
+  )
+}
+
+export type FishingBaitKind = 'common' | 'apprentice' | 'enchanted'
+
+export function fishingBaitKind(paidWith?: string, price = 0): FishingBaitKind {
+  if (paidWith === 'baits') return price >= 8 ? 'enchanted' : 'apprentice'
+  return 'common'
+}
+
+function baitGradientId(uid: string, name: string) {
+  return `fishing-bait-${uid}-${name}`
+}
+
+/** Isca ilustrada da troca; cada tipo tem gancho e isca próprios. */
+export function FishingBaitMark({ kind }: { kind: FishingBaitKind }) {
+  const uid = useId().replace(/:/g, '')
+  const gold = baitGradientId(uid, 'gold')
+  const steel = baitGradientId(uid, 'steel')
+  const worm = baitGradientId(uid, 'worm')
+  const lure = baitGradientId(uid, 'lure')
+  const glow = baitGradientId(uid, 'glow')
+  return (
+    <svg viewBox="0 0 64 64" className="fishing-bait-mark" data-kind={kind} aria-hidden="true">
+      <defs>
+        <linearGradient id={gold} x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#fff6d0" />
+          <stop offset="0.5" stopColor="#e6c77d" />
+          <stop offset="1" stopColor="#8d6422" />
+        </linearGradient>
+        <linearGradient id={steel} x1="16" y1="6" x2="48" y2="54" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#f3efe4" />
+          <stop offset="0.55" stopColor="#c9b48a" />
+          <stop offset="1" stopColor="#6f5b38" />
+        </linearGradient>
+        <linearGradient id={worm} x1="12" y1="24" x2="40" y2="56" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#c46a4a" />
+          <stop offset="1" stopColor="#7a2f22" />
+        </linearGradient>
+        <linearGradient id={lure} x1="14" y1="18" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#8fd4c8" />
+          <stop offset="0.45" stopColor="#3f8f88" />
+          <stop offset="1" stopColor="#1d4c4a" />
+        </linearGradient>
+        <radialGradient id={glow} cx="46%" cy="58%" r="38%">
+          <stop offset="0" stopColor="#fff4c4" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#e6c77d" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <ellipse cx="32" cy="38" rx="18" ry="10" fill={`url(#${glow})`} />
+      <path d="M40 6c0 9-7 13-16 16" fill="none" stroke={`url(#${gold})`} strokeWidth="1.8" strokeLinecap="round" />
+      <path
+        d="M24.5 21c-8 6-13 16-9.5 24 4 9 16 12 23-3"
+        fill="none"
+        stroke={`url(#${steel})`}
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+      <path d="M37 39.5 42 44" fill="none" stroke={`url(#${steel})`} strokeWidth="1.8" strokeLinecap="round" />
+      {kind === 'common' ? (
+        <>
+          <path
+            d="M16 34c4-6 11-4 15 1 4 5 3 12-2 15-6 4-13 0-15-7-1.4-5 0-7 2-9Z"
+            fill={`url(#${worm})`}
+          />
+          <path d="M19 36c3 2 7 3 11 1M18 41c4 2 8 2 12 0" fill="none" stroke="#5a1f16" strokeWidth="1.1" opacity="0.55" />
+          <circle cx="18.5" cy="35" r="1.3" fill="#2a120e" />
+        </>
+      ) : null}
+      {kind === 'apprentice' ? (
+        <>
+          <path d="M15 36c6-8 16-8 21-1 4 6 2 14-5 17-8 3-16-2-16-9 0-3 0-5 0-7Z" fill="#6b8f3a" />
+          <path d="M18 38c5-3 12-3 16 1" fill="none" stroke="#dce8b0" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+          <path d="M19 42c3 2 8 2 12 0" fill="none" stroke="#3d5a1e" strokeWidth="1.1" opacity="0.55" />
+          <path d="M14 34 11 31" stroke="#c9b48a" strokeWidth="1.6" strokeLinecap="round" />
+          <path d="M46 10 49 16l6.2.7-4.7 4.4 1.3 6.1-5.5-3.1-5.5 3.1 1.3-6.1-4.7-4.4L43 16Z" fill={`url(#${gold})`} />
+        </>
+      ) : null}
+      {kind === 'enchanted' ? (
+        <>
+          <path
+            d="M18 34c5-4 12-3 16 3 4 6 2 13-4 16-7 3-14-1-15-8-.6-4 1-8 3-11Z"
+            fill={`url(#${lure})`}
+          />
+          <path d="M22 36c4-2 9-1 12 3" fill="none" stroke="#e8fff8" strokeWidth="1.3" strokeLinecap="round" opacity="0.65" />
+          <circle cx="48" cy="12" r="2.1" fill={`url(#${gold})`} />
+          <path d="M44 16 50 22M52 10 48 18" fill="none" stroke={`url(#${gold})`} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="54" cy="20" r="1.2" fill="#fff6d0" />
+          <circle cx="42" cy="8" r="1" fill="#9be7dc" />
+        </>
+      ) : null}
+    </svg>
+  )
+}
+
+/** Moldura da troca: botão nativo em forma de slot, sem a textura padrão. */
+export function FishingBaitFrame({
+  kind,
+  stock,
+  label,
+  selected = false,
+  disabled,
+  onClick,
+  onFocus,
+  onBlur,
+}: {
+  kind: FishingBaitKind
+  stock: number
+  label: string
+  selected?: boolean
+  disabled?: boolean
+  onClick: () => void
+  onFocus?: () => void
+  onBlur?: () => void
+}) {
+  return (
+    <button
+      type="button"
+      className={`fishing-bait-frame${selected ? ' is-selected' : ''}`}
+      data-kind={kind}
+      data-theme-part="fishing-bait"
+      aria-label={label}
+      aria-current={selected ? 'true' : undefined}
+      disabled={disabled}
+      onClick={onClick}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    >
+      <i className="fishing-bait-corner is-tl" aria-hidden="true" />
+      <i className="fishing-bait-corner is-tr" aria-hidden="true" />
+      <i className="fishing-bait-corner is-bl" aria-hidden="true" />
+      <i className="fishing-bait-corner is-br" aria-hidden="true" />
+      <FishingBaitMark kind={kind} />
+      <span className="fishing-bait-count">{stock}</span>
+    </button>
   )
 }
 

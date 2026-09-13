@@ -10289,32 +10289,51 @@ html.pdl-panel .fishing-fish.is-locked .fishing-fish-art {
 
 html.pdl-panel .fishing-board {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.72fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.7fr) minmax(200px, 0.5fr);
+  grid-template-areas:
+    "pond pond"
+    "stage side";
+  gap: 16px 24px;
   align-items: start;
+}
+
+html.pdl-panel .fishing-board > .fishing-pond {
+  grid-area: pond;
 }
 
 html.pdl-panel .fishing-stage {
   display: grid;
-  gap: 16px;
+  grid-area: stage;
+  gap: 8px;
   min-width: 0;
 }
 
 html.pdl-panel .fishing-game .fishing-pond {
-  min-height: 300px;
+  min-height: 260px;
+}
+
+html.pdl-panel .fishing-console {
+  display: grid;
+  min-width: 0;
+  border: 1px solid rgba(230, 199, 125, 0.14);
+  background: rgba(8, 7, 6, 0.35);
 }
 
 html.pdl-panel .fishing-hud {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 0;
+  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
 }
 
 html.pdl-panel .fishing-stat {
   min-width: 0;
-  padding: 10px 12px;
-  border: 1px solid rgba(230, 199, 125, 0.12);
-  background: rgba(8, 7, 6, 0.35);
+  padding: 8px 12px;
+  border-right: 1px solid rgba(230, 199, 125, 0.1);
+}
+
+html.pdl-panel .fishing-stat:last-child {
+  border-right: 0;
 }
 
 html.pdl-panel .fishing-stat small {
@@ -10325,31 +10344,45 @@ html.pdl-panel .fishing-stat small {
 
 html.pdl-panel .fishing-stat strong {
   display: block;
-  margin-top: 4px;
+  margin-top: 2px;
   color: var(--panel-gold);
-  font-size: 20px;
+  font-size: 16px;
 }
 
 html.pdl-panel .fishing-cast {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(12rem, 1fr) auto;
   align-items: end;
-  gap: 12px;
+  justify-items: start;
+  gap: 8px 12px;
 }
 
 html.pdl-panel .fishing-cast .field {
+  width: min(100%, 22rem);
   margin-bottom: 0;
 }
 
-html.pdl-panel .fishing-cast-hint {
-  grid-column: 1 / -1;
+html.pdl-panel .fishing-cast-hint,
+html.pdl-panel .fishing-console-note .muted {
   margin: 0;
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+html.pdl-panel .fishing-console-note {
+  display: grid;
+  gap: 4px;
+  padding: 0 12px 10px;
+  border-top: 1px solid rgba(230, 199, 125, 0.08);
+}
+
+html.pdl-panel .fishing-console-note:empty {
+  display: none;
 }
 
 html.pdl-panel .fishing-side {
   display: grid;
+  grid-area: side;
   align-content: start;
   gap: 4px;
   min-width: 0;
@@ -10361,36 +10394,227 @@ html.pdl-panel .fishing-side .game-subsection:first-child {
   margin-top: 0;
 }
 
-html.pdl-panel .fishing-qty {
-  margin: 0 0 12px;
+html.pdl-panel .fishing-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px 16px;
+  min-width: 0;
+  padding: 12px;
 }
 
-html.pdl-panel .fishing-bait {
+html.pdl-panel .fishing-play {
   display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+html.pdl-panel .fishing-dock-split {
+  align-self: stretch;
+  width: 1px;
+  margin: 2px 2px 4px;
+  background: rgba(230, 199, 125, 0.12);
+}
+
+html.pdl-panel .fishing-shop {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+html.pdl-panel .fishing-shop-title {
+  margin: 0;
+  color: var(--panel-gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .fishing-shop-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px 12px;
+}
+
+html.pdl-panel .fishing-qty {
+  width: 4.5rem;
+  margin: 0;
+}
+
+html.pdl-panel .fishing-shop-icons {
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.1);
 }
 
-html.pdl-panel .fishing-bait:last-of-type {
-  border-bottom: 0;
-  padding-bottom: 0;
+html.pdl-panel .fishing-bait-buy {
+  position: relative;
 }
 
-html.pdl-panel .fishing-bait h3 {
-  margin: 0 0 4px;
-  font-size: 15px;
+html.pdl-panel .fishing-bait-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 88px;
+  min-width: 88px;
+  height: 88px;
+  padding: 0;
+  isolation: isolate;
+  border: 1px solid rgba(198, 176, 130, 0.46);
+  outline: 1px solid rgba(90, 78, 54, 0.88);
+  outline-offset: 2px;
+  background:
+    radial-gradient(ellipse at 50% 22%, rgba(120, 104, 72, 0.2), transparent 46%),
+    radial-gradient(ellipse at 50% 80%, rgba(70, 58, 40, 0.28), transparent 52%),
+    linear-gradient(180deg, #2a2620 0%, #161310 100%);
+  color: var(--panel-gold);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 18px rgba(0, 0, 0, 0.42);
+  cursor: pointer;
 }
 
-html.pdl-panel .fishing-bait p {
-  margin: 0 0 6px;
+html.pdl-panel .fishing-bait-frame[data-kind="apprentice"] {
+  border-color: rgba(214, 188, 128, 0.58);
+}
+
+html.pdl-panel .fishing-bait-frame[data-kind="enchanted"] {
+  border-color: rgba(126, 200, 200, 0.42);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 18px rgba(30, 70, 68, 0.35),
+    0 0 12px rgba(126, 200, 200, 0.12);
+}
+
+html.pdl-panel .fishing-bait-frame:hover:not(:disabled),
+html.pdl-panel .fishing-bait-frame:focus-visible {
+  border-color: rgba(230, 199, 125, 0.78);
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 199, 125, 0.16),
+    inset 0 0 18px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(230, 199, 125, 0.18);
+}
+
+html.pdl-panel .fishing-bait-frame.is-selected {
+  border-color: rgba(230, 199, 125, 0.88);
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 199, 125, 0.2),
+    inset 0 0 18px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(230, 199, 125, 0.22);
+}
+
+html.pdl-panel .fishing-bait-frame:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+html.pdl-panel .fishing-bait-frame.is-selected:disabled {
+  opacity: 0.72;
+}
+
+html.pdl-panel .fishing-bait-corner {
+  pointer-events: none;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(214, 188, 128, 0.78);
+  border-style: solid;
+  border-width: 0;
+  z-index: 1;
+}
+
+html.pdl-panel .fishing-bait-corner.is-tl {
+  top: 4px;
+  left: 4px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+
+html.pdl-panel .fishing-bait-corner.is-tr {
+  top: 4px;
+  right: 4px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+
+html.pdl-panel .fishing-bait-corner.is-bl {
+  bottom: 4px;
+  left: 4px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+
+html.pdl-panel .fishing-bait-corner.is-br {
+  right: 4px;
+  bottom: 4px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+}
+
+html.pdl-panel .fishing-bait-mark {
+  display: block;
+  width: 58px;
+  height: 58px;
+}
+
+html.pdl-panel .fishing-bait-count {
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  color: var(--panel-gold);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 1;
+}
+
+html.pdl-panel .fishing-bait-tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  z-index: 4;
+  width: max-content;
+  max-width: 220px;
+  padding: 8px 10px;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(10, 8, 6, 0.94);
+  color: var(--panel-text);
+  font-size: 12px;
+  line-height: 1.4;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+html.pdl-panel .fishing-bait-buy:hover .fishing-bait-tip,
+html.pdl-panel .fishing-bait-buy:focus-within .fishing-bait-tip,
+html.pdl-panel .fishing-bait-buy.is-open .fishing-bait-tip {
+  visibility: visible;
+  opacity: 1;
+}
+
+html.pdl-panel .fishing-bait-tip strong,
+html.pdl-panel .fishing-bait-tip p,
+html.pdl-panel .fishing-bait-tip small {
+  display: block;
+  margin: 0;
+}
+
+html.pdl-panel .fishing-bait-tip p,
+html.pdl-panel .fishing-bait-tip small {
+  margin-top: 4px;
   color: var(--panel-muted);
-  font-size: 13px;
-  line-height: 1.45;
 }
 
-html.pdl-panel .fishing-bait small {
-  color: var(--panel-muted);
+@media (prefers-reduced-motion: reduce) {
+  html.pdl-panel .fishing-bait-tip {
+    transform: translateX(-50%);
+  }
 }
 
 html.pdl-panel .fishing-recent-list {
@@ -12206,9 +12430,16 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .game-tab-layout,
   html.pdl-panel .roulette-content,
-  html.pdl-panel .fishing-board,
   html.pdl-panel .bag-content {
     grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .fishing-board {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "pond"
+      "stage"
+      "side";
   }
 
   html.pdl-panel .fishing-tiers {
@@ -12516,10 +12747,37 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     min-height: 200px;
   }
 
-  html.pdl-panel .fishing-board,
-  html.pdl-panel .fishing-cast,
-  html.pdl-panel .fishing-hud {
+  html.pdl-panel .fishing-board {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "pond"
+      "stage"
+      "side";
+  }
+
+  html.pdl-panel .fishing-cast,
+  html.pdl-panel .fishing-hud,
+  html.pdl-panel .fishing-controls {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .fishing-dock-split {
+    display: none;
+  }
+
+  html.pdl-panel .fishing-shop-row,
+  html.pdl-panel .fishing-shop-icons {
+    width: 100%;
+  }
+
+  html.pdl-panel .fishing-bait-frame {
+    width: 76px;
+    height: 76px;
+  }
+
+  html.pdl-panel .fishing-bait-mark {
+    width: 50px;
+    height: 50px;
   }
 
   html.pdl-panel .fishing-side {

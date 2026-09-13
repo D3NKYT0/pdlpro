@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Na **Pescaria**, vara, lançar e troca de iscas ficam no mesmo painel;
+  a moldura da isca em uso fica marcada, e trocar já deixa essa isca
+  pronta para o lançamento. Nome, custo e dica só aparecem ao apontar
+  o mouse.
 - Na **Pescaria**, iscas e peixes passam a ter nome/descrição em pt, en e es
   (campos `*_en` / `*_es`, editáveis no admin). A API devolve o texto do idioma
   ativo; sem tradução, cai no português.
