@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Alterado
+
+- Na **Roda da Fortuna**, o giro fica no centro vertical do card. O fundo da
+  coluna anima com faixas e partículas; a roda deixa de ter o halo oval que
+  vazava do círculo. A lista de prêmios usa a barra de rolagem do tema. O card
+  do bônus diário ganhou o passo a passo e dicas.
+
 ### Adicionado
 
 - Confirmação de pagamento **mock só no admin** (`POST /api/v1/staff/payments/{id}/confirm-mock/`
@@ -60,8 +67,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   por vez; o pedido vai à API na hora, o giro começa rápido e desacelera, e
   o palco só revela o prêmio (pop + fogos, sem toast) depois de 5s; a derrota
   pinta o círculo em vermelho, treme e marca o X.
-- Baús Encantados em `/panel/games`: cada baú mostra o item em mira e o que
-  mais pode sair; as aberturas deixam de se chamar boosters; a arte passa a
+- Baús Encantados em `/panel/games`: o título da aba tem um “?” que abre
+  o passo a passo (mira, compra, abrir e resetar). Cada baú mostra o item
+  em mira e o que mais pode sair; as aberturas deixam de se chamar
+  boosters; a arte passa a
   ser pixel art da paleta do painel (sem foto de IA). A compra em reais
   sela o item em mira em um dos pacotes — quem abrir todos sempre leva; a
   sorte só decide se sai cedo ou no último. Abrir um pacote gasta 1 ficha:
@@ -80,10 +89,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   aberto um pacote e pede confirmação.
 - Mesa da Taverna em `/panel/games`: cubo de dado 3D no feltro (seis
   faces, tombo até a face sorteada de frente, com brilho de escolha
-  e volta ao repouso em alguns segundos),
-  gabinete dourado dos cilindros (janela, payline e faixa de símbolos
-  no giro), ícone com nome (Espada, Escudo, Coroa…) e controles em
-  duas colunas.
+  e volta ao repouso em alguns segundos), gabinete de caça-níquel
+  com SVGs dos símbolos, giro fluido em sequência e, no resultado,
+  modal de vidro limpo (mesa escurecida, lavado e anel) em ouro ou
+  alerta, sem toast. Ícone com nome (Espada, Escudo, Coroa…) e, na
+  colunas de jogo, as regras do dado (par/ímpar/alto/baixo · 2×) e
+  do giro (10× / 2× / nada).
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e
   skills no mesmo visual da ficha; o anúncio grava o snapshot na publicação
   para o comprador ver o personagem em custódia.

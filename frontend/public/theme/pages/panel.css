@@ -6618,7 +6618,7 @@ html.pdl-panel .game-tab-panels {
 html.pdl-panel .game-tab-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(290px, 1fr);
-  align-items: start;
+  align-items: stretch;
   gap: 16px;
 }
 
@@ -6665,9 +6665,62 @@ html.pdl-panel .game-module-heading > div:not(.weapon-level) {
   min-width: 0;
 }
 
+html.pdl-panel .game-module-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 html.pdl-panel .game-module-heading h2 {
   margin: 3px 0 0;
   font-size: 25px;
+}
+
+html.pdl-panel .game-box-help {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+html.pdl-panel .game-box-help p {
+  margin: 0;
+  color: var(--panel-muted);
+  line-height: 1.55;
+}
+
+html.pdl-panel .game-box-help dl {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  width: 100%;
+}
+
+html.pdl-panel .game-box-help dl > div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+}
+
+html.pdl-panel .game-box-help dl > div:first-child {
+  padding-top: 0;
+}
+
+html.pdl-panel .game-box-help dl > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+html.pdl-panel .game-box-help dt {
+  color: var(--panel-gold-bright);
+  font-size: 14px;
+}
+
+html.pdl-panel .game-box-help dd {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 html.pdl-panel .game-module-heading p.muted {
@@ -6705,25 +6758,98 @@ html.pdl-panel .game-cost {
   white-space: nowrap;
 }
 
+html.pdl-panel .game-roulette {
+  display: flex;
+  flex-direction: column;
+}
+
 html.pdl-panel .roulette-content {
   display: grid;
+  flex: 1 1 auto;
   grid-template-columns: minmax(280px, 1.2fr) minmax(240px, 0.8fr);
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
 }
 
 html.pdl-panel .roulette-action {
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: 4px 8px 8px;
+  isolation: isolate;
+  min-height: 100%;
+  padding: 12px 8px;
+  overflow: hidden;
   text-align: center;
+}
+
+html.pdl-panel .roulette-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html.pdl-panel .roulette-field-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      color-mix(in srgb, var(--panel-gold) 8%, transparent) 38%,
+      transparent 62%
+    );
+  background-size: 220% 100%;
+  animation: roulette-field-shimmer 9s linear infinite;
+}
+
+html.pdl-panel .roulette-field-band {
+  position: absolute;
+  top: 18%;
+  left: -20%;
+  width: 140%;
+  height: 18%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--panel-gold) 10%, transparent),
+    transparent
+  );
+  animation: roulette-field-band 11s linear infinite;
+}
+
+html.pdl-panel .roulette-field-band.is-late {
+  top: 64%;
+  animation-duration: 14s;
+  animation-delay: -4s;
+}
+
+html.pdl-panel .roulette-field-speck {
+  position: absolute;
+  left: var(--speck-x);
+  bottom: -8%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--panel-gold-bright) 60%, transparent);
+  opacity: 0;
+  transform: scale(var(--speck-s));
+  animation: roulette-field-speck 7.5s linear infinite;
+  animation-delay: var(--speck-d);
+}
+
+html.pdl-panel .roulette-action > :not(.roulette-field) {
+  position: relative;
+  z-index: 1;
 }
 
 html.pdl-panel .roulette-stage {
   position: relative;
-  width: min(100%, 320px);
+  width: min(100%, 360px);
   margin: 0 auto 16px;
 }
 
@@ -6738,19 +6864,133 @@ html.pdl-panel .roulette-orbit {
   border-radius: 50%;
   color: var(--panel-gold-bright);
   background:
-    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--panel-gold) 22%, transparent), transparent 58%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--panel-gold) 22%, transparent), transparent 58%),
     radial-gradient(circle at 50% 100%, rgba(8, 6, 4, 0.92), rgba(12, 10, 8, 0.4));
-  box-shadow:
-    inset 0 0 0 10px color-mix(in srgb, var(--panel-gold) 8%, transparent),
-    0 0 36px color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--panel-gold) 8%, transparent);
+}
+
+html.pdl-panel .roulette-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+html.pdl-panel .roulette-backdrop-wash {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--panel-gold) 18%, transparent) 36deg,
+    transparent 78deg,
+    color-mix(in srgb, var(--panel-gold-bright) 12%, transparent) 168deg,
+    transparent 214deg,
+    color-mix(in srgb, var(--panel-gold) 14%, transparent) 300deg,
+    transparent 340deg
+  );
+  animation: roulette-backdrop-spin 16s linear infinite;
+}
+
+html.pdl-panel .roulette-backdrop-rays {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--panel-gold) 16%, transparent) 0deg 5deg,
+    transparent 5deg 16deg
+  );
+  opacity: 0.5;
+  mask-image: radial-gradient(circle, transparent 22%, #000 38%, #000 72%, transparent 82%);
+  animation: roulette-backdrop-spin 11s linear infinite reverse;
+}
+
+html.pdl-panel .roulette-backdrop-dust {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.6px 1.6px at 18% 28%, color-mix(in srgb, var(--panel-gold-bright) 58%, transparent), transparent),
+    radial-gradient(1.2px 1.2px at 72% 22%, color-mix(in srgb, var(--panel-gold) 48%, transparent), transparent),
+    radial-gradient(1.4px 1.4px at 38% 68%, color-mix(in srgb, var(--panel-gold-bright) 42%, transparent), transparent),
+    radial-gradient(1px 1px at 82% 62%, color-mix(in srgb, var(--panel-gold) 40%, transparent), transparent),
+    radial-gradient(1.3px 1.3px at 54% 40%, color-mix(in srgb, var(--panel-gold-bright) 36%, transparent), transparent);
+  animation: roulette-dust-drift 8s linear infinite;
+}
+
+html.pdl-panel .roulette-mote {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
+  animation: roulette-mote-orbit 8.5s linear infinite;
+  animation-delay: var(--mote-d);
+}
+
+html.pdl-panel .roulette-orbit.is-spinning .roulette-backdrop-wash {
+  animation-duration: 2.6s;
+}
+
+html.pdl-panel .roulette-orbit.is-spinning .roulette-backdrop-rays {
+  animation-duration: 1.7s;
+}
+
+html.pdl-panel .roulette-orbit.is-spinning .roulette-backdrop-dust,
+html.pdl-panel .roulette-orbit.is-spinning .roulette-mote {
+  animation-duration: 2.2s;
+}
+
+html.pdl-panel .roulette-orbit.is-spinning.is-slowing .roulette-backdrop-wash,
+html.pdl-panel .roulette-orbit.is-spinning.is-slowing .roulette-backdrop-rays,
+html.pdl-panel .roulette-orbit.is-spinning.is-slowing .roulette-mote {
+  animation-duration: 6s;
+}
+
+html.pdl-panel .roulette-core {
+  position: absolute;
+  inset: 18%;
+  z-index: 2;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 50%;
+}
+
+html.pdl-panel .roulette-core-glow {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--panel-gold) 18%, transparent),
+    transparent 68%
+  );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+html.pdl-panel .roulette-orbit.is-spinning .roulette-core-glow {
+  opacity: 1;
+  animation: roulette-core-pulse 0.7s ease-in-out infinite alternate;
 }
 
 html.pdl-panel .roulette-reel {
   position: absolute;
-  inset: 16% 24%;
+  top: 50%;
+  left: 50%;
+  width: 72%;
+  height: 78%;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+  transform: translate(-50%, -50%);
   mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
 }
 
@@ -6792,15 +7032,17 @@ html.pdl-panel .roulette-window {
   position: absolute;
   z-index: 2;
   top: 50%;
-  left: 22%;
-  right: 22%;
-  height: 52px;
-  margin-top: -26px;
+  left: 50%;
+  width: 78%;
+  height: 56px;
   border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
   background: color-mix(in srgb, var(--panel-gold) 6%, transparent);
-  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  box-shadow:
+    inset 0 0 18px color-mix(in srgb, var(--panel-gold) 12%, transparent),
+    0 0 22px color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   opacity: 0;
   pointer-events: none;
+  transform: translate(-50%, -50%);
 }
 
 html.pdl-panel .roulette-orbit.is-spinning .roulette-window {
@@ -6811,7 +7053,7 @@ html.pdl-panel .roulette-hub {
   position: relative;
   z-index: 3;
   display: grid;
-  width: 38%;
+  width: 72%;
   aspect-ratio: 1;
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
@@ -6835,16 +7077,21 @@ html.pdl-panel .roulette-hub span {
   font-size: 20px;
 }
 
-html.pdl-panel .roulette-burst {
+html.pdl-panel .roulette-burst,
+html.pdl-panel .roulette-miss-burst {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   z-index: 4;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
+  transform: translate(-50%, -50%);
 }
 
 html.pdl-panel .roulette-flash {
   position: absolute;
-  inset: 12%;
+  inset: 8%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -6882,8 +7129,11 @@ html.pdl-panel .roulette-spark:nth-child(3n) {
 
 html.pdl-panel .roulette-boom {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 8px;
   height: 8px;
+  margin: -4px;
   border-radius: 50%;
   background: var(--panel-gold-bright);
   box-shadow: 0 0 14px var(--panel-gold-bright);
@@ -6891,14 +7141,17 @@ html.pdl-panel .roulette-boom {
 }
 
 html.pdl-panel .roulette-prize {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 5;
   display: grid;
-  width: 58%;
+  width: 78%;
   place-items: center;
   gap: 4px;
   text-align: center;
   color: var(--panel-gold-bright);
+  transform: translate(-50%, -50%);
   animation: roulette-prize-pop 0.55s cubic-bezier(0.2, 1.4, 0.35, 1) both;
 }
 
@@ -6913,7 +7166,7 @@ html.pdl-panel .roulette-prize small {
 }
 
 html.pdl-panel .roulette-prize.is-miss {
-  width: 72%;
+  width: 86%;
   color: var(--theme-danger, #f3c2b8);
   font-size: 13px;
   line-height: 1.35;
@@ -6927,16 +7180,9 @@ html.pdl-panel .roulette-prize.is-miss svg {
   stroke-width: 2.2;
 }
 
-html.pdl-panel .roulette-miss-burst {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-
 html.pdl-panel .roulette-miss-flash {
   position: absolute;
-  inset: 10%;
+  inset: 6%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -6949,10 +7195,11 @@ html.pdl-panel .roulette-miss-flash {
 html.pdl-panel .roulette-miss-ember {
   --ember-x: 0px;
   position: absolute;
-  top: 42%;
+  top: 50%;
   left: 50%;
   width: 7px;
   height: 7px;
+  margin: -3px;
   border-radius: 50%;
   background: var(--theme-danger, #dc7a6b);
   box-shadow: 0 0 12px var(--theme-danger, #dc7a6b);
@@ -6980,28 +7227,79 @@ html.pdl-panel .roulette-miss-ember:nth-child(4) {
   }
 }
 
-html.pdl-panel .roulette-orbit-ring,
-html.pdl-panel .roulette-orbit-flare {
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-  pointer-events: none;
+@keyframes roulette-backdrop-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes roulette-dust-drift {
+  from {
+    transform: translate3d(-6%, 4%, 0);
+  }
+  to {
+    transform: translate3d(8%, -8%, 0);
+  }
+}
+
+@keyframes roulette-mote-orbit {
+  from {
+    transform: rotate(var(--mote-a)) translateY(calc(var(--mote-r) * -1)) scale(0.85);
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(calc(var(--mote-a) + 360deg)) translateY(calc(var(--mote-r) * -1)) scale(0.7);
+    opacity: 0.35;
+  }
+}
+
+@keyframes roulette-field-shimmer {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 220% 0;
+  }
+}
+
+@keyframes roulette-field-band {
+  from {
+    transform: translateX(-12%);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(12%);
+    opacity: 0.25;
+  }
+}
+
+@keyframes roulette-field-speck {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(var(--speck-s));
+  }
+  12% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-118%) scale(calc(var(--speck-s) * 0.7));
+  }
 }
 
 html.pdl-panel .roulette-orbit-ring {
+  position: absolute;
+  inset: 6px;
   border: 1px dashed color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
+  border-radius: 50%;
   box-shadow: inset 0 0 22px color-mix(in srgb, var(--panel-gold) 10%, transparent);
-}
-
-html.pdl-panel .roulette-orbit-flare {
-  inset: auto;
-  top: 8px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
-  background: var(--panel-gold-bright);
-  box-shadow: 0 0 16px var(--panel-gold-bright);
+  pointer-events: none;
 }
 
 html.pdl-panel .roulette-orbit.is-spinning .roulette-orbit-ring {
@@ -7020,6 +7318,11 @@ html.pdl-panel .roulette-stage.is-win .roulette-orbit {
     inset 0 0 0 10px color-mix(in srgb, var(--panel-gold) 16%, transparent),
     0 0 56px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   animation: roulette-win-pulse 0.6s ease-out;
+}
+
+html.pdl-panel .roulette-orbit.is-win .roulette-core,
+html.pdl-panel .roulette-orbit.is-miss .roulette-core {
+  overflow: visible;
 }
 
 html.pdl-panel .roulette-orbit.is-win .roulette-reel,
@@ -7051,9 +7354,12 @@ html.pdl-panel .roulette-orbit.is-miss .roulette-orbit-ring {
   box-shadow: inset 0 0 22px color-mix(in srgb, var(--theme-danger, #dc7a6b) 18%, transparent);
 }
 
-html.pdl-panel .roulette-orbit.is-miss .roulette-orbit-flare {
-  background: var(--theme-danger, #dc7a6b);
-  box-shadow: 0 0 16px var(--theme-danger, #dc7a6b);
+html.pdl-panel .roulette-orbit.is-miss .roulette-core-glow {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--theme-danger, #dc7a6b) 28%, transparent),
+    transparent 68%
+  );
 }
 
 html.pdl-panel .prize-item.is-hit {
@@ -7068,16 +7374,27 @@ html.pdl-panel .prize-item.is-hit {
   }
 }
 
+@keyframes roulette-core-pulse {
+  from {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
 @keyframes roulette-prize-pop {
   0% {
-    transform: scale(0.35);
+    transform: translate(-50%, -50%) scale(0.35);
     opacity: 0;
   }
   70% {
-    transform: scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
   100% {
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
 }
@@ -7100,21 +7417,21 @@ html.pdl-panel .prize-item.is-hit {
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--spark-a)) translateY(-128px) scale(0.35);
+    transform: rotate(var(--spark-a)) translateY(-72px) scale(0.35);
   }
 }
 
 @keyframes roulette-boom-pop {
   0% {
-    transform: scale(0.2);
+    transform: rotate(var(--boom-a)) translateY(-10px) scale(0.2);
     opacity: 1;
   }
   55% {
-    transform: scale(1.8);
+    transform: rotate(var(--boom-a)) translateY(-38px) scale(1.8);
     opacity: 1;
   }
   100% {
-    transform: scale(0.4);
+    transform: rotate(var(--boom-a)) translateY(-52px) scale(0.4);
     opacity: 0;
   }
 }
@@ -7217,7 +7534,36 @@ html.pdl-panel .bag-items {
 html.pdl-panel .prize-list {
   max-height: min(420px, 52vh);
   overflow: auto;
-  padding-right: 4px;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 55%, transparent) rgba(197, 161, 97, 0.08);
+}
+
+html.pdl-panel .prize-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+html.pdl-panel .prize-list::-webkit-scrollbar-track {
+  background: rgba(197, 161, 97, 0.06);
+  border: 1px solid rgba(197, 161, 97, 0.1);
+  border-radius: 999px;
+}
+
+html.pdl-panel .prize-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(230, 199, 125, 0.72), rgba(117, 85, 34, 0.78));
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.18);
+}
+
+html.pdl-panel .prize-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(230, 199, 125, 0.92), rgba(156, 121, 55, 0.9));
+  background-clip: padding-box;
+}
+
+html.pdl-panel .prize-list::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 html.pdl-panel .prize-item,
@@ -7337,6 +7683,71 @@ html.pdl-panel .game-list-item > b {
   color: var(--panel-gold-bright);
   font-size: 12px;
   font-weight: 500;
+}
+
+html.pdl-panel .game-daily {
+  display: flex;
+  flex-direction: column;
+}
+
+html.pdl-panel .game-daily .daily-value {
+  flex: 0 0 auto;
+}
+
+html.pdl-panel .game-guide {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(197, 161, 97, 0.12);
+}
+
+html.pdl-panel .game-guide h3 {
+  margin: 0;
+  color: rgba(230, 199, 125, 0.82);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .game-guide h3 + h3 {
+  margin-top: 6px;
+}
+
+html.pdl-panel .game-guide p.muted {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+html.pdl-panel .game-guide-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html.pdl-panel .game-guide-list li {
+  position: relative;
+  padding-left: 14px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+html.pdl-panel .game-guide-list li::before {
+  content: '';
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--panel-gold) 70%, transparent);
 }
 
 html.pdl-panel .daily-value {
@@ -8509,7 +8920,12 @@ html.pdl-panel .chance-stage,
 html.pdl-panel .chance-controls {
   display: grid;
   grid-template-columns: minmax(220px, 0.88fr) minmax(0, 1.12fr);
+  align-items: stretch;
   gap: 14px;
+}
+
+html.pdl-panel .chance-controls {
+  grid-template-rows: none;
 }
 
 html.pdl-panel .chance-stage {
@@ -8522,13 +8938,19 @@ html.pdl-panel .chance-dice-form,
 html.pdl-panel .chance-slots-play {
   display: grid;
   min-width: 0;
-  align-content: start;
+  margin: 0;
   gap: 12px;
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background:
     radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 58%),
     color-mix(in srgb, var(--theme-bg-deep, #100e0b) 82%, #000);
+}
+
+html.pdl-panel .chance-dice,
+html.pdl-panel .chance-slots {
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
 }
 
 html.pdl-panel .chance-dice .panel-eyebrow,
@@ -8543,6 +8965,7 @@ html.pdl-panel .chance-dice {
 html.pdl-panel .chance-dice-felt {
   position: relative;
   display: grid;
+  align-self: stretch;
   width: min(100%, 220px);
   min-height: 200px;
   place-items: center;
@@ -8790,62 +9213,94 @@ html.pdl-panel .chance-dice.is-win .chance-die-face.is-front {
 
 html.pdl-panel .chance-slots-cabinet {
   position: relative;
+  align-self: stretch;
   min-width: 0;
-  padding: 14px 12px 10px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
+  overflow: hidden;
+  padding: 12px 12px 8px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 22%, #241910), #0b0a08 58%),
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 26%, #2a1d12), var(--theme-bg-deep, #100e0b) 62%),
     var(--theme-art-games-chance-cabinet);
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold) 18%, transparent),
-    inset 0 18px 24px rgba(0, 0, 0, 0.28),
-    0 16px 28px rgba(0, 0, 0, 0.35);
+    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold) 20%, transparent),
+    0 16px 28px rgba(0, 0, 0, 0.38);
 }
 
-html.pdl-panel .chance-slots-lamps {
+html.pdl-panel .chance-slots-marquee {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 6px;
   margin-bottom: 10px;
+  padding: 0 4px;
 }
 
-html.pdl-panel .chance-slots-lamps i {
-  width: 10px;
+html.pdl-panel .chance-slots-marquee i {
+  flex: 1;
   height: 10px;
-  border-radius: 50%;
   background: var(--panel-gold-bright);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
 }
 
-html.pdl-panel .chance-slots.is-spinning .chance-slots-lamps i {
-  animation: game-tokens-buy-spark 0.4s ease-in-out infinite;
+html.pdl-panel .chance-slots-marquee i:nth-child(even) {
+  background: var(--panel-gold);
 }
 
-html.pdl-panel .chance-slots.is-spinning .chance-slots-lamps i:nth-child(2) {
-  animation-delay: 0.12s;
+html.pdl-panel .chance-slots-marquee i:nth-child(3n) {
+  background: var(--panel-box-epic);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--panel-box-epic) 55%, transparent);
 }
 
-html.pdl-panel .chance-slots.is-spinning .chance-slots-lamps i:nth-child(3) {
-  animation-delay: 0.24s;
+html.pdl-panel .chance-slots.is-spinning .chance-slots-marquee i,
+html.pdl-panel .chance-slots.is-win .chance-slots-marquee i {
+  animation: chance-slots-lamp 0.36s ease-in-out infinite;
+}
+
+html.pdl-panel .chance-slots-marquee i:nth-child(2) { animation-delay: 0.05s; }
+html.pdl-panel .chance-slots-marquee i:nth-child(3) { animation-delay: 0.1s; }
+html.pdl-panel .chance-slots-marquee i:nth-child(4) { animation-delay: 0.15s; }
+html.pdl-panel .chance-slots-marquee i:nth-child(5) { animation-delay: 0.2s; }
+html.pdl-panel .chance-slots-marquee i:nth-child(6) { animation-delay: 0.25s; }
+html.pdl-panel .chance-slots-marquee i:nth-child(7) { animation-delay: 0.3s; }
+
+html.pdl-panel .chance-slots-screen {
+  position: relative;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 34%, transparent);
+  background: var(--theme-bg-deep, #100e0b);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 16px 22px rgba(0, 0, 0, 0.35);
+}
+
+html.pdl-panel .chance-slots-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 36%, rgba(0, 0, 0, 0.18));
+  pointer-events: none;
 }
 
 html.pdl-panel .chance-reels {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
 }
 
 html.pdl-panel .chance-slots-payline {
   position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 46%;
-  z-index: 2;
-  height: 2px;
-  background: color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
+  left: 0;
+  right: 0;
+  top: 44%;
+  z-index: 4;
+  height: 3px;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
   pointer-events: none;
+}
+
+html.pdl-panel .chance-slots.is-win .chance-slots-payline {
+  animation: chance-slots-payline 0.7s ease-in-out infinite;
 }
 
 html.pdl-panel .chance-reel {
@@ -8860,57 +9315,139 @@ html.pdl-panel .chance-reel-window {
   position: relative;
   display: grid;
   width: 100%;
-  height: 104px;
+  height: 148px;
   place-items: center;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 28%, rgba(0, 0, 0, 0.45)),
-    #070605;
-  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.55);
+  background: #080705;
+  box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.62);
 }
 
-html.pdl-panel .chance-reel-plate {
+html.pdl-panel .chance-reel-shine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 38%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+html.pdl-panel .chance-reel-plate,
+html.pdl-panel .chance-reel-cell {
   position: relative;
   z-index: 1;
   display: grid;
-  width: 78%;
-  height: 72px;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--panel-gold) 32%, transparent);
-  border-radius: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 40%),
-    color-mix(in srgb, var(--theme-bg-deep, #100e0b) 88%, var(--panel-gold));
-  color: var(--panel-gold-bright);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  border: 1px solid color-mix(in srgb, #fff 18%, transparent);
 }
 
+html.pdl-panel .chance-reel-plate {
+  width: 88%;
+  height: 92px;
+}
+
+html.pdl-panel .chance-reel-cell {
+  flex: 0 0 74px;
+  width: 88%;
+  margin: 4px auto;
+}
+
+html.pdl-panel .chance-reel-plate[data-symbol="sword"],
+html.pdl-panel .chance-reel-cell[data-symbol="sword"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 55%, #2a1d12), #1a140e);
+}
+
+html.pdl-panel .chance-reel-plate[data-symbol="shield"],
+html.pdl-panel .chance-reel-cell[data-symbol="shield"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-box-epic) 42%, #1a140e), #120e18);
+}
+
+html.pdl-panel .chance-reel-plate[data-symbol="crown"],
+html.pdl-panel .chance-reel-cell[data-symbol="crown"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-box-legendary) 55%, #2a1d12), #1a140e);
+}
+
+html.pdl-panel .chance-reel-plate[data-symbol="adena"],
+html.pdl-panel .chance-reel-cell[data-symbol="adena"] {
+  background: linear-gradient(180deg, var(--panel-gold-bright), var(--panel-gold));
+}
+
+html.pdl-panel .chance-reel-plate[data-symbol="scroll"],
+html.pdl-panel .chance-reel-cell[data-symbol="scroll"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-soft) 80%, #2a1d12), #16120c);
+}
+
+html.pdl-panel .chance-slot-mark,
 html.pdl-panel .chance-reel-plate svg,
 html.pdl-panel .chance-reel-strip svg {
-  width: 26px;
-  height: 26px;
+  width: 52px;
+  height: 52px;
 }
 
 html.pdl-panel .chance-reel-strip {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  z-index: 1;
   display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  padding-top: 10px;
-  color: var(--panel-gold-bright);
+  width: 100%;
 }
 
 html.pdl-panel .chance-slots.is-spinning .chance-reel-plate {
   opacity: 0;
 }
 
+html.pdl-panel .chance-slots.is-spinning .chance-slots-glass {
+  opacity: 0.2;
+}
+
 html.pdl-panel .chance-slots.is-spinning .chance-reel-strip {
   display: flex;
-  animation: chance-reel-strip 0.22s linear infinite;
+  will-change: transform;
+  animation: chance-reel-loop 0.22s linear infinite;
+}
+
+html.pdl-panel .chance-slots.is-spinning .chance-reel:nth-child(3) .chance-reel-strip {
+  animation-duration: 0.28s;
+}
+
+html.pdl-panel .chance-slots.is-spinning .chance-reel:nth-child(4) .chance-reel-strip {
+  animation-duration: 0.34s;
+}
+
+html.pdl-panel .chance-slots-tray {
+  display: block;
+  height: 12px;
+  margin-top: 8px;
+  background: linear-gradient(180deg, var(--panel-gold), #1a140e);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
+}
+
+html.pdl-panel .chance-slots-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+html.pdl-panel .chance-slots-spark {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 6px;
+  height: 6px;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 10px var(--panel-gold-bright);
+  animation: chance-slots-spark 0.9s ease-out forwards;
+  animation-delay: calc(var(--spark-i) * 40ms);
+}
+
+html.pdl-panel .chance-slots.is-win .chance-reel-plate {
+  animation: chance-slots-tile 0.9s ease;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 50%, transparent),
+    0 0 18px color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
 }
 
 html.pdl-panel .chance-reel small {
@@ -8925,31 +9462,275 @@ html.pdl-panel .chance-reel small {
   white-space: nowrap;
 }
 
-html.pdl-panel .chance-dice-form {
-  grid-template-columns: minmax(0, 1fr) 96px;
+html.pdl-panel .chance-dice-form,
+html.pdl-panel .chance-slots-play {
+  display: flex;
+  flex-direction: column;
+  grid-template-rows: none;
+  grid-row: auto;
 }
 
-html.pdl-panel .chance-dice-form .btn {
-  grid-column: 1 / -1;
+html.pdl-panel .chance-play-foot {
+  display: grid;
+  flex: 0 0 auto;
+  align-content: start;
+  gap: 12px;
+}
+
+html.pdl-panel .chance-dice-form .chance-play-foot {
+  grid-template-columns: minmax(0, 1fr) 96px;
 }
 
 html.pdl-panel .chance-dice-form .field {
   margin: 0;
 }
 
-html.pdl-panel .chance-dice-form .btn,
-html.pdl-panel .chance-slots-play .btn {
+html.pdl-panel .chance-dice-form .chance-play-foot .btn {
+  grid-column: 1 / -1;
   justify-self: start;
 }
 
-html.pdl-panel .chance-slots-play {
-  align-content: end;
+html.pdl-panel .chance-slots-play .chance-play-foot .btn {
+  justify-self: start;
 }
 
-html.pdl-panel .chance-slots-play p {
+html.pdl-panel .chance-guide {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+html.pdl-panel .chance-guide h3 {
   margin: 0;
+  color: var(--panel-gold-bright);
+  font-family: Cambria, Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+html.pdl-panel .chance-guide p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+html.pdl-panel .chance-guide dl {
+  display: grid;
+  flex: 0 0 auto;
+  align-content: start;
+  gap: 0;
+  margin: 6px 0 0;
+}
+
+html.pdl-panel .chance-guide dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-content: center;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+}
+
+html.pdl-panel .chance-guide dl > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+html.pdl-panel .chance-guide.is-pairs dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 22px;
+}
+
+html.pdl-panel .chance-guide.is-pairs dl > div:nth-last-child(-n+2) {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+html.pdl-panel .chance-guide dt {
+  color: var(--panel-text);
+  font-size: 13px;
+}
+
+html.pdl-panel .chance-guide dd {
+  margin: 0;
+  color: var(--panel-gold-bright);
+  font-size: 13px;
+}
+
+html.pdl-panel .ui-modal-root:has(.game-chance-reveal-modal) .ui-modal-backdrop {
+  background: rgba(4, 3, 2, 0.62);
+}
+
+html.pdl-panel .ui-modal.game-chance-reveal-modal.card {
+  isolation: isolate;
+  width: min(100%, 380px);
+  padding: 4px 8px 20px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--chance-flare) 36%, transparent);
+  background: color-mix(in srgb, var(--theme-bg-deep, #100e0b) 28%, transparent);
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(22px);
+}
+
+html.pdl-panel .ui-modal.game-chance-reveal-modal.card::before {
+  content: none;
+}
+
+html.pdl-panel .ui-modal.game-chance-reveal-modal.is-win {
+  --chance-flare: var(--panel-gold-bright);
+}
+
+html.pdl-panel .ui-modal.game-chance-reveal-modal.is-loss {
+  --chance-flare: var(--theme-danger, #dc7a6b);
+}
+
+html.pdl-panel .game-chance-reveal-modal.is-win .ui-modal-header h2,
+html.pdl-panel .game-chance-reveal-modal.is-win .game-chance-reveal-outcome {
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .game-chance-reveal-modal.is-loss .ui-modal-header h2,
+html.pdl-panel .game-chance-reveal-modal.is-loss .game-chance-reveal-outcome {
+  color: var(--theme-danger, #dc7a6b);
+}
+
+html.pdl-panel .game-chance-reveal-modal .ui-modal-header,
+html.pdl-panel .game-chance-reveal-modal .ui-modal-body {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: 0;
+}
+
+html.pdl-panel .game-chance-reveal-modal .ui-modal-header {
+  justify-content: center;
+  padding: 18px 44px 4px;
+}
+
+html.pdl-panel .game-chance-reveal-modal .ui-modal-header .ui-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+html.pdl-panel .game-chance-reveal-modal .ui-modal-header h2 {
+  font-size: 26px;
+}
+
+html.pdl-panel .game-chance-reveal-modal .ui-modal-body {
+  display: grid;
+  justify-items: center;
+  padding: 8px 20px 8px;
+}
+
+html.pdl-panel .game-chance-reveal-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html.pdl-panel .game-chance-reveal-wash {
+  position: absolute;
+  inset: 8%;
+  background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--chance-flare) 28%, transparent), transparent 68%);
+  animation: game-chance-reveal-wash 0.7s ease-out both;
+}
+
+html.pdl-panel .game-chance-reveal-ring {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 148px;
+  height: 148px;
+  border: 1px solid color-mix(in srgb, var(--chance-flare) 40%, transparent);
+  transform: translate(-50%, -50%);
+  animation: game-chance-reveal-ring 0.9s ease-out both;
+}
+
+html.pdl-panel .game-chance-reveal-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+html.pdl-panel .game-chance-reveal-face {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 108px;
+  height: 108px;
+  padding: 14px;
+  border: 0;
+  background:
+    linear-gradient(155deg, rgba(255, 248, 230, 0.42), transparent 46%),
+    linear-gradient(145deg, #f4e6c4 0%, #e0c07a 48%, #b8924c 100%);
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--panel-gold-bright) 78%, #fff 8%),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  animation: game-chance-reveal-pop 0.5s ease;
+}
+
+html.pdl-panel .game-chance-reveal-face i {
+  width: 14px;
+  height: 14px;
+  justify-self: center;
+  align-self: center;
+}
+
+html.pdl-panel .game-chance-reveal-face i.is-on {
+  background: radial-gradient(circle at 32% 28%, #4a3420, #140d08 68%);
+  box-shadow:
+    inset 0 2px 3px rgba(0, 0, 0, 0.55),
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 70%, #1a1208);
+}
+
+html.pdl-panel .game-chance-reveal-reels {
+  display: flex;
+  gap: 18px;
+}
+
+html.pdl-panel .game-chance-reveal-reel {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  animation: game-chance-reveal-pop 0.5s ease;
+}
+
+html.pdl-panel .game-chance-reveal-reel svg {
+  width: 56px;
+  height: 56px;
+}
+
+html.pdl-panel .game-chance-reveal-reel em {
+  color: var(--panel-muted);
   font-size: 12px;
-  line-height: 1.45;
+  font-style: normal;
+}
+
+html.pdl-panel .game-chance-reveal-outcome {
+  color: var(--chance-flare);
+  font-family: Cambria, Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+html.pdl-panel .game-chance-reveal-actions {
+  display: flex;
+  justify-content: center;
+}
+
+html.pdl-panel .game-chance-reveal-actions .btn {
+  justify-self: center;
+  margin-inline: auto;
 }
 
 html.pdl-panel .fishing-pond {
@@ -9240,6 +10021,60 @@ html.pdl-panel .monster-item.is-fighting {
   to { transform: translateY(8%); }
 }
 
+@keyframes chance-reel-run {
+  0% { transform: translateY(0); filter: blur(2.4px); }
+  72% { transform: translateY(-62%); filter: blur(1.6px); }
+  100% { transform: translateY(-70%); filter: blur(0); }
+}
+
+@keyframes chance-reel-loop {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes chance-slots-lamp {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes chance-slots-payline {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@keyframes chance-slots-tile {
+  0% { transform: scale(0.92); }
+  55% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes game-chance-reveal-wash {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes game-chance-reveal-ring {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.62); }
+  40% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.28); }
+}
+
+@keyframes game-chance-reveal-pop {
+  0% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+@keyframes chance-slots-spark {
+  0% {
+    opacity: 1;
+    transform: rotate(calc(var(--spark-i) * 36deg)) translateY(0) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(calc(var(--spark-i) * 36deg)) translateY(-54px) scale(1);
+  }
+}
+
 @keyframes game-pond-ripple {
   from { transform: scale(0.4); opacity: 0.9; }
   to { transform: scale(7); opacity: 0; }
@@ -9319,6 +10154,14 @@ html.pdl-panel .monster-item.is-fighting {
   }
 
   html.pdl-panel .roulette-orbit.is-spinning .roulette-orbit-ring,
+  html.pdl-panel .roulette-orbit.is-spinning .roulette-core-glow,
+  html.pdl-panel .roulette-field-veil,
+  html.pdl-panel .roulette-field-band,
+  html.pdl-panel .roulette-field-speck,
+  html.pdl-panel .roulette-backdrop-wash,
+  html.pdl-panel .roulette-backdrop-rays,
+  html.pdl-panel .roulette-backdrop-dust,
+  html.pdl-panel .roulette-mote,
   html.pdl-panel .roulette-orbit.is-win,
   html.pdl-panel .roulette-orbit.is-miss,
   html.pdl-panel .roulette-flash,
@@ -9362,7 +10205,15 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .chance-dice.is-chosen .chance-die-face.is-front::after,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,
   html.pdl-panel .chance-slots.is-spinning .chance-reel-strip,
-  html.pdl-panel .chance-slots.is-spinning .chance-slots-lamps i,
+  html.pdl-panel .chance-slots.is-spinning .chance-slots-marquee i,
+  html.pdl-panel .chance-slots.is-win .chance-slots-marquee i,
+  html.pdl-panel .chance-slots.is-win .chance-slots-payline,
+  html.pdl-panel .chance-slots.is-win .chance-reel-plate,
+  html.pdl-panel .chance-slots-spark,
+  html.pdl-panel .game-chance-reveal-wash,
+  html.pdl-panel .game-chance-reveal-ring,
+  html.pdl-panel .game-chance-reveal-face,
+  html.pdl-panel .game-chance-reveal-reel,
   html.pdl-panel .fishing-pond.is-casting .fishing-pond-ripple,
   html.pdl-panel .monster-portrait.is-fighting {
     animation: none;
@@ -10454,8 +11305,17 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .chance-stage,
   html.pdl-panel .chance-controls,
-  html.pdl-panel .chance-dice-form {
+  html.pdl-panel .chance-dice-form,
+  html.pdl-panel .chance-guide.is-pairs dl {
     grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .chance-guide.is-pairs dl > div {
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  }
+
+  html.pdl-panel .chance-guide.is-pairs dl > div:last-child {
+    border-bottom: 0;
   }
 
   html.pdl-panel .game-box-grid {

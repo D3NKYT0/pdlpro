@@ -1,38 +1,24 @@
 import type { CSSProperties } from 'react'
-import { Coins, Crown, Gem, ScrollText, Shield, Sword, Trophy, X, type LucideIcon } from 'lucide-react'
+import { Trophy, X } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
   DICE_PIP_FACES,
   inferBoxRarity,
-  isSlotSymbol,
   monsterHue,
   normalizeRouletteRarity,
   rouletteReelStrip,
   type GameRarity,
   type RouletteReelPrize,
   SLOT_SYMBOLS,
-  type SlotSymbol,
   visibleSlotReels,
 } from './gameArt'
-
-const SLOT_ICONS: Record<SlotSymbol, LucideIcon> = {
-  sword: Sword,
-  shield: Shield,
-  crown: Crown,
-  adena: Coins,
-  scroll: ScrollText,
-}
+import { SlotMark } from './slotSymbols'
 
 const ROULETTE_SPARKS = 12
-const ROULETTE_BOOMS = [
-  { x: '22%', y: '18%' },
-  { x: '78%', y: '20%' },
-  { x: '16%', y: '62%' },
-  { x: '84%', y: '58%' },
-  { x: '38%', y: '12%' },
-  { x: '64%', y: '80%' },
-] as const
+const ROULETTE_BOOMS = 6
+const ROULETTE_MOTES = 12
+const ROULETTE_FIELD_SPECKS = 18
 
 export function RouletteWheel({
   tokens,
@@ -69,70 +55,112 @@ export function RouletteWheel({
   return (
     <div className={`roulette-stage ${state}`.trim()} data-theme-part="game-stage">
       <div className={`roulette-orbit ${state}`.trim()} aria-hidden={won || missed ? undefined : true}>
-        <div className="roulette-reel">
-          <div className="roulette-reel-track">
-            {strip.map((prize, index) => (
-              <span
-                className="roulette-reel-item"
-                data-rarity={normalizeRouletteRarity(prize.rarity)}
-                key={`${prize.id}-${index}`}
-              >
-                <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
-              </span>
-            ))}
-          </div>
+        <div className="roulette-backdrop" aria-hidden="true">
+          <i className="roulette-backdrop-wash" />
+          <i className="roulette-backdrop-rays" />
+          <i className="roulette-backdrop-dust" />
+          {Array.from({ length: ROULETTE_MOTES }, (_, index) => (
+            <i
+              key={index}
+              className="roulette-mote"
+              style={
+                {
+                  '--mote-a': `${index * (360 / ROULETTE_MOTES)}deg`,
+                  '--mote-d': `${(index % 6) * 0.4}s`,
+                  '--mote-r': `${72 + (index % 4) * 18}px`,
+                } as CSSProperties
+              }
+            />
+          ))}
         </div>
-        <i className="roulette-window" />
-        <i className="roulette-orbit-ring">
-          <i className="roulette-orbit-flare" />
-        </i>
-        {won ? (
-          <div className="roulette-burst" aria-hidden="true">
-            <i className="roulette-flash" />
-            {Array.from({ length: ROULETTE_SPARKS }, (_, index) => (
-              <i
-                key={index}
-                className="roulette-spark"
-                style={{ '--spark-a': `${index * (360 / ROULETTE_SPARKS)}deg` } as CSSProperties}
-              />
-            ))}
-            {ROULETTE_BOOMS.map((boom) => (
-              <i
-                key={`${boom.x}-${boom.y}`}
-                className="roulette-boom"
-                style={{ top: boom.y, left: boom.x }}
-              />
-            ))}
-          </div>
-        ) : null}
-        {won ? (
-          <div className="roulette-prize" role="status">
-            <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
-            <strong>{prizeName}</strong>
-            <small>{formatCompactQuantity(quantity)}</small>
-          </div>
-        ) : null}
-        {missed && !spinning ? (
-          <>
-            <div className="roulette-miss-burst" aria-hidden="true">
-              <i className="roulette-miss-flash" />
-              <i className="roulette-miss-ember" />
-              <i className="roulette-miss-ember" />
-              <i className="roulette-miss-ember" />
+        <i className="roulette-orbit-ring" />
+        <div className="roulette-core">
+          <i className="roulette-core-glow" />
+          <div className="roulette-reel">
+            <div className="roulette-reel-track">
+              {strip.map((prize, index) => (
+                <span
+                  className="roulette-reel-item"
+                  data-rarity={normalizeRouletteRarity(prize.rarity)}
+                  key={`${prize.id}-${index}`}
+                >
+                  <ItemIcon itemId={prize.item_id} name={prize.name} size={28} />
+                </span>
+              ))}
             </div>
-            <p className="roulette-prize is-miss" role="status">
-              <X aria-hidden="true" />
-              <span>{missLabel}</span>
-            </p>
-          </>
-        ) : null}
-        {!spinning && !prizeName && !missed ? (
-          <div className="roulette-hub">
-            <Trophy />
-            <span>{tokens}</span>
           </div>
-        ) : null}
+          <i className="roulette-window" />
+          {won ? (
+            <div className="roulette-burst" aria-hidden="true">
+              <i className="roulette-flash" />
+              {Array.from({ length: ROULETTE_SPARKS }, (_, index) => (
+                <i
+                  key={index}
+                  className="roulette-spark"
+                  style={{ '--spark-a': `${index * (360 / ROULETTE_SPARKS)}deg` } as CSSProperties}
+                />
+              ))}
+              {Array.from({ length: ROULETTE_BOOMS }, (_, index) => (
+                <i
+                  key={index}
+                  className="roulette-boom"
+                  style={{ '--boom-a': `${index * (360 / ROULETTE_BOOMS)}deg` } as CSSProperties}
+                />
+              ))}
+            </div>
+          ) : null}
+          {won ? (
+            <div className="roulette-prize" role="status">
+              <ItemIcon itemId={prizeItemId} name={prizeName} size={48} />
+              <strong>{prizeName}</strong>
+              <small>{formatCompactQuantity(quantity)}</small>
+            </div>
+          ) : null}
+          {missed && !spinning ? (
+            <>
+              <div className="roulette-miss-burst" aria-hidden="true">
+                <i className="roulette-miss-flash" />
+                <i className="roulette-miss-ember" />
+                <i className="roulette-miss-ember" />
+                <i className="roulette-miss-ember" />
+              </div>
+              <p className="roulette-prize is-miss" role="status">
+                <X aria-hidden="true" />
+                <span>{missLabel}</span>
+              </p>
+            </>
+          ) : null}
+          {!spinning && !prizeName && !missed ? (
+            <div className="roulette-hub">
+              <Trophy />
+              <span>{tokens}</span>
+            </div>
+          ) : null}
+        </div>
       </div>
+    </div>
+  )
+}
+
+export function RouletteField() {
+  return (
+    <div className="roulette-field" aria-hidden="true">
+      <i className="roulette-field-veil" />
+      <i className="roulette-field-band" />
+      <i className="roulette-field-band is-late" />
+      {Array.from({ length: ROULETTE_FIELD_SPECKS }, (_, index) => (
+        <i
+          key={index}
+          className="roulette-field-speck"
+          style={
+            {
+              '--speck-x': `${6 + ((index * 17) % 88)}%`,
+              '--speck-d': `${(index % 9) * 0.45}s`,
+              '--speck-s': `${0.55 + (index % 5) * 0.18}`,
+            } as CSSProperties
+          }
+        />
+      ))}
     </div>
   )
 }
@@ -293,6 +321,7 @@ export function ChanceStage({
   chosen = false,
   won = false,
   spinningSlots = false,
+  slotsWon = false,
   reels,
   symbols = [],
   diceLabel,
@@ -304,6 +333,7 @@ export function ChanceStage({
   chosen?: boolean
   won?: boolean
   spinningSlots?: boolean
+  slotsWon?: boolean
   reels?: string[]
   symbols?: string[]
   diceLabel: string
@@ -312,7 +342,7 @@ export function ChanceStage({
 }) {
   const face = roll && roll >= 1 && roll <= 6 ? roll : 5
   const slots = visibleSlotReels(reels, symbols)
-  const strip = [...SLOT_SYMBOLS, ...SLOT_SYMBOLS]
+  const strip = [...SLOT_SYMBOLS, ...SLOT_SYMBOLS, ...SLOT_SYMBOLS, ...SLOT_SYMBOLS]
   const diceState = rolling
     ? ' is-rolling'
     : chosen
@@ -331,36 +361,46 @@ export function ChanceStage({
           <i className="chance-die-shadow" aria-hidden="true" />
         </div>
       </div>
-      <div className={`chance-slots${spinningSlots ? ' is-spinning' : ''}`}>
+      <div className={`chance-slots${spinningSlots ? ' is-spinning' : ''}${slotsWon && !spinningSlots ? ' is-win' : ''}`}>
         <span className="panel-eyebrow">{slotsLabel}</span>
-        <div className="chance-slots-cabinet">
-          <span className="chance-slots-lamps" aria-hidden="true">
-            <i />
-            <i />
-            <i />
+        <div className="chance-slots-cabinet" key={spinningSlots ? 'spin' : 'rest'}>
+          <span className="chance-slots-marquee" aria-hidden="true">
+            {Array.from({ length: 7 }, (_, index) => (
+              <i key={index} />
+            ))}
           </span>
-          <div className="chance-reels">
-            <i className="chance-slots-payline" aria-hidden="true" />
-            {slots.map((symbol, index) => {
-              const Icon = isSlotSymbol(symbol) ? SLOT_ICONS[symbol] : Gem
-              return (
+          <div className="chance-slots-screen">
+            <i className="chance-slots-glass" aria-hidden="true" />
+            <div className="chance-reels">
+              <i className="chance-slots-payline" aria-hidden="true" />
+              {slots.map((symbol, index) => (
                 <span className="chance-reel" data-symbol={symbol} key={`${symbol}-${index}`}>
                   <span className="chance-reel-window">
-                    <span className="chance-reel-plate">
-                      <Icon aria-hidden="true" />
+                    <i className="chance-reel-shine" aria-hidden="true" />
+                    <span className="chance-reel-plate" data-symbol={symbol}>
+                      <SlotMark symbol={symbol} />
                     </span>
                     <span className="chance-reel-strip" aria-hidden="true">
-                      {strip.map((item, itemIndex) => {
-                        const StripIcon = isSlotSymbol(item) ? SLOT_ICONS[item] : Gem
-                        return <StripIcon key={`${item}-${itemIndex}`} />
-                      })}
+                      {strip.map((item, itemIndex) => (
+                        <span className="chance-reel-cell" data-symbol={item} key={`${item}-${itemIndex}`}>
+                          <SlotMark symbol={item} />
+                        </span>
+                      ))}
                     </span>
                   </span>
                   <small>{symbolLabel(symbol)}</small>
                 </span>
-              )
-            })}
+              ))}
+            </div>
           </div>
+          <i className="chance-slots-tray" aria-hidden="true" />
+          {slotsWon && !spinningSlots ? (
+            <span className="chance-slots-burst" aria-hidden="true">
+              {Array.from({ length: 10 }, (_, index) => (
+                <i key={index} className="chance-slots-spark" style={{ '--spark-i': index } as CSSProperties} />
+              ))}
+            </span>
+          ) : null}
         </div>
       </div>
     </div>

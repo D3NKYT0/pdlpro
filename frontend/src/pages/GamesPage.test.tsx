@@ -82,12 +82,29 @@ vi.mock('../components/games/diceReveal', () => ({
   waitForDiceReveal: () => diceReveal.wait(),
   waitForDiceRest: () => diceReveal.rest(),
 }))
+const slotsReveal = vi.hoisted(() => {
+  let wait = () => Promise.resolve()
+  return {
+    wait: () => wait(),
+    setWait: (value: () => Promise<void>) => {
+      wait = value
+    },
+    reset: () => {
+      wait = () => Promise.resolve()
+    },
+  }
+})
+vi.mock('../components/games/slotsReveal', () => ({
+  SLOTS_REVEAL_MS: 0,
+  waitForSlotsReveal: () => slotsReveal.wait(),
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
   rouletteReveal.reset()
   boxReveal.reset()
   diceReveal.reset()
+  slotsReveal.reset()
   vi.resetAllMocks()
   vi.mocked(gamesApi.roulette).mockResolvedValue({
     fichas: 10,
@@ -152,7 +169,7 @@ it('bloqueia repetição e outras ações enquanto o giro está pendente', async
   expect(toast.success).not.toHaveBeenCalled()
   expect(screen.getByRole('status')).toHaveTextContent('Adena')
 })
-it.each(actions.filter((scenario) => scenario.method !== 'openBox'))('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
+it.each(actions.filter((scenario) => !['openBox', 'dice', 'slots'].includes(scenario.method)))('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
   const user = mount(scenario.tab)
   await screen.findByText('10 fichas')
@@ -179,8 +196,6 @@ it.each(actions)('$method apresenta recusa sem anunciar sucesso', async scenario
   expect(toast.success).not.toHaveBeenCalled()
 })
 it.each([
-  { ...actions[4], result: { won: false, roll: 3 }, message: 'Dado 3 · perdeu' },
-  { ...actions[5], result: { won: false, reels: ['A', 'B', 'C'] }, message: 'A | B | C · nada' },
   { ...actions[6], result: { won: false }, message: 'Derrota' },
   { ...actions[7], result: { success: false }, message: 'O encantamento falhou' },
 ])('$method diferencia derrota de falha de rede', async scenario => {
@@ -263,9 +278,24 @@ it('monta o tambor da roleta sem fatias de todos os prêmios', async () => {
   mount('roulette')
   await screen.findByText('Adena')
   expect(document.querySelector('.roulette-stage')).toBeTruthy()
+  expect(document.querySelector('.roulette-core')).toBeTruthy()
+  expect(document.querySelector('.roulette-backdrop')).toBeTruthy()
+  expect(document.querySelector('.roulette-field')).toBeTruthy()
+  expect(document.querySelectorAll('.roulette-field-speck').length).toBe(18)
+  expect(document.querySelectorAll('.roulette-mote').length).toBe(12)
   expect(document.querySelector('.roulette-reel')).toBeTruthy()
   expect(document.querySelector('.roulette-slice')).toBeNull()
   expect(document.querySelector('.roulette-pointer')).toBeNull()
+  expect(document.querySelector('.roulette-orbit-flare')).toBeNull()
+})
+it('mostra como a roleta funciona e dicas abaixo do bônus diário', async () => {
+  mount('roulette')
+  expect(await screen.findByRole('heading', { name: 'Como funciona' })).toBeVisible()
+  expect(screen.getByText(/O tambor acelera no centro/)).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Dicas' })).toBeVisible()
+  expect(screen.getByText(/Cada giro consome fichas/)).toBeVisible()
+  expect(screen.getByText(/A chance de falha agora é 20%/)).toBeVisible()
+  expect(screen.getByText(/não gasta ficha/)).toBeVisible()
 })
 it('mostra baús do tema nas caixas e anima a abertura', async () => {
   let finish!: (value: any) => void
@@ -312,6 +342,20 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   expect(gamesApi.openBox).toHaveBeenCalledWith('box')
   await user.click(screen.getByRole('button', { name: 'Continuar' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+})
+it('abre a explicação dos baús pelo atalho de ajuda', async () => {
+  const user = mount('boxes')
+  await screen.findByText('Garantido neste baú')
+  expect(screen.queryByRole('dialog', { name: 'Como funcionam os baús' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Como funcionam os baús' }))
+  const dialog = await screen.findByRole('dialog', { name: 'Como funcionam os baús' })
+  expect(dialog).toHaveTextContent('O baú não é uma roleta')
+  expect(dialog).toHaveTextContent('É sempre lendário e já está em um dos pacotes')
+  expect(dialog).toHaveTextContent('Comum libera 20 pacotes, raro 30, épico 40 e lendário 50')
+  expect(dialog).toHaveTextContent('Cada pacote custa 1 ficha')
+  expect(dialog).toHaveTextContent('Só depois de abrir pelo menos um pacote')
+  await user.click(screen.getByRole('button', { name: 'Entendi' }))
+  expect(screen.queryByRole('dialog', { name: 'Como funcionam os baús' })).not.toBeInTheDocument()
 })
 it('explica o item em mira e o que mais pode sair do baú', async () => {
   mount('boxes')
@@ -487,7 +531,7 @@ it('volta o dado ao repouso depois do brilho da face escolhida', async () => {
   expect(document.querySelector('.chance-dice.is-chosen')).toBeNull()
   expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4')
 })
-it('só anuncia o dado depois do cubo 3d pousar', async () => {
+it('abre o modal de vitória depois do cubo 3d pousar, sem toast', async () => {
   let release!: () => void
   diceReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
   vi.mocked(gamesApi.dice).mockResolvedValue({ won: true, roll: 4, payout: 2 } as any)
@@ -496,10 +540,22 @@ it('só anuncia o dado depois do cubo 3d pousar', async () => {
   await user.click(await screen.findByRole('button', { name: 'Lançar os dados' }))
   await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeTruthy())
   await waitFor(() => expect(document.querySelector('.chance-die')?.getAttribute('data-face')).toBe('4'))
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   expect(toast.success).not.toHaveBeenCalled()
   release()
   await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeNull())
-  expect(toast.success).toHaveBeenCalledWith('Dado 4 · +2')
+  const dialog = await screen.findByRole('dialog', { name: 'Vitória' })
+  expect(dialog).toHaveClass('game-chance-reveal-modal', 'is-win')
+  expect(dialog).not.toHaveClass('is-loss')
+  expect(dialog.querySelector('.game-chance-reveal-face')?.getAttribute('data-face')).toBe('4')
+  expect(dialog.querySelector('.game-chance-reveal-wash')).toBeTruthy()
+  expect(dialog.querySelector('.game-chance-reveal-orb')).toBeNull()
+  expect(screen.getByText('+2')).toBeVisible()
+  expect(dialog.querySelector('.game-chance-reveal-actions')?.querySelector('.btn')).toBeTruthy()
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: 'Continuar' }))
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 })
 it('marca o dado e os cilindros enquanto a jogada está pendente', async () => {
   let finishDice!: (value: any) => void
@@ -512,6 +568,7 @@ it('marca o dado e os cilindros enquanto a jogada está pendente', async () => {
   expect(document.querySelector('.chance-dice.is-rolling')).toBeTruthy()
   finishDice({ won: true, roll: 4, payout: 2 })
   await waitFor(() => expect(document.querySelector('.chance-dice.is-rolling')).toBeNull())
+  await user.click(await screen.findByRole('button', { name: 'Continuar' }))
   await user.click(screen.getByRole('button', { name: 'Girar cilindros · 1 ficha' }))
   expect(document.querySelector('.chance-slots.is-spinning')).toBeTruthy()
   expect(document.querySelector('.chance-reel-strip')).toBeTruthy()
@@ -528,8 +585,45 @@ it('mostra os cilindros com ícone e nome completo, sem cortar o id inglês', as
   expect(await screen.findByText('Espada')).toBeVisible()
   expect(screen.getByText('Escudo')).toBeVisible()
   expect(screen.getByText('Coroa')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Como apostar' })).toBeVisible()
+  expect(document.querySelector('.chance-guide.is-pairs')).toBeTruthy()
+  expect(document.querySelectorAll('.chance-play-foot')).toHaveLength(2)
+  expect(screen.getByText('Escolha um lado do cubo e as fichas da rodada. Se a face cair no seu lado, você recebe o dobro; se errar, a aposta não volta.')).toBeVisible()
+  expect(screen.getByText('2, 4 ou 6 · 2×')).toBeVisible()
+  expect(screen.getByText('1, 3 ou 5 · 2×')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Como girar' })).toBeVisible()
+  expect(screen.getByText('Pague 1 ficha e os três cilindros param na mesma linha. Só a combinação decide o prêmio.')).toBeVisible()
+  expect(screen.getByText('Três iguais')).toBeVisible()
+  expect(screen.getByText('10× as fichas do giro')).toBeVisible()
+  expect(screen.getByText('Dois iguais')).toBeVisible()
+  expect(screen.getByText('2× as fichas do giro')).toBeVisible()
+  expect(screen.getByText('Nada nesta rodada')).toBeVisible()
   expect(document.querySelector('[data-symbol="sword"]')).toBeTruthy()
+  expect(document.querySelector('[data-slot-mark="sword"]')).toBeTruthy()
+  expect(document.querySelector('.chance-reel-cell[data-symbol="sword"]')).toBeTruthy()
+  expect(document.querySelector('.chance-slots-cabinet')).toBeTruthy()
+  expect(document.querySelector('.chance-slots-marquee')).toBeTruthy()
   expect(screen.queryByText('sword')).not.toBeInTheDocument()
+})
+it('abre o modal de derrota depois do giro do caça-níquel, sem toast', async () => {
+  let release!: () => void
+  slotsReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
+  vi.mocked(gamesApi.slots).mockResolvedValue({ won: false, reels: ['sword', 'shield', 'crown'], payout: 0 } as any)
+  const user = mount('chance')
+  await screen.findByText('10 fichas')
+  await user.click(screen.getByRole('button', { name: 'Girar cilindros · 1 ficha' }))
+  await waitFor(() => expect(document.querySelector('.chance-slots.is-spinning')).toBeTruthy())
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(toast.success).not.toHaveBeenCalled()
+  release()
+  await waitFor(() => expect(document.querySelector('.chance-slots.is-spinning')).toBeNull())
+  const dialog = await screen.findByRole('dialog', { name: 'Derrota' })
+  expect(dialog).toHaveClass('game-chance-reveal-modal', 'is-loss')
+  expect(dialog).not.toHaveClass('is-win')
+  expect(dialog.querySelectorAll('.game-chance-reveal-reel')).toHaveLength(3)
+  expect(screen.getByText('Nada desta vez')).toBeVisible()
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
 })
 it('usa retrato de monstro na arena', async () => {
   mount('economy')

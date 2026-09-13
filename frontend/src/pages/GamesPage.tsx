@@ -1,7 +1,7 @@
 import { Card } from '../components/ui/Card'
 import { Tabs } from '../components/ui/Tabs'
 import { useFeedbackAction } from '../hooks/useFeedbackAction'
-import { Button } from '../components/ui/Button'
+import { Button, IconButton } from '../components/ui/Button'
 import { Modal } from '../components/ui/Modal'
 import { Field } from '../components/ui/Field'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import {
   ArrowUpRight,
   Box,
+  CircleHelp,
   Coins,
   Dices,
   Fish,
@@ -29,12 +30,15 @@ import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
 import { BoxRevealModal } from '../components/games/BoxRevealModal'
 import { sortBoxesByRarity } from '../components/games/gameArt'
-import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games/GameVisuals'
+import { ChanceStage, MonsterPortrait, RouletteField, RouletteWheel } from '../components/games/GameVisuals'
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { waitForDiceReveal, waitForDiceRest } from '../components/games/diceReveal'
+import { waitForSlotsReveal } from '../components/games/slotsReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 import { BuyTokensModal } from '../components/games/BuyTokensModal'
+import { BoxHelpModal } from '../components/games/BoxHelpModal'
+import { ChanceRevealModal } from '../components/games/ChanceRevealModal'
 
 type PlayFx = {
   playing?: 'spin' | 'open' | 'dice' | 'slots' | 'fight'
@@ -52,6 +56,9 @@ type PlayFx = {
   diceWon?: boolean
   diceChosen?: boolean
   slotsReels?: string[]
+  slotsWon?: boolean
+  chanceOverlay?: 'dice' | 'slots'
+  chancePayout?: number
 }
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
@@ -80,6 +87,7 @@ export function GamesPage() {
   const diceRestSeq = useRef(0)
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
+  const [boxHelpOpen, setBoxHelpOpen] = useState(false)
   const [params, setParams] = useSearchParams()
   const requestedGame = params.get('tab')
   const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
@@ -218,7 +226,12 @@ export function GamesPage() {
     const startedAt = Date.now()
     diceRestSeq.current += 1
     const restSeq = diceRestSeq.current
-    setFx((current) => ({ playing: 'dice', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    setFx((current) => ({
+      playing: 'dice',
+      diceRoll: current.diceRoll,
+      slotsReels: current.slotsReels,
+      slotsWon: current.slotsWon,
+    }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
       setFx((current) => ({
@@ -228,8 +241,6 @@ export function GamesPage() {
         slotsReels: current.slotsReels,
       }))
       await waitForDiceReveal(startedAt)
-      const summary = result.won ? t('games.toast.diceWin', { payout: result.payout }) : t('games.toast.diceLoss')
-      toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome: summary }))
       await refresh()
       return result
     }, t('games.toast.diceError'), quietTokens)
@@ -238,13 +249,22 @@ export function GamesPage() {
         diceRoll: outcome.value.roll,
         diceWon: outcome.value.won,
         diceChosen: true,
+        chanceOverlay: 'dice',
+        chancePayout: outcome.value.payout,
         slotsReels: current.slotsReels,
+        slotsWon: current.slotsWon,
       }))
       void waitForDiceRest().then(() => {
         if (diceRestSeq.current !== restSeq) return
         setFx((current) => {
           if (current.playing === 'dice') return current
-          return { diceRoll: current.diceRoll, slotsReels: current.slotsReels }
+          return {
+            diceRoll: current.diceRoll,
+            slotsReels: current.slotsReels,
+            slotsWon: current.slotsWon,
+            chanceOverlay: current.chanceOverlay,
+            chancePayout: current.chancePayout,
+          }
         })
       })
     } else {
@@ -255,6 +275,7 @@ export function GamesPage() {
 
   async function playSlots() {
     if (needTokens(minigames.data?.slots.cost ?? 1)) return
+    const startedAt = Date.now()
     setFx((current) => ({
       playing: 'slots',
       diceRoll: current.diceRoll,
@@ -264,11 +285,15 @@ export function GamesPage() {
     }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
-      const summary = result.won ? t('games.toast.slotsWin', { payout: result.payout }) : t('games.toast.slotsLoss')
-      toast[result.won ? 'success' : 'error'](t('games.toast.slotsResult', {
-        reels: result.reels.map((symbol) => t(`games.chance.symbols.${symbol}`, { defaultValue: symbol })).join(' | '),
-        outcome: summary,
+      setFx((current) => ({
+        playing: 'slots',
+        diceRoll: current.diceRoll,
+        diceWon: current.diceWon,
+        diceChosen: current.diceChosen,
+        slotsReels: result.reels,
+        slotsWon: result.won,
       }))
+      await waitForSlotsReveal(startedAt)
       await refresh()
       return result
     }, t('games.toast.slotsError'), quietTokens)
@@ -278,6 +303,9 @@ export function GamesPage() {
         diceWon: current.diceWon,
         diceChosen: current.diceChosen,
         slotsReels: outcome.value.reels,
+        slotsWon: outcome.value.won,
+        chanceOverlay: 'slots',
+        chancePayout: outcome.value.payout,
       }))
     } else {
       noteTokenFailure(outcome.error)
@@ -369,6 +397,7 @@ export function GamesPage() {
 
           <div className="roulette-content">
             <div className="roulette-action">
+              <RouletteField />
               <RouletteWheel
                 tokens={tokens}
                 spinning={fx.playing === 'spin'}
@@ -439,6 +468,17 @@ export function GamesPage() {
               <Gift aria-hidden="true" /> {t('games.daily.claim')}
             </Button>
           )}
+          <div className="game-guide">
+            <h3>{t('games.daily.guideTitle')}</h3>
+            <p className="muted">{t('games.daily.guideLead')}</p>
+            <h3>{t('games.daily.tipsTitle')}</h3>
+            <ul className="game-guide-list">
+              <li>{t('games.daily.tips.spin')}</li>
+              <li>{t('games.daily.tips.miss', { percent: roulette.data?.fail_chance ?? 20 })}</li>
+              <li>{t('games.daily.tips.prize')}</li>
+              <li>{t('games.daily.tips.daily')}</li>
+            </ul>
+          </div>
           </Card>
         </div>
 
@@ -453,7 +493,17 @@ export function GamesPage() {
             <span className="game-module-icon"><Box aria-hidden="true" /></span>
             <div>
               <span className="panel-eyebrow">{t('games.boxes.eyebrow')}</span>
-              <h2>{t('games.boxes.title')}</h2>
+              <div className="game-module-title">
+                <h2>{t('games.boxes.title')}</h2>
+                <IconButton
+                  label={t('games.boxes.helpLabel')}
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setBoxHelpOpen(true)}
+                >
+                  <CircleHelp aria-hidden="true" />
+                </IconButton>
+              </div>
               <p className="muted">{t('games.boxes.lead')}</p>
             </div>
           </div>
@@ -510,6 +560,7 @@ export function GamesPage() {
             <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
           ) : null}
         </Card>
+        <BoxHelpModal open={boxHelpOpen} onClose={() => setBoxHelpOpen(false)} />
         <Modal
           className="game-box-reset-modal"
           open={resetTarget != null}
@@ -546,6 +597,15 @@ export function GamesPage() {
           hunt={fx.hunt === true}
           onClose={() => setFx({})}
         />
+        <ChanceRevealModal
+          open={fx.chanceOverlay != null}
+          kind={fx.chanceOverlay}
+          won={(fx.chanceOverlay === 'dice' ? fx.diceWon : fx.slotsWon) === true}
+          roll={fx.diceRoll}
+          reels={fx.slotsReels}
+          payout={fx.chancePayout}
+          onClose={() => setFx((current) => ({ ...current, chanceOverlay: undefined }))}
+        />
 
         <Card
           className="game-module game-chance"
@@ -567,6 +627,7 @@ export function GamesPage() {
             chosen={fx.diceChosen === true}
             won={fx.diceWon === true}
             spinningSlots={fx.playing === 'slots'}
+            slotsWon={fx.slotsWon === true}
             reels={fx.slotsReels}
             symbols={minigames.data?.slots.symbols}
             diceLabel={t('games.chance.diceBoard')}
@@ -575,26 +636,71 @@ export function GamesPage() {
           />
           <div className="chance-controls">
             <form className="chance-dice-form" onSubmit={playDice}>
-              <Field>
-                {t('games.chance.betType')}
-                <select value={diceType} onChange={(event) => setDiceType(event.target.value)}>
-                  <option value="even">{t('games.chance.even')}</option>
-                  <option value="odd">{t('games.chance.odd')}</option>
-                  <option value="high">{t('games.chance.high')}</option>
-                  <option value="low">{t('games.chance.low')}</option>
-                </select>
-              </Field>
-              <Field>
-                {t('games.chance.tokens')}
-                <input value={diceAmount} onChange={(event) => setDiceAmount(event.target.value)} inputMode="numeric" />
-              </Field>
-              <Button type="submit"><Dices aria-hidden="true" /> {t('games.chance.playDice')}</Button>
+              <div className="chance-guide is-pairs">
+                <span className="panel-eyebrow">{t('games.chance.diceGuideEyebrow')}</span>
+                <h3>{t('games.chance.diceGuideTitle')}</h3>
+                <p>{t('games.chance.diceGuideLead')}</p>
+                <dl>
+                  <div>
+                    <dt>{t('games.chance.even')}</dt>
+                    <dd>{t('games.chance.diceEvenPay')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('games.chance.odd')}</dt>
+                    <dd>{t('games.chance.diceOddPay')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('games.chance.high')}</dt>
+                    <dd>{t('games.chance.diceHighPay')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('games.chance.low')}</dt>
+                    <dd>{t('games.chance.diceLowPay')}</dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="chance-play-foot">
+                <Field>
+                  {t('games.chance.betType')}
+                  <select value={diceType} onChange={(event) => setDiceType(event.target.value)}>
+                    <option value="even">{t('games.chance.even')}</option>
+                    <option value="odd">{t('games.chance.odd')}</option>
+                    <option value="high">{t('games.chance.high')}</option>
+                    <option value="low">{t('games.chance.low')}</option>
+                  </select>
+                </Field>
+                <Field>
+                  {t('games.chance.tokens')}
+                  <input value={diceAmount} onChange={(event) => setDiceAmount(event.target.value)} inputMode="numeric" />
+                </Field>
+                <Button type="submit"><Dices aria-hidden="true" /> {t('games.chance.playDice')}</Button>
+              </div>
             </form>
             <div className="chance-slots-play">
-              <p className="muted">{t('games.chance.slotsHint')}</p>
-              <Button className="ghost" type="button" onClick={() => void playSlots()}>
-                {t('games.chance.playSlots', { count: minigames.data?.slots.cost ?? 1 })}
-              </Button>
+              <div className="chance-guide">
+                <span className="panel-eyebrow">{t('games.chance.slotsGuideEyebrow')}</span>
+                <h3>{t('games.chance.slotsGuideTitle')}</h3>
+                <p>{t('games.chance.slotsGuideLead', { count: minigames.data?.slots.cost ?? 1 })}</p>
+                <dl>
+                  <div>
+                    <dt>{t('games.chance.slotsTriple')}</dt>
+                    <dd>{t('games.chance.slotsTriplePay')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('games.chance.slotsPair')}</dt>
+                    <dd>{t('games.chance.slotsPairPay')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('games.chance.slotsMiss')}</dt>
+                    <dd>{t('games.chance.slotsMissPay')}</dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="chance-play-foot">
+                <Button className="ghost" type="button" onClick={() => void playSlots()}>
+                  {t('games.chance.playSlots', { count: minigames.data?.slots.cost ?? 1 })}
+                </Button>
+              </div>
             </div>
           </div>
         </Card>
