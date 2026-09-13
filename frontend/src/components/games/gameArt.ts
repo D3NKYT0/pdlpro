@@ -145,13 +145,43 @@ export function resolveFishArt(name?: string | null, rarity?: string | null): Fi
   return FISH_RARITY_ART[normalizeFishRarity(rarity ?? text)]
 }
 
-/** Variação leve entre monstros a partir do id, sem arte extra. */
-export function monsterHue(id: string) {
-  let hue = 0
-  for (let index = 0; index < id.length; index += 1) {
-    hue = (hue + id.charCodeAt(index) * 17) % 360
-  }
-  return hue
+export type MonsterArtId =
+  | 'keltir'
+  | 'wolf'
+  | 'goblin'
+  | 'orc'
+  | 'lizardman'
+  | 'ant'
+  | 'werewolf'
+  | 'ogre'
+  | 'drake'
+  | 'death-knight'
+  | 'default'
+
+const MONSTER_NAME_ART: Array<{ pattern: RegExp; id: Exclude<MonsterArtId, 'default'> }> = [
+  { pattern: /keltir/i, id: 'keltir' },
+  { pattern: /werewolf|homem[- ]?lobo|lobisomem/i, id: 'werewolf' },
+  { pattern: /\bwolf\b|\blobo\b/i, id: 'wolf' },
+  { pattern: /goblin/i, id: 'goblin' },
+  { pattern: /lizard|lagarto/i, id: 'lizardman' },
+  { pattern: /\bant\b|formiga/i, id: 'ant' },
+  { pattern: /ogre|ogro/i, id: 'ogre' },
+  { pattern: /drake/i, id: 'drake' },
+  { pattern: /death.?knight|cavaleiro negro/i, id: 'death-knight' },
+  { pattern: /\borc\b/i, id: 'orc' },
+]
+
+/** Escolhe a sprite pelo nome da fera; nomes novos caem no retrato padrão. */
+export function resolveMonsterArt(name?: string | null): MonsterArtId {
+  const text = (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  return MONSTER_NAME_ART.find(({ pattern }) => pattern.test(text))?.id ?? 'default'
+}
+
+/** Token CSS do retrato; o tema pode remapear `--theme-art-games-monster-*`. */
+export function monsterArtVar(name?: string | null) {
+  const id = resolveMonsterArt(name)
+  if (id === 'default') return 'var(--theme-art-games-monster)'
+  return `var(--theme-art-games-monster-${id})`
 }
 
 export const DICE_FACES = ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'] as const

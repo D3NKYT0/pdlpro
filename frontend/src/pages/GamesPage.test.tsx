@@ -126,10 +126,14 @@ const enchantReveal = vi.hoisted(() => {
     },
   }
 })
-vi.mock('../components/games/enchantReveal', () => ({
-  ENCHANT_REVEAL_MS: 0,
-  waitForEnchantReveal: () => enchantReveal.wait(),
-}))
+vi.mock('../components/games/enchantReveal', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../components/games/enchantReveal')>()
+  return {
+    ...actual,
+    ENCHANT_REVEAL_MS: 0,
+    waitForEnchantReveal: () => enchantReveal.wait(),
+  }
+})
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
@@ -249,23 +253,27 @@ it('abre o modal de encante tentando e revela sucesso sem toast', async () => {
   expect(screen.queryByRole('button', { name: 'Continuar' })).not.toBeInTheDocument()
   expect(toast.success).not.toHaveBeenCalled()
   release()
-  const dialog = await screen.findByRole('dialog', { name: 'Sucesso' })
+  const dialog = await screen.findByRole('dialog', { name: 'Vitória' })
   expect(dialog).toHaveClass('is-win')
   expect(dialog).not.toHaveClass('is-attempting', 'is-loss')
+  expect(dialog.querySelector('.enchant-reveal-kicker')).toHaveTextContent('+3 → +4')
   expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('A arma subiu para +4')
+  expect(dialog.querySelectorAll('.enchant-reveal-burst-spark').length).toBe(14)
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
   await user.click(screen.getByRole('button', { name: 'Continuar' }))
-  expect(screen.queryByRole('dialog', { name: 'Sucesso' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('dialog', { name: 'Vitória' })).not.toBeInTheDocument()
 })
 it('revela falha do encante no modal sem toast', async () => {
   vi.mocked(gamesApi.enchant).mockResolvedValue({ success: false, weapon: { level: 3 } } as any)
   const user = mount('economy')
   await screen.findByText('Orc')
   await user.click(namedButton('Encantar · 10 fragmentos'))
-  const dialog = await screen.findByRole('dialog', { name: 'Falhou' })
+  const dialog = await screen.findByRole('dialog', { name: 'Derrota' })
   expect(dialog).toHaveClass('game-enchant-reveal-modal', 'is-loss')
+  expect(dialog.querySelector('.enchant-reveal-kicker')).toHaveTextContent('Tentou +3 → +4')
   expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('A arma permanece +3')
+  expect(dialog.querySelectorAll('.enchant-reveal-ember').length).toBe(10)
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
   await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
@@ -761,6 +769,8 @@ it('usa retrato de monstro na arena', async () => {
   mount('economy')
   await screen.findByText('Orc')
   expect(document.querySelectorAll('.monster-portrait')).toHaveLength(2)
+  expect(document.querySelector('.monster-portrait[data-monster="orc"]')).toBeTruthy()
+  expect(document.querySelector('.monster-portrait[data-monster="default"]')).toBeTruthy()
   expect(document.querySelector('.monster-portrait.is-down')).toBeTruthy()
 })
 it('divide a arena em lista de feras e palco só para o combate', async () => {

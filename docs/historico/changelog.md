@@ -13,8 +13,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - A **Arena das Feras** divide o card em duas colunas: lista de feras,
   forja e palco só para o combate.   O encante atual fica no cabeçalho
   ao lado da trilha (+1 a +10).   Encantar abre um modal da tentativa
-  e só então mostra sucesso ou falha, sem toast. A arma ganha sprite
-  própria de +0 a +10 (luz de encante no estilo Lineage). A forja
+  e só então mostra vitória ou derrota (explosão dourada, cinzas na
+  falha e celebração extra no +10), sem toast. A arma ganha sprite
+  própria de +0 a +10 (luz de encante no estilo Lineage). A arena
+  tem dez oponentes, cada um com retrato próprio. A forja
   mostra fragmentos e o botão. Lutar fica
   desativado (com relógio circular) enquanto a fera não pode combater,
   amarelo sem fichas, e Encantar fica verde com 10 fragmentos.

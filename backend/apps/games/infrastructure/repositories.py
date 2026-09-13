@@ -517,7 +517,7 @@ class DjangoEconomyRepository(IEconomyRepository):
         weapon.save(update_fields=update_fields)
 
     def list_active_monsters(self) -> list[Monster]:
-        return list(Monster.objects.filter(active=True).order_by("level"))
+        return list(Monster.objects.filter(active=True).order_by("level", "required_weapon_level", "name"))
 
     def get_active_monster(self, monster_id: UUID) -> Monster | None:
         return Monster.objects.filter(id=monster_id, active=True).first()

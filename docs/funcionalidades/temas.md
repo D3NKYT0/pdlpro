@@ -132,7 +132,9 @@ de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-b
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`)
 e as artes `images/games/fishing-pond.webp`,
 `images/games/fish-{lambari,tilapia,traira,dourado,tucunare,tambaqui,piraiba,surubim,pirarucu,koi,boiuna,serafim}.webp` e
-`images/games/monster-default.webp` e os ícones realistas
+`images/games/monster-default.webp`, os retratos
+`images/games/monster-{keltir,wolf,goblin,orc,lizardman,ant,werewolf,ogre,drake,death-knight}.webp`
+e os ícones realistas
 `images/games/sword-{0-10}.webp` como `--theme-art-games-*`.
 A Arena das Feras usa a espada do encante atual (luz de Lineage
 que cresce do aço ao glow santo) e aceita textura opcional em

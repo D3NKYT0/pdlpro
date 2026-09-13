@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from django.utils import timezone
 
+from apps.games.domain.arena_roster import ARENA_MONSTERS
 from apps.games.domain.autoconfig import KNOWN_GAME_CODES, IGameAutoconfigService
 from apps.games.domain.fishing_i18n import BAIT_CONTENT_I18N, FISH_CONTENT_I18N
 from apps.games.infrastructure.models import (
@@ -149,13 +150,7 @@ FISH_SPECIES = (
     ("Serafim de Eva", "divine", 5, 1, 180, 10, 6577, 1),
 )
 
-MONSTERS = (
-    ("Elder Keltir", 1, 0, 3, 16, 3, 1, 12),
-    ("Goblin", 1, 0, 5, 20, 4, 1, 15),
-    ("Orc", 3, 2, 8, 50, 10, 3, 30),
-    ("Ant Recruit", 5, 3, 12, 70, 12, 4, 40),
-    ("Drake", 8, 5, 20, 120, 18, 8, 60),
-)
+MONSTERS = ARENA_MONSTERS
 
 # name, paid_with, price, bonus, description
 # Isca comum: 1 ficha = 10. Encantadas: preço antigo em iscas comuns (3 e 8).
@@ -433,7 +428,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
     def _ensure_monsters(self) -> int:
         created = 0
         for name, level, weapon, fragments, hp, attack, defense, respawn in MONSTERS:
-            _, was = Monster.objects.get_or_create(
+            monster, was = Monster.objects.get_or_create(
                 name=name,
                 defaults={
                     "level": level,
@@ -447,6 +442,25 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 },
             )
             created += int(was)
+            if was:
+                continue
+            fields: list[str] = []
+            values = {
+                "level": level,
+                "required_weapon_level": weapon,
+                "fragment_reward": fragments,
+                "hp": hp,
+                "attack": attack,
+                "defense": defense,
+                "respawn_seconds": respawn,
+                "active": True,
+            }
+            for field, value in values.items():
+                if getattr(monster, field) != value:
+                    setattr(monster, field, value)
+                    fields.append(field)
+            if fields:
+                monster.save(update_fields=[*fields, "updated_at"])
         return created
 
     def _ensure_boxes(self) -> dict[str, int]:

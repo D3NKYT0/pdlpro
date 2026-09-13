@@ -6,7 +6,8 @@ import {
   DICE_PIP_FACES,
   fishArtVar,
   inferBoxRarity,
-  monsterHue,
+  monsterArtVar,
+  resolveMonsterArt,
   normalizeFishRarity,
   normalizeRouletteRarity,
   resolveFishArt,
@@ -415,20 +416,25 @@ export function ChanceStage({
 
 export function MonsterPortrait({
   id,
+  name,
   down = false,
   fighting = false,
   size = 'card',
 }: {
   id: string
+  name?: string
   down?: boolean
   fighting?: boolean
   size?: 'card' | 'hero'
 }) {
+  const art = resolveMonsterArt(name)
   return (
     <div
       className={`monster-portrait${down ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${size === 'hero' ? ' is-hero' : ''}`}
+      data-monster={art}
+      data-monster-id={id}
       data-theme-part="game-portrait"
-      style={{ '--monster-hue': `${monsterHue(id)}deg` } as CSSProperties}
+      style={{ '--monster-art': monsterArtVar(name) } as CSSProperties}
       aria-hidden="true"
     />
   )
@@ -566,7 +572,7 @@ export function BattleStage({
         <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${lost ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
           {monsterId ? (
-            <MonsterPortrait id={monsterId} down={won} fighting={fighting} size="hero" />
+            <MonsterPortrait id={monsterId} name={monsterName} down={won} fighting={fighting} size="hero" />
           ) : (
             <div className="battle-fighter-art is-empty" data-theme-part="game-portrait" />
           )}

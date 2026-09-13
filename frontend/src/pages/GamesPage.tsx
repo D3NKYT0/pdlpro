@@ -885,6 +885,7 @@ export function GamesPage() {
                     <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}`} key={monster.id}>
                       <MonsterPortrait
                         id={monster.id}
+                        name={monster.name}
                         down={!monster.alive}
                         fighting={fx.playing === 'fight' && fx.targetId === monster.id}
                       />

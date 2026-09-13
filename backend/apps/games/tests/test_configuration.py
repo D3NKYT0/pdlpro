@@ -1,10 +1,28 @@
 import pytest
 
 from apps.games.application.configuration import require_active_game
+from apps.games.domain.arena_roster import ARENA_MONSTERS
 from apps.games.domain.exceptions import GameInactiveError
 from apps.games.domain.repositories import IGameCatalogRepository
 from apps.games.infrastructure.models import GameConfig
 from common.di.bootstrap import DependencyInjection
+
+
+def test_arena_roster_has_ten_distinct_beasts():
+    names = [row[0] for row in ARENA_MONSTERS]
+    assert names == [
+        "Elder Keltir",
+        "Wolf",
+        "Goblin",
+        "Orc",
+        "Lizardman",
+        "Ant Recruit",
+        "Werewolf",
+        "Ogre",
+        "Drake",
+        "Death Knight",
+    ]
+    assert len(set(names)) == 10
 
 
 @pytest.mark.django_db

@@ -4,7 +4,8 @@ import {
   findRoulettePrizeIndex,
   inferBoxRarity,
   sortBoxesByRarity,
-  monsterHue,
+  monsterArtVar,
+  resolveMonsterArt,
   normalizeGameRarity,
   normalizeRouletteRarity,
   groupFishByRarity,
@@ -108,9 +109,18 @@ it('parte as faixas em duas colunas: rasas e profundas', () => {
   expect(columns.right.map((tier) => tier.rarity)).toEqual(['epic', 'legendary', 'divine'])
 })
 
-it('varia o tom do monstro a partir do id', () => {
-  expect(monsterHue('orc')).not.toBe(monsterHue('troll'))
-  expect(monsterHue('orc')).toBe(monsterHue('orc'))
+it('escolhe a sprite da fera pelo nome e cai no retrato padrão', () => {
+  expect(resolveMonsterArt('Elder Keltir')).toBe('keltir')
+  expect(resolveMonsterArt('Wolf')).toBe('wolf')
+  expect(resolveMonsterArt('Werewolf')).toBe('werewolf')
+  expect(resolveMonsterArt('Homem-lobo')).toBe('werewolf')
+  expect(resolveMonsterArt('Ant Recruit')).toBe('ant')
+  expect(resolveMonsterArt('Death Knight')).toBe('death-knight')
+  expect(resolveMonsterArt('Cavaleiro Negro')).toBe('death-knight')
+  expect(resolveMonsterArt('Orc')).toBe('orc')
+  expect(resolveMonsterArt('Troll')).toBe('default')
+  expect(monsterArtVar('Drake')).toBe('var(--theme-art-games-monster-drake)')
+  expect(monsterArtVar('Troll')).toBe('var(--theme-art-games-monster)')
 })
 
 it('monta três cilindros visíveis a partir do catálogo', () => {

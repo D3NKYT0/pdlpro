@@ -58,6 +58,16 @@ html.pdl-panel {
   --theme-art-games-fish-boiuna: url(/theme/default/images/games/fish-boiuna.webp);
   --theme-art-games-fish-serafim: url(/theme/default/images/games/fish-serafim.webp);
   --theme-art-games-monster: url(/theme/default/images/games/monster-default.webp);
+  --theme-art-games-monster-keltir: url(/theme/default/images/games/monster-keltir.webp);
+  --theme-art-games-monster-wolf: url(/theme/default/images/games/monster-wolf.webp);
+  --theme-art-games-monster-goblin: url(/theme/default/images/games/monster-goblin.webp);
+  --theme-art-games-monster-orc: url(/theme/default/images/games/monster-orc.webp);
+  --theme-art-games-monster-lizardman: url(/theme/default/images/games/monster-lizardman.webp);
+  --theme-art-games-monster-ant: url(/theme/default/images/games/monster-ant.webp);
+  --theme-art-games-monster-werewolf: url(/theme/default/images/games/monster-werewolf.webp);
+  --theme-art-games-monster-ogre: url(/theme/default/images/games/monster-ogre.webp);
+  --theme-art-games-monster-drake: url(/theme/default/images/games/monster-drake.webp);
+  --theme-art-games-monster-death-knight: url(/theme/default/images/games/monster-death-knight.webp);
   --theme-art-games-sword-0: url(/theme/default/images/games/sword-0.webp);
   --theme-art-games-sword-1: url(/theme/default/images/games/sword-1.webp);
   --theme-art-games-sword-2: url(/theme/default/images/games/sword-2.webp);
@@ -10031,17 +10041,22 @@ html.pdl-panel .game-chance-reveal-actions .btn {
 }
 
 html.pdl-panel .ui-modal-root:has(.game-enchant-reveal-modal) .ui-modal-backdrop {
-  background: rgba(4, 3, 2, 0.62);
+  background: rgba(4, 3, 2, 0.74);
 }
 
 html.pdl-panel .ui-modal.game-enchant-reveal-modal.card {
   isolation: isolate;
-  width: min(100%, 380px);
-  padding: 4px 8px 20px;
+  width: min(100%, 400px);
+  padding: 6px 8px 24px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--enchant-flare) 36%, transparent);
-  background: color-mix(in srgb, var(--theme-bg-deep, #100e0b) 28%, transparent);
-  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+  border: 1px solid color-mix(in srgb, var(--enchant-flare) 46%, transparent);
+  background:
+    radial-gradient(ellipse 92% 68% at 50% -6%, color-mix(in srgb, var(--enchant-flare) 26%, transparent), transparent 58%),
+    radial-gradient(ellipse 80% 48% at 50% 108%, color-mix(in srgb, var(--enchant-flare) 12%, transparent), transparent 62%),
+    color-mix(in srgb, var(--theme-bg-deep, #100e0b) 36%, transparent);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.5),
+    0 0 56px color-mix(in srgb, var(--enchant-flare) 20%, transparent);
   backdrop-filter: blur(22px);
 }
 
@@ -10052,6 +10067,11 @@ html.pdl-panel .ui-modal.game-enchant-reveal-modal.card::before {
 html.pdl-panel .ui-modal.game-enchant-reveal-modal.is-attempting,
 html.pdl-panel .ui-modal.game-enchant-reveal-modal.is-win {
   --enchant-flare: var(--panel-gold-bright);
+}
+
+html.pdl-panel .ui-modal.game-enchant-reveal-modal.is-peak {
+  --enchant-flare: color-mix(in srgb, var(--panel-gold-bright) 68%, var(--panel-box-legendary, #f0d48a));
+  animation: enchant-reveal-peak-pulse 2.4s ease-in-out infinite;
 }
 
 html.pdl-panel .ui-modal.game-enchant-reveal-modal.is-loss {
@@ -10080,7 +10100,7 @@ html.pdl-panel .game-enchant-reveal-modal .ui-modal-body {
 
 html.pdl-panel .game-enchant-reveal-modal .ui-modal-header {
   justify-content: center;
-  padding: 18px 44px 4px;
+  padding: 20px 48px 2px;
 }
 
 html.pdl-panel .game-enchant-reveal-modal .ui-modal-header .ui-button {
@@ -10094,13 +10114,15 @@ html.pdl-panel .game-enchant-reveal-modal.is-attempting .ui-modal-header .ui-but
 }
 
 html.pdl-panel .game-enchant-reveal-modal .ui-modal-header h2 {
-  font-size: 26px;
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--enchant-flare) 42%, transparent);
 }
 
 html.pdl-panel .game-enchant-reveal-modal .ui-modal-body {
   display: grid;
   justify-items: center;
-  padding: 8px 20px 8px;
+  padding: 6px 22px 8px;
 }
 
 html.pdl-panel .enchant-reveal-field {
@@ -10113,28 +10135,76 @@ html.pdl-panel .enchant-reveal-field {
 
 html.pdl-panel .enchant-reveal-wash {
   position: absolute;
-  inset: 8%;
-  background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--enchant-flare) 28%, transparent), transparent 68%);
+  inset: 4%;
+  background:
+    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--enchant-flare) 34%, transparent), transparent 68%),
+    radial-gradient(circle at 18% 82%, color-mix(in srgb, var(--enchant-flare) 12%, transparent), transparent 42%);
+  animation: enchant-reveal-wash 0.7s ease-out both;
+}
+
+html.pdl-panel .enchant-reveal-veil {
+  position: absolute;
+  inset: -12%;
+  opacity: 0.42;
+  background: repeating-linear-gradient(
+    128deg,
+    transparent 0 16px,
+    color-mix(in srgb, var(--enchant-flare) 8%, transparent) 16px 18px
+  );
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-veil {
+  animation: enchant-reveal-veil 9s linear infinite;
+}
+
+html.pdl-panel .enchant-reveal-rays {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 280px;
+  height: 280px;
+  opacity: 0;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--enchant-flare) 28%, transparent) 0deg 6deg,
+    transparent 6deg 18deg
+  );
+  mask-image: radial-gradient(circle, #000 18%, transparent 68%);
+  translate: -50% -50%;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-rays {
+  opacity: 0.7;
+  animation: enchant-reveal-rays 8s linear infinite;
 }
 
 html.pdl-panel .enchant-reveal-ring {
   position: absolute;
   left: 50%;
-  top: 42%;
-  width: 148px;
-  height: 148px;
-  border: 1px solid color-mix(in srgb, var(--enchant-flare) 40%, transparent);
+  top: 40%;
+  width: 168px;
+  height: 168px;
+  border: 1px solid color-mix(in srgb, var(--enchant-flare) 46%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 28px color-mix(in srgb, var(--enchant-flare) 18%, transparent);
   translate: -50% -50%;
 }
 
-html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-ring {
+html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-ring,
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-ring {
   animation: enchant-reveal-ring 1.1s ease-out infinite;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-ring {
+  opacity: 0.45;
+  border-style: dashed;
+  animation: enchant-reveal-loss-ring 0.7s ease-out both;
 }
 
 html.pdl-panel .enchant-reveal-spark {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 40%;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -10147,38 +10217,180 @@ html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-spark {
   animation: enchant-reveal-spark 360ms ease-out infinite;
 }
 
+html.pdl-panel .enchant-reveal-burst,
+html.pdl-panel .enchant-reveal-ash {
+  position: absolute;
+  inset: 0;
+}
+
+html.pdl-panel .enchant-reveal-flash {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, #fff 70%, var(--enchant-flare)), transparent 72%);
+  translate: -50% -50%;
+  animation: enchant-reveal-flash 0.7s ease-out both;
+}
+
+html.pdl-panel .enchant-reveal-burst-spark {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 5px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff, var(--enchant-flare));
+  transform-origin: 50% 0;
+  animation: enchant-reveal-burst-spark 0.82s ease-out both;
+  animation-delay: var(--spark-d);
+}
+
+html.pdl-panel .enchant-reveal-mote {
+  position: absolute;
+  left: var(--x);
+  bottom: 8%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--enchant-flare);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--enchant-flare) 80%, transparent);
+  animation: enchant-reveal-mote 2.8s linear infinite;
+  animation-delay: var(--d);
+}
+
+html.pdl-panel .enchant-reveal-orb {
+  position: absolute;
+  left: calc(18% + (var(--p) * 14%));
+  top: calc(22% + ((var(--p) * 12%) - 6%));
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, #fff 60%, var(--enchant-flare)), var(--enchant-flare));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--enchant-flare) 70%, transparent);
+  animation: enchant-reveal-orb 3.8s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+html.pdl-panel .enchant-reveal-crack {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 176px;
+  height: 176px;
+  border: 1px solid color-mix(in srgb, var(--enchant-flare) 28%, transparent);
+  border-radius: 50%;
+  opacity: 0.55;
+  translate: -50% -50%;
+  clip-path: polygon(8% 18%, 42% 8%, 78% 22%, 92% 58%, 68% 88%, 28% 84%, 6% 54%);
+}
+
+html.pdl-panel .enchant-reveal-ember {
+  position: absolute;
+  left: var(--x);
+  top: 28%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--enchant-flare) 80%, #3a120e);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--enchant-flare) 70%, transparent);
+  animation: enchant-reveal-ember 1.8s ease-in both;
+  animation-delay: var(--d);
+}
+
 html.pdl-panel .enchant-reveal-stage {
   position: relative;
   z-index: 1;
   display: grid;
   justify-items: center;
-  gap: 14px;
+  gap: 12px;
   text-align: center;
+}
+
+html.pdl-panel .enchant-reveal-kicker {
+  margin: 0;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in srgb, var(--enchant-flare) 28%, transparent);
+  background: color-mix(in srgb, var(--enchant-flare) 10%, transparent);
+  color: color-mix(in srgb, var(--enchant-flare) 78%, var(--panel-muted));
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
 }
 
 html.pdl-panel .enchant-reveal-swords {
   position: relative;
   display: grid;
-  width: 132px;
-  height: 132px;
+  width: 220px;
+  height: 220px;
+  overflow: visible;
   place-items: center;
 }
 
-html.pdl-panel .enchant-reveal-swords .weapon-art {
+html.pdl-panel .enchant-reveal-halo {
   grid-area: 1 / 1;
-  width: 132px;
-  height: 132px;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--enchant-flare) 38%, transparent), transparent 68%);
+  opacity: 0.55;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-halo {
+  animation: enchant-reveal-halo 1.8s ease-in-out infinite;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-halo {
+  opacity: 0.22;
+  filter: grayscale(0.35);
+}
+
+html.pdl-panel .enchant-reveal-swords .weapon-art {
+  position: relative;
+  z-index: 1;
+  grid-area: 1 / 1;
+  width: 210px;
+  height: 210px;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-swords .weapon-art.is-toward {
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--enchant-flare) 72%, transparent));
+  animation: enchant-reveal-pop 0.56s ease both;
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-swords .weapon-art.is-from {
+  filter: grayscale(0.28) saturate(0.78);
+  animation: enchant-reveal-loss-sword 0.55s ease both;
+}
+
+html.pdl-panel .enchant-reveal-pedestal {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 0;
+  width: 118px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 72%);
+  translate: -50% 0;
 }
 
 html.pdl-panel .enchant-reveal-level {
   display: grid;
   min-width: 120px;
-  min-height: 78px;
   place-items: center;
   font-family: Cambria, Georgia, serif;
-  font-size: 52px;
+  font-size: 58px;
   font-weight: 400;
   line-height: 1;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--enchant-flare) 38%, transparent);
+}
+
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-level {
+  animation: enchant-reveal-pop 0.56s ease both;
 }
 
 html.pdl-panel .enchant-reveal-level span {
@@ -10204,14 +10416,15 @@ html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-swords .is-tow
 
 html.pdl-panel .enchant-reveal-outcome {
   margin: 0;
-  max-width: 28ch;
+  max-width: 30ch;
   color: var(--panel-muted);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 html.pdl-panel .enchant-reveal-actions {
   display: flex;
   justify-content: center;
+  padding-top: 2px;
 }
 
 html.pdl-panel .fishing-pond {
@@ -11223,9 +11436,9 @@ html.pdl-panel .monster-portrait {
   flex: 0 0 auto;
   width: 52px;
   height: 52px;
+  overflow: hidden;
   border: 1px solid rgba(230, 199, 125, 0.22);
-  background: var(--theme-art-games-monster) center 18% / cover no-repeat;
-  filter: hue-rotate(var(--monster-hue, 0deg)) saturate(0.92);
+  background: var(--monster-art, var(--theme-art-games-monster)) center 18% / cover no-repeat;
   box-shadow: inset 0 -10px 16px rgba(0, 0, 0, 0.35);
 }
 
@@ -11398,6 +11611,7 @@ html.pdl-panel .battle-fighter-art {
   display: grid;
   width: 132px;
   height: 132px;
+  overflow: hidden;
   place-items: center;
   border: 2px solid rgba(230, 199, 125, 0.34);
   background:
@@ -11414,9 +11628,9 @@ html.pdl-panel .battle-stage .monster-portrait.is-hero {
   z-index: 1;
   width: 132px;
   height: 132px;
+  overflow: hidden;
   border: 2px solid rgba(230, 199, 125, 0.34);
-  background: var(--theme-art-games-monster) center 28% / cover no-repeat;
-  filter: hue-rotate(var(--monster-hue, 0deg)) saturate(1.05);
+  background: var(--monster-art, var(--theme-art-games-monster)) center 22% / cover no-repeat;
   box-shadow:
     inset 0 -16px 22px rgba(0, 0, 0, 0.32),
     0 0 0 1px rgba(197, 161, 97, 0.08);
@@ -11426,12 +11640,12 @@ html.pdl-panel .weapon-art {
   display: block;
   width: 100%;
   height: 100%;
-  background: var(--weapon-art) center / contain no-repeat;
+  background: var(--weapon-art) 50% 46% / 195% no-repeat;
 }
 
 html.pdl-panel .battle-fighter-art .weapon-art {
-  width: 92%;
-  height: 92%;
+  width: 100%;
+  height: 100%;
 }
 
 html.pdl-panel .battle-fighter-art.is-empty {
@@ -11974,6 +12188,99 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   100% { opacity: 0; transform: scale(2.2); }
 }
 
+@keyframes enchant-reveal-wash {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes enchant-reveal-veil {
+  from { transform: translateX(0); }
+  to { transform: translateX(-36px); }
+}
+
+@keyframes enchant-reveal-rays {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes enchant-reveal-flash {
+  0% { opacity: 0.95; transform: translate(-50%, -50%) scale(0.35); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
+}
+
+@keyframes enchant-reveal-burst-spark {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--spark-a)) translateY(8px) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--spark-a)) translateY(-72px) scale(1);
+  }
+}
+
+@keyframes enchant-reveal-mote {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(var(--s, 1));
+  }
+  18% { opacity: 0.9; }
+  100% {
+    opacity: 0;
+    transform: translateY(-148px) scale(var(--s, 1));
+  }
+}
+
+@keyframes enchant-reveal-orb {
+  0%, 100% {
+    opacity: 0.34;
+    transform: translate(0, 0) scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(12px, -18px) scale(1.16);
+  }
+}
+
+@keyframes enchant-reveal-ember {
+  0% {
+    opacity: 0.85;
+    transform: translateY(0) scale(var(--s, 1));
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(92px) scale(calc(var(--s, 1) * 0.4));
+  }
+}
+
+@keyframes enchant-reveal-halo {
+  0%, 100% { opacity: 0.42; transform: scale(0.94); }
+  50% { opacity: 0.78; transform: scale(1.08); }
+}
+
+@keyframes enchant-reveal-pop {
+  0% { transform: scale(0.86); }
+  58% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes enchant-reveal-loss-sword {
+  0% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-5px) rotate(-2deg); }
+  55% { transform: translateX(4px) rotate(1.5deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes enchant-reveal-loss-ring {
+  0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.86); }
+  100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+@keyframes enchant-reveal-peak-pulse {
+  0%, 100% { box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5), 0 0 56px color-mix(in srgb, var(--enchant-flare) 20%, transparent); }
+  50% { box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5), 0 0 78px color-mix(in srgb, var(--enchant-flare) 36%, transparent); }
+}
+
 @keyframes chance-slots-spark {
   0% {
     opacity: 1;
@@ -12126,7 +12433,7 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
 
 @keyframes game-fight-flash {
   0%, 100% { transform: scale(1); }
-  40% { transform: scale(1.06); filter: hue-rotate(var(--monster-hue, 0deg)) brightness(1.25); }
+  40% { transform: scale(1.06); filter: brightness(1.25); }
 }
 
 @keyframes battle-wash {
@@ -12355,6 +12662,21 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-toward,
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-from,
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-toward,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-ring,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-rays,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-veil,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-halo,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-swords .weapon-art.is-toward,
+  html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-level,
+  html.pdl-panel .game-enchant-reveal-modal.is-peak,
+  html.pdl-panel .enchant-reveal-wash,
+  html.pdl-panel .enchant-reveal-flash,
+  html.pdl-panel .enchant-reveal-burst-spark,
+  html.pdl-panel .enchant-reveal-mote,
+  html.pdl-panel .enchant-reveal-orb,
+  html.pdl-panel .enchant-reveal-ember,
+  html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-ring,
+  html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-swords .weapon-art.is-from,
   html.pdl-panel .fishing-pond-caustic,
   html.pdl-panel .fishing-glint,
   html.pdl-panel .fishing-bubble,

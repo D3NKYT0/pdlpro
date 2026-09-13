@@ -64,6 +64,10 @@ it('aplica superfícies e densidade a partir do layout do pacote', () => {
   expect(style.getPropertyValue('--theme-button-primary')).toContain('btn-a.png')
   expect(style.getPropertyValue('--theme-art-bg-3')).toContain('art-3.jpg')
   expect(style.getPropertyValue('--theme-art-games-monster')).toContain('games/monster-default.webp')
+  expect(style.getPropertyValue('--theme-art-games-monster-drake')).toContain('games/monster-drake.webp')
+  expect(style.getPropertyValue('--theme-art-games-monster-death-knight')).toContain(
+    'games/monster-death-knight.webp',
+  )
 })
 it('remapeia arte dos jogos pelo mapa de assets do pacote', () => {
   configureRuntimeTheme({

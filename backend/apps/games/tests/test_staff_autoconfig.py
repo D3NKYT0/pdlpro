@@ -202,6 +202,25 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert serafim.item_id == 6577
     assert serafim.min_rod_level == 5
     assert Monster.objects.filter(name="Drake").exists()
+    assert Monster.objects.filter(name="Wolf").exists()
+    assert Monster.objects.filter(name="Death Knight").exists()
+    assert Monster.objects.filter(
+        name__in=[
+            "Elder Keltir",
+            "Wolf",
+            "Goblin",
+            "Orc",
+            "Lizardman",
+            "Ant Recruit",
+            "Werewolf",
+            "Ogre",
+            "Drake",
+            "Death Knight",
+        ]
+    ).count() == 10
+    drake = Monster.objects.get(name="Drake")
+    assert drake.required_weapon_level == 5
+    assert Monster.objects.get(name="Death Knight").level == 10
     listed = api.get("/api/v1/staff/games/")
     assert listed.status_code == 200
     assert {item["code"] for item in listed.data} >= {"roulette", "fishing", "economy"}
