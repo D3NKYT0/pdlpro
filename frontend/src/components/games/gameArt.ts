@@ -124,6 +124,19 @@ export function fishArtVar(id: FishArtId) {
   return `var(--theme-art-games-fish-${id})`
 }
 
+export const SWORD_MAX_ENCHANT = 10
+
+/** Limita o encante da arte da arma à faixa +0 a +10. */
+export function swordEnchantLevel(level: number) {
+  if (!Number.isFinite(level)) return 0
+  return Math.min(SWORD_MAX_ENCHANT, Math.max(0, Math.round(level)))
+}
+
+/** Token CSS da espada; o tema pode remapear `--theme-art-games-sword-*`. */
+export function swordArtVar(level: number) {
+  return `var(--theme-art-games-sword-${swordEnchantLevel(level)})`
+}
+
 /** Escolhe a sprite pelo nome da espécie; espécies novas caem na raridade. */
 export function resolveFishArt(name?: string | null, rarity?: string | null): FishArtId {
   const text = (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')

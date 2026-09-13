@@ -132,8 +132,11 @@ de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-b
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`)
 e as artes `images/games/fishing-pond.webp`,
 `images/games/fish-{lambari,tilapia,traira,dourado,tucunare,tambaqui,piraiba,surubim,pirarucu,koi,boiuna,serafim}.webp` e
-`images/games/monster-default.webp` como `--theme-art-games-*`. A Arena das Feras
-aceita textura opcional em `--theme-art-games-arena`. A Mesa da Taverna aceita textura opcional em
+`images/games/monster-default.webp` e os ícones realistas
+`images/games/sword-{0-10}.webp` como `--theme-art-games-*`.
+A Arena das Feras usa a espada do encante atual (luz de Lineage
+que cresce do aço ao glow santo) e aceita textura opcional em
+`--theme-art-games-arena`. A Mesa da Taverna aceita textura opcional em
 `--theme-art-games-chance-felt` e `--theme-art-games-chance-cabinet` (o default
 desenha feltro e gabinete só com tokens). O script `frontend/scripts/paint-box-chests.py` regenera os baús
 fechados, entreabertos e abertos.

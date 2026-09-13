@@ -1,7 +1,7 @@
-import { Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../ui/Button'
 import { Modal } from '../ui/Modal'
+import { WeaponArt } from './GameVisuals'
 
 export function EnchantRevealModal({
   open,
@@ -49,8 +49,9 @@ export function EnchantRevealModal({
         <i className="enchant-reveal-spark" />
       </div>
       <div className="enchant-reveal-stage">
-        <span className="enchant-reveal-icon">
-          <Sparkles aria-hidden="true" />
+        <span className="enchant-reveal-swords">
+          <WeaponArt className="is-from" level={from} />
+          <WeaponArt className="is-toward" level={shownToward} />
         </span>
         <strong className="enchant-reveal-level">
           <span className="is-from">+{from}</span>

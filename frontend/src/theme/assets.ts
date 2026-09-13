@@ -48,6 +48,17 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-games-fish-boiuna',
   '--theme-art-games-fish-serafim',
   '--theme-art-games-monster',
+  '--theme-art-games-sword-0',
+  '--theme-art-games-sword-1',
+  '--theme-art-games-sword-2',
+  '--theme-art-games-sword-3',
+  '--theme-art-games-sword-4',
+  '--theme-art-games-sword-5',
+  '--theme-art-games-sword-6',
+  '--theme-art-games-sword-7',
+  '--theme-art-games-sword-8',
+  '--theme-art-games-sword-9',
+  '--theme-art-games-sword-10',
 ] as const
 
 const GAME_ART = {
@@ -77,6 +88,17 @@ const GAME_ART = {
   '--theme-art-games-fish-boiuna': 'games/fish-boiuna.webp',
   '--theme-art-games-fish-serafim': 'games/fish-serafim.webp',
   '--theme-art-games-monster': 'games/monster-default.webp',
+  '--theme-art-games-sword-0': 'games/sword-0.webp',
+  '--theme-art-games-sword-1': 'games/sword-1.webp',
+  '--theme-art-games-sword-2': 'games/sword-2.webp',
+  '--theme-art-games-sword-3': 'games/sword-3.webp',
+  '--theme-art-games-sword-4': 'games/sword-4.webp',
+  '--theme-art-games-sword-5': 'games/sword-5.webp',
+  '--theme-art-games-sword-6': 'games/sword-6.webp',
+  '--theme-art-games-sword-7': 'games/sword-7.webp',
+  '--theme-art-games-sword-8': 'games/sword-8.webp',
+  '--theme-art-games-sword-9': 'games/sword-9.webp',
+  '--theme-art-games-sword-10': 'games/sword-10.webp',
 } as const
 
 const DENSITY_PRESETS = {

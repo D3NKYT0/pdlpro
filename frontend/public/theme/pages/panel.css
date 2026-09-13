@@ -58,6 +58,17 @@ html.pdl-panel {
   --theme-art-games-fish-boiuna: url(/theme/default/images/games/fish-boiuna.webp);
   --theme-art-games-fish-serafim: url(/theme/default/images/games/fish-serafim.webp);
   --theme-art-games-monster: url(/theme/default/images/games/monster-default.webp);
+  --theme-art-games-sword-0: url(/theme/default/images/games/sword-0.webp);
+  --theme-art-games-sword-1: url(/theme/default/images/games/sword-1.webp);
+  --theme-art-games-sword-2: url(/theme/default/images/games/sword-2.webp);
+  --theme-art-games-sword-3: url(/theme/default/images/games/sword-3.webp);
+  --theme-art-games-sword-4: url(/theme/default/images/games/sword-4.webp);
+  --theme-art-games-sword-5: url(/theme/default/images/games/sword-5.webp);
+  --theme-art-games-sword-6: url(/theme/default/images/games/sword-6.webp);
+  --theme-art-games-sword-7: url(/theme/default/images/games/sword-7.webp);
+  --theme-art-games-sword-8: url(/theme/default/images/games/sword-8.webp);
+  --theme-art-games-sword-9: url(/theme/default/images/games/sword-9.webp);
+  --theme-art-games-sword-10: url(/theme/default/images/games/sword-10.webp);
   --theme-art-games-arena: none;
   --theme-art-games-chance-felt: none;
   --theme-art-games-chance-cabinet: none;
@@ -10145,17 +10156,18 @@ html.pdl-panel .enchant-reveal-stage {
   text-align: center;
 }
 
-html.pdl-panel .enchant-reveal-icon {
+html.pdl-panel .enchant-reveal-swords {
+  position: relative;
   display: grid;
-  width: 42px;
-  height: 42px;
+  width: 132px;
+  height: 132px;
   place-items: center;
-  color: var(--enchant-flare, var(--panel-gold-bright));
 }
 
-html.pdl-panel .enchant-reveal-icon svg {
-  width: 28px;
-  height: 28px;
+html.pdl-panel .enchant-reveal-swords .weapon-art {
+  grid-area: 1 / 1;
+  width: 132px;
+  height: 132px;
 }
 
 html.pdl-panel .enchant-reveal-level {
@@ -10173,16 +10185,20 @@ html.pdl-panel .enchant-reveal-level span {
   grid-area: 1 / 1;
 }
 
-html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-from {
+html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-from,
+html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-from {
   animation: enchant-reveal-flicker 280ms steps(1) infinite;
 }
 
-html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-toward {
+html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-toward,
+html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-toward {
   animation: enchant-reveal-flicker 280ms steps(1) infinite reverse;
 }
 
 html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-level .is-from,
-html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-level .is-toward {
+html.pdl-panel .game-enchant-reveal-modal.is-win .enchant-reveal-swords .is-from,
+html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-level .is-toward,
+html.pdl-panel .game-enchant-reveal-modal.is-loss .enchant-reveal-swords .is-toward {
   display: none;
 }
 
@@ -11406,11 +11422,16 @@ html.pdl-panel .battle-stage .monster-portrait.is-hero {
     0 0 0 1px rgba(197, 161, 97, 0.08);
 }
 
-html.pdl-panel .battle-fighter-art svg {
-  width: 58px;
-  height: 58px;
-  stroke-width: 1.3;
-  filter: drop-shadow(0 0 10px rgba(230, 199, 125, 0.35));
+html.pdl-panel .weapon-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--weapon-art) center / contain no-repeat;
+}
+
+html.pdl-panel .battle-fighter-art .weapon-art {
+  width: 92%;
+  height: 92%;
 }
 
 html.pdl-panel .battle-fighter-art.is-empty {
@@ -12332,6 +12353,8 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-spark,
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-from,
   html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-level .is-toward,
+  html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-from,
+  html.pdl-panel .game-enchant-reveal-modal.is-attempting .enchant-reveal-swords .is-toward,
   html.pdl-panel .fishing-pond-caustic,
   html.pdl-panel .fishing-glint,
   html.pdl-panel .fishing-bubble,

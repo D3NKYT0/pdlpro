@@ -244,6 +244,8 @@ it('abre o modal de encante tentando e revela sucesso sem toast', async () => {
   expect(attempting).toHaveTextContent('+3')
   expect(attempting).toHaveTextContent('+4')
   expect(attempting).toHaveTextContent('Tentando +3 → +4')
+  expect(attempting.querySelector('.weapon-art.is-from')).toHaveAttribute('data-enchant', '3')
+  expect(attempting.querySelector('.weapon-art.is-toward')).toHaveAttribute('data-enchant', '4')
   expect(screen.queryByRole('button', { name: 'Continuar' })).not.toBeInTheDocument()
   expect(toast.success).not.toHaveBeenCalled()
   release()
@@ -776,6 +778,7 @@ it('divide a arena em lista de feras e palco só para o combate', async () => {
   expect(screen.getByRole('status')).toHaveTextContent('Escolha uma fera para lutar.')
   expect(screen.getByText('Você')).toBeVisible()
   expect(document.querySelector('.battle-vs')?.textContent).toBe('VS')
+  expect(document.querySelector('.weapon-art[data-enchant="3"]')).toBeTruthy()
 })
 it('anima o confronto no palco e revela a vitória sem toast', async () => {
   let release!: () => void

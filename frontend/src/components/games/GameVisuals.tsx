@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from 'react'
-import { Sword, Trophy, X } from 'lucide-react'
+import { Trophy, X } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
@@ -11,6 +11,8 @@ import {
   normalizeRouletteRarity,
   resolveFishArt,
   rouletteReelStrip,
+  swordArtVar,
+  swordEnchantLevel,
   type FishArtId,
   type GameRarity,
   type RouletteReelPrize,
@@ -432,6 +434,24 @@ export function MonsterPortrait({
   )
 }
 
+export function WeaponArt({
+  level,
+  className,
+}: {
+  level: number
+  className?: string
+}) {
+  const enchant = swordEnchantLevel(level)
+  return (
+    <span
+      className={`weapon-art${className ? ` ${className}` : ''}`}
+      data-enchant={enchant}
+      style={{ '--weapon-art': swordArtVar(enchant) } as CSSProperties}
+      aria-hidden="true"
+    />
+  )
+}
+
 const BATTLE_SPARKS = 16
 const BATTLE_MOTES = 12
 const BATTLE_HITS = 4
@@ -496,7 +516,7 @@ export function BattleStage({
         <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${won ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
           <div className="battle-fighter-art" data-theme-part="game-portrait">
-            <Sword aria-hidden="true" />
+            <WeaponArt level={weaponLevel} />
           </div>
           <i className="battle-pedestal" />
           <span className="battle-hp" aria-hidden="true">

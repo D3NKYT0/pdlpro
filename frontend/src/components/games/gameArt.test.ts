@@ -11,6 +11,8 @@ import {
   splitFishRarityColumns,
   resolveFishArt,
   rouletteReelStrip,
+  swordArtVar,
+  swordEnchantLevel,
   visibleSlotReels,
 } from './gameArt'
 import { BOX_REVEAL_MS, BOX_SHAKE_MS, boxOpenPhase, waitForBoxReveal, waitForBoxShake } from './boxReveal'
@@ -83,6 +85,13 @@ it('agrupa a coleção por raridade e omite faixas vazias', () => {
     ['rare', ['Dourado']],
     ['divine', ['Serafim de Eva']],
   ])
+})
+
+it('limita a arte da espada à faixa +0 a +10', () => {
+  expect(swordEnchantLevel(-2)).toBe(0)
+  expect(swordEnchantLevel(3.6)).toBe(4)
+  expect(swordEnchantLevel(14)).toBe(10)
+  expect(swordArtVar(8)).toBe('var(--theme-art-games-sword-8)')
 })
 
 it('parte as faixas em duas colunas: rasas e profundas', () => {

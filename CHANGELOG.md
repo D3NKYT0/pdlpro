@@ -8,7 +8,7 @@ de simulação só no admin (aviso vermelho); ficha L2
 bag/warehouse e skills da ficha; leilão de personagem com o mesmo snapshot; LGPD self-service;
 arte e animações dos minigames em `/panel/games` (pesca com sprites, fisgada e
 troca das iscas em molduras SVG, com nomes traduzidos; Arena das Feras em duas
-colunas com palco de combate, trilha de encante até +10 e modal da tentativa; item do baú centralizado no reveal);
+colunas com palco de combate, trilha e sprites de encante +0 a +10 e modal da tentativa; item do baú centralizado no reveal);
 autoconfig e configurador dos jogos no admin com catálogo Interlude; pacote
 instalável de ícones de skills. Publicado: **[2.3.0]** — pacote legal/LGPD (textos reais, cookies,
 histórico, reaceitação); atalhos **API**/**Painel** no Jazzmin e card API no hub
