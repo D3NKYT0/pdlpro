@@ -179,6 +179,8 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert FishingBait.objects.filter(active=True).count() >= 1
     token_bait = FishingBait.objects.get(name="Isca comum")
     assert token_bait.paid_with == "tokens"
+    assert token_bait.name_en == "Common bait"
+    assert token_bait.name_es == "Cebo común"
     apprentice = FishingBait.objects.get(name="Isca do aprendiz")
     assert apprentice.paid_with == "baits"
     assert apprentice.price == 3
@@ -195,6 +197,8 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert tilapia.rarity == "common"
     serafim = Fish.objects.get(name="Serafim de Eva")
     assert serafim.rarity == "divine"
+    assert serafim.name_en == "Seraph of Eva"
+    assert serafim.name_es == "Serafín de Eva"
     assert serafim.item_id == 6577
     assert serafim.min_rod_level == 5
     assert Monster.objects.filter(name="Drake").exists()

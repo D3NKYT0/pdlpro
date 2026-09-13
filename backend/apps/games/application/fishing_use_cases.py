@@ -8,6 +8,7 @@ from apps.accounts.application.progress import add_xp
 from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
+from apps.games.application.fishing_i18n import localized_fish_name
 from apps.games.domain.exceptions import GameInactiveError
 from apps.games.domain.repositories import (
     IBagRepository,
@@ -63,7 +64,8 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
             "fish": [
                 {
                     "id": str(fish.id),
-                    "name": fish.name,
+                    "name": localized_fish_name(fish),
+                    "art": fish.name,
                     "rarity": fish.rarity,
                     "min_rod_level": fish.min_rod_level,
                 }
@@ -72,7 +74,8 @@ class GetFishingStateUseCase(UseCase[UUID, dict]):
             "recent": [
                 {
                     "success": row.success,
-                    "fish": row.fish.name if row.fish else None,
+                    "fish": localized_fish_name(row.fish) if row.fish else None,
+                    "fish_art": row.fish.name if row.fish else None,
                     "created_at": row.created_at.isoformat(),
                 }
                 for row in catches
@@ -173,7 +176,11 @@ class CastLineUseCase(UseCase[CastLineInput, dict]):
             remaining = self._fishing.bait_stock_map(user)
         return {
             "success": success,
-            "fish": {"name": fish.name, "rarity": fish.rarity} if fish else None,
+            "fish": (
+                {"name": localized_fish_name(fish), "art": fish.name, "rarity": fish.rarity}
+                if fish
+                else None
+            ),
             "rod": {"level": rod.level, "xp": rod.xp},
             "fichas": user.fichas,
             "baits": sum(remaining.values()),

@@ -774,6 +774,8 @@
     },
     "fields": {
       "name": "Nome",
+      "name_en": "Nome (EN)",
+      "name_es": "Nome (ES)",
       "active": "Ativo",
       "season": "Temporada",
       "rewards": "Recompensas",
@@ -788,6 +790,8 @@
       "enchant": "Encantamento",
       "quantity": "Quantidade",
       "description": "Descrição",
+      "description_en": "Descrição (EN)",
+      "description_es": "Descrição (ES)",
       "is_premium": "Exclusivo premium",
       "event": "Objetivo",
       "target": "Quantidade necessária",

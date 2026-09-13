@@ -4,6 +4,11 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from apps.games.application import advanced
+from apps.games.application.fishing_i18n import (
+    localized_bait_description,
+    localized_bait_name,
+    localized_fish_name,
+)
 from apps.games.application.fishing_use_cases import fishing_economy
 from apps.games.application.use_cases import (
     ClaimDailyBonusInput,
@@ -165,8 +170,8 @@ class GetFishingDetailsUseCase(UseCase[FishingDetailsInput, dict]):
             "baits": [
                 {
                     "id": str(b.id),
-                    "name": b.name,
-                    "description": b.description,
+                    "name": localized_bait_name(b),
+                    "description": localized_bait_description(b),
                     "price": b.price,
                     "paid_with": getattr(b, "paid_with", "tokens"),
                     "success_bonus": b.success_bonus,
@@ -177,7 +182,8 @@ class GetFishingDetailsUseCase(UseCase[FishingDetailsInput, dict]):
             "collection": [
                 {
                     "id": str(f.id),
-                    "name": f.name,
+                    "name": localized_fish_name(f),
+                    "art": f.name,
                     "rarity": f.rarity,
                     "count": catches.get(f.pk, 0),
                 }

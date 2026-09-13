@@ -54,6 +54,8 @@ it('escolhe a sprite do peixe pelo nome da espécie ou pela raridade', () => {
   expect(resolveFishArt('Koi Etéreo', 'legendary')).toBe('koi')
   expect(resolveFishArt('Boiúna', 'divine')).toBe('boiuna')
   expect(resolveFishArt('Serafim de Eva', 'divine')).toBe('serafim')
+  expect(resolveFishArt('Seraph of Eva', 'divine')).toBe('serafim')
+  expect(resolveFishArt('Serafín de Eva', 'divine')).toBe('serafim')
   expect(resolveFishArt('Pirarucu Ancestral', 'legendary')).toBe('pirarucu')
   expect(resolveFishArt('Truta', 'rare')).toBe('dourado')
   expect(resolveFishArt('Carpa', 'épico')).toBe('piraiba')

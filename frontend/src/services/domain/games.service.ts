@@ -98,7 +98,7 @@ export type FishingDetails = {
     success_bonus: number
     quantity: number
   }[]
-  collection: { id: string; name: string; rarity: string; count: number }[]
+  collection: { id: string; name: string; art?: string; rarity: string; count: number }[]
 }
 
 export type GameStats = {
@@ -182,7 +182,7 @@ export const gamesApi = {
   cast: (bait_id: string) =>
     request<{
       success: boolean
-      fish: { name: string; rarity: string } | null
+      fish: { name: string; art?: string; rarity: string } | null
       rod: { level: number; xp: number }
       fichas: number
       baits: number

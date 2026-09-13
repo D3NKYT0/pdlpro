@@ -10,6 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Na **Pescaria**, iscas e peixes passam a ter nome/descrição em pt, en e es
+  (campos `*_en` / `*_es`, editáveis no admin). A API devolve o texto do idioma
+  ativo; sem tradução, cai no português.
 - Na **Pescaria**, o lançamento gasta 1 isca (comum ou encantada), não fichas.
   Fichas só compram isca comum (**1 ficha = 10**). As duas encantadas saem
   das comuns: aprendiz por 3 e encantada por 8.

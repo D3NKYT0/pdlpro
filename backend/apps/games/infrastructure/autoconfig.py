@@ -6,6 +6,7 @@ from decimal import Decimal
 from django.utils import timezone
 
 from apps.games.domain.autoconfig import KNOWN_GAME_CODES, IGameAutoconfigService
+from apps.games.domain.fishing_i18n import BAIT_CONTENT_I18N, FISH_CONTENT_I18N
 from apps.games.infrastructure.models import (
     BoxType,
     CatalogItem,
@@ -351,6 +352,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
         created = 0
         for name, rarity, rod, weight, xp, fichas, item_id, quantity in FISH_SPECIES:
             item_name = self._item_name(item_id)
+            i18n = FISH_CONTENT_I18N.get(name, {})
             fish, was = Fish.objects.get_or_create(
                 name=name,
                 defaults={
@@ -363,6 +365,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                     "item_name": item_name,
                     "quantity": quantity,
                     "active": True,
+                    **i18n,
                 },
             )
             created += int(was)
@@ -377,6 +380,10 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 if fish.quantity != quantity:
                     fish.quantity = quantity
                     fields.append("quantity")
+                for field, value in i18n.items():
+                    if value and not (getattr(fish, field, "") or "").strip():
+                        setattr(fish, field, value)
+                        fields.append(field)
                 if fields:
                     fish.save(update_fields=[*fields, "updated_at"])
                     created += 1
@@ -385,6 +392,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
     def _ensure_baits(self) -> int:
         created = 0
         for name, paid_with, price, bonus, description in BAITS:
+            i18n = BAIT_CONTENT_I18N.get(name, {})
             bait, was = FishingBait.objects.get_or_create(
                 name=name,
                 defaults={
@@ -393,6 +401,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                     "success_bonus": bonus,
                     "description": description,
                     "active": True,
+                    **i18n,
                 },
             )
             created += int(was)
@@ -413,6 +422,10 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 if not bait.active:
                     bait.active = True
                     fields.append("active")
+                for field, value in i18n.items():
+                    if value and not (getattr(bait, field, "") or "").strip():
+                        setattr(bait, field, value)
+                        fields.append(field)
                 if fields:
                     bait.save(update_fields=[*fields, "updated_at"])
         return created

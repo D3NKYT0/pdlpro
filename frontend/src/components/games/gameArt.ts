@@ -60,7 +60,7 @@ export type FishArtId =
   | 'serafim'
 
 const FISH_NAME_ART: Array<{ pattern: RegExp; id: FishArtId }> = [
-  { pattern: /serafim/i, id: 'serafim' },
+  { pattern: /serafim|seraph|serafin/i, id: 'serafim' },
   { pattern: /boiuna/i, id: 'boiuna' },
   { pattern: /\bkoi\b/i, id: 'koi' },
   { pattern: /pirarucu/i, id: 'pirarucu' },

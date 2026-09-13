@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Fish } from 'lucide-react'
 import { gamesApi } from '../../services/api'
+import { contentLang } from '../../i18n/locale'
 import { formatDateTime } from '../../lib/formatters'
 import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
@@ -16,13 +17,14 @@ import { waitForFishingBite, waitForFishingCast, waitForFishingReveal } from './
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
 
 export function FishingGame() {
-  const { t } = useTranslation('panel')
+  const { t, i18n } = useTranslation('panel')
+  const language = contentLang(i18n.language)
   const query = useQuery({
-    queryKey: ['fishing-details'],
+    queryKey: ['fishing-details', language],
     queryFn: gamesApi.fishingDetails,
   })
   const fishing = useQuery({
-    queryKey: ['fishing'],
+    queryKey: ['fishing', language],
     queryFn: gamesApi.fishing,
   })
   const action = useProgramAction()
@@ -30,7 +32,7 @@ export function FishingGame() {
   const [quantity, setQuantity] = useState(1)
   const [result, setResult] = useState('')
   const [pond, setPond] = useState<FishingPondState>('idle')
-  const [catchFish, setCatchFish] = useState<{ name: string; rarity: string } | null>(null)
+  const [catchFish, setCatchFish] = useState<{ name: string; rarity: string; art?: string } | null>(null)
   const packSize = fishing.data?.baits_per_token ?? query.data?.baits_per_token ?? 10
   const castCost = fishing.data?.cost ?? 1
   const baits = query.data?.baits ?? []
@@ -70,7 +72,7 @@ export function FishingGame() {
       </div>
       <div className="fishing-board">
         <div className="fishing-stage">
-          <FishingPond state={pond} fishName={catchFish?.name} fishRarity={catchFish?.rarity} />
+          <FishingPond state={pond} fishName={catchFish?.art || catchFish?.name} fishRarity={catchFish?.rarity} />
           <div className="fishing-hud">
             <div className="fishing-stat">
               <small>{t('games.fishing.rod')}</small>
@@ -98,7 +100,7 @@ export function FishingGame() {
                 try {
                   const r = await gamesApi.cast(usedBait.id)
                   if (usedBait.quantity <= castCost) setBait('')
-                  if (r.fish) setCatchFish(r.fish)
+                  if (r.fish) setCatchFish({ name: r.fish.name, rarity: r.fish.rarity, art: r.fish.art })
                   await waitForFishingCast(started)
                   setPond('bite')
                   await waitForFishingBite(started)
@@ -234,7 +236,7 @@ export function FishingGame() {
                 {recent.map((row, index) => (
                   <span className="fishing-recent" key={`${row.created_at}-${index}`}>
                     {row.success && row.fish ? (
-                      <FishPortrait name={row.fish} size="chip" />
+                      <FishPortrait name={row.fish_art || row.fish} size="chip" />
                     ) : (
                       <i className="fishing-recent-miss" aria-hidden="true" />
                     )}
@@ -273,7 +275,7 @@ export function FishingGame() {
                           className={`fishing-collection-card ${f.count ? '' : 'is-locked'}`}
                           key={f.id}
                         >
-                          <FishPortrait name={f.name} rarity={f.rarity} discovered={f.count > 0} />
+                          <FishPortrait name={f.art || f.name} rarity={f.rarity} discovered={f.count > 0} />
                           <h3>{f.name}</h3>
                           <small>
                             {f.count

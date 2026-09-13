@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from apps.games.infrastructure.models import (
     Bag,
@@ -15,6 +16,7 @@ from apps.games.infrastructure.models import (
     EconomyFightLog,
     EconomyWeapon,
     Fish,
+    FishingBait,
     FishingCatch,
     FishingRod,
     GameConfig,
@@ -191,6 +193,44 @@ class FishAdmin(PDLModelAdmin):
     """
 
     list_display = ("name", "rarity", "item_id", "quantity", "min_rod_level", "weight", "active")
+    search_fields = ("name", "name_en", "name_es")
+    fieldsets = (
+        (_("Português"), {"fields": ("name",)}),
+        (_("English"), {"fields": ("name_en",)}),
+        (_("Español"), {"fields": ("name_es",)}),
+        (
+            _("Regras"),
+            {
+                "fields": (
+                    "rarity",
+                    "min_rod_level",
+                    "weight",
+                    "xp_reward",
+                    "fichas_reward",
+                    "item_id",
+                    "item_name",
+                    "enchant",
+                    "quantity",
+                    "active",
+                )
+            },
+        ),
+    )
+
+
+@admin.register(FishingBait)
+class FishingBaitAdmin(PDLModelAdmin):
+    """Administração das iscas com camadas PT/EN/ES."""
+
+    list_display = ("name", "paid_with", "price", "success_bonus", "active")
+    list_filter = ("paid_with", "active")
+    search_fields = ("name", "name_en", "name_es", "description")
+    fieldsets = (
+        (_("Português"), {"fields": ("name", "description")}),
+        (_("English"), {"fields": ("name_en", "description_en")}),
+        (_("Español"), {"fields": ("name_es", "description_es")}),
+        (_("Regras"), {"fields": ("paid_with", "price", "success_bonus", "active")}),
+    )
 
 
 @admin.register(FishingCatch)

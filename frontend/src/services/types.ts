@@ -333,8 +333,8 @@ export interface ApiFishingState {
   baits_per_token: number
   active: boolean
   rod: { level: number; xp: number }
-  fish: Array<{ id: string; name: string; rarity: string; min_rod_level: number }>
-  recent: Array<{ success: boolean; fish: string | null; created_at: string }>
+  fish: Array<{ id: string; name: string; art?: string; rarity: string; min_rod_level: number }>
+  recent: Array<{ success: boolean; fish: string | null; fish_art?: string | null; created_at: string }>
 }
 
 export interface ApiEconomyState {

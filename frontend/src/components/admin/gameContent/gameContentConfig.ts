@@ -100,7 +100,11 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
     ]),
     section('baits', [
       name,
+      field(t, 'name_en'),
+      field(t, 'name_es'),
       field(t, 'description', { type: 'textarea' }),
+      field(t, 'description_en', { type: 'textarea' }),
+      field(t, 'description_es', { type: 'textarea' }),
       field(t, 'paid_with', {
         options: options(t, 'baitPaidWith', ['tokens', 'baits']),
         initial: 'tokens',
@@ -123,6 +127,8 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
     ]),
     section('fish', [
       name,
+      field(t, 'name_en'),
+      field(t, 'name_es'),
       field(t, 'rarity', {
         options: options(t, 'lootRarity', ['common', 'rare', 'epic', 'legendary']),
         initial: 'common',

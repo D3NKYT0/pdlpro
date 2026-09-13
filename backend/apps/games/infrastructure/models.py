@@ -252,6 +252,8 @@ class Fish(BaseModel):
     """
 
     name = models.CharField(max_length=80)
+    name_en = models.CharField(_("Nome (EN)"), max_length=80, blank=True)
+    name_es = models.CharField(_("Nome (ES)"), max_length=80, blank=True)
     rarity = models.CharField(max_length=20, default="common")
     min_rod_level = models.PositiveIntegerField(default=1)
     weight = models.PositiveIntegerField(default=10)
@@ -604,7 +606,11 @@ class FishingBait(BaseModel):
     )
 
     name = models.CharField(max_length=100)
+    name_en = models.CharField(_("Nome (EN)"), max_length=100, blank=True)
+    name_es = models.CharField(_("Nome (ES)"), max_length=100, blank=True)
     description = models.CharField(max_length=250, blank=True)
+    description_en = models.CharField(_("Descrição (EN)"), max_length=250, blank=True)
+    description_es = models.CharField(_("Descrição (ES)"), max_length=250, blank=True)
     paid_with = models.CharField(
         max_length=10,
         choices=PAID_WITH_CHOICES,

@@ -429,6 +429,67 @@ def test_fishing_trades_common_bait_for_both_enchanted_kinds(api, player):
     assert poor.status_code == 400
 
 
+@pytest.mark.django_db
+def test_fishing_bait_and_fish_follow_request_language(api, player):
+    from apps.games.infrastructure.models import Fish, FishingBait
+
+    GameConfig.objects.update_or_create(
+        code="fishing",
+        defaults={"name": "Pesca", "active": True, "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
+    )
+    FishingBait.objects.all().delete()
+    FishingBait.objects.create(
+        name="Isca comum",
+        name_en="Common bait",
+        name_es="Cebo común",
+        description="Isca simples para lançar a linha.",
+        description_en="Simple bait to cast the line.",
+        description_es="Cebo simple para lanzar la línea.",
+        paid_with="tokens",
+        price=1,
+        success_bonus=0,
+        active=True,
+    )
+    FishingBait.objects.create(
+        name="Isca sem tradução",
+        description="Só em português.",
+        paid_with="tokens",
+        price=1,
+        active=True,
+    )
+    Fish.objects.filter(name="Serafim de Eva").delete()
+    Fish.objects.create(
+        name="Serafim de Eva",
+        name_en="Seraph of Eva",
+        name_es="Serafín de Eva",
+        rarity="divine",
+        active=True,
+    )
+    api.force_authenticate(user=player)
+    pt = api.get("/api/v1/customer/games/fishing/details/")
+    assert pt.status_code == 200, pt.data
+    names = {row["name"] for row in pt.data["baits"]}
+    assert names == {"Isca comum", "Isca sem tradução"}
+    serafim = next(row for row in pt.data["collection"] if row["art"] == "Serafim de Eva")
+    assert serafim["name"] == "Serafim de Eva"
+
+    en = api.get("/api/v1/customer/games/fishing/details/", HTTP_X_LANGUAGE="en")
+    assert en.status_code == 200, en.data
+    en_names = {row["name"] for row in en.data["baits"]}
+    assert "Common bait" in en_names
+    assert "Isca sem tradução" in en_names
+    assert next(row for row in en.data["baits"] if row["name"] == "Common bait")[
+        "description"
+    ].startswith("Simple bait")
+    serafim_en = next(row for row in en.data["collection"] if row["art"] == "Serafim de Eva")
+    assert serafim_en["name"] == "Seraph of Eva"
+
+    es = api.get("/api/v1/customer/games/fishing/details/", HTTP_X_LANGUAGE="es")
+    assert {row["name"] for row in es.data["baits"]} >= {"Cebo común", "Isca sem tradução"}
+    serafim_es = next(row for row in es.data["collection"] if row["art"] == "Serafim de Eva")
+    assert serafim_es["name"] == "Serafín de Eva"
+
+
 def test_divine_catch_is_rarer_than_legendary():
     from apps.games.application.fishing_use_cases import SUCCESS_CHANCE
 

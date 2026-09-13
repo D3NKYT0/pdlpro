@@ -792,6 +792,21 @@ msgstr "English"
 msgid "Español"
 msgstr "Spanish"
 
+msgid "Nome (EN)"
+msgstr "Name (EN)"
+
+msgid "Nome (ES)"
+msgstr "Name (ES)"
+
+msgid "Descrição (EN)"
+msgstr "Description (EN)"
+
+msgid "Descrição (ES)"
+msgstr "Description (ES)"
+
+msgid "Regras"
+msgstr "Rules"
+
 #: .\apps\content\admin.py:55
 msgid ""
 "Marque Somente assistente para um passo a passo do Denkynho. Não é "

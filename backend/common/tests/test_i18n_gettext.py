@@ -10,6 +10,7 @@ from common.architecture.exceptions import EntityNotFoundError
 from common.exceptions import custom_exception_handler
 from common.i18n import (
     activate_language,
+    active_product_language,
     from_django_language,
     parse_accept_language,
     resolve_language,
@@ -37,6 +38,10 @@ class ProductLanguageHelpersTests(SimpleTestCase):
         self.assertEqual(to_django_language("en"), "en")
         self.assertEqual(from_django_language("pt-br"), "pt")
         self.assertEqual(from_django_language("en"), "en")
+        activate_language("en")
+        self.assertEqual(active_product_language(), "en")
+        activate_language("pt")
+        self.assertEqual(active_product_language(), "pt")
 
 
 class ApiLanguageMiddlewareTests(SimpleTestCase):

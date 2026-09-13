@@ -78,6 +78,12 @@ def from_django_language(language: str | None, default: str = "pt") -> str:
     return resolve_language(code, default)
 
 
+def active_product_language() -> str:
+    """Idioma de produto já ativado pelo middleware (``pt`` / ``en`` / ``es``)."""
+
+    return from_django_language(translation.get_language())
+
+
 def activate_language(language: str | None) -> str:
     """Ativa o gettext Django para o idioma de produto; devolve o código Django."""
 
