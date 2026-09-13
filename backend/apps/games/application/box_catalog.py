@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 # Joia de boss e encantamentos de grau alto aparecem na face do baú quando empatam.
-_HUNT_FACE_IDS = (6658, 6577, 947, 8748, 951, 955, 3470)
+_HUNT_FACE_IDS = (6658, 6577, 6578, 6569, 947, 8748, 951, 955, 3470)
 _HUNT_FACE_RANK = {item_id: index for index, item_id in enumerate(_HUNT_FACE_IDS)}
 _RARITY_RANK = {
     "legendary": 0,

@@ -46,6 +46,17 @@ class BoxNotOwnedError(ValidationDomainError):
     message = "Essa caixa não pertence a você."
 
 
+class BoxResetBlockedError(ValidationDomainError):
+    """Falha de domínio: não dá para resetar um baú ainda intacto.
+
+    A apresentação expõe o código ``BOX_RESET_BLOCKED``. Lance esta exceção quando o jogador
+    tentar comprar de novo um tipo cuja caixa ainda não teve nenhum pacote aberto.
+    """
+
+    error_code = "BOX_RESET_BLOCKED"
+    message = "Abra pelo menos um pacote antes de resetar este baú."
+
+
 class InvalidRewardError(ValidationDomainError):
     """Falha de domínio: configuração ou payload de recompensa inválido."""
 

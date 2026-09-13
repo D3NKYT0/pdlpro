@@ -134,6 +134,49 @@ def test_buy_and_open_box(api, player):
 
 
 @pytest.mark.django_db
+def test_cannot_reset_box_before_opening_a_pack(api, player):
+    from apps.games.infrastructure.models import BoxType, CatalogItem
+
+    CatalogItem.objects.create(name="Scroll", item_id=736, quantity=20, rarity="common", weight=10)
+    CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    box_type = BoxType.objects.create(name="Bronze", price=Decimal("5.00"), boosters_amount=4)
+    Wallet.objects.create(user=player, balance=Decimal("20.00"))
+    api.force_authenticate(user=player)
+    bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert bought.status_code == 200, bought.data
+    refused = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert refused.status_code == 400
+    assert refused.data["error_code"] == "BOX_RESET_BLOCKED"
+    player.refresh_from_db()
+    from apps.wallet.infrastructure.models import Wallet as WalletModel
+
+    assert WalletModel.objects.get(user=player).balance == Decimal("15.00")
+
+
+@pytest.mark.django_db
+def test_can_reset_box_after_opening_a_pack(api, player):
+    from apps.games.infrastructure.models import BoxType, CatalogItem
+
+    CatalogItem.objects.create(name="Scroll", item_id=736, quantity=20, rarity="common", weight=10)
+    CatalogItem.objects.create(name="Ring of Baium", item_id=6658, rarity="legendary", weight=1)
+    box_type = BoxType.objects.create(name="Bronze", price=Decimal("5.00"), boosters_amount=4)
+    Wallet.objects.create(user=player, balance=Decimal("20.00"))
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    api.force_authenticate(user=player)
+    bought = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert bought.status_code == 200, bought.data
+    opened = api.post(f"/api/v1/customer/games/boxes/{bought.data['id']}/open/")
+    assert opened.status_code == 200, opened.data
+    reset = api.post("/api/v1/customer/games/boxes/", {"box_type_id": str(box_type.id)}, format="json")
+    assert reset.status_code == 200, reset.data
+    assert reset.data["remaining"] == 4
+    listed = api.get("/api/v1/customer/games/boxes/")
+    assert listed.data["boxes"][0]["remaining"] == 4
+    assert listed.data["boxes"][0]["total"] == 4
+
+
+@pytest.mark.django_db
 def test_bought_box_always_contains_one_hunt_item(api, player):
     from apps.games.infrastructure.models import BoxSlot, BoxType, CatalogItem
 

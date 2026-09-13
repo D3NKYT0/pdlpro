@@ -2,6 +2,7 @@ import { Card } from '../components/ui/Card'
 import { Tabs } from '../components/ui/Tabs'
 import { useFeedbackAction } from '../hooks/useFeedbackAction'
 import { Button } from '../components/ui/Button'
+import { Modal } from '../components/ui/Modal'
 import { Field } from '../components/ui/Field'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -71,6 +72,7 @@ export function GamesPage() {
   const [diceAmount, setDiceAmount] = useState('1')
   const [diceType, setDiceType] = useState('even')
   const [fx, setFx] = useState<PlayFx>({})
+  const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [params, setParams] = useSearchParams()
   const requestedGame = params.get('tab')
   const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
@@ -136,6 +138,22 @@ export function GamesPage() {
       toast.success(t(reset ? 'games.toast.boxReset' : 'games.toast.boxBought'))
       await refresh()
     }, t(reset ? 'games.toast.resetBoxError' : 'games.toast.buyBoxError'))
+  }
+
+  function requestBuy(id: string, name: string, reset: boolean, locked: boolean) {
+    if (locked) return
+    if (reset) {
+      setResetTarget({ id, name })
+      return
+    }
+    void buyBox(id, false)
+  }
+
+  async function confirmReset() {
+    if (!resetTarget) return
+    const { id } = resetTarget
+    setResetTarget(null)
+    await buyBox(id, true)
   }
 
   async function openBox(id: string) {
@@ -231,9 +249,6 @@ export function GamesPage() {
     boxes.data?.boxes ?? [],
     (row) => row.type_name,
   )
-  const ownedTypeIds = new Set(ownedBoxes.map((row) => row.type_id).filter(Boolean))
-  const ownedTypeNames = new Set(ownedBoxes.map((row) => row.type_name))
-
   return (
     <div className="games-page">
       <Card as="header" className="games-hero">
@@ -390,7 +405,10 @@ export function GamesPage() {
               <h3>{t('games.boxes.shopTitle')}</h3>
               <div className="game-box-grid">
                 {shopBoxes.map((row) => {
-                  const resetting = ownedTypeIds.has(row.id) || ownedTypeNames.has(row.name)
+                  const owned = ownedBoxes.find((box) => box.type_id === row.id || box.type_name === row.name)
+                  const opened = owned != null && (owned.remaining ?? 0) < (owned.total ?? 0)
+                  const resetting = owned != null
+                  const locked = resetting && !opened
                   return (
                     <BoxHuntCard
                       key={row.id}
@@ -400,7 +418,8 @@ export function GamesPage() {
                       featured={row.featured}
                       items={row.items}
                       resetting={resetting}
-                      onAction={() => void buyBox(row.id, resetting)}
+                      locked={locked}
+                      onAction={() => requestBuy(row.id, row.name, resetting, locked)}
                       actionLabel={t(resetting ? 'games.boxes.reset' : 'games.boxes.buy')}
                     />
                   )
@@ -412,6 +431,22 @@ export function GamesPage() {
             <div className="game-empty"><Box aria-hidden="true" /> {t('games.boxes.empty')}</div>
           ) : null}
         </Card>
+        <Modal
+          className="game-box-reset-modal"
+          open={resetTarget != null}
+          title={t('games.boxes.resetConfirmTitle')}
+          onClose={() => setResetTarget(null)}
+        >
+          <p>{t('games.boxes.resetConfirm', { name: resetTarget?.name ?? '' })}</p>
+          <div className="game-box-reset-actions">
+            <Button variant="warning" type="button" onClick={() => void confirmReset()}>
+              {t('games.boxes.resetConfirmAction')}
+            </Button>
+            <Button variant="ghost" type="button" onClick={() => setResetTarget(null)}>
+              {t('games.boxes.resetCancel')}
+            </Button>
+          </div>
+        </Modal>
         <BoxRevealModal
           open={fx.overlay === true}
           name={fx.boxName ?? ''}

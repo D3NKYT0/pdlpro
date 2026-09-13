@@ -164,10 +164,14 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert BoxType.objects.get(name="Baú Raro").boosters_amount == 30
     assert BoxType.objects.get(name="Baú Épico").boosters_amount == 40
     assert legendary.boosters_amount == 50
-    assert common.items.filter(item_id=6658).exists()
-    assert not common.items.filter(item_id=6577).exists()
+    assert common.items.filter(item_id=6569).exists()
+    assert not common.items.filter(item_id=6658).exists()
+    assert BoxType.objects.get(name="Baú Raro").items.filter(item_id=6578).exists()
+    assert BoxType.objects.get(name="Baú Épico").items.filter(item_id=6577).exists()
     assert legendary.items.filter(item_id=6658).exists()
-    assert not legendary.items.filter(item_id=6577).exists()
+    assert not legendary.items.filter(item_id=6569).exists()
+    assert CatalogItem.objects.filter(item_id=736, quantity=20, active=True).exists()
+    assert CatalogItem.objects.filter(item_id=3470, active=True).exists()
     assert CatalogItem.objects.filter(item_id=57, quantity=80_000, active=True).exists()
     luck = DailyBonusPoolEntry.objects.get(name="Moeda da Sorte")
     assert luck.rewards[0]["item_id"] == 4037

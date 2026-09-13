@@ -14,6 +14,7 @@ from apps.games.application.box_catalog import (
 from apps.games.domain.exceptions import (
     BoxEmptyError,
     BoxNotOwnedError,
+    BoxResetBlockedError,
     InsufficientTokensError,
 )
 from apps.games.domain.repositories import IBagRepository, IBoxRepository
@@ -150,7 +151,7 @@ class BuyBoxInput:
 
 class BuyBoxUseCase(UseCase[BuyBoxInput, dict]):
     """Cobra a caixa e gera seus slots de prêmios a partir do catálogo. Substitui caixas anteriores
-    do mesmo tipo pertencentes ao usuário.
+    do mesmo tipo só se pelo menos um pacote já tiver sido aberto.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``BuyBoxInput``. O retorno é
     ``dict``.
@@ -173,6 +174,13 @@ class BuyBoxUseCase(UseCase[BuyBoxInput, dict]):
         _catalog_for(box_type, self._boxes)
         with self._unit_of_work:
             user = self._boxes.require_user(data.user_id)
+            for box in self._boxes.list_user_boxes(data.user_id):
+                if box.box_type.pk != box_type.pk:
+                    continue
+                closed = self._boxes.count_closed_slots(box)
+                total = self._boxes.count_slots(box)
+                if total > 0 and closed == total:
+                    raise BoxResetBlockedError()
             wallet = self._wallets.get_or_create(data.user_id)
             self._wallets.debit(
                 wallet.id,

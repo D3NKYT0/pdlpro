@@ -348,9 +348,29 @@ it('oferece resetar o baú já selado em vez de comprar de novo', async () => {
   expect(reset).toHaveClass('ui-button--warning')
   expect(screen.getByText('Substitui o baú selado deste tipo. O que ainda não abriu se perde.')).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Comprar' })).not.toBeInTheDocument()
+  await user.click(reset)
+  expect(gamesApi.buyBox).not.toHaveBeenCalled()
+  expect(screen.getByRole('dialog', { name: 'Resetar este baú?' })).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Cancelar' }))
+  expect(screen.queryByRole('dialog', { name: 'Resetar este baú?' })).not.toBeInTheDocument()
+  expect(gamesApi.buyBox).not.toHaveBeenCalled()
   await user.click(screen.getByRole('button', { name: 'Resetar' }))
+  await user.click(screen.getByRole('button', { name: 'Resetar baú' }))
   expect(gamesApi.buyBox).toHaveBeenCalledWith('type')
   expect(toast.success).toHaveBeenCalledWith('Baú resetado')
+})
+it('não deixa resetar o baú intacto sem abrir nenhum pacote', async () => {
+  vi.mocked(gamesApi.boxes).mockResolvedValue({
+    types: [{ id: 'type', name: 'Caixa rara', price: '10.00', boosters_amount: 2 }],
+    boxes: [{ id: 'box', type_id: 'type', type_name: 'Caixa rara', remaining: 2, total: 2 }],
+  } as any)
+  const user = mount('boxes')
+  const reset = await screen.findByRole('button', { name: 'Resetar' })
+  expect(reset).toBeDisabled()
+  expect(screen.getByText('Abra pelo menos um pacote antes de resetar.')).toBeVisible()
+  await user.click(reset)
+  expect(gamesApi.buyBox).not.toHaveBeenCalled()
+  expect(screen.queryByRole('dialog', { name: 'Resetar este baú?' })).not.toBeInTheDocument()
 })
 it('lista os baús do comum ao lendário e pinta a coluna pela raridade', async () => {
   vi.mocked(gamesApi.boxes).mockResolvedValue({

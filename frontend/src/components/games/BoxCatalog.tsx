@@ -25,6 +25,7 @@ export function BoxHuntCard({
   opening = false,
   resetting = false,
   huntRemaining,
+  locked = false,
   onAction,
   actionLabel,
 }: {
@@ -39,6 +40,7 @@ export function BoxHuntCard({
   opening?: boolean
   resetting?: boolean
   huntRemaining?: boolean
+  locked?: boolean
   onAction: () => void
   actionLabel: string
 }) {
@@ -86,9 +88,14 @@ export function BoxHuntCard({
       {owned ? null : <b className="game-box-price">{t('games.boxes.price', { price })}</b>}
       <footer className="game-box-actions">
         <small className="game-box-hint">
-          {resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
+          {locked ? t('games.boxes.resetLockedHint') : resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
         </small>
-        <Button variant={owned ? 'success' : resetting ? 'warning' : 'ghost'} type="button" onClick={onAction}>
+        <Button
+          variant={owned ? 'success' : resetting ? 'warning' : 'ghost'}
+          type="button"
+          disabled={locked}
+          onClick={onAction}
+        >
           {actionLabel}
         </Button>
       </footer>

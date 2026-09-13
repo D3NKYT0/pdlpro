@@ -73,21 +73,41 @@ ROULETTE_PRIZES = (
 BOX_ITEMS = (
     (57, 0, 80_000, "common", 28),
     (1835, 0, 3_000, "common", 20),
+    (2509, 0, 1_500, "common", 16),
     (1463, 0, 1_500, "common", 14),
+    (1061, 0, 80, "common", 12),
     (1539, 0, 80, "common", 12),
+    (736, 0, 20, "common", 10),
     (1538, 0, 15, "rare", 10),
+    (3936, 0, 5, "rare", 8),
     (1458, 0, 60, "rare", 8),
+    (2130, 0, 20, "rare", 7),
     (955, 0, 1, "rare", 7),
+    (956, 0, 2, "rare", 6),
     (3470, 0, 1, "rare", 6),
+    (8723, 0, 1, "rare", 5),
     (57, 0, 750_000, "rare", 5),
     (951, 0, 1, "epic", 4),
+    (952, 0, 1, "epic", 4),
     (4037, 0, 10, "epic", 3),
+    (1464, 0, 500, "epic", 3),
     (8748, 0, 1, "epic", 2),
     (947, 0, 1, "epic", 2),
+    (729, 0, 1, "epic", 2),
+    (6569, 0, 1, "legendary", 1),
+    (6578, 0, 1, "legendary", 1),
     (6577, 0, 1, "legendary", 1),
     (6658, 0, 1, "legendary", 1),
     (57, 0, 3_000_000, "legendary", 1),
 )
+
+# Mira lendária de cada baú default — low rate, não o mesmo anel em todos.
+BOX_HUNTS = {
+    "Baú Comum": 6569,
+    "Baú Raro": 6578,
+    "Baú Épico": 6577,
+    "Baú Lendário": 6658,
+}
 
 # Raridades do catálogo em cada baú default; nomes customizados não entram neste mapa.
 BOX_TIER_RARITIES = {
@@ -432,12 +452,15 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 box.save(update_fields=["boosters_amount", "updated_at"])
             allowed = BOX_TIER_RARITIES.get(name)
             fillers = [item for item in catalog if allowed is None or item.rarity in allowed]
+            hunt_id = BOX_HUNTS.get(name)
             hunts = [
                 item
                 for item in catalog
                 if item.rarity in {"legendary", "lendario", "legendario"} and item.item_id != 57
             ]
-            hunt = next((item for item in hunts if item.item_id == 6658), hunts[0] if hunts else None)
+            hunt = next((item for item in hunts if item.item_id == hunt_id), None)
+            if hunt is None:
+                hunt = next((item for item in hunts if item.item_id == 6658), hunts[0] if hunts else None)
             tier = list(fillers)
             if hunt is not None and hunt not in tier:
                 tier.append(hunt)

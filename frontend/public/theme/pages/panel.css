@@ -7646,6 +7646,13 @@ html.pdl-panel .game-box-card .btn {
   justify-self: center;
 }
 
+html.pdl-panel .game-box-reset-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
 html.pdl-panel .game-box-grid > .game-empty {
   grid-column: 1 / -1;
 }
