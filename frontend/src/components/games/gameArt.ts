@@ -44,6 +44,35 @@ export function sortBoxesByRarity<T>(
   })
 }
 
+export type FishArtId = 'lambari' | 'dourado' | 'piraiba' | 'pirarucu'
+
+const FISH_NAME_ART: Array<{ pattern: RegExp; id: FishArtId }> = [
+  { pattern: /pirarucu/i, id: 'pirarucu' },
+  { pattern: /piraiba/i, id: 'piraiba' },
+  { pattern: /dourado/i, id: 'dourado' },
+  { pattern: /lambari/i, id: 'lambari' },
+]
+
+const FISH_RARITY_ART: Record<GameRarity, FishArtId> = {
+  common: 'lambari',
+  rare: 'dourado',
+  epic: 'piraiba',
+  legendary: 'pirarucu',
+}
+
+export function normalizeGameRarity(value?: string | null): GameRarity {
+  const text = (value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  return RARITY_PATTERNS.find(({ pattern }) => pattern.test(text))?.rarity ?? 'common'
+}
+
+/** Escolhe a sprite pelo nome da espécie; espécies novas caem na raridade. */
+export function resolveFishArt(name?: string | null, rarity?: string | null): FishArtId {
+  const text = (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const named = FISH_NAME_ART.find(({ pattern }) => pattern.test(text))
+  if (named) return named.id
+  return FISH_RARITY_ART[normalizeGameRarity(rarity ?? text)]
+}
+
 /** Variação leve entre monstros a partir do id, sem arte extra. */
 export function monsterHue(id: string) {
   let hue = 0

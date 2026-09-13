@@ -78,3 +78,12 @@ it('remapeia arte dos jogos pelo mapa de assets do pacote', () => {
     'chest-open.webp',
   )
 })
+it('publica as sprites da pescaria no tema', () => {
+  applyThemeSurfaceVars()
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-fish-dourado')).toContain(
+    'games/fish-dourado.webp',
+  )
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-fish-pirarucu')).toContain(
+    'games/fish-pirarucu.webp',
+  )
+})

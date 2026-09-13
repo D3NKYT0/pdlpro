@@ -35,6 +35,10 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-games-box-legendary-ajar',
   '--theme-art-games-box-legendary-open',
   '--theme-art-games-fishing',
+  '--theme-art-games-fish-lambari',
+  '--theme-art-games-fish-dourado',
+  '--theme-art-games-fish-piraiba',
+  '--theme-art-games-fish-pirarucu',
   '--theme-art-games-monster',
 ] as const
 
@@ -52,6 +56,10 @@ const GAME_ART = {
   '--theme-art-games-box-legendary-ajar': 'games/box-legendary-ajar.webp',
   '--theme-art-games-box-legendary-open': 'games/box-legendary-open.webp',
   '--theme-art-games-fishing': 'games/fishing-pond.webp',
+  '--theme-art-games-fish-lambari': 'games/fish-lambari.webp',
+  '--theme-art-games-fish-dourado': 'games/fish-dourado.webp',
+  '--theme-art-games-fish-piraiba': 'games/fish-piraiba.webp',
+  '--theme-art-games-fish-pirarucu': 'games/fish-pirarucu.webp',
   '--theme-art-games-monster': 'games/monster-default.webp',
 } as const
 

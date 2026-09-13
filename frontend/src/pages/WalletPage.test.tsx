@@ -149,11 +149,12 @@ it('desabilita novo envio enquanto transferência está pendente', async () => {
 
 it('cria pedido mock sem confirmar saldo automaticamente mesmo com auto_confirm', async () => {
   vi.mocked(paymentApi.catalog).mockResolvedValue({
-    methods: [{ id: 'mock', currencies: ['BRL'], auto_confirm: true }],
+    currency: 'BRL',
+    methods: [{ id: 'mock', public_key: '', currencies: ['BRL'], auto_confirm: true }],
     packages: [],
     allow_custom_amount: true,
     promo: null,
-  } as Awaited<ReturnType<typeof paymentApi.catalog>>)
+  })
   vi.mocked(paymentApi.create).mockResolvedValue({
     id: 'ord-mock',
     amount: '10.00',

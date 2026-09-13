@@ -7,12 +7,6 @@
   gap: 22px;
   min-width: 0;
 }
-html.pdl-panel .fishing-game .fishing-cast-button {
-  justify-self: start;
-  width: auto;
-  min-width: 180px;
-  max-width: 100%;
-}
 html.pdl-panel .program-page h1,
 html.pdl-panel .program-page h2,
 html.pdl-panel .program-page h3 {

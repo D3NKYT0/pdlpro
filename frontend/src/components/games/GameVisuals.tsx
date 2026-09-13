@@ -6,8 +6,11 @@ import {
   DICE_PIP_FACES,
   inferBoxRarity,
   monsterHue,
+  normalizeGameRarity,
   normalizeRouletteRarity,
+  resolveFishArt,
   rouletteReelStrip,
+  type FishArtId,
   type GameRarity,
   type RouletteReelPrize,
   SLOT_SYMBOLS,
@@ -418,15 +421,89 @@ export function MonsterPortrait({ id, down = false, fighting = false }: { id: st
   )
 }
 
+const POND_SCHOOL: Array<{ id: FishArtId; delay: string; duration: string; top: string; scale: number }> = [
+  { id: 'lambari', delay: '0s', duration: '12s', top: '58%', scale: 0.42 },
+  { id: 'dourado', delay: '-3.2s', duration: '15s', top: '70%', scale: 0.56 },
+  { id: 'piraiba', delay: '-6.4s', duration: '18s', top: '64%', scale: 0.72 },
+  { id: 'pirarucu', delay: '-9s', duration: '16s', top: '76%', scale: 0.64 },
+]
+
+export type FishingPondState = 'idle' | 'casting' | 'bite' | 'caught' | 'escaped'
+
+export function FishPortrait({
+  name,
+  rarity,
+  discovered = true,
+  size = 'card',
+}: {
+  name?: string | null
+  rarity?: string | null
+  discovered?: boolean
+  size?: 'card' | 'hero' | 'chip'
+}) {
+  const art = resolveFishArt(name, rarity)
+  return (
+    <span
+      className={`fishing-fish is-${size}${discovered ? '' : ' is-locked'}`}
+      data-fish={art}
+      data-rarity={normalizeGameRarity(rarity)}
+      aria-hidden="true"
+    >
+      <i className="fishing-fish-art" />
+    </span>
+  )
+}
+
 export function FishingPond({
   state = 'idle',
+  fishName,
+  fishRarity,
 }: {
-  state?: 'idle' | 'casting' | 'caught' | 'escaped'
+  state?: FishingPondState
+  fishName?: string | null
+  fishRarity?: string | null
 }) {
+  const featured = fishName ? resolveFishArt(fishName, fishRarity) : null
   return (
     <div className={`fishing-pond is-${state}`} data-theme-part="game-stage" aria-hidden="true">
       <i className="fishing-pond-art" />
+      <i className="fishing-pond-mist" />
+      <div className="fishing-school">
+        {POND_SCHOOL.map((fish) => (
+          <span
+            className="fishing-swimmer"
+            data-fish={fish.id}
+            key={fish.id}
+            style={
+              {
+                '--swim-delay': fish.delay,
+                '--swim-duration': fish.duration,
+                '--swim-top': fish.top,
+                '--swim-scale': fish.scale,
+              } as CSSProperties
+            }
+          >
+            <i className="fishing-swimmer-wake" />
+            <i className="fishing-swimmer-wake is-late" />
+            <i className="fishing-swimmer-body" />
+          </span>
+        ))}
+      </div>
+      <i className="fishing-line" />
+      <i className="fishing-bobber" />
       <i className="fishing-pond-ripple" />
+      <i className="fishing-pond-ripple is-late" />
+      <i className="fishing-splash" />
+      {featured ? (
+        <span
+          className="fishing-catch"
+          data-fish={featured}
+          data-rarity={normalizeGameRarity(fishRarity)}
+        >
+          <i className="fishing-catch-glow" />
+          <i className="fishing-catch-art" />
+        </span>
+      ) : null}
     </div>
   )
 }

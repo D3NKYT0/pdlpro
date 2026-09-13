@@ -4,7 +4,9 @@ import {
   inferBoxRarity,
   sortBoxesByRarity,
   monsterHue,
+  normalizeGameRarity,
   normalizeRouletteRarity,
+  resolveFishArt,
   rouletteReelStrip,
   visibleSlotReels,
 } from './gameArt'
@@ -40,6 +42,15 @@ describe('inferBoxRarity', () => {
       ).map((row) => row.name),
     ).toEqual(['Baú Comum', 'Baú Raro', 'Baú Épico', 'Baú Lendário'])
   })
+})
+
+it('escolhe a sprite do peixe pelo nome da espécie ou pela raridade', () => {
+  expect(resolveFishArt('Lambari', 'common')).toBe('lambari')
+  expect(resolveFishArt('Piraíba do rio', 'epic')).toBe('piraiba')
+  expect(resolveFishArt('Pirarucu Ancestral', 'legendary')).toBe('pirarucu')
+  expect(resolveFishArt('Truta', 'rare')).toBe('dourado')
+  expect(resolveFishArt('Carpa', 'épico')).toBe('piraiba')
+  expect(normalizeGameRarity('lendario')).toBe('legendary')
 })
 
 it('varia o tom do monstro a partir do id', () => {

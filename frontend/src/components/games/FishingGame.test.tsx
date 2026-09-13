@@ -15,10 +15,26 @@ vi.mock('../../services/domain/games.service', () => ({
     buyBait: vi.fn(),
   },
 }))
+vi.mock('./fishingReveal', () => ({
+  FISHING_CAST_MS: 0,
+  FISHING_BITE_MS: 0,
+  FISHING_REVEAL_MS: 0,
+  FISHING_TOTAL_MS: 0,
+  waitForFishingCast: () => Promise.resolve(),
+  waitForFishingBite: () => Promise.resolve(),
+  waitForFishingReveal: () => Promise.resolve(),
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
 let client: QueryClient
-const state = { active: true, cost: 2, fichas: 20, rod: { level: 3, xp: 40 }, fish: [], recent: [] }
+const state = {
+  active: true,
+  cost: 2,
+  fichas: 20,
+  rod: { level: 3, xp: 40 },
+  fish: [],
+  recent: [{ success: true, fish: 'Dourado', created_at: '2026-09-13T16:05:51.000Z' }],
+}
 const details = {
   baits: [
     { id: 'bait', name: 'Minhoca', description: 'Isca especial', quantity: 1, price: 3, success_bonus: 10 },
@@ -65,24 +81,30 @@ it('exibe coleção e lista somente iscas em estoque para lançar', async () => 
   expect(screen.getAllByRole('option')).toHaveLength(2)
   expect(screen.getByText('Nível 3')).toBeVisible()
   expect(document.querySelector('.fishing-pond.is-idle')).toBeTruthy()
+  expect(document.querySelector('.fishing-school .fishing-swimmer[data-fish="lambari"]')).toBeTruthy()
+  expect(document.querySelector('.fishing-collection-card .fishing-fish[data-fish="dourado"]')).toBeTruthy()
+  expect(document.querySelector('.fishing-collection-card .fishing-fish.is-locked[data-fish="piraiba"]')).toBeTruthy()
+  expect(document.querySelector('time[datetime="2026-09-13T16:05:51.000Z"]')).toBeTruthy()
+  expect(screen.queryByText(/16:05:51\.000Z/)).toBeNull()
 })
 
 it.each([true, false])('lança com a última isca e apresenta captura=%s', async (success) => {
   vi.mocked(gamesApi.cast).mockResolvedValue({
     success,
-    fish: success ? { name: 'Truta', rarity: 'rare' } : null,
+    fish: { name: 'Truta', rarity: 'rare' },
     rod: state.rod,
     fichas: 18,
   })
   const user = mount()
   await screen.findByText('Nível 3')
-  await user.selectOptions(screen.getByLabelText('Isca'), 'bait')
+  await user.selectOptions(screen.getByLabelText(/Isca/), 'bait')
   await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
   expect(gamesApi.cast).toHaveBeenCalledWith('bait')
   expect(
     await screen.findByText(success ? 'Você pescou Truta!' : 'O peixe escapou. Tente novamente.'),
   ).toBeVisible()
   expect(document.querySelector(success ? '.fishing-pond.is-caught' : '.fishing-pond.is-escaped')).toBeTruthy()
+  expect(document.querySelector('.fishing-catch[data-fish="dourado"]')).toBeTruthy()
 })
 
 it('compra isca e atualiza o estoque', async () => {
@@ -100,6 +122,15 @@ it('mostra vazio quando não há iscas', async () => {
   vi.mocked(gamesApi.fishingDetails).mockResolvedValue({ baits: [], collection: [] })
   mount()
   expect(await screen.findByText(/Nenhuma isca à venda/i)).toBeVisible()
+})
+
+it('volta o lago ao repouso quando o lançamento falha', async () => {
+  vi.mocked(gamesApi.cast).mockRejectedValue(new ApiError('Linha rompida', 400, 'CAST_FAILED'))
+  const user = mount()
+  await screen.findByText('Nível 3')
+  await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
+  expect(await screen.findByText('Linha rompida')).toBeVisible()
+  expect(document.querySelector('.fishing-pond.is-idle')).toBeTruthy()
 })
 
 it('mostra erro quando o estoque falha', async () => {
