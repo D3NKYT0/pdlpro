@@ -971,6 +971,21 @@
     "balance": "Saldo disponível",
     "tokens_one": "{{count}} ficha",
     "tokens_other": "{{count}} fichas",
+    "tokensBuy": {
+      "title": "Comprar fichas",
+      "lead": "Você não tem fichas suficientes para esta jogada. 1 ficha = R$ 1.",
+      "have_one": "Você tem {{count}} ficha.",
+      "have_other": "Você tem {{count}} fichas.",
+      "vault": "Seu cofre",
+      "packs": "Escolha um pacote",
+      "pack_one": "{{count}} ficha",
+      "pack_other": "{{count}} fichas",
+      "youGet_one": "Você leva {{count}} ficha",
+      "youGet_other": "Você leva {{count}} fichas",
+      "amount": "Outra quantidade",
+      "confirm": "Comprar · {{price}}",
+      "cancel": "Agora não"
+    },
     "tabsLabel": "Escolha uma diversão",
     "tabs": {
       "roulette": "Roda da Fortuna",

@@ -7653,6 +7653,273 @@ html.pdl-panel .game-box-reset-actions {
   gap: 10px;
 }
 
+html.pdl-panel .ui-modal.game-tokens-buy-modal {
+  --token-flare: color-mix(in srgb, var(--panel-gold-bright) 70%, var(--panel-gold));
+  isolation: isolate;
+  width: min(100%, 760px);
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #100e0b) 88%, #000), #0a0907);
+  box-shadow:
+    0 28px 64px rgba(0, 0, 0, 0.62),
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
+}
+
+html.pdl-panel .ui-modal.game-tokens-buy-modal .ui-modal-header {
+  position: relative;
+  z-index: 1;
+  padding: 12px 16px;
+  border-bottom-color: color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  background: transparent;
+}
+
+html.pdl-panel .ui-modal.game-tokens-buy-modal .ui-modal-header h2 {
+  color: var(--panel-gold-bright);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+html.pdl-panel .ui-modal.game-tokens-buy-modal .ui-modal-body {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 18px 18px;
+}
+
+html.pdl-panel .game-tokens-buy-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 16px 22px;
+  align-items: stretch;
+}
+
+html.pdl-panel .game-tokens-buy-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html.pdl-panel .game-tokens-buy-wash {
+  position: absolute;
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: 42%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 40% 28%, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), transparent 46%),
+    radial-gradient(circle at 30% 80%, color-mix(in srgb, var(--panel-box-epic) 12%, transparent), transparent 50%);
+  animation: game-tokens-buy-wash 6s ease-in-out infinite alternate;
+}
+
+html.pdl-panel .game-tokens-buy-spark {
+  position: absolute;
+  left: 10%;
+  top: 18%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--token-flare) 80%, transparent);
+  animation: game-tokens-buy-spark 2.8s ease-in-out infinite;
+}
+
+html.pdl-panel .game-tokens-buy-spark.is-late {
+  left: 28%;
+  top: 72%;
+  animation-delay: -1.2s;
+}
+
+html.pdl-panel .game-tokens-buy-hero {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 4px;
+  text-align: center;
+  border-right: 1px solid color-mix(in srgb, var(--panel-box-epic) 28%, transparent);
+  background: color-mix(in srgb, var(--theme-bg-deep, #100e0b) 70%, #000);
+}
+
+html.pdl-panel .game-tokens-buy-hero p {
+  margin: 0;
+  color: var(--panel-text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+html.pdl-panel .game-tokens-buy-medallion {
+  position: relative;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .game-tokens-buy-medallion i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 8px color-mix(in srgb, var(--panel-gold) 8%, transparent);
+}
+
+html.pdl-panel .game-tokens-buy-medallion i:last-of-type {
+  inset: 10px;
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--panel-gold-bright) 36%, transparent),
+    inset 0 0 16px color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  animation: game-tokens-buy-pulse 2.4s ease-in-out infinite;
+}
+
+html.pdl-panel .game-tokens-buy-medallion svg {
+  position: relative;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--panel-gold-bright) 55%, transparent));
+}
+
+html.pdl-panel .game-tokens-buy-vault {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
+  background: color-mix(in srgb, #000 55%, var(--theme-bg-deep, #100e0b));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold) 14%, transparent);
+}
+
+html.pdl-panel .game-tokens-buy-vault svg {
+  width: 18px;
+  height: 18px;
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .game-tokens-buy-vault span {
+  display: grid;
+  gap: 1px;
+  text-align: left;
+}
+
+html.pdl-panel .game-tokens-buy-vault small {
+  color: var(--panel-muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .game-tokens-buy-vault strong {
+  color: var(--panel-gold-bright);
+  font-family: Cambria, Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+html.pdl-panel .game-tokens-buy-form {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+html.pdl-panel .game-tokens-buy-packs-label {
+  margin: 0;
+  color: var(--panel-gold-bright);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .game-tokens-buy-packs {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+html.pdl-panel .game-tokens-buy-amount {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+html.pdl-panel .game-tokens-buy-amount input {
+  width: 104px;
+  min-height: 38px;
+}
+
+html.pdl-panel .game-tokens-buy-checkout {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
+  background: color-mix(in srgb, #000 42%, var(--theme-bg-deep, #100e0b));
+}
+
+html.pdl-panel .game-tokens-buy-total {
+  display: grid;
+  gap: 2px;
+}
+
+html.pdl-panel .game-tokens-buy-total span {
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+html.pdl-panel .game-tokens-buy-total strong {
+  color: var(--panel-gold-bright);
+  font-family: Cambria, Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  html.pdl-panel .game-tokens-buy-modal {
+    width: min(100%, 640px);
+  }
+
+  html.pdl-panel .game-tokens-buy-stage {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 10px 14px;
+  }
+
+  html.pdl-panel .game-tokens-buy-hero {
+    padding: 4px 8px 4px 0;
+  }
+
+  html.pdl-panel .game-tokens-buy-packs {
+    flex-wrap: wrap;
+  }
+}
+
+@keyframes game-tokens-buy-wash {
+  from { transform: translate(-3%, -2%) scale(1); opacity: 0.8; }
+  to { transform: translate(4%, 3%) scale(1.06); opacity: 1; }
+}
+
+@keyframes game-tokens-buy-spark {
+  0%, 100% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes game-tokens-buy-pulse {
+  0%, 100% { box-shadow: 0 0 18px color-mix(in srgb, var(--panel-gold-bright) 24%, transparent), inset 0 0 14px color-mix(in srgb, var(--panel-gold) 18%, transparent); }
+  50% { box-shadow: 0 0 34px color-mix(in srgb, var(--panel-gold-bright) 48%, transparent), inset 0 0 22px color-mix(in srgb, var(--panel-gold) 28%, transparent); }
+}
+
 html.pdl-panel .game-box-grid > .game-empty {
   grid-column: 1 / -1;
 }
@@ -8691,6 +8958,9 @@ html.pdl-panel .monster-item.is-fighting {
   html.pdl-panel .game-box-hunt-ribbon,
   html.pdl-panel .game-box-hunt-orb,
   html.pdl-panel .game-box-hunt-particle,
+  html.pdl-panel .game-tokens-buy-wash,
+  html.pdl-panel .game-tokens-buy-spark,
+  html.pdl-panel .game-tokens-buy-medallion i,
   html.pdl-panel .chance-dice.is-rolling .chance-die,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,
   html.pdl-panel .fishing-pond.is-casting .fishing-pond-ripple,

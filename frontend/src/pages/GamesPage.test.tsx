@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -343,6 +343,39 @@ it('celebra o item em mira quando o pacote é o da caçada', async () => {
   expect(document.querySelectorAll('.game-box-hunt-particle').length).toBeGreaterThan(12)
   expect(document.querySelectorAll('.game-box-hunt-orb').length).toBeGreaterThan(3)
   expect(toast.success).not.toHaveBeenCalled()
+})
+it('abre o modal de compra quando não há fichas para abrir o baú', async () => {
+  vi.mocked(gamesApi.roulette).mockResolvedValue({
+    fichas: 0,
+    cost: 1,
+    fail_chance: 20,
+    prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
+  } as any)
+  vi.mocked(gamesApi.buyTokens).mockResolvedValue({ fichas: 5 } as any)
+  const user = mount('boxes')
+  await screen.findByText('0 ficha')
+  await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
+  expect(gamesApi.openBox).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+  const dialog = await screen.findByRole('dialog', { name: 'Comprar fichas' })
+  expect(dialog).toHaveTextContent('Você não tem fichas suficientes para esta jogada')
+  expect(dialog.querySelector('.game-tokens-buy-stage')).toBeTruthy()
+  expect(dialog.querySelector('.game-tokens-buy-medallion')).toBeTruthy()
+  expect(within(dialog).getByRole('button', { name: '5 fichas' })).toHaveAttribute('aria-pressed', 'true')
+  await user.click(within(dialog).getByRole('button', { name: '25 fichas' }))
+  await user.click(within(dialog).getByRole('button', { name: /Comprar/ }))
+  expect(gamesApi.buyTokens).toHaveBeenCalledWith(25)
+  expect(toast.success).toHaveBeenCalledWith('Fichas creditadas')
+  await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Comprar fichas' })).not.toBeInTheDocument())
+})
+it('abre o modal de fichas quando a API recusa INSUFFICIENT_TOKENS', async () => {
+  vi.mocked(gamesApi.openBox).mockRejectedValue(new ApiError('Fichas insuficientes', 400, 'INSUFFICIENT_TOKENS'))
+  const user = mount('boxes')
+  await screen.findByText('10 fichas')
+  await user.click(await screen.findByRole('button', { name: 'Abrir · 1 ficha' }))
+  expect(gamesApi.openBox).toHaveBeenCalledWith('box')
+  expect(await screen.findByRole('dialog', { name: 'Comprar fichas' })).toBeVisible()
+  expect(toast.error).not.toHaveBeenCalled()
 })
 it('oferece resetar o baú já selado em vez de comprar de novo', async () => {
   vi.mocked(gamesApi.boxes).mockResolvedValue({

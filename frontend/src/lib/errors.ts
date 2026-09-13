@@ -4,3 +4,7 @@ import { isApiError } from '../services/api'
 export function apiErrorMessage(error: unknown, fallback: string) {
   return isApiError(error) ? error.message : fallback
 }
+
+export function isInsufficientTokens(error: unknown) {
+  return isApiError(error) && error.errorCode === 'INSUFFICIENT_TOKENS'
+}

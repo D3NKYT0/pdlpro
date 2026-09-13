@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import '../i18n'
 import { formatCompactQuantity, formatCurrency, formatDateTime, formatQuantityLabel, formatTime } from './formatters'
-import { apiErrorMessage } from './errors'
+import { apiErrorMessage, isInsufficientTokens } from './errors'
 import { ApiError } from '../services/api'
 
 it.each([['12.34', '12,34'], [null, '0,00'], ['invalid', '0,00'], [-2, '-R$']])('formata valor %s para exibição', (input, expected) => {
@@ -23,6 +23,8 @@ it('hora segue o locale ativo e trata entrada ausente', () => {
 it('erro técnico usa fallback; API preserva mensagem pública', () => {
   expect(apiErrorMessage(new Error('SQL secret'), 'Falha ao salvar')).toBe('Falha ao salvar')
   expect(apiErrorMessage(new ApiError('Saldo insuficiente', 400, 'INVALID'), 'Falha')).toBe('Saldo insuficiente')
+  expect(isInsufficientTokens(new ApiError('Fichas insuficientes', 400, 'INSUFFICIENT_TOKENS'))).toBe(true)
+  expect(isInsufficientTokens(new ApiError('Saldo insuficiente', 400, 'INSUFFICIENT_BALANCE'))).toBe(false)
 })
 it.each([
   [0, '0'],

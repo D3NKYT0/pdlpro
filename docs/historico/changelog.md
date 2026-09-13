@@ -88,6 +88,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - `start-dev.bat` ficou seletivo: pip só em venv novo ou `requirements.txt`
   diferente, `npm install` só se o lock mudou, e não abre outra janela se
   API (`8000`) ou Vite (`3000`) já respondem. `PDL_FORCE_PIP=1` força o sync.
+- Sem fichas nos jogos (`/panel/games`), a recusa abre um modal de vitrine
+  (pacotes, total em reais e medalhão dourado) para comprar com o saldo da
+  carteira, em vez de só o toast de saldo insuficiente.
 
 ### Corrigido
 

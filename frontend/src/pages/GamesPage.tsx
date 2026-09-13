@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { gamesApi } from '../services/api'
+import { isInsufficientTokens } from '../lib/errors'
 import { formatCompactQuantity } from '../lib/formatters'
 import { ItemIcon } from '../components/ItemIcon'
 import { FishingGame } from '../components/games/FishingGame'
@@ -32,6 +33,7 @@ import { ChanceStage, MonsterPortrait, RouletteWheel } from '../components/games
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
+import { BuyTokensModal } from '../components/games/BuyTokensModal'
 
 type PlayFx = {
   playing?: 'spin' | 'open' | 'dice' | 'slots' | 'fight'
@@ -73,6 +75,7 @@ export function GamesPage() {
   const [diceType, setDiceType] = useState('even')
   const [fx, setFx] = useState<PlayFx>({})
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
+  const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [params, setParams] = useSearchParams()
   const requestedGame = params.get('tab')
   const activeGame = gameTabs.find((tab) => tab.id === requestedGame)?.id ?? 'roulette'
@@ -96,14 +99,29 @@ export function GamesPage() {
     await queryClient.invalidateQueries({ queryKey: ['inventory'] })
   }
 
+  const knownTokens = roulette.data?.fichas ?? minigames.data?.fichas
+  const tokens = knownTokens ?? 0
+  const quietTokens = { quiet: isInsufficientTokens }
+
+  function needTokens(cost = 1) {
+    if (knownTokens == null || knownTokens >= cost) return false
+    setBuyTokensOpen(true)
+    return true
+  }
+
+  function noteTokenFailure(error: unknown) {
+    if (isInsufficientTokens(error)) setBuyTokensOpen(true)
+  }
+
   async function spin() {
+    if (needTokens(roulette.data?.cost ?? 1)) return
     setFx({ playing: 'spin' })
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
       const result = await gamesApi.spin()
       await waitForRouletteReveal(startedAt)
       return result
-    }, t('games.toast.spinError'))
+    }, t('games.toast.spinError'), quietTokens)
     if (outcome.ok) {
       setFx({
         spinFailed: outcome.value.failed,
@@ -112,7 +130,10 @@ export function GamesPage() {
         prizeItemId: outcome.value.prize?.item_id,
       })
       await refresh()
-    } else setFx({})
+    } else {
+      noteTokenFailure(outcome.error)
+      setFx({})
+    }
   }
 
   async function buy(event: FormEvent) {
@@ -120,6 +141,7 @@ export function GamesPage() {
     await action.run(async () => {
       await gamesApi.buyTokens(Number(amount))
       toast.success(t('games.toast.tokensCredited'))
+      setBuyTokensOpen(false)
       await refresh()
     }, t('games.toast.buyTokensError'))
   }
@@ -157,6 +179,7 @@ export function GamesPage() {
   }
 
   async function openBox(id: string) {
+    if (needTokens(1)) return
     const boxName = ownedBoxes.find((row) => row.id === id)?.type_name
     setFx({ playing: 'open', targetId: id, boxName })
     const outcome = await action.run(async () => {
@@ -178,12 +201,16 @@ export function GamesPage() {
       })
       await refresh()
       return result
-    }, t('games.toast.openBoxError'))
-    if (!outcome.ok) setFx({})
+    }, t('games.toast.openBoxError'), quietTokens)
+    if (!outcome.ok) {
+      noteTokenFailure(outcome.error)
+      setFx({})
+    }
   }
 
   async function playDice(event: FormEvent) {
     event.preventDefault()
+    if (needTokens(Number(diceAmount) || 1)) return
     setFx((current) => ({ playing: 'dice', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.dice({ bet_type: diceType, amount: Number(diceAmount) })
@@ -191,12 +218,16 @@ export function GamesPage() {
       toast[result.won ? 'success' : 'error'](t('games.toast.diceResult', { roll: result.roll, outcome: summary }))
       await refresh()
       return result
-    }, t('games.toast.diceError'))
+    }, t('games.toast.diceError'), quietTokens)
     if (outcome.ok) setFx((current) => ({ diceRoll: outcome.value.roll, slotsReels: current.slotsReels }))
-    else setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    else {
+      noteTokenFailure(outcome.error)
+      setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    }
   }
 
   async function playSlots() {
+    if (needTokens(minigames.data?.slots.cost ?? 1)) return
     setFx((current) => ({ playing: 'slots', diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
     const outcome = await action.run(async () => {
       const result = await gamesApi.slots()
@@ -207,12 +238,16 @@ export function GamesPage() {
       }))
       await refresh()
       return result
-    }, t('games.toast.slotsError'))
+    }, t('games.toast.slotsError'), quietTokens)
     if (outcome.ok) setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: outcome.value.reels }))
-    else setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    else {
+      noteTokenFailure(outcome.error)
+      setFx((current) => ({ diceRoll: current.diceRoll, slotsReels: current.slotsReels }))
+    }
   }
 
   async function fight(monsterId: string) {
+    if (needTokens(1)) return
     setFx({ playing: 'fight', targetId: monsterId })
     const outcome = await action.run(async () => {
       const result = await gamesApi.fight(monsterId)
@@ -221,7 +256,8 @@ export function GamesPage() {
       )
       await refresh()
       return result
-    }, t('games.toast.fightError'))
+    }, t('games.toast.fightError'), quietTokens)
+    if (!outcome.ok) noteTokenFailure(outcome.error)
     setFx(outcome.ok ? { targetId: monsterId } : {})
   }
 
@@ -243,7 +279,6 @@ export function GamesPage() {
     return () => window.clearTimeout(timer)
   }, [fx.playing])
 
-  const tokens = roulette.data?.fichas ?? minigames.data?.fichas ?? 0
   const shopBoxes = sortBoxesByRarity(boxes.data?.types ?? [], (row) => row.name, (row) => row.price)
   const ownedBoxes = sortBoxesByRarity(
     boxes.data?.boxes ?? [],
@@ -447,6 +482,15 @@ export function GamesPage() {
             </Button>
           </div>
         </Modal>
+        <BuyTokensModal
+          open={buyTokensOpen}
+          tokens={tokens}
+          amount={amount}
+          pending={action.pending}
+          onAmountChange={setAmount}
+          onClose={() => setBuyTokensOpen(false)}
+          onConfirm={buy}
+        />
         <BoxRevealModal
           open={fx.overlay === true}
           name={fx.boxName ?? ''}

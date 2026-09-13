@@ -971,6 +971,21 @@
     "balance": "Available balance",
     "tokens_one": "{{count}} token",
     "tokens_other": "{{count}} tokens",
+    "tokensBuy": {
+      "title": "Buy tokens",
+      "lead": "You do not have enough tokens for this play. 1 token = R$ 1.",
+      "have_one": "You have {{count}} token.",
+      "have_other": "You have {{count}} tokens.",
+      "vault": "Your vault",
+      "packs": "Choose a pack",
+      "pack_one": "{{count}} token",
+      "pack_other": "{{count}} tokens",
+      "youGet_one": "You get {{count}} token",
+      "youGet_other": "You get {{count}} tokens",
+      "amount": "Another amount",
+      "confirm": "Buy · {{price}}",
+      "cancel": "Not now"
+    },
     "tabsLabel": "Choose a pastime",
     "tabs": {
       "roulette": "Wheel of Fortune",
