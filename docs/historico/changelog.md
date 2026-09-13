@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.4.0] - 2026-09-13
+
+Alterações desde **10 de setembro de 2026** (após `[2.3.0]`), consolidadas pelo histórico
+Git até **13 de setembro de 2026**.
+
 ### Alterado
 
 - Na central de jogos, o saldo de fichas do hero atualiza na hora em

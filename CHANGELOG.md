@@ -2,15 +2,13 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **13 de setembro de 2026** — Em progresso: confirmação
-de simulação só no admin (aviso vermelho); ficha L2
-(paperdoll, bag/baú, crest/extras, skills com ícones); marketplace com paperdoll,
-bag/warehouse e skills da ficha; leilão de personagem com o mesmo snapshot; LGPD self-service;
-arte e animações dos minigames em `/panel/games` (pesca com sprites, fisgada e
-troca das iscas em molduras SVG, com nomes traduzidos; Arena das Feras em duas
-colunas com palco de combate, dez oponentes com retrato próprio, trilha e sprites de encante +0 a +10 e modal de vitória/derrota do encante; item do baú centralizado no reveal);
-autoconfig e configurador dos jogos no admin com catálogo Interlude; pacote
-instalável de ícones de skills. Publicado: **[2.3.0]** — pacote legal/LGPD (textos reais, cookies,
-histórico, reaceitação); atalhos **API**/**Painel** no Jazzmin e card API no hub
-admin; extensões de cliente; i18n pt/en/es ampliado (SPA + gettext); sync de
-idioma SPA↔API; proxy Nginx `/i18n/`; tema **PDL Classic**.
+Última atualização: **13 de setembro de 2026** — Publicado: **[2.4.0]** —
+minigames em `/panel/games` (Arena das Feras com dez oponentes e
+encante +0 a +10, pescaria com iscas/espécies e i18n, roleta, baús e
+taverna animados; saldo de fichas ao vivo); ficha L2 (paperdoll, bag/baú,
+skills); marketplace e leilão de personagem com o mesmo snapshot;
+confirmação mock só no admin; LGPD self-service. Anterior: **[2.3.0]** —
+pacote legal/LGPD (textos reais, cookies, histórico, reaceitação);
+atalhos **API**/**Painel** no Jazzmin e card API no hub admin; extensões
+de cliente; i18n pt/en/es ampliado (SPA + gettext); sync de idioma
+SPA↔API; proxy Nginx `/i18n/`; tema **PDL Classic**.
