@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **13 de setembro de 2026** — Publicado: **[2.4.0]** —
+Última atualização: **13 de setembro de 2026** — Não publicado: instaladores
+Linux/Windows das tags (`install.sh` / `install.ps1`), imagens GHCR e ZIP
+`pdl-pro-X.Y.Z.zip` via workflow de Release. Publicado: **[2.4.0]** —
 minigames em `/panel/games` (Arena das Feras com dez oponentes e
 encante +0 a +10, pescaria com iscas/espécies e i18n, roleta, baús e
 taverna animados; saldo de fichas ao vivo); ficha L2 (paperdoll, bag/baú,

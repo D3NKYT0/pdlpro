@@ -2,7 +2,9 @@
 
 [← Índice da documentação](../README.md)
 
-Este roteiro prepara um ambiente local. Para produção, siga [Implantação](../operacao/implantacao.md).
+Este roteiro prepara um ambiente local a partir do clone. Para instalar uma
+versão publicada com imagens prontas, use [Distribuição](../operacao/distribuicao.md).
+Para produção a partir do Git, siga [Implantação](../operacao/implantacao.md).
 
 ### Pré-requisitos
 

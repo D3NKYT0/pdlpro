@@ -11,6 +11,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Conhecer e experimentar | [Produto](produto/visao-geral.md) → [Docker](primeiros-passos/docker.md) → [Preview](desenvolvimento/preview.md) |
 | Contribuir com código | [Ambiente](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Apps](arquitetura/apps.md) → [Testes](desenvolvimento/testes.md) |
 | Trabalhar no frontend | [Frontend](desenvolvimento/frontend.md) → [Temas](funcionalidades/temas.md) → [Componentes](desenvolvimento/componentes.md) → [Testes](desenvolvimento/testes.md) |
+| Instalar uma versão publicada | [Distribuição](operacao/distribuicao.md) → [Implantação](operacao/implantacao.md) → [Backup](operacao/backup-e-restauracao.md) |
 | Administrar um servidor | [Configuração](configuracao/ambiente.md) → [Lineage](integracoes/lineage.md) → [Implantação](operacao/implantacao.md) → [Backup](operacao/backup-e-restauracao.md) |
 
 ## Índice completo
@@ -83,6 +84,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 
 | Documento | O que explica |
 | --- | --- |
+| [Distribuição](operacao/distribuicao.md) | Instaladores Linux/Windows, imagens GHCR e GitHub Release |
 | [Implantação](operacao/implantacao.md) | Topologias, produção, proxy, atualização e rollback |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
 | [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |

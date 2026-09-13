@@ -230,6 +230,29 @@ def test_configure_production_rejects_remote_without_model_when_still_on_ollama(
     assert _read(env_file, "DENKYNHO_LLM_MODEL") == "qwen3.5:4b"
 
 
+def test_configure_production_skip_docker_can_replace_weak_password(tmp_path: Path):
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "DEBUG=false\n"
+        "SECRET_KEY=change-me-to-a-long-random-string-at-least-50-chars\n"
+        "DJANGO_SETTINGS_MODULE=core.settings.development\n"
+        "DOMAIN=painel.example.com\n"
+        "DB_NAME=pdl\n"
+        "DB_USER=pdl\n"
+        "DB_PASSWORD=pdl\n",
+        encoding="utf-8",
+    )
+
+    result = _run_configure(env_file, tmp_path / "backups", "-y", "--domain", "painel.example.com")
+
+    output = result.stdout + result.stderr
+    assert result.returncode == 0, output
+    assert _read(env_file, "DB_PASSWORD") != "pdl"
+    assert len(_read(env_file, "DB_PASSWORD")) >= 16
+    assert _read(env_file, "SECRET_KEY") != "change-me-to-a-long-random-string-at-least-50-chars"
+    assert "PDL_SKIP_DOCKER=1" in output
+
+
 def test_configure_production_writes_a_config_backup(tmp_path: Path):
     env_file = tmp_path / ".env"
     env_file.write_text(_production_stub(), encoding="utf-8")

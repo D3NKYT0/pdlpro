@@ -1,0 +1,173 @@
+name: Release publicada
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versão X.Y.Z (vazio usa version.json)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    uses: ./.github/workflows/tests.yml
+    permissions:
+      contents: read
+
+  publish:
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      tag: ${{ steps.meta.outputs.tag }}
+    env:
+      REGISTRY: ghcr.io
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - id: meta
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          declared = json.loads(Path("version.json").read_text(encoding="utf-8"))["version"]
+          event = os.environ.get("GITHUB_EVENT_NAME", "")
+          if event == "push":
+              raw = os.environ.get("GITHUB_REF_NAME", declared)
+          else:
+              raw = os.environ.get("INPUT_VERSION") or declared
+          if re.match(r"^v\d", raw):
+              raw = raw[1:]
+          if raw != declared:
+              print(
+                  f"::error::a versão {raw} diverge de version.json ({declared})",
+                  file=sys.stderr,
+              )
+              sys.exit(1)
+          repo = os.environ["GITHUB_REPOSITORY"].lower()
+          print(f"version={declared}")
+          print(f"tag=v{declared}")
+          print(f"registry=ghcr.io/{repo}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"version={declared}\n")
+              handle.write(f"tag=v{declared}\n")
+              handle.write(f"registry=ghcr.io/{repo}\n")
+              handle.write(f"backend=ghcr.io/{repo}/backend\n")
+              handle.write(f"web=ghcr.io/{repo}/web\n")
+          PY
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publicar imagem do backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.backend }}:${{ steps.meta.outputs.version }}
+            ${{ steps.meta.outputs.backend }}:latest
+          labels: |
+            org.opencontainers.image.title=PDL PRO backend
+            org.opencontainers.image.version=${{ steps.meta.outputs.version }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=pdl-backend
+          cache-to: type=gha,mode=max,scope=pdl-backend
+
+      - name: Publicar imagem do frontend/Nginx
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile.production
+          push: true
+          build-args: |
+            VITE_SENTRY_RELEASE=${{ steps.meta.outputs.version }}
+          tags: |
+            ${{ steps.meta.outputs.web }}:${{ steps.meta.outputs.version }}
+            ${{ steps.meta.outputs.web }}:latest
+          labels: |
+            org.opencontainers.image.title=PDL PRO web
+            org.opencontainers.image.version=${{ steps.meta.outputs.version }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=pdl-web
+          cache-to: type=gha,mode=max,scope=pdl-web
+
+      - name: Empacotar o ZIP da release
+        run: python scripts/pdl_release.py pack --output-dir dist --version "${{ steps.meta.outputs.version }}"
+
+      - name: Copiar instaladores
+        run: |
+          cp packaging/install.sh dist/install.sh
+          cp packaging/install.ps1 dist/install.ps1
+          chmod +x dist/install.sh packaging/install.sh
+
+      - name: Publicar GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          notes="$(mktemp)"
+          cat > "$notes" <<EOF
+          PDL PRO ${{ steps.meta.outputs.version }}
+
+          Instale com Docker (Linux ou Windows + Docker Desktop):
+
+          \`\`\`bash
+          curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ steps.meta.outputs.tag }}/install.sh -o install.sh
+          bash install.sh --domain painel.exemplo.com --yes
+          \`\`\`
+
+          \`\`\`powershell
+          Invoke-WebRequest -UseBasicParsing -Uri https://github.com/${{ github.repository }}/releases/download/${{ steps.meta.outputs.tag }}/install.ps1 -OutFile install.ps1
+          powershell -File .\\install.ps1 -Domain painel.exemplo.com -Yes
+          \`\`\`
+
+          Imagens: \`${{ steps.meta.outputs.backend }}:${{ steps.meta.outputs.version }}\` e \`${{ steps.meta.outputs.web }}:${{ steps.meta.outputs.version }}\`.
+          Guia: docs/operacao/distribuicao.md
+          EOF
+          if gh release view "${{ steps.meta.outputs.tag }}" >/dev/null 2>&1; then
+            gh release upload "${{ steps.meta.outputs.tag }}" \
+              dist/pdl-pro-${{ steps.meta.outputs.version }}.zip \
+              dist/pdl-pro-${{ steps.meta.outputs.version }}.zip.sha256 \
+              dist/install.sh \
+              dist/install.ps1 \
+              --clobber
+          else
+            gh release create "${{ steps.meta.outputs.tag }}" \
+              dist/pdl-pro-${{ steps.meta.outputs.version }}.zip \
+              dist/pdl-pro-${{ steps.meta.outputs.version }}.zip.sha256 \
+              dist/install.sh \
+              dist/install.ps1 \
+              --title "PDL PRO ${{ steps.meta.outputs.version }}" \
+              --notes-file "$notes" \
+              --latest
+          fi

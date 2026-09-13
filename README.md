@@ -35,6 +35,7 @@ Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral d
 | Quero… | Começar por… |
 | --- | --- |
 | Executar o painel pela primeira vez | [Início rápido com Docker](docs/primeiros-passos/docker.md) |
+| Instalar uma versão publicada | [Distribuição](docs/operacao/distribuicao.md) |
 | Preparar o ambiente de desenvolvimento | [Execução local](docs/desenvolvimento/ambiente-local.md) |
 | Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) e [guia dos apps](docs/arquitetura/apps.md) |
 | Rodar ou escrever testes | [Testes e qualidade](docs/desenvolvimento/testes.md) |

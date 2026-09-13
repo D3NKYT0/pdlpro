@@ -310,7 +310,11 @@ if [[ "${PDL_SKIP_DOCKER:-0}" != "1" ]] && command -v docker >/dev/null 2>&1 && 
 fi
 
 if [[ "$rotate_db_password" -eq 1 && "$docker_ready" -ne 1 ]]; then
-  die "Docker precisa estar instalado e em execucao para sincronizar DB_PASSWORD"
+  if [[ "${PDL_SKIP_DOCKER:-0}" == "1" ]]; then
+    warn "PDL_SKIP_DOCKER=1: a senha foi gerada só no .env; o PostgreSQL não foi sincronizado"
+  else
+    die "Docker precisa estar instalado e em execucao para sincronizar DB_PASSWORD"
+  fi
 fi
 
 set_env_value DEBUG false

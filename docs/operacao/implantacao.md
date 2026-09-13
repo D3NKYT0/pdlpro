@@ -2,6 +2,10 @@
 
 [← Índice da documentação](../README.md)
 
+Para instalar uma **tag publicada** (ZIP + imagens no GHCR, sem build no
+servidor), use o [guia de distribuição](distribuicao.md). As seções abaixo
+descrevem o deploy a partir do clone Git.
+
 ## Formas de implantação
 
 ### Stack completa em VPS
@@ -153,6 +157,10 @@ antes de repetir o `up --build`.
 docker compose --env-file .env -f docker-compose.prod.yml ps
 docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web backend
 ```
+
+Sem `PDL_BACKEND_IMAGE` / `PDL_WEB_IMAGE`, o Compose constrói
+`pdl_backend:local` e `pdl_web:local`. Com as variáveis da [release](distribuicao.md),
+`deploy --production` passa a puxar as imagens publicadas.
 
 Configure o proxy externo com destino `http://IP_PRIVADO_DO_PDL:8080`. Depois,
 acesse `https://pdl.denky.dev.br` e crie o admin:

@@ -13,12 +13,12 @@ Uso:
   ./setup.sh deploy [--production] [--build|--no-build] [--dev] [--pull]
 
 Opções:
-  --build     Reconstrói as imagens (padrão).
-  --no-build  Reutiliza as imagens locais existentes.
+  --build     Reconstrói as imagens (padrão no clone; omitido com imagens GHCR).
+  --no-build  Reutiliza as imagens locais ou publicadas.
   --dev       Ativa o perfil dev e inicia o frontend Vite.
-  --production  Build estático e Django production atrás do proxy reverso.
+  --production  Django production atrás do proxy reverso.
                 Detectado automaticamente quando o .env usa settings de produção.
-  --pull      Atualiza as imagens base antes do deploy.
+  --pull      Atualiza as imagens base ou publicadas antes do deploy.
   -h, --help  Exibe esta ajuda.
 EOF
 }
@@ -28,7 +28,7 @@ if [[ "${1:-}" == "--description" ]]; then
   exit 0
 fi
 
-build=1
+build=""
 dev=0
 pull=0
 production=0
@@ -50,7 +50,11 @@ if [[ "$production" -eq 1 && "$dev" -eq 1 ]]; then
   die "--production e --dev não podem ser usados juntos"
 fi
 
-require_project_files
+if [[ "$production" -eq 1 ]]; then
+  require_production_files
+else
+  require_project_files
+fi
 require_docker
 ensure_env_file
 cd "$ROOT_DIR"
@@ -78,6 +82,11 @@ if [[ "$production" -eq 1 ]]; then
   [[ ",$allowed_hosts," == *",$domain,"* ]] || die "inclua $domain em ALLOWED_HOSTS no .env"
   [[ ",$cors_origins," == *",https://$domain,"* ]] || die "inclua https://$domain em CORS_ALLOWED_ORIGINS no .env"
   [[ ",$csrf_origins," == *",https://$domain,"* ]] || die "inclua https://$domain em CSRF_TRUSTED_ORIGINS no .env"
+fi
+
+resolve_deploy_image_policy
+if uses_published_images; then
+  info "Usando imagens publicadas ($(read_env_value PDL_BACKEND_IMAGE))."
 fi
 
 compose_args=()

@@ -34,7 +34,54 @@ require_docker() {
 }
 
 require_project_files() {
-  [[ -f "$COMPOSE_FILE" ]] || die "docker-compose.yml não encontrado em $ROOT_DIR"
+  [[ -f "$COMPOSE_FILE" || -f "$PRODUCTION_COMPOSE_FILE" ]] ||
+    die "docker-compose.yml ou docker-compose.prod.yml não encontrado em $ROOT_DIR"
+}
+
+require_production_files() {
+  [[ -f "$PRODUCTION_COMPOSE_FILE" ]] || die "docker-compose.prod.yml não encontrado em $ROOT_DIR"
+}
+
+read_product_version() {
+  local file="${ROOT_DIR}/version.json"
+  [[ -f "$file" ]] || return 1
+  awk -F'"' '/"version":/ { print $4; exit }' "$file"
+}
+
+default_image_registry() {
+  printf '%s' "${PDL_IMAGE_REGISTRY:-ghcr.io/d3nkyt0/pdlpro}"
+}
+
+uses_published_images() {
+  local image
+  image="$(read_env_value PDL_BACKEND_IMAGE)"
+  [[ -n "$image" && "$image" != pdl_backend:* && "$image" != *:local ]]
+}
+
+apply_published_release_images() {
+  local version="${1:-}"
+  local registry
+  registry="$(default_image_registry)"
+  if [[ -z "$version" ]]; then
+    version="$(read_product_version)" || die "version.json não encontrado em $ROOT_DIR"
+  fi
+  [[ -n "$version" ]] || die "versão do produto vazia"
+  set_env_value PDL_IMAGE_REGISTRY "$registry"
+  set_env_value PDL_IMAGE_TAG "$version"
+  set_env_value PDL_BACKEND_IMAGE "${registry}/backend:${version}"
+  set_env_value PDL_WEB_IMAGE "${registry}/web:${version}"
+  set_env_value PDL_IMAGE_PULL_POLICY always
+}
+
+resolve_deploy_image_policy() {
+  if uses_published_images; then
+    [[ -n "${build:-}" ]] || build=0
+    if [[ "$build" -eq 0 && "${pull:-0}" -eq 0 ]]; then
+      pull=1
+    fi
+  else
+    [[ -n "${build:-}" ]] || build=1
+  fi
 }
 
 ensure_env_file() {
@@ -61,7 +108,7 @@ production_is_active() {
 }
 
 operational_compose() {
-  if production_is_active; then
+  if production_is_active || { [[ ! -f "$COMPOSE_FILE" ]] && [[ -f "$PRODUCTION_COMPOSE_FILE" ]]; }; then
     production_compose "$@"
   else
     compose "$@"

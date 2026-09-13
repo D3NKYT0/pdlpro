@@ -131,7 +131,8 @@ infraestrutura e apresentação, com casos de uso e injeção de dependência ex
 ├── frontend/            # SPA React + TypeScript
 ├── docs/                # Documentação técnica e operacional
 ├── nginx/               # Proxy HTTP e WebSocket
-├── scripts/             # Instalação, deploy, backup e restauração
+├── scripts/             # Instalação, deploy, backup, release e restauração
+├── packaging/           # Instaladores públicos Linux/Windows
 ├── docker-compose.yml   # Desenvolvimento e integração
 ├── docker-compose.prod.yml
 ├── setup.sh

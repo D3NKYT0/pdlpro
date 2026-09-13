@@ -9,10 +9,10 @@ volumes:
   media_files:
 
 x-backend-app-image: &backend-app-image
-  image: pdl_backend:local
+  image: ${PDL_BACKEND_IMAGE:-pdl_backend:local}
+  pull_policy: ${PDL_IMAGE_PULL_POLICY:-never}
   build:
     context: ./backend
-  pull_policy: never
 
 x-logging: &default-logging
   driver: json-file
@@ -131,8 +131,8 @@ services:
       - pdl_net
 
   web:
-    image: pdl_web:local
-    pull_policy: never
+    image: ${PDL_WEB_IMAGE:-pdl_web:local}
+    pull_policy: ${PDL_IMAGE_PULL_POLICY:-never}
     build:
       context: ./frontend
       dockerfile: Dockerfile.production

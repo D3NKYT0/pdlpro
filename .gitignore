@@ -44,6 +44,7 @@ yarn-error.log*
 # Docker
 *.override.yml
 backups/
+/dist/
 
 # IDEs
 .vscode/

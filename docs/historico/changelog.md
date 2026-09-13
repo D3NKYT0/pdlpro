@@ -8,6 +8,24 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Instaladores das versões publicadas para Linux (`packaging/install.sh`) e
+  Windows (`packaging/install.ps1`): baixam o ZIP da GitHub Release, configuram
+  o `.env` e sobem o Compose **puxando** imagens do GHCR, sem build no servidor.
+- Workflow **Release publicada**: suíte, imagens `backend`/`web` no GHCR, ZIP
+  `pdl-pro-X.Y.Z.zip` com checksum e anexos `install.sh` / `install.ps1`.
+- `./setup.sh pack-release` e `scripts/pdl_release.py` para gerar o pacote
+  localmente; Compose de produção interpola `PDL_BACKEND_IMAGE` e `PDL_WEB_IMAGE`.
+- Guia [Distribuição](../operacao/distribuicao.md).
+
+### Alterado
+
+- `./setup.sh deploy --production` deixa de reconstruir imagens quando o `.env`
+  aponta para uma imagem publicada; nesse caso o padrão é `--pull`.
+- Pacote de release e clone sem `docker-compose.yml` de desenvolvimento passam
+  a ser aceitos pelo `setup.sh` (árvore só com `docker-compose.prod.yml`).
+
 ## [2.4.0] - 2026-09-13
 
 Alterações desde **10 de setembro de 2026** (após `[2.3.0]`), consolidadas pelo histórico

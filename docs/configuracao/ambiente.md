@@ -124,6 +124,11 @@ Parâmetros SMTP como host, porta, TLS, usuário e senha também precisam existi
 | `GUNICORN_RELOAD` | Reload do Gunicorn; somente desenvolvimento |
 | `RUN_MIGRATIONS` | Executa migrações no entrypoint do container |
 | `RUN_COLLECTSTATIC` | Executa coleta de arquivos estáticos no entrypoint |
+| `PDL_IMAGE_REGISTRY` | Registro GHCR das imagens publicadas (`ghcr.io/d3nkyt0/pdlpro`) |
+| `PDL_IMAGE_TAG` | Tag SemVer das imagens (`2.4.0`) |
+| `PDL_BACKEND_IMAGE` | Imagem completa do backend; vazio usa `pdl_backend:local` |
+| `PDL_WEB_IMAGE` | Imagem completa do frontend/Nginx; vazio usa `pdl_web:local` |
+| `PDL_IMAGE_PULL_POLICY` | `never` no clone local; `always` no instalador da release |
 
 Temas instalados não exigem uma variável própria. Eles usam `MEDIA_ROOT/themes/` e
 `MEDIA_URL`, definidos nos settings Django. Em produção, preserve e compartilhe esse diretório
