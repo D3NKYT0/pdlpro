@@ -74,8 +74,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   a arte do baú. O autoconfig passa a selar 20–50 pacotes por
   baú (comum 20, raro 30, épico 40, lendário 50). O item em mira é
   sempre lendário e muda por baú (Blessed A / Armor S / Weapon S / Baium),
-  com o resto do catálogo em stacks low rate. Resetar exige ter aberto um
-  pacote e pede confirmação.
+  com o resto do catálogo em stacks low rate. O reveal da mira troca o fundo
+  do modal para um lavado dourado-violeta, com partículas e faixas em
+  movimento, distinto do ouro dos outros pacotes. Resetar exige ter
+  aberto um pacote e pede confirmação.
 - Mesa da Taverna em `/panel/games`: dado com pips, cilindros com ícone e
   nome (Espada, Escudo, Coroa…) e controles alinhados em duas colunas.
 - Detalhe do marketplace (`/panel/marketplace`): paperdoll, bag/warehouse e

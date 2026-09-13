@@ -91,7 +91,7 @@ export function BoxHuntCard({
           {locked ? t('games.boxes.resetLockedHint') : resetting ? t('games.boxes.resetHint') : t('games.boxes.openHint')}
         </small>
         <Button
-          variant={owned ? 'success' : resetting ? 'warning' : 'ghost'}
+          variant={owned ? (huntRemaining === false ? 'yellow' : 'success') : resetting ? 'warning' : 'ghost'}
           type="button"
           disabled={locked}
           onClick={onAction}

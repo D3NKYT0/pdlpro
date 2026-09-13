@@ -6,6 +6,7 @@
 .btn.ui-button.danger { color: rgba(235, 145, 127, 0.82); }
 /* Variações usam a arte existente do tema; a tonalidade também acompanha o hover. */
 html.pdl-panel .btn.ui-button--success { --ui-button-tone: hue-rotate(65deg) saturate(1.35); filter: var(--ui-button-tone); }
+html.pdl-panel .btn.ui-button--yellow { --ui-button-tone: hue-rotate(22deg) saturate(1.6) brightness(1.24); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--warning { --ui-button-tone: hue-rotate(-12deg) saturate(1.8) brightness(1.12); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button--danger { --ui-button-tone: hue-rotate(-38deg) saturate(2); filter: var(--ui-button-tone); }
 html.pdl-panel .btn.ui-button.ui-button--sm { height: 36px; padding: 0 14px; font-size: 12px; }

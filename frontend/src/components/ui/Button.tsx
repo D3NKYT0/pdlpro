@@ -5,7 +5,7 @@ import './ui.css'
 
 export interface ButtonAppearance {
   /** ghost é o nome legado da variante secondary, com textura azul. */
-  variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'warning' | 'danger'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'yellow' | 'warning' | 'danger'
   size?: 'sm' | 'md' | 'lg'
 }
 
