@@ -30,18 +30,28 @@ import { FishingGame } from '../components/games/FishingGame'
 import { BoxHuntCard } from '../components/games/BoxCatalog'
 import { BoxRevealModal } from '../components/games/BoxRevealModal'
 import { sortBoxesByRarity } from '../components/games/gameArt'
-import { ChanceStage, MonsterPortrait, RouletteField, RouletteWheel } from '../components/games/GameVisuals'
+import { BattleStage, ChanceStage, MonsterPortrait, RouletteField, RouletteWheel } from '../components/games/GameVisuals'
+import { RespawnTimer } from '../components/games/RespawnTimer'
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { waitForDiceReveal, waitForDiceRest } from '../components/games/diceReveal'
+import { waitForFightReveal } from '../components/games/fightReveal'
+import {
+  formatRespawnClock,
+  remainingSeconds,
+  rememberRespawnTotal,
+  useRespawnNow,
+} from '../components/games/respawnClock'
 import { waitForSlotsReveal } from '../components/games/slotsReveal'
 import { ROULETTE_SLOW_MS, waitForRouletteReveal } from '../components/games/rouletteReveal'
 import { ResourceGate } from '../components/programs/ResourceGate'
 import { BuyTokensModal } from '../components/games/BuyTokensModal'
 import { BoxHelpModal } from '../components/games/BoxHelpModal'
 import { ChanceRevealModal } from '../components/games/ChanceRevealModal'
+import { EnchantRevealModal } from '../components/games/EnchantRevealModal'
+import { waitForEnchantReveal } from '../components/games/enchantReveal'
 
 type PlayFx = {
-  playing?: 'spin' | 'open' | 'dice' | 'slots' | 'fight'
+  playing?: 'spin' | 'open' | 'dice' | 'slots' | 'fight' | 'enchant'
   targetId?: string
   spinFailed?: boolean
   prizeName?: string | null
@@ -59,9 +69,22 @@ type PlayFx = {
   slotsWon?: boolean
   chanceOverlay?: 'dice' | 'slots'
   chancePayout?: number
+  fightName?: string
+  fightWon?: boolean
+  fightRounds?: number
+  fightFragments?: number
+  enchantOverlay?: boolean
+  enchantSuccess?: boolean
+  enchantFrom?: number
+  enchantToward?: number
+  enchantLevel?: number
 }
 
 type GameTab = 'roulette' | 'boxes' | 'chance' | 'fishing' | 'economy'
+
+const FIGHT_COST = 1
+const ENCHANT_COST = 10
+const ENCHANT_GOAL = 10
 
 const gameTabs: Array<{ id: GameTab; icon: LucideIcon }> = [
   { id: 'roulette', icon: RotateCw },
@@ -319,28 +342,59 @@ export function GamesPage() {
   }
 
   async function fight(monsterId: string) {
-    if (needTokens(1)) return
-    setFx({ playing: 'fight', targetId: monsterId })
+    if (needTokens(FIGHT_COST)) return
+    const monster = economy.data?.monsters.find((row) => row.id === monsterId)
+    setFx({ playing: 'fight', targetId: monsterId, fightName: monster?.name })
     const outcome = await action.run(async () => {
+      const startedAt = Date.now()
       const result = await gamesApi.fight(monsterId)
-      toast[result.won ? 'success' : 'error'](
-        result.won ? t('games.toast.fightWin', { fragments: result.fragments_earned }) : t('games.toast.fightLoss'),
-      )
+      await waitForFightReveal(startedAt)
       await refresh()
       return result
     }, t('games.toast.fightError'), quietTokens)
-    if (!outcome.ok) noteTokenFailure(outcome.error)
-    setFx(outcome.ok ? { targetId: monsterId } : {})
+    if (outcome.ok) {
+      setFx({
+        targetId: monsterId,
+        fightName: monster?.name,
+        fightWon: outcome.value.won,
+        fightRounds: outcome.value.rounds,
+        fightFragments: outcome.value.fragments_earned,
+      })
+    } else {
+      noteTokenFailure(outcome.error)
+      setFx({})
+    }
   }
 
   async function enchant() {
-    await action.run(async () => {
+    const from = economy.data?.weapon.level ?? 0
+    const toward = Math.min(ENCHANT_GOAL, from + 1)
+    setFx({ playing: 'enchant', enchantFrom: from, enchantToward: toward })
+    const outcome = await action.run(async () => {
+      const startedAt = Date.now()
       const result = await gamesApi.enchant()
-      toast[result.success ? 'success' : 'error'](
-        result.success ? t('games.toast.enchantSuccess', { level: result.weapon.level }) : t('games.toast.enchantFailed'),
-      )
+      await waitForEnchantReveal(startedAt)
       await refresh()
+      return result
     }, t('games.toast.enchantError'))
+    if (outcome.ok) {
+      setFx({
+        enchantOverlay: true,
+        enchantSuccess: outcome.value.success,
+        enchantFrom: from,
+        enchantToward: toward,
+        enchantLevel: outcome.value.weapon.level,
+      })
+      return
+    }
+    setFx({})
+  }
+
+  const waitingRespawn = (economy.data?.monsters ?? []).some((row) => !row.alive && row.respawn_in > 0)
+  const now = useRespawnNow(activeGame === 'economy' && waitingRespawn)
+  const respawnTotals = useRef<Record<string, number>>({})
+  if (economy.data) {
+    respawnTotals.current = rememberRespawnTotal(respawnTotals.current, economy.data.monsters)
   }
 
   useEffect(() => {
@@ -351,6 +405,18 @@ export function GamesPage() {
     return () => window.clearTimeout(timer)
   }, [fx.playing])
 
+  useEffect(() => {
+    if (!economy.data || economy.isFetching) return
+    const ready = economy.data.monsters.some((row) => {
+      if (row.alive) return false
+      return remainingSeconds(row.respawn_in, economy.dataUpdatedAt, now) <= 0
+    })
+    if (ready) void queryClient.invalidateQueries({ queryKey: ['economy'] })
+  }, [economy.data, economy.dataUpdatedAt, economy.isFetching, now, queryClient])
+
+  const fragments = economy.data?.weapon.fragments ?? 0
+  const weaponLevel = economy.data?.weapon.level ?? 0
+  const nextEnchant = Math.min(ENCHANT_GOAL, weaponLevel + 1)
   const shopBoxes = sortBoxesByRarity(boxes.data?.types ?? [], (row) => row.name, (row) => row.price)
   const ownedBoxes = sortBoxesByRarity(
     boxes.data?.boxes ?? [],
@@ -606,6 +672,15 @@ export function GamesPage() {
           payout={fx.chancePayout}
           onClose={() => setFx((current) => ({ ...current, chanceOverlay: undefined }))}
         />
+        <EnchantRevealModal
+          open={fx.playing === 'enchant' || fx.enchantOverlay === true}
+          attempting={fx.playing === 'enchant'}
+          success={fx.enchantSuccess === true}
+          from={fx.enchantFrom ?? 0}
+          toward={fx.enchantToward ?? 0}
+          level={fx.enchantLevel ?? 0}
+          onClose={() => setFx({})}
+        />
 
         <Card
           className="game-module game-chance"
@@ -731,32 +806,128 @@ export function GamesPage() {
               <span className="panel-eyebrow">{t('games.economy.eyebrow')}</span>
               <h2>{t('games.economy.title')}</h2>
             </div>
-            <div className="weapon-level">{t('games.economy.weapon')} <strong>+{economy.data?.weapon.level ?? 0}</strong></div>
+            <div className="weapon-now">
+              <div className="weapon-level">
+                <small>{t('games.economy.weapon')}</small>
+                <strong>+{weaponLevel}</strong>
+                <span>{t('games.economy.enchantGoal', { goal: ENCHANT_GOAL })}</span>
+              </div>
+              <div
+                className="weapon-path"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={ENCHANT_GOAL}
+                aria-valuenow={weaponLevel}
+                aria-label={t('games.economy.enchantAria', { current: weaponLevel, goal: ENCHANT_GOAL })}
+              >
+                <ol className="weapon-path-steps">
+                  {Array.from({ length: ENCHANT_GOAL }, (_, index) => {
+                    const step = index + 1
+                    const state = step <= weaponLevel ? 'is-done' : step === nextEnchant && weaponLevel < ENCHANT_GOAL ? 'is-next' : ''
+                    return (
+                      <li className={state} key={step}>
+                        +{step}
+                      </li>
+                    )
+                  })}
+                </ol>
+                <p className="weapon-path-next">
+                  {weaponLevel >= ENCHANT_GOAL
+                    ? t('games.economy.enchantPeak', { goal: ENCHANT_GOAL })
+                    : t('games.economy.enchantNext', { level: nextEnchant, goal: ENCHANT_GOAL })}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="fragment-progress">
-            <span><b>{economy.data?.weapon.fragments ?? 0}</b> {t('games.economy.fragments', { max: 10 })}</span>
-            <i style={{ width: `${Math.min(100, ((economy.data?.weapon.fragments ?? 0) / 10) * 100)}%` }} />
+          <div className="economy-content">
+            <div className="economy-roster">
+              <section className="weapon-forge">
+                <div
+                  className={`fragment-progress${fragments >= ENCHANT_COST ? ' is-ready' : ''}`}
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={ENCHANT_COST}
+                  aria-valuenow={fragments}
+                  aria-label={t('games.economy.fragmentsAria', { current: fragments, max: ENCHANT_COST })}
+                >
+                  <div className="fragment-progress-head">
+                    <small>{t('games.economy.fragmentsLabel')}</small>
+                    <strong>
+                      <b>{fragments}</b>
+                      <span>{t('games.economy.fragments', { max: ENCHANT_COST })}</span>
+                    </strong>
+                  </div>
+                  <span className="fragment-progress-track" aria-hidden="true">
+                    <i className="fragment-progress-fill" style={{ width: `${Math.min(100, (fragments / ENCHANT_COST) * 100)}%` }} />
+                    <i className="fragment-progress-sheen" />
+                    <span className="fragment-progress-pips">
+                      {Array.from({ length: ENCHANT_COST }, (_, index) => (
+                        <i key={index} className={index < fragments ? 'is-lit' : undefined} />
+                      ))}
+                    </span>
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  variant={fragments >= ENCHANT_COST ? 'success' : undefined}
+                  disabled={fragments < ENCHANT_COST}
+                  onClick={() => void enchant()}
+                >
+                  <Sparkles aria-hidden="true" /> {t('games.economy.enchant', { count: ENCHANT_COST })}
+                </Button>
+              </section>
+              <div className="monster-list">
+                {(economy.data?.monsters ?? []).map((monster) => {
+                  const wait = remainingSeconds(monster.respawn_in, economy.dataUpdatedAt, now)
+                  const canFight = monster.alive && weaponLevel >= monster.required_weapon_level
+                  const canAffordFight = knownTokens == null || knownTokens >= FIGHT_COST
+                  return (
+                    <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}`} key={monster.id}>
+                      <MonsterPortrait
+                        id={monster.id}
+                        down={!monster.alive}
+                        fighting={fx.playing === 'fight' && fx.targetId === monster.id}
+                      />
+                      <span><strong>{monster.name}</strong><small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small></span>
+                      <div className="monster-actions">
+                        {!monster.alive ? (
+                          <RespawnTimer
+                            remaining={wait}
+                            total={respawnTotals.current[monster.id] ?? wait}
+                            label={t('games.economy.respawnWait', { clock: formatRespawnClock(wait) })}
+                          />
+                        ) : null}
+                        <Button
+                          variant={canFight && !canAffordFight ? 'yellow' : 'ghost'}
+                          type="button"
+                          disabled={!canFight}
+                          onClick={() => void fight(monster.id)}
+                        >
+                          {t('games.economy.fight', { count: FIGHT_COST })}
+                        </Button>
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
+            </div>
+            <div className="economy-stage">
+              <BattleStage
+                phase={fx.playing === 'fight' ? 'clash' : fx.fightWon === true ? 'win' : fx.fightWon === false ? 'loss' : 'idle'}
+                monsterId={fx.targetId}
+                monsterName={fx.fightName}
+                weaponLevel={weaponLevel}
+                idleLabel={t('games.economy.idle')}
+                clashLabel={t('games.economy.clashing')}
+                playerLabel={t('games.economy.player')}
+                versusLabel={t('games.economy.versus')}
+                winLabel={t('games.economy.revealWin')}
+                lossLabel={t('games.economy.revealLoss')}
+                fragmentsLabel={t('games.economy.revealFragments', { fragments: fx.fightFragments ?? 0 })}
+                roundsLabel={fx.fightRounds ? t('games.economy.rounds', { count: fx.fightRounds }) : undefined}
+              />
+            </div>
           </div>
-          <div className="monster-list">
-            {(economy.data?.monsters ?? []).map((monster) => (
-              <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}`} key={monster.id}>
-                <MonsterPortrait
-                  id={monster.id}
-                  down={!monster.alive}
-                  fighting={fx.playing === 'fight' && fx.targetId === monster.id}
-                />
-                <span><strong>{monster.name}</strong><small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small></span>
-                {monster.alive ? (
-                  <Button className="ghost" type="button" onClick={() => void fight(monster.id)}>{t('games.economy.fight', { count: 1 })}</Button>
-                ) : (
-                  <span className="respawn">{t('games.economy.respawn', { seconds: monster.respawn_in })}</span>
-                )}
-              </article>
-            ))}
-          </div>
-          <Button type="button" onClick={() => void enchant()}>
-            <Sparkles aria-hidden="true" /> {t('games.economy.enchant', { count: 10 })}
-          </Button>
         </Card>
 
       </fieldset>

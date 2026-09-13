@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from 'react'
-import { Trophy, X } from 'lucide-react'
+import { Sword, Trophy, X } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
@@ -411,14 +411,162 @@ export function ChanceStage({
   )
 }
 
-export function MonsterPortrait({ id, down = false, fighting = false }: { id: string; down?: boolean; fighting?: boolean }) {
+export function MonsterPortrait({
+  id,
+  down = false,
+  fighting = false,
+  size = 'card',
+}: {
+  id: string
+  down?: boolean
+  fighting?: boolean
+  size?: 'card' | 'hero'
+}) {
   return (
     <div
-      className={`monster-portrait${down ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}`}
+      className={`monster-portrait${down ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${size === 'hero' ? ' is-hero' : ''}`}
       data-theme-part="game-portrait"
       style={{ '--monster-hue': `${monsterHue(id)}deg` } as CSSProperties}
       aria-hidden="true"
     />
+  )
+}
+
+const BATTLE_SPARKS = 16
+const BATTLE_MOTES = 12
+const BATTLE_HITS = 4
+
+export type BattlePhase = 'idle' | 'clash' | 'win' | 'loss'
+
+export function BattleStage({
+  phase = 'idle',
+  monsterId,
+  monsterName,
+  weaponLevel = 0,
+  idleLabel,
+  clashLabel,
+  playerLabel,
+  versusLabel,
+  winLabel,
+  lossLabel,
+  fragmentsLabel,
+  roundsLabel,
+}: {
+  phase?: BattlePhase
+  monsterId?: string
+  monsterName?: string
+  weaponLevel?: number
+  idleLabel: string
+  clashLabel: string
+  playerLabel: string
+  versusLabel: string
+  winLabel: string
+  lossLabel: string
+  fragmentsLabel?: string
+  roundsLabel?: string
+}) {
+  const fighting = phase === 'clash'
+  const won = phase === 'win'
+  const lost = phase === 'loss'
+  const status = won ? winLabel : lost ? lossLabel : fighting ? clashLabel : idleLabel
+  return (
+    <div className={`battle-stage is-${phase}`} data-theme-part="game-stage">
+      <div className="battle-field" aria-hidden="true">
+        <i className="battle-field-veil" />
+        <i className="battle-field-wash" />
+        <i className="battle-field-rays" />
+        <i className="battle-field-dust" />
+        <i className="battle-pillar is-left" />
+        <i className="battle-pillar is-right" />
+        <i className="battle-floor" />
+        {Array.from({ length: BATTLE_MOTES }, (_, index) => (
+          <i
+            key={index}
+            className="battle-mote"
+            style={
+              {
+                '--mote-a': `${index * (360 / BATTLE_MOTES)}deg`,
+                '--mote-d': `${(index % 6) * 0.28}s`,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
+      <div className="battle-ring">
+        <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${won ? ' is-victor' : ''}`}>
+          <i className="battle-fighter-glow" />
+          <div className="battle-fighter-art" data-theme-part="game-portrait">
+            <Sword aria-hidden="true" />
+          </div>
+          <i className="battle-pedestal" />
+          <span className="battle-hp" aria-hidden="true">
+            <i className="battle-hp-fill is-player" />
+          </span>
+          <span className="battle-plate">
+            <small>{playerLabel}</small>
+            <b>+{weaponLevel}</b>
+          </span>
+        </div>
+        <div className="battle-clash" aria-hidden="true">
+          <strong className="battle-vs">{versusLabel}</strong>
+          <i className="battle-slash" />
+          <i className="battle-slash is-cross" />
+          <i className="battle-slash is-late" />
+          <i className="battle-impact" />
+          <i className="battle-shock" />
+          {fighting ? (
+            <span className="battle-hits">
+              {Array.from({ length: BATTLE_HITS }, (_, index) => (
+                <i
+                  key={index}
+                  className="battle-hit"
+                  style={{ '--hit-d': `${index * 420}ms` } as CSSProperties}
+                />
+              ))}
+            </span>
+          ) : null}
+          {fighting || won ? (
+            <span className="battle-burst">
+              <i className="battle-flash" />
+              {Array.from({ length: BATTLE_SPARKS }, (_, index) => (
+                <i
+                  key={index}
+                  className="battle-spark"
+                  style={
+                    {
+                      '--spark-a': `${index * (360 / BATTLE_SPARKS)}deg`,
+                      '--spark-d': `${(index % 5) * 40}ms`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </span>
+          ) : null}
+        </div>
+        <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${lost ? ' is-victor' : ''}`}>
+          <i className="battle-fighter-glow" />
+          {monsterId ? (
+            <MonsterPortrait id={monsterId} down={won} fighting={fighting} size="hero" />
+          ) : (
+            <div className="battle-fighter-art is-empty" data-theme-part="game-portrait" />
+          )}
+          <i className="battle-pedestal" />
+          <span className="battle-hp" aria-hidden="true">
+            <i className="battle-hp-fill is-monster" />
+          </span>
+          {monsterName ? (
+            <span className="battle-plate">
+              <small>{monsterName}</small>
+            </span>
+          ) : null}
+        </div>
+      </div>
+      <p className="battle-status" role="status">
+        <strong>{status}</strong>
+        {won && fragmentsLabel ? <small>{fragmentsLabel}</small> : null}
+        {(won || lost) && roundsLabel ? <small>{roundsLabel}</small> : null}
+      </p>
+    </div>
   )
 }
 

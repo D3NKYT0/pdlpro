@@ -98,6 +98,38 @@ vi.mock('../components/games/slotsReveal', () => ({
   SLOTS_REVEAL_MS: 0,
   waitForSlotsReveal: () => slotsReveal.wait(),
 }))
+const fightReveal = vi.hoisted(() => {
+  let wait = () => Promise.resolve()
+  return {
+    wait: () => wait(),
+    setWait: (value: () => Promise<void>) => {
+      wait = value
+    },
+    reset: () => {
+      wait = () => Promise.resolve()
+    },
+  }
+})
+vi.mock('../components/games/fightReveal', () => ({
+  FIGHT_REVEAL_MS: 0,
+  waitForFightReveal: () => fightReveal.wait(),
+}))
+const enchantReveal = vi.hoisted(() => {
+  let wait = () => Promise.resolve()
+  return {
+    wait: () => wait(),
+    setWait: (value: () => Promise<void>) => {
+      wait = value
+    },
+    reset: () => {
+      wait = () => Promise.resolve()
+    },
+  }
+})
+vi.mock('../components/games/enchantReveal', () => ({
+  ENCHANT_REVEAL_MS: 0,
+  waitForEnchantReveal: () => enchantReveal.wait(),
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 beforeEach(() => {
@@ -105,6 +137,8 @@ beforeEach(() => {
   boxReveal.reset()
   diceReveal.reset()
   slotsReveal.reset()
+  fightReveal.reset()
+  enchantReveal.reset()
   vi.resetAllMocks()
   vi.mocked(gamesApi.roulette).mockResolvedValue({
     fichas: 10,
@@ -141,6 +175,9 @@ function mount(tab: string) {
   render(<QueryClientProvider client={client}><MemoryRouter initialEntries={[`/panel/games?tab=${tab}`]}><GamesPage /></MemoryRouter></QueryClientProvider>)
   return userEvent.setup()
 }
+function namedButton(name: string) {
+  return screen.getAllByRole('button', { name }).find((button) => !(button as HTMLButtonElement).disabled) ?? screen.getByRole('button', { name })
+}
 const actions = [
   { method: 'buyTokens', tab: 'roulette', button: 'Comprar', args: [5], result: { fichas: 15 }, message: 'Fichas creditadas' },
   { method: 'claimDailyBonus', tab: 'roulette', button: 'Resgatar bônus', args: [], result: { amount: '5.00', claimed: true }, message: 'Bônus de R$ 5.00 creditado' },
@@ -148,7 +185,7 @@ const actions = [
   { method: 'openBox', tab: 'boxes', button: 'Abrir · 1 ficha', args: ['box'], result: { item: { name: 'Espada', enchant: 3 }, remaining: 0 }, message: 'Espada (+3)' },
   { method: 'dice', tab: 'chance', button: 'Lançar os dados', args: [{ bet_type: 'even', amount: 1 }], result: { won: true, roll: 4, payout: 2 }, message: 'Dado 4 · +2' },
   { method: 'slots', tab: 'chance', button: 'Girar cilindros · 1 ficha', args: [], result: { won: true, reels: ['A', 'A', 'A'], payout: 5 }, message: 'A | A | A · +5' },
-  { method: 'fight', tab: 'economy', button: 'Lutar · 1 ficha', args: ['monster'], result: { won: true, fragments_earned: 2 }, message: 'Vitória · +2 fragmentos' },
+  { method: 'fight', tab: 'economy', button: 'Lutar · 1 ficha', args: ['monster'], result: { won: true, rounds: 3, fragments_earned: 2 }, message: 'Vitória · +2 fragmentos' },
   { method: 'enchant', tab: 'economy', button: 'Encantar · 10 fragmentos', args: [], result: { success: true, weapon: { level: 4 } }, message: 'Arma +4' },
 ] as const
 it('bloqueia repetição e outras ações enquanto o giro está pendente', async () => {
@@ -169,11 +206,11 @@ it('bloqueia repetição e outras ações enquanto o giro está pendente', async
   expect(toast.success).not.toHaveBeenCalled()
   expect(screen.getByRole('status')).toHaveTextContent('Adena')
 })
-it.each(actions.filter((scenario) => !['openBox', 'dice', 'slots'].includes(scenario.method)))('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
+it.each(actions.filter((scenario) => !['openBox', 'dice', 'slots', 'fight', 'enchant'].includes(scenario.method)))('$method envia ação, mostra resultado e atualiza saldo', async scenario => {
   vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
   const user = mount(scenario.tab)
   await screen.findByText('10 fichas')
-  await user.click(await screen.findByRole('button', { name: scenario.button }))
+  await user.click(namedButton(scenario.button))
   expect(gamesApi[scenario.method]).toHaveBeenCalledWith(...scenario.args)
   expect(toast.success).toHaveBeenCalledWith(scenario.message)
   await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
@@ -191,19 +228,44 @@ it.each(actions)('$method apresenta recusa sem anunciar sucesso', async scenario
   vi.mocked(gamesApi[scenario.method]).mockRejectedValue(new ApiError('Operação recusada', 400, 'INVALID'))
   const user = mount(scenario.tab)
   await screen.findByText('10 fichas')
-  await user.click(await screen.findByRole('button', { name: scenario.button }))
+  await user.click(namedButton(scenario.button))
   expect(toast.error).toHaveBeenCalledWith('Operação recusada')
   expect(toast.success).not.toHaveBeenCalled()
 })
-it.each([
-  { ...actions[6], result: { won: false }, message: 'Derrota' },
-  { ...actions[7], result: { success: false }, message: 'O encantamento falhou' },
-])('$method diferencia derrota de falha de rede', async scenario => {
-  vi.mocked(gamesApi[scenario.method]).mockResolvedValue(scenario.result as any)
-  const user = mount(scenario.tab)
-  await screen.findByText('10 fichas')
-  await user.click(await screen.findByRole('button', { name: scenario.button }))
-  expect(toast.error).toHaveBeenCalledWith(scenario.message)
+it('abre o modal de encante tentando e revela sucesso sem toast', async () => {
+  let release!: () => void
+  enchantReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
+  vi.mocked(gamesApi.enchant).mockResolvedValue({ success: true, weapon: { level: 4 } } as any)
+  const user = mount('economy')
+  await screen.findByText('Orc')
+  await user.click(namedButton('Encantar · 10 fragmentos'))
+  const attempting = await screen.findByRole('dialog', { name: 'Encantando…' })
+  expect(attempting).toHaveClass('game-enchant-reveal-modal', 'is-attempting')
+  expect(attempting).toHaveTextContent('+3')
+  expect(attempting).toHaveTextContent('+4')
+  expect(attempting).toHaveTextContent('Tentando +3 → +4')
+  expect(screen.queryByRole('button', { name: 'Continuar' })).not.toBeInTheDocument()
+  expect(toast.success).not.toHaveBeenCalled()
+  release()
+  const dialog = await screen.findByRole('dialog', { name: 'Sucesso' })
+  expect(dialog).toHaveClass('is-win')
+  expect(dialog).not.toHaveClass('is-attempting', 'is-loss')
+  expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('A arma subiu para +4')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: 'Continuar' }))
+  expect(screen.queryByRole('dialog', { name: 'Sucesso' })).not.toBeInTheDocument()
+})
+it('revela falha do encante no modal sem toast', async () => {
+  vi.mocked(gamesApi.enchant).mockResolvedValue({ success: false, weapon: { level: 3 } } as any)
+  const user = mount('economy')
+  await screen.findByText('Orc')
+  await user.click(namedButton('Encantar · 10 fragmentos'))
+  const dialog = await screen.findByRole('dialog', { name: 'Falhou' })
+  expect(dialog).toHaveClass('game-enchant-reveal-modal', 'is-loss')
+  expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('A arma permanece +3')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
   await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
 })
 it('troca aba e envia valor/tipo da aposta alterados', async () => {
@@ -223,8 +285,16 @@ it('bônus resgatado e monstro em respawn não oferecem nova ação', async () =
   await screen.findByText('Bônus já resgatado hoje')
   expect(screen.queryByRole('button', { name: 'Resgatar bônus' })).not.toBeInTheDocument()
   await user.click(screen.getByRole('tab', { name: 'Arena das Feras' }))
-  expect(screen.getByText('Retorna em 60s')).toBeVisible()
-  expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })).toHaveLength(1)
+  const fights = screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })
+  expect(fights).toHaveLength(2)
+  expect(fights[0]).toBeEnabled()
+  expect(fights[1]).toBeDisabled()
+  const timer = screen.getByRole('timer')
+  expect(timer).toHaveAccessibleName(/Retorna em/)
+  expect(timer.querySelector('b')).toHaveTextContent(/^\d{2}:\d{2}$/)
+  expect(timer.querySelector('.respawn-timer-fill')).toBeTruthy()
+  await user.click(fights[1])
+  expect(gamesApi.fight).not.toHaveBeenCalled()
 })
 it('desacelera o tambor enquanto o giro ainda corre', async () => {
   rouletteReveal.setSlowMs(20)
@@ -334,6 +404,11 @@ it('mostra baús do tema nas caixas e anima a abertura', async () => {
   expect(document.querySelector('.game-chest-rays')).toBeTruthy()
   expect(document.querySelector('.game-chest-prize-core')).toBeTruthy()
   expect(document.querySelector('.game-chest-prize-shine')).toBeTruthy()
+  const prize = document.querySelector('.game-chest.is-hero .game-chest-prize')
+  const stage = document.querySelector('.game-chest.is-hero .game-chest-stage')
+  expect(prize).toBeTruthy()
+  expect(stage).toBeTruthy()
+  expect(prize?.compareDocumentPosition(stage!) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy()
   expect(document.querySelectorAll('.game-chest-mote').length).toBeGreaterThan(10)
   expect(screen.getByRole('status')).toHaveTextContent('Espada')
   expect(screen.getByRole('status')).toHaveTextContent('+3')
@@ -550,7 +625,7 @@ it('abre o modal de vitória depois do cubo 3d pousar, sem toast', async () => {
   expect(dialog.querySelector('.game-chance-reveal-face')?.getAttribute('data-face')).toBe('4')
   expect(dialog.querySelector('.game-chance-reveal-wash')).toBeTruthy()
   expect(dialog.querySelector('.game-chance-reveal-orb')).toBeNull()
-  expect(screen.getByText('+2')).toBeVisible()
+  expect(dialog.querySelector('.game-chance-reveal-outcome')).toHaveTextContent('+2')
   expect(dialog.querySelector('.game-chance-reveal-actions')?.querySelector('.btn')).toBeTruthy()
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
@@ -625,11 +700,125 @@ it('abre o modal de derrota depois do giro do caça-níquel, sem toast', async (
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
 })
+it('mostra a trilha de encante até +10 com o próximo passo em destaque', async () => {
+  mount('economy')
+  await screen.findByText('Orc')
+  const path = screen.getByRole('progressbar', { name: 'Arma +3 de +10' })
+  const steps = [...path.querySelectorAll('.weapon-path-steps li')]
+  expect(steps).toHaveLength(10)
+  expect(steps.filter((step) => step.classList.contains('is-done'))).toHaveLength(3)
+  expect(path.querySelector('.weapon-path-steps li.is-next')).toHaveTextContent('+4')
+  expect(screen.getByText('Próximo passo · +4')).toBeVisible()
+  const chip = document.querySelector('.weapon-level')
+  expect(chip).toHaveTextContent('Arma')
+  expect(chip).toHaveTextContent('+3')
+  expect(chip).toHaveTextContent('/ +10')
+})
+it('pinta Lutar de amarelo sem fichas e Encantar de verde com fragmentos', async () => {
+  mount('economy')
+  await screen.findByText('Orc')
+  expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })[0]).toHaveClass('ui-button--secondary')
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toHaveClass('ui-button--success')
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toBeEnabled()
+  const bar = screen.getByRole('progressbar', { name: '10 de 10 fragmentos' })
+  expect(bar).toHaveClass('is-ready')
+  expect(bar.querySelectorAll('.fragment-progress-pips i')).toHaveLength(10)
+  expect(bar.querySelector('.fragment-progress-fill')).toHaveStyle({ width: '100%' })
+})
+it('abre a compra de fichas pelo Lutar amarelo e trava Encantar sem fragmentos', async () => {
+  vi.mocked(gamesApi.roulette).mockResolvedValue({
+    fichas: 0,
+    cost: 1,
+    fail_chance: 20,
+    prizes: [{ id: 'p1', name: 'Adena', rarity: 'comum', item_id: 57, weight: 10, quantity: 50000 }],
+  } as any)
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 0,
+    weapon: { level: 3, fragments: 3 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0 },
+      { id: 'drake', name: 'Drake', alive: true, level: 8, required_weapon_level: 8, fragment_reward: 5, respawn_in: 0 },
+    ],
+  } as any)
+  const user = mount('economy')
+  await screen.findByText('Orc')
+  await screen.findByText('0 ficha')
+  const [ready, locked] = screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })
+  expect(ready).toHaveClass('ui-button--yellow')
+  expect(ready).toBeEnabled()
+  expect(locked).toBeDisabled()
+  expect(locked).not.toHaveClass('ui-button--yellow')
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).not.toHaveClass('ui-button--success')
+  expect(screen.getByRole('progressbar', { name: '3 de 10 fragmentos' })).not.toHaveClass('is-ready')
+  await user.click(ready)
+  expect(gamesApi.fight).not.toHaveBeenCalled()
+  expect(await screen.findByRole('dialog', { name: 'Comprar fichas' })).toBeVisible()
+})
 it('usa retrato de monstro na arena', async () => {
   mount('economy')
   await screen.findByText('Orc')
   expect(document.querySelectorAll('.monster-portrait')).toHaveLength(2)
   expect(document.querySelector('.monster-portrait.is-down')).toBeTruthy()
+})
+it('divide a arena em lista de feras e palco só para o combate', async () => {
+  mount('economy')
+  await screen.findByText('Orc')
+  expect(document.querySelector('.economy-content')).toBeTruthy()
+  expect(document.querySelector('.economy-roster')).toBeTruthy()
+  expect(document.querySelector('.economy-stage')).toBeTruthy()
+  expect(document.querySelector('.economy-roster')?.contains(screen.getByText('Orc'))).toBe(true)
+  expect(document.querySelector('.battle-stage.is-idle')).toBeTruthy()
+  expect(document.querySelector('.battle-field')).toBeTruthy()
+  expect(document.querySelectorAll('.battle-mote').length).toBe(12)
+  expect(document.querySelector('.battle-floor')).toBeTruthy()
+  expect(document.querySelector('.battle-field-rays')).toBeTruthy()
+  expect(screen.getByRole('status')).toHaveTextContent('Escolha uma fera para lutar.')
+  expect(screen.getByText('Você')).toBeVisible()
+  expect(document.querySelector('.battle-vs')?.textContent).toBe('VS')
+})
+it('anima o confronto no palco e revela a vitória sem toast', async () => {
+  let release!: () => void
+  fightReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
+  vi.mocked(gamesApi.fight).mockResolvedValue({ won: true, rounds: 3, fragments_earned: 2 } as any)
+  const user = mount('economy')
+  await screen.findByText('10 fichas')
+  await user.click(namedButton('Lutar · 1 ficha'))
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-clash')).toBeTruthy())
+  expect(document.querySelector('.monster-item.is-fighting')).toBeTruthy()
+  expect(document.querySelector('.monster-portrait.is-hero.is-fighting')).toBeTruthy()
+  expect(document.querySelector('.battle-slash')).toBeTruthy()
+  expect(document.querySelector('.battle-impact')).toBeTruthy()
+  expect(document.querySelector('.battle-shock')).toBeTruthy()
+  expect(document.querySelectorAll('.battle-hit').length).toBe(4)
+  expect(screen.getByRole('status')).toHaveTextContent('O combate está em andamento')
+  expect(toast.success).not.toHaveBeenCalled()
+  release()
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-win')).toBeTruthy())
+  expect(document.querySelector('.battle-stage.is-clash')).toBeNull()
+  expect(screen.getByRole('status')).toHaveTextContent('Vitória')
+  expect(screen.getByRole('status')).toHaveTextContent('+2 fragmentos')
+  expect(screen.getByRole('status')).toHaveTextContent('3 rodadas')
+  expect(document.querySelector('.battle-burst')).toBeTruthy()
+  expect(document.querySelector('.battle-flash')).toBeTruthy()
+  expect(document.querySelectorAll('.battle-spark').length).toBe(16)
+  expect(document.querySelector('.battle-stage .monster-portrait.is-hero')).toBeTruthy()
+  expect(document.querySelector('.battle-fighter.is-player.is-victor')).toBeTruthy()
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+  await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
+})
+it('revela a derrota no palco sem toast', async () => {
+  vi.mocked(gamesApi.fight).mockResolvedValue({ won: false, rounds: 4, fragments_earned: 0 } as any)
+  const user = mount('economy')
+  await screen.findByText('10 fichas')
+  await user.click(namedButton('Lutar · 1 ficha'))
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-loss')).toBeTruthy())
+  expect(screen.getByRole('status')).toHaveTextContent('Derrota')
+  expect(screen.getByRole('status')).toHaveTextContent('4 rodadas')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+  await waitFor(() => expect(gamesApi.roulette).toHaveBeenCalledTimes(2))
 })
 it('mantém o atalho de recompensas dentro do hero', async () => {
   mount('roulette')

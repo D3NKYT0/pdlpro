@@ -10,6 +10,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- A **Arena das Feras** divide o card em duas colunas: lista de feras,
+  forja e palco só para o combate.   O encante atual fica no cabeçalho
+  ao lado da trilha (+1 a +10). Encantar abre um modal da tentativa
+  e só então mostra sucesso ou falha, sem toast. A forja mostra
+  fragmentos e o botão. Lutar fica
+  desativado (com relógio circular) enquanto a fera não pode combater,
+  amarelo sem fichas, e Encantar fica verde com 10 fragmentos.
+  No celular o palco sobe para a animação ficar visível.
 - Na **Pescaria**, vara, lançar e troca de iscas ficam no mesmo painel;
   a moldura da isca em uso fica marcada, e trocar já deixa essa isca
   pronta para o lançamento. Nome, custo e dica só aparecem ao apontar
@@ -36,6 +44,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Palco de combate na **Arena das Feras**: golpes, barras e retrato da fera
+  no palco; vitória ou derrota só depois da animação, sem toast.
 - Confirmação de pagamento **mock só no admin** (`POST /api/v1/staff/payments/{id}/confirm-mock/`
   e botão em `/panel/admin/reports/financial/payments`), com aviso vermelho piscando
   de que o crédito não é um pagamento real. O jogador cria o pedido simulado e
@@ -128,6 +138,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- No reveal dos **Baús Encantados**, o item volta a ficar centralizado sob o
+  baú: o pop da roleta (`translate(-50%, -50%)`) não se aplica mais ao prêmio
+  do modal, que já está no fluxo.
 - Paperdoll da ficha (`Itens equipados`) voltou a ficar centralizado na coluna.
 - Chrome visual das áreas legais e cookies alinhado ao tema público (ouro/marrom,
   `public-pages.css` + `terms.css` remapeável no público e no painel), no lugar
