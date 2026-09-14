@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { CircleUserRound } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { programsApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
@@ -11,7 +12,7 @@ import { PdlSymbol } from '../PdlSymbol'
 function navActive(path: string, to: string, end?: boolean) {
   if (end) {
     // Landing cancela em `/` (site aberto) ou fica em `/home` (Coming Soon / pós-login).
-    if (to === '/') return path === '/' || path === '/home'
+    if (LANDING_PATHS.includes(to)) return LANDING_PATHS.includes(path)
     return path === to
   }
   return path === to || path.startsWith(`${to}/`)
@@ -21,6 +22,7 @@ export function SiteNav() {
   const { t } = useTranslation('public')
   const { user } = useAuth()
   const { pathname } = useLocation()
+  const landingPath = useLandingPath()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const resources = useQuery({
@@ -29,7 +31,7 @@ export function SiteNav() {
     staleTime: 15000,
   })
   const links = [
-    { to: '/', label: t('nav.home'), end: true },
+    { to: landingPath, label: t('nav.home'), end: true },
     { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
@@ -65,7 +67,7 @@ export function SiteNav() {
   return (
     <nav className={`site-nav${scrolled ? ' scrolled' : ''}`} aria-label={t('nav.main')}>
       <div className="site-nav-shell">
-        <Link className="site-nav-brand" to="/" aria-label={t('nav.brandHome')}>
+        <Link className="site-nav-brand" to={landingPath} aria-label={t('nav.brandHome')}>
           <PdlSymbol className="site-brand-mark" />
           <span className="site-brand-copy"><strong>PDL PRO</strong><small>Lineage</small></span>
         </Link>

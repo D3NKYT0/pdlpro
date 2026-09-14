@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { themeImage } from '../../theme/assets'
+import { useLandingPath } from '../../hooks/useLandingPath'
 import { programsApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
 
 export function SiteFooter() {
   const { t } = useTranslation('public')
+  const landingPath = useLandingPath()
   const year = new Date().getFullYear()
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
   const resources = useQuery({
@@ -20,7 +22,7 @@ export function SiteFooter() {
   const downloadsEnabled = visible('downloads')
 
   const exploreLinks = [
-    { to: '/', label: t('nav.home') },
+    { to: landingPath, label: t('nav.home') },
     { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
@@ -47,7 +49,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="site-footer-shell container">
         <div className="site-footer-brand">
-          <Link className="site-footer-brand-link" to="/" aria-label={t('nav.brandHome')}>
+          <Link className="site-footer-brand-link" to={landingPath} aria-label={t('nav.brandHome')}>
             <PdlSymbol className="site-footer-mark" />
             <span className="site-footer-brand-copy">
               <strong>PDL PRO</strong>

@@ -11,9 +11,13 @@ import { contentApi, serverApi } from '../../services/api'
 import type { ThemePresentation } from '../../services/api'
 import { PortalHomePage, PortalPublicLayout } from './PortalTheme'
 
-vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: null }) }))
+const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
+
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi.fn() } }))
-vi.mock('../../services/domain/server.service', () => ({ serverApi: { rankings: vi.fn() } }))
+vi.mock('../../services/domain/server.service', () => ({
+  serverApi: { rankings: vi.fn(), info: vi.fn() },
+}))
 
 const presentation: ThemePresentation = {
   renderer: 'portal-v1',
@@ -62,7 +66,24 @@ afterEach(() => {
   cleanup()
   vi.useRealTimers()
   vi.restoreAllMocks()
+  session.user = null
 })
+
+function renderChrome(comingSoon = false) {
+  const client = queryClient()
+  client.setQueryData(['server-info'], { coming_soon: comingSoon })
+  return render(wrap(
+    <QueryClientProvider client={client}>
+      <MemoryRouter>
+        <Routes>
+          <Route element={<PortalPublicLayout presentation={presentation} />}>
+            <Route index element={<p>Conteúdo</p>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  ))
+}
 
 it('executa countdown e troca o ranking usando dados reais da API', async () => {
   render(wrap(
@@ -80,21 +101,28 @@ it('executa countdown e troca o ranking usando dados reais da API', async () => 
 })
 
 it('entrega o chrome completo e o comportamento do menu móvel', () => {
-  render(wrap(
-    <MemoryRouter>
-      <Routes>
-        <Route element={<PortalPublicLayout presentation={presentation} />}>
-          <Route index element={<p>Conteúdo</p>} />
-        </Route>
-      </Routes>
-    </MemoryRouter>,
-  ))
+  renderChrome()
   fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
   expect(screen.getByText('Conteúdo').closest('[data-theme-surface="public"]')).not.toBeNull()
   expect(screen.getByRole('navigation', { name: 'Navegação móvel' })).toBeVisible()
   expect(document.body.style.overflow).toBe('hidden')
   fireEvent.click(screen.getByRole('button', { name: 'Fechar menu' }))
   expect(screen.queryByRole('navigation', { name: 'Navegação móvel' })).toBeNull()
+})
+
+it('aponta a home do tema para /home durante o Coming Soon quando há sessão', () => {
+  session.user = { username: 'root' }
+  renderChrome(true)
+
+  expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/home')
+})
+
+it('mantém a home do tema na raiz para visitante durante o Coming Soon', () => {
+  renderChrome(true)
+
+  expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/')
+  expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/')
 })
 
 it('respeita ordem e omissão de seções declaradas no presentation', async () => {

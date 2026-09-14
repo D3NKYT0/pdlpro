@@ -23,9 +23,12 @@ const resourcesMock = vi.hoisted(() => ({
   data: [] as Array<{ code: string; enabled: boolean }>,
 }))
 
+const launchMock = vi.hoisted(() => ({ comingSoon: false }))
+
 vi.mock('@tanstack/react-query', () => ({
   useQuery: ({ queryKey }: { queryKey: string[] }) => {
     if (queryKey[0] === 'resources') return { data: resourcesMock.data, isPending: false, error: null }
+    if (queryKey[0] === 'server-info') return { data: { coming_soon: launchMock.comingSoon }, isPending: false }
     if (queryKey[0] === 'support-tickets') return { data: { summary: { waiting_user: 0 } } }
     if (queryKey[0] === 'denkynho-pet') return {
       data: {
@@ -59,6 +62,7 @@ afterEach(async () => {
   cleanup()
   await i18n.changeLanguage('pt')
   resourcesMock.data = []
+  launchMock.comingSoon = false
   themeMock.current.presentation = {
     renderer: 'portal-v1',
     shells: {
@@ -129,6 +133,17 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
   expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Meu perfil' })).toBeVisible()
+})
+
+it('volta para a landing em /home quando o Coming Soon está ligado', () => {
+  launchMock.comingSoon = true
+  const { container } = renderAt('/panel/profile')
+  expect(container.querySelector('.site-back')).toHaveAttribute('href', '/home')
+})
+
+it('volta para a raiz do site quando o Coming Soon está desligado', () => {
+  const { container } = renderAt('/panel/profile')
+  expect(container.querySelector('.site-back')).toHaveAttribute('href', '/')
 })
 
 it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () => {

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { contentApi, serverApi } from '../../services/api'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
@@ -11,14 +12,19 @@ import { themeAsset } from '../../theme/assets'
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
 
 function activeRoute(pathname: string, target: string) {
-  return target === '/' ? pathname === '/' : pathname === target || pathname.startsWith(`${target}/`)
+  if (LANDING_PATHS.includes(target)) return LANDING_PATHS.includes(pathname)
+  return pathname === target || pathname.startsWith(`${target}/`)
 }
 
 export function PortalPublicLayout({ presentation }: { presentation: ThemePresentation }) {
   const { t } = useTranslation('public')
   const { user } = useAuth()
   const { pathname } = useLocation()
+  const landingPath = useLandingPath()
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigation = presentation.navigation.map((item) =>
+    item.to === '/' ? { ...item, to: landingPath } : item,
+  )
 
   useEffect(() => setMenuOpen(false), [pathname])
   useEffect(() => {
@@ -30,11 +36,11 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
     <div className="portal-shell" data-theme-surface="public">
       <header className="site-header">
         <div className="site-header__inner container">
-          <Link to="/" className="logo" aria-label={t('portal.homeAria')}>
+          <Link to={landingPath} className="logo" aria-label={t('portal.homeAria')}>
             <img src={themeAsset('images/logo-text.png')} alt="Valorem" />
           </Link>
           <nav className="nav-main" aria-label={t('nav.main')}>
-            {presentation.navigation.map((item) => (
+            {navigation.map((item) => (
               <Link className={activeRoute(pathname, item.to) ? 'is-active' : undefined} key={`${item.to}-${item.label}`} to={item.to}>
                 {item.label}
               </Link>
@@ -53,7 +59,7 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
       <div className={`mobile-nav${menuOpen ? ' is-open' : ''}`} hidden={!menuOpen}>
         <button className="mobile-nav__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label={t('portal.mobileNav')}>
-          {presentation.navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
+          {navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
           <Link to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
           {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
         </nav>
@@ -63,12 +69,12 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
 
       <footer className="site-footer">
         <div className="container">
-          <Link to="/" className="logo logo--footer">
+          <Link to={landingPath} className="logo logo--footer">
             <img src={themeAsset('images/logo-footer.png')} alt="Valorem" />
           </Link>
           <p className="site-footer__tagline">{presentation.footer.tagline}</p>
           <nav className="footer-nav" aria-label={t('portal.footerNav')}>
-            {presentation.navigation.slice(0, 5).map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
+            {navigation.slice(0, 5).map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
           </nav>
           <p className="site-footer__copy">{presentation.footer.copyright}</p>
           <p className="site-footer__copy portal-legal-links">

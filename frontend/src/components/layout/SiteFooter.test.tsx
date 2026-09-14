@@ -6,18 +6,28 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, expect, it, vi } from 'vitest'
 import { SiteFooter } from './SiteFooter'
 
+const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
+const launch = vi.hoisted(() => ({ comingSoon: false }))
+
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/programs.service', () => ({
   programsApi: { resources: vi.fn(async () => []) },
+}))
+vi.mock('../../services/domain/server.service', () => ({
+  serverApi: { info: vi.fn(async () => ({ coming_soon: launch.comingSoon })) },
 }))
 
 afterEach(() => {
   cleanup()
   vi.unstubAllEnvs()
+  session.user = null
+  launch.comingSoon = false
 })
 
 function mount(resources: Array<{ code: string; enabled: boolean }> = []) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   client.setQueryData(['resources'], resources)
+  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon })
   return render(
     <QueryClientProvider client={client}>
       <MemoryRouter>
@@ -67,6 +77,24 @@ it('expõe a comunidade apenas quando a URL do Discord está configurada', () =>
   expect(community).toHaveAttribute('href', 'https://discord.gg/pdl')
   expect(community).toHaveAttribute('target', '_blank')
   expect(community).toHaveAttribute('rel', 'noreferrer')
+})
+
+it('leva marca e Início para /home durante o Coming Soon quando há sessão', () => {
+  session.user = { username: 'root' }
+  launch.comingSoon = true
+
+  mount()
+
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/home')
+})
+
+it('mantém Início na raiz para visitante durante o Coming Soon', () => {
+  launch.comingSoon = true
+
+  mount()
+
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
 })
 
 it('oculta links de conteúdo pausados no rodapé', () => {

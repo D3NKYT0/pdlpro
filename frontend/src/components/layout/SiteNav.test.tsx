@@ -3,27 +3,43 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import { afterEach, expect, it, vi } from 'vitest'
 import i18n from '../../i18n'
 import { SiteNav } from './SiteNav'
 
-vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: null }) }))
+const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
+const launch = vi.hoisted(() => ({ comingSoon: false }))
+
+vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/programs.service', () => ({
   programsApi: { resources: vi.fn(async () => []) },
 }))
+vi.mock('../../services/domain/server.service', () => ({
+  serverApi: { info: vi.fn(async () => ({ coming_soon: launch.comingSoon })) },
+}))
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  session.user = null
+  launch.comingSoon = false
+})
+
+function CurrentPath() {
+  return <p data-testid="current-path">{useLocation().pathname}</p>
+}
 
 function mount(path = '/rankings', resources: Array<{ code: string; enabled: boolean }> = []) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   client.setQueryData(['resources'], resources)
+  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon })
   return render(
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={client}>
         <MemoryRouter initialEntries={[path]}>
           <SiteNav />
+          <CurrentPath />
         </MemoryRouter>
       </QueryClientProvider>
     </I18nextProvider>,
@@ -71,4 +87,48 @@ it.each(['/', '/home'])('marca Início como página atual em %s', (path) => {
   expect(home).toHaveAttribute('aria-current', 'page')
   expect(home.closest('li')).toHaveClass('active')
   expect(container.querySelector('.site-nav-drawer li.active a')).toBe(home)
+})
+
+it('aponta Início e marca para /home quando o Coming Soon está ligado e há sessão', () => {
+  session.user = { username: 'root' }
+  launch.comingSoon = true
+  mount('/news')
+
+  const home = screen.getByRole('link', { name: 'Início' })
+  expect(home).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/home')
+})
+
+it('mantém Início na raiz para visitante durante o Coming Soon', () => {
+  launch.comingSoon = true
+  mount('/news')
+
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/')
+})
+
+it('mantém Início na raiz com o site aberto mesmo autenticado', () => {
+  session.user = { username: 'root' }
+  mount('/news')
+
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
+})
+
+it('clicar em Início durante o Coming Soon mantém o visitante autenticado na landing', async () => {
+  const user = userEvent.setup()
+  session.user = { username: 'root' }
+  launch.comingSoon = true
+  mount('/news')
+
+  await user.click(screen.getByRole('link', { name: 'Início' }))
+  expect(screen.getByTestId('current-path').textContent).toBe('/home')
+})
+
+it('clicar em Início com o site aberto leva para a raiz', async () => {
+  const user = userEvent.setup()
+  session.user = { username: 'root' }
+  mount('/news')
+
+  await user.click(screen.getByRole('link', { name: 'Início' }))
+  expect(screen.getByTestId('current-path').textContent).toBe('/')
 })

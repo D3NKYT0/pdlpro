@@ -24,6 +24,10 @@ A ativação sem data de lançamento é rejeitada pela API.
 1. Visitantes em `/` veem a tela full-bleed com contagem regressiva.
 2. A landing permanece em `/home` (com chrome público). Sem Coming Soon, `/home`
    redireciona para `/`.
+   Com o modo ativo, os atalhos de Início do chrome (menu, marca, rodapé, tema
+   `portal-v1` e “voltar ao site” do painel) apontam para `/home` quando há sessão,
+   para que quem já entrou não volte à contagem regressiva. Visitante anônimo e site
+   aberto continuam indo para `/`.
 3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
 4. Entrar é a ação principal; Downloads fica secundário.
 5. Login e Downloads permanecem acessíveis pelos botões da página.
@@ -58,8 +62,10 @@ hero do tema.
 
 - Backend: `apps/server/tests/test_server_info.py`, `apps/staff/tests/test_staff_config_api.py`,
   login restrito em `apps/accounts/tests/test_auth_api.py`.
-- Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, admin em
-  `AdminSettings.test.tsx`.
+- Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, chrome em
+  `SiteNav.test.tsx`, `SiteFooter.test.tsx`, `PrivateLayout.test.tsx`, `PortalTheme.test.tsx`,
+  admin em `AdminSettings.test.tsx`.
 - Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
-  abrir `/home` e confirmar a landing; tentar login de jogador com restrição de staff;
+  abrir `/home` e confirmar a landing; autenticado, clicar em Início no menu e conferir que
+  permanece em `/home`; tentar login de jogador com restrição de staff;
   visitar `/login` já autenticado e confirmar o redirect para `/home`.

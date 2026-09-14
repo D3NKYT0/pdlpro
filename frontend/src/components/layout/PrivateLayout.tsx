@@ -28,6 +28,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useLandingPath } from "../../hooks/useLandingPath";
 import { canAccessStaff } from "../../lib/staff";
 import { notificationApi, supportApi, contentApi } from "../../services/api";
 import { usePanelTheme } from "../../theme/usePanelTheme";
@@ -88,6 +89,7 @@ export function PrivateLayout() {
   const resourceEnabled = (code: string) =>
     !resources.data?.some((r) => r.code === code && !r.enabled);
   const { user, logout } = useAuth();
+  const landingPath = useLandingPath();
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -157,7 +159,7 @@ export function PrivateLayout() {
             className={`sidebar-drawer${menuOpen ? " is-open" : ""}`}
             id="panel-navigation-drawer"
           >
-            <NavLink className="site-back" to="/">
+            <NavLink className="site-back" to={landingPath}>
               <ArrowLeft aria-hidden="true" />
               <span>{tPublic("nav.home")}</span>
             </NavLink>
