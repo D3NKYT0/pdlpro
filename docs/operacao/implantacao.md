@@ -134,6 +134,8 @@ SECRET_KEY=valor-aleatorio-com-no-minimo-50-caracteres
 DB_NAME=pdl
 DB_USER=pdl
 DB_PASSWORD=valor-aleatorio-com-no-minimo-16-caracteres
+REDIS_PASSWORD=valor-aleatorio-com-no-minimo-16-caracteres
+REDIS_URL=redis://:valor-aleatorio-com-no-minimo-16-caracteres@redis:6379/0
 ALLOWED_HOSTS=pdl.denky.dev.br
 CORS_ALLOWED_ORIGINS=https://pdl.denky.dev.br
 CSRF_TRUSTED_ORIGINS=https://pdl.denky.dev.br
@@ -200,7 +202,10 @@ git pull --ff-only
 ### Aplicação
 
 - Defina `DJANGO_SETTINGS_MODULE=core.settings.production`.
-- Gere um `SECRET_KEY` longo, aleatório e exclusivo.
+- Gere um `SECRET_KEY` longo, aleatório e exclusivo; os settings de produção recusam iniciar com
+  valor vazio, marcador de exemplo ou menos de 50 caracteres.
+- Defina `REDIS_PASSWORD`: o Compose de produção sobe o Redis com `--requirepass` e o
+  `deploy.sh` interrompe quando a senha tem menos de 16 caracteres.
 - Configure `ALLOWED_HOSTS`, CORS, CSRF e WebSocket com os domínios reais.
 - Use `GUNICORN_RELOAD=false`.
 - Execute `python manage.py check --deploy`.
@@ -230,6 +235,8 @@ git pull --ff-only
 - Faça backups automáticos de banco e mídia e teste a restauração.
 - Preserve o volume `media_files`: ele contém versões de temas instaladas e outros uploads.
   O entrypoint cria `/app/media/themes` e ajusta sua permissão no primeiro deploy.
+- Preserve o volume `private_files` (`/app/private`, modo 700): guarda os pacotes de
+  portabilidade LGPD, que só saem pela view com token assinado e não são servidos em `/media/`.
 
 ### Integrações
 

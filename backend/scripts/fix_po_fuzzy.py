@@ -147,52 +147,130 @@ FIXES: dict[str, tuple[str, str]] = {
         "Example: [57, 4037]. On overlaps, the first category in order wins.",
         "Ejemplo: [57, 4037]. En solapamientos, vale la primera categoría en el orden.",
     ),
+    # admin, LGPD, termos e catálogo de itens/iscas
+    "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois fatores apaga o segredo e o usuário precisa cadastrá-la novamente.": (
+        (
+            "The TOTP secret is neither shown nor editable. Clearing two-factor authentication "
+            "deletes the secret and the user must set it up again."
+        ),
+        (
+            "El secreto TOTP no se muestra ni se puede editar. Desmarcar la autenticación en dos "
+            "pasos borra el secreto y el usuario debe configurarla de nuevo."
+        ),
+    ),
+    "IP do aceite": ("Acceptance IP", "IP de la aceptación"),
+    "User-agent do aceite": ("Acceptance user agent", "User agent de la aceptación"),
+    "Log de exportação de dados (LGPD)": (
+        "Data export log (LGPD)",
+        "Registro de exportación de datos (LGPD)",
+    ),
+    "Logs de exportação de dados (LGPD)": (
+        "Data export logs (LGPD)",
+        "Registros de exportación de datos (LGPD)",
+    ),
+    "Exclusão de conta (LGPD)": ("Account deletion (LGPD)", "Eliminación de cuenta (LGPD)"),
+    "Código de ação da conta": ("Account action code", "Código de acción de la cuenta"),
+    "Códigos de ação da conta": ("Account action codes", "Códigos de acción de la cuenta"),
+    "Aceitar documentos legais": ("Accept legal documents", "Aceptar documentos legales"),
+    "Registra o aceite explícito da versão vigente dos Termos, Privacidade e Acordo.": (
+        "Records the explicit acceptance of the current version of the Terms, Privacy and Agreement.",
+        "Registra la aceptación explícita de la versión vigente de los Términos, la Privacidad y el Acuerdo.",
+    ),
+    "Item": ("Item", "Ítem"),
+    "Personagem": ("Character", "Personaje"),
+    "Cria um leilão de item do inventário (kind=item) ou de personagem L2 (kind=character).": (
+        "Creates an auction for an inventory item (kind=item) or an L2 character (kind=character).",
+        "Crea una subasta de un ítem del inventario (kind=item) o de un personaje L2 (kind=character).",
+    ),
+    "Histórico de versões legais": ("Legal version history", "Historial de versiones legales"),
+    "Lista o histórico público de versões dos documentos legais.": (
+        "Lists the public version history of the legal documents.",
+        "Lista el historial público de versiones de los documentos legales.",
+    ),
+    "Iscas comuns": ("Common baits", "Cebos comunes"),
+    "Fichas compram isca comum; iscas comuns compram as encantadas.": (
+        "Tokens buy common bait; common baits buy the enchanted ones.",
+        "Las fichas compran cebo común; los cebos comunes compran los encantados.",
+    ),
+    "Custo em iscas comuns quando a isca é encantada.": (
+        "Cost in common baits when the bait is enchanted.",
+        "Coste en cebos comunes cuando el cebo es encantado.",
+    ),
+    "Troca fichas por pacotes de iscas para o jogador autenticado.": (
+        "Exchanges tokens for bait packs for the authenticated player.",
+        "Cambia fichas por paquetes de cebos para el jugador autenticado.",
+    ),
+    "Lança a linha de pesca consumindo iscas e devolve o resultado da captura.": (
+        "Casts the fishing line consuming baits and returns the catch result.",
+        "Lanza el sedal consumiendo cebos y devuelve el resultado de la captura.",
+    ),
+    "Recusado para o jogador. Simulações são confirmadas pela equipe em POST /api/v1/staff/payments/{id}/confirm-mock/.": (
+        (
+            "Refused for the player. Simulations are confirmed by the team at "
+            "POST /api/v1/staff/payments/{id}/confirm-mock/."
+        ),
+        (
+            "Rechazado para el jugador. Las simulaciones las confirma el equipo en "
+            "POST /api/v1/staff/payments/{id}/confirm-mock/."
+        ),
+    ),
+    "Confirmar pagamento simulado": ("Confirm simulated payment", "Confirmar pago simulado"),
+    "Credita a carteira de um pedido mock pendente. Não confirma Mercado Pago nem Stripe. Use somente em desenvolvimento ou para regularizar uma simulação consciente.": (
+        (
+            "Credits the wallet of a pending mock order. It does not confirm Mercado Pago or "
+            "Stripe. Use it only in development or to settle a deliberate simulation."
+        ),
+        (
+            "Acredita la cartera de un pedido mock pendiente. No confirma Mercado Pago ni "
+            "Stripe. Úsalo solo en desarrollo o para regularizar una simulación consciente."
+        ),
+    ),
+    "A senha precisa ter ao menos 8 caracteres.": (
+        "The password must have at least 8 characters.",
+        "La contraseña debe tener al menos 8 caracteres.",
+    ),
+    "Extensão de exemplo": ("Sample extension", "Extensión de ejemplo"),
 }
 
 
-_SINGLE = re.compile(
-    r'^msgid "(?P<id>[^"]+)"\nmsgstr "(?P<str>[^"]*)"$',
-    re.MULTILINE,
-)
-_MULTILINE_EMPTY = re.compile(
-    r'^msgid ""\n"(?P<id>[^"]+)"\nmsgstr ""$',
-    re.MULTILINE,
-)
+_MSGID = re.compile(r'^msgid ((?:".*"\n?)+)', re.MULTILINE)
+_MSGSTR = re.compile(r'^msgstr ((?:".*"\n?)+)', re.MULTILINE)
+
+
+def _joined(value: str) -> str:
+    """Concatena as partes de um literal PO (``"a"\\n"b"``) em uma única string."""
+
+    return "".join(re.findall(r'"(.*)"', value))
 
 
 def apply(path: Path, lang_index: int) -> tuple[int, int]:
-    text = path.read_text(encoding="utf-8")
+    """Reescreve msgstr do catálogo com os valores de FIXES e remove marcas fuzzy.
+
+    Percorre bloco a bloco para alcançar também msgids longos, que o gettext quebra em várias
+    linhas. Retorna quantas entradas foram corrigidas e quantas referências ``#|`` saíram.
+    """
+
+    blocks = path.read_text(encoding="utf-8").split("\n\n")
     updated = 0
+    stripped = 0
+    result: list[str] = []
 
-    def repl_single(match: re.Match[str]) -> str:
-        nonlocal updated
-        msgid = match.group("id")
-        current = match.group("str")
-        if msgid not in FIXES:
-            return match.group(0)
-        target = FIXES[msgid][lang_index]
-        if current == target:
-            return match.group(0)
-        updated += 1
-        return f'msgid "{msgid}"\nmsgstr "{target}"'
+    for block in blocks:
+        msgid = _MSGID.search(block)
+        msgstr = _MSGSTR.search(block)
+        if msgid and msgstr:
+            key = _joined(msgid.group(1))
+            target = FIXES.get(key)
+            if target and _joined(msgstr.group(1)) != target[lang_index]:
+                escaped = target[lang_index].replace("\\", "\\\\").replace('"', '\\"')
+                block = block[: msgstr.start()] + f'msgstr "{escaped}"\n' + block[msgstr.end() :]
+                updated += 1
+        stripped += len(re.findall(r'^#\| .*\n', block, flags=re.MULTILINE))
+        block = re.sub(r"^#\| .*\n", "", block, flags=re.MULTILINE)
+        block = re.sub(r"^#, fuzzy\n", "", block, flags=re.MULTILINE)
+        result.append(block)
 
-    def repl_multi(match: re.Match[str]) -> str:
-        nonlocal updated
-        msgid = match.group("id")
-        if msgid not in FIXES:
-            return match.group(0)
-        updated += 1
-        target = FIXES[msgid][lang_index]
-        return f'msgid ""\n"{msgid}"\nmsgstr "{target}"'
-
-    new_text = _SINGLE.sub(repl_single, text)
-    new_text = _MULTILINE_EMPTY.sub(repl_multi, new_text)
-
-    stripped = len(re.findall(r'^#\| msgid ".*"\n', new_text, flags=re.MULTILINE))
-    new_text = re.sub(r'^#\| msgid ".*"\n', "", new_text, flags=re.MULTILINE)
-    new_text = re.sub(r"^#, fuzzy\n", "", new_text, flags=re.MULTILINE)
-
-    path.write_text(new_text, encoding="utf-8")
+    path.write_text("\n\n".join(result), encoding="utf-8")
     return updated, stripped
 
 

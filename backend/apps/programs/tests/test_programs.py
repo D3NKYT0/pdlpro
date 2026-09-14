@@ -1,9 +1,12 @@
 from datetime import timedelta
+from io import BytesIO
 from uuid import uuid4
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
+from PIL import Image
 from rest_framework.test import APIClient
 
 from apps.games.infrastructure.models import (
@@ -105,6 +108,55 @@ def test_supporter_cannot_self_approve(api, player):
     row = Supporter.objects.get(user=player)
     assert row.status == "pending" and row.commission_percent == 0
     assert api.get("/api/v1/staff/supporters/").status_code == 403
+
+
+def supporter_image(fmt: str, size=(32, 32)) -> SimpleUploadedFile:
+    buffer = BytesIO()
+    Image.new("RGB", size, (30, 90, 160)).save(buffer, format=fmt)
+    return SimpleUploadedFile(
+        f"logo.{fmt.lower()}", buffer.getvalue(), content_type=f"image/{fmt.lower()}"
+    )
+
+
+def test_supporter_image_is_rewritten_as_static_png(api, player):
+    result = api.post(
+        "/api/v1/customer/supporters/",
+        {
+            "name": "Creator",
+            "channel_url": "https://example.com",
+            "image": supporter_image("JPEG"),
+        },
+        format="multipart",
+    )
+
+    assert result.status_code == 200, result.data
+    row = Supporter.objects.get(user=player)
+    assert row.image.name.endswith(".png")
+    with Image.open(row.image) as stored:
+        assert stored.format == "PNG"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        supporter_image("GIF"),
+        supporter_image("PNG", size=(1025, 8)),
+        SimpleUploadedFile(
+            "logo.png",
+            b"<svg xmlns='http://www.w3.org/2000/svg'><script>alert(1)</script></svg>",
+            content_type="image/png",
+        ),
+    ],
+)
+def test_supporter_image_refuses_content_outside_the_allowlist(api, player, payload):
+    result = api.post(
+        "/api/v1/customer/supporters/",
+        {"name": "Creator", "channel_url": "https://example.com", "image": payload},
+        format="multipart",
+    )
+
+    assert result.status_code == 400, result.data
+    assert not Supporter.objects.filter(user=player).exists()
 
 
 def test_supporter_review_and_payout_are_once(staff, supporter):

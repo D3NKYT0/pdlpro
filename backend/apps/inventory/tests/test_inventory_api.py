@@ -25,7 +25,7 @@ def test_register_and_list_accounts(api, player):
     assert before.status_code == 200
     assert before.data["accounts"] == []
 
-    response = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    response = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     assert response.status_code == 200
     assert response.data["login"] == "hero"
     listed = api.get("/api/v1/customer/server/accounts/")
@@ -38,7 +38,7 @@ def test_register_and_list_accounts(api, player):
 @pytest.mark.django_db
 def test_withdraw_and_deposit_roundtrip(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     from common.di.bootstrap import DependencyInjection
 
     gateway = DependencyInjection.root().resolve(ILineageGateway)
@@ -67,7 +67,7 @@ def test_withdraw_and_deposit_roundtrip(api, player):
 @pytest.mark.django_db
 def test_trade_moves_panel_item_between_characters(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     from common.di.bootstrap import DependencyInjection
 
     gateway = DependencyInjection.root().resolve(ILineageGateway)
@@ -106,7 +106,7 @@ def test_trade_moves_panel_item_between_characters(api, player):
 @pytest.mark.django_db
 def test_withdraw_rejects_item_marked_not_tradeable_in_xml(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     from common.di.bootstrap import DependencyInjection
 
     gateway = DependencyInjection.root().resolve(ILineageGateway)
@@ -131,7 +131,7 @@ def test_withdraw_rejects_item_marked_not_tradeable_in_xml(api, player):
 @pytest.mark.django_db
 def test_character_equipment_is_read_only_and_scoped_to_the_account(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     from common.di.bootstrap import DependencyInjection
 
     gateway = DependencyInjection.root().resolve(ILineageGateway)
@@ -163,7 +163,7 @@ def test_character_equipment_is_read_only_and_scoped_to_the_account(api, player)
 @pytest.mark.django_db
 def test_character_items_expose_inventory_and_warehouse_locations(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     from common.di.bootstrap import DependencyInjection
 
     gateway = DependencyInjection.root().resolve(ILineageGateway)

@@ -25,8 +25,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 COPY . .
 
 RUN useradd -m -u 1000 appuser && \
-    mkdir -p /app/logs /app/staticfiles /app/media && \
-    chown -R appuser:appuser /app/logs /app/staticfiles /app/media && \
+    mkdir -p /app/logs /app/staticfiles /app/media /app/private && \
+    chown -R appuser:appuser /app/logs /app/staticfiles /app/media /app/private && \
+    chmod 700 /app/private && \
     chmod +x /app/entrypoint.sh
 
 EXPOSE 8000

@@ -31,7 +31,7 @@ def _seed_character(player):
 @pytest.mark.django_db
 def test_list_and_get_character_includes_sheet_fields(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     char = _seed_character(player)
 
     listed = api.get("/api/v1/customer/server/characters/?login=hero")
@@ -59,7 +59,7 @@ def test_list_and_get_character_includes_sheet_fields(api, player):
 @pytest.mark.django_db
 def test_character_services_nickname_sex_unstuck(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     char = _seed_character(player)
     wallets = DependencyInjection.root().resolve(IWalletRepository)
     wallet = wallets.get_or_create(player.id)

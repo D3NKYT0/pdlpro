@@ -16,6 +16,9 @@ local_settings.py
 *.sqlite3-journal
 /backend/staticfiles/
 /backend/media/
+# Armazenamento privado (pacotes LGPD) e o equivalente usado pela suíte de testes.
+/backend/private/
+/backend/test-private/
 /backend/htmlcov/
 
 # Logs — somente sob */log/ (ver AGENTS.md); conteúdo ignorado, pasta versionada

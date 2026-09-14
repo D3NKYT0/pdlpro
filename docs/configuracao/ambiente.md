@@ -13,11 +13,13 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | Variável | Finalidade | Desenvolvimento |
 |---|---|---|
 | `DJANGO_SETTINGS_MODULE` | Seleciona settings de development, test ou production | `core.settings.development` |
-| `SECRET_KEY` | Assinatura criptográfica do Django | Trocar o valor de exemplo |
+| `SECRET_KEY` | Assinatura criptográfica do Django | Trocar o valor de exemplo; produção recusa iniciar com valor vazio, com marcador de exemplo (`django-insecure`, `change-me`) ou menor que 50 caracteres |
 | `DEBUG` | Modo de debug nos settings base | `true` |
 | `ALLOWED_HOSTS` | Hosts HTTP aceitos, separados por vírgula | `localhost,127.0.0.1` |
 | `DATABASE_URL` | Banco principal do painel | `sqlite:///db.sqlite3` |
 | `REDIS_URL` | Cache, Channels e broker/result backend Celery | `redis://redis:6379/0` no Compose |
+| `REDIS_PASSWORD` | Senha exigida pelo Redis em produção (`--requirepass`); entra também na `REDIS_URL` | vazio em desenvolvimento, onde o Redis não é publicado |
+| `PRIVATE_MEDIA_ROOT` | Diretório dos arquivos que nunca são publicados (pacote de portabilidade LGPD) | `backend/private/` |
 | `PROJECT_TITLE` | Nome exibido pelo projeto | `PDL PRO` |
 | `PROJECT_URL` | URL pública do backend/proxy | `http://localhost` |
 | `FRONTEND_URL` | URL usada em links enviados ao usuário | `http://localhost:3000` |
@@ -143,6 +145,7 @@ No mínimo:
 DJANGO_SETTINGS_MODULE=core.settings.production
 DEBUG=false
 SECRET_KEY=<segredo-longo-e-aleatorio>
+REDIS_PASSWORD=<senha-longa-e-aleatoria>
 ALLOWED_HOSTS=painel.exemplo.com
 PROJECT_URL=https://painel.exemplo.com
 FRONTEND_URL=https://painel.exemplo.com
@@ -154,6 +157,11 @@ RUN_COLLECTSTATIC=true
 ```
 
 Não reutilize os valores de exemplo e não armazene o `.env` de produção no repositório.
+`./setup.sh configure-production --rotate-secret-key --rotate-redis-password` gera os dois
+segredos e reescreve a `REDIS_URL` com a senha; no Windows,
+`scripts/configure-production.ps1` faz o mesmo ao preencher valores fracos ou ausentes. O
+`deploy.sh` recusa subir sem `REDIS_PASSWORD` e os settings de produção recusam iniciar com
+`SECRET_KEY` de exemplo.
 
 ## Denkynho
 

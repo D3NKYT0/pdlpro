@@ -1,5 +1,8 @@
 from .base import *
 from .monitoring import configure_error_monitoring
+from .security import require_production_secret_key
+
+require_production_secret_key(SECRET_KEY)
 
 DEBUG = False
 REST_FRAMEWORK["NUM_PROXIES"] = env.int("TRUSTED_PROXY_COUNT", default=2)

@@ -253,6 +253,37 @@ def test_configure_production_skip_docker_can_replace_weak_password(tmp_path: Pa
     assert "PDL_SKIP_DOCKER=1" in output
 
 
+def test_configure_production_generates_a_redis_password_and_uses_it_in_the_url(tmp_path: Path):
+    env_file = tmp_path / ".env"
+    env_file.write_text(_production_stub(), encoding="utf-8")
+
+    result = _run_configure(env_file, tmp_path / "backups", "-y")
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    redis_password = _read(env_file, "REDIS_PASSWORD")
+    assert len(redis_password) >= 16
+    assert redis_password not in (result.stdout + result.stderr)
+    assert _read(env_file, "REDIS_URL") == f"redis://:{redis_password}@redis:6379/0"
+    assert _count(env_file, "REDIS_PASSWORD") == 1
+
+
+def test_configure_production_keeps_a_strong_redis_password_until_asked_to_rotate(tmp_path: Path):
+    env_file = tmp_path / ".env"
+    strong = "b1a2c3d4e5f6a7b8c9d0e1f2"
+    env_file.write_text(_production_stub() + f"REDIS_PASSWORD={strong}\n", encoding="utf-8")
+
+    kept = _run_configure(env_file, tmp_path / "backups", "-y")
+
+    assert kept.returncode == 0, kept.stdout + kept.stderr
+    assert _read(env_file, "REDIS_PASSWORD") == strong
+
+    rotated = _run_configure(env_file, tmp_path / "backups", "-y", "--rotate-redis-password")
+
+    assert rotated.returncode == 0, rotated.stdout + rotated.stderr
+    assert _read(env_file, "REDIS_PASSWORD") != strong
+    assert _read(env_file, "REDIS_URL").startswith("redis://:")
+
+
 def test_configure_production_writes_a_config_backup(tmp_path: Path):
     env_file = tmp_path / ".env"
     env_file.write_text(_production_stub(), encoding="utf-8")

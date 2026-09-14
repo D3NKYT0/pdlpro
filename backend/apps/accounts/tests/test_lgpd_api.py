@@ -1,9 +1,12 @@
 import gzip
 import json
+from datetime import timedelta
+from pathlib import Path
 
 import pytest
 from django.core import mail
 from django.core.cache import cache
+from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import DataExportLog, User
@@ -28,7 +31,7 @@ def clear_lgpd_throttle_cache():
 
 @pytest.mark.django_db
 def test_export_data_creates_package_and_emails_link(api, user, settings, tmp_path):
-    settings.MEDIA_ROOT = tmp_path
+    settings.PRIVATE_MEDIA_ROOT = tmp_path
     settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
     api.force_authenticate(user=user)
 
@@ -76,7 +79,7 @@ def test_delete_account_requires_valid_code_then_anonymizes(api, user, settings)
 
 @pytest.mark.django_db
 def test_export_download_serves_signed_file(api, settings, tmp_path):
-    settings.MEDIA_ROOT = tmp_path
+    settings.PRIVATE_MEDIA_ROOT = tmp_path
     settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
     user = User.objects.create_user("lgpddl", "lgpddl@pdl.dev", password="Secret123!")
     api.force_authenticate(user=user)
@@ -87,3 +90,43 @@ def test_export_download_serves_signed_file(api, settings, tmp_path):
     download = APIClient().get(path)
     assert download.status_code == 200
     assert "gzip" in download["Content-Type"]
+
+
+@pytest.mark.django_db
+def test_export_package_is_stored_outside_media_and_has_no_public_url(api, user, settings, tmp_path):
+    private_root = tmp_path / "private"
+    settings.PRIVATE_MEDIA_ROOT = private_root
+    settings.MEDIA_ROOT = tmp_path / "media"
+    settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+    api.force_authenticate(user=user)
+
+    response = api.post("/api/v1/shared/me/export-data/", {}, format="json")
+    assert response.status_code == 200, response.data
+
+    export = DataExportLog.objects.get(user=user)
+    stored = Path(export.export_file.path)
+    assert stored.is_file()
+    assert private_root in stored.parents
+    assert not (tmp_path / "media").exists()
+    # O nome não pode ser adivinhável a partir do horário da solicitação.
+    assert len(stored.stem) > len("pdl-lgpd-2026-01-01T00-00-00")
+    with pytest.raises(ValueError):
+        _ = export.export_file.url
+
+
+@pytest.mark.django_db
+def test_export_download_refuses_tampered_and_expired_tokens(api, user, settings, tmp_path):
+    settings.PRIVATE_MEDIA_ROOT = tmp_path
+    settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+    api.force_authenticate(user=user)
+    created = api.post("/api/v1/shared/me/export-data/", {}, format="json")
+    url = created.data["download_url"]
+    path = url[url.find("/api/") :]
+
+    tampered = APIClient().get(path.replace(path[-8:-1], "0000000"))
+    assert tampered.status_code == 404
+
+    DataExportLog.objects.filter(user=user).update(expires_at=timezone.now() - timedelta(minutes=1))
+    expired = APIClient().get(path)
+    assert expired.status_code == 403
+    assert "Content-Disposition" not in expired

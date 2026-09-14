@@ -16,9 +16,10 @@ Opcoes:
   --domain DOMINIO          Dominio publico (padrao: o DOMAIN atual ou pdl.denky.dev.br).
   --bind-address IP         IP HTTP local (padrao: o valor atual ou 0.0.0.0).
   --port PORTA              Porta do proxy reverso (padrao: o valor atual ou 8080).
-  --rotate-secrets          Rotaciona SECRET_KEY e DB_PASSWORD.
+  --rotate-secrets          Rotaciona SECRET_KEY, DB_PASSWORD e REDIS_PASSWORD.
   --rotate-secret-key       Rotaciona somente a SECRET_KEY.
   --rotate-db-password      Rotaciona somente a senha PostgreSQL.
+  --rotate-redis-password   Rotaciona somente a senha do Redis.
   --denkynho-provider MODO  ollama | remote. Liga a geracao nesse modo.
   --denkynho-enabled BOOL   true | false. Padrao true se --denkynho-provider for passado.
   --denkynho-embeddings BOOL  true | false. MiniLM no worker.
@@ -48,6 +49,7 @@ bind_flag=0
 port_flag=0
 rotate_secret_key=0
 rotate_db_password=0
+rotate_redis_password_flag=0
 assume_yes=0
 denkynho_provider=""
 denkynho_enabled=""
@@ -79,9 +81,11 @@ while [[ $# -gt 0 ]]; do
     --rotate-secrets)
       rotate_secret_key=1
       rotate_db_password=1
+      rotate_redis_password_flag=1
       ;;
     --rotate-secret-key) rotate_secret_key=1 ;;
     --rotate-db-password) rotate_db_password=1 ;;
+    --rotate-redis-password) rotate_redis_password_flag=1 ;;
     --denkynho-provider)
       [[ $# -ge 2 ]] || die "--denkynho-provider exige ollama ou remote"
       denkynho_provider="$2"
@@ -202,6 +206,7 @@ alter_database_password() {
 
 current_secret_key="$(read_env_value SECRET_KEY)"
 current_db_password="$(read_env_value DB_PASSWORD)"
+current_redis_password="$(read_env_value REDIS_PASSWORD)"
 database_user="$(read_env_value DB_USER)"
 database_name="$(read_env_value DB_NAME)"
 database_user="${database_user:-pdl}"
@@ -216,6 +221,11 @@ fi
 if is_weak_value "$current_db_password" 16 || [[ ! "$current_db_password" =~ ^[a-zA-Z0-9._~-]+$ ]]; then
   rotate_db_password=1
 fi
+# O Compose de producao exige REDIS_PASSWORD; instalacoes antigas chegam aqui sem a chave.
+rotate_redis_password="$rotate_redis_password_flag"
+if is_weak_value "$current_redis_password" 16 || [[ ! "$current_redis_password" =~ ^[a-zA-Z0-9._~-]+$ ]]; then
+  rotate_redis_password=1
+fi
 
 if [[ "$assume_yes" -ne 1 ]]; then
   if [[ ! -t 0 ]]; then
@@ -225,6 +235,7 @@ if [[ "$assume_yes" -ne 1 ]]; then
   printf 'Proxy reverso: http://%s:%s\n' "$bind_address" "$http_port"
   [[ "$rotate_secret_key" -eq 1 ]] && printf 'SECRET_KEY: sera gerada novamente\n'
   [[ "$rotate_db_password" -eq 1 ]] && printf 'DB_PASSWORD: sera rotacionada\n'
+  [[ "$rotate_redis_password" -eq 1 ]] && printf 'REDIS_PASSWORD: sera rotacionada\n'
   [[ -n "$denkynho_provider" ]] && printf 'Denkynho: provider=%s enabled=%s\n' "$denkynho_provider" "${denkynho_enabled:-true}"
   printf '\nContinuar? [s/N] '
   read -r answer
@@ -240,8 +251,10 @@ chmod 600 "$backup_path"
 
 new_secret_key="$current_secret_key"
 new_db_password="$current_db_password"
+new_redis_password="$current_redis_password"
 [[ "$rotate_secret_key" -eq 1 ]] && new_secret_key="$(generate_hex 64)"
 [[ "$rotate_db_password" -eq 1 ]] && new_db_password="$(generate_hex 32)"
+[[ "$rotate_redis_password" -eq 1 ]] && new_redis_password="$(generate_hex 24)"
 
 database_container=""
 database_started_for_rotation=0
@@ -271,7 +284,8 @@ rollback_on_failure() {
     warn "O .env anterior foi restaurado."
   fi
 
-  unset current_secret_key current_db_password new_secret_key new_db_password denkynho_api_key
+  unset current_secret_key current_db_password current_redis_password
+  unset new_secret_key new_db_password new_redis_password denkynho_api_key
   exit "$status"
 }
 trap rollback_on_failure EXIT
@@ -288,6 +302,12 @@ if [[ "${PDL_SKIP_DOCKER:-0}" != "1" ]] && command -v docker >/dev/null 2>&1 && 
       services_to_recreate+=("$service")
     fi
   done
+
+  # A senha do Redis entra pelo command do container; sem recriar, o servico segue
+  # exigindo a senha antiga que ninguem mais tem.
+  if [[ "$rotate_redis_password" -eq 1 && -n "$(production_compose ps --status running --quiet redis 2>/dev/null)" ]]; then
+    services_to_recreate+=("redis")
+  fi
 
   if [[ "$rotate_db_password" -eq 1 ]]; then
     if [[ -z "$database_container" ]]; then
@@ -329,7 +349,8 @@ set_env_value DB_NAME "$database_name"
 set_env_value DB_USER "$database_user"
 set_env_value DB_PASSWORD "$new_db_password"
 set_env_value DATABASE_URL "postgres://${database_user}:${new_db_password}@db:5432/${database_name}"
-set_env_value REDIS_URL redis://redis:6379/0
+set_env_value REDIS_PASSWORD "$new_redis_password"
+set_env_value REDIS_URL "redis://:${new_redis_password}@redis:6379/0"
 
 set_env_value DOMAIN "$domain"
 set_env_value APP_BIND_ADDRESS "$bind_address"

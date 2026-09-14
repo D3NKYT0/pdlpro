@@ -26,7 +26,7 @@ def player(db):
 @pytest.mark.django_db
 def test_character_skills_are_read_only_and_include_icon_urls(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character(
@@ -60,7 +60,7 @@ def test_character_skills_are_read_only_and_include_icon_urls(api, player):
 @pytest.mark.django_db
 def test_character_skills_decode_enchant_from_stored_level(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     char = gateway.seed_character("hero", "Enchanter", skills=[GameSkill(1, 52)])
 
@@ -84,7 +84,7 @@ def test_character_skills_decode_enchant_from_stored_level(api, player):
 @pytest.mark.django_db
 def test_character_skills_reject_foreign_character(api, player):
     api.force_authenticate(user=player)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     foreign = gateway.seed_character("stranger", "Private", skills=[GameSkill(1, 1)])
 

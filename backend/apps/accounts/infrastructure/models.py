@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
+from common.storages import private_media_storage
 from common.validators import validate_ascii_username
 
 
@@ -229,7 +230,11 @@ class RewardClaim(BaseModel):
 
 
 class DataExportLog(BaseModel):
-    """Pacote de portabilidade LGPD gerado sob demanda para download assinado."""
+    """Pacote de portabilidade LGPD gerado sob demanda para download assinado.
+
+    ``export_file`` usa armazenamento privado: o arquivo fica fora de ``MEDIA_ROOT`` e só sai
+    pela view de download que valida o token assinado. Não exponha ``export_file.url``.
+    """
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -238,7 +243,11 @@ class DataExportLog(BaseModel):
     )
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=512, blank=True, default="")
-    export_file = models.FileField(upload_to="lgpd_exports/%Y/%m/", blank=True)
+    export_file = models.FileField(
+        upload_to="lgpd_exports/%Y/%m/",
+        storage=private_media_storage,
+        blank=True,
+    )
     file_size_bytes = models.PositiveBigIntegerField(default=0)
     expires_at = models.DateTimeField(null=True, blank=True)
     downloaded_at = models.DateTimeField(null=True, blank=True)

@@ -28,7 +28,7 @@ def buyer(db):
 @pytest.mark.django_db
 def test_list_and_buy_character(api, seller, buyer):
     api.force_authenticate(user=seller)
-    assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json").status_code == 200
+    assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json").status_code == 200
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character(
@@ -82,7 +82,7 @@ def test_list_and_buy_character(api, seller, buyer):
     assert catalog.data[0]["skills"][0]["skill_id"] == 1
 
     api.force_authenticate(user=buyer)
-    assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json").status_code == 200
+    assert api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json").status_code == 200
     order = api.post("/api/v1/customer/payments/", {"amount": "40.00", "method": "mock"}, format="json")
     confirm_mock_payment(order.data["id"])
     bought = api.post(f"/api/v1/customer/marketplace/{listing_id}/buy/", format="json")

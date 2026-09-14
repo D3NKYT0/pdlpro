@@ -17,6 +17,7 @@ STORAGES = {
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 MEDIA_ROOT = BASE_DIR / "media" / "preview"
+PRIVATE_MEDIA_ROOT = BASE_DIR / "private" / "preview"
 PAYMENT_METHODS = ["mock"]
 HCAPTCHA_SITE_KEY = ""
 HCAPTCHA_SECRET_KEY = ""

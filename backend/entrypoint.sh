@@ -26,5 +26,13 @@ if ! gosu appuser test -w /app/media/themes 2>/dev/null; then
     chown -R appuser:appuser /app/media 2>/dev/null || true
 fi
 
+# PRIVATE_MEDIA_ROOT guarda pacotes LGPD: fora de /app/media e sem leitura para outros.
+mkdir -p /app/private
+chmod 700 /app/private 2>/dev/null || true
+if ! gosu appuser test -w /app/private 2>/dev/null; then
+    echo "[entrypoint] Fixing private storage permissions..."
+    chown -R appuser:appuser /app/private 2>/dev/null || true
+fi
+
 echo "[entrypoint] Starting application..."
 exec gosu appuser "$@"

@@ -42,7 +42,12 @@ it.each([false, true])('salva textos sem espaços externos; preserva edição qu
     expect(name).toHaveValue(' Novo herói ')
   } else expect(session.refreshUser).toHaveBeenCalledTimes(1)
 })
-it.each([['text/plain', 10, 'Escolha um arquivo de imagem.'], ['image/png', 5 * 1024 * 1024 + 1, 'O avatar deve ter no máximo 5 MB.']])('recusa avatar inválido: %s / %s bytes', (type, size, message) => {
+it.each([
+  ['text/plain', 10, 'Escolha um arquivo de imagem.'],
+  ['image/gif', 10, 'Use PNG, JPEG ou WebP.'],
+  ['image/svg+xml', 10, 'Use PNG, JPEG ou WebP.'],
+  ['image/png', 2 * 1024 * 1024 + 1, 'O avatar deve ter no máximo 2 MB.'],
+])('recusa avatar inválido: %s / %s bytes', (type, size, message) => {
   const { container } = mount()
   const file = new File(['x'], 'avatar', { type: String(type) })
   Object.defineProperty(file, 'size', { value: size })
@@ -53,7 +58,9 @@ it.each([['text/plain', 10, 'Escolha um arquivo de imagem.'], ['image/png', 5 * 
 it('envia imagem, exibe preview e libera URL após salvar', async () => {
   const { user, container } = mount()
   const file = new File(['image'], 'avatar.png', { type: 'image/png' })
-  fireEvent.change(container.querySelector('input[type=file]')!, { target: { files: [file] } })
+  const input = container.querySelector('input[type=file]')!
+  expect(input).toHaveAttribute('accept', 'image/png,image/jpeg,image/webp')
+  fireEvent.change(input, { target: { files: [file] } })
   expect(screen.getByRole('img', { name: 'Avatar de Hero' })).toHaveAttribute('src', 'blob:avatar')
   await user.click(screen.getByRole('button', { name: 'Salvar alterações' }))
   const form = vi.mocked(authApi.updateMe).mock.calls[0][0] as FormData

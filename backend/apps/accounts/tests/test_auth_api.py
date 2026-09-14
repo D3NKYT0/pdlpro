@@ -1,4 +1,5 @@
 from decimal import Decimal
+from io import BytesIO
 
 import pytest
 from django.contrib.auth import get_user_model
@@ -69,26 +70,61 @@ def test_google_oauth_begin_returns_provider_authorization_url(api):
     assert "auth%2Fcallback%2Fgoogle" in response.data["authorization_url"]
 
 
+def avatar_upload(name="avatar.png", fmt="PNG", size=(48, 48)):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from PIL import Image
+
+    buffer = BytesIO()
+    Image.new("RGB", size, (30, 90, 180)).save(buffer, format=fmt)
+    return SimpleUploadedFile(name, buffer.getvalue(), content_type=f"image/{fmt.lower()}")
+
+
 @pytest.mark.django_db
 def test_update_profile_with_avatar(api, user):
-    from django.core.files.uploadedfile import SimpleUploadedFile
-
     api.force_authenticate(user=user)
-    avatar = SimpleUploadedFile(
-        "avatar.gif",
-        b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;",
-        content_type="image/gif",
-    )
+
     response = api.patch(
         "/api/v1/shared/me/",
-        {"display_name": "Sir Hero", "bio": "Guardião de Aden", "avatar": avatar},
+        {
+            "display_name": "Sir Hero",
+            "bio": "Guardião de Aden",
+            "avatar": avatar_upload("retrato.jpg", fmt="JPEG"),
+        },
         format="multipart",
     )
 
     assert response.status_code == 200, response.data
     assert response.data["display_name"] == "Sir Hero"
     assert response.data["bio"] == "Guardião de Aden"
-    assert response.data["avatar_url"].endswith(".gif")
+    # O upload é reescrito como PNG: o arquivo original nunca é servido de volta.
+    assert response.data["avatar_url"].endswith(".png")
+
+
+@pytest.mark.django_db
+def test_update_profile_rejects_avatar_that_is_not_a_static_allowed_image(api, user):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    api.force_authenticate(user=user)
+    payloads = {
+        "svg": SimpleUploadedFile(
+            "avatar.svg",
+            b"<svg xmlns='http://www.w3.org/2000/svg'><script>alert(1)</script></svg>",
+            content_type="image/svg+xml",
+        ),
+        "gif": SimpleUploadedFile(
+            "avatar.gif",
+            b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;",
+            content_type="image/gif",
+        ),
+        "huge": avatar_upload(size=(1200, 1200)),
+    }
+
+    for label, upload in payloads.items():
+        response = api.patch("/api/v1/shared/me/", {"avatar": upload}, format="multipart")
+        assert response.status_code == 400, f"{label}: {response.data}"
+
+    user.refresh_from_db()
+    assert not user.avatar
 
 
 @pytest.mark.django_db

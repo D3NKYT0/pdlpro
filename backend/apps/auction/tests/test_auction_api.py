@@ -32,7 +32,7 @@ def bidder(db):
 @pytest.mark.django_db
 def test_create_bid_and_close_auction(api, seller, bidder):
     api.force_authenticate(user=seller)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character("aseller", "SirAuc", items=[GameItem(57, "Adena", 200, 0)])
@@ -64,7 +64,7 @@ def test_create_bid_and_close_auction(api, seller, bidder):
     auction_id = created.data["id"]
 
     api.force_authenticate(user=bidder)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway.seed_character("abidder", "SirBid")
     order = api.post("/api/v1/customer/payments/", {"amount": "30.00", "method": "mock"}, format="json")
     confirm_mock_payment(order.data["id"])
@@ -87,7 +87,7 @@ def test_create_bid_and_close_auction(api, seller, bidder):
 @pytest.mark.django_db
 def test_create_bid_and_close_character_auction(api, seller, bidder):
     api.force_authenticate(user=seller)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character(
@@ -129,7 +129,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
     auction_id = created.data["id"]
 
     api.force_authenticate(user=bidder)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     order = api.post("/api/v1/customer/payments/", {"amount": "50.00", "method": "mock"}, format="json")
     confirm_mock_payment(order.data["id"])
     bid = api.post(
@@ -149,7 +149,7 @@ def test_create_bid_and_close_character_auction(api, seller, bidder):
 @pytest.mark.django_db
 def test_character_auction_returns_without_bids(api, seller):
     api.force_authenticate(user=seller)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character("aseller", "SirBack")
@@ -167,7 +167,7 @@ def test_character_auction_returns_without_bids(api, seller):
 @pytest.mark.django_db
 def test_marketplace_blocked_when_character_auction_open(api, seller):
     api.force_authenticate(user=seller)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character("aseller", "SirDup")
@@ -192,7 +192,7 @@ def test_marketplace_blocked_when_character_auction_open(api, seller):
 @pytest.mark.django_db
 def test_character_auction_rejects_online_character(api, seller):
     api.force_authenticate(user=seller)
-    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     gateway = DependencyInjection.root().resolve(ILineageGateway)
     assert isinstance(gateway, NullLineageGateway)
     char = gateway.seed_character("aseller", "SirOn")

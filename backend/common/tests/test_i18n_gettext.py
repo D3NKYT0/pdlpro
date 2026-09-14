@@ -18,6 +18,11 @@ from common.i18n import (
 )
 from common.middleware import ApiLanguageMiddleware
 
+TOTP_ADMIN_HELP = (
+    "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois fatores "
+    "apaga o segredo e o usuário precisa cadastrá-la novamente."
+)
+
 
 class ProductLanguageHelpersTests(SimpleTestCase):
     def test_resolve_language_normalizes_and_falls_back(self):
@@ -212,6 +217,29 @@ class CatalogResolutionTests(SimpleTestCase):
             self.assertEqual(_("Excluir passkey"), "Eliminar passkey")
         finally:
             translation.deactivate()
+
+    def test_security_hardening_messages_are_translated(self):
+        """Mensagens novas de imagem, senha do jogo e admin 2FA precisam sair em EN e ES."""
+        expected = {
+            "en": {
+                "A senha precisa ter ao menos 8 caracteres.": "The password must have at least 8 characters.",
+                "Use PNG, JPEG ou WebP estático.": "Use PNG, JPEG or static WebP.",
+                "A imagem deve ter no máximo 2 MB.": "The image must be at most 2 MB.",
+            },
+            "es": {
+                "A senha precisa ter ao menos 8 caracteres.": "La contraseña debe tener al menos 8 caracteres.",
+                "Use PNG, JPEG ou WebP estático.": "Usa PNG, JPEG o WebP estático.",
+                "A imagem deve ter no máximo 2 MB.": "La imagen debe tener como máximo 2 MB.",
+            },
+        }
+        for language, pairs in expected.items():
+            activate_language(language)
+            try:
+                for msgid, msgstr in pairs.items():
+                    self.assertEqual(_(msgid), msgstr)
+                self.assertNotIn("segredo TOTP", _(TOTP_ADMIN_HELP))
+            finally:
+                translation.deactivate()
 
     def test_openapi_translation_data_file_matches_catalogs(self):
         """scripts/openapi_translations.json is the source of truth for both catalogs."""

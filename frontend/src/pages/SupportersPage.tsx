@@ -1,5 +1,6 @@
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Coins, TicketPercent } from "lucide-react";
@@ -13,6 +14,10 @@ import {
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
 import { ProgramHeader } from "../components/programs/ProgramHeader";
+import toast from "react-hot-toast";
+
+const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+const IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
 export function SupportersPage() {
   const { t } = useTranslation("panel");
@@ -20,6 +25,7 @@ export function SupportersPage() {
     queryKey: ["supporter"],
     queryFn: programsApi.supporter,
   });
+  const [image, setImage] = useState<File | null>(null);
   const action = useProgramAction();
   const data = query.data;
   const profile = data?.profile;
@@ -72,8 +78,8 @@ export function SupportersPage() {
                 onSubmit={(event) => {
                   event.preventDefault();
                   const form = new FormData(event.currentTarget);
-                  const file = form.get("image");
-                  if (file instanceof File && !file.size) form.delete("image");
+                  form.delete("image");
+                  if (image) form.set("image", image);
                   void action.run(
                     () => programsApi.apply(form),
                     t("supporters.applyToast"),
@@ -123,7 +129,25 @@ export function SupportersPage() {
                     type="file"
                     name="image"
                     accept="image/png,image/jpeg,image/webp"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0] ?? null;
+                      const problem = !file
+                        ? null
+                        : !IMAGE_TYPES.includes(file.type)
+                          ? "supporters.imageUnsupportedFormat"
+                          : file.size > MAX_IMAGE_BYTES
+                            ? "supporters.imageTooLarge"
+                            : null;
+                      if (problem) {
+                        toast.error(t(problem));
+                        event.target.value = "";
+                        setImage(null);
+                        return;
+                      }
+                      setImage(file);
+                    }}
                   />
+                  <small className="muted">{t("supporters.imageHint")}</small>
                 </label>
                 <div className="program-actions">
                   <Button disabled={action.busy} type="submit">

@@ -18,6 +18,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - `./setup.sh pack-release` e `scripts/pdl_release.py` para gerar o pacote
   localmente; Compose de produção interpola `PDL_BACKEND_IMAGE` e `PDL_WEB_IMAGE`.
 - Guia [Distribuição](../operacao/distribuicao.md).
+- Armazenamento privado (`PRIVATE_MEDIA_ROOT`, volume `private_files`) para o pacote de
+  portabilidade LGPD: o arquivo sai apenas pela view com token assinado, tem nome com sufixo
+  aleatório e não é publicado em `/media/`.
+- Recusa de inicialização em produção quando a `SECRET_KEY` está vazia, contém marcador de
+  exemplo (`django-insecure`, `change-me`) ou tem menos de 50 caracteres.
+- Senha obrigatória no Redis de produção (`--requirepass`, `REDIS_URL` com credencial),
+  gerada pelo configurador (`--rotate-redis-password`) e exigida pelo `deploy.sh`.
+- Saneamento compartilhado de imagens enviadas (`common/images.py`): PNG/JPEG/WebP estáticos,
+  até 2 MB e 1024 × 1024, reescritos como PNG sem metadados. Aplica-se a avatar, ícone de item
+  customizado e imagem de apoiador.
 
 ### Alterado
 
@@ -25,6 +35,18 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   aponta para uma imagem publicada; nesse caso o padrão é `--pull`.
 - Pacote de release e clone sem `docker-compose.yml` de desenvolvimento passam
   a ser aceitos pelo `setup.sh` (árvore só com `docker-compose.prod.yml`).
+- Senha de conta do jogo passa a exigir oito caracteres no cadastro e na troca (antes seis),
+  na API e nos formulários do painel.
+- Nginx de desenvolvimento e produção enviam CSP, `X-Frame-Options`, `Referrer-Policy` e
+  `X-Content-Type-Options` em `/static/` e `/media/`, negam `/media/lgpd_exports/` e só
+  aceitam `X-Forwarded-For` de proxies internos para a chave do rate limit.
+- O segredo TOTP deixa de aparecer no admin do usuário; desmarcar a autenticação em dois
+  fatores apaga o segredo e obriga novo cadastro.
+
+### Corrigido
+
+- Webhook de pagamento com `order_id` de um pedido e `external_id` de outro passa a ser
+  recusado e registrado em log, em vez de liquidar o pedido indicado nos metadados.
 
 ## [2.4.0] - 2026-09-13
 

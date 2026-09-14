@@ -238,7 +238,9 @@ class DjangoLgpdPrivacyService(ILgpdPrivacyService):
 
     def _save_compressed_export(self, export_log: DataExportLog, payload: dict[str, Any]) -> None:
         stamp = str(payload.get("exported_at", "")).replace(":", "-").split(".")[0] or "export"
-        filename = f"pdl-lgpd-{stamp}.json.gz"
+        # O sufixo aleatório evita que o caminho seja adivinhável mesmo se o diretório
+        # privado for exposto por engano em uma futura configuração de servidor.
+        filename = f"pdl-lgpd-{stamp}-{secrets.token_urlsafe(12)}.json.gz"
         compressed = gzip.compress(
             json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"),
             compresslevel=6,

@@ -7,6 +7,7 @@ from apps.programs.models import (
     Supporter,
     SystemResource,
 )
+from common.images import sanitize_uploaded_image
 
 
 class SupporterSerializer(serializers.ModelSerializer):
@@ -14,7 +15,8 @@ class SupporterSerializer(serializers.ModelSerializer):
     Meta.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. ``image`` é reescrita como PNG
+    estático sem metadados antes de ser gravada.
 
     Campos declarados: ``username``.
     """
@@ -22,9 +24,7 @@ class SupporterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
 
     def validate_image(self, image):
-        if image and image.size > 5 * 1024 * 1024:
-            raise serializers.ValidationError(_("A imagem deve ter no máximo 5 MB."))
-        return image
+        return sanitize_uploaded_image(image, filename="supporter.png")
 
     class Meta:
         model = Supporter

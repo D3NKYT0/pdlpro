@@ -7,6 +7,8 @@ volumes:
   redis_data:
   static_files:
   media_files:
+  # Arquivos que nunca são publicados como estático (pacote de portabilidade LGPD).
+  private_files:
 
 x-backend-app-image: &backend-app-image
   image: ${PDL_BACKEND_IMAGE:-pdl_backend:local}
@@ -25,7 +27,7 @@ x-backend-environment: &backend-environment
   LOG_ENVIRONMENT: production
   DEBUG: "false"
   GUNICORN_RELOAD: "false"
-  REDIS_URL: redis://redis:6379/0
+  REDIS_URL: redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0
   DATABASE_URL: postgres://${DB_USER:?DB_USER is required}:${DB_PASSWORD:?DB_PASSWORD is required}@db:5432/${DB_NAME:?DB_NAME is required}
 
 services:
@@ -50,15 +52,19 @@ services:
 
   redis:
     image: redis:8-alpine
-    command: redis-server --appendonly yes
+    # Cache, fila Celery e presença do Channels ficam autenticados: qualquer container da
+    # rede interna alcança a porta 6379, então a senha é o que separa os serviços do PDL.
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
     restart: unless-stopped
     logging: *default-logging
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
     volumes:
       - redis_data:/data
     networks:
       - pdl_net
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD-SHELL", "redis-cli --no-auth-warning -a \"$${REDIS_PASSWORD}\" ping | grep -q PONG"]
       interval: 10s
       timeout: 10s
       retries: 20
@@ -78,6 +84,7 @@ services:
     volumes:
       - static_files:/app/staticfiles
       - media_files:/app/media
+      - private_files:/app/private
     depends_on:
       db:
         condition: service_healthy
@@ -102,6 +109,7 @@ services:
       RUN_COLLECTSTATIC: "false"
     volumes:
       - media_files:/app/media
+      - private_files:/app/private
     depends_on:
       backend:
         condition: service_started
@@ -124,6 +132,7 @@ services:
       RUN_COLLECTSTATIC: "false"
     volumes:
       - media_files:/app/media
+      - private_files:/app/private
     depends_on:
       backend:
         condition: service_started

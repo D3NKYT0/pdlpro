@@ -22,7 +22,9 @@ import { AchievementGrid } from '../components/AchievementGrid'
 import { useAuth } from '../contexts/AuthContext'
 import { authApi } from '../services/api'
 
-const MAX_AVATAR_BYTES = 5 * 1024 * 1024
+// Mesmo contrato do backend, que reescreve o arquivo como PNG estático até 2 MB.
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024
+const AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/webp']
 const MAX_BIO_LENGTH = 500
 
 export function ProfilePage() {
@@ -58,6 +60,10 @@ export function ProfilePage() {
     if (!file) return
     if (!file.type.startsWith('image/')) {
       toast.error(t('profile.avatarNotImage'))
+      return
+    }
+    if (!AVATAR_TYPES.includes(file.type)) {
+      toast.error(t('profile.avatarUnsupportedFormat'))
       return
     }
     if (file.size > MAX_AVATAR_BYTES) {
@@ -125,7 +131,7 @@ export function ProfilePage() {
               <div><span className="panel-eyebrow">{t('profile.publicInfo')}</span><h2>{t('profile.editTitle')}</h2></div>
             </div>
             <form onSubmit={saveProfile}>
-              <input ref={fileInput} type="file" accept="image/*" hidden onChange={chooseAvatar} />
+              <input ref={fileInput} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={chooseAvatar} />
               <Field>
                 {t('profile.displayName')}
                 <input value={displayName} maxLength={80} onChange={(event) => setDisplayName(event.target.value)} placeholder={user?.username} />

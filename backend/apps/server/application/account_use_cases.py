@@ -430,7 +430,7 @@ class UpdateGamePasswordInput:
 
 
 class UpdateGamePasswordUseCase(UseCase[UpdateGamePasswordInput, None]):
-    """Verifica acesso à conta e senha com pelo menos seis caracteres antes de alterar a senha no
+    """Verifica acesso à conta e senha com pelo menos oito caracteres antes de alterar a senha no
     gateway.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UpdateGamePasswordInput``. O
@@ -445,8 +445,8 @@ class UpdateGamePasswordUseCase(UseCase[UpdateGamePasswordInput, None]):
         login = data.login or data.actor.username
         if not self._access.can_access(data.actor.user_id, data.actor.username, login):
             raise AuthorizationError()
-        if len(data.password) < 6:
-            raise ValidationDomainError("A senha precisa ter ao menos 6 caracteres.")
+        if len(data.password) < 8:
+            raise ValidationDomainError("A senha precisa ter ao menos 8 caracteres.")
         self._lineage.update_account_password(login, data.password)
 
 

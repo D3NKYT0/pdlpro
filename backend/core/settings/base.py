@@ -150,6 +150,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+# Fora de MEDIA_ROOT de propósito: o Nginx serve /media/, então nada aqui pode
+# ficar acessível sem passar por uma view que confere autorização.
+# O valor pode chegar vazio pelo .env; nesse caso vale o diretório padrão.
+PRIVATE_MEDIA_ROOT = Path(env("PRIVATE_MEDIA_ROOT", default="") or BASE_DIR / "private")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

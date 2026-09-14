@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
@@ -21,6 +22,8 @@ from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
+
+logger = logging.getLogger(__name__)
 
 
 def _configured_methods() -> list[str]:
@@ -558,6 +561,10 @@ class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderE
     Retorna None se não localizar; a validação da assinatura e da origem do evento deve ocorrer
     antes desta chamada.
 
+    Quando o evento chega com ``order_id`` (metadado que o gateway apenas repassa) e o pedido já
+    tem ``external_id`` de outra cobrança, a liquidação é recusada: aceitar o metadado nesse caso
+    permitiria apontar um pagamento barato para um pedido caro.
+
     Uso: resolva pelo container e chame ``execute(data)`` com ``ApplyGatewayPaymentInput``. O
     retorno é ``PaymentOrderEntity | None``.
     """
@@ -570,6 +577,14 @@ class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderE
         order = None
         if data.order_id:
             order = self._orders.get_by_id(data.order_id)
+            if order is not None and not self._external_id_matches(order, data.external_id):
+                logger.warning(
+                    "Webhook recusado: order_id=%s aponta para external_id=%s, evento trouxe %s",
+                    order.id,
+                    order.external_id,
+                    data.external_id,
+                )
+                return None
         if order is None and data.external_id:
             order = self._orders.get_by_external_id(data.external_id)
         if order is None:
@@ -577,3 +592,10 @@ class ApplyGatewayPaymentUseCase(UseCase[ApplyGatewayPaymentInput, PaymentOrderE
         if not data.approved:
             return order
         return self._settle.execute(SettlePaymentInput(order_id=order.id))
+
+    def _external_id_matches(self, order: PaymentOrderEntity, external_id: str) -> bool:
+        # Pedido sem external_id continua aceito: o webhook pode chegar antes de o checkout
+        # persistir o identificador do gateway.
+        if not external_id or not order.external_id:
+            return True
+        return str(order.external_id) == str(external_id)

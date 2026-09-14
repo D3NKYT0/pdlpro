@@ -7,6 +7,10 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from apps.payment.application.pricing import CoinPricingService
+from apps.payment.application.use_cases import (
+    ApplyGatewayPaymentInput,
+    ApplyGatewayPaymentUseCase,
+)
 from apps.payment.infrastructure.models import PedidoPagamento
 from apps.payment.tests.helpers import confirm_mock_payment
 from apps.wallet.domain.repositories import IWalletRepository
@@ -115,6 +119,64 @@ def test_mock_cannot_be_used_when_disabled(api, order, settings):
     response = api.post("/api/v1/customer/payments/", {"amount": "20", "method": "mock"}, format="json")
     assert response.status_code == 400
     assert not WalletTransaction.objects.exists()
+
+
+def _apply_gateway_payment() -> ApplyGatewayPaymentUseCase:
+    return DependencyInjection.root().create_scope().resolve(ApplyGatewayPaymentUseCase)
+
+
+def test_webhook_settles_the_order_that_owns_the_external_id(owner):
+    order = PedidoPagamento.objects.create(
+        user=owner, amount=50, coins=50, currency="BRL", method="mercadopago",
+        status="processing", external_id="mp-500",
+    )
+
+    settled = _apply_gateway_payment().execute(
+        ApplyGatewayPaymentInput(external_id="mp-500", order_id=order.id, approved=True)
+    )
+
+    assert settled is not None
+    order.refresh_from_db()
+    assert order.status == "confirmed"
+    assert Wallet.objects.get(user=owner).balance == 50
+
+
+def test_webhook_metadata_cannot_point_a_cheap_payment_at_another_order(owner):
+    paid = PedidoPagamento.objects.create(
+        user=owner, amount=5, coins=5, currency="BRL", method="mercadopago",
+        status="processing", external_id="mp-cheap",
+    )
+    expensive = PedidoPagamento.objects.create(
+        user=owner, amount=500, coins=500, currency="BRL", method="mercadopago",
+        status="processing", external_id="mp-expensive",
+    )
+
+    result = _apply_gateway_payment().execute(
+        ApplyGatewayPaymentInput(external_id="mp-cheap", order_id=expensive.id, approved=True)
+    )
+
+    assert result is None
+    expensive.refresh_from_db()
+    paid.refresh_from_db()
+    assert expensive.status == "processing"
+    assert paid.status == "processing"
+    assert not WalletTransaction.objects.exists()
+
+
+def test_webhook_still_settles_when_the_order_has_no_external_id_yet(owner):
+    order = PedidoPagamento.objects.create(
+        user=owner, amount=30, coins=30, currency="BRL", method="mercadopago",
+        status="processing", external_id="",
+    )
+
+    settled = _apply_gateway_payment().execute(
+        ApplyGatewayPaymentInput(external_id="mp-inflight", order_id=order.id, approved=True)
+    )
+
+    assert settled is not None
+    order.refresh_from_db()
+    assert order.status == "confirmed"
+    assert Wallet.objects.get(user=owner).balance == 30
 
 
 def _pricing() -> CoinPricingService:

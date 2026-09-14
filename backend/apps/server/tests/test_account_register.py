@@ -45,13 +45,13 @@ def test_register_creates_alternate_login_when_username_is_taken(api):
     gateway.link_account("admin", str(owner.id))
 
     api.force_authenticate(user=player)
-    blocked = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass1"}, format="json")
+    blocked = api.post("/api/v1/customer/server/accounts/register/", {"password": "l2pass123"}, format="json")
     assert blocked.status_code == 409
     assert blocked.data["error_code"] == "ACCOUNT_ALREADY_LINKED"
 
     created = api.post(
         "/api/v1/customer/server/accounts/register/",
-        {"password": "l2pass1", "login": "admin2"},
+        {"password": "l2pass123", "login": "admin2"},
         format="json",
     )
     assert created.status_code == 200, created.data
@@ -73,7 +73,7 @@ def test_register_claims_unlinked_existing_login_with_password(api):
     listed = api.get("/api/v1/customer/server/accounts/")
     assert listed.data["primary"]["status"] == "unclaimed"
 
-    rejected = api.post("/api/v1/customer/server/accounts/register/", {"password": "wrong1"}, format="json")
+    rejected = api.post("/api/v1/customer/server/accounts/register/", {"password": "wrongpass1"}, format="json")
     assert rejected.status_code == 400
 
     claimed = api.post("/api/v1/customer/server/accounts/register/", {"password": "GamePass1"}, format="json")
@@ -144,3 +144,29 @@ def test_link_existing_account_becomes_primary_when_username_is_taken(api):
     assert listed.data["accounts"][0]["login"] == "knight"
     assert listed.data["accounts"][0]["is_primary"] is True
     assert listed.data["slots"]["used"] == 0
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("endpoint", ["register", "password"])
+def test_game_account_password_needs_eight_characters(api, endpoint):
+    player = User.objects.create_user(username="shorty", email="shorty@pdl.dev", password="Secret123")
+    gateway = _gateway()
+    gateway.register_account("shorty", "GamePass1", "shorty@pdl.dev")
+    gateway.link_account("shorty", str(player.id))
+    api.force_authenticate(user=player)
+
+    rejected = api.post(
+        f"/api/v1/customer/server/accounts/{endpoint}/",
+        {"password": "l2pass1"},
+        format="json",
+    )
+
+    assert rejected.status_code == 400, rejected.data
+    assert gateway.validate_credentials("shorty", "GamePass1")
+
+    accepted = api.post(
+        f"/api/v1/customer/server/accounts/{endpoint}/",
+        {"password": "l2pass123"},
+        format="json",
+    )
+    assert accepted.status_code == 200, accepted.data

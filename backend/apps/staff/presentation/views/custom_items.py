@@ -1,11 +1,8 @@
 import json
-from io import BytesIO
 
-from django.core.files.base import ContentFile
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
-from PIL import Image, ImageOps
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
@@ -21,6 +18,7 @@ from apps.server.application.custom_items import (
     catalog_choices,
 )
 from apps.server.domain.item_catalog import ITEM_CATEGORIES, ITEM_GRADES
+from common.images import sanitize_uploaded_image
 from common.permissions import IsStaffMember
 from common.views import InjectedAPIView
 
@@ -63,25 +61,7 @@ class CustomItemSerializer(serializers.Serializer):
         return value
 
     def validate_image(self, value):
-        if value is None:
-            return value
-        if value.size > 2 * 1024 * 1024:
-            raise serializers.ValidationError(_("A imagem deve ter no máximo 2 MB."))
-        try:
-            value.seek(0)
-            with Image.open(value) as img:
-                if img.format not in {"PNG", "JPEG", "WEBP"} or getattr(img, "is_animated", False):
-                    raise serializers.ValidationError(_("Use PNG, JPEG ou WebP estático."))
-                if max(img.size) > 1024:
-                    raise serializers.ValidationError(_("Dimensões máximas: 1024 × 1024 pixels."))
-                clean = ImageOps.exif_transpose(img).convert("RGBA")
-                sanitized = Image.new("RGBA", clean.size)
-                sanitized.paste(clean)
-                output = BytesIO()
-                sanitized.save(output, format="PNG")
-            return ContentFile(output.getvalue(), name="icon.png")
-        except (OSError, ValueError, Image.DecompressionBombError):
-            raise serializers.ValidationError(_("Imagem inválida.")) from None
+        return sanitize_uploaded_image(value, filename="icon.png")
 
 
 class CustomItemQuery(serializers.Serializer):

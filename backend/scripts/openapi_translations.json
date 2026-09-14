@@ -223,9 +223,9 @@
     "Lists the auctions created by the authenticated user.",
     "Lista las subastas creadas por el usuario autenticado."
   ],
-  "Cria um novo leilão a partir de um item do inventário do usuário autenticado.": [
-    "Creates a new auction from an item in the authenticated user's inventory.",
-    "Crea una nueva subasta a partir de un ítem del inventario del usuario autenticado."
+  "Cria um leilão de item do inventário (kind=item) ou de personagem L2 (kind=character).": [
+    "Creates an auction for an inventory item (kind=item) or an L2 character (kind=character).",
+    "Crea una subasta de un ítem del inventario (kind=item) o de un personaje L2 (kind=character)."
   ],
   "Registra um lance no leilão informado para o usuário autenticado.": [
     "Places a bid on the given auction for the authenticated user.",
@@ -411,9 +411,9 @@
     "Buy baits",
     "Comprar cebos"
   ],
-  "Compra iscas de pesca para o jogador autenticado com a quantidade informada.": [
-    "Buys fishing baits for the authenticated player in the given quantity.",
-    "Compra cebos de pesca para el jugador autenticado con la cantidad indicada."
+  "Troca fichas por pacotes de iscas para o jogador autenticado.": [
+    "Exchanges tokens for bait packs for the authenticated player.",
+    "Cambia fichas por paquetes de cebos para el jugador autenticado."
   ],
   "Estatísticas de jogos": [
     "Game statistics",
@@ -531,9 +531,9 @@
     "Cast line",
     "Lanzar el sedal"
   ],
-  "Lança a linha de pesca, opcionalmente usando uma isca, e devolve o resultado da captura.": [
-    "Casts the fishing line, optionally using a bait, and returns the catch result.",
-    "Lanza el sedal de pesca, opcionalmente usando un cebo, y devuelve el resultado de la captura."
+  "Lança a linha de pesca consumindo iscas e devolve o resultado da captura.": [
+    "Casts the fishing line consuming baits and returns the catch result.",
+    "Lanza el sedal consumiendo cebos y devuelve el resultado de la captura."
   ],
   "Retorna o estado do minijogo de economia para o jogador autenticado.": [
     "Returns the state of the economy minigame for the authenticated player.",
@@ -643,9 +643,33 @@
     "Cancels the given payment order belonging to the authenticated user.",
     "Cancela el pedido de pago indicado perteneciente al usuario autenticado."
   ],
-  "Confirma o pagamento do pedido informado para o usuário autenticado.": [
-    "Confirms the payment of the given order for the authenticated user.",
-    "Confirma el pago del pedido indicado para el usuario autenticado."
+  "Recusado para o jogador. Simulações são confirmadas pela equipe em POST /api/v1/staff/payments/{id}/confirm-mock/.": [
+    "Refused for the player. Simulations are confirmed by the team at POST /api/v1/staff/payments/{id}/confirm-mock/.",
+    "Rechazado para el jugador. Las simulaciones las confirma el equipo en POST /api/v1/staff/payments/{id}/confirm-mock/."
+  ],
+  "Confirmar pagamento simulado": [
+    "Confirm simulated payment",
+    "Confirmar pago simulado"
+  ],
+  "Credita a carteira de um pedido mock pendente. Não confirma Mercado Pago nem Stripe. Use somente em desenvolvimento ou para regularizar uma simulação consciente.": [
+    "Credits the wallet of a pending mock order. It does not confirm Mercado Pago or Stripe. Use it only in development or to settle a deliberate simulation.",
+    "Acredita la cartera de un pedido mock pendiente. No confirma Mercado Pago ni Stripe. Úsalo solo en desarrollo o para regularizar una simulación consciente."
+  ],
+  "Aceitar documentos legais": [
+    "Accept legal documents",
+    "Aceptar documentos legales"
+  ],
+  "Registra o aceite explícito da versão vigente dos Termos, Privacidade e Acordo.": [
+    "Records the explicit acceptance of the current version of the Terms, Privacy and Agreement.",
+    "Registra la aceptación explícita de la versión vigente de los Términos, la Privacidad y el Acuerdo."
+  ],
+  "Histórico de versões legais": [
+    "Legal version history",
+    "Historial de versiones legales"
+  ],
+  "Lista o histórico público de versões dos documentos legais.": [
+    "Lists the public version history of the legal documents.",
+    "Lista el historial público de versiones de los documentos legales."
   ],
   "Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto.": [
     "Sends the order to the gateway and returns charge data such as PIX or boleto.",

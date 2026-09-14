@@ -43,4 +43,10 @@ O mantenedor confirmará o recebimento quando possível, avaliará severidade e 
 - Aplique atualizações de dependências, faça backups testados e monitore os health checks.
 - Permita instalar/ativar temas somente a superadministradores, mantenha o limite de upload
   no proxy e não contorne a validação para aceitar HTML, JavaScript ou URLs externas.
+- Gere `SECRET_KEY` e `REDIS_PASSWORD` pelo configurador de produção. Produção recusa iniciar
+  com chave de exemplo e o Redis do Compose exige senha.
+- Mantenha `PRIVATE_MEDIA_ROOT` fora do diretório servido pelo proxy: os pacotes LGPD só devem
+  sair pela view com token assinado.
+- Preserve os cabeçalhos de segurança e a negação de `/media/lgpd_exports/` no Nginx, e mantenha
+  o `X-Forwarded-For` confiável restrito aos proxies internos usados pelo rate limit.
 - Rotacione imediatamente qualquer segredo que possa ter sido exposto.

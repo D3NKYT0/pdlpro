@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.accounts.domain.entities import UserEntity
+from common.images import sanitize_uploaded_image
 from common.mixins import UUIDPublicFieldsMixin
 from common.validators import validate_ascii_username
 
@@ -175,7 +176,8 @@ class UpdateProfileSerializer(serializers.Serializer):
     """Valida os campos editáveis do perfil e o upload opcional de avatar.
 
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
-    validated_data. A autorização pertence ao fluxo chamador.
+    validated_data. A autorização pertence ao fluxo chamador. O avatar aprovado chega em
+    ``validated_data`` já reescrito como PNG estático.
 
     Campos declarados: ``display_name``, ``bio``, ``avatar``.
     """
@@ -183,6 +185,9 @@ class UpdateProfileSerializer(serializers.Serializer):
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
     avatar = serializers.ImageField(required=False)
+
+    def validate_avatar(self, value):
+        return sanitize_uploaded_image(value, filename="avatar.png")
 
 
 class PasskeyCredentialSerializer(serializers.Serializer):

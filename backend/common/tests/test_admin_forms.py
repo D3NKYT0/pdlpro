@@ -87,6 +87,62 @@ def test_user_change_form_uses_safe_password_and_compact_special_widgets():
     assert "admin/js/SelectFilter2.js" in str(form.media)
 
 
+def test_user_change_form_never_exposes_the_totp_secret():
+    request = RequestFactory().get("/admin/accounts/user/1/change/")
+    request.user = AnonymousUser()
+    admin_form_class = admin.site._registry[User].get_form(request, obj=User(username="staffer"))
+
+    assert "totp_secret" not in PDLUserChangeForm.base_fields
+    assert "totp_secret" not in admin_form_class.base_fields
+
+
+@pytest.mark.django_db
+def test_user_change_page_hides_secret_and_disabling_2fa_clears_it(client):
+    user_model = get_user_model()
+    operator = user_model.objects.create_superuser(
+        username="admin_2fa",
+        email="admin-2fa@example.com",
+        password="test-password",
+    )
+    target = user_model.objects.create_user(
+        username="withsecret",
+        email="withsecret@example.com",
+        password="test-password",
+    )
+    target.is_2fa_enabled = True
+    target.totp_secret = "JBSWY3DPEHPK3PXP"
+    target.save(update_fields=["is_2fa_enabled", "totp_secret"])
+    client.force_login(operator)
+    url = reverse("admin:accounts_user_change", args=[target.pk])
+
+    page = client.get(url)
+
+    assert page.status_code == 200
+    assert "JBSWY3DPEHPK3PXP" not in page.content.decode()
+    assert 'name="totp_secret"' not in page.content.decode()
+
+    response = client.post(
+        url,
+        {
+            "username": target.username,
+            "email": target.email,
+            "display_name": "",
+            "bio": "",
+            "role": target.role,
+            "is_active": "on",
+            "is_email_verified": "on",
+            "fichas": "0",
+            "terms_and_privacy_version": "",
+            "terms_accepted_user_agent": "",
+        },
+    )
+
+    assert response.status_code == 302, getattr(response, "context", {})
+    target.refresh_from_db()
+    assert target.is_2fa_enabled is False
+    assert target.totp_secret == ""
+
+
 def test_user_admin_add_form_uses_password_confirmation_fields():
     request = RequestFactory().get("/admin/accounts/user/add/")
     request.user = AnonymousUser()

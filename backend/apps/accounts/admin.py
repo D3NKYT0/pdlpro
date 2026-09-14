@@ -45,7 +45,13 @@ class UserAdmin(PDLModelAdmin):
         ),
         (
             _("Segurança"),
-            {"fields": ("is_email_verified", "is_2fa_enabled", "totp_secret", "last_login")},
+            {
+                "fields": ("is_email_verified", "is_2fa_enabled", "last_login"),
+                "description": _(
+                    "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em "
+                    "dois fatores apaga o segredo e o usuário precisa cadastrá-la novamente."
+                ),
+            },
         ),
         (_("Economia"), {"fields": ("fichas",)}),
         (_("Termos"), {"fields": ("terms_accepted_at", "terms_and_privacy_version", "terms_accepted_ip", "terms_accepted_user_agent")}),

@@ -196,7 +196,7 @@ export function AccountsPage() {
               ) : null}
               <Field>
                 {t('accounts.gamePassword')}
-                <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={6} />
+                <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={8} />
               </Field>
               <Button type="submit" disabled={submitting !== null}>
                 {submitting === 'register'

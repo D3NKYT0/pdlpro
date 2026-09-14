@@ -71,12 +71,25 @@ class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):
     """Edita usuários com os rótulos e widgets administrativos do PDL.
 
     Preserva o tratamento de senha de UserChangeForm, exibindo o resumo seguro em vez de
-    oferecer o hash como campo de texto editável. Usado por UserAdmin.
+    oferecer o hash como campo de texto editável. ``totp_secret`` fica fora do formulário:
+    quem administra contas não precisa ler o segredo — com ele seria possível gerar códigos
+    válidos e passar pelo segundo fator da vítima. Desmarcar ``is_2fa_enabled`` apaga o
+    segredo, de modo que reativar o 2FA exija um novo cadastro pelo próprio usuário. Usado por
+    UserAdmin.
     """
 
     class Meta(UserChangeForm.Meta):
         model = User
-        fields = "__all__"
+        exclude = ("totp_secret",)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if "is_2fa_enabled" in self.fields and not user.is_2fa_enabled:
+            user.totp_secret = ""
+        if commit:
+            user.save()
+            self.save_m2m()
+        return user
 
 
 class PDLUserCreationForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserCreationForm):

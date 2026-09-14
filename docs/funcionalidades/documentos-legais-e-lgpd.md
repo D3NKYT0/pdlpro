@@ -77,4 +77,10 @@ Em `/panel/security` a seção **Privacidade, LGPD e cookies** permite:
 
 Download do pacote: `GET /api/v1/shared/lgpd-export/<token>/download/`.
 
+O arquivo é gravado em `PRIVATE_MEDIA_ROOT` (padrão `backend/private/`, volume `private_files`
+no Compose de produção), fora da árvore que o Nginx serve em `/media/`. O nome inclui um sufixo
+aleatório, o campo não expõe `url()` e a única saída é essa view, que confere o token assinado —
+links expirados ou alterados recebem 403/404 sem corpo. Inclua esse diretório no backup junto
+com banco e mídia quando precisar preservar pedidos em aberto.
+
 Pedidos de correção ou dúvidas ao DPO continuam pelos canais da página `/lgpd`.

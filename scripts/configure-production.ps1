@@ -124,6 +124,7 @@ if (-not [int]::TryParse($Port, [ref]$portNumber) -or $portNumber -lt 1 -or $por
 
 $secret = Read-EnvValue 'SECRET_KEY'
 $password = Read-EnvValue 'DB_PASSWORD'
+$redisPassword = Read-EnvValue 'REDIS_PASSWORD'
 $dbUser = Read-EnvValue 'DB_USER'
 if (-not $dbUser) { $dbUser = 'pdl' }
 $dbName = Read-EnvValue 'DB_NAME'
@@ -131,6 +132,8 @@ if (-not $dbName) { $dbName = 'pdl' }
 
 if (Test-WeakValue $secret 50) { $secret = New-HexSecret 64 }
 if (Test-WeakValue $password 16) { $password = New-HexSecret 32 }
+# O Compose de producao exige REDIS_PASSWORD e monta REDIS_URL com ela.
+if (Test-WeakValue $redisPassword 16) { $redisPassword = New-HexSecret 24 }
 
 if (-not $Yes) {
     throw 'execucao nao interativa exige -Yes'
@@ -153,7 +156,8 @@ Set-EnvValue 'DB_NAME' $dbName
 Set-EnvValue 'DB_USER' $dbUser
 Set-EnvValue 'DB_PASSWORD' $password
 Set-EnvValue 'DATABASE_URL' "postgres://${dbUser}:${password}@db:5432/${dbName}"
-Set-EnvValue 'REDIS_URL' 'redis://redis:6379/0'
+Set-EnvValue 'REDIS_PASSWORD' $redisPassword
+Set-EnvValue 'REDIS_URL' "redis://:${redisPassword}@redis:6379/0"
 Set-EnvValue 'DOMAIN' $Domain
 Set-EnvValue 'APP_BIND_ADDRESS' $BindAddress
 Set-EnvValue 'APP_HTTP_PORT' "$portNumber"

@@ -47,5 +47,9 @@ STORAGES = {
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 
+# Campos com armazenamento privado explícito escrevem em disco; cada teste que gera
+# um pacote LGPD aponta PRIVATE_MEDIA_ROOT para o próprio tmp_path.
+PRIVATE_MEDIA_ROOT = BASE_DIR / "test-private"
+
 # Testes de geração habilitam explicitamente e simulam apenas o SDK externo.
 DENKYNHO_LLM_ENABLED = False

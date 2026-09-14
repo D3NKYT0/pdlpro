@@ -50,6 +50,10 @@ O comando usa `pg_restore --clean --if-exists` e pausa os serviços ativos `back
 4. Confira amostras de usuários, pedidos, saldos, extratos, inventários e configurações.
 5. Registre revisão, data do backup, destino e resultado do ensaio.
 
+Os pacotes de portabilidade LGPD ficam em `PRIVATE_MEDIA_ROOT` (volume `private_files` em
+produção), fora de `MEDIA_ROOT`. Copie esse diretório junto com a mídia quando houver pedidos
+com link ainda válido; restaurar só o banco deixa o registro sem arquivo para download.
+
 Os registros `ThemePackage` ficam no PostgreSQL, mas os arquivos ficam em
 `MEDIA_ROOT/themes/`. Banco e mídia precisam pertencer ao mesmo ponto de recuperação;
 restaurar apenas um deles pode deixar o tema ativo apontando para uma versão ausente. Se isso

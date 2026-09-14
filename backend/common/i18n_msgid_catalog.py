@@ -99,6 +99,9 @@ _("Um serviço necessário respondeu com erro.")
 _("Serviço temporariamente indisponível.")
 _("Um serviço necessário demorou demais para responder.")
 
+# application (mensagens de ValidationDomainError levantadas em casos de uso)
+_("A senha precisa ter ao menos 8 caracteres.")
+
 # presentation / validators (API)
 _("Use apenas letras e números, sem espaços ou símbolos.")
 _("O nome de usuário deve ter entre 3 e 16 caracteres.")
