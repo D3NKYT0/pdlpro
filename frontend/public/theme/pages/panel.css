@@ -1033,6 +1033,12 @@ html.pdl-panel .admin-category[data-tone="server"] {
   --admin-tone-border: rgba(138, 155, 176, 0.28);
   --admin-tone-glow: rgba(138, 155, 176, 0.12);
 }
+html.pdl-panel .admin-category[data-tone="extensions"] {
+  --admin-tone: var(--panel-gold-bright, #c5a161);
+  --admin-tone-soft: rgba(197, 161, 97, 0.12);
+  --admin-tone-border: rgba(197, 161, 97, 0.28);
+  --admin-tone-glow: rgba(197, 161, 97, 0.12);
+}
 
 html.pdl-panel .admin-category .panel-eyebrow {
   color: var(--admin-tone);

@@ -1,4 +1,8 @@
-import type { ExtensionModule, ExtensionRouteScope } from './types'
+import type {
+  ExtensionModule,
+  ExtensionRouteScope,
+  ResolvedExtensionNavItem,
+} from './types'
 import { EXTENSION_CATALOG } from './catalog'
 
 /** Prefixo público das rotas SPA de extensão (espelha `/api/v1/extensions/` no backend). */
@@ -31,7 +35,7 @@ export function resolveEnabledExtensions(
   if (missing.length > 0 && import.meta.env.DEV) {
     console.warn(
       `[extensions] IDs não encontrados no catálogo: ${missing.join(', ')}. ` +
-        'Registre o módulo em extensions/catalog.ts.',
+        'Crie frontend/src/extensions/<id>/index.tsx exportando um ExtensionModule.',
     )
   }
   return ids.flatMap((id) => {
@@ -53,4 +57,29 @@ export function routesForScope(
         element: route.element,
       })),
   )
+}
+
+export function navItemsForScope(
+  modules: ExtensionModule[],
+  scope: ExtensionRouteScope,
+): ResolvedExtensionNavItem[] {
+  return modules.flatMap((mod) =>
+    (mod.nav ?? [])
+      .filter((item) => item.scope === scope)
+      .map((item) => ({
+        to: extensionAbsolutePath(mod.id, item.path),
+        labelKey: item.labelKey,
+        descriptionKey: item.descriptionKey,
+        ns: item.namespace ?? `ext.${mod.id}`,
+        scope,
+      })),
+  )
+}
+
+export function extensionNavItems(
+  scope: ExtensionRouteScope,
+  raw: string | undefined | null = import.meta.env.VITE_PDL_EXTENSIONS,
+  catalog: Record<string, ExtensionModule> = EXTENSION_CATALOG,
+): ResolvedExtensionNavItem[] {
+  return navItemsForScope(resolveEnabledExtensions(raw, catalog), scope)
 }

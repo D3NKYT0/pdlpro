@@ -22,6 +22,7 @@ import {
   UserRoundCog,
   WalletCards,
   X,
+  Puzzle,
   type LucideIcon,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -35,6 +36,7 @@ import { CONTEXTUAL_HELP_OUTLET_ID, ContextualHelp } from "../help/ContextualHel
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
+import { extensionNavItems } from "../../extensions";
 
 const links: Array<{
   to: string;
@@ -60,6 +62,8 @@ const links: Array<{
 export function PrivateLayout() {
   const { t } = useTranslation("panel");
   const { t: tPublic } = useTranslation("public");
+  const extensionPanelLinks = extensionNavItems("panel");
+  const extensionStaffLinks = extensionNavItems("staff");
   const resources = useQuery({
     queryKey: ["resources"],
     queryFn: programsApi.resources,
@@ -175,12 +179,26 @@ export function PrivateLayout() {
                     </NavLink>
                   );
                 })}
+              {extensionPanelLinks.map((link) => (
+                <NavLink key={link.to} to={link.to}>
+                  <Puzzle aria-hidden="true" />
+                  <span>{t(link.labelKey, { ns: link.ns })}</span>
+                </NavLink>
+              ))}
               {canAccessStaff(user) ? (
                 <NavLink to="/panel/admin">
                   <SlidersHorizontal aria-hidden="true" />
                   <span>{t("nav.admin")}</span>
                 </NavLink>
               ) : null}
+              {canAccessStaff(user)
+                ? extensionStaffLinks.map((link) => (
+                    <NavLink key={link.to} to={link.to}>
+                      <Puzzle aria-hidden="true" />
+                      <span>{t(link.labelKey, { ns: link.ns })}</span>
+                    </NavLink>
+                  ))
+                : null}
             </div>
             <div className="panel-user">
               <LanguageSwitcher className="language-switcher panel-language" id="panel-language" />

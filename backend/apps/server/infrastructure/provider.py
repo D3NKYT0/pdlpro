@@ -82,6 +82,7 @@ from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGatew
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
+from extensions.loader import lineage_query_roots
 
 
 class ServerProvider(AppProvider):
@@ -95,7 +96,10 @@ class ServerProvider(AppProvider):
     def register(self, container: Container) -> None:
         if settings.LINEAGE_DB_ENABLED:
             # O catálogo é carregado no boot; alterações nos arquivos .sql exigem recarregar o processo.
-            catalog = LineageQueryCatalog.load(getattr(settings, "LINEAGE_QUERY_MODULE", "lucerav2"))
+            catalog = LineageQueryCatalog.load(
+                getattr(settings, "LINEAGE_QUERY_MODULE", "lucerav2"),
+                extra_roots=lineage_query_roots(),
+            )
             container.register(LineageQueryCatalog, instance=catalog, lifetime=Lifetime.SINGLETON)
             container.register(ILineageGateway, SqlAlchemyLineageGateway, lifetime=Lifetime.SINGLETON)
         else:

@@ -18,6 +18,9 @@ vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi
 vi.mock('../../services/domain/server.service', () => ({
   serverApi: { rankings: vi.fn(), info: vi.fn() },
 }))
+vi.mock('../../extensions', () => ({
+  extensionNavItems: () => [],
+}))
 
 const presentation: ThemePresentation = {
   renderer: 'portal-v1',

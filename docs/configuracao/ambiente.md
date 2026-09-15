@@ -43,7 +43,8 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LINEAGE_DB_ENABLED` | Ativa o gateway SQLAlchemy para o banco do jogo |
 | `LINEAGE_DB_HOST`, `LINEAGE_DB_PORT` | Endereço do MySQL |
 | `LINEAGE_DB_NAME`, `LINEAGE_DB_USER`, `LINEAGE_DB_PASSWORD` | Credenciais do schema Lineage |
-| `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2`, `dreamv3` ou `mobius` |
+| `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2`, `dreamv3`, `mobius` ou dialeto da extensão |
+| `LINEAGE_PASSWORD_ALGO` | Hash de senha nova: vazio (convenção do módulo), `whirlpool` ou `sha1` |
 | `LINEAGE_DB_POOL_SIZE` | Conexões permanentes no pool |
 | `LINEAGE_DB_MAX_OVERFLOW` | Conexões extras permitidas |
 | `GAME_SERVER_IP` | Host usado no status do login/game server |

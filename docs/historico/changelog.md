@@ -15,6 +15,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `/panel/admin/downloads`, `/panel/admin/notifications`): listar, criar, editar
   e excluir sem sair do painel. Avisos vão a um usuário ativo ou a todas as
   contas ativas, com entrega por Web Push.
+- Extensões de cliente passam a **embarcar SQL Lineage** em
+  `extensions/<cliente>/infrastructure/lineage/queries/`: overlay do dialeto do
+  core (mesmo `-- name:` substitui) ou dialeto completo, sem patch em `apps/`.
+  Hash de senha nova configurável (`LINEAGE_PASSWORD_ALGO`). A SPA descobre
+  módulos pela pasta (`*/index.tsx`), i18n em `ext.<id>` e itens `nav` no site,
+  painel e hub staff.
 - Instaladores das versões publicadas para Linux (`packaging/install.sh`) e
   Windows (`packaging/install.ps1`): baixam o ZIP da GitHub Release, configuram
   o `.env` e sobem o Compose **puxando** imagens do GHCR, sem build no servidor.

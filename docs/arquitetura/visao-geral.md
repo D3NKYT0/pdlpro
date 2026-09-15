@@ -95,9 +95,13 @@ Código exclusivo de um cliente **não** entra em `apps/`. Use
 1. `ServerProvider` lê `LINEAGE_DB_ENABLED`.
 2. Desabilitado: registra `NullLineageGateway`, mantendo status por socket e respostas sem banco do jogo.
 3. Habilitado: carrega o `LineageQueryCatalog` selecionado e registra `SqlAlchemyLineageGateway`.
-4. O catálogo usa somente consultas conhecidas dentro de `queries/<módulo>/`.
+4. O catálogo usa consultas conhecidas em `queries/<módulo>/` do core e, se
+   houver, o overlay em `extensions/<cliente>/infrastructure/lineage/queries/`.
 
-Para suportar um novo fork do servidor, crie outro diretório de consultas com o mesmo contrato dos catálogos existentes e cubra-o com testes. Não aceite nomes de arquivos ou SQL arbitrário do cliente.
+Para um fork de servidor, prefira SQL na **extensão** (overlay do dialeto ou
+pasta nova) em vez de patchar o core. O contrato (`-- name:`, parâmetros) é o
+mesmo dos catálogos embutidos. Não aceite nomes de arquivos ou SQL arbitrário
+pelo admin ou pela API.
 
 ## Frontend
 

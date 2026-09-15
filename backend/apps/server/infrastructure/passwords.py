@@ -21,10 +21,20 @@ class LineagePasswordHasher:
     """
 
     def hash(self, password: str) -> str:
-        dialect = str(getattr(settings, "LINEAGE_QUERY_MODULE", "")).lower()
-        if dialect in WHIRLPOOL_DIALECTS:
+        if self._use_whirlpool_for_new_hashes():
             return self._whirlpool(password)
         return self._sha1(password)
+
+    def _use_whirlpool_for_new_hashes(self) -> bool:
+        """Algoritmo de hash novo: env explícito ou convenção do dialeto Lucera."""
+
+        algo = str(getattr(settings, "LINEAGE_PASSWORD_ALGO", "") or "").strip().lower()
+        if algo in {"whirlpool", "whirlpool2003"}:
+            return True
+        if algo in {"sha1", "sha-1"}:
+            return False
+        dialect = str(getattr(settings, "LINEAGE_QUERY_MODULE", "")).lower()
+        return dialect in WHIRLPOOL_DIALECTS
 
     def verify(self, password: str, stored: str) -> bool:
         if not stored:

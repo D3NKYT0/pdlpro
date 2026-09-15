@@ -11,6 +11,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Iterable
 from importlib import import_module
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +67,33 @@ def is_extension_app_name(name: str) -> bool:
     """Indica se o ``AppConfig.name`` pertence à árvore de extensões públicas."""
 
     return name.startswith(_EXTENSION_PREFIX) and not name.startswith(_PRIVATE_PREFIX)
+
+
+def query_root_for_app(app_path: Path) -> Path | None:
+    """Pasta ``infrastructure/lineage/queries`` da extensão, se existir."""
+
+    candidate = Path(app_path) / "infrastructure" / "lineage" / "queries"
+    return candidate if candidate.is_dir() else None
+
+
+def lineage_query_roots() -> list[Path]:
+    """Raízes SQL das extensões instaladas, na ordem de ``INSTALLED_APPS``.
+
+    O catálogo Lineage carrega o core primeiro e aplica estas pastas por cima
+    (consultas de mesmo nome substituem as do dialeto base). Scaffolding
+    ``extensions._*`` entra se estiver instalado via ``PDL_EXTENSION_APPS``.
+    """
+
+    from django.apps import apps
+
+    roots: list[Path] = []
+    for config in apps.get_app_configs():
+        if not config.name.startswith(_EXTENSION_PREFIX):
+            continue
+        root = query_root_for_app(Path(config.path))
+        if root is not None:
+            roots.append(root)
+    return roots
 
 
 def extension_urlpatterns():

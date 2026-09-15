@@ -23,8 +23,10 @@ infrastructure → domain
 - Comandos management resolvem portas pelo container (ex.: `IPreviewSeedService`); ORM fica no adaptador.
 - Staff consome portas dos apps donos; `common/` só para capacidades transversais.
 - Código exclusivo de cliente: `backend/extensions/<cliente>/` + `PDL_EXTENSION_APPS`;
-  SPA em `frontend/src/extensions/` + `VITE_PDL_EXTENSIONS` (catálogo, sem editar
-  `AppRoutes` por cliente). Imports estáveis via `extensions.surface`. Não patchar o core no fork.
+  SPA em `frontend/src/extensions/<cliente>/` + `VITE_PDL_EXTENSIONS` (descoberta
+  automática, sem editar `AppRoutes` nem o catálogo por cliente). SQL Lineage do
+  fork em `extensions/<cliente>/infrastructure/lineage/queries/`. Imports estáveis via
+  `extensions.surface`. Não patchar o core no fork.
 
 ### Frontend (SPA em camadas)
 
@@ -57,7 +59,7 @@ alterações quando expõe texto ao usuário (API, admin, e-mail ou UI).
   conforme o idioma ativo; datas e números usam os formatadores do projeto (sem
   `pt-BR` fixo).
 - Namespaces: `common`, `public`, `auth`, `panel`, `admin`, `help` (e `personality`
-  quando aplicável).
+  quando aplicável). Extensões de cliente: `ext.<id>`.
 
 **Backend (Django gettext — mesmo rigor que a SPA)**
 

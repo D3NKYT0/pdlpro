@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **14 de setembro de 2026** — Não publicado: notícias,
+Última atualização: **15 de setembro de 2026** — Não publicado: extensões
+embarcam SQL Lineage (overlay ou dialeto próprio) e a SPA descobre módulos
+sem editar o catálogo; notícias,
 calendário e roadmap com edição e entrega PT/EN/ES; CRUD de
 calendário, FAQ, wiki, downloads e avisos em `/panel/admin`; avisos
 no sino da barra superior; dica do dia do Denkynho alinhada à faixa da

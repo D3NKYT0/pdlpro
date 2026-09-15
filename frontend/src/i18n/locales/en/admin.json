@@ -15,7 +15,8 @@
       "finance": "Finance",
       "games": "Games",
       "content": "Content",
-      "server": "Server"
+      "server": "Server",
+      "extensions": "Extensions"
     },
     "entries": {
       "supporters": { "title": "Supporters and commissions", "description": "Applications, percentages and commission approval" },

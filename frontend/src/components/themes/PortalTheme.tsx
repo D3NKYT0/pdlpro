@@ -9,6 +9,7 @@ import { contentLang } from '../../i18n/locale'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
 import { themeAsset } from '../../theme/assets'
+import { extensionNavItems } from '../../extensions'
 
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
 
@@ -23,9 +24,15 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   const { pathname } = useLocation()
   const landingPath = useLandingPath()
   const [menuOpen, setMenuOpen] = useState(false)
-  const navigation = presentation.navigation.map((item) =>
-    item.to === '/' ? { ...item, to: landingPath } : item,
-  )
+  const navigation = [
+    ...presentation.navigation.map((item) =>
+      item.to === '/' ? { ...item, to: landingPath } : item,
+    ),
+    ...extensionNavItems('public').map((item) => ({
+      label: t(item.labelKey, { ns: item.ns }),
+      to: item.to,
+    })),
+  ]
 
   useEffect(() => setMenuOpen(false), [pathname])
   useEffect(() => {

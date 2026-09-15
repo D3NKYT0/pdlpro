@@ -8,8 +8,9 @@ customizar um cliente.
 | --- | --- |
 | Guia completo | [docs/arquitetura/extensoes.md](../../docs/arquitetura/extensoes.md) |
 | Superfície de import | [`surface.py`](surface.py) |
-| Loader / env | [`loader.py`](loader.py) · `PDL_EXTENSION_APPS` |
+| Loader / env | [`loader.py`](loader.py) · `PDL_EXTENSION_APPS` · SQL Lineage |
 | Skeleton | [`_example/`](_example/) |
+| SQL do fork | [`_example/infrastructure/lineage/`](_example/infrastructure/lineage/) |
 
 Ativar o exemplo:
 

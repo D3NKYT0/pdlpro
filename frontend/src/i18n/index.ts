@@ -33,6 +33,10 @@ import esPanel from './locales/es/panel.json'
 import esAdmin from './locales/es/admin.json'
 import esHelp from './locales/es/help.json'
 import esPersonality from './locales/es/personality.json'
+import { extensionI18nResources, extensionNamespaceList } from '../extensions/locales'
+
+const extI18n = extensionI18nResources()
+const extNamespaces = extensionNamespaceList(extI18n)
 
 const initialLanguage: AppLanguage =
   import.meta.env.MODE === 'test'
@@ -53,14 +57,14 @@ if (canPersistLanguage && import.meta.env.MODE !== 'test') {
 
 void i18n.use(initReactI18next).init({
   resources: {
-    pt: { common: ptCommon, public: ptPublic, auth: ptAuth, panel: ptPanel, admin: ptAdmin, help: ptHelp, personality: ptPersonality },
-    en: { common: enCommon, public: enPublic, auth: enAuth, panel: enPanel, admin: enAdmin, help: enHelp, personality: enPersonality },
-    es: { common: esCommon, public: esPublic, auth: esAuth, panel: esPanel, admin: esAdmin, help: esHelp, personality: esPersonality },
+    pt: { common: ptCommon, public: ptPublic, auth: ptAuth, panel: ptPanel, admin: ptAdmin, help: ptHelp, personality: ptPersonality, ...extI18n.pt },
+    en: { common: enCommon, public: enPublic, auth: enAuth, panel: enPanel, admin: enAdmin, help: enHelp, personality: enPersonality, ...extI18n.en },
+    es: { common: esCommon, public: esPublic, auth: esAuth, panel: esPanel, admin: esAdmin, help: esHelp, personality: esPersonality, ...extI18n.es },
   },
   lng: initialLanguage,
   fallbackLng: 'pt',
   defaultNS: 'common',
-  ns: ['common', 'public', 'auth', 'panel', 'admin', 'help', 'personality'],
+  ns: ['common', 'public', 'auth', 'panel', 'admin', 'help', 'personality', ...extNamespaces],
   interpolation: { escapeValue: false },
   returnNull: false,
 })

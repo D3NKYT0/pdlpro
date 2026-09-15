@@ -8,6 +8,7 @@ import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { programsApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
+import { extensionNavItems } from '../../extensions'
 
 function navActive(path: string, to: string, end?: boolean) {
   if (end) {
@@ -30,7 +31,7 @@ export function SiteNav() {
     queryFn: programsApi.resources,
     staleTime: 15000,
   })
-  const links = [
+  const links: Array<{ to: string; label: string; end?: boolean; resource?: string }> = [
     { to: landingPath, label: t('nav.home'), end: true },
     { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
@@ -39,10 +40,19 @@ export function SiteNav() {
     { to: '/roadmap', label: t('nav.roadmap'), resource: 'roadmap' },
     { to: '/faq', label: t('nav.faq'), resource: 'faq' },
   ]
-  const visibleLinks = links.filter(
-    (link) => !link.resource || !resources.data?.some((r) => r.code === link.resource && !r.enabled),
-  )
   const downloadsEnabled = !resources.data?.some((r) => r.code === 'downloads' && !r.enabled)
+  const extensionLinks: Array<{ to: string; label: string; end?: boolean }> = extensionNavItems('public').map(
+    (item) => ({
+      to: item.to,
+      label: t(item.labelKey, { ns: item.ns }),
+    }),
+  )
+  const visibleLinks: Array<{ to: string; label: string; end?: boolean }> = [
+    ...links.filter(
+      (link) => !link.resource || !resources.data?.some((r) => r.code === link.resource && !r.enabled),
+    ),
+    ...extensionLinks,
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 1)

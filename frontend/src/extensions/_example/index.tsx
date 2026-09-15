@@ -10,6 +10,13 @@ export const exampleExtension: ExtensionModule = {
       element: <ExamplePingPage />,
     },
   ],
+  nav: [
+    {
+      path: 'ping',
+      scope: 'public',
+      labelKey: 'nav.ping',
+    },
+  ],
 }
 
 export { ExamplePingPage }

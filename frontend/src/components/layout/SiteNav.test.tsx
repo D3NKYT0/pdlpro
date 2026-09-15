@@ -11,6 +11,9 @@ import { SiteNav } from './SiteNav'
 
 const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
 const launch = vi.hoisted(() => ({ comingSoon: false }))
+const extensionNavMock = vi.hoisted(() => ({
+  public: [] as Array<{ to: string; labelKey: string; ns: string }>,
+}))
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/programs.service', () => ({
@@ -19,11 +22,15 @@ vi.mock('../../services/domain/programs.service', () => ({
 vi.mock('../../services/domain/server.service', () => ({
   serverApi: { info: vi.fn(async () => ({ coming_soon: launch.comingSoon })) },
 }))
+vi.mock('../../extensions', () => ({
+  extensionNavItems: (scope: string) => (scope === 'public' ? extensionNavMock.public : []),
+}))
 
 afterEach(() => {
   cleanup()
   session.user = null
   launch.comingSoon = false
+  extensionNavMock.public = []
 })
 
 function CurrentPath() {
@@ -131,4 +138,10 @@ it('clicar em Início com o site aberto leva para a raiz', async () => {
 
   await user.click(screen.getByRole('link', { name: 'Início' }))
   expect(screen.getByTestId('current-path').textContent).toBe('/')
+})
+
+it('anexa links públicos da extensão ao menu', () => {
+  extensionNavMock.public = [{ to: '/ext/example/ping', labelKey: 'nav.ping', ns: 'ext.example' }]
+  mount('/')
+  expect(screen.getByRole('link', { name: 'Ping da extensão' })).toHaveAttribute('href', '/ext/example/ping')
 })

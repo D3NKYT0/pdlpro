@@ -20,10 +20,12 @@ import {
   ShoppingBag,
   SlidersHorizontal,
   Palette,
+  Puzzle,
   Unlink,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
+import { extensionNavItems } from '../../extensions'
 
 type Entry = { to: string; key: string; icon: LucideIcon; external?: boolean }
 type Category = {
@@ -105,6 +107,7 @@ const categories: Category[] = [
 
 export function AdminHubPage() {
   const { t } = useTranslation('admin')
+  const extensionEntries = extensionNavItems('staff')
   return (
     <div className="account-page admin-hub">
       <Card as="header" className="account-hero">
@@ -156,6 +159,32 @@ export function AdminHubPage() {
           </div>
         </Card>
       ))}
+
+      {extensionEntries.length > 0 ? (
+        <Card className="admin-category" data-tone="extensions">
+          <div className="account-section-heading">
+            <div>
+              <span className="panel-eyebrow">{t('hub.module')}</span>
+              <h2>{t('hub.categories.extensions')}</h2>
+            </div>
+          </div>
+          <div className="admin-entry-grid">
+            {extensionEntries.map((entry) => (
+              <Link className="admin-entry" key={entry.to} to={entry.to}>
+                <span className="admin-entry-icon">
+                  <Puzzle aria-hidden="true" />
+                </span>
+                <span>
+                  <strong>{t(entry.labelKey, { ns: entry.ns })}</strong>
+                  {entry.descriptionKey ? (
+                    <small>{t(entry.descriptionKey, { ns: entry.ns })}</small>
+                  ) : null}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Card>
+      ) : null}
 
       <p className="muted admin-hub-note">
         <Bell aria-hidden="true" />

@@ -15,7 +15,8 @@
       "finance": "Finanzas",
       "games": "Juegos",
       "content": "Contenido",
-      "server": "Servidor"
+      "server": "Servidor",
+      "extensions": "Extensiones"
     },
     "entries": {
       "supporters": { "title": "Patrocinadores y comisiones", "description": "Candidaturas, porcentajes y aprobación de comisiones" },

@@ -15,6 +15,14 @@ pdl-core (este repositório, versionado)
 instalação do cliente = core + extensions/<cliente> + tema ZIP + env
 ```
 
+O core permanece **igual para todos**. Cada cliente (ou cada feature vendida)
+vive só na extensão + tema. Atualizar o PDL é subir a tag do core; o overlay
+do cliente continua no lugar. SQL do fork Lineage, telas e APIs novas **não**
+exigem um PR no produto — entram como código de deploy da extensão.
+
+**Não** aceite SQL/Python pelo admin (upload). Extensão é repositório/imagem,
+não um plugin runtime.
+
 ## Pastas
 
 | Caminho | Papel |
@@ -56,6 +64,7 @@ Exemplo (`_example` ativado): `GET /api/v1/extensions/example_extension/ping/`.
 
 5. Rode migrações se a extensão tiver models próprios
    (`python manage.py migrate <label>`).
+6. SQL Lineage (opcional): veja [Dialeto SQL na extensão](#dialeto-sql-lineage-na-extensão).
 
 Para experimentar o skeleton no desenvolvimento:
 
@@ -121,10 +130,63 @@ entram com menção no changelog (contrato público).
 Teste automatizado em `backend/extensions/tests/test_surface.py` falha se algum
 arquivo sob `extensions/` importar `apps.*.infrastructure`.
 
+## Dialeto SQL Lineage na extensão
+
+O painel fala com o banco do jogo só por consultas nomeadas
+(`-- name: top_pvp`, `list_characters`, …). Os dialetos do core
+(`lucerav2`, `dreamv3`, `mobius`) ficam em
+`backend/apps/server/infrastructure/lineage/queries/`.
+
+O cliente **não** pede um patch nessas pastas. Coloque SQL em:
+
+```text
+backend/extensions/<cliente>/infrastructure/lineage/queries/<dialeto>/*.sql
+```
+
+O loader junta essas pastas (`extensions.loader.lineage_query_roots`) e o
+catálogo carrega **core primeiro, extensão por cima**: o mesmo `-- name:` na
+extensão substitui a query do core.
+
+### Overlay (recomendado quando o fork é perto de um dialeto do core)
+
+```text
+extensions/acme/infrastructure/lineage/queries/lucerav2/characters.sql
+```
+
+```env
+PDL_EXTENSION_APPS=extensions.acme.apps.AcmeConfig
+LINEAGE_QUERY_MODULE=lucerav2
+```
+
+Só versiona o que divergiu. No update do PDL, o restante das queries vem da
+tag nova; revalide o overlay no schema do jogo antes de promover.
+
+### Dialeto inteiro (fork longe do core)
+
+Pasta nova com **todas** as consultas `REQUIRED` (lista em
+`LineageQueryCatalog.REQUIRED`). Aponte `LINEAGE_QUERY_MODULE` para esse nome
+(`[a-z][a-z0-9_]{0,63}`).
+
+Hash de senha nova: Lucera (`lucerav2`) usa Whirlpool; os demais, SHA1. Se o
+nome do módulo não bater com o algoritmo do login server:
+
+```env
+LINEAGE_PASSWORD_ALGO=whirlpool
+```
+
+(valores: `whirlpool` | `sha1`; vazio = convenção do módulo).
+
+O nome do dialeto **nunca** vem de um parâmetro HTTP. SQL arbitrário enviado
+pelo browser/admin continua recusado.
+
+Guia de schema e homologação: [Integração Lineage](../integracoes/lineage.md).
+Esqueleto: `backend/extensions/_example/infrastructure/lineage/README.md`.
+
 ## Frontend
 
-Coloque telas exclusivas em `frontend/src/extensions/<cliente>/` e registre o
-módulo em `frontend/src/extensions/catalog.ts` (composition root).
+Coloque telas exclusivas em `frontend/src/extensions/<cliente>/` com
+`index.tsx` exportando um `ExtensionModule`. O build **descobre** a pasta
+(glob); não edite `catalog.ts` nem `AppRoutes` por cliente.
 
 Ative com:
 
@@ -134,11 +196,16 @@ VITE_PDL_EXTENSIONS=acme
 
 | Peça | Papel |
 | --- | --- |
-| `types.ts` / `ExtensionModule` | Contrato: `id`, `routes[]` com `scope` |
-| `catalog.ts` | Mapa id → módulo conhecido pelo build |
-| `registry.ts` | Lê o env, monta paths `/ext/<id>/…` |
+| `types.ts` / `ExtensionModule` | Contrato: `id`, `routes[]`, `nav[]` opcional |
+| `catalog.ts` | Descoberta automática das pastas `*/index.tsx` |
+| `locales/{pt,en,es}.json` | Namespace `ext.<id>` (pasta `_example` → `ext.example`) |
+| `registry.ts` | Lê o env, monta `/ext/<id>/…` e itens de menu |
 | `extensionRouteElements()` | Lista de `<Route>` espalhada em `AppRoutes` |
 | `_example/` | Skeleton (`scope: public` → `/ext/example/ping`) |
+
+Menu: declare `nav` no módulo. O core injeta os links no site público, no
+sidebar do painel (`panel`) e no hub staff (`staff`). Textos vêm de
+`ext.<id>`, não dos JSON do produto.
 
 Escopos:
 
@@ -149,9 +216,10 @@ Escopos:
 | `staff` | sob `RequireStaff` | staff |
 
 - Continue importando HTTP de `services/api.ts`.
-- Não altere `AppRoutes` por cliente — só o catálogo + env.
-- i18n: namespaces próprios ou chaves da instalação; o skeleton usa
-  `common.extensionExample.*` só como fumaça do core.
+- Não altere `AppRoutes` por cliente — pasta + env.
+- i18n: `frontend/src/extensions/<id>/locales/{pt,en,es}.json` (namespace
+  `ext.<id>`). O ping do skeleton ainda usa `common.extensionExample.*` como
+  fumaça do core.
 - Backend da mesma extensão: gettext (msgid PT + catálogos EN/ES) com o mesmo
   rigor da SPA — ver `AGENTS.md` (Internacionalização).
 - Visual de marca: prefira [tema ZIP](../funcionalidades/temas.md).
@@ -197,18 +265,23 @@ código entre clientes sem extrair para o core ou para um pacote versionado.
 4. Testes/build do frontend do overlay.
 5. Smoke: login, pagamento (se usado), endpoints
    `/api/v1/extensions/<label>/` e rotas SPA `/ext/<id>/`.
-6. Migrar apenas labels das extensões do cliente, se houver models novos no
+6. Se a extensão overlay SQL Lineage, homologar o dialeto no schema do jogo
+   (consultas `REQUIRED` + escritas que o overlay toca).
+7. Migrar apenas labels das extensões do cliente, se houver models novos no
    core ou na extensão.
-7. Só então promover o ambiente.
+8. Só então promover o ambiente.
 
 ## Quando a feature deveria ir para o core
 
-- Mais de um cliente precisa da mesma regra.
-- Exige mudança profunda em carteira, checkout, inventário ou Lineage.
+- Mais de um cliente precisa da **mesma** regra de produto (não só o mesmo
+  SQL de um fork).
+- Exige mudança profunda em carteira, checkout ou inventário **do painel**
+  (não o schema Lineage — esse vai na extensão).
 - Dá para expor uma porta estável (`I…`) sem revelar o cliente.
 
 Aí a implementação genérica entra no core; a extensão só configura ou
-implementa o adaptador específico.
+implementa o adaptador específico. Fork de servidor de jogo, telas extras e
+APIs vendidas ficam na extensão para você não manter dois produtos.
 
 ## Relação com temas e programs
 

@@ -26,6 +26,10 @@ const resourcesMock = vi.hoisted(() => ({
 
 const launchMock = vi.hoisted(() => ({ comingSoon: false }))
 const supportMock = vi.hoisted(() => ({ waitingUser: 0 }))
+const extensionNavMock = vi.hoisted(() => ({
+  panel: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'panel' }>,
+  staff: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'staff' }>,
+}))
 
 vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries: vi.fn() }),
@@ -60,6 +64,13 @@ vi.mock('../../theme/ThemeProvider', () => ({
 
 vi.mock('../../theme/usePanelTheme', () => ({ usePanelTheme: vi.fn() }))
 vi.mock('../../theme/assets', () => ({ themeImage: (path: string) => `/theme/${path}` }))
+vi.mock('../../extensions', () => ({
+  extensionNavItems: (scope: 'public' | 'panel' | 'staff') => {
+    if (scope === 'panel') return extensionNavMock.panel
+    if (scope === 'staff') return extensionNavMock.staff
+    return []
+  },
+}))
 
 afterEach(async () => {
   cleanup()
@@ -67,6 +78,8 @@ afterEach(async () => {
   resourcesMock.data = []
   launchMock.comingSoon = false
   supportMock.waitingUser = 0
+  extensionNavMock.panel = []
+  extensionNavMock.staff = []
   themeMock.current.presentation = {
     renderer: 'portal-v1',
     shells: {
@@ -189,6 +202,14 @@ it('volta para a landing em /home quando o Coming Soon está ligado', () => {
   launchMock.comingSoon = true
   const { container } = renderAt('/panel/profile')
   expect(container.querySelector('.site-back')).toHaveAttribute('href', '/home')
+})
+
+it('inclui links de extensão no menu do painel', () => {
+  extensionNavMock.panel = [
+    { to: '/ext/acme/desk', labelKey: 'nav.ping', ns: 'ext.example', scope: 'panel' },
+  ]
+  renderAt('/panel/profile')
+  expect(screen.getByRole('link', { name: 'Ping da extensão' })).toHaveAttribute('href', '/ext/acme/desk')
 })
 
 it('volta para a raiz do site quando o Coming Soon está desligado', () => {

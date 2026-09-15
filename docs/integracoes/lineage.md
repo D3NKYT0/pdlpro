@@ -5,11 +5,17 @@
 O banco do PDL permanece separado do banco do jogo. Quando a integração está ativa,
 o backend seleciona um catálogo de consultas adequado ao schema configurado.
 
-Módulos disponíveis atualmente:
+Módulos disponíveis no core:
 
 - `lucerav2`
 - `dreamv3`
 - `mobius`
+
+Forks de cliente **não** precisam de um módulo novo no core. Coloque o SQL em
+`backend/extensions/<cliente>/infrastructure/lineage/queries/<dialeto>/` e
+ative a extensão. Pode ser overlay do mesmo nome (`lucerav2` com só as queries
+que mudaram) ou um dialeto completo. Detalhe em
+[Extensões de cliente](../arquitetura/extensoes.md#dialeto-sql-lineage-na-extensão).
 
 Configure o módulo em `.env`:
 
@@ -30,7 +36,10 @@ que dependem somente do banco do PDL.
 
 `ServerProvider` registra `ILineageGateway`: sem banco do jogo, usa `NullLineageGateway`, que mantém dados apenas em memória para desenvolvimento; com integração ativa, carrega `LineageQueryCatalog` e `SqlAlchemyLineageGateway`. O status por socket continua separado do acesso SQL.
 
-Os catálogos ficam em [queries](../../backend/apps/server/infrastructure/lineage/queries/). Uma nova distribuição deve manter as consultas obrigatórias e seus contratos de parâmetros/retorno; veja os [testes de catálogos](../desenvolvimento/testes.md).
+Os catálogos do core ficam em [queries](../../backend/apps/server/infrastructure/lineage/queries/).
+Uma distribuição nova deve manter as consultas obrigatórias e seus contratos de
+parâmetros/retorno; veja os [testes de catálogos](../desenvolvimento/testes.md).
+SQL de instalação entra na extensão, não nessa pasta.
 
 ## Schema Dream v3
 

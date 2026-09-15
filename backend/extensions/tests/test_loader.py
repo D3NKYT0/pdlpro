@@ -6,8 +6,10 @@ import pytest
 
 from extensions.loader import (
     is_extension_app_name,
+    lineage_query_roots,
     merge_extension_apps,
     parse_extension_apps,
+    query_root_for_app,
 )
 
 
@@ -48,3 +50,17 @@ def test_is_extension_app_name():
     assert is_extension_app_name("extensions.acme") is True
     assert is_extension_app_name("extensions._example") is False
     assert is_extension_app_name("apps.wallet") is False
+
+
+def test_query_root_for_app_requires_queries_directory(tmp_path):
+    assert query_root_for_app(tmp_path) is None
+    queries = tmp_path / "infrastructure" / "lineage" / "queries"
+    queries.mkdir(parents=True)
+    assert query_root_for_app(tmp_path) == queries
+
+
+def test_lineage_query_roots_skips_core_apps():
+    roots = lineage_query_roots()
+    for root in roots:
+        assert "extensions" in root.parts
+        assert root.name == "queries"

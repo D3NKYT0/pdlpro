@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   extensionAbsolutePath,
+  navItemsForScope,
   parseExtensionIds,
   resolveEnabledExtensions,
   routesForScope,
@@ -18,6 +19,7 @@ const catalog: Record<string, ExtensionModule> = {
   acme: {
     id: 'acme',
     routes: [{ path: '', scope: 'staff', element: null }],
+    nav: [{ path: '', scope: 'staff', labelKey: 'nav.desk', descriptionKey: 'nav.deskHint' }],
   },
 }
 
@@ -55,6 +57,21 @@ describe('resolveEnabledExtensions', () => {
       'acme',
       'example',
     ])
+  })
+})
+
+describe('navItemsForScope', () => {
+  it('monta links de menu no prefixo /ext/<id>', () => {
+    const modules = resolveEnabledExtensions('example,acme', catalog)
+    expect(navItemsForScope(modules, 'staff')).toEqual([
+      expect.objectContaining({
+        to: '/ext/acme',
+        labelKey: 'nav.desk',
+        descriptionKey: 'nav.deskHint',
+        ns: 'ext.acme',
+      }),
+    ])
+    expect(navItemsForScope(modules, 'public')).toEqual([])
   })
 })
 
