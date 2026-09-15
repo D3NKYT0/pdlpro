@@ -31,7 +31,7 @@ import { supportApi, contentApi } from "../../services/api";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/api";
 import { useTheme } from "../../theme/ThemeProvider";
-import { ContextualHelp } from "../help/ContextualHelp";
+import { CONTEXTUAL_HELP_OUTLET_ID, ContextualHelp } from "../help/ContextualHelp";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
@@ -228,13 +228,20 @@ export function PrivateLayout() {
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />
-        <header className="panel-topbar" data-theme-part="panel-topbar" aria-label={t("notifications.title")}>
-          {resourceEnabled("notifications") ? <NotificationCenter /> : null}
+        <header className="panel-topbar" data-theme-part="panel-topbar" aria-label={t("shell.topbar")}>
+          <div className="panel-topbar-start">
+            {!location.pathname.startsWith("/panel/help") ? (
+              <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
+            ) : null}
+          </div>
+          {resourceEnabled("notifications") ? (
+            <div className="panel-topbar-end">
+              <NotificationCenter />
+            </div>
+          ) : null}
         </header>
         <main className="content">
-          {!location.pathname.startsWith("/panel/help") ? (
-            <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
-          ) : null}
+          <div id={CONTEXTUAL_HELP_OUTLET_ID} className="panel-help-outlet" />
           <Outlet />
         </main>
       </div>

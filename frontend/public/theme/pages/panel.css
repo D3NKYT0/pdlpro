@@ -433,8 +433,9 @@ html.pdl-panel .panel-topbar {
   grid-area: topbar;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-self: start;
+  gap: 12px;
   min-height: 58px;
   padding: 8px 16px;
   overflow: visible;
@@ -445,6 +446,29 @@ html.pdl-panel .panel-topbar {
     var(--panel-surface);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
   backdrop-filter: blur(18px);
+}
+
+html.pdl-panel .panel-topbar-start,
+html.pdl-panel .panel-topbar-end {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+}
+
+html.pdl-panel .panel-topbar-start {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+html.pdl-panel .panel-topbar-end {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+html.pdl-panel .panel-topbar .contextual-help {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 html.pdl-panel .content {
@@ -13585,30 +13609,25 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .shell {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      "sidebar topbar"
-      "content content";
+      "sidebar"
+      "topbar"
+      "content";
     gap: 16px;
     padding: 10px 12px 32px;
   }
 
   html.pdl-panel .panel-topbar {
-    height: 68px;
-    min-height: 68px;
-    padding: 10px 12px;
-    border-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    height: auto;
+    min-height: 58px;
+    padding: 8px 12px;
   }
 
   html.pdl-panel .sidebar {
     position: sticky;
     z-index: 120;
     top: 10px;
-    border-right: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     display: flex;
     align-items: center;
     flex-direction: row;

@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { MessageCircle, X } from 'lucide-react'
 import { Button, ButtonLink, IconButton } from '../ui/Button'
@@ -10,6 +11,8 @@ import type { ApiDenkynhoProfile } from '../../services/api'
 import { denkynhoPose } from './assets'
 import poses from './poses.json'
 import './contextual-help.css'
+
+export const CONTEXTUAL_HELP_OUTLET_ID = 'panel-help-outlet'
 
 const CARE_KEYS = ['satiety', 'energy', 'hygiene', 'happiness'] as const
 type CareKey = (typeof CARE_KEYS)[number]
@@ -51,18 +54,22 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
     label: t(`contextual.attributes.${attr}`),
     value: pet.attributes[attr],
   })) : []
+  const close = () => { setOpenPath(null); trigger.current?.focus() }
   useEffect(() => {
     if (open) closeButton.current?.focus()
   }, [open])
+  useEffect(() => {
+    if (!open) return
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return
+      event.stopPropagation()
+      close()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
   if (!context && !pet) return null
-  const close = () => { setOpenPath(null); trigger.current?.focus() }
-  return <div className="contextual-help" onKeyDown={event => { if (open && event.key === 'Escape') { event.stopPropagation(); close() } }}>
-    <Button ref={trigger} size="sm" variant="secondary" aria-expanded={open} aria-controls={open ? id : undefined} onClick={() => setOpenPath(open ? null : path)}>
-      {pet ? <img className="contextual-help-face" src={denkynhoPose(pose.src)} alt="" /> : <MessageCircle aria-hidden="true" />}
-      {cue && <b className="contextual-help-cue" aria-hidden="true">!</b>}
-      {triggerLabel}
-    </Button>
-    {open && <Card as="aside" className="contextual-help-panel" id={id} aria-labelledby={`${id}-title`}>
+  const panel = open ? <Card as="aside" className="contextual-help-panel" id={id} aria-labelledby={`${id}-title`}>
       <header className="contextual-help-top">
         <div className="contextual-help-brand">
           <p className="contextual-help-kicker">{t('contextual.kicker')}</p>
@@ -127,6 +134,14 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
           <p className="contextual-help-tip">{context.tip}</p>
         </section> : null}
       </div>
-    </Card>}
+    </Card> : null
+  const outlet = typeof document !== 'undefined' ? document.getElementById(CONTEXTUAL_HELP_OUTLET_ID) : null
+  return <div className="contextual-help">
+    <Button ref={trigger} size="sm" variant="secondary" aria-expanded={open} aria-controls={open ? id : undefined} onClick={() => setOpenPath(open ? null : path)}>
+      {pet ? <img className="contextual-help-face" src={denkynhoPose(pose.src)} alt="" /> : <MessageCircle aria-hidden="true" />}
+      {cue && <b className="contextual-help-cue" aria-hidden="true">!</b>}
+      {triggerLabel}
+    </Button>
+    {panel && outlet ? createPortal(panel, outlet) : panel}
   </div>
 }

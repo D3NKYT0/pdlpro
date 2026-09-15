@@ -632,7 +632,8 @@
     "openProfile": "Abrir meu perfil",
     "verifiedAccount": "Conta verificada",
     "confirmEmail": "Confirme seu e-mail",
-    "logoutTitle": "Sair da conta"
+    "logoutTitle": "Sair da conta",
+    "topbar": "Barra do painel"
   },
   "dashboard": {
     "eyebrow": "Visão geral da conta",

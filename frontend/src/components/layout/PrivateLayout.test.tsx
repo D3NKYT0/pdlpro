@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import { afterEach, expect, it, vi } from 'vitest'
@@ -119,9 +120,22 @@ it('distingue visualmente a administração dentro do mesmo renderer', () => {
   expect(screen.getByText('VALOREM ADMIN')).toBeVisible()
 })
 
+it('abre o cantinho do Denkynho fora da faixa superior', async () => {
+  const user = userEvent.setup()
+  renderAt('/panel/profile')
+  await user.click(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' }))
+  const panel = screen.getByRole('heading', { name: 'Meu perfil' }).closest('.contextual-help-panel')
+  expect(panel).toBeTruthy()
+  expect(document.querySelector('.panel-topbar')).not.toContainElement(panel as HTMLElement)
+  expect(document.getElementById('panel-help-outlet')).toContainElement(panel as HTMLElement)
+})
+
 it('mostra o mini-mascote fora da Ajuda e o oculta na conversa', () => {
   renderAt('/panel/profile')
-  expect(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' })).toBeVisible()
+  const topbar = document.querySelector('.panel-topbar')
+  const denkynho = screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' })
+  expect(denkynho).toBeVisible()
+  expect(topbar).toContainElement(denkynho)
   cleanup()
   renderAt('/panel/help')
   expect(screen.queryByRole('button', { name: 'Denkynho: ajuda nesta tela' })).not.toBeInTheDocument()
@@ -154,9 +168,14 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
 
 it('coloca avisos na barra superior e os remove do menu', () => {
   renderAt('/panel/profile')
+  const topbar = document.querySelector('.panel-topbar')
+  const denkynho = screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' })
+  const notices = screen.getByRole('button', { name: 'Abrir notificações' })
   expect(screen.queryByRole('link', { name: 'Avisos' })).not.toBeInTheDocument()
-  expect(screen.getByRole('button', { name: 'Abrir notificações' })).toBeVisible()
-  expect(document.querySelector('.panel-topbar')).toContainElement(screen.getByRole('button', { name: 'Abrir notificações' }))
+  expect(notices).toBeVisible()
+  expect(topbar).toContainElement(denkynho)
+  expect(topbar).toContainElement(notices)
+  expect(denkynho.compareDocumentPosition(notices) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
 })
 
 it('esconde o sino quando o recurso de avisos está pausado', () => {

@@ -1,4 +1,7 @@
 .contextual-help { margin-bottom: 10px; }
+.panel-help-outlet:empty { display: none; }
+.panel-help-outlet { min-width: 0; margin: 0 0 12px; }
+.panel-help-outlet .card.contextual-help-panel { width: 100%; margin-top: 0; }
 
 .card.contextual-help-panel {
   --contextual-ink: var(--theme-text, var(--panel-text, #eef6f2));

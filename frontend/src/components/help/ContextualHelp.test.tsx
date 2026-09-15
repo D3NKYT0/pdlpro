@@ -27,6 +27,20 @@ function mount(ui: ReactElement) {
   )
 }
 
+it('renderiza a caixa no outlet quando ele existe', async () => {
+  const user = userEvent.setup()
+  const { container } = mount(
+    <>
+      <div id="panel-help-outlet" className="panel-help-outlet" />
+      <ContextualHelp path="/panel/wallet" resources={[]} />
+    </>,
+  )
+  await user.click(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' }))
+  const panel = screen.getByRole('heading', { name: 'Carteira' }).closest('.contextual-help-panel')
+  expect(container.querySelector('.contextual-help')).not.toContainElement(panel as HTMLElement)
+  expect(container.querySelector('#panel-help-outlet')).toContainElement(panel as HTMLElement)
+})
+
 it('orienta na tela, encaminha o contexto e fecha com Escape sem enviar mensagem', async () => {
   const user = userEvent.setup()
   mount(<ContextualHelp path="/panel/wallet" resources={[]} />)

@@ -632,7 +632,8 @@
     "openProfile": "Open my profile",
     "verifiedAccount": "Verified account",
     "confirmEmail": "Confirm your e-mail",
-    "logoutTitle": "Sign out of the account"
+    "logoutTitle": "Sign out of the account",
+    "topbar": "Dashboard bar"
   },
   "dashboard": {
     "eyebrow": "Account overview",
