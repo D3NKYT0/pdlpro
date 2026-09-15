@@ -35,6 +35,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- A tela dedicada `/panel/progress` sai do produto: nível, XP, conquistas e
+  prêmios de evolução da conta passam a viver no Painel (`/panel`). URLs
+  antigas (`/panel/progress`, `/painel/progress`, `/progress`) redirecionam
+  para o dashboard. Passe, bônus diário e 2FA permanecem em Jornada e
+  recompensas e em Conta e segurança.
 - A jornada de recompensas do painel passa a usar o mesmo chrome de Jogos,
   Progresso e Carteira: hero com arte do tema, selo de nível, calendário com
   carimbo do dia e pódio no ranking.

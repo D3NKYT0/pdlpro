@@ -620,7 +620,6 @@
     "games": "Juegos",
     "rewards": "Viaje y recompensas",
     "supporters": "Patrocinadores",
-    "progress": "Progreso",
     "notifications": "Avisos",
     "support": "Atención",
     "help": "Ayuda",
@@ -654,7 +653,6 @@
       "wallet": { "label": "Cartera", "text": "Saldo, PIX y transferencias" },
       "shop": { "label": "Tienda", "text": "Objetos de la tienda del panel" },
       "games": { "label": "Juegos", "text": "Fortuna, cofres, lago y arena" },
-      "progress": { "label": "Logros", "text": "Hitos de la cuenta y premios" },
       "admin": { "label": "Admin", "text": "Configurar el panel, rates y tienda" }
     }
   },
@@ -1399,48 +1397,9 @@
       "locked": "Bloqueada",
       "empty": "Ninguna recompensa disponible."
     },
-    "security": {
-      "eyebrow": "Protección de la cuenta",
-      "title": "Seguridad",
-      "on": "Activo",
-      "off": "Inactivo",
-      "description": "Usa la autenticación en dos pasos para proteger tus personajes e ítems.",
-      "generateSecret": "Generar secreto",
-      "secretLabel": "Secreto del autenticador",
-      "codeLabel": "Código del autenticador",
-      "disable": "Desactivar 2FA",
-      "confirm": "Confirmar 2FA"
-    },
-    "pass": {
-      "eyebrow": "Temporada activa",
-      "title": "Pase de batalla",
-      "premiumActive": "Premium activo",
-      "premiumBuy": "Premium · R$ {{price}}",
-      "currentLevel": "Nivel actual",
-      "seasonXp": "XP de la temporada",
-      "claimedRewards": "Premios reclamados",
-      "seasonProgress": "Progreso de la temporada",
-      "levelLegend": "Nivel",
-      "freeTrack": "Vía gratuita",
-      "premiumTrack": "Vía premium",
-      "xpRequired": "{{xp}} XP",
-      "rewardClaimed": "Reclamado",
-      "claim": "Reclamar",
-      "noFreeReward": "Sin premio gratuito",
-      "noPremiumReward": "Sin premio premium",
-      "empty": "Ninguna temporada activa."
-    },
     "toast": {
       "rewardSent": "{{item}} enviado a la bolsa",
-      "claimError": "No fue posible reclamar",
-      "passClaimError": "No fue posible reclamar el pase",
-      "premiumActivated": "Pase premium activado",
-      "premiumError": "No fue posible comprar el pase",
-      "secretGenerated": "Guarda el secreto y confirma con el código",
-      "setupError": "No fue posible iniciar el 2FA",
-      "twoFactorDisabled": "2FA desactivado",
-      "twoFactorEnabled": "2FA activado",
-      "invalidCode": "Código inválido"
+      "claimError": "No fue posible reclamar"
     }
   },
   "supporters": {

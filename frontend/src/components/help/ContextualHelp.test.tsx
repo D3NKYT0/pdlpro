@@ -57,6 +57,7 @@ it('mostra consulta e falha de recursos, retira atalhos indisponíveis e não of
   expect(screen.queryByRole('button')).not.toBeInTheDocument()
   expect(getHelpContext('https://evil.test/panel/wallet')).toBeNull()
   expect(getHelpContext('/panel/admin')).toBeNull()
+  expect(getHelpContext('/panel/progress')).toBeNull()
   expect(getHelpContext('/panel/accounts/alice/123')?.path).toBe('/panel/accounts')
 })
 it('gera somente destinos conhecidos, autorizados e disponíveis a partir da resposta', () => {

@@ -620,7 +620,6 @@
     "games": "Games",
     "rewards": "Journey & rewards",
     "supporters": "Supporters",
-    "progress": "Progress",
     "notifications": "Alerts",
     "support": "Support",
     "help": "Help",
@@ -654,7 +653,6 @@
       "wallet": { "label": "Wallet", "text": "Balance, PIX and transfers" },
       "shop": { "label": "Shop", "text": "Items from the panel shop" },
       "games": { "label": "Games", "text": "Fortune, chests, lake and arena" },
-      "progress": { "label": "Achievements", "text": "Account milestones and prizes" },
       "admin": { "label": "Admin", "text": "Configure the panel, rates and shop" }
     }
   },
@@ -1399,48 +1397,9 @@
       "locked": "Locked",
       "empty": "No reward available."
     },
-    "security": {
-      "eyebrow": "Account protection",
-      "title": "Security",
-      "on": "Active",
-      "off": "Inactive",
-      "description": "Use two-factor authentication to protect your characters and items.",
-      "generateSecret": "Generate secret",
-      "secretLabel": "Authenticator secret",
-      "codeLabel": "Authenticator code",
-      "disable": "Disable 2FA",
-      "confirm": "Confirm 2FA"
-    },
-    "pass": {
-      "eyebrow": "Active season",
-      "title": "Battle pass",
-      "premiumActive": "Premium active",
-      "premiumBuy": "Premium · R$ {{price}}",
-      "currentLevel": "Current level",
-      "seasonXp": "Season XP",
-      "claimedRewards": "Prizes claimed",
-      "seasonProgress": "Season progress",
-      "levelLegend": "Level",
-      "freeTrack": "Free track",
-      "premiumTrack": "Premium track",
-      "xpRequired": "{{xp}} XP",
-      "rewardClaimed": "Claimed",
-      "claim": "Claim",
-      "noFreeReward": "No free prize",
-      "noPremiumReward": "No premium prize",
-      "empty": "No active season."
-    },
     "toast": {
       "rewardSent": "{{item}} sent to your bag",
-      "claimError": "Could not claim",
-      "passClaimError": "Could not claim the pass reward",
-      "premiumActivated": "Premium pass activated",
-      "premiumError": "Could not buy the pass",
-      "secretGenerated": "Save the secret and confirm with the code",
-      "setupError": "Could not start 2FA",
-      "twoFactorDisabled": "2FA disabled",
-      "twoFactorEnabled": "2FA enabled",
-      "invalidCode": "Invalid code"
+      "claimError": "Could not claim"
     }
   },
   "supporters": {

@@ -12,7 +12,7 @@ const PAGE_SIZE = 12
 
 export function AchievementGrid({
   achievements,
-  rewardsTo = '/panel/progress',
+  rewardsTo = '/panel#dashboard-rewards',
   showRewardsLink = true,
 }: {
   achievements: AchievementRow[]

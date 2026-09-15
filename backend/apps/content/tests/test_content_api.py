@@ -277,3 +277,29 @@ def test_legal_documents(api):
     assert history.status_code == 200
     assert history.data["history"]
     assert any(entry["is_current"] for entry in history.data["history"])
+
+
+@pytest.mark.django_db
+def test_progress_screen_retirement_updates_faq_and_handbook():
+    from django.apps import apps
+
+    migration = import_module("apps.content.migrations.0026_retire_progress_screen_help")
+    faq = Faq.objects.get(id=migration.FAQ_ID)
+    handbook = Faq.objects.get(id=migration.HANDBOOK_PROGRESS_ID)
+    menu = Faq.objects.get(id=migration.HANDBOOK_MENU_ID)
+    assert "/panel/progress" not in faq.answer
+    assert "/panel" in faq.answer
+    assert "Painel" in faq.short_answer
+    assert "/panel/progress" not in handbook.answer
+    assert "/panel" in handbook.answer
+    assert "Dashboard" in handbook.short_answer_en
+    assert "Progresso," not in menu.answer
+    assert "Progress," not in menu.answer_en
+    migration.backwards(apps, None)
+    faq.refresh_from_db()
+    handbook.refresh_from_db()
+    assert "Use Progresso no painel" in faq.short_answer
+    assert "/panel/progress" in handbook.answer
+    migration.forwards(apps, None)
+    faq.refresh_from_db()
+    assert "No Painel você vê nível" in faq.short_answer

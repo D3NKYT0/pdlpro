@@ -37,7 +37,7 @@ const topics: Topic[] = [
   {
     path: '/panel', title: copy('Painel', 'Dashboard'), action: copy('Abrir meu painel', 'Open my dashboard'),
     tips: [
-      copy('Use o menu para consultar suas contas, acompanhar seu progresso e encontrar os recursos do servidor.', 'Use the menu to view your accounts, follow your progress and find server features.'),
+      copy('No Painel você vê nível, conquistas e prêmios da conta. Use o menu para contas, jogos e o restante do servidor.', 'The Dashboard shows your level, achievements and account prizes. Use the menu for accounts, games and the rest of the server.'),
       copy('Comece pelas contas vinculadas: com elas abertas, inventário, troca e comércio fazem mais sentido.', 'Start with linked accounts: once they are set, inventory, exchange and trading make more sense.'),
       copy('Avisos e atendimento ficam no menu — abra-os quando precisar de novidades ou da equipe.', 'Notifications and support live in the menu — open them when you need news or the team.'),
     ],
@@ -140,7 +140,7 @@ const topics: Topic[] = [
       copy('Só resgate o que estiver marcado como disponível. Requisitos incompletos bloqueiam o botão de propósito.', 'Only claim what is marked available. Incomplete requirements block the button on purpose.'),
       copy('Progresso e inventário andam juntos: após resgatar, confira a mochila se o item não aparecer na hora.', 'Progress and inventory go together: after claiming, check the bag if the item does not show up right away.'),
     ],
-    suggestion: copy('Como acompanho as missões e resgato uma recompensa disponível?', 'How do I track missions and claim an available reward?'), related: ['/panel/inventory', '/panel/progress'],
+    suggestion: copy('Como acompanho as missões e resgato uma recompensa disponível?', 'How do I track missions and claim an available reward?'), related: ['/panel/inventory', '/panel'],
   },
   {
     path: '/panel/supporters', title: copy('Apoiadores', 'Supporters'), action: copy('Abrir área de apoiadores', 'Open supporters area'), resource: 'supporters',
@@ -168,15 +168,6 @@ const topics: Topic[] = [
       copy('Trocas de senha e vínculos de login ficam aqui — confirme o e-mail e o método antes de salvar.', 'Password changes and login links live here — confirm email and method before saving.'),
     ],
     suggestion: copy('Como reviso as opções de segurança da minha conta?', 'How do I review my account security options?'), related: ['/panel/support'],
-  },
-  {
-    path: '/panel/progress', title: copy('Progresso', 'Progress'), action: copy('Abrir meu progresso', 'Open my progress'), resource: 'progress',
-    tips: [
-      copy('Consulte suas conquistas e o progresso registrado. Os requisitos de cada objetivo ajudam a escolher o próximo passo.', 'Check your achievements and recorded progress. Each goal’s requirements can help you choose your next step.'),
-      copy('Conquistas completas e em andamento aparecem com requisitos claros — use-os para priorizar o próximo objetivo.', 'Completed and in-progress achievements show clear requirements — use them to pick the next goal.'),
-      copy('Parte do progresso também aparece em Jornada e recompensas quando houver missão ligada.', 'Some progress also shows under Journey and rewards when a linked mission exists.'),
-    ],
-    suggestion: copy('Como acompanho meu progresso e minhas conquistas no PDL?', 'How do I track my progress and achievements in PDL?'), related: ['/panel/rewards'],
   },
   {
     path: '/panel/notifications', title: copy('Avisos', 'Notifications'), action: copy('Abrir meus avisos', 'Open my notifications'), resource: 'notifications',

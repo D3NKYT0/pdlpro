@@ -93,6 +93,7 @@ it('aplica o shell Valorem à área do jogador', () => {
   expect(surface).toHaveAttribute('data-theme-renderer', 'portal-v1')
   expect(screen.getByText("WARRIOR'S SANCTUM")).toBeVisible()
   expect(screen.getByText('VALOREM')).toBeVisible()
+  expect(screen.queryByRole('link', { name: 'Progresso' })).not.toBeInTheDocument()
 })
 
 it('distingue visualmente a administração dentro do mesmo renderer', () => {
@@ -133,6 +134,7 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
   expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Meu perfil' })).toBeVisible()
+  expect(screen.queryByRole('link', { name: 'Progresso' })).not.toBeInTheDocument()
 })
 
 it('volta para a landing em /home quando o Coming Soon está ligado', () => {

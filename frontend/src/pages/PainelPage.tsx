@@ -10,7 +10,6 @@ import {
   Server,
   ShoppingBag,
   SlidersHorizontal,
-  Trophy,
   UserRoundCog,
   CircleUserRound,
   Users,
@@ -18,6 +17,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { AchievementGrid } from '../components/AchievementGrid'
+import { AccountProgress } from '../components/progress/AccountProgress'
 import { useAuth } from '../contexts/AuthContext'
 import { canAccessStaff } from '../lib/staff'
 import { authApi, serverApi } from '../services/api'
@@ -30,7 +30,6 @@ const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: s
   { to: '/panel/wallet', key: 'wallet', icon: WalletCards, resource: 'wallet' },
   { to: '/panel/shop', key: 'shop', icon: ShoppingBag, resource: 'shop' },
   { to: '/panel/games', key: 'games', icon: Gamepad2, resource: 'games' },
-  { to: '/panel/progress', key: 'progress', icon: Trophy, resource: 'progress' },
 ]
 
 export function PainelPage() {
@@ -44,10 +43,11 @@ export function PainelPage() {
   const resourceEnabled = (code?: string) =>
     !code || !resources.data?.some((r) => r.code === code && !r.enabled)
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const progressEnabled = Boolean(user) && resourceEnabled('progress')
   const progress = useQuery({
     queryKey: ['progress'],
     queryFn: authApi.progress,
-    enabled: Boolean(user) && resourceEnabled('progress'),
+    enabled: progressEnabled,
   })
   const baseShortcuts = shortcuts.filter((item) => resourceEnabled(item.resource))
   const dashboardShortcuts = canAccessStaff(user)
@@ -90,7 +90,9 @@ export function PainelPage() {
         </Card>
       </section>
 
-      {resourceEnabled('progress') ? <AchievementGrid achievements={progress.data?.achievements ?? []} /> : null}
+      {progressEnabled ? <AccountProgress profile={progress.data} /> : null}
+
+      {progressEnabled ? <AchievementGrid achievements={progress.data?.achievements ?? []} showRewardsLink={false} /> : null}
 
       <section className="panel-section-heading">
         <div>

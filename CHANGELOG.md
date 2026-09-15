@@ -2,8 +2,10 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **14 de setembro de 2026** — Não publicado: jornada de
-recompensas e programa de apoiadores alinhados ao chrome de Jogos/Progresso/Carteira;
+Última atualização: **14 de setembro de 2026** — Não publicado: tela
+`/panel/progress` retirada (nível, conquistas e prêmios no Painel);
+jornada de
+recompensas e programa de apoiadores alinhados ao chrome de Jogos/Carteira;
 endurecimento de
 segurança (pacote LGPD em armazenamento privado, `SECRET_KEY` validada em
 produção, Redis com senha, saneamento de imagens enviadas, senha de conta do

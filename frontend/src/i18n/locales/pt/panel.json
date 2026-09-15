@@ -620,7 +620,6 @@
     "games": "Jogos",
     "rewards": "Jornada e recompensas",
     "supporters": "Apoiadores",
-    "progress": "Progresso",
     "notifications": "Avisos",
     "support": "Atendimento",
     "help": "Ajuda",
@@ -654,7 +653,6 @@
       "wallet": { "label": "Carteira", "text": "Saldo, PIX e transferências" },
       "shop": { "label": "Loja", "text": "Itens da loja do painel" },
       "games": { "label": "Jogos", "text": "Fortuna, baús, lago e arena" },
-      "progress": { "label": "Conquistas", "text": "Marcos da conta e prêmios" },
       "admin": { "label": "Admin", "text": "Configurar o painel, rates e loja" }
     }
   },
@@ -1399,48 +1397,9 @@
       "locked": "Bloqueada",
       "empty": "Nenhuma recompensa disponível."
     },
-    "security": {
-      "eyebrow": "Proteção da conta",
-      "title": "Segurança",
-      "on": "Ativo",
-      "off": "Inativo",
-      "description": "Use autenticação em duas etapas para proteger seus personagens e itens.",
-      "generateSecret": "Gerar segredo",
-      "secretLabel": "Segredo do autenticador",
-      "codeLabel": "Código do autenticador",
-      "disable": "Desativar 2FA",
-      "confirm": "Confirmar 2FA"
-    },
-    "pass": {
-      "eyebrow": "Temporada ativa",
-      "title": "Passe de batalha",
-      "premiumActive": "Premium ativo",
-      "premiumBuy": "Premium · R$ {{price}}",
-      "currentLevel": "Nível atual",
-      "seasonXp": "XP da temporada",
-      "claimedRewards": "Prêmios resgatados",
-      "seasonProgress": "Progresso da temporada",
-      "levelLegend": "Nível",
-      "freeTrack": "Trilha livre",
-      "premiumTrack": "Trilha premium",
-      "xpRequired": "{{xp}} XP",
-      "rewardClaimed": "Resgatado",
-      "claim": "Resgatar",
-      "noFreeReward": "Sem prêmio livre",
-      "noPremiumReward": "Sem prêmio premium",
-      "empty": "Nenhuma temporada ativa."
-    },
     "toast": {
       "rewardSent": "{{item}} enviado à bag",
-      "claimError": "Não foi possível resgatar",
-      "passClaimError": "Não foi possível resgatar o passe",
-      "premiumActivated": "Passe premium ativado",
-      "premiumError": "Falha ao comprar o passe",
-      "secretGenerated": "Salve o segredo e confirme com o código",
-      "setupError": "Falha ao iniciar 2FA",
-      "twoFactorDisabled": "2FA desativado",
-      "twoFactorEnabled": "2FA ativado",
-      "invalidCode": "Código inválido"
+      "claimError": "Não foi possível resgatar"
     }
   },
   "supporters": {

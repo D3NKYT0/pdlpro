@@ -8,6 +8,7 @@ def test_canonical_screen_accepts_known_panel_paths():
     assert canonical_screen("https://evil.test/panel/wallet") is None
     assert canonical_screen("/panel/wallet?x=1") is None
     assert canonical_screen("/panel/unknown") is None
+    assert canonical_screen("/panel/progress") is None
     assert canonical_screen("/painel/wallet") is None
 
 

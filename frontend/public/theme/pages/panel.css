@@ -5883,7 +5883,8 @@ html.pdl-panel .profile-progress-title {
   gap: 17px;
 }
 
-html.pdl-panel .profile-progress-title h1 {
+html.pdl-panel .profile-progress-title h1,
+html.pdl-panel .profile-progress-title h2 {
   margin: 4px 0 5px;
 }
 
