@@ -91,6 +91,28 @@ it('abre o destino do aviso e fecha o painel', async () => {
   expect(screen.queryByRole('dialog', { name: 'Avisos' })).toBeNull()
 })
 
+it('ancora o painel à direita do sino', async () => {
+  const user = mount()
+  const trigger = await screen.findByRole('button', { name: 'Abrir notificações, 1 não lidas' })
+  const root = trigger.closest('.notification-center') as HTMLElement
+  root.getBoundingClientRect = () => ({
+    x: 900,
+    y: 40,
+    top: 40,
+    bottom: 76,
+    left: 900,
+    right: 936,
+    width: 36,
+    height: 36,
+    toJSON: () => ({}),
+  })
+  Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1200 })
+  await user.click(trigger)
+  const dialog = await screen.findByRole('dialog', { name: 'Avisos' }) as HTMLElement
+  expect(dialog.style.top).toBe('84px')
+  expect(dialog.style.right).toBe('264px')
+})
+
 it('mostra estado vazio quando não há avisos', async () => {
   vi.mocked(notificationApi.list).mockResolvedValue({ unread: 0, results: [] })
   const user = mount()

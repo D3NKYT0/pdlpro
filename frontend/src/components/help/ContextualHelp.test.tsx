@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
-import { afterEach, beforeEach, expect, it } from 'vitest'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import i18n from '../../i18n'
 import { ContextualHelp } from './ContextualHelp'
 import { getHelpActionsForText, getHelpContext, dailyTipIndex } from './contextual'
@@ -126,4 +126,41 @@ it('escolhe a dica do dia pela tela e pelo dia do calendário', () => {
   expect(other?.tip).toBeTruthy()
   expect(other?.tip).not.toBe(dayA?.tip)
   expect(dailyTipIndex(3, '/panel/wallet', new Date('2026-01-01T12:00:00Z'))).toBe(dailyTipIndex(3, '/panel/wallet', new Date('2026-01-01T23:00:00Z')))
+})
+it('no painel estreito iguala a altura da dica à da pergunta', async () => {
+  const user = userEvent.setup()
+  vi.stubGlobal('matchMedia', () => ({
+    matches: true,
+    media: '(max-width: 1100px)',
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: () => false,
+    onchange: null,
+  }))
+  const original = HTMLElement.prototype.getBoundingClientRect
+  HTMLElement.prototype.getBoundingClientRect = function () {
+    if (this.classList.contains('contextual-help-guide')) {
+      return { height: 140, width: 320, top: 0, left: 0, right: 320, bottom: 140, x: 0, y: 0, toJSON() { return {} } } as DOMRect
+    }
+    if (this.classList.contains('contextual-help-daily')) {
+      return { height: 72, width: 320, top: 0, left: 0, right: 320, bottom: 72, x: 0, y: 0, toJSON() { return {} } } as DOMRect
+    }
+    return original.call(this)
+  }
+  try {
+    mount(<ContextualHelp path="/panel/wallet" resources={[]} />)
+    await user.click(screen.getByRole('button', { name: 'Denkynho: ajuda nesta tela' }))
+    const copy = document.querySelector('.contextual-help-copy')
+    const guide = copy?.querySelector('.contextual-help-guide') as HTMLElement
+    const daily = copy?.querySelector('.contextual-help-daily') as HTMLElement
+    expect(copy).toContainElement(guide)
+    expect(copy).toContainElement(daily)
+    expect(guide.style.minHeight).toBe('140px')
+    expect(daily.style.minHeight).toBe('140px')
+  } finally {
+    HTMLElement.prototype.getBoundingClientRect = original
+    vi.unstubAllGlobals()
+  }
 })

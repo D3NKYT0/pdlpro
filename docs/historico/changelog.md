@@ -68,6 +68,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- No cantinho do Denkynho em telas estreitas, a dica do dia passa a ter a
+  mesma largura e a mesma altura da faixa da pergunta.
 - Webhook de pagamento com `order_id` de um pedido e `external_id` de outro passa a ser
   recusado e registrado em log, em vez de liquidar o pedido indicado nos metadados.
 

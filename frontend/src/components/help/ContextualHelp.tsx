@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { MessageCircle, X } from 'lucide-react'
@@ -13,6 +13,21 @@ import poses from './poses.json'
 import './contextual-help.css'
 
 export const CONTEXTUAL_HELP_OUTLET_ID = 'panel-help-outlet'
+export const CONTEXTUAL_COPY_NARROW_QUERY = '(max-width: 1100px)'
+
+function equalizeContextualCopy(root: HTMLElement | null) {
+  const guide = root?.querySelector<HTMLElement>('.contextual-help-guide')
+  const daily = root?.querySelector<HTMLElement>('.contextual-help-daily')
+  if (!guide || !daily) return
+  guide.style.minHeight = ''
+  daily.style.minHeight = ''
+  if (!window.matchMedia?.(CONTEXTUAL_COPY_NARROW_QUERY).matches) return
+  const height = Math.ceil(Math.max(guide.getBoundingClientRect().height, daily.getBoundingClientRect().height))
+  if (height <= 0) return
+  const value = `${height}px`
+  guide.style.minHeight = value
+  daily.style.minHeight = value
+}
 
 const CARE_KEYS = ['satiety', 'energy', 'hygiene', 'happiness'] as const
 type CareKey = (typeof CARE_KEYS)[number]
@@ -38,6 +53,7 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
   const [openPath, setOpenPath] = useState<string | null>(null)
   const trigger = useRef<HTMLButtonElement>(null)
   const closeButton = useRef<HTMLButtonElement>(null)
+  const copyRef = useRef<HTMLDivElement>(null)
   const id = useId()
   const context = getHelpContext(path, user, error ? undefined : resources, activeLanguage)
   const open = openPath === path
@@ -68,6 +84,27 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
+  useLayoutEffect(() => {
+    if (!open) return
+    const root = copyRef.current
+    equalizeContextualCopy(root)
+    if (!root) return
+    const sync = () => equalizeContextualCopy(root)
+    window.addEventListener('resize', sync)
+    const media = window.matchMedia?.(CONTEXTUAL_COPY_NARROW_QUERY)
+    media?.addEventListener?.('change', sync)
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(sync)
+    root.querySelectorAll('.contextual-help-ask, .contextual-help-actions, .contextual-help-tip').forEach((node) => observer?.observe(node))
+    return () => {
+      window.removeEventListener('resize', sync)
+      media?.removeEventListener?.('change', sync)
+      observer?.disconnect()
+      const guide = root.querySelector<HTMLElement>('.contextual-help-guide')
+      const daily = root.querySelector<HTMLElement>('.contextual-help-daily')
+      if (guide) guide.style.minHeight = ''
+      if (daily) daily.style.minHeight = ''
+    }
+  }, [open, path, context?.tip, context?.suggestion, loading])
   if (!context && !pet) return null
   const panel = open ? <Card as="aside" className="contextual-help-panel" id={id} aria-labelledby={`${id}-title`}>
       <header className="contextual-help-top">
@@ -118,21 +155,23 @@ export function ContextualHelp({ path, user = null, resources, loading = false, 
           </div>
         </section> : null}
 
-        <section className="contextual-help-guide">
-          {context && helpEnabled ? <p className="muted contextual-help-ask"><span>{t('contextual.ask')}</span> {context.suggestion}</p> : null}
-          {loading && <LoadingState>{t('contextual.checkingResources')}</LoadingState>}
-          <ErrorNotice error={Boolean(error)} fallback={t('contextual.resourcesError')} />
-          <div className="contextual-help-actions">
-            {helpEnabled ? <ButtonLink size="sm" to={helpPath}>{t('contextual.chatAboutScreen')}</ButtonLink> : null}
-            {ticket && <ButtonLink size="sm" variant="secondary" to={ticket.to}>{ticket.label}</ButtonLink>}
-            {!loading && context?.actions.filter(action => action.to !== context.path).map(action => <ButtonLink key={action.to} size="sm" variant="secondary" to={action.to}>{action.label}</ButtonLink>)}
-          </div>
-        </section>
+        <div className="contextual-help-copy" ref={copyRef}>
+          <section className="contextual-help-guide">
+            {context && helpEnabled ? <p className="muted contextual-help-ask"><span>{t('contextual.ask')}</span> {context.suggestion}</p> : null}
+            {loading && <LoadingState>{t('contextual.checkingResources')}</LoadingState>}
+            <ErrorNotice error={Boolean(error)} fallback={t('contextual.resourcesError')} />
+            <div className="contextual-help-actions">
+              {helpEnabled ? <ButtonLink size="sm" to={helpPath}>{t('contextual.chatAboutScreen')}</ButtonLink> : null}
+              {ticket && <ButtonLink size="sm" variant="secondary" to={ticket.to}>{ticket.label}</ButtonLink>}
+              {!loading && context?.actions.filter(action => action.to !== context.path).map(action => <ButtonLink key={action.to} size="sm" variant="secondary" to={action.to}>{action.label}</ButtonLink>)}
+            </div>
+          </section>
 
-        {context ? <section className="contextual-help-daily" aria-label={t('contextual.tipOfDay')}>
-          <p className="contextual-help-kicker">{t('contextual.tipOfDay')}</p>
-          <p className="contextual-help-tip">{context.tip}</p>
-        </section> : null}
+          {context ? <section className="contextual-help-daily" aria-label={t('contextual.tipOfDay')}>
+            <p className="contextual-help-kicker">{t('contextual.tipOfDay')}</p>
+            <p className="contextual-help-tip">{context.tip}</p>
+          </section> : null}
+        </div>
       </div>
     </Card> : null
   const outlet = typeof document !== 'undefined' ? document.getElementById(CONTEXTUAL_HELP_OUTLET_ID) : null

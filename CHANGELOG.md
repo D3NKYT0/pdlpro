@@ -3,7 +3,8 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **14 de setembro de 2026** — Não publicado: avisos
-no sino da barra superior; Atendimento
+no sino da barra superior; dica do dia do Denkynho alinhada à faixa da
+pergunta no mobile; Atendimento
 fora do menu (acesso só pela Ajuda); tela
 `/panel/progress` retirada (nível, conquistas e prêmios no Painel);
 jornada de

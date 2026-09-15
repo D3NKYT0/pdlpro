@@ -31,6 +31,7 @@ export function NotificationCenter() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const action = useAsyncAction()
+  const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const panelId = useId()
   const titleId = useId()
@@ -47,12 +48,17 @@ export function NotificationCenter() {
   const openLabel = unread ? t('notifications.openUnread', { unread }) : t('notifications.open')
 
   function placePanel() {
-    const trigger = triggerRef.current
-    if (!trigger) return
-    const rect = trigger.getBoundingClientRect()
+    const anchor = rootRef.current ?? triggerRef.current
+    if (!anchor) return
+    const rect = anchor.getBoundingClientRect()
+    const width = Math.min(400, window.innerWidth - 24)
+    const right = Math.min(
+      Math.max(12, window.innerWidth - rect.right),
+      Math.max(12, window.innerWidth - width - 12),
+    )
     setCoords({
       top: rect.bottom + 8,
-      right: Math.max(12, window.innerWidth - rect.right),
+      right,
     })
   }
 
@@ -126,7 +132,7 @@ export function NotificationCenter() {
   }
 
   return (
-    <div className="notification-center" data-theme-part="notification-center">
+    <div ref={rootRef} className="notification-center" data-theme-part="notification-center">
       <IconButton
         ref={triggerRef}
         className="notification-center-trigger"
@@ -157,7 +163,12 @@ export function NotificationCenter() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={titleId}
-                style={{ top: coords.top, right: coords.right }}
+                style={{
+                  top: coords.top,
+                  right: coords.right,
+                  ['--notification-panel-top' as string]: `${coords.top}px`,
+                  ['--notification-panel-right' as string]: `${coords.right}px`,
+                }}
               >
                 <header className="notification-center-head">
                   <div>
