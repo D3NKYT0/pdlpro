@@ -22,9 +22,13 @@ from apps.content.application.use_cases import (
 )
 from apps.content.application.wardrobe import EquipDenkynhoUseCase
 from apps.content.domain.repositories import (
+    ICalendarAdminRepository,
     IContentCatalogRepository,
     IDenkynhoRepository,
+    IDownloadAdminRepository,
+    IFaqAdminRepository,
     INewsAdminRepository,
+    IWikiAdminRepository,
 )
 from common.di.container import Container
 from common.di.lifetime import Lifetime
@@ -32,9 +36,13 @@ from common.di.provider import AppProvider
 
 from .configured_model import ConfiguredConversationModel
 from .repositories import (
+    DjangoCalendarAdminRepository,
     DjangoContentCatalogRepository,
     DjangoDenkynhoRepository,
+    DjangoDownloadAdminRepository,
+    DjangoFaqAdminRepository,
     DjangoNewsAdminRepository,
+    DjangoWikiAdminRepository,
 )
 from .semantic import SentenceTransformerMatcher
 
@@ -56,6 +64,10 @@ class ContentProvider(AppProvider):
             lifetime=Lifetime.SINGLETON,
         )
         container.register(INewsAdminRepository, DjangoNewsAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(ICalendarAdminRepository, DjangoCalendarAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IFaqAdminRepository, DjangoFaqAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IWikiAdminRepository, DjangoWikiAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IDownloadAdminRepository, DjangoDownloadAdminRepository, lifetime=Lifetime.SCOPED)
         container.register(
             IContentCatalogRepository, DjangoContentCatalogRepository, lifetime=Lifetime.SCOPED
         )

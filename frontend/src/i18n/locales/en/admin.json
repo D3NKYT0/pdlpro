@@ -6,7 +6,7 @@
     "reports": "Reports",
     "reportsDesc": "Finance, inventory, auctions, shop and marketplace",
     "module": "Module",
-    "note": "Notifications, calendar and the remaining fine-grained CRUD stay in Django Admin.",
+    "note": "Users, payments and operational records stay in Django Admin.",
     "categories": {
       "programs": "Programs and growth",
       "support": "Support",
@@ -22,6 +22,7 @@
       "commerce": { "title": "Packages and coupons", "description": "Item packages, discounts and supporter coupons" },
       "rewardsWorkshop": { "title": "Rewards workshop", "description": "Seasons, quests, exchanges, bonuses and baits" },
       "tickets": { "title": "Ticket queue", "description": "SLA, owners, replies and player history" },
+      "notifications": { "title": "Alerts", "description": "Send alerts to one player or to every account" },
       "resources": { "title": "Resource control", "description": "Enable or pause modules by category" },
       "themes": { "title": "Themes", "description": "Install, activate and restore the frontend look" },
       "api": { "title": "API", "description": "OpenAPI documentation (Swagger)" },
@@ -31,6 +32,10 @@
       "wallet": { "title": "Wallet settings", "description": "Promo banner and minimum top-up bonus" },
       "gameModules": { "title": "Game modules", "description": "Turn minigames on or off and fill their playable content" },
       "news": { "title": "News", "description": "Publish server announcements" },
+      "calendar": { "title": "Calendar", "description": "Public site events" },
+      "faq": { "title": "FAQ", "description": "Help articles and Denkynho handbook" },
+      "wiki": { "title": "Wiki", "description": "Guides and public wiki pages" },
+      "downloads": { "title": "Downloads", "description": "Client, patches and official files" },
       "roadmap": { "title": "Roadmap", "description": "Planning, milestones and server news" },
       "comingSoon": { "title": "Coming Soon", "description": "Home page countdown" },
       "server": { "title": "Panel and server", "description": "Name, rates, chronicle and coming soon" },
@@ -43,7 +48,11 @@
   "chrome": {
     "back": "Hub",
     "save": "Save",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancelEdit": "Cancel edit",
+    "confirmDelete": "Delete this record?"
   },
   "coins": {
     "kicker": "Finance",
@@ -285,6 +294,166 @@
       "error": "Could not save"
     }
   },
+  "calendar": {
+    "kicker": "Content",
+    "title": "Calendar",
+    "description": "Public site events, with start and end dates.",
+    "fieldTitle": "Title",
+    "fieldDescription": "Description",
+    "startsAt": "Starts",
+    "endsAt": "Ends",
+    "color": "Color",
+    "published": "Publish on the site",
+    "publishedLabel": "Published",
+    "draft": "Draft",
+    "submitCreate": "Create event",
+    "submitUpdate": "Update event",
+    "libraryEyebrow": "Schedule",
+    "libraryTitle": "Registered events",
+    "empty": "No events registered.",
+    "colors": {
+      "gold": "Gold",
+      "crimson": "Crimson",
+      "teal": "Teal",
+      "violet": "Violet",
+      "steel": "Steel"
+    },
+    "toast": {
+      "created": "Event created",
+      "updated": "Event updated",
+      "deleted": "Event deleted",
+      "error": "Could not save the event"
+    }
+  },
+  "faq": {
+    "kicker": "Content",
+    "title": "FAQ",
+    "description": "Public help articles and internal Denkynho walkthroughs.",
+    "language": "Article language",
+    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "question": "Question",
+    "shortAnswer": "Short answer",
+    "answer": "Full answer",
+    "keywords": "Keywords",
+    "category": "Topic",
+    "audience": "Audience",
+    "order": "Order",
+    "published": "Publish",
+    "assistantOnly": "Denkynho only",
+    "publishedLabel": "Published",
+    "handbook": "Handbook",
+    "draft": "Draft",
+    "submitCreate": "Create article",
+    "submitUpdate": "Update article",
+    "libraryEyebrow": "Catalog",
+    "libraryTitle": "Registered articles",
+    "empty": "No articles registered.",
+    "categories": {
+      "getting_started": "Getting started",
+      "account_security": "Account and security",
+      "game_accounts": "Accounts and characters",
+      "economy": "Wallet and inventory",
+      "commerce": "Shop and commerce",
+      "games_rewards": "Games and rewards",
+      "community": "Content and community",
+      "support": "Help and support"
+    },
+    "audiences": {
+      "public": "All users",
+      "staff": "Staff",
+      "superadmin": "Superadministrators"
+    },
+    "toast": {
+      "created": "Article created",
+      "updated": "Article updated",
+      "deleted": "Article deleted",
+      "error": "Could not save the article"
+    }
+  },
+  "wiki": {
+    "kicker": "Content",
+    "title": "Wiki",
+    "description": "Public wiki pages, with Portuguese, English and Spanish versions.",
+    "language": "Page language",
+    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "fieldTitle": "Title",
+    "summary": "Summary",
+    "body": "Content",
+    "category": "Category",
+    "slug": "Slug",
+    "order": "Order",
+    "published": "Publish on the site",
+    "menuItem": "Show in the menu",
+    "publishedLabel": "Published",
+    "draft": "Draft",
+    "submitCreate": "Create page",
+    "submitUpdate": "Update page",
+    "libraryEyebrow": "Library",
+    "libraryTitle": "Registered pages",
+    "empty": "No pages registered.",
+    "toast": {
+      "bodyRequired": "Enter the page content",
+      "created": "Page created",
+      "updated": "Page updated",
+      "deleted": "Page deleted",
+      "error": "Could not save the page"
+    }
+  },
+  "downloads": {
+    "kicker": "Content",
+    "title": "Downloads",
+    "description": "Official client, patch and extra file links.",
+    "fieldTitle": "Title",
+    "url": "URL",
+    "category": "Category",
+    "order": "Order",
+    "published": "Publish on the site",
+    "publishedLabel": "Published",
+    "draft": "Draft",
+    "submitCreate": "Create download",
+    "submitUpdate": "Update download",
+    "libraryEyebrow": "Files",
+    "libraryTitle": "Registered links",
+    "empty": "No downloads registered.",
+    "toast": {
+      "created": "Download created",
+      "updated": "Download updated",
+      "deleted": "Download deleted",
+      "error": "Could not save the download"
+    }
+  },
+  "notifications": {
+    "kicker": "Support",
+    "title": "Alerts",
+    "description": "Send an alert to one player or to every active account. Push delivery follows each browser permission.",
+    "fieldTitle": "Title",
+    "fieldBody": "Message",
+    "kind": "Type",
+    "link": "Link (optional)",
+    "username": "Target username",
+    "broadcast": "Send to every active account",
+    "submitSend": "Send alert",
+    "submitBroadcast": "Send to everyone",
+    "libraryEyebrow": "History",
+    "libraryTitle": "Recent alerts",
+    "search": "Search",
+    "searchPlaceholder": "Title, text or username",
+    "read": "Read",
+    "unread": "Unread",
+    "empty": "No alerts sent.",
+    "kinds": {
+      "info": "Information",
+      "support": "Support",
+      "payment": "Payment",
+      "staff": "Staff"
+    },
+    "toast": {
+      "sent": "Alert sent",
+      "broadcast": "{{count}} alerts sent",
+      "deleted": "Alert deleted",
+      "error": "Could not send the alert"
+    }
+  },
   "support": {
     "back": "Hub",
     "eyebrow": "Support operations",
@@ -363,7 +532,11 @@
   "chrome": {
     "back": "Hub",
     "save": "Save",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancelEdit": "Cancel edit",
+    "confirmDelete": "Delete this record?"
   },
   "server": {
     "kicker": "Server",

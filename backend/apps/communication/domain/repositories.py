@@ -3,7 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from apps.communication.domain.entities import NotificationEntity
+from apps.communication.domain.entities import (
+    NotificationEntity,
+    StaffNotificationRecord,
+)
 
 
 class INotificationRepository(ABC):
@@ -32,6 +35,18 @@ class INotificationRepository(ABC):
 
     @abstractmethod
     def create(self, user_id: UUID, *, title: str, body: str, kind: str = "info", link: str = "") -> NotificationEntity:
+        raise NotImplementedError
+
+
+class INotificationAdminRepository(ABC):
+    """Porta administrativa de avisos: listagem recente e exclusão."""
+
+    @abstractmethod
+    def list_recent(self, *, query: str = "", limit: int = 100) -> list[StaffNotificationRecord]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, notification_id: UUID) -> bool:
         raise NotImplementedError
 
 

@@ -8,22 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { CalendarClock, ExternalLink, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
+import { fromDatetimeLocal, toDatetimeLocal } from '../../lib/datetime'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
-
-function toDatetimeLocal(iso: string | null | undefined) {
-  if (!iso) return ''
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return ''
-  const pad = (value: number) => String(value).padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
-}
-
-function fromDatetimeLocal(value: string) {
-  if (!value.trim()) return null
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return null
-  return date.toISOString()
-}
 
 export function AdminServerPage() {
   const { t } = useTranslation('admin')

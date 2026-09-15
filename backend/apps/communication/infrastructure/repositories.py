@@ -2,8 +2,14 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from apps.communication.domain.entities import NotificationEntity
+from django.db.models import Q
+
+from apps.communication.domain.entities import (
+    NotificationEntity,
+    StaffNotificationRecord,
+)
 from apps.communication.domain.repositories import (
+    INotificationAdminRepository,
     INotificationRepository,
     IPushSubscriptionRepository,
 )
@@ -55,6 +61,39 @@ class DjangoNotificationRepository(INotificationRepository):
         user = get_user_model().objects.get(id=user_id)
         row = Notification.objects.create(user=user, title=title, body=body, kind=kind, link=link)
         return self._entity(row)
+
+
+class DjangoNotificationAdminRepository(INotificationAdminRepository):
+    """Adaptador Django da listagem e exclusão administrativa de avisos."""
+
+    def list_recent(self, *, query: str = "", limit: int = 100) -> list[StaffNotificationRecord]:
+        rows = Notification.objects.select_related("user").all()
+        needle = query.strip()
+        if needle:
+            rows = rows.filter(
+                Q(title__icontains=needle)
+                | Q(body__icontains=needle)
+                | Q(user__username__icontains=needle)
+            )
+        capped = max(1, min(int(limit), 200))
+        return [
+            StaffNotificationRecord(
+                id=row.id,
+                user_id=row.user_id,
+                username=row.user.username,
+                title=row.title,
+                body=row.body,
+                kind=row.kind,
+                link=row.link,
+                is_read=row.is_read,
+                created_at=row.created_at.isoformat(),
+            )
+            for row in rows[:capped]
+        ]
+
+    def delete(self, notification_id: UUID) -> bool:
+        deleted, _ = Notification.objects.filter(id=notification_id).delete()
+        return bool(deleted)
 
 
 class DjangoPushSubscriptionRepository(IPushSubscriptionRepository):

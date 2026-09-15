@@ -4,6 +4,12 @@ from apps.staff.presentation.views.accounts import (
     StaffInspectGameAccountView,
     StaffUnlinkGameAccountView,
 )
+from apps.staff.presentation.views.cms import (
+    StaffCalendarView,
+    StaffDownloadsView,
+    StaffFaqView,
+    StaffWikiView,
+)
 from apps.staff.presentation.views.config import (
     StaffCoinConfigView,
     StaffGamesAutoconfigView,
@@ -34,6 +40,7 @@ from apps.staff.presentation.views.item_observation import (
     ObservationSnapshotsView,
     ObservationSnapshotView,
 )
+from apps.staff.presentation.views.notifications import StaffNotificationsView
 from apps.staff.presentation.views.operational_reports import (
     AuctionsOperationalReportView,
     InventoryOperationalReportView,
@@ -72,6 +79,11 @@ urlpatterns = [
     path("wallet-promo/", StaffWalletPromoView.as_view(), name="staff-wallet-promo"),
     path("shop/", StaffShopItemsView.as_view(), name="staff-shop"),
     path("news/", StaffNewsView.as_view(), name="staff-news"),
+    path("calendar/", StaffCalendarView.as_view(), name="staff-calendar"),
+    path("faq/", StaffFaqView.as_view(), name="staff-faq"),
+    path("wiki/", StaffWikiView.as_view(), name="staff-wiki"),
+    path("downloads/", StaffDownloadsView.as_view(), name="staff-downloads"),
+    path("notifications/", StaffNotificationsView.as_view(), name="staff-notifications"),
     path("games/autoconfig/", StaffGamesAutoconfigView.as_view(), name="staff-games-autoconfig"),
     path("games/", StaffGamesView.as_view(), name="staff-games"),
 ]

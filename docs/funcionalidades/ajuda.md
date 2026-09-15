@@ -198,13 +198,13 @@ A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. P
 
 A migration `content.0004_seed_pdl_faq` publica 38 orientações em oito assuntos: primeiros passos; conta e segurança; contas e personagens; carteira e inventário; loja e comércio; jogos e recompensas; conteúdo e comunidade; ajuda e atendimento. O catálogo cobre os módulos disponíveis no PDL sem fixar preços, taxas, limites ou prazos configuráveis. IDs determinísticos permitem reaplicar a carga e removê-la no rollback sem atingir artigos criados pela administração.
 
-A migration `content.0009_seed_english_faq` acrescenta as versões em inglês dos 38 artigos públicos e quatro artigos internos. A página pública `/faq` permite trocar o idioma, buscar em pergunta, resposta e palavras-chave e filtrar por assunto. As rotas de FAQ aceitam `?lang=pt` ou `?lang=en`; a API também retorna `language`, `audience` e `audience_label`. O Django Admin permite editar as duas versões e publicar cada artigo para todos, para a equipe ou somente para superadministradores.
+A migration `content.0009_seed_english_faq` acrescenta as versões em inglês dos 38 artigos públicos e quatro artigos internos. A página pública `/faq` permite trocar o idioma, buscar em pergunta, resposta e palavras-chave e filtrar por assunto. As rotas de FAQ aceitam `?lang=pt` ou `?lang=en`; a API também retorna `language`, `audience` e `audience_label`. A equipe edita as três línguas e a audiência em `/panel/admin/faq` (também disponível no Django Admin).
 
 ## Handbook interno do Denkynho
 
 A migration `content.0013_seed_denkynho_handbook` publica 61 orientações de passo a passo marcadas como `assistant_only`. Elas alimentam só a consulta do assistente: não entram em `/faq`, nas sugestões da Ajuda nem nas APIs de listagem, mesmo para superadministradores. O Denkynho continua filtrando por papel: jogadores recebem os 45 artigos públicos do handbook; a equipe recebe também os 13 de staff; superadministradores recebem os 3 exclusivos de temas e permissões.
 
-O handbook descreve rotas reais do painel (`/panel/wallet`, `/panel/accounts`, `/panel/admin/support` e correlatas), sem fixar preços, taxas ou prazos configuráveis. No Django Admin, o proxy **DenkynhoHandbook** e o filtro **Somente assistente** separam esses artigos do FAQ listado. Novos passo a passo usam o fluxo editorial: marque `assistant_only` e mantenha as versões em português e inglês; a migração `content.0018` cria só o proxy, sem republicar o catálogo.
+O handbook descreve rotas reais do painel (`/panel/wallet`, `/panel/accounts`, `/panel/admin/support` e correlatas), sem fixar preços, taxas ou prazos configuráveis. Em `/panel/admin/faq`, marque **Somente Denkynho** para um passo a passo interno; o proxy **DenkynhoHandbook** no Django Admin continua separando esses artigos do FAQ listado. Novos passo a passo usam o fluxo editorial: marque `assistant_only` e mantenha as versões em português, inglês e espanhol; a migração `content.0018` cria só o proxy, sem republicar o catálogo.
 
 ## Moderação da conversa
 

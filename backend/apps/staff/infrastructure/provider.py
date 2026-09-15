@@ -1,4 +1,23 @@
+from apps.staff.application.cms import (
+    DeleteStaffCalendarUseCase,
+    DeleteStaffDownloadUseCase,
+    DeleteStaffFaqUseCase,
+    DeleteStaffWikiUseCase,
+    ListStaffCalendarUseCase,
+    ListStaffDownloadsUseCase,
+    ListStaffFaqUseCase,
+    ListStaffWikiUseCase,
+    UpsertStaffCalendarUseCase,
+    UpsertStaffDownloadUseCase,
+    UpsertStaffFaqUseCase,
+    UpsertStaffWikiUseCase,
+)
 from apps.staff.application.financial_reports import GetFinancialReportUseCase
+from apps.staff.application.notifications import (
+    DeleteStaffNotificationUseCase,
+    ListStaffNotificationsUseCase,
+    SendStaffNotificationUseCase,
+)
 from apps.staff.application.observability import PruneObservabilityLogsUseCase
 from apps.staff.application.operational_reports import GetOperationalReportUseCase
 from apps.staff.application.use_cases import (
@@ -62,6 +81,21 @@ class StaffProvider(AppProvider):
             UpsertStaffShopItemUseCase,
             ListStaffNewsUseCase,
             UpsertStaffNewsUseCase,
+            ListStaffCalendarUseCase,
+            UpsertStaffCalendarUseCase,
+            DeleteStaffCalendarUseCase,
+            ListStaffFaqUseCase,
+            UpsertStaffFaqUseCase,
+            DeleteStaffFaqUseCase,
+            ListStaffWikiUseCase,
+            UpsertStaffWikiUseCase,
+            DeleteStaffWikiUseCase,
+            ListStaffDownloadsUseCase,
+            UpsertStaffDownloadUseCase,
+            DeleteStaffDownloadUseCase,
+            ListStaffNotificationsUseCase,
+            SendStaffNotificationUseCase,
+            DeleteStaffNotificationUseCase,
             ListStaffGamesUseCase,
             ToggleStaffGameUseCase,
         ):

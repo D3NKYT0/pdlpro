@@ -84,6 +84,13 @@ class DjangoUserRepository(IUserRepository):
         user = User.objects.filter(username__iexact=username).first()
         return self._to_entity(user) if user else None
 
+    def get_active_by_username(self, username: str) -> UserEntity | None:
+        user = User.objects.filter(username__iexact=username, is_active=True).first()
+        return self._to_entity(user) if user else None
+
+    def list_active_ids(self) -> list[UUID]:
+        return list(User.objects.filter(is_active=True).values_list("id", flat=True))
+
     def get_by_email(self, email: str) -> UserEntity | None:
         user = User.objects.filter(email__iexact=email).first()
         return self._to_entity(user) if user else None

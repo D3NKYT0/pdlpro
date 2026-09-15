@@ -1114,6 +1114,18 @@ html.pdl-panel .admin-form {
   gap: 14px;
 }
 
+html.pdl-panel .admin-cms-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+html.pdl-panel .admin-cms-langs {
+  display: grid;
+  gap: 14px;
+}
+
 html.pdl-panel .admin-shop-form > .btn {
   justify-self: start;
   height: 40px;

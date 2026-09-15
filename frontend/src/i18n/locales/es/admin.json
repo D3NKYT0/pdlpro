@@ -6,7 +6,7 @@
     "reports": "Informes",
     "reportsDesc": "Finanzas, inventario, subastas, tienda y marketplace",
     "module": "Módulo",
-    "note": "Notificaciones, calendario y el resto del CRUD detallado siguen en el Django Admin.",
+    "note": "Usuarios, pagos y registros operativos siguen en el Django Admin.",
     "categories": {
       "programs": "Programas y expansión",
       "support": "Atención",
@@ -22,6 +22,7 @@
       "commerce": { "title": "Paquetes y cupones", "description": "Paquetes de ítems, descuentos y cupones de patrocinadores" },
       "rewardsWorkshop": { "title": "Taller de recompensas", "description": "Temporadas, misiones, intercambios, bonos y cebos" },
       "tickets": { "title": "Cola de tickets", "description": "SLA, responsables, respuestas e historial del jugador" },
+      "notifications": { "title": "Avisos", "description": "Enviar avisos a un jugador o a todas las cuentas" },
       "resources": { "title": "Control de recursos", "description": "Activar o pausar módulos por categoría" },
       "themes": { "title": "Temas", "description": "Instalar, activar y restaurar la apariencia del frontend" },
       "api": { "title": "API", "description": "Documentación OpenAPI (Swagger)" },
@@ -31,6 +32,10 @@
       "wallet": { "title": "Configuración de la cartera", "description": "Banner promocional y bono mínimo en las recargas" },
       "gameModules": { "title": "Módulos de juegos", "description": "Encender, apagar y rellenar el contenido de los minijuegos" },
       "news": { "title": "Noticias", "description": "Publicar avisos del servidor" },
+      "calendar": { "title": "Calendario", "description": "Eventos públicos del sitio" },
+      "faq": { "title": "FAQ", "description": "Artículos de ayuda y handbook de Denkynho" },
+      "wiki": { "title": "Wiki", "description": "Guías y páginas de la wiki pública" },
+      "downloads": { "title": "Descargas", "description": "Cliente, parches y archivos oficiales" },
       "roadmap": { "title": "Roadmap", "description": "Planificación, etapas y novedades del servidor" },
       "comingSoon": { "title": "Coming Soon", "description": "Cuenta regresiva de la portada" },
       "server": { "title": "Panel y servidor", "description": "Nombre, rates, chronicle y coming soon" },
@@ -43,7 +48,11 @@
   "chrome": {
     "back": "Central",
     "save": "Guardar",
-    "saving": "Guardando..."
+    "saving": "Guardando...",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancelEdit": "Cancelar edición",
+    "confirmDelete": "¿Eliminar este registro?"
   },
   "coins": {
     "kicker": "Finanzas",
@@ -285,6 +294,166 @@
       "error": "No se pudo guardar"
     }
   },
+  "calendar": {
+    "kicker": "Contenido",
+    "title": "Calendario",
+    "description": "Eventos públicos del sitio, con fechas de inicio y fin.",
+    "fieldTitle": "Título",
+    "fieldDescription": "Descripción",
+    "startsAt": "Inicio",
+    "endsAt": "Fin",
+    "color": "Color",
+    "published": "Publicar en el sitio",
+    "publishedLabel": "Publicado",
+    "draft": "Borrador",
+    "submitCreate": "Crear evento",
+    "submitUpdate": "Actualizar evento",
+    "libraryEyebrow": "Agenda",
+    "libraryTitle": "Eventos registrados",
+    "empty": "Ningún evento registrado.",
+    "colors": {
+      "gold": "Oro",
+      "crimson": "Carmesí",
+      "teal": "Teal",
+      "violet": "Violeta",
+      "steel": "Acero"
+    },
+    "toast": {
+      "created": "Evento creado",
+      "updated": "Evento actualizado",
+      "deleted": "Evento eliminado",
+      "error": "No se pudo guardar el evento"
+    }
+  },
+  "faq": {
+    "kicker": "Contenido",
+    "title": "FAQ",
+    "description": "Artículos de ayuda pública y pasos internos de Denkynho.",
+    "language": "Idioma del artículo",
+    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "question": "Pregunta",
+    "shortAnswer": "Respuesta rápida",
+    "answer": "Respuesta completa",
+    "keywords": "Palabras clave",
+    "category": "Tema",
+    "audience": "Audiencia",
+    "order": "Orden",
+    "published": "Publicar",
+    "assistantOnly": "Solo Denkynho",
+    "publishedLabel": "Publicado",
+    "handbook": "Handbook",
+    "draft": "Borrador",
+    "submitCreate": "Crear artículo",
+    "submitUpdate": "Actualizar artículo",
+    "libraryEyebrow": "Catálogo",
+    "libraryTitle": "Artículos registrados",
+    "empty": "Ningún artículo registrado.",
+    "categories": {
+      "getting_started": "Primeros pasos",
+      "account_security": "Cuenta y seguridad",
+      "game_accounts": "Cuentas y personajes",
+      "economy": "Cartera e inventario",
+      "commerce": "Tienda y comercio",
+      "games_rewards": "Juegos y recompensas",
+      "community": "Contenido y comunidad",
+      "support": "Ayuda y atención"
+    },
+    "audiences": {
+      "public": "Todos los usuarios",
+      "staff": "Equipo",
+      "superadmin": "Superadministradores"
+    },
+    "toast": {
+      "created": "Artículo creado",
+      "updated": "Artículo actualizado",
+      "deleted": "Artículo eliminado",
+      "error": "No se pudo guardar el artículo"
+    }
+  },
+  "wiki": {
+    "kicker": "Contenido",
+    "title": "Wiki",
+    "description": "Páginas de la wiki pública, con versiones en portugués, inglés y español.",
+    "language": "Idioma de la página",
+    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "fieldTitle": "Título",
+    "summary": "Resumen",
+    "body": "Contenido",
+    "category": "Categoría",
+    "slug": "Slug",
+    "order": "Orden",
+    "published": "Publicar en el sitio",
+    "menuItem": "Mostrar en el menú",
+    "publishedLabel": "Publicada",
+    "draft": "Borrador",
+    "submitCreate": "Crear página",
+    "submitUpdate": "Actualizar página",
+    "libraryEyebrow": "Biblioteca",
+    "libraryTitle": "Páginas registradas",
+    "empty": "Ninguna página registrada.",
+    "toast": {
+      "bodyRequired": "Escribe el contenido de la página",
+      "created": "Página creada",
+      "updated": "Página actualizada",
+      "deleted": "Página eliminada",
+      "error": "No se pudo guardar la página"
+    }
+  },
+  "downloads": {
+    "kicker": "Contenido",
+    "title": "Descargas",
+    "description": "Enlaces oficiales del cliente, parches y archivos auxiliares.",
+    "fieldTitle": "Título",
+    "url": "URL",
+    "category": "Categoría",
+    "order": "Orden",
+    "published": "Publicar en el sitio",
+    "publishedLabel": "Publicado",
+    "draft": "Borrador",
+    "submitCreate": "Crear descarga",
+    "submitUpdate": "Actualizar descarga",
+    "libraryEyebrow": "Archivos",
+    "libraryTitle": "Enlaces registrados",
+    "empty": "Ninguna descarga registrada.",
+    "toast": {
+      "created": "Descarga creada",
+      "updated": "Descarga actualizada",
+      "deleted": "Descarga eliminada",
+      "error": "No se pudo guardar la descarga"
+    }
+  },
+  "notifications": {
+    "kicker": "Atención",
+    "title": "Avisos",
+    "description": "Envía un aviso a un jugador o a todas las cuentas activas. La entrega push sigue el permiso de cada navegador.",
+    "fieldTitle": "Título",
+    "fieldBody": "Mensaje",
+    "kind": "Tipo",
+    "link": "Enlace (opcional)",
+    "username": "Usuario de destino",
+    "broadcast": "Enviar a todas las cuentas activas",
+    "submitSend": "Enviar aviso",
+    "submitBroadcast": "Enviar a todos",
+    "libraryEyebrow": "Historial",
+    "libraryTitle": "Avisos recientes",
+    "search": "Buscar",
+    "searchPlaceholder": "Título, texto o usuario",
+    "read": "Leído",
+    "unread": "No leído",
+    "empty": "Ningún aviso enviado.",
+    "kinds": {
+      "info": "Información",
+      "support": "Atención",
+      "payment": "Pago",
+      "staff": "Equipo"
+    },
+    "toast": {
+      "sent": "Aviso enviado",
+      "broadcast": "{{count}} avisos enviados",
+      "deleted": "Aviso eliminado",
+      "error": "No se pudo enviar el aviso"
+    }
+  },
   "support": {
     "back": "Central",
     "eyebrow": "Operación de atención",
@@ -363,7 +532,11 @@
   "chrome": {
     "back": "Central",
     "save": "Guardar",
-    "saving": "Guardando..."
+    "saving": "Guardando...",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancelEdit": "Cancelar edición",
+    "confirmDelete": "¿Eliminar este registro?"
   },
   "server": {
     "kicker": "Servidor",

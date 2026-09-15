@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Bell,
+  BookOpen,
   Braces,
   ChartNoAxesCombined,
   CalendarDays,
+  CircleHelp,
   Coins,
+  Download,
   ExternalLink,
   Gamepad2,
   PackagePlus,
@@ -40,6 +43,7 @@ const categories: Category[] = [
     tone: 'support',
     entries: [
       { to: '/panel/admin/support', key: 'tickets', icon: Headphones },
+      { to: '/panel/admin/notifications', key: 'notifications', icon: Bell },
     ],
   },
   {
@@ -78,6 +82,10 @@ const categories: Category[] = [
     tone: 'content',
     entries: [
       { to: '/panel/admin/news', key: 'news', icon: Newspaper },
+      { to: '/panel/admin/calendar', key: 'calendar', icon: CalendarDays },
+      { to: '/panel/admin/faq', key: 'faq', icon: CircleHelp },
+      { to: '/panel/admin/wiki', key: 'wiki', icon: BookOpen },
+      { to: '/panel/admin/downloads', key: 'downloads', icon: Download },
       { to: '/panel/admin/roadmap', key: 'roadmap', icon: CalendarDays },
       { to: '/panel/admin/server', key: 'comingSoon', icon: CalendarDays },
     ],

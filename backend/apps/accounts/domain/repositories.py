@@ -63,6 +63,18 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def get_active_by_username(self, username: str) -> UserEntity | None:
+        """Usuário ativo pelo username; None se inexistente ou inativo."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_ids(self) -> list[UUID]:
+        """IDs de contas ativas, para envio em massa de avisos."""
+
+        raise NotImplementedError
+
+    @abstractmethod
     def get_by_email(self, email: str) -> UserEntity | None:
         raise NotImplementedError
 

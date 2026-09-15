@@ -211,7 +211,8 @@ pdl_swagger_tags: list[dict[str, Any]] = [
         "name": "Staff",
         "description": _(
             "Configurações do painel, preços de serviços, moedas, itens da loja, "
-            "notícias, jogos, temas, inspeção de contas e demais operações administrativas."
+            "notícias, calendário, FAQ, wiki, downloads, avisos, jogos, temas, "
+            "inspeção de contas e demais operações administrativas."
         ),
     },
     {

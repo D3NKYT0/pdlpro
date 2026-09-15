@@ -218,6 +218,28 @@ class CatalogResolutionTests(SimpleTestCase):
         finally:
             translation.deactivate()
 
+    def test_staff_cms_messages_are_translated(self):
+        """Erros de calendário, FAQ, wiki, downloads e avisos precisam sair em EN e ES."""
+        expected = {
+            "en": {
+                "A data de término deve ser posterior ao início.": "The end date must be after the start.",
+                "Já existe uma página com este slug.": "A page with this slug already exists.",
+                "Informe o usuário de destino ou envie para todos.": "Provide the destination user or send to everyone.",
+            },
+            "es": {
+                "A data de término deve ser posterior ao início.": "La fecha de término debe ser posterior al inicio.",
+                "Já existe uma página com este slug.": "Ya existe una página con este slug.",
+                "Informe o usuário de destino ou envie para todos.": "Indica el usuario de destino o envía a todos.",
+            },
+        }
+        for language, pairs in expected.items():
+            activate_language(language)
+            try:
+                for msgid, msgstr in pairs.items():
+                    self.assertEqual(_(msgid), msgstr)
+            finally:
+                translation.deactivate()
+
     def test_security_hardening_messages_are_translated(self):
         """Mensagens novas de imagem, senha do jogo e admin 2FA precisam sair em EN e ES."""
         expected = {

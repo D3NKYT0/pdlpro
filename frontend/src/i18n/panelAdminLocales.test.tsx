@@ -110,6 +110,8 @@ describe('admin hub and reports follow the active language', () => {
     expect(english).toContain('Programs and growth')
     expect(english).toContain('Reports')
     expect(english).toContain('Ticket queue')
+    expect(english).toContain('Calendar')
+    expect(english).toContain('Alerts')
     expect(english).toContain('OpenAPI documentation (Swagger)')
     expect(english).not.toContain('Fila de chamados')
     const spanish = await withLanguage('es', () => render(<AdminHubPage />))

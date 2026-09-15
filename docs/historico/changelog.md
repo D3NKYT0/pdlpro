@@ -10,6 +10,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- CRUD de **calendário**, **FAQ**, **wiki**, **downloads** e **avisos** na central
+  da staff (`/panel/admin/calendar`, `/panel/admin/faq`, `/panel/admin/wiki`,
+  `/panel/admin/downloads`, `/panel/admin/notifications`): listar, criar, editar
+  e excluir sem sair do painel. Avisos vão a um usuário ativo ou a todas as
+  contas ativas, com entrega por Web Push.
 - Instaladores das versões publicadas para Linux (`packaging/install.sh`) e
   Windows (`packaging/install.ps1`): baixam o ZIP da GitHub Release, configuram
   o `.env` e sobem o Compose **puxando** imagens do GHCR, sem build no servidor.

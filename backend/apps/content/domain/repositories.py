@@ -38,6 +38,106 @@ class INewsAdminRepository(ABC):
         raise NotImplementedError
 
 
+class ICalendarAdminRepository(ABC):
+    """Porta administrativa de eventos do calendário público."""
+
+    @abstractmethod
+    def list_all(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, event_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def new(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, event_id: UUID) -> bool:
+        raise NotImplementedError
+
+
+class IFaqAdminRepository(ABC):
+    """Porta administrativa de artigos do FAQ e do handbook do Denkynho."""
+
+    @abstractmethod
+    def list_all(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, faq_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def new(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, faq_id: UUID) -> bool:
+        raise NotImplementedError
+
+
+class IWikiAdminRepository(ABC):
+    """Porta administrativa de páginas da wiki."""
+
+    @abstractmethod
+    def list_all(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, page_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def slug_exists(self, slug: str, *, exclude_id: UUID | None = None) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def new(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, page_id: UUID) -> bool:
+        raise NotImplementedError
+
+
+class IDownloadAdminRepository(ABC):
+    """Porta administrativa de links de download."""
+
+    @abstractmethod
+    def list_all(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_by_id(self, download_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def new(self, **fields) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(self, row: Any) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, download_id: UUID) -> bool:
+        raise NotImplementedError
+
+
 class IContentCatalogRepository(ABC):
     """Porta do catálogo público CMS: notícias, FAQ, downloads, wiki e calendário.
 

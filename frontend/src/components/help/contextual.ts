@@ -214,7 +214,7 @@ const topics: Topic[] = [
   },
 ]
 
-const adminPages = new Set(['resources', 'roadmap', 'supporters', 'commerce', 'rewards', 'reports', 'financial', 'items', 'items/customs', 'server', 'accounts', 'services', 'coins', 'shop', 'news', 'games', 'support', 'themes', 'wallet'].map(path => `/panel/admin/${path}`))
+const adminPages = new Set(['resources', 'roadmap', 'supporters', 'commerce', 'rewards', 'reports', 'financial', 'items', 'items/customs', 'server', 'accounts', 'services', 'coins', 'shop', 'news', 'calendar', 'faq', 'wiki', 'downloads', 'notifications', 'games', 'support', 'themes', 'wallet'].map(path => `/panel/admin/${path}`))
 
 function resolveTopic(path: string | null | undefined) {
   if (!path) return undefined

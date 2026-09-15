@@ -10,11 +10,13 @@ from apps.communication.application.use_cases import (
 )
 from apps.communication.domain.push import IPushSender
 from apps.communication.domain.repositories import (
+    INotificationAdminRepository,
     INotificationRepository,
     IPushSubscriptionRepository,
 )
 from apps.communication.infrastructure.push import WebPushSender
 from apps.communication.infrastructure.repositories import (
+    DjangoNotificationAdminRepository,
     DjangoNotificationRepository,
     DjangoPushSubscriptionRepository,
 )
@@ -33,6 +35,11 @@ class CommunicationProvider(AppProvider):
 
     def register(self, container: Container) -> None:
         container.register(INotificationRepository, DjangoNotificationRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            INotificationAdminRepository,
+            DjangoNotificationAdminRepository,
+            lifetime=Lifetime.SCOPED,
+        )
         container.register(
             IPushSubscriptionRepository,
             DjangoPushSubscriptionRepository,

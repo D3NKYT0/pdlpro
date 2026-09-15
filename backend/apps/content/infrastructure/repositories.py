@@ -6,9 +6,13 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 
 from apps.content.domain.repositories import (
+    ICalendarAdminRepository,
     IContentCatalogRepository,
     IDenkynhoRepository,
+    IDownloadAdminRepository,
+    IFaqAdminRepository,
     INewsAdminRepository,
+    IWikiAdminRepository,
 )
 from apps.content.infrastructure.models import (
     CalendarEvent,
@@ -44,6 +48,96 @@ class DjangoNewsAdminRepository(INewsAdminRepository):
     def save(self, row: News) -> News:
         row.save()
         return row
+
+
+class DjangoCalendarAdminRepository(ICalendarAdminRepository):
+    """Adaptador Django de ``ICalendarAdminRepository``."""
+
+    def list_all(self) -> list[CalendarEvent]:
+        return list(CalendarEvent.objects.all().order_by("starts_at", "title"))
+
+    def get_by_id(self, event_id: UUID) -> CalendarEvent | None:
+        return CalendarEvent.objects.filter(id=event_id).first()
+
+    def new(self, **fields) -> CalendarEvent:
+        return CalendarEvent(**fields)
+
+    def save(self, row: CalendarEvent) -> CalendarEvent:
+        row.save()
+        return row
+
+    def delete(self, event_id: UUID) -> bool:
+        deleted, _ = CalendarEvent.objects.filter(id=event_id).delete()
+        return bool(deleted)
+
+
+class DjangoFaqAdminRepository(IFaqAdminRepository):
+    """Adaptador Django de ``IFaqAdminRepository``."""
+
+    def list_all(self) -> list[Faq]:
+        return list(Faq.objects.all().order_by("order", "question"))
+
+    def get_by_id(self, faq_id: UUID) -> Faq | None:
+        return Faq.objects.filter(id=faq_id).first()
+
+    def new(self, **fields) -> Faq:
+        return Faq(**fields)
+
+    def save(self, row: Faq) -> Faq:
+        row.save()
+        return row
+
+    def delete(self, faq_id: UUID) -> bool:
+        deleted, _ = Faq.objects.filter(id=faq_id).delete()
+        return bool(deleted)
+
+
+class DjangoWikiAdminRepository(IWikiAdminRepository):
+    """Adaptador Django de ``IWikiAdminRepository``."""
+
+    def list_all(self) -> list[WikiPage]:
+        return list(WikiPage.objects.all().order_by("order", "title"))
+
+    def get_by_id(self, page_id: UUID) -> WikiPage | None:
+        return WikiPage.objects.filter(id=page_id).first()
+
+    def slug_exists(self, slug: str, *, exclude_id: UUID | None = None) -> bool:
+        qs = WikiPage.objects.filter(slug=slug)
+        if exclude_id is not None:
+            qs = qs.exclude(id=exclude_id)
+        return qs.exists()
+
+    def new(self, **fields) -> WikiPage:
+        return WikiPage(**fields)
+
+    def save(self, row: WikiPage) -> WikiPage:
+        row.save()
+        return row
+
+    def delete(self, page_id: UUID) -> bool:
+        deleted, _ = WikiPage.objects.filter(id=page_id).delete()
+        return bool(deleted)
+
+
+class DjangoDownloadAdminRepository(IDownloadAdminRepository):
+    """Adaptador Django de ``IDownloadAdminRepository``."""
+
+    def list_all(self) -> list[DownloadLink]:
+        return list(DownloadLink.objects.all().order_by("order", "title"))
+
+    def get_by_id(self, download_id: UUID) -> DownloadLink | None:
+        return DownloadLink.objects.filter(id=download_id).first()
+
+    def new(self, **fields) -> DownloadLink:
+        return DownloadLink(**fields)
+
+    def save(self, row: DownloadLink) -> DownloadLink:
+        row.save()
+        return row
+
+    def delete(self, download_id: UUID) -> bool:
+        deleted, _ = DownloadLink.objects.filter(id=download_id).delete()
+        return bool(deleted)
 
 
 class DjangoContentCatalogRepository(IContentCatalogRepository):

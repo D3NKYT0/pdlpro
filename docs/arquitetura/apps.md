@@ -17,9 +17,9 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | `marketplace` | Custódia, anúncios e venda de personagens | `application/use_cases.py` |
 | `auction` | Leilões, lances e entrega de itens | `application/use_cases.py`, `tasks.py` |
 | `games` | Roleta, caixas, pesca, economia e passe | `application/*_use_cases.py`, `application/staff_content_use_cases.py`, `application/staff_autoconfig.py` |
-| `content` | Notícias, wiki, FAQ, downloads e documentos legais | `application/use_cases.py`, `domain/repositories.py` |
+| `content` | Notícias, wiki, FAQ, downloads, calendário e documentos legais | `application/use_cases.py`, `domain/repositories.py` |
 | `communication` | Notificações persistidas e Web Push | `application/notify.py`, `application/push_use_cases.py` |
-| `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py` (consome portas admin dos apps donos), `presentation/views/` |
+| `staff` | Configuração, relatórios e ferramentas administrativas | `application/use_cases.py`, `application/cms.py`, `application/notifications.py` (consome portas admin dos apps donos), `presentation/views/` |
 | `programs` | Apoiadores, comissões, roadmap e ativação de recursos | `application/use_cases.py`, `infrastructure/provider.py`, `views.py`, `middleware.py` |
 | `support` | Chamados, respostas e atribuição de atendimento | `application/use_cases.py`, `domain/repositories.py`, `presentation/views/` |
 | `themes` | Instalação, validação, ativação e publicação de temas globais | `application/use_cases.py`, `application/theme_packages.py`, `infrastructure/provider.py` |

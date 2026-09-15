@@ -19,3 +19,18 @@ class NotificationEntity:
     link: str
     is_read: bool
     created_at: str
+
+
+@dataclass(frozen=True, slots=True)
+class StaffNotificationRecord:
+    """Notificação na listagem administrativa, com o destinatário visível à equipe."""
+
+    id: UUID
+    user_id: UUID
+    username: str
+    title: str
+    body: str
+    kind: str
+    link: str
+    is_read: bool
+    created_at: str

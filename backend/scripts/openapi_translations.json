@@ -963,6 +963,242 @@
     "Updates a news item with the given administrative payload.",
     "Actualiza una noticia con el payload administrativo indicado."
   ],
+  "Lista os eventos do calendário gerenciados pela equipe, inclusive rascunhos.": [
+    "Lists the calendar events managed by staff, including drafts.",
+    "Lista los eventos del calendario gestionados por el equipo, incluidos los borradores."
+  ],
+  "Criar evento do calendário": [
+    "Create calendar event",
+    "Crear evento del calendario"
+  ],
+  "Cria um evento do calendário público com o payload administrativo informado.": [
+    "Creates a public calendar event with the given administrative payload.",
+    "Crea un evento del calendario público con el payload administrativo indicado."
+  ],
+  "Atualizar evento do calendário": [
+    "Update calendar event",
+    "Actualizar evento del calendario"
+  ],
+  "Atualiza um evento do calendário público com o payload administrativo informado.": [
+    "Updates a public calendar event with the given administrative payload.",
+    "Actualiza un evento del calendario público con el payload administrativo indicado."
+  ],
+  "Excluir evento do calendário": [
+    "Delete calendar event",
+    "Eliminar evento del calendario"
+  ],
+  "Remove o evento do calendário identificado no payload.": [
+    "Removes the calendar event identified in the payload.",
+    "Elimina el evento del calendario identificado en el payload."
+  ],
+  "Listar FAQ": [
+    "List FAQ",
+    "Listar FAQ"
+  ],
+  "Lista os artigos do FAQ gerenciados pela equipe, inclusive rascunhos e handbook.": [
+    "Lists the FAQ articles managed by staff, including drafts and the handbook.",
+    "Lista los artículos del FAQ gestionados por el equipo, incluidos borradores y handbook."
+  ],
+  "Criar artigo do FAQ": [
+    "Create FAQ article",
+    "Crear artículo del FAQ"
+  ],
+  "Cria um artigo do FAQ com o payload administrativo informado.": [
+    "Creates a FAQ article with the given administrative payload.",
+    "Crea un artículo del FAQ con el payload administrativo indicado."
+  ],
+  "Atualizar artigo do FAQ": [
+    "Update FAQ article",
+    "Actualizar artículo del FAQ"
+  ],
+  "Atualiza um artigo do FAQ com o payload administrativo informado.": [
+    "Updates a FAQ article with the given administrative payload.",
+    "Actualiza un artículo del FAQ con el payload administrativo indicado."
+  ],
+  "Excluir artigo do FAQ": [
+    "Delete FAQ article",
+    "Eliminar artículo del FAQ"
+  ],
+  "Remove o artigo do FAQ identificado no payload.": [
+    "Removes the FAQ article identified in the payload.",
+    "Elimina el artículo del FAQ identificado en el payload."
+  ],
+  "Listar wiki": [
+    "List wiki",
+    "Listar wiki"
+  ],
+  "Lista as páginas da wiki gerenciadas pela equipe, inclusive rascunhos.": [
+    "Lists the wiki pages managed by staff, including drafts.",
+    "Lista las páginas de la wiki gestionadas por el equipo, incluidos los borradores."
+  ],
+  "Criar página da wiki": [
+    "Create wiki page",
+    "Crear página de la wiki"
+  ],
+  "Cria uma página da wiki com o payload administrativo informado.": [
+    "Creates a wiki page with the given administrative payload.",
+    "Crea una página de la wiki con el payload administrativo indicado."
+  ],
+  "Atualizar página da wiki": [
+    "Update wiki page",
+    "Actualizar página de la wiki"
+  ],
+  "Atualiza uma página da wiki com o payload administrativo informado.": [
+    "Updates a wiki page with the given administrative payload.",
+    "Actualiza una página de la wiki con el payload administrativo indicado."
+  ],
+  "Excluir página da wiki": [
+    "Delete wiki page",
+    "Eliminar página de la wiki"
+  ],
+  "Remove a página da wiki identificada no payload.": [
+    "Removes the wiki page identified in the payload.",
+    "Elimina la página de la wiki identificada en el payload."
+  ],
+  "Listar downloads": [
+    "List downloads",
+    "Listar descargas"
+  ],
+  "Lista os links de download gerenciados pela equipe, inclusive os não publicados.": [
+    "Lists the download links managed by staff, including unpublished ones.",
+    "Lista los enlaces de descarga gestionados por el equipo, incluidos los no publicados."
+  ],
+  "Criar download": [
+    "Create download",
+    "Crear descarga"
+  ],
+  "Cria um link de download com o payload administrativo informado.": [
+    "Creates a download link with the given administrative payload.",
+    "Crea un enlace de descarga con el payload administrativo indicado."
+  ],
+  "Atualizar download": [
+    "Update download",
+    "Actualizar descarga"
+  ],
+  "Atualiza um link de download com o payload administrativo informado.": [
+    "Updates a download link with the given administrative payload.",
+    "Actualiza un enlace de descarga con el payload administrativo indicado."
+  ],
+  "Excluir download": [
+    "Delete download",
+    "Eliminar descarga"
+  ],
+  "Remove o link de download identificado no payload.": [
+    "Removes the download link identified in the payload.",
+    "Elimina el enlace de descarga identificado en el payload."
+  ],
+  "Listar avisos": [
+    "List notices",
+    "Listar avisos"
+  ],
+  "Lista avisos recentes enviados a jogadores, com filtro opcional por texto.": [
+    "Lists recent notices sent to players, with an optional text filter.",
+    "Lista avisos recientes enviados a jugadores, con filtro opcional por texto."
+  ],
+  "Enviar aviso": [
+    "Send notice",
+    "Enviar aviso"
+  ],
+  "Envia um aviso a um usuário ativo ou a todas as contas ativas, com entrega por push.": [
+    "Sends a notice to an active user or to all active accounts, with push delivery.",
+    "Envía un aviso a un usuario activo o a todas las cuentas activas, con entrega por push."
+  ],
+  "Excluir aviso": [
+    "Delete notice",
+    "Eliminar aviso"
+  ],
+  "Remove o aviso persistido identificado no payload.": [
+    "Removes the persisted notice identified in the payload.",
+    "Elimina el aviso persistido identificado en el payload."
+  ],
+  "Identificador inválido.": [
+    "Invalid identifier.",
+    "Identificador no válido."
+  ],
+  "Título é obrigatório.": [
+    "Title is required.",
+    "El título es obligatorio."
+  ],
+  "Título e conteúdo são obrigatórios.": [
+    "Title and content are required.",
+    "El título y el contenido son obligatorios."
+  ],
+  "Informe o início e o fim do evento.": [
+    "Provide the start and end of the event.",
+    "Indica el inicio y el fin del evento."
+  ],
+  "Informe datas de início e fim em formato ISO 8601.": [
+    "Provide start and end dates in ISO 8601 format.",
+    "Indica las fechas de inicio y fin en formato ISO 8601."
+  ],
+  "A data de término deve ser posterior ao início.": [
+    "The end date must be after the start.",
+    "La fecha de término debe ser posterior al inicio."
+  ],
+  "Pergunta e resposta são obrigatórias.": [
+    "Question and answer are required.",
+    "La pregunta y la respuesta son obligatorias."
+  ],
+  "Categoria do FAQ inválida.": [
+    "Invalid FAQ category.",
+    "Categoría del FAQ no válida."
+  ],
+  "Audiência do FAQ inválida.": [
+    "Invalid FAQ audience.",
+    "Audiencia del FAQ no válida."
+  ],
+  "Artigo do FAQ não encontrado.": [
+    "FAQ article not found.",
+    "Artículo del FAQ no encontrado."
+  ],
+  "Evento não encontrado.": [
+    "Event not found.",
+    "Evento no encontrado."
+  ],
+  "Página do wiki não encontrada.": [
+    "Wiki page not found.",
+    "Página de la wiki no encontrada."
+  ],
+  "Já existe uma página com este slug.": [
+    "A page with this slug already exists.",
+    "Ya existe una página con este slug."
+  ],
+  "Informe o título e a URL do download.": [
+    "Provide the download title and URL.",
+    "Indica el título y la URL de la descarga."
+  ],
+  "Informe uma URL http ou https.": [
+    "Provide an http or https URL.",
+    "Indica una URL http o https."
+  ],
+  "Download não encontrado.": [
+    "Download not found.",
+    "Descarga no encontrada."
+  ],
+  "Informe o título do aviso.": [
+    "Provide the notice title.",
+    "Indica el título del aviso."
+  ],
+  "Tipo de aviso inválido.": [
+    "Invalid notice type.",
+    "Tipo de aviso no válido."
+  ],
+  "Informe o usuário de destino ou envie para todos.": [
+    "Provide the destination user or send to everyone.",
+    "Indica el usuario de destino o envía a todos."
+  ],
+  "Não há usuários ativos para receber o aviso.": [
+    "There are no active users to receive the notice.",
+    "No hay usuarios activos para recibir el aviso."
+  ],
+  "Notificação não encontrada.": [
+    "Notification not found.",
+    "Notificación no encontrada."
+  ],
+  "Informe um número inteiro válido.": [
+    "Provide a valid integer.",
+    "Indica un número entero válido."
+  ],
   "Listar jogos": [
     "List games",
     "Listar juegos"
@@ -1351,9 +1587,9 @@
     "Health check and API version.",
     "Health check y versión de la API."
   ],
-  "Configurações do painel, preços de serviços, moedas, itens da loja, notícias, jogos, temas, inspeção de contas e demais operações administrativas.": [
-    "Panel settings, service prices, coins, shop items, news, games, themes, account inspection and other administrative operations.",
-    "Configuración del panel, precios de servicios, monedas, ítems de la tienda, noticias, juegos, temas, inspección de cuentas y demás operaciones administrativas."
+  "Configurações do painel, preços de serviços, moedas, itens da loja, notícias, calendário, FAQ, wiki, downloads, avisos, jogos, temas, inspeção de contas e demais operações administrativas.": [
+    "Panel settings, service prices, coins, shop items, news, calendar, FAQ, wiki, downloads, notices, games, themes, account inspection and other administrative operations.",
+    "Configuración del panel, precios de servicios, monedas, ítems de la tienda, noticias, calendario, FAQ, wiki, descargas, avisos, juegos, temas, inspección de cuentas y demás operaciones administrativas."
   ],
   "Fila e detalhe de tickets para a equipe de suporte.": [
     "Queue and ticket detail for the support staff.",

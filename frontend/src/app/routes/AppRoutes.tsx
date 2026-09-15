@@ -52,6 +52,11 @@ import { AdminHubPage } from '../../pages/admin/AdminHubPage'
 import { AdminItemObservationPage } from '../../pages/admin/AdminItemObservationPage'
 import { AdminCustomItemsPage } from '../../pages/admin/AdminCustomItemsPage'
 import { AdminNewsPage } from '../../pages/admin/AdminNewsPage'
+import { AdminCalendarPage } from '../../pages/admin/AdminCalendarPage'
+import { AdminFaqPage } from '../../pages/admin/AdminFaqPage'
+import { AdminWikiPage as AdminWikiCmsPage } from '../../pages/admin/AdminWikiPage'
+import { AdminDownloadsPage } from '../../pages/admin/AdminDownloadsPage'
+import { AdminNotificationsPage } from '../../pages/admin/AdminNotificationsPage'
 import { AdminServerPage } from '../../pages/admin/AdminServerPage'
 import { AdminServicesPage } from '../../pages/admin/AdminServicesPage'
 import { AdminShopPage } from '../../pages/admin/AdminShopPage'
@@ -149,6 +154,11 @@ export function AppRoutes() {
               <Route path="/panel/admin/wallet" element={<AdminWalletPage />} />
               <Route path="/panel/admin/shop" element={<AdminShopPage />} />
               <Route path="/panel/admin/news" element={<AdminNewsPage />} />
+              <Route path="/panel/admin/calendar" element={<AdminCalendarPage />} />
+              <Route path="/panel/admin/faq" element={<AdminFaqPage />} />
+              <Route path="/panel/admin/wiki" element={<AdminWikiCmsPage />} />
+              <Route path="/panel/admin/downloads" element={<AdminDownloadsPage />} />
+              <Route path="/panel/admin/notifications" element={<AdminNotificationsPage />} />
               <Route path="/panel/admin/games" element={<AdminGamesPage />} />
               <Route path="/panel/admin/support" element={<AdminSupportPage />} />
               <Route path="/panel/admin/themes" element={<AdminThemesPage />} />

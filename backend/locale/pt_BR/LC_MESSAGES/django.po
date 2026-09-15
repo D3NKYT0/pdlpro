@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 18:40-0300\n"
+"POT-Creation-Date: 2026-09-14 22:55-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: Portuguese\n"
@@ -51,12 +51,12 @@ msgstr ""
 msgid "Nova conta"
 msgstr ""
 
-#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:125
+#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:147
 msgid "Código do autenticador"
 msgstr ""
 
-#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:124
-#: .\common\tests\test_i18n_gettext.py:249
+#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:146
+#: .\common\tests\test_i18n_gettext.py:299
 msgid "Informe um código válido do autenticador."
 msgstr ""
 
@@ -287,8 +287,8 @@ msgid "Códigos de ação da conta"
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:123
-#: .\common\tests\test_i18n_gettext.py:199
-#: .\common\tests\test_i18n_gettext.py:211
+#: .\common\tests\test_i18n_gettext.py:204
+#: .\common\tests\test_i18n_gettext.py:216
 msgid "Obter token CSRF"
 msgstr ""
 
@@ -308,7 +308,7 @@ msgid ""
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:156
-#: .\common\i18n_msgid_catalog.py:108
+#: .\common\i18n_msgid_catalog.py:130
 msgid "Resolva o CAPTCHA para criar sua conta."
 msgstr ""
 
@@ -323,7 +323,7 @@ msgid ""
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:198
-#: .\common\i18n_msgid_catalog.py:109
+#: .\common\i18n_msgid_catalog.py:131
 msgid "Resolva o CAPTCHA para continuar."
 msgstr ""
 
@@ -375,12 +375,12 @@ msgid "Rotaciona o refresh token e atualiza os cookies JWT da sessão."
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:369
-#: .\common\i18n_msgid_catalog.py:110
+#: .\common\i18n_msgid_catalog.py:132
 msgid "Validação CSRF necessária."
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:372
-#: .\common\i18n_msgid_catalog.py:111 .\common\tests\test_i18n_gettext.py:241
+#: .\common\i18n_msgid_catalog.py:133 .\common\tests\test_i18n_gettext.py:291
 msgid "Refresh token ausente."
 msgstr ""
 
@@ -472,7 +472,7 @@ msgid ""
 msgstr ""
 
 #: .\apps\accounts\presentation\views\auth.py:602
-#: .\common\i18n_msgid_catalog.py:126 .\common\tests\test_i18n_gettext.py:243
+#: .\common\i18n_msgid_catalog.py:148 .\common\tests\test_i18n_gettext.py:293
 msgid "Ação 2FA inválida."
 msgstr ""
 
@@ -609,13 +609,13 @@ msgid ""
 msgstr ""
 
 #: .\apps\accounts\presentation\views\passkeys.py:170
-#: .\common\i18n_msgid_catalog.py:112
+#: .\common\i18n_msgid_catalog.py:134
 msgid "Não foi possível autenticar com esta chave."
 msgstr ""
 
 #: .\apps\accounts\presentation\views\passkeys.py:199
-#: .\common\tests\test_i18n_gettext.py:200
-#: .\common\tests\test_i18n_gettext.py:212
+#: .\common\tests\test_i18n_gettext.py:205
+#: .\common\tests\test_i18n_gettext.py:217
 msgid "Excluir passkey"
 msgstr ""
 
@@ -1034,6 +1034,7 @@ msgid "Lista as perguntas frequentes públicas no idioma solicitado."
 msgstr ""
 
 #: .\apps\content\presentation\views\public.py:117
+#: .\apps\staff\presentation\views\cms.py:145
 msgid "Listar downloads"
 msgstr ""
 
@@ -1059,6 +1060,7 @@ msgid "Retorna o conteúdo da página da wiki identificada pelo slug."
 msgstr ""
 
 #: .\apps\content\presentation\views\public.py:195
+#: .\apps\staff\presentation\views\cms.py:31
 msgid "Listar eventos do calendário"
 msgstr ""
 
@@ -1102,7 +1104,7 @@ msgstr ""
 
 #: .\apps\content\presentation\views\shared.py:62
 #: .\apps\content\presentation\views\shared.py:130
-#: .\common\i18n_msgid_catalog.py:116
+#: .\common\i18n_msgid_catalog.py:138
 msgid "Use um nome de até 30 letras, sem termos ofensivos."
 msgstr ""
 
@@ -1405,7 +1407,7 @@ msgstr ""
 msgid "Iscas do jogador"
 msgstr ""
 
-#: .\apps\games\presentation\advanced.py:50 .\common\i18n_msgid_catalog.py:115
+#: .\apps\games\presentation\advanced.py:50 .\common\i18n_msgid_catalog.py:137
 msgid "Selecione uma recompensa."
 msgstr ""
 
@@ -1462,7 +1464,7 @@ msgstr ""
 msgid "Retorna as estatísticas do tipo solicitado para o jogador autenticado."
 msgstr ""
 
-#: .\apps\games\presentation\advanced.py:217 .\common\i18n_msgid_catalog.py:130
+#: .\apps\games\presentation\advanced.py:217 .\common\i18n_msgid_catalog.py:152
 msgid "Configuração desconhecida."
 msgstr ""
 
@@ -1950,7 +1952,7 @@ msgid "Consulta o status atual do pedido de pagamento informado."
 msgstr ""
 
 #: .\apps\payment\presentation\views\webhooks.py:29
-#: .\common\tests\test_i18n_gettext.py:201
+#: .\common\tests\test_i18n_gettext.py:206
 msgid "Webhook Mercado Pago"
 msgstr ""
 
@@ -1962,7 +1964,7 @@ msgstr ""
 
 #: .\apps\payment\presentation\views\webhooks.py:35
 #: .\apps\payment\presentation\views\webhooks.py:67
-#: .\common\i18n_msgid_catalog.py:128 .\common\tests\test_i18n_gettext.py:245
+#: .\common\i18n_msgid_catalog.py:150 .\common\tests\test_i18n_gettext.py:295
 msgid "Assinatura inválida."
 msgstr ""
 
@@ -2154,7 +2156,7 @@ msgstr ""
 
 #: .\apps\server\infrastructure\custom_item_models.py:23
 #: .\apps\staff\presentation\views\custom_items.py:58
-#: .\common\i18n_msgid_catalog.py:129
+#: .\common\i18n_msgid_catalog.py:151
 msgid "Metadados JSON inválidos."
 msgstr ""
 
@@ -2339,7 +2341,7 @@ msgid "Operações de serviço"
 msgstr ""
 
 #: .\apps\server\presentation\serializers.py:138
-#: .\common\i18n_msgid_catalog.py:113
+#: .\common\i18n_msgid_catalog.py:135
 msgid "Use 3 a 16 letras ou números, sem espaços."
 msgstr ""
 
@@ -2698,6 +2700,134 @@ msgstr ""
 msgid "Remove forçadamente o vínculo da conta de jogo informada pelo login."
 msgstr ""
 
+#: .\apps\staff\presentation\views\cms.py:32
+msgid ""
+"Lista os eventos do calendário gerenciados pela equipe, inclusive rascunhos."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:39
+msgid "Criar evento do calendário"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:40
+msgid ""
+"Cria um evento do calendário público com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:47
+msgid "Atualizar evento do calendário"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:48
+msgid ""
+"Atualiza um evento do calendário público com o payload administrativo "
+"informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:55
+msgid "Excluir evento do calendário"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:56
+msgid "Remove o evento do calendário identificado no payload."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:69
+msgid "Listar FAQ"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:70
+msgid ""
+"Lista os artigos do FAQ gerenciados pela equipe, inclusive rascunhos e "
+"handbook."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:77
+msgid "Criar artigo do FAQ"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:78
+msgid "Cria um artigo do FAQ com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:85
+msgid "Atualizar artigo do FAQ"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:86
+msgid "Atualiza um artigo do FAQ com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:93
+msgid "Excluir artigo do FAQ"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:94
+msgid "Remove o artigo do FAQ identificado no payload."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:107
+msgid "Listar wiki"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:108
+msgid "Lista as páginas da wiki gerenciadas pela equipe, inclusive rascunhos."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:115
+msgid "Criar página da wiki"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:116
+msgid "Cria uma página da wiki com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:123
+msgid "Atualizar página da wiki"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:124
+msgid "Atualiza uma página da wiki com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:131
+msgid "Excluir página da wiki"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:132
+msgid "Remove a página da wiki identificada no payload."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:146
+msgid ""
+"Lista os links de download gerenciados pela equipe, inclusive os não "
+"publicados."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:153
+msgid "Criar download"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:154
+msgid "Cria um link de download com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:161
+msgid "Atualizar download"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:162
+msgid "Atualiza um link de download com o payload administrativo informado."
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:169
+msgid "Excluir download"
+msgstr ""
+
+#: .\apps\staff\presentation\views\cms.py:170
+msgid "Remove o link de download identificado no payload."
+msgstr ""
+
 #: .\apps\staff\presentation\views\config.py:40
 msgid "Consultar configurações do painel"
 msgstr ""
@@ -2838,7 +2968,7 @@ msgstr ""
 
 #: .\apps\staff\presentation\views\custom_items.py:82
 #: .\apps\staff\presentation\views\item_observation.py:173
-#: .\common\i18n_msgid_catalog.py:133
+#: .\common\i18n_msgid_catalog.py:155
 msgid "Você não tem permissão para esta ação."
 msgstr ""
 
@@ -2902,7 +3032,7 @@ msgid "Especializa a consulta financeira para o relatório de pagamentos."
 msgstr ""
 
 #: .\apps\staff\presentation\views\item_observation.py:185
-#: .\common\i18n_msgid_catalog.py:135
+#: .\common\i18n_msgid_catalog.py:157
 msgid ""
 "Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."
 msgstr ""
@@ -2937,7 +3067,7 @@ msgid ""
 msgstr ""
 
 #: .\apps\staff\presentation\views\item_observation.py:269
-#: .\common\i18n_msgid_catalog.py:127 .\common\tests\test_i18n_gettext.py:242
+#: .\common\i18n_msgid_catalog.py:149 .\common\tests\test_i18n_gettext.py:292
 msgid "ID de item inválido."
 msgstr ""
 
@@ -3016,6 +3146,33 @@ msgstr ""
 
 #: .\apps\staff\presentation\views\item_observation.py:461
 msgid "Remove permanentemente a categoria de observação identificada pelo ID."
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:23
+msgid "Listar avisos"
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:24
+msgid ""
+"Lista avisos recentes enviados a jogadores, com filtro opcional por texto."
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:32
+msgid "Enviar aviso"
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:33
+msgid ""
+"Envia um aviso a um usuário ativo ou a todas as contas ativas, com entrega "
+"por push."
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:40
+msgid "Excluir aviso"
+msgstr ""
+
+#: .\apps\staff\presentation\views\notifications.py:41
+msgid "Remove o aviso persistido identificado no payload."
 msgstr ""
 
 #: .\apps\staff\presentation\views\operational_reports.py:49
@@ -3361,7 +3518,7 @@ msgid "Executar câmbio de moedas"
 msgstr ""
 
 #: .\apps\wallet\presentation\views\exchange.py:70
-#: .\common\i18n_msgid_catalog.py:114
+#: .\common\i18n_msgid_catalog.py:136
 msgid "Conecte o banco do jogo para transferir moedas."
 msgstr ""
 
@@ -3427,9 +3584,9 @@ msgstr ""
 msgid "Informe %(label)s"
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:12 .\common\tests\test_i18n_gettext.py:55
-#: .\common\tests\test_i18n_gettext.py:78
-#: .\common\tests\test_i18n_gettext.py:99
+#: .\common\i18n_msgid_catalog.py:12 .\common\tests\test_i18n_gettext.py:60
+#: .\common\tests\test_i18n_gettext.py:83
+#: .\common\tests\test_i18n_gettext.py:104
 msgid "O recurso solicitado não foi encontrado."
 msgstr ""
 
@@ -3668,7 +3825,7 @@ msgstr ""
 msgid "Esta ação não está disponível para o chamado."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:92 .\common\tests\test_i18n_gettext.py:244
+#: .\common\i18n_msgid_catalog.py:92 .\common\tests\test_i18n_gettext.py:294
 msgid "Autenticação necessária."
 msgstr ""
 
@@ -3708,52 +3865,140 @@ msgstr ""
 msgid "A senha precisa ter ao menos 8 caracteres."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:106 .\common\validators.py:14
-msgid "Use apenas letras e números, sem espaços ou símbolos."
+#: .\common\i18n_msgid_catalog.py:104
+msgid "Identificador inválido."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:107 .\common\validators.py:16
-msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
+#: .\common\i18n_msgid_catalog.py:105
+msgid "Título é obrigatório."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:106
+msgid "Título e conteúdo são obrigatórios."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:107
+msgid "Informe o início e o fim do evento."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:108
+msgid "Informe datas de início e fim em formato ISO 8601."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:109
+msgid "A data de término deve ser posterior ao início."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:110
+msgid "Pergunta e resposta são obrigatórias."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:111
+msgid "Categoria do FAQ inválida."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:112
+msgid "Audiência do FAQ inválida."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:113
+msgid "Artigo do FAQ não encontrado."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:114
+msgid "Evento não encontrado."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:115
+msgid "Página do wiki não encontrada."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:116
+msgid "Já existe uma página com este slug."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:117
-msgid "Personagem não encontrado nesta conta."
+msgid "Informe o título e a URL do download."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:118
-msgid "Transferência de moedas indisponível neste servidor."
+msgid "Informe uma URL http ou https."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:119
-msgid "Observação de itens indisponível neste gateway."
+msgid "Download não encontrado."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:120 .\common\tests\test_i18n_gettext.py:247
-msgid "Carteira não encontrada."
+#: .\common\i18n_msgid_catalog.py:120
+msgid "Informe o título do aviso."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:121
-msgid "Saldo insuficiente."
+msgid "Tipo de aviso inválido."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:122
-msgid "Transferência inválida."
+msgid "Informe o usuário de destino ou envie para todos."
 msgstr ""
 
 #: .\common\i18n_msgid_catalog.py:123
+msgid "Não há usuários ativos para receber o aviso."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:124
+msgid "Notificação não encontrada."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:125
+msgid "Informe um número inteiro válido."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:128 .\common\validators.py:14
+msgid "Use apenas letras e números, sem espaços ou símbolos."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:129 .\common\validators.py:16
+msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:139
+msgid "Personagem não encontrado nesta conta."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:140
+msgid "Transferência de moedas indisponível neste servidor."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:141
+msgid "Observação de itens indisponível neste gateway."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:142 .\common\tests\test_i18n_gettext.py:297
+msgid "Carteira não encontrada."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:143
+msgid "Saldo insuficiente."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:144
+msgid "Transferência inválida."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:145
 msgid "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:131
+#: .\common\i18n_msgid_catalog.py:153
 msgid "Jogo desconhecido."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:132 .\common\images.py:45
+#: .\common\i18n_msgid_catalog.py:154 .\common\images.py:45
 msgid "Imagem inválida."
 msgstr ""
 
-#: .\common\i18n_msgid_catalog.py:134 .\common\mixins.py:64
-#: .\common\tests\test_i18n_gettext.py:246
+#: .\common\i18n_msgid_catalog.py:156 .\common\mixins.py:64
+#: .\common\tests\test_i18n_gettext.py:296
 msgid "recurso não encontrado"
 msgstr ""
 
@@ -3944,49 +4189,49 @@ msgstr ""
 msgid "Tema ativo do painel para o frontend."
 msgstr ""
 
-#: .\common\swagger.py:208 .\common\tests\test_i18n_gettext.py:203
+#: .\common\swagger.py:208 .\common\tests\test_i18n_gettext.py:208
 msgid "Health check e versão da API."
 msgstr ""
 
 #: .\common\swagger.py:213
 msgid ""
 "Configurações do painel, preços de serviços, moedas, itens da loja, "
-"notícias, jogos, temas, inspeção de contas e demais operações "
-"administrativas."
+"notícias, calendário, FAQ, wiki, downloads, avisos, jogos, temas, inspeção "
+"de contas e demais operações administrativas."
 msgstr ""
 
-#: .\common\swagger.py:219
+#: .\common\swagger.py:220
 msgid "Fila e detalhe de tickets para a equipe de suporte."
 msgstr ""
 
-#: .\common\swagger.py:224
+#: .\common\swagger.py:225
 msgid "Relatórios de saldo, reconciliação, fluxo de caixa e pagamentos."
 msgstr ""
 
-#: .\common\swagger.py:230
+#: .\common\swagger.py:231
 msgid ""
 "Relatórios operacionais de inventário, leilões, compras da loja e "
 "marketplace."
 msgstr ""
 
-#: .\common\swagger.py:236
+#: .\common\swagger.py:237
 msgid ""
 "CRUD administrativo do catálogo de itens customizados (metadados e ícones)."
 msgstr ""
 
-#: .\common\swagger.py:242
+#: .\common\swagger.py:243
 msgid ""
 "Observação live de itens no L2, favoritos, capturas (snapshots), comparação "
 "e categorias de organização."
 msgstr ""
 
-#: .\common\swagger.py:249
+#: .\common\swagger.py:250
 msgid ""
 "CRUD administrativo de temporadas, níveis, recompensas, quests, exchanges, "
 "milestones, bônus diário e iscas."
 msgstr ""
 
-#: .\common\swagger.py:255
+#: .\common\swagger.py:256
 msgid "Interfaces Swagger UI e ReDoc desta documentação OpenAPI."
 msgstr ""
 

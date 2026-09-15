@@ -74,7 +74,7 @@ uma nova implantação e testada em paralelo antes da liberação aos jogadores.
 ### Staff e operação
 
 - Central operacional dentro do próprio painel.
-- Gestão de loja, rates, notícias, cupons, recompensas e módulos.
+- Gestão de loja, rates, notícias, calendário, FAQ, wiki, downloads, avisos, cupons, recompensas e módulos.
 - Cadastro de itens customizados sem rebuild do frontend.
 - Chamados de suporte com fila e histórico.
 - Relatórios de saldo, fluxo, pedidos, pagamentos e reconciliação.
