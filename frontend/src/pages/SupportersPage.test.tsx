@@ -56,6 +56,13 @@ async function submit(
   await user.type(screen.getByRole('textbox', { name: labels.channel }), 'https://exemplo.dev')
   await user.click(screen.getByRole('button', { name: labels.send }))
 }
+it('apresenta o programa com o chrome da carteira e o saldo de comissão', async () => {
+  await mount()
+  expect(screen.getByRole('heading', { level: 1, name: 'Programa de apoiadores' })).toBeVisible()
+  expect(screen.getAllByText('0.00 moedas').length).toBeGreaterThan(0)
+  expect(screen.getByText('Ainda não enviado')).toBeVisible()
+})
+
 it('anuncia formatos e limite aceitos no campo de imagem', async () => {
   const { input } = await mount()
   expect(input).toHaveAttribute('accept', 'image/png,image/jpeg,image/webp')
