@@ -51,6 +51,29 @@ it('mostra chrome de conquistas em português e pagina a lista', async () => {
   expect(screen.getByText('Achievement 13')).toBeVisible()
 })
 
+it('desenha uma arte própria por conquista e marca as bloqueadas com cadeado', () => {
+  const { container } = mount([
+    { code: '10_peixes_capturados', name: 'Peixes', description: 'Capturou 10 peixes', unlocked: true },
+    { code: '10_spins', name: 'Giros', description: 'Girou 10 vezes', unlocked: true },
+    { code: 'battle_pass_premium', name: 'Premium', description: 'Comprou o passe', unlocked: false },
+    { code: 'pescaria_do_cliente', name: 'Extensão', description: 'Código de extensão', unlocked: true },
+    { code: 'codigo_sem_arte', name: 'Genérica', description: 'Sem arte dedicada', unlocked: true },
+  ])
+
+  const icons = Array.from(container.querySelectorAll<HTMLElement>('[data-achievement-icon]'))
+  expect(icons.map((icon) => icon.dataset.achievementIcon)).toEqual([
+    'fish',
+    'roulette',
+    'crown',
+    'fishingRod',
+    'trophy',
+  ])
+  icons.forEach((icon) => expect(icon.querySelector('svg')).not.toBeNull())
+
+  expect(container.querySelectorAll('.conquista-card-lock')).toHaveLength(1)
+  expect(icons[2].querySelector('.conquista-card-lock')).not.toBeNull()
+})
+
 it('traduz o chrome para inglês', async () => {
   await i18n.changeLanguage('en')
   mount(rows(1))

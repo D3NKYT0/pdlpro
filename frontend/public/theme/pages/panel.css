@@ -12837,19 +12837,74 @@ html.pdl-panel .conquista-card:hover {
 }
 
 html.pdl-panel .conquista-card.locked {
-  opacity: 0.48;
-  border-color: rgba(140, 140, 140, 0.22);
+  border-style: dashed;
+  border-color: rgba(150, 142, 128, 0.26);
+  background: rgba(5, 5, 4, 0.62);
 }
 
-html.pdl-panel .conquista-card > svg {
+html.pdl-panel .conquista-card.locked strong {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+html.pdl-panel .conquista-card.locked small {
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .conquista-card-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .conquista-card-icon::before {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 199, 125, 0.16), rgba(230, 199, 125, 0) 70%);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+html.pdl-panel .conquista-card:not(.locked) .conquista-card-icon::before {
+  opacity: 1;
+}
+
+html.pdl-panel .conquista-card-icon > svg {
+  position: relative;
+  width: 46px;
+  height: 46px;
+}
+
+html.pdl-panel .conquista-card.locked .conquista-card-icon > svg {
+  filter: grayscale(1) brightness(0.55) contrast(0.8);
+}
+
+html.pdl-panel .conquista-card-lock {
+  position: absolute;
+  inset: -6px;
+  display: grid;
+  place-items: center;
+}
+
+html.pdl-panel .conquista-card-lock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10, 8, 6, 0.74) 36%, rgba(10, 8, 6, 0) 70%);
+}
+
+html.pdl-panel .conquista-card-lock svg {
+  position: relative;
   width: 28px;
   height: 28px;
-  color: var(--panel-gold-bright);
-  stroke-width: 1.4;
-}
-
-html.pdl-panel .conquista-card.locked > svg {
-  color: rgba(239, 224, 194, 0.35);
+  filter: grayscale(0.55) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
 }
 
 html.pdl-panel .conquista-card strong {

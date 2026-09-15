@@ -6,7 +6,8 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 segurança (pacote LGPD em armazenamento privado, `SECRET_KEY` validada em
 produção, Redis com senha, saneamento de imagens enviadas, senha de conta do
 jogo com oito caracteres, cabeçalhos e rate limit do Nginx, webhook de pagamento
-com `external_id` conferido) e instaladores Linux/Windows das tags
+com `external_id` conferido), ilustrações próprias das conquistas no desenho do
+Denkynho com estado bloqueado mais claro, e instaladores Linux/Windows das tags
 (`install.sh` / `install.ps1`), imagens GHCR e ZIP `pdl-pro-X.Y.Z.zip` via
 workflow de Release. Publicado: **[2.4.0]** —
 minigames em `/panel/games` (Arena das Feras com dez oponentes e

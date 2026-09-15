@@ -28,6 +28,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Saneamento compartilhado de imagens enviadas (`common/images.py`): PNG/JPEG/WebP estáticos,
   até 2 MB e 1024 × 1024, reescritos como PNG sem metadados. Aplica-se a avatar, ícone de item
   customizado e imagem de apoiador.
+- Ilustrações próprias para as conquistas do painel e do perfil, no mesmo desenho das
+  atividades do Denkynho: 35 artes vetoriais cobrindo login, loja, leilão, carteira, baús,
+  minigames, pescaria, Battle Pass, marketplace e progressão, resolvidas pelo código da
+  conquista com reserva para códigos de extensões de cliente.
 
 ### Alterado
 
@@ -42,6 +46,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   aceitam `X-Forwarded-For` de proxies internos para a chave do rate limit.
 - O segredo TOTP deixa de aparecer no admin do usuário; desmarcar a autenticação em dois
   fatores apaga o segredo e obriga novo cadastro.
+- Conquista bloqueada passa a mostrar a própria arte como silhueta esmaecida com cadeado
+  sobreposto, borda tracejada e rótulo de estado em destaque, no lugar do cadeado genérico.
 
 ### Corrigido
 

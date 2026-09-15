@@ -3,7 +3,8 @@ import { Button } from './ui/Button'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Gift, Lock, Trophy } from 'lucide-react'
+import { Gift, Trophy } from 'lucide-react'
+import { ACHIEVEMENT_ICONS, PadlockIcon, resolveAchievementIconKey } from './achievements/AchievementIcons'
 
 export type AchievementRow = { code: string; name: string; description: string; unlocked: boolean }
 
@@ -48,13 +49,24 @@ export function AchievementGrid({
 
       {visible.length ? (
         <div className="conquista-grid">
-          {visible.map((row) => (
-            <article className={`conquista-card ${row.unlocked ? '' : 'locked'}`} key={row.code}>
-              {row.unlocked ? <Trophy aria-hidden="true" /> : <Lock aria-hidden="true" />}
-              <strong>{row.name}</strong>
-              <small>{row.unlocked ? row.description : t('progress.achievements.locked')}</small>
-            </article>
-          ))}
+          {visible.map((row) => {
+            const iconKey = resolveAchievementIconKey(row.code)
+            const Icon = ACHIEVEMENT_ICONS[iconKey]
+            return (
+              <article className={`conquista-card ${row.unlocked ? '' : 'locked'}`} key={row.code}>
+                <span className="conquista-card-icon" data-achievement-icon={iconKey}>
+                  <Icon />
+                  {row.unlocked ? null : (
+                    <span className="conquista-card-lock">
+                      <PadlockIcon />
+                    </span>
+                  )}
+                </span>
+                <strong>{row.name}</strong>
+                <small>{row.unlocked ? row.description : t('progress.achievements.locked')}</small>
+              </article>
+            )
+          })}
         </div>
       ) : (
         <div className="progress-empty"><Trophy aria-hidden="true" /> {t('progress.achievements.empty')}</div>
