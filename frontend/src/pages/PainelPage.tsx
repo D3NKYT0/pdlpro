@@ -20,8 +20,8 @@ import { AchievementGrid } from '../components/AchievementGrid'
 import { AccountProgress } from '../components/progress/AccountProgress'
 import { useAuth } from '../contexts/AuthContext'
 import { canAccessStaff } from '../lib/staff'
-import { authApi, serverApi } from '../services/api'
-import { programsApi } from '../services/api'
+import { authApi, programsApi, serverApi } from '../services/api'
+import { ExtensionSlotOutlet } from '../extensions'
 
 const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: string }> = [
   { to: '/panel/profile', key: 'profile', icon: CircleUserRound, resource: 'profile' },
@@ -118,6 +118,8 @@ export function PainelPage() {
           )
         })}
       </section>
+
+      <ExtensionSlotOutlet slot="panel.dashboard" />
     </div>
   )
 }

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
-import { contentApi, serverApi } from '../../services/api'
+import { contentApi, programsApi, serverApi } from '../../services/api'
 import { contentLang } from '../../i18n/locale'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
 import { themeAsset } from '../../theme/assets'
-import { extensionNavItems } from '../../extensions'
+import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
 
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
 
@@ -24,14 +24,21 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   const { pathname } = useLocation()
   const landingPath = useLandingPath()
   const [menuOpen, setMenuOpen] = useState(false)
+  const resources = useQuery({
+    queryKey: ['resources'],
+    queryFn: programsApi.resources,
+    staleTime: 15000,
+  })
   const navigation = [
     ...presentation.navigation.map((item) =>
       item.to === '/' ? { ...item, to: landingPath } : item,
     ),
-    ...extensionNavItems('public').map((item) => ({
-      label: t(item.labelKey, { ns: item.ns }),
-      to: item.to,
-    })),
+    ...extensionNavItems('public')
+      .filter((item) => isExtensionResourceEnabled(resources.data, item.resource))
+      .map((item) => ({
+        label: t(item.labelKey, { ns: item.ns }),
+        to: item.to,
+      })),
   ]
 
   useEffect(() => setMenuOpen(false), [pathname])

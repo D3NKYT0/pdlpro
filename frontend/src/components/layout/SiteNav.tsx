@@ -8,7 +8,7 @@ import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { programsApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
-import { extensionNavItems } from '../../extensions'
+import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
 
 function navActive(path: string, to: string, end?: boolean) {
   if (end) {
@@ -41,12 +41,12 @@ export function SiteNav() {
     { to: '/faq', label: t('nav.faq'), resource: 'faq' },
   ]
   const downloadsEnabled = !resources.data?.some((r) => r.code === 'downloads' && !r.enabled)
-  const extensionLinks: Array<{ to: string; label: string; end?: boolean }> = extensionNavItems('public').map(
-    (item) => ({
+  const extensionLinks: Array<{ to: string; label: string; end?: boolean }> = extensionNavItems('public')
+    .filter((item) => isExtensionResourceEnabled(resources.data, item.resource))
+    .map((item) => ({
       to: item.to,
       label: t(item.labelKey, { ns: item.ns }),
-    }),
-  )
+    }))
   const visibleLinks: Array<{ to: string; label: string; end?: boolean }> = [
     ...links.filter(
       (link) => !link.resource || !resources.data?.some((r) => r.code === link.resource && !r.enabled),

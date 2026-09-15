@@ -57,3 +57,11 @@ class PaymentGatewayRegistry(IPaymentGatewayRegistry):
                 }
             )
         return methods
+
+    def register(self, gateway: IPaymentGateway) -> None:
+        """Inclui um adaptador da extensão. Inclua o ``method_name`` em ``PAYMENT_METHODS``."""
+
+        name = (gateway.method_name or "").strip().lower()
+        if not name:
+            raise PaymentMethodUnavailableError("Gateway de extensão sem method_name.")
+        self._gateways[name] = gateway

@@ -22,6 +22,7 @@ from apps.wallet.domain.bonus import IPurchaseBonusPolicy
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
+from common.hooks import HookNames, IHookBus
 
 logger = logging.getLogger(__name__)
 
@@ -308,13 +309,16 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
         wallets: IWalletRepository,
         bonus_policy: IPurchaseBonusPolicy,
         unit_of_work: UnitOfWork,
+        hooks: IHookBus,
     ) -> None:
         self._orders = orders
         self._wallets = wallets
         self._bonus_policy = bonus_policy
         self._unit_of_work = unit_of_work
+        self._hooks = hooks
 
     def execute(self, data: SettlePaymentInput) -> PaymentOrderEntity:
+        already_confirmed = False
         with self._unit_of_work:
             order = self._orders.get_for_update(data.order_id)
             if order is None:
@@ -322,31 +326,44 @@ class SettlePaymentUseCase(UseCase[SettlePaymentInput, PaymentOrderEntity]):
             if data.user_id is not None and order.user_id != data.user_id:
                 raise AuthorizationError()
             if order.status == "confirmed":
-                return order
-            if order.status not in {"pending", "processing"}:
-                raise PaymentAlreadyConfirmedError() if order.status == "confirmed" else PaymentNotPendingError()
-            if data.allow_methods is not None and order.method not in data.allow_methods:
-                raise PaymentMethodUnavailableError("Este pedido não pode ser confirmado manualmente.")
-            preview = self._bonus_policy.preview(order.coins)
-            wallet = self._wallets.get_or_create(order.user_id)
-            self._wallets.credit(
-                wallet.id,
-                order.coins,
-                origin=order.method,
-                description=f"Compra de {order.coins} moedas via {order.method} ({order.currency})",
-            )
-            if preview.bonus > 0:
-                self._wallets.credit_bonus(
+                already_confirmed = True
+                settled = order
+            else:
+                if order.status not in {"pending", "processing"}:
+                    raise PaymentAlreadyConfirmedError() if order.status == "confirmed" else PaymentNotPendingError()
+                if data.allow_methods is not None and order.method not in data.allow_methods:
+                    raise PaymentMethodUnavailableError("Este pedido não pode ser confirmado manualmente.")
+                preview = self._bonus_policy.preview(order.coins)
+                wallet = self._wallets.get_or_create(order.user_id)
+                self._wallets.credit(
                     wallet.id,
-                    preview.bonus,
-                    origin="bonus",
-                    description=preview.description or "Bônus de compra",
+                    order.coins,
+                    origin=order.method,
+                    description=f"Compra de {order.coins} moedas via {order.method} ({order.currency})",
                 )
-            return self._orders.mark_confirmed(
-                order.id,
-                bonus_applied=preview.bonus,
-                total_credited=preview.total,
+                if preview.bonus > 0:
+                    self._wallets.credit_bonus(
+                        wallet.id,
+                        preview.bonus,
+                        origin="bonus",
+                        description=preview.description or "Bônus de compra",
+                    )
+                settled = self._orders.mark_confirmed(
+                    order.id,
+                    bonus_applied=preview.bonus,
+                    total_credited=preview.total,
+                )
+        if not already_confirmed:
+            self._hooks.publish(
+                HookNames.PAYMENT_SETTLED,
+                {
+                    "order_id": str(settled.id),
+                    "user_id": str(settled.user_id),
+                    "method": settled.method,
+                    "coins": str(settled.coins),
+                },
             )
+        return settled
 
 
 @dataclass(frozen=True, slots=True)

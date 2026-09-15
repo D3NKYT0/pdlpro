@@ -5,6 +5,7 @@ import {
   parseExtensionIds,
   resolveEnabledExtensions,
   routesForScope,
+  slotsForName,
 } from './registry'
 import type { ExtensionModule } from './types'
 
@@ -20,6 +21,7 @@ const catalog: Record<string, ExtensionModule> = {
     id: 'acme',
     routes: [{ path: '', scope: 'staff', element: null }],
     nav: [{ path: '', scope: 'staff', labelKey: 'nav.desk', descriptionKey: 'nav.deskHint' }],
+    slots: [{ slot: 'admin.hub', element: null }],
   },
 }
 
@@ -84,5 +86,15 @@ describe('routesForScope', () => {
     expect(routesForScope(modules, 'staff')).toEqual([
       expect.objectContaining({ path: '/ext/acme' }),
     ])
+  })
+})
+
+describe('slotsForName', () => {
+  it('resolve blocos pelo encaixe', () => {
+    const modules = resolveEnabledExtensions('example,acme', catalog)
+    expect(slotsForName(modules, 'admin.hub')).toEqual([
+      expect.objectContaining({ key: 'acme:admin.hub:0', slot: 'admin.hub' }),
+    ])
+    expect(slotsForName(modules, 'panel.dashboard')).toEqual([])
   })
 })

@@ -70,3 +70,29 @@ def test_checkout_delivers_all_purchased_units_to_bag(api, user, item):
     assert bag_item.quantity == 10_000
     assert api.get("/api/v1/shared/shop/cart/").data["items"] == []
     assert Wallet.objects.get(user=user).balance == 10
+
+
+@pytest.mark.django_db
+def test_checkout_publishes_extension_hook(api, user, item):
+    from common.di.bootstrap import DependencyInjection
+    from common.hooks import HookEvent, HookNames, IHookBus, IHookHandler
+
+    class Recorder(IHookHandler):
+        names = frozenset({HookNames.CHECKOUT_COMPLETED})
+
+        def __init__(self) -> None:
+            self.events: list[HookEvent] = []
+
+        def handle(self, event: HookEvent) -> None:
+            self.events.append(event)
+
+    recorder = Recorder()
+    DependencyInjection.root().resolve(IHookBus).add(recorder)
+    api.force_authenticate(user=user)
+    Wallet.objects.create(user=user, balance="20.00")
+    api.post("/api/v1/shared/shop/cart/", {"item_id": str(item.id), "quantity": 1}, format="json")
+    checkout = api.post("/api/v1/shared/shop/checkout/", format="json")
+    assert checkout.status_code == 200, checkout.data
+    assert recorder.events
+    assert recorder.events[0].payload["user_id"] == str(user.id)
+    assert recorder.events[0].payload["purchase_id"] == checkout.data["purchase_id"]

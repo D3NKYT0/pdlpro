@@ -11,6 +11,8 @@ público e versionado no changelog.
 
 from __future__ import annotations
 
+from apps.accounts.domain.mailer import IMailer
+from apps.payment.domain.gateways import IPaymentGateway, IPaymentGatewayRegistry
 from common.architecture.exceptions import (
     AuthorizationError,
     ConflictError,
@@ -22,9 +24,11 @@ from common.di.bootstrap import DependencyInjection
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
+from common.hooks import HookEvent, HookNames, IHookBus, IHookHandler
 from common.pagination import StandardPagination
 from common.permissions import IsStaffMember, IsSuperAdmin
 from common.views import InjectedAPIView, InjectedViewSet
+from extensions.resources import ExtensionResource, declare_extension_resource
 
 __all__ = [
     "AppProvider",
@@ -34,6 +38,14 @@ __all__ = [
     "DependencyInjection",
     "DomainError",
     "EntityNotFoundError",
+    "ExtensionResource",
+    "HookEvent",
+    "HookNames",
+    "IHookBus",
+    "IHookHandler",
+    "IMailer",
+    "IPaymentGateway",
+    "IPaymentGatewayRegistry",
     "InjectedAPIView",
     "InjectedViewSet",
     "IsStaffMember",
@@ -41,4 +53,5 @@ __all__ = [
     "Lifetime",
     "StandardPagination",
     "ValidationDomainError",
+    "declare_extension_resource",
 ]

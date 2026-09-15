@@ -1,5 +1,8 @@
 {
   "nav": {
     "ping": "Extension ping"
+  },
+  "slot": {
+    "dashboard": "Example overlay on the dashboard. Enable with VITE_PDL_EXTENSIONS=example."
   }
 }

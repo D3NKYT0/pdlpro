@@ -1,7 +1,9 @@
 import type {
   ExtensionModule,
   ExtensionRouteScope,
+  ExtensionSlot,
   ResolvedExtensionNavItem,
+  ResolvedExtensionSlot,
 } from './types'
 import { EXTENSION_CATALOG } from './catalog'
 
@@ -47,7 +49,12 @@ export function resolveEnabledExtensions(
 export function routesForScope(
   modules: ExtensionModule[],
   scope: ExtensionRouteScope,
-): Array<{ key: string; path: string; element: ExtensionModule['routes'][number]['element'] }> {
+): Array<{
+  key: string
+  path: string
+  element: ExtensionModule['routes'][number]['element']
+  resource?: string
+}> {
   return modules.flatMap((mod) =>
     mod.routes
       .filter((route) => route.scope === scope)
@@ -55,6 +62,7 @@ export function routesForScope(
         key: `${mod.id}:${route.scope}:${route.path}`,
         path: extensionAbsolutePath(mod.id, route.path),
         element: route.element,
+        resource: route.resource,
       })),
   )
 }
@@ -72,6 +80,7 @@ export function navItemsForScope(
         descriptionKey: item.descriptionKey,
         ns: item.namespace ?? `ext.${mod.id}`,
         scope,
+        resource: item.resource,
       })),
   )
 }
@@ -82,4 +91,28 @@ export function extensionNavItems(
   catalog: Record<string, ExtensionModule> = EXTENSION_CATALOG,
 ): ResolvedExtensionNavItem[] {
   return navItemsForScope(resolveEnabledExtensions(raw, catalog), scope)
+}
+
+export function slotsForName(
+  modules: ExtensionModule[],
+  slot: ExtensionSlot,
+): ResolvedExtensionSlot[] {
+  return modules.flatMap((mod) =>
+    (mod.slots ?? [])
+      .filter((item) => item.slot === slot)
+      .map((item, index) => ({
+        key: `${mod.id}:${slot}:${index}`,
+        slot,
+        element: item.element,
+        resource: item.resource,
+      })),
+  )
+}
+
+export function extensionSlotItems(
+  slot: ExtensionSlot,
+  raw: string | undefined | null = import.meta.env.VITE_PDL_EXTENSIONS,
+  catalog: Record<string, ExtensionModule> = EXTENSION_CATALOG,
+): ResolvedExtensionSlot[] {
+  return slotsForName(resolveEnabledExtensions(raw, catalog), slot)
 }

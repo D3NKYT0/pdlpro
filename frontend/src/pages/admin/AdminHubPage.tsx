@@ -25,7 +25,9 @@ import {
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
-import { extensionNavItems } from '../../extensions'
+import { useQuery } from '@tanstack/react-query'
+import { programsApi } from '../../services/api'
+import { ExtensionSlotOutlet, extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
 
 type Entry = { to: string; key: string; icon: LucideIcon; external?: boolean }
 type Category = {
@@ -107,7 +109,14 @@ const categories: Category[] = [
 
 export function AdminHubPage() {
   const { t } = useTranslation('admin')
-  const extensionEntries = extensionNavItems('staff')
+  const resources = useQuery({
+    queryKey: ['resources'],
+    queryFn: programsApi.resources,
+    staleTime: 15000,
+  })
+  const extensionEntries = extensionNavItems('staff').filter((entry) =>
+    isExtensionResourceEnabled(resources.data, entry.resource),
+  )
   return (
     <div className="account-page admin-hub">
       <Card as="header" className="account-hero">
@@ -159,6 +168,8 @@ export function AdminHubPage() {
           </div>
         </Card>
       ))}
+
+      <ExtensionSlotOutlet slot="admin.hub" />
 
       {extensionEntries.length > 0 ? (
         <Card className="admin-category" data-tone="extensions">

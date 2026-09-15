@@ -86,7 +86,8 @@ Não mantenha estado específico de usuário em singletons.
 
 Código exclusivo de um cliente **não** entra em `apps/`. Use
 [`backend/extensions/`](../../backend/extensions/) e o guia
-[Extensões de cliente](extensoes.md) (`PDL_EXTENSION_APPS`, `extensions.surface`).
+[Extensões de cliente](extensoes.md) (`PDL_EXTENSION_APPS`, `extensions.surface`,
+ganchos `IHookBus`, recursos `ext.<id>.<slug>`).
 
 ## Integração com o Lineage 2
 

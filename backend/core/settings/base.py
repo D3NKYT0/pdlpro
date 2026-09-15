@@ -35,7 +35,11 @@ USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 TRUSTED_PROXY_COUNT = env.int("TRUSTED_PROXY_COUNT", default=1)
 
-from extensions.loader import merge_extension_apps, parse_extension_apps
+from extensions.loader import (
+    discover_extension_locale_paths,
+    merge_extension_apps,
+    parse_extension_apps,
+)
 
 INSTALLED_APPS = merge_extension_apps(
     INSTALLED_APPS_PDL,
@@ -140,7 +144,7 @@ LANGUAGES = [
     ("en", "English"),
     ("es", "Español"),
 ]
-LOCALE_PATHS = [BASE_DIR / "locale"]
+LOCALE_PATHS = [BASE_DIR / "locale", *discover_extension_locale_paths(BASE_DIR / "extensions")]
 TIME_ZONE = env("CONFIG_TIME_ZONE", default="America/Sao_Paulo")
 USE_I18N = True
 USE_TZ = True

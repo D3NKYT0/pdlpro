@@ -28,6 +28,7 @@ from apps.server.domain.gateways import (
 from apps.server.domain.repositories import IManagedLineageAccountRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
+from common.hooks import HookNames, IHookBus
 from common.i18n import activate_language
 
 
@@ -205,11 +206,13 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
         access: IAccountAccessService,
         unit_of_work: UnitOfWork,
         managed_accounts: IManagedLineageAccountRepository,
+        hooks: IHookBus,
     ) -> None:
         self._lineage = lineage
         self._access = access
         self._unit_of_work = unit_of_work
         self._managed = managed_accounts
+        self._hooks = hooks
 
     def execute(self, data: LinkGameAccountInput) -> GameAccount:
         login = data.login.strip()
@@ -234,6 +237,10 @@ class LinkGameAccountUseCase(UseCase[LinkGameAccountInput, GameAccount]):
                 login,
                 primary=is_preferred or not self._managed.has_primary(data.actor.user_id),
             )
+        self._hooks.publish(
+            HookNames.ACCOUNT_LINKED,
+            {"user_id": str(data.actor.user_id), "login": login},
+        )
         return account
 
 

@@ -27,8 +27,8 @@ const resourcesMock = vi.hoisted(() => ({
 const launchMock = vi.hoisted(() => ({ comingSoon: false }))
 const supportMock = vi.hoisted(() => ({ waitingUser: 0 }))
 const extensionNavMock = vi.hoisted(() => ({
-  panel: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'panel' }>,
-  staff: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'staff' }>,
+  panel: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'panel'; resource?: string }>,
+  staff: [] as Array<{ to: string; labelKey: string; ns: string; scope: 'staff'; resource?: string }>,
 }))
 
 vi.mock('@tanstack/react-query', () => ({
@@ -70,6 +70,10 @@ vi.mock('../../extensions', () => ({
     if (scope === 'staff') return extensionNavMock.staff
     return []
   },
+  isExtensionResourceEnabled: (
+    resources: Array<{ code: string; enabled: boolean }> | undefined,
+    code: string | undefined,
+  ) => !code || !resources?.some((row) => row.code === code && !row.enabled),
 }))
 
 afterEach(async () => {
@@ -210,6 +214,21 @@ it('inclui links de extensão no menu do painel', () => {
   ]
   renderAt('/panel/profile')
   expect(screen.getByRole('link', { name: 'Ping da extensão' })).toHaveAttribute('href', '/ext/acme/desk')
+})
+
+it('oculta o link da extensão no painel quando o recurso está pausado', () => {
+  extensionNavMock.panel = [
+    {
+      to: '/ext/acme/desk',
+      labelKey: 'nav.ping',
+      ns: 'ext.example',
+      scope: 'panel',
+      resource: 'ext.example.ping',
+    },
+  ]
+  resourcesMock.data = [{ code: 'ext.example.ping', enabled: false }]
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('link', { name: 'Ping da extensão' })).not.toBeInTheDocument()
 })
 
 it('volta para a raiz do site quando o Coming Soon está desligado', () => {

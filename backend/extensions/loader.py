@@ -76,6 +76,22 @@ def query_root_for_app(app_path: Path) -> Path | None:
     return candidate if candidate.is_dir() else None
 
 
+def discover_extension_locale_paths(extensions_root: Path) -> list[Path]:
+    """Pastas ``locale/`` de cada extensão no disco (para ``LOCALE_PATHS``)."""
+
+    root = Path(extensions_root)
+    if not root.is_dir():
+        return []
+    paths: list[Path] = []
+    for child in sorted(root.iterdir()):
+        if not child.is_dir() or child.name.startswith("."):
+            continue
+        locale_dir = child / "locale"
+        if locale_dir.is_dir():
+            paths.append(locale_dir)
+    return paths
+
+
 def lineage_query_roots() -> list[Path]:
     """Raízes SQL das extensões instaladas, na ordem de ``INSTALLED_APPS``.
 

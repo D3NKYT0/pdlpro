@@ -18,8 +18,12 @@ vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi
 vi.mock('../../services/domain/server.service', () => ({
   serverApi: { rankings: vi.fn(), info: vi.fn() },
 }))
+vi.mock('../../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn(async () => []) },
+}))
 vi.mock('../../extensions', () => ({
   extensionNavItems: () => [],
+  isExtensionResourceEnabled: () => true,
 }))
 
 const presentation: ThemePresentation = {

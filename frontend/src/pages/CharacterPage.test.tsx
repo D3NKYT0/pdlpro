@@ -22,6 +22,7 @@ vi.mock('../services/api', async (importOriginal) => {
       characterSkills: vi.fn(),
     },
     inventoryApi: { equipment: vi.fn(), gameItems: vi.fn() },
+    programsApi: { ...actual.programsApi, resources: vi.fn(async () => []) },
   }
 })
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))

@@ -170,3 +170,33 @@ def test_game_account_password_needs_eight_characters(api, endpoint):
         format="json",
     )
     assert accepted.status_code == 200, accepted.data
+
+
+@pytest.mark.django_db
+def test_link_account_publishes_extension_hook(api):
+    from common.hooks import HookEvent, HookNames, IHookBus, IHookHandler
+
+    class Recorder(IHookHandler):
+        names = frozenset({HookNames.ACCOUNT_LINKED})
+
+        def __init__(self) -> None:
+            self.events: list[HookEvent] = []
+
+        def handle(self, event: HookEvent) -> None:
+            self.events.append(event)
+
+    player = User.objects.create_user(username="hooker", email="hooker@pdl.dev", password="Secret123")
+    gateway = _gateway()
+    gateway.register_account("knight", "GamePass1", "knight@pdl.dev")
+    recorder = Recorder()
+    DependencyInjection.root().resolve(IHookBus).add(recorder)
+    api.force_authenticate(user=player)
+    linked = api.post(
+        "/api/v1/customer/server/accounts/link/",
+        {"login": "knight", "password": "GamePass1"},
+        format="json",
+    )
+    assert linked.status_code == 200, linked.data
+    assert recorder.events
+    assert recorder.events[0].payload["user_id"] == str(player.id)
+    assert recorder.events[0].payload["login"] == "knight"

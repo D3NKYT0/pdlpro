@@ -24,6 +24,7 @@ import { formatServicePrice, getClassName } from '../lib/lineage'
 import { formatCompactQuantity } from '../lib/formatters'
 import { formatDate, formatDuration } from '../components/rankings/rankingsFormat'
 import { inventoryApi, isApiError, lineageApi } from '../services/api'
+import { ExtensionSlotOutlet } from '../extensions'
 import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
 import { CharacterPaperdoll } from '../components/character/CharacterPaperdoll'
 import { CharacterSkillsPanel } from '../components/character/CharacterSkillsPanel'
@@ -383,6 +384,7 @@ export function CharacterPage() {
           </div>
         </div>
       ) : null}
+      {char ? <ExtensionSlotOutlet slot="character.aside" /> : null}
       <CharacterItemDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
     </div>
   )

@@ -1,12 +1,24 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { describe, expect, it, vi } from 'vitest'
 import { AdminHubPage } from './AdminHubPage'
+
+vi.mock('../../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn(async () => []) },
+}))
 
 describe('AdminHubPage', () => {
   it('marca cada módulo com tom de cor para leitura rápida', () => {
-    const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    const html = renderToStaticMarkup(
+      createElement(
+        QueryClientProvider,
+        { client },
+        createElement(MemoryRouter, null, createElement(AdminHubPage)),
+      ),
+    )
     for (const tone of ['programs', 'support', 'system', 'reports', 'finance', 'games', 'content', 'server']) {
       expect(html).toContain(`data-tone="${tone}"`)
     }

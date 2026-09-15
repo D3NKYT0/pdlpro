@@ -1,4 +1,5 @@
 import { Route } from 'react-router-dom'
+import { ResourceGate } from '../components/programs/ResourceGate'
 import { resolveEnabledExtensions, routesForScope } from './registry'
 import type { ExtensionRouteScope } from './types'
 
@@ -14,6 +15,12 @@ export function extensionRouteElements(
     enabledIds ?? import.meta.env.VITE_PDL_EXTENSIONS,
   )
   return routesForScope(modules, scope).map((route) => (
-    <Route key={route.key} path={route.path} element={route.element} />
+    <Route
+      key={route.key}
+      path={route.path}
+      element={
+        route.resource ? <ResourceGate code={route.resource}>{route.element}</ResourceGate> : route.element
+      }
+    />
   ))
 }

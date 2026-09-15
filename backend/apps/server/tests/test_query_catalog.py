@@ -95,6 +95,33 @@ def test_incomplete_extension_dialect_fails_required(tmp_path):
         LineageQueryCatalog.load("broken", extra_roots=[tmp_path])
 
 
+def test_overlay_rejects_stale_core_revision(tmp_path):
+    overlay = tmp_path / "lucerav2"
+    overlay.mkdir()
+    (overlay / "manifest.json").write_text('{"core_revision": 0}', encoding="utf-8")
+    (overlay / "rankings.sql").write_text(
+        "-- name: top_pvp\nSELECT 1\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(QueryNotFoundError, match="core_revision"):
+        LineageQueryCatalog.load("lucerav2", extra_roots=[tmp_path])
+
+
+def test_overlay_accepts_current_core_revision(tmp_path):
+    overlay = tmp_path / "lucerav2"
+    overlay.mkdir()
+    (overlay / "manifest.json").write_text(
+        f'{{"core_revision": {LineageQueryCatalog.CONTRACT_REVISION}, "overrides": ["top_pvp"]}}',
+        encoding="utf-8",
+    )
+    (overlay / "rankings.sql").write_text(
+        "-- name: top_pvp\nSELECT 'rev-ok' AS overlay\n",
+        encoding="utf-8",
+    )
+    catalog = LineageQueryCatalog.load("lucerav2", extra_roots=[tmp_path])
+    assert "rev-ok" in catalog["top_pvp"]
+
+
 def test_discover_dialects_includes_extension_folders(tmp_path):
     (tmp_path / "acme_fork").mkdir()
     names = LineageQueryCatalog.discover_dialects(extra_roots=[tmp_path])

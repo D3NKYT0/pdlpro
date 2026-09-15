@@ -26,7 +26,9 @@ infrastructure → domain
   SPA em `frontend/src/extensions/<cliente>/` + `VITE_PDL_EXTENSIONS` (descoberta
   automática, sem editar `AppRoutes` nem o catálogo por cliente). SQL Lineage do
   fork em `extensions/<cliente>/infrastructure/lineage/queries/`. Imports estáveis via
-  `extensions.surface`. Não patchar o core no fork.
+  `extensions.surface` (hooks, gateways, mailer, recursos `ext.<id>.<slug>`).
+  SPA: `nav`/`slots`/`resource` + `extensionApi()` em `services/api.ts`.
+  Não patchar o core no fork.
 
 ### Frontend (SPA em camadas)
 

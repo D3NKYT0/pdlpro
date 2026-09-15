@@ -36,7 +36,7 @@ import { CONTEXTUAL_HELP_OUTLET_ID, ContextualHelp } from "../help/ContextualHel
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
-import { extensionNavItems } from "../../extensions";
+import { extensionNavItems, isExtensionResourceEnabled } from "../../extensions";
 
 const links: Array<{
   to: string;
@@ -179,7 +179,9 @@ export function PrivateLayout() {
                     </NavLink>
                   );
                 })}
-              {extensionPanelLinks.map((link) => (
+              {extensionPanelLinks
+                .filter((link) => isExtensionResourceEnabled(resources.data, link.resource))
+                .map((link) => (
                 <NavLink key={link.to} to={link.to}>
                   <Puzzle aria-hidden="true" />
                   <span>{t(link.labelKey, { ns: link.ns })}</span>
@@ -192,7 +194,9 @@ export function PrivateLayout() {
                 </NavLink>
               ) : null}
               {canAccessStaff(user)
-                ? extensionStaffLinks.map((link) => (
+                ? extensionStaffLinks
+                    .filter((link) => isExtensionResourceEnabled(resources.data, link.resource))
+                    .map((link) => (
                     <NavLink key={link.to} to={link.to}>
                       <Puzzle aria-hidden="true" />
                       <span>{t(link.labelKey, { ns: link.ns })}</span>

@@ -33,6 +33,7 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LEGAL_LEGAL_EMAIL` | E-mail jurídico | `juridico@example.com` |
 | `LEGAL_FORUM` | Foro eleito nos Termos | `Brasil` |
 | `PDL_EXTENSION_APPS` | AppConfigs de cliente sob `extensions.*` (vírgula) | vazio no core; ver [Extensões](../arquitetura/extensoes.md) |
+| `VITE_PDL_EXTENSIONS` | IDs SPA das pastas em `frontend/src/extensions/` (vírgula) | vazio no core; o build descobre as pastas, o env só ativa |
 
 `DB_NAME`, `DB_USER` e `DB_PASSWORD` configuram o serviço PostgreSQL do Compose. Fora dele, prefira uma `DATABASE_URL` completa.
 

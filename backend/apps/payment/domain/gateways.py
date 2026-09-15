@@ -56,3 +56,8 @@ class IPaymentGatewayRegistry(ABC):
         """Filtra métodos configurados e retorna metadados públicos."""
 
         raise NotImplementedError
+
+    def register(self, gateway: IPaymentGateway) -> None:
+        """Inclui ou substitui um adaptador pelo ``method_name``. Extensões usam no provider."""
+
+        raise NotImplementedError

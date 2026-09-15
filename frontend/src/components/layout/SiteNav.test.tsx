@@ -12,7 +12,7 @@ import { SiteNav } from './SiteNav'
 const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
 const launch = vi.hoisted(() => ({ comingSoon: false }))
 const extensionNavMock = vi.hoisted(() => ({
-  public: [] as Array<{ to: string; labelKey: string; ns: string }>,
+  public: [] as Array<{ to: string; labelKey: string; ns: string; resource?: string }>,
 }))
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
@@ -24,6 +24,10 @@ vi.mock('../../services/domain/server.service', () => ({
 }))
 vi.mock('../../extensions', () => ({
   extensionNavItems: (scope: string) => (scope === 'public' ? extensionNavMock.public : []),
+  isExtensionResourceEnabled: (
+    resources: Array<{ code: string; enabled: boolean }> | undefined,
+    code: string | undefined,
+  ) => !code || !resources?.some((row) => row.code === code && !row.enabled),
 }))
 
 afterEach(() => {
@@ -144,4 +148,12 @@ it('anexa links públicos da extensão ao menu', () => {
   extensionNavMock.public = [{ to: '/ext/example/ping', labelKey: 'nav.ping', ns: 'ext.example' }]
   mount('/')
   expect(screen.getByRole('link', { name: 'Ping da extensão' })).toHaveAttribute('href', '/ext/example/ping')
+})
+
+it('oculta o link da extensão quando o recurso está pausado', () => {
+  extensionNavMock.public = [
+    { to: '/ext/example/ping', labelKey: 'nav.ping', ns: 'ext.example', resource: 'ext.example.ping' },
+  ]
+  mount('/', [{ code: 'ext.example.ping', enabled: false }])
+  expect(screen.queryByRole('link', { name: 'Ping da extensão' })).not.toBeInTheDocument()
 })

@@ -32,7 +32,8 @@ não um plugin runtime.
 | `backend/extensions/_example/` | Skeleton instalável sob demanda (não entra no `INSTALLED_APPS` padrão) |
 | `backend/extensions/surface.py` | Re-exports estáveis (DI, views, erros, paginação, permissões) |
 | `backend/extensions/loader.py` | Lê `PDL_EXTENSION_APPS` e monta URLs |
-| `frontend/src/extensions/` | Overlay SPA: catálogo + `VITE_PDL_EXTENSIONS` + `/ext/<id>/` |
+| `frontend/src/extensions/` | Overlay SPA: catálogo + slots + `VITE_PDL_EXTENSIONS` + `/ext/<id>/` |
+| `frontend/src/extensions/<id>/api.ts` | Cliente HTTP da extensão (exposto por `extensionApi()`) |
 | pacote de tema ZIP | Marca / CSS / assets (já documentado em [Temas](../funcionalidades/temas.md)) |
 
 Código de cliente **não** deve editar arquivos do core. Se a regra precisar
@@ -98,10 +99,16 @@ from extensions.surface import (
     AppProvider,
     DependencyInjection,
     DomainError,
+    ExtensionResource,
+    HookNames,
+    IHookBus,
+    IMailer,
+    IPaymentGatewayRegistry,
     InjectedAPIView,
     IsStaffMember,
     Lifetime,
     StandardPagination,
+    declare_extension_resource,
 )
 ```
 
@@ -129,6 +136,64 @@ entram com menção no changelog (contrato público).
 
 Teste automatizado em `backend/extensions/tests/test_surface.py` falha se algum
 arquivo sob `extensions/` importar `apps.*.infrastructure`.
+
+## Ganchos, gateways, e-mail e recursos
+
+O core **não** cresce um `if client == "acme"`. A extensão se encaixa nas
+portas abaixo. Todas estão em `extensions.surface`.
+
+### `IHookBus` (depois do commit)
+
+O core publica eventos **após** o `UnitOfWork` confirmar. Falha no handler é
+logada e **não** desfaz dinheiro já gravado.
+
+| Evento | Quando | Payload típico |
+| --- | --- | --- |
+| `HookNames.CHECKOUT_COMPLETED` | Compra da loja nova (replay de `request_key` não republica) | ids da compra / usuário |
+| `HookNames.PAYMENT_SETTLED` | Pagamento liquidado pela primeira vez | pedido / método |
+| `HookNames.ACCOUNT_LINKED` | Conta de jogo vinculada | usuário / login |
+
+No `AppProvider.register` da extensão:
+
+```python
+container.resolve(IHookBus).add(MeuCheckoutHook())
+```
+
+`IHookHandler.names` declara quais eventos o ouvinte aceita. O skeleton
+`_example` registra `ExampleCheckoutHook`.
+
+### Pagamento e mailer
+
+- `IPaymentGatewayRegistry.register(gateway)` — inclui ou substitui o adaptador
+  pelo `method_name` (minúsculo). O método precisa constar em `PAYMENT_METHODS`
+  da instalação.
+- `IMailer` — re-registre a implementação no container (último provider ganha).
+  Não há um segundo registry.
+
+### Recursos Programs (`ext.<id>.<slug>`)
+
+Declare no `AppConfig.ready()`:
+
+```python
+declare_extension_resource(
+    ExtensionResource(
+        code="ext.acme.desk",
+        name=_("Mesa Acme"),
+        description=_("Tela exclusiva do cliente."),
+    )
+)
+```
+
+`sync_extension_resources()` cria a linha em `SystemResource` se ainda não
+existir e **não** sobrescreve o `enabled` que a staff já gravou. A SPA usa o
+mesmo código em `route.resource` / `nav.resource` / `slot.resource`
+(`ResourceGate` + filtro de menu).
+
+### Gettext / Jazzmin
+
+Cada `extensions/<cliente>/locale/` entra em `LOCALE_PATHS`. `makemessages` /
+`compilemessages` cobrem o overlay; o admin Jazzmin resolve as msgids da
+extensão sem path extra no settings.
 
 ## Dialeto SQL Lineage na extensão
 
@@ -160,6 +225,17 @@ LINEAGE_QUERY_MODULE=lucerav2
 
 Só versiona o que divergiu. No update do PDL, o restante das queries vem da
 tag nova; revalide o overlay no schema do jogo antes de promover.
+
+Contrato opcional no overlay:
+
+```text
+extensions/acme/infrastructure/lineage/queries/lucerav2/manifest.json
+{"core_revision": 1, "overrides": ["top_pvp"]}
+```
+
+`core_revision` deve igualar `LineageQueryCatalog.CONTRACT_REVISION`. Sem
+arquivo, o overlay carrega. Revisão antiga levanta `QueryNotFoundError` na
+subida do catálogo — o cliente ajusta o SQL antes de promover o core novo.
 
 ### Dialeto inteiro (fork longe do core)
 
@@ -196,16 +272,30 @@ VITE_PDL_EXTENSIONS=acme
 
 | Peça | Papel |
 | --- | --- |
-| `types.ts` / `ExtensionModule` | Contrato: `id`, `routes[]`, `nav[]` opcional |
+| `types.ts` / `ExtensionModule` | Contrato: `id`, `routes[]`, `nav[]`, `slots[]` |
 | `catalog.ts` | Descoberta automática das pastas `*/index.tsx` |
 | `locales/{pt,en,es}.json` | Namespace `ext.<id>` (pasta `_example` → `ext.example`) |
-| `registry.ts` | Lê o env, monta `/ext/<id>/…` e itens de menu |
-| `extensionRouteElements()` | Lista de `<Route>` espalhada em `AppRoutes` |
-| `_example/` | Skeleton (`scope: public` → `/ext/example/ping`) |
+| `registry.ts` | Lê o env, monta `/ext/<id>/…`, menu e slots |
+| `extensionRouteElements()` | Lista de `<Route>` + `ResourceGate` em `AppRoutes` |
+| `ExtensionSlotOutlet` | Encaixes no Painel, ficha e hub admin |
+| `http.ts` / `api.ts` | `extensionApi('acme')` reexportado em `services/api.ts` |
+| `_example/` | Skeleton (`/ext/example/ping`, slot no dashboard) |
 
-Menu: declare `nav` no módulo. O core injeta os links no site público, no
-sidebar do painel (`panel`) e no hub staff (`staff`). Textos vêm de
-`ext.<id>`, não dos JSON do produto.
+Menu: declare `nav` no módulo. O core injeta os links no site público (e no
+chrome portal-v1), no sidebar do painel (`panel`) e no hub staff (`staff`).
+Textos vêm de `ext.<id>`, não dos JSON do produto.
+
+Encaixes de UI (`slots`) — a extensão **acrescenta**, não substitui a página:
+
+| Slot | Onde |
+| --- | --- |
+| `panel.dashboard` | Painel do jogador |
+| `character.aside` | Ficha do personagem (quando há char) |
+| `admin.hub` | Central da staff |
+
+HTTP: crie `frontend/src/extensions/<id>/api.ts` exportando `api` (ou default)
+que usa `request` de `services/infra/http`. Telas importam
+`extensionApi('<id>')` de `services/api.ts`.
 
 Escopos:
 
@@ -215,7 +305,7 @@ Escopos:
 | `panel` | `PrivateLayout` | `RequireAuth` |
 | `staff` | sob `RequireStaff` | staff |
 
-- Continue importando HTTP de `services/api.ts`.
+- Continue importando HTTP de `services/api.ts` (core e `extensionApi`).
 - Não altere `AppRoutes` por cliente — pasta + env.
 - i18n: `frontend/src/extensions/<id>/locales/{pt,en,es}.json` (namespace
   `ext.<id>`). O ping do skeleton ainda usa `common.extensionExample.*` como
@@ -266,7 +356,8 @@ código entre clientes sem extrair para o core ou para um pacote versionado.
 5. Smoke: login, pagamento (se usado), endpoints
    `/api/v1/extensions/<label>/` e rotas SPA `/ext/<id>/`.
 6. Se a extensão overlay SQL Lineage, homologar o dialeto no schema do jogo
-   (consultas `REQUIRED` + escritas que o overlay toca).
+   (consultas `REQUIRED` + escritas que o overlay toca) e conferir
+   `manifest.json` / `CONTRACT_REVISION`.
 7. Migrar apenas labels das extensões do cliente, se houver models novos no
    core ou na extensão.
 8. Só então promover o ambiente.

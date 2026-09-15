@@ -12,6 +12,9 @@ def test_surface_exports_di_and_views():
     assert surface.InjectedAPIView is not None
     assert surface.AppProvider is not None
     assert surface.DomainError is not None
+    assert surface.IHookBus is not None
+    assert surface.IPaymentGateway is not None
+    assert surface.IMailer is not None
     assert "PermissionDeniedError" not in surface.__all__
 
 

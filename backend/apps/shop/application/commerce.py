@@ -16,6 +16,7 @@ from apps.wallet.domain.entities import InsufficientBalanceError, WalletEntity
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import ValidationDomainError
+from common.hooks import HookNames, IHookBus, NullHookBus
 
 
 def money(value):
@@ -137,57 +138,72 @@ def checkout(
     commissions: ISupporterCommissionPort,
     bags: IBagRepository,
     unit_of_work: UnitOfWork,
+    hooks: IHookBus | None = None,
 ):
     """Finaliza o carrinho debitando carteira, entregando itens e registrando a compra."""
 
+    bus = hooks or NullHookBus()
+    replayed = None
+    result = None
     with unit_of_work:
         user = carts.lock_user(user_id)
         if request_key:
             prior = shop.find_purchase_by_request_key(user, request_key)
             if prior:
-                return {"purchase_id": str(prior.id), "total": str(prior.total)}
-        cart = carts.get_locked_for_user(user)
-        if not cart:
-            raise ValidationDomainError("Carrinho vazio.")
-        wallet = wallets.get_or_create(user_id)
-        details, promo = quote(cart, user, shop=shop, carts=carts, wallet=wallet, lock=True)
-        if not details["items"]:
-            raise ValidationDomainError("Carrinho vazio.")
-        due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
-        purchase = shop.create_purchase(
-            user=user,
-            total=details["total"],
-            subtotal=details["subtotal"],
-            discount=details["discount"],
-            bonus_used=bonus,
-            promo_code=cart.promo_code,
-            items_snapshot=details["items"],
-            request_key=request_key,
-        )
-        try:
-            if due:
-                wallets.debit(
-                    wallet.id,
-                    due,
-                    destination="shop",
-                    description=f"Compra na loja (saldo) · {purchase.id}",
-                )
-            if bonus:
-                wallets.debit_bonus(
-                    wallet.id,
-                    bonus,
-                    destination="shop",
-                    description=f"Compra na loja (bônus) · {purchase.id}",
-                )
-        except InsufficientBalanceError as exc:
-            raise ValidationDomainError("Saldo insuficiente.") from exc
-        for row in details["items"]:
-            for grant in row["grants"]:
-                add_to_bag(user, bags=bags, **grant)
-        if promo:
-            promo.uses += 1
-            shop.save_promo(promo)
-            if promo.supporter_id:
-                commissions.record(supporter_id=promo.supporter_id, purchase=purchase, due=due)
-        carts.clear_after_checkout(cart)
-        return {"purchase_id": str(purchase.id), "total": str(purchase.total)}
+                replayed = {"purchase_id": str(prior.id), "total": str(prior.total)}
+            else:
+                replayed = None
+        if replayed is None:
+            cart = carts.get_locked_for_user(user)
+            if not cart:
+                raise ValidationDomainError("Carrinho vazio.")
+            wallet = wallets.get_or_create(user_id)
+            details, promo = quote(cart, user, shop=shop, carts=carts, wallet=wallet, lock=True)
+            if not details["items"]:
+                raise ValidationDomainError("Carrinho vazio.")
+            due, bonus = Decimal(details["balance_due"]), Decimal(details["bonus_used"])
+            purchase = shop.create_purchase(
+                user=user,
+                total=details["total"],
+                subtotal=details["subtotal"],
+                discount=details["discount"],
+                bonus_used=bonus,
+                promo_code=cart.promo_code,
+                items_snapshot=details["items"],
+                request_key=request_key,
+            )
+            try:
+                if due:
+                    wallets.debit(
+                        wallet.id,
+                        due,
+                        destination="shop",
+                        description=f"Compra na loja (saldo) · {purchase.id}",
+                    )
+                if bonus:
+                    wallets.debit_bonus(
+                        wallet.id,
+                        bonus,
+                        destination="shop",
+                        description=f"Compra na loja (bônus) · {purchase.id}",
+                    )
+            except InsufficientBalanceError as exc:
+                raise ValidationDomainError("Saldo insuficiente.") from exc
+            for row in details["items"]:
+                for grant in row["grants"]:
+                    add_to_bag(user, bags=bags, **grant)
+            if promo:
+                promo.uses += 1
+                shop.save_promo(promo)
+                if promo.supporter_id:
+                    commissions.record(supporter_id=promo.supporter_id, purchase=purchase, due=due)
+            carts.clear_after_checkout(cart)
+            result = {"purchase_id": str(purchase.id), "total": str(purchase.total)}
+    if replayed is not None:
+        return replayed
+    assert result is not None
+    bus.publish(
+        HookNames.CHECKOUT_COMPLETED,
+        {"user_id": str(user_id), "purchase_id": result["purchase_id"], "total": result["total"]},
+    )
+    return result

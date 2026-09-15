@@ -229,3 +229,32 @@ def test_real_methods_cannot_be_confirmed_manually(api, player):
     assert response.status_code == 403
     staff_response = confirm_mock_payment(order.id)
     assert staff_response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_confirm_payment_publishes_extension_hook(api, player):
+    from common.di.bootstrap import DependencyInjection
+    from common.hooks import HookEvent, HookNames, IHookBus, IHookHandler
+
+    class Recorder(IHookHandler):
+        names = frozenset({HookNames.PAYMENT_SETTLED})
+
+        def __init__(self) -> None:
+            self.events: list[HookEvent] = []
+
+        def handle(self, event: HookEvent) -> None:
+            self.events.append(event)
+
+    recorder = Recorder()
+    DependencyInjection.root().resolve(IHookBus).add(recorder)
+    api.force_authenticate(user=player)
+    created = api.post("/api/v1/customer/payments/", {"amount": "10.00", "method": "mock"}, format="json")
+    assert created.status_code == 200, created.data
+    confirmed = confirm_mock_payment(created.data["id"])
+    assert confirmed.status_code == 200, confirmed.data
+    assert recorder.events
+    assert recorder.events[0].payload["order_id"] == created.data["id"]
+    assert recorder.events[0].payload["user_id"] == str(player.id)
+    replay = confirm_mock_payment(created.data["id"])
+    assert replay.status_code == 200
+    assert len(recorder.events) == 1

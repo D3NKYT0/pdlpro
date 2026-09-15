@@ -1,5 +1,8 @@
 {
   "nav": {
     "ping": "Ping de la extensión"
+  },
+  "slot": {
+    "dashboard": "Overlay de ejemplo en el Panel. Active con VITE_PDL_EXTENSIONS=example."
   }
 }

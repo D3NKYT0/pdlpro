@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Iterable
 from pathlib import Path
@@ -46,6 +47,7 @@ class LineageQueryCatalog:
     """
 
     ROOT = Path(__file__).resolve().parent / "queries"
+    CONTRACT_REVISION = 1
     DIALECT_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
     NAME_RE = re.compile(r"^--\s*name:\s*([a-z0-9_]+)\s*$", re.IGNORECASE)
     REQUIRED = (
@@ -106,11 +108,13 @@ class LineageQueryCatalog:
         dialect = cls._normalize_dialect(dialect)
         statements: dict[str, str] = {}
         found = False
-        for root in cls._iter_roots(extra_roots):
+        for index, root in enumerate(cls._iter_roots(extra_roots)):
             folder = root / dialect
             if not folder.is_dir():
                 continue
             found = True
+            if index > 0:
+                cls._validate_overlay_manifest(folder, dialect)
             for path in sorted(folder.glob("*.sql")):
                 statements.update(cls._parse(path.read_text(encoding="utf-8")))
         if not found:
@@ -132,6 +136,34 @@ class LineageQueryCatalog:
                 if path.is_dir() and cls.DIALECT_RE.fullmatch(path.name):
                     names.add(path.name)
         return sorted(names)
+
+    @classmethod
+    def _validate_overlay_manifest(cls, folder: Path, dialect: str) -> None:
+        """Recusa overlay com ``core_revision`` diferente do contrato atual."""
+
+        manifest_path = folder / "manifest.json"
+        if not manifest_path.is_file():
+            return
+        try:
+            data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise QueryNotFoundError(
+                f"O manifest.json do dialeto '{dialect}' em {folder} é inválido."
+            ) from exc
+        expected = data.get("core_revision")
+        if expected is None:
+            return
+        try:
+            revision = int(expected)
+        except (TypeError, ValueError) as exc:
+            raise QueryNotFoundError(
+                f"O overlay do dialeto '{dialect}' tem core_revision inválido."
+            ) from exc
+        if revision != cls.CONTRACT_REVISION:
+            raise QueryNotFoundError(
+                f"O overlay do dialeto '{dialect}' espera core_revision={revision}, "
+                f"o core está em {cls.CONTRACT_REVISION}."
+            )
 
     @classmethod
     def _normalize_dialect(cls, dialect: str) -> str:

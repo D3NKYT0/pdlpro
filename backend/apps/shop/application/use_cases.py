@@ -13,6 +13,7 @@ from apps.shop.domain.repositories import (
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
+from common.hooks import IHookBus
 
 
 @dataclass(frozen=True, slots=True)
@@ -211,6 +212,7 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
         commissions: ISupporterCommissionPort,
         bags: IBagRepository,
         unit_of_work: UnitOfWork,
+        hooks: IHookBus,
     ) -> None:
         self._wallets = wallets
         self._shop = shop
@@ -218,6 +220,7 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
         self._commissions = commissions
         self._bags = bags
         self._unit_of_work = unit_of_work
+        self._hooks = hooks
 
     def execute(self, data: CheckoutInput) -> dict:
         from apps.shop.application.commerce import checkout
@@ -231,4 +234,5 @@ class CheckoutUseCase(UseCase[CheckoutInput, dict]):
             commissions=self._commissions,
             bags=self._bags,
             unit_of_work=self._unit_of_work,
+            hooks=self._hooks,
         )

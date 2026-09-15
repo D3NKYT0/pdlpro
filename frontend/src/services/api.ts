@@ -112,5 +112,6 @@ export type {
 } from './domain/itemObservation.service'
 export { catalogApi, ITEM_CATALOG_KEY } from './domain/catalog.service'
 export type { ItemCatalogResponse, L2CatalogItem } from './domain/catalog.service'
+export { extensionApi, listExtensionApiIds } from '../extensions/http'
 export { staffGameContentApi } from './domain/staffGameContent.service'
 export type { ConfigRow } from './domain/staffGameContent.service'

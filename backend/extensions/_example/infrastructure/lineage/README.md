@@ -20,7 +20,11 @@ substitui `-- name:` iguais pelos arquivos da extensão.
 
 ```text
 infrastructure/lineage/queries/lucerav2/characters.sql   # só o que mudou
+infrastructure/lineage/queries/lucerav2/manifest.json    # opcional: {"core_revision": 1}
 ```
+
+`core_revision` deve igualar `LineageQueryCatalog.CONTRACT_REVISION`. Sem
+manifest o overlay carrega; revisão antiga recusa o catálogo na subida.
 
 ```env
 LINEAGE_QUERY_MODULE=lucerav2

@@ -14,7 +14,9 @@ Módulos disponíveis no core:
 Forks de cliente **não** precisam de um módulo novo no core. Coloque o SQL em
 `backend/extensions/<cliente>/infrastructure/lineage/queries/<dialeto>/` e
 ative a extensão. Pode ser overlay do mesmo nome (`lucerav2` com só as queries
-que mudaram) ou um dialeto completo. Detalhe em
+que mudaram) ou um dialeto completo. Opcional: `manifest.json` com
+`core_revision` igual a `LineageQueryCatalog.CONTRACT_REVISION` (hoje `1`);
+revisão defasada recusa o catálogo. Detalhe em
 [Extensões de cliente](../arquitetura/extensoes.md#dialeto-sql-lineage-na-extensão).
 
 Configure o módulo em `.env`:
