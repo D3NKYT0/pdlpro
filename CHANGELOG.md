@@ -2,7 +2,8 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **14 de setembro de 2026** — Não publicado: endurecimento de
+Última atualização: **14 de setembro de 2026** — Não publicado: jornada de
+recompensas alinhada ao chrome de Jogos/Progresso/Carteira; endurecimento de
 segurança (pacote LGPD em armazenamento privado, `SECRET_KEY` validada em
 produção, Redis com senha, saneamento de imagens enviadas, senha de conta do
 jogo com oito caracteres, cabeçalhos e rate limit do Nginx, webhook de pagamento

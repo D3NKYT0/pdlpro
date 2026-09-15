@@ -14439,3 +14439,835 @@ html.pdl-panel .theme-active-badge svg { width: 16px; }
   html.pdl-panel .theme-installer-layout { grid-template-columns: 1fr; }
   html.pdl-panel .theme-package-grid { grid-template-columns: 1fr; }
 }
+
+/* Jornada e recompensas: passe de batalha, bônus diário e estatísticas. */
+html.pdl-panel .rewards-page {
+  display: grid;
+  gap: 18px;
+}
+
+html.pdl-panel .rewards-hero {
+  position: relative;
+  display: flex;
+  min-height: 176px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  overflow: hidden;
+  padding: 28px 30px;
+  background:
+    linear-gradient(90deg, rgba(11, 10, 8, 0.97), rgba(18, 14, 10, 0.72) 58%, rgba(22, 16, 10, 0.58)),
+    var(--theme-art-bg-4) center 34% / cover no-repeat;
+}
+
+html.pdl-panel .rewards-hero::after {
+  position: absolute;
+  right: 6%;
+  width: 248px;
+  height: 248px;
+  border: 1px solid rgba(230, 199, 125, 0.1);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 34px rgba(197, 161, 97, 0.02),
+    inset 0 0 0 78px rgba(197, 161, 97, 0.016),
+    0 0 64px rgba(197, 161, 97, 0.04);
+}
+
+html.pdl-panel .rewards-hero > div {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 18px;
+  min-width: 0;
+}
+
+html.pdl-panel .rewards-hero h1 {
+  margin: 4px 0 6px;
+  font-size: clamp(28px, 3vw, 36px);
+}
+
+html.pdl-panel .rewards-hero p {
+  max-width: 640px;
+  margin: 0;
+}
+
+html.pdl-panel .rewards-hero-emblem {
+  display: grid;
+  grid-row: 1 / 4;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border: 1px solid rgba(230, 199, 125, 0.32);
+  background:
+    linear-gradient(160deg, rgba(230, 199, 125, 0.16), rgba(197, 161, 97, 0.04)),
+    rgba(8, 7, 5, 0.7);
+  color: var(--panel-gold-bright);
+  box-shadow: 0 0 24px rgba(197, 161, 97, 0.12);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .rewards-hero-emblem svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 1.3;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .rewards-hero-jump {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 14px 16px;
+  border: 1px solid rgba(230, 199, 125, 0.26);
+  background: rgba(6, 6, 5, 0.64);
+  color: var(--panel-gold-bright);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+}
+
+html.pdl-panel .rewards-hero-jump svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.7;
+}
+
+html.pdl-panel .rewards-hero-jump:hover {
+  border-color: rgba(230, 199, 125, 0.48);
+  background: rgba(197, 161, 97, 0.1);
+  color: #fff;
+}
+
+html.pdl-panel .rewards-page .ui-tabs.game-tabs {
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid rgba(230, 199, 125, 0.18);
+  background: rgba(10, 9, 7, 0.82);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
+}
+
+html.pdl-panel .rewards-page .ui-tabs.rewards-tabs {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+html.pdl-panel .rewards-page .ui-tabs.pass-tabs,
+html.pdl-panel .rewards-page .ui-tabs.stats-tabs {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+html.pdl-panel .rewards-page .ui-tabs.game-tabs > button {
+  min-height: 52px;
+  justify-content: center;
+  border-radius: 0;
+  background: transparent;
+}
+
+html.pdl-panel .rewards-tab-content,
+html.pdl-panel .pass-layout,
+html.pdl-panel .pass-tab-content,
+html.pdl-panel .daily-layout,
+html.pdl-panel .stats-layout,
+html.pdl-panel .stats-tab-content {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+html.pdl-panel .rewards-tab-content {
+  animation: rewards-tab-enter 220ms ease both;
+}
+
+@keyframes rewards-tab-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+html.pdl-panel .rewards-page .battle-pass-overview {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr));
+  margin-bottom: 0;
+}
+
+html.pdl-panel .rewards-page .battle-pass-overview > div {
+  position: relative;
+  min-height: 78px;
+  padding: 13px 14px 13px 46px;
+  border-color: rgba(197, 161, 97, 0.16);
+  background:
+    linear-gradient(160deg, rgba(197, 161, 97, 0.06), transparent 58%),
+    rgba(5, 5, 4, 0.42);
+}
+
+html.pdl-panel .rewards-page .battle-pass-overview svg {
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  color: var(--panel-gold);
+  stroke-width: 1.45;
+}
+
+html.pdl-panel .rewards-page .battle-pass-overview strong {
+  font-size: 24px;
+}
+
+html.pdl-panel .rewards-page .battle-pass-progress {
+  margin-bottom: 0;
+}
+
+html.pdl-panel .rewards-page .battle-pass-progress .progress-bar {
+  height: 14px;
+}
+
+html.pdl-panel .pass-season,
+html.pdl-panel .daily-hero,
+html.pdl-panel .stats-overview-card {
+  position: relative;
+  overflow: hidden;
+}
+
+html.pdl-panel .pass-season {
+  display: grid;
+  gap: 18px;
+  background:
+    linear-gradient(100deg, rgba(11, 10, 8, 0.96), rgba(18, 14, 10, 0.78) 62%, rgba(20, 15, 10, 0.7)),
+    var(--theme-art-bg-4) right 18% / cover no-repeat;
+}
+
+html.pdl-panel .pass-season::after,
+html.pdl-panel .daily-hero::after {
+  position: absolute;
+  right: 7%;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(230, 199, 125, 0.08);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  box-shadow: inset 0 0 0 32px rgba(197, 161, 97, 0.016), inset 0 0 0 74px rgba(197, 161, 97, 0.012);
+}
+
+html.pdl-panel .pass-season-banner,
+html.pdl-panel .daily-hero-banner,
+html.pdl-panel .stats-overview-banner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px 28px;
+}
+
+html.pdl-panel .daily-hero-banner {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+html.pdl-panel .pass-season-copy,
+html.pdl-panel .pass-level-seal,
+html.pdl-panel .daily-day-seal,
+html.pdl-panel .stats-rate-seal {
+  position: relative;
+  z-index: 1;
+}
+
+html.pdl-panel .pass-season-copy {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+html.pdl-panel .pass-season-copy h2,
+html.pdl-panel .daily-hero-banner h2 {
+  margin: 2px 0 0;
+  font-size: clamp(26px, 2.6vw, 34px);
+}
+
+html.pdl-panel .pass-season-copy p,
+html.pdl-panel .daily-hero-banner p {
+  margin: 0;
+  max-width: 560px;
+  color: var(--panel-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+html.pdl-panel .pass-level-seal,
+html.pdl-panel .daily-day-seal,
+html.pdl-panel .stats-rate-seal {
+  display: flex;
+  width: 108px;
+  height: 108px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid rgba(230, 199, 125, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(230, 199, 125, 0.16), transparent 58%),
+    rgba(6, 6, 5, 0.72);
+  box-shadow:
+    inset 0 0 0 8px rgba(197, 161, 97, 0.04),
+    0 0 32px rgba(197, 161, 97, 0.1);
+}
+
+html.pdl-panel .pass-level-seal span,
+html.pdl-panel .daily-day-seal span,
+html.pdl-panel .stats-rate-seal span {
+  color: var(--panel-muted);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .pass-level-seal strong,
+html.pdl-panel .daily-day-seal strong,
+html.pdl-panel .stats-rate-seal strong {
+  color: var(--panel-gold-bright);
+  font-family: Cambria, serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+html.pdl-panel .stats-rate-seal strong {
+  font-size: 26px;
+}
+
+html.pdl-panel .pass-season .premium-active {
+  box-shadow: 0 0 20px rgba(197, 161, 97, 0.08);
+}
+
+html.pdl-panel .pass-auto-claim {
+  position: relative;
+  z-index: 1;
+  gap: 10px;
+  padding: 13px 15px;
+  border: 1px solid rgba(197, 161, 97, 0.16);
+  background: rgba(5, 5, 4, 0.46);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+}
+
+html.pdl-panel .rewards-empty-card,
+html.pdl-panel .pass-season-empty {
+  min-height: 220px;
+}
+
+html.pdl-panel .rewards-empty-card .ui-empty,
+html.pdl-panel .pass-season-empty .ui-empty {
+  min-height: 180px;
+  color: var(--panel-muted);
+}
+
+html.pdl-panel .rewards-empty-card .ui-empty svg,
+html.pdl-panel .pass-season-empty .ui-empty svg {
+  width: 36px;
+  height: 36px;
+  color: var(--panel-gold);
+  stroke-width: 1.3;
+}
+
+html.pdl-panel .rewards-page .pass-tier.is-current {
+  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.2);
+}
+
+html.pdl-panel .rewards-page .pass-tier.is-current .pass-tier-level > span {
+  border-color: rgba(230, 199, 125, 0.5);
+  background: rgba(197, 161, 97, 0.12);
+  color: var(--panel-gold-bright);
+  box-shadow: 0 0 16px rgba(197, 161, 97, 0.16);
+}
+
+html.pdl-panel .pass-track-card,
+html.pdl-panel .pass-history,
+html.pdl-panel .daily-calendar-card,
+html.pdl-panel .daily-pool-card,
+html.pdl-panel .stats-overview-card,
+html.pdl-panel .stats-ranking-card {
+  display: grid;
+  gap: 15px;
+  align-content: start;
+}
+
+html.pdl-panel .pass-track-card .pass-track-legend {
+  margin-bottom: 0;
+}
+
+/* Missões, trocas e marcos compartilham o cartão de objetivo. */
+html.pdl-panel .pass-quest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 15px;
+  align-items: start;
+}
+
+html.pdl-panel .pass-quest {
+  display: grid;
+  gap: 13px;
+  align-content: start;
+  padding: 19px;
+  background:
+    linear-gradient(150deg, rgba(197, 161, 97, 0.055), transparent 42%),
+    rgba(10, 9, 7, 0.72);
+}
+
+html.pdl-panel .pass-quest.is-complete {
+  border-color: rgba(230, 199, 125, 0.34);
+  box-shadow: inset 0 0 30px rgba(197, 161, 97, 0.05);
+}
+
+html.pdl-panel .pass-quest.is-claimed {
+  border-color: rgba(128, 201, 135, 0.22);
+}
+
+html.pdl-panel .pass-quest > p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+html.pdl-panel .pass-quest > small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+}
+
+html.pdl-panel .pass-quest .btn {
+  justify-self: start;
+}
+
+html.pdl-panel .pass-quest-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
+}
+
+html.pdl-panel .pass-quest-head > div {
+  min-width: 0;
+}
+
+html.pdl-panel .pass-quest-head h3 {
+  margin: 3px 0 0;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+html.pdl-panel .pass-quest-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(230, 199, 125, 0.24);
+  background: rgba(197, 161, 97, 0.075);
+  color: var(--panel-gold-bright);
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .pass-quest-icon svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.4;
+  transform: rotate(-45deg);
+}
+
+html.pdl-panel .pass-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 1px solid rgba(230, 199, 125, 0.2);
+  color: var(--panel-gold-bright);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+html.pdl-panel .pass-chip svg {
+  width: 12px;
+  height: 12px;
+}
+
+html.pdl-panel .pass-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #80c987;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+html.pdl-panel .pass-done svg {
+  width: 14px;
+  height: 14px;
+}
+
+html.pdl-panel .pass-quest-progress .progress-labels {
+  font-size: 10px;
+}
+
+/* Trocas: custo, seta e prêmios. */
+html.pdl-panel .pass-exchange-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+html.pdl-panel .pass-exchange-side {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+html.pdl-panel .pass-exchange-cost {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 50px;
+  padding: 8px 10px;
+  border: 1px solid rgba(197, 161, 97, 0.12);
+  background: rgba(5, 5, 4, 0.4);
+}
+
+html.pdl-panel .pass-exchange-cost span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+html.pdl-panel .pass-exchange-cost strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.pdl-panel .pass-exchange-cost small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+}
+
+html.pdl-panel .pass-missing {
+  color: #dc8a68 !important;
+}
+
+html.pdl-panel .pass-exchange-arrow {
+  width: 17px;
+  height: 17px;
+  color: var(--panel-gold);
+  stroke-width: 1.5;
+}
+
+/* Prêmios reaproveitam as fichas do painel dentro da jornada. */
+html.pdl-panel .rewards-page .program-rewards {
+  gap: 8px;
+}
+
+html.pdl-panel .rewards-page .program-reward {
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(197, 161, 97, 0.12);
+  border-radius: 0;
+  background: rgba(5, 5, 4, 0.4);
+  font-size: 12px;
+}
+
+html.pdl-panel .rewards-page .program-reward strong {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 12px;
+}
+
+html.pdl-panel .rewards-page .program-reward small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+}
+
+html.pdl-panel .rewards-page .program-timeline article {
+  padding: 14px 0;
+  border-bottom-color: rgba(197, 161, 97, 0.12);
+}
+
+html.pdl-panel .rewards-page .program-timeline article > svg {
+  width: 17px;
+  height: 17px;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .rewards-page .program-timeline strong {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 12px;
+}
+
+html.pdl-panel .rewards-page .program-timeline small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+}
+
+/* Bônus diário */
+html.pdl-panel .daily-hero {
+  display: grid;
+  gap: 18px;
+  background:
+    linear-gradient(100deg, rgba(11, 10, 8, 0.96), rgba(18, 14, 10, 0.8) 60%, rgba(20, 15, 10, 0.7)),
+    var(--theme-art-bg-3) right 22% / cover no-repeat;
+}
+
+html.pdl-panel .daily-hero .battle-pass-header {
+  margin-bottom: 0;
+}
+
+html.pdl-panel .daily-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 186px), 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .daily-day {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  overflow: hidden;
+  padding: 16px 14px 14px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background:
+    linear-gradient(160deg, rgba(197, 161, 97, 0.05), transparent 50%),
+    rgba(5, 5, 4, 0.4);
+}
+
+html.pdl-panel .daily-day-stamp {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: rgba(230, 199, 125, 0.12);
+  font-family: Cambria, serif;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+}
+
+html.pdl-panel .daily-day header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+html.pdl-panel .daily-day strong {
+  position: relative;
+  z-index: 1;
+  color: var(--panel-gold-bright);
+  font-family: Cambria, serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+html.pdl-panel .daily-day.is-today {
+  border-color: rgba(230, 199, 125, 0.46);
+  background:
+    linear-gradient(160deg, rgba(197, 161, 97, 0.14), transparent 55%),
+    rgba(8, 7, 5, 0.55);
+  box-shadow: 0 0 28px rgba(197, 161, 97, 0.1);
+}
+
+html.pdl-panel .daily-day.is-today .daily-day-stamp {
+  color: rgba(230, 199, 125, 0.2);
+}
+
+html.pdl-panel .daily-day.is-released .pass-chip {
+  border-color: rgba(128, 201, 135, 0.26);
+  color: #80c987;
+}
+
+html.pdl-panel .daily-day.is-locked {
+  border-style: dashed;
+  border-color: rgba(150, 142, 128, 0.22);
+}
+
+html.pdl-panel .daily-day.is-locked .pass-chip {
+  border-color: rgba(150, 142, 128, 0.22);
+  color: rgba(255, 255, 255, 0.42);
+}
+
+html.pdl-panel .daily-day.is-locked .program-reward {
+  opacity: 0.6;
+}
+
+html.pdl-panel .daily-pool {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .daily-pool-entry {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 14px;
+  border: 1px solid rgba(197, 161, 97, 0.12);
+  background: rgba(5, 5, 4, 0.34);
+}
+
+html.pdl-panel .daily-pool-entry header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+html.pdl-panel .daily-pool-entry h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+html.pdl-panel .daily-pool-card > p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+/* Estatísticas e ranking */
+html.pdl-panel .stats-ranking-card > p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+html.pdl-panel .stats-table-wrap {
+  overflow-x: auto;
+}
+
+html.pdl-panel .stats-table {
+  margin-top: 0;
+}
+
+html.pdl-panel .stats-table td:first-child {
+  width: 74px;
+}
+
+html.pdl-panel .stats-overview-card {
+  background:
+    linear-gradient(100deg, rgba(11, 10, 8, 0.96), rgba(18, 14, 10, 0.82) 70%),
+    var(--theme-art-bg-2) right 20% / cover no-repeat;
+}
+
+html.pdl-panel .stats-overview-card .progress-module-heading {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+html.pdl-panel .stats-rank {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(197, 161, 97, 0.18);
+  color: var(--panel-muted);
+  font-family: Cambria, serif;
+  font-size: 14px;
+}
+
+html.pdl-panel .stats-table .is-podium .stats-rank {
+  border-color: rgba(230, 199, 125, 0.36);
+  background: rgba(197, 161, 97, 0.08);
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .stats-table .is-podium-1 .stats-rank {
+  border-color: rgba(230, 199, 125, 0.55);
+  background: linear-gradient(180deg, rgba(230, 199, 125, 0.22), rgba(197, 161, 97, 0.08));
+  box-shadow: 0 0 14px rgba(197, 161, 97, 0.16);
+}
+
+html.pdl-panel .stats-table .is-podium-2 .stats-rank {
+  border-color: rgba(210, 210, 210, 0.28);
+  color: #d7d2c6;
+}
+
+html.pdl-panel .stats-table .is-podium-3 .stats-rank {
+  border-color: rgba(176, 122, 74, 0.4);
+  color: #c4925a;
+}
+
+html.pdl-panel .stats-table .is-podium td {
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  html.pdl-panel .pass-exchange-flow {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .pass-exchange-arrow {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 720px) {
+  html.pdl-panel .rewards-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  html.pdl-panel .rewards-hero::after,
+  html.pdl-panel .pass-season::after,
+  html.pdl-panel .daily-hero::after {
+    display: none;
+  }
+
+  html.pdl-panel .pass-season-banner,
+  html.pdl-panel .daily-hero-banner,
+  html.pdl-panel .stats-overview-banner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+}
+
+@media (max-width: 600px) {
+  html.pdl-panel .rewards-page .ui-tabs.game-tabs,
+  html.pdl-panel .rewards-page .pass-tabs,
+  html.pdl-panel .rewards-page .stats-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html.pdl-panel .rewards-hero > div {
+    align-items: flex-start;
+  }
+
+  html.pdl-panel .pass-quest {
+    padding: 16px;
+  }
+
+  html.pdl-panel .pass-quest-head {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  html.pdl-panel .pass-quest-head .pass-chip {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  html.pdl-panel .daily-calendar {
+    grid-template-columns: 1fr;
+  }
+}

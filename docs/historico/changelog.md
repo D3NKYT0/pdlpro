@@ -35,6 +35,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- A jornada de recompensas do painel passa a usar o mesmo chrome de Jogos,
+  Progresso e Carteira: hero com arte do tema, selo de nível, calendário com
+  carimbo do dia e pódio no ranking.
 - `./setup.sh deploy --production` deixa de reconstruir imagens quando o `.env`
   aponta para uma imagem publicada; nesse caso o padrão é `--pull`.
 - Pacote de release e clone sem `docker-compose.yml` de desenvolvimento passam
