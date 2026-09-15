@@ -5,12 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import {
   ArrowLeft,
-  Bell,
   CircleUserRound,
   Gamepad2,
   Gavel,
   LayoutDashboard,
-  Headphones,
   MessageCircle,
   Handshake,
   Gift,
@@ -29,12 +27,13 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import { useLandingPath } from "../../hooks/useLandingPath";
 import { canAccessStaff } from "../../lib/staff";
-import { notificationApi, supportApi, contentApi } from "../../services/api";
+import { supportApi, contentApi } from "../../services/api";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/api";
 import { useTheme } from "../../theme/ThemeProvider";
 import { ContextualHelp } from "../help/ContextualHelp";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
+import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
 
 const links: Array<{
@@ -55,8 +54,6 @@ const links: Array<{
   { to: "/panel/games", labelKey: "nav.games", icon: Gamepad2 },
   { to: "/panel/rewards", labelKey: "nav.rewards", icon: Gift },
   { to: "/panel/supporters", labelKey: "nav.supporters", icon: Handshake },
-  { to: "/panel/notifications", labelKey: "nav.notifications", icon: Bell },
-  { to: "/panel/support", labelKey: "nav.support", icon: Headphones },
   { to: "/panel/help", labelKey: "nav.help", icon: MessageCircle },
 ];
 
@@ -79,8 +76,6 @@ export function PrivateLayout() {
     games: "games",
     rewards: "games",
     supporters: "supporters",
-    notifications: "notifications",
-    support: "support",
     help: "help",
   };
   const resourceEnabled = (code: string) =>
@@ -96,12 +91,6 @@ export function PrivateLayout() {
     ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)
     : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
-  const notices = useQuery({
-    queryKey: ["notifications"],
-    queryFn: notificationApi.list,
-    enabled: Boolean(user) && resourceEnabled("notifications"),
-  });
-  const unread = notices.data?.unread ?? 0;
   const support = useQuery({
     queryKey: ["support-tickets"],
     queryFn: supportApi.list,
@@ -180,10 +169,7 @@ export function PrivateLayout() {
                     <NavLink key={link.to} to={link.to} end={link.end}>
                       <Icon aria-hidden="true" />
                       <span>{t(link.labelKey)}</span>
-                      {link.to === "/panel/notifications" && unread ? (
-                        <b className="menu-badge">{unread}</b>
-                      ) : null}
-                      {link.to === "/panel/support" && waitingSupport ? (
+                      {link.to === "/panel/help" && waitingSupport ? (
                         <b className="menu-badge">{waitingSupport}</b>
                       ) : null}
                     </NavLink>
@@ -242,6 +228,9 @@ export function PrivateLayout() {
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />
+        <header className="panel-topbar" data-theme-part="panel-topbar" aria-label={t("notifications.title")}>
+          {resourceEnabled("notifications") ? <NotificationCenter /> : null}
+        </header>
         <main className="content">
           {!location.pathname.startsWith("/panel/help") ? (
             <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />

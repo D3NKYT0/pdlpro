@@ -27,7 +27,6 @@ SCREENS: dict[str, dict[str, str]] = {
     "/panel/supporters": {"pt": "Apoiadores", "en": "Supporters", "es": "Patrocinadores"},
     "/panel/profile": {"pt": "Meu perfil", "en": "My profile", "es": "Mi perfil"},
     "/panel/security": {"pt": "Conta e segurança", "en": "Account and security", "es": "Cuenta y seguridad"},
-    "/panel/notifications": {"pt": "Avisos", "en": "Notifications", "es": "Avisos"},
     "/panel/support": {"pt": "Atendimento", "en": "Support", "es": "Atención"},
     "/panel/admin": {"pt": "Administração", "en": "Administration", "es": "Administración"},
 }

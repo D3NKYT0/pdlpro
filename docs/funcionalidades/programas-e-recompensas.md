@@ -12,7 +12,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Roadmap e detalhes | `/roadmap` | `/panel/admin/roadmap` (descrição em rich text) |
 | Disponibilidade de módulos | Navegação e bloqueio da API | `/panel/admin/resources` |
 | Conta L2, perfil e progresso | `/panel/accounts`, `/panel/profile`, `/panel` (nível, conquistas e prêmios da conta) | Controle de recursos |
-| Avisos, atendimento e ajuda | `/panel/notifications`, `/panel/support`, `/panel/help` | Controle de recursos |
+| Avisos, atendimento e ajuda | sino da barra superior, `/panel/help` (Atendimento só pela Ajuda) | Controle de recursos |
 | Conteúdo público do site | Rankings, notícias, wiki, FAQ, downloads, calendário | Controle de recursos |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
 | Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |

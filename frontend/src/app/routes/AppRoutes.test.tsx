@@ -65,7 +65,6 @@ const pages = [
   ['/panel/wallet/statement', 'Extrato'],
   ['/panel/inventory', 'Inventário'],
   ['/panel/games', 'Diversões do reino'],
-  ['/panel/notifications', 'Avisos'],
   ['/panel/support', 'Como podemos ajudar?'],
   ['/panel/help', 'Ajuda'],
   ['/panel/shop', 'Loja do servidor'],
@@ -116,7 +115,7 @@ it.each(pages)('abre %s com API pendente', (path, heading) => {
   expect(window.location.pathname).toBe(path)
 })
 
-it.each(['/panel/progress', '/painel/progress', '/progress'])('leva %s ao painel', (path) => {
+it.each(['/panel/progress', '/painel/progress', '/progress', '/panel/notifications', '/painel/notifications', '/notifications'])('leva %s ao painel', (path) => {
   window.history.replaceState({}, '', path)
   mountRoutes()
   expect(window.location.pathname).toBe('/panel')

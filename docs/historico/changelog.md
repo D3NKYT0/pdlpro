@@ -35,6 +35,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- A central de avisos deixa o menu e a rota `/panel/notifications`: o sino
+  fica na barra superior do painel, com lista, leitura e push no painel
+  flutuante. URLs antigas (`/panel/notifications`, `/painel/notifications`,
+  `/notifications`) levam ao Painel.
+- Atendimento sai do menu do painel. O jogador abre `/panel/support` só pela
+  Ajuda (`Atendimento da equipe` ou chamado contextual). Chamados à espera do
+  jogador passam a marcar o item Ajuda.
 - A tela dedicada `/panel/progress` sai do produto: nível, XP, conquistas e
   prêmios de evolução da conta passam a viver no Painel (`/panel`). URLs
   antigas (`/panel/progress`, `/painel/progress`, `/progress`) redirecionam

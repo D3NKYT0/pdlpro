@@ -192,7 +192,7 @@ Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta
 
 A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. Perguntas com correspondência segura recebem resposta curta, detalhes e fonte; as demais pedem esclarecimento. [dialogue.ts](../../frontend/src/components/help/dialogue.ts) e [personality.ts](../../frontend/src/components/help/personality.ts) mantêm o repertório de contingência e as boas-vindas.
 
-**Atendimento da equipe** abre `/panel/support`. A partir da ajuda contextual, o assunto e a tela de origem podem vir pré-preenchidos; o histórico do chat nunca é enviado junto.
+**Atendimento da equipe** abre `/panel/support`. Essa tela não aparece no menu do painel: o jogador chega a ela pela Ajuda (botão no hero ou chamado pré-preenchido da ajuda contextual). O assunto e a tela de origem podem vir preenchidos; o histórico do chat nunca é enviado junto. Chamados aguardando resposta do jogador aparecem como selo no item Ajuda.
 
 ## Catálogo inicial
 

@@ -231,8 +231,26 @@ html:not(.pdl-public):not(.pdl-panel) .brand { font-family: "Cinzel", serif; let
 html:not(.pdl-public):not(.pdl-panel) a { color: var(--gold); text-decoration: none; }
 button, input, select { font: inherit; }
 
-.shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar content";
+  min-height: 100vh;
+}
+.panel-topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 48px;
+  padding: 0 0 12px;
+}
+.panel-menu-backdrop { display: none; }
 .sidebar {
+  grid-area: sidebar;
   background: var(--bg-elevated);
   border-right: 1px solid var(--border);
   padding: 24px 18px;
@@ -249,7 +267,7 @@ button, input, select { font: inherit; }
 }
 .nav a.active, .nav a:hover { background: rgba(212, 175, 55, 0.12); color: var(--text); }
 .shell .card { background: rgba(27, 24, 18, 0.96); }
-.content { padding: 32px 40px; }
+.content { grid-area: content; padding: 32px 40px; }
 .card {
   background: var(--bg-panel);
   border: 1px solid var(--border);
@@ -320,8 +338,14 @@ button, input, select { font: inherit; }
 #payment-brick, #stripe-element { min-height: 120px; margin: 12px 0; }
 
 @media (max-width: 900px) {
-  .shell { grid-template-columns: 1fr; }
+  .shell {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "sidebar topbar"
+      "content content";
+  }
   .sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+  .panel-topbar { padding: 0; }
   .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
   .content { padding: 20px; }
 }

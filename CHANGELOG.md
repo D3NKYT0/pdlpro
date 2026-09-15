@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **14 de setembro de 2026** — Não publicado: tela
+Última atualização: **14 de setembro de 2026** — Não publicado: avisos
+no sino da barra superior; Atendimento
+fora do menu (acesso só pela Ajuda); tela
 `/panel/progress` retirada (nível, conquistas e prêmios no Painel);
 jornada de
 recompensas e programa de apoiadores alinhados ao chrome de Jogos/Carteira;

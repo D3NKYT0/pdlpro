@@ -11,7 +11,7 @@ export const LEGACY_EXACT_REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/games', to: '/panel/games' },
   { from: '/progress', to: '/panel' },
   { from: '/panel/progress', to: '/panel' },
-  { from: '/notifications', to: '/panel/notifications' },
+  { from: '/notifications', to: '/panel' },
   { from: '/shop', to: '/panel/shop' },
   { from: '/marketplace', to: '/panel/marketplace' },
   { from: '/auctions', to: '/panel/auctions' },
@@ -32,7 +32,7 @@ export const LEGACY_EXACT_REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/painel/recompensas', to: '/panel/rewards' },
   { from: '/painel/apoiadores', to: '/panel/supporters' },
   { from: '/painel/progress', to: '/panel' },
-  { from: '/painel/notifications', to: '/panel/notifications' },
+  { from: '/painel/notifications', to: '/panel' },
   { from: '/painel/support', to: '/panel/support' },
   { from: '/painel/ajuda', to: '/panel/help' },
 

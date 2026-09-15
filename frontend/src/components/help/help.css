@@ -652,7 +652,11 @@ html.pdl-panel:has(.help-page) .help-page {
 }
 @media(max-width:900px) {
   html.pdl-panel:has(.help-page) .shell {
+    grid-template-columns:minmax(0,1fr) auto;
     grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:
+      "sidebar topbar"
+      "content content";
     gap:8px;
     padding:8px 10px;
   }

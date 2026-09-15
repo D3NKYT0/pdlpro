@@ -196,7 +196,7 @@ O seletor raiz recomendado é:
 Seletores de contexto disponíveis: `html.pdl-public`, `html.pdl-panel`,
 `[data-theme-surface="public|auth|panel|admin|overlay"]`, `html[data-panel-density]` e os componentes
 compartilhados com `data-theme-part` (`button`, `card`, `page-header`, `field`, `tabs`, `toast-host`,
-`home` e estados de consulta). O caminho default sempre marca essas superfícies no shell público,
+`home`, `panel-topbar`, `notification-center` e estados de consulta). O caminho default sempre marca essas superfícies no shell público,
 autenticação, painel e toasts. O identificador do pacote é aplicado como `data-pdl-theme` no elemento
 `html`; renderers também recebem `data-pdl-renderer`.
 

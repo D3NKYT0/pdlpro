@@ -39,7 +39,7 @@ const topics: Topic[] = [
     tips: [
       copy('No Painel você vê nível, conquistas e prêmios da conta. Use o menu para contas, jogos e o restante do servidor.', 'The Dashboard shows your level, achievements and account prizes. Use the menu for accounts, games and the rest of the server.'),
       copy('Comece pelas contas vinculadas: com elas abertas, inventário, troca e comércio fazem mais sentido.', 'Start with linked accounts: once they are set, inventory, exchange and trading make more sense.'),
-      copy('Avisos e atendimento ficam no menu — abra-os quando precisar de novidades ou da equipe.', 'Notifications and support live in the menu — open them when you need news or the team.'),
+      copy('Os avisos da conta ficam no sino da barra superior. Atendimento continua no menu quando você precisar da equipe.', 'Account alerts are in the bell on the top bar. Support stays in the menu when you need the team.'),
     ],
     suggestion: copy('Por onde começo no painel do PDL?', 'Where should I start in the PDL dashboard?'), related: ['/panel/accounts', '/panel/support'],
   },
@@ -170,22 +170,13 @@ const topics: Topic[] = [
     suggestion: copy('Como reviso as opções de segurança da minha conta?', 'How do I review my account security options?'), related: ['/panel/support'],
   },
   {
-    path: '/panel/notifications', title: copy('Avisos', 'Notifications'), action: copy('Abrir meus avisos', 'Open my notifications'), resource: 'notifications',
-    tips: [
-      copy('Consulte os avisos recebidos e marque os que já leu. Para conversar com a equipe, abra o Atendimento.', 'Review received notifications and mark the ones you have read. Open Support to talk to the team.'),
-      copy('Avisos não lidos ficam em destaque. Marque como lido para limpar a lista sem apagar o histórico.', 'Unread notices stay highlighted. Mark as read to clear the list without deleting history.'),
-      copy('Se um aviso pedir ação da equipe, abra o Atendimento e cite o assunto do aviso.', 'If a notice needs staff action, open Support and mention the notice subject.'),
-    ],
-    suggestion: copy('Como acompanho os avisos e entro em contato com a equipe?', 'How do I follow notifications and contact the team?'), related: ['/panel/support'],
-  },
-  {
     path: '/panel/support', title: copy('Atendimento', 'Support'), action: copy('Ir ao atendimento', 'Contact the team'), resource: 'support',
     tips: [
       copy('Descreva o que aconteceu e a tela envolvida no chamado. Acompanhe as respostas da equipe no mesmo atendimento.', 'Describe what happened and which screen was involved in your ticket. Follow team replies in the same support conversation.'),
       copy('Inclua horário aproximado, personagem/conta e o que já tentou — isso acelera a resposta da equipe.', 'Include approximate time, character/account and what you already tried — that speeds up the team reply.'),
       copy('Não envie senhas ou códigos no chamado. A equipe nunca pede esses dados pelo chat.', 'Never send passwords or codes in a ticket. Staff never ask for those in chat.'),
     ],
-    suggestion: copy('Como abro e acompanho um chamado para a equipe?', 'How do I open and follow a support ticket?'), related: ['/panel/notifications'],
+    suggestion: copy('Como abro e acompanho um chamado para a equipe?', 'How do I open and follow a support ticket?'), related: ['/panel/help'],
   },
   {
     path: '/panel/help', title: copy('Ajuda', 'Help'), action: copy('Abrir a ajuda', 'Open help'), resource: 'help',

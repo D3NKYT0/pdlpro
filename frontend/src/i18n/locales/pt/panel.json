@@ -880,6 +880,12 @@
   },
   "notifications": {
     "title": "Avisos",
+    "eyebrow": "Conta",
+    "open": "Abrir notificações",
+    "openUnread": "Abrir notificações, {{unread}} não lidas",
+    "close": "Fechar notificações",
+    "openItem": "Abrir aviso",
+    "loadError": "Não foi possível carregar os avisos",
     "unreadCount": "{{unread}} não lidos",
     "enablePush": "Ativar push",
     "disablePush": "Desativar",
@@ -892,7 +898,12 @@
     "pushDisabled": "Push desativado",
     "markAllSuccess": "Todas marcadas como lidas",
     "markAllError": "Não foi possível atualizar",
-    "markOneError": "Não foi possível marcar como lida"
+    "markOneError": "Não foi possível marcar como lida",
+    "kind": {
+      "support": "Atendimento",
+      "info": "Informação",
+      "payment": "Pagamento"
+    }
   },
   "support": {
     "eyebrow": "Central de atendimento",

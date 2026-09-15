@@ -303,3 +303,27 @@ def test_progress_screen_retirement_updates_faq_and_handbook():
     migration.forwards(apps, None)
     faq.refresh_from_db()
     assert "No Painel você vê nível" in faq.short_answer
+
+
+@pytest.mark.django_db
+def test_notifications_move_to_topbar_updates_faq_and_handbook():
+    from django.apps import apps
+
+    migration = import_module("apps.content.migrations.0027_move_notifications_to_topbar")
+    faq = Faq.objects.get(id=migration.FAQ_ID)
+    handbook = Faq.objects.get(id=migration.HANDBOOK_NOTIFY_ID)
+    menu = Faq.objects.get(id=migration.HANDBOOK_MENU_ID)
+    assert "/panel/notifications" not in faq.answer
+    assert "sino" in faq.short_answer
+    assert "/panel/notifications" not in handbook.answer
+    assert "barra superior" in handbook.answer
+    assert "Notifications," not in menu.answer_en
+    assert "Avisos," not in menu.answer
+    migration.backwards(apps, None)
+    faq.refresh_from_db()
+    handbook.refresh_from_db()
+    assert "Abra Avisos no painel" in faq.short_answer
+    assert "/panel/notifications" in handbook.answer
+    migration.forwards(apps, None)
+    faq.refresh_from_db()
+    assert "sino da barra superior" in faq.short_answer

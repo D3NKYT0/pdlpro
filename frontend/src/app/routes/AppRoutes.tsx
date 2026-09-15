@@ -21,7 +21,6 @@ import { LoginPage } from '../../pages/LoginPage'
 import { MarketplacePage } from '../../pages/MarketplacePage'
 import { NewsDetailPage } from '../../pages/NewsDetailPage'
 import { NewsPage } from '../../pages/NewsPage'
-import { NotificationsPage } from '../../pages/NotificationsPage'
 import { OAuthCallbackPage } from '../../pages/OAuthCallbackPage'
 import { PainelPage } from '../../pages/PainelPage'
 import { ProfilePage } from '../../pages/ProfilePage'
@@ -124,7 +123,7 @@ export function AppRoutes() {
             <Route path="/panel/accounts/:login/:charId" element={<ResourceGate code="accounts"><CharacterPage /></ResourceGate>} />
             <Route path="/panel/inventory" element={<ResourceGate code="inventory"><InventoryPage /></ResourceGate>} />
             <Route path="/panel/games" element={<ResourceGate code="games"><GamesPage /></ResourceGate>} />
-            <Route path="/panel/notifications" element={<ResourceGate code="notifications"><NotificationsPage /></ResourceGate>} />
+            <Route path="/panel/notifications" element={<Navigate to="/panel" replace />} />
             <Route path="/panel/support" element={<ResourceGate code="support"><SupportPage /></ResourceGate>} />
             <Route path="/panel/help" element={<ResourceGate code="help"><HelpPage /></ResourceGate>} />
             <Route path="/panel/shop" element={<ResourceGate code="shop"><ShopPage /></ResourceGate>} />

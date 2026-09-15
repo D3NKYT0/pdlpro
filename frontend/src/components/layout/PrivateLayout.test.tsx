@@ -24,12 +24,14 @@ const resourcesMock = vi.hoisted(() => ({
 }))
 
 const launchMock = vi.hoisted(() => ({ comingSoon: false }))
+const supportMock = vi.hoisted(() => ({ waitingUser: 0 }))
 
 vi.mock('@tanstack/react-query', () => ({
+  useQueryClient: () => ({ invalidateQueries: vi.fn() }),
   useQuery: ({ queryKey }: { queryKey: string[] }) => {
     if (queryKey[0] === 'resources') return { data: resourcesMock.data, isPending: false, error: null }
     if (queryKey[0] === 'server-info') return { data: { coming_soon: launchMock.comingSoon }, isPending: false }
-    if (queryKey[0] === 'support-tickets') return { data: { summary: { waiting_user: 0 } } }
+    if (queryKey[0] === 'support-tickets') return { data: { summary: { waiting_user: supportMock.waitingUser } } }
     if (queryKey[0] === 'denkynho-pet') return {
       data: {
         level: 1, experience: 0, experience_next: 100,
@@ -39,7 +41,7 @@ vi.mock('@tanstack/react-query', () => ({
       },
       isPending: false,
     }
-    return { data: { unread: 0 } }
+    return { data: { unread: 0, results: [], enabled: false } }
   },
 }))
 
@@ -63,6 +65,7 @@ afterEach(async () => {
   await i18n.changeLanguage('pt')
   resourcesMock.data = []
   launchMock.comingSoon = false
+  supportMock.waitingUser = 0
   themeMock.current.presentation = {
     renderer: 'portal-v1',
     shells: {
@@ -94,6 +97,17 @@ it('aplica o shell Valorem à área do jogador', () => {
   expect(screen.getByText("WARRIOR'S SANCTUM")).toBeVisible()
   expect(screen.getByText('VALOREM')).toBeVisible()
   expect(screen.queryByRole('link', { name: 'Progresso' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Ajuda' })).toBeVisible()
+})
+
+it('mostra resposta da equipe na Ajuda, sem item de Atendimento no menu', () => {
+  supportMock.waitingUser = 2
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
+  const help = screen.getByRole('link', { name: /Ajuda/ })
+  expect(help).toBeVisible()
+  expect(help).toHaveTextContent('2')
 })
 
 it('distingue visualmente a administração dentro do mesmo renderer', () => {
@@ -135,6 +149,21 @@ it('esconde itens do menu quando o recurso correspondente está pausado', () => 
   expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Meu perfil' })).toBeVisible()
   expect(screen.queryByRole('link', { name: 'Progresso' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Abrir notificações' })).toBeVisible()
+})
+
+it('coloca avisos na barra superior e os remove do menu', () => {
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('link', { name: 'Avisos' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Abrir notificações' })).toBeVisible()
+  expect(document.querySelector('.panel-topbar')).toContainElement(screen.getByRole('button', { name: 'Abrir notificações' }))
+})
+
+it('esconde o sino quando o recurso de avisos está pausado', () => {
+  resourcesMock.data = [{ code: 'notifications', enabled: false }]
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('button', { name: 'Abrir notificações' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Avisos' })).not.toBeInTheDocument()
 })
 
 it('volta para a landing em /home quando o Coming Soon está ligado', () => {
@@ -172,4 +201,5 @@ it('traduz o rodapé e o cabeçalho do menu quando o idioma muda', async () => {
   expect(screen.getByRole('link', { name: 'Open my profile' })).toBeVisible()
   expect(screen.getByText('Verified account')).toBeVisible()
   expect(screen.getByRole('button', { name: 'Sign out' })).toHaveAttribute('title', 'Sign out of the account')
+  expect(screen.getByRole('button', { name: 'Open notifications' })).toBeVisible()
 })

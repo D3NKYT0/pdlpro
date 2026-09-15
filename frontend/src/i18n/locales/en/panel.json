@@ -880,6 +880,12 @@
   },
   "notifications": {
     "title": "Alerts",
+    "eyebrow": "Account",
+    "open": "Open notifications",
+    "openUnread": "Open notifications, {{unread}} unread",
+    "close": "Close notifications",
+    "openItem": "Open alert",
+    "loadError": "Could not load alerts",
     "unreadCount": "{{unread}} unread",
     "enablePush": "Enable push",
     "disablePush": "Disable",
@@ -892,7 +898,12 @@
     "pushDisabled": "Push disabled",
     "markAllSuccess": "All marked as read",
     "markAllError": "Could not update",
-    "markOneError": "Could not mark as read"
+    "markOneError": "Could not mark as read",
+    "kind": {
+      "support": "Support",
+      "info": "Info",
+      "payment": "Payment"
+    }
   },
   "support": {
     "eyebrow": "Support center",
