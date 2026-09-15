@@ -284,6 +284,35 @@ def test_roadmap_description_sanitizes_html(staff):
     assert "descrição" in str(empty.data).lower()
 
 
+@pytest.mark.django_db
+def test_staff_roadmap_stores_translations(staff):
+    created = staff.post(
+        "/api/v1/staff/roadmap/",
+        {
+            "title": "Expansão",
+            "title_en": "Expansion",
+            "title_es": "Expansión",
+            "description": "<p>Novo mapa</p>",
+            "description_en": "<p>New map</p>",
+            "description_es": "<p>Nuevo mapa</p>",
+            "category": "Servidor",
+            "status": "planned",
+            "progress": 10,
+            "published": True,
+            "order": 1,
+        },
+        format="json",
+    )
+    assert created.status_code == 201, created.data
+    assert created.data["title_en"] == "Expansion"
+    listed = staff.get("/api/v1/staff/roadmap/")
+    assert listed.data[0]["description_es"] == "<p>Nuevo mapa</p>"
+    public = APIClient().get("/api/v1/public/roadmap/?lang=en")
+    assert public.data[0]["title"] == "Expansion"
+    assert "New map" in public.data[0]["description"]
+    assert "title_en" not in public.data[0]
+
+
 @pytest.mark.parametrize(
     "code,path",
     [

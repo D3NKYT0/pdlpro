@@ -9,11 +9,11 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Módulo | Jogador/site | Administração |
 | --- | --- | --- |
 | Apoiadores e comissões | `/panel/supporters` | `/panel/admin/supporters` |
-| Roadmap e detalhes | `/roadmap` | `/panel/admin/roadmap` (descrição em rich text) |
+| Roadmap e detalhes | `/roadmap` | `/panel/admin/roadmap` (rich text e PT/EN/ES) |
 | Disponibilidade de módulos | Navegação e bloqueio da API | `/panel/admin/resources` |
 | Conta L2, perfil e progresso | `/panel/accounts`, `/panel/profile`, `/panel` (nível, conquistas e prêmios da conta) | Controle de recursos |
 | Avisos, atendimento e ajuda | sino da barra superior, `/panel/help` (Atendimento só pela Ajuda) | `/panel/admin/notifications`, `/panel/admin/support` |
-| Conteúdo público do site | Rankings, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` |
+| Conteúdo público do site | Rankings, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
 | Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |
 | Passe, bônus diário e rankings | `/panel/rewards` | `/panel/admin/rewards` |

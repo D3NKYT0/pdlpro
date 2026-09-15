@@ -3,6 +3,7 @@ import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next'
 import { contentApi, serverApi } from '../services/api'
+import { contentLang } from '../i18n/locale'
 import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
@@ -20,9 +21,10 @@ function sectionArt(image: string) {
 function DefaultHomePage() {
   const { t, i18n } = useTranslation('public')
   const theme = useTheme()
+  const language = contentLang(i18n.language)
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
-  const news = useQuery({ queryKey: ['news'], queryFn: () => contentApi.news() })
-  const wiki = useQuery({ queryKey: ['wiki'], queryFn: () => contentApi.wiki() })
+  const news = useQuery({ queryKey: ['news', language], queryFn: () => contentApi.news(language) })
+  const wiki = useQuery({ queryKey: ['wiki', language], queryFn: () => contentApi.wiki(undefined, language) })
   const clans = useQuery({ queryKey: ['rankings', 'clans'], queryFn: () => serverApi.rankings('clans') })
   const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
   const trailerId = (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'

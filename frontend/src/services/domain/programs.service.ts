@@ -13,7 +13,11 @@ export type Resource = {
 export type RoadmapEntry = {
   id: string
   title: string
+  title_en?: string
+  title_es?: string
   description: string
+  description_en?: string
+  description_es?: string
   category: string
   status: string
   progress: number

@@ -1,5 +1,6 @@
 import { Card } from '../../ui/Card'
 import { Button } from '../../ui/Button'
+import { Tabs } from '../../ui/Tabs'
 import { RichTextEditor } from '../../ui/RichText'
 import { isRichTextEmpty } from '../../../lib/rich-text'
 import { useState } from 'react'
@@ -20,6 +21,8 @@ import { useProgramAction } from '../../programs/useProgramAction'
 import { AdminHeader } from '../../../pages/admin/AdminChrome'
 import toast from 'react-hot-toast'
 
+const LANGS = ['pt', 'en', 'es'] as const
+
 export function AdminRoadmapSection() {
   const { t } = useTranslation('admin')
   const query = useQuery({
@@ -28,7 +31,33 @@ export function AdminRoadmapSection() {
   })
   const action = useProgramAction()
   const [edit, setEdit] = useState<Partial<RoadmapEntry> | null>(null)
+  const [lang, setLang] = useState<(typeof LANGS)[number]>('pt')
   const [remove, setRemove] = useState<string | null>(null)
+
+  function openCreate() {
+    setLang('pt')
+    setEdit({
+      status: 'planned',
+      progress: 0,
+      published: true,
+      title: '',
+      title_en: '',
+      title_es: '',
+      description: '',
+      description_en: '',
+      description_es: '',
+    })
+  }
+
+  function openEdit(entry: RoadmapEntry) {
+    setLang('pt')
+    setEdit(entry)
+  }
+
+  function patch(next: Partial<RoadmapEntry>) {
+    setEdit((current) => (current ? { ...current, ...next } : current))
+  }
+
   return (
     <div className="program-page">
       <AdminHeader
@@ -38,12 +67,7 @@ export function AdminRoadmapSection() {
       />
       <ErrorNotice error={query.error || action.error} />
       <div className="program-actions">
-        <Button type="submit"
-
-          onClick={() =>
-            setEdit({ status: 'planned', progress: 0, published: true })
-          }
-        >
+        <Button type="submit" onClick={openCreate}>
           <Plus size={18} />
           {t('roadmap.new')}
         </Button>
@@ -57,9 +81,16 @@ export function AdminRoadmapSection() {
             onSubmit={(e) => {
               e.preventDefault()
               const f = new FormData(e.currentTarget)
+              const title = String(edit.title || '').trim()
               const description = edit.description || ''
+              if (!title) {
+                toast.error(t('roadmap.titleRequired'))
+                setLang('pt')
+                return
+              }
               if (isRichTextEmpty(description)) {
                 toast.error(t('roadmap.descriptionRequired'))
+                setLang('pt')
                 return
               }
               void action
@@ -67,8 +98,12 @@ export function AdminRoadmapSection() {
                   () =>
                     programsApi.saveRoadmap(
                       {
-                        title: String(f.get('title')),
+                        title,
+                        title_en: String(edit.title_en || '').trim(),
+                        title_es: String(edit.title_es || '').trim(),
                         description,
+                        description_en: edit.description_en || '',
+                        description_es: edit.description_es || '',
                         category: String(f.get('category')),
                         status: String(f.get('status')),
                         progress: Number(f.get('progress')),
@@ -82,32 +117,89 @@ export function AdminRoadmapSection() {
                   [['staff-roadmap'], ['roadmap']],
                 )
                 .then((ok) => {
-                  if (ok) setEdit(null)
+                  if (ok) {
+                    setLang('pt')
+                    setEdit(null)
+                  }
                 })
             }}
           >
-            <label>
-              {t('roadmap.titleField')}
-              <input
-                name="title"
-                required
-                maxLength={160}
-                defaultValue={edit.title}
-              />
-            </label>
-            <label>
-              {t('roadmap.descriptionField')}
-              <RichTextEditor
-                value={edit.description || ''}
-                onChange={(html) =>
-                  setEdit((current) =>
-                    current ? { ...current, description: html } : current,
-                  )
-                }
-                required
-                aria-label={t('roadmap.descriptionField')}
-              />
-            </label>
+            <Tabs
+              id="roadmap-lang"
+              label={t('roadmap.language')}
+              value={lang}
+              onChange={setLang}
+              items={LANGS.map((id) => ({ id, label: t(`roadmap.languages.${id}`) }))}
+            />
+            <div
+              className="admin-cms-langs"
+              role="tabpanel"
+              id={`roadmap-lang-panel-${lang}`}
+              aria-labelledby={`roadmap-lang-tab-${lang}`}
+            >
+              {lang === 'pt' ? (
+                <>
+                  <label>
+                    {t('roadmap.titleField')}
+                    <input
+                      required
+                      maxLength={160}
+                      value={edit.title || ''}
+                      onChange={(event) => patch({ title: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    {t('roadmap.descriptionField')}
+                    <RichTextEditor
+                      value={edit.description || ''}
+                      onChange={(html) => patch({ description: html })}
+                      required
+                      aria-label={t('roadmap.descriptionField')}
+                    />
+                  </label>
+                </>
+              ) : null}
+              {lang === 'en' ? (
+                <>
+                  <label>
+                    {t('roadmap.titleField')}
+                    <input
+                      maxLength={160}
+                      value={edit.title_en || ''}
+                      onChange={(event) => patch({ title_en: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    {t('roadmap.descriptionField')}
+                    <RichTextEditor
+                      value={edit.description_en || ''}
+                      onChange={(html) => patch({ description_en: html })}
+                      aria-label={t('roadmap.descriptionField')}
+                    />
+                  </label>
+                </>
+              ) : null}
+              {lang === 'es' ? (
+                <>
+                  <label>
+                    {t('roadmap.titleField')}
+                    <input
+                      maxLength={160}
+                      value={edit.title_es || ''}
+                      onChange={(event) => patch({ title_es: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    {t('roadmap.descriptionField')}
+                    <RichTextEditor
+                      value={edit.description_es || ''}
+                      onChange={(html) => patch({ description_es: html })}
+                      aria-label={t('roadmap.descriptionField')}
+                    />
+                  </label>
+                </>
+              ) : null}
+            </div>
             <div className="program-fields">
               <label>
                 {t('roadmap.category')}
@@ -170,7 +262,10 @@ export function AdminRoadmapSection() {
               <Button
                 className="ghost"
                 type="button"
-                onClick={() => setEdit(null)}
+                onClick={() => {
+                  setLang('pt')
+                  setEdit(null)
+                }}
               >
                 {t('roadmap.cancel')}
               </Button>
@@ -192,7 +287,7 @@ export function AdminRoadmapSection() {
               })}
             </p>
             <div className="program-actions">
-              <Button type="submit" className="ghost" onClick={() => setEdit(r)}>
+              <Button type="submit" className="ghost" onClick={() => openEdit(r)}>
                 <Pencil size={16} />
                 {t('roadmap.editAction')}
               </Button>

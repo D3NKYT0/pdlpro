@@ -19,6 +19,7 @@ from apps.content.application.use_cases import (
     GetWikiPageInput,
     GetWikiPageUseCase,
     ListCalendarEventsUseCase,
+    ListCalendarInput,
     ListDownloadsUseCase,
     ListFaqInput,
     ListFaqUseCase,
@@ -196,7 +197,10 @@ class CalendarEventListView(InjectedAPIView):
         description=gettext_lazy("Lista os eventos públicos do calendário do servidor."),
     )
     def get(self, request):
-        return Response(self.resolve(ListCalendarEventsUseCase).execute(None))
+        language = resolve_language(request.query_params.get("lang"))
+        return Response(
+            self.resolve(ListCalendarEventsUseCase).execute(ListCalendarInput(language=language))
+        )
 
 
 class LegalListView(InjectedAPIView):

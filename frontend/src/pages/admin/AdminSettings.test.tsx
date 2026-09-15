@@ -222,8 +222,41 @@ it('cria notícia como rascunho sem publicar implicitamente', async () => {
   await user.type(screen.getByRole('textbox', { name: 'Conteúdo' }), 'Detalhes da atualização')
   await user.click(screen.getByRole('checkbox'))
   await user.click(screen.getByRole('button', { name: 'Salvar rascunho' }))
-  expect(staffApi.saveNews).toHaveBeenCalledWith({ id: undefined, title: 'Atualização', excerpt: '', body: 'Detalhes da atualização', is_published: false })
+  expect(staffApi.saveNews).toHaveBeenCalledWith({
+    id: undefined,
+    title: 'Atualização',
+    title_en: '',
+    title_es: '',
+    excerpt: '',
+    excerpt_en: '',
+    excerpt_es: '',
+    body: 'Detalhes da atualização',
+    body_en: '',
+    body_es: '',
+    is_published: false,
+  })
   expect(screen.getByRole('textbox', { name: /Título/ })).toHaveValue('')
+})
+
+it('envia traduções EN e ES da notícia junto com o português', async () => {
+  const user = mount(<AdminNewsPage />)
+  await user.type(screen.getByRole('textbox', { name: /Título/ }), 'Atualização')
+  await user.type(screen.getByRole('textbox', { name: 'Conteúdo' }), 'Detalhes')
+  await user.click(screen.getByRole('tab', { name: 'English' }))
+  await user.type(screen.getByRole('textbox', { name: /Título/ }), 'Update')
+  await user.type(screen.getByRole('textbox', { name: 'Conteúdo' }), 'Details')
+  await user.click(screen.getByRole('tab', { name: 'Español' }))
+  await user.type(screen.getByRole('textbox', { name: /Título/ }), 'Actualización')
+  await user.click(screen.getByRole('tab', { name: 'Português' }))
+  await user.click(screen.getByRole('button', { name: 'Publicar notícia' }))
+  expect(staffApi.saveNews).toHaveBeenCalledWith(expect.objectContaining({
+    title: 'Atualização',
+    title_en: 'Update',
+    title_es: 'Actualización',
+    body: 'Detalhes',
+    body_en: 'Details',
+    is_published: true,
+  }))
 })
 
 it('notícia rejeitada mantém o conteúdo para correção', async () => {

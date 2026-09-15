@@ -74,6 +74,15 @@ it('cria evento no calendário e bloqueia envio duplicado', async () => {
   await user.click(submit)
   await user.click(submit)
   expect(staffApi.saveCalendar).toHaveBeenCalledTimes(1)
+  expect(staffApi.saveCalendar).toHaveBeenCalledWith(expect.objectContaining({
+    title: 'Siege',
+    title_en: '',
+    title_es: '',
+    description: '',
+    description_en: '',
+    description_es: '',
+    is_published: true,
+  }))
   resolveSave({ id: 'event' })
   await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Evento criado'))
 })
@@ -87,6 +96,29 @@ it('calendário rejeitado mantém o título para correção', async () => {
   await user.click(screen.getByRole('button', { name: 'Criar evento' }))
   expect(toast.error).toHaveBeenCalledWith('A data de término deve ser posterior ao início.')
   expect(screen.getByLabelText('Título')).toHaveValue('Siege')
+})
+
+it('envia traduções EN e ES do evento junto com o português', async () => {
+  const user = mount(<AdminCalendarPage />)
+  await user.type(screen.getByLabelText('Título'), 'Cerco')
+  await user.type(screen.getByLabelText('Descrição'), 'Castelos')
+  await user.click(screen.getByRole('tab', { name: 'English' }))
+  await user.type(screen.getByLabelText('Título'), 'Siege')
+  await user.type(screen.getByLabelText('Descrição'), 'Castles')
+  await user.click(screen.getByRole('tab', { name: 'Español' }))
+  await user.type(screen.getByLabelText('Título'), 'Asedio')
+  await user.click(screen.getByRole('tab', { name: 'Português' }))
+  fireEvent.change(screen.getByLabelText('Início'), { target: { value: '2027-01-03T18:00' } })
+  fireEvent.change(screen.getByLabelText('Fim'), { target: { value: '2027-01-03T20:00' } })
+  await user.click(screen.getByRole('button', { name: 'Criar evento' }))
+  expect(staffApi.saveCalendar).toHaveBeenCalledWith(expect.objectContaining({
+    title: 'Cerco',
+    title_en: 'Siege',
+    title_es: 'Asedio',
+    description: 'Castelos',
+    description_en: 'Castles',
+    description_es: '',
+  }))
 })
 
 it('envia aviso a um usuário e exige confirmação para excluir', async () => {

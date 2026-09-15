@@ -366,25 +366,34 @@ class SearchWikiUseCase(UseCase[SearchWikiInput, list[WikiPageDTO]]):
         ]
 
 
-class ListCalendarEventsUseCase(UseCase[None, list[dict]]):
+@dataclass(frozen=True, slots=True)
+class ListCalendarInput:
+    """Idioma solicitado para listar eventos públicos do calendário."""
+
+    language: str = "pt"
+
+
+class ListCalendarEventsUseCase(UseCase[ListCalendarInput | None, list[dict]]):
     """Lista eventos publicados com datas de início e fim em formato ISO.
 
-    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
-    retorno é ``list[dict]``.
+    Uso: resolva pelo container e chame ``execute(data)`` com ``ListCalendarInput`` ou ``None``.
+    Título e descrição seguem ``*_en`` / ``*_es`` quando preenchidos.
     """
 
     def __init__(self, catalog: IContentCatalogRepository) -> None:
         self._catalog = catalog
 
-    def execute(self, data: None = None) -> list[dict]:
+    def execute(self, data: ListCalendarInput | None = None) -> list[dict]:
+        language = resolve_language(data.language if data else "pt")
         return [
             {
                 "id": str(item.id),
-                "title": item.title,
-                "description": item.description,
+                "title": localized_text(item, "title", language),
+                "description": localized_text(item, "description", language),
                 "starts_at": item.starts_at.isoformat(),
                 "ends_at": item.ends_at.isoformat(),
                 "color": item.color,
+                "language": language,
             }
             for item in self._catalog.list_published_calendar()
         ]

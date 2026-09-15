@@ -291,7 +291,11 @@ class CalendarEvent(BaseModel):
     """
 
     title = models.CharField(max_length=200)
+    title_en = models.CharField(max_length=200, blank=True)
+    title_es = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
+    description_en = models.TextField(blank=True)
+    description_es = models.TextField(blank=True)
     starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
     color = models.CharField(max_length=20, default="gold")

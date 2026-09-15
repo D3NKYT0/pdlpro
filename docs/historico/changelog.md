@@ -40,6 +40,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Notícias, calendário e roadmap passam a editar e servir PT/EN/ES: a staff
+  grava `*_en`/`*_es` em `/panel/admin/news`, `/panel/admin/calendar` e
+  `/panel/admin/roadmap`; o site público pede `?lang=` (home, news, calendário
+  e roadmap). Eventos do calendário ganham colunas de tradução no banco.
 - A central de avisos deixa o menu e a rota `/panel/notifications`: o sino
   fica na barra superior do painel, com lista, leitura e push no painel
   flutuante. URLs antigas (`/panel/notifications`, `/painel/notifications`,

@@ -37,7 +37,11 @@ def _dump_calendar(row) -> dict:
     return {
         "id": str(row.id),
         "title": row.title,
+        "title_en": row.title_en,
+        "title_es": row.title_es,
         "description": row.description,
+        "description_en": row.description_en,
+        "description_es": row.description_es,
         "starts_at": row.starts_at.isoformat() if row.starts_at else None,
         "ends_at": row.ends_at.isoformat() if row.ends_at else None,
         "color": row.color,
@@ -147,7 +151,11 @@ class UpsertStaffCalendarUseCase(UseCase[dict, dict]):
         if row is None:
             row = self._events.new(title=title, starts_at=starts_at, ends_at=ends_at)
         row.title = title
+        row.title_en = _text(data, "title_en", limit=200)
+        row.title_es = _text(data, "title_es", limit=200)
         row.description = _text(data, "description")
+        row.description_en = _text(data, "description_en")
+        row.description_es = _text(data, "description_es")
         row.starts_at = starts_at
         row.ends_at = ends_at
         row.color = _text(data, "color", limit=20) or "gold"

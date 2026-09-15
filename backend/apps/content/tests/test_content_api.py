@@ -113,7 +113,14 @@ def test_wiki_list_search_and_detail(api):
 @pytest.mark.django_db
 def test_calendar_and_faq(api):
     now = timezone.now()
-    CalendarEvent.objects.create(title="Siege", starts_at=now, ends_at=now, description="Castelos")
+    CalendarEvent.objects.create(
+        title="Siege",
+        title_en="Castle Siege",
+        starts_at=now,
+        ends_at=now,
+        description="Castelos",
+        description_en="Castles",
+    )
     Faq.objects.create(
         question="Como doar?",
         short_answer="Abra a carteira.",
@@ -125,6 +132,9 @@ def test_calendar_and_faq(api):
     calendar = api.get("/api/v1/public/calendar/")
     assert calendar.status_code == 200
     assert calendar.data[0]["title"] == "Siege"
+    english_calendar = api.get("/api/v1/public/calendar/?lang=en")
+    assert english_calendar.data[0]["title"] == "Castle Siege"
+    assert english_calendar.data[0]["description"] == "Castles"
     faq = api.get("/api/v1/public/faq/")
     assert faq.status_code == 200
     assert faq.data[0] == {

@@ -142,3 +142,10 @@ class CalendarEventAdmin(PDLModelAdmin):
 
     list_display = ("title", "starts_at", "ends_at", "is_published")
     list_filter = ("is_published",)
+    search_fields = ("title", "title_en", "title_es", "description")
+    fieldsets = (
+        (_("Publicação"), {"fields": ("is_published", "starts_at", "ends_at", "color")}),
+        (_("Português"), {"fields": ("title", "description")}),
+        (_("English"), {"fields": ("title_en", "description_en")}),
+        (_("Español"), {"fields": ("title_es", "description_es")}),
+    )

@@ -118,4 +118,5 @@ it('calendário mostra título e descrição do evento', async () => {
   mount(<CalendarPage />)
   expect(await screen.findByRole('heading', { name: 'Siege' })).toBeTruthy()
   expect(screen.getByText('Prepare seu clã')).toBeTruthy()
+  expect(contentApi.calendar).toHaveBeenCalledWith('pt')
 })

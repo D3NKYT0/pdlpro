@@ -25,8 +25,8 @@ export function RoadmapPage() {
   const { t, i18n } = useTranslation('public')
   const language = contentLang(i18n.language)
   const query = useQuery({
-    queryKey: ['roadmap'],
-    queryFn: () => programsApi.roadmap(),
+    queryKey: ['roadmap', language],
+    queryFn: () => programsApi.roadmap(false, language),
   })
 
   const formatDate = (value: string) =>
@@ -93,8 +93,8 @@ export function RoadmapDetailPage() {
     window.scrollTo(0, 0)
   }, [id])
   const query = useQuery({
-    queryKey: ['roadmap', id],
-    queryFn: () => programsApi.roadmapDetail(id),
+    queryKey: ['roadmap', id, language],
+    queryFn: () => programsApi.roadmapDetail(id, language),
   })
   const entry = query.data
   return (

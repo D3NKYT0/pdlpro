@@ -163,6 +163,36 @@ def test_staff_can_update_coins_shop_and_news(api, staff):
 
 
 @pytest.mark.django_db
+def test_staff_news_stores_and_serves_translations(api, staff):
+    api.force_authenticate(user=staff)
+    created = api.post(
+        "/api/v1/staff/news/",
+        {
+            "title": "Patch 1",
+            "title_en": "Patch notes",
+            "title_es": "Notas del parche",
+            "excerpt": "Notas",
+            "excerpt_en": "Notes",
+            "excerpt_es": "Notas",
+            "body": "<p>Conteúdo do patch.</p>",
+            "body_en": "<p>Patch content.</p>",
+            "body_es": "<p>Contenido del parche.</p>",
+            "is_published": True,
+        },
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert created.data["title_en"] == "Patch notes"
+    listed = api.get("/api/v1/staff/news/")
+    assert listed.data[0]["body_es"] == "<p>Contenido del parche.</p>"
+    english = api.get("/api/v1/public/news/?lang=en")
+    assert english.data[0]["title"] == "Patch notes"
+    assert "Patch content" in english.data[0]["body"]
+    spanish = api.get("/api/v1/public/news/?lang=es")
+    assert spanish.data[0]["title"] == "Notas del parche"
+
+
+@pytest.mark.django_db
 def test_me_exposes_staff_flags(api, staff):
     api.force_authenticate(user=staff)
     me = api.get("/api/v1/shared/me/")

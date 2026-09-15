@@ -6,7 +6,7 @@ import { contentLang, INTL_LOCALES } from '../i18n/locale'
 export function CalendarPage() {
   const { t, i18n } = useTranslation('public')
   const language = contentLang(i18n.language)
-  const events = useQuery({ queryKey: ['calendar'], queryFn: contentApi.calendar })
+  const events = useQuery({ queryKey: ['calendar', language], queryFn: () => contentApi.calendar(language) })
 
   const formatRange = (startsAt: string, endsAt: string) =>
     t('calendar.range', {

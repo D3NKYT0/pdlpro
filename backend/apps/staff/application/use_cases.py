@@ -385,6 +385,24 @@ class UpsertStaffShopItemUseCase(UseCase[dict, dict]):
         }
 
 
+def _dump_staff_news(row) -> dict:
+    return {
+        "id": str(row.id),
+        "slug": row.slug,
+        "title": row.title,
+        "title_en": row.title_en,
+        "title_es": row.title_es,
+        "excerpt": row.excerpt,
+        "excerpt_en": row.excerpt_en,
+        "excerpt_es": row.excerpt_es,
+        "body": row.body,
+        "body_en": row.body_en,
+        "body_es": row.body_es,
+        "is_published": row.is_published,
+        "published_at": row.published_at.isoformat() if row.published_at else None,
+    }
+
+
 class ListStaffNewsUseCase(UseCase[None, list[dict]]):
     """Lista notícias para administração, incluindo rascunhos e estado de publicação.
 
@@ -396,18 +414,7 @@ class ListStaffNewsUseCase(UseCase[None, list[dict]]):
         self._news = news
 
     def execute(self, data: None = None) -> list[dict]:
-        return [
-            {
-                "id": str(item.id),
-                "slug": item.slug,
-                "title": item.title,
-                "excerpt": item.excerpt,
-                "body": item.body,
-                "is_published": item.is_published,
-                "published_at": item.published_at.isoformat() if item.published_at else None,
-            }
-            for item in self._news.list_all()
-        ]
+        return [_dump_staff_news(item) for item in self._news.list_all()]
 
 
 class UpsertStaffNewsUseCase(UseCase[dict, dict]):
@@ -437,21 +444,19 @@ class UpsertStaffNewsUseCase(UseCase[dict, dict]):
                 suffix += 1
             row.slug = slug
         row.title = title
+        row.title_en = str(data.get("title_en") or "").strip()[:200]
+        row.title_es = str(data.get("title_es") or "").strip()[:200]
         row.body = body
+        row.body_en = sanitize_rich_text(str(data.get("body_en") or ""))
+        row.body_es = sanitize_rich_text(str(data.get("body_es") or ""))
         row.excerpt = str(data.get("excerpt") or "")[:300]
+        row.excerpt_en = str(data.get("excerpt_en") or "").strip()[:300]
+        row.excerpt_es = str(data.get("excerpt_es") or "").strip()[:300]
         if data.get("slug"):
             row.slug = slugify(str(data["slug"]))[:200]
         row.is_published = bool(data.get("is_published", False))
         self._news.save(row)
-        return {
-            "id": str(row.id),
-            "slug": row.slug,
-            "title": row.title,
-            "excerpt": row.excerpt,
-            "body": row.body,
-            "is_published": row.is_published,
-            "published_at": row.published_at.isoformat() if row.published_at else None,
-        }
+        return _dump_staff_news(row)
 
 
 class ListStaffGamesUseCase(UseCase[None, list[dict]]):

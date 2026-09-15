@@ -61,8 +61,14 @@ export interface ApiStaffNews {
   id: string
   slug: string
   title: string
+  title_en: string
+  title_es: string
   excerpt: string
+  excerpt_en: string
+  excerpt_es: string
   body: string
+  body_en: string
+  body_es: string
   is_published: boolean
   published_at: string | null
 }
@@ -70,7 +76,11 @@ export interface ApiStaffNews {
 export interface ApiStaffCalendarEvent {
   id: string
   title: string
+  title_en: string
+  title_es: string
   description: string
+  description_en: string
+  description_es: string
   starts_at: string | null
   ends_at: string | null
   color: string

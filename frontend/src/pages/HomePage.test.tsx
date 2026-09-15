@@ -160,6 +160,8 @@ it('prioriza páginas e notícias publicadas na seção de crônica', async () =
 
   expect(await screen.findByRole('link', { name: /Guia de Siege/i })).toHaveAttribute('href', '/wiki/siege')
   expect(screen.getByRole('link', { name: /Patch do castelo/i })).toHaveAttribute('href', '/news/patch-80')
+  expect(contentApi.news).toHaveBeenCalledWith('pt')
+  expect(contentApi.wiki).toHaveBeenCalledWith(undefined, 'pt')
   expect(screen.queryByRole('link', { name: /Rates e progressão/i })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: /Notícias do reino/i })).not.toBeInTheDocument()
 })

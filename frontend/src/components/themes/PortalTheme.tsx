@@ -5,6 +5,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { contentApi, serverApi } from '../../services/api'
+import { contentLang } from '../../i18n/locale'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
 import { themeAsset } from '../../theme/assets'
@@ -121,7 +122,8 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 }
 
 export function PortalHomePage({ presentation }: { presentation: ThemePresentation }) {
-  const { t } = useTranslation('public')
+  const { t, i18n } = useTranslation('public')
+  const language = contentLang(i18n.language)
   const { hero, features, ranking, cta, news: newsContent } = presentation.home
   const sections = presentation.home.sections ?? DEFAULT_HOME_SECTIONS
   const countdown = useCountdown(hero.countdownAt)
@@ -136,8 +138,8 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
     enabled: Boolean(selectedTab) && sections.includes('ranking'),
   })
   const news = useQuery({
-    queryKey: ['news'],
-    queryFn: () => contentApi.news(),
+    queryKey: ['news', language],
+    queryFn: () => contentApi.news(language),
     enabled: sections.includes('news'),
   })
 

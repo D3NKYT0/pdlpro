@@ -123,7 +123,7 @@ export const contentApi = {
   downloads: () => request<Array<{ id: string; title: string; url: string; category: string }>>('/public/downloads/'),
   wiki: (q?: string, language: ContentLanguage = 'pt') => request<ApiWikiPage[]>(withLang('/public/wiki/', language, q ? `q=${encodeURIComponent(q)}` : '')),
   wikiPage: (slug: string, language: ContentLanguage = 'pt') => request<ApiWikiPage>(withLang(`/public/wiki/${slug}/`, language)),
-  calendar: () => request<ApiCalendarEvent[]>('/public/calendar/'),
+  calendar: (language: ContentLanguage = 'pt') => request<ApiCalendarEvent[]>(withLang('/public/calendar/', language)),
   legal: (language: ContentLanguage = 'pt') => request<{ version: string; documents: Array<{ slug: string; title: string }> }>(withLang('/public/legal/', language)),
   legalDocument: (slug: string, language: ContentLanguage = 'pt') =>
     request<{ slug: string; title: string; body: string; version: string; format?: string; language?: string }>(

@@ -100,6 +100,36 @@ def test_staff_calendar_crud_and_public_visibility(api, staff):
 
 
 @pytest.mark.django_db
+def test_staff_calendar_stores_and_serves_translations(api, staff):
+    api.force_authenticate(user=staff)
+    starts = timezone.now()
+    ends = starts + timedelta(hours=2)
+    created = api.post(
+        "/api/v1/staff/calendar/",
+        {
+            "title": "Cerco",
+            "title_en": "Siege",
+            "title_es": "Asedio",
+            "description": "Castelos",
+            "description_en": "Castles",
+            "description_es": "Castillos",
+            "starts_at": starts.isoformat(),
+            "ends_at": ends.isoformat(),
+            "is_published": True,
+        },
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert created.data["title_en"] == "Siege"
+    english = api.get("/api/v1/public/calendar/?lang=en")
+    assert english.data[0]["title"] == "Siege"
+    assert english.data[0]["description"] == "Castles"
+    assert english.data[0]["language"] == "en"
+    spanish = api.get("/api/v1/public/calendar/?lang=es")
+    assert spanish.data[0]["title"] == "Asedio"
+
+
+@pytest.mark.django_db
 def test_staff_calendar_rejects_inverted_range(api, staff):
     api.force_authenticate(user=staff)
     starts = timezone.now()
