@@ -10,7 +10,7 @@ from apps.accounts.application.progress import add_xp
 from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
-from apps.games.domain.arena_combat import resolve_arena_fight
+from apps.games.domain.arena_combat import is_arena_overlevel, resolve_arena_fight
 from apps.games.domain.arena_roster import (
     ARENA_BOSS_ADENA,
     ARENA_BOSS_ITEM_ID,
@@ -134,13 +134,23 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
             if weapon.level < needed:
                 raise ValidationDomainError("Sua arma é fraca demais para este monstro.")
             user.fichas -= 1
-            won, rounds = resolve_arena_fight(
-                weapon_level=weapon.level,
-                required_weapon_level=monster.required_weapon_level,
-                monster_attack=monster.attack,
-                is_boss=is_arena_boss(monster),
-                strikes=data.strikes,
-            )
+            weapon_level = int(weapon.level)
+            required = int(monster.required_weapon_level)
+            boss = is_arena_boss(monster)
+            if is_arena_overlevel(
+                weapon_level=weapon_level,
+                required_weapon_level=required,
+                is_boss=boss,
+            ):
+                won, rounds = True, random.randint(2, 6)
+            else:
+                won, rounds = resolve_arena_fight(
+                    weapon_level=weapon_level,
+                    required_weapon_level=required,
+                    monster_attack=int(monster.attack),
+                    is_boss=boss,
+                    strikes=data.strikes,
+                )
             fragments = monster.fragment_reward if won else 0
             prize = None
             if won:

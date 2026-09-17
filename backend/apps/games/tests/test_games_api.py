@@ -665,6 +665,39 @@ def test_economy_fight_can_lose(api, player):
 
 
 @pytest.mark.django_db
+def test_economy_overleveled_fight_always_wins(api, player):
+    from unittest.mock import patch
+
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    monster = Monster.objects.create(
+        name="Elder Keltir Folga",
+        level=1,
+        required_weapon_level=0,
+        fragment_reward=3,
+        hp=16,
+        attack=3,
+        defense=1,
+        respawn_seconds=12,
+    )
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = 1
+    weapon.fragments = 0
+    weapon.save(update_fields=["level", "fragments"])
+    api.force_authenticate(user=player)
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=100):
+        fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is True
+    assert fight.data["fragments_earned"] == 3
+    weapon.refresh_from_db()
+    assert weapon.fragments == 3
+
+
+@pytest.mark.django_db
 def test_economy_boss_can_lose_without_prize(api, player):
     from unittest.mock import patch
 
