@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { formatWorldCell, initial } from './rankingsFormat'
 import type { WorldRow } from './rankingsMeta'
 
@@ -41,9 +42,20 @@ export function RankingsSearch({ search, onSearchChange, isLoading, results }: R
             {results.map((row, index) => (
               <li key={`${row.char_id ?? row.name}-${index}`}>
                 <span className="rankings-board-rank">{formatWorldCell('value', row.value)}</span>
-                <span className="rankings-crest sm" aria-hidden="true">
-                  <span>{initial(String(row.name ?? '?'))}</span>
-                </span>
+                {row.class_id != null || row.sex != null ? (
+                  <span className="rankings-crest rankings-crest-photo sm">
+                    <CharacterAvatar
+                      name={String(row.name ?? '')}
+                      classId={Number(row.class_id ?? 0)}
+                      sex={Number(row.sex ?? 0)}
+                      size="sm"
+                    />
+                  </span>
+                ) : (
+                  <span className="rankings-crest sm" aria-hidden="true">
+                    <span>{initial(String(row.name ?? '?'))}</span>
+                  </span>
+                )}
                 <span className="rankings-board-name">
                   {String(row.name ?? '—')}
                   <small>{String(row.clan_name ?? t('rankings.search.noClan'))}</small>

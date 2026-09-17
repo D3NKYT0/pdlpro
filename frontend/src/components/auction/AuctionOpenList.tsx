@@ -5,10 +5,10 @@ import {
   Gavel,
   PackageOpen,
   Sparkles,
-  UserRound,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiAuction } from '../../services/api'
 import { auctionDisplayName, formatRemaining, isCharacterAuction } from './auctionHelpers'
@@ -40,7 +40,7 @@ export function AuctionOpenList({ auctions, username, loading, onSelect }: Aucti
               <div className="auction-listing-card-head">
                 <div className="auction-item-icon">
                   {character ? (
-                    <UserRound aria-hidden="true" size={48} />
+                    <CharacterAvatar name={name} classId={auction.char_class} sex={auction.char_sex} size="md" />
                   ) : (
                     <ItemIcon itemId={auction.item_id ?? 0} name={auction.item_name} size={48} />
                   )}

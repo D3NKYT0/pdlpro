@@ -28,7 +28,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   (homem e mulher de cada raça) e coordenadas XYZ para ir comprar. Recurso
   `game-stores`; some do menu quando o catálogo SQL não publica as consultas.
   Schema sem as tabelas de offline trade devolve a página como indisponível,
-  sem 500.
+  sem 500. O mesmo retrato (raça × sexo) aparece em ficha, contas, rankings,
+  marketplace, leilão, caça, inventário, troca Adena e moderação da equipe.
 
 - CRUD de **calendário**, **FAQ**, **wiki**, **downloads** e **avisos** na central
   da staff (`/panel/admin/calendar`, `/panel/admin/faq`, `/panel/admin/wiki`,
@@ -113,6 +114,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- A home deixava de montar no Vite no Windows: o import de `CharacterAvatar`
+  resolvia para o helper `.ts` (Vite tenta `.ts` antes de `.tsx`) e a SPA
+  ficava no “Preparando sua jornada”. O componente passa a ter um barrel
+  `.ts` que reexporta o retrato.
 - No cantinho do Denkynho em telas estreitas, a dica do dia passa a ter a
   mesma largura e a mesma altura da faixa da pergunta.
 - Webhook de pagamento com `order_id` de um pedido e `external_id` de outro passa a ser

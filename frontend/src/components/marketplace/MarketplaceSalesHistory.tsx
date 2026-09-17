@@ -4,9 +4,9 @@ import { Button } from '../ui/Button'
 import {
   Eye,
   PackageOpen,
-  UsersRound,
 } from 'lucide-react'
 import { formatCurrency, formatDateTime as formatDate } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
 import { listingStatusFor } from './marketplaceHelpers'
@@ -44,7 +44,7 @@ export function MarketplaceSalesHistory({
           return (
             <article className="marketplace-sale-row" key={listing.id}>
               <div className="marketplace-sale-main">
-                <div className="marketplace-character-emblem small"><UsersRound aria-hidden="true" /></div>
+                <CharacterAvatar name={listing.char_name} classId={listing.char_class} sex={listing.char_sex} size="sm" />
                 <div>
                   <strong>{listing.char_name}</strong>
                   <small>{t('marketplace.sales.classLevel', { className: getClassName(listing.char_class), level: listing.char_level })}</small>

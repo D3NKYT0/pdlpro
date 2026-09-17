@@ -1,8 +1,25 @@
 import { Crown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import type { ApiRankingEntry } from '../../services/types'
-import { formatValue, initial } from './rankingsFormat'
+import { formatValue, initial, rankingPortrait } from './rankingsFormat'
 import type { LocalizedTab } from './rankingsMeta'
+
+function RankingMark({ row, size = 'md' }: { row: ApiRankingEntry; size?: 'sm' | 'md' }) {
+  const portrait = rankingPortrait(row)
+  if (!portrait) {
+    return (
+      <span className={`rankings-crest${size === 'sm' ? ' sm' : ''}`} aria-hidden="true">
+        <span>{initial(row.name)}</span>
+      </span>
+    )
+  }
+  return (
+    <span className={`rankings-crest rankings-crest-photo${size === 'sm' ? ' sm' : ''}`}>
+      <CharacterAvatar name={row.name} classId={portrait.classId} sex={portrait.sex} size={size} />
+    </span>
+  )
+}
 
 export function RankingPodium({ tab, rows }: { tab: LocalizedTab; rows: ApiRankingEntry[] }) {
   const { t } = useTranslation('public')
@@ -18,9 +35,7 @@ export function RankingPodium({ tab, rows }: { tab: LocalizedTab; rows: ApiRanki
                 {index === 0 ? <Crown aria-hidden="true" /> : null}
                 {t('rankings.place', { n: row.position })}
               </span>
-              <span className="rankings-crest" aria-hidden="true">
-                <span>{initial(row.name)}</span>
-              </span>
+              <RankingMark row={row} />
               <h3>{row.name}</h3>
               <strong>{formatValue(tab, row.value)}</strong>
               <em>{tab.valueLabel}</em>
@@ -33,9 +48,7 @@ export function RankingPodium({ tab, rows }: { tab: LocalizedTab; rows: ApiRanki
           {rest.map((row) => (
             <li key={`${row.position}-${row.name}`}>
               <span className="rankings-board-rank">{row.position}</span>
-              <span className="rankings-crest sm" aria-hidden="true">
-                <span>{initial(row.name)}</span>
-              </span>
+              <RankingMark row={row} size="sm" />
               <span className="rankings-board-name">{row.name}</span>
               <span className="rankings-board-score">{formatValue(tab, row.value)}</span>
             </li>

@@ -474,6 +474,36 @@
   flex: 0 0 36px;
 }
 
+.rankings-crest-photo {
+  overflow: hidden;
+  padding: 0;
+}
+
+.rankings-crest-photo .character-avatar {
+  width: 86px;
+  height: 86px;
+  border: 0;
+  clip-path: none;
+}
+
+.rankings-crest-photo.sm .character-avatar {
+  width: 46px;
+  height: 46px;
+}
+
+.rankings-world-name,
+.rating-character {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rankings-world-name .character-avatar,
+.rating-character .character-avatar {
+  width: 28px;
+  height: 38px;
+}
+
 .rankings-card h3 {
   margin: 22px 0 8px;
   color: #fff;

@@ -46,6 +46,7 @@ export interface ApiRankingEntry {
   position: number
   name: string
   value: number
+  extra?: Record<string, string | number | boolean | null>
 }
 
 export interface ApiWallet {

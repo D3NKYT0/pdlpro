@@ -34,6 +34,10 @@
   "itemCatalogUnavailable": "Catálogo indisponível.",
   "itemCatalogEmpty": "Nenhum item encontrado no catálogo.",
   "itemIdMeta": "ID {{id}} · {{grade}}",
+  "characterAvatar": {
+    "named": "Retrato de {{name}}",
+    "unnamed": "Retrato do personagem"
+  },
   "extensionExample": {
     "pingTitle": "Extensão de exemplo",
     "pingBody": "Skeleton do overlay SPA. Ative com VITE_PDL_EXTENSIONS=example."

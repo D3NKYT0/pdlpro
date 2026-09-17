@@ -5,10 +5,10 @@ import {
   Crown,
   Eye,
   ShoppingCart,
-  UserRound,
   X,
 } from 'lucide-react'
 import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing, ApiGameItem } from '../../services/api'
 import { ListingEquipment } from './ListingEquipment'
@@ -46,9 +46,7 @@ export function ListingDetail({ listing, isOwner, pending, onClose, onBuy, onCan
     <article className="marketplace-listing-detail" aria-label={t('marketplace.detail.aria', { name: listing.char_name })}>
       <div className="marketplace-listing-detail-hero">
         <div className="marketplace-detail-identity">
-          <div className="marketplace-character-emblem">
-            <UserRound aria-hidden="true" />
-          </div>
+          <CharacterAvatar name={listing.char_name} classId={listing.char_class} sex={listing.char_sex} size="lg" />
           <div>
             <span className="panel-eyebrow">{t('marketplace.detail.eyebrow')}</span>
             <h2>{listing.char_name}</h2>

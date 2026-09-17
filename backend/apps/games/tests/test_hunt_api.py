@@ -47,6 +47,8 @@ def test_hunt_reads_character_delta_and_claims_once(api, player):
     first = api.get(f"/api/v1/customer/games/hunt/?login=hunter&char_id={char.char_id}")
     assert first.status_code == 200, first.data
     assert first.data["character"]["name"] == "Caçador"
+    assert first.data["character"]["sex"] == 0
+    assert first.data["character"]["class_id"] == 0
     assert first.data["quests"][0]["current"] == 0
     assert first.data["quests"][0]["target"] == 5
 

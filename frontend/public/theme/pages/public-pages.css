@@ -100,14 +100,45 @@
   margin-bottom: 8px;
 }
 
-.stores-avatar {
-  width: 108px;
-  height: 144px;
+.character-avatar {
+  display: block;
   object-fit: cover;
   object-position: center center;
   background: #16120c;
   border: 1px solid rgba(197, 161, 97, 0.45);
   clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
+}
+
+.character-avatar-sm {
+  width: 36px;
+  height: 48px;
+}
+
+.character-avatar-md {
+  width: 56px;
+  height: 76px;
+}
+
+.character-avatar-lg {
+  width: 84px;
+  height: 112px;
+}
+
+.character-avatar-xl,
+.stores-avatar {
+  width: 108px;
+  height: 144px;
+}
+
+.rating-character {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-character .character-avatar {
+  width: 28px;
+  height: 38px;
 }
 
 .stores-place {

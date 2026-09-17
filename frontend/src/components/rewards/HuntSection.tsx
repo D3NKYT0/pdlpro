@@ -16,6 +16,7 @@ import { Field } from '../ui/Field'
 import { Select } from '../ui/Select'
 import { gamesApi } from '../../services/api'
 import { formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { formatDuration } from '../rankings/rankingsFormat'
 import { Empty, ErrorNotice, Loading, RewardList } from '../programs/ProgramUI'
 import { useProgramAction } from '../programs/useProgramAction'
@@ -100,6 +101,14 @@ export function HuntSection() {
 
             {options.length ? (
               <div className="hunt-character">
+                {data.character ? (
+                  <CharacterAvatar
+                    name={data.character.name}
+                    classId={data.character.class_id}
+                    sex={data.character.sex}
+                    size="md"
+                  />
+                ) : null}
                 <Field label={t('rewards.hunt.character')}>
                   <Select
                     aria-label={t('rewards.hunt.character')}

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { MapPin } from 'lucide-react'
 import { PublicEmpty, PublicHero } from '../components/public/PublicChrome'
 import { ItemIcon } from '../components/ItemIcon'
-import { storeAvatarSrc } from '../components/stores/storeAvatar'
+import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { formatCompactQuantity } from '../lib/formatters'
 import { serverApi } from '../services/api'
 
@@ -67,12 +67,13 @@ export function StoresPage() {
                 <article className="public-tile" key={`${store.char_id}-${store.title}-${store.store_type}`}>
                   <div>
                     <header className="stores-head">
-                      <img
+                      <CharacterAvatar
                         className="stores-avatar"
-                        src={storeAvatarSrc(store.race, store.sex)}
+                        name={store.name}
+                        race={store.race}
+                        sex={store.sex}
+                        size="xl"
                         alt={t('stores.avatarAlt', { name: store.name, race, sex })}
-                        width={108}
-                        height={144}
                       />
                       <div>
                         <span className="public-kicker">

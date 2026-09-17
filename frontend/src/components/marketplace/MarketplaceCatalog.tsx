@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import {
   ChevronRight,
   Store,
-  Sword,
 } from 'lucide-react'
 import { formatCurrency, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiCharacterListing } from '../../services/api'
 
@@ -31,7 +31,7 @@ export function MarketplaceCatalog({ listings, username, loading, onSelect }: Ma
               key={listing.id}
             >
               <div className="marketplace-listing-card-top">
-                <div className="marketplace-character-emblem"><Sword aria-hidden="true" /></div>
+                <CharacterAvatar name={listing.char_name} classId={listing.char_class} sex={listing.char_sex} size="md" />
                 <div>
                   <span className="panel-eyebrow">{isOwner ? t('marketplace.catalog.ownerEyebrow') : t('marketplace.catalog.listingEyebrow')}</span>
                   <h3>{listing.char_name}</h3>

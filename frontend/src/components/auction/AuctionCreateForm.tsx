@@ -11,11 +11,13 @@ import {
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 
 interface InventoryRow {
   inventory_id: string
   character_name: string
+  character?: { name: string; class_id: number; sex: number }
   items: Array<{
     id: string
     item_id: number
@@ -30,6 +32,7 @@ interface CharacterOption {
   name: string
   level: number
   class_id: number
+  sex: number
   online: boolean
   pvp: number
   pk: number
@@ -128,7 +131,16 @@ export function AuctionCreateForm({
 
             {selectedInventory ? (
               <div className="auction-inventory-summary">
-                <UserRound aria-hidden="true" />
+                {selectedInventory.character ? (
+                  <CharacterAvatar
+                    name={selectedInventory.character.name}
+                    classId={selectedInventory.character.class_id}
+                    sex={selectedInventory.character.sex}
+                    size="sm"
+                  />
+                ) : (
+                  <UserRound aria-hidden="true" />
+                )}
                 <div>
                   <span className="panel-eyebrow">{t('auctions.create.selectedInventoryEyebrow')}</span>
                   <strong>{selectedInventory.character_name}</strong>
@@ -211,7 +223,7 @@ export function AuctionCreateForm({
             {selectedCharacter ? (
               <div className="marketplace-character-preview">
                 <div className="marketplace-character-preview-head">
-                  <div className="marketplace-character-emblem"><UserRound aria-hidden="true" /></div>
+                  <CharacterAvatar name={selectedCharacter.name} classId={selectedCharacter.class_id} sex={selectedCharacter.sex} size="md" />
                   <div>
                     <span className="panel-eyebrow">{t('auctions.create.selectedCharacterEyebrow')}</span>
                     <strong>{selectedCharacter.name}</strong>

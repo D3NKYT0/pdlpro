@@ -82,6 +82,7 @@ it('lista personagens e mostra ações ao escolher um', async () => {
   const user = mount()
   expect(await screen.findByRole('heading', { name: 'Moderação' })).toBeVisible()
   expect(await screen.findByText('SirHero')).toBeVisible()
+  expect(screen.getByRole('img', { name: 'Retrato de SirHero' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
   expect(screen.getByText('hero@pdl.dev')).toBeVisible()
   await user.click(screen.getByRole('button', { name: /SirHero/i }))
   expect(await screen.findByRole('button', { name: 'Kick' })).toBeVisible()

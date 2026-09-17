@@ -14,6 +14,7 @@ SELECT
     C.onlinetime,
     CS.level,
     CS.class_id AS class_id,
+    C.sex AS sex,
     D.name AS clan_name
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -30,6 +31,8 @@ SELECT
     C.online,
     C.onlinetime,
     CS.level,
+    CS.class_id AS class_id,
+    C.sex AS sex,
     D.name AS clan_name
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -46,6 +49,8 @@ SELECT
     C.pkkills,
     C.online,
     C.onlinetime,
+    CS.class_id AS class_id,
+    C.sex AS sex,
     D.name AS clan_name
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -62,6 +67,8 @@ SELECT
     C.pkkills,
     C.online,
     CS.level,
+    CS.class_id AS class_id,
+    C.sex AS sex,
     D.name AS clan_name
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -89,6 +96,8 @@ SELECT
     C.online,
     C.onlinetime,
     CS.level,
+    CS.class_id AS class_id,
+    C.sex AS sex,
     D.name AS clan_name
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'

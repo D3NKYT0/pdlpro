@@ -17,6 +17,7 @@ import {
   Status,
 } from "../components/programs/ProgramUI";
 import { useProgramAction } from "../components/programs/useProgramAction";
+import { CharacterAvatar } from "../components/character/CharacterAvatar";
 import { formatDateTime } from "../lib/formatters";
 
 export function GameExchangePage() {
@@ -36,6 +37,7 @@ export function GameExchangePage() {
     enabled: !!login,
   });
   const [charId, setCharId] = useState("");
+  const selectedChar = chars.data?.find((c) => String(c.char_id) === String(charId));
   const [direction, setDirection] = useState("to_game");
   const [quantity, setQuantity] = useState(1);
   const [confirmation, setConfirmation] = useState(false);
@@ -155,6 +157,12 @@ export function GameExchangePage() {
                 ))}
               </select>
             </label>
+            {selectedChar ? (
+              <div className="exchange-selected-character">
+                <CharacterAvatar name={selectedChar.name} classId={selectedChar.class_id} sex={selectedChar.sex} size="sm" />
+                <strong>{selectedChar.name}</strong>
+              </div>
+            ) : null}
             <label>
               {t("exchange.form.quantity")}
               <input

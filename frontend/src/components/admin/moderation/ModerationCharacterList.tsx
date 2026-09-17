@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { ApiModerationCharacter } from '../../../services/api'
+import { CharacterAvatar } from '../../character/CharacterAvatar'
 import { getClassName } from '../../../lib/lineage'
 
 export function ModerationCharacterList({
@@ -33,8 +34,11 @@ export function ModerationCharacterList({
           >
             <td>
               <button type="button" className="admin-moderation-row" onClick={() => onSelect(row)}>
-                <strong>{row.name}</strong>
-                <small>{getClassName(row.class_id)}</small>
+                <CharacterAvatar name={row.name} classId={row.class_id} sex={row.sex} size="sm" />
+                <span>
+                  <strong>{row.name}</strong>
+                  <small>{getClassName(row.class_id)}</small>
+                </span>
               </button>
             </td>
             <td>{row.login}</td>

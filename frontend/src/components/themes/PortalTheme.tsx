@@ -8,6 +8,8 @@ import { contentApi, programsApi, serverApi } from '../../services/api'
 import { contentLang } from '../../i18n/locale'
 import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
+import { rankingPortrait } from '../rankings/rankingsFormat'
 import { themeAsset } from '../../theme/assets'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
 
@@ -222,9 +224,25 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
               <table className="rating-table">
                 <thead><tr><th>{t('portal.colPosition')}</th><th>{t('portal.colCharacterClan')}</th><th>{t('portal.colScore')}</th></tr></thead>
                 <tbody>
-                  {(rankings.data ?? []).map((row) => (
-                    <tr key={`${row.position}-${row.name}`}><td className="rank">{String(row.position).padStart(2, '0')}</td><td>{row.name}</td><td>{formatNumber(row.value)}</td></tr>
-                  ))}
+                  {(rankings.data ?? []).map((row) => {
+                    const portrait = rankingPortrait(row)
+                    return (
+                      <tr key={`${row.position}-${row.name}`}>
+                        <td className="rank">{String(row.position).padStart(2, '0')}</td>
+                        <td>
+                          {portrait ? (
+                            <span className="rating-character">
+                              <CharacterAvatar name={row.name} classId={portrait.classId} sex={portrait.sex} size="sm" />
+                              {row.name}
+                            </span>
+                          ) : (
+                            row.name
+                          )}
+                        </td>
+                        <td>{formatNumber(row.value)}</td>
+                      </tr>
+                    )
+                  })}
                   {!rankings.data?.length ? <tr><td colSpan={3}>{t('portal.ratingEmpty')}</td></tr> : null}
                 </tbody>
               </table>

@@ -7,11 +7,11 @@ import {
   Eye,
   Gavel,
   Package,
-  UserRound,
   X,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 import type { ApiAuction, ApiGameItem } from '../../services/api'
 import {
@@ -75,7 +75,7 @@ export function AuctionDetail({
         <div className="marketplace-detail-identity auction-detail-identity">
           <div className="auction-item-icon large">
             {character ? (
-              <UserRound aria-hidden="true" size={64} />
+              <CharacterAvatar name={name} classId={auction.char_class} sex={auction.char_sex} size="lg" />
             ) : (
               <ItemIcon itemId={auction.item_id ?? 0} name={auction.item_name} size={64} />
             )}

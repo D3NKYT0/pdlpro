@@ -65,7 +65,7 @@ beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-02T00:00:00Z').getTime())
   vi.mocked(serverApi.rankings).mockReset()
   vi.mocked(contentApi.news).mockReset()
-  vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Equinox', value: 1240 }])
+  vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Equinox', value: 1240, extra: { class_id: 0, sex: 0 } }])
   vi.mocked(contentApi.news).mockResolvedValue([])
 })
 
@@ -101,6 +101,7 @@ it('executa countdown e troca o ranking usando dados reais da API', async () => 
   expect(screen.getByText('Welcome to Valorem')).toBeInTheDocument()
   expect(screen.getByLabelText('SERVER IS OPENING IN')).toHaveTextContent('01DIAS')
   expect(await screen.findByText('Equinox')).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: 'Retrato de Equinox' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
   expect(serverApi.rankings).toHaveBeenCalledWith('pvp', 5)
 
   fireEvent.click(screen.getByRole('tab', { name: 'TOP PK' }))

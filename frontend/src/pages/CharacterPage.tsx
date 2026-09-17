@@ -28,6 +28,7 @@ import { formatCompactQuantity } from '../lib/formatters'
 import { formatDate, formatDuration } from '../components/rankings/rankingsFormat'
 import { inventoryApi, isApiError, lineageApi, serviceAvailable } from '../services/api'
 import { ExtensionSlotOutlet } from '../extensions'
+import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
 import { CharacterPaperdoll } from '../components/character/CharacterPaperdoll'
 import { CharacterSkillsPanel } from '../components/character/CharacterSkillsPanel'
@@ -192,20 +193,25 @@ export function CharacterPage() {
   return (
     <div className="account-page character-page">
       <Card as="header" className="account-hero">
-        <div>
-          <Link className="character-back" to="/panel/accounts">
-            <ArrowLeft aria-hidden="true" />
-            {t('character.backToAccounts')}
-          </Link>
-          <span className="panel-eyebrow">{t('character.eyebrow')}</span>
-          <h1>{char?.name ?? t('character.fallbackName')}</h1>
-          <p className="muted">
-            {t('character.summary', {
-              login,
-              className: getClassName(char?.class_id),
-              level: char?.level ?? '—',
-            })}
-          </p>
+        <div className="character-hero-identity">
+          {char ? (
+            <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="xl" />
+          ) : null}
+          <div>
+            <Link className="character-back" to="/panel/accounts">
+              <ArrowLeft aria-hidden="true" />
+              {t('character.backToAccounts')}
+            </Link>
+            <span className="panel-eyebrow">{t('character.eyebrow')}</span>
+            <h1>{char?.name ?? t('character.fallbackName')}</h1>
+            <p className="muted">
+              {t('character.summary', {
+                login,
+                className: getClassName(char?.class_id),
+                level: char?.level ?? '—',
+              })}
+            </p>
+          </div>
         </div>
         {char ? (
           <span className={`account-status-pill ${char.online ? 'is-active' : ''}`}>
@@ -273,9 +279,12 @@ export function CharacterPage() {
           <div className="character-overview-side">
             <Card className="character-sheet">
             <div className="account-section-heading">
-              <div>
-                <span className="panel-eyebrow">{t('character.infoEyebrow')}</span>
-                <h2>{char.name}</h2>
+              <div className="character-sheet-identity">
+                <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="sm" />
+                <div>
+                  <span className="panel-eyebrow">{t('character.infoEyebrow')}</span>
+                  <h2>{char.name}</h2>
+                </div>
               </div>
               {char.is_clan_leader ? (
                 <span className="account-login-chip">

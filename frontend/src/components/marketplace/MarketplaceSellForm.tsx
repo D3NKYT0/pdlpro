@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next'
 import {
   BadgeDollarSign,
   Store,
-  UserRound,
 } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { getClassName } from '../../lib/lineage'
 
 interface CharacterOption {
@@ -17,6 +17,7 @@ interface CharacterOption {
   name: string
   level: number
   class_id: number
+  sex: number
   online: boolean
   pvp: number
   pk: number
@@ -85,7 +86,7 @@ export function MarketplaceSellForm({
         {selectedCharacter ? (
           <div className="marketplace-character-preview">
             <div className="marketplace-character-preview-head">
-              <div className="marketplace-character-emblem"><UserRound aria-hidden="true" /></div>
+              <CharacterAvatar name={selectedCharacter.name} classId={selectedCharacter.class_id} sex={selectedCharacter.sex} size="md" />
               <div>
                 <span className="panel-eyebrow">{t('marketplace.sell.previewEyebrow')}</span>
                 <strong>{selectedCharacter.name}</strong>

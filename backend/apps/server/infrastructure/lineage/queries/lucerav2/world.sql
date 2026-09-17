@@ -6,7 +6,8 @@ SELECT
     O.points_current AS value,
     C.online,
     D.name AS clan_name,
-    CS.class_id AS class_id
+    CS.class_id AS class_id,
+    C.sex AS sex
 FROM oly_nobles O
 LEFT JOIN characters C ON C.obj_Id = O.char_id
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -19,7 +20,8 @@ SELECT
     H.count AS value,
     C.online,
     D.name AS clan_name,
-    CS.class_id AS class_id
+    CS.class_id AS class_id,
+    C.sex AS sex
 FROM oly_heroes H
 LEFT JOIN characters C ON C.obj_Id = H.char_id
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
@@ -76,6 +78,7 @@ SELECT
     C.char_name AS name,
     CS.level AS value,
     CS.class_id AS class_id,
+    C.sex AS sex,
     C.online,
     D.name AS clan_name
 FROM characters C

@@ -104,6 +104,7 @@ it('mostra paperdoll com slots L2 e item equipado', async () => {
 it('mostra ficha com adena compacta, clã, aliança e tempo online', async () => {
   mount()
   expect(await screen.findByText('Guild')).toBeVisible()
+  expect(screen.getAllByRole('img', { name: 'Retrato de Hero' })[0]).toHaveAttribute('src', '/theme/avatars/human-m.png')
   expect(screen.getByText('Alliance')).toBeVisible()
   expect(screen.getByText('2,5KK')).toBeVisible()
   expect(screen.getByText('1d 1h')).toBeVisible()

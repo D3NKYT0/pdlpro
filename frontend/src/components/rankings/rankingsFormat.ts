@@ -16,6 +16,13 @@ export function initial(name: string) {
   return (name.trim()[0] || '?').toUpperCase()
 }
 
+export function rankingPortrait(row: ApiRankingEntry) {
+  const extra = row.extra ?? {}
+  return 'class_id' in extra || 'sex' in extra
+    ? { classId: Number(extra.class_id ?? 0), sex: Number(extra.sex ?? 0) }
+    : null
+}
+
 export function formatScore(value: number) {
   return value.toLocaleString(intlLocale())
 }
@@ -173,6 +180,10 @@ export function asRankingRows(rows: WorldRow[]): ApiRankingEntry[] {
       position: index + 1,
       name: String(row.name),
       value: Number(row.value ?? 0),
+      extra:
+        row.class_id != null || row.sex != null
+          ? { class_id: Number(row.class_id ?? 0), sex: Number(row.sex ?? 0) }
+          : undefined,
     }))
 }
 
@@ -191,7 +202,7 @@ export function formatWorldCell(key: string, value: unknown) {
 
 export function worldKeys(rows: WorldRow[]) {
   const keys = rows[0] ? Object.keys(rows[0]) : []
-  return keys.filter((key) => !['char_id', 'clan_id', 'castle_id'].includes(key))
+  return keys.filter((key) => !['char_id', 'clan_id', 'castle_id', 'sex'].includes(key))
 }
 
 export function worldColumnLabel(key: string) {

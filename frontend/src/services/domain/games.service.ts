@@ -83,6 +83,8 @@ export type HuntDetails = {
     pk: number
     online_time: number
     online: boolean
+    sex: number
+    class_id: number
   } | null
   characters: Array<{
     login: string
@@ -90,6 +92,8 @@ export type HuntDetails = {
     name: string
     level: number
     online: boolean
+    sex: number
+    class_id: number
   }>
   quests: Array<{
     id: string

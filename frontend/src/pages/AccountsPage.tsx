@@ -10,6 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
 
@@ -300,6 +301,7 @@ export function AccountsPage() {
                         to={`/panel/accounts/${selectedLogin}/${char.char_id}`}
                         onClick={(event) => event.stopPropagation()}
                       >
+                        <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="sm" />
                         {char.name}
                       </Link>
                     </td>

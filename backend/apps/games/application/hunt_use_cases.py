@@ -120,6 +120,8 @@ class GetHuntDetailsUseCase(UseCase[HuntActor, dict]):
                 "pk": char.pk,
                 "online_time": char.online_time,
                 "online": char.online,
+                "sex": char.sex,
+                "class_id": char.class_id,
             },
             "characters": characters,
             "quests": quests,
@@ -191,6 +193,8 @@ def _list_accessible_characters(access, lineage, user_id, username) -> list[dict
                     "name": char.name,
                     "level": char.level,
                     "online": char.online,
+                    "sex": char.sex,
+                    "class_id": char.class_id,
                 }
             )
     return rows

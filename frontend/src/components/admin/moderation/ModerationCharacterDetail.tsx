@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Ban, DoorOpen, MapPin, ShieldOff, Unlock, UserX } from 'lucide-react'
 import { Button } from '../../ui/Button'
+import { CharacterAvatar } from '../../character/CharacterAvatar'
 import { formatDate, formatDuration } from '../../rankings/rankingsFormat'
 import { getClassName } from '../../../lib/lineage'
 import type { ApiModerationCharacter, ModerationAction } from '../../../services/api'
@@ -19,6 +20,7 @@ export function ModerationCharacterDetail({
   return (
     <section className="admin-moderation-sheet">
       <header className="admin-accounts-result-head">
+        <CharacterAvatar name={character.name} classId={character.class_id} sex={character.sex} size="lg" />
         <div>
           <span className="panel-eyebrow">{t('moderation.detailEyebrow')}</span>
           <h2>{character.name}</h2>

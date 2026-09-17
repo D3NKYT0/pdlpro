@@ -12,6 +12,7 @@ import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { ItemIcon } from '../ItemIcon'
 import { ItemIdField } from '../ItemIdField'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import { InventoryGameItems } from './InventoryGameItems'
 import { PanelItemActionPanel } from './PanelItemActionPanel'
 import type { useInventoryDashboard } from './useInventoryDashboard'
@@ -62,6 +63,7 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
     onTrade,
     onDeposit,
   } = inventory
+  const selectedCharacter = (characters.data ?? []).find((char) => char.char_id === charId)
 
   return (
     <div
@@ -121,14 +123,19 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
           <form className="inventory-withdraw-form" onSubmit={onWithdraw}>
             <Field>
               {t('inventory.characters.character')}
-              <select value={charId} onChange={(e) => setCharId(e.target.value ? Number(e.target.value) : '')} required>
-                <option value="">{t('inventory.characters.select')}</option>
-                {(characters.data ?? []).map((char) => (
-                  <option key={char.char_id} value={char.char_id}>
-                    {t('inventory.characters.characterOption', { name: char.name, level: char.level })}
-                  </option>
-                ))}
-              </select>
+              <span className="inventory-character-pick">
+                {selectedCharacter ? (
+                  <CharacterAvatar name={selectedCharacter.name} classId={selectedCharacter.class_id} sex={selectedCharacter.sex} size="sm" />
+                ) : null}
+                <select value={charId} onChange={(e) => setCharId(e.target.value ? Number(e.target.value) : '')} required>
+                  <option value="">{t('inventory.characters.select')}</option>
+                  {(characters.data ?? []).map((char) => (
+                    <option key={char.char_id} value={char.char_id}>
+                      {t('inventory.characters.characterOption', { name: char.name, level: char.level })}
+                    </option>
+                  ))}
+                </select>
+              </span>
             </Field>
             <ItemIdField value={itemId} required onChange={(id) => setItemId(id)} />
             <Field>
@@ -169,7 +176,16 @@ export function InventoryCharactersTab({ inventory }: { inventory: InventoryDash
       {(dashboard.data ?? []).map((row) => (
         <Card className="inventory-character-card" key={row.inventory_id}>
           <div className="inventory-character-heading">
-            <PackageOpen aria-hidden="true" />
+            {row.character ? (
+              <CharacterAvatar
+                name={row.character.name}
+                classId={row.character.class_id}
+                sex={row.character.sex}
+                size="md"
+              />
+            ) : (
+              <PackageOpen aria-hidden="true" />
+            )}
             <div>
               <span className="panel-eyebrow">{t('inventory.characters.chestEyebrow', { account: row.account_name })}</span>
               <h2>{row.character_name}</h2>

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
-import { Eye, History, UserRound } from 'lucide-react'
+import { Eye, History } from 'lucide-react'
 import { ItemIcon } from '../ItemIcon'
 import { formatCurrency, formatDateTime as formatDate, formatNumber } from '../../lib/formatters'
+import { CharacterAvatar } from '../character/CharacterAvatar'
 import type { ApiAuction } from '../../services/api'
 import { auctionDisplayName, auctionStatusFor, isCharacterAuction } from './auctionHelpers'
 
@@ -35,7 +36,7 @@ export function AuctionHistory({ auctions, loading, onView }: AuctionHistoryProp
               <div className="marketplace-sale-main">
                 <div className="auction-item-icon small">
                   {character ? (
-                    <UserRound aria-hidden="true" size={34} />
+                    <CharacterAvatar name={name} classId={auction.char_class} sex={auction.char_sex} size="sm" />
                   ) : (
                     <ItemIcon itemId={auction.item_id ?? 0} name={auction.item_name} size={34} />
                   )}

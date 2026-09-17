@@ -96,8 +96,10 @@ const hunt = {
     pk: 1,
     online_time: 3600,
     online: false,
+    sex: 0,
+    class_id: 0,
   },
-  characters: [{ login: 'hunter', char_id: 7, name: 'Caçador', level: 80, online: false }],
+  characters: [{ login: 'hunter', char_id: 7, name: 'Caçador', level: 80, online: false, sex: 0, class_id: 0 }],
   quests: [
     {
       id: 'q-pvp',
@@ -300,6 +302,7 @@ it('bônus diário já resgatado não permite novo envio', async () => {
 it('caça do dia resgata a missão concluída e bloqueia a incompleta', async () => {
   const user = mount('/panel/rewards?tab=hunt')
   expect(await screen.findByRole('heading', { name: 'Caça do dia' })).toBeVisible()
+  expect(screen.getByRole('img', { name: 'Retrato de Caçador' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
   expect(screen.getByLabelText('Personagem')).toBeVisible()
   expect(screen.getByText('Offline')).toBeVisible()
   expect(screen.getByRole('progressbar', { name: 'Progresso da caça' })).toHaveAttribute('aria-valuenow', '52')

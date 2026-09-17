@@ -15,7 +15,7 @@ vi.mock('../services/domain/games.service', () => ({ gamesApi: { bag: vi.fn(), t
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 let client: QueryClient
 const accountData = { accounts: [{ login: 'main', is_primary: true }, { login: 'alt', is_primary: false }], slots: { used: 2, total: 3, can_link: true }, primary: {} }
-const character = { char_id: 7, name: 'Elf', level: 80 }
+const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, sex: 0 }
 const bag = { inventory_id: 'bag', account_name: 'main', character_name: 'Elf', character, items: [{ id: 'item', inventory_id: 'bag', item_id: 57, item_name: 'Adena', enchant: 3, quantity: 10 }] }
 const destination = { inventory_id: 'dest', account_name: 'alt', character_name: 'Orc', character: { ...character, char_id: 8, name: 'Orc' }, items: [] }
 beforeEach(() => {
@@ -36,6 +36,7 @@ function mount() {
 it.each([false, true])('retirada informa conta, personagem, item e quantidade; erro=%s', async fail => {
   if (fail) vi.mocked(inventoryApi.withdraw).mockRejectedValue(new ApiError('Personagem online', 409, 'ONLINE'))
   const user = mount()
+  expect(await screen.findByRole('img', { name: 'Retrato de Elf' })).toHaveAttribute('src', '/theme/avatars/elf-m.png')
   await user.selectOptions(await screen.findByRole('combobox', { name: 'Personagem' }), '7')
   const input = screen.getByRole('textbox', { name: 'Quantidade' })
   await user.clear(input)

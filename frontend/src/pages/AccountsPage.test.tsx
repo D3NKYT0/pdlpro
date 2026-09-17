@@ -102,3 +102,18 @@ it('traduz o estado da conta e o formulário de criação no idioma ativo', asyn
   expect(screen.getByRole('heading', { name: 'Link an existing account' })).toBeVisible()
   expect(screen.getByText('No linked account')).toBeVisible()
 })
+
+it('mostra retrato Interlude na lista de personagens', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue([
+    { char_id: 7, name: 'Hero', level: 80, class_id: 0, sex: 0, online: false },
+  ] as Awaited<ReturnType<typeof lineageApi.characters>>)
+
+  mount()
+
+  expect(await screen.findByRole('img', { name: 'Retrato de Hero' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
+})

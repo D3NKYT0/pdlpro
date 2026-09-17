@@ -76,6 +76,7 @@ const characterAuction: ApiAuction = {
   char_name: 'Elf',
   char_level: 80,
   char_class: 99,
+  char_sex: 0,
   char_pvp: 40,
   char_pk: 0,
   char_clan_name: 'Reino',
@@ -105,7 +106,7 @@ const characterAuction: ApiAuction = {
     },
   ],
 }
-const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, online: false, pvp: 40, pk: 0, clan_name: '', title: '' }
+const character = { char_id: 7, name: 'Elf', level: 80, class_id: 99, sex: 0, online: false, pvp: 40, pk: 0, clan_name: '', title: '' }
 let client: QueryClient
 beforeEach(() => {
   vi.resetAllMocks()
@@ -118,7 +119,7 @@ beforeEach(() => {
   vi.mocked(marketplaceApi.cancel).mockResolvedValue({ ...listing, status: 'cancelled' })
   vi.mocked(lineageApi.characters).mockResolvedValue([character] as Awaited<ReturnType<typeof lineageApi.characters>>)
   vi.mocked(inventoryApi.equipment).mockResolvedValue([])
-  vi.mocked(inventoryApi.dashboard).mockResolvedValue([{ inventory_id: 'bag', character_name: 'Elf', items: [{ id: 'item', item_id: 57, item_name: 'Adena', enchant: 3, quantity: 10 }] }] as Awaited<ReturnType<typeof inventoryApi.dashboard>>)
+  vi.mocked(inventoryApi.dashboard).mockResolvedValue([{ inventory_id: 'bag', character_name: 'Elf', character, items: [{ id: 'item', item_id: 57, item_name: 'Adena', enchant: 3, quantity: 10 }] }] as Awaited<ReturnType<typeof inventoryApi.dashboard>>)
   vi.mocked(auctionApi.open).mockResolvedValue([auction])
   vi.mocked(auctionApi.mine).mockResolvedValue([])
   vi.mocked(auctionApi.create).mockResolvedValue(auction)
@@ -139,7 +140,9 @@ async function prepareListing(user: ReturnType<typeof userEvent.setup>) {
 it.each([false, true])('marketplace compra e apresenta resultado; erro=%s', async fail => {
   if (fail) vi.mocked(marketplaceApi.buy).mockRejectedValue(new ApiError('Saldo insuficiente', 400, 'INSUFFICIENT'))
   const user = mount(<MarketplacePage />)
+  expect(await screen.findByRole('img', { name: 'Retrato de Elf' })).toHaveAttribute('src', '/theme/avatars/elf-m.png')
   await user.click(await screen.findByRole('button', { name: /Ver personagem/ }))
+  expect(screen.getAllByRole('img', { name: 'Retrato de Elf' }).length).toBeGreaterThan(1)
   expect(screen.getByText('Pronto para jogar')).toBeVisible()
   expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
   expect(screen.getByLabelText('Brinco: Adena')).toBeVisible()
@@ -243,6 +246,7 @@ it.each([false, true])('cria leilão do item/enchant e quantidade escolhidos; er
   const user = mount(<AuctionPage />)
   await screen.findByRole('option', { name: /Elf — 1 itens/ })
   await user.selectOptions(screen.getByRole('combobox', { name: 'Inventário do personagem' }), 'bag')
+  expect(screen.getByRole('img', { name: 'Retrato de Elf' })).toHaveAttribute('src', '/theme/avatars/elf-m.png')
   await user.selectOptions(screen.getByRole('combobox', { name: 'Item' }), '57:3')
   const quantity = screen.getByRole('spinbutton', { name: 'Quantidade' })
   expect(quantity).toHaveAttribute('max', '10')
@@ -270,6 +274,7 @@ it('lance em personagem não pede inventário de destino', async () => {
   vi.mocked(auctionApi.open).mockResolvedValue([characterAuction])
   const user = mount(<AuctionPage />)
   await user.click(await screen.findByRole('button', { name: /Ver leilão/ }))
+  expect(screen.getAllByRole('img', { name: 'Retrato de Elf' })[0]).toHaveAttribute('src', '/theme/avatars/elf-m.png')
   expect(screen.getByLabelText('Equipamentos atuais do personagem')).toBeVisible()
   expect(screen.getByLabelText('Elmo: Blue Wolf Helmet +5')).toBeVisible()
   expect(screen.getByLabelText('Grade do inventário')).toBeVisible()
