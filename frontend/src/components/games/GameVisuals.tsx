@@ -11,6 +11,8 @@ import {
   normalizeFishRarity,
   normalizeRouletteRarity,
   resolveFishArt,
+  rodArtLevel,
+  rodArtVar,
   rouletteReelStrip,
   swordArtVar,
   swordEnchantLevel,
@@ -608,6 +610,7 @@ const POND_BUBBLES = 10
 const POND_GLINTS = 7
 const POND_DROPLETS = 12
 const POND_SPARKS = 10
+const POND_LURES = 6
 
 export type FishingPondState = 'idle' | 'casting' | 'bite' | 'caught' | 'escaped'
 
@@ -773,20 +776,28 @@ export function FishingBaitFrame({
 
 export function FishingPond({
   state = 'idle',
+  bait = 'common',
+  rodLevel = 1,
   fishName,
   fishRarity,
 }: {
   state?: FishingPondState
+  bait?: FishingBaitKind
+  rodLevel?: number
   fishName?: string | null
   fishRarity?: string | null
 }) {
   const featured = fishName ? resolveFishArt(fishName, fishRarity) : null
   const rarity = featured ? normalizeFishRarity(fishRarity) : undefined
+  const tier = rodArtLevel(rodLevel)
   return (
     <div
       className={`fishing-pond is-${state}`}
       data-theme-part="game-stage"
       data-rarity={rarity}
+      data-bait={bait}
+      data-rod={tier}
+      style={{ '--rod-art': rodArtVar(tier) } as CSSProperties}
       aria-hidden="true"
     >
       <i className="fishing-pond-art" />
@@ -844,8 +855,23 @@ export function FishingPond({
         ))}
       </div>
       <i className="fishing-lurk" />
+      <i className="fishing-rod-glow" />
+      <i className="fishing-rod" />
       <i className="fishing-line" />
       <i className="fishing-bobber" />
+      {Array.from({ length: POND_LURES }, (_, index) => (
+        <i
+          key={`lure-${index}`}
+          className="fishing-lure-spark"
+          style={
+            {
+              '--lure-x': `${44 + (index % 3) * 6}%`,
+              '--lure-y': `${52 + (index % 4) * 5}%`,
+              '--lure-d': `${(index % 5) * 0.18}s`,
+            } as CSSProperties
+          }
+        />
+      ))}
       <i className="fishing-impact" />
       <i className="fishing-pond-ripple" />
       <i className="fishing-pond-ripple is-mid" />

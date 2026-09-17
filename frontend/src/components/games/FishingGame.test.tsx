@@ -95,6 +95,7 @@ it('exibe coleção e deixa nome, bônus e custo das iscas visíveis', async () 
   expect(document.querySelector('[data-side="left"] .fishing-tier[data-rarity="epic"]')).toBeNull()
   expect(screen.queryByRole('combobox')).toBeNull()
   expect(screen.getByText('Nível 3')).toBeVisible()
+  expect(screen.getByText('Vara de carvalho')).toBeVisible()
   expect(screen.getByText('40 / 300 XP')).toBeVisible()
   expect(screen.getByText('1 isca')).toBeVisible()
   expect(screen.getAllByText('Isca comum').length).toBeGreaterThanOrEqual(1)
@@ -124,6 +125,9 @@ it('exibe coleção e deixa nome, bônus e custo das iscas visíveis', async () 
   expect(document.querySelector('.fishing-board > .fishing-pond')).toBeTruthy()
   expect(document.querySelector('.fishing-stage .fishing-cast-button')).toBeTruthy()
   expect(document.querySelector('.fishing-pond.is-idle')).toBeTruthy()
+  expect(document.querySelector('.fishing-pond[data-bait="common"][data-rod="3"]')).toBeTruthy()
+  expect(document.querySelector('.fishing-pond .fishing-rod')).toBeTruthy()
+  expect(document.querySelector('.fishing-stat-rod .fishing-rod-portrait')).toBeTruthy()
   expect(document.querySelector('.fishing-pond-caustic')).toBeTruthy()
   expect(document.querySelectorAll('.fishing-bubble').length).toBeGreaterThan(0)
   expect(document.querySelectorAll('.fishing-droplet').length).toBeGreaterThan(0)
@@ -166,6 +170,7 @@ it('escolhe a isca no quadro sem comprar e lança com ela', async () => {
   await user.click(screen.getByRole('button', { name: 'Usar Isca do aprendiz neste lançamento' }))
   expect(gamesApi.buyBait).not.toHaveBeenCalled()
   expect(document.querySelector('.fishing-bait-frame.is-selected[data-kind="apprentice"]')).toBeTruthy()
+  expect(document.querySelector('.fishing-pond[data-bait="apprentice"]')).toBeTruthy()
   await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
   expect(gamesApi.cast).toHaveBeenCalledWith('aprendiz')
 })
@@ -222,6 +227,22 @@ it('mostra vazio quando não há iscas', async () => {
   expect(await screen.findByText(/Nenhuma isca à venda/i)).toBeVisible()
   expect(await screen.findByText(/precisa de iscas para lançar/i)).toBeVisible()
   expect(screen.getByRole('button', { name: 'Lançar a linha' })).toBeDisabled()
+})
+
+it('anuncia a vara nova quando o nível sobe', async () => {
+  vi.mocked(gamesApi.cast).mockResolvedValue({
+    success: true,
+    fish: { name: 'Truta', rarity: 'rare' },
+    rod: { level: 4, xp: 0 },
+    fichas: 20,
+    baits: 0,
+  })
+  const user = mount()
+  await screen.findByText('Nível 3')
+  await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
+  expect(
+    await screen.findByText('Você pescou Truta! A vara melhorou: Vara de bronze (nível 4).'),
+  ).toBeVisible()
 })
 
 it('volta o lago ao repouso quando o lançamento falha', async () => {

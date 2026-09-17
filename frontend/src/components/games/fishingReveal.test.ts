@@ -4,6 +4,8 @@ import {
   FISHING_CAST_MS,
   FISHING_TOTAL_MS,
   fishingPhase,
+  fishingStageMs,
+  fishingTotalMs,
   waitForFishingBite,
   waitForFishingCast,
   waitForFishingReveal,
@@ -45,4 +47,12 @@ it('marca a linha, a fisgada, o salto e o fim', () => {
   expect(fishingPhase(FISHING_CAST_MS + FISHING_BITE_MS)).toBe('reveal')
   expect(fishingPhase(FISHING_TOTAL_MS - 1)).toBe('reveal')
   expect(fishingPhase(FISHING_TOTAL_MS)).toBe('done')
+})
+
+it('acelera o palco com isca encantada', () => {
+  expect(fishingStageMs('enchanted').cast).toBeLessThan(FISHING_CAST_MS)
+  expect(fishingStageMs('enchanted').bite).toBeLessThan(FISHING_BITE_MS)
+  expect(fishingTotalMs('enchanted')).toBeGreaterThan(fishingStageMs('enchanted').cast)
+  expect(fishingPhase(fishingStageMs('enchanted').cast - 1, 'enchanted')).toBe('cast')
+  expect(fishingPhase(fishingStageMs('enchanted').cast, 'enchanted')).toBe('bite')
 })

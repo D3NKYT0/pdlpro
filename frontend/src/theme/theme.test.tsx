@@ -96,4 +96,10 @@ it('publica as sprites da pescaria no tema', () => {
   expect(document.documentElement.style.getPropertyValue('--theme-art-games-sword-10')).toContain(
     'games/sword-10.webp',
   )
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-rod-1')).toContain(
+    'games/rod-1.webp',
+  )
+  expect(document.documentElement.style.getPropertyValue('--theme-art-games-rod-10')).toContain(
+    'games/rod-10.webp',
+  )
 })

@@ -69,6 +69,16 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-games-sword-8',
   '--theme-art-games-sword-9',
   '--theme-art-games-sword-10',
+  '--theme-art-games-rod-1',
+  '--theme-art-games-rod-2',
+  '--theme-art-games-rod-3',
+  '--theme-art-games-rod-4',
+  '--theme-art-games-rod-5',
+  '--theme-art-games-rod-6',
+  '--theme-art-games-rod-7',
+  '--theme-art-games-rod-8',
+  '--theme-art-games-rod-9',
+  '--theme-art-games-rod-10',
 ] as const
 
 const GAME_ART = {
@@ -119,6 +129,16 @@ const GAME_ART = {
   '--theme-art-games-sword-8': 'games/sword-8.webp',
   '--theme-art-games-sword-9': 'games/sword-9.webp',
   '--theme-art-games-sword-10': 'games/sword-10.webp',
+  '--theme-art-games-rod-1': 'games/rod-1.webp',
+  '--theme-art-games-rod-2': 'games/rod-2.webp',
+  '--theme-art-games-rod-3': 'games/rod-3.webp',
+  '--theme-art-games-rod-4': 'games/rod-4.webp',
+  '--theme-art-games-rod-5': 'games/rod-5.webp',
+  '--theme-art-games-rod-6': 'games/rod-6.webp',
+  '--theme-art-games-rod-7': 'games/rod-7.webp',
+  '--theme-art-games-rod-8': 'games/rod-8.webp',
+  '--theme-art-games-rod-9': 'games/rod-9.webp',
+  '--theme-art-games-rod-10': 'games/rod-10.webp',
 } as const
 
 const DENSITY_PRESETS = {

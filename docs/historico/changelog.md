@@ -94,7 +94,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   fica visível (nome, bônus e custo, sem hover) e um «?» explica vara, iscas
   e coleção. A barra de XP mostra o progresso até o próximo nível. O cais
   divide iscas e lançar em dois painéis com borda (quantidade em cima,
-  três células de isca e o poço de lançar).
+  três células de isca e o poço de lançar). O palco anima a vara do nível
+  (junco → divina, `rod-1.webp`–`rod-10.webp`) e pinta boia, linha e ritmo
+  conforme a isca (comum, aprendiz ou encantada).
 - O **controle de recursos** em `/panel/admin/resources` passa ao chrome de
   Jogos/Serviços: cartões por categoria, código do módulo, interruptor
   compartilhado e nomes atuais (**Pescaria**, **Caça do dia**, **Lojas do

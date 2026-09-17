@@ -12,6 +12,8 @@ import {
   splitFishRarityColumns,
   resolveFishArt,
   rouletteReelStrip,
+  rodArtVar,
+  rodArtLevel,
   swordArtVar,
   swordEnchantLevel,
   visibleSlotReels,
@@ -86,6 +88,14 @@ it('agrupa a coleção por raridade e omite faixas vazias', () => {
     ['rare', ['Dourado']],
     ['divine', ['Serafim de Eva']],
   ])
+})
+
+it('limita a arte da vara à faixa 1 a 10', () => {
+  expect(rodArtLevel(Number.NaN)).toBe(1)
+  expect(rodArtLevel(-2)).toBe(1)
+  expect(rodArtLevel(3.6)).toBe(4)
+  expect(rodArtLevel(14)).toBe(10)
+  expect(rodArtVar(8)).toBe('var(--theme-art-games-rod-8)')
 })
 
 it('limita a arte da espada à faixa +0 a +10', () => {

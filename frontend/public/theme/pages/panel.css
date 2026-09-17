@@ -79,6 +79,16 @@ html.pdl-panel {
   --theme-art-games-sword-8: url(/theme/default/images/games/sword-8.webp);
   --theme-art-games-sword-9: url(/theme/default/images/games/sword-9.webp);
   --theme-art-games-sword-10: url(/theme/default/images/games/sword-10.webp);
+  --theme-art-games-rod-1: url(/theme/default/images/games/rod-1.webp);
+  --theme-art-games-rod-2: url(/theme/default/images/games/rod-2.webp);
+  --theme-art-games-rod-3: url(/theme/default/images/games/rod-3.webp);
+  --theme-art-games-rod-4: url(/theme/default/images/games/rod-4.webp);
+  --theme-art-games-rod-5: url(/theme/default/images/games/rod-5.webp);
+  --theme-art-games-rod-6: url(/theme/default/images/games/rod-6.webp);
+  --theme-art-games-rod-7: url(/theme/default/images/games/rod-7.webp);
+  --theme-art-games-rod-8: url(/theme/default/images/games/rod-8.webp);
+  --theme-art-games-rod-9: url(/theme/default/images/games/rod-9.webp);
+  --theme-art-games-rod-10: url(/theme/default/images/games/rod-10.webp);
   --theme-art-games-arena: none;
   --theme-art-games-chance-felt: none;
   --theme-art-games-chance-cabinet: none;
@@ -10672,6 +10682,9 @@ html.pdl-panel .fishing-streak,
 html.pdl-panel .fishing-lurk,
 html.pdl-panel .fishing-line,
 html.pdl-panel .fishing-bobber,
+html.pdl-panel .fishing-rod,
+html.pdl-panel .fishing-rod-glow,
+html.pdl-panel .fishing-lure-spark,
 html.pdl-panel .fishing-school,
 html.pdl-panel .fishing-catch {
   position: absolute;
@@ -10896,6 +10909,178 @@ html.pdl-panel .fishing-pond.is-caught .fishing-bobber,
 html.pdl-panel .fishing-pond.is-escaped .fishing-bobber {
   opacity: 1;
   animation: fishing-bobber-yank 0.4s ease-in both;
+}
+
+html.pdl-panel .fishing-rod {
+  z-index: 7;
+  left: 0;
+  bottom: 0;
+  width: auto;
+  height: 88%;
+  aspect-ratio: 1;
+  background: var(--rod-art) center / 82% no-repeat;
+  transform-origin: 22% 86%;
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+}
+
+html.pdl-panel .fishing-rod-glow {
+  z-index: 6;
+  left: 2%;
+  bottom: 4%;
+  width: 18%;
+  height: 64%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 199, 125, 0.2), transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+html.pdl-panel .fishing-pond.is-idle .fishing-rod {
+  animation: fishing-rod-idle 4.8s ease-in-out infinite;
+}
+
+html.pdl-panel .fishing-pond.is-casting .fishing-rod {
+  animation: fishing-rod-cast 0.7s cubic-bezier(0.18, 0.84, 0.22, 1) both;
+}
+
+html.pdl-panel .fishing-pond.is-bite .fishing-rod {
+  animation: fishing-rod-fight 0.38s ease-in-out infinite;
+}
+
+html.pdl-panel .fishing-pond.is-caught .fishing-rod {
+  animation: fishing-rod-lift 0.55s ease-out both;
+}
+
+html.pdl-panel .fishing-pond.is-escaped .fishing-rod {
+  animation: fishing-rod-snap 0.5s ease-in both;
+}
+
+html.pdl-panel .fishing-pond[data-rod="6"] .fishing-rod-glow,
+html.pdl-panel .fishing-pond[data-rod="7"] .fishing-rod-glow {
+  opacity: 0.55;
+}
+
+html.pdl-panel .fishing-pond[data-rod="8"] .fishing-rod-glow {
+  opacity: 0.75;
+  background: radial-gradient(circle, rgba(90, 210, 198, 0.28), transparent 72%);
+}
+
+html.pdl-panel .fishing-pond[data-rod="9"] .fishing-rod-glow,
+html.pdl-panel .fishing-pond[data-rod="10"] .fishing-rod-glow {
+  opacity: 0.9;
+  background: radial-gradient(circle, rgba(255, 248, 220, 0.42), transparent 70%);
+}
+
+html.pdl-panel .fishing-pond[data-rod="8"] .fishing-rod,
+html.pdl-panel .fishing-pond[data-rod="9"] .fishing-rod,
+html.pdl-panel .fishing-pond[data-rod="10"] .fishing-rod {
+  filter: drop-shadow(0 0 16px rgba(230, 199, 125, 0.4)) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+}
+
+html.pdl-panel .fishing-lure-spark {
+  z-index: 8;
+  left: var(--lure-x, 50%);
+  top: var(--lure-y, 56%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff4c8;
+  box-shadow: 0 0 8px rgba(230, 199, 125, 0.7);
+  opacity: 0;
+  pointer-events: none;
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-casting .fishing-lure-spark,
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-bite .fishing-lure-spark,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-casting .fishing-lure-spark,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-bite .fishing-lure-spark,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-caught .fishing-lure-spark {
+  animation: fishing-lure-spark 1s ease-out var(--lure-d, 0s) infinite;
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-lure-spark {
+  background: #9be7dc;
+  box-shadow: 0 0 10px rgba(155, 231, 220, 0.8);
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-line {
+  background: linear-gradient(180deg, transparent, rgba(230, 199, 125, 0.88));
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-bobber {
+  background: linear-gradient(#6b8f3a 52%, #e6c77d 52%);
+  box-shadow: 0 0 12px rgba(107, 143, 58, 0.45);
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-line {
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(155, 231, 220, 0.92));
+  box-shadow: 0 0 8px rgba(155, 231, 220, 0.4);
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-bobber {
+  background: linear-gradient(#2a7a76 52%, #c8fff6 52%);
+  box-shadow: 0 0 16px rgba(155, 231, 220, 0.7);
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-pond-caustic {
+  background:
+    radial-gradient(ellipse 42% 16% at 28% 64%, rgba(186, 220, 255, 0.14), transparent 70%),
+    radial-gradient(ellipse 34% 14% at 72% 72%, rgba(230, 199, 125, 0.2), transparent 68%),
+    radial-gradient(ellipse 22% 10% at 48% 58%, rgba(255, 255, 255, 0.1), transparent 70%);
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-pond-caustic {
+  background:
+    radial-gradient(ellipse 42% 16% at 28% 64%, rgba(155, 231, 220, 0.28), transparent 70%),
+    radial-gradient(ellipse 34% 14% at 72% 72%, rgba(230, 199, 125, 0.16), transparent 68%),
+    radial-gradient(ellipse 22% 10% at 48% 58%, rgba(255, 255, 255, 0.12), transparent 70%);
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-casting .fishing-line,
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-casting .fishing-rod {
+  animation-duration: 0.6s;
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-casting .fishing-line,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-casting .fishing-rod {
+  animation-duration: 0.48s;
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-casting .fishing-bobber {
+  animation:
+    fishing-bobber-land 0.42s ease-out both,
+    fishing-bob 1s ease-in-out 0.42s infinite;
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-casting .fishing-bobber {
+  animation:
+    fishing-bobber-land 0.34s ease-out both,
+    fishing-bob 0.82s ease-in-out 0.34s infinite;
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"].is-bite .fishing-bobber {
+  animation: fishing-dunk 0.32s ease-in-out infinite;
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-bite .fishing-bobber,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-bite .fishing-line {
+  animation-duration: 0.28s;
+}
+
+html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-splash {
+  background: radial-gradient(circle, rgba(230, 199, 125, 0.55), rgba(107, 143, 58, 0.22) 42%, transparent 72%);
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-splash {
+  background: radial-gradient(circle, rgba(155, 231, 220, 0.5), rgba(230, 199, 125, 0.22) 42%, transparent 72%);
+}
+
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-caught .fishing-impact,
+html.pdl-panel .fishing-pond[data-bait="enchanted"].is-casting .fishing-impact {
+  background: radial-gradient(circle, rgba(200, 255, 246, 0.8), transparent 68%);
 }
 
 html.pdl-panel .fishing-impact {
@@ -11262,6 +11447,21 @@ html.pdl-panel .fishing-stat-hint {
   color: var(--panel-muted);
   font-size: 10px;
   line-height: 1.3;
+}
+
+html.pdl-panel .fishing-stat-rod {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+html.pdl-panel .fishing-rod-portrait {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: var(--rod-art) center / contain no-repeat;
+  filter: drop-shadow(0 0 8px rgba(230, 199, 125, 0.28));
 }
 
 html.pdl-panel .fishing-stat .progress-bar {
@@ -12668,6 +12868,39 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   40% { transform: translateY(12px) scaleY(0.62); }
 }
 
+@keyframes fishing-rod-idle {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50% { transform: rotate(-1deg) translateY(2px); }
+}
+
+@keyframes fishing-rod-cast {
+  0% { transform: rotate(-22deg) translateY(-6px); }
+  38% { transform: rotate(8deg) translateY(8px); }
+  100% { transform: rotate(-4deg) translateY(0); }
+}
+
+@keyframes fishing-rod-fight {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(2deg) translateY(4px); }
+}
+
+@keyframes fishing-rod-lift {
+  0% { transform: rotate(-4deg); }
+  100% { transform: rotate(-18deg) translateY(-8px); }
+}
+
+@keyframes fishing-rod-snap {
+  0% { transform: rotate(-4deg); }
+  35% { transform: rotate(8deg); }
+  100% { transform: rotate(-14deg) translateY(4px); }
+}
+
+@keyframes fishing-lure-spark {
+  0% { opacity: 0; transform: scale(0.4) translateY(0); }
+  30% { opacity: 1; transform: scale(1.1) translateY(-6px); }
+  100% { opacity: 0; transform: scale(0.3) translateY(-18px); }
+}
+
 @keyframes fishing-impact {
   0% { opacity: 0.95; transform: scale(0.3); }
   100% { opacity: 0; transform: scale(2.4); }
@@ -12989,6 +13222,12 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .fishing-pond.is-bite .fishing-bobber,
   html.pdl-panel .fishing-pond.is-caught .fishing-bobber,
   html.pdl-panel .fishing-pond.is-escaped .fishing-bobber,
+  html.pdl-panel .fishing-pond.is-idle .fishing-rod,
+  html.pdl-panel .fishing-pond.is-casting .fishing-rod,
+  html.pdl-panel .fishing-pond.is-bite .fishing-rod,
+  html.pdl-panel .fishing-pond.is-caught .fishing-rod,
+  html.pdl-panel .fishing-pond.is-escaped .fishing-rod,
+  html.pdl-panel .fishing-lure-spark,
   html.pdl-panel .fishing-pond.is-casting .fishing-impact,
   html.pdl-panel .fishing-pond.is-bite .fishing-catch,
   html.pdl-panel .fishing-pond.is-caught .fishing-catch,

@@ -135,13 +135,15 @@ e as artes `images/games/fishing-pond.webp`,
 `images/games/monster-default.webp`, os retratos
 `images/games/monster-{keltir,wolf,goblin,orc,lizardman,ant,werewolf,ogre,drake,death-knight}.webp`
 e os ícones realistas
-`images/games/sword-{0-10}.webp` como `--theme-art-games-*`.
+`images/games/sword-{0-10}.webp` e `images/games/rod-{1-10}.webp` como `--theme-art-games-*`.
 A Arena das Feras usa a espada do encante atual (luz de Lineage
 que cresce do aço ao glow santo) e aceita textura opcional em
-`--theme-art-games-arena`. A Mesa da Taverna aceita textura opcional em
+`--theme-art-games-arena`. A pescaria usa a vara do nível atual
+(junco no 1 até a divina no 10; nível 11+ reusa a arte 10).
+A Mesa da Taverna aceita textura opcional em
 `--theme-art-games-chance-felt` e `--theme-art-games-chance-cabinet` (o default
 desenha feltro e gabinete só com tokens). O script `frontend/scripts/paint-box-chests.py` regenera os baús
-fechados, entreabertos e abertos.
+fechados, entreabertos e abertos. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 

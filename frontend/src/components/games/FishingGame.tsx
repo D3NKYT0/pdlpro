@@ -1,7 +1,7 @@
 import { Card } from '../ui/Card'
 import { Button, IconButton } from '../ui/Button'
 import { Field } from '../ui/Field'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { CircleHelp, Fish } from 'lucide-react'
@@ -18,7 +18,7 @@ import {
   type FishingBaitKind,
   type FishingPondState,
 } from './GameVisuals'
-import { groupFishByRarity, splitFishRarityColumns } from './gameArt'
+import { groupFishByRarity, rodArtLevel, rodArtVar, splitFishRarityColumns } from './gameArt'
 import { waitForFishingBite, waitForFishingCast, waitForFishingReveal } from './fishingReveal'
 import { writeCachedTokens } from './gameTokens'
 import { FishingHelpModal } from './FishingHelpModal'
@@ -118,8 +118,11 @@ export function FishingGame() {
   const commonStock = commonBait?.quantity ?? 0
   const stockedBaits = baits.filter((row) => row.quantity >= castCost)
   const selectedBait = stockedBaits.find((row) => row.id === bait) ?? stockedBaits[0]
+  const hookKind = fishingBaitKind(selectedBait?.paid_with, selectedBait?.price)
   const baitTotal = baits.reduce((sum, row) => sum + row.quantity, 0)
   const rodLevel = fishing.data?.rod.level || 1
+  const rodTier = rodArtLevel(rodLevel)
+  const rodName = t(`games.fishing.rodName.${rodTier}`)
   const rodXp = fishing.data?.rod.xp ?? 0
   const xpToNext = rodXpToNext(rodLevel)
   const xpPercent = Math.min(100, Math.round((rodXp / xpToNext) * 100))
@@ -173,13 +176,26 @@ export function FishingGame() {
         <span className="game-cost">{t('games.fishing.cost', { count: castCost })}</span>
       </div>
       <div className="fishing-board">
-        <FishingPond state={pond} fishName={catchFish?.art || catchFish?.name} fishRarity={catchFish?.rarity} />
+        <FishingPond
+          state={pond}
+          bait={hookKind}
+          rodLevel={rodLevel}
+          fishName={catchFish?.art || catchFish?.name}
+          fishRarity={catchFish?.rarity}
+        />
         <div className="fishing-stage">
           <div className="fishing-console">
             <div className="fishing-hud">
-              <div className="fishing-stat">
-                <small>{t('games.fishing.rod')}</small>
-                <strong>{t('games.fishing.rodLevel', { level: rodLevel })}</strong>
+              <div className="fishing-stat fishing-stat-rod">
+                <i
+                  className="fishing-rod-portrait"
+                  style={{ '--rod-art': rodArtVar(rodLevel) } as CSSProperties}
+                />
+                <div>
+                  <small>{t('games.fishing.rod')}</small>
+                  <strong>{t('games.fishing.rodLevel', { level: rodLevel })}</strong>
+                  <span className="fishing-stat-hint">{rodName}</span>
+                </div>
               </div>
               <div className="fishing-stat">
                 <small>{t('games.fishing.xp')}</small>
@@ -267,6 +283,8 @@ export function FishingGame() {
                     e.preventDefault()
                     if (!canCast || action.busy || !selectedBait) return
                     const usedBait = selectedBait
+                    const usedKind = fishingBaitKind(usedBait.paid_with, usedBait.price)
+                    const previousLevel = rodLevel
                     void action.run(async () => {
                       setPond('casting')
                       setCatchFish(null)
@@ -276,16 +294,23 @@ export function FishingGame() {
                         writeCachedTokens(queryClient, r.fichas)
                         if (usedBait.quantity <= castCost) setBait('')
                         if (r.fish) setCatchFish({ name: r.fish.name, rarity: r.fish.rarity, art: r.fish.art })
-                        await waitForFishingCast(started)
+                        await waitForFishingCast(started, Date.now(), usedKind)
                         setPond('bite')
-                        await waitForFishingBite(started)
+                        await waitForFishingBite(started, Date.now(), usedKind)
                         setPond(r.success ? 'caught' : 'escaped')
+                        const outcome = r.success
+                          ? t('games.fishing.caught', { name: r.fish?.name })
+                          : t('games.fishing.escaped')
+                        const upgraded = r.rod.level > previousLevel
                         setResult(
-                          r.success
-                            ? t('games.fishing.caught', { name: r.fish?.name })
-                            : t('games.fishing.escaped'),
+                          upgraded
+                            ? `${outcome} ${t('games.fishing.rodUpgraded', {
+                                level: r.rod.level,
+                                name: t(`games.fishing.rodName.${rodArtLevel(r.rod.level)}`),
+                              })}`
+                            : outcome,
                         )
-                        await waitForFishingReveal(started)
+                        await waitForFishingReveal(started, Date.now(), usedKind)
                         setPond('idle')
                         setCatchFish(null)
                       } catch (error) {

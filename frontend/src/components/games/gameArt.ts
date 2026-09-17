@@ -125,6 +125,7 @@ export function fishArtVar(id: FishArtId) {
 }
 
 export const SWORD_MAX_ENCHANT = 10
+export const ROD_MAX_TIER = 10
 
 /** Limita o encante da arte da arma à faixa +0 a +10. */
 export function swordEnchantLevel(level: number) {
@@ -135,6 +136,17 @@ export function swordEnchantLevel(level: number) {
 /** Token CSS da espada; o tema pode remapear `--theme-art-games-sword-*`. */
 export function swordArtVar(level: number) {
   return `var(--theme-art-games-sword-${swordEnchantLevel(level)})`
+}
+
+/** Limita a arte da vara à faixa 1–10; nível 11+ reusa a divina. */
+export function rodArtLevel(level: number) {
+  if (!Number.isFinite(level)) return 1
+  return Math.min(ROD_MAX_TIER, Math.max(1, Math.round(level)))
+}
+
+/** Token CSS da vara; o tema pode remapear `--theme-art-games-rod-*`. */
+export function rodArtVar(level: number) {
+  return `var(--theme-art-games-rod-${rodArtLevel(level)})`
 }
 
 /** Escolhe a sprite pelo nome da espécie; espécies novas caem na raridade. */
