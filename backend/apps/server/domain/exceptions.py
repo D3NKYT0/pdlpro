@@ -83,3 +83,14 @@ class NicknameTakenError(ConflictError):
 
     error_code = "NICKNAME_TAKEN"
     message = "Este nick já está em uso."
+
+
+class CharacterServiceUnavailableError(ValidationDomainError):
+    """Falha de domínio: O serviço de personagem não está disponível neste servidor.
+
+    A apresentação expõe o código ``SERVICE_UNAVAILABLE``. Lance quando o dialeto não tiver
+    a consulta ou a staff tiver desativado o serviço.
+    """
+
+    error_code = "SERVICE_UNAVAILABLE"
+    message = "Este serviço não está disponível neste servidor."

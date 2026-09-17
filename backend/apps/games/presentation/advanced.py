@@ -19,6 +19,12 @@ from apps.games.application.advanced_use_cases import (
     GetFishingDetailsUseCase,
     GetGameStatisticsUseCase,
 )
+from apps.games.application.hunt_use_cases import (
+    ClaimHuntInput,
+    ClaimHuntQuestUseCase,
+    GetHuntDetailsUseCase,
+    HuntActor,
+)
 from apps.games.application.staff_content_schema import (
     CONFIG_FIELDS,
     RELATED_FIELDS,
@@ -172,7 +178,12 @@ class GameStatisticsView(InjectedAPIView):
 
 _FIELD_TYPES = {
     "name": serializers.CharField(max_length=120),
+    "name_en": serializers.CharField(max_length=120, allow_blank=True, required=False, default=""),
+    "name_es": serializers.CharField(max_length=120, allow_blank=True, required=False, default=""),
     "description": serializers.CharField(allow_blank=True, required=False, default=""),
+    "description_en": serializers.CharField(allow_blank=True, required=False, default=""),
+    "description_es": serializers.CharField(allow_blank=True, required=False, default=""),
+    "metric": serializers.ChoiceField(choices=["pvp", "pk", "online_time", "level"]),
     "active": serializers.BooleanField(required=False, default=True),
     "premium_price": serializers.DecimalField(max_digits=12, decimal_places=2, min_value=0),
     "starts_at": serializers.DateTimeField(),
@@ -275,3 +286,51 @@ class StaffGameContentView(InjectedAPIView):
             )
         )
         return Response(cls(row).data)
+
+
+class HuntClaimSerializer(serializers.Serializer):
+    """Valida o resgate de uma missão da caça."""
+
+    quest_id = serializers.UUIDField()
+    login = serializers.CharField(required=False, allow_blank=True, default="")
+    char_id = serializers.IntegerField(required=False, default=0)
+
+
+class HuntDetailsView(InjectedAPIView):
+    """Consulta e resgata as missões da caça do dia."""
+
+    permission_classes = [IsAuthenticated]
+
+    def _actor(self, request, extra=None) -> HuntActor:
+        extra = extra or {}
+        return HuntActor(
+            user_id=request.user.id,
+            username=request.user.username,
+            language=getattr(request, "LANGUAGE_CODE", None) or "pt",
+            login=extra.get("login") or request.query_params.get("login", ""),
+            char_id=int(extra.get("char_id") or request.query_params.get("char_id") or 0),
+        )
+
+    @extend_schema(
+        tags=["Jogos"],
+        summary=gettext_lazy("Caça do dia"),
+        description=gettext_lazy("Lista as missões que leem PvP, tempo online ou nível do personagem no jogo."),
+    )
+    def get(self, request):
+        return Response(self.resolve(GetHuntDetailsUseCase).execute(self._actor(request)))
+
+    @extend_schema(
+        tags=["Jogos"],
+        summary=gettext_lazy("Resgatar caça do dia"),
+        description=gettext_lazy("Resgata uma missão da caça quando o personagem atingiu a meta no período."),
+        request=HuntClaimSerializer,
+    )
+    def post(self, request):
+        serializer = HuntClaimSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        return Response(
+            self.resolve(ClaimHuntQuestUseCase).execute(
+                ClaimHuntInput(actor=self._actor(request, data), quest_id=data["quest_id"])
+            )
+        )

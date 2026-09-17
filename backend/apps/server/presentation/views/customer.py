@@ -27,25 +27,33 @@ from apps.server.application.account_use_cases import (
     UpdateGamePasswordUseCase,
 )
 from apps.server.application.character_use_cases import (
+    ChangeAppearanceUseCase,
     ChangeNicknameUseCase,
     ChangeSexUseCase,
     CharacterServiceInput,
+    ClearKarmaUseCase,
+    ClearPkUseCase,
     ListServicePricesUseCase,
     PurchaseLinkSlotInput,
     PurchaseLinkSlotUseCase,
+    TeleportCharacterUseCase,
     UnstuckCharacterUseCase,
 )
+from apps.server.domain.appearance import appearance_value
 from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.presentation.serializers import (
     AccessibleAccountSerializer,
+    ChangeAppearanceSerializer,
     ChangeNicknameSerializer,
     ChangeSexSerializer,
+    ClearStatusSerializer,
     GameAccountSerializer,
     GameCharacterSerializer,
     LinkGameAccountSerializer,
     PrimaryLoginStateSerializer,
     PurchaseSlotSerializer,
     RegisterGameAccountSerializer,
+    TeleportSerializer,
     UnlinkGameAccountSerializer,
     UnstuckSerializer,
     UpdateGamePasswordSerializer,
@@ -362,6 +370,120 @@ class UnstuckView(InjectedAPIView):
                 username=request.user.username,
                 login=data["login"],
                 char_id=data["char_id"],
+            )
+        )
+        return Response({"ok": True})
+
+
+class TeleportView(InjectedAPIView):
+    """Entrada HTTP para ``TeleportCharacterUseCase``."""
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Teleportar personagem"),
+        description=gettext_lazy("Move o personagem offline para uma vila do catálogo, cobrando o serviço."),
+        request=TeleportSerializer,
+    )
+    def post(self, request):
+        serializer = TeleportSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        self.resolve(TeleportCharacterUseCase).execute(
+            (
+                CharacterServiceInput(
+                    user_id=request.user.id,
+                    username=request.user.username,
+                    login=data["login"],
+                    char_id=data["char_id"],
+                    request_key=data.get("request_key"),
+                ),
+                data["town"],
+            )
+        )
+        return Response({"ok": True})
+
+
+class ChangeAppearanceView(InjectedAPIView):
+    """Entrada HTTP para ``ChangeAppearanceUseCase``."""
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Alterar visual do personagem"),
+        description=gettext_lazy("Altera cabelo, cor e rosto do personagem offline, cobrando o serviço."),
+        request=ChangeAppearanceSerializer,
+    )
+    def post(self, request):
+        serializer = ChangeAppearanceSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        self.resolve(ChangeAppearanceUseCase).execute(
+            (
+                CharacterServiceInput(
+                    user_id=request.user.id,
+                    username=request.user.username,
+                    login=data["login"],
+                    char_id=data["char_id"],
+                    request_key=data.get("request_key"),
+                ),
+                appearance_value(data["hair_style"], data["hair_color"], data["face"]),
+            )
+        )
+        return Response({"ok": True})
+
+
+class ClearKarmaView(InjectedAPIView):
+    """Entrada HTTP para ``ClearKarmaUseCase``."""
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Limpar karma"),
+        description=gettext_lazy("Zera o karma do personagem offline, cobrando o serviço."),
+        request=ClearStatusSerializer,
+    )
+    def post(self, request):
+        serializer = ClearStatusSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        self.resolve(ClearKarmaUseCase).execute(
+            CharacterServiceInput(
+                user_id=request.user.id,
+                username=request.user.username,
+                login=data["login"],
+                char_id=data["char_id"],
+                request_key=data.get("request_key"),
+            )
+        )
+        return Response({"ok": True})
+
+
+class ClearPkView(InjectedAPIView):
+    """Entrada HTTP para ``ClearPkUseCase``."""
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Limpar PK"),
+        description=gettext_lazy("Zera a contagem de PK do personagem offline, cobrando o serviço."),
+        request=ClearStatusSerializer,
+    )
+    def post(self, request):
+        serializer = ClearStatusSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        self.resolve(ClearPkUseCase).execute(
+            CharacterServiceInput(
+                user_id=request.user.id,
+                username=request.user.username,
+                login=data["login"],
+                char_id=data["char_id"],
+                request_key=data.get("request_key"),
             )
         )
         return Response({"ok": True})

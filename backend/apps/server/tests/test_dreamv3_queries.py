@@ -34,7 +34,8 @@ def schema():
             obj_Id INTEGER PRIMARY KEY, account_name TEXT, char_name TEXT,
             online INTEGER, sex INTEGER, pvpkills INTEGER, pkkills INTEGER,
             title TEXT, clanid INTEGER, accesslevel INTEGER, onlinetime INTEGER,
-            karma INTEGER, lastAccess INTEGER, x INTEGER, y INTEGER, z INTEGER
+            karma INTEGER, lastAccess INTEGER, x INTEGER, y INTEGER, z INTEGER,
+            hairStyle INTEGER, hairColor INTEGER, face INTEGER
         );
         CREATE TABLE character_subclasses (
             char_obj_id INTEGER, level INTEGER, class_id INTEGER, isBase INTEGER
@@ -70,9 +71,17 @@ def schema():
             id INTEGER, name TEXT, siege_date INTEGER, treasury INTEGER, tax_percent INTEGER
         );
         CREATE TABLE siege_clans (type TEXT, clan_id INTEGER, residence_id INTEGER);
+        CREATE TABLE character_offline_trade (
+            charId INTEGER, time INTEGER, type INTEGER, title TEXT
+        );
+        CREATE TABLE character_offline_trade_items (
+            charId INTEGER, item INTEGER, count INTEGER, price INTEGER, enchant INTEGER
+        );
 
         INSERT INTO characters VALUES
-            (101, 'player', 'Knight', 0, 0, 10, 2, 'Title', 7, 0, 3600, 150, 1700000000000, 0, 0, 0);
+            (101, 'player', 'Knight', 0, 0, 10, 2, 'Title', 7, 0, 3600, 150, 1700000000000, 0, 0, 0, 1, 2, 0);
+        INSERT INTO character_offline_trade VALUES (101, 0, 1, 'Soulshots');
+        INSERT INTO character_offline_trade_items VALUES (101, 1835, 500, 800, 0);
         INSERT INTO character_subclasses VALUES (101, 80, 88, 1), (101, 40, 1, 0);
         INSERT INTO clan_data VALUES (7, 5, 200, 3, 1, NULL);
         INSERT INTO clan_subpledges VALUES (7, 0, 'Guild', 101);
@@ -93,7 +102,9 @@ def test_complete_feature_catalog():
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
     assert CATALOG.has("list_character_skills")
-    assert len(CATALOG._statements) == 53
+    assert len(CATALOG._statements) == 58
+    assert CATALOG.has("change_appearance")
+    assert CATALOG.has("list_private_stores")
 
 
 @pytest.mark.parametrize("name", READ_QUERIES)
@@ -114,6 +125,7 @@ def test_character_uses_base_class_and_main_clan(schema):
         "karma": 150, "adena": 350, "online_time": 3600, "last_access": 1700000000000,
         "clan_id": 7, "ally_id": 3, "ally_name": "Alliance",
         "clan_crest": None, "ally_crest": None,
+        "hair_style": 1, "hair_color": 2, "face": 0,
     }
 
 

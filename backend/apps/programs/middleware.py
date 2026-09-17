@@ -32,6 +32,8 @@ RESOURCE_PATHS = {
     "faq": ("public/faq/", "shared/content/faq/"),
     "downloads": ("public/downloads/",),
     "calendar": ("public/calendar/",),
+    "hunt": ("customer/games/hunt/",),
+    "game-stores": ("public/server/stores/",),
 }
 
 

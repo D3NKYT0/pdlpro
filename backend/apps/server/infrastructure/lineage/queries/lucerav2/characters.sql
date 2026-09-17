@@ -21,7 +21,10 @@ SELECT
     COALESCE(CD.ally_id, 0) AS ally_id,
     COALESCE(A.ally_name, '') AS ally_name,
     CD.crest AS clan_crest,
-    A.crest AS ally_crest
+    A.crest AS ally_crest,
+    COALESCE(C.hairStyle, 0) AS hair_style,
+    COALESCE(C.hairColor, 0) AS hair_color,
+    COALESCE(C.face, 0) AS face
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
 LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
@@ -57,7 +60,10 @@ SELECT
     COALESCE(CD.ally_id, 0) AS ally_id,
     COALESCE(A.ally_name, '') AS ally_name,
     CD.crest AS clan_crest,
-    A.crest AS ally_crest
+    A.crest AS ally_crest,
+    COALESCE(C.hairStyle, 0) AS hair_style,
+    COALESCE(C.hairColor, 0) AS hair_color,
+    COALESCE(C.face, 0) AS face
 FROM characters C
 LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
 LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
@@ -115,4 +121,22 @@ WHERE obj_Id = :cid
 SELECT obj_Id AS char_id
 FROM characters
 WHERE char_name = :name
+LIMIT 1
+
+-- name: change_appearance
+UPDATE characters
+SET hairStyle = :hair_style, hairColor = :hair_color, face = :face
+WHERE obj_Id = :cid AND account_name = :login
+LIMIT 1
+
+-- name: clear_karma
+UPDATE characters
+SET karma = 0
+WHERE obj_Id = :cid AND account_name = :login
+LIMIT 1
+
+-- name: clear_pk
+UPDATE characters
+SET pkkills = 0
+WHERE obj_Id = :cid AND account_name = :login
 LIMIT 1

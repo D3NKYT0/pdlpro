@@ -40,6 +40,16 @@ export interface ApiGameCharacter {
   ally_name: string
   clan_crest_base64: string
   ally_crest_base64: string
+  hair_style?: number
+  hair_color?: number
+  face?: number
+}
+
+export interface ApiServiceTown {
+  id: string
+  x: number
+  y: number
+  z: number
 }
 
 export interface ApiServicePrices {
@@ -47,6 +57,26 @@ export interface ApiServicePrices {
   CHANGE_SEX: string
   LINK_SLOT: string
   UNSTUCK: string
+  TELEPORT?: string
+  APPEARANCE?: string
+  CLEAR_KARMA?: string
+  CLEAR_PK?: string
+  available?: string[]
+  catalog?: {
+    towns: ApiServiceTown[]
+    appearance: {
+      hair_style_max_male: number
+      hair_style_max_female: number
+      hair_color_max: number
+      face_max: number
+    }
+  }
+}
+
+export function serviceAvailable(prices: ApiServicePrices | undefined, code: string) {
+  if (!prices) return false
+  if (prices.available) return prices.available.includes(code)
+  return code in prices
 }
 
 export interface ApiInventoryRow {
@@ -147,6 +177,33 @@ export const lineageApi = {
     request('/customer/server/characters/unstuck/', {
       method: 'POST',
       body: JSON.stringify({ login, char_id }),
+    }),
+  teleport: (login: string, char_id: number, town: string, request_key?: string) =>
+    request('/customer/server/characters/teleport/', {
+      method: 'POST',
+      body: JSON.stringify({ login, char_id, town, request_key }),
+    }),
+  changeAppearance: (
+    login: string,
+    char_id: number,
+    hair_style: number,
+    hair_color: number,
+    face: number,
+    request_key?: string,
+  ) =>
+    request('/customer/server/characters/appearance/', {
+      method: 'POST',
+      body: JSON.stringify({ login, char_id, hair_style, hair_color, face, request_key }),
+    }),
+  clearKarma: (login: string, char_id: number, request_key?: string) =>
+    request('/customer/server/characters/karma/', {
+      method: 'POST',
+      body: JSON.stringify({ login, char_id, request_key }),
+    }),
+  clearPk: (login: string, char_id: number, request_key?: string) =>
+    request('/customer/server/characters/pk/', {
+      method: 'POST',
+      body: JSON.stringify({ login, char_id, request_key }),
     }),
   characterSkills: (charId: number, login?: string) =>
     request<ApiGameSkill[]>(

@@ -146,6 +146,10 @@
       "CHANGE_SEX": "Changes the character's sex and base appearance.",
       "LINK_SLOT": "Frees a new slot to link an account.",
       "UNSTUCK": "Moves a stuck character to a safe position.",
+      "TELEPORT": "Teleports an offline character to a catalog town.",
+      "APPEARANCE": "Changes the character's hair, color and face.",
+      "CLEAR_KARMA": "Sets the character's karma to zero.",
+      "CLEAR_PK": "Sets the character's PK count to zero.",
       "fallback": "Configurable character service."
     },
     "active": "Active",
@@ -950,7 +954,8 @@
       "prizes": "Roulette prizes",
       "fish": "Fish",
       "monsters": "Arena monsters",
-      "box-items": "Chest items"
+      "box-items": "Chest items",
+      "hunt-quests": "Daily hunt"
     },
     "fields": {
       "name": "Name",
@@ -997,7 +1002,14 @@
       "hp": "HP",
       "attack": "Attack",
       "defense": "Defense",
-      "respawn_seconds": "Respawn (s)"
+      "respawn_seconds": "Respawn (s)",
+      "metric": "Character metric"
+    },
+    "huntMetrics": {
+      "pvp": "PvP",
+      "pk": "PK",
+      "online_time": "Online time",
+      "level": "Level"
     },
     "prizeRarity": {
       "comum": "Common",

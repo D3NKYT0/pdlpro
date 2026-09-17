@@ -93,7 +93,7 @@ class GameCharacterSerializer(serializers.Serializer):
     Campos declarados: ``char_id``, ``name``, ``level``, ``online``, ``sex``, ``pvp``, ``pk``,
     ``class_id``, ``title``, ``clan_name``, ``is_clan_leader``, ``karma``, ``adena``,
     ``online_time``, ``last_access``, ``clan_id``, ``ally_id``, ``ally_name``,
-    ``clan_crest_base64``, ``ally_crest_base64``.
+    ``clan_crest_base64``, ``ally_crest_base64``, ``hair_style``, ``hair_color``, ``face``.
     """
 
     char_id = serializers.IntegerField()
@@ -116,6 +116,9 @@ class GameCharacterSerializer(serializers.Serializer):
     ally_name = serializers.CharField(allow_blank=True)
     clan_crest_base64 = serializers.CharField(allow_blank=True)
     ally_crest_base64 = serializers.CharField(allow_blank=True)
+    hair_style = serializers.IntegerField()
+    hair_color = serializers.IntegerField()
+    face = serializers.IntegerField()
 
 
 class RegisterGameAccountSerializer(serializers.Serializer):
@@ -231,6 +234,34 @@ class UnstuckSerializer(serializers.Serializer):
 
     login = serializers.CharField()
     char_id = serializers.IntegerField()
+
+
+class TeleportSerializer(serializers.Serializer):
+    """Valida o personagem e o destino de teleporte da taverna."""
+
+    login = serializers.CharField()
+    char_id = serializers.IntegerField()
+    town = serializers.CharField(max_length=40)
+    request_key = serializers.UUIDField(required=False)
+
+
+class ChangeAppearanceSerializer(serializers.Serializer):
+    """Valida o visual (cabelo, cor e rosto) do personagem."""
+
+    login = serializers.CharField()
+    char_id = serializers.IntegerField()
+    hair_style = serializers.IntegerField(min_value=0, max_value=6)
+    hair_color = serializers.IntegerField(min_value=0, max_value=3)
+    face = serializers.IntegerField(min_value=0, max_value=2)
+    request_key = serializers.UUIDField(required=False)
+
+
+class ClearStatusSerializer(serializers.Serializer):
+    """Valida o personagem para limpar karma ou PK."""
+
+    login = serializers.CharField()
+    char_id = serializers.IntegerField()
+    request_key = serializers.UUIDField(required=False)
 
 
 class PurchaseSlotSerializer(serializers.Serializer):

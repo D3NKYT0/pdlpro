@@ -42,7 +42,7 @@
       "server": { "title": "Painel e servidor", "description": "Nome, rates, chronicle e coming soon" },
       "itemWatch": { "title": "Observar itens", "description": "Economia do servidor, favoritos, snapshots e comparação entre datas" },
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
-      "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots e destravamento" },
+      "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
       "lineageAccounts": { "title": "Contas Lineage", "description": "Consultar login e remover o vínculo com o painel" }
     }
   },
@@ -146,6 +146,10 @@
       "CHANGE_SEX": "Altera o sexo e a aparência-base do personagem.",
       "LINK_SLOT": "Libera um novo espaço para vincular uma conta.",
       "UNSTUCK": "Move um personagem travado para uma posição segura.",
+      "TELEPORT": "Teleporta o personagem offline para uma vila do catálogo.",
+      "APPEARANCE": "Altera cabelo, cor e rosto do personagem.",
+      "CLEAR_KARMA": "Zera o karma do personagem.",
+      "CLEAR_PK": "Zera a contagem de PK do personagem.",
       "fallback": "Serviço configurável do personagem."
     },
     "active": "Ativo",
@@ -950,7 +954,8 @@
       "prizes": "Prêmios da roleta",
       "fish": "Peixes",
       "monsters": "Monstros da arena",
-      "box-items": "Itens dos baús"
+      "box-items": "Itens dos baús",
+      "hunt-quests": "Caça do dia"
     },
     "fields": {
       "name": "Nome",
@@ -997,7 +1002,14 @@
       "hp": "HP",
       "attack": "Ataque",
       "defense": "Defesa",
-      "respawn_seconds": "Respawn (s)"
+      "respawn_seconds": "Respawn (s)",
+      "metric": "Métrica do personagem"
+    },
+    "huntMetrics": {
+      "pvp": "PvP",
+      "pk": "PK",
+      "online_time": "Tempo online",
+      "level": "Nível"
     },
     "prizeRarity": {
       "comum": "Comum",

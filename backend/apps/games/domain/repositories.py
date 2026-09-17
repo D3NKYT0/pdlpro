@@ -606,3 +606,42 @@ class IBattlePassRepository(ABC):
     @abstractmethod
     def count_season_reward_claims(self, user, season) -> int:
         raise NotImplementedError
+
+
+class IHuntRepository(ABC):
+    """Porta das missões da caça do dia (leitura do personagem no jogo)."""
+
+    @abstractmethod
+    def require_user(self, user_id: UUID):
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_quests(self) -> list[Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_active_quest(self, quest_id: UUID) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_or_create_snapshot(
+        self,
+        user,
+        *,
+        login: str,
+        character_id: int,
+        period_start: date,
+        pvp: int,
+        pk: int,
+        online_time: int,
+        level: int,
+    ) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def has_claim(self, user, quest, period_start: date) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def create_claim(self, user, quest, *, character_id: int, period_start: date) -> Any:
+        raise NotImplementedError

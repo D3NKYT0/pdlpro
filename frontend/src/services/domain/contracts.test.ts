@@ -117,6 +117,8 @@ const contracts: Contract[] = [
   ['server.rankings', () => serverApi.rankings('pvp'), '/public/server/rankings/pvp/'],
   ['server.limit', () => serverApi.rankings('pvp', 10), '/public/server/rankings/pvp/?limit=10'],
   ['server.world', () => serverApi.world('bosses'), '/public/server/world/bosses/'],
+  ['server.stores', () => serverApi.stores(), '/public/server/stores/'],
+  ['server.storesQuery', () => serverApi.stores('sword', 'sell'), '/public/server/stores/?q=sword&type=sell'],
   ['lineage.accounts', () => lineageApi.accounts(), '/customer/server/accounts/'],
   ['lineage.register', () => lineageApi.register('secret'), '/customer/server/accounts/register/', 'POST', { password: 'secret' }],
   ['lineage.explicitLogin', () => lineageApi.register('secret', 'hero'), '/customer/server/accounts/register/', 'POST', { password: 'secret', login: 'hero' }],
@@ -133,6 +135,10 @@ const contracts: Contract[] = [
   ['lineage.nickname', () => lineageApi.changeNickname('hero', 7, 'New'), '/customer/server/characters/nickname/', 'POST', { login: 'hero', char_id: 7, name: 'New' }],
   ['lineage.sex', () => lineageApi.changeSex('hero', 7, 'F'), '/customer/server/characters/sex/', 'POST', { login: 'hero', char_id: 7, sex: 'F' }],
   ['lineage.unstuck', () => lineageApi.unstuck('hero', 7), '/customer/server/characters/unstuck/', 'POST', { login: 'hero', char_id: 7 }],
+  ['lineage.teleport', () => lineageApi.teleport('hero', 7, 'giran'), '/customer/server/characters/teleport/', 'POST', { login: 'hero', char_id: 7, town: 'giran' }],
+  ['lineage.appearance', () => lineageApi.changeAppearance('hero', 7, 1, 2, 0), '/customer/server/characters/appearance/', 'POST', { login: 'hero', char_id: 7, hair_style: 1, hair_color: 2, face: 0 }],
+  ['lineage.karma', () => lineageApi.clearKarma('hero', 7), '/customer/server/characters/karma/', 'POST', { login: 'hero', char_id: 7 }],
+  ['lineage.pk', () => lineageApi.clearPk('hero', 7), '/customer/server/characters/pk/', 'POST', { login: 'hero', char_id: 7 }],
   ['inventory.dashboard', () => inventoryApi.dashboard(), '/customer/inventory/'],
   ['inventory.account', () => inventoryApi.dashboard('a&b'), '/customer/inventory/?login=a%26b'],
   ['inventory.items', () => inventoryApi.gameItems(7), '/customer/inventory/characters/7/items/'],
@@ -184,6 +190,9 @@ const contracts: Contract[] = [
   ['games.fishingDetails', () => gamesApi.fishingDetails(), '/customer/games/fishing/details/'],
   ['games.buyBait', () => gamesApi.buyBait('bait', 2), '/customer/games/fishing/details/', 'POST', { bait_id: 'bait', quantity: 2 }],
   ['games.stats', () => gamesApi.stats('dice'), '/customer/games/statistics/dice/'],
+  ['games.hunt', () => gamesApi.hunt(), '/customer/games/hunt/'],
+  ['games.huntChar', () => gamesApi.hunt('hero', 7), '/customer/games/hunt/?login=hero&char_id=7'],
+  ['games.claimHunt', () => gamesApi.claimHunt('q1', 'hero', 7), '/customer/games/hunt/', 'POST', { quest_id: 'q1', login: 'hero', char_id: 7 }],
   ['staffGame.configs', () => staffGameContentApi.configs('baits'), '/staff/game-content/baits/'],
   ['staffGame.createConfig', () => staffGameContentApi.saveConfig('baits', { name: 'New' }), '/staff/game-content/baits/', 'POST', { name: 'New' }],
   ['staffGame.updateConfig', () => staffGameContentApi.saveConfig('baits', { active: false }, 'bait'), '/staff/game-content/baits/bait/', 'PATCH', { active: false }],
@@ -296,5 +305,21 @@ it('serviços pagos enviam a chave de repetição no contrato HTTP', async () =>
   await lineageApi.changeSex('hero', 7, 'F', '22222222-2222-4222-8222-222222222222')
   expect(send).toHaveBeenLastCalledWith('/customer/server/characters/sex/', {
     method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, sex: 'F', request_key: '22222222-2222-4222-8222-222222222222' }),
+  })
+  await lineageApi.teleport('hero', 7, 'giran', '33333333-3333-4333-8333-333333333333')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/teleport/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, town: 'giran', request_key: '33333333-3333-4333-8333-333333333333' }),
+  })
+  await lineageApi.changeAppearance('hero', 7, 1, 2, 0, '44444444-4444-4444-8444-444444444444')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/appearance/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, hair_style: 1, hair_color: 2, face: 0, request_key: '44444444-4444-4444-8444-444444444444' }),
+  })
+  await lineageApi.clearKarma('hero', 7, '55555555-5555-4555-8555-555555555555')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/karma/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, request_key: '55555555-5555-4555-8555-555555555555' }),
+  })
+  await lineageApi.clearPk('hero', 7, '66666666-6666-4666-8666-666666666666')
+  expect(send).toHaveBeenLastCalledWith('/customer/server/characters/pk/', {
+    method: 'POST', body: JSON.stringify({ login: 'hero', char_id: 7, request_key: '66666666-6666-4666-8666-666666666666' }),
   })
 })

@@ -4,6 +4,7 @@
     "home": "Início",
     "info": "Informações",
     "rankings": "Rankings",
+    "stores": "Lojas",
     "wiki": "Wiki",
     "news": "Notícias",
     "roadmap": "Roadmap",
@@ -517,6 +518,28 @@
     "title": "Calendário",
     "empty": "Nenhum evento publicado.",
     "range": "{{start}} — {{end}}"
+  },
+  "stores": {
+    "eyebrow": "Economia do mundo",
+    "title": "Lojas do jogo",
+    "description": "Private stores offline publicadas no servidor. Busque pelo item ou pelo vendedor.",
+    "search": "Buscar item ou vendedor",
+    "type": "Tipo",
+    "allTypes": "Todas",
+    "types": {
+      "sell": "Venda",
+      "buy": "Compra",
+      "package": "Pacote",
+      "craft": "Craft"
+    },
+    "loading": "Consultando as lojas...",
+    "empty": "Nenhuma loja offline no momento.",
+    "unavailable": "Este servidor ainda não publica lojas no painel.",
+    "error": "Não foi possível carregar as lojas.",
+    "noTitle": "Sem título",
+    "items": "{{count}} itens",
+    "price": "{{price}} adena",
+    "enchant": "+{{value}}"
   },
   "resourceGate": {
     "title": "Recurso temporariamente desativado",

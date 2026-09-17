@@ -95,6 +95,9 @@ class GameCharacter:
     ally_name: str = ""
     clan_crest_base64: str = ""
     ally_crest_base64: str = ""
+    hair_style: int = 0
+    hair_color: int = 0
+    face: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -126,6 +129,32 @@ class GameSkill:
     skill_id: int
     level: int
     class_index: int = 0
+
+
+@dataclass(frozen=True, slots=True)
+class GameStoreItem:
+    """Item anunciado em uma loja offline do jogo."""
+
+    item_id: int
+    quantity: int
+    price: int
+    enchant: int = 0
+    char_id: int = 0
+
+
+@dataclass(frozen=True, slots=True)
+class GameStore:
+    """Loja privada offline (private store) exposta pelo gameserver."""
+
+    char_id: int
+    name: str
+    store_type: int
+    title: str = ""
+    x: int = 0
+    y: int = 0
+    z: int = 0
+    clan_name: str = ""
+    items: tuple[GameStoreItem, ...] = ()
 
 
 class ILineageGateway(ABC):
@@ -228,6 +257,51 @@ class ILineageGateway(ABC):
 
     @abstractmethod
     def unstuck(self, login: str, char_id: int) -> None: ...
+
+    def supports(self, capability: str) -> bool:
+        """Indica se o adaptador executa o serviço ou consulta informados."""
+
+        return capability in {"CHANGE_NICKNAME", "CHANGE_SEX", "UNSTUCK", "TELEPORT", "LINK_SLOT"}
+
+    def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        """Move o personagem offline para as coordenadas informadas."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def change_appearance(
+        self, login: str, char_id: int, hair_style: int, hair_color: int, face: int
+    ) -> None:
+        """Altera cabelo, cor e rosto do personagem offline."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def clear_karma(self, login: str, char_id: int) -> None:
+        """Zera o karma do personagem offline."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def clear_pk(self, login: str, char_id: int) -> None:
+        """Zera a contagem de PK do personagem offline."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def list_private_stores(self) -> list[GameStore]:
+        """Lojas offline do mundo; vazio quando o dialeto não publica a consulta."""
+
+        return []
+
+    def list_private_store_items(self) -> list[GameStoreItem]:
+        """Itens de todas as lojas offline, com ``char_id`` para agrupar."""
+
+        return []
 
     @abstractmethod
     def count_characters(self, login: str) -> int: ...

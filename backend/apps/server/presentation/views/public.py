@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from apps.server.application.store_use_cases import ListGameStoresUseCase
 from apps.server.application.use_cases import (
     GetRankingInput,
     GetRankingUseCase,
@@ -119,3 +120,25 @@ class PublicLineageQueryView(InjectedAPIView):
             RunPublicLineageQueryInput(name=name, params=params)
         )
         return Response([dump_sql_row(row) for row in rows])
+
+
+class GameStoresView(InjectedAPIView):
+    """Entrada HTTP para ``ListGameStoresUseCase``."""
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    @extend_schema(
+        tags=["Servidor"],
+        summary=gettext_lazy("Lojas do jogo"),
+        description=gettext_lazy("Lista as lojas privadas offline publicadas no banco do jogo."),
+    )
+    def get(self, request):
+        return Response(
+            self.resolve(ListGameStoresUseCase).execute(
+                {
+                    "query": request.query_params.get("q", ""),
+                    "store_type": request.query_params.get("type", ""),
+                }
+            )
+        )

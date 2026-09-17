@@ -13,10 +13,11 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Disponibilidade de módulos | Navegação e bloqueio da API | `/panel/admin/resources` |
 | Conta L2, perfil e progresso | `/panel/accounts`, `/panel/profile`, `/panel` (nível, conquistas e prêmios da conta) | Controle de recursos |
 | Avisos, atendimento e ajuda | sino da barra superior, `/panel/help` (Atendimento só pela Ajuda) | `/panel/admin/notifications`, `/panel/admin/support` |
-| Conteúdo público do site | Rankings, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
+| Conteúdo público do site | Rankings, lojas do jogo, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
 | Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |
-| Passe, bônus diário e rankings | `/panel/rewards` | `/panel/admin/rewards` |
+| Passe, bônus diário, caça do dia e rankings | `/panel/rewards` | `/panel/admin/rewards` (missões da caça em `hunt-quests`) |
+| Lojas offline do jogo | `/stores` | Consulta somente leitura; SQL opcional por dialeto |
 | Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar, **Configurar** por jogo e **Configurar todos**) |
 | Pesca, iscas e coleção | `/panel/games?tab=fishing` | `/panel/admin/rewards` |
 
@@ -29,7 +30,11 @@ e prêmio maior.
 
 Os **Baús Encantados** funcionam diferente da roleta: o **item em mira é sempre lendário** e já está em um dos pacotes. O título da aba tem um atalho “?” que abre o passo a passo (mira, compra, abrir e resetar). Quem compra leva o item se abrir todos — a sorte só decide se sai no primeiro ou no último. A compra do baú é em reais e libera de **20 a 50 pacotes** (comum → lendário); **abrir** um pacote consome 1 ficha. Resetar só vale depois de abrir pelo menos um pacote e pede confirmação; um baú intacto não pode ser rerolado. Os outros pacotes saem só do catálogo do tier (sem outro lendário). O baú do card treme e, em seguida, um modal no centro troca os frames (fechado → entreaberto → aberto) e revela o item centralizado sob o baú aberto, sem toast. Sem fichas, a tela abre um modal de vitrine para comprar (pacotes, total em reais; 1 ficha = R$ 1 da carteira) em vez de só avisar saldo insuficiente. Se o pacote for o da mira, o fundo do modal muda para um lavado dourado-violeta com partículas e faixas em movimento. O autoconfig põe uma mira lendária **diferente** em cada baú, no estilo low rate: Blessed Enchant Weapon A no comum, Armor S no raro, Weapon S no épico e Ring of Baium no lendário. O resto do catálogo é stack Interlude do tier (Adena, soulshot, poção, SoE, crystal, encant D–A, Gold Bar, Coin of Luck). A arte do baú é pixel art da paleta do painel (`images/games/box-*.webp`), não foto.
 
-O controle central oferece 23 módulos organizados por categoria (economia, jogos, conta, comunicação e conteúdo do site). Desativar bloqueia os endpoints correspondentes e a tela; não apaga dados nem bloqueia a administração. Perfil e segurança de autenticação ficam acessíveis no menu conforme a política de cada módulo; Conta e segurança permanece sempre disponível. Os jogos continuam respeitando também suas configurações individuais.
+A **Caça do dia** (`/panel/rewards?tab=hunt`) lê PvP, PK, tempo online e nível no personagem L2. No primeiro acesso do período (dia ou semana) o painel grava um snapshot; o progresso é a diferença até o valor ao vivo. O resgate entrega recompensas da bag/carteira uma vez por missão e período. Não exige logout. A staff edita as missões em `/panel/admin/rewards` (área Caça do dia), com nome/descrição PT/EN/ES.
+
+As **Lojas do jogo** (`/stores`) listam private stores offline publicadas no servidor (`character_offline_trade`). A tela é pública e somente leitura: busca por item ou vendedor e filtro por tipo (venda, compra, pacote, craft). Sem as consultas no catálogo SQL, a API devolve `available: false` e a SPA esconde o módulo.
+
+O controle central oferece 25 módulos organizados por categoria (economia, jogos, conta, comunicação e conteúdo do site). Desativar bloqueia os endpoints correspondentes e a tela; não apaga dados nem bloqueia a administração. Perfil e segurança de autenticação ficam acessíveis no menu conforme a política de cada módulo; Conta e segurança permanece sempre disponível. Os jogos continuam respeitando também suas configurações individuais.
 
 Em `/panel/admin/games`, cada card abre um **configurador** (parâmetros +
 catálogo jogável). **Preencher conteúdo** / **Configurar todos** aplica IDs
@@ -50,6 +55,7 @@ usam `GameConfig`.
 - A comissão é calculada sobre o saldo normal efetivamente pago, após desconto e descontado o bônus. A aprovação da solicitação credita a carteira uma única vez; a recusa libera as comissões para nova solicitação.
 - O checkout compra itens e pacotes na mesma transação, preserva a composição histórica, entrega na bag e usa chave de idempotência. Alterar um pacote depois não altera compras anteriores.
 - Missões contam eventos reais do período diário, semanal ou da temporada. Trocas consomem o item e encantamento exatos da bag. Marcos e prêmios só são resgatados uma vez. Resgate automático atende prêmios de nível, respeitando premium.
+- A caça do dia mede o delta do personagem desde o snapshot do período (PvP, PK, tempo online ou nível). Cada missão resgata uma vez por período e usuário. Sem personagem acessível a lista vem vazia.
 - Bônus sazonal usa o dia do calendário da temporada, não uma sequência pessoal de login. Um conjunto extra pode ser sorteado por peso. Sem temporada ativa, o bônus simples anterior permanece disponível. O limite é um resgate por data local.
 - O lançamento consome 1 isca comum ou 1 das duas encantadas, não fichas. Fichas só compram isca comum (**1 ficha = 10**). Aprendiz e encantada saem das comuns (3 e 8). Sem isca no estoque a linha não sai. A isca é gasta mesmo quando o peixe escapa. Coleção registra capturas bem-sucedidas. Rankings de cada minigame ordenam resultados positivos e partidas.
 

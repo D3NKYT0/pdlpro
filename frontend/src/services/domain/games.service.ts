@@ -73,6 +73,37 @@ export type BattleDetails = {
   }[]
 }
 
+export type HuntDetails = {
+  character: {
+    login: string
+    char_id: number
+    name: string
+    level: number
+    pvp: number
+    pk: number
+    online_time: number
+    online: boolean
+  } | null
+  characters: Array<{
+    login: string
+    char_id: number
+    name: string
+    level: number
+    online: boolean
+  }>
+  quests: Array<{
+    id: string
+    name: string
+    description: string
+    metric: string
+    target: number
+    current: number
+    period: string
+    claimed: boolean
+    rewards: Reward[]
+  }>
+}
+
 export type DailyDetails = {
   season: {
     id: string
@@ -225,4 +256,13 @@ export const gamesApi = {
       quantity,
     }),
   stats: (kind: string) => request<GameStats>(`/customer/games/statistics/${kind}/`),
+  hunt: (login?: string, charId?: number) => {
+    const query = new URLSearchParams()
+    if (login) query.set('login', login)
+    if (charId) query.set('char_id', String(charId))
+    const suffix = query.toString() ? `?${query}` : ''
+    return request<HuntDetails>(`/customer/games/hunt/${suffix}`)
+  },
+  claimHunt: (quest_id: string, login?: string, char_id?: number) =>
+    sendJson<HuntDetails>('/customer/games/hunt/', { quest_id, login, char_id }),
 }

@@ -92,6 +92,13 @@ def validate_game_content_fields(
                     exclude_id=exclude_id,
                 ):
                     raise ValidationDomainError("Já existe uma temporada ativa neste período.")
+    if kind == "hunt-quests" and "metric" in data and data["metric"] not in (
+        "pvp",
+        "pk",
+        "online_time",
+        "level",
+    ):
+        raise ValidationDomainError("Métrica da caça inválida.")
     if kind == "daily-days" and value("season") and value("day"):
         season = value("season")
         day = value("day")

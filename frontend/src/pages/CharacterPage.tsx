@@ -15,6 +15,9 @@ import {
   MapPin,
   Package,
   Pencil,
+  Scissors,
+  ShieldOff,
+  Skull,
   Store,
   Undo2,
   UsersRound,
@@ -23,7 +26,7 @@ import {
 import { formatServicePrice, getClassName } from '../lib/lineage'
 import { formatCompactQuantity } from '../lib/formatters'
 import { formatDate, formatDuration } from '../components/rankings/rankingsFormat'
-import { inventoryApi, isApiError, lineageApi } from '../services/api'
+import { inventoryApi, isApiError, lineageApi, serviceAvailable } from '../services/api'
 import { ExtensionSlotOutlet } from '../extensions'
 import { CharacterBagPanel } from '../components/character/CharacterBagPanel'
 import { CharacterPaperdoll } from '../components/character/CharacterPaperdoll'
@@ -70,7 +73,11 @@ export function CharacterPage() {
   })
   const [nickname, setNickname] = useState('')
   const [sex, setSex] = useState<'M' | 'F' | ''>('')
-  const [submitting, setSubmitting] = useState<'nick' | 'sex' | 'unstuck' | null>(null)
+  const [town, setTown] = useState('')
+  const [hairStyle, setHairStyle] = useState(0)
+  const [hairColor, setHairColor] = useState(0)
+  const [face, setFace] = useState(0)
+  const [submitting, setSubmitting] = useState<string | null>(null)
   const [selectedItem, setSelectedItem] = useState<CharacterItemDetail | null>(null)
   const action = useAsyncAction()
   const operation = useRef<{ payload: string; key: string } | null>(null)
@@ -83,6 +90,11 @@ export function CharacterPage() {
   const missing = characters.isSuccess && Number.isFinite(id) && !char
   const offline = Boolean(char && !char.online)
   const equippedItems = equipment.data ?? []
+  const towns = prices.data?.catalog?.towns ?? []
+  const appearance = prices.data?.catalog?.appearance
+  const hairMax = char?.sex === 1 ? appearance?.hair_style_max_female ?? 6 : appearance?.hair_style_max_male ?? 4
+  const colorMax = appearance?.hair_color_max ?? 3
+  const faceMax = appearance?.face_max ?? 2
 
   async function refreshCharacter() {
     await queryClient.invalidateQueries({ queryKey: ['characters', login] })
@@ -129,6 +141,52 @@ export function CharacterPage() {
       } finally { setSubmitting(null) }
     })
     if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.unstuckError')))
+  }
+
+  async function onTeleport(event: FormEvent) {
+    event.preventDefault()
+    if (!town) return
+    const result = await action.run(async () => {
+      setSubmitting('teleport')
+      try {
+        await lineageApi.teleport(login, id, town, requestKey('teleport', town))
+        operation.current = null
+        toast.success(t('character.toast.teleportDone'))
+        await queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.teleportError')))
+  }
+
+  async function onAppearance(event: FormEvent) {
+    event.preventDefault()
+    const value = `${hairStyle},${hairColor},${face}`
+    const result = await action.run(async () => {
+      setSubmitting('appearance')
+      try {
+        await lineageApi.changeAppearance(login, id, hairStyle, hairColor, face, requestKey('appearance', value))
+        operation.current = null
+        toast.success(t('character.toast.appearanceDone'))
+        await refreshCharacter()
+        await queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t('character.toast.appearanceError')))
+  }
+
+  async function onClear(kind: 'karma' | 'pk') {
+    const send = kind === 'karma' ? lineageApi.clearKarma : lineageApi.clearPk
+    const result = await action.run(async () => {
+      setSubmitting(kind)
+      try {
+        await send(login, id, requestKey(kind, ''))
+        operation.current = null
+        toast.success(t(`character.toast.${kind}Done`))
+        await refreshCharacter()
+        await queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      } finally { setSubmitting(null) }
+    })
+    if (!result.ok && !result.skipped) toast.error(apiErrorMessage(result.error, t(`character.toast.${kind}Error`)))
   }
 
   return (
@@ -361,6 +419,105 @@ export function CharacterPage() {
               </Button>
             </Card>
 
+            {serviceAvailable(prices.data, 'TELEPORT') ? (
+              <Card>
+                <div className="account-form-title">
+                  <MapPin aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.teleport.title')}</h3>
+                    <p>{t('character.services.teleport.hint', { price: formatServicePrice(prices.data?.TELEPORT) })}</p>
+                  </div>
+                </div>
+                <form className="account-action-form" onSubmit={onTeleport}>
+                  <Field>
+                    {t('character.services.teleport.field')}
+                    <select value={town} onChange={(event) => setTown(event.target.value)} required disabled={!offline}>
+                      <option value="">{t('character.services.teleport.placeholder')}</option>
+                      {towns.map((item) => (
+                        <option key={item.id} value={item.id}>{t(`character.towns.${item.id}`)}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Button type="submit" disabled={!offline || submitting !== null}>
+                    {submitting === 'teleport' ? t('character.services.teleport.submitting') : t('character.services.teleport.submit')}
+                  </Button>
+                </form>
+              </Card>
+            ) : null}
+
+            {serviceAvailable(prices.data, 'APPEARANCE') ? (
+              <Card>
+                <div className="account-form-title">
+                  <Scissors aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.appearance.title')}</h3>
+                    <p>{t('character.services.appearance.hint', { price: formatServicePrice(prices.data?.APPEARANCE) })}</p>
+                  </div>
+                </div>
+                <form className="account-action-form" onSubmit={onAppearance}>
+                  <Field>
+                    {t('character.services.appearance.hair')}
+                    <select value={hairStyle} onChange={(event) => setHairStyle(Number(event.target.value))} disabled={!offline}>
+                      {Array.from({ length: hairMax + 1 }, (_, index) => (
+                        <option key={index} value={index}>{t('character.services.appearance.styleOption', { n: index })}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field>
+                    {t('character.services.appearance.color')}
+                    <select value={hairColor} onChange={(event) => setHairColor(Number(event.target.value))} disabled={!offline}>
+                      {Array.from({ length: colorMax + 1 }, (_, index) => (
+                        <option key={index} value={index}>{t('character.services.appearance.colorOption', { n: index })}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field>
+                    {t('character.services.appearance.face')}
+                    <select value={face} onChange={(event) => setFace(Number(event.target.value))} disabled={!offline}>
+                      {Array.from({ length: faceMax + 1 }, (_, index) => (
+                        <option key={index} value={index}>{t('character.services.appearance.faceOption', { n: index })}</option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Button type="submit" disabled={!offline || submitting !== null}>
+                    {submitting === 'appearance' ? t('character.services.appearance.submitting') : t('character.services.appearance.submit')}
+                  </Button>
+                </form>
+              </Card>
+            ) : null}
+
+            {serviceAvailable(prices.data, 'CLEAR_KARMA') ? (
+              <Card>
+                <div className="account-form-title">
+                  <ShieldOff aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.karma.title')}</h3>
+                    <p>{t('character.services.karma.hint', { price: formatServicePrice(prices.data?.CLEAR_KARMA) })}</p>
+                  </div>
+                </div>
+                <p className="muted">{t('character.services.karma.description')}</p>
+                <Button type="button" onClick={() => void onClear('karma')} disabled={!offline || submitting !== null}>
+                  {submitting === 'karma' ? t('character.services.karma.submitting') : t('character.services.karma.submit')}
+                </Button>
+              </Card>
+            ) : null}
+
+            {serviceAvailable(prices.data, 'CLEAR_PK') ? (
+              <Card>
+                <div className="account-form-title">
+                  <Skull aria-hidden="true" />
+                  <div>
+                    <h3>{t('character.services.pk.title')}</h3>
+                    <p>{t('character.services.pk.hint', { price: formatServicePrice(prices.data?.CLEAR_PK) })}</p>
+                  </div>
+                </div>
+                <p className="muted">{t('character.services.pk.description')}</p>
+                <Button type="button" onClick={() => void onClear('pk')} disabled={!offline || submitting !== null}>
+                  {submitting === 'pk' ? t('character.services.pk.submitting') : t('character.services.pk.submit')}
+                </Button>
+              </Card>
+            ) : null}
+
             <Card className="character-shortcuts">
               <div className="account-form-title">
                 <MapPin aria-hidden="true" />
@@ -377,6 +534,10 @@ export function CharacterPage() {
                 <Link className="btn ghost" to="/panel/marketplace">
                   <Store aria-hidden="true" />
                   {t('character.services.shortcuts.marketplace')}
+                </Link>
+                <Link className="btn ghost" to="/stores">
+                  <Store aria-hidden="true" />
+                  {t('character.services.shortcuts.stores')}
                 </Link>
               </div>
             </Card>

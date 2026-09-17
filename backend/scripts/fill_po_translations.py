@@ -531,6 +531,106 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Creates default minigame configuration and content without overwriting existing names or keys.",
         "Crea la configuración y el contenido predeterminado de los minijuegos sin sobrescribir nombres o claves ya definidas.",
     ),
+    "Este serviço não está disponível neste servidor.": (
+        "This service is not available on this server.",
+        "Este servicio no está disponible en este servidor.",
+    ),
+    "Personagem não encontrado.": (
+        "Character not found.",
+        "Personaje no encontrado.",
+    ),
+    "Missão não encontrada.": (
+        "Quest not found.",
+        "Misión no encontrada.",
+    ),
+    "Complete o objetivo da caça antes de resgatar.": (
+        "Complete the hunt objective before claiming.",
+        "Completa el objetivo de la caza antes de canjear.",
+    ),
+    "Teleportar personagem": (
+        "Teleport character",
+        "Teletransportar personaje",
+    ),
+    "Move o personagem offline para uma vila do catálogo, cobrando o serviço.": (
+        "Moves the offline character to a catalog town and charges the service.",
+        "Mueve al personaje desconectado a una villa del catálogo y cobra el servicio.",
+    ),
+    "Alterar visual do personagem": (
+        "Change character appearance",
+        "Cambiar el aspecto del personaje",
+    ),
+    "Altera cabelo, cor e rosto do personagem offline, cobrando o serviço.": (
+        "Changes hair, color and face of the offline character and charges the service.",
+        "Cambia el pelo, el color y el rostro del personaje desconectado y cobra el servicio.",
+    ),
+    "Limpar karma": (
+        "Clear karma",
+        "Limpiar karma",
+    ),
+    "Zera o karma do personagem offline, cobrando o serviço.": (
+        "Clears the offline character's karma and charges the service.",
+        "Pone a cero el karma del personaje desconectado y cobra el servicio.",
+    ),
+    "Limpar PK": (
+        "Clear PK",
+        "Limpiar PK",
+    ),
+    "Zera a contagem de PK do personagem offline, cobrando o serviço.": (
+        "Clears the offline character's PK count and charges the service.",
+        "Pone a cero el recuento de PK del personaje desconectado y cobra el servicio.",
+    ),
+    "Lojas do jogo": (
+        "In-game shops",
+        "Tiendas del juego",
+    ),
+    "Lista as lojas privadas offline publicadas no banco do jogo.": (
+        "Lists offline private stores published in the game database.",
+        "Lista las tiendas privadas offline publicadas en la base del juego.",
+    ),
+    "Caça do dia": (
+        "Daily hunt",
+        "Caza del día",
+    ),
+    "Lista as missões que leem PvP, tempo online ou nível do personagem no jogo.": (
+        "Lists quests that read the character's PvP, online time or level from the game.",
+        "Lista las misiones que leen PvP, tiempo en línea o nivel del personaje en el juego.",
+    ),
+    "Resgatar caça do dia": (
+        "Claim daily hunt",
+        "Canjear la caza del día",
+    ),
+    "Resgata uma missão da caça quando o personagem atingiu a meta no período.": (
+        "Claims a hunt quest when the character reached the target in the period.",
+        "Canjea una misión de caza cuando el personaje alcanzó la meta en el período.",
+    ),
+    "Tempo online": (
+        "Online time",
+        "Tiempo en línea",
+    ),
+    "Missão da caça": (
+        "Hunt quest",
+        "Misión de caza",
+    ),
+    "Missões da caça": (
+        "Hunt quests",
+        "Misiones de caza",
+    ),
+    "Snapshot da caça": (
+        "Hunt snapshot",
+        "Instantánea de la caza",
+    ),
+    "Snapshots da caça": (
+        "Hunt snapshots",
+        "Instantáneas de la caza",
+    ),
+    "Resgate da caça": (
+        "Hunt claim",
+        "Canje de la caza",
+    ),
+    "Resgates da caça": (
+        "Hunt claims",
+        "Canjes de la caza",
+    ),
 }
 
 

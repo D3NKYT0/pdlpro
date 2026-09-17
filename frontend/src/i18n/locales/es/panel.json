@@ -1261,7 +1261,26 @@
     "tabs": {
       "battle": "Pase de batalla",
       "daily": "Bono diario",
+      "hunt": "Caza del día",
       "statistics": "Rankings y estadísticas"
+    },
+    "hunt": {
+      "eyebrow": "Misiones del personaje",
+      "title": "Caza del día",
+      "description": "El panel lee PvP, tiempo en línea y nivel en el juego. Puedes estar en línea o desconectado; solo los servicios de la ficha piden logout.",
+      "emptyAccounts": "Vincula una cuenta L2 para cazar.",
+      "emptyQuests": "No hay misiones de caza activas.",
+      "character": "Personaje",
+      "progress": "{{current}} / {{target}}",
+      "claim": "Canjear",
+      "claimed": "Canjeado",
+      "claimToast": "Caza canjeada",
+      "metrics": {
+        "pvp": "PvP",
+        "pk": "PK",
+        "online_time": "Tiempo en línea",
+        "level": "Nivel"
+      }
     },
     "battlePass": {
       "emptySeason": "La próxima temporada se está preparando. Vuelve pronto.",
@@ -1643,12 +1662,67 @@
         "submit": "Desatascar personaje",
         "submitting": "Desatascando..."
       },
+      "teleport": {
+        "title": "Teletransporte a villa",
+        "hint": "Elige la ciudad. Cuesta {{price}}.",
+        "field": "Destino",
+        "placeholder": "Selecciona la villa",
+        "submit": "Teletransportar",
+        "submitting": "Teletransportando..."
+      },
+      "appearance": {
+        "title": "Visual",
+        "hint": "Cabello, color y rostro. Cuesta {{price}}.",
+        "hair": "Cabello",
+        "color": "Color",
+        "face": "Rostro",
+        "styleOption": "Estilo {{n}}",
+        "colorOption": "Color {{n}}",
+        "faceOption": "Rostro {{n}}",
+        "submit": "Cambiar visual",
+        "submitting": "Cambiando..."
+      },
+      "karma": {
+        "title": "Limpiar karma",
+        "hint": "Pone el karma en cero. Cuesta {{price}}.",
+        "description": "El personaje debe estar desconectado.",
+        "submit": "Limpiar karma",
+        "submitting": "Limpiando..."
+      },
+      "pk": {
+        "title": "Limpiar PK",
+        "hint": "Pone el recuento de PK en cero. Cuesta {{price}}.",
+        "description": "El personaje debe estar desconectado.",
+        "submit": "Limpiar PK",
+        "submitting": "Limpiando..."
+      },
       "shortcuts": {
         "title": "Atajos",
         "hint": "Los mismos destinos del panel anterior.",
         "inventory": "Inventario",
-        "marketplace": "Marketplace"
+        "marketplace": "Marketplace",
+        "stores": "Tiendas del juego"
       }
+    },
+    "towns": {
+      "talking_island": "Talking Island",
+      "dark_elf": "Aldea Dark Elf",
+      "orc": "Aldea Orc",
+      "dwarf": "Aldea Dwarf",
+      "elven": "Aldea Elven",
+      "gludin": "Gludin",
+      "gludio": "Gludio",
+      "dion": "Dion",
+      "floran": "Floran",
+      "giran": "Giran",
+      "hunter": "Hunter",
+      "oren": "Oren",
+      "ivory_tower": "Ivory Tower",
+      "aden": "Aden",
+      "goddard": "Goddard",
+      "rune": "Rune",
+      "schuttgart": "Schuttgart",
+      "heine": "Heine"
     },
     "toast": {
       "nicknameChanged": "Apodo cambiado",
@@ -1656,7 +1730,15 @@
       "sexChanged": "Sexo cambiado",
       "sexError": "No fue posible cambiar el sexo",
       "unstuckDone": "Personaje desatascado",
-      "unstuckError": "No fue posible desatascar"
+      "unstuckError": "No fue posible desatascar",
+      "teleportDone": "Personaje teletransportado",
+      "teleportError": "No fue posible teletransportar",
+      "appearanceDone": "Visual cambiado",
+      "appearanceError": "No fue posible cambiar el visual",
+      "karmaDone": "Karma limpio",
+      "karmaError": "No fue posible limpiar el karma",
+      "pkDone": "PK limpio",
+      "pkError": "No fue posible limpiar el PK"
     }
   },
   "programs": {

@@ -5,6 +5,7 @@ from apps.games.presentation.advanced import (
     DailyDetailsView,
     FishingDetailsView,
     GameStatisticsView,
+    HuntDetailsView,
     StaffGameContentView,
 )
 from apps.shop.presentation.commerce import CommerceView, StaffCommerceView
@@ -17,6 +18,7 @@ urlpatterns = [
     path("customer/games/daily-bonus/details/", DailyDetailsView.as_view()),
     path("customer/games/fishing/details/", FishingDetailsView.as_view()),
     path("customer/games/statistics/<str:kind>/", GameStatisticsView.as_view()),
+    path("customer/games/hunt/", HuntDetailsView.as_view()),
     path("staff/game-content/<str:kind>/", StaffGameContentView.as_view()),
     path(
         "staff/game-content/<str:kind>/<uuid:entry_id>/", StaffGameContentView.as_view()

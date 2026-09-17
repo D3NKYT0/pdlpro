@@ -92,6 +92,43 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
+.stores-meta {
+  display: block;
+  margin: -8px 0 16px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+
+.stores-item-list {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.stores-item-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.stores-item-list strong {
+  display: block;
+}
+
+.stores-item-list small {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stores-item-list b {
+  color: #c5a161;
+  font-weight: 400;
+}
+
 .public-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

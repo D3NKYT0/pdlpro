@@ -14,6 +14,7 @@ from apps.games.infrastructure.models import (
     DailyBonusSeason,
     Fish,
     FishingBait,
+    HuntQuest,
     Monster,
     Prize,
 )
@@ -35,6 +36,7 @@ CONFIG_MODELS = {
         ("fish", Fish),
         ("monsters", Monster),
         ("box-items", CatalogItem),
+        ("hunt-quests", HuntQuest),
     )
 }
 

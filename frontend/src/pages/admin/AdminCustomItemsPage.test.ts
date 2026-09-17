@@ -7,6 +7,9 @@ import { AdminCustomItemsPage } from './AdminCustomItemsPage'
 import { AdminHubPage } from './AdminHubPage'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'staff' } }) }))
+vi.mock('../../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn(async () => []) },
+}))
 
 function render(writable: boolean) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
@@ -34,8 +37,12 @@ describe('native custom item administration', () => {
     expect(html).not.toContain('Desativar')
   })
   it('is discoverable from the admin hub', () => {
-    const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    const html = renderToStaticMarkup(
+      createElement(QueryClientProvider, { client }, createElement(MemoryRouter, null, createElement(AdminHubPage))),
+    )
     expect(html).toContain('href="/panel/admin/items/customs"')
     expect(html).toContain('Itens customizados')
+    client.clear()
   })
 })

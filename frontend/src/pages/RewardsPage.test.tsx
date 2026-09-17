@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -23,6 +23,8 @@ vi.mock('../services/domain/games.service', () => ({
     dailyBonus: vi.fn(),
     claimDailyBonus: vi.fn(),
     stats: vi.fn(),
+    hunt: vi.fn(),
+    claimHunt: vi.fn(),
   },
 }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
@@ -84,6 +86,43 @@ const daily = {
   ],
   history: [],
 }
+const hunt = {
+  character: {
+    login: 'hunter',
+    char_id: 7,
+    name: 'Caçador',
+    level: 80,
+    pvp: 12,
+    pk: 1,
+    online_time: 3600,
+    online: false,
+  },
+  characters: [{ login: 'hunter', char_id: 7, name: 'Caçador', level: 80, online: false }],
+  quests: [
+    {
+      id: 'q-pvp',
+      name: 'Caçada PvP',
+      description: 'Vença 10 PvPs',
+      metric: 'pvp',
+      target: 10,
+      current: 10,
+      period: 'daily',
+      claimed: false,
+      rewards: [{ kind: 'tokens', quantity: 5, name: 'Fichas' }],
+    },
+    {
+      id: 'q-online',
+      name: 'Tempo no reino',
+      description: 'Fique 1 hora online',
+      metric: 'online_time',
+      target: 3600,
+      current: 120,
+      period: 'daily',
+      claimed: false,
+      rewards: [{ kind: 'item', quantity: 1000, item_id: 57, name: 'Adena' }],
+    },
+  ],
+}
 const stats = {
   plays: 20,
   wins: 5,
@@ -108,6 +147,11 @@ beforeEach(() => {
   vi.mocked(gamesApi.dailyBonus).mockResolvedValue({ amount: '10', active: true, claimed: false } as Awaited<ReturnType<typeof gamesApi.dailyBonus>>)
   vi.mocked(gamesApi.claimDailyBonus).mockResolvedValue({ amount: '10', active: true, claimed: true } as Awaited<ReturnType<typeof gamesApi.claimDailyBonus>>)
   vi.mocked(gamesApi.stats).mockResolvedValue(stats)
+  vi.mocked(gamesApi.hunt).mockResolvedValue(hunt as Awaited<ReturnType<typeof gamesApi.hunt>>)
+  vi.mocked(gamesApi.claimHunt).mockResolvedValue({
+    ...hunt,
+    quests: hunt.quests.map((quest) => quest.id === 'q-pvp' ? { ...quest, claimed: true } : quest),
+  } as Awaited<ReturnType<typeof gamesApi.claimHunt>>)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 
@@ -249,6 +293,62 @@ it('bônus diário já resgatado não permite novo envio', async () => {
   mount('/panel/rewards?tab=daily')
   expect(await screen.findByRole('button', { name: /Recompensa de hoje resgatada/ })).toBeDisabled()
   expect(gamesApi.claimDailyBonus).not.toHaveBeenCalled()
+})
+
+it('caça do dia resgata a missão concluída e bloqueia a incompleta', async () => {
+  const user = mount('/panel/rewards?tab=hunt')
+  expect(await screen.findByRole('heading', { name: 'Caça do dia' })).toBeVisible()
+  expect(screen.getByLabelText('Personagem')).toBeVisible()
+  const done = within(screen.getByText('Caçada PvP').closest('.battle-pass-card')!)
+  const open = within(screen.getByText('Tempo no reino').closest('.battle-pass-card')!)
+  expect(open.getByRole('button', { name: 'Resgatar' })).toBeDisabled()
+  await user.click(done.getByRole('button', { name: 'Resgatar' }))
+  expect(gamesApi.claimHunt).toHaveBeenCalledWith('q-pvp', 'hunter', 7)
+  expect(toast.success).toHaveBeenCalledWith('Caça resgatada')
+})
+
+it('caça já resgatada não permite novo envio', async () => {
+  vi.mocked(gamesApi.hunt).mockResolvedValue({
+    ...hunt,
+    quests: hunt.quests.map((quest) => ({ ...quest, claimed: true })),
+  } as Awaited<ReturnType<typeof gamesApi.hunt>>)
+  mount('/panel/rewards?tab=hunt')
+  expect(await screen.findAllByRole('button', { name: 'Resgatado' })).toHaveLength(2)
+  expect(screen.getAllByRole('button', { name: 'Resgatado' })[0]).toBeDisabled()
+  expect(gamesApi.claimHunt).not.toHaveBeenCalled()
+})
+
+it('caça recarrega o personagem escolhido na lista', async () => {
+  vi.mocked(gamesApi.hunt).mockImplementation(async (login?: string, charId?: number) => {
+    if (login === 'alt' && charId === 9) {
+      return {
+        ...hunt,
+        character: { ...hunt.character, login: 'alt', char_id: 9, name: 'Outro' },
+        characters: [
+          hunt.characters[0],
+          { login: 'alt', char_id: 9, name: 'Outro', level: 40, online: false },
+        ],
+      } as Awaited<ReturnType<typeof gamesApi.hunt>>
+    }
+    return {
+      ...hunt,
+      characters: [
+        hunt.characters[0],
+        { login: 'alt', char_id: 9, name: 'Outro', level: 40, online: false },
+      ],
+    } as Awaited<ReturnType<typeof gamesApi.hunt>>
+  })
+  const user = mount('/panel/rewards?tab=hunt')
+  await screen.findByRole('heading', { name: 'Caça do dia' })
+  await user.selectOptions(screen.getByLabelText('Personagem'), 'alt:9')
+  await waitFor(() => expect(gamesApi.hunt).toHaveBeenCalledWith('alt', 9))
+})
+
+it('recurso de caça pausado substitui as missões pelo aviso', async () => {
+  vi.mocked(programsApi.resources).mockResolvedValue([{ code: 'hunt', enabled: false }] as Awaited<ReturnType<typeof programsApi.resources>>)
+  mount('/panel/rewards?tab=hunt')
+  expect(await screen.findByRole('heading', { name: 'Recurso temporariamente desativado' })).toBeVisible()
+  expect(gamesApi.hunt).not.toHaveBeenCalled()
 })
 
 it('estatísticas mostram desempenho, pódio e trocam de jogo', async () => {

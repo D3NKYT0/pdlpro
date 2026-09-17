@@ -4,6 +4,7 @@
     "home": "Home",
     "info": "Information",
     "rankings": "Rankings",
+    "stores": "Shops",
     "wiki": "Wiki",
     "news": "News",
     "roadmap": "Roadmap",
@@ -517,6 +518,28 @@
     "title": "Calendar",
     "empty": "No events published.",
     "range": "{{start}} — {{end}}"
+  },
+  "stores": {
+    "eyebrow": "World economy",
+    "title": "In-game shops",
+    "description": "Offline private stores published on the server. Search by item or seller.",
+    "search": "Search item or seller",
+    "type": "Type",
+    "allTypes": "All",
+    "types": {
+      "sell": "Sell",
+      "buy": "Buy",
+      "package": "Package",
+      "craft": "Craft"
+    },
+    "loading": "Loading shops...",
+    "empty": "No offline shops at the moment.",
+    "unavailable": "This server does not publish shops in the panel yet.",
+    "error": "Could not load the shops.",
+    "noTitle": "No title",
+    "items": "{{count}} items",
+    "price": "{{price}} adena",
+    "enchant": "+{{value}}"
   },
   "resourceGate": {
     "title": "Feature temporarily disabled",

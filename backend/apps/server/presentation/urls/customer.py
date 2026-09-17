@@ -1,11 +1,14 @@
 from django.urls import path
 
 from apps.server.presentation.views.customer import (
+    ChangeAppearanceView,
     ChangeNicknameView,
     ChangeSexView,
     CharacterDetailView,
     CharacterSkillsView,
     CharactersView,
+    ClearKarmaView,
+    ClearPkView,
     ConfirmLinkByEmailView,
     LineageAccountsView,
     LinkGameAccountView,
@@ -13,6 +16,7 @@ from apps.server.presentation.views.customer import (
     RegisterGameAccountView,
     RequestLinkByEmailView,
     ServicePricesView,
+    TeleportView,
     UnlinkGameAccountView,
     UnstuckView,
     UpdateGamePasswordView,
@@ -35,5 +39,9 @@ urlpatterns = [
     path("characters/nickname/", ChangeNicknameView.as_view(), name="customer-nickname"),
     path("characters/sex/", ChangeSexView.as_view(), name="customer-sex"),
     path("characters/unstuck/", UnstuckView.as_view(), name="customer-unstuck"),
+    path("characters/teleport/", TeleportView.as_view(), name="customer-teleport"),
+    path("characters/appearance/", ChangeAppearanceView.as_view(), name="customer-appearance"),
+    path("characters/karma/", ClearKarmaView.as_view(), name="customer-clear-karma"),
+    path("characters/pk/", ClearPkView.as_view(), name="customer-clear-pk"),
     path("services/", ServicePricesView.as_view(), name="customer-service-prices"),
 ]

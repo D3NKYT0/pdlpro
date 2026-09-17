@@ -17,10 +17,14 @@ from apps.server.application.account_use_cases import (
     UpdateGamePasswordUseCase,
 )
 from apps.server.application.character_use_cases import (
+    ChangeAppearanceUseCase,
     ChangeNicknameUseCase,
     ChangeSexUseCase,
+    ClearKarmaUseCase,
+    ClearPkUseCase,
     ListServicePricesUseCase,
     PurchaseLinkSlotUseCase,
+    TeleportCharacterUseCase,
     UnstuckCharacterUseCase,
 )
 from apps.server.application.custom_items import (
@@ -45,6 +49,7 @@ from apps.server.application.item_observation import (
     SetObservationFavoriteUseCase,
     UpsertObservationCategoryUseCase,
 )
+from apps.server.application.store_use_cases import ListGameStoresUseCase
 from apps.server.application.use_cases import (
     GetRankingUseCase,
     GetServerInfoUseCase,
@@ -144,7 +149,12 @@ class ServerProvider(AppProvider):
             ChangeNicknameUseCase,
             ChangeSexUseCase,
             UnstuckCharacterUseCase,
+            TeleportCharacterUseCase,
+            ChangeAppearanceUseCase,
+            ClearKarmaUseCase,
+            ClearPkUseCase,
             ListServicePricesUseCase,
+            ListGameStoresUseCase,
             PurchaseLinkSlotUseCase,
             RequestLinkByEmailUseCase,
             ConfirmLinkByEmailUseCase,

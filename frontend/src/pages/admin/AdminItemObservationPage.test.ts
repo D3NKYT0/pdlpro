@@ -8,6 +8,9 @@ import { AdminItemObservationPage, Categories, Snapshots } from './AdminItemObse
 import { ITEM_CATALOG_KEY } from '../../services/api'
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: { id: 'observer' } }) }))
+vi.mock('../../services/domain/programs.service', () => ({
+  programsApi: { resources: vi.fn(async () => []) },
+}))
 
 const fullAccess = { capture: true, delete_snapshots: true, add_categories: true, change_categories: true, delete_categories: true }
 const readAccess = { capture: false, delete_snapshots: false, add_categories: false, change_categories: false, delete_categories: false }
@@ -63,9 +66,13 @@ describe('panel item observation entry', () => {
     expect(html).toContain('Excluir')
   })
   it('links from the central panel to the native React route', () => {
-    const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AdminHubPage)))
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    const html = renderToStaticMarkup(
+      createElement(QueryClientProvider, { client }, createElement(MemoryRouter, null, createElement(AdminHubPage))),
+    )
     expect(html).toContain('href="/panel/admin/items"')
     expect(html).toContain('Observar itens')
+    client.clear()
   })
   it('renders the live panel with read-only data and exact quantities', () => {
     const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })

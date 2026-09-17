@@ -20,6 +20,9 @@ from apps.games.infrastructure.models import (
     FishingCatch,
     FishingRod,
     GameConfig,
+    HuntClaim,
+    HuntQuest,
+    HuntSnapshot,
     Monster,
     Prize,
     SlotHistory,
@@ -337,3 +340,31 @@ class UserBattlePassClaimAdmin(PDLModelAdmin):
     """
 
     list_display = ("user", "reward", "created_at")
+
+
+@admin.register(HuntQuest)
+class HuntQuestAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``HuntQuest``."""
+
+    list_display = ("name", "metric", "target", "period", "active")
+    search_fields = ("name", "name_en", "name_es")
+    list_filter = ("metric", "period", "active")
+    fieldsets = (
+        (None, {"fields": ("name", "description", "metric", "target", "period", "rewards", "active")}),
+        (_("English"), {"fields": ("name_en", "description_en")}),
+        (_("Español"), {"fields": ("name_es", "description_es")}),
+    )
+
+
+@admin.register(HuntSnapshot)
+class HuntSnapshotAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``HuntSnapshot``."""
+
+    list_display = ("user", "login", "character_id", "period_start")
+
+
+@admin.register(HuntClaim)
+class HuntClaimAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``HuntClaim``."""
+
+    list_display = ("user", "quest", "character_id", "period_start")

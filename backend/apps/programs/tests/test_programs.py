@@ -332,6 +332,8 @@ def test_staff_roadmap_stores_translations(staff):
         ("faq", "public/faq/"),
         ("downloads", "public/downloads/"),
         ("calendar", "public/calendar/"),
+        ("hunt", "customer/games/hunt/"),
+        ("game-stores", "public/server/stores/"),
     ],
 )
 def test_resource_gate_enforced_on_api(api, staff, code, path):

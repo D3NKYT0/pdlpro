@@ -4585,3 +4585,104 @@ msgstr "Schema"
 #: .\templates\pdl_docs\_topbar.html:16
 msgid "Admin"
 msgstr "Admin"
+
+#: .\apps\server\domain\exceptions.py:96
+msgid "Este serviço não está disponível neste servidor."
+msgstr "This service is not available on this server."
+
+#: .\apps\server\application\character_use_cases.py:303
+#: .\apps\games\application\hunt_use_cases.py:75
+msgid "Personagem não encontrado."
+msgstr "Character not found."
+
+#: .\apps\games\application\hunt_use_cases.py:153
+msgid "Missão não encontrada."
+msgstr "Quest not found."
+
+#: .\apps\games\application\hunt_use_cases.py:157
+msgid "Complete o objetivo da caça antes de resgatar."
+msgstr "Complete the hunt objective before claiming."
+
+#: .\apps\server\presentation\views\customer.py:385
+msgid "Teleportar personagem"
+msgstr "Teleport character"
+
+#: .\apps\server\presentation\views\customer.py:386
+msgid "Move o personagem offline para uma vila do catálogo, cobrando o serviço."
+msgstr "Moves the offline character to a catalog town and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:415
+msgid "Alterar visual do personagem"
+msgstr "Change character appearance"
+
+#: .\apps\server\presentation\views\customer.py:416
+msgid "Altera cabelo, cor e rosto do personagem offline, cobrando o serviço."
+msgstr "Changes hair, color and face of the offline character and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:445
+msgid "Limpar karma"
+msgstr "Clear karma"
+
+#: .\apps\server\presentation\views\customer.py:446
+msgid "Zera o karma do personagem offline, cobrando o serviço."
+msgstr "Clears the offline character's karma and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:472
+msgid "Limpar PK"
+msgstr "Clear PK"
+
+#: .\apps\server\presentation\views\customer.py:473
+msgid "Zera a contagem de PK do personagem offline, cobrando o serviço."
+msgstr "Clears the offline character's PK count and charges the service."
+
+#: .\apps\server\presentation\views\public.py:133
+msgid "Lojas do jogo"
+msgstr "In-game shops"
+
+#: .\apps\server\presentation\views\public.py:134
+msgid "Lista as lojas privadas offline publicadas no banco do jogo."
+msgstr "Lists offline private stores published in the game database."
+
+#: .\apps\games\presentation\advanced.py:316
+msgid "Caça do dia"
+msgstr "Daily hunt"
+
+#: .\apps\games\presentation\advanced.py:317
+msgid "Lista as missões que leem PvP, tempo online ou nível do personagem no jogo."
+msgstr "Lists quests that read the character's PvP, online time or level from the game."
+
+#: .\apps\games\presentation\advanced.py:324
+msgid "Resgatar caça do dia"
+msgstr "Claim daily hunt"
+
+#: .\apps\games\presentation\advanced.py:325
+msgid "Resgata uma missão da caça quando o personagem atingiu a meta no período."
+msgstr "Claims a hunt quest when the character reached the target in the period."
+
+#: .\apps\games\infrastructure\models.py:668
+msgid "Tempo online"
+msgstr "Online time"
+
+#: .\apps\games\infrastructure\models.py:683
+msgid "Missão da caça"
+msgstr "Hunt quest"
+
+#: .\apps\games\infrastructure\models.py:684
+msgid "Missões da caça"
+msgstr "Hunt quests"
+
+#: .\apps\games\infrastructure\models.py:700
+msgid "Snapshot da caça"
+msgstr "Hunt snapshot"
+
+#: .\apps\games\infrastructure\models.py:701
+msgid "Snapshots da caça"
+msgstr "Hunt snapshots"
+
+#: .\apps\games\infrastructure\models.py:719
+msgid "Resgate da caça"
+msgstr "Hunt claim"
+
+#: .\apps\games\infrastructure\models.py:720
+msgid "Resgates da caça"
+msgstr "Hunt claims"

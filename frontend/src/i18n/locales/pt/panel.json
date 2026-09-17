@@ -1261,7 +1261,26 @@
     "tabs": {
       "battle": "Passe de batalha",
       "daily": "Bônus diário",
+      "hunt": "Caça do dia",
       "statistics": "Rankings e estatísticas"
+    },
+    "hunt": {
+      "eyebrow": "Missões no personagem",
+      "title": "Caça do dia",
+      "description": "O painel lê PvP, tempo online e nível no jogo. Entre offline ou online — só o resgate de serviços da ficha pede logout.",
+      "emptyAccounts": "Vincule uma conta L2 para caçar.",
+      "emptyQuests": "Nenhuma missão da caça está ativa.",
+      "character": "Personagem",
+      "progress": "{{current}} / {{target}}",
+      "claim": "Resgatar",
+      "claimed": "Resgatado",
+      "claimToast": "Caça resgatada",
+      "metrics": {
+        "pvp": "PvP",
+        "pk": "PK",
+        "online_time": "Tempo online",
+        "level": "Nível"
+      }
     },
     "battlePass": {
       "emptySeason": "A próxima temporada está sendo preparada. Volte em breve.",
@@ -1643,12 +1662,67 @@
         "submit": "Destravar personagem",
         "submitting": "Destravando..."
       },
+      "teleport": {
+        "title": "Teleporte para vila",
+        "hint": "Escolha a cidade. Custa {{price}}.",
+        "field": "Destino",
+        "placeholder": "Selecione a vila",
+        "submit": "Teleportar",
+        "submitting": "Teleportando..."
+      },
+      "appearance": {
+        "title": "Visual",
+        "hint": "Cabelo, cor e rosto. Custa {{price}}.",
+        "hair": "Cabelo",
+        "color": "Cor",
+        "face": "Rosto",
+        "styleOption": "Estilo {{n}}",
+        "colorOption": "Cor {{n}}",
+        "faceOption": "Rosto {{n}}",
+        "submit": "Alterar visual",
+        "submitting": "Alterando..."
+      },
+      "karma": {
+        "title": "Limpar karma",
+        "hint": "Zera o karma. Custa {{price}}.",
+        "description": "O personagem precisa estar offline.",
+        "submit": "Limpar karma",
+        "submitting": "Limpando..."
+      },
+      "pk": {
+        "title": "Limpar PK",
+        "hint": "Zera a contagem de PK. Custa {{price}}.",
+        "description": "O personagem precisa estar offline.",
+        "submit": "Limpar PK",
+        "submitting": "Limpando..."
+      },
       "shortcuts": {
         "title": "Atalhos",
         "hint": "Mesmos destinos do painel antigo.",
         "inventory": "Inventário",
-        "marketplace": "Marketplace"
+        "marketplace": "Marketplace",
+        "stores": "Lojas do jogo"
       }
+    },
+    "towns": {
+      "talking_island": "Talking Island",
+      "dark_elf": "Vila Dark Elf",
+      "orc": "Vila Orc",
+      "dwarf": "Vila Dwarf",
+      "elven": "Vila Elven",
+      "gludin": "Gludin",
+      "gludio": "Gludio",
+      "dion": "Dion",
+      "floran": "Floran",
+      "giran": "Giran",
+      "hunter": "Hunter",
+      "oren": "Oren",
+      "ivory_tower": "Ivory Tower",
+      "aden": "Aden",
+      "goddard": "Goddard",
+      "rune": "Rune",
+      "schuttgart": "Schuttgart",
+      "heine": "Heine"
     },
     "toast": {
       "nicknameChanged": "Nickname alterado",
@@ -1656,7 +1730,15 @@
       "sexChanged": "Sexo alterado",
       "sexError": "Não foi possível alterar o sexo",
       "unstuckDone": "Personagem destravado",
-      "unstuckError": "Não foi possível destravar"
+      "unstuckError": "Não foi possível destravar",
+      "teleportDone": "Personagem teleportado",
+      "teleportError": "Não foi possível teleportar",
+      "appearanceDone": "Visual alterado",
+      "appearanceError": "Não foi possível alterar o visual",
+      "karmaDone": "Karma limpo",
+      "karmaError": "Não foi possível limpar o karma",
+      "pkDone": "PK limpo",
+      "pkError": "Não foi possível limpar o PK"
     }
   },
   "programs": {

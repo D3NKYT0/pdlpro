@@ -86,10 +86,17 @@ it('oculta links de conteúdo quando o recurso está pausado', () => {
   mount('/', [
     { code: 'rankings', enabled: false },
     { code: 'downloads', enabled: false },
+    { code: 'game-stores', enabled: false },
   ])
   expect(screen.queryByRole('link', { name: 'Rankings' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Lojas' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Wiki' })).toBeVisible()
+})
+
+it('mostra o atalho das lojas do jogo', () => {
+  mount('/')
+  expect(screen.getByRole('link', { name: 'Lojas' })).toHaveAttribute('href', '/stores')
 })
 
 it.each(['/', '/home'])('marca Início como página atual em %s', (path) => {

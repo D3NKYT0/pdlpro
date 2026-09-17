@@ -27,6 +27,10 @@ from apps.games.application.fishing_use_cases import (
     CastLineUseCase,
     GetFishingStateUseCase,
 )
+from apps.games.application.hunt_use_cases import (
+    ClaimHuntQuestUseCase,
+    GetHuntDetailsUseCase,
+)
 from apps.games.application.minigame_use_cases import (
     GetMinigamesStateUseCase,
     PlayDiceUseCase,
@@ -57,6 +61,7 @@ from apps.games.domain.repositories import (
     IGameCatalogRepository,
     IGameConfigAdminRepository,
     IGameContentAdminRepository,
+    IHuntRepository,
     IMinigameRepository,
 )
 from apps.games.infrastructure.autoconfig import DjangoGameAutoconfigService
@@ -70,6 +75,7 @@ from apps.games.infrastructure.repositories import (
     DjangoGameCatalogRepository,
     DjangoGameConfigAdminRepository,
     DjangoGameContentAdminRepository,
+    DjangoHuntRepository,
     DjangoMinigameRepository,
 )
 from common.di.container import Container
@@ -115,6 +121,7 @@ class GamesProvider(AppProvider):
         container.register(
             IBattlePassRepository, DjangoBattlePassRepository, lifetime=Lifetime.SCOPED
         )
+        container.register(IHuntRepository, DjangoHuntRepository, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetRouletteStateUseCase,
             SpinRouletteUseCase,
@@ -144,6 +151,8 @@ class GamesProvider(AppProvider):
             GetFishingDetailsUseCase,
             BuyBaitUseCase,
             GetGameStatisticsUseCase,
+            GetHuntDetailsUseCase,
+            ClaimHuntQuestUseCase,
             ListGameContentUseCase,
             GetGameContentUseCase,
             UpsertGameContentUseCase,

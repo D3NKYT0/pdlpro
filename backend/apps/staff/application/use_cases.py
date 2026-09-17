@@ -23,6 +23,10 @@ DEFAULT_SERVICES = (
     ("CHANGE_SEX", "Troca de sexo", Decimal("10.00")),
     ("LINK_SLOT", "Slot extra de conta", Decimal("10.00")),
     ("UNSTUCK", "Destravar personagem", Decimal("0.00")),
+    ("TELEPORT", "Teleporte para vila", Decimal("5.00")),
+    ("APPEARANCE", "Visual (cabelo e rosto)", Decimal("5.00")),
+    ("CLEAR_KARMA", "Limpar karma", Decimal("15.00")),
+    ("CLEAR_PK", "Limpar PK", Decimal("20.00")),
 )
 
 

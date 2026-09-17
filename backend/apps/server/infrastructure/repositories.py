@@ -49,7 +49,15 @@ class DjangoServicePriceRepository(IServicePriceRepository):
     def get_price(self, code: str) -> Decimal:
         row = ServicePrice.objects.filter(code=code, active=True).first()
         if row is None:
-            defaults = {"CHANGE_NICKNAME": Decimal("10.00"), "CHANGE_SEX": Decimal("10.00"), "LINK_SLOT": Decimal("10.00")}
+            defaults = {
+                "CHANGE_NICKNAME": Decimal("10.00"),
+                "CHANGE_SEX": Decimal("10.00"),
+                "LINK_SLOT": Decimal("10.00"),
+                "TELEPORT": Decimal("5.00"),
+                "APPEARANCE": Decimal("5.00"),
+                "CLEAR_KARMA": Decimal("15.00"),
+                "CLEAR_PK": Decimal("20.00"),
+            }
             return defaults.get(code, Decimal("0.00"))
         return row.price
 

@@ -108,6 +108,9 @@ JAZZMIN_ICONS_PDL = {
     "games.battlepassreward": "fas fa-gift",
     "games.userbattlepassprogress": "fas fa-chart-line",
     "games.userbattlepassclaim": "fas fa-check-circle",
+    "games.huntquest": "fas fa-crosshairs",
+    "games.huntsnapshot": "fas fa-camera",
+    "games.huntclaim": "fas fa-flag-checkered",
 
     # Notifications.
     "server.indexconfig": "fas fa-home",

@@ -146,6 +146,10 @@
       "CHANGE_SEX": "Cambia el sexo y la apariencia base del personaje.",
       "LINK_SLOT": "Libera un nuevo espacio para vincular una cuenta.",
       "UNSTUCK": "Mueve a un personaje atascado a una posición segura.",
+      "TELEPORT": "Teletransporta al personaje desconectado a una villa del catálogo.",
+      "APPEARANCE": "Cambia el cabello, el color y el rostro del personaje.",
+      "CLEAR_KARMA": "Pone el karma del personaje en cero.",
+      "CLEAR_PK": "Pone el recuento de PK del personaje en cero.",
       "fallback": "Servicio configurable del personaje."
     },
     "active": "Activo",
@@ -950,7 +954,8 @@
       "prizes": "Premios de la ruleta",
       "fish": "Peces",
       "monsters": "Monstruos de la arena",
-      "box-items": "Ítems de los cofres"
+      "box-items": "Ítems de los cofres",
+      "hunt-quests": "Caza del día"
     },
     "fields": {
       "name": "Nombre",
@@ -997,7 +1002,14 @@
       "hp": "HP",
       "attack": "Ataque",
       "defense": "Defensa",
-      "respawn_seconds": "Reaparición (s)"
+      "respawn_seconds": "Reaparición (s)",
+      "metric": "Métrica del personaje"
+    },
+    "huntMetrics": {
+      "pvp": "PvP",
+      "pk": "PK",
+      "online_time": "Tiempo en línea",
+      "level": "Nivel"
     },
     "prizeRarity": {
       "comum": "Común",

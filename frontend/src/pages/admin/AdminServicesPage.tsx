@@ -5,7 +5,7 @@ import { Toggle } from '../../components/ui/Toggle'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Link2, MapPinOff, PencilLine, Settings2, VenusAndMars } from 'lucide-react'
+import { Link2, MapPin, MapPinOff, PencilLine, Scissors, Settings2, ShieldOff, Skull, VenusAndMars } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi, type ApiStaffService } from '../../services/api'
 import { AdminHeader, AdminSaveBar } from './AdminChrome'
@@ -15,6 +15,10 @@ const SERVICE_ICONS = {
   CHANGE_SEX: VenusAndMars,
   LINK_SLOT: Link2,
   UNSTUCK: MapPinOff,
+  TELEPORT: MapPin,
+  APPEARANCE: Scissors,
+  CLEAR_KARMA: ShieldOff,
+  CLEAR_PK: Skull,
 }
 
 export function AdminServicesPage() {

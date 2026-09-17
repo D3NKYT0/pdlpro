@@ -10,6 +10,19 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Taverna da ficha:** teleporte para vila do catálogo Interlude, troca de
+  cabelo/cor/rosto e limpeza de karma/PK no personagem offline, com preço no
+  admin de serviços. UNSTUCK segue gratuito em Giran; TELEPORT reusa o mesmo
+  UPDATE. Os novos serviços só aparecem quando o dialeto SQL e o preço ativo
+  existem.
+- **Caça do dia** em `/panel/rewards?tab=hunt`: missões sobre PvP, PK, tempo
+  online e nível lidos no personagem L2, com snapshot por período e um resgate
+  por missão. Staff edita `hunt-quests` na oficina de recompensas (PT/EN/ES).
+- **Vitrine de lojas** em `/stores`: private stores offline somente leitura,
+  busca por item/vendedor e filtro por tipo. Recurso `game-stores`; some do
+  menu quando o catálogo SQL não publica as consultas. Schema sem as tabelas
+  de offline trade devolve a página como indisponível, sem 500.
+
 - CRUD de **calendário**, **FAQ**, **wiki**, **downloads** e **avisos** na central
   da staff (`/panel/admin/calendar`, `/panel/admin/faq`, `/panel/admin/wiki`,
   `/panel/admin/downloads`, `/panel/admin/notifications`): listar, criar, editar

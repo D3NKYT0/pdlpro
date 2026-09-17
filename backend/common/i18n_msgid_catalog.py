@@ -83,6 +83,10 @@ _("Esta conta Lineage já está vinculada.")
 _("Limite de contas vinculadas atingido. Compre um slot extra.")
 _("O personagem precisa estar offline.")
 _("Este nick já está em uso.")
+_("Este serviço não está disponível neste servidor.")
+_("Personagem não encontrado.")
+_("Missão não encontrada.")
+_("Complete o objetivo da caça antes de resgatar.")
 
 # apps.support.domain.exceptions
 _("Chamado não encontrado.")

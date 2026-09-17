@@ -2,13 +2,16 @@
 
 from uuid import uuid4
 
+from apps.server.domain.appearance import parse_appearance
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     CharacterOfflineRequiredError,
+    CharacterServiceUnavailableError,
     GameAccountNotFoundError,
     NicknameTakenError,
 )
 from apps.server.domain.repositories import ICharacterServiceOperationRepository
+from apps.server.domain.towns import get_town
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import (
@@ -98,11 +101,7 @@ def execute_paid_service(
         char = require_offline_character(
             lineage.get_character(actor.login, actor.char_id)
         )
-        already_applied = (
-            char.name == value
-            if service == "CHANGE_NICKNAME"
-            else str(char.sex) == value
-        )
+        already_applied = service_already_applied(service, char, value)
         amount = 0 if already_applied else price
         wallet = wallets.get_or_create(actor.user_id)
         row = ops.create(
@@ -125,14 +124,13 @@ def execute_paid_service(
     if already_applied:
         return
     try:
-        if service == "CHANGE_NICKNAME":
-            lineage.change_nickname(actor.login, actor.char_id, value)
-        else:
-            lineage.change_sex(actor.login, actor.char_id, int(value))
+        apply_paid_service(lineage, service, actor, value)
     except (
         CharacterOfflineRequiredError,
+        CharacterServiceUnavailableError,
         GameAccountNotFoundError,
         NicknameTakenError,
+        ValidationDomainError,
     ):
         settle_service(
             row.id,
@@ -157,3 +155,50 @@ def execute_paid_service(
         operations=ops,
         unit_of_work=work,
     )
+
+
+def service_already_applied(service: str, char, value: str) -> bool:
+    """Compara o personagem atual com o valor pedido para não cobrar de novo."""
+
+    if service == "CHANGE_NICKNAME":
+        return char.name == value
+    if service == "CHANGE_SEX":
+        return str(char.sex) == value
+    if service == "CLEAR_KARMA":
+        return int(char.karma or 0) == 0
+    if service == "CLEAR_PK":
+        return int(char.pk or 0) == 0
+    if service == "APPEARANCE":
+        try:
+            hair_style, hair_color, face = parse_appearance(value, char.sex)
+        except ValidationDomainError:
+            return False
+        return (char.hair_style, char.hair_color, char.face) == (hair_style, hair_color, face)
+    return False
+
+
+def apply_paid_service(lineage, service: str, actor, value: str) -> None:
+    """Despacha a gravação no gateway depois da reserva de saldo."""
+
+    if service == "CHANGE_NICKNAME":
+        lineage.change_nickname(actor.login, actor.char_id, value)
+        return
+    if service == "CHANGE_SEX":
+        lineage.change_sex(actor.login, actor.char_id, int(value))
+        return
+    if service == "TELEPORT":
+        town = get_town(value)
+        lineage.teleport(actor.login, actor.char_id, town.x, town.y, town.z)
+        return
+    if service == "APPEARANCE":
+        char = lineage.get_character(actor.login, actor.char_id)
+        hair_style, hair_color, face = parse_appearance(value, getattr(char, "sex", 0))
+        lineage.change_appearance(actor.login, actor.char_id, hair_style, hair_color, face)
+        return
+    if service == "CLEAR_KARMA":
+        lineage.clear_karma(actor.login, actor.char_id)
+        return
+    if service == "CLEAR_PK":
+        lineage.clear_pk(actor.login, actor.char_id)
+        return
+    raise ValidationDomainError("Serviço de personagem desconhecido.")

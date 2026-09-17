@@ -17,5 +17,8 @@ def reset_in_memory_lineage():
         gateway._accounts.clear()
         gateway._characters.clear()
         gateway._items.clear()
+        gateway._skills.clear()
+        gateway._stores.clear()
+        gateway._store_items.clear()
         gateway._next_char_id = 1
     yield

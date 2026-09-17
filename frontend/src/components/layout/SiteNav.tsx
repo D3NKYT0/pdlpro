@@ -35,6 +35,7 @@ export function SiteNav() {
     { to: landingPath, label: t('nav.home'), end: true },
     { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
+    { to: '/stores', label: t('nav.stores'), resource: 'game-stores' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
     { to: '/news', label: t('nav.news'), resource: 'news' },
     { to: '/roadmap', label: t('nav.roadmap'), resource: 'roadmap' },

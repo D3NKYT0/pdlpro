@@ -166,6 +166,21 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
       number(t, 'weight', 10, 1),
       active,
     ]),
+    section('hunt-quests', [
+      name,
+      field(t, 'name_en'),
+      field(t, 'name_es'),
+      field(t, 'description', { type: 'textarea' }),
+      field(t, 'description_en', { type: 'textarea' }),
+      field(t, 'description_es', { type: 'textarea' }),
+      field(t, 'metric', {
+        options: options(t, 'huntMetrics', ['pvp', 'pk', 'online_time', 'level']),
+      }),
+      number(t, 'target', 1, 1),
+      field(t, 'period', { options: options(t, 'periods', ['daily', 'weekly']) }),
+      rewards,
+      active,
+    ]),
   ]
 }
 

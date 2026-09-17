@@ -75,6 +75,18 @@ it('traduz as opções de objetivo e repetição no editor de missões', async (
   client.clear()
 })
 
+it('traduz métricas da caça do dia no editor', async () => {
+  await i18n.changeLanguage('en')
+  const user = userEvent.setup()
+  const client = renderPage()
+  await user.selectOptions(await screen.findByLabelText('Configuration area'), 'hunt-quests')
+  await user.click(screen.getByRole('button', { name: 'New record' }))
+  expect(await screen.findByRole('option', { name: 'Online time' })).toBeInTheDocument()
+  expect(screen.getByRole('option', { name: 'PvP' })).toBeInTheDocument()
+  expect(screen.queryByRole('option', { name: 'Tempo online' })).not.toBeInTheDocument()
+  client.clear()
+})
+
 it('traduz a oficina de recompensas quando o idioma é espanhol', async () => {
   await i18n.changeLanguage('es')
   const client = renderPage()

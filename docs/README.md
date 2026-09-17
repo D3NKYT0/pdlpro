@@ -77,7 +77,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Ajuda e Denkynho](funcionalidades/ajuda.md) | Chat sobre o FAQ publicado, personagem animado, limites e atendimento |
 | [Documentos legais e LGPD](funcionalidades/documentos-legais-e-lgpd.md) | Termos, privacidade, cookies, histórico de versões e reaceitação |
 | [Animações do Denkynho](funcionalidades/denkynho-animacoes.md) | Sequências de comer, jogar e rir, assets, reprodução e prompts |
-| [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, bônus e pesca |
+| [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, caça do dia, lojas do jogo, bônus e pesca |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
 
 ### Operação

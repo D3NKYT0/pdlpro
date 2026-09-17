@@ -69,6 +69,19 @@ CONFIG_FIELDS: dict[str, list[str]] = {
         "active",
     ],
     "box-items": ["name", "item_id", "enchant", "quantity", "rarity", "weight", "active"],
+    "hunt-quests": [
+        "name",
+        "name_en",
+        "name_es",
+        "description",
+        "description_en",
+        "description_es",
+        "metric",
+        "target",
+        "period",
+        "rewards",
+        "active",
+    ],
 }
 
 RELATED_FIELDS = frozenset({"season", "level_row"})

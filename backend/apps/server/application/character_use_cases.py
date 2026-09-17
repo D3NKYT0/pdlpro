@@ -5,12 +5,20 @@ from uuid import UUID
 
 from apps.server.application.paid_services import execute_paid_service
 from apps.server.domain.access import IAccountAccessService
+from apps.server.domain.appearance import (
+    appearance_catalog,
+    appearance_value,
+    parse_appearance,
+)
+from apps.server.domain.exceptions import CharacterServiceUnavailableError
 from apps.server.domain.gateways import ILineageGateway
 from apps.server.domain.repositories import (
     ICharacterServiceOperationRepository,
     ILinkSlotRepository,
     IServicePriceRepository,
 )
+from apps.server.domain.services import TAVERN_SERVICES
+from apps.server.domain.towns import get_town, town_catalog
 from apps.wallet.domain.repositories import IWalletRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
@@ -162,22 +170,44 @@ class PurchaseLinkSlotInput:
 
 
 class ListServicePricesUseCase(UseCase[None, dict]):
-    """Lista preços dos serviços de personagem pela porta de configuração.
+    """Lista preços, destinos e serviços da taverna disponíveis neste servidor.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
     retorno é ``dict``.
     """
 
-    def __init__(self, prices: IServicePriceRepository) -> None:
+    def __init__(self, prices: IServicePriceRepository, lineage: ILineageGateway) -> None:
         self._prices = prices
+        self._lineage = lineage
 
     def execute(self, data: None = None) -> dict:
-        return {
+        rows = {row.code: row for row in self._prices.list_all()}
+        payload = {
             "CHANGE_NICKNAME": str(self._prices.get_price("CHANGE_NICKNAME")),
             "CHANGE_SEX": str(self._prices.get_price("CHANGE_SEX")),
             "LINK_SLOT": str(self._prices.get_price("LINK_SLOT")),
             "UNSTUCK": "0.00",
+            "available": ["CHANGE_NICKNAME", "CHANGE_SEX", "UNSTUCK", "LINK_SLOT"],
+            "catalog": {"towns": town_catalog(), "appearance": appearance_catalog()},
         }
+        for code in TAVERN_SERVICES:
+            if not self._lineage.supports(code):
+                continue
+            row = rows.get(code)
+            if row is not None and not row.active:
+                continue
+            payload[code] = str(row.price if row else self._prices.get_price(code))
+            payload["available"].append(code)
+        return payload
+
+
+def _require_priced_service(prices: IServicePriceRepository, lineage: ILineageGateway, code: str):
+    if not lineage.supports(code):
+        raise CharacterServiceUnavailableError()
+    row = next((item for item in prices.list_all() if item.code == code), None)
+    if row is not None and not row.active:
+        raise CharacterServiceUnavailableError()
+    return prices.get_price(code)
 
 
 class PurchaseLinkSlotUseCase(UseCase[PurchaseLinkSlotInput, dict]):
@@ -209,3 +239,154 @@ class PurchaseLinkSlotUseCase(UseCase[PurchaseLinkSlotInput, dict]):
             self._wallets.debit(wallet.id, total, destination="link-slot", description=f"{data.quantity} slot(s)")
             extra = self._slots.add_slots(data.user_id, data.quantity)
         return {"extra_slots": extra, "paid": str(total)}
+
+
+class TeleportCharacterUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
+    """Cobra o teleporte e move o personagem offline para a vila escolhida."""
+
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        prices: IServicePriceRepository,
+        wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._lineage = lineage
+        self._access = access
+        self._prices = prices
+        self._wallets = wallets
+        self._operations = operations
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: tuple[CharacterServiceInput, str]) -> None:
+        actor, town_code = data
+        if not self._access.can_access(actor.user_id, actor.username, actor.login):
+            raise AuthorizationError()
+        town = get_town(town_code)
+        price = _require_priced_service(self._prices, self._lineage, "TELEPORT")
+        execute_paid_service(
+            actor,
+            service="TELEPORT",
+            value=town.code,
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )
+
+
+class ChangeAppearanceUseCase(UseCase[tuple[CharacterServiceInput, str], None]):
+    """Cobra e altera cabelo, cor e rosto do personagem offline."""
+
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        prices: IServicePriceRepository,
+        wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._lineage = lineage
+        self._access = access
+        self._prices = prices
+        self._wallets = wallets
+        self._operations = operations
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: tuple[CharacterServiceInput, str]) -> None:
+        actor, raw = data
+        if not self._access.can_access(actor.user_id, actor.username, actor.login):
+            raise AuthorizationError()
+        char = self._lineage.get_character(actor.login, actor.char_id)
+        if char is None:
+            raise ValidationDomainError("Personagem não encontrado.")
+        hair_style, hair_color, face = parse_appearance(raw, char.sex)
+        price = _require_priced_service(self._prices, self._lineage, "APPEARANCE")
+        execute_paid_service(
+            actor,
+            service="APPEARANCE",
+            value=appearance_value(hair_style, hair_color, face),
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )
+
+
+class ClearKarmaUseCase(UseCase[CharacterServiceInput, None]):
+    """Cobra e zera o karma do personagem offline."""
+
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        prices: IServicePriceRepository,
+        wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._lineage = lineage
+        self._access = access
+        self._prices = prices
+        self._wallets = wallets
+        self._operations = operations
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: CharacterServiceInput) -> None:
+        if not self._access.can_access(data.user_id, data.username, data.login):
+            raise AuthorizationError()
+        price = _require_priced_service(self._prices, self._lineage, "CLEAR_KARMA")
+        execute_paid_service(
+            data,
+            service="CLEAR_KARMA",
+            value="",
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )
+
+
+class ClearPkUseCase(UseCase[CharacterServiceInput, None]):
+    """Cobra e zera a contagem de PK do personagem offline."""
+
+    def __init__(
+        self,
+        lineage: ILineageGateway,
+        access: IAccountAccessService,
+        prices: IServicePriceRepository,
+        wallets: IWalletRepository,
+        operations: ICharacterServiceOperationRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._lineage = lineage
+        self._access = access
+        self._prices = prices
+        self._wallets = wallets
+        self._operations = operations
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: CharacterServiceInput) -> None:
+        if not self._access.can_access(data.user_id, data.username, data.login):
+            raise AuthorizationError()
+        price = _require_priced_service(self._prices, self._lineage, "CLEAR_PK")
+        execute_paid_service(
+            data,
+            service="CLEAR_PK",
+            value="",
+            price=price,
+            lineage=self._lineage,
+            access=self._access,
+            wallets=self._wallets,
+            operations=self._operations,
+            unit_of_work=self._unit_of_work,
+        )

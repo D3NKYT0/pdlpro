@@ -19,6 +19,10 @@ vi.mock('../services/api', async (importOriginal) => {
       changeNickname: vi.fn(),
       changeSex: vi.fn(),
       unstuck: vi.fn(),
+      teleport: vi.fn(),
+      changeAppearance: vi.fn(),
+      clearKarma: vi.fn(),
+      clearPk: vi.fn(),
       characterSkills: vi.fn(),
     },
     inventoryApi: { equipment: vi.fn(), gameItems: vi.fn() },
@@ -254,6 +258,50 @@ it('mostra carregamento sem permitir serviço', () => {
   mount()
   expect(screen.getByText('Carregando personagem...')).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Alterar nickname' })).not.toBeInTheDocument()
+})
+it('oferece teleporte, visual e limpeza quando o catálogo está disponível', async () => {
+  vi.mocked(lineageApi.servicePrices).mockResolvedValue({
+    CHANGE_NICKNAME: '10',
+    CHANGE_SEX: '10',
+    UNSTUCK: '0',
+    LINK_SLOT: '10',
+    TELEPORT: '5',
+    APPEARANCE: '5',
+    CLEAR_KARMA: '15',
+    CLEAR_PK: '20',
+    available: ['TELEPORT', 'APPEARANCE', 'CLEAR_KARMA', 'CLEAR_PK'],
+    catalog: {
+      towns: [{ id: 'giran', x: 83400, y: 147943, z: -3404 }],
+      appearance: {
+        hair_style_max_male: 4,
+        hair_style_max_female: 6,
+        hair_color_max: 3,
+        face_max: 2,
+      },
+    },
+  })
+  vi.mocked(lineageApi.teleport).mockResolvedValue({ ok: true })
+  const user = mount()
+  expect(await screen.findByRole('heading', { name: 'Teleporte para vila' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Visual' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Limpar karma' })).toBeEnabled()
+  expect(screen.getByRole('button', { name: 'Limpar PK' })).toBeEnabled()
+  expect(screen.getByRole('link', { name: 'Lojas do jogo' })).toHaveAttribute('href', '/stores')
+  await user.selectOptions(screen.getByLabelText('Destino'), 'giran')
+  await user.click(screen.getByRole('button', { name: 'Teleportar' }))
+  await waitFor(() => expect(lineageApi.teleport).toHaveBeenCalledTimes(1))
+  const [login, charId, town, key] = vi.mocked(lineageApi.teleport).mock.calls[0]
+  expect(login).toBe('hero')
+  expect(charId).toBe(7)
+  expect(town).toBe('giran')
+  expect(key).toMatch(/^[a-f0-9-]{36}$/)
+  expect(toast.success).toHaveBeenCalledWith('Personagem teleportado')
+})
+it('oculta serviços da taverna quando o gateway não os publica', async () => {
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Hero', level: 1 })).toBeVisible()
+  expect(screen.queryByRole('heading', { name: 'Teleporte para vila' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'Limpar karma' })).not.toBeInTheDocument()
 })
 it.each(['empty', 'error', 'online'] as const)('trata estado %s', async state => {
   if (state === 'empty') vi.mocked(lineageApi.characters).mockResolvedValue([])

@@ -29,6 +29,7 @@ import { RegisterPage } from '../../pages/RegisterPage'
 import { CompleteAccountPage } from '../../pages/CompleteAccountPage'
 import { ResetPasswordPage } from '../../pages/ResetPasswordPage'
 import { ShopPage } from '../../pages/ShopPage'
+import { StoresPage } from '../../pages/StoresPage'
 import { SupportPage } from '../../pages/SupportPage'
 import { HelpPage } from '../../pages/HelpPage'
 import { VerifyEmailPage } from '../../pages/VerifyEmailPage'
@@ -95,6 +96,7 @@ export function AppRoutes() {
             <Route path="/roadmap" element={<ResourceGate code="roadmap"><RoadmapPage /></ResourceGate>} />
             <Route path="/roadmap/:id" element={<ResourceGate code="roadmap"><RoadmapDetailPage /></ResourceGate>} />
             <Route path="/rankings" element={<ResourceGate code="rankings"><RankingsPage /></ResourceGate>} />
+            <Route path="/stores" element={<ResourceGate code="game-stores"><StoresPage /></ResourceGate>} />
             <Route path="/news" element={<ResourceGate code="news"><NewsPage /></ResourceGate>} />
             <Route path="/news/:slug" element={<ResourceGate code="news"><NewsDetailPage /></ResourceGate>} />
             <Route path="/info" element={<InfoPage />} />

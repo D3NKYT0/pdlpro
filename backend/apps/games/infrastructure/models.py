@@ -645,3 +645,85 @@ class UserFishingBait(BaseModel):
         verbose_name = _("Isca do jogador")
         verbose_name_plural = _("Iscas do jogador")
         constraints = [models.UniqueConstraint(fields=["user", "bait"], name="unique_user_bait")]
+
+
+class HuntQuest(BaseModel):
+    """Missão da caça do dia, medida em estatísticas do personagem no jogo.
+
+    ``metric`` lê PvP, PK, tempo online ou nível no gateway Lineage. ``rewards`` usa o mesmo
+    contrato JSON dos prêmios do passe. Herda BaseModel: use ``id`` (UUID) nas APIs.
+    """
+
+    name = models.CharField(max_length=120)
+    name_en = models.CharField(max_length=120, blank=True)
+    name_es = models.CharField(max_length=120, blank=True)
+    description = models.CharField(max_length=300, blank=True)
+    description_en = models.CharField(max_length=300, blank=True)
+    description_es = models.CharField(max_length=300, blank=True)
+    metric = models.CharField(
+        max_length=20,
+        choices=[
+            ("pvp", "PvP"),
+            ("pk", "PK"),
+            ("online_time", _("Tempo online")),
+            ("level", _("Nível")),
+        ],
+        default="pvp",
+    )
+    target = models.PositiveIntegerField(default=1)
+    period = models.CharField(
+        max_length=10,
+        choices=[("daily", _("Diária")), ("weekly", _("Semanal"))],
+        default="daily",
+    )
+    rewards = models.JSONField(default=list)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Missão da caça")
+        verbose_name_plural = _("Missões da caça")
+        ordering = ["-created_at"]
+
+
+class HuntSnapshot(BaseModel):
+    """Marcação inicial das estatísticas do personagem no período da caça."""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    login = models.CharField(max_length=45)
+    character_id = models.PositiveIntegerField()
+    period_start = models.DateField()
+    pvp = models.PositiveIntegerField(default=0)
+    pk_count = models.PositiveIntegerField(default=0)
+    online_time = models.PositiveIntegerField(default=0)
+    level = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _("Snapshot da caça")
+        verbose_name_plural = _("Snapshots da caça")
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "character_id", "period_start"],
+                name="unique_hunt_snapshot_period",
+            )
+        ]
+
+
+class HuntClaim(BaseModel):
+    """Resgate de uma missão da caça no período corrente."""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    quest = models.ForeignKey(HuntQuest, on_delete=models.PROTECT)
+    character_id = models.PositiveIntegerField()
+    period_start = models.DateField()
+
+    class Meta:
+        verbose_name = _("Resgate da caça")
+        verbose_name_plural = _("Resgates da caça")
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "quest", "period_start"],
+                name="unique_hunt_claim_period",
+            )
+        ]

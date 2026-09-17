@@ -1,18 +1,20 @@
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowUpRight, BarChart3, Crown, Gift, Trophy, type LucideIcon } from 'lucide-react'
+import { ArrowUpRight, BarChart3, Crown, Gift, Swords, Trophy, type LucideIcon } from 'lucide-react'
 import { PageHeader } from '../components/ui/PageHeader'
 import { Tabs } from '../components/ui/Tabs'
 import { BattlePassSection } from '../components/rewards/BattlePassSection'
 import { DailySection } from '../components/rewards/DailySection'
+import { HuntSection } from '../components/rewards/HuntSection'
 import { StatsSection } from '../components/rewards/StatsSection'
 import { ResourceGate } from '../components/programs/ResourceGate'
 
-type RewardTab = 'battle' | 'daily' | 'statistics'
+type RewardTab = 'battle' | 'daily' | 'hunt' | 'statistics'
 
 const REWARD_TABS: Array<{ id: RewardTab; icon: LucideIcon }> = [
   { id: 'battle', icon: Crown },
   { id: 'daily', icon: Gift },
+  { id: 'hunt', icon: Swords },
   { id: 'statistics', icon: BarChart3 },
 ]
 
@@ -64,6 +66,10 @@ export function RewardsPage() {
         ) : tab === 'daily' ? (
           <ResourceGate code="daily-bonus">
             <DailySection />
+          </ResourceGate>
+        ) : tab === 'hunt' ? (
+          <ResourceGate code="hunt">
+            <HuntSection />
           </ResourceGate>
         ) : (
           <StatsSection />

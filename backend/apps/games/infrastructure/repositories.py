@@ -20,6 +20,7 @@ from apps.games.domain.repositories import (
     IGameCatalogRepository,
     IGameConfigAdminRepository,
     IGameContentAdminRepository,
+    IHuntRepository,
     IMinigameRepository,
 )
 from apps.games.infrastructure.models import (
@@ -47,6 +48,9 @@ from apps.games.infrastructure.models import (
     FishingRod,
     GameConfig,
     GameRewardLog,
+    HuntClaim,
+    HuntQuest,
+    HuntSnapshot,
     Monster,
     Prize,
     SlotHistory,
@@ -773,3 +777,50 @@ class DjangoBattlePassRepository(IBattlePassRepository):
 
     def count_season_reward_claims(self, user, season) -> int:
         return user.battle_pass_claims.filter(reward__level_row__season=season).count()
+
+
+class DjangoHuntRepository(IHuntRepository):
+    """Adaptador Django de ``IHuntRepository``."""
+
+    def require_user(self, user_id: UUID):
+        return User.objects.get(id=user_id)
+
+    def list_active_quests(self) -> list:
+        return list(HuntQuest.objects.filter(active=True).order_by("seq_id"))
+
+    def get_active_quest(self, quest_id: UUID):
+        return HuntQuest.objects.filter(id=quest_id, active=True).first()
+
+    def get_or_create_snapshot(
+        self,
+        user,
+        *,
+        login: str,
+        character_id: int,
+        period_start,
+        pvp: int,
+        pk: int,
+        online_time: int,
+        level: int,
+    ):
+        row, _ = HuntSnapshot.objects.get_or_create(
+            user=user,
+            character_id=character_id,
+            period_start=period_start,
+            defaults={
+                "login": login,
+                "pvp": pvp,
+                "pk_count": pk,
+                "online_time": online_time,
+                "level": level,
+            },
+        )
+        return row
+
+    def has_claim(self, user, quest, period_start) -> bool:
+        return HuntClaim.objects.filter(user=user, quest=quest, period_start=period_start).exists()
+
+    def create_claim(self, user, quest, *, character_id: int, period_start):
+        return HuntClaim.objects.create(
+            user=user, quest=quest, character_id=character_id, period_start=period_start
+        )

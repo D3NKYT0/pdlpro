@@ -1261,7 +1261,26 @@
     "tabs": {
       "battle": "Battle pass",
       "daily": "Daily bonus",
+      "hunt": "Daily hunt",
       "statistics": "Rankings and statistics"
+    },
+    "hunt": {
+      "eyebrow": "Character missions",
+      "title": "Daily hunt",
+      "description": "The panel reads PvP, online time and level from the game. Stay online or offline — only character-sheet services require logout.",
+      "emptyAccounts": "Link an L2 account to hunt.",
+      "emptyQuests": "No hunt quests are active.",
+      "character": "Character",
+      "progress": "{{current}} / {{target}}",
+      "claim": "Claim",
+      "claimed": "Claimed",
+      "claimToast": "Hunt claimed",
+      "metrics": {
+        "pvp": "PvP",
+        "pk": "PK",
+        "online_time": "Online time",
+        "level": "Level"
+      }
     },
     "battlePass": {
       "emptySeason": "The next season is being prepared. Come back soon.",
@@ -1643,12 +1662,67 @@
         "submit": "Unstuck character",
         "submitting": "Unsticking..."
       },
+      "teleport": {
+        "title": "Town teleport",
+        "hint": "Choose the town. Costs {{price}}.",
+        "field": "Destination",
+        "placeholder": "Select a town",
+        "submit": "Teleport",
+        "submitting": "Teleporting..."
+      },
+      "appearance": {
+        "title": "Look",
+        "hint": "Hair, color and face. Costs {{price}}.",
+        "hair": "Hair",
+        "color": "Color",
+        "face": "Face",
+        "styleOption": "Style {{n}}",
+        "colorOption": "Color {{n}}",
+        "faceOption": "Face {{n}}",
+        "submit": "Change look",
+        "submitting": "Changing..."
+      },
+      "karma": {
+        "title": "Clear karma",
+        "hint": "Sets karma to zero. Costs {{price}}.",
+        "description": "The character must be offline.",
+        "submit": "Clear karma",
+        "submitting": "Clearing..."
+      },
+      "pk": {
+        "title": "Clear PK",
+        "hint": "Sets PK count to zero. Costs {{price}}.",
+        "description": "The character must be offline.",
+        "submit": "Clear PK",
+        "submitting": "Clearing..."
+      },
       "shortcuts": {
         "title": "Shortcuts",
         "hint": "Same destinations as the legacy panel.",
         "inventory": "Inventory",
-        "marketplace": "Marketplace"
+        "marketplace": "Marketplace",
+        "stores": "In-game shops"
       }
+    },
+    "towns": {
+      "talking_island": "Talking Island",
+      "dark_elf": "Dark Elf Village",
+      "orc": "Orc Village",
+      "dwarf": "Dwarf Village",
+      "elven": "Elven Village",
+      "gludin": "Gludin",
+      "gludio": "Gludio",
+      "dion": "Dion",
+      "floran": "Floran",
+      "giran": "Giran",
+      "hunter": "Hunter",
+      "oren": "Oren",
+      "ivory_tower": "Ivory Tower",
+      "aden": "Aden",
+      "goddard": "Goddard",
+      "rune": "Rune",
+      "schuttgart": "Schuttgart",
+      "heine": "Heine"
     },
     "toast": {
       "nicknameChanged": "Nickname changed",
@@ -1656,7 +1730,15 @@
       "sexChanged": "Sex changed",
       "sexError": "Could not change the sex",
       "unstuckDone": "Character unstuck",
-      "unstuckError": "Could not unstuck"
+      "unstuckError": "Could not unstuck",
+      "teleportDone": "Character teleported",
+      "teleportError": "Could not teleport",
+      "appearanceDone": "Look changed",
+      "appearanceError": "Could not change the look",
+      "karmaDone": "Karma cleared",
+      "karmaError": "Could not clear karma",
+      "pkDone": "PK cleared",
+      "pkError": "Could not clear PK"
     }
   },
   "programs": {

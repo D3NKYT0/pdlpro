@@ -18,10 +18,13 @@ from apps.server.domain.gateways import (
     GameCharacter,
     GameItem,
     GameSkill,
+    GameStore,
+    GameStoreItem,
     ILineageGateway,
     RankingEntry,
     ServerStatus,
 )
+from apps.server.domain.services import SERVICE_CAPABILITIES
 from apps.server.infrastructure.passwords import LineagePasswordHasher
 
 
@@ -61,6 +64,8 @@ class NullLineageGateway(ILineageGateway):
         self._characters: dict[str, list[GameCharacter]] = {}
         self._items: dict[int, list[GameItem]] = {}
         self._skills: dict[int, list[GameSkill]] = {}
+        self._stores: list[GameStore] = []
+        self._store_items: list[GameStoreItem] = []
         self._next_char_id = 1
 
     def get_status(self) -> ServerStatus:
@@ -213,6 +218,36 @@ class NullLineageGateway(ILineageGateway):
     def unstuck(self, login: str, char_id: int) -> None:
         self._require_offline(login, char_id)
 
+    def supports(self, capability: str) -> bool:
+        return capability in SERVICE_CAPABILITIES
+
+    def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        self._require_offline(login, char_id)
+
+    def change_appearance(
+        self, login: str, char_id: int, hair_style: int, hair_color: int, face: int
+    ) -> None:
+        char = self._require_offline(login, char_id)
+        self._replace_character(
+            login,
+            char_id,
+            replace(char, hair_style=hair_style, hair_color=hair_color, face=face, online=False),
+        )
+
+    def clear_karma(self, login: str, char_id: int) -> None:
+        char = self._require_offline(login, char_id)
+        self._replace_character(login, char_id, replace(char, karma=0, online=False))
+
+    def clear_pk(self, login: str, char_id: int) -> None:
+        char = self._require_offline(login, char_id)
+        self._replace_character(login, char_id, replace(char, pk=0, online=False))
+
+    def list_private_stores(self) -> list[GameStore]:
+        return list(self._stores)
+
+    def list_private_store_items(self) -> list[GameStoreItem]:
+        return list(self._store_items)
+
     def count_characters(self, login: str) -> int:
         return len(self.list_characters(login))
 
@@ -250,6 +285,7 @@ class NullLineageGateway(ILineageGateway):
         *,
         items: list[GameItem] | None = None,
         skills: list[GameSkill] | None = None,
+        **stats,
     ) -> GameCharacter:
         """Apenas testes/dev: cria um personagem no gateway em memória."""
         key = login.lower()
@@ -257,12 +293,56 @@ class NullLineageGateway(ILineageGateway):
             key,
             {"login": login, "email": "", "password": "", "linked_user_id": None},
         )
-        char = GameCharacter(self._next_char_id, name, 1, False, 0)
+        char = GameCharacter(
+            self._next_char_id,
+            name,
+            int(stats.pop("level", 1)),
+            bool(stats.pop("online", False)),
+            int(stats.pop("sex", 0)),
+            **stats,
+        )
         self._next_char_id += 1
         self._characters.setdefault(key, []).append(char)
         self._items[char.char_id] = [self._normalize_item(item) for item in items or []]
         self._skills[char.char_id] = list(skills or [])
         return char
+
+    def seed_store(
+        self,
+        *,
+        char_id: int,
+        name: str,
+        store_type: int = 1,
+        title: str = "",
+        items: list[GameStoreItem] | None = None,
+        x: int = 83400,
+        y: int = 147943,
+        z: int = -3404,
+        clan_name: str = "",
+    ) -> GameStore:
+        """Apenas testes/dev: publica uma loja offline em memória."""
+        store = GameStore(
+            char_id=char_id,
+            name=name,
+            store_type=store_type,
+            title=title,
+            x=x,
+            y=y,
+            z=z,
+            clan_name=clan_name,
+        )
+        self._stores.append(store)
+        for item in items or []:
+            self._store_items.append(
+                GameStoreItem(
+                    item_id=item.item_id,
+                    quantity=item.quantity,
+                    price=item.price,
+                    enchant=item.enchant,
+                    char_id=char_id,
+                )
+            )
+        return store
 
     @staticmethod
     def _normalize_item(item: GameItem) -> GameItem:

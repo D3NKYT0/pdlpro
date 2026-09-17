@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **15 de setembro de 2026** — Não publicado: extensões
+Última atualização: **16 de setembro de 2026** — Não publicado: taverna da
+ficha (teleporte, visual, karma/PK), caça do dia nas recompensas e vitrine
+pública de lojas offline; extensões
 embarcam SQL Lineage (overlay ou dialeto próprio, contrato versionado), a SPA
 descobre módulos/slots/APIs sem editar o catálogo, e o overlay se encaixa em
 hooks de checkout/pagamento/vínculo, gateways e recursos Programs; notícias,

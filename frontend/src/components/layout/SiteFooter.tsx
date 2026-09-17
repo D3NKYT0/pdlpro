@@ -25,6 +25,7 @@ export function SiteFooter() {
     { to: landingPath, label: t('nav.home') },
     { to: '/info', label: t('nav.info') },
     { to: '/rankings', label: t('nav.rankings'), resource: 'rankings' },
+    { to: '/stores', label: t('nav.stores'), resource: 'game-stores' },
     { to: '/wiki', label: t('nav.wiki'), resource: 'wiki' },
     { to: '/news', label: t('nav.news'), resource: 'news' },
   ]

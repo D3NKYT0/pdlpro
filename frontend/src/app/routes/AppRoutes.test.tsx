@@ -40,6 +40,7 @@ const pages = [
   ['/verify-email', 'Verificar e-mail'],
   ['/roadmap', 'Roadmap do servidor'],
   ['/rankings', 'Os mais fortes do reino'],
+  ['/stores', 'Lojas do jogo'],
   ['/info', 'Conheça o reino'],
   ['/news', 'Notícias'],
   ['/news/update', 'Notícia'],

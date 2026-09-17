@@ -5,6 +5,7 @@ export { restoreSession } from './infra/session'
 export { authApi, isTwoFactorChallenge } from './domain/auth.service'
 export type { TwoFactorChallenge } from './domain/auth.service'
 export { serverApi } from './domain/server.service'
+export type { ApiGameStore, ApiGameStoreItem } from './domain/server.service'
 export { walletApi } from './domain/wallet.service'
 export { shopApi } from './domain/shop.service'
 export { contentApi } from './domain/content.service'
@@ -16,7 +17,7 @@ export type {
   DenkynhoAppearance,
   DenkynhoUnlock,
 } from './domain/content.service'
-export { lineageApi, inventoryApi } from './domain/lineage.service'
+export { lineageApi, inventoryApi, serviceAvailable } from './domain/lineage.service'
 export type {
   ApiAccessibleAccount,
   ApiCharacterEquipmentItem,
@@ -38,6 +39,7 @@ export type {
   BattleDetails,
   DailyDetails,
   FishingDetails,
+  HuntDetails,
   GameStats,
   Reward,
   RewardHistory,

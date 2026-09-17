@@ -46,6 +46,7 @@ it('apresenta marca, navegação útil e documentos legais sem atalhos decorativ
 
   expect(screen.getByRole('navigation', { name: 'Explorar o site' })).toBeVisible()
   expect(screen.getByRole('link', { name: 'Rankings' })).toHaveAttribute('href', '/rankings')
+  expect(screen.getByRole('link', { name: 'Lojas' })).toHaveAttribute('href', '/stores')
   expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
   expect(screen.getByRole('link', { name: 'Criar conta' })).toHaveAttribute('href', '/register')
   expect(screen.getByRole('link', { name: 'Política de Privacidade' })).toHaveAttribute('href', '/privacy')
@@ -102,9 +103,11 @@ it('oculta links de conteúdo pausados no rodapé', () => {
     { code: 'wiki', enabled: false },
     { code: 'faq', enabled: false },
     { code: 'downloads', enabled: false },
+    { code: 'game-stores', enabled: false },
   ])
   expect(screen.queryByRole('link', { name: 'Wiki' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Perguntas frequentes' })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Lojas' })).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Rankings' })).toBeVisible()
 })

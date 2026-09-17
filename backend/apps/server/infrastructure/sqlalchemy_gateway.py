@@ -12,6 +12,7 @@ from apps.server.domain.access import same_linked_user
 from apps.server.domain.character_rules import require_offline_character
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
+    CharacterServiceUnavailableError,
     GameAccountAlreadyExistsError,
     GameAccountNotFoundError,
     NicknameTakenError,
@@ -21,10 +22,13 @@ from apps.server.domain.gateways import (
     GameCharacter,
     GameItem,
     GameSkill,
+    GameStore,
+    GameStoreItem,
     ILineageGateway,
     RankingEntry,
     ServerStatus,
 )
+from apps.server.domain.services import SERVICE_QUERY_NAMES
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.lineage.crests import crest_to_png_base64
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
@@ -185,6 +189,9 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             ally_name=str(row.get("ally_name") or "").strip(),
             clan_crest_base64=crest_to_png_base64(row.get("clan_crest"), "clan"),
             ally_crest_base64=crest_to_png_base64(row.get("ally_crest"), "ally"),
+            hair_style=int(row.get("hair_style") or 0),
+            hair_color=int(row.get("hair_color") or 0),
+            face=int(row.get("face") or 0),
         )
 
     def get_status(self) -> ServerStatus:
@@ -389,6 +396,90 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         x, y, z = UNSTUCK
         self._execute("unstuck", {"x": x, "y": y, "z": z, "cid": char.char_id, "login": login})
+
+    def supports(self, capability: str) -> bool:
+        query_name = SERVICE_QUERY_NAMES.get(capability)
+        if query_name is None:
+            return False
+        if capability == "LINK_SLOT":
+            return True
+        return self._sql.has(query_name)
+
+    def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        char = self._require_offline(login, char_id)
+        self._execute("unstuck", {"x": x, "y": y, "z": z, "cid": char.char_id, "login": login})
+
+    def change_appearance(
+        self, login: str, char_id: int, hair_style: int, hair_color: int, face: int
+    ) -> None:
+        if not self._sql.has("change_appearance"):
+            raise CharacterServiceUnavailableError()
+        char = self._require_offline(login, char_id)
+        self._execute(
+            "change_appearance",
+            {
+                "hair_style": hair_style,
+                "hair_color": hair_color,
+                "face": face,
+                "cid": char.char_id,
+                "login": login,
+            },
+        )
+
+    def clear_karma(self, login: str, char_id: int) -> None:
+        if not self._sql.has("clear_karma"):
+            raise CharacterServiceUnavailableError()
+        char = self._require_offline(login, char_id)
+        self._execute("clear_karma", {"cid": char.char_id, "login": login})
+
+    def clear_pk(self, login: str, char_id: int) -> None:
+        if not self._sql.has("clear_pk"):
+            raise CharacterServiceUnavailableError()
+        char = self._require_offline(login, char_id)
+        self._execute("clear_pk", {"cid": char.char_id, "login": login})
+
+    def list_private_stores(self) -> list[GameStore]:
+        if not self._sql.has("list_private_stores"):
+            return []
+        try:
+            rows = self._fetch("list_private_stores")
+        except SQLAlchemyError as exc:
+            raise CharacterServiceUnavailableError() from exc
+        stores = []
+        for row in rows:
+            stores.append(
+                GameStore(
+                    char_id=int(row.get("char_id") or 0),
+                    name=str(row.get("name") or ""),
+                    store_type=int(row.get("store_type") or 1),
+                    title=str(row.get("title") or ""),
+                    x=int(row.get("x") or 0),
+                    y=int(row.get("y") or 0),
+                    z=int(row.get("z") or 0),
+                    clan_name=str(row.get("clan_name") or ""),
+                )
+            )
+        return stores
+
+    def list_private_store_items(self) -> list[GameStoreItem]:
+        if not self._sql.has("list_private_store_items"):
+            return []
+        try:
+            rows = self._fetch("list_private_store_items")
+        except SQLAlchemyError as exc:
+            raise CharacterServiceUnavailableError() from exc
+        items = []
+        for row in rows:
+            items.append(
+                GameStoreItem(
+                    item_id=int(row.get("item_id") or 0),
+                    quantity=int(row.get("quantity") or 0),
+                    price=int(row.get("price") or 0),
+                    enchant=int(row.get("enchant") or 0),
+                    char_id=int(row.get("char_id") or 0),
+                )
+            )
+        return items
 
     def count_characters(self, login: str) -> int:
         rows = self._fetch("count_characters", {"login": login})
