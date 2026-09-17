@@ -8,12 +8,6 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
-### Corrigido
-
-- Ícone Jazzmin do duelo do chefe (`games.economybossduel`) e typecheck da SPA
-  (`Timeout` do golpe da Queen Ant e arquivos `.test.tsx` fora do tsconfig da
-  aplicação).
-
 ## [2.5.0] - 2026-09-17
 
 Alterações desde **13 de setembro de 2026** (após `[2.4.0]`), consolidadas pelo histórico
@@ -194,6 +188,9 @@ Git até **17 de setembro de 2026**.
   recusado e registrado em log, em vez de liquidar o pedido indicado nos metadados.
 - As quatro abas da jornada (passe, bônus diário, caça do dia e rankings)
   voltam a caber numa linha no desktop; a grade ainda era de três colunas.
+- Ícone Jazzmin do duelo do chefe (`games.economybossduel`) e typecheck da SPA
+  (`Timeout` do golpe da Queen Ant e arquivos `.test.tsx` fora do tsconfig da
+  aplicação).
 
 ## [2.4.0] - 2026-09-13
 
