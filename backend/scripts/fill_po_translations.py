@@ -631,6 +631,62 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Hunt claims",
         "Canjes de la caza",
     ),
+    "Listar personagens para moderação": (
+        "List characters for moderation",
+        "Listar personajes para moderación",
+    ),
+    "Busca personagens por nick, login ou e-mail e devolve dados administrativos da conta.": (
+        "Search characters by nick, login or email and return administrative account data.",
+        "Busca personajes por nick, login o correo y devuelve datos administrativos de la cuenta.",
+    ),
+    "Consultar personagem para moderação": (
+        "Look up a character for moderation",
+        "Consultar personaje para moderación",
+    ),
+    "Devolve personagem, conta, e-mail, prisão, banimento e o histórico da equipe.": (
+        "Returns character, account, email, jail, ban status and staff history.",
+        "Devuelve personaje, cuenta, correo, prisión, ban e historial del equipo.",
+    ),
+    "Executar ação de moderação": (
+        "Run a moderation action",
+        "Ejecutar una acción de moderación",
+    ),
+    "Aplica kick, jail, unjail, ban, unban ou teleporte. Personagem online só reflete posição e kick no próximo login; o banimento da conta impede o relogin.": (
+        "Applies kick, jail, unjail, ban, unban or teleport. An online character only reflects position and kick on the next login; banning the account blocks relogin.",
+        "Aplica kick, jail, unjail, ban, unban o teleporte. Un personaje online solo refleja posición y kick en el próximo login; el ban de la cuenta impide el relogin.",
+    ),
+    "Prisão do personagem": ("Character jail", "Prisión del personaje"),
+    "Prisões de personagens": ("Character jails", "Prisiones de personajes"),
+    "Ação de moderação": ("Moderation action", "Acción de moderación"),
+    "Ações de moderação": ("Moderation actions", "Acciones de moderación"),
+    "ID do personagem": ("Character ID", "ID del personaje"),
+    "Preso": ("Jailed", "En prisión"),
+    "Preso até": ("Jailed until", "En prisión hasta"),
+    "Motivo": ("Reason", "Motivo"),
+    "Estava online": ("Was online", "Estaba online"),
+    "Usuário da equipe": ("Staff username", "Usuario del equipo"),
+    "Equipe": ("Staff", "Equipo"),
+    "Login": ("Login", "Login"),
+    "Ação": ("Action", "Acción"),
+    "Detalhes": ("Details", "Detalles"),
+    "Filtro de status inválido.": ("Invalid status filter.", "Filtro de estado inválido."),
+    "Ação de moderação inválida.": ("Invalid moderation action.", "Acción de moderación inválida."),
+    "Informe o motivo (mínimo 3 caracteres).": (
+        "Enter a reason (at least 3 characters).",
+        "Indica el motivo (mínimo 3 caracteres).",
+    ),
+    "O motivo deve ter no máximo 255 caracteres.": (
+        "The reason must be at most 255 characters.",
+        "El motivo debe tener como máximo 255 caracteres.",
+    ),
+    "Este personagem não está na prisão.": (
+        "This character is not in jail.",
+        "Este personaje no está en prisión.",
+    ),
+    "Esta conta não está banida.": (
+        "This account is not banned.",
+        "Esta cuenta no está baneada.",
+    ),
 }
 
 

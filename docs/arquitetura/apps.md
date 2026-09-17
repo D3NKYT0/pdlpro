@@ -9,7 +9,7 @@ Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua
 | App | Responsabilidade | Pontos de entrada para desenvolvimento |
 | --- | --- | --- |
 | `accounts` | Cadastro, sessão, e-mail, 2FA, passkeys e progresso | `application/use_cases.py`, `application/sessions.py`, `application/oauth.py`, `application/webauthn_service.py`, `infrastructure/provider.py` |
-| `server` | Contas Lineage, personagens, serviços e catálogos | `domain/gateways.py`, `application/account_use_cases.py`, `application/custom_items.py`, `application/item_observation.py`, `infrastructure/provider.py` |
+| `server` | Contas Lineage, personagens, serviços, catálogos e moderação | `domain/gateways.py`, `application/account_use_cases.py`, `application/moderation_use_cases.py`, `application/custom_items.py`, `application/item_observation.py`, `infrastructure/provider.py` |
 | `wallet` | Carteira, transferências, bônus e câmbio com o jogo | `application/use_cases.py`, `application/exchange.py`, `domain/repositories.py` |
 | `payment` | Pedidos, gateways, confirmação e webhooks | `application/use_cases.py`, `application/webhooks.py`, `infrastructure/registry.py` |
 | `shop` | Produtos, pacotes, carrinho, promoções e checkout | `application/use_cases.py`, `application/commerce_use_cases.py` |

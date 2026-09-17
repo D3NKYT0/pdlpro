@@ -19,6 +19,8 @@ export type ApiGameStore = {
   x: number
   y: number
   z: number
+  sex: number
+  race: string
   items: ApiGameStoreItem[]
 }
 

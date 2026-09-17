@@ -11,10 +11,15 @@ from apps.server.infrastructure.models import (
     ManagedLineageAccount,
     ServicePrice,
 )
+from apps.server.infrastructure.moderation_models import (
+    CharacterJailState,
+    ModerationActionLog,
+)
 from apps.server.infrastructure.service_models import CharacterServiceOperation
 
 __all__ = [
     "AccountLinkSlot",
+    "CharacterJailState",
     "CharacterServiceOperation",
     "CustomCatalogItem",
     "IndexConfig",
@@ -23,5 +28,6 @@ __all__ = [
     "ItemObservationFavorite",
     "ItemObservationSnapshot",
     "ManagedLineageAccount",
+    "ModerationActionLog",
     "ServicePrice",
 ]

@@ -19,6 +19,8 @@ def test_public_stores_list_and_filter_by_item_name():
         char_id=11,
         name="TraderAnn",
         title="Soulshots D",
+        sex=1,
+        class_id=88,
         items=[GameStoreItem(item_id=1463, quantity=500, price=1200, enchant=0)],
     )
     gateway.seed_store(
@@ -37,6 +39,9 @@ def test_public_stores_list_and_filter_by_item_name():
     first = next(row for row in listed.data["stores"] if row["name"] == "TraderAnn")
     assert first["store_type"] == "sell"
     assert first["town"] == "giran"
+    assert first["sex"] == 1
+    assert first["race"] == "human"
+    assert first["x"] == 83400
     assert first["items"][0]["item_id"] == 1463
 
     filtered = api.get("/api/v1/public/server/stores/?q=traderann")

@@ -46,6 +46,7 @@ import {
   LegacyReportsRedirect,
 } from './legacyRedirects'
 import { AdminAccountsPage } from '../../pages/admin/AdminAccountsPage'
+import { AdminModerationPage } from '../../pages/admin/AdminModerationPage'
 import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
 import { AdminReportsPage, AdminFinancialReportsRedirect } from '../../pages/admin/AdminReportsPage'
 import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
@@ -151,6 +152,7 @@ export function AppRoutes() {
               <Route path="/panel/admin/items/customs" element={<AdminCustomItemsPage />} />
               <Route path="/panel/admin/server" element={<AdminServerPage />} />
               <Route path="/panel/admin/accounts" element={<AdminAccountsPage />} />
+              <Route path="/panel/admin/moderation" element={<AdminModerationPage />} />
               <Route path="/panel/admin/services" element={<AdminServicesPage />} />
               <Route path="/panel/admin/coins" element={<AdminCoinsPage />} />
               <Route path="/panel/admin/wallet" element={<AdminWalletPage />} />

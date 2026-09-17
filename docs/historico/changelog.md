@@ -10,6 +10,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Moderação da equipe** em `/panel/admin/moderation`: lista personagens
+  (nick, conta L2, e-mail, online) e aplica kick, prisão/soltar, ban/desban e
+  teleporte para vila, com motivo e histórico. As escritas vão ao SQL do
+  dialeto Lineage; personagem online só reflete posição e kick no próximo
+  login, e o banimento da conta impede o relogin.
 - **Taverna da ficha:** teleporte para vila do catálogo Interlude, troca de
   cabelo/cor/rosto e limpeza de karma/PK no personagem offline, com preço no
   admin de serviços. UNSTUCK segue gratuito em Giran; TELEPORT reusa o mesmo
@@ -19,9 +24,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   online e nível lidos no personagem L2, com snapshot por período e um resgate
   por missão. Staff edita `hunt-quests` na oficina de recompensas (PT/EN/ES).
 - **Vitrine de lojas** em `/stores`: private stores offline somente leitura,
-  busca por item/vendedor e filtro por tipo. Recurso `game-stores`; some do
-  menu quando o catálogo SQL não publica as consultas. Schema sem as tabelas
-  de offline trade devolve a página como indisponível, sem 500.
+  busca por item/vendedor/vila e filtro por tipo, com retrato Interlude
+  (homem e mulher de cada raça) e coordenadas XYZ para ir comprar. Recurso
+  `game-stores`; some do menu quando o catálogo SQL não publica as consultas.
+  Schema sem as tabelas de offline trade devolve a página como indisponível,
+  sem 500.
 
 - CRUD de **calendário**, **FAQ**, **wiki**, **downloads** e **avisos** na central
   da staff (`/panel/admin/calendar`, `/panel/admin/faq`, `/panel/admin/wiki`,
@@ -85,7 +92,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   recompensas e em Conta e segurança.
 - A jornada de recompensas do painel passa a usar o mesmo chrome de Jogos,
   Progresso e Carteira: hero com arte do tema, selo de nível, calendário com
-  carimbo do dia e pódio no ranking.
+  carimbo do dia e pódio no ranking. A **Caça do dia** acompanha as missões do
+  passe (selo do personagem, snapshot PvP/PK/tempo, barras de progresso e
+  seletor no tema).
 - O programa de apoiadores ganha o mesmo chrome: hero com arte, saldo de
   comissão em evidência, fichas de cadastro e estados vazios com ícone.
 - `./setup.sh deploy --production` deixa de reconstruir imagens quando o `.env`
@@ -108,6 +117,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   mesma largura e a mesma altura da faixa da pergunta.
 - Webhook de pagamento com `order_id` de um pedido e `external_id` de outro passa a ser
   recusado e registrado em log, em vez de liquidar o pedido indicado nos metadados.
+- As quatro abas da jornada (passe, bônus diário, caça do dia e rankings)
+  voltam a caber numa linha no desktop; a grade ainda era de três colunas.
 
 ## [2.4.0] - 2026-09-13
 

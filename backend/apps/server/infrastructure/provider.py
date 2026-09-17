@@ -49,6 +49,11 @@ from apps.server.application.item_observation import (
     SetObservationFavoriteUseCase,
     UpsertObservationCategoryUseCase,
 )
+from apps.server.application.moderation_use_cases import (
+    ApplyModerationActionUseCase,
+    GetModerationCharacterUseCase,
+    SearchModerationCharactersUseCase,
+)
 from apps.server.application.store_use_cases import ListGameStoresUseCase
 from apps.server.application.use_cases import (
     GetRankingUseCase,
@@ -66,12 +71,16 @@ from apps.server.domain.repositories import (
     IItemObservationRepository,
     ILinkSlotRepository,
     IManagedLineageAccountRepository,
+    IModerationStateRepository,
     IServicePriceRepository,
 )
 from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.infrastructure.access import DjangoAccountAccessService
 from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
+from apps.server.infrastructure.moderation_repository import (
+    DjangoModerationStateRepository,
+)
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.repositories import (
     DjangoCharacterServiceOperationRepository,
@@ -119,6 +128,7 @@ class ServerProvider(AppProvider):
         )
         container.register(ICustomItemRepository, DjangoCustomItemRepository, lifetime=Lifetime.SCOPED)
         container.register(IItemObservationRepository, DjangoItemObservationRepository, lifetime=Lifetime.SCOPED)
+        container.register(IModerationStateRepository, DjangoModerationStateRepository, lifetime=Lifetime.SCOPED)
         container.register(
             ICharacterServiceOperationRepository,
             DjangoCharacterServiceOperationRepository,
@@ -174,5 +184,8 @@ class ServerProvider(AppProvider):
             GetObservationCategoryUseCase,
             UpsertObservationCategoryUseCase,
             DeleteObservationCategoryUseCase,
+            SearchModerationCharactersUseCase,
+            GetModerationCharacterUseCase,
+            ApplyModerationActionUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

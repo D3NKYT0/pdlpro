@@ -26,7 +26,7 @@ valor recomendado é `false`.
 | `/api/v1/public/` | Anônimo | Status, rankings, notícias, wiki, calendário, FAQ, downloads e mercados públicos |
 | `/api/v1/shared/` | Autenticado | Perfil, progresso, recompensas, carteira, loja e conteúdo compartilhado |
 | `/api/v1/customer/` | Autenticado | Contas, personagens, inventário, pagamentos, mercados, jogos e comunicação |
-| `/api/v1/staff/` | Equipe | Configurações administrativas, conteúdo editorial, avisos e relatórios (financeiros e operacionais) |
+| `/api/v1/staff/` | Equipe | Configurações administrativas, conteúdo editorial, avisos, relatórios e moderação de personagens |
 | `/api/v1/system/` | Operacional | Health, versão e webhooks de pagamento |
 
 A lista completa e os métodos aceitos devem ser consultados no Swagger/ReDoc ou diretamente nos arquivos `backend/apps/*/presentation/urls/`.

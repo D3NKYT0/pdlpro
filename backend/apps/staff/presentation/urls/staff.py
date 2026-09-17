@@ -40,6 +40,11 @@ from apps.staff.presentation.views.item_observation import (
     ObservationSnapshotsView,
     ObservationSnapshotView,
 )
+from apps.staff.presentation.views.moderation import (
+    StaffModerationActionView,
+    StaffModerationCharactersView,
+    StaffModerationCharacterView,
+)
 from apps.staff.presentation.views.notifications import StaffNotificationsView
 from apps.staff.presentation.views.operational_reports import (
     AuctionsOperationalReportView,
@@ -73,6 +78,13 @@ urlpatterns = [
     path("item-observation/categories/<uuid:category_id>/", ObservationCategoryView.as_view()),
     path("accounts/", StaffInspectGameAccountView.as_view(), name="staff-accounts-inspect"),
     path("accounts/unlink/", StaffUnlinkGameAccountView.as_view(), name="staff-accounts-unlink"),
+    path("moderation/characters/", StaffModerationCharactersView.as_view(), name="staff-moderation-characters"),
+    path(
+        "moderation/characters/<int:char_id>/",
+        StaffModerationCharacterView.as_view(),
+        name="staff-moderation-character",
+    ),
+    path("moderation/actions/", StaffModerationActionView.as_view(), name="staff-moderation-actions"),
     path("panel/", StaffPanelSettingsView.as_view(), name="staff-panel-settings"),
     path("services/", StaffServicePricesView.as_view(), name="staff-service-prices"),
     path("coins/", StaffCoinConfigView.as_view(), name="staff-coins"),

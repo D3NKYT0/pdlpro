@@ -21,6 +21,7 @@ from apps.server.domain.gateways import (
     GameStore,
     GameStoreItem,
     ILineageGateway,
+    ModerationCharacter,
     RankingEntry,
     ServerStatus,
 )
@@ -66,6 +67,7 @@ class NullLineageGateway(ILineageGateway):
         self._skills: dict[int, list[GameSkill]] = {}
         self._stores: list[GameStore] = []
         self._store_items: list[GameStoreItem] = []
+        self._char_coords: dict[int, tuple[int, int, int]] = {}
         self._next_char_id = 1
 
     def get_status(self) -> ServerStatus:
@@ -123,6 +125,7 @@ class NullLineageGateway(ILineageGateway):
             "email": email,
             "password": self._hasher.hash(password),
             "linked_user_id": None,
+            "access_level": 0,
         }
         self._characters.setdefault(key, [])
         return self.get_account(login)
@@ -219,7 +222,50 @@ class NullLineageGateway(ILineageGateway):
         self._require_offline(login, char_id)
 
     def supports(self, capability: str) -> bool:
-        return capability in SERVICE_CAPABILITIES
+        return capability == "MODERATION" or capability in SERVICE_CAPABILITIES
+
+    def search_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+        limit: int,
+        offset: int,
+    ) -> list[ModerationCharacter]:
+        rows = self._moderation_matches(like, online_filter, banned_filter)
+        return rows[offset : offset + limit]
+
+    def count_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+    ) -> int:
+        return len(self._moderation_matches(like, online_filter, banned_filter))
+
+    def get_moderation_character(self, char_id: int) -> ModerationCharacter | None:
+        for login, chars in self._characters.items():
+            for char in chars:
+                if char.char_id == char_id:
+                    return self._to_moderation(login, char)
+        return None
+
+    def set_account_access_level(self, login: str, level: int) -> None:
+        row = self._require_account(login)
+        row["access_level"] = int(level)
+
+    def kick_character(self, login: str, char_id: int) -> None:
+        char = self.get_character(login, char_id)
+        if char is None:
+            raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
+        self._replace_character(login, char_id, replace(char, online=False))
+
+    def move_character(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        if self.get_character(login, char_id) is None:
+            raise GameAccountNotFoundError("Personagem não encontrado nesta conta.")
+        self._char_coords[char_id] = (int(x), int(y), int(z))
 
     def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
         self._require_offline(login, char_id)
@@ -271,7 +317,7 @@ class NullLineageGateway(ILineageGateway):
         key = new_account.lower()
         self._accounts.setdefault(
             key,
-            {"login": new_account, "email": "", "password": "", "linked_user_id": None},
+            {"login": new_account, "email": "", "password": "", "linked_user_id": None, "access_level": 0},
         )
         self._characters.setdefault(key, []).append(moved)
 
@@ -291,7 +337,7 @@ class NullLineageGateway(ILineageGateway):
         key = login.lower()
         self._accounts.setdefault(
             key,
-            {"login": login, "email": "", "password": "", "linked_user_id": None},
+            {"login": login, "email": "", "password": "", "linked_user_id": None, "access_level": 0},
         )
         char = GameCharacter(
             self._next_char_id,
@@ -305,6 +351,7 @@ class NullLineageGateway(ILineageGateway):
         self._characters.setdefault(key, []).append(char)
         self._items[char.char_id] = [self._normalize_item(item) for item in items or []]
         self._skills[char.char_id] = list(skills or [])
+        self._char_coords[char.char_id] = (83400, 147943, -3404)
         return char
 
     def seed_store(
@@ -319,6 +366,8 @@ class NullLineageGateway(ILineageGateway):
         y: int = 147943,
         z: int = -3404,
         clan_name: str = "",
+        sex: int = 0,
+        class_id: int = 0,
     ) -> GameStore:
         """Apenas testes/dev: publica uma loja offline em memória."""
         store = GameStore(
@@ -330,6 +379,8 @@ class NullLineageGateway(ILineageGateway):
             y=y,
             z=z,
             clan_name=clan_name,
+            sex=sex,
+            class_id=class_id,
         )
         self._stores.append(store)
         for item in items or []:
@@ -363,6 +414,55 @@ class NullLineageGateway(ILineageGateway):
     def _replace_character(self, login: str, char_id: int, updated: GameCharacter) -> None:
         chars = self._characters[login.lower()]
         self._characters[login.lower()] = [updated if item.char_id == char_id else item for item in chars]
+
+    def _moderation_matches(self, like: str, online_filter: int, banned_filter: int) -> list[ModerationCharacter]:
+        needle = like.strip("%").lower()
+        rows: list[ModerationCharacter] = []
+        for login, chars in self._characters.items():
+            account = self._accounts.get(login.lower(), {})
+            access = int(account.get("access_level") or 0)
+            email = str(account.get("email") or "")
+            for char in chars:
+                haystack = (char.name, login, email)
+                if needle and not any(needle in value.lower() for value in haystack):
+                    continue
+                if online_filter >= 0 and int(bool(char.online)) != online_filter:
+                    continue
+                if banned_filter == 1 and access >= 0:
+                    continue
+                if banned_filter == 0 and access < 0:
+                    continue
+                rows.append(self._to_moderation(login, char))
+        rows.sort(key=lambda item: (not item.online, -item.level, item.name.lower()))
+        return rows
+
+    def _to_moderation(self, login: str, char: GameCharacter) -> ModerationCharacter:
+        account = self._accounts.get(login.lower(), {})
+        linked = account.get("linked_user_id")
+        x, y, z = self._char_coords.get(char.char_id, (83400, 147943, -3404))
+        return ModerationCharacter(
+            char_id=char.char_id,
+            name=char.name,
+            login=account.get("login") or login,
+            email=str(account.get("email") or ""),
+            level=char.level,
+            online=char.online,
+            sex=char.sex,
+            class_id=char.class_id,
+            title=char.title,
+            clan_name=char.clan_name,
+            pvp=char.pvp,
+            pk=char.pk,
+            karma=char.karma,
+            online_time=char.online_time,
+            last_access=char.last_access,
+            account_access=int(account.get("access_level") or 0),
+            char_access=0,
+            x=x,
+            y=y,
+            z=z,
+            linked_user_id=str(linked) if linked else None,
+        )
 
     def _find_char_by_name(self, name: str) -> GameCharacter:
         for chars in self._characters.values():

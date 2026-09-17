@@ -1271,10 +1271,28 @@
       "emptyAccounts": "Vincula una cuenta L2 para cazar.",
       "emptyQuests": "No hay misiones de caza activas.",
       "character": "Personaje",
+      "characterOption": "{{name}} · {{login}} · {{level}}",
+      "online": "En línea",
+      "offline": "Desconectado",
       "progress": "{{current}} / {{target}}",
+      "overallProgress": "Progreso de la caza",
+      "questsDone": "Misiones canjeadas",
+      "readyCount_one": "{{count}} lista para canjear",
+      "readyCount_other": "{{count}} listas para canjear",
       "claim": "Canjear",
       "claimed": "Canjeado",
+      "questClaimed": "Misión canjeada",
       "claimToast": "Caza canjeada",
+      "status": {
+        "progress": "En curso",
+        "ready": "Lista",
+        "claimed": "Canjeada"
+      },
+      "period": {
+        "daily": "Diaria",
+        "weekly": "Semanal",
+        "season": "Temporada"
+      },
       "metrics": {
         "pvp": "PvP",
         "pk": "PK",

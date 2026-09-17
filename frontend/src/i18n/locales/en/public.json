@@ -522,8 +522,8 @@
   "stores": {
     "eyebrow": "World economy",
     "title": "In-game shops",
-    "description": "Offline private stores published on the server. Search by item or seller.",
-    "search": "Search item or seller",
+    "description": "Offline private stores published on the server. Each shop shows a race portrait, town and coordinates so you can go buy in-game.",
+    "search": "Search item, seller or town",
     "type": "Type",
     "allTypes": "All",
     "types": {
@@ -537,6 +537,20 @@
     "unavailable": "This server does not publish shops in the panel yet.",
     "error": "Could not load the shops.",
     "noTitle": "No title",
+    "place": "{{town}}",
+    "coords": "X {{x}} · Y {{y}} · Z {{z}}",
+    "avatarAlt": "{{name}}, {{race}} {{sex}}",
+    "sex": {
+      "male": "male",
+      "female": "female"
+    },
+    "races": {
+      "human": "human",
+      "elf": "elf",
+      "dark_elf": "dark elf",
+      "orc": "orc",
+      "dwarf": "dwarf"
+    },
     "items": "{{count}} items",
     "price": "{{price}} adena",
     "enchant": "+{{value}}"

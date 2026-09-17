@@ -79,6 +79,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Animações do Denkynho](funcionalidades/denkynho-animacoes.md) | Sequências de comer, jogar e rir, assets, reprodução e prompts |
 | [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, caça do dia, lojas do jogo, bônus e pesca |
 | [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
+| [Moderação de personagens](funcionalidades/moderacao.md) | Kick, prisão, banimento e teleporte no admin SPA |
 
 ### Operação
 

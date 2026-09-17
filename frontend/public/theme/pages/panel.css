@@ -1513,6 +1513,71 @@ html.pdl-panel .admin-accounts-danger:disabled {
   opacity: 0.55;
 }
 
+html.pdl-panel .admin-moderation-page { gap: 16px; }
+html.pdl-panel .admin-moderation-panel,
+html.pdl-panel .admin-moderation-list,
+html.pdl-panel .admin-moderation-detail { display: grid; gap: 16px; }
+html.pdl-panel .admin-moderation-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin: 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(197, 161, 97, 0.16);
+  background: linear-gradient(180deg, rgba(197, 161, 97, 0.045), rgba(0, 0, 0, 0.22));
+}
+html.pdl-panel .admin-moderation-search .field { flex: 1 1 180px; margin: 0; max-width: 320px; }
+html.pdl-panel .admin-moderation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
+  align-items: start;
+  gap: 16px;
+}
+html.pdl-panel .admin-moderation-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+html.pdl-panel .admin-moderation-row small { color: var(--panel-muted); font-size: 11px; }
+html.pdl-panel .admin-moderation-list .table tbody tr.is-selected {
+  outline: 1px solid rgba(197, 161, 97, 0.45);
+  background: rgba(197, 161, 97, 0.08);
+}
+html.pdl-panel .admin-moderation-list .badge + .badge { margin-left: 6px; }
+html.pdl-panel .admin-moderation-list .badge.is-warn {
+  color: #e8a45c;
+  border-color: rgba(232, 164, 92, 0.35);
+}
+html.pdl-panel .admin-moderation-sheet { display: grid; gap: 16px; }
+html.pdl-panel .admin-moderation-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+html.pdl-panel .admin-moderation-log {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html.pdl-panel .admin-moderation-log li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  background: rgba(0, 0, 0, 0.16);
+}
+html.pdl-panel .admin-moderation-log span,
+html.pdl-panel .admin-moderation-log small { color: var(--panel-muted); font-size: 12px; }
+html.pdl-panel .admin-moderation-form { display: grid; gap: 14px; }
+html.pdl-panel .admin-moderation-form-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
 html.pdl-panel .admin-coins-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-coin-identity .account-form-fields { align-items: start; }
 html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
@@ -1593,6 +1658,7 @@ html.pdl-panel .admin-news-item .btn svg { width: 14px; }
   html.pdl-panel .admin-accounts-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   html.pdl-panel .admin-accounts-result-head { grid-template-columns: auto minmax(0, 1fr); }
   html.pdl-panel .admin-accounts-result-head .account-status-pill { grid-column: 2; justify-self: start; }
+  html.pdl-panel .admin-moderation-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 650px) {
@@ -14634,7 +14700,11 @@ html.pdl-panel .rewards-page .ui-tabs.game-tabs {
 }
 
 html.pdl-panel .rewards-page .ui-tabs.rewards-tabs {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+html.pdl-panel .rewards-page .ui-tabs.rewards-tabs > button {
+  white-space: nowrap;
 }
 
 html.pdl-panel .rewards-page .ui-tabs.pass-tabs,
@@ -15109,6 +15179,58 @@ html.pdl-panel .daily-hero .battle-pass-header {
   margin-bottom: 0;
 }
 
+html.pdl-panel .hunt-hero {
+  background:
+    linear-gradient(100deg, rgba(11, 10, 8, 0.96), rgba(16, 12, 9, 0.78) 58%, rgba(20, 15, 10, 0.68)),
+    var(--theme-art-bg-4) right 14% / cover no-repeat;
+}
+
+html.pdl-panel .hunt-hero-banner {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+html.pdl-panel .daily-day-seal svg {
+  width: 34px;
+  height: 34px;
+  color: var(--panel-gold-bright);
+  stroke-width: 1.35;
+}
+
+html.pdl-panel .hunt-character {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 380px) auto;
+  align-items: end;
+  gap: 10px 14px;
+}
+
+html.pdl-panel .hunt-character .ui-field {
+  margin-bottom: 0;
+}
+
+html.pdl-panel .hunt-presence.is-online {
+  border-color: rgba(128, 201, 135, 0.38);
+  color: #80c987;
+}
+
+html.pdl-panel .hunt-quest-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+html.pdl-panel .hunt-quest-foot .program-rewards {
+  flex: 1 1 auto;
+}
+
+html.pdl-panel .hunt-quest-foot .btn,
+html.pdl-panel .hunt-quest-foot .pass-done {
+  justify-self: start;
+}
+
 html.pdl-panel .daily-calendar {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 186px), 1fr));
@@ -15314,7 +15436,13 @@ html.pdl-panel .stats-table .is-podium td {
 
   html.pdl-panel .pass-season-banner,
   html.pdl-panel .daily-hero-banner,
+  html.pdl-panel .hunt-hero-banner,
   html.pdl-panel .stats-overview-banner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  html.pdl-panel .hunt-character {
     grid-template-columns: minmax(0, 1fr);
     justify-items: start;
   }

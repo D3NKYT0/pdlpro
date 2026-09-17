@@ -22,6 +22,7 @@ import {
   Palette,
   Puzzle,
   Unlink,
+  Gavel,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
@@ -103,6 +104,7 @@ const categories: Category[] = [
       { to: '/panel/admin/items/customs', key: 'customItems', icon: PackagePlus },
       { to: '/panel/admin/services', key: 'services', icon: Settings2 },
       { to: '/panel/admin/accounts', key: 'lineageAccounts', icon: Unlink },
+      { to: '/panel/admin/moderation', key: 'moderation', icon: Gavel },
     ],
   },
 ]

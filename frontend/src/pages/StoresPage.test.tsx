@@ -19,9 +19,11 @@ const store = {
   title: 'Swords',
   clan_name: 'Guild',
   town: 'giran',
-  x: 0,
-  y: 0,
-  z: 0,
+  x: 83400,
+  y: 147943,
+  z: -3404,
+  sex: 1,
+  race: 'human',
   items: [
     { item_id: 2, name: 'Long Sword', quantity: 1, price: 15000, enchant: 7 },
   ],
@@ -57,14 +59,16 @@ it('lista lojas offline com item, preço e cidade', async () => {
   expect(screen.getByText('Long Sword')).toBeVisible()
   expect(screen.getByText('+7')).toBeVisible()
   expect(screen.getByText('15K adena')).toBeVisible()
-  expect(screen.getByText(/Giran/)).toBeVisible()
+  expect(screen.getByText('Giran')).toBeVisible()
+  expect(screen.getByText('X 83400 · Y 147943 · Z -3404')).toBeVisible()
+  expect(screen.getByRole('img', { name: 'Trader, humano mulher' })).toHaveAttribute('src', '/theme/avatars/human-f.png')
   expect(serverApi.stores).toHaveBeenCalledWith('', '')
 })
 
 it('filtra por busca e tipo sem enviar de novo enquanto carrega', async () => {
   const user = mount()
   await screen.findByRole('heading', { name: 'Trader' })
-  await user.type(screen.getByLabelText('Buscar item ou vendedor'), 'sword')
+  await user.type(screen.getByLabelText('Buscar item, vendedor ou vila'), 'sword')
   await user.selectOptions(screen.getByLabelText('Tipo'), 'sell')
   await waitFor(() => expect(serverApi.stores).toHaveBeenCalledWith('sword', 'sell'))
 })

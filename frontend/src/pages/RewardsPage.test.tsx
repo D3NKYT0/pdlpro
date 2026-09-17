@@ -183,6 +183,8 @@ it('apresenta a temporada com progresso, atalho do salão de jogos e abas da jor
   expect(seasonBar).toHaveAttribute('aria-valuenow', '120')
   expect(seasonBar).toHaveAttribute('aria-valuemax', '400')
   expect(screen.getByRole('tab', { name: 'Passe de batalha', selected: true })).toBeVisible()
+  const journey = screen.getByRole('tablist', { name: 'Seções da jornada' })
+  expect(within(journey).getAllByRole('tab')).toHaveLength(4)
 })
 
 it('resgata a missão concluída e bloqueia a missão em andamento', async () => {
@@ -299,8 +301,13 @@ it('caça do dia resgata a missão concluída e bloqueia a incompleta', async ()
   const user = mount('/panel/rewards?tab=hunt')
   expect(await screen.findByRole('heading', { name: 'Caça do dia' })).toBeVisible()
   expect(screen.getByLabelText('Personagem')).toBeVisible()
-  const done = within(screen.getByText('Caçada PvP').closest('.battle-pass-card')!)
-  const open = within(screen.getByText('Tempo no reino').closest('.battle-pass-card')!)
+  expect(screen.getByText('Offline')).toBeVisible()
+  expect(screen.getByRole('progressbar', { name: 'Progresso da caça' })).toHaveAttribute('aria-valuenow', '52')
+  const done = within(screen.getByText('Caçada PvP').closest('article')!)
+  const open = within(screen.getByText('Tempo no reino').closest('article')!)
+  expect(done.getByRole('progressbar', { name: 'Caçada PvP' })).toHaveAttribute('aria-valuenow', '10')
+  expect(done.getByText('Pronta')).toBeVisible()
+  expect(open.getByRole('progressbar', { name: 'Tempo no reino' })).toHaveAttribute('aria-valuenow', '120')
   expect(open.getByRole('button', { name: 'Resgatar' })).toBeDisabled()
   await user.click(done.getByRole('button', { name: 'Resgatar' }))
   expect(gamesApi.claimHunt).toHaveBeenCalledWith('q-pvp', 'hunter', 7)
@@ -313,8 +320,8 @@ it('caça já resgatada não permite novo envio', async () => {
     quests: hunt.quests.map((quest) => ({ ...quest, claimed: true })),
   } as Awaited<ReturnType<typeof gamesApi.hunt>>)
   mount('/panel/rewards?tab=hunt')
-  expect(await screen.findAllByRole('button', { name: 'Resgatado' })).toHaveLength(2)
-  expect(screen.getAllByRole('button', { name: 'Resgatado' })[0]).toBeDisabled()
+  expect(await screen.findAllByText('Missão resgatada')).toHaveLength(2)
+  expect(screen.queryByRole('button', { name: 'Resgatar' })).not.toBeInTheDocument()
   expect(gamesApi.claimHunt).not.toHaveBeenCalled()
 })
 
@@ -340,8 +347,30 @@ it('caça recarrega o personagem escolhido na lista', async () => {
   })
   const user = mount('/panel/rewards?tab=hunt')
   await screen.findByRole('heading', { name: 'Caça do dia' })
-  await user.selectOptions(screen.getByLabelText('Personagem'), 'alt:9')
+  await user.click(screen.getByRole('combobox', { name: 'Personagem' }))
+  await user.click(screen.getByRole('option', { name: 'Outro · alt · 40' }))
   await waitFor(() => expect(gamesApi.hunt).toHaveBeenCalledWith('alt', 9))
+})
+
+it('caça sem missões apresenta o estado vazio', async () => {
+  vi.mocked(gamesApi.hunt).mockResolvedValue({
+    ...hunt,
+    quests: [],
+  } as Awaited<ReturnType<typeof gamesApi.hunt>>)
+  mount('/panel/rewards?tab=hunt')
+  expect(await screen.findByText('Nenhuma missão da caça está ativa.')).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Resgatar' })).not.toBeInTheDocument()
+})
+
+it('caça sem conta vinculada pede o vínculo L2', async () => {
+  vi.mocked(gamesApi.hunt).mockResolvedValue({
+    character: null,
+    characters: [],
+    quests: [],
+  } as Awaited<ReturnType<typeof gamesApi.hunt>>)
+  mount('/panel/rewards?tab=hunt')
+  expect(await screen.findByText('Vincule uma conta L2 para caçar.')).toBeVisible()
+  expect(screen.queryByLabelText('Personagem')).not.toBeInTheDocument()
 })
 
 it('recurso de caça pausado substitui as missões pelo aviso', async () => {

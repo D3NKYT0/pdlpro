@@ -16,6 +16,9 @@ def test_lucerav2_catalog_loads_required_queries():
     assert "is_clan_leader" in catalog["get_character"]
     assert catalog["top_pvp"].lstrip().upper().startswith("SELECT")
     assert "char_obj_id" in catalog["list_character_skills"]
+    assert catalog.has("search_moderation_characters")
+    assert "account_name" in catalog["search_moderation_characters"]
+    assert "accessLevel" in catalog["set_account_access_level"]
 
 
 def test_dreamv3_catalog_matches_character_schema():
@@ -24,6 +27,8 @@ def test_dreamv3_catalog_matches_character_schema():
     assert "character_subclasses" in catalog["list_characters"]
     assert "clan_subpledges" in catalog["list_characters"]
     assert "obj_Id" in catalog["transfer_character"]
+    assert catalog.has("kick_character")
+    assert "accessLevel" in catalog["set_account_access_level"]
 
 
 def test_mobius_catalog_exposes_read_only_paperdoll_query():
@@ -31,6 +36,8 @@ def test_mobius_catalog_exposes_read_only_paperdoll_query():
     assert "PAPERDOLL" in catalog["list_character_equipment"]
     assert "loc_data AS slot" in catalog["list_character_equipment"]
     assert "charId" in catalog["list_character_skills"]
+    assert "access_level" in catalog["set_account_access_level"]
+    assert catalog.has("get_moderation_character")
 
 
 def test_mobius_deposit_matches_items_delayed_schema():

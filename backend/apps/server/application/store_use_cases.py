@@ -5,6 +5,7 @@ from __future__ import annotations
 from apps.server.domain.exceptions import CharacterServiceUnavailableError
 from apps.server.domain.gateways import GameStore, ILineageGateway
 from apps.server.domain.item_catalog import IItemDisplayName
+from apps.server.domain.races import race_from_class
 from apps.server.domain.towns import nearest_town_code
 from common.architecture.base import UseCase
 
@@ -47,7 +48,8 @@ class ListGameStoresUseCase(UseCase[dict | None, dict]):
                 }
                 for item in items_by_char.get(store.char_id, [])
             ]
-            if query and not _store_matches(store, listed, query):
+            town = nearest_town_code(store.x, store.y)
+            if query and not _store_matches(store, listed, query, town):
                 continue
             stores.append(
                 {
@@ -56,17 +58,19 @@ class ListGameStoresUseCase(UseCase[dict | None, dict]):
                     "store_type": kind,
                     "title": store.title,
                     "clan_name": store.clan_name,
-                    "town": nearest_town_code(store.x, store.y),
+                    "town": town,
                     "x": store.x,
                     "y": store.y,
                     "z": store.z,
+                    "sex": int(store.sex or 0),
+                    "race": race_from_class(store.class_id),
                     "items": listed,
                 }
             )
         return {"available": True, "stores": stores}
 
 
-def _store_matches(store: GameStore, items: list[dict], query: str) -> bool:
-    if query in store.name.lower() or query in (store.title or "").lower():
+def _store_matches(store: GameStore, items: list[dict], query: str, town: str) -> bool:
+    if query in store.name.lower() or query in (store.title or "").lower() or query in town.lower():
         return True
     return any(query in str(item.get("name") or "").lower() for item in items)

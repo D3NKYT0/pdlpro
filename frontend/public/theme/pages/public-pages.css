@@ -92,6 +92,58 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
+.stores-head {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 8px;
+}
+
+.stores-avatar {
+  width: 108px;
+  height: 144px;
+  object-fit: cover;
+  object-position: center center;
+  background: #16120c;
+  border: 1px solid rgba(197, 161, 97, 0.45);
+  clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
+}
+
+.stores-place {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  min-width: 0;
+}
+
+.stores-place svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  flex: none;
+  color: #c5a161;
+}
+
+.stores-place strong,
+.stores-place small {
+  display: block;
+}
+
+.stores-place span {
+  min-width: 0;
+}
+
+.stores-place small {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  overflow-wrap: anywhere;
+}
+
 .stores-meta {
   display: block;
   margin: -8px 0 16px;

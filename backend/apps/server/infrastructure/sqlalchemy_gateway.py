@@ -25,6 +25,7 @@ from apps.server.domain.gateways import (
     GameStore,
     GameStoreItem,
     ILineageGateway,
+    ModerationCharacter,
     RankingEntry,
     ServerStatus,
 )
@@ -398,12 +399,103 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         self._execute("unstuck", {"x": x, "y": y, "z": z, "cid": char.char_id, "login": login})
 
     def supports(self, capability: str) -> bool:
+        if capability == "MODERATION":
+            return all(
+                self._sql.has(name)
+                for name in (
+                    "search_moderation_characters",
+                    "count_moderation_characters",
+                    "get_moderation_character",
+                    "set_account_access_level",
+                    "kick_character",
+                    "unstuck",
+                )
+            )
         query_name = SERVICE_QUERY_NAMES.get(capability)
         if query_name is None:
             return False
         if capability == "LINK_SLOT":
             return True
         return self._sql.has(query_name)
+
+    def search_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+        limit: int,
+        offset: int,
+    ) -> list[ModerationCharacter]:
+        rows = self._fetch(
+            "search_moderation_characters",
+            {
+                "like": like,
+                "online_filter": online_filter,
+                "banned_filter": banned_filter,
+                "limit": limit,
+                "offset": offset,
+            },
+        )
+        return [self._moderation_character(row) for row in rows]
+
+    def count_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+    ) -> int:
+        rows = self._fetch(
+            "count_moderation_characters",
+            {"like": like, "online_filter": online_filter, "banned_filter": banned_filter},
+        )
+        return int(rows[0]["total"]) if rows else 0
+
+    def get_moderation_character(self, char_id: int) -> ModerationCharacter | None:
+        rows = self._fetch("get_moderation_character", {"char_id": char_id})
+        return self._moderation_character(rows[0]) if rows else None
+
+    def set_account_access_level(self, login: str, level: int) -> None:
+        if self.get_account(login) is None:
+            raise GameAccountNotFoundError()
+        self._execute("set_account_access_level", {"login": login, "level": level})
+
+    def kick_character(self, login: str, char_id: int) -> None:
+        if self.get_moderation_character(char_id) is None:
+            raise GameAccountNotFoundError("Personagem não encontrado.")
+        self._execute("kick_character", {"cid": char_id, "login": login})
+
+    def move_character(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        if self.get_moderation_character(char_id) is None:
+            raise GameAccountNotFoundError("Personagem não encontrado.")
+        self._execute("unstuck", {"x": x, "y": y, "z": z, "cid": char_id, "login": login})
+
+    def _moderation_character(self, row: dict) -> ModerationCharacter:
+        linked = str(row["linked_uuid"]).strip() if row.get("linked_uuid") else None
+        return ModerationCharacter(
+            char_id=int(row["char_id"]),
+            name=str(row.get("name") or ""),
+            login=str(row.get("login") or ""),
+            email=str(row.get("email") or ""),
+            level=int(row.get("level") or 0),
+            online=bool(row.get("online")),
+            sex=int(row.get("sex") or 0),
+            class_id=int(row.get("class_id") or 0),
+            title=str(row.get("title") or "").strip(),
+            clan_name=str(row.get("clan_name") or "").strip(),
+            pvp=int(row.get("pvp") or 0),
+            pk=int(row.get("pk") or 0),
+            karma=int(row.get("karma") or 0),
+            online_time=int(row.get("online_time") or 0),
+            last_access=int(row.get("last_access") or 0),
+            account_access=int(row.get("account_access") or 0),
+            char_access=int(row.get("char_access") or 0),
+            x=int(row.get("x") or 0),
+            y=int(row.get("y") or 0),
+            z=int(row.get("z") or 0),
+            linked_user_id=linked or None,
+        )
 
     def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
         char = self._require_offline(login, char_id)
@@ -457,6 +549,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                     y=int(row.get("y") or 0),
                     z=int(row.get("z") or 0),
                     clan_name=str(row.get("clan_name") or ""),
+                    sex=int(row.get("sex") or 0),
+                    class_id=int(row.get("class_id") or 0),
                 )
             )
         return stores

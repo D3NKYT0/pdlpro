@@ -15,6 +15,7 @@ import { pushApi } from './push.service'
 import { serverApi } from './server.service'
 import { shopApi } from './shop.service'
 import { staffApi } from './staff.service'
+import { staffModerationApi } from './staffModeration.service'
 import { staffGameContentApi } from './staffGameContent.service'
 import { staffSupportApi, supportApi } from './support.service'
 import { walletApi } from './wallet.service'
@@ -260,6 +261,10 @@ const contracts: Contract[] = [
   ['staff.autoconfigGame', () => staffApi.autoconfigGames('roulette'), '/staff/games/autoconfig/', 'POST', { code: 'roulette' }],
   ['staff.inspect', () => staffApi.inspectAccount('a&b'), '/staff/accounts/?login=a%26b'],
   ['staff.unlink', () => staffApi.unlinkAccount('hero'), '/staff/accounts/unlink/', 'POST', { login: 'hero' }],
+  ['staff.moderation.list', () => staffModerationApi.characters(), '/staff/moderation/characters/'],
+  ['staff.moderation.search', () => staffModerationApi.characters('a&b', 'online', 2), '/staff/moderation/characters/?q=a%26b&status=online&page=2'],
+  ['staff.moderation.detail', () => staffModerationApi.character(7), '/staff/moderation/characters/7/'],
+  ['staff.moderation.kick', () => staffModerationApi.act({ action: 'kick', char_id: 7, reason: 'AFK' }), '/staff/moderation/actions/', 'POST', { action: 'kick', char_id: 7, reason: 'AFK' }],
   ['staff.confirmMockPayment', () => staffApi.confirmMockPayment('order'), '/staff/payments/order/confirm-mock/', 'POST'],
   ['push.vapid', () => pushApi.vapid(), '/customer/push/vapid/'],
   ['push.subscribe', () => pushApi.subscribe({ endpoint: 'https://push.test/key' }), '/customer/push/subscribe/', 'POST', { endpoint: 'https://push.test/key' }],

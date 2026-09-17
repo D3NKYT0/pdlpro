@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDL PRO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 22:55-0300\n"
+"POT-Creation-Date: 2026-09-16 22:39-0300\n"
 "PO-Revision-Date: 2026-09-09 22:00+0000\n"
 "Last-Translator: PDL PRO\n"
 "Language-Team: English\n"
@@ -55,11 +55,11 @@ msgstr "Metadata"
 msgid "Nova conta"
 msgstr "New account"
 
-#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:147
+#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:177
 msgid "Código do autenticador"
 msgstr "Authenticator code"
 
-#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:146
+#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:176
 #: .\common\tests\test_i18n_gettext.py:299
 msgid "Informe um código válido do autenticador."
 msgstr "Enter a valid authenticator code."
@@ -217,7 +217,8 @@ msgstr "permissions"
 #: .\apps\accounts\forms.py:58
 msgid ""
 "Pesquise as permissões disponíveis e use as setas para atribuir ou remover."
-msgstr "Search available permissions and use the arrows to assign or remove them."
+msgstr ""
+"Search available permissions and use the arrows to assign or remove them."
 
 #: .\apps\accounts\infrastructure\models.py:59
 msgid "Jogador"
@@ -232,7 +233,9 @@ msgid "Moderador"
 msgstr "Moderator"
 
 #: .\apps\accounts\infrastructure\models.py:62
-#: .\apps\content\infrastructure\models.py:67 .\templates\admin\base.html:195
+#: .\apps\content\infrastructure\models.py:67
+#: .\apps\server\infrastructure\moderation_models.py:40
+#: .\common\i18n_msgid_catalog.py:155 .\templates\admin\base.html:195
 msgid "Equipe"
 msgstr "Staff"
 
@@ -267,6 +270,7 @@ msgid "Conquista do jogador"
 msgstr "Player achievement"
 
 #: .\apps\accounts\infrastructure\models.py:201
+#: .\apps\games\infrastructure\models.py:669
 msgid "Nível"
 msgstr "Level"
 
@@ -308,7 +312,8 @@ msgstr "Get CSRF token"
 msgid ""
 "Retorna o token CSRF necessário para requisições de escrita autenticadas por "
 "cookie."
-msgstr "Returns the CSRF token required for write requests authenticated by cookie."
+msgstr ""
+"Returns the CSRF token required for write requests authenticated by cookie."
 
 #: .\apps\accounts\presentation\views\auth.py:145
 msgid "Registrar conta"
@@ -317,10 +322,12 @@ msgstr "Register account"
 #: .\apps\accounts\presentation\views\auth.py:146
 msgid ""
 "Cria uma nova conta de usuário e inicia a sessão com cookies de autenticação."
-msgstr "Creates a new user account and starts the session with authentication cookies."
+msgstr ""
+"Creates a new user account and starts the session with authentication "
+"cookies."
 
 #: .\apps\accounts\presentation\views\auth.py:156
-#: .\common\i18n_msgid_catalog.py:130
+#: .\common\i18n_msgid_catalog.py:160
 msgid "Resolva o CAPTCHA para criar sua conta."
 msgstr "Solve the CAPTCHA to create your account."
 
@@ -332,10 +339,12 @@ msgstr "Credit"
 msgid ""
 "Autentica com login e senha, podendo exigir CAPTCHA ou desafio de segundo "
 "fator."
-msgstr "Authenticates with login and password, and may require CAPTCHA or a second-factor challenge."
+msgstr ""
+"Authenticates with login and password, and may require CAPTCHA or a second-"
+"factor challenge."
 
 #: .\apps\accounts\presentation\views\auth.py:198
-#: .\common\i18n_msgid_catalog.py:131
+#: .\common\i18n_msgid_catalog.py:161
 msgid "Resolva o CAPTCHA para continuar."
 msgstr "Solve the CAPTCHA to continue."
 
@@ -347,7 +356,9 @@ msgstr "Authentication capabilities"
 msgid ""
 "Informa flags de passkeys, 2FA, verificação de e-mail, CAPTCHA, provedores "
 "OAuth e vínculos sociais da sessão."
-msgstr "Reports the flags for passkeys, 2FA, email verification, CAPTCHA, OAuth providers and the social links of the session."
+msgstr ""
+"Reports the flags for passkeys, 2FA, email verification, CAPTCHA, OAuth "
+"providers and the social links of the session."
 
 #: .\apps\accounts\presentation\views\auth.py:253
 msgid "Iniciar OAuth"
@@ -356,7 +367,8 @@ msgstr "Start OAuth"
 #: .\apps\accounts\presentation\views\auth.py:254
 msgid ""
 "Gera a URL de autorização do provedor social para login ou vínculo de conta."
-msgstr "Generates the social provider authorization URL for login or account linking."
+msgstr ""
+"Generates the social provider authorization URL for login or account linking."
 
 #: .\apps\accounts\presentation\views\auth.py:287
 msgid "Concluir OAuth"
@@ -366,7 +378,9 @@ msgstr "Complete OAuth"
 msgid ""
 "Troca o código do provedor por sessão autenticada, vínculo de conta ou "
 "desafio 2FA."
-msgstr "Exchanges the provider code for an authenticated session, an account link or a 2FA challenge."
+msgstr ""
+"Exchanges the provider code for an authenticated session, an account link or "
+"a 2FA challenge."
 
 #: .\apps\accounts\presentation\views\auth.py:331
 msgid "Completar credenciais"
@@ -376,7 +390,9 @@ msgstr "Complete credentials"
 msgid ""
 "Define username e senha para contas criadas via OAuth que ainda não possuem "
 "credenciais locais."
-msgstr "Sets the username and password for accounts created via OAuth that still have no local credentials."
+msgstr ""
+"Sets the username and password for accounts created via OAuth that still "
+"have no local credentials."
 
 #: .\apps\accounts\presentation\views\auth.py:363
 msgid "Renovar sessão"
@@ -387,12 +403,12 @@ msgid "Rotaciona o refresh token e atualiza os cookies JWT da sessão."
 msgstr "Rotates the refresh token and updates the session JWT cookies."
 
 #: .\apps\accounts\presentation\views\auth.py:369
-#: .\common\i18n_msgid_catalog.py:132
+#: .\common\i18n_msgid_catalog.py:162
 msgid "Validação CSRF necessária."
 msgstr "CSRF validation required."
 
 #: .\apps\accounts\presentation\views\auth.py:372
-#: .\common\i18n_msgid_catalog.py:133 .\common\tests\test_i18n_gettext.py:291
+#: .\common\i18n_msgid_catalog.py:163 .\common\tests\test_i18n_gettext.py:291
 msgid "Refresh token ausente."
 msgstr "Refresh token missing."
 
@@ -407,7 +423,9 @@ msgstr "Sign out"
 
 #: .\apps\accounts\presentation\views\auth.py:398
 msgid "Revoga o refresh token e remove os cookies de autenticação da resposta."
-msgstr "Revokes the refresh token and removes the authentication cookies from the response."
+msgstr ""
+"Revokes the refresh token and removes the authentication cookies from the "
+"response."
 
 #: .\apps\accounts\presentation\views\auth.py:423
 msgid "Listar sessões"
@@ -416,7 +434,8 @@ msgstr "List sessions"
 #: .\apps\accounts\presentation\views\auth.py:424
 msgid ""
 "Retorna as sessões de refresh ativas, marcando a sessão do navegador atual."
-msgstr "Returns the active refresh sessions, flagging the current browser session."
+msgstr ""
+"Returns the active refresh sessions, flagging the current browser session."
 
 #: .\apps\accounts\presentation\views\auth.py:445
 msgid "Revogar sessão"
@@ -426,7 +445,9 @@ msgstr "Revoke session"
 msgid ""
 "Encerra uma sessão ativa pelo identificador ``jti``. A sessão atual também "
 "limpa cookies."
-msgstr "Ends an active session by its ``jti`` identifier. Ending the current session also clears cookies."
+msgstr ""
+"Ends an active session by its ``jti`` identifier. Ending the current session "
+"also clears cookies."
 
 #: .\apps\accounts\presentation\views\auth.py:470
 msgid "Revogar outras sessões"
@@ -454,7 +475,9 @@ msgstr "Updated at"
 msgid ""
 "Atualiza campos do perfil do usuário autenticado e devolve o estado "
 "atualizado."
-msgstr "Updates profile fields of the authenticated user and returns the updated state."
+msgstr ""
+"Updates profile fields of the authenticated user and returns the updated "
+"state."
 
 #: .\apps\accounts\presentation\views\auth.py:530
 msgid "Aceitar documentos legais"
@@ -464,7 +487,9 @@ msgstr "Accept legal documents"
 msgid ""
 "Registra o aceite explícito da versão vigente dos Termos, Privacidade e "
 "Acordo."
-msgstr "Records the explicit acceptance of the current version of the Terms, Privacy and Agreement."
+msgstr ""
+"Records the explicit acceptance of the current version of the Terms, Privacy "
+"and Agreement."
 
 #: .\apps\accounts\presentation\views\auth.py:562
 msgid "Verificar 2FA no login"
@@ -472,7 +497,9 @@ msgstr "Verify 2FA at login"
 
 #: .\apps\accounts\presentation\views\auth.py:563
 msgid "Valida o código de segundo fator do desafio de login e inicia a sessão."
-msgstr "Validates the second-factor code from the login challenge and starts the session."
+msgstr ""
+"Validates the second-factor code from the login challenge and starts the "
+"session."
 
 #: .\apps\accounts\presentation\views\auth.py:584
 msgid "Gerenciar 2FA"
@@ -481,10 +508,11 @@ msgstr "Manage 2FA"
 #: .\apps\accounts\presentation\views\auth.py:585
 msgid ""
 "Configura, confirma ou desativa a autenticação de dois fatores da conta."
-msgstr "Sets up, confirms or disables two-factor authentication for the account."
+msgstr ""
+"Sets up, confirms or disables two-factor authentication for the account."
 
 #: .\apps\accounts\presentation\views\auth.py:602
-#: .\common\i18n_msgid_catalog.py:148 .\common\tests\test_i18n_gettext.py:293
+#: .\common\i18n_msgid_catalog.py:178 .\common\tests\test_i18n_gettext.py:293
 msgid "Ação 2FA inválida."
 msgstr "Invalid 2FA action."
 
@@ -499,7 +527,9 @@ msgstr "Request email verification"
 #: .\apps\accounts\presentation\views\auth.py:635
 msgid ""
 "Dispara o envio do e-mail com o link de verificação da conta autenticada."
-msgstr "Triggers the email carrying the verification link for the authenticated account."
+msgstr ""
+"Triggers the email carrying the verification link for the authenticated "
+"account."
 
 #: .\apps\accounts\presentation\views\auth.py:654
 msgid "Verificar e-mail"
@@ -509,7 +539,9 @@ msgstr "Verify email"
 msgid ""
 "Confirma o endereço de e-mail a partir do token recebido na mensagem de "
 "verificação."
-msgstr "Confirms the email address using the token received in the verification message."
+msgstr ""
+"Confirms the email address using the token received in the verification "
+"message."
 
 #: .\apps\accounts\presentation\views\auth.py:676
 msgid "Solicitar redefinição de senha"
@@ -519,7 +551,9 @@ msgstr "Request password reset"
 msgid ""
 "Envia o e-mail com o token para redefinir a senha da conta associada ao "
 "endereço informado."
-msgstr "Sends the email with the token to reset the password of the account linked to the given address."
+msgstr ""
+"Sends the email with the token to reset the password of the account linked "
+"to the given address."
 
 #: .\apps\accounts\presentation\views\auth.py:700
 msgid "Confirmar redefinição de senha"
@@ -593,7 +627,9 @@ msgstr "Start passkey registration"
 msgid ""
 "Gera o desafio WebAuthn para criar uma nova credencial passkey na conta "
 "autenticada."
-msgstr "Generates the WebAuthn challenge to create a new passkey credential on the authenticated account."
+msgstr ""
+"Generates the WebAuthn challenge to create a new passkey credential on the "
+"authenticated account."
 
 #: .\apps\accounts\presentation\views\passkeys.py:96
 msgid "Concluir registro de passkey"
@@ -602,7 +638,9 @@ msgstr "Complete passkey registration"
 #: .\apps\accounts\presentation\views\passkeys.py:97
 msgid ""
 "Valida a resposta WebAuthn e persiste a nova credencial passkey do usuário."
-msgstr "Validates the WebAuthn response and persists the user's new passkey credential."
+msgstr ""
+"Validates the WebAuthn response and persists the user's new passkey "
+"credential."
 
 #: .\apps\accounts\presentation\views\passkeys.py:128
 msgid "Iniciar login com passkey"
@@ -611,7 +649,9 @@ msgstr "Start passkey login"
 #: .\apps\accounts\presentation\views\passkeys.py:129
 msgid ""
 "Gera o desafio WebAuthn para autenticar o usuário com uma passkey existente."
-msgstr "Generates the WebAuthn challenge to authenticate the user with an existing passkey."
+msgstr ""
+"Generates the WebAuthn challenge to authenticate the user with an existing "
+"passkey."
 
 #: .\apps\accounts\presentation\views\passkeys.py:155
 msgid "Concluir login com passkey"
@@ -620,10 +660,12 @@ msgstr "Complete passkey login"
 #: .\apps\accounts\presentation\views\passkeys.py:156
 msgid ""
 "Valida a asserção WebAuthn e inicia a sessão ou o desafio de segundo fator."
-msgstr "Validates the WebAuthn assertion and starts the session or the second-factor challenge."
+msgstr ""
+"Validates the WebAuthn assertion and starts the session or the second-factor "
+"challenge."
 
 #: .\apps\accounts\presentation\views\passkeys.py:170
-#: .\common\i18n_msgid_catalog.py:134
+#: .\common\i18n_msgid_catalog.py:164
 msgid "Não foi possível autenticar com esta chave."
 msgstr "Could not authenticate with this key."
 
@@ -660,12 +702,14 @@ msgid "Item"
 msgstr "Item"
 
 #: .\apps\auction\infrastructure\models.py:31
+#: .\apps\server\infrastructure\moderation_models.py:18
+#: .\apps\server\infrastructure\moderation_models.py:45
 msgid "Personagem"
 msgstr "Character"
 
 #: .\apps\auction\infrastructure\models.py:61
 #: .\apps\marketplace\infrastructure\models.py:52
-#: .\apps\server\presentation\views\customer.py:225
+#: .\apps\server\presentation\views\customer.py:233
 msgid "Skills do personagem"
 msgstr "Character skills"
 
@@ -688,7 +732,8 @@ msgstr "List open auctions"
 #: .\apps\auction\presentation\views\customer.py:75
 msgid ""
 "Encerra leilões expirados e retorna a lista pública de leilões ainda abertos."
-msgstr "Closes expired auctions and returns the public list of auctions still open."
+msgstr ""
+"Closes expired auctions and returns the public list of auctions still open."
 
 #: .\apps\auction\presentation\views\customer.py:96
 msgid "Listar meus leilões"
@@ -706,7 +751,9 @@ msgstr "Auction"
 msgid ""
 "Cria um leilão de item do inventário (kind=item) ou de personagem L2 "
 "(kind=character)."
-msgstr "Creates an auction for an inventory item (kind=item) or an L2 character (kind=character)."
+msgstr ""
+"Creates an auction for an inventory item (kind=item) or an L2 character "
+"(kind=character)."
 
 #: .\apps\auction\presentation\views\customer.py:154
 msgid "Dar lance"
@@ -774,7 +821,8 @@ msgstr "Subscribe to push"
 
 #: .\apps\communication\presentation\views\push.py:86
 msgid "Registra a assinatura Web Push do navegador para o usuário autenticado."
-msgstr "Registers the browser Web Push subscription for the authenticated user."
+msgstr ""
+"Registers the browser Web Push subscription for the authenticated user."
 
 #: .\apps\communication\presentation\views\push.py:106
 msgid "Cancelar assinatura push"
@@ -784,30 +832,35 @@ msgstr "Unsubscribe from push"
 msgid ""
 "Remove a assinatura Web Push do endpoint informado para o usuário "
 "autenticado."
-msgstr "Removes the Web Push subscription of the given endpoint for the authenticated user."
+msgstr ""
+"Removes the Web Push subscription of the given endpoint for the "
+"authenticated user."
 
 #: .\apps\content\admin.py:29 .\apps\content\admin.py:52
-#: .\apps\content\admin.py:127 .\apps\programs\admin.py:16
+#: .\apps\content\admin.py:127 .\apps\content\admin.py:147
+#: .\apps\programs\admin.py:16
 msgid "Publicação"
 msgstr "Publication"
 
 #: .\apps\content\admin.py:30 .\apps\content\admin.py:59
 #: .\apps\content\admin.py:88 .\apps\content\admin.py:128
-#: .\apps\games\admin.py:198 .\apps\games\admin.py:229
-#: .\apps\programs\admin.py:17
+#: .\apps\content\admin.py:148 .\apps\games\admin.py:201
+#: .\apps\games\admin.py:232 .\apps\programs\admin.py:17
 msgid "Português"
 msgstr "Portuguese"
 
 #: .\apps\content\admin.py:31 .\apps\content\admin.py:60
 #: .\apps\content\admin.py:89 .\apps\content\admin.py:129
-#: .\apps\games\admin.py:199 .\apps\games\admin.py:230
+#: .\apps\content\admin.py:149 .\apps\games\admin.py:202
+#: .\apps\games\admin.py:233 .\apps\games\admin.py:354
 #: .\apps\programs\admin.py:18
 msgid "English"
 msgstr "English"
 
 #: .\apps\content\admin.py:32 .\apps\content\admin.py:61
 #: .\apps\content\admin.py:90 .\apps\content\admin.py:130
-#: .\apps\games\admin.py:200 .\apps\games\admin.py:231
+#: .\apps\content\admin.py:150 .\apps\games\admin.py:203
+#: .\apps\games\admin.py:234 .\apps\games\admin.py:355
 #: .\apps\programs\admin.py:19
 msgid "Español"
 msgstr "Spanish"
@@ -939,13 +992,16 @@ msgstr "Cosmetic pieces unlocked and equipped by the user."
 msgid ""
 "Sentimento do usuário que o mascote está acompanhando; vazio quando não há "
 "empatia ativa."
-msgstr "Feeling of the user the mascot is following; empty when there is no active empathy."
+msgstr ""
+"Feeling of the user the mascot is following; empty when there is no active "
+"empathy."
 
 #: .\apps\content\infrastructure\models.py:175
 msgid ""
 "Quando a empatia expira, o humor volta a ser calculado só pelas necessidades "
 "do mascote."
-msgstr "When empathy expires, mood is computed again only from the mascot's needs."
+msgstr ""
+"When empathy expires, mood is computed again only from the mascot's needs."
 
 #: .\apps\content\infrastructure\models.py:181
 msgid "Apelido opcional da conversa; não armazena o histórico."
@@ -1022,95 +1078,96 @@ msgstr "Wiki page"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: .\apps\content\infrastructure\models.py:301
+#: .\apps\content\infrastructure\models.py:305
 msgid "Evento"
 msgstr "Event"
 
-#: .\apps\content\infrastructure\models.py:302
+#: .\apps\content\infrastructure\models.py:306
 msgid "Calendário"
 msgstr "Calendar"
 
-#: .\apps\content\presentation\views\public.py:48
+#: .\apps\content\presentation\views\public.py:49
 #: .\apps\staff\presentation\views\config.py:184
 msgid "Listar notícias"
 msgstr "News"
 
-#: .\apps\content\presentation\views\public.py:49
+#: .\apps\content\presentation\views\public.py:50
 msgid "Lista as notícias públicas publicadas no portal."
 msgstr "Lists the public news published on the portal."
 
-#: .\apps\content\presentation\views\public.py:74
+#: .\apps\content\presentation\views\public.py:75
 msgid "Detalhe da notícia"
 msgstr "News detail"
 
-#: .\apps\content\presentation\views\public.py:75
+#: .\apps\content\presentation\views\public.py:76
 msgid "Retorna o conteúdo completo da notícia identificada pelo slug."
 msgstr "Returns the full content of the news item identified by the slug."
 
-#: .\apps\content\presentation\views\public.py:97
+#: .\apps\content\presentation\views\public.py:98
 msgid "Listar FAQ público"
 msgstr "List public FAQ"
 
-#: .\apps\content\presentation\views\public.py:98
+#: .\apps\content\presentation\views\public.py:99
 msgid "Lista as perguntas frequentes públicas no idioma solicitado."
 msgstr "Lists the public frequently asked questions in the requested language."
 
-#: .\apps\content\presentation\views\public.py:117
+#: .\apps\content\presentation\views\public.py:118
 #: .\apps\staff\presentation\views\cms.py:145
 msgid "Listar downloads"
 msgstr "List downloads"
 
-#: .\apps\content\presentation\views\public.py:118
+#: .\apps\content\presentation\views\public.py:119
 msgid "Lista os arquivos e links de download disponíveis publicamente."
 msgstr "Lists the publicly available download files and links."
 
-#: .\apps\content\presentation\views\public.py:142
+#: .\apps\content\presentation\views\public.py:143
 msgid "Listar ou buscar wiki"
 msgstr "List or search wiki"
 
-#: .\apps\content\presentation\views\public.py:143
+#: .\apps\content\presentation\views\public.py:144
 msgid ""
 "Lista as páginas da wiki ou busca por termo quando o parâmetro q é informado."
-msgstr "Lists the wiki pages, or searches by term when the q parameter is provided."
+msgstr ""
+"Lists the wiki pages, or searches by term when the q parameter is provided."
 
-#: .\apps\content\presentation\views\public.py:169
+#: .\apps\content\presentation\views\public.py:170
 msgid "Detalhe da página wiki"
 msgstr "Wiki page detail"
 
-#: .\apps\content\presentation\views\public.py:170
+#: .\apps\content\presentation\views\public.py:171
 msgid "Retorna o conteúdo da página da wiki identificada pelo slug."
 msgstr "Returns the content of the wiki page identified by the slug."
 
-#: .\apps\content\presentation\views\public.py:195
+#: .\apps\content\presentation\views\public.py:196
 #: .\apps\staff\presentation\views\cms.py:31
 msgid "Listar eventos do calendário"
 msgstr "List calendar events"
 
-#: .\apps\content\presentation\views\public.py:196
+#: .\apps\content\presentation\views\public.py:197
 msgid "Lista os eventos públicos do calendário do servidor."
 msgstr "Lists the public events on the server calendar."
 
-#: .\apps\content\presentation\views\public.py:214
+#: .\apps\content\presentation\views\public.py:218
 msgid "Listar documentos legais"
 msgstr "List legal documents"
 
-#: .\apps\content\presentation\views\public.py:215
+#: .\apps\content\presentation\views\public.py:219
 msgid "Lista os documentos legais públicos disponíveis no portal."
 msgstr "Lists the public legal documents available on the portal."
 
-#: .\apps\content\presentation\views\public.py:238
+#: .\apps\content\presentation\views\public.py:242
 msgid "Histórico de versões legais"
 msgstr "Legal version history"
 
-#: .\apps\content\presentation\views\public.py:239
+#: .\apps\content\presentation\views\public.py:243
 msgid "Lista o histórico público de versões dos documentos legais."
 msgstr "Lists the public version history of the legal documents."
 
-#: .\apps\content\presentation\views\public.py:260
+#: .\apps\content\presentation\views\public.py:264
 msgid "Detalhe do documento legal"
 msgstr "Legal document detail"
 
-#: .\apps\content\presentation\views\public.py:261
+#: .\apps\content\presentation\views\public.py:265
 msgid "Retorna o conteúdo do documento legal identificado pelo slug."
 msgstr "Returns the content of the legal document identified by the slug."
 
@@ -1122,11 +1179,13 @@ msgstr "Authenticator code"
 msgid ""
 "Entrega ajuda pública e interna conforme a identidade autenticada da "
 "requisição."
-msgstr "Delivers public and internal help according to the authenticated identity of the request."
+msgstr ""
+"Delivers public and internal help according to the authenticated identity of "
+"the request."
 
 #: .\apps\content\presentation\views\shared.py:62
 #: .\apps\content\presentation\views\shared.py:130
-#: .\common\i18n_msgid_catalog.py:138
+#: .\common\i18n_msgid_catalog.py:168
 msgid "Use um nome de até 30 letras, sem termos ofensivos."
 msgstr "Use a name of up to 30 letters, without offensive terms."
 
@@ -1138,11 +1197,14 @@ msgstr "Reply with the assistant"
 msgid ""
 "Interpreta uma mensagem sem persistir seu texto e devolve apenas conteúdo "
 "autorizado."
-msgstr "Interprets a message without persisting its text and returns only authorized content."
+msgstr ""
+"Interprets a message without persisting its text and returns only authorized "
+"content."
 
 #: .\apps\content\presentation\views\shared.py:142
 msgid "Retorna o perfil do Denkynho vinculado à sessão autenticada atual."
-msgstr "Returns the Denkynho profile linked to the current authenticated session."
+msgstr ""
+"Returns the Denkynho profile linked to the current authenticated session."
 
 #: .\apps\content\presentation\views\shared.py:149
 msgid "Atualizar preferências do Denkynho"
@@ -1152,7 +1214,9 @@ msgstr "Denkynho profiles"
 msgid ""
 "Atualiza apelido e nível de detalhe persistidos no mascote da conta "
 "autenticada."
-msgstr "Updates the nickname and detail level stored on the authenticated account's mascot."
+msgstr ""
+"Updates the nickname and detail level stored on the authenticated account's "
+"mascot."
 
 #: .\apps\content\presentation\views\shared.py:163
 msgid "Cuidar do Denkynho"
@@ -1160,7 +1224,8 @@ msgstr "Denkynho care action"
 
 #: .\apps\content\presentation\views\shared.py:164
 msgid "Executa uma ação de cuidado no Denkynho da sessão autenticada atual."
-msgstr "Runs a care action on the Denkynho of the current authenticated session."
+msgstr ""
+"Runs a care action on the Denkynho of the current authenticated session."
 
 #: .\apps\content\presentation\views\wardrobe.py:27
 msgid "Consultar guarda-roupa"
@@ -1169,7 +1234,8 @@ msgstr "Get wardrobe"
 #: .\apps\content\presentation\views\wardrobe.py:28
 msgid ""
 "Consulta os desbloqueios e a aparência atual do mascote da própria conta."
-msgstr "Returns the unlocks and the current appearance of the account's own mascot."
+msgstr ""
+"Returns the unlocks and the current appearance of the account's own mascot."
 
 #: .\apps\content\presentation\views\wardrobe.py:35
 msgid "Equipar peça no Denkynho"
@@ -1179,7 +1245,7 @@ msgstr "Denkynho care action"
 msgid "Equipa ou remove uma peça no guarda-roupa do mascote da própria conta."
 msgstr "Equips or removes a piece in the wardrobe of the account's own mascot."
 
-#: .\apps\games\admin.py:202 .\apps\games\admin.py:232
+#: .\apps\games\admin.py:205 .\apps\games\admin.py:235
 msgid "Regras"
 msgstr "Rules"
 
@@ -1318,10 +1384,12 @@ msgid "Resgate do passe"
 msgstr "Pass claim"
 
 #: .\apps\games\infrastructure\models.py:451
+#: .\apps\games\infrastructure\models.py:676
 msgid "Diária"
 msgstr "Daily"
 
 #: .\apps\games\infrastructure\models.py:452
+#: .\apps\games\infrastructure\models.py:676
 msgid "Semanal"
 msgstr "Weekly"
 
@@ -1429,93 +1497,150 @@ msgstr "Player bait"
 msgid "Iscas do jogador"
 msgstr "Player baits"
 
-#: .\apps\games\presentation\advanced.py:50 .\common\i18n_msgid_catalog.py:137
+#: .\apps\games\infrastructure\models.py:668
+msgid "Tempo online"
+msgstr "Online time"
+
+#: .\apps\games\infrastructure\models.py:683
+msgid "Missão da caça"
+msgstr "Hunt quest"
+
+#: .\apps\games\infrastructure\models.py:684
+msgid "Missões da caça"
+msgstr "Hunt quests"
+
+#: .\apps\games\infrastructure\models.py:701
+msgid "Snapshot da caça"
+msgstr "Hunt snapshot"
+
+#: .\apps\games\infrastructure\models.py:702
+msgid "Snapshots da caça"
+msgstr "Hunt snapshots"
+
+#: .\apps\games\infrastructure\models.py:721
+msgid "Resgate da caça"
+msgstr "Hunt claim"
+
+#: .\apps\games\infrastructure\models.py:722
+msgid "Resgates da caça"
+msgstr "Hunt claims"
+
+#: .\apps\games\presentation\advanced.py:56 .\common\i18n_msgid_catalog.py:167
 msgid "Selecione uma recompensa."
 msgstr "Select a reward."
 
-#: .\apps\games\presentation\advanced.py:61
+#: .\apps\games\presentation\advanced.py:67
 msgid "Detalhes do passe de batalha"
 msgstr "Battle pass details"
 
-#: .\apps\games\presentation\advanced.py:62
+#: .\apps\games\presentation\advanced.py:68
 msgid ""
 "Retorna o conteúdo adicional do passe de batalha disponível para o jogador "
 "autenticado."
-msgstr "Returns the additional battle pass content available to the authenticated player."
+msgstr ""
+"Returns the additional battle pass content available to the authenticated "
+"player."
 
-#: .\apps\games\presentation\advanced.py:73
+#: .\apps\games\presentation\advanced.py:79
 msgid "Ação do passe de batalha"
 msgstr "Battle pass action"
 
-#: .\apps\games\presentation\advanced.py:74
+#: .\apps\games\presentation\advanced.py:80
 msgid ""
 "Executa uma ação validada no conteúdo adicional do passe (missão, troca, "
 "marco ou resgate automático)."
-msgstr "Runs a validated action on the additional pass content (mission, exchange, milestone or automatic claim)."
+msgstr ""
+"Runs a validated action on the additional pass content (mission, exchange, "
+"milestone or automatic claim)."
 
-#: .\apps\games\presentation\advanced.py:100
+#: .\apps\games\presentation\advanced.py:106
 msgid "Detalhes do bônus diário"
 msgstr "Daily bonus days"
 
-#: .\apps\games\presentation\advanced.py:101
+#: .\apps\games\presentation\advanced.py:107
 msgid ""
 "Retorna o calendário e os detalhes do bônus diário do jogador autenticado."
-msgstr "Returns the calendar and the details of the authenticated player's daily bonus."
+msgstr ""
+"Returns the calendar and the details of the authenticated player's daily "
+"bonus."
 
-#: .\apps\games\presentation\advanced.py:125
+#: .\apps\games\presentation\advanced.py:131
 msgid "Detalhes da pesca"
 msgstr "Fishing baits"
 
-#: .\apps\games\presentation\advanced.py:126
+#: .\apps\games\presentation\advanced.py:132
 msgid "Lista iscas ativas, estoque do jogador e coleção de peixes capturados."
-msgstr "Lists the active baits, the player's stock and the collection of caught fish."
+msgstr ""
+"Lists the active baits, the player's stock and the collection of caught fish."
 
-#: .\apps\games\presentation\advanced.py:137
+#: .\apps\games\presentation\advanced.py:143
 msgid "Comprar iscas"
 msgstr "Buy baits"
 
-#: .\apps\games\presentation\advanced.py:138
+#: .\apps\games\presentation\advanced.py:144
 msgid "Troca fichas por pacotes de iscas para o jogador autenticado."
 msgstr "Exchanges tokens for bait packs for the authenticated player."
 
-#: .\apps\games\presentation\advanced.py:162
+#: .\apps\games\presentation\advanced.py:168
 msgid "Estatísticas de jogos"
 msgstr "Game statistics"
 
-#: .\apps\games\presentation\advanced.py:163
+#: .\apps\games\presentation\advanced.py:169
 msgid "Retorna as estatísticas do tipo solicitado para o jogador autenticado."
-msgstr "Returns the statistics of the requested type for the authenticated player."
+msgstr ""
+"Returns the statistics of the requested type for the authenticated player."
 
-#: .\apps\games\presentation\advanced.py:217 .\common\i18n_msgid_catalog.py:152
+#: .\apps\games\presentation\advanced.py:228 .\common\i18n_msgid_catalog.py:182
 msgid "Configuração desconhecida."
 msgstr "Unknown configuration."
 
-#: .\apps\games\presentation\advanced.py:237
+#: .\apps\games\presentation\advanced.py:248
 msgid "Listar conteúdo de jogos"
 msgstr "List game content"
 
-#: .\apps\games\presentation\advanced.py:238
+#: .\apps\games\presentation\advanced.py:249
 msgid "Lista as entradas de configuração do tipo de conteúdo informado."
 msgstr "Lists the configuration entries for the given content type."
 
-#: .\apps\games\presentation\advanced.py:247
+#: .\apps\games\presentation\advanced.py:258
 msgid "Criar conteúdo de jogos"
 msgstr "Create game content"
 
-#: .\apps\games\presentation\advanced.py:248
+#: .\apps\games\presentation\advanced.py:259
 msgid ""
 "Cria uma nova entrada de configuração para o tipo de conteúdo informado."
 msgstr "Creates a new configuration entry for the given content type."
 
-#: .\apps\games\presentation\advanced.py:260
+#: .\apps\games\presentation\advanced.py:271
 msgid "Atualizar conteúdo de jogos"
 msgstr "Update game content"
 
-#: .\apps\games\presentation\advanced.py:261
+#: .\apps\games\presentation\advanced.py:272
 msgid ""
 "Atualiza parcialmente uma entrada de configuração identificada pelo tipo e "
 "pelo ID."
 msgstr "Partially updates a configuration entry identified by type and ID."
+
+#: .\apps\games\presentation\advanced.py:316
+msgid "Caça do dia"
+msgstr "Daily hunt"
+
+#: .\apps\games\presentation\advanced.py:317
+msgid ""
+"Lista as missões que leem PvP, tempo online ou nível do personagem no jogo."
+msgstr ""
+"Lists quests that read the character's PvP, online time or level from the "
+"game."
+
+#: .\apps\games\presentation\advanced.py:324
+msgid "Resgatar caça do dia"
+msgstr "Claim daily hunt"
+
+#: .\apps\games\presentation\advanced.py:325
+msgid ""
+"Resgata uma missão da caça quando o personagem atingiu a meta no período."
+msgstr ""
+"Claims a hunt quest when the character reached the target in the period."
 
 #: .\apps\games\presentation\views\customer.py:73
 msgid "Estado da roleta"
@@ -1532,7 +1657,8 @@ msgstr "Roulette spin"
 #: .\apps\games\presentation\views\customer.py:82
 msgid ""
 "Executa um giro da roleta e devolve o resultado para o jogador autenticado."
-msgstr "Runs a roulette spin and returns the result for the authenticated player."
+msgstr ""
+"Runs a roulette spin and returns the result for the authenticated player."
 
 #: .\apps\games\presentation\views\customer.py:99
 msgid "Comprar fichas"
@@ -1548,7 +1674,8 @@ msgstr "Daily bonus day"
 
 #: .\apps\games\presentation\views\customer.py:126
 msgid "Retorna o estado do bônus diário disponível para o jogador autenticado."
-msgstr "Returns the state of the daily bonus available to the authenticated player."
+msgstr ""
+"Returns the state of the daily bonus available to the authenticated player."
 
 #: .\apps\games\presentation\views\customer.py:133
 msgid "Resgatar bônus diário"
@@ -1557,7 +1684,8 @@ msgstr "Daily bonus claim"
 #: .\apps\games\presentation\views\customer.py:134
 msgid ""
 "Resgata o bônus diário ativo, priorizando a temporada diária quando existir."
-msgstr "Claims the active daily bonus, prioritizing the daily season when one exists."
+msgstr ""
+"Claims the active daily bonus, prioritizing the daily season when one exists."
 
 #: .\apps\games\presentation\views\customer.py:156
 msgid "Consultar bolsa"
@@ -1583,7 +1711,8 @@ msgstr "Box booster"
 #: .\apps\games\presentation\views\customer.py:191
 msgid ""
 "Lista os tipos de caixas disponíveis para compra pelo jogador autenticado."
-msgstr "Lists the box types available for purchase by the authenticated player."
+msgstr ""
+"Lists the box types available for purchase by the authenticated player."
 
 #: .\apps\games\presentation\views\customer.py:198
 msgid "Comprar caixa"
@@ -1607,7 +1736,8 @@ msgstr "Minigames state"
 
 #: .\apps\games\presentation\views\customer.py:242
 msgid "Retorna o estado consolidado dos minijogos disponíveis para o jogador."
-msgstr "Returns the consolidated state of the minigames available to the player."
+msgstr ""
+"Returns the consolidated state of the minigames available to the player."
 
 #: .\apps\games\presentation\views\customer.py:259
 msgid "Jogar dados"
@@ -1627,7 +1757,8 @@ msgstr "Spin slot machine"
 msgid ""
 "Executa um giro no caça-níqueis e devolve o resultado para o jogador "
 "autenticado."
-msgstr "Runs a slot machine spin and returns the result for the authenticated player."
+msgstr ""
+"Runs a slot machine spin and returns the result for the authenticated player."
 
 #: .\apps\games\presentation\views\customer.py:303
 msgid "Estado da pesca"
@@ -1635,7 +1766,9 @@ msgstr "Fishing bait"
 
 #: .\apps\games\presentation\views\customer.py:304
 msgid "Retorna o estado atual do minijogo de pesca para o jogador autenticado."
-msgstr "Returns the current state of the fishing minigame for the authenticated player."
+msgstr ""
+"Returns the current state of the fishing minigame for the authenticated "
+"player."
 
 #: .\apps\games\presentation\views\customer.py:311
 msgid "Lançar linha"
@@ -1652,7 +1785,8 @@ msgstr "Economy weapon"
 
 #: .\apps\games\presentation\views\customer.py:332
 msgid "Retorna o estado do minijogo de economia para o jogador autenticado."
-msgstr "Returns the state of the economy minigame for the authenticated player."
+msgstr ""
+"Returns the state of the economy minigame for the authenticated player."
 
 #: .\apps\games\presentation\views\customer.py:349
 msgid "Combater monstro"
@@ -1670,7 +1804,9 @@ msgstr "Enchant weapon"
 msgid ""
 "Tenta encantar a arma do jogador no minijogo de economia e devolve o "
 "resultado."
-msgstr "Attempts to enchant the player's weapon in the economy minigame and returns the result."
+msgstr ""
+"Attempts to enchant the player's weapon in the economy minigame and returns "
+"the result."
 
 #: .\apps\games\presentation\views\customer.py:390
 msgid "Estado do passe de batalha"
@@ -1680,7 +1816,8 @@ msgstr "Battle pass state"
 msgid ""
 "Retorna o progresso e as recompensas do passe de batalha do jogador "
 "autenticado."
-msgstr "Returns the progress and rewards of the authenticated player's battle pass."
+msgstr ""
+"Returns the progress and rewards of the authenticated player's battle pass."
 
 #: .\apps\games\presentation\views\customer.py:398
 msgid "Comprar passe premium"
@@ -1739,7 +1876,9 @@ msgstr "Inventory item"
 msgid ""
 "Sincroniza e retorna os inventários dos personagens acessíveis ao usuário "
 "autenticado."
-msgstr "Synchronizes and returns the inventories of the characters accessible to the authenticated user."
+msgstr ""
+"Synchronizes and returns the inventories of the characters accessible to the "
+"authenticated user."
 
 #: .\apps\inventory\presentation\views\customer.py:91
 msgid "Itens do personagem"
@@ -1748,7 +1887,8 @@ msgstr "Character listings"
 #: .\apps\inventory\presentation\views\customer.py:92
 msgid ""
 "Lista os itens do personagem informado, indicando quais são negociáveis."
-msgstr "Lists the items of the given character, indicating which ones are tradable."
+msgstr ""
+"Lists the items of the given character, indicating which ones are tradable."
 
 #: .\apps\inventory\presentation\views\customer.py:117
 msgid "Equipamentos do personagem"
@@ -1773,7 +1913,8 @@ msgstr "Deposit item"
 #: .\apps\inventory\presentation\views\customer.py:168
 msgid ""
 "Deposita um item do inventário do painel de volta ao personagem no jogo."
-msgstr "Deposits an item from the panel inventory back to the character in the game."
+msgstr ""
+"Deposits an item from the panel inventory back to the character in the game."
 
 #: .\apps\inventory\presentation\views\customer.py:198
 msgid "Transferir item entre inventários"
@@ -1783,7 +1924,9 @@ msgstr "Wallet and inventory"
 msgid ""
 "Transfere um item entre inventários do painel pertencentes ao usuário "
 "autenticado."
-msgstr "Transfers an item between panel inventories belonging to the authenticated user."
+msgstr ""
+"Transfers an item between panel inventories belonging to the authenticated "
+"user."
 
 #: .\apps\marketplace\apps.py:15
 msgid "Marketplace"
@@ -1837,7 +1980,8 @@ msgstr "Create listing"
 #: .\apps\marketplace\presentation\views\customer.py:88
 msgid ""
 "Cria um anúncio de personagem no marketplace para o usuário autenticado."
-msgstr "Creates a character listing on the marketplace for the authenticated user."
+msgstr ""
+"Creates a character listing on the marketplace for the authenticated user."
 
 #: .\apps\marketplace\presentation\views\customer.py:119
 msgid "Comprar anúncio"
@@ -1855,7 +1999,8 @@ msgstr "Cancelled"
 #: .\apps\marketplace\presentation\views\customer.py:145
 msgid ""
 "Cancela o anúncio de personagem informado pertencente ao usuário autenticado."
-msgstr "Cancels the given character listing belonging to the authenticated user."
+msgstr ""
+"Cancels the given character listing belonging to the authenticated user."
 
 #: .\apps\payment\apps.py:15
 msgid "Pagamento"
@@ -1910,7 +2055,9 @@ msgstr "Payment order"
 msgid ""
 "Retorna pacotes, métodos e regras disponíveis para criação de pedidos de "
 "pagamento."
-msgstr "Returns the packages, methods and rules available for creating payment orders."
+msgstr ""
+"Returns the packages, methods and rules available for creating payment "
+"orders."
 
 #: .\apps\payment\presentation\views\customer.py:85
 msgid "Listar pedidos de pagamento"
@@ -1954,7 +2101,9 @@ msgstr "Failed to start payment."
 msgid ""
 "Recusado para o jogador. Simulações são confirmadas pela equipe em POST /api/"
 "v1/staff/payments/{id}/confirm-mock/."
-msgstr "Refused for the player. Simulations are confirmed by the team at POST /api/v1/staff/payments/{id}/confirm-mock/."
+msgstr ""
+"Refused for the player. Simulations are confirmed by the team at POST /api/"
+"v1/staff/payments/{id}/confirm-mock/."
 
 #: .\apps\payment\presentation\views\customer.py:203
 msgid "Processar pagamento"
@@ -1963,7 +2112,8 @@ msgstr "Payment order"
 #: .\apps\payment\presentation\views\customer.py:204
 msgid ""
 "Envia o pedido ao gateway e devolve dados de cobrança como PIX ou boleto."
-msgstr "Sends the order to the gateway and returns charge data such as PIX or boleto."
+msgstr ""
+"Sends the order to the gateway and returns charge data such as PIX or boleto."
 
 #: .\apps\payment\presentation\views\customer.py:238
 msgid "Status do pedido"
@@ -1982,11 +2132,13 @@ msgstr "Mercado Pago webhook"
 msgid ""
 "Recebe eventos do Mercado Pago, valida a assinatura e credita pagamentos "
 "aprovados."
-msgstr "Receives Mercado Pago events, validates the signature and credits approved payments."
+msgstr ""
+"Receives Mercado Pago events, validates the signature and credits approved "
+"payments."
 
 #: .\apps\payment\presentation\views\webhooks.py:35
 #: .\apps\payment\presentation\views\webhooks.py:67
-#: .\common\i18n_msgid_catalog.py:150 .\common\tests\test_i18n_gettext.py:295
+#: .\common\i18n_msgid_catalog.py:180 .\common\tests\test_i18n_gettext.py:295
 msgid "Assinatura inválida."
 msgstr "Invalid signature."
 
@@ -1998,7 +2150,9 @@ msgstr "Stripe webhook"
 msgid ""
 "Recebe eventos do Stripe, valida a assinatura e credita pagamentos "
 "concluídos."
-msgstr "Receives Stripe events, validates the signature and credits completed payments."
+msgstr ""
+"Receives Stripe events, validates the signature and credits completed "
+"payments."
 
 #: .\apps\programs\apps.py:14
 msgid "Programas e recursos"
@@ -2141,23 +2295,23 @@ msgstr "System feature"
 msgid "Atualiza parcialmente o recurso do sistema identificado por entry_id."
 msgstr "Partially updates the system feature identified by entry_id."
 
-#: .\apps\server\admin.py:67
+#: .\apps\server\admin.py:104
 msgid "Identidade"
 msgstr "Identity"
 
-#: .\apps\server\admin.py:68
+#: .\apps\server\admin.py:105
 msgid "Rates"
 msgstr "Rates"
 
-#: .\apps\server\admin.py:70
+#: .\apps\server\admin.py:107
 msgid "Coming Soon"
 msgstr "Coming Soon"
 
-#: .\apps\server\application\account_use_cases.py:500
+#: .\apps\server\application\account_use_cases.py:507
 msgid "Vinculação de conta Lineage"
 msgstr "Lineage account linking"
 
-#: .\apps\server\application\account_use_cases.py:502
+#: .\apps\server\application\account_use_cases.py:509
 #, python-format
 msgid ""
 "Clique no link para vincular a conta %(login)s ao PDL PRO:\n"
@@ -2183,7 +2337,7 @@ msgstr "Metadata must be a JSON object."
 
 #: .\apps\server\infrastructure\custom_item_models.py:23
 #: .\apps\staff\presentation\views\custom_items.py:58
-#: .\common\i18n_msgid_catalog.py:151
+#: .\common\i18n_msgid_catalog.py:181
 msgid "Metadados JSON inválidos."
 msgstr "Invalid JSON metadata."
 
@@ -2355,6 +2509,71 @@ msgstr "Panel setting"
 msgid "Configurações do painel"
 msgstr "Panel settings"
 
+#: .\apps\server\infrastructure\moderation_models.py:16
+#: .\apps\server\infrastructure\moderation_models.py:44
+#: .\common\i18n_msgid_catalog.py:149
+msgid "ID do personagem"
+msgstr "Character ID"
+
+#: .\apps\server\infrastructure\moderation_models.py:17
+#: .\apps\server\infrastructure\moderation_models.py:46
+msgid "Login"
+msgstr "Login"
+
+#: .\apps\server\infrastructure\moderation_models.py:19
+#: .\common\i18n_msgid_catalog.py:150
+msgid "Preso"
+msgstr "Jailed"
+
+#: .\apps\server\infrastructure\moderation_models.py:20
+#: .\common\i18n_msgid_catalog.py:151
+msgid "Preso até"
+msgstr "Jailed until"
+
+#: .\apps\server\infrastructure\moderation_models.py:21
+#: .\apps\server\infrastructure\moderation_models.py:47
+#: .\common\i18n_msgid_catalog.py:152
+msgid "Motivo"
+msgstr "Reason"
+
+#: .\apps\server\infrastructure\moderation_models.py:24
+#: .\common\i18n_msgid_catalog.py:145
+msgid "Prisão do personagem"
+msgstr "Character jail"
+
+#: .\apps\server\infrastructure\moderation_models.py:25
+#: .\common\i18n_msgid_catalog.py:146
+msgid "Prisões de personagens"
+msgstr "Character jails"
+
+#: .\apps\server\infrastructure\moderation_models.py:42
+#: .\common\i18n_msgid_catalog.py:154
+msgid "Usuário da equipe"
+msgstr "Staff username"
+
+#: .\apps\server\infrastructure\moderation_models.py:43
+msgid "Ação"
+msgstr "Action"
+
+#: .\apps\server\infrastructure\moderation_models.py:48
+#: .\common\i18n_msgid_catalog.py:153
+msgid "Estava online"
+msgstr "Was online"
+
+#: .\apps\server\infrastructure\moderation_models.py:49
+msgid "Detalhes"
+msgstr "Details"
+
+#: .\apps\server\infrastructure\moderation_models.py:52
+#: .\common\i18n_msgid_catalog.py:147
+msgid "Ação de moderação"
+msgstr "Moderation action"
+
+#: .\apps\server\infrastructure\moderation_models.py:53
+#: .\common\i18n_msgid_catalog.py:148
+msgid "Ações de moderação"
+msgstr "Moderation actions"
+
 #: .\apps\server\infrastructure\service_models.py:30
 msgid "Estornado"
 msgstr "Refunded"
@@ -2367,62 +2586,69 @@ msgstr "Service operation"
 msgid "Operações de serviço"
 msgstr "Service operations"
 
-#: .\apps\server\presentation\serializers.py:138
-#: .\common\i18n_msgid_catalog.py:135
+#: .\apps\server\presentation\serializers.py:141
+#: .\common\i18n_msgid_catalog.py:165
 msgid "Use 3 a 16 letras ou números, sem espaços."
 msgstr "Use 3 to 16 letters or numbers, without spaces."
 
-#: .\apps\server\presentation\views\customer.py:73
+#: .\apps\server\presentation\views\customer.py:81
 msgid "Contas Lineage vinculadas"
 msgstr "Lineage accounts"
 
-#: .\apps\server\presentation\views\customer.py:74
+#: .\apps\server\presentation\views\customer.py:82
 msgid ""
 "Retorna contas acessíveis, slots de vínculo e o estado do login principal."
-msgstr "Returns the accessible accounts, the link slots and the main login state."
+msgstr ""
+"Returns the accessible accounts, the link slots and the main login state."
 
-#: .\apps\server\presentation\views\customer.py:101
+#: .\apps\server\presentation\views\customer.py:109
 msgid "Registrar conta de jogo"
 msgstr "Game reward logs"
 
-#: .\apps\server\presentation\views\customer.py:102
+#: .\apps\server\presentation\views\customer.py:110
 msgid "Cria uma nova conta de jogo e a vincula ao usuário autenticado."
 msgstr "Creates a new game account and links it to the authenticated user."
 
-#: .\apps\server\presentation\views\customer.py:129
+#: .\apps\server\presentation\views\customer.py:137
 msgid "Vincular conta de jogo"
 msgstr "Lineage account linking"
 
-#: .\apps\server\presentation\views\customer.py:130
+#: .\apps\server\presentation\views\customer.py:138
 msgid ""
 "Vincula uma conta de jogo existente ao usuário autenticado mediante senha."
-msgstr "Links an existing game account to the authenticated user using its password."
+msgstr ""
+"Links an existing game account to the authenticated user using its password."
 
-#: .\apps\server\presentation\views\customer.py:157
+#: .\apps\server\presentation\views\customer.py:165
 msgid "Desvincular conta de jogo"
 msgstr "Unlink game account"
 
-#: .\apps\server\presentation\views\customer.py:158
+#: .\apps\server\presentation\views\customer.py:166
 msgid "Remove o vínculo da conta de jogo informada com o usuário autenticado."
-msgstr "Removes the link between the given game account and the authenticated user."
+msgstr ""
+"Removes the link between the given game account and the authenticated user."
 
-#: .\apps\server\presentation\views\customer.py:181
+#: .\apps\server\presentation\views\customer.py:189
 msgid "Listar personagens"
 msgstr "Accounts and characters"
 
-#: .\apps\server\presentation\views\customer.py:182
+#: .\apps\server\presentation\views\customer.py:190
 msgid "Lista os personagens da conta de jogo acessível ao usuário autenticado."
-msgstr "Lists the characters of the game account accessible to the authenticated user."
+msgstr ""
+"Lists the characters of the game account accessible to the authenticated "
+"user."
 
-#: .\apps\server\presentation\views\customer.py:203
+#: .\apps\server\presentation\views\customer.py:211
 msgid "Detalhe do personagem"
 msgstr "Accounts and characters"
 
-#: .\apps\server\presentation\views\customer.py:204
+#: .\apps\server\presentation\views\customer.py:212
 msgid "Retorna os dados do personagem informado na conta acessível ao usuário."
-msgstr "Returns the data of the given character in the account accessible to the user."
+msgstr ""
+"Returns the data of the given character in the account accessible to the "
+"user."
 
-#: .\apps\server\presentation\views\customer.py:227
+#: .\apps\server\presentation\views\customer.py:235
 msgid ""
 "Lista as skills aprendidas pelo personagem informado, com nome, ícone e "
 "pastas da janela L2 (físicas, mágicas, reforço, enfraquecimento)."
@@ -2430,72 +2656,114 @@ msgstr ""
 "Lists the skills learned by the given character, with XML catalog name, icon "
 "and L2 skill-window folders (physical, magic, reinforcement, weaken)."
 
-#: .\apps\server\presentation\views\customer.py:255
+#: .\apps\server\presentation\views\customer.py:263
 msgid "Alterar senha do jogo"
 msgstr "Change game password"
 
-#: .\apps\server\presentation\views\customer.py:256
+#: .\apps\server\presentation\views\customer.py:264
 msgid "Atualiza a senha da conta de jogo vinculada ao usuário autenticado."
-msgstr "Updates the password of the game account linked to the authenticated user."
+msgstr ""
+"Updates the password of the game account linked to the authenticated user."
 
-#: .\apps\server\presentation\views\customer.py:283
+#: .\apps\server\presentation\views\customer.py:291
 msgid "Alterar nick do personagem"
 msgstr "Character listing"
 
-#: .\apps\server\presentation\views\customer.py:284
+#: .\apps\server\presentation\views\customer.py:292
 msgid ""
 "Altera o nick do personagem informado cobrando o serviço correspondente."
-msgstr "Changes the nickname of the given character, charging the corresponding service."
+msgstr ""
+"Changes the nickname of the given character, charging the corresponding "
+"service."
 
-#: .\apps\server\presentation\views\customer.py:317
+#: .\apps\server\presentation\views\customer.py:325
 msgid "Alterar sexo do personagem"
 msgstr "Character listing"
 
-#: .\apps\server\presentation\views\customer.py:318
+#: .\apps\server\presentation\views\customer.py:326
 msgid ""
 "Altera o sexo do personagem informado cobrando o serviço correspondente."
-msgstr "Changes the gender of the given character, charging the corresponding service."
+msgstr ""
+"Changes the gender of the given character, charging the corresponding "
+"service."
 
-#: .\apps\server\presentation\views\customer.py:351
+#: .\apps\server\presentation\views\customer.py:359
 msgid "Destravar personagem"
 msgstr "Accounts and characters"
 
-#: .\apps\server\presentation\views\customer.py:352
+#: .\apps\server\presentation\views\customer.py:360
 msgid "Move o personagem preso para um local seguro no servidor de jogo."
-msgstr "Moves the stuck character to a safe location on the game server (unstuck)."
+msgstr ""
+"Moves the stuck character to a safe location on the game server (unstuck)."
 
-#: .\apps\server\presentation\views\customer.py:381
+#: .\apps\server\presentation\views\customer.py:385
+msgid "Teleportar personagem"
+msgstr "Teleport character"
+
+#: .\apps\server\presentation\views\customer.py:386
+msgid ""
+"Move o personagem offline para uma vila do catálogo, cobrando o serviço."
+msgstr "Moves the offline character to a catalog town and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:415
+msgid "Alterar visual do personagem"
+msgstr "Change character appearance"
+
+#: .\apps\server\presentation\views\customer.py:416
+msgid "Altera cabelo, cor e rosto do personagem offline, cobrando o serviço."
+msgstr ""
+"Changes hair, color and face of the offline character and charges the "
+"service."
+
+#: .\apps\server\presentation\views\customer.py:445
+msgid "Limpar karma"
+msgstr "Clear karma"
+
+#: .\apps\server\presentation\views\customer.py:446
+msgid "Zera o karma do personagem offline, cobrando o serviço."
+msgstr "Clears the offline character's karma and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:472
+msgid "Limpar PK"
+msgstr "Clear PK"
+
+#: .\apps\server\presentation\views\customer.py:473
+msgid "Zera a contagem de PK do personagem offline, cobrando o serviço."
+msgstr "Clears the offline character's PK count and charges the service."
+
+#: .\apps\server\presentation\views\customer.py:503
 msgid "Solicitar vínculo por e-mail"
 msgstr "Request link by email"
 
-#: .\apps\server\presentation\views\customer.py:382
+#: .\apps\server\presentation\views\customer.py:504
 msgid ""
 "Inicia o fluxo de vínculo de conta de jogo mediante confirmação por e-mail."
 msgstr "Starts the game account linking flow with confirmation by email."
 
-#: .\apps\server\presentation\views\customer.py:403
+#: .\apps\server\presentation\views\customer.py:525
 msgid "Confirmar vínculo por e-mail"
 msgstr "Confirm link by email"
 
-#: .\apps\server\presentation\views\customer.py:404
+#: .\apps\server\presentation\views\customer.py:526
 msgid "Confirma o vínculo da conta de jogo com o token recebido por e-mail."
 msgstr "Confirms the game account link with the token received by email."
 
-#: .\apps\server\presentation\views\customer.py:424
+#: .\apps\server\presentation\views\customer.py:546
 msgid "Comprar slot de vínculo"
 msgstr "Link slot"
 
-#: .\apps\server\presentation\views\customer.py:425
+#: .\apps\server\presentation\views\customer.py:547
 msgid ""
 "Adquire slots adicionais de vínculo de contas de jogo para o usuário "
 "autenticado."
-msgstr "Purchases additional game account link slots for the authenticated user."
+msgstr ""
+"Purchases additional game account link slots for the authenticated user."
 
-#: .\apps\server\presentation\views\customer.py:448
+#: .\apps\server\presentation\views\customer.py:570
 msgid "Preços dos serviços"
 msgstr "Service prices"
 
-#: .\apps\server\presentation\views\customer.py:449
+#: .\apps\server\presentation\views\customer.py:571
 msgid "Lista os preços dos serviços de personagem disponíveis no painel."
 msgstr "Lists the prices of the character services available in the panel."
 
@@ -2507,43 +2775,58 @@ msgstr "Item snapshot"
 msgid ""
 "Catálogo canônico: XML + customs do banco PDL. Não consulta nem expõe o "
 "banco L2."
-msgstr "Canonical catalog: XML + customs from the PDL database. It neither queries nor exposes the L2 database."
+msgstr ""
+"Canonical catalog: XML + customs from the PDL database. It neither queries "
+"nor exposes the L2 database."
 
-#: .\apps\server\presentation\views\public.py:35
+#: .\apps\server\presentation\views\public.py:36
 msgid "Informações do servidor"
 msgstr "Service operations"
 
-#: .\apps\server\presentation\views\public.py:36
+#: .\apps\server\presentation\views\public.py:37
 msgid ""
 "Retorna as informações públicas de configuração e apresentação do servidor."
-msgstr "Returns the public configuration and presentation information of the server."
+msgstr ""
+"Returns the public configuration and presentation information of the server."
 
-#: .\apps\server\presentation\views\public.py:56
+#: .\apps\server\presentation\views\public.py:57
 msgid "Status do servidor"
 msgstr "Server status"
 
-#: .\apps\server\presentation\views\public.py:57
+#: .\apps\server\presentation\views\public.py:58
 msgid "Retorna o status online, contagens e disponibilidade atual do servidor."
-msgstr "Returns the online status, counts and current availability of the server."
+msgstr ""
+"Returns the online status, counts and current availability of the server."
 
-#: .\apps\server\presentation\views\public.py:77
+#: .\apps\server\presentation\views\public.py:78
 msgid "Ranking público"
 msgstr "Public ranking"
 
-#: .\apps\server\presentation\views\public.py:78
+#: .\apps\server\presentation\views\public.py:79
 msgid ""
 "Retorna o ranking público do tipo informado, limitado pelo parâmetro limit."
-msgstr "Returns the public ranking of the given type, capped by the limit parameter."
+msgstr ""
+"Returns the public ranking of the given type, capped by the limit parameter."
 
-#: .\apps\server\presentation\views\public.py:113
+#: .\apps\server\presentation\views\public.py:114
 msgid "Consulta pública Lineage"
 msgstr "Lineage account"
 
-#: .\apps\server\presentation\views\public.py:114
+#: .\apps\server\presentation\views\public.py:115
 msgid ""
 "Executa uma consulta pública nomeada no banco Lineage e devolve as linhas "
 "resultantes."
-msgstr "Runs a named public query against the Lineage database and returns the resulting rows."
+msgstr ""
+"Runs a named public query against the Lineage database and returns the "
+"resulting rows."
+
+#: .\apps\server\presentation\views\public.py:133
+msgid "Lojas do jogo"
+msgstr "In-game shops"
+
+#: .\apps\server\presentation\views\public.py:134
+msgid "Lista as lojas privadas offline publicadas no banco do jogo."
+msgstr "Lists offline private stores published in the game database."
 
 #: .\apps\shop\apps.py:15
 msgid "Loja"
@@ -2689,7 +2972,9 @@ msgstr "Finished"
 #: .\apps\shop\presentation\views\shared.py:135
 msgid ""
 "Finaliza a compra pela rotina checkout e devolve o resultado da operação."
-msgstr "Completes the purchase through the checkout routine and returns the operation result."
+msgstr ""
+"Completes the purchase through the checkout routine and returns the "
+"operation result."
 
 #: .\apps\staff\apps.py:15
 msgid "Staff"
@@ -2719,7 +3004,8 @@ msgstr "Inspect game account"
 #: .\apps\staff\presentation\views\accounts.py:27
 msgid ""
 "Consulta os dados administrativos da conta de jogo informada pelo login."
-msgstr "Returns the administrative data of the game account identified by login."
+msgstr ""
+"Returns the administrative data of the game account identified by login."
 
 #: .\apps\staff\presentation\views\accounts.py:45
 msgid "Forçar desvínculo de conta"
@@ -2769,7 +3055,8 @@ msgstr "List FAQ"
 msgid ""
 "Lista os artigos do FAQ gerenciados pela equipe, inclusive rascunhos e "
 "handbook."
-msgstr "Lists the FAQ articles managed by staff, including drafts and the handbook."
+msgstr ""
+"Lists the FAQ articles managed by staff, including drafts and the handbook."
 
 #: .\apps\staff\presentation\views\cms.py:77
 msgid "Criar artigo do FAQ"
@@ -2872,7 +3159,8 @@ msgstr "Panel settings"
 #: .\apps\staff\presentation\views\config.py:49
 msgid ""
 "Atualiza as configurações administrativas do painel com o payload informado."
-msgstr "Updates the administrative settings of the panel with the given payload."
+msgstr ""
+"Updates the administrative settings of the panel with the given payload."
 
 #: .\apps\staff\presentation\views\config.py:67
 msgid "Listar preços de serviços"
@@ -2914,7 +3202,9 @@ msgstr "Top-up promotion"
 msgid ""
 "Retorna a campanha promocional da carteira usada no banner e no bônus de "
 "moedas."
-msgstr "Returns the wallet promotional campaign used in the banner and in the coin bonus."
+msgstr ""
+"Returns the wallet promotional campaign used in the banner and in the coin "
+"bonus."
 
 #: .\apps\staff\presentation\views\config.py:130
 msgid "Atualizar promoção de recarga"
@@ -2999,7 +3289,7 @@ msgstr ""
 
 #: .\apps\staff\presentation\views\custom_items.py:82
 #: .\apps\staff\presentation\views\item_observation.py:173
-#: .\common\i18n_msgid_catalog.py:155
+#: .\common\i18n_msgid_catalog.py:185
 msgid "Você não tem permissão para esta ação."
 msgstr "You do not have permission for this action."
 
@@ -3035,7 +3325,9 @@ msgstr "Slots spin"
 msgid ""
 "Expõe o relatório de saldos usando os filtros e a paginação da base "
 "financeira."
-msgstr "Exposes the balance report using the filters and pagination of the financial base."
+msgstr ""
+"Exposes the balance report using the filters and pagination of the financial "
+"base."
 
 #: .\apps\staff\presentation\views\financial_reports.py:70
 msgid "Relatório de conciliação"
@@ -3044,7 +3336,9 @@ msgstr "Reconciliation report"
 #: .\apps\staff\presentation\views\financial_reports.py:71
 msgid ""
 "Especializa a consulta financeira para conciliação de saldos e movimentações."
-msgstr "Specializes the financial query for the reconciliation of balances and movements."
+msgstr ""
+"Specializes the financial query for the reconciliation of balances and "
+"movements."
 
 #: .\apps\staff\presentation\views\financial_reports.py:88
 msgid "Relatório de fluxo de caixa"
@@ -3063,7 +3357,7 @@ msgid "Especializa a consulta financeira para o relatório de pagamentos."
 msgstr "Specializes the financial query for the payments report."
 
 #: .\apps\staff\presentation\views\item_observation.py:185
-#: .\common\i18n_msgid_catalog.py:157
+#: .\common\i18n_msgid_catalog.py:187
 msgid ""
 "Não foi possível consultar os itens. Confira a conexão L2 e o módulo SQL."
 msgstr "Could not query items. Check the L2 connection and SQL module."
@@ -3076,7 +3370,8 @@ msgstr "Observation categories"
 msgid ""
 "Informa quais ações de observação de itens o usuário autenticado pode "
 "executar."
-msgstr "Reports which item observation actions the authenticated user may perform."
+msgstr ""
+"Reports which item observation actions the authenticated user may perform."
 
 #: .\apps\staff\presentation\views\item_observation.py:227
 msgid "Observação ao vivo"
@@ -3086,7 +3381,9 @@ msgstr "Service operation"
 msgid ""
 "Consulta a distribuição atual de itens no servidor L2 com filtros e "
 "paginação."
-msgstr "Queries the current item distribution on the L2 server with filters and pagination."
+msgstr ""
+"Queries the current item distribution on the L2 server with filters and "
+"pagination."
 
 #: .\apps\staff\presentation\views\item_observation.py:263
 msgid "Atualizar favorito"
@@ -3098,7 +3395,7 @@ msgid ""
 msgstr "Adds or removes the given item from the user's observation favorites."
 
 #: .\apps\staff\presentation\views\item_observation.py:269
-#: .\common\i18n_msgid_catalog.py:149 .\common\tests\test_i18n_gettext.py:292
+#: .\common\i18n_msgid_catalog.py:179 .\common\tests\test_i18n_gettext.py:292
 msgid "ID de item inválido."
 msgstr "Invalid item ID."
 
@@ -3117,7 +3414,8 @@ msgstr "Created by"
 #: .\apps\staff\presentation\views\item_observation.py:310
 msgid ""
 "Captura o estado atual da observação de itens e persiste um novo snapshot."
-msgstr "Captures the current item observation state and persists a new snapshot."
+msgstr ""
+"Captures the current item observation state and persists a new snapshot."
 
 #: .\apps\staff\presentation\views\item_observation.py:336
 msgid "Detalhe da captura"
@@ -3126,7 +3424,8 @@ msgstr "Snapshot detail"
 #: .\apps\staff\presentation\views\item_observation.py:337
 msgid ""
 "Retorna os metadados e os detalhes paginados de uma captura de observação."
-msgstr "Returns the metadata and the paginated details of an observation snapshot."
+msgstr ""
+"Returns the metadata and the paginated details of an observation snapshot."
 
 #: .\apps\staff\presentation\views\item_observation.py:355
 msgid "Excluir captura"
@@ -3144,7 +3443,9 @@ msgstr "Compare snapshots"
 msgid ""
 "Compara duas capturas de observação e pagina as diferenças encontradas entre "
 "elas."
-msgstr "Compares two observation snapshots and paginates the differences found between them."
+msgstr ""
+"Compares two observation snapshots and paginates the differences found "
+"between them."
 
 #: .\apps\staff\presentation\views\item_observation.py:409
 msgid "Listar categorias"
@@ -3161,7 +3462,8 @@ msgstr "Create category"
 #: .\apps\staff\presentation\views\item_observation.py:420
 msgid ""
 "Cria uma nova categoria para organizar itens na observação administrativa."
-msgstr "Creates a new category to organize items in the administrative observation."
+msgstr ""
+"Creates a new category to organize items in the administrative observation."
 
 #: .\apps\staff\presentation\views\item_observation.py:443
 msgid "Atualizar categoria"
@@ -3178,6 +3480,47 @@ msgstr "Delete category"
 #: .\apps\staff\presentation\views\item_observation.py:461
 msgid "Remove permanentemente a categoria de observação identificada pelo ID."
 msgstr "Permanently removes the observation category identified by the ID."
+
+#: .\apps\staff\presentation\views\moderation.py:49
+#: .\common\i18n_msgid_catalog.py:136
+msgid "Listar personagens para moderação"
+msgstr "List characters for moderation"
+
+#: .\apps\staff\presentation\views\moderation.py:51
+#: .\common\i18n_msgid_catalog.py:137
+msgid ""
+"Busca personagens por nick, login ou e-mail e devolve dados administrativos "
+"da conta."
+msgstr ""
+"Search characters by nick, login or email and return administrative account "
+"data."
+
+#: .\apps\staff\presentation\views\moderation.py:76
+#: .\common\i18n_msgid_catalog.py:138
+msgid "Consultar personagem para moderação"
+msgstr "Look up a character for moderation"
+
+#: .\apps\staff\presentation\views\moderation.py:77
+#: .\common\i18n_msgid_catalog.py:139
+msgid ""
+"Devolve personagem, conta, e-mail, prisão, banimento e o histórico da equipe."
+msgstr "Returns character, account, email, jail, ban status and staff history."
+
+#: .\apps\staff\presentation\views\moderation.py:92
+#: .\common\i18n_msgid_catalog.py:140
+msgid "Executar ação de moderação"
+msgstr "Run a moderation action"
+
+#: .\apps\staff\presentation\views\moderation.py:94
+#: .\common\i18n_msgid_catalog.py:142
+msgid ""
+"Aplica kick, jail, unjail, ban, unban ou teleporte. Personagem online só "
+"reflete posição e kick no próximo login; o banimento da conta impede o "
+"relogin."
+msgstr ""
+"Applies kick, jail, unjail, ban, unban or teleport. An online character only "
+"reflects position and kick on the next login; banning the account blocks "
+"relogin."
 
 #: .\apps\staff\presentation\views\notifications.py:23
 msgid "Listar avisos"
@@ -3196,7 +3539,9 @@ msgstr "Send notice"
 msgid ""
 "Envia um aviso a um usuário ativo ou a todas as contas ativas, com entrega "
 "por push."
-msgstr "Sends a notice to an active user or to all active accounts, with push delivery."
+msgstr ""
+"Sends a notice to an active user or to all active accounts, with push "
+"delivery."
 
 #: .\apps\staff\presentation\views\notifications.py:40
 msgid "Excluir aviso"
@@ -3230,7 +3575,8 @@ msgstr "Shop purchases"
 msgid ""
 "Compras concluídas, receita, carrinhos abandonados e tops de itens/pacotes/"
 "cupons."
-msgstr "Completed purchases, revenue, abandoned carts and top items/packages/coupons."
+msgstr ""
+"Completed purchases, revenue, abandoned carts and top items/packages/coupons."
 
 #: .\apps\staff\presentation\views\operational_reports.py:85
 msgid "Relatório de marketplace"
@@ -3250,7 +3596,9 @@ msgid ""
 "Credita a carteira de um pedido mock pendente. Não confirma Mercado Pago nem "
 "Stripe. Use somente em desenvolvimento ou para regularizar uma simulação "
 "consciente."
-msgstr "Credits the wallet of a pending mock order. It does not confirm Mercado Pago or Stripe. Use it only in development or to settle a deliberate simulation."
+msgstr ""
+"Credits the wallet of a pending mock order. It does not confirm Mercado Pago "
+"or Stripe. Use it only in development or to settle a deliberate simulation."
 
 #: .\apps\staff\presentation\views\system.py:22
 msgid "Health check"
@@ -3366,7 +3714,8 @@ msgstr "Ticket"
 
 #: .\apps\support\presentation\views\customer.py:51
 msgid "Cria um novo chamado do usuário autenticado com a mensagem inicial."
-msgstr "Creates a new ticket for the authenticated user with the initial message."
+msgstr ""
+"Creates a new ticket for the authenticated user with the initial message."
 
 #: .\apps\support\presentation\views\customer.py:79
 msgid "Detalhe do chamado"
@@ -3384,7 +3733,9 @@ msgstr "Ticket messages"
 msgid ""
 "Envia uma mensagem do jogador no chamado e notifica o atendente quando "
 "houver."
-msgstr "Sends a player message on the ticket and notifies the assigned agent when there is one."
+msgstr ""
+"Sends a player message on the ticket and notifies the assigned agent when "
+"there is one."
 
 #: .\apps\support\presentation\views\customer.py:105
 msgid "Encerrar ou reabrir chamado"
@@ -3394,7 +3745,9 @@ msgstr "Close or reopen ticket"
 msgid ""
 "Permite ao jogador encerrar ou reabrir o próprio chamado conforme a ação "
 "informada."
-msgstr "Lets the player close or reopen their own ticket according to the given action."
+msgstr ""
+"Lets the player close or reopen their own ticket according to the given "
+"action."
 
 #: .\apps\support\presentation\views\staff.py:33
 msgid "Listar chamados (staff)"
@@ -3448,7 +3801,8 @@ msgstr "Active theme"
 #: .\apps\themes\presentation\views.py:43
 msgid ""
 "Expõe apenas os caminhos e metadados necessários para montar o tema ativo."
-msgstr "Exposes only the paths and metadata required to assemble the active theme."
+msgstr ""
+"Exposes only the paths and metadata required to assemble the active theme."
 
 #: .\apps\themes\presentation\views.py:59
 msgid "Listar temas"
@@ -3458,7 +3812,9 @@ msgstr "List themes"
 msgid ""
 "Lista os pacotes de tema instalados; alteração visual global é exclusiva de "
 "superadministradores."
-msgstr "Lists the installed theme packages; global visual changes are restricted to superusers."
+msgstr ""
+"Lists the installed theme packages; global visual changes are restricted to "
+"superusers."
 
 #: .\apps\themes\presentation\views.py:67
 msgid "Instalar tema"
@@ -3468,7 +3824,9 @@ msgstr "Install theme"
 msgid ""
 "Instala um pacote .zip de tema; alteração visual global é exclusiva de "
 "superadministradores."
-msgstr "Installs a .zip theme package; global visual changes are restricted to superusers."
+msgstr ""
+"Installs a .zip theme package; global visual changes are restricted to "
+"superusers."
 
 #: .\apps\themes\presentation\views.py:88
 msgid "Ativar tema"
@@ -3476,7 +3834,8 @@ msgstr "Activate theme"
 
 #: .\apps\themes\presentation\views.py:89
 msgid "Ativa uma versão instalada ou restaura explicitamente o tema default."
-msgstr "Activates an installed version or explicitly restores the default theme."
+msgstr ""
+"Activates an installed version or explicitly restores the default theme."
 
 #: .\apps\themes\presentation\views.py:106
 msgid "Excluir tema"
@@ -3485,7 +3844,8 @@ msgstr "Delete theme"
 #: .\apps\themes\presentation\views.py:107
 msgid ""
 "Remove um pacote inativo; o tema default não possui endpoint de exclusão."
-msgstr "Removes an inactive package; the default theme has no deletion endpoint."
+msgstr ""
+"Removes an inactive package; the default theme has no deletion endpoint."
 
 #: .\apps\wallet\apps.py:15 .\apps\wallet\infrastructure\models.py:24
 msgid "Carteira"
@@ -3549,7 +3909,7 @@ msgid "Executar câmbio de moedas"
 msgstr "Coin package"
 
 #: .\apps\wallet\presentation\views\exchange.py:70
-#: .\common\i18n_msgid_catalog.py:136
+#: .\common\i18n_msgid_catalog.py:166
 msgid "Conecte o banco do jogo para transferir moedas."
 msgstr "Connect the game database to transfer coins."
 
@@ -3567,7 +3927,8 @@ msgstr "Transfer to player"
 
 #: .\apps\wallet\presentation\views\shared.py:52
 msgid "Transfere moedas da carteira do usuário autenticado para outro jogador."
-msgstr "Transfers coins from the authenticated user's wallet to another player."
+msgstr ""
+"Transfers coins from the authenticated user's wallet to another player."
 
 #: .\apps\wallet\presentation\views\shared.py:82
 msgid "Listar transações"
@@ -3653,7 +4014,8 @@ msgstr "Invalid username or password."
 msgid ""
 "O servidor está em período de lançamento. O login está restrito à equipe no "
 "momento."
-msgstr "The server is in its launch period. Login is currently restricted to staff."
+msgstr ""
+"The server is in its launch period. Login is currently restricted to staff."
 
 #: .\common\i18n_msgid_catalog.py:23
 msgid "Código 2FA inválido."
@@ -3848,187 +4210,227 @@ msgstr "The character must be offline."
 msgid "Este nick já está em uso."
 msgstr "This nickname is already in use."
 
+#: .\common\i18n_msgid_catalog.py:86
+msgid "Este serviço não está disponível neste servidor."
+msgstr "This service is not available on this server."
+
+#: .\common\i18n_msgid_catalog.py:87
+msgid "Personagem não encontrado."
+msgstr "Character not found."
+
 #: .\common\i18n_msgid_catalog.py:88
+msgid "Filtro de status inválido."
+msgstr "Invalid status filter."
+
+#: .\common\i18n_msgid_catalog.py:89
+msgid "Ação de moderação inválida."
+msgstr "Invalid moderation action."
+
+#: .\common\i18n_msgid_catalog.py:90
+msgid "Informe o motivo (mínimo 3 caracteres)."
+msgstr "Enter a reason (at least 3 characters)."
+
+#: .\common\i18n_msgid_catalog.py:91
+msgid "O motivo deve ter no máximo 255 caracteres."
+msgstr "The reason must be at most 255 characters."
+
+#: .\common\i18n_msgid_catalog.py:92
+msgid "Este personagem não está na prisão."
+msgstr "This character is not in jail."
+
+#: .\common\i18n_msgid_catalog.py:93
+msgid "Esta conta não está banida."
+msgstr "This account is not banned."
+
+#: .\common\i18n_msgid_catalog.py:94
+msgid "Missão não encontrada."
+msgstr "Quest not found."
+
+#: .\common\i18n_msgid_catalog.py:95
+msgid "Complete o objetivo da caça antes de resgatar."
+msgstr "Complete the hunt objective before claiming."
+
+#: .\common\i18n_msgid_catalog.py:98
 msgid "Chamado não encontrado."
 msgstr "Ticket not found."
 
-#: .\common\i18n_msgid_catalog.py:89
+#: .\common\i18n_msgid_catalog.py:99
 msgid "Esta ação não está disponível para o chamado."
 msgstr "This action is not available for the ticket."
 
-#: .\common\i18n_msgid_catalog.py:92 .\common\tests\test_i18n_gettext.py:294
+#: .\common\i18n_msgid_catalog.py:102 .\common\tests\test_i18n_gettext.py:294
 msgid "Autenticação necessária."
 msgstr "Authentication required."
 
-#: .\common\i18n_msgid_catalog.py:93
+#: .\common\i18n_msgid_catalog.py:103
 msgid "Método não permitido."
 msgstr "Method not allowed."
 
-#: .\common\i18n_msgid_catalog.py:94
+#: .\common\i18n_msgid_catalog.py:104
 msgid "O conteúdo enviado excede o tamanho permitido."
 msgstr "The uploaded content exceeds the allowed size."
 
-#: .\common\i18n_msgid_catalog.py:95
+#: .\common\i18n_msgid_catalog.py:105
 msgid "Formato de conteúdo não suportado."
 msgstr "Unsupported content type."
 
-#: .\common\i18n_msgid_catalog.py:96
+#: .\common\i18n_msgid_catalog.py:106
 msgid "Muitas tentativas. Aguarde um momento e tente novamente."
 msgstr "Too many attempts. Wait a moment and try again."
 
-#: .\common\i18n_msgid_catalog.py:97
+#: .\common\i18n_msgid_catalog.py:107
 msgid "Ocorreu um erro interno. Tente novamente em instantes."
 msgstr "An internal error occurred. Try again shortly."
 
-#: .\common\i18n_msgid_catalog.py:98
+#: .\common\i18n_msgid_catalog.py:108
 msgid "Um serviço necessário respondeu com erro."
 msgstr "A required service responded with an error."
 
-#: .\common\i18n_msgid_catalog.py:99
+#: .\common\i18n_msgid_catalog.py:109
 msgid "Serviço temporariamente indisponível."
 msgstr "Service temporarily unavailable."
 
-#: .\common\i18n_msgid_catalog.py:100
+#: .\common\i18n_msgid_catalog.py:110
 msgid "Um serviço necessário demorou demais para responder."
 msgstr "A required service took too long to respond."
 
-#: .\common\i18n_msgid_catalog.py:103
+#: .\common\i18n_msgid_catalog.py:113
 msgid "A senha precisa ter ao menos 8 caracteres."
 msgstr "The password must have at least 8 characters."
 
-#: .\common\i18n_msgid_catalog.py:104
+#: .\common\i18n_msgid_catalog.py:114
 msgid "Identificador inválido."
 msgstr "Invalid identifier."
 
-#: .\common\i18n_msgid_catalog.py:105
+#: .\common\i18n_msgid_catalog.py:115
 msgid "Título é obrigatório."
 msgstr "Title is required."
 
-#: .\common\i18n_msgid_catalog.py:106
+#: .\common\i18n_msgid_catalog.py:116
 msgid "Título e conteúdo são obrigatórios."
 msgstr "Title and content are required."
 
-#: .\common\i18n_msgid_catalog.py:107
+#: .\common\i18n_msgid_catalog.py:117
 msgid "Informe o início e o fim do evento."
 msgstr "Provide the start and end of the event."
 
-#: .\common\i18n_msgid_catalog.py:108
+#: .\common\i18n_msgid_catalog.py:118
 msgid "Informe datas de início e fim em formato ISO 8601."
 msgstr "Provide start and end dates in ISO 8601 format."
 
-#: .\common\i18n_msgid_catalog.py:109
+#: .\common\i18n_msgid_catalog.py:119
 msgid "A data de término deve ser posterior ao início."
 msgstr "The end date must be after the start."
 
-#: .\common\i18n_msgid_catalog.py:110
+#: .\common\i18n_msgid_catalog.py:120
 msgid "Pergunta e resposta são obrigatórias."
 msgstr "Question and answer are required."
 
-#: .\common\i18n_msgid_catalog.py:111
+#: .\common\i18n_msgid_catalog.py:121
 msgid "Categoria do FAQ inválida."
 msgstr "Invalid FAQ category."
 
-#: .\common\i18n_msgid_catalog.py:112
+#: .\common\i18n_msgid_catalog.py:122
 msgid "Audiência do FAQ inválida."
 msgstr "Invalid FAQ audience."
 
-#: .\common\i18n_msgid_catalog.py:113
+#: .\common\i18n_msgid_catalog.py:123
 msgid "Artigo do FAQ não encontrado."
 msgstr "FAQ article not found."
 
-#: .\common\i18n_msgid_catalog.py:114
+#: .\common\i18n_msgid_catalog.py:124
 msgid "Evento não encontrado."
 msgstr "Event not found."
 
-#: .\common\i18n_msgid_catalog.py:115
+#: .\common\i18n_msgid_catalog.py:125
 msgid "Página do wiki não encontrada."
 msgstr "Wiki page not found."
 
-#: .\common\i18n_msgid_catalog.py:116
+#: .\common\i18n_msgid_catalog.py:126
 msgid "Já existe uma página com este slug."
 msgstr "A page with this slug already exists."
 
-#: .\common\i18n_msgid_catalog.py:117
+#: .\common\i18n_msgid_catalog.py:127
 msgid "Informe o título e a URL do download."
 msgstr "Provide the download title and URL."
 
-#: .\common\i18n_msgid_catalog.py:118
+#: .\common\i18n_msgid_catalog.py:128
 msgid "Informe uma URL http ou https."
 msgstr "Provide an http or https URL."
 
-#: .\common\i18n_msgid_catalog.py:119
+#: .\common\i18n_msgid_catalog.py:129
 msgid "Download não encontrado."
 msgstr "Download not found."
 
-#: .\common\i18n_msgid_catalog.py:120
+#: .\common\i18n_msgid_catalog.py:130
 msgid "Informe o título do aviso."
 msgstr "Provide the notice title."
 
-#: .\common\i18n_msgid_catalog.py:121
+#: .\common\i18n_msgid_catalog.py:131
 msgid "Tipo de aviso inválido."
 msgstr "Invalid notice type."
 
-#: .\common\i18n_msgid_catalog.py:122
+#: .\common\i18n_msgid_catalog.py:132
 msgid "Informe o usuário de destino ou envie para todos."
 msgstr "Provide the destination user or send to everyone."
 
-#: .\common\i18n_msgid_catalog.py:123
+#: .\common\i18n_msgid_catalog.py:133
 msgid "Não há usuários ativos para receber o aviso."
 msgstr "There are no active users to receive the notice."
 
-#: .\common\i18n_msgid_catalog.py:124
+#: .\common\i18n_msgid_catalog.py:134
 msgid "Notificação não encontrada."
 msgstr "Notification not found."
 
-#: .\common\i18n_msgid_catalog.py:125
+#: .\common\i18n_msgid_catalog.py:135
 msgid "Informe um número inteiro válido."
 msgstr "Provide a valid integer."
 
-#: .\common\i18n_msgid_catalog.py:128 .\common\validators.py:14
+#: .\common\i18n_msgid_catalog.py:158 .\common\validators.py:14
 msgid "Use apenas letras e números, sem espaços ou símbolos."
 msgstr "Use only letters and numbers, without spaces or symbols."
 
-#: .\common\i18n_msgid_catalog.py:129 .\common\validators.py:16
+#: .\common\i18n_msgid_catalog.py:159 .\common\validators.py:16
 msgid "O nome de usuário deve ter entre 3 e 16 caracteres."
 msgstr "Username must be between 3 and 16 characters."
 
-#: .\common\i18n_msgid_catalog.py:139
+#: .\common\i18n_msgid_catalog.py:169
 msgid "Personagem não encontrado nesta conta."
 msgstr "Character not found on this account."
 
-#: .\common\i18n_msgid_catalog.py:140
+#: .\common\i18n_msgid_catalog.py:170
 msgid "Transferência de moedas indisponível neste servidor."
 msgstr "Coin transfer unavailable on this server."
 
-#: .\common\i18n_msgid_catalog.py:141
+#: .\common\i18n_msgid_catalog.py:171
 msgid "Observação de itens indisponível neste gateway."
 msgstr "Item observation unavailable on this gateway."
 
-#: .\common\i18n_msgid_catalog.py:142 .\common\tests\test_i18n_gettext.py:297
+#: .\common\i18n_msgid_catalog.py:172 .\common\tests\test_i18n_gettext.py:297
 msgid "Carteira não encontrada."
 msgstr "Wallet not found."
 
-#: .\common\i18n_msgid_catalog.py:143
+#: .\common\i18n_msgid_catalog.py:173
 msgid "Saldo insuficiente."
 msgstr "Insufficient balance."
 
-#: .\common\i18n_msgid_catalog.py:144
+#: .\common\i18n_msgid_catalog.py:174
 msgid "Transferência inválida."
 msgstr "Invalid transfer."
 
-#: .\common\i18n_msgid_catalog.py:145
+#: .\common\i18n_msgid_catalog.py:175
 msgid "Saldo insuficiente. Bônus não pode ser enviado ao jogo."
 msgstr "Insufficient balance. Bonus cannot be sent to the game."
 
-#: .\common\i18n_msgid_catalog.py:153
+#: .\common\i18n_msgid_catalog.py:183
 msgid "Jogo desconhecido."
 msgstr "Unknown game."
 
-#: .\common\i18n_msgid_catalog.py:154 .\common\images.py:45
+#: .\common\i18n_msgid_catalog.py:184 .\common\images.py:45
 msgid "Imagem inválida."
 msgstr "Invalid image."
 
-#: .\common\i18n_msgid_catalog.py:156 .\common\mixins.py:64
+#: .\common\i18n_msgid_catalog.py:186 .\common\mixins.py:64
 #: .\common\tests\test_i18n_gettext.py:296
 msgid "recurso não encontrado"
 msgstr "resource not found"
@@ -4092,7 +4494,8 @@ msgstr ""
 "\n"
 "## Authentication\n"
 "\n"
-"- **JWT** — HttpOnly cookie (`PDL-auth`) or `Authorization: Bearer <token>` header.\n"
+"- **JWT** — HttpOnly cookie (`PDL-auth`) or `Authorization: Bearer <token>` "
+"header.\n"
 "- On writes authenticated by cookie, also send `X-CSRFToken`.\n"
 "\n"
 "## Prefixes\n"
@@ -4109,31 +4512,40 @@ msgstr ""
 "## Contract\n"
 "\n"
 "- Public identifiers are UUID (`id`). The sequential `seq_id` is internal.\n"
-"- 4xx/5xx errors use the `error_code`, `message`, `details` and `request_id` envelope.\n"
+"- 4xx/5xx errors use the `error_code`, `message`, `details` and `request_id` "
+"envelope.\n"
 
 #: .\common\swagger.py:46
 msgid ""
 "Cadastro, login, CSRF, refresh, logout, verificação de e-mail, recuperação "
 "de senha, 2FA, OAuth social e capacidades de autenticação."
-msgstr "Sign-up, login, CSRF, refresh, logout, email verification, password recovery, 2FA, social OAuth and authentication capabilities."
+msgstr ""
+"Sign-up, login, CSRF, refresh, logout, email verification, password "
+"recovery, 2FA, social OAuth and authentication capabilities."
 
 #: .\common\swagger.py:53
 msgid ""
 "Registro, listagem, exclusão e autenticação WebAuthn/passkey (desafios begin/"
 "complete)."
-msgstr "Registration, listing, deletion and WebAuthn/passkey authentication (begin/complete challenges)."
+msgstr ""
+"Registration, listing, deletion and WebAuthn/passkey authentication (begin/"
+"complete challenges)."
 
 #: .\common\swagger.py:60
 msgid ""
 "Dados do jogador autenticado, preferências, progresso gamer e resgate de "
 "recompensas de perfil."
-msgstr "Authenticated player data, preferences, gamer progress and profile reward claims."
+msgstr ""
+"Authenticated player data, preferences, gamer progress and profile reward "
+"claims."
 
 #: .\common\swagger.py:67
 msgid ""
 "Status do servidor Lineage 2, informações públicas, rankings e consultas de "
 "personagens/contas."
-msgstr "Lineage 2 server status, public information, rankings and character/account queries."
+msgstr ""
+"Lineage 2 server status, public information, rankings and character/account "
+"queries."
 
 #: .\common\swagger.py:74
 msgid "Consulta pública/autenticada ao catálogo de itens do servidor."
@@ -4143,7 +4555,9 @@ msgstr "Public/authenticated queries against the server item catalog."
 msgid ""
 "Saldo de moedas do painel, transferências entre jogadores, extrato e câmbio "
 "de moedas painel ↔ jogo."
-msgstr "Panel coin balance, player-to-player transfers, statement and panel ↔ game coin exchange."
+msgstr ""
+"Panel coin balance, player-to-player transfers, statement and panel ↔ game "
+"coin exchange."
 
 #: .\common\swagger.py:87
 msgid "Catálogo de itens da loja, carrinho, atualização de itens e checkout."
@@ -4153,13 +4567,17 @@ msgstr "Shop item catalog, cart, item updates and checkout."
 msgid ""
 "Pacotes, cotação do carrinho, opções (cupom/bônus) e histórico de compras. "
 "Staff gerencia pacotes e códigos promocionais."
-msgstr "Packages, cart quote, options (coupon/bonus) and purchase history. Staff manages packages and promo codes."
+msgstr ""
+"Packages, cart quote, options (coupon/bonus) and purchase history. Staff "
+"manages packages and promo codes."
 
 #: .\common\swagger.py:100
 msgid ""
 "Notícias, FAQ, downloads, assistente Denkynho, wardrobe e conteúdo "
 "autenticado do painel."
-msgstr "News, FAQ, downloads, Denkynho assistant, wardrobe and authenticated panel content."
+msgstr ""
+"News, FAQ, downloads, Denkynho assistant, wardrobe and authenticated panel "
+"content."
 
 #: .\common\swagger.py:106
 msgid "Artigos da wiki pública do servidor."
@@ -4185,23 +4603,30 @@ msgstr ""
 msgid ""
 "Vínculo e desvínculo de contas do jogo, personagens, senha, nickname, sexo, "
 "unstuck, slots e preços de serviços."
-msgstr "Linking and unlinking game accounts, characters, password, nickname, gender, unstuck, slots and service prices."
+msgstr ""
+"Linking and unlinking game accounts, characters, password, nickname, gender, "
+"unstuck, slots and service prices."
 
 #: .\common\swagger.py:133
 msgid ""
 "Dashboard do inventário no painel, itens/equipamentos do personagem, "
 "retirada, depósito e troca."
-msgstr "Panel inventory dashboard, character items/equipment, withdrawal, deposit and transfer."
+msgstr ""
+"Panel inventory dashboard, character items/equipment, withdrawal, deposit "
+"and transfer."
 
 #: .\common\swagger.py:140
 msgid ""
 "Roleta, bônus diário, bag, caixas, minigames, dados, slots, pesca, economia, "
 "monstro, encantamento, battle pass, detalhes avançados e estatísticas."
-msgstr "Roulette, daily bonus, bag, boxes, minigames, dice, slots, fishing, economy, monster, enchanting, battle pass, advanced details and statistics."
+msgstr ""
+"Roulette, daily bonus, bag, boxes, minigames, dice, slots, fishing, economy, "
+"monster, enchanting, battle pass, advanced details and statistics."
 
 #: .\common\swagger.py:147
 msgid "Listagens públicas e do jogador, compra e cancelamento no marketplace."
-msgstr "Public and player listings, purchase and cancellation on the marketplace."
+msgstr ""
+"Public and player listings, purchase and cancellation on the marketplace."
 
 #: .\common\swagger.py:152
 msgid "Leilões públicos, meus leilões, criação e lances."
@@ -4211,7 +4636,9 @@ msgstr "Public auctions, my auctions, creation and bids."
 msgid ""
 "Catálogo de métodos, pedidos de recarga, preview de bônus, cancelamento, "
 "confirmação, processamento e status."
-msgstr "Method catalog, top-up orders, bonus preview, cancellation, confirmation, processing and status."
+msgstr ""
+"Method catalog, top-up orders, bonus preview, cancellation, confirmation, "
+"processing and status."
 
 #: .\common\swagger.py:164
 msgid "Callbacks de provedores de pagamento (Mercado Pago, Stripe)."
@@ -4233,7 +4660,9 @@ msgstr "Player support tickets: listing, creation, detail and messages."
 msgid ""
 "Inscrição de apoiador, comissões, cupons e solicitação de repasse. Staff "
 "revisa apoiadores e payouts."
-msgstr "Supporter enrollment, commissions, coupons and payout requests. Staff reviews supporters and payouts."
+msgstr ""
+"Supporter enrollment, commissions, coupons and payout requests. Staff "
+"reviews supporters and payouts."
 
 #: .\common\swagger.py:193
 msgid "Roadmap público do projeto e CRUD administrativo das entradas."
@@ -4256,7 +4685,10 @@ msgid ""
 "Configurações do painel, preços de serviços, moedas, itens da loja, "
 "notícias, calendário, FAQ, wiki, downloads, avisos, jogos, temas, inspeção "
 "de contas e demais operações administrativas."
-msgstr "Panel settings, service prices, coins, shop items, news, calendar, FAQ, wiki, downloads, notices, games, themes, account inspection and other administrative operations."
+msgstr ""
+"Panel settings, service prices, coins, shop items, news, calendar, FAQ, "
+"wiki, downloads, notices, games, themes, account inspection and other "
+"administrative operations."
 
 #: .\common\swagger.py:220
 msgid "Fila e detalhe de tickets para a equipe de suporte."
@@ -4270,7 +4702,8 @@ msgstr "Balance, reconciliation, cash flow and payment reports."
 msgid ""
 "Relatórios operacionais de inventário, leilões, compras da loja e "
 "marketplace."
-msgstr "Operational reports for inventory, auctions, shop purchases and marketplace."
+msgstr ""
+"Operational reports for inventory, auctions, shop purchases and marketplace."
 
 #: .\common\swagger.py:237
 msgid ""
@@ -4281,13 +4714,17 @@ msgstr "Administrative CRUD of the custom item catalog (metadata and icons)."
 msgid ""
 "Observação live de itens no L2, favoritos, capturas (snapshots), comparação "
 "e categorias de organização."
-msgstr "Live item observation on L2, favorites, snapshots, comparison and organization categories."
+msgstr ""
+"Live item observation on L2, favorites, snapshots, comparison and "
+"organization categories."
 
 #: .\common\swagger.py:250
 msgid ""
 "CRUD administrativo de temporadas, níveis, recompensas, quests, exchanges, "
 "milestones, bônus diário e iscas."
-msgstr "Administrative CRUD of seasons, levels, rewards, quests, exchanges, milestones, daily bonus and baits."
+msgstr ""
+"Administrative CRUD of seasons, levels, rewards, quests, exchanges, "
+"milestones, daily bonus and baits."
 
 #: .\common\swagger.py:256
 msgid "Interfaces Swagger UI e ReDoc desta documentação OpenAPI."
@@ -4296,10 +4733,6 @@ msgstr "Swagger UI and ReDoc interfaces for this OpenAPI documentation."
 #: .\core\settings\jazzmin.py:9
 msgid "Acesso ao painel administrativo"
 msgstr "Administrative panel access"
-
-#: .\extensions\_example\apps.py:15
-msgid "Extensão de exemplo"
-msgstr "Sample extension"
 
 #: .\templates\admin\base.html:61
 msgid "Barra de comandos"
@@ -4586,103 +5019,5 @@ msgstr "Schema"
 msgid "Admin"
 msgstr "Admin"
 
-#: .\apps\server\domain\exceptions.py:96
-msgid "Este serviço não está disponível neste servidor."
-msgstr "This service is not available on this server."
-
-#: .\apps\server\application\character_use_cases.py:303
-#: .\apps\games\application\hunt_use_cases.py:75
-msgid "Personagem não encontrado."
-msgstr "Character not found."
-
-#: .\apps\games\application\hunt_use_cases.py:153
-msgid "Missão não encontrada."
-msgstr "Quest not found."
-
-#: .\apps\games\application\hunt_use_cases.py:157
-msgid "Complete o objetivo da caça antes de resgatar."
-msgstr "Complete the hunt objective before claiming."
-
-#: .\apps\server\presentation\views\customer.py:385
-msgid "Teleportar personagem"
-msgstr "Teleport character"
-
-#: .\apps\server\presentation\views\customer.py:386
-msgid "Move o personagem offline para uma vila do catálogo, cobrando o serviço."
-msgstr "Moves the offline character to a catalog town and charges the service."
-
-#: .\apps\server\presentation\views\customer.py:415
-msgid "Alterar visual do personagem"
-msgstr "Change character appearance"
-
-#: .\apps\server\presentation\views\customer.py:416
-msgid "Altera cabelo, cor e rosto do personagem offline, cobrando o serviço."
-msgstr "Changes hair, color and face of the offline character and charges the service."
-
-#: .\apps\server\presentation\views\customer.py:445
-msgid "Limpar karma"
-msgstr "Clear karma"
-
-#: .\apps\server\presentation\views\customer.py:446
-msgid "Zera o karma do personagem offline, cobrando o serviço."
-msgstr "Clears the offline character's karma and charges the service."
-
-#: .\apps\server\presentation\views\customer.py:472
-msgid "Limpar PK"
-msgstr "Clear PK"
-
-#: .\apps\server\presentation\views\customer.py:473
-msgid "Zera a contagem de PK do personagem offline, cobrando o serviço."
-msgstr "Clears the offline character's PK count and charges the service."
-
-#: .\apps\server\presentation\views\public.py:133
-msgid "Lojas do jogo"
-msgstr "In-game shops"
-
-#: .\apps\server\presentation\views\public.py:134
-msgid "Lista as lojas privadas offline publicadas no banco do jogo."
-msgstr "Lists offline private stores published in the game database."
-
-#: .\apps\games\presentation\advanced.py:316
-msgid "Caça do dia"
-msgstr "Daily hunt"
-
-#: .\apps\games\presentation\advanced.py:317
-msgid "Lista as missões que leem PvP, tempo online ou nível do personagem no jogo."
-msgstr "Lists quests that read the character's PvP, online time or level from the game."
-
-#: .\apps\games\presentation\advanced.py:324
-msgid "Resgatar caça do dia"
-msgstr "Claim daily hunt"
-
-#: .\apps\games\presentation\advanced.py:325
-msgid "Resgata uma missão da caça quando o personagem atingiu a meta no período."
-msgstr "Claims a hunt quest when the character reached the target in the period."
-
-#: .\apps\games\infrastructure\models.py:668
-msgid "Tempo online"
-msgstr "Online time"
-
-#: .\apps\games\infrastructure\models.py:683
-msgid "Missão da caça"
-msgstr "Hunt quest"
-
-#: .\apps\games\infrastructure\models.py:684
-msgid "Missões da caça"
-msgstr "Hunt quests"
-
-#: .\apps\games\infrastructure\models.py:700
-msgid "Snapshot da caça"
-msgstr "Hunt snapshot"
-
-#: .\apps\games\infrastructure\models.py:701
-msgid "Snapshots da caça"
-msgstr "Hunt snapshots"
-
-#: .\apps\games\infrastructure\models.py:719
-msgid "Resgate da caça"
-msgstr "Hunt claim"
-
-#: .\apps\games\infrastructure\models.py:720
-msgid "Resgates da caça"
-msgstr "Hunt claims"
+#~ msgid "Extensão de exemplo"
+#~ msgstr "Sample extension"

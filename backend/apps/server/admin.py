@@ -6,6 +6,10 @@ from apps.server.infrastructure.models import (
     ManagedLineageAccount,
     ServicePrice,
 )
+from apps.server.infrastructure.moderation_models import (
+    CharacterJailState,
+    ModerationActionLog,
+)
 from apps.server.infrastructure.service_models import CharacterServiceOperation
 from common.admin import PDLModelAdmin
 
@@ -51,6 +55,39 @@ class ServicePriceAdmin(PDLModelAdmin):
     """
 
     list_display = ("code", "name", "price", "active")
+
+
+@admin.register(CharacterJailState)
+class CharacterJailStateAdmin(PDLModelAdmin):
+    """Consulta o estado de prisão gravado no painel; a ação efetiva fica na SPA de moderação."""
+
+    list_display = ("char_name", "char_id", "login", "jailed", "jail_until", "updated_at")
+    list_filter = ("jailed",)
+    search_fields = ("char_name", "login")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(ModerationActionLog)
+class ModerationActionLogAdmin(PDLModelAdmin):
+    """Histórico somente leitura das ações de kick, prisão, banimento e teleporte."""
+
+    list_display = ("created_at", "action", "char_name", "login", "actor_username", "was_online")
+    list_filter = ("action", "was_online")
+    search_fields = ("char_name", "login", "actor_username", "reason")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(IndexConfig)

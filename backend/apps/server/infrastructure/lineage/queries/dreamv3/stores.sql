@@ -9,9 +9,12 @@ SELECT
     COALESCE(C.x, 0) AS x,
     COALESCE(C.y, 0) AS y,
     COALESCE(C.z, 0) AS z,
-    COALESCE(D.name, '') AS clan_name
+    COALESCE(D.name, '') AS clan_name,
+    COALESCE(C.sex, 0) AS sex,
+    COALESCE(CS.class_id, 0) AS class_id
 FROM character_offline_trade T
 INNER JOIN characters C ON C.obj_Id = T.charId
+LEFT JOIN character_subclasses CS ON CS.char_obj_id = C.obj_Id AND CS.isBase = '1'
 LEFT JOIN clan_subpledges D ON D.clan_id = C.clanid AND D.type = '0'
 ORDER BY C.char_name ASC
 

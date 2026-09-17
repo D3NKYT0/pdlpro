@@ -47,6 +47,7 @@ export const LEGACY_EXACT_REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/painel/admin/itens/customs', to: '/panel/admin/items/customs' },
   { from: '/painel/admin/servidor', to: '/panel/admin/server' },
   { from: '/painel/admin/contas', to: '/panel/admin/accounts' },
+  { from: '/painel/admin/moderacao', to: '/panel/admin/moderation' },
   { from: '/painel/admin/servicos', to: '/panel/admin/services' },
   { from: '/painel/admin/moedas', to: '/panel/admin/coins' },
   { from: '/painel/admin/carteira', to: '/panel/admin/wallet' },

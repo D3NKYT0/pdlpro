@@ -101,6 +101,33 @@ class GameCharacter:
 
 
 @dataclass(frozen=True, slots=True)
+class ModerationCharacter:
+    """Personagem com dados administrativos (conta, e-mail, acesso e posição)."""
+
+    char_id: int
+    name: str
+    login: str
+    email: str
+    level: int
+    online: bool
+    sex: int
+    class_id: int
+    title: str
+    clan_name: str
+    pvp: int
+    pk: int
+    karma: int
+    online_time: int
+    last_access: int
+    account_access: int
+    char_access: int
+    x: int
+    y: int
+    z: int
+    linked_user_id: str | None = None
+
+
+@dataclass(frozen=True, slots=True)
 class GameItem:
     """Pilha de item do jogo; item_id identifica o tipo de item e slot informa equipamento quando
     presente.
@@ -154,6 +181,8 @@ class GameStore:
     y: int = 0
     z: int = 0
     clan_name: str = ""
+    sex: int = 0
+    class_id: int = 0
     items: tuple[GameStoreItem, ...] = ()
 
 
@@ -262,6 +291,62 @@ class ILineageGateway(ABC):
         """Indica se o adaptador executa o serviço ou consulta informados."""
 
         return capability in {"CHANGE_NICKNAME", "CHANGE_SEX", "UNSTUCK", "TELEPORT", "LINK_SLOT"}
+
+    def search_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+        limit: int,
+        offset: int,
+    ) -> list[ModerationCharacter]:
+        """Lista personagens para a equipe. ``online_filter``/``banned_filter`` usam -1 para todos."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def count_moderation_characters(
+        self,
+        *,
+        like: str,
+        online_filter: int,
+        banned_filter: int,
+    ) -> int:
+        """Conta o recorte da busca administrativa de personagens."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def get_moderation_character(self, char_id: int) -> ModerationCharacter | None:
+        """Devolve o personagem administrativo pelo ``obj_Id`` do jogo."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def set_account_access_level(self, login: str, level: int) -> None:
+        """Atualiza o access level da conta Lineage (banimento usa valor negativo)."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def kick_character(self, login: str, char_id: int) -> None:
+        """Marca o personagem como offline no banco do jogo."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
+
+    def move_character(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
+        """Atualiza x/y/z sem exigir offline; personagem online só reflete no próximo login."""
+
+        from apps.server.domain.exceptions import CharacterServiceUnavailableError
+
+        raise CharacterServiceUnavailableError()
 
     def teleport(self, login: str, char_id: int, x: int, y: int, z: int) -> None:
         """Move o personagem offline para as coordenadas informadas."""

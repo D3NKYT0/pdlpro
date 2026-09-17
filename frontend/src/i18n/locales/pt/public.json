@@ -522,8 +522,8 @@
   "stores": {
     "eyebrow": "Economia do mundo",
     "title": "Lojas do jogo",
-    "description": "Private stores offline publicadas no servidor. Busque pelo item ou pelo vendedor.",
-    "search": "Buscar item ou vendedor",
+    "description": "Private stores offline publicadas no servidor. Cada loja mostra retrato, vila e coordenadas para você ir comprar no jogo.",
+    "search": "Buscar item, vendedor ou vila",
     "type": "Tipo",
     "allTypes": "Todas",
     "types": {
@@ -537,6 +537,20 @@
     "unavailable": "Este servidor ainda não publica lojas no painel.",
     "error": "Não foi possível carregar as lojas.",
     "noTitle": "Sem título",
+    "place": "{{town}}",
+    "coords": "X {{x}} · Y {{y}} · Z {{z}}",
+    "avatarAlt": "{{name}}, {{race}} {{sex}}",
+    "sex": {
+      "male": "homem",
+      "female": "mulher"
+    },
+    "races": {
+      "human": "humano",
+      "elf": "elfo",
+      "dark_elf": "dark elf",
+      "orc": "orc",
+      "dwarf": "anão"
+    },
     "items": "{{count}} itens",
     "price": "{{price}} adena",
     "enchant": "+{{value}}"

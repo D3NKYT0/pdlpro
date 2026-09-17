@@ -1271,10 +1271,28 @@
       "emptyAccounts": "Vincule uma conta L2 para caçar.",
       "emptyQuests": "Nenhuma missão da caça está ativa.",
       "character": "Personagem",
+      "characterOption": "{{name}} · {{login}} · {{level}}",
+      "online": "Online",
+      "offline": "Offline",
       "progress": "{{current}} / {{target}}",
+      "overallProgress": "Progresso da caça",
+      "questsDone": "Missões resgatadas",
+      "readyCount_one": "{{count}} pronta para resgatar",
+      "readyCount_other": "{{count}} prontas para resgatar",
       "claim": "Resgatar",
       "claimed": "Resgatado",
+      "questClaimed": "Missão resgatada",
       "claimToast": "Caça resgatada",
+      "status": {
+        "progress": "Em andamento",
+        "ready": "Pronta",
+        "claimed": "Resgatada"
+      },
+      "period": {
+        "daily": "Diária",
+        "weekly": "Semanal",
+        "season": "Temporada"
+      },
       "metrics": {
         "pvp": "PvP",
         "pk": "PK",

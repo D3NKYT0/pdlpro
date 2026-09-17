@@ -1271,10 +1271,28 @@
       "emptyAccounts": "Link an L2 account to hunt.",
       "emptyQuests": "No hunt quests are active.",
       "character": "Character",
+      "characterOption": "{{name}} · {{login}} · {{level}}",
+      "online": "Online",
+      "offline": "Offline",
       "progress": "{{current}} / {{target}}",
+      "overallProgress": "Hunt progress",
+      "questsDone": "Quests claimed",
+      "readyCount_one": "{{count}} ready to claim",
+      "readyCount_other": "{{count}} ready to claim",
       "claim": "Claim",
       "claimed": "Claimed",
+      "questClaimed": "Quest claimed",
       "claimToast": "Hunt claimed",
+      "status": {
+        "progress": "In progress",
+        "ready": "Ready",
+        "claimed": "Claimed"
+      },
+      "period": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "season": "Season"
+      },
       "metrics": {
         "pvp": "PvP",
         "pk": "PK",

@@ -45,6 +45,17 @@ export type {
   RewardHistory,
 } from './domain/games.service'
 export { staffApi } from './domain/staff.service'
+export { staffModerationApi } from './domain/staffModeration.service'
+export type {
+  ApiModerationActionResult,
+  ApiModerationCharacter,
+  ApiModerationList,
+  ApiModerationLog,
+  ApiModerationTown,
+  ModerationAction,
+  ModerationActionPayload,
+  ModerationStatus,
+} from './domain/staffModeration.service'
 export { supportApi, staffSupportApi } from './domain/support.service'
 export { themeApi } from './domain/theme.service'
 export type { ApiTheme, ThemeLayout, ThemePresentation, ThemeHomeSection } from './domain/theme.service'

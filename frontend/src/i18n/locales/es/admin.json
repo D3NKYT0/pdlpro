@@ -43,7 +43,8 @@
       "itemWatch": { "title": "Observar ítems", "description": "Economía del servidor, favoritos, snapshots y comparación entre fechas" },
       "customItems": { "title": "Ítems personalizados", "description": "Registrar nombre, ID, imagen y metadatos en el catálogo único" },
       "services": { "title": "Servicios", "description": "Precios de apodo, sexo, espacios y desatasco" },
-      "lineageAccounts": { "title": "Cuentas Lineage", "description": "Consultar el login y quitar el vínculo con el panel" }
+      "lineageAccounts": { "title": "Cuentas Lineage", "description": "Consultar el login y quitar el vínculo con el panel" },
+      "moderation": { "title": "Moderación", "description": "Kick, prisión, ban y teleporte de personajes" }
     }
   },
   "chrome": {
@@ -255,6 +256,104 @@
       "inspectError": "No se pudo consultar la cuenta",
       "unlinked": "El vínculo de {{login}} fue eliminado",
       "unlinkError": "No se pudo desvincular"
+    }
+  },
+  "moderation": {
+    "kicker": "Servidor",
+    "title": "Moderación",
+    "description": "Lista personajes, elige uno y aplica kick, prisión, ban o teleporte.",
+    "eyebrow": "Búsqueda",
+    "searchTitle": "Encontrar personaje",
+    "searchText": "Filtra por nick, login de la cuenta L2 o correo guardado en el juego.",
+    "queryLabel": "Nick, cuenta o correo",
+    "queryPlaceholder": "SirHero",
+    "statusLabel": "Situación",
+    "search": "Buscar",
+    "searching": "Buscando...",
+    "loading": "Cargando personajes...",
+    "loadingDetail": "Cargando ficha...",
+    "empty": "Ningún personaje coincide con estos filtros.",
+    "pick": "Elige un personaje de la lista para ver las acciones.",
+    "unavailable": "La moderación por la base del juego no está disponible en este servidor.",
+    "online": "Online",
+    "offline": "Offline",
+    "banned": "Baneado",
+    "jailed": "En prisión",
+    "notBanned": "Cuenta activa",
+    "notJailed": "Libre",
+    "indefinite": "indefinido",
+    "onlineHint": "El personaje está en el mundo. Kick, prisión y teleporte en la base valen en el próximo login; el ban impide el relogin.",
+    "jailHint": "Prisión: {{reason}} · hasta {{until}}",
+    "noLogs": "Todavía no hay acciones registradas en este personaje.",
+    "detailEyebrow": "Ficha",
+    "level": "Nv. {{level}}",
+    "cancel": "Cancelar",
+    "applying": "Aplicando...",
+    "reasonLabel": "Motivo",
+    "reasonRequired": "Obligatorio para prisión y ban.",
+    "reasonOptional": "Opcional, queda en el historial.",
+    "minutesLabel": "Duración en minutos",
+    "minutesHint": "0 deja la prisión hasta un unjail.",
+    "townLabel": "Destino",
+    "filters": {
+      "all": "Todos",
+      "online": "Online",
+      "offline": "Offline",
+      "banned": "Baneados",
+      "jailed": "En prisión"
+    },
+    "columns": {
+      "character": "Personaje",
+      "login": "Cuenta",
+      "email": "Correo",
+      "level": "Nivel",
+      "status": "Estado"
+    },
+    "fields": {
+      "login": "Cuenta L2",
+      "email": "Correo del juego",
+      "panel": "Usuario del panel",
+      "clan": "Clan",
+      "lastAccess": "Último acceso",
+      "onlineTime": "Tiempo online",
+      "pvpPk": "PvP / PK",
+      "flags": "Moderación"
+    },
+    "actions": {
+      "kick": "Kick",
+      "jail": "Enjaular",
+      "unjail": "Liberar",
+      "ban": "Banear",
+      "unban": "Quitar ban",
+      "teleport": "Teleportar"
+    },
+    "confirmTitle": {
+      "kick": "Kick a {{name}}",
+      "jail": "Enjaular a {{name}}",
+      "unjail": "Liberar a {{name}}",
+      "ban": "Banear la cuenta de {{name}}",
+      "unban": "Quitar el ban de {{name}}",
+      "teleport": "Teleportar a {{name}}"
+    },
+    "confirmText": {
+      "kick": "Marca el personaje como offline en la base del juego. Si está online, la desconexión real depende del gameserver.",
+      "jail": "Lo mueve a la prisión GM y guarda el motivo. Online solo entra en el próximo login.",
+      "unjail": "Libera la prisión y envía al personaje a Giran.",
+      "ban": "Pone access level negativo en la cuenta L2. Impide el próximo login.",
+      "unban": "Restaura el access level de la cuenta a jugador (0).",
+      "teleport": "Mueve al personaje offline (o en el próximo login) a la villa elegida."
+    },
+    "toast": {
+      "listError": "No se pudieron listar los personajes",
+      "detailError": "No se pudo abrir la ficha",
+      "actionError": "No se pudo aplicar la acción",
+      "kick": "Kick aplicado",
+      "jail": "Personaje en prisión",
+      "unjail": "Personaje liberado",
+      "ban": "Cuenta baneada",
+      "unban": "Ban quitado",
+      "teleport": "Teleporte aplicado",
+      "onlinePending": "El personaje estaba online: la posición y el kick valen en el próximo login."
     }
   },
   "news": {

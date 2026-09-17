@@ -43,7 +43,8 @@
       "itemWatch": { "title": "Item watch", "description": "Server economy, favourites, snapshots and date comparison" },
       "customItems": { "title": "Custom items", "description": "Register name, ID, image and metadata in the single catalog" },
       "services": { "title": "Services", "description": "Prices for nickname, sex, slots and unstuck" },
-      "lineageAccounts": { "title": "Lineage accounts", "description": "Look up logins and unlink them from the panel" }
+      "lineageAccounts": { "title": "Lineage accounts", "description": "Look up logins and unlink them from the panel" },
+      "moderation": { "title": "Moderation", "description": "Kick, jail, ban and teleport characters" }
     }
   },
   "chrome": {
@@ -255,6 +256,104 @@
       "inspectError": "Could not look up the account",
       "unlinked": "The link of {{login}} was removed",
       "unlinkError": "Could not unlink"
+    }
+  },
+  "moderation": {
+    "kicker": "Server",
+    "title": "Moderation",
+    "description": "List characters, pick one and apply kick, jail, ban or teleport.",
+    "eyebrow": "Search",
+    "searchTitle": "Find a character",
+    "searchText": "Filter by nick, L2 account login or email stored in the game.",
+    "queryLabel": "Nick, account or email",
+    "queryPlaceholder": "SirHero",
+    "statusLabel": "Status",
+    "search": "Search",
+    "searching": "Searching...",
+    "loading": "Loading characters...",
+    "loadingDetail": "Loading sheet...",
+    "empty": "No characters match these filters.",
+    "pick": "Choose a character in the list to see the actions.",
+    "unavailable": "Game-database moderation is not available on this server.",
+    "online": "Online",
+    "offline": "Offline",
+    "banned": "Banned",
+    "jailed": "Jailed",
+    "notBanned": "Account active",
+    "notJailed": "Free",
+    "indefinite": "indefinite",
+    "onlineHint": "The character is in the world. Kick, jail and teleport in the database apply on the next login; a ban blocks relogin.",
+    "jailHint": "Jail: {{reason}} · until {{until}}",
+    "noLogs": "There are no recorded actions on this character yet.",
+    "detailEyebrow": "Sheet",
+    "level": "Lv. {{level}}",
+    "cancel": "Cancel",
+    "applying": "Applying...",
+    "reasonLabel": "Reason",
+    "reasonRequired": "Required for jail and ban.",
+    "reasonOptional": "Optional, stored in the history.",
+    "minutesLabel": "Duration in minutes",
+    "minutesHint": "0 keeps the jail until an unjail.",
+    "townLabel": "Destination",
+    "filters": {
+      "all": "All",
+      "online": "Online",
+      "offline": "Offline",
+      "banned": "Banned",
+      "jailed": "Jailed"
+    },
+    "columns": {
+      "character": "Character",
+      "login": "Account",
+      "email": "Email",
+      "level": "Level",
+      "status": "Status"
+    },
+    "fields": {
+      "login": "L2 account",
+      "email": "Game email",
+      "panel": "Panel user",
+      "clan": "Clan",
+      "lastAccess": "Last access",
+      "onlineTime": "Online time",
+      "pvpPk": "PvP / PK",
+      "flags": "Moderation"
+    },
+    "actions": {
+      "kick": "Kick",
+      "jail": "Jail",
+      "unjail": "Unjail",
+      "ban": "Ban",
+      "unban": "Unban",
+      "teleport": "Teleport"
+    },
+    "confirmTitle": {
+      "kick": "Kick {{name}}",
+      "jail": "Jail {{name}}",
+      "unjail": "Unjail {{name}}",
+      "ban": "Ban {{name}}'s account",
+      "unban": "Unban {{name}}'s account",
+      "teleport": "Teleport {{name}}"
+    },
+    "confirmText": {
+      "kick": "Marks the character offline in the game database. If they are online, the actual disconnect depends on the gameserver.",
+      "jail": "Moves them to the GM jail and stores the reason. Online characters only enter jail on the next login.",
+      "unjail": "Clears the jail and sends the character to Giran.",
+      "ban": "Sets a negative access level on the L2 account. Blocks the next login.",
+      "unban": "Restores the account access level to player (0).",
+      "teleport": "Moves the offline character (or on next login) to the chosen town."
+    },
+    "toast": {
+      "listError": "Could not list characters",
+      "detailError": "Could not open the sheet",
+      "actionError": "Could not apply the action",
+      "kick": "Kick applied",
+      "jail": "Character jailed",
+      "unjail": "Character released",
+      "ban": "Account banned",
+      "unban": "Account unbanned",
+      "teleport": "Teleport applied",
+      "onlinePending": "The character was online: position and kick apply on the next login."
     }
   },
   "news": {

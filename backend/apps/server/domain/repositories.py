@@ -291,3 +291,67 @@ class IItemObservationRepository(ABC):
         """Agrega quantidade/instâncias/donos dos itens no inventário do painel."""
 
         raise NotImplementedError
+
+
+class IModerationStateRepository(ABC):
+    """Porta do estado de prisão e do histórico de ações de moderação no painel.
+
+    Injete nos casos de uso de staff e registre o adaptador no ServerProvider. O estado de
+    prisão vive no banco do PDL; kick/ban/teleporte escrevem no banco do jogo.
+    """
+
+    @abstractmethod
+    def get_jail(self, char_id: int):
+        """Estado ativo da prisão, ou None se o personagem não estiver preso."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_active_jails(self, *, offset: int, limit: int) -> list:
+        """Página de prisões ainda válidas, da mais recente para a mais antiga."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def count_active_jails(self) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_jail(
+        self,
+        *,
+        char_id: int,
+        login: str,
+        char_name: str,
+        jail_until,
+        jail_reason: str,
+    ):
+        """Marca o personagem como preso até ``jail_until`` (None = indefinido)."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def clear_jail(self, char_id: int) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_logs(self, char_id: int, *, limit: int = 20) -> list:
+        """Histórico recente daquele personagem, do mais novo para o mais antigo."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_log(
+        self,
+        *,
+        actor_id: UUID,
+        actor_username: str,
+        action: str,
+        char_id: int,
+        char_name: str,
+        login: str,
+        reason: str,
+        was_online: bool,
+        details: dict | None = None,
+    ):
+        raise NotImplementedError

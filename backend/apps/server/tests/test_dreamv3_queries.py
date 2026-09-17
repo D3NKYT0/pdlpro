@@ -102,7 +102,7 @@ def test_complete_feature_catalog():
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
     assert CATALOG.has("list_character_skills")
-    assert len(CATALOG._statements) == 58
+    assert len(CATALOG._statements) == 63
     assert CATALOG.has("change_appearance")
     assert CATALOG.has("list_private_stores")
 
@@ -127,6 +127,16 @@ def test_character_uses_base_class_and_main_clan(schema):
         "clan_crest": None, "ally_crest": None,
         "hair_style": 1, "hair_color": 2, "face": 0,
     }
+
+
+def test_private_store_query_exposes_sex_class_and_coords(schema):
+    rows = schema.execute(CATALOG["list_private_stores"]).fetchall()
+    assert len(rows) == 1
+    store = dict(rows[0])
+    assert store["name"] == "Knight"
+    assert store["sex"] == 0
+    assert store["class_id"] == 88
+    assert store["x"] == 0
 
 
 def test_adena_sums_template_amounts_across_stacks(schema):
