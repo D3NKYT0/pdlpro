@@ -52,6 +52,7 @@ from apps.games.application.use_cases import (
 from apps.games.presentation.serializers import (
     BuyBoxSerializer,
     BuyTokensSerializer,
+    FightMonsterSerializer,
     PlayDiceSerializer,
     TransferBagSerializer,
 )
@@ -348,11 +349,18 @@ class FightMonsterView(ItemCatalogAPIView):
         tags=["Jogos"],
         summary=gettext_lazy("Combater monstro"),
         description=gettext_lazy("Inicia um combate contra o monstro informado e devolve o resultado."),
+        request=FightMonsterSerializer,
     )
     def post(self, request, monster_id):
+        serializer = FightMonsterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         return Response(
             self.resolve(FightMonsterUseCase).execute(
-                FightMonsterInput(user_id=request.user.id, monster_id=monster_id)
+                FightMonsterInput(
+                    user_id=request.user.id,
+                    monster_id=monster_id,
+                    strikes=serializer.validated_data.get("strikes", 0),
+                )
             )
         )
 

@@ -35,6 +35,7 @@ import { RespawnTimer } from '../components/games/RespawnTimer'
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { waitForDiceReveal, waitForDiceRest } from '../components/games/diceReveal'
 import { waitForFightReveal } from '../components/games/fightReveal'
+import { startBossDuel, BOSS_STRIKE_MAX } from '../components/games/bossDuel'
 import {
   formatRespawnClock,
   remainingSeconds,
@@ -76,6 +77,7 @@ type PlayFx = {
   fightFragments?: number
   fightPrize?: { item_id: number; item_name: string; quantity: number } | null
   fightBoss?: boolean
+  duel?: { open: boolean; hits: number } | null
   enchantOverlay?: boolean
   enchantSuccess?: boolean
   enchantFrom?: number
@@ -111,6 +113,8 @@ export function GamesPage() {
   const [diceType, setDiceType] = useState('even')
   const [fx, setFx] = useState<PlayFx>({})
   const diceRestSeq = useRef(0)
+  const duelRef = useRef<ReturnType<typeof startBossDuel> | null>(null)
+  const duelActiveRef = useRef(false)
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [boxHelpOpen, setBoxHelpOpen] = useState(false)
@@ -124,6 +128,24 @@ export function GamesPage() {
       return next
     })
   }
+
+  useEffect(() => {
+    return () => {
+      duelActiveRef.current = false
+      duelRef.current?.stop()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!fx.duel) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.code !== 'Space' && event.key !== ' ') return
+      event.preventDefault()
+      duelRef.current?.strike()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [fx.duel])
 
   async function refresh() {
     await queryClient.invalidateQueries({ queryKey: ['roulette'] })
@@ -357,13 +379,17 @@ export function GamesPage() {
     }
   }
 
-  async function fight(monsterId: string) {
-    if (needTokens(FIGHT_COST)) return
+  async function commitFight(monsterId: string, strikes = 0) {
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
-    setFx({ playing: 'fight', targetId: monsterId, fightName: monster?.name, fightBoss: Boolean(monster?.is_boss) })
+    setFx({
+      playing: 'fight',
+      targetId: monsterId,
+      fightName: monster?.name,
+      fightBoss: Boolean(monster?.is_boss),
+    })
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
-      const result = await gamesApi.fight(monsterId)
+      const result = await gamesApi.fight(monsterId, { strikes })
       applyTokens(result.fichas)
       await waitForFightReveal(startedAt)
       await refresh()
@@ -383,6 +409,43 @@ export function GamesPage() {
       noteTokenFailure(outcome.error)
       setFx({})
     }
+  }
+
+  async function fight(monsterId: string) {
+    if (needTokens(FIGHT_COST)) return
+    if (fx.playing === 'fight') return
+    const monster = economy.data?.monsters.find((row) => row.id === monsterId)
+    if (monster?.is_boss) {
+      duelRef.current?.stop()
+      duelActiveRef.current = true
+      setFx({
+        playing: 'fight',
+        targetId: monsterId,
+        fightName: monster.name,
+        fightBoss: true,
+        duel: { open: false, hits: 0 },
+      })
+      duelRef.current = startBossDuel({
+        onTick: (state) => {
+          if (!duelActiveRef.current) return
+          setFx((current) => ({
+            ...current,
+            playing: 'fight',
+            targetId: monsterId,
+            fightName: monster.name,
+            fightBoss: true,
+            duel: { open: state.open, hits: state.hits },
+          }))
+        },
+        onComplete: (hits) => {
+          duelActiveRef.current = false
+          duelRef.current = null
+          void commitFight(monsterId, hits)
+        },
+      })
+      return
+    }
+    await commitFight(monsterId, 0)
   }
 
   async function enchant() {
@@ -900,6 +963,7 @@ export function GamesPage() {
                   const wait = remainingSeconds(monster.respawn_in, economy.dataUpdatedAt, now)
                   const canFight = monster.alive && weaponLevel >= monster.required_weapon_level
                   const canAffordFight = knownTokens == null || knownTokens >= FIGHT_COST
+                  const busy = fx.playing === 'fight'
                   return (
                     <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}${monster.is_boss ? ' is-boss' : ''}`} key={monster.id}>
                       <MonsterPortrait
@@ -924,7 +988,7 @@ export function GamesPage() {
                         <Button
                           variant={!canFight ? 'danger' : !canAffordFight ? 'yellow' : 'ghost'}
                           type="button"
-                          disabled={!canFight}
+                          disabled={!canFight || busy}
                           onClick={() => void fight(monster.id)}
                         >
                           {t('games.economy.fight', { count: FIGHT_COST })}
@@ -937,7 +1001,7 @@ export function GamesPage() {
             </div>
             <div className="economy-stage">
               <BattleStage
-                phase={fx.playing === 'fight' ? 'clash' : fx.fightWon === true ? 'win' : fx.fightWon === false ? 'loss' : 'idle'}
+                phase={fx.duel ? 'duel' : fx.playing === 'fight' ? 'clash' : fx.fightWon === true ? 'win' : fx.fightWon === false ? 'loss' : 'idle'}
                 monsterId={fx.targetId}
                 monsterName={fx.fightName}
                 weaponLevel={weaponLevel}
@@ -948,6 +1012,12 @@ export function GamesPage() {
                 versusLabel={t('games.economy.versus')}
                 winLabel={t('games.economy.revealWin')}
                 lossLabel={t('games.economy.revealLoss')}
+                duel={fx.duel}
+                duelHint={t('games.economy.duelHint', { hits: fx.duel?.hits ?? 0, max: BOSS_STRIKE_MAX })}
+                duelStrikeLabel={fx.duel?.open ? t('games.economy.duelNow') : t('games.economy.duelStrike')}
+                onDuelStrike={() => {
+                  duelRef.current?.strike()
+                }}
                 fragmentsLabel={
                   fx.fightPrize
                     ? t('games.economy.revealPrize', {

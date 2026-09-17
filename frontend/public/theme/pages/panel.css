@@ -12009,6 +12009,75 @@ html.pdl-panel .battle-stage.is-boss {
   border-color: rgba(230, 199, 125, 0.46);
 }
 
+html.pdl-panel .battle-stage.is-duel {
+  box-shadow: inset 0 0 90px rgba(230, 199, 125, 0.12);
+}
+
+html.pdl-panel .battle-duel {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 6px 0 0;
+}
+
+html.pdl-panel .battle-duel-ring {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(230, 199, 125, 0.28);
+  border-radius: 50%;
+  box-shadow: inset 0 0 18px rgba(230, 199, 125, 0.08);
+}
+
+html.pdl-panel .battle-duel-ring i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+html.pdl-panel .battle-duel-ring.is-open {
+  border-color: var(--panel-gold-bright);
+  box-shadow: 0 0 22px rgba(230, 199, 125, 0.48);
+  animation: battle-duel-pulse 280ms ease infinite alternate;
+}
+
+html.pdl-panel .battle-stage.is-strike-open .battle-duel-ring.is-open i {
+  box-shadow: inset 0 0 16px rgba(255, 246, 208, 0.35);
+}
+
+html.pdl-panel .battle-duel-hits {
+  display: flex;
+  gap: 6px;
+}
+
+html.pdl-panel .battle-duel-hits i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(230, 199, 125, 0.22);
+}
+
+html.pdl-panel .battle-duel-hits i.is-lit {
+  background: var(--panel-gold-bright);
+  box-shadow: 0 0 8px rgba(230, 199, 125, 0.55);
+}
+
+html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player,
+html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster {
+  animation: battle-lunge-player 640ms ease-in-out infinite alternate;
+}
+
+html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster {
+  animation-name: battle-lunge-monster;
+}
+
+@keyframes battle-duel-pulse {
+  from { transform: scale(0.92); opacity: 0.72; }
+  to { transform: scale(1.08); opacity: 1; }
+}
+
 html.pdl-panel .battle-stage {
   position: relative;
   display: flex;
@@ -13310,6 +13379,9 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .battle-stage.is-clash .battle-fighter.is-player,
   html.pdl-panel .battle-stage.is-clash .battle-fighter.is-monster,
   html.pdl-panel .battle-stage.is-clash .battle-hp-fill,
+  html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player,
+  html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster,
+  html.pdl-panel .battle-duel-ring.is-open,
   html.pdl-panel .battle-slash,
   html.pdl-panel .battle-impact,
   html.pdl-panel .battle-shock,

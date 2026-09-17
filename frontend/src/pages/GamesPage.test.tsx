@@ -114,6 +114,37 @@ vi.mock('../components/games/fightReveal', () => ({
   FIGHT_REVEAL_MS: 0,
   waitForFightReveal: () => fightReveal.wait(),
 }))
+const bossDuel = vi.hoisted(() => {
+  let autoHits: number | null = 5
+  let last: { onTick: (state: { beat: number; open: boolean; hits: number; remaining: number }) => void; onComplete: (hits: number) => void } | null = null
+  return {
+    setAutoHits: (value: number | null) => {
+      autoHits = value
+    },
+    complete: (hits: number) => last?.onComplete(hits),
+    openWindow: () => last?.onTick({ beat: 1, open: true, hits: 0, remaining: 1000 }),
+    reset: () => {
+      autoHits = 5
+      last = null
+    },
+    start: (opts: { onTick: (state: { beat: number; open: boolean; hits: number; remaining: number }) => void; onComplete: (hits: number) => void }) => {
+      last = opts
+      opts.onTick({ beat: 1, open: false, hits: 0, remaining: 4000 })
+      if (autoHits != null) opts.onComplete(autoHits)
+      return {
+        strike: () => {
+          opts.onTick({ beat: 1, open: false, hits: 1, remaining: 800 })
+          return true
+        },
+        stop: () => {},
+      }
+    },
+  }
+})
+vi.mock('../components/games/bossDuel', () => ({
+  BOSS_STRIKE_MAX: 5,
+  startBossDuel: (opts: Parameters<typeof bossDuel.start>[0]) => bossDuel.start(opts),
+}))
 const enchantReveal = vi.hoisted(() => {
   let wait = () => Promise.resolve()
   return {
@@ -142,6 +173,7 @@ beforeEach(() => {
   diceReveal.reset()
   slotsReveal.reset()
   fightReveal.reset()
+  bossDuel.reset()
   enchantReveal.reset()
   vi.resetAllMocks()
   vi.mocked(gamesApi.roulette).mockResolvedValue({
@@ -796,10 +828,47 @@ it('revela o prêmio do chefe no palco e zera a arma sem toast', async () => {
   expect(bossRow).toBeTruthy()
   await user.click(within(bossRow as HTMLElement).getByRole('button', { name: 'Lutar · 1 ficha' }))
   await waitFor(() => expect(document.querySelector('.battle-stage.is-win.is-boss')).toBeTruthy())
-  expect(gamesApi.fight).toHaveBeenCalledWith('boss')
+  expect(gamesApi.fight).toHaveBeenCalledWith('boss', { strikes: 5 })
   expect(screen.getByRole('status')).toHaveTextContent('Vitória')
   expect(screen.getByRole('status')).toHaveTextContent('+250K Adena')
   expect(screen.getByRole('status')).toHaveTextContent('6 rodadas')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+})
+it('espera os golpes do chefe antes de enviar o combate', async () => {
+  bossDuel.setAutoHits(null)
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 10,
+    weapon: { level: 10, fragments: 10 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0, is_boss: false },
+      { id: 'boss', name: 'Queen Ant', alive: true, level: 12, required_weapon_level: 10, fragment_reward: 0, respawn_in: 0, is_boss: true },
+    ],
+  } as any)
+  vi.mocked(gamesApi.fight).mockResolvedValue({
+    won: false,
+    rounds: 7,
+    fragments_earned: 0,
+    prize: null,
+    weapon: { level: 10, fragments: 10 },
+    fichas: 9,
+  } as any)
+  const user = mount('economy')
+  await screen.findByText('Queen Ant')
+  const bossRow = document.querySelector('.monster-item.is-boss') as HTMLElement
+  await user.click(within(bossRow).getByRole('button', { name: 'Lutar · 1 ficha' }))
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-duel.is-boss')).toBeTruthy())
+  expect(gamesApi.fight).not.toHaveBeenCalled()
+  expect(screen.getByRole('status')).toHaveTextContent('Acerte quando o anel brilhar')
+  expect(screen.getByRole('button', { name: 'Golpear' })).toBeDisabled()
+  bossDuel.openWindow()
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Agora!' })).toBeEnabled())
+  await user.click(screen.getByRole('button', { name: 'Agora!' }))
+  expect(gamesApi.fight).not.toHaveBeenCalled()
+  bossDuel.complete(3)
+  await waitFor(() => expect(gamesApi.fight).toHaveBeenCalledWith('boss', { strikes: 3 }))
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-loss.is-boss')).toBeTruthy())
+  expect(screen.getByRole('status')).toHaveTextContent('Derrota')
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
 })
@@ -924,6 +993,7 @@ it('anima o confronto no palco e revela a vitória sem toast', async () => {
   await screen.findByText('10 fichas')
   await user.click(namedButton('Lutar · 1 ficha'))
   await waitFor(() => expect(document.querySelector('.battle-stage.is-clash')).toBeTruthy())
+  expect(gamesApi.fight).toHaveBeenCalledWith('monster', { strikes: 0 })
   expect(document.querySelector('.monster-item.is-fighting')).toBeTruthy()
   expect(document.querySelector('.monster-portrait.is-hero.is-fighting')).toBeTruthy()
   expect(document.querySelector('.battle-slash')).toBeTruthy()

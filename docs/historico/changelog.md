@@ -98,6 +98,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   amarelo sem fichas.
 - Encantar na **Arena das Feras** para no +10: a arma não zera mais nesse
   passo e o prêmio de 250k Adena passa a sair só da vitória contra o chefe.
+- Combate da **Arena das Feras** passa a ter derrota real: a chance fica
+  entre 38% e 90% nas feras comuns e o chefe começa em 34%, com +9% por
+  golpe cronometrado (até cinco). O palco da Queen Ant pede **Golpear** no
+  ritmo (ou Espaço) antes de enviar a luta; errar a janela não gasta a ficha
+  até o POST final.
 - A **pescaria** em `/panel/games?tab=fishing` deixa de misturar escolha e
   compra no mesmo clique: o quadro põe a isca na linha, **Obter** reposição
   fica visível (nome, bônus e custo, sem hover) e um «?» explica vara, iscas

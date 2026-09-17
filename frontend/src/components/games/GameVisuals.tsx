@@ -1,6 +1,8 @@
 import { useId, type CSSProperties } from 'react'
 import { Trophy, X } from 'lucide-react'
+import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
+import { BOSS_STRIKE_MAX } from './bossDuel'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
   DICE_PIP_FACES,
@@ -475,7 +477,7 @@ const BATTLE_SPARKS = 16
 const BATTLE_MOTES = 12
 const BATTLE_HITS = 4
 
-export type BattlePhase = 'idle' | 'clash' | 'win' | 'loss'
+export type BattlePhase = 'idle' | 'duel' | 'clash' | 'win' | 'loss'
 
 export function BattleStage({
   phase = 'idle',
@@ -491,6 +493,10 @@ export function BattleStage({
   fragmentsLabel,
   roundsLabel,
   boss = false,
+  duel = null,
+  duelHint,
+  duelStrikeLabel,
+  onDuelStrike,
 }: {
   phase?: BattlePhase
   monsterId?: string
@@ -505,13 +511,18 @@ export function BattleStage({
   fragmentsLabel?: string
   roundsLabel?: string
   boss?: boolean
+  duel?: { open: boolean; hits: number } | null
+  duelHint?: string
+  duelStrikeLabel?: string
+  onDuelStrike?: () => void
 }) {
   const fighting = phase === 'clash'
+  const dueling = phase === 'duel'
   const won = phase === 'win'
   const lost = phase === 'loss'
-  const status = won ? winLabel : lost ? lossLabel : fighting ? clashLabel : idleLabel
+  const status = won ? winLabel : lost ? lossLabel : dueling ? (duelHint ?? clashLabel) : fighting ? clashLabel : idleLabel
   return (
-    <div className={`battle-stage is-${phase}${boss ? ' is-boss' : ''}`} data-theme-part="game-stage">
+    <div className={`battle-stage is-${phase}${boss ? ' is-boss' : ''}${duel?.open ? ' is-strike-open' : ''}`} data-theme-part="game-stage">
       <div className="battle-field" aria-hidden="true">
         <i className="battle-field-veil" />
         <i className="battle-field-wash" />
@@ -534,7 +545,7 @@ export function BattleStage({
         ))}
       </div>
       <div className="battle-ring">
-        <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${won ? ' is-victor' : ''}`}>
+        <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${fighting || dueling ? ' is-fighting' : ''}${won ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
           <div className="battle-fighter-art" data-theme-part="game-portrait">
             <WeaponArt level={weaponLevel} />
@@ -584,10 +595,10 @@ export function BattleStage({
             </span>
           ) : null}
         </div>
-        <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${fighting ? ' is-fighting' : ''}${lost ? ' is-victor' : ''}`}>
+        <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${fighting || dueling ? ' is-fighting' : ''}${lost ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
           {monsterId ? (
-            <MonsterPortrait id={monsterId} name={monsterName} down={won} fighting={fighting} size="hero" />
+            <MonsterPortrait id={monsterId} name={monsterName} down={won} fighting={fighting || dueling} size="hero" />
           ) : (
             <div className="battle-fighter-art is-empty" data-theme-part="game-portrait" />
           )}
@@ -602,6 +613,27 @@ export function BattleStage({
           ) : null}
         </div>
       </div>
+      {dueling ? (
+        <div className="battle-duel">
+          <div className={`battle-duel-ring${duel?.open ? ' is-open' : ''}`} aria-hidden="true">
+            <i />
+          </div>
+          <span className="battle-duel-hits" aria-hidden="true">
+            {Array.from({ length: BOSS_STRIKE_MAX }, (_, index) => (
+              <i key={index} className={index < (duel?.hits ?? 0) ? 'is-lit' : undefined} />
+            ))}
+          </span>
+          <Button
+            type="button"
+            variant={duel?.open ? 'yellow' : 'ghost'}
+            size="sm"
+            disabled={!duel?.open}
+            onClick={onDuelStrike}
+          >
+            {duelStrikeLabel}
+          </Button>
+        </div>
+      ) : null}
       <p className="battle-status" role="status">
         <strong>{status}</strong>
         {won && fragmentsLabel ? <small>{fragmentsLabel}</small> : null}

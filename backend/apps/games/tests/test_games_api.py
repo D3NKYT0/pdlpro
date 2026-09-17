@@ -516,7 +516,8 @@ def test_economy_fight_and_enchant(api, player):
     player.fichas = 3
     player.save(update_fields=["fichas"])
     api.force_authenticate(user=player)
-    fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=1):
+        fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is True
     assert fight.data["fragments_earned"] == 12
@@ -573,7 +574,14 @@ def test_economy_boss_grants_prize_and_resets_weapon(api, player):
     assert state.status_code == 200
     listed = next(row for row in state.data["monsters"] if row["id"] == str(boss.id))
     assert listed["is_boss"] is True
-    fight = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    from unittest.mock import patch
+
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=1):
+        fight = api.post(
+            f"/api/v1/customer/games/economy/{boss.id}/fight/",
+            {"strikes": 5},
+            format="json",
+        )
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is True
     assert fight.data["fragments_earned"] == 0
@@ -609,10 +617,91 @@ def test_queen_ant_loses_to_max_weapon(api, player):
     weapon.level = ARENA_WEAPON_MAX
     weapon.save(update_fields=["level"])
     api.force_authenticate(user=player)
-    fight = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    from unittest.mock import patch
+
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=1):
+        fight = api.post(
+            f"/api/v1/customer/games/economy/{boss.id}/fight/",
+            {"strikes": 5},
+            format="json",
+        )
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is True
     assert fight.data["weapon"]["level"] == 0
+
+
+@pytest.mark.django_db
+def test_economy_fight_can_lose(api, player):
+    from unittest.mock import patch
+
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    monster = Monster.objects.create(
+        name="Goblin Perda",
+        level=1,
+        required_weapon_level=0,
+        fragment_reward=12,
+        hp=10,
+        attack=1,
+        defense=0,
+        respawn_seconds=5,
+    )
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.fragments = 4
+    weapon.save(update_fields=["fragments"])
+    api.force_authenticate(user=player)
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=100):
+        fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is False
+    assert fight.data["fragments_earned"] == 0
+    assert fight.data["prize"] is None
+    weapon.refresh_from_db()
+    assert weapon.fragments == 4
+    assert weapon.level == 0
+
+
+@pytest.mark.django_db
+def test_economy_boss_can_lose_without_prize(api, player):
+    from unittest.mock import patch
+
+    from apps.games.domain.arena_roster import ARENA_WEAPON_MAX
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    boss = Monster.objects.create(
+        name="Queen Ant Falha",
+        level=12,
+        required_weapon_level=ARENA_WEAPON_MAX,
+        fragment_reward=0,
+        hp=480,
+        attack=48,
+        defense=28,
+        respawn_seconds=5,
+        is_boss=True,
+    )
+    player.fichas = 1
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = ARENA_WEAPON_MAX
+    weapon.save(update_fields=["level"])
+    api.force_authenticate(user=player)
+    with patch("apps.games.domain.arena_combat.random.randint", return_value=100):
+        fight = api.post(
+            f"/api/v1/customer/games/economy/{boss.id}/fight/",
+            {"strikes": 5},
+            format="json",
+        )
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is False
+    assert fight.data["prize"] is None
+    weapon.refresh_from_db()
+    assert weapon.level == ARENA_WEAPON_MAX
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert not any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
 
 
 @pytest.mark.django_db

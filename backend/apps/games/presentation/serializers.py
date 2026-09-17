@@ -49,3 +49,15 @@ class PlayDiceSerializer(serializers.Serializer):
     bet_type = serializers.ChoiceField(choices=["even", "odd", "high", "low", "number"])
     amount = serializers.IntegerField(min_value=1, max_value=1000)
     number = serializers.IntegerField(min_value=1, max_value=6, required=False)
+
+
+class FightMonsterSerializer(serializers.Serializer):
+    """Valida os golpes do duelo do chefe na arena.
+
+    Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
+    validated_data. A autorização pertence ao fluxo chamador.
+
+    Campos declarados: ``strikes``.
+    """
+
+    strikes = serializers.IntegerField(min_value=0, max_value=5, required=False, default=0)
