@@ -166,9 +166,10 @@ class PurchaseListingInput:
 
 
 class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntity]):
-    """Valida anúncio, comprador, slots e custódia; debita o comprador, credita o vendedor,
-    transfere o personagem e marca a venda. O gateway do jogo não participa do rollback do
-    Django.
+    """Valida anúncio, comprador, slots e custódia; reivindica o anúncio com
+    compare-and-set, debita o comprador, credita o vendedor e transfere o personagem.
+    A reivindicação ocorre antes do dinheiro e do gateway: o perdedor da corrida não
+    movimenta saldo. O gateway do jogo não participa do rollback do Django.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``PurchaseListingInput``. O
     retorno é ``CharacterListingEntity``.
@@ -188,7 +189,7 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
 
     def execute(self, data: PurchaseListingInput) -> CharacterListingEntity:
         with self._unit_of_work:
-            listing = self._listings.get_by_id(data.listing_id)
+            listing = self._listings.get_by_id(data.listing_id, lock=True)
             if listing is None:
                 raise ListingNotFoundError()
             if listing.status != "for_sale":
@@ -205,6 +206,7 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
             if buyer_wallet.balance < listing.price:
                 raise InsufficientBalanceError()
             seller_wallet = self._wallets.get_or_create(listing.seller_id)
+            sold = self._listings.mark_sold(listing.id, data.buyer_id, data.buyer_username)
             self._wallets.debit(
                 buyer_wallet.id,
                 listing.price,
@@ -218,7 +220,7 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
                 description=f"Venda de personagem: {listing.char_name}",
             )
             self._lineage.transfer_character(listing.char_id, data.buyer_username)
-            return self._listings.mark_sold(listing.id, data.buyer_id, data.buyer_username)
+            return sold
 
 
 @dataclass(frozen=True, slots=True)
@@ -235,8 +237,9 @@ class CancelListingInput:
 
 
 class CancelListingUseCase(UseCase[CancelListingInput, CharacterListingEntity]):
-    """Confirma o vendedor e a custódia, devolve o personagem à conta de origem e cancela o
-    anúncio.
+    """Confirma o vendedor e a custódia, reivindica o cancelamento com compare-and-set e
+    devolve o personagem à conta de origem. A transição de estado ocorre antes da
+    transferência no jogo, para não competir com uma compra concorrente.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``CancelListingInput``. O retorno
     é ``CharacterListingEntity``.
@@ -254,7 +257,7 @@ class CancelListingUseCase(UseCase[CancelListingInput, CharacterListingEntity]):
 
     def execute(self, data: CancelListingInput) -> CharacterListingEntity:
         with self._unit_of_work:
-            listing = self._listings.get_by_id(data.listing_id)
+            listing = self._listings.get_by_id(data.listing_id, lock=True)
             if listing is None:
                 raise ListingNotFoundError()
             if listing.seller_id != data.user_id:
@@ -267,5 +270,6 @@ class CancelListingUseCase(UseCase[CancelListingInput, CharacterListingEntity]):
             master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
             if not self._lineage.verify_character_ownership(listing.char_id, master):
                 raise ListingNotForSaleError("Personagem não está na conta do marketplace.")
+            cancelled = self._listings.mark_cancelled(listing.id)
             self._lineage.transfer_character(listing.char_id, listing.old_account)
-            return self._listings.mark_cancelled(listing.id)
+            return cancelled

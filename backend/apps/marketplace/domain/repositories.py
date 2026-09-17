@@ -16,7 +16,13 @@ class ICharacterListingRepository(ABC):
     """
 
     @abstractmethod
-    def get_by_id(self, listing_id: UUID) -> CharacterListingEntity | None:
+    def get_by_id(self, listing_id: UUID, *, lock: bool = False) -> CharacterListingEntity | None:
+        """Carrega o anúncio pelo UUID público.
+
+        ``lock=True`` adquire bloqueio de linha na transação ativa (``SELECT FOR UPDATE``)
+        para compra e cancelamento. Leituras públicas permanecem sem lock.
+        """
+
         raise NotImplementedError
 
     @abstractmethod
@@ -57,8 +63,16 @@ class ICharacterListingRepository(ABC):
 
     @abstractmethod
     def mark_sold(self, listing_id: UUID, buyer_id: UUID, new_account: str) -> CharacterListingEntity:
+        """Transição condicional ``for_sale`` → ``sold`` (compare-and-set).
+
+        Zero linhas afetadas significa que outro comprador ou um cancelamento já
+        levou o anúncio; o adaptador lança ``ListingNotForSaleError``.
+        """
+
         raise NotImplementedError
 
     @abstractmethod
     def mark_cancelled(self, listing_id: UUID) -> CharacterListingEntity:
+        """Transição condicional ``for_sale`` → ``cancelled`` (compare-and-set)."""
+
         raise NotImplementedError

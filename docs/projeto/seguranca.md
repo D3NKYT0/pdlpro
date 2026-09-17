@@ -23,6 +23,14 @@ Inclua, quando possível:
 
 O mantenedor confirmará o recebimento quando possível, avaliará severidade e alcance e combinará a divulgação após existir uma correção ou mitigação. Não há SLA público neste momento.
 
+## Agradecimentos
+
+Relatos responsáveis que resultaram em correção no produto:
+
+| Relato | Relator |
+| --- | --- |
+| Venda dupla no marketplace sob compras concorrentes (TOCTOU no anúncio) | [Victor Mendonça (@mend3)](https://github.com/mend3) |
+
 ## Escopo prioritário
 
 - autenticação, cookies JWT, CSRF, 2FA e recuperação de conta;

@@ -54,6 +54,20 @@ def test_purchase_repetition_never_charges_twice(market):
     assert gateway.get_character("buyer", listing.char_id) is not None
 
 
+def test_second_buyer_does_not_pay_after_sale(market):
+    users, listing, gateway = market
+    other = get_user_model().objects.create_user(username="buyer2", email="buyer2@test.dev")
+    Wallet.objects.create(user=other, balance=40)
+    assert call(users[1], listing, "buy").status_code == 200
+    assert call(other, listing, "buy").status_code == 400
+    assert call(users[0], listing, "cancel").status_code == 400
+    assert Wallet.objects.get(user=users[1]).balance == 15
+    assert Wallet.objects.get(user=other).balance == 40
+    assert Wallet.objects.get(user=users[0]).balance == 25
+    assert WalletTransaction.objects.count() == 2
+    assert gateway.get_character("buyer", listing.char_id) is not None
+
+
 @pytest.mark.parametrize("reason", ["balance", "slots", "custody"])
 def test_unavailable_purchase_preserves_money_and_listing(market, settings, reason):
     users, listing, gateway = market

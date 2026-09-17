@@ -45,6 +45,10 @@ casos de uso resolvem portas via container; staff consome portas admin dos apps 
 ORM e ``transaction.atomic`` ficam nos adaptadores / ``UnitOfWork``. Não crie uma porta
 fictícia para usar uma operação existente — leia o provider do app dono.
 
+No marketplace, ``PurchaseListingUseCase`` e ``CancelListingUseCase`` reivindicam o anúncio
+com compare-and-set (``for_sale`` → ``sold``/``cancelled``) **antes** de movimentar carteira
+ou o banco do jogo; ``get_by_id(..., lock=True)`` serializa as duas escritas no PostgreSQL.
+
 ## Exemplo: chamar um caso de uso de uma view
 
 O fluxo abaixo usa classes existentes. O UUID do remetente vem do usuário autenticado, e não de um campo livre no payload.

@@ -8,6 +8,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Corrigido
+
+- Compra (e cancelamento) de personagem no marketplace deixa de aceitar venda
+  dupla sob requisições concorrentes: a transição `for_sale` → `sold`/`cancelled`
+  é compare-and-set e ocorre antes do débito/crédito e da transferência no
+  jogo. O perdedor da corrida não tem a carteira debitada. Achado relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
+
 ## [2.5.0] - 2026-09-17
 
 Alterações desde **13 de setembro de 2026** (após `[2.4.0]`), consolidadas pelo histórico

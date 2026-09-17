@@ -6,6 +6,7 @@ from uuid import UUID
 from django.utils import timezone
 
 from apps.marketplace.domain.entities import CharacterListingEntity
+from apps.marketplace.domain.exceptions import ListingNotForSaleError
 from apps.marketplace.domain.repositories import ICharacterListingRepository
 from apps.marketplace.infrastructure.models import CharacterListing
 
@@ -48,9 +49,28 @@ class DjangoCharacterListingRepository(ICharacterListingRepository):
             sold_at=row.sold_at,
         )
 
-    def get_by_id(self, listing_id: UUID) -> CharacterListingEntity | None:
-        row = CharacterListing.objects.select_related("seller", "buyer").filter(id=listing_id).first()
-        return self._entity(row) if row else None
+    def _queryset(self, *, lock: bool = False):
+        rows = CharacterListing.objects.select_related("seller", "buyer")
+        if lock:
+            # ``of=("self",)`` evita FOR UPDATE no OUTER JOIN de ``buyer`` nulo (PostgreSQL).
+            rows = rows.select_for_update(of=("self",))
+        return rows
+
+    def get_by_id(self, listing_id: UUID, *, lock: bool = False) -> CharacterListingEntity | None:
+        try:
+            row = self._queryset(lock=lock).get(id=listing_id)
+        except CharacterListing.DoesNotExist:
+            return None
+        return self._entity(row)
+
+    def _claim_for_sale(self, listing_id: UUID, **fields) -> CharacterListing:
+        fields["updated_at"] = timezone.now()
+        updated = CharacterListing.objects.filter(
+            id=listing_id, status=CharacterListing.Status.FOR_SALE
+        ).update(**fields)
+        if not updated:
+            raise ListingNotForSaleError()
+        return self._queryset().get(id=listing_id)
 
     def list_for_sale(self) -> list[CharacterListingEntity]:
         rows = CharacterListing.objects.select_related("seller", "buyer").filter(status=CharacterListing.Status.FOR_SALE)
@@ -116,16 +136,16 @@ class DjangoCharacterListingRepository(ICharacterListingRepository):
     def mark_sold(self, listing_id: UUID, buyer_id: UUID, new_account: str) -> CharacterListingEntity:
         from django.contrib.auth import get_user_model
 
-        row = CharacterListing.objects.select_related("seller", "buyer").select_for_update().get(id=listing_id)
-        row.buyer = get_user_model().objects.get(id=buyer_id)
-        row.new_account = new_account
-        row.status = CharacterListing.Status.SOLD
-        row.sold_at = timezone.now()
-        row.save(update_fields=["buyer", "new_account", "status", "sold_at", "updated_at"])
+        buyer = get_user_model().objects.get(id=buyer_id)
+        row = self._claim_for_sale(
+            listing_id,
+            buyer=buyer,
+            new_account=new_account,
+            status=CharacterListing.Status.SOLD,
+            sold_at=timezone.now(),
+        )
         return self._entity(row)
 
     def mark_cancelled(self, listing_id: UUID) -> CharacterListingEntity:
-        row = CharacterListing.objects.select_related("seller", "buyer").select_for_update().get(id=listing_id)
-        row.status = CharacterListing.Status.CANCELLED
-        row.save(update_fields=["status", "updated_at"])
+        row = self._claim_for_sale(listing_id, status=CharacterListing.Status.CANCELLED)
         return self._entity(row)
