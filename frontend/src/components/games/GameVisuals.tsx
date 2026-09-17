@@ -728,7 +728,7 @@ export function FishingBaitMark({ kind }: { kind: FishingBaitKind }) {
   )
 }
 
-/** Moldura da troca: botão nativo em forma de slot, sem a textura padrão. */
+/** Moldura da isca: botão nativo em forma de slot para escolher a linha, sem a textura padrão. */
 export function FishingBaitFrame({
   kind,
   stock,
@@ -755,7 +755,7 @@ export function FishingBaitFrame({
       data-kind={kind}
       data-theme-part="fishing-bait"
       aria-label={label}
-      aria-current={selected ? 'true' : undefined}
+      aria-pressed={selected}
       disabled={disabled}
       onClick={onClick}
       onFocus={onFocus}

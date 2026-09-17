@@ -1,11 +1,11 @@
 import { Card } from '../ui/Card'
-import { Button } from '../ui/Button'
+import { Button, IconButton } from '../ui/Button'
 import { Field } from '../ui/Field'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Fish } from 'lucide-react'
-import { gamesApi } from '../../services/api'
+import { CircleHelp, Fish } from 'lucide-react'
+import { gamesApi, type FishingDetails } from '../../services/api'
 import { contentLang } from '../../i18n/locale'
 import { formatDateTime } from '../../lib/formatters'
 import { Empty, ErrorNotice, Loading } from '../programs/ProgramUI'
@@ -15,13 +15,82 @@ import {
   FishingBaitFrame,
   FishingPond,
   fishingBaitKind,
+  type FishingBaitKind,
   type FishingPondState,
 } from './GameVisuals'
 import { groupFishByRarity, splitFishRarityColumns } from './gameArt'
 import { waitForFishingBite, waitForFishingCast, waitForFishingReveal } from './fishingReveal'
 import { writeCachedTokens } from './gameTokens'
+import { FishingHelpModal } from './FishingHelpModal'
 
 const FISHING_KEYS = [['fishing'], ['fishing-details']] as const
+
+type FishingBait = FishingDetails['baits'][number]
+
+function rodXpToNext(level: number) {
+  return Math.max(1, level) * 100
+}
+
+function FishingBaitSlot({
+  bait,
+  kind,
+  selected,
+  canSelect,
+  canAfford,
+  deal,
+  costLabel,
+  busy,
+  onSelect,
+  onBuy,
+}: {
+  bait: FishingBait
+  kind: FishingBaitKind
+  selected: boolean
+  canSelect: boolean
+  canAfford: boolean
+  deal: string
+  costLabel: string
+  busy: boolean
+  onSelect: () => void
+  onBuy: () => void
+}) {
+  const { t } = useTranslation('panel')
+  return (
+    <div className={`fishing-bait-slot${selected ? ' is-selected' : ''}`} title={bait.description || undefined}>
+      <div className="fishing-bait-icon">
+        {selected ? <span className="fishing-bait-status">{t('games.fishing.onTheHook')}</span> : null}
+        <FishingBaitFrame
+          kind={kind}
+          stock={bait.quantity}
+          selected={selected}
+          label={
+            canSelect
+              ? t('games.fishing.selectBait', { name: bait.name })
+              : t('games.fishing.selectBaitEmpty', { name: bait.name })
+          }
+          disabled={busy || !canSelect}
+          onClick={onSelect}
+        />
+      </div>
+      <div className="fishing-bait-meta">
+        <strong>{bait.name}</strong>
+        <small>
+          {t('games.fishing.baitBonus', { bonus: bait.success_bonus })} · {costLabel}
+        </small>
+      </div>
+      <Button
+        type="button"
+        size="sm"
+        variant="secondary"
+        aria-label={deal}
+        disabled={busy || !canAfford}
+        onClick={onBuy}
+      >
+        {t('games.fishing.getBait')}
+      </Button>
+    </div>
+  )
+}
 
 export function FishingGame() {
   const { t, i18n } = useTranslation('panel')
@@ -39,7 +108,7 @@ export function FishingGame() {
   const [bait, setBait] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [result, setResult] = useState('')
-  const [openBait, setOpenBait] = useState('')
+  const [helpOpen, setHelpOpen] = useState(false)
   const [pond, setPond] = useState<FishingPondState>('idle')
   const [catchFish, setCatchFish] = useState<{ name: string; rarity: string; art?: string } | null>(null)
   const packSize = fishing.data?.baits_per_token ?? query.data?.baits_per_token ?? 10
@@ -50,6 +119,10 @@ export function FishingGame() {
   const stockedBaits = baits.filter((row) => row.quantity >= castCost)
   const selectedBait = stockedBaits.find((row) => row.id === bait) ?? stockedBaits[0]
   const baitTotal = baits.reduce((sum, row) => sum + row.quantity, 0)
+  const rodLevel = fishing.data?.rod.level || 1
+  const rodXp = fishing.data?.rod.xp ?? 0
+  const xpToNext = rodXpToNext(rodLevel)
+  const xpPercent = Math.min(100, Math.round((rodXp / xpToNext) * 100))
   const canCast =
     !!fishing.data?.active &&
     !fishing.isError &&
@@ -57,6 +130,7 @@ export function FishingGame() {
     !query.isPending &&
     !!selectedBait
   const validQuantity = Number.isInteger(quantity) && quantity >= 1 && quantity <= 999
+  const shopReady = validQuantity && !!fishing.data && !query.isError && !fishing.isError
   const castLabel =
     pond === 'bite'
       ? t('games.fishing.biting')
@@ -65,6 +139,15 @@ export function FishingGame() {
         : t('games.fishing.cast')
   const recent = fishing.data?.recent ?? []
   const rarityColumns = splitFishRarityColumns(groupFishByRarity(query.data?.collection ?? []))
+
+  function buyBait(row: FishingBait) {
+    void action.run(async () => {
+      const bought = await gamesApi.buyBait(row.id, quantity)
+      writeCachedTokens(queryClient, bought.fichas)
+      setBait(row.id)
+    }, t('games.fishing.bought'), FISHING_KEYS)
+  }
+
   return (
     <Card className="game-module game-fishing fishing-game">
       <ErrorNotice error={query.error || fishing.error || action.error} />
@@ -75,7 +158,17 @@ export function FishingGame() {
         </span>
         <div>
           <span className="panel-eyebrow">{t('games.fishing.eyebrow')}</span>
-          <h2>{t('games.fishing.title')}</h2>
+          <div className="game-module-title">
+            <h2>{t('games.fishing.title')}</h2>
+            <IconButton
+              label={t('games.fishing.helpLabel')}
+              size="sm"
+              variant="ghost"
+              onClick={() => setHelpOpen(true)}
+            >
+              <CircleHelp aria-hidden="true" />
+            </IconButton>
+          </div>
         </div>
         <span className="game-cost">{t('games.fishing.cost', { count: castCost })}</span>
       </div>
@@ -86,11 +179,21 @@ export function FishingGame() {
             <div className="fishing-hud">
               <div className="fishing-stat">
                 <small>{t('games.fishing.rod')}</small>
-                <strong>{t('games.fishing.rodLevel', { level: fishing.data?.rod.level || 1 })}</strong>
+                <strong>{t('games.fishing.rodLevel', { level: rodLevel })}</strong>
               </div>
               <div className="fishing-stat">
                 <small>{t('games.fishing.xp')}</small>
-                <strong>{t('games.fishing.xpValue', { xp: fishing.data?.rod.xp ?? 0 })}</strong>
+                <strong>{t('games.fishing.xpProgress', { xp: rodXp, next: xpToNext })}</strong>
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  aria-label={t('games.fishing.xp')}
+                  aria-valuemin={0}
+                  aria-valuemax={xpToNext}
+                  aria-valuenow={rodXp}
+                >
+                  <i style={{ width: `${xpPercent}%` }} />
+                </div>
               </div>
               <div className="fishing-stat">
                 <small>{t('games.fishing.baits')}</small>
@@ -98,7 +201,66 @@ export function FishingGame() {
               </div>
             </div>
             <div className="fishing-controls">
-              <div className="fishing-play">
+              <section className="fishing-play-pane">
+                <header className="fishing-pane-head">
+                  <p className="fishing-pane-title">{t('games.fishing.playTitle')}</p>
+                  <div className="fishing-shop-bar">
+                    <Field className="fishing-qty" label={t('games.fishing.buyQuantity')}>
+                      <input
+                        type="number"
+                        step={1}
+                        min={1}
+                        max={999}
+                        value={quantity}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
+                      />
+                    </Field>
+                    <p className="muted fishing-shop-wallet">
+                      {t('games.fishing.tokensWallet', { count: fishing.data?.fichas ?? 0 })}
+                    </p>
+                  </div>
+                </header>
+                <div className="fishing-bait-rack" role="group" aria-label={t('games.fishing.playTitle')}>
+                  {baits.map((row) => {
+                    const enchanted = row.paid_with === 'baits'
+                    const kind = fishingBaitKind(row.paid_with, row.price)
+                    const cost = (enchanted ? row.price : 1) * quantity
+                    const canAfford = shopReady && (enchanted ? commonStock >= cost : (fishing.data?.fichas ?? 0) >= quantity)
+                    const deal = enchanted
+                      ? t('games.fishing.buyEnchanted', { cost, count: quantity, name: row.name })
+                      : t('games.fishing.buy', { tokens: quantity, baits: packSize * quantity })
+                    const costLabel = enchanted
+                      ? t('games.fishing.getCostEnchanted', { cost, count: quantity })
+                      : t('games.fishing.getCost', { count: quantity, tokens: quantity, baits: packSize * quantity })
+                    return (
+                      <FishingBaitSlot
+                        key={row.id}
+                        bait={row}
+                        kind={kind}
+                        selected={selectedBait?.id === row.id}
+                        canSelect={row.quantity >= castCost}
+                        canAfford={canAfford}
+                        deal={deal}
+                        costLabel={costLabel}
+                        busy={action.busy}
+                        onSelect={() => setBait(row.id)}
+                        onBuy={() => buyBait(row)}
+                      />
+                    )
+                  })}
+                </div>
+                {baits.length === 0 && <Empty>{t('games.fishing.shopEmpty')}</Empty>}
+              </section>
+              <section className="fishing-cast-pane">
+                <p className="fishing-pane-title">{t('games.fishing.castTitle')}</p>
+                {selectedBait ? (
+                  <p className="fishing-cast-choice">
+                    <small>{t('games.fishing.onTheHook')}</small>
+                    <strong>{selectedBait.name}</strong>
+                  </p>
+                ) : (
+                  <p className="muted">{t('games.fishing.insufficientBait')}</p>
+                )}
                 <form
                   className="fishing-cast"
                   onSubmit={(e) => {
@@ -134,118 +296,16 @@ export function FishingGame() {
                     }, t('games.fishing.castDone'), FISHING_KEYS)
                   }}
                 >
-                  <Field label={t('games.fishing.bait')}>
-                    <select
-                      value={selectedBait?.id ?? ''}
-                      disabled={action.busy}
-                      onChange={(e) => setBait(e.target.value)}
-                    >
-                      <option value="">{t('games.fishing.noBait')}</option>
-                      {query.data?.baits
-                        .filter((b) => b.quantity > 0)
-                        .map((b) => (
-                          <option key={b.id} value={b.id}>
-                            {t('games.fishing.baitOption', {
-                              name: b.name,
-                              quantity: b.quantity,
-                              bonus: b.success_bonus,
-                            })}
-                          </option>
-                        ))}
-                    </select>
-                  </Field>
                   <Button type="submit" className="fishing-cast-button" disabled={action.busy || !canCast}>
                     {castLabel}
                   </Button>
                 </form>
-              </div>
-              <i className="fishing-dock-split" aria-hidden="true" />
-              <div className="fishing-shop">
-                <p className="fishing-shop-title">{t('games.fishing.shopTitle')}</p>
-                <div className="fishing-shop-row">
-                  <Field className="fishing-qty" label={t('games.fishing.buyQuantity')}>
-                    <input
-                      type="number"
-                      step={1}
-                      min={1}
-                      max={999}
-                      value={quantity}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
-                    />
-                  </Field>
-                  <div className="fishing-shop-icons">
-                    {baits.map((b) => {
-                      const enchanted = b.paid_with === 'baits'
-                      const kind = fishingBaitKind(b.paid_with, b.price)
-                      const cost = (enchanted ? b.price : 1) * quantity
-                      const canAfford = enchanted
-                        ? commonStock >= cost
-                        : (fishing.data?.fichas ?? 0) >= quantity
-                      const deal = enchanted
-                        ? t('games.fishing.buyEnchanted', { cost, count: quantity, name: b.name })
-                        : t('games.fishing.buy', { tokens: quantity, baits: packSize * quantity })
-                      return (
-                        <div
-                          className={`fishing-bait-buy${openBait === b.id ? ' is-open' : ''}`}
-                          key={b.id}
-                          onMouseEnter={() => setOpenBait(b.id)}
-                          onMouseLeave={() => setOpenBait('')}
-                        >
-                          <FishingBaitFrame
-                            kind={kind}
-                            stock={b.quantity}
-                            label={deal}
-                            selected={selectedBait?.id === b.id}
-                            onFocus={() => setOpenBait(b.id)}
-                            onBlur={() => setOpenBait('')}
-                            disabled={
-                              action.busy ||
-                              !validQuantity ||
-                              !fishing.data ||
-                              query.isError ||
-                              fishing.isError ||
-                              !canAfford
-                            }
-                            onClick={() =>
-                              void action.run(async () => {
-                                const bought = await gamesApi.buyBait(b.id, quantity)
-                                writeCachedTokens(queryClient, bought.fichas)
-                                setBait(b.id)
-                              }, t('games.fishing.bought'), FISHING_KEYS)
-                            }
-                          />
-                          <div className="fishing-bait-tip" role="tooltip" hidden={openBait !== b.id}>
-                            <strong>{b.name}</strong>
-                            {b.description ? <p>{b.description}</p> : null}
-                            <small>{deal}</small>
-                            <small>
-                              {t('games.fishing.baitChance', {
-                                bonus: b.success_bonus,
-                                quantity: b.quantity,
-                              })}
-                            </small>
-                            {!enchanted ? (
-                              <small>{t('games.fishing.exchangeRate', { count: packSize })}</small>
-                            ) : (
-                              <small>{t('games.fishing.enchantedHint')}</small>
-                            )}
-                            <small>{t('games.fishing.tokensWallet', { count: fishing.data?.fichas ?? 0 })}</small>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-                {query.data?.baits.length === 0 && <Empty>{t('games.fishing.shopEmpty')}</Empty>}
-              </div>
+                <p className="muted fishing-cast-hint">{t('games.fishing.castCost', { count: castCost })}</p>
+              </section>
             </div>
             <div className="fishing-console-note">
-              <p className="muted fishing-cast-hint">{t('games.fishing.castCost', { count: castCost })}</p>
               {fishing.data && !fishing.data.active && (
                 <p className="muted">{t('games.fishing.unavailable')}</p>
-              )}
-              {fishing.data?.active && !selectedBait && (
-                <p className="muted">{t('games.fishing.insufficientBait')}</p>
               )}
               {result && (
                 <p className="program-note" role="status">
@@ -319,6 +379,7 @@ export function FishingGame() {
           })}
         </div>
       </div>
+      <FishingHelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
     </Card>
   )
 }

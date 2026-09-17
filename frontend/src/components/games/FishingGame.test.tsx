@@ -82,7 +82,7 @@ function mount() {
   return userEvent.setup()
 }
 
-it('exibe coleção e lista somente iscas em estoque para lançar', async () => {
+it('exibe coleção e deixa nome, bônus e custo das iscas visíveis', async () => {
   mount()
   expect(await screen.findByRole('heading', { name: 'Raro' }, { timeout: 5000 })).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Épico' })).toBeVisible()
@@ -93,18 +93,32 @@ it('exibe coleção e lista somente iscas em estoque para lançar', async () => 
   expect(document.querySelector('[data-side="right"] .fishing-tier[data-rarity="epic"]')).toBeTruthy()
   expect(document.querySelector('[data-side="right"] .fishing-tier[data-rarity="divine"] .fishing-fish[data-fish="serafim"]')).toBeTruthy()
   expect(document.querySelector('[data-side="left"] .fishing-tier[data-rarity="epic"]')).toBeNull()
-  expect(screen.getAllByRole('option')).toHaveLength(2)
+  expect(screen.queryByRole('combobox')).toBeNull()
   expect(screen.getByText('Nível 3')).toBeVisible()
+  expect(screen.getByText('40 / 300 XP')).toBeVisible()
   expect(screen.getByText('1 isca')).toBeVisible()
+  expect(screen.getAllByText('Isca comum').length).toBeGreaterThanOrEqual(1)
+  expect(screen.getByText('Isca do aprendiz')).toBeVisible()
+  expect(screen.getByText('Isca encantada')).toBeVisible()
+  expect(screen.getByText(/\+0% · 1 ficha → 10 iscas/)).toBeVisible()
+  expect(screen.getByText(/\+5% · 3 comuns → 1/)).toBeVisible()
+  expect(screen.getByText(/\+15% · 8 comuns → 1/)).toBeVisible()
+  expect(screen.getAllByText('Na linha').length).toBeGreaterThanOrEqual(1)
+  expect(screen.getByText('Isca na linha')).toBeVisible()
+  expect(screen.getByText('Lançar')).toBeVisible()
   expect(screen.getByRole('button', { name: /1 fichas → 10 iscas/i })).toBeEnabled()
   expect(screen.getByRole('button', { name: /3 iscas → 1 Isca do aprendiz/ })).toBeDisabled()
   expect(screen.getByRole('button', { name: /8 iscas → 1 Isca encantada/ })).toBeDisabled()
-  expect(document.querySelectorAll('.fishing-shop-icons .fishing-bait-frame')).toHaveLength(3)
+  expect(screen.getByRole('button', { name: 'Usar Isca comum neste lançamento' })).toBeEnabled()
+  expect(screen.getByRole('button', { name: 'Isca do aprendiz — sem estoque para lançar' })).toBeDisabled()
+  expect(document.querySelectorAll('.fishing-bait-rack .fishing-bait-frame')).toHaveLength(3)
   expect(document.querySelector('.fishing-bait-frame.ui-button')).toBeNull()
   expect(document.querySelector('.fishing-bait-mark[data-kind="common"]')).toBeTruthy()
   expect(document.querySelector('.fishing-bait-mark[data-kind="apprentice"]')).toBeTruthy()
   expect(document.querySelector('.fishing-bait-mark[data-kind="enchanted"]')).toBeTruthy()
-  expect(document.querySelector('.fishing-console .fishing-controls .fishing-shop-row')).toBeTruthy()
+  expect(document.querySelector('.fishing-play-pane .fishing-shop-bar')).toBeTruthy()
+  expect(document.querySelector('.fishing-play-pane .fishing-bait-rack')).toBeTruthy()
+  expect(document.querySelector('.fishing-cast-pane .fishing-cast-button')).toBeTruthy()
   expect(document.querySelector('.fishing-bait-frame.is-selected[data-kind="common"]')).toBeTruthy()
   expect(document.querySelector('.fishing-bait-frame.is-selected[data-kind="apprentice"]')).toBeNull()
   expect(document.querySelector('.fishing-board > .fishing-pond')).toBeTruthy()
@@ -130,7 +144,6 @@ it.each([true, false])('lança com a última isca e apresenta captura=%s', async
   })
   const user = mount()
   await screen.findByText('Nível 3')
-  await user.selectOptions(screen.getByRole('combobox'), 'common')
   await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
   expect(gamesApi.cast).toHaveBeenCalledWith('common')
   expect(
@@ -141,13 +154,31 @@ it.each([true, false])('lança com a última isca e apresenta captura=%s', async
   expect(document.querySelector('.fishing-school .fishing-swimmer')).toBeTruthy()
 })
 
-it('mostra o texto da troca só ao apontar o botão da isca', async () => {
+it('escolhe a isca no quadro sem comprar e lança com ela', async () => {
+  vi.mocked(gamesApi.fishingDetails).mockResolvedValue({
+    ...details,
+    baits: details.baits.map((row) =>
+      row.id === 'aprendiz' ? { ...row, quantity: 2 } : row,
+    ),
+  })
   const user = mount()
-  await screen.findByRole('button', { name: /1 fichas → 10 iscas/i })
-  expect(screen.getByText('1 ficha = 10 iscas comuns')).not.toBeVisible()
-  await user.hover(screen.getByRole('button', { name: /1 fichas → 10 iscas/i }))
-  expect(screen.getByText('1 ficha = 10 iscas comuns')).toBeVisible()
-  expect(screen.getByText('Isca simples')).toBeVisible()
+  await screen.findByRole('button', { name: 'Usar Isca do aprendiz neste lançamento' })
+  await user.click(screen.getByRole('button', { name: 'Usar Isca do aprendiz neste lançamento' }))
+  expect(gamesApi.buyBait).not.toHaveBeenCalled()
+  expect(document.querySelector('.fishing-bait-frame.is-selected[data-kind="apprentice"]')).toBeTruthy()
+  await user.click(screen.getByRole('button', { name: 'Lançar a linha' }))
+  expect(gamesApi.cast).toHaveBeenCalledWith('aprendiz')
+})
+
+it('abre o guia da pescaria', async () => {
+  const user = mount()
+  await screen.findByRole('button', { name: 'Como funciona a pescaria' })
+  expect(screen.queryByRole('dialog', { name: 'Como funciona a pescaria' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Como funciona a pescaria' }))
+  const dialog = await screen.findByRole('dialog', { name: 'Como funciona a pescaria' })
+  expect(dialog).toHaveTextContent('Fichas só compram isca comum')
+  await user.click(screen.getByRole('button', { name: 'Entendi' }))
+  expect(screen.queryByRole('dialog', { name: 'Como funciona a pescaria' })).not.toBeInTheDocument()
 })
 
 it('compra isca e atualiza o estoque', async () => {
@@ -174,9 +205,9 @@ it('troca iscas comuns pelas duas encantadas quando o estoque cobre o custo', as
   const user = mount()
   expect(await screen.findByRole('button', { name: /3 iscas → 1 Isca do aprendiz/ })).toBeEnabled()
   expect(screen.getByRole('button', { name: /8 iscas → 1 Isca encantada/ })).toBeEnabled()
-  await user.click(screen.getByRole('button', { name: /Isca do aprendiz/ }))
+  await user.click(screen.getByRole('button', { name: /3 iscas → 1 Isca do aprendiz/ }))
   expect(gamesApi.buyBait).toHaveBeenCalledWith('aprendiz', 1)
-  await user.click(screen.getByRole('button', { name: /Isca encantada/ }))
+  await user.click(screen.getByRole('button', { name: /8 iscas → 1 Isca encantada/ }))
   expect(gamesApi.buyBait).toHaveBeenCalledWith('encantada', 1)
 })
 
