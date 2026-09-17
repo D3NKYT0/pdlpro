@@ -10707,6 +10707,206 @@ html.pdl-panel .enchant-reveal-actions {
   padding-top: 2px;
 }
 
+html.pdl-panel .ui-modal-root:has(.game-boss-victory-modal) .ui-modal-backdrop {
+  background: rgba(4, 3, 2, 0.78);
+}
+
+html.pdl-panel .ui-modal.game-boss-victory-modal.card {
+  isolation: isolate;
+  width: min(100%, 460px);
+  padding: 6px 8px 24px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
+  background:
+    radial-gradient(ellipse 92% 68% at 50% -6%, color-mix(in srgb, var(--panel-gold-bright) 28%, transparent), transparent 58%),
+    radial-gradient(ellipse 80% 48% at 50% 108%, color-mix(in srgb, var(--panel-gold-bright) 14%, transparent), transparent 62%),
+    color-mix(in srgb, var(--theme-bg-deep, #100e0b) 36%, transparent);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.5),
+    0 0 64px color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
+  backdrop-filter: blur(22px);
+}
+
+html.pdl-panel .ui-modal.game-boss-victory-modal.card::before {
+  content: none;
+}
+
+html.pdl-panel .game-boss-victory-modal .ui-modal-header,
+html.pdl-panel .game-boss-victory-modal .ui-modal-body {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: 0;
+}
+
+html.pdl-panel .game-boss-victory-modal .ui-modal-header {
+  justify-content: center;
+  padding: 20px 48px 2px;
+}
+
+html.pdl-panel .game-boss-victory-modal .ui-modal-header .ui-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+html.pdl-panel .game-boss-victory-modal .ui-modal-header h2 {
+  color: var(--panel-gold-bright);
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+}
+
+html.pdl-panel .game-boss-victory-modal .ui-modal-body {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 8px 22px 8px;
+  text-align: center;
+}
+
+html.pdl-panel .boss-victory-field,
+html.pdl-panel .boss-victory-wash,
+html.pdl-panel .boss-victory-veil,
+html.pdl-panel .boss-victory-rays,
+html.pdl-panel .boss-victory-firework,
+html.pdl-panel .boss-victory-spark,
+html.pdl-panel .boss-victory-mote {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+html.pdl-panel .boss-victory-field {
+  z-index: 0;
+  overflow: hidden;
+}
+
+html.pdl-panel .boss-victory-wash {
+  background: radial-gradient(circle at 50% 18%, rgba(255, 246, 208, 0.28), transparent 58%);
+  animation: boss-victory-wash 2.4s ease-in-out infinite;
+}
+
+html.pdl-panel .boss-victory-veil {
+  background: radial-gradient(ellipse 70% 40% at 50% 100%, rgba(230, 199, 125, 0.16), transparent 70%);
+}
+
+html.pdl-panel .boss-victory-rays {
+  background: repeating-conic-gradient(from 0deg at 50% 20%, rgba(255, 246, 208, 0.08) 0 8deg, transparent 8deg 18deg);
+  animation: boss-victory-rays 12s linear infinite;
+}
+
+html.pdl-panel .boss-victory-firework {
+  top: auto;
+  bottom: 10%;
+  left: var(--x, 50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff6d0;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 80%, transparent);
+  animation: boss-victory-firework 2.2s ease-out var(--d, 0s) infinite;
+}
+
+html.pdl-panel .boss-victory-spark {
+  top: 28%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px;
+  border-radius: 50%;
+  background: var(--panel-gold-bright);
+  animation: boss-victory-spark 1.4s ease-out var(--spark-d, 0s) infinite;
+}
+
+html.pdl-panel .boss-victory-mote {
+  top: auto;
+  left: var(--x, 40%);
+  bottom: 12%;
+  width: 5px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 246, 208, 0.7);
+  animation: boss-victory-mote 2.2s ease-in var(--d, 0s) infinite;
+}
+
+html.pdl-panel .boss-victory-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+html.pdl-panel .boss-victory-kicker {
+  margin: 0;
+  max-width: 36ch;
+  color: var(--panel-muted);
+  font-size: 14px;
+}
+
+html.pdl-panel .boss-victory-heroes {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 28px;
+}
+
+html.pdl-panel .boss-victory-hero {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+html.pdl-panel .boss-victory-hero small {
+  color: var(--panel-gold-bright);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+html.pdl-panel .boss-victory-prize {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--panel-gold-bright);
+  font-size: 22px;
+}
+
+html.pdl-panel .boss-victory-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 18px;
+  margin: 0;
+  width: min(100%, 320px);
+  text-align: left;
+}
+
+html.pdl-panel .boss-victory-stats div {
+  display: grid;
+  gap: 2px;
+}
+
+html.pdl-panel .boss-victory-stats dt {
+  color: var(--panel-muted);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .boss-victory-stats dd {
+  margin: 0;
+  color: var(--panel-gold-bright);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+html.pdl-panel .boss-victory-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
 html.pdl-panel .fishing-pond {
   position: relative;
   min-height: 280px;
@@ -12903,6 +13103,68 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   50% { box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5), 0 0 78px color-mix(in srgb, var(--enchant-flare) 36%, transparent); }
 }
 
+@keyframes boss-victory-wash {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes boss-victory-rays {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes boss-victory-firework {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 28px) scale(0.25);
+    box-shadow: 0 0 0 0 transparent;
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -36px) scale(0.55);
+    box-shadow: 0 0 10px 3px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
+  }
+  52% {
+    opacity: 1;
+    transform: translate(-50%, -108px) scale(var(--s, 1));
+    box-shadow:
+      0 -26px 0 -2px #ffe7a3,
+      18px -18px 0 -2px #ffd36a,
+      26px 0 0 -2px #fff6d0,
+      18px 18px 0 -2px #e6c77d,
+      0 26px 0 -2px #ffd36a,
+      -18px 18px 0 -2px #fff6d0,
+      -26px 0 0 -2px #e6c77d,
+      -18px -18px 0 -2px #ffe7a3,
+      0 0 22px 8px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -148px) scale(calc(var(--s, 1) * 1.35));
+    box-shadow:
+      0 -40px 0 -6px transparent,
+      28px -28px 0 -6px transparent,
+      40px 0 0 -6px transparent,
+      28px 28px 0 -6px transparent,
+      0 40px 0 -6px transparent,
+      -28px 28px 0 -6px transparent,
+      -40px 0 0 -6px transparent,
+      -28px -28px 0 -6px transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+@keyframes boss-victory-spark {
+  0% { opacity: 1; transform: rotate(var(--spark-a)) translateY(0) scale(0.4); }
+  100% { opacity: 0; transform: rotate(var(--spark-a)) translateY(-72px) scale(1.1); }
+}
+
+@keyframes boss-victory-mote {
+  0% { opacity: 0; transform: translateY(12px) scale(0.6); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-90px) scale(1); }
+}
+
 @keyframes chance-slots-spark {
   0% {
     opacity: 1;
@@ -13382,6 +13644,11 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player,
   html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster,
   html.pdl-panel .battle-duel-ring.is-open,
+  html.pdl-panel .boss-victory-wash,
+  html.pdl-panel .boss-victory-rays,
+  html.pdl-panel .boss-victory-firework,
+  html.pdl-panel .boss-victory-spark,
+  html.pdl-panel .boss-victory-mote,
   html.pdl-panel .battle-slash,
   html.pdl-panel .battle-impact,
   html.pdl-panel .battle-shock,
@@ -13400,7 +13667,9 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .fishing-spray,
   html.pdl-panel .fishing-impact,
   html.pdl-panel .fishing-streak,
-  html.pdl-panel .battle-burst {
+  html.pdl-panel .battle-burst,
+  html.pdl-panel .boss-victory-firework,
+  html.pdl-panel .boss-victory-spark {
     display: none;
   }
 }

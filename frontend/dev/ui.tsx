@@ -59,6 +59,7 @@ function Showcase() {
             <Button variant="success" onClick={() => setLastAction('Solicitação aprovada no exemplo.')}><Check aria-hidden="true" /> Aprovar</Button>
             <Button variant="warning" onClick={() => setLastAction('Solicitação enviada para revisão no exemplo.')}><ShieldAlert aria-hidden="true" /> Revisar</Button>
             <Button variant="danger" onClick={() => setLastAction('Item removido apenas neste exemplo.')}><Trash2 aria-hidden="true" /> Remover</Button>
+            <Button variant="muted" disabled>Bloqueado</Button>
           </div>
           <h3>Tamanhos e ícones</h3>
           <div className="ui-showcase-actions">

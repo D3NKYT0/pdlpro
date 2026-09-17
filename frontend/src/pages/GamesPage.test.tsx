@@ -793,7 +793,7 @@ it('no +10 trava Encantar, destaca o chefe e pede o combate final', async () => 
       { id: 'boss', name: 'Queen Ant', alive: true, level: 12, required_weapon_level: 10, fragment_reward: 0, respawn_in: 0, is_boss: true },
     ],
   } as any)
-  mount('economy')
+  const user = mount('economy')
   await screen.findByText('Queen Ant')
   expect(screen.getByText('O +10 destrava o chefe da arena')).toBeVisible()
   expect(screen.getByText('Enfrente o chefe para reivindicar o prêmio.')).toBeVisible()
@@ -802,10 +802,21 @@ it('no +10 trava Encantar, destaca o chefe e pede o combate final', async () => 
   expect(document.querySelector('.monster-item.is-boss')).toBeTruthy()
   expect(screen.getByText('Chefe')).toBeVisible()
   expect(document.querySelector('.monster-portrait[data-monster="queen-ant"]')).toBeTruthy()
+  const orcRow = screen.getByText('Orc').closest('.monster-item') as HTMLElement
+  const orcFight = within(orcRow).getByRole('button', { name: 'Lutar · 1 ficha' })
+  expect(orcRow).toHaveClass('is-boss-locked')
+  expect(orcFight).toBeDisabled()
+  expect(orcFight).toHaveClass('ui-button--muted')
+  expect(orcFight).not.toHaveClass('ui-button--danger')
+  expect(orcFight).not.toHaveClass('ui-button--yellow')
+  expect(orcFight).not.toHaveClass('ui-button--secondary')
+  await user.click(orcFight)
+  expect(gamesApi.fight).not.toHaveBeenCalled()
+  expect(within(document.querySelector('.monster-item.is-boss') as HTMLElement).getByRole('button', { name: 'Lutar · 1 ficha' })).toBeEnabled()
   const steps = [...screen.getByRole('progressbar', { name: 'Arma +10 de +10' }).querySelectorAll('.weapon-path-steps li')]
   expect(steps.filter((step) => step.classList.contains('is-done'))).toHaveLength(10)
 })
-it('revela o prêmio do chefe no palco e zera a arma sem toast', async () => {
+it('abre o modal de vitória do chefe com a corrida e zera a arma sem toast', async () => {
   vi.mocked(gamesApi.economy).mockResolvedValue({
     fichas: 10,
     weapon: { level: 10, fragments: 10 },
@@ -819,7 +830,8 @@ it('revela o prêmio do chefe no palco e zera a arma sem toast', async () => {
     rounds: 6,
     fragments_earned: 0,
     prize: { item_id: 57, item_name: 'Adena', quantity: 250000 },
-    weapon: { level: 0, fragments: 10 },
+    run: { weapon_level: 10, fragments: 10, strikes: 5, rounds: 6, boss_name: 'Queen Ant' },
+    weapon: { level: 0, fragments: 0 },
     fichas: 9,
   } as any)
   const user = mount('economy')
@@ -827,11 +839,15 @@ it('revela o prêmio do chefe no palco e zera a arma sem toast', async () => {
   const bossRow = document.querySelector('.monster-item.is-boss')
   expect(bossRow).toBeTruthy()
   await user.click(within(bossRow as HTMLElement).getByRole('button', { name: 'Lutar · 1 ficha' }))
-  await waitFor(() => expect(document.querySelector('.battle-stage.is-win.is-boss')).toBeTruthy())
+  const dialog = await screen.findByRole('dialog', { name: 'Corrida concluída' })
+  expect(dialog).toHaveClass('game-boss-victory-modal')
   expect(gamesApi.fight).toHaveBeenCalledWith('boss', { strikes: 5 })
-  expect(screen.getByRole('status')).toHaveTextContent('Vitória')
-  expect(screen.getByRole('status')).toHaveTextContent('+250K Adena')
-  expect(screen.getByRole('status')).toHaveTextContent('6 rodadas')
+  expect(dialog).toHaveTextContent('Queen Ant caiu')
+  expect(dialog).toHaveTextContent('Arma +10')
+  expect(dialog).toHaveTextContent('10 fragmentos')
+  expect(dialog).toHaveTextContent('+250K Adena')
+  expect(dialog).toHaveTextContent('6 rodadas')
+  expect(dialog.querySelectorAll('.boss-victory-firework').length).toBe(16)
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
 })
@@ -859,11 +875,11 @@ it('espera os golpes do chefe antes de enviar o combate', async () => {
   await user.click(within(bossRow).getByRole('button', { name: 'Lutar · 1 ficha' }))
   await waitFor(() => expect(document.querySelector('.battle-stage.is-duel.is-boss')).toBeTruthy())
   expect(gamesApi.fight).not.toHaveBeenCalled()
-  expect(screen.getByRole('status')).toHaveTextContent('Acerte quando o anel brilhar')
+  expect(screen.getByRole('status')).toHaveTextContent('Golpeie 5 vezes')
   expect(screen.getByRole('button', { name: 'Golpear' })).toBeDisabled()
   bossDuel.openWindow()
-  await waitFor(() => expect(screen.getByRole('button', { name: 'Agora!' })).toBeEnabled())
-  await user.click(screen.getByRole('button', { name: 'Agora!' }))
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Golpear' })).toBeEnabled())
+  await user.click(screen.getByRole('button', { name: 'Golpear' }))
   expect(gamesApi.fight).not.toHaveBeenCalled()
   bossDuel.complete(3)
   await waitFor(() => expect(gamesApi.fight).toHaveBeenCalledWith('boss', { strikes: 3 }))

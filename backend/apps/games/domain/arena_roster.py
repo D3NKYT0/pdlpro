@@ -42,3 +42,9 @@ def is_arena_boss(monster) -> bool:
     """Verdadeiro quando o oponente é o chefe que entrega o prêmio da arena."""
 
     return bool(getattr(monster, "is_boss", False))
+
+
+def is_arena_regular_locked(*, weapon_level: int, is_boss: bool) -> bool:
+    """Com a arma no máximo, só o chefe pode ser enfrentado."""
+
+    return int(weapon_level) >= ARENA_WEAPON_MAX and not bool(is_boss)

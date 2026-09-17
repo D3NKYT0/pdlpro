@@ -3,9 +3,9 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **17 de setembro de 2026** — Não publicado: chefe Queen Ant
-na Arena das Feras (prêmio e reset só após a vitória; duelo com Golpear no
-ritmo; vitória certa se o encante passa o requerimento; no mesmo nível a
-derrota é rara porque a luta gasta ficha); Lutar vermelho
+na Arena das Feras (duelo com 5 golpes, modal de vitória com fogos e corrida,
+reset da arma e dos fragmentos; no +10 Lutar das feras comuns fica cinza);
+Lutar vermelho
 e cursor de proibido quando o combate está bloqueado; pescaria
 com escolha da isca nos quadros, Obter visível, guia «?», vara que sobe
 de junco a divina no lago e animação por tipo de isca; caça-níquel com

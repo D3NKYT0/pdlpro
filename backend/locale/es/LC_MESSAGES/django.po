@@ -5148,6 +5148,9 @@ msgstr "El monstruo aún no ha reaparecido."
 msgid "Sua arma é fraca demais para este monstro."
 msgstr "Tu arma es demasiado débil para este monstruo."
 
+msgid "A arma no máximo só enfrenta o chefe da arena."
+msgstr "En el encantamiento máximo el arma solo enfrenta al jefe de la arena."
+
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr "El arma ya está al máximo. Derrota al jefe de la arena para recibir el premio."
 

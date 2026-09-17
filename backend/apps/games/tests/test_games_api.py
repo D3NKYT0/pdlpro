@@ -588,7 +588,10 @@ def test_economy_boss_grants_prize_and_resets_weapon(api, player):
     assert fight.data["prize"]["item_id"] == 57
     assert fight.data["prize"]["quantity"] == ARENA_BOSS_ADENA
     assert fight.data["weapon"]["level"] == 0
-    assert fight.data["weapon"]["fragments"] == 4
+    assert fight.data["weapon"]["fragments"] == 0
+    assert fight.data["run"]["weapon_level"] == ARENA_WEAPON_MAX
+    assert fight.data["run"]["fragments"] == 4
+    assert fight.data["run"]["strikes"] == 5
     bag = api.get("/api/v1/customer/games/bag/")
     assert any(item["item_id"] == 57 and item["quantity"] == ARENA_BOSS_ADENA for item in bag.data)
 
@@ -628,6 +631,7 @@ def test_queen_ant_loses_to_max_weapon(api, player):
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is True
     assert fight.data["weapon"]["level"] == 0
+    assert fight.data["weapon"]["fragments"] == 0
 
 
 @pytest.mark.django_db
@@ -698,6 +702,39 @@ def test_economy_overleveled_fight_always_wins(api, player):
 
 
 @pytest.mark.django_db
+def test_economy_max_weapon_blocks_regular_fights(api, player):
+    from apps.games.domain.arena_roster import ARENA_WEAPON_MAX
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    monster = Monster.objects.create(
+        name="Elder Keltir Bloqueado",
+        level=1,
+        required_weapon_level=0,
+        fragment_reward=3,
+        hp=16,
+        attack=3,
+        defense=1,
+        respawn_seconds=12,
+    )
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = ARENA_WEAPON_MAX
+    weapon.fragments = 4
+    weapon.save(update_fields=["level", "fragments"])
+    api.force_authenticate(user=player)
+    fight = api.post(f"/api/v1/customer/games/economy/{monster.id}/fight/")
+    assert fight.status_code == 400, fight.data
+    assert fight.data["message"] == "A arma no máximo só enfrenta o chefe da arena."
+    player.refresh_from_db()
+    weapon.refresh_from_db()
+    assert player.fichas == 2
+    assert weapon.level == ARENA_WEAPON_MAX
+    assert weapon.fragments == 4
+
+
+@pytest.mark.django_db
 def test_economy_boss_can_lose_without_prize(api, player):
     from unittest.mock import patch
 
@@ -720,7 +757,8 @@ def test_economy_boss_can_lose_without_prize(api, player):
     player.save(update_fields=["fichas"])
     weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
     weapon.level = ARENA_WEAPON_MAX
-    weapon.save(update_fields=["level"])
+    weapon.fragments = 7
+    weapon.save(update_fields=["level", "fragments"])
     api.force_authenticate(user=player)
     with patch("apps.games.domain.arena_combat.random.randint", return_value=100):
         fight = api.post(
@@ -731,8 +769,10 @@ def test_economy_boss_can_lose_without_prize(api, player):
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is False
     assert fight.data["prize"] is None
+    assert fight.data["run"] is None
     weapon.refresh_from_db()
     assert weapon.level == ARENA_WEAPON_MAX
+    assert weapon.fragments == 7
     bag = api.get("/api/v1/customer/games/bag/")
     assert not any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
 

@@ -4780,6 +4780,9 @@ msgstr ""
 msgid "Sua arma é fraca demais para este monstro."
 msgstr ""
 
+msgid "A arma no máximo só enfrenta o chefe da arena."
+msgstr ""
+
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr ""
 

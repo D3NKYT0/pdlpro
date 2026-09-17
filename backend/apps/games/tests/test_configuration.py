@@ -1,7 +1,13 @@
 import pytest
 
 from apps.games.application.configuration import require_active_game
-from apps.games.domain.arena_roster import ARENA_BOSS, ARENA_MONSTERS, ARENA_WEAPON_MAX, is_arena_boss
+from apps.games.domain.arena_roster import (
+    ARENA_BOSS,
+    ARENA_MONSTERS,
+    ARENA_WEAPON_MAX,
+    is_arena_boss,
+    is_arena_regular_locked,
+)
 from apps.games.domain.exceptions import GameInactiveError
 from apps.games.domain.repositories import IGameCatalogRepository
 from apps.games.infrastructure.models import GameConfig
@@ -36,6 +42,9 @@ def test_arena_boss_is_queen_ant_at_weapon_max():
 
     assert is_arena_boss(Marked()) is True
     assert is_arena_boss(object()) is False
+    assert is_arena_regular_locked(weapon_level=ARENA_WEAPON_MAX, is_boss=False)
+    assert not is_arena_regular_locked(weapon_level=ARENA_WEAPON_MAX, is_boss=True)
+    assert not is_arena_regular_locked(weapon_level=ARENA_WEAPON_MAX - 1, is_boss=False)
 
 
 @pytest.mark.django_db

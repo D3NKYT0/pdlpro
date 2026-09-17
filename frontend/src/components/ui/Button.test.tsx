@@ -3,9 +3,11 @@ import '@testing-library/jest-dom/vitest'
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { render, screen } from '@testing-library/react'
-import { expect, it } from 'vitest'
+import { cleanup, render, screen } from '@testing-library/react'
+import { afterEach, expect, it } from 'vitest'
 import { Button } from './Button'
+
+afterEach(cleanup)
 
 it('mostra o cursor de proibido quando está desativado', () => {
   const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'ui.css'), 'utf8')
@@ -14,6 +16,15 @@ it('mostra o cursor de proibido quando está desativado', () => {
   render(<Button disabled>Lutar</Button>)
   expect(screen.getByRole('button', { name: 'Lutar' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Lutar' })).toHaveClass('ui-button', 'btn')
+})
+
+it('aplica a variante cinza sem reusar o perigo', () => {
+  render(<Button variant="muted" disabled>Lutar</Button>)
+  const button = screen.getByRole('button', { name: 'Lutar' })
+  expect(button).toHaveClass('ui-button--muted')
+  expect(button).not.toHaveClass('ui-button--danger')
+  expect(button).not.toHaveClass('ui-button--yellow')
+  expect(button).toBeDisabled()
 })
 
 it('aplica a variante amarela sem reusar o âmbar de alerta', () => {

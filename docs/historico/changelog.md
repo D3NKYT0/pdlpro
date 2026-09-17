@@ -11,8 +11,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Adicionado
 
 - **Chefe da Arena das Feras:** ao chegar em +10 a arma permanece e destrava a
-  **Queen Ant**. Só a vitória contra o chefe entrega 250k Adena e zera o
-  encante. Encantar no máximo fica bloqueado até essa luta.
+  **Queen Ant**. O duelo pede cinco golpes; só a vitória entrega 250k Adena,
+  abre o modal da corrida (arma +10, fragmentos, golpes e prêmio) e zera
+  encante e fragmentos. Encantar no máximo fica bloqueado até essa luta.
 
 - **Configurador da loja** em `/panel/admin/shop`: itens avulsos, pacotes e
   **Preencher catálogo low grade** com stacks Interlude NG/D/C (Adena,
@@ -95,15 +96,17 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Lutar na **Arena das Feras** fica vermelho quando a fera não pode ser
   combatida (arma fraca ou respawn), com o cursor de proibido no hover, e
-  amarelo sem fichas.
+  amarelo sem fichas. No +10 as feras comuns ficam com Lutar cinza e
+  bloqueado; só a Queen Ant aceita combate.
 - Encantar na **Arena das Feras** para no +10: a arma não zera mais nesse
   passo e o prêmio de 250k Adena passa a sair só da vitória contra o chefe.
 - Combate da **Arena das Feras** compara encante e requerimento: arma acima
   do pedido da fera vence sempre; no mesmo encante a vitória fica entre
   cerca de 74% e 92% (a luta gasta ficha). O chefe (Queen Ant no +10) nunca
-  é garantido — começa em 56%, com +7% por golpe cronometrado (até cinco).
-  O palco do chefe pede **Golpear** no ritmo (ou Espaço) antes de enviar a
-  luta; errar a janela não gasta a ficha até o POST final.
+  é garantido — começa em 56%, com +7% por golpe. O duelo pede **cinco
+  Golpear** (ou Espaço), com pausa entre os cliques; a vitória abre um
+  modal com fogos, arma +10, fragmentos da corrida e 250k Adena, e zera
+  arma e fragmentos.
 - A **pescaria** em `/panel/games?tab=fishing` deixa de misturar escolha e
   compra no mesmo clique: o quadro põe a isca na linha, **Obter** reposição
   fica visível (nome, bônus e custo, sem hover) e um «?» explica vara, iscas

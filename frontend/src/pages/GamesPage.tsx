@@ -49,6 +49,7 @@ import { BuyTokensModal } from '../components/games/BuyTokensModal'
 import { BoxHelpModal } from '../components/games/BoxHelpModal'
 import { ChanceRevealModal } from '../components/games/ChanceRevealModal'
 import { EnchantRevealModal } from '../components/games/EnchantRevealModal'
+import { BossVictoryModal } from '../components/games/BossVictoryModal'
 import { latestGameTokens, writeCachedTokens } from '../components/games/gameTokens'
 import { waitForEnchantReveal } from '../components/games/enchantReveal'
 
@@ -78,6 +79,14 @@ type PlayFx = {
   fightPrize?: { item_id: number; item_name: string; quantity: number } | null
   fightBoss?: boolean
   duel?: { open: boolean; hits: number } | null
+  bossRun?: {
+    name: string
+    weaponLevel: number
+    fragments: number
+    strikes: number
+    rounds: number
+    prize: { item_id: number; item_name: string; quantity: number }
+  } | null
   enchantOverlay?: boolean
   enchantSuccess?: boolean
   enchantFrom?: number
@@ -381,21 +390,25 @@ export function GamesPage() {
 
   async function commitFight(monsterId: string, strikes = 0) {
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
-    setFx({
-      playing: 'fight',
-      targetId: monsterId,
-      fightName: monster?.name,
-      fightBoss: Boolean(monster?.is_boss),
-    })
+    const bossFight = Boolean(monster?.is_boss)
+    if (!bossFight) {
+      setFx({
+        playing: 'fight',
+        targetId: monsterId,
+        fightName: monster?.name,
+        fightBoss: false,
+      })
+    }
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
       const result = await gamesApi.fight(monsterId, { strikes })
       applyTokens(result.fichas)
-      await waitForFightReveal(startedAt)
+      if (!bossFight) await waitForFightReveal(startedAt)
       await refresh()
       return result
     }, t('games.toast.fightError'), quietTokens)
     if (outcome.ok) {
+      const run = outcome.value.run
       setFx({
         targetId: monsterId,
         fightName: monster?.name,
@@ -404,6 +417,17 @@ export function GamesPage() {
         fightFragments: outcome.value.fragments_earned,
         fightPrize: outcome.value.prize ?? null,
         fightBoss: Boolean(monster?.is_boss),
+        bossRun:
+          outcome.value.won && monster?.is_boss && outcome.value.prize && run
+            ? {
+                name: run.boss_name || monster.name,
+                weaponLevel: run.weapon_level,
+                fragments: run.fragments,
+                strikes,
+                rounds: outcome.value.rounds,
+                prize: outcome.value.prize,
+              }
+            : null,
       })
     } else {
       noteTokenFailure(outcome.error)
@@ -415,6 +439,8 @@ export function GamesPage() {
     if (needTokens(FIGHT_COST)) return
     if (fx.playing === 'fight') return
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
+    const weaponLevelNow = economy.data?.weapon.level ?? 0
+    if (weaponLevelNow >= ENCHANT_GOAL && monster && !monster.is_boss) return
     if (monster?.is_boss) {
       duelRef.current?.stop()
       duelActiveRef.current = true
@@ -763,6 +789,11 @@ export function GamesPage() {
           level={fx.enchantLevel ?? 0}
           onClose={() => setFx({})}
         />
+        <BossVictoryModal
+          open={fx.bossRun != null}
+          run={fx.bossRun ?? null}
+          onClose={() => setFx({})}
+        />
 
         <Card
           className="game-module game-chance"
@@ -961,11 +992,12 @@ export function GamesPage() {
               <div className="monster-list">
                 {(economy.data?.monsters ?? []).map((monster) => {
                   const wait = remainingSeconds(monster.respawn_in, economy.dataUpdatedAt, now)
-                  const canFight = monster.alive && weaponLevel >= monster.required_weapon_level
+                  const lockedByBoss = weaponLevel >= ENCHANT_GOAL && !monster.is_boss
+                  const canFight = monster.alive && weaponLevel >= monster.required_weapon_level && !lockedByBoss
                   const canAffordFight = knownTokens == null || knownTokens >= FIGHT_COST
                   const busy = fx.playing === 'fight'
                   return (
-                    <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}${monster.is_boss ? ' is-boss' : ''}`} key={monster.id}>
+                    <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}${monster.is_boss ? ' is-boss' : ''}${lockedByBoss ? ' is-boss-locked' : ''}`} key={monster.id}>
                       <MonsterPortrait
                         id={monster.id}
                         name={monster.name}
@@ -986,7 +1018,7 @@ export function GamesPage() {
                           />
                         ) : null}
                         <Button
-                          variant={!canFight ? 'danger' : !canAffordFight ? 'yellow' : 'ghost'}
+                          variant={lockedByBoss ? 'muted' : !canFight ? 'danger' : !canAffordFight ? 'yellow' : 'ghost'}
                           type="button"
                           disabled={!canFight || busy}
                           onClick={() => void fight(monster.id)}
@@ -1004,7 +1036,7 @@ export function GamesPage() {
                 phase={fx.duel ? 'duel' : fx.playing === 'fight' ? 'clash' : fx.fightWon === true ? 'win' : fx.fightWon === false ? 'loss' : 'idle'}
                 monsterId={fx.targetId}
                 monsterName={fx.fightName}
-                weaponLevel={weaponLevel}
+                weaponLevel={fx.bossRun?.weaponLevel ?? weaponLevel}
                 boss={Boolean(fx.fightBoss)}
                 idleLabel={weaponLevel >= ENCHANT_GOAL ? t('games.economy.idleBoss') : t('games.economy.idle')}
                 clashLabel={t('games.economy.clashing')}

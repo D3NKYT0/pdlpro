@@ -47,7 +47,7 @@ ou substituir a interação implementada pelo componente.
 
 | Propriedade | Valores e finalidade |
 | --- | --- |
-| `variant` | `primary`: dourado; `secondary`: azul; `success`: verde; `yellow`: amarelo; `warning`: âmbar; `danger`: vermelho |
+| `variant` | `primary`: dourado; `secondary`: azul; `success`: verde; `yellow`: amarelo; `warning`: âmbar; `danger`: vermelho; `muted`: cinza |
 | `variant="ghost"` | Alias compatível de `secondary`, usado pelas telas anteriores |
 | `size` | `sm` compacto, `md` padrão e `lg` amplo |
 | `busy`, `busyLabel` | Desabilita a ação, mostra indicador e anuncia o texto de envio |
@@ -70,6 +70,7 @@ import { Button, ButtonLink, IconButton } from '../../components/ui/Button'
 <IconButton label="Excluir item" variant="danger" onClick={remove}>
   <Trash2 aria-hidden="true" />
 </IconButton>
+<Button variant="muted" disabled>Bloqueado</Button>
 <ButtonLink to="/panel" variant="secondary">Voltar ao painel</ButtonLink>
 ```
 

@@ -10,13 +10,18 @@ from apps.accounts.application.progress import add_xp
 from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
-from apps.games.domain.arena_combat import is_arena_overlevel, resolve_arena_fight
+from apps.games.domain.arena_combat import (
+    clamp_arena_strikes,
+    is_arena_overlevel,
+    resolve_arena_fight,
+)
 from apps.games.domain.arena_roster import (
     ARENA_BOSS_ADENA,
     ARENA_BOSS_ITEM_ID,
     ARENA_BOSS_ITEM_NAME,
     ARENA_WEAPON_MAX,
     is_arena_boss,
+    is_arena_regular_locked,
 )
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
 from apps.games.domain.repositories import (
@@ -95,7 +100,8 @@ class FightMonsterInput:
 
 class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
     """Consome fichas para enfrentar um monstro disponível e registra combate, fragmentos, XP e
-    progresso resultantes.
+    progresso resultantes. Com a arma no máximo, só o chefe pode ser enfrentado. Vitória no chefe
+    entrega Adena, devolve ``run`` da corrida e zera encante e fragmentos da arma.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``FightMonsterInput``. O retorno é
     ``dict``.
@@ -133,6 +139,13 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
                 needed = max(needed, ARENA_WEAPON_MAX)
             if weapon.level < needed:
                 raise ValidationDomainError("Sua arma é fraca demais para este monstro.")
+            if is_arena_regular_locked(
+                weapon_level=int(weapon.level),
+                is_boss=is_arena_boss(monster),
+            ):
+                raise ValidationDomainError(
+                    "A arma no máximo só enfrenta o chefe da arena."
+                )
             user.fichas -= 1
             weapon_level = int(weapon.level)
             required = int(monster.required_weapon_level)
@@ -153,8 +166,8 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
                 )
             fragments = monster.fragment_reward if won else 0
             prize = None
+            run = None
             if won:
-                weapon.fragments += fragments
                 weapon_fields = ["fragments", "updated_at"]
                 if is_arena_boss(monster):
                     add_to_bag(
@@ -164,13 +177,23 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
                         quantity=ARENA_BOSS_ADENA,
                         bags=self._bags,
                     )
+                    run = {
+                        "weapon_level": weapon_level,
+                        "fragments": int(weapon.fragments),
+                        "strikes": clamp_arena_strikes(data.strikes),
+                        "rounds": rounds,
+                        "boss_name": monster.name,
+                    }
                     weapon.level = 0
+                    weapon.fragments = 0
                     weapon_fields = ["level", "fragments", "updated_at"]
                     prize = {
                         "item_id": ARENA_BOSS_ITEM_ID,
                         "item_name": ARENA_BOSS_ITEM_NAME,
                         "quantity": ARENA_BOSS_ADENA,
                     }
+                else:
+                    weapon.fragments += fragments
                 self._economy.save_weapon(weapon, update_fields=weapon_fields)
                 monster.defeated_at = timezone.now()
                 self._economy.save_monster(
@@ -193,6 +216,7 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
             "rounds": rounds,
             "fragments_earned": fragments,
             "prize": prize,
+            "run": run,
             "weapon": {"level": weapon.level, "fragments": weapon.fragments},
             "fichas": user.fichas,
         }

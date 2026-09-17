@@ -5041,6 +5041,9 @@ msgstr "The monster has not respawned yet."
 msgid "Sua arma é fraca demais para este monstro."
 msgstr "Your weapon is too weak for this monster."
 
+msgid "A arma no máximo só enfrenta o chefe da arena."
+msgstr "At max enchant the weapon can only fight the arena boss."
+
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr "The weapon is already at max. Defeat the arena boss to claim the prize."
 
