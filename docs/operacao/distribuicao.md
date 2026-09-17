@@ -33,7 +33,7 @@ curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh
 bash install.sh --domain painel.exemplo.com --yes
 ```
 
-Opções úteis: `--version 2.4.0`, `--dir /opt/pdlpro`, `--port 8080`,
+Opções úteis: `--version 2.5.0`, `--dir /opt/pdlpro`, `--port 8080`,
 `--no-start`. Sem `--yes` o script pede o domínio e confirma.
 
 O instalador configura o `.env` (equivalente a

@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.0] - 2026-09-17
+
+Alterações desde **13 de setembro de 2026** (após `[2.4.0]`), consolidadas pelo histórico
+Git até **17 de setembro de 2026**.
+
 ### Adicionado
 
 - **Chefe da Arena das Feras:** ao chegar em +10 a arma permanece e destrava a

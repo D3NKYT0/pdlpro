@@ -2,8 +2,8 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **17 de setembro de 2026** — Não publicado: chefe Queen Ant
-na Arena das Feras (duelo de HP com crítico no servidor, modal de vitória com fogos e corrida,
+Última atualização: **17 de setembro de 2026** — Publicado: **[2.5.0]** —
+chefe Queen Ant na Arena das Feras (duelo de HP com crítico no servidor, modal de vitória com fogos e corrida,
 reset da arma e dos fragmentos; no +10 Lutar das feras comuns fica cinza);
 Lutar vermelho
 e cursor de proibido quando o combate está bloqueado; pescaria
@@ -44,13 +44,9 @@ jogo com oito caracteres, cabeçalhos e rate limit do Nginx, webhook de pagament
 com `external_id` conferido), ilustrações próprias das conquistas no desenho do
 Denkynho com estado bloqueado mais claro, e instaladores Linux/Windows das tags
 (`install.sh` / `install.ps1`), imagens GHCR e ZIP `pdl-pro-X.Y.Z.zip` via
-workflow de Release. Publicado: **[2.4.0]** —
+workflow de Release. Anterior: **[2.4.0]** —
 minigames em `/panel/games` (Arena das Feras com dez oponentes e
 encante +0 a +10, pescaria com iscas/espécies e i18n, roleta, baús e
 taverna animados; saldo de fichas ao vivo); ficha L2 (paperdoll, bag/baú,
 skills); marketplace e leilão de personagem com o mesmo snapshot;
-confirmação mock só no admin; LGPD self-service. Anterior: **[2.3.0]** —
-pacote legal/LGPD (textos reais, cookies, histórico, reaceitação);
-atalhos **API**/**Painel** no Jazzmin e card API no hub admin; extensões
-de cliente; i18n pt/en/es ampliado (SPA + gettext); sync de idioma
-SPA↔API; proxy Nginx `/i18n/`; tema **PDL Classic**.
+confirmação mock só no admin; LGPD self-service.
