@@ -295,6 +295,11 @@ def claim_daily_season(
             rewards += random.choices(pool, weights=[p.weight for p in pool], k=1)[0].rewards
         if not rewards:
             raise ValidationDomainError("Nenhuma recompensa configurada para hoje.")
+        amount = sum(
+            (Decimal(str(r.get("quantity", 0))) for r in rewards if r.get("kind") == "balance"),
+            Decimal(0),
+        )
+        daily_bonus.create_claim(user, claimed_on=today, amount=amount)
         rewards = grant_rewards(
             user,
             rewards,
@@ -302,11 +307,6 @@ def claim_daily_season(
             wallets=wallets,
             bags=bags,
         )
-        amount = sum(
-            (Decimal(str(r["quantity"])) for r in rewards if r["kind"] == "balance"),
-            Decimal(0),
-        )
-        daily_bonus.create_claim(user, claimed_on=today, amount=amount)
         daily_bonus.create_reward_log(
             user=user,
             kind="daily_bonus",

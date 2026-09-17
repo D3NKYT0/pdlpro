@@ -230,9 +230,9 @@ class ClaimDailyBonusUseCase(UseCase[ClaimDailyBonusInput, dict]):
             user = self._daily_bonus.require_user_locked(data.user_id)
             if self._daily_bonus.has_claim(user, today):
                 raise AlreadyClaimedError()
+            self._daily_bonus.create_claim(user, claimed_on=today, amount=amount)
             wallet = self._wallets.get_or_create(data.user_id)
             self._wallets.credit(wallet.id, amount, origin="daily_bonus", description="Bônus diário")
-            self._daily_bonus.create_claim(user, claimed_on=today, amount=amount)
             self._daily_bonus.create_reward_log(
                 user=user,
                 kind="daily_bonus",

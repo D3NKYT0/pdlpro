@@ -110,6 +110,7 @@ def claim_battle_pass_reward(
         raise ValidationDomainError("Compre o passe premium para este prêmio.")
     if repo.has_claim(user, reward):
         raise ValidationDomainError("Recompensa já resgatada.")
+    repo.create_claim(user, reward)
     add_to_bag(
         user,
         item_id=reward.item_id,
@@ -118,7 +119,6 @@ def claim_battle_pass_reward(
         quantity=reward.quantity,
         bags=bag_repo,
     )
-    repo.create_claim(user, reward)
     repo.create_reward_log(
         user=user,
         season=season,

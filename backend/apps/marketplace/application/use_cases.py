@@ -129,7 +129,7 @@ class CreateListingUseCase(UseCase[CreateListingInput, CharacterListingEntity]):
         skills = [asdict(skill) for skill in self._lineage.list_character_skills(char.char_id)]
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
         with self._unit_of_work:
-            self._lineage.transfer_character(data.char_id, master)
+            self._lineage.transfer_character(data.char_id, master, from_account=login)
             return self._listings.create(
                 data.user_id,
                 char_id=char.char_id,
@@ -219,7 +219,9 @@ class PurchaseListingUseCase(UseCase[PurchaseListingInput, CharacterListingEntit
                 origin=data.buyer_username,
                 description=f"Venda de personagem: {listing.char_name}",
             )
-            self._lineage.transfer_character(listing.char_id, data.buyer_username)
+            self._lineage.transfer_character(
+                listing.char_id, data.buyer_username, from_account=master
+            )
             return sold
 
 
@@ -271,5 +273,7 @@ class CancelListingUseCase(UseCase[CancelListingInput, CharacterListingEntity]):
             if not self._lineage.verify_character_ownership(listing.char_id, master):
                 raise ListingNotForSaleError("Personagem não está na conta do marketplace.")
             cancelled = self._listings.mark_cancelled(listing.id)
-            self._lineage.transfer_character(listing.char_id, listing.old_account)
+            self._lineage.transfer_character(
+                listing.char_id, listing.old_account, from_account=master
+            )
             return cancelled

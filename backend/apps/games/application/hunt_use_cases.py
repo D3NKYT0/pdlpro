@@ -162,22 +162,24 @@ class ClaimHuntQuestUseCase(UseCase[ClaimHuntInput, dict]):
             raise AlreadyClaimedError()
         if quest["current"] < quest["target"]:
             raise ValidationDomainError("Complete o objetivo da caça antes de resgatar.")
-        user = self._hunt.require_user(data.actor.user_id)
         row = self._hunt.get_active_quest(data.quest_id)
         if row is None:
             raise ValidationDomainError("Missão não encontrada.")
         start = hunt_period_start(row.period)
         character = details["character"]
         with self._unit_of_work:
+            user = self._hunt.require_user_locked(data.actor.user_id)
+            if self._hunt.has_claim(user, row, start):
+                raise AlreadyClaimedError()
+            self._hunt.create_claim(
+                user, row, character_id=character["char_id"], period_start=start
+            )
             grant_rewards(
                 user,
                 row.rewards,
                 row.name,
                 wallets=self._wallets,
                 bags=self._bags,
-            )
-            self._hunt.create_claim(
-                user, row, character_id=character["char_id"], period_start=start
             )
         return GetHuntDetailsUseCase(self._hunt, self._lineage, self._access).execute(data.actor)
 

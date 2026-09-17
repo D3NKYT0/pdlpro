@@ -7,9 +7,11 @@ from uuid import UUID
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldDoesNotExist
+from django.db import IntegrityError
 from django.db.models import Count, F, Q, Sum
 from django.utils import timezone
 
+from apps.games.domain.exceptions import AlreadyClaimedError
 from apps.games.domain.repositories import (
     IBagRepository,
     IBattlePassRepository,
@@ -606,7 +608,10 @@ class DjangoDailyBonusRepository(IDailyBonusRepository):
         return DailyBonusClaim.objects.filter(user__id=user_id, claimed_on=claimed_on).exists()
 
     def create_claim(self, user, *, claimed_on: date, amount: Decimal) -> DailyBonusClaim:
-        return DailyBonusClaim.objects.create(user=user, claimed_on=claimed_on, amount=amount)
+        try:
+            return DailyBonusClaim.objects.create(user=user, claimed_on=claimed_on, amount=amount)
+        except IntegrityError:
+            raise AlreadyClaimedError() from None
 
     def create_reward_log(
         self,
@@ -738,7 +743,10 @@ class DjangoBattlePassRepository(IBattlePassRepository):
         return UserBattlePassClaim.objects.filter(user=user, reward=reward).exists()
 
     def create_claim(self, user, reward) -> UserBattlePassClaim:
-        return UserBattlePassClaim.objects.create(user=user, reward=reward)
+        try:
+            return UserBattlePassClaim.objects.create(user=user, reward=reward)
+        except IntegrityError:
+            raise ValidationDomainError("Recompensa já resgatada.") from None
 
     def list_claimable_rewards(self, user, progress) -> list[BattlePassReward]:
         rewards = BattlePassReward.objects.filter(
@@ -822,6 +830,9 @@ class DjangoHuntRepository(IHuntRepository):
     def require_user(self, user_id: UUID):
         return User.objects.get(id=user_id)
 
+    def require_user_locked(self, user_id: UUID):
+        return User.objects.select_for_update().get(id=user_id)
+
     def list_active_quests(self) -> list:
         return list(HuntQuest.objects.filter(active=True).order_by("seq_id"))
 
@@ -858,6 +869,9 @@ class DjangoHuntRepository(IHuntRepository):
         return HuntClaim.objects.filter(user=user, quest=quest, period_start=period_start).exists()
 
     def create_claim(self, user, quest, *, character_id: int, period_start):
-        return HuntClaim.objects.create(
-            user=user, quest=quest, character_id=character_id, period_start=period_start
-        )
+        try:
+            return HuntClaim.objects.create(
+                user=user, quest=quest, character_id=character_id, period_start=period_start
+            )
+        except IntegrityError:
+            raise AlreadyClaimedError() from None

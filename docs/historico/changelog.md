@@ -14,7 +14,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   dupla sob requisições concorrentes: a transição `for_sale` → `sold`/`cancelled`
   é compare-and-set e ocorre antes do débito/crédito e da transferência no
   jogo. O perdedor da corrida não tem a carteira debitada. Achado relatado por
-  [Victor Mendonça (@mend3)](https://github.com/mend3).
+  [Victor Mendonça (@mend3)](https://github.com/mend3). A transferência no
+  Lineage passa a exigir a conta de origem (`from_account`); zero linhas
+  abortam e revertem o atomic do painel.
+- Lance de leilão e fechamento de oferta vencida usam compare-and-set no preço
+  atual e no status `open` → `finished` antes de movimentar carteira ou item.
+- Resgates de bônus diário, passe e caça do dia gravam o comprovante único
+  antes de creditar; conflito de unicidade vira “já resgatado”, sem segunda
+  entrega.
 
 ## [2.5.0] - 2026-09-17
 

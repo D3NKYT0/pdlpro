@@ -300,9 +300,10 @@ class NullLineageGateway(ILineageGateway):
     def verify_character_ownership(self, char_id: int, account: str) -> bool:
         return self.get_character(account, char_id) is not None
 
-    def transfer_character(self, char_id: int, new_account: str) -> None:
+    def transfer_character(self, char_id: int, new_account: str, *, from_account: str) -> None:
         origin_login = None
         moved: GameCharacter | None = None
+        expected = from_account.lower()
         for login, chars in self._characters.items():
             for char in chars:
                 if char.char_id == char_id:
@@ -311,8 +312,8 @@ class NullLineageGateway(ILineageGateway):
                     break
             if moved is not None:
                 break
-        if origin_login is None or moved is None:
-            raise GameAccountNotFoundError("Personagem não encontrado.")
+        if origin_login is None or moved is None or origin_login != expected:
+            raise GameAccountNotFoundError("Não foi possível transferir o personagem.")
         self._characters[origin_login] = [char for char in self._characters[origin_login] if char.char_id != char_id]
         key = new_account.lower()
         self._accounts.setdefault(

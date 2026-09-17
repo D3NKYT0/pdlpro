@@ -202,7 +202,7 @@ class CreateCharacterAuctionUseCase(UseCase[CreateCharacterAuctionInput, Auction
         skills = [asdict(skill) for skill in self._lineage.list_character_skills(char.char_id)]
         master = getattr(settings, "MARKETPLACE_MASTER_ACCOUNT", "MARKETPLACE_SYSTEM")
         with self._unit_of_work:
-            self._lineage.transfer_character(data.char_id, master)
+            self._lineage.transfer_character(data.char_id, master, from_account=login)
             return self._auctions.create(
                 data.user_id,
                 kind="character",
@@ -248,8 +248,9 @@ class PlaceBidInput:
 
 
 class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
-    """Valida prazo e valor do lance, devolve o lance anterior e debita o novo participante antes
-    de registrar a oferta. O vendedor não pode dar lance no próprio leilão.
+    """Valida prazo e valor do lance, reivindica o novo maior lance com compare-and-set e
+    só então devolve o lance anterior e debita o participante. O vendedor não pode dar lance
+    no próprio leilão.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``PlaceBidInput``. O retorno é
     ``BidEntity``.
@@ -273,7 +274,7 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
         if data.amount <= 0:
             raise InvalidBidError()
         with self._unit_of_work:
-            auction = self._auctions.get_by_id(data.auction_id)
+            auction = self._auctions.get_by_id(data.auction_id, lock=True)
             if auction is None:
                 raise AuctionNotFoundError()
             if auction.status != "open" or auction.ends_at <= timezone.now():
@@ -299,11 +300,20 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
             wallet = self._wallets.get_or_create(data.user_id)
             if wallet.balance < data.amount:
                 raise InsufficientBalanceError()
-            if auction.highest_bidder_id and auction.current_bid:
-                previous = self._wallets.get_or_create(auction.highest_bidder_id)
+            previous_id = auction.highest_bidder_id
+            previous_bid = auction.current_bid
+            placed = self._auctions.place_bid(
+                auction.id,
+                data.user_id,
+                data.amount,
+                destination,
+                expected_current_bid=previous_bid,
+            )
+            if previous_id and previous_bid:
+                previous = self._wallets.get_or_create(previous_id)
                 self._wallets.credit(
                     previous.id,
-                    auction.current_bid,
+                    previous_bid,
                     origin="auction",
                     description="Devolução de lance no leilão",
                 )
@@ -313,7 +323,7 @@ class PlaceBidUseCase(UseCase[PlaceBidInput, BidEntity]):
                 destination=auction.seller_username,
                 description="Lance no leilão",
             )
-            return self._auctions.place_bid(auction.id, data.user_id, data.amount, destination)
+            return placed
 
 
 class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
@@ -341,8 +351,11 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
         closed = 0
         for auction in self._auctions.list_expired_open(timezone.now()):
             with self._unit_of_work:
-                current = self._auctions.get_by_id(auction.id)
+                current = self._auctions.get_by_id(auction.id, lock=True)
                 if current is None or current.status != "open":
+                    continue
+                finished = self._auctions.mark_finished(current.id)
+                if finished is None:
                     continue
                 if current.kind == "character":
                     self._close_character(current)
@@ -350,7 +363,6 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
                     self._close_item_sold(current)
                 else:
                     self._close_item_return(current)
-                self._auctions.mark_finished(current.id)
                 closed += 1
         return {"closed": closed}
 
@@ -371,7 +383,9 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
                     origin="auction",
                     description=f"Devolução de lance (slot indisponível) — {label}",
                 )
-                self._lineage.transfer_character(current.char_id, current.old_account)
+                self._lineage.transfer_character(
+                    current.char_id, current.old_account, from_account=master
+                )
                 return
             seller_wallet = self._wallets.get_or_create(current.seller_id)
             self._wallets.credit(
@@ -380,10 +394,14 @@ class CloseExpiredAuctionsUseCase(UseCase[None, dict]):
                 origin=current.highest_bidder_username,
                 description=f"Venda no leilão {label}",
             )
-            self._lineage.transfer_character(current.char_id, current.highest_bidder_username)
+            self._lineage.transfer_character(
+                current.char_id, current.highest_bidder_username, from_account=master
+            )
             return
         if in_custody:
-            self._lineage.transfer_character(current.char_id, current.old_account)
+            self._lineage.transfer_character(
+                current.char_id, current.old_account, from_account=master
+            )
 
     def _close_item_sold(self, current: AuctionEntity) -> None:
         winning = self._auctions.winning_bid(current.id)

@@ -17,7 +17,9 @@ class IAuctionRepository(ABC):
     """
 
     @abstractmethod
-    def get_by_id(self, auction_id: UUID) -> AuctionEntity | None:
+    def get_by_id(self, auction_id: UUID, *, lock: bool = False) -> AuctionEntity | None:
+        """Carrega o leilão. ``lock=True`` adquire ``SELECT FOR UPDATE`` na linha do leilão."""
+
         raise NotImplementedError
 
     @abstractmethod
@@ -73,7 +75,14 @@ class IAuctionRepository(ABC):
         bidder_id: UUID,
         amount: Decimal,
         character_name: str,
+        *,
+        expected_current_bid: Decimal | None,
     ) -> BidEntity:
+        """Registra o lance se o leilão ainda estiver aberto com ``expected_current_bid``.
+
+        Zero linhas (outro lance já avançou o preço) lança ``InvalidBidError``.
+        """
+
         raise NotImplementedError
 
     @abstractmethod
@@ -81,5 +90,7 @@ class IAuctionRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def mark_finished(self, auction_id: UUID) -> AuctionEntity:
+    def mark_finished(self, auction_id: UUID) -> AuctionEntity | None:
+        """Transição condicional ``open`` → ``finished``. ``None`` se outro fechamento ganhou."""
+
         raise NotImplementedError

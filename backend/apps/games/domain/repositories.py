@@ -645,6 +645,10 @@ class IHuntRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def require_user_locked(self, user_id: UUID):
+        raise NotImplementedError
+
+    @abstractmethod
     def list_active_quests(self) -> list[Any]:
         raise NotImplementedError
 

@@ -4,7 +4,10 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
+from django.utils import timezone
+
 from apps.auction.domain.entities import AuctionEntity, BidEntity
+from apps.auction.domain.exceptions import InvalidBidError
 from apps.auction.domain.repositories import IAuctionRepository
 from apps.auction.infrastructure.models import Auction, Bid
 
@@ -61,9 +64,18 @@ class DjangoAuctionRepository(IAuctionRepository):
             character_name=row.character_name,
         )
 
-    def get_by_id(self, auction_id: UUID) -> AuctionEntity | None:
-        row = Auction.objects.select_related("seller", "highest_bidder").filter(id=auction_id).first()
-        return self._auction(row) if row else None
+    def _queryset(self, *, lock: bool = False):
+        rows = Auction.objects.select_related("seller", "highest_bidder")
+        if lock:
+            rows = rows.select_for_update(of=("self",))
+        return rows
+
+    def get_by_id(self, auction_id: UUID, *, lock: bool = False) -> AuctionEntity | None:
+        try:
+            row = self._queryset(lock=lock).get(id=auction_id)
+        except Auction.DoesNotExist:
+            return None
+        return self._auction(row)
 
     def list_open(self) -> list[AuctionEntity]:
         rows = Auction.objects.select_related("seller", "highest_bidder").filter(status=Auction.Status.OPEN)
@@ -144,14 +156,31 @@ class DjangoAuctionRepository(IAuctionRepository):
         )
         return self._auction(row)
 
-    def place_bid(self, auction_id: UUID, bidder_id: UUID, amount: Decimal, character_name: str) -> BidEntity:
+    def place_bid(
+        self,
+        auction_id: UUID,
+        bidder_id: UUID,
+        amount: Decimal,
+        character_name: str,
+        *,
+        expected_current_bid: Decimal | None,
+    ) -> BidEntity:
         from django.contrib.auth import get_user_model
 
-        auction = Auction.objects.select_related("seller", "highest_bidder").select_for_update().get(id=auction_id)
         bidder = get_user_model().objects.get(id=bidder_id)
-        auction.current_bid = amount
-        auction.highest_bidder = bidder
-        auction.save(update_fields=["current_bid", "highest_bidder", "updated_at"])
+        claimed = Auction.objects.filter(id=auction_id, status=Auction.Status.OPEN)
+        if expected_current_bid is None:
+            claimed = claimed.filter(current_bid__isnull=True)
+        else:
+            claimed = claimed.filter(current_bid=expected_current_bid)
+        updated = claimed.update(
+            current_bid=amount,
+            highest_bidder=bidder,
+            updated_at=timezone.now(),
+        )
+        if not updated:
+            raise InvalidBidError("O lance deve ser maior que o lance atual.")
+        auction = self._queryset().get(id=auction_id)
         row = Bid.objects.create(auction=auction, bidder=bidder, amount=amount, character_name=character_name)
         row.auction = auction
         return self._bid(row)
@@ -165,8 +194,11 @@ class DjangoAuctionRepository(IAuctionRepository):
         )
         return self._bid(row) if row else None
 
-    def mark_finished(self, auction_id: UUID) -> AuctionEntity:
-        row = Auction.objects.select_related("seller", "highest_bidder").select_for_update().get(id=auction_id)
-        row.status = Auction.Status.FINISHED
-        row.save(update_fields=["status", "updated_at"])
-        return self._auction(row)
+    def mark_finished(self, auction_id: UUID) -> AuctionEntity | None:
+        updated = Auction.objects.filter(id=auction_id, status=Auction.Status.OPEN).update(
+            status=Auction.Status.FINISHED,
+            updated_at=timezone.now(),
+        )
+        if not updated:
+            return None
+        return self._auction(self._queryset().get(id=auction_id))

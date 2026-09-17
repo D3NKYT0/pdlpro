@@ -76,7 +76,9 @@ def test_unavailable_purchase_preserves_money_and_listing(market, settings, reas
     elif reason == "slots":
         settings.MAX_CHARACTERS_PER_ACCOUNT = 1
     else:
-        gateway.transfer_character(listing.char_id, "elsewhere")
+        gateway.transfer_character(
+            listing.char_id, "elsewhere", from_account=settings.MARKETPLACE_MASTER_ACCOUNT
+        )
     assert call(users[1], listing, "buy").status_code == 400
     listing.refresh_from_db()
     assert listing.status == "for_sale"

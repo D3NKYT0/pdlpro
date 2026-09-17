@@ -107,7 +107,7 @@ class RecordingLineage:
     def verify_character_ownership(self, char_id: int, account: str) -> bool:
         return True
 
-    def transfer_character(self, char_id: int, new_account: str) -> None:
+    def transfer_character(self, char_id: int, new_account: str, *, from_account: str) -> None:
         self.transfers.append((char_id, new_account))
 
 
@@ -134,9 +134,9 @@ class AlwaysInCustody:
     def verify_character_ownership(self, char_id: int, account: str) -> bool:
         return True
 
-    def transfer_character(self, char_id: int, new_account: str) -> None:
+    def transfer_character(self, char_id: int, new_account: str, *, from_account: str) -> None:
         self.transfers.append((char_id, new_account))
-        self._inner.transfer_character(char_id, new_account)
+        self._inner.transfer_character(char_id, new_account, from_account=from_account)
 
 
 def _listing_entity(*, seller_id: UUID, price: Decimal = Decimal("25.00")) -> CharacterListingEntity:

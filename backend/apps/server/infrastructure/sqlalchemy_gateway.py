@@ -151,10 +151,11 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             result = connection.execute(text(sql), self._bind(sql, params))
             return [dict(row._mapping) for row in result]
 
-    def _execute(self, name: str, params: dict | None = None) -> None:
+    def _execute(self, name: str, params: dict | None = None) -> int:
         sql = self._sql[name]
         with self._engine_or_create().begin() as connection:
-            connection.execute(text(sql), self._bind(sql, params))
+            result = connection.execute(text(sql), self._bind(sql, params))
+            return int(result.rowcount or 0)
 
     def _ranking(self, name: str, limit: int) -> list[RankingEntry]:
         rows = self._fetch(name, {"limit": limit})
@@ -583,8 +584,13 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         rows = self._fetch("verify_character_ownership", {"char_id": char_id, "login": account})
         return bool(rows and int(rows[0]["total"] or 0) > 0)
 
-    def transfer_character(self, char_id: int, new_account: str) -> None:
-        self._execute("transfer_character", {"acc": new_account, "cid": char_id})
+    def transfer_character(self, char_id: int, new_account: str, *, from_account: str) -> None:
+        updated = self._execute(
+            "transfer_character",
+            {"acc": new_account, "cid": char_id, "from_acc": from_account},
+        )
+        if updated != 1:
+            raise GameAccountNotFoundError("Não foi possível transferir o personagem.")
 
     def observe_items(self) -> dict:
         # All reads share one MySQL snapshot; this path cannot mutate game data.

@@ -115,7 +115,7 @@ WHERE obj_Id = :char_id AND account_name = :login
 -- name: transfer_character
 UPDATE characters
 SET account_name = :acc
-WHERE obj_Id = :cid
+WHERE obj_Id = :cid AND account_name = :from_acc
 
 -- name: find_character_id_by_name
 SELECT obj_Id AS char_id
