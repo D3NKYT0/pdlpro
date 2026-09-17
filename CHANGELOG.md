@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **17 de setembro de 2026** — Não publicado: ícones
+Última atualização: **17 de setembro de 2026** — Não publicado: controle de
+recursos em `/panel/admin/resources` no chrome de Jogos/Serviços, com Caça do
+dia, Lojas do jogo, Pescaria e Nível e conquistas; ícones
 esmaltados compartilhados em `components/icons` no lugar dos Lucide `--gold`
 (loja, troca Adena, roadmap e recompensas); configurador
 da loja em `/panel/admin/shop` com catálogo low grade (itens e pacotes

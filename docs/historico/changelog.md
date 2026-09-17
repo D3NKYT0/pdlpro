@@ -89,6 +89,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- O **controle de recursos** em `/panel/admin/resources` passa ao chrome de
+  Jogos/Serviços: cartões por categoria, código do módulo, interruptor
+  compartilhado e nomes atuais (**Pescaria**, **Caça do dia**, **Lojas do
+  jogo**, **Nível e conquistas**), com i18n pt/en/es. A lista pública da API
+  deixa o rótulo legado «Pesca»/«Progresso».
 - Notícias, calendário e roadmap passam a editar e servir PT/EN/ES: a staff
   grava `*_en`/`*_es` em `/panel/admin/news`, `/panel/admin/calendar` e
   `/panel/admin/roadmap`; o site público pede `?lang=` (home, news, calendário

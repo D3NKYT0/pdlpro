@@ -65,9 +65,10 @@ describe("program screens", () => {
   });
   it("exposes accessible resource switches with the persisted state", () => {
     const html = render(<AdminResourcesPage />, [[["resources"], [resource]]]);
-    expect(html).toContain('role="switch"');
-    expect(html).toContain('aria-checked="false"');
-    expect(html).toContain('aria-label="Ativar Loja"');
+    expect(html).toContain('type="checkbox"');
+    expect(html).toContain("Ativar Loja");
+    expect(html).toContain("Loja");
+    expect(html).not.toContain("checked");
   });
   it("provides structured reward fields and preserves enchantment", () => {
     const html = render(

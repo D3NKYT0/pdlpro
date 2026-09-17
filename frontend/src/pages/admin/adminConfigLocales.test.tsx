@@ -134,9 +134,23 @@ describe('admin configuration pages follow the active language', () => {
   })
 
   it('translates the resource, roadmap and supporter sections', async () => {
-    expect(await inLanguage('pt', () => render(<AdminResourcesSection />))).toContain('Controle de recursos')
-    expect(await inLanguage('en', () => render(<AdminResourcesSection />))).toContain('Resource control')
-    expect(await inLanguage('es', () => render(<AdminResourcesSection />))).toContain('Control de recursos')
+    const resources = (client: QueryClient) =>
+      client.setQueryData(['resources'], [
+        { id: 'hunt', code: 'hunt', name: 'Caça do dia', category: 'Jogos', enabled: true, description: 'legado' },
+        { id: 'fish', code: 'fishing', name: 'Pesca', category: 'Jogos', enabled: true, description: 'legado' },
+        { id: 'stores', code: 'game-stores', name: 'Lojas do jogo', category: 'Conteúdo', enabled: true, description: 'legado' },
+      ])
+    expect(await inLanguage('pt', () => render(<AdminResourcesSection />, resources))).toContain('Controle de recursos')
+    expect(await inLanguage('pt', () => render(<AdminResourcesSection />, resources))).toContain('Pescaria')
+    const resourceEnglish = await inLanguage('en', () => render(<AdminResourcesSection />, resources))
+    expect(resourceEnglish).toContain('Resource control')
+    expect(resourceEnglish).toContain('Daily hunt')
+    expect(resourceEnglish).toContain('Fishing')
+    expect(resourceEnglish).toContain('In-game shops')
+    expect(resourceEnglish).not.toContain('Caça do dia')
+    expect(resourceEnglish).not.toContain('Pesca')
+    expect(await inLanguage('es', () => render(<AdminResourcesSection />, resources))).toContain('Control de recursos')
+    expect(await inLanguage('es', () => render(<AdminResourcesSection />, resources))).toContain('Caza del día')
 
     expect(await inLanguage('pt', () => render(<AdminRoadmapSection />))).toContain('Gerenciar roadmap')
     const roadmapEnglish = await inLanguage('en', () => render(<AdminRoadmapSection />))

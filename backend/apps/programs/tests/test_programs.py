@@ -313,6 +313,17 @@ def test_staff_roadmap_stores_translations(staff):
     assert "title_en" not in public.data[0]
 
 
+def test_public_resources_use_current_product_labels():
+    rows = {row["code"]: row for row in APIClient().get("/api/v1/public/resources/").data}
+    assert {"hunt", "game-stores", "fishing", "progress", "games"} <= set(rows)
+    assert rows["fishing"]["name"] == "Pescaria"
+    assert rows["progress"]["name"] == "Nível e conquistas"
+    assert rows["hunt"]["name"] == "Caça do dia"
+    assert rows["game-stores"]["name"] == "Lojas do jogo"
+    assert "PvP" in rows["hunt"]["description"]
+    assert "Painel" in rows["progress"]["description"]
+
+
 @pytest.mark.parametrize(
     "code,path",
     [
