@@ -40,6 +40,7 @@ from apps.games.infrastructure.models import (
     DailyBonusClaim,
     DailyBonusSeason,
     DiceHistory,
+    EconomyBossDuel,
     EconomyFightLog,
     EconomyWeapon,
     Fish,
@@ -545,6 +546,42 @@ class DjangoEconomyRepository(IEconomyRepository):
             rounds=rounds,
             fragments_earned=fragments_earned,
         )
+
+    def get_boss_duel(self, user) -> EconomyBossDuel | None:
+        return EconomyBossDuel.objects.filter(user=user).select_related("monster").first()
+
+    def get_boss_duel_locked(self, user) -> EconomyBossDuel | None:
+        return (
+            EconomyBossDuel.objects.select_for_update()
+            .filter(user=user)
+            .select_related("monster")
+            .first()
+        )
+
+    def create_boss_duel(
+        self,
+        *,
+        user,
+        monster,
+        player_hp: int,
+        player_max_hp: int,
+        boss_hp: int,
+        boss_max_hp: int,
+    ) -> EconomyBossDuel:
+        return EconomyBossDuel.objects.create(
+            user=user,
+            monster=monster,
+            player_hp=player_hp,
+            player_max_hp=player_max_hp,
+            boss_hp=boss_hp,
+            boss_max_hp=boss_max_hp,
+        )
+
+    def save_boss_duel(self, duel, *, update_fields: list[str]) -> None:
+        duel.save(update_fields=update_fields)
+
+    def delete_boss_duel(self, user) -> None:
+        EconomyBossDuel.objects.filter(user=user).delete()
 
 
 class DjangoDailyBonusRepository(IDailyBonusRepository):

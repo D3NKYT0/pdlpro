@@ -411,6 +411,35 @@ class IEconomyRepository(ABC):
     ) -> Any:
         raise NotImplementedError
 
+    @abstractmethod
+    def get_boss_duel(self, user) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_boss_duel_locked(self, user) -> Any | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def create_boss_duel(
+        self,
+        *,
+        user,
+        monster,
+        player_hp: int,
+        player_max_hp: int,
+        boss_hp: int,
+        boss_max_hp: int,
+    ) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_boss_duel(self, duel, *, update_fields: list[str]) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_boss_duel(self, user) -> None:
+        raise NotImplementedError
+
 
 class IDailyBonusRepository(ABC):
     """Porta do bônus diário simples e por temporada."""

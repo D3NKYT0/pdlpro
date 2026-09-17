@@ -2,7 +2,7 @@ import { useId, type CSSProperties } from 'react'
 import { Trophy, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { ItemIcon } from '../ItemIcon'
-import { BOSS_STRIKE_MAX } from './bossDuel'
+import { type ArenaCombatHit, type BossDuelPhase } from './bossDuel'
 import { formatCompactQuantity } from '../../lib/formatters'
 import {
   DICE_PIP_FACES,
@@ -477,6 +477,16 @@ const BATTLE_SPARKS = 16
 const BATTLE_MOTES = 12
 const BATTLE_HITS = 4
 
+function BattleFloat({ hit, critLabel }: { hit?: ArenaCombatHit | null; critLabel?: string }) {
+  if (!hit) return null
+  return (
+    <span className={`battle-float${hit.crit ? ' is-crit' : ''}`}>
+      {hit.crit && critLabel ? `${critLabel} ` : null}
+      {hit.damage}
+    </span>
+  )
+}
+
 export type BattlePhase = 'idle' | 'duel' | 'clash' | 'win' | 'loss'
 
 export function BattleStage({
@@ -496,6 +506,7 @@ export function BattleStage({
   duel = null,
   duelHint,
   duelStrikeLabel,
+  duelCritLabel,
   onDuelStrike,
 }: {
   phase?: BattlePhase
@@ -511,18 +522,43 @@ export function BattleStage({
   fragmentsLabel?: string
   roundsLabel?: string
   boss?: boolean
-  duel?: { open: boolean; hits: number } | null
+  duel?: {
+    open: boolean
+    hits: number
+    phase?: BossDuelPhase
+    turn?: number
+    playerHp?: number
+    bossHp?: number
+    playerHpNow?: number
+    playerMaxHp?: number
+    bossHpNow?: number
+    bossMaxHp?: number
+    playerHit?: ArenaCombatHit | null
+    bossHit?: ArenaCombatHit | null
+  } | null
   duelHint?: string
   duelStrikeLabel?: string
+  duelCritLabel?: string
   onDuelStrike?: () => void
 }) {
   const fighting = phase === 'clash'
   const dueling = phase === 'duel'
   const won = phase === 'win'
   const lost = phase === 'loss'
+  const duelPhase = duel?.phase ?? (duel?.open ? 'player' : undefined)
+  const playerActing = fighting || duelPhase === 'playerAct'
+  const monsterActing = fighting || duelPhase === 'bossAct'
   const status = won ? winLabel : lost ? lossLabel : dueling ? (duelHint ?? clashLabel) : fighting ? clashLabel : idleLabel
+  const turnClass =
+    duelPhase === 'player'
+      ? ' is-turn-player'
+      : duelPhase === 'playerAct'
+        ? ' is-turn-player-act'
+        : duelPhase === 'bossAct'
+          ? ' is-turn-boss-act'
+          : ''
   return (
-    <div className={`battle-stage is-${phase}${boss ? ' is-boss' : ''}${duel?.open ? ' is-strike-open' : ''}`} data-theme-part="game-stage">
+    <div className={`battle-stage is-${phase}${boss ? ' is-boss' : ''}${duel?.open ? ' is-strike-open' : ''}${turnClass}`} data-theme-part="game-stage">
       <div className="battle-field" aria-hidden="true">
         <i className="battle-field-veil" />
         <i className="battle-field-wash" />
@@ -545,15 +581,24 @@ export function BattleStage({
         ))}
       </div>
       <div className="battle-ring">
-        <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${fighting || dueling ? ' is-fighting' : ''}${won ? ' is-victor' : ''}`}>
+        <div className={`battle-fighter is-player${lost ? ' is-down' : ''}${playerActing ? ' is-fighting' : ''}${playerActing && dueling ? ' is-acting' : ''}${won ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
+          {duelPhase === 'bossAct' ? <BattleFloat hit={duel?.bossHit} critLabel={duelCritLabel} /> : null}
           <div className="battle-fighter-art" data-theme-part="game-portrait">
             <WeaponArt level={weaponLevel} />
           </div>
           <i className="battle-pedestal" />
           <span className="battle-hp" aria-hidden="true">
-            <i className="battle-hp-fill is-player" />
+            <i
+              className="battle-hp-fill is-player"
+              style={dueling ? ({ '--hp': String(duel?.playerHp ?? 1) } as CSSProperties) : undefined}
+            />
           </span>
+          {dueling && duel?.playerMaxHp ? (
+            <small className="battle-hp-value">
+              {duel.playerHpNow}/{duel.playerMaxHp}
+            </small>
+          ) : null}
           <span className="battle-plate">
             <small>{playerLabel}</small>
             <b>+{weaponLevel}</b>
@@ -595,17 +640,26 @@ export function BattleStage({
             </span>
           ) : null}
         </div>
-        <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${fighting || dueling ? ' is-fighting' : ''}${lost ? ' is-victor' : ''}`}>
+        <div className={`battle-fighter is-monster${won ? ' is-down' : ''}${monsterActing ? ' is-fighting' : ''}${monsterActing && dueling ? ' is-acting' : ''}${lost ? ' is-victor' : ''}`}>
           <i className="battle-fighter-glow" />
+          {duelPhase === 'playerAct' ? <BattleFloat hit={duel?.playerHit} critLabel={duelCritLabel} /> : null}
           {monsterId ? (
-            <MonsterPortrait id={monsterId} name={monsterName} down={won} fighting={fighting || dueling} size="hero" />
+            <MonsterPortrait id={monsterId} name={monsterName} down={won} fighting={monsterActing} size="hero" />
           ) : (
             <div className="battle-fighter-art is-empty" data-theme-part="game-portrait" />
           )}
           <i className="battle-pedestal" />
           <span className="battle-hp" aria-hidden="true">
-            <i className="battle-hp-fill is-monster" />
+            <i
+              className="battle-hp-fill is-monster"
+              style={dueling ? ({ '--hp': String(duel?.bossHp ?? 1) } as CSSProperties) : undefined}
+            />
           </span>
+          {dueling && duel?.bossMaxHp ? (
+            <small className="battle-hp-value">
+              {duel.bossHpNow}/{duel.bossMaxHp}
+            </small>
+          ) : null}
           {monsterName ? (
             <span className="battle-plate">
               <small>{monsterName}</small>
@@ -618,11 +672,6 @@ export function BattleStage({
           <div className={`battle-duel-ring${duel?.open ? ' is-open' : ''}`} aria-hidden="true">
             <i />
           </div>
-          <span className="battle-duel-hits" aria-hidden="true">
-            {Array.from({ length: BOSS_STRIKE_MAX }, (_, index) => (
-              <i key={index} className={index < (duel?.hits ?? 0) ? 'is-lit' : undefined} />
-            ))}
-          </span>
           <Button
             type="button"
             variant={duel?.open ? 'yellow' : 'ghost'}

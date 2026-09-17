@@ -48,6 +48,8 @@ _("O monstro ainda não respawnou.")
 _("Sua arma é fraca demais para este monstro.")
 _("A arma no máximo só enfrenta o chefe da arena.")
 _("A arma já está no máximo. Derrote o chefe da arena para receber o prêmio.")
+_("Termine o duelo do chefe em andamento.")
+_("Não há duelo em andamento com este chefe.")
 
 # apps.inventory.domain.exceptions
 _("Inventário não encontrado.")

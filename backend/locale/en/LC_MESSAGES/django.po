@@ -5047,6 +5047,18 @@ msgstr "At max enchant the weapon can only fight the arena boss."
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr "The weapon is already at max. Defeat the arena boss to claim the prize."
 
+msgid "Termine o duelo do chefe em andamento."
+msgstr "Finish the arena boss duel already underway."
+
+msgid "Não há duelo em andamento com este chefe."
+msgstr "There is no boss duel underway with this monster."
+
+msgid "Duelo do chefe"
+msgstr "Boss duel"
+
+msgid "Duelos do chefe"
+msgstr "Boss duels"
+
 msgid "Chefe da arena"
 msgstr "Arena boss"
 

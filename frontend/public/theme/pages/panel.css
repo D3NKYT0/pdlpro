@@ -12278,6 +12278,11 @@ html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster {
   to { transform: scale(1.08); opacity: 1; }
 }
 
+@keyframes battle-float-up {
+  from { opacity: 1; transform: translate(-50%, 8px); }
+  to { opacity: 0; transform: translate(-50%, -28px); }
+}
+
 html.pdl-panel .battle-stage {
   position: relative;
   display: flex;
@@ -12493,11 +12498,43 @@ html.pdl-panel .battle-hp {
   background: rgba(5, 5, 4, 0.62);
 }
 
+html.pdl-panel .battle-hp-value {
+  position: relative;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .battle-float {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  z-index: 4;
+  transform: translateX(-50%);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--panel-gold-bright);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.72);
+  animation: battle-float-up 720ms ease-out forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+html.pdl-panel .battle-float.is-crit {
+  color: #ff7a4a;
+  font-size: 1.05rem;
+}
+
 html.pdl-panel .battle-hp-fill {
   display: block;
+  width: 100%;
   height: 100%;
+  transform: scaleX(var(--hp, 1));
   transform-origin: left center;
   background: linear-gradient(90deg, rgba(197, 161, 97, 0.42), rgba(230, 199, 125, 0.88));
+  transition: transform 480ms ease;
 }
 
 html.pdl-panel .battle-plate {
@@ -12659,6 +12696,35 @@ html.pdl-panel .battle-stage.is-loss .battle-status strong {
 
 html.pdl-panel .battle-stage.is-clash {
   animation: battle-shake 2200ms ease;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-player-act .battle-fighter.is-player,
+html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player.is-acting {
+  animation: battle-lunge-player 360ms ease-in-out 2 alternate;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-boss-act .battle-fighter.is-monster,
+html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster.is-acting {
+  animation: battle-lunge-monster 360ms ease-in-out 2 alternate;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-player-act .battle-slash,
+html.pdl-panel .battle-stage.is-duel.is-turn-boss-act .battle-slash {
+  animation: battle-slash 360ms ease-in-out 2;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-player-act .battle-slash.is-cross,
+html.pdl-panel .battle-stage.is-duel.is-turn-boss-act .battle-slash.is-cross {
+  animation-name: battle-slash-cross;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-player-act .battle-impact,
+html.pdl-panel .battle-stage.is-duel.is-turn-boss-act .battle-impact {
+  animation: battle-impact 420ms ease-out 1;
+}
+
+html.pdl-panel .battle-stage.is-duel.is-turn-boss-act .battle-shock {
+  animation: battle-shock 640ms ease-out 1;
 }
 
 html.pdl-panel .battle-stage.is-clash .battle-fighter.is-player {
@@ -13644,6 +13710,7 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player,
   html.pdl-panel .battle-stage.is-duel .battle-fighter.is-monster,
   html.pdl-panel .battle-duel-ring.is-open,
+  html.pdl-panel .battle-float,
   html.pdl-panel .boss-victory-wash,
   html.pdl-panel .boss-victory-rays,
   html.pdl-panel .boss-victory-firework,

@@ -4,6 +4,7 @@ import type {
   ApiBattlePass,
   ApiDailyBonus,
   ApiEconomyState,
+  ApiFightResult,
   ApiFishingState,
   ApiRouletteState,
   ApiSpinResult,
@@ -223,24 +224,10 @@ export const gamesApi = {
       baits: number
     }>('/customer/games/fishing/', { method: 'POST', body: JSON.stringify({ bait_id }) }),
   economy: () => request<ApiEconomyState>('/customer/games/economy/'),
-  fight: (monsterId: string, payload: { strikes?: number } = {}) =>
-    request<{
-      won: boolean
-      rounds: number
-      fragments_earned: number
-      prize?: { item_id: number; item_name: string; quantity: number } | null
-      run?: {
-        weapon_level: number
-        fragments: number
-        strikes: number
-        rounds: number
-        boss_name: string
-      } | null
-      weapon: { level: number; fragments: number }
-      fichas: number
-    }>(`/customer/games/economy/${monsterId}/fight/`, {
+  fight: (monsterId: string, payload: { strike?: boolean } = {}) =>
+    request<ApiFightResult>(`/customer/games/economy/${monsterId}/fight/`, {
       method: 'POST',
-      body: JSON.stringify({ strikes: payload.strikes ?? 0 }),
+      body: JSON.stringify({ strike: Boolean(payload.strike) }),
     }),
   enchant: () =>
     request<{ success: boolean; weapon: { level: number; fragments: number } }>(

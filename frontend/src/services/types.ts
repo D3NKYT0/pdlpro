@@ -338,6 +338,46 @@ export interface ApiFishingState {
   recent: Array<{ success: boolean; fish: string | null; fish_art?: string | null; created_at: string }>
 }
 
+export interface ApiArenaHit {
+  damage: number
+  crit: boolean
+}
+
+export interface ApiBossDuel {
+  monster_id: string
+  player_hp: number
+  player_max_hp: number
+  boss_hp: number
+  boss_max_hp: number
+  round: number
+  player_crits: number
+  boss_crits: number
+  player_damage: number
+  boss_damage: number
+}
+
+export interface ApiFightResult {
+  won: boolean | null
+  phase?: 'start' | 'resume' | 'round' | 'win' | 'loss'
+  rounds: number
+  fragments_earned: number
+  prize?: { item_id: number; item_name: string; quantity: number } | null
+  run?: {
+    weapon_level: number
+    fragments: number
+    rounds: number
+    boss_name: string
+    player_crits?: number
+    boss_crits?: number
+    player_damage?: number
+    boss_damage?: number
+  } | null
+  weapon: { level: number; fragments: number }
+  fichas: number
+  duel?: ApiBossDuel | null
+  last?: { player: ApiArenaHit; boss: ApiArenaHit | null } | null
+}
+
 export interface ApiEconomyState {
   fichas: number
   weapon: { level: number; fragments: number }
@@ -351,6 +391,7 @@ export interface ApiEconomyState {
     alive: boolean
     respawn_in: number
   }>
+  duel?: ApiBossDuel | null
 }
 
 export interface ApiAuction {

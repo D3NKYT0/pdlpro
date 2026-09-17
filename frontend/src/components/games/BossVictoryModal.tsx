@@ -4,7 +4,6 @@ import { ItemIcon } from '../ItemIcon'
 import { Button } from '../ui/Button'
 import { Modal } from '../ui/Modal'
 import { formatCompactQuantity } from '../../lib/formatters'
-import { BOSS_STRIKE_MAX } from './bossDuel'
 import { MonsterPortrait, WeaponArt } from './GameVisuals'
 
 const FIREWORKS = 16
@@ -15,8 +14,11 @@ export type BossVictoryRun = {
   name: string
   weaponLevel: number
   fragments: number
-  strikes: number
   rounds: number
+  playerCrits: number
+  bossCrits: number
+  playerDamage: number
+  bossDamage: number
   prize: { item_id: number; item_name: string; quantity: number }
 }
 
@@ -103,12 +105,12 @@ export function BossVictoryModal({
             <dd>{t('games.economy.bossVictoryFragments', { count: run.fragments })}</dd>
           </div>
           <div>
-            <dt>{t('games.economy.bossVictoryStrikesLabel')}</dt>
-            <dd>{t('games.economy.bossVictoryStrikes', { hits: run.strikes, max: BOSS_STRIKE_MAX })}</dd>
+            <dt>{t('games.economy.bossVictoryCritsLabel')}</dt>
+            <dd>{t('games.economy.bossVictoryCrits', { player: run.playerCrits, boss: run.bossCrits })}</dd>
           </div>
           <div>
-            <dt>{t('games.economy.bossVictoryRoundsLabel')}</dt>
-            <dd>{t('games.economy.rounds', { count: run.rounds })}</dd>
+            <dt>{t('games.economy.bossVictoryDamageLabel')}</dt>
+            <dd>{t('games.economy.bossVictoryDamage', { player: run.playerDamage, boss: run.bossDamage })}</dd>
           </div>
         </dl>
         <div className="boss-victory-actions">

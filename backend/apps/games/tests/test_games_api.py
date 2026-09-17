@@ -544,6 +544,9 @@ def test_economy_fight_and_enchant(api, player):
 
 @pytest.mark.django_db
 def test_economy_boss_grants_prize_and_resets_weapon(api, player):
+    from unittest.mock import patch
+
+    from apps.games.domain.arena_combat import ArenaHit
     from apps.games.domain.arena_roster import ARENA_BOSS_ADENA, ARENA_WEAPON_MAX
     from apps.games.infrastructure.models import EconomyWeapon, Monster
 
@@ -574,16 +577,29 @@ def test_economy_boss_grants_prize_and_resets_weapon(api, player):
     assert state.status_code == 200
     listed = next(row for row in state.data["monsters"] if row["id"] == str(boss.id))
     assert listed["is_boss"] is True
-    from unittest.mock import patch
-
-    with patch("apps.games.domain.arena_combat.random.randint", return_value=1):
+    start = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert start.status_code == 200, start.data
+    assert start.data["won"] is None
+    assert start.data["phase"] == "start"
+    assert start.data["duel"]["player_hp"] == 270
+    assert start.data["duel"]["boss_hp"] == 10
+    player.refresh_from_db()
+    assert player.fichas == 1
+    listed_duel = api.get("/api/v1/customer/games/economy/")
+    assert listed_duel.data["duel"]["monster_id"] == str(boss.id)
+    with patch(
+        "apps.games.domain.arena_combat.roll_arena_hit",
+        return_value=ArenaHit(damage=500, crit=True),
+    ):
         fight = api.post(
             f"/api/v1/customer/games/economy/{boss.id}/fight/",
-            {"strikes": 5},
+            {"strike": True},
             format="json",
         )
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is True
+    assert fight.data["phase"] == "win"
+    assert fight.data["last"]["player"]["crit"] is True
     assert fight.data["fragments_earned"] == 0
     assert fight.data["prize"]["item_id"] == 57
     assert fight.data["prize"]["quantity"] == ARENA_BOSS_ADENA
@@ -591,13 +607,20 @@ def test_economy_boss_grants_prize_and_resets_weapon(api, player):
     assert fight.data["weapon"]["fragments"] == 0
     assert fight.data["run"]["weapon_level"] == ARENA_WEAPON_MAX
     assert fight.data["run"]["fragments"] == 4
-    assert fight.data["run"]["strikes"] == 5
+    assert fight.data["run"]["rounds"] == 1
+    assert fight.data["run"]["player_crits"] == 1
+    assert fight.data["duel"] is None
     bag = api.get("/api/v1/customer/games/bag/")
     assert any(item["item_id"] == 57 and item["quantity"] == ARENA_BOSS_ADENA for item in bag.data)
+    leftover = api.get("/api/v1/customer/games/economy/")
+    assert leftover.data["duel"] is None
 
 
 @pytest.mark.django_db
 def test_queen_ant_loses_to_max_weapon(api, player):
+    from unittest.mock import patch
+
+    from apps.games.domain.arena_combat import ArenaHit
     from apps.games.domain.arena_roster import ARENA_BOSS, ARENA_WEAPON_MAX
     from apps.games.infrastructure.models import EconomyWeapon, Monster
 
@@ -620,12 +643,16 @@ def test_queen_ant_loses_to_max_weapon(api, player):
     weapon.level = ARENA_WEAPON_MAX
     weapon.save(update_fields=["level"])
     api.force_authenticate(user=player)
-    from unittest.mock import patch
-
-    with patch("apps.games.domain.arena_combat.random.randint", return_value=1):
+    start = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert start.status_code == 200, start.data
+    assert start.data["duel"]["boss_hp"] == hp
+    with patch(
+        "apps.games.domain.arena_combat.roll_arena_hit",
+        return_value=ArenaHit(damage=999, crit=True),
+    ):
         fight = api.post(
             f"/api/v1/customer/games/economy/{boss.id}/fight/",
-            {"strikes": 5},
+            {"strike": True},
             format="json",
         )
     assert fight.status_code == 200, fight.data
@@ -738,6 +765,7 @@ def test_economy_max_weapon_blocks_regular_fights(api, player):
 def test_economy_boss_can_lose_without_prize(api, player):
     from unittest.mock import patch
 
+    from apps.games.domain.arena_combat import ArenaHit
     from apps.games.domain.arena_roster import ARENA_WEAPON_MAX
     from apps.games.infrastructure.models import EconomyWeapon, Monster
 
@@ -760,14 +788,23 @@ def test_economy_boss_can_lose_without_prize(api, player):
     weapon.fragments = 7
     weapon.save(update_fields=["level", "fragments"])
     api.force_authenticate(user=player)
-    with patch("apps.games.domain.arena_combat.random.randint", return_value=100):
+    start = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert start.status_code == 200, start.data
+    hits = [ArenaHit(damage=1, crit=False), ArenaHit(damage=999, crit=True)]
+
+    def fake_roll(*, attack, defense, crit_chance):
+        return hits.pop(0)
+
+    with patch("apps.games.domain.arena_combat.roll_arena_hit", side_effect=fake_roll):
         fight = api.post(
             f"/api/v1/customer/games/economy/{boss.id}/fight/",
-            {"strikes": 5},
+            {"strike": True},
             format="json",
         )
     assert fight.status_code == 200, fight.data
     assert fight.data["won"] is False
+    assert fight.data["phase"] == "loss"
+    assert fight.data["last"]["boss"]["crit"] is True
     assert fight.data["prize"] is None
     assert fight.data["run"] is None
     weapon.refresh_from_db()
@@ -775,6 +812,93 @@ def test_economy_boss_can_lose_without_prize(api, player):
     assert weapon.fragments == 7
     bag = api.get("/api/v1/customer/games/bag/")
     assert not any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
+
+
+@pytest.mark.django_db
+def test_economy_boss_round_does_not_charge_a_second_token(api, player):
+    from unittest.mock import patch
+
+    from apps.games.domain.arena_combat import ArenaHit
+    from apps.games.domain.arena_roster import ARENA_WEAPON_MAX
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    boss = Monster.objects.create(
+        name="Queen Ant Rodadas",
+        level=12,
+        required_weapon_level=ARENA_WEAPON_MAX,
+        fragment_reward=0,
+        hp=250,
+        attack=10,
+        defense=0,
+        respawn_seconds=5,
+        is_boss=True,
+    )
+    keltir = Monster.objects.create(
+        name="Keltir Durante Duelo",
+        level=1,
+        required_weapon_level=0,
+        fragment_reward=3,
+        hp=16,
+        attack=3,
+        defense=1,
+        respawn_seconds=12,
+    )
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = ARENA_WEAPON_MAX
+    weapon.save(update_fields=["level"])
+    api.force_authenticate(user=player)
+    start = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert start.status_code == 200, start.data
+    resume = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert resume.status_code == 200, resume.data
+    assert resume.data["phase"] == "resume"
+    player.refresh_from_db()
+    assert player.fichas == 1
+    blocked = api.post(f"/api/v1/customer/games/economy/{keltir.id}/fight/")
+    assert blocked.status_code == 400
+    assert blocked.data["message"] == "Termine o duelo do chefe em andamento."
+    hits = [
+        ArenaHit(damage=100, crit=False),
+        ArenaHit(damage=10, crit=False),
+        ArenaHit(damage=200, crit=True),
+    ]
+
+    def fake_roll(*, attack, defense, crit_chance):
+        return hits.pop(0)
+
+    with patch("apps.games.domain.arena_combat.roll_arena_hit", side_effect=fake_roll):
+        mid = api.post(
+            f"/api/v1/customer/games/economy/{boss.id}/fight/",
+            {"strike": True},
+            format="json",
+        )
+        assert mid.status_code == 200, mid.data
+        assert mid.data["won"] is None
+        assert mid.data["phase"] == "round"
+        assert mid.data["last"]["player"]["damage"] == 100
+        assert mid.data["duel"]["boss_hp"] == 150
+        assert mid.data["duel"]["player_hp"] == 260
+        finish = api.post(
+            f"/api/v1/customer/games/economy/{boss.id}/fight/",
+            {"strike": True},
+            format="json",
+        )
+    assert finish.status_code == 200, finish.data
+    assert finish.data["won"] is True
+    assert finish.data["run"]["rounds"] == 2
+    assert finish.data["run"]["player_crits"] == 1
+    player.refresh_from_db()
+    assert player.fichas == 1
+    missing = api.post(
+        f"/api/v1/customer/games/economy/{boss.id}/fight/",
+        {"strike": True},
+        format="json",
+    )
+    assert missing.status_code == 400
+    assert missing.data["message"] == "Não há duelo em andamento com este chefe."
 
 
 @pytest.mark.django_db

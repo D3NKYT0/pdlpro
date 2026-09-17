@@ -348,7 +348,10 @@ class FightMonsterView(ItemCatalogAPIView):
     @extend_schema(
         tags=["Jogos"],
         summary=gettext_lazy("Combater monstro"),
-        description=gettext_lazy("Inicia um combate contra o monstro informado e devolve o resultado."),
+        description=gettext_lazy(
+            "Nas feras comuns resolve o combate. No chefe, o primeiro POST inicia o duelo "
+            "(gasta a ficha) e ``strike`` resolve uma rodada com dano e crítico."
+        ),
         request=FightMonsterSerializer,
     )
     def post(self, request, monster_id):
@@ -359,7 +362,7 @@ class FightMonsterView(ItemCatalogAPIView):
                 FightMonsterInput(
                     user_id=request.user.id,
                     monster_id=monster_id,
-                    strikes=serializer.validated_data.get("strikes", 0),
+                    strike=serializer.validated_data.get("strike", False),
                 )
             )
         )

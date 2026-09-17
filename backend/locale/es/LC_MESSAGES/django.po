@@ -5154,6 +5154,18 @@ msgstr "En el encantamiento máximo el arma solo enfrenta al jefe de la arena."
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr "El arma ya está al máximo. Derrota al jefe de la arena para recibir el premio."
 
+msgid "Termine o duelo do chefe em andamento."
+msgstr "Termina el duelo del jefe de la arena en curso."
+
+msgid "Não há duelo em andamento com este chefe."
+msgstr "No hay un duelo de jefe en curso con este monstruo."
+
+msgid "Duelo do chefe"
+msgstr "Duelo del jefe"
+
+msgid "Duelos do chefe"
+msgstr "Duelos del jefe"
+
 msgid "Chefe da arena"
 msgstr "Jefe de la arena"
 

@@ -13,6 +13,7 @@ from apps.games.infrastructure.models import (
     CatalogItem,
     DailyBonusClaim,
     DiceHistory,
+    EconomyBossDuel,
     EconomyFightLog,
     EconomyWeapon,
     Fish,
@@ -257,6 +258,18 @@ class EconomyWeaponAdmin(PDLModelAdmin):
     """
 
     list_display = ("user", "level", "fragments")
+
+
+@admin.register(EconomyBossDuel)
+class EconomyBossDuelAdmin(PDLModelAdmin):
+    """Configura a administração Django de ``EconomyBossDuel``.
+
+    A listagem exibe ``user``, ``monster``, ``round``, ``player_hp``, ``boss_hp``. Ajuste filtros,
+    busca e campos nesta classe para mudar a experiência da equipe no admin; regras
+    reutilizáveis ficam na aplicação.
+    """
+
+    list_display = ("user", "monster", "round", "player_hp", "boss_hp")
 
 
 @admin.register(Monster)

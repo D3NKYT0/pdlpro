@@ -1,80 +1,98 @@
-/** Cinco golpes no duelo do chefe, com pausa entre cada clique. */
-export const BOSS_STRIKE_MAX = 5
-export const BOSS_HIT_COOLDOWN_MS = 1200
-export const BOSS_DUEL_MS = 16_000
+/** Animação de uma rodada do duelo do chefe: o jogador golpeia e o chefe responde. */
+export const BOSS_PLAYER_ACT_MS = 720
+export const BOSS_BOSS_ACT_MS = 980
 
-export type BossDuelTick = {
-  beat: number
-  open: boolean
-  hits: number
-  remaining: number
+export type BossDuelPhase = 'player' | 'playerAct' | 'bossAct'
+
+export type ArenaCombatHit = {
+  damage: number
+  crit: boolean
 }
 
-export function startBossDuel({
-  onTick,
-  onComplete,
-  now = Date.now,
+export type BossDuelSnapshot = {
+  player_hp: number
+  player_max_hp: number
+  boss_hp: number
+  boss_max_hp: number
+  round: number
+}
+
+export type BossDuelView = {
+  open: boolean
+  hits: number
+  phase: BossDuelPhase
+  turn: number
+  playerHp: number
+  bossHp: number
+  playerHpNow: number
+  playerMaxHp: number
+  bossHpNow: number
+  bossMaxHp: number
+  playerHit?: ArenaCombatHit | null
+  bossHit?: ArenaCombatHit | null
+}
+
+export function arenaHpRatio(current: number, max: number) {
+  if (max <= 0) return 1
+  return Math.max(0, Math.min(1, current / max))
+}
+
+export function bossDuelView(
+  duel: BossDuelSnapshot,
+  extras: Partial<Pick<BossDuelView, 'open' | 'phase' | 'playerHit' | 'bossHit'>> = {},
+): BossDuelView {
+  const phase = extras.phase ?? 'player'
+  return {
+    open: extras.open ?? phase === 'player',
+    hits: duel.round,
+    phase,
+    turn: Math.max(1, duel.round + (phase === 'player' ? 1 : 0)),
+    playerHp: arenaHpRatio(duel.player_hp, duel.player_max_hp),
+    bossHp: arenaHpRatio(duel.boss_hp, duel.boss_max_hp),
+    playerHpNow: duel.player_hp,
+    playerMaxHp: duel.player_max_hp,
+    bossHpNow: duel.boss_hp,
+    bossMaxHp: duel.boss_max_hp,
+    playerHit: extras.playerHit,
+    bossHit: extras.bossHit,
+  }
+}
+
+export function playBossRound({
+  bossReplies,
+  onPhase,
+  onDone,
 }: {
-  onTick: (state: BossDuelTick) => void
-  onComplete: (hits: number) => void
-  now?: () => number
+  bossReplies: boolean
+  onPhase: (phase: BossDuelPhase) => void
+  onDone: () => void
 }) {
-  const started = now()
-  let hits = 0
-  let lastHitAt = started - BOSS_HIT_COOLDOWN_MS
   let stopped = false
+  let timer = 0
 
-  const elapsedNow = () => now() - started
-
-  const canStrike = () => {
-    if (stopped || hits >= BOSS_STRIKE_MAX) return false
-    const elapsed = elapsedNow()
-    if (elapsed < 0 || elapsed >= BOSS_DUEL_MS) return false
-    return now() - lastHitAt >= BOSS_HIT_COOLDOWN_MS
+  const clear = () => {
+    globalThis.clearTimeout(timer)
+    timer = 0
   }
 
-  const snapshot = (): BossDuelTick => {
-    const elapsed = elapsedNow()
-    return {
-      beat: Math.min(BOSS_STRIKE_MAX, hits + 1),
-      open: canStrike(),
-      hits,
-      remaining: Math.max(0, BOSS_DUEL_MS - elapsed),
+  onPhase('playerAct')
+  timer = globalThis.setTimeout(() => {
+    if (stopped) return
+    if (!bossReplies) {
+      onDone()
+      return
     }
-  }
-
-  const emit = () => {
-    onTick(snapshot())
-  }
-
-  const finish = () => {
-    if (stopped) return
-    stopped = true
-    globalThis.clearInterval(timer)
-    onComplete(hits)
-  }
-
-  const strike = () => {
-    if (!canStrike()) return false
-    hits += 1
-    lastHitAt = now()
-    emit()
-    if (hits >= BOSS_STRIKE_MAX) finish()
-    return true
-  }
-
-  const timer = globalThis.setInterval(() => {
-    if (stopped) return
-    emit()
-    if (elapsedNow() >= BOSS_DUEL_MS) finish()
-  }, 40)
-  emit()
+    onPhase('bossAct')
+    timer = globalThis.setTimeout(() => {
+      if (stopped) return
+      onDone()
+    }, BOSS_BOSS_ACT_MS)
+  }, BOSS_PLAYER_ACT_MS)
 
   return {
-    strike,
     stop() {
       stopped = true
-      globalThis.clearInterval(timer)
+      clear()
     },
   }
 }

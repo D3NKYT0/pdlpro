@@ -4,6 +4,7 @@ import { useFeedbackAction } from '../hooks/useFeedbackAction'
 import { Button, IconButton } from '../components/ui/Button'
 import { Modal } from '../components/ui/Modal'
 import { Field } from '../components/ui/Field'
+import { ErrorNotice } from '../components/ui/Feedback'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -35,7 +36,7 @@ import { RespawnTimer } from '../components/games/RespawnTimer'
 import { waitForBoxReveal, waitForBoxShake } from '../components/games/boxReveal'
 import { waitForDiceReveal, waitForDiceRest } from '../components/games/diceReveal'
 import { waitForFightReveal } from '../components/games/fightReveal'
-import { startBossDuel, BOSS_STRIKE_MAX } from '../components/games/bossDuel'
+import { bossDuelView, playBossRound, type BossDuelView } from '../components/games/bossDuel'
 import {
   formatRespawnClock,
   remainingSeconds,
@@ -78,13 +79,16 @@ type PlayFx = {
   fightFragments?: number
   fightPrize?: { item_id: number; item_name: string; quantity: number } | null
   fightBoss?: boolean
-  duel?: { open: boolean; hits: number } | null
+  duel?: BossDuelView | null
   bossRun?: {
     name: string
     weaponLevel: number
     fragments: number
-    strikes: number
     rounds: number
+    playerCrits: number
+    bossCrits: number
+    playerDamage: number
+    bossDamage: number
     prize: { item_id: number; item_name: string; quantity: number }
   } | null
   enchantOverlay?: boolean
@@ -122,8 +126,8 @@ export function GamesPage() {
   const [diceType, setDiceType] = useState('even')
   const [fx, setFx] = useState<PlayFx>({})
   const diceRestSeq = useRef(0)
-  const duelRef = useRef<ReturnType<typeof startBossDuel> | null>(null)
-  const duelActiveRef = useRef(false)
+  const duelPlayRef = useRef<ReturnType<typeof playBossRound> | null>(null)
+  const strikeBossRef = useRef<() => void>(() => {})
   const [resetTarget, setResetTarget] = useState<{ id: string; name: string } | null>(null)
   const [buyTokensOpen, setBuyTokensOpen] = useState(false)
   const [boxHelpOpen, setBoxHelpOpen] = useState(false)
@@ -140,8 +144,7 @@ export function GamesPage() {
 
   useEffect(() => {
     return () => {
-      duelActiveRef.current = false
-      duelRef.current?.stop()
+      duelPlayRef.current?.stop()
     }
   }, [])
 
@@ -150,11 +153,25 @@ export function GamesPage() {
     const onKey = (event: KeyboardEvent) => {
       if (event.code !== 'Space' && event.key !== ' ') return
       event.preventDefault()
-      duelRef.current?.strike()
+      strikeBossRef.current()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [fx.duel])
+
+  useEffect(() => {
+    const saved = economy.data?.duel
+    if (!saved) return
+    if (fx.duel || fx.bossRun || fx.playing) return
+    const monster = economy.data?.monsters.find((row) => row.id === saved.monster_id)
+    setFx({
+      playing: 'fight',
+      targetId: saved.monster_id,
+      fightName: monster?.name,
+      fightBoss: true,
+      duel: bossDuelView(saved),
+    })
+  }, [economy.data, fx.bossRun, fx.duel, fx.playing])
 
   async function refresh() {
     await queryClient.invalidateQueries({ queryKey: ['roulette'] })
@@ -388,46 +405,31 @@ export function GamesPage() {
     }
   }
 
-  async function commitFight(monsterId: string, strikes = 0) {
+  async function commitFight(monsterId: string) {
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
-    const bossFight = Boolean(monster?.is_boss)
-    if (!bossFight) {
-      setFx({
-        playing: 'fight',
-        targetId: monsterId,
-        fightName: monster?.name,
-        fightBoss: false,
-      })
-    }
+    setFx({
+      playing: 'fight',
+      targetId: monsterId,
+      fightName: monster?.name,
+      fightBoss: false,
+    })
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
-      const result = await gamesApi.fight(monsterId, { strikes })
+      const result = await gamesApi.fight(monsterId, { strike: false })
       applyTokens(result.fichas)
-      if (!bossFight) await waitForFightReveal(startedAt)
+      await waitForFightReveal(startedAt)
       await refresh()
       return result
     }, t('games.toast.fightError'), quietTokens)
     if (outcome.ok) {
-      const run = outcome.value.run
       setFx({
         targetId: monsterId,
         fightName: monster?.name,
-        fightWon: outcome.value.won,
+        fightWon: outcome.value.won === true,
         fightRounds: outcome.value.rounds,
         fightFragments: outcome.value.fragments_earned,
         fightPrize: outcome.value.prize ?? null,
-        fightBoss: Boolean(monster?.is_boss),
-        bossRun:
-          outcome.value.won && monster?.is_boss && outcome.value.prize && run
-            ? {
-                name: run.boss_name || monster.name,
-                weaponLevel: run.weapon_level,
-                fragments: run.fragments,
-                strikes,
-                rounds: outcome.value.rounds,
-                prize: outcome.value.prize,
-              }
-            : null,
+        fightBoss: false,
       })
     } else {
       noteTokenFailure(outcome.error)
@@ -435,43 +437,159 @@ export function GamesPage() {
     }
   }
 
+  async function strikeBoss() {
+    const monsterId = fx.targetId
+    if (!monsterId || !fx.duel?.open || fx.duel.phase !== 'player') return
+    const monsterName = fx.fightName
+    setFx((current) => ({
+      ...current,
+      duel: current.duel ? { ...current.duel, open: false, phase: 'playerAct' } : current.duel,
+    }))
+    const outcome = await action.run(async () => {
+      const result = await gamesApi.fight(monsterId, { strike: true })
+      applyTokens(result.fichas)
+      return result
+    }, t('games.toast.fightError'), quietTokens)
+    if (!outcome.ok) {
+      noteTokenFailure(outcome.error)
+      setFx((current) => ({
+        ...current,
+        duel: current.duel ? { ...current.duel, open: true, phase: 'player' } : current.duel,
+      }))
+      return
+    }
+    const result = outcome.value
+    const last = result.last
+    const snapshot = result.duel
+      ? result.duel
+      : {
+          player_hp: result.won === false ? 0 : fx.duel?.playerHpNow ?? 0,
+          player_max_hp: fx.duel?.playerMaxHp ?? 1,
+          boss_hp: result.won === true ? 0 : fx.duel?.bossHpNow ?? 0,
+          boss_max_hp: fx.duel?.bossMaxHp ?? 1,
+          round: result.rounds,
+        }
+    duelPlayRef.current?.stop()
+    duelPlayRef.current = playBossRound({
+      bossReplies: Boolean(last?.boss),
+      onPhase: (phase) => {
+        setFx((current) => ({
+          ...current,
+          playing: 'fight',
+          targetId: monsterId,
+          fightName: monsterName,
+          fightBoss: true,
+          duel: bossDuelView(snapshot, {
+            phase,
+            open: false,
+            playerHit: last?.player,
+            bossHit: last?.boss,
+          }),
+        }))
+      },
+      onDone: () => {
+        duelPlayRef.current = null
+        if (result.won === true) {
+          const run = result.run
+          setFx({
+            targetId: monsterId,
+            fightName: monsterName,
+            fightWon: true,
+            fightRounds: result.rounds,
+            fightPrize: result.prize ?? null,
+            fightBoss: true,
+            bossRun:
+              run && result.prize
+                ? {
+                    name: run.boss_name || monsterName || '',
+                    weaponLevel: run.weapon_level,
+                    fragments: run.fragments,
+                    rounds: result.rounds,
+                    playerCrits: run.player_crits ?? 0,
+                    bossCrits: run.boss_crits ?? 0,
+                    playerDamage: run.player_damage ?? 0,
+                    bossDamage: run.boss_damage ?? 0,
+                    prize: result.prize,
+                  }
+                : null,
+          })
+          void refresh()
+          return
+        }
+        if (result.won === false) {
+          setFx({
+            targetId: monsterId,
+            fightName: monsterName,
+            fightWon: false,
+            fightRounds: result.rounds,
+            fightBoss: true,
+          })
+          void refresh()
+          return
+        }
+        if (result.duel) {
+          setFx({
+            playing: 'fight',
+            targetId: monsterId,
+            fightName: monsterName,
+            fightBoss: true,
+            duel: bossDuelView(result.duel, {
+              open: true,
+              phase: 'player',
+              playerHit: last?.player,
+              bossHit: last?.boss,
+            }),
+          })
+        }
+      },
+    })
+  }
+  strikeBossRef.current = () => {
+    void strikeBoss()
+  }
+
   async function fight(monsterId: string) {
-    if (needTokens(FIGHT_COST)) return
     if (fx.playing === 'fight') return
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
     const weaponLevelNow = economy.data?.weapon.level ?? 0
     if (weaponLevelNow >= ENCHANT_GOAL && monster && !monster.is_boss) return
     if (monster?.is_boss) {
-      duelRef.current?.stop()
-      duelActiveRef.current = true
-      setFx({
-        playing: 'fight',
-        targetId: monsterId,
-        fightName: monster.name,
-        fightBoss: true,
-        duel: { open: false, hits: 0 },
-      })
-      duelRef.current = startBossDuel({
-        onTick: (state) => {
-          if (!duelActiveRef.current) return
-          setFx((current) => ({
-            ...current,
-            playing: 'fight',
-            targetId: monsterId,
-            fightName: monster.name,
-            fightBoss: true,
-            duel: { open: state.open, hits: state.hits },
-          }))
-        },
-        onComplete: (hits) => {
-          duelActiveRef.current = false
-          duelRef.current = null
-          void commitFight(monsterId, hits)
-        },
-      })
+      const saved = economy.data?.duel
+      if (saved && saved.monster_id === monster.id) {
+        setFx({
+          playing: 'fight',
+          targetId: monster.id,
+          fightName: monster.name,
+          fightBoss: true,
+          duel: bossDuelView(saved),
+        })
+        return
+      }
+      if (needTokens(FIGHT_COST)) return
+      const outcome = await action.run(async () => {
+        const result = await gamesApi.fight(monster.id, { strike: false })
+        applyTokens(result.fichas)
+        return result
+      }, t('games.toast.fightError'), quietTokens)
+      if (!outcome.ok) {
+        noteTokenFailure(outcome.error)
+        setFx({})
+        return
+      }
+      if (outcome.value.duel) {
+        setFx({
+          playing: 'fight',
+          targetId: monster.id,
+          fightName: monster.name,
+          fightBoss: true,
+          duel: bossDuelView(outcome.value.duel),
+        })
+      }
+      void refresh()
       return
     }
-    await commitFight(monsterId, 0)
+    if (needTokens(FIGHT_COST)) return
+    await commitFight(monsterId)
   }
 
   async function enchant() {
@@ -990,6 +1108,13 @@ export function GamesPage() {
                 </Button>
               </section>
               <div className="monster-list">
+                {economy.isError ? (
+                  <ErrorNotice
+                    error={economy.error}
+                    fallback={t('games.economy.loadError')}
+                    onRetry={() => void economy.refetch()}
+                  />
+                ) : null}
                 {(economy.data?.monsters ?? []).map((monster) => {
                   const wait = remainingSeconds(monster.respawn_in, economy.dataUpdatedAt, now)
                   const lockedByBoss = weaponLevel >= ENCHANT_GOAL && !monster.is_boss
@@ -1045,10 +1170,17 @@ export function GamesPage() {
                 winLabel={t('games.economy.revealWin')}
                 lossLabel={t('games.economy.revealLoss')}
                 duel={fx.duel}
-                duelHint={t('games.economy.duelHint', { hits: fx.duel?.hits ?? 0, max: BOSS_STRIKE_MAX })}
-                duelStrikeLabel={fx.duel?.open ? t('games.economy.duelNow') : t('games.economy.duelStrike')}
+                duelHint={
+                  fx.duel?.phase === 'playerAct'
+                    ? t('games.economy.duelPlayerAct')
+                    : fx.duel?.phase === 'bossAct'
+                      ? t('games.economy.duelBossAct', { boss: fx.fightName ?? '' })
+                      : t('games.economy.duelHint', { turn: fx.duel?.turn ?? 1 })
+                }
+                duelStrikeLabel={fx.duel?.open ? t('games.economy.duelNow') : t('games.economy.duelWait')}
+                duelCritLabel={t('games.economy.duelCrit')}
                 onDuelStrike={() => {
-                  duelRef.current?.strike()
+                  void strikeBoss()
                 }}
                 fragmentsLabel={
                   fx.fightPrize

@@ -329,6 +329,36 @@ class Monster(BaseModel):
         verbose_name=_("Monstro")
 
 
+class EconomyBossDuel(BaseModel):
+    """Duelo persistido do chefe da arena, com HP e totais de crítico/dano.
+
+    Relaciona os registros por ``user``, ``monster``. Herda BaseModel: use ``id`` (UUID) nas
+    APIs; ``pk``/``seq_id`` são internos. Use os serviços de aplicação para operações de
+    negócio, mantendo neste modelo as regras de persistência e os relacionamentos.
+    """
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="economy_boss_duel",
+    )
+    monster = models.ForeignKey(Monster, on_delete=models.CASCADE, related_name="boss_duels")
+    player_hp = models.PositiveIntegerField(default=0)
+    player_max_hp = models.PositiveIntegerField(default=0)
+    boss_hp = models.PositiveIntegerField(default=0)
+    boss_max_hp = models.PositiveIntegerField(default=0)
+    round = models.PositiveIntegerField(default=0)
+    player_crits = models.PositiveIntegerField(default=0)
+    boss_crits = models.PositiveIntegerField(default=0)
+    player_damage = models.PositiveIntegerField(default=0)
+    boss_damage = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _("Duelo do chefe")
+        verbose_name_plural = _("Duelos do chefe")
+        ordering = ["-created_at"]
+
+
 class EconomyFightLog(BaseModel):
     """Resultado de combate e recompensas obtidas no minigame de economia.
 

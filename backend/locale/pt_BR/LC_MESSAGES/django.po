@@ -4786,6 +4786,18 @@ msgstr ""
 msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
 msgstr ""
 
+msgid "Termine o duelo do chefe em andamento."
+msgstr ""
+
+msgid "Não há duelo em andamento com este chefe."
+msgstr ""
+
+msgid "Duelo do chefe"
+msgstr ""
+
+msgid "Duelos do chefe"
+msgstr ""
+
 msgid "Chefe da arena"
 msgstr ""
 

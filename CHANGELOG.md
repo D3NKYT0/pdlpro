@@ -3,7 +3,7 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **17 de setembro de 2026** — Não publicado: chefe Queen Ant
-na Arena das Feras (duelo com 5 golpes, modal de vitória com fogos e corrida,
+na Arena das Feras (duelo de HP com crítico no servidor, modal de vitória com fogos e corrida,
 reset da arma e dos fragmentos; no +10 Lutar das feras comuns fica cinza);
 Lutar vermelho
 e cursor de proibido quando o combate está bloqueado; pescaria

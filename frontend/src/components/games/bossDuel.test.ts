@@ -1,57 +1,57 @@
 import { expect, it, vi } from 'vitest'
-import { BOSS_DUEL_MS, BOSS_HIT_COOLDOWN_MS, BOSS_STRIKE_MAX, startBossDuel } from './bossDuel'
+import {
+  BOSS_BOSS_ACT_MS,
+  BOSS_PLAYER_ACT_MS,
+  arenaHpRatio,
+  bossDuelView,
+  playBossRound,
+} from './bossDuel'
 
-it('aceita o primeiro golpe na hora', () => {
-  vi.useFakeTimers()
-  vi.setSystemTime(0)
-  const done = vi.fn()
-  const duel = startBossDuel({
-    onTick: () => undefined,
-    onComplete: done,
-    now: Date.now,
+it('mapeia HP real para a barra e a próxima rodada', () => {
+  expect(arenaHpRatio(135, 270)).toBe(0.5)
+  expect(arenaHpRatio(0, 480)).toBe(0)
+  const view = bossDuelView({
+    player_hp: 270,
+    player_max_hp: 270,
+    boss_hp: 480,
+    boss_max_hp: 480,
+    round: 0,
   })
-  expect(duel.strike()).toBe(true)
-  expect(duel.strike()).toBe(false)
-  duel.stop()
+  expect(view.open).toBe(true)
+  expect(view.turn).toBe(1)
+  expect(view.playerHp).toBe(1)
+  expect(view.bossHp).toBe(1)
+})
+
+it('anima o golpe do jogador e só então o do chefe', () => {
+  vi.useFakeTimers()
+  const phases: string[] = []
+  const done = vi.fn()
+  playBossRound({
+    bossReplies: true,
+    onPhase: (phase) => phases.push(phase),
+    onDone: done,
+  })
+  expect(phases).toEqual(['playerAct'])
+  expect(done).not.toHaveBeenCalled()
+  vi.advanceTimersByTime(BOSS_PLAYER_ACT_MS)
+  expect(phases).toEqual(['playerAct', 'bossAct'])
+  vi.advanceTimersByTime(BOSS_BOSS_ACT_MS)
+  expect(done).toHaveBeenCalledTimes(1)
   vi.useRealTimers()
 })
 
-it('conta cinco golpes com pausa e encerra o duelo', () => {
+it('encerra na hora quando o chefe cai no golpe do jogador', () => {
   vi.useFakeTimers()
-  vi.setSystemTime(0)
-  const ticks: Array<{ open: boolean; hits: number }> = []
+  const phases: string[] = []
   const done = vi.fn()
-  const duel = startBossDuel({
-    onTick: (state) => ticks.push({ open: state.open, hits: state.hits }),
-    onComplete: done,
-    now: Date.now,
+  playBossRound({
+    bossReplies: false,
+    onPhase: (phase) => phases.push(phase),
+    onDone: done,
   })
-  for (let hit = 0; hit < BOSS_STRIKE_MAX; hit += 1) {
-    if (hit > 0) {
-      vi.setSystemTime(hit * BOSS_HIT_COOLDOWN_MS)
-      vi.advanceTimersByTime(40)
-    }
-    expect(duel.strike()).toBe(true)
-  }
-  expect(done).toHaveBeenCalledWith(5)
-  expect(ticks.some((tick) => tick.hits === 5)).toBe(true)
-  duel.stop()
-  vi.useRealTimers()
-})
-
-it('envia os golpes feitos se o tempo acabar', () => {
-  vi.useFakeTimers()
-  vi.setSystemTime(0)
-  const done = vi.fn()
-  const duel = startBossDuel({
-    onTick: () => undefined,
-    onComplete: done,
-    now: Date.now,
-  })
-  expect(duel.strike()).toBe(true)
-  vi.setSystemTime(BOSS_DUEL_MS)
-  vi.advanceTimersByTime(40)
-  expect(done).toHaveBeenCalledWith(1)
-  duel.stop()
+  vi.advanceTimersByTime(BOSS_PLAYER_ACT_MS)
+  expect(phases).toEqual(['playerAct'])
+  expect(done).toHaveBeenCalledTimes(1)
   vi.useRealTimers()
 })
