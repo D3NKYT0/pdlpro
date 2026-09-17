@@ -13,6 +13,7 @@ from .celery import get_celery_settings
 from .jazzmin import JAZZMIN_SETTINGS_PDL, JAZZMIN_UI_TWEAKS_PDL
 from .logging import get_logging_config
 from .middleware import MIDDLEWARE_PDL
+from .security import build_content_security_policy
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -190,19 +191,8 @@ CSRF_TRUSTED_ORIGINS = env.list(
     default=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost"],
 )
 
-CONTENT_SECURITY_POLICY = (
-    "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; "
-    "form-action 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
-    "https://js.stripe.com https://sdk.mercadopago.com https://hcaptcha.com "
-    "https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
-    "https://fonts.googleapis.com https://cdnjs.cloudflare.com https://hcaptcha.com "
-    "https://*.hcaptcha.com; font-src 'self' data: https://fonts.gstatic.com "
-    "https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' "
-    "https: ws: wss:; frame-src 'self' https://*.stripe.com https://*.mercadopago.com "
-    "https://*.mercadopago.com.br https://www.youtube-nocookie.com https://hcaptcha.com "
-    "https://*.hcaptcha.com; media-src 'self' blob:; worker-src 'self' blob:; "
-    "manifest-src 'self';"
-)
+CONTENT_SECURITY_POLICY = build_content_security_policy()
+CONTENT_SECURITY_POLICY_HTML = build_content_security_policy(script_unsafe_inline=True)
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_PDL
 JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS_PDL

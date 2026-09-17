@@ -76,7 +76,7 @@ Consulte também [as variáveis de conexão](../configuracao/ambiente.md), [o ca
 
 Nome igual ao login não concede acesso: a conta deve possuir vínculo confirmado no gateway. Nickname, sexo, teleporte, visual, karma e PK reservam saldo antes da chamada externa e aceitam `request_key` para repetição segura. O personagem precisa estar **offline**. UNSTUCK continua gratuito e fixo em Giran; TELEPORT reutiliza o mesmo UPDATE com as coordenadas da vila do catálogo Interlude. APPEARANCE, CLEAR_KARMA, CLEAR_PK e a vitrine de lojas dependem de consultas opcionais no dialeto (`change_appearance`, `clear_karma`, `clear_pk`, `list_private_stores`); se o catálogo não as tiver, o serviço some da ficha e `/stores` informa indisponibilidade. Resultados incertos exigem [conciliação de serviços](../operacao/seguranca.md#serviços-pagos-do-personagem).
 
-A caça do dia só lê o personagem (`pvp`, `pk`, `online_time`, `level`). A vitrine lê `character_offline_trade` / `character_offline_trade_items` quando o dialeto publica essas consultas, devolve sexo/classe para o retrato da raça e as coordenadas XYZ da loja. Se as tabelas não existirem no schema, `/stores` responde `available: false` (200) em vez de 500.
+A caça do dia só lê o personagem (`pvp`, `pk`, `online_time`, `level`). A vitrine lê `character_offline_trade` / `character_offline_trade_items` quando o dialeto publica essas consultas, devolve sexo/classe para o retrato da raça e as coordenadas XYZ da loja, e o gateway memoriza a lista por 30 segundos. Se as tabelas não existirem no schema, `/stores` responde `available: false` (200) em vez de 500.
 
 ## Moderação da equipe
 

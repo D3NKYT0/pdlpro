@@ -1,10 +1,12 @@
 from .base import *
 from .monitoring import configure_error_monitoring
-from .security import require_production_secret_key
+from .security import build_content_security_policy, require_production_secret_key
 
 require_production_secret_key(SECRET_KEY)
 
 DEBUG = False
+# Cópia de .env.example não pode abrir schema/Swagger em produção.
+OPENAPI_DOCS_PUBLIC = False
 REST_FRAMEWORK["NUM_PROXIES"] = env.int("TRUSTED_PROXY_COUNT", default=2)
 LOGGING = get_logging_config(env, default_format="json", default_environment="production")
 SENTRY_ENABLED = configure_error_monitoring(env)
@@ -20,7 +22,11 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_HSTS_SECONDS = 31_536_000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-CONTENT_SECURITY_POLICY = f"{CONTENT_SECURITY_POLICY} upgrade-insecure-requests;"
+CONTENT_SECURITY_POLICY = build_content_security_policy(upgrade_insecure_requests=True)
+CONTENT_SECURITY_POLICY_HTML = build_content_security_policy(
+    script_unsafe_inline=True,
+    upgrade_insecure_requests=True,
+)
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"

@@ -35,6 +35,7 @@ from apps.server.infrastructure.lineage.crests import crest_to_png_base64
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
 from apps.server.infrastructure.null_gateway import SocketStatusProbe
 from apps.server.infrastructure.passwords import LineagePasswordHasher
+from apps.server.infrastructure.read_cache import GAME_STORES_TTL, cached_fetch
 
 BIND_RE = re.compile(r"(?<!:):([a-zA-Z_][a-zA-Z0-9_]*)")
 UNSTUCK = (83400, 147940, -3404)
@@ -535,7 +536,11 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         if not self._sql.has("list_private_stores"):
             return []
         try:
-            rows = self._fetch("list_private_stores")
+            rows = cached_fetch(
+                f"lineage:game-stores:list:{self._sql.dialect}",
+                lambda: self._fetch("list_private_stores"),
+                GAME_STORES_TTL,
+            )
         except SQLAlchemyError as exc:
             raise CharacterServiceUnavailableError() from exc
         stores = []
@@ -560,7 +565,11 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         if not self._sql.has("list_private_store_items"):
             return []
         try:
-            rows = self._fetch("list_private_store_items")
+            rows = cached_fetch(
+                f"lineage:game-stores:items:{self._sql.dialect}",
+                lambda: self._fetch("list_private_store_items"),
+                GAME_STORES_TTL,
+            )
         except SQLAlchemyError as exc:
             raise CharacterServiceUnavailableError() from exc
         items = []

@@ -55,17 +55,19 @@ def _cookie_kwargs(request, *, max_age: int) -> dict[str, Any]:
 
 
 def set_auth_cookies(request, response: Response, *, refresh: RefreshToken) -> Response:
+    """Grava access e refresh HttpOnly. O access expira com o JWT; o refresh segue a renovação."""
     access = str(refresh.access_token)
-    cookie_age = int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
+    access_age = int(settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds())
+    refresh_age = int(settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
     response.set_cookie(
         get_access_cookie_name(),
         access,
-        **_cookie_kwargs(request, max_age=cookie_age),
+        **_cookie_kwargs(request, max_age=access_age),
     )
     response.set_cookie(
         get_refresh_cookie_name(),
         str(refresh),
-        **_cookie_kwargs(request, max_age=cookie_age),
+        **_cookie_kwargs(request, max_age=refresh_age),
     )
     get_token(request)
     return response

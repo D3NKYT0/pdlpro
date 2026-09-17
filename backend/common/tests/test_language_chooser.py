@@ -17,7 +17,7 @@ def test_edge_nginx_proxies_i18n_to_backend():
     prod = (repo / "frontend/nginx.production.conf").read_text(encoding="utf-8")
     dev = (repo / "nginx/nginx.conf").read_text(encoding="utf-8")
     assert "i18n" in prod
-    assert "location ~ ^/(api|admin|i18n)(/|$)" in prod
+    assert "location ~ ^/(admin|i18n)(/|$)" in prod
     assert "location ^~ /i18n/" in dev
 
 

@@ -219,7 +219,8 @@ git pull --ff-only
 - Configure fallback da SPA para `index.html`.
 - Ajuste `server_name` e os limites de upload.
 - Preserve o `limit_req` da API e dimensione sua zona somente após observar tráfego legítimo.
-- Preserve a CSP do proxy alinhada a `CONTENT_SECURITY_POLICY` do Django; teste pagamentos,
+- Preserve a CSP do proxy alinhada a `CONTENT_SECURITY_POLICY` (SPA/API) e
+  `CONTENT_SECURITY_POLICY_HTML` (admin/docs) do Django; teste pagamentos,
   CAPTCHA, fontes e vídeo ao acrescentar ou remover uma origem.
 - Termine TLS no proxy e preserve corretamente os cabeçalhos `X-Forwarded-*`.
 - Garanta upgrade de conexão em `/ws/`.

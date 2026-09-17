@@ -117,13 +117,18 @@ it('mostra o ícone do resultado ao lado da receita nas lojas de craft', async (
   expect(screen.getByRole('img', { name: 'Resultado: Sword of Valhalla' })).toHaveClass('stores-item-result')
 })
 
-it('filtra por busca e tipo sem enviar de novo enquanto carrega', async () => {
+it('filtra por busca e tipo sem disparar a API a cada tecla', async () => {
   const user = mount()
   await screen.findByRole('heading', { name: 'Trader' })
+  expect(serverApi.stores).toHaveBeenCalledTimes(1)
   await user.type(screen.getByLabelText('Buscar item, vendedor ou vila'), 'sword')
   await user.selectOptions(screen.getByLabelText('Tipo'), 'sell')
   await waitFor(() => expect(serverApi.stores).toHaveBeenCalledWith('sword', 'sell'))
   expect(screen.getByLabelText('Tipo').closest('.public-faq-tools')).toHaveAttribute('data-store-filter', 'sell')
+  const partials = vi.mocked(serverApi.stores).mock.calls.filter(
+    ([query]) => query === 's' || query === 'sw' || query === 'swo' || query === 'swor',
+  )
+  expect(partials).toHaveLength(0)
 })
 
 it('mostra vazio, erro e servidor sem vitrine', async () => {

@@ -64,3 +64,14 @@ def test_importing_production_settings_succeeds_with_a_strong_secret_key(monkeyp
     assert production.SECRET_KEY == STRONG_KEY
     assert production.DEBUG is False
     assert production.REST_AUTH["JWT_AUTH_SECURE"] is True
+    assert production.OPENAPI_DOCS_PUBLIC is False
+    assert "'unsafe-inline'" not in production.CONTENT_SECURITY_POLICY.split("style-src")[0]
+
+
+def test_production_keeps_openapi_docs_private_even_when_env_enables_them(monkeypatch):
+    monkeypatch.setenv("SECRET_KEY", STRONG_KEY)
+    monkeypatch.setenv("OPENAPI_DOCS_PUBLIC", "true")
+
+    production = _load_production_settings()
+
+    assert production.OPENAPI_DOCS_PUBLIC is False

@@ -22,6 +22,26 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Resgates de bônus diário, passe e caça do dia gravam o comprovante único
   antes de creditar; conflito de unicidade vira “já resgatado”, sem segunda
   entrega.
+- `script-src` da API e da SPA deixa de incluir `'unsafe-inline'`. O texto do
+  carregamento inicial da SPA passou para `/bootstrap-language.js`. Admin,
+  schema e Swagger/ReDoc conservam a política HTML. Relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
+- Cookie `PDL-auth` passa a expirar com o JWT de acesso (15 minutos por
+  padrão); `PDL-refresh` permanece com a vida do refresh. Relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
+- `?limit=` inválido no ranking público deixa de responder 500: o valor vira
+  10 e o teto continua 50. Relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
+
+### Alterado
+
+- Produção força `OPENAPI_DOCS_PUBLIC=false`, mesmo se a variável de ambiente
+  estiver ligada. Relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
+- A vitrine `/stores` espera 300 ms após a última tecla antes de consultar a
+  API, reutiliza o resultado anterior enquanto busca e o gateway Lineage
+  memoriza as lojas por 30 segundos. Relatado por
+  [Victor Mendonça (@mend3)](https://github.com/mend3).
 
 ## [2.5.0] - 2026-09-17
 

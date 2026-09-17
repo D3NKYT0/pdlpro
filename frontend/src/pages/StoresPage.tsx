@@ -1,23 +1,28 @@
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MapPin } from 'lucide-react'
 import { PublicEmpty, PublicHero } from '../components/public/PublicChrome'
 import { ItemIcon } from '../components/ItemIcon'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
+import { useDebouncedValue } from '../hooks/useDebouncedValue'
 import { formatCompactQuantity } from '../lib/formatters'
 import { serverApi } from '../services/api'
 
 const STORE_TYPES = ['sell', 'buy', 'package', 'craft'] as const
+const STORES_STALE_MS = 30_000
 
 export function StoresPage() {
   const { t } = useTranslation('public')
   const { t: tPanel } = useTranslation('panel')
   const [search, setSearch] = useState('')
   const [storeType, setStoreType] = useState('')
+  const debouncedSearch = useDebouncedValue(search, 300)
   const query = useQuery({
-    queryKey: ['game-stores', search, storeType],
-    queryFn: () => serverApi.stores(search.trim(), storeType),
+    queryKey: ['game-stores', debouncedSearch.trim(), storeType],
+    queryFn: () => serverApi.stores(debouncedSearch.trim(), storeType),
+    staleTime: STORES_STALE_MS,
+    placeholderData: keepPreviousData,
   })
   const stores = query.data?.stores ?? []
   const available = query.data?.available !== false

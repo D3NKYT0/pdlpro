@@ -43,8 +43,22 @@ class RequestIdMiddleware:
             reset_request_id(token)
 
 
+_HTML_CSP_PREFIXES = ("/admin/", "/api/docs/", "/api/schema", "/i18n/")
+
+
+def uses_html_content_security_policy(path: str) -> bool:
+    """Jazzmin, Spectacular e ``setlang`` ainda dependem de script inline."""
+
+    return path == "/admin" or path.startswith(_HTML_CSP_PREFIXES)
+
+
 class SecurityHeadersMiddleware:
-    """Aplica a política CSP também quando o Django é acessado sem o proxy Nginx."""
+    """Aplica a política CSP também quando o Django é acessado sem o proxy Nginx.
+
+    Respostas JSON e a SPA usam ``CONTENT_SECURITY_POLICY`` (sem
+    ``script-src 'unsafe-inline'``). HTML de admin, schema e troca de idioma
+    usam ``CONTENT_SECURITY_POLICY_HTML``.
+    """
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -53,8 +67,17 @@ class SecurityHeadersMiddleware:
         from django.conf import settings
 
         response = self.get_response(request)
-        response.setdefault("Content-Security-Policy", settings.CONTENT_SECURITY_POLICY)
+        response.setdefault(
+            "Content-Security-Policy",
+            self.policy_for(request.path, settings),
+        )
         return response
+
+    @staticmethod
+    def policy_for(path: str, settings) -> str:
+        if uses_html_content_security_policy(path):
+            return getattr(settings, "CONTENT_SECURITY_POLICY_HTML", settings.CONTENT_SECURITY_POLICY)
+        return settings.CONTENT_SECURITY_POLICY
 
 
 def _api_accept_language_applies(path: str) -> bool:

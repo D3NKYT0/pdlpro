@@ -18,6 +18,8 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
   `POST /api/v1/auth/sessions/revoke-others/`. A interface fica em Conta e segurança
   (`/panel/security`). Quem já está logado em `/register` é enviado a essa tela.
 - Access e refresh não são expostos no JSON de autenticação; ficam somente nos cookies `HttpOnly`.
+  O cookie de acesso dura o mesmo que o JWT (`ACCESS_TOKEN_MINUTES`); o de renovação segue
+  `REFRESH_TOKEN_DAYS`. Sem o cookie de acesso, `POST /api/v1/auth/refresh/` emite outro par.
 - O link de recuperação usa token vinculado à senha e validade de uma hora. O consumo e a alteração de senha são serializados: repetir o link, inclusive simultaneamente, é rejeitado.
 - OAuth mantém estado descartável associado à sessão do navegador. Cookies de sessão devem acompanhar início e callback. Vincular um provedor exige o mesmo usuário autenticado e a mesma credencial de sessão.
 - Um login social não assume automaticamente cadastro com e-mail ainda não verificado. O proprietário deve recuperar o acesso, verificar o e-mail e então conectar o provedor. Contas sociais com e-mail diferente não verificam o e-mail local.
@@ -31,8 +33,10 @@ Somente os proxies confiáveis devem alcançar o backend/Nginx interno; mantenha
 O DRF aplica limites globais e escopos separados para login (10/minuto) e cadastro (10/hora).
 O Nginx absorve rajadas da API em 20 requisições/segundo por IP, com burst de 40; ele complementa
 o limite persistido no cache da aplicação. Em produção, a chave usa o último endereço acrescentado
-ao `X-Forwarded-For`; somente o proxy externo confiável deve alcançar essa porta. Schema e interfaces OpenAPI exigem staff quando
-`OPENAPI_DOCS_PUBLIC=false`. Django e Nginx emitem a CSP; mantenha suas listas de origens iguais.
+ao `X-Forwarded-For`; somente o proxy externo confiável deve alcançar essa porta. Schema e interfaces OpenAPI exigem staff:
+`core.settings.production` define `OPENAPI_DOCS_PUBLIC=false` e ignora a variável de ambiente.
+Django e Nginx emitem a CSP; a da SPA/API não inclui `script-src 'unsafe-inline'`; admin e
+`/api/docs/` conservam a exceção HTML. Mantenha as listas de origens iguais.
 
 ## Serviços pagos do personagem
 

@@ -8,6 +8,9 @@ from common.di.exceptions import UnregisteredServiceError
 
 @pytest.fixture(autouse=True)
 def reset_in_memory_lineage():
+    from django.core.cache import cache
+
+    cache.clear()
     try:
         gateway = DependencyInjection.root().resolve(ILineageGateway)
     except UnregisteredServiceError:
@@ -23,3 +26,4 @@ def reset_in_memory_lineage():
         gateway._char_coords.clear()
         gateway._next_char_id = 1
     yield
+    cache.clear()

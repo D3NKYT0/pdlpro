@@ -273,7 +273,7 @@ def test_auth_capabilities_and_passkey_registration_begin(api, user):
 
 
 @pytest.mark.django_db
-def test_login_cookies_outlive_access_token(api, user):
+def test_login_cookies_match_token_lifetimes(api, user):
     from django.conf import settings as django_settings
 
     response = api.post(
@@ -286,9 +286,11 @@ def test_login_cookies_outlive_access_token(api, user):
     assert "refresh" not in response.data
     access_name = django_settings.REST_AUTH["JWT_AUTH_COOKIE"]
     refresh_name = django_settings.REST_AUTH["JWT_AUTH_REFRESH_COOKIE"]
-    expected_age = int(django_settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
-    assert int(response.cookies[access_name]["max-age"]) == expected_age
-    assert int(response.cookies[refresh_name]["max-age"]) == expected_age
+    access_age = int(django_settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds())
+    refresh_age = int(django_settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds())
+    assert int(response.cookies[access_name]["max-age"]) == access_age
+    assert int(response.cookies[refresh_name]["max-age"]) == refresh_age
+    assert access_age < refresh_age
     assert response.cookies[access_name]["path"] == "/"
     assert response.cookies[refresh_name]["path"] == "/"
 

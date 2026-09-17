@@ -30,6 +30,7 @@ Relatos responsáveis que resultaram em correção no produto:
 | Relato | Relator |
 | --- | --- |
 | Venda dupla no marketplace sob compras concorrentes (TOCTOU no anúncio) | [Victor Mendonça (@mend3)](https://github.com/mend3) |
+| CSP com `script-src 'unsafe-inline'`, cookie de acesso com Max-Age de 7 dias, OpenAPI público, busca de lojas sem debounce/cache e `limit` inválido no ranking | [Victor Mendonça (@mend3)](https://github.com/mend3) |
 
 ## Escopo prioritário
 

@@ -76,12 +76,66 @@ def test_list_stores_marks_unavailable_when_game_tables_are_missing():
 
 
 def test_sql_gateway_store_lists_fail_closed_without_offline_tables():
+    from django.core.cache import cache
+
+    cache.clear()
     gateway = SqlAlchemyLineageGateway(LineageQueryCatalog.load("dreamv3"))
     gateway._engine = create_engine("sqlite://")
     with pytest.raises(CharacterServiceUnavailableError):
         gateway.list_private_store_items()
     with pytest.raises(CharacterServiceUnavailableError):
         gateway.list_private_stores()
+
+
+def test_sql_gateway_reuses_cached_store_lists(monkeypatch):
+    from django.core.cache import cache
+
+    cache.clear()
+    gateway = SqlAlchemyLineageGateway(LineageQueryCatalog.load("dreamv3"))
+    calls = {"n": 0}
+
+    def fake_fetch(name, params=None):
+        calls["n"] += 1
+        if name == "list_private_stores":
+            return [
+                {
+                    "char_id": 1,
+                    "name": "Ann",
+                    "store_type": 1,
+                    "title": "",
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "clan_name": "",
+                    "sex": 0,
+                    "class_id": 0,
+                }
+            ]
+        return []
+
+    monkeypatch.setattr(gateway, "_fetch", fake_fetch)
+    first = gateway.list_private_stores()
+    second = gateway.list_private_stores()
+    assert first[0].name == "Ann"
+    assert second[0].name == "Ann"
+    assert calls["n"] == 1
+
+
+def test_lineage_read_cache_skips_loader_on_hit():
+    from django.core.cache import cache
+
+    from apps.server.infrastructure.read_cache import cached_fetch
+
+    cache.clear()
+    calls = {"n": 0}
+
+    def loader():
+        calls["n"] += 1
+        return [{"char_id": 1}]
+
+    assert cached_fetch("lineage:test", loader, 30) == [{"char_id": 1}]
+    assert cached_fetch("lineage:test", loader, 30) == [{"char_id": 1}]
+    assert calls["n"] == 1
 
 
 class _RecipeCatalog:

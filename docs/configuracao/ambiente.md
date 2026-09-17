@@ -68,23 +68,27 @@ Os settings aceitam as seguintes opções, ainda que nem todas apareçam habilit
 
 | Variável | Descrição |
 |---|---|
-| `ACCESS_TOKEN_MINUTES` | Duração do access token; padrão 15 minutos |
-| `REFRESH_TOKEN_DAYS` | Duração do refresh token; padrão 7 dias |
+| `ACCESS_TOKEN_MINUTES` | Duração do access token e do cookie `PDL-auth`; padrão 15 minutos |
+| `REFRESH_TOKEN_DAYS` | Duração do refresh token e do cookie `PDL-refresh`; padrão 7 dias |
 | `JWT_AUTH_COOKIE` | Nome do cookie de acesso |
 | `JWT_AUTH_REFRESH_COOKIE` | Nome do cookie de renovação |
 | `CORS_ALLOWED_ORIGINS` | Origens permitidas, separadas por vírgula |
 | `CSRF_TRUSTED_ORIGINS` | Origens confiáveis para CSRF |
 | `WEBSOCKET_ALLOWED_ORIGINS` | Origens aceitas pelo ASGI/WebSocket |
 | `TRUSTED_PROXY_COUNT` | Quantidade esperada de proxies confiáveis |
-| `OPENAPI_DOCS_PUBLIC` | `true` libera schema, Swagger e ReDoc; `false` restringe à equipe |
+| `OPENAPI_DOCS_PUBLIC` | `true` libera schema, Swagger e ReDoc; `false` restringe à equipe. `core.settings.production` força `false` mesmo se a variável estiver ligada |
 | `SITE_ID` | Site do `django.contrib.sites` |
 
 `core.settings.development` libera CORS e usa cookies não seguros para facilitar o uso local. `core.settings.production` ativa cookies seguros e HSTS; ele deve ficar atrás de HTTPS corretamente configurado.
 
 Os tokens de sessão são entregues somente em cookies `HttpOnly`; respostas de autenticação não
-incluem access ou refresh no JSON. Login e cadastro usam, respectivamente, os limites dedicados
-de 10/minuto e 10/hora. A CSP é definida em `core.settings.base`, recebe
-`upgrade-insecure-requests` em produção e deve permanecer alinhada às configurações Nginx.
+incluem access ou refresh no JSON. O cookie de acesso (`PDL-auth`) usa o `Max-Age` de
+`ACCESS_TOKEN_MINUTES`; o de renovação (`PDL-refresh`) usa `REFRESH_TOKEN_DAYS`. Login e cadastro usam, respectivamente, os limites dedicados
+de 10/minuto e 10/hora. A CSP é definida em `core.settings.security.build_content_security_policy`:
+`script-src` da API e da SPA não inclui `'unsafe-inline'` (o bootstrap da SPA é um arquivo
+estático). Admin, schema, Swagger e ReDoc usam `CONTENT_SECURITY_POLICY_HTML`, que ainda
+permite script inline do Jazzmin/Spectacular. Produção acrescenta
+`upgrade-insecure-requests` e deve permanecer alinhada às configurações Nginx.
 
 ## Pagamentos
 

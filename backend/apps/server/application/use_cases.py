@@ -143,6 +143,29 @@ class GetServerStatusUseCase(UseCase[GetServerStatusInput, ServerStatus]):
         return self._lineage.get_status()
 
 
+RANKING_LIMIT_DEFAULT = 10
+RANKING_LIMIT_MAX = 50
+
+
+def clamp_ranking_limit(limit: int) -> int:
+    """Garante entre 1 e 50 posições, inclusive quando a borda HTTP já tentou converter."""
+
+    return max(1, min(int(limit), RANKING_LIMIT_MAX))
+
+
+def parse_ranking_limit(raw: str | None) -> int:
+    """Converte ``?limit=`` público; texto inválido vira o padrão em vez de 500."""
+
+    try:
+        if raw in (None, ""):
+            value = RANKING_LIMIT_DEFAULT
+        else:
+            value = int(raw)
+    except (TypeError, ValueError):
+        return RANKING_LIMIT_DEFAULT
+    return clamp_ranking_limit(value)
+
+
 @dataclass(frozen=True, slots=True)
 class GetRankingInput:
     """Dados de entrada de ``GetRankingUseCase.execute``.
@@ -152,14 +175,14 @@ class GetRankingInput:
     """
 
     kind: str
-    limit: int = 10
+    limit: int = RANKING_LIMIT_DEFAULT
 
 
 class GetRankingUseCase(UseCase[GetRankingInput, list[RankingEntry]]):
     """Seleciona o ranking solicitado e consulta suas posições pelo gateway.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``GetRankingInput``. O retorno é
-    ``list[RankingEntry]``.
+    ``list[RankingEntry]``. O limite é recortado para no máximo 50.
     """
 
     def __init__(self, lineage: ILineageGateway) -> None:
@@ -179,7 +202,7 @@ class GetRankingUseCase(UseCase[GetRankingInput, list[RankingEntry]]):
             from common.architecture.exceptions import ValidationDomainError
 
             raise ValidationDomainError(f"Ranking desconhecido: {data.kind}")
-        return fetcher(data.limit)
+        return fetcher(clamp_ranking_limit(data.limit))
 
 
 @dataclass(frozen=True, slots=True)

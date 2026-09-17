@@ -15,8 +15,8 @@
 O Swagger e o ReDoc usam o mesmo visual ouro/escuro do frontend e do Jazzmin. Em desenvolvimento nativo, use `http://127.0.0.1:8000`. Com o Compose completo, use `http://localhost` por meio do Nginx.
 
 Quando `OPENAPI_DOCS_PUBLIC=false`, schema, Swagger e ReDoc exigem uma conta da equipe. A
-autenticação pode vir dos cookies JWT do painel ou da sessão do Django Admin. Em produção, o
-valor recomendado é `false`.
+autenticação pode vir dos cookies JWT do painel ou da sessão do Django Admin. Em produção o
+schema permanece privado: `core.settings.production` força `false`.
 
 ## Namespaces
 

@@ -12,6 +12,7 @@ from apps.server.application.use_cases import (
     GetServerStatusUseCase,
     RunPublicLineageQueryInput,
     RunPublicLineageQueryUseCase,
+    parse_ranking_limit,
 )
 from apps.server.presentation.serializers import (
     RankingEntrySerializer,
@@ -80,8 +81,8 @@ class RankingView(InjectedAPIView):
         responses=RankingEntrySerializer(many=True),
     )
     def get(self, request, kind: str):
-        limit = int(request.query_params.get("limit", 10))
-        entries = self.resolve(GetRankingUseCase).execute(GetRankingInput(kind=kind, limit=min(limit, 50)))
+        limit = parse_ranking_limit(request.query_params.get("limit"))
+        entries = self.resolve(GetRankingUseCase).execute(GetRankingInput(kind=kind, limit=limit))
         return Response(RankingEntrySerializer(entries, many=True).data)
 
 

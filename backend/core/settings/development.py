@@ -1,6 +1,7 @@
 from .base import *
 
 DEBUG = True
+# Schema local mesmo se o .env copiado de produção tiver OPENAPI_DOCS_PUBLIC=false.
 OPENAPI_DOCS_PUBLIC = True
 LOGGING = get_logging_config(env, default_app_level="DEBUG", default_log_to_file=True)
 
