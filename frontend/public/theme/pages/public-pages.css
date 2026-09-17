@@ -199,6 +199,25 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
+.stores-item-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stores-recipe-arrow {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid color-mix(in srgb, var(--store-accent, #c5a161) 72%, transparent);
+  border-top: 1.5px solid color-mix(in srgb, var(--store-accent, #c5a161) 72%, transparent);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.stores-item-result {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--store-accent, #c5a161) 48%, transparent);
+}
+
 .stores-item-list strong {
   display: block;
 }
@@ -210,6 +229,90 @@
 .stores-item-list b {
   color: #c5a161;
   font-weight: 400;
+}
+
+.stores-page {
+  --store-sell: var(--theme-store-sell, var(--theme-accent, #c5a161));
+  --store-buy: var(--theme-store-buy, var(--theme-info, #6aa8c9));
+  --store-package: var(--theme-store-package, var(--theme-epic, #c4a6e8));
+  --store-craft: var(--theme-store-craft, var(--theme-success, #7ebc8a));
+}
+
+.stores-page .public-tile {
+  --store-accent: var(--store-sell);
+  padding: 2px;
+  background: color-mix(in srgb, var(--store-accent) 62%, #1c1610);
+}
+
+.stores-page .public-tile[data-store-type="buy"] {
+  --store-accent: var(--store-buy);
+}
+
+.stores-page .public-tile[data-store-type="package"] {
+  --store-accent: var(--store-package);
+}
+
+.stores-page .public-tile[data-store-type="craft"] {
+  --store-accent: var(--store-craft);
+}
+
+.stores-page .public-tile > div {
+  box-shadow: inset 0 3px 0 var(--store-accent);
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--store-accent) 18%, transparent), transparent 48%),
+    #0a0907;
+}
+
+.stores-page .public-tile:hover {
+  background: color-mix(in srgb, var(--store-accent) 88%, #fff);
+}
+
+.stores-page .public-tile:hover h3,
+.stores-page .public-tile:hover strong,
+.stores-page .public-tile:hover .public-kicker {
+  text-shadow: 0 0 16px color-mix(in srgb, var(--store-accent) 75%, transparent);
+}
+
+.stores-page .stores-type {
+  color: var(--store-accent);
+  background: color-mix(in srgb, var(--store-accent) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--store-accent) 40%, transparent);
+  padding: 3px 9px;
+  margin-bottom: 10px;
+}
+
+.stores-page .character-avatar {
+  border-color: color-mix(in srgb, var(--store-accent) 58%, transparent);
+}
+
+.stores-page .stores-place svg,
+.stores-page .stores-item-list b {
+  color: var(--store-accent);
+}
+
+.stores-page .public-faq-tools {
+  --store-filter-accent: var(--theme-accent, #c5a161);
+}
+
+.stores-page .public-faq-tools[data-store-filter="sell"] {
+  --store-filter-accent: var(--store-sell);
+}
+
+.stores-page .public-faq-tools[data-store-filter="buy"] {
+  --store-filter-accent: var(--store-buy);
+}
+
+.stores-page .public-faq-tools[data-store-filter="package"] {
+  --store-filter-accent: var(--store-package);
+}
+
+.stores-page .public-faq-tools[data-store-filter="craft"] {
+  --store-filter-accent: var(--store-craft);
+}
+
+.stores-page .public-faq-tools[data-store-filter]:not([data-store-filter="all"]) select {
+  border-color: color-mix(in srgb, var(--store-filter-accent) 58%, #3d3223);
+  color: var(--store-filter-accent);
 }
 
 .public-grid {

@@ -8,6 +8,7 @@ import i18n from '../../i18n'
 import { ITEM_CATALOG_KEY, type ApiTheme } from '../../services/api'
 import { AdminServerPage } from './AdminServerPage'
 import { AdminThemesPage } from './AdminThemesPage'
+import { AdminShopPage } from './AdminShopPage'
 import { AdminCommercePage } from './AdminCommercePage'
 import { AdminGameContentPage } from './AdminGameContentPage'
 import { AdminCustomItemsPage } from './AdminCustomItemsPage'
@@ -78,6 +79,15 @@ describe('admin configuration pages follow the active language', () => {
     expect(english).toContain('Create package')
     expect(english).not.toContain('Pacotes e cupons')
     expect(await inLanguage('es', () => render(<AdminCommercePage />))).toContain('Paquetes y cupones')
+  })
+
+  it('translates the shop configurator', async () => {
+    expect(await inLanguage('pt', () => render(<AdminShopPage />))).toContain('Preencher catálogo low grade')
+    const english = await inLanguage('en', () => render(<AdminShopPage />))
+    expect(english).toContain('Fill low-grade catalog')
+    expect(english).toContain('Shop configurator')
+    expect(english).not.toContain('Preencher catálogo low grade')
+    expect(await inLanguage('es', () => render(<AdminShopPage />))).toContain('Rellenar catálogo low grade')
   })
 
   it('translates the rewards workshop sections and field labels', async () => {

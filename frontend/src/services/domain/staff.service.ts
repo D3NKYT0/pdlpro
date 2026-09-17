@@ -57,6 +57,12 @@ export interface ApiStaffShopItem {
   active: boolean
 }
 
+export interface ApiStaffShopAutoconfig {
+  created: { items: number; packages: number }
+  items_total: number
+  packages_total: number
+}
+
 export interface ApiStaffNews {
   id: string
   slug: string
@@ -194,6 +200,8 @@ export const staffApi = {
       method: payload.id ? 'PUT' : 'POST',
       body: JSON.stringify(payload),
     }),
+  autoconfigShop: () =>
+    request<ApiStaffShopAutoconfig>('/staff/shop/autoconfig/', { method: 'POST', body: JSON.stringify({}) }),
   news: () => request<ApiStaffNews[]>('/staff/news/'),
   saveNews: (payload: Partial<ApiStaffNews>) =>
     request<ApiStaffNews>('/staff/news/', {

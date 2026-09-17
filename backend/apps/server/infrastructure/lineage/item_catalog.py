@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from contextlib import contextmanager
 from contextvars import ContextVar
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from functools import lru_cache
 from pathlib import Path
 
@@ -15,6 +15,10 @@ ITEM_RE = re.compile(
 )
 SET_RE = re.compile(r"<set\s+name=\"([^\"]+)\"\s+value=\"([^\"]*)\"\s*/>")
 SLOT_RE = re.compile(r"<slot\s+id=\"([^\"]+)\"\s*/>")
+RECIPE_NAME_RE = re.compile(
+    r"^(?:recipe|receita|receta)\s*:\s*(.+?)(?:\s*\(\d+%\))?\s*$",
+    re.IGNORECASE,
+)
 
 
 def _decode_xml(value: str) -> str:
@@ -78,6 +82,42 @@ def _classify(kind: str, item_type: str, slots: list[str]) -> str:
     return "COMUM"
 
 
+def recipe_product_name(name: str) -> str | None:
+    """Extrai o nome do item produzido a partir do nome da receita."""
+    match = RECIPE_NAME_RE.fullmatch((name or "").strip())
+    if not match:
+        return None
+    product = match.group(1).strip()
+    return product or None
+
+
+def _is_recipe(sets: dict[str, str], name: str) -> bool:
+    item_type = (sets.get("type") or "").strip().upper()
+    item_class = (sets.get("class") or "").strip().upper()
+    return item_type == "RECIPE" or item_class in {"RECIPIES", "RECIPES"} or recipe_product_name(name) is not None
+
+
+def attach_recipe_results(items: dict[int, L2Item]) -> dict[int, L2Item]:
+    """Liga cada receita ao item de menor ID com o nome do produto."""
+    by_name: dict[str, L2Item] = {}
+    for item in items.values():
+        if item.is_recipe:
+            continue
+        key = item.name.casefold()
+        current = by_name.get(key)
+        if current is None or item.id < current.id:
+            by_name[key] = item
+    resolved: dict[int, L2Item] = {}
+    for item in items.values():
+        result_id = item.recipe_result_id
+        if item.is_recipe:
+            product = recipe_product_name(item.name)
+            match = by_name.get(product.casefold()) if product else None
+            result_id = match.id if match else None
+        resolved[item.id] = item if result_id == item.recipe_result_id else replace(item, recipe_result_id=result_id)
+    return resolved
+
+
 @dataclass(frozen=True, slots=True)
 class L2Item:
     """Metadados de um tipo de item carregado do catálogo XML do Lineage.
@@ -95,6 +135,8 @@ class L2Item:
     icon_url: str = ""
     source: str = "xml"
     metadata: dict = field(default_factory=dict)
+    is_recipe: bool = False
+    recipe_result_id: int | None = None
 
 
 class LineageItemCatalog:
@@ -172,7 +214,7 @@ class LineageItemCatalog:
         for path in sorted(folder.rglob("*.xml")):
             for item in cls._parse(path.read_text(encoding="utf-8")):
                 items[item.id] = item
-        return cls(items)
+        return cls(attach_recipe_results(items))
 
     @classmethod
     def _parse(cls, xml: str) -> list[L2Item]:
@@ -196,6 +238,7 @@ class LineageItemCatalog:
                     grade=_map_grade(sets.get("crystal_type", "NONE")),
                     icon=sets.get("icon", ""),
                     tradeable=raw_tradeable.strip().casefold() in {"true", "1", "yes"},
+                    is_recipe=_is_recipe(sets, name),
                 )
             )
         return parsed
@@ -231,7 +274,7 @@ def get_item_catalog() -> LineageItemCatalog:
             items[row.item_id] = L2Item(id=row.item_id, name=row.name, category=row.category,
                 grade=row.grade, tradeable=row.tradeable, icon_url=row.image.url if row.image else "",
                 source="custom", metadata=row.metadata)
-    catalog = LineageItemCatalog(items)
+    catalog = LineageItemCatalog(attach_recipe_results(items))
     if scope is not None:
         scope["catalog"] = catalog
     return catalog
@@ -271,4 +314,6 @@ def item_metadata(item_id: int) -> dict:
         "icon_reference": item.icon if item else "",
         "source": item.source if item else None,
         "metadata": item.metadata if item else {},
+        "is_recipe": bool(item.is_recipe) if item else False,
+        "recipe_result_id": item.recipe_result_id if item else None,
     }

@@ -15,7 +15,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Avisos, atendimento e ajuda | sino da barra superior, `/panel/help` (Atendimento só pela Ajuda) | `/panel/admin/notifications`, `/panel/admin/support` |
 | Conteúdo público do site | Rankings, lojas do jogo, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
-| Pacotes, cupons, bônus e histórico | `/panel/shop` | `/panel/admin/commerce` |
+| Pacotes, cupons, bônus e histórico | `/panel/shop` | Itens e pacotes em `/panel/admin/shop` (com **Preencher catálogo low grade**); cupons em `/panel/admin/commerce` |
 | Passe, bônus diário, caça do dia e rankings | `/panel/rewards` | `/panel/admin/rewards` (missões da caça em `hunt-quests`) |
 | Lojas offline do jogo | `/stores` | Consulta somente leitura; SQL opcional por dialeto |
 | Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar, **Configurar** por jogo e **Configurar todos**) |
@@ -32,7 +32,7 @@ Os **Baús Encantados** funcionam diferente da roleta: o **item em mira é sempr
 
 A **Caça do dia** (`/panel/rewards?tab=hunt`) lê PvP, PK, tempo online e nível no personagem L2. O painel mostra o snapshot do personagem escolhido (nível, presença, PvP/PK e tempo online), o progresso de cada missão em barra e o resgate no mesmo chrome das missões do passe. No primeiro acesso do período (dia ou semana) o painel grava um snapshot; o progresso é a diferença até o valor ao vivo. O resgate entrega recompensas da bag/carteira uma vez por missão e período. Não exige logout. A staff edita as missões em `/panel/admin/rewards` (área Caça do dia), com nome/descrição PT/EN/ES.
 
-As **Lojas do jogo** (`/stores`) listam private stores offline publicadas no servidor (`character_offline_trade`). A tela é pública e somente leitura: busca por item ou vendedor e filtro por tipo (venda, compra, pacote, craft). Sem as consultas no catálogo SQL, a API devolve `available: false` e a SPA esconde o módulo.
+As **Lojas do jogo** (`/stores`) listam private stores offline publicadas no servidor (`character_offline_trade`). A tela é pública e somente leitura: busca por item ou vendedor e filtro por tipo (venda, compra, pacote, craft). Cada tipo pinta o cartão (borda, selo, preço e retrato) com uma cor própria — ouro na venda, azul na compra, violeta no pacote e verde no craft — para o jogador reconhecer a loja de relance. Nas lojas de craft, receitas mostram o ícone do item produzido ao lado do pergaminho. Sem as consultas no catálogo SQL, a API devolve `available: false` e a SPA esconde o módulo.
 
 O controle central oferece 25 módulos organizados por categoria (economia, jogos, conta, comunicação e conteúdo do site). Desativar bloqueia os endpoints correspondentes e a tela; não apaga dados nem bloqueia a administração. Perfil e segurança de autenticação ficam acessíveis no menu conforme a política de cada módulo; Conta e segurança permanece sempre disponível. Os jogos continuam respeitando também suas configurações individuais.
 
@@ -47,6 +47,14 @@ definidas; desativa sobras do catálogo antigo (unidade isolada e Necklace of
 Valakas).
 A operação é idempotente. Baús também têm **Configurar baús**, porque não
 usam `GameConfig`.
+
+Em `/panel/admin/shop`, o **configurador da loja** edita itens avulsos e
+pacotes. **Preencher catálogo low grade** aplica IDs reais do XML Interlude
+em stacks NG/D/C (Adena 1M–10M, soulshot/spiritshot NG–C, poções, SoE/SoR,
+crystal/gemstone D–C, encantes D–C, Gold Bar e Coin of Luck) e monta
+pacotes com desconto (iniciante, mago NG, farm D, PvP, encante D, C-Grade,
+semanal e premium). Não sobrescreve preço, nome, ativação nem pacotes já
+existentes com o mesmo nome. A operação é idempotente.
 
 ## Regras importantes
 

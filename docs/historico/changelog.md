@@ -10,6 +10,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Configurador da loja** em `/panel/admin/shop`: itens avulsos, pacotes e
+  **Preencher catálogo low grade** com stacks Interlude NG/D/C (Adena,
+  soulshot, poções, SoE/SoR, crystal/gemstone, encantes D–C) e pacotes de
+  iniciante, mago, farm, PvP, encante, C-Grade, semanal e premium. Idempotente:
+  não sobrescreve preço, nome ou pacotes já definidos.
 - **Moderação da equipe** em `/panel/admin/moderation`: lista personagens
   (nick, conta L2, e-mail, online) e aplica kick, prisão/soltar, ban/desban e
   teleporte para vila, com motivo e histórico. As escritas vão ao SQL do
@@ -111,6 +116,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   fatores apaga o segredo e obriga novo cadastro.
 - Conquista bloqueada passa a mostrar a própria arte como silhueta esmaecida com cadeado
   sobreposto, borda tracejada e rótulo de estado em destaque, no lugar do cadeado genérico.
+- A vitrine de lojas em `/stores` pinta cada cartão pelo tipo: ouro na venda,
+  azul na compra, violeta no pacote e verde no craft (borda, selo, preço e
+  retrato). Pacotes de tema podem remapear `--theme-store-sell|buy|package|craft`.
+  Receitas mostram o ícone do item produzido ao lado do pergaminho.
 
 ### Corrigido
 

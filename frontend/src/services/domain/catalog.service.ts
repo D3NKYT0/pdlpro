@@ -11,6 +11,8 @@ export interface L2CatalogItem {
   catalog_found: boolean
   source?: 'xml' | 'custom' | null
   metadata?: Record<string, unknown>
+  is_recipe?: boolean
+  recipe_result_id?: number | null
 }
 
 export type ItemCatalogResponse = { items: L2CatalogItem[]; default_icon_url: string }

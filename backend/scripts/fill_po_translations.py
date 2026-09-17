@@ -531,6 +531,11 @@ TRANSLATIONS: dict[str, tuple[str, str]] = {
         "Creates default minigame configuration and content without overwriting existing names or keys.",
         "Crea la configuración y el contenido predeterminado de los minijuegos sin sobrescribir nombres o claves ya definidas.",
     ),
+    "Preencher loja": ("Fill shop", "Rellenar tienda"),
+    "Cria itens e pacotes padrão de servidor low grade sem sobrescrever preços, nomes ou pacotes já definidos.": (
+        "Creates default low-grade shop items and packages without overwriting existing prices, names, or packages.",
+        "Crea ítems y paquetes predeterminados de servidor low grade sin sobrescribir precios, nombres o paquetes ya definidos.",
+    ),
     "Este serviço não está disponível neste servidor.": (
         "This service is not available on this server.",
         "Este servicio no está disponible en este servidor.",

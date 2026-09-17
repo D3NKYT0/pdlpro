@@ -3128,6 +3128,16 @@ msgid ""
 "chaves já definidas."
 msgstr ""
 
+#: .\apps\staff\presentation\views\config.py:185
+msgid "Preencher loja"
+msgstr ""
+
+#: .\apps\staff\presentation\views\config.py:187
+msgid ""
+"Cria itens e pacotes padrão de servidor low grade sem sobrescrever preços, "
+"nomes ou pacotes já definidos."
+msgstr ""
+
 #: .\apps\staff\presentation\views\custom_items.py:82
 #: .\apps\staff\presentation\views\item_observation.py:173
 #: .\common\i18n_msgid_catalog.py:185

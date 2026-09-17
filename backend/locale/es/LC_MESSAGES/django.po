@@ -3367,6 +3367,18 @@ msgstr ""
 "Crea la configuración y el contenido predeterminado de los minijuegos sin "
 "sobrescribir nombres o claves ya definidas."
 
+#: .\apps\staff\presentation\views\config.py:185
+msgid "Preencher loja"
+msgstr "Rellenar tienda"
+
+#: .\apps\staff\presentation\views\config.py:187
+msgid ""
+"Cria itens e pacotes padrão de servidor low grade sem sobrescrever preços, "
+"nomes ou pacotes já definidos."
+msgstr ""
+"Crea ítems y paquetes predeterminados de servidor low grade sin sobrescribir "
+"precios, nombres o paquetes ya definidos."
+
 #: .\apps\staff\presentation\views\custom_items.py:82
 #: .\apps\staff\presentation\views\item_observation.py:173
 #: .\common\i18n_msgid_catalog.py:185

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from apps.games.application.staff_autoconfig import BootstrapStaffGamesUseCase
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
+from apps.shop.application.staff_autoconfig import BootstrapStaffShopUseCase
 from apps.staff.application.use_cases import (
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
@@ -167,6 +168,27 @@ class StaffShopItemsView(ItemCatalogAPIView):
     )
     def put(self, request):
         return Response(self.resolve(UpsertStaffShopItemUseCase).execute(request.data or {}))
+
+
+class StaffShopAutoconfigView(InjectedAPIView):
+    """Entrada HTTP para ``BootstrapStaffShopUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated, IsStaffMember]. Resolve a aplicação no escopo da requisição antes de
+    montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated, IsStaffMember]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Preencher loja"),
+        description=gettext_lazy(
+            "Cria itens e pacotes padrão de servidor low grade sem sobrescrever preços, nomes ou pacotes já definidos."
+        ),
+    )
+    def post(self, request):
+        return Response(self.resolve(BootstrapStaffShopUseCase).execute())
 
 
 class StaffNewsView(InjectedAPIView):

@@ -30,7 +30,7 @@ export function StoresPage() {
         description={t('stores.description')}
       />
       <div className="container">
-        <div className="public-faq-tools">
+        <div className="public-faq-tools" data-store-filter={storeType || 'all'}>
           <label>
             {t('stores.search')}
             <input
@@ -64,7 +64,11 @@ export function StoresPage() {
               const race = t(`stores.races.${store.race}`, { defaultValue: store.race })
               const sex = t(store.sex === 1 ? 'stores.sex.female' : 'stores.sex.male')
               return (
-                <article className="public-tile" key={`${store.char_id}-${store.title}-${store.store_type}`}>
+                <article
+                  className="public-tile"
+                  data-store-type={store.store_type}
+                  key={`${store.char_id}-${store.title}-${store.store_type}`}
+                >
                   <div>
                     <header className="stores-head">
                       <CharacterAvatar
@@ -76,7 +80,7 @@ export function StoresPage() {
                         alt={t('stores.avatarAlt', { name: store.name, race, sex })}
                       />
                       <div>
-                        <span className="public-kicker">
+                        <span className="public-kicker stores-type">
                           {t(`stores.types.${store.store_type}`, { defaultValue: store.store_type })}
                         </span>
                         <h3>{store.name}</h3>
@@ -94,7 +98,20 @@ export function StoresPage() {
                     <ul className="stores-item-list">
                       {store.items.map((item) => (
                         <li key={`${store.char_id}-${item.item_id}-${item.enchant}-${item.price}`}>
-                          <ItemIcon itemId={item.item_id} name={item.name} size={28} />
+                          <span className="stores-item-icons">
+                            <ItemIcon itemId={item.item_id} name={item.name} size={28} />
+                            {item.result_item_id ? (
+                              <>
+                                <span className="stores-recipe-arrow" aria-hidden="true" />
+                                <ItemIcon
+                                  className="stores-item-result"
+                                  itemId={item.result_item_id}
+                                  name={t('stores.recipeResult', { name: item.result_name || item.name })}
+                                  size={28}
+                                />
+                              </>
+                            ) : null}
+                          </span>
                           <span>
                             <strong>{item.name}</strong>
                             {item.enchant > 0 ? ` ${t('stores.enchant', { value: item.enchant })}` : ''}

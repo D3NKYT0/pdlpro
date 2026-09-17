@@ -232,6 +232,7 @@ const contracts: Contract[] = [
   ['staff.shop', () => staffApi.shop(), '/staff/shop/'],
   ['staff.createItem', () => staffApi.saveShopItem({ name: 'Sword' }), '/staff/shop/', 'POST', { name: 'Sword' }],
   ['staff.updateItem', () => staffApi.saveShopItem({ id: 'item', active: false }), '/staff/shop/', 'PUT', { id: 'item', active: false }],
+  ['staff.autoconfigShop', () => staffApi.autoconfigShop(), '/staff/shop/autoconfig/', 'POST', {}],
   ['staff.news', () => staffApi.news(), '/staff/news/'],
   ['staff.createNews', () => staffApi.saveNews({ title: 'Update' }), '/staff/news/', 'POST', { title: 'Update' }],
   ['staff.updateNews', () => staffApi.saveNews({ id: 'news', is_published: false }), '/staff/news/', 'PUT', { id: 'news', is_published: false }],

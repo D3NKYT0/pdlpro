@@ -13,6 +13,7 @@ from apps.shop.application.commerce_use_cases import (
     UpdateStaffPackageUseCase,
     UpdateStaffPromoUseCase,
 )
+from apps.shop.application.staff_autoconfig import BootstrapStaffShopUseCase
 from apps.shop.application.use_cases import (
     AddToCartUseCase,
     CheckoutUseCase,
@@ -20,12 +21,14 @@ from apps.shop.application.use_cases import (
     ListShopItemsUseCase,
     UpdateCartItemUseCase,
 )
+from apps.shop.domain.autoconfig import IShopAutoconfigService
 from apps.shop.domain.repositories import (
     ICartRepository,
     IShopItemAdminRepository,
     IShopRepository,
     ISupporterCommissionPort,
 )
+from apps.shop.infrastructure.autoconfig import DjangoShopAutoconfigService
 from apps.shop.infrastructure.repositories import (
     DjangoCartRepository,
     DjangoShopItemAdminRepository,
@@ -47,6 +50,7 @@ class ShopProvider(AppProvider):
 
     def register(self, container: Container) -> None:
         container.register(IShopItemAdminRepository, DjangoShopItemAdminRepository, lifetime=Lifetime.SCOPED)
+        container.register(IShopAutoconfigService, DjangoShopAutoconfigService, lifetime=Lifetime.SCOPED)
         container.register(IShopRepository, DjangoShopRepository, lifetime=Lifetime.SCOPED)
         container.register(ICartRepository, DjangoCartRepository, lifetime=Lifetime.SCOPED)
         container.register(
@@ -71,5 +75,6 @@ class ShopProvider(AppProvider):
             UpdateStaffPackageUseCase,
             CreateStaffPromoUseCase,
             UpdateStaffPromoUseCase,
+            BootstrapStaffShopUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

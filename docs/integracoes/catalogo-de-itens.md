@@ -29,7 +29,9 @@ Para cada item, o catálogo resolve:
 - grade;
 - possibilidade de negociação;
 - referência de ícone;
-- URL pública da imagem.
+- URL pública da imagem;
+- se é receita (`is_recipe`) e o ID do item produzido (`recipe_result_id`), quando o
+  nome segue o padrão *Recipe: Item (60%)* e o produto existe no catálogo.
 
 Itens sem nome ou marcados como não utilizados são ignorados. Quando um ID não existe
 no catálogo, a interface usa o nome `Item <ID>`, o ícone padrão e não o considera

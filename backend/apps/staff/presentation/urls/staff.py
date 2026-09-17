@@ -17,6 +17,7 @@ from apps.staff.presentation.views.config import (
     StaffNewsView,
     StaffPanelSettingsView,
     StaffServicePricesView,
+    StaffShopAutoconfigView,
     StaffShopItemsView,
     StaffWalletPromoView,
 )
@@ -89,6 +90,7 @@ urlpatterns = [
     path("services/", StaffServicePricesView.as_view(), name="staff-service-prices"),
     path("coins/", StaffCoinConfigView.as_view(), name="staff-coins"),
     path("wallet-promo/", StaffWalletPromoView.as_view(), name="staff-wallet-promo"),
+    path("shop/autoconfig/", StaffShopAutoconfigView.as_view(), name="staff-shop-autoconfig"),
     path("shop/", StaffShopItemsView.as_view(), name="staff-shop"),
     path("news/", StaffNewsView.as_view(), name="staff-news"),
     path("calendar/", StaffCalendarView.as_view(), name="staff-calendar"),

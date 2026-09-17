@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 
 from apps.server.application.store_use_cases import ListGameStoresUseCase
 from apps.server.domain.exceptions import CharacterServiceUnavailableError
-from apps.server.domain.gateways import GameStoreItem, ILineageGateway
+from apps.server.domain.gateways import GameStore, GameStoreItem, ILineageGateway
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.null_gateway import NullLineageGateway
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
@@ -66,6 +66,9 @@ class _Names:
     def display_name(self, item_id: int, fallback: str | None = None) -> str:
         return fallback or str(item_id)
 
+    def metadata(self, item_id: int) -> dict:
+        return {}
+
 
 def test_list_stores_marks_unavailable_when_game_tables_are_missing():
     result = ListGameStoresUseCase(_FailingStoresGateway(), _Names()).execute()
@@ -79,3 +82,39 @@ def test_sql_gateway_store_lists_fail_closed_without_offline_tables():
         gateway.list_private_store_items()
     with pytest.raises(CharacterServiceUnavailableError):
         gateway.list_private_stores()
+
+
+class _RecipeCatalog:
+    def display_name(self, item_id: int, fallback: str | None = None) -> str:
+        names = {4967: "Recipe: Sword of Valhalla (60%)", 148: "Sword of Valhalla", 57: "Adena"}
+        return names.get(item_id, fallback or str(item_id))
+
+    def metadata(self, item_id: int) -> dict:
+        return {"recipe_result_id": 148 if item_id == 4967 else None}
+
+
+class _CraftGateway:
+    def supports(self, capability: str) -> bool:
+        return capability == "GAME_STORES"
+
+    def list_private_stores(self):
+        return [GameStore(char_id=1, name="Smith", store_type=8, title="Craft A")]
+
+    def list_private_store_items(self):
+        return [
+            GameStoreItem(item_id=4967, quantity=1, price=2_200_000, enchant=0, char_id=1),
+            GameStoreItem(item_id=57, quantity=20, price=95_000, enchant=0, char_id=1),
+        ]
+
+
+def test_craft_recipe_includes_result_item_and_matches_product_search():
+    result = ListGameStoresUseCase(_CraftGateway(), _RecipeCatalog()).execute({"query": "valhalla"})
+    assert result["available"] is True
+    assert len(result["stores"]) == 1
+    recipe, adena = result["stores"][0]["items"]
+    assert recipe["item_id"] == 4967
+    assert recipe["result_item_id"] == 148
+    assert recipe["result_name"] == "Sword of Valhalla"
+    assert "result_item_id" not in adena
+    empty = ListGameStoresUseCase(_CraftGateway(), _RecipeCatalog()).execute({"query": "soulshot"})
+    assert empty["stores"] == []

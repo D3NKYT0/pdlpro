@@ -73,6 +73,7 @@ export type {
   ApiStaffNotification,
   ApiStaffService,
   ApiStaffShopItem,
+  ApiStaffShopAutoconfig,
   ApiStaffWalletPromo,
 } from './domain/staff.service'
 export { programsApi } from './domain/programs.service'

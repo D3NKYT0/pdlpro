@@ -7,7 +7,11 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { serverApi } from '../services/api'
 import { StoresPage } from './StoresPage'
 
-vi.mock('../components/ItemIcon', () => ({ ItemIcon: () => null }))
+vi.mock('../components/ItemIcon', () => ({
+  ItemIcon: ({ itemId, name, className }: { itemId?: number | string; name?: string; className?: string }) => (
+    <img alt={name || String(itemId)} data-item-id={String(itemId ?? '')} className={className} />
+  ),
+}))
 vi.mock('../services/domain/server.service', () => ({
   serverApi: { stores: vi.fn() },
 }))
@@ -62,7 +66,55 @@ it('lista lojas offline com item, preço e cidade', async () => {
   expect(screen.getByText('Giran')).toBeVisible()
   expect(screen.getByText('X 83400 · Y 147943 · Z -3404')).toBeVisible()
   expect(screen.getByRole('img', { name: 'Trader, humano mulher' })).toHaveAttribute('src', '/theme/avatars/human-f.png')
+  expect(screen.getByRole('heading', { name: 'Trader' }).closest('article')).toHaveAttribute('data-store-type', 'sell')
   expect(serverApi.stores).toHaveBeenCalledWith('', '')
+})
+
+it('pinta cada cartão com o tipo da loja', async () => {
+  vi.mocked(serverApi.stores).mockResolvedValue({
+    available: true,
+    stores: [
+      store,
+      { ...store, char_id: 10, name: 'Buyer', store_type: 'buy' },
+      { ...store, char_id: 11, name: 'Packer', store_type: 'package' },
+      { ...store, char_id: 12, name: 'Smith', store_type: 'craft' },
+    ],
+  })
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Trader' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Trader' }).closest('article')).toHaveAttribute('data-store-type', 'sell')
+  expect(screen.getByRole('heading', { name: 'Buyer' }).closest('article')).toHaveAttribute('data-store-type', 'buy')
+  expect(screen.getByRole('heading', { name: 'Packer' }).closest('article')).toHaveAttribute('data-store-type', 'package')
+  expect(screen.getByRole('heading', { name: 'Smith' }).closest('article')).toHaveAttribute('data-store-type', 'craft')
+  expect(document.querySelector('[data-store-type="sell"] .stores-type')).toHaveTextContent('Venda')
+  expect(document.querySelector('[data-store-type="buy"] .stores-type')).toHaveTextContent('Compra')
+  expect(document.querySelector('[data-store-type="package"] .stores-type')).toHaveTextContent('Pacote')
+  expect(document.querySelector('[data-store-type="craft"] .stores-type')).toHaveTextContent('Craft')
+})
+
+it('mostra o ícone do resultado ao lado da receita nas lojas de craft', async () => {
+  vi.mocked(serverApi.stores).mockResolvedValue({
+    available: true,
+    stores: [{
+      ...store,
+      name: 'Smith',
+      store_type: 'craft',
+      items: [{
+        item_id: 4967,
+        name: 'Recipe: Sword of Valhalla (60%)',
+        quantity: 1,
+        price: 2_200_000,
+        enchant: 0,
+        result_item_id: 148,
+        result_name: 'Sword of Valhalla',
+      }],
+    }],
+  })
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Smith' })).toBeVisible()
+  expect(screen.getByRole('img', { name: 'Recipe: Sword of Valhalla (60%)' })).toHaveAttribute('data-item-id', '4967')
+  expect(screen.getByRole('img', { name: 'Resultado: Sword of Valhalla' })).toHaveAttribute('data-item-id', '148')
+  expect(screen.getByRole('img', { name: 'Resultado: Sword of Valhalla' })).toHaveClass('stores-item-result')
 })
 
 it('filtra por busca e tipo sem enviar de novo enquanto carrega', async () => {
@@ -71,6 +123,7 @@ it('filtra por busca e tipo sem enviar de novo enquanto carrega', async () => {
   await user.type(screen.getByLabelText('Buscar item, vendedor ou vila'), 'sword')
   await user.selectOptions(screen.getByLabelText('Tipo'), 'sell')
   await waitFor(() => expect(serverApi.stores).toHaveBeenCalledWith('sword', 'sell'))
+  expect(screen.getByLabelText('Tipo').closest('.public-faq-tools')).toHaveAttribute('data-store-filter', 'sell')
 })
 
 it('mostra vazio, erro e servidor sem vitrine', async () => {

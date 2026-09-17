@@ -553,7 +553,8 @@
     },
     "items": "{{count}} items",
     "price": "{{price}} adena",
-    "enchant": "+{{value}}"
+    "enchant": "+{{value}}",
+    "recipeResult": "Result: {{name}}"
   },
   "resourceGate": {
     "title": "Feature temporarily disabled",

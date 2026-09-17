@@ -190,6 +190,10 @@ O seletor raiz recomendado é:
   --theme-surface: var(--panel-surface);
   --theme-border: var(--panel-border);
   --theme-bg-deep: #100e0b;
+  --theme-store-sell: var(--theme-accent, #c5a161);
+  --theme-store-buy: var(--theme-info, #6aa8c9);
+  --theme-store-package: var(--theme-epic, #c4a6e8);
+  --theme-store-craft: var(--theme-success, #7ebc8a);
 }
 ```
 
@@ -204,6 +208,8 @@ O CSS de features do painel (ajuda/companheiro, programas do jogador e painéis 
 relatórios financeiros, itens customizados e observação de itens) consome tokens `--theme-*` e
 `--panel-*` (texto, muted, accent, surface, border, fundo profundo). Pacotes personalizam essas
 cores via `theme.css`; os fallbacks hex preservam a aparência default quando o token não existe.
+A vitrine pública de lojas usa `--theme-store-sell`, `--theme-store-buy`,
+`--theme-store-package` e `--theme-store-craft` para a cor predominante de cada tipo.
 
 As folhas estruturais em `/theme/public` e `/theme/pages` entram na lista de estilos do default via
 chaves lógicas `css/public/*` e `css/pages/*` (por exemplo `css/pages/coming-soon.css`). Fontes e

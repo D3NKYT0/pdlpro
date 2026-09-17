@@ -8,7 +8,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { ReactElement } from 'react'
 import toast from 'react-hot-toast'
 import i18n from '../../i18n'
-import { ApiError, staffApi, staffGameContentApi } from '../../services/api'
+import { ApiError, commerceApi, staffApi, staffGameContentApi } from '../../services/api'
 import { AdminCoinsPage } from './AdminCoinsPage'
 import { AdminWalletPage } from './AdminWalletPage'
 import { AdminServicesPage } from './AdminServicesPage'
@@ -28,7 +28,8 @@ vi.mock('../../components/ui/RichText', () => ({
   isRichTextEmpty: (html: string) => !html.replace(/<[^>]*>/g, '').trim(),
 }))
 vi.mock('../../hooks/useItemCatalog', () => ({ useItemCatalog: () => ({ isPending: false, isError: false, getById: (id: string) => String(id) === '57' ? { id: '57', name: 'Adena', grade: 'NG' } : String(id) === '1835' ? { id: '1835', name: 'Soulshot: No Grade', grade: 'NG' } : null, search: () => [], refetch: vi.fn() }) }))
-vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), autoconfigGames: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/staff.service', () => ({ staffApi: { coins: vi.fn(), saveCoins: vi.fn(), walletPromo: vi.fn(), saveWalletPromo: vi.fn(), services: vi.fn(), saveServices: vi.fn(), games: vi.fn(), saveGame: vi.fn(), autoconfigGames: vi.fn(), shop: vi.fn(), saveShopItem: vi.fn(), autoconfigShop: vi.fn(), news: vi.fn(), saveNews: vi.fn(), panel: vi.fn(), savePanel: vi.fn(), inspectAccount: vi.fn(), unlinkAccount: vi.fn() } }))
+vi.mock('../../services/domain/commerce.service', () => ({ commerceApi: { staffPackages: vi.fn(), save: vi.fn() } }))
 vi.mock('../../services/domain/staffGameContent.service', () => ({ staffGameContentApi: { configs: vi.fn(), saveConfig: vi.fn() } }))
 
 beforeEach(() => {
@@ -51,6 +52,9 @@ beforeEach(() => {
   vi.mocked(staffGameContentApi.configs).mockResolvedValue([])
   vi.mocked(staffGameContentApi.saveConfig).mockResolvedValue({ id: 'p1' })
   vi.mocked(staffApi.shop).mockResolvedValue([{ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 1, active: true }])
+  vi.mocked(staffApi.autoconfigShop).mockResolvedValue({ created: { items: 0, packages: 0 }, items_total: 0, packages_total: 0 })
+  vi.mocked(commerceApi.staffPackages).mockResolvedValue([])
+  vi.mocked(commerceApi.save).mockResolvedValue({ id: 'pack', name: 'Kit Iniciante', total_price: '16.00', active: true, contents: [] })
   vi.mocked(staffApi.news).mockResolvedValue([])
   vi.mocked(staffApi.panel).mockResolvedValue({
     name: 'PDL',
@@ -214,6 +218,37 @@ it('edição da loja preserva UUID e converte quantidade para número', async ()
   await user.click(screen.getByRole('button', { name: 'Atualizar item' }))
   expect(staffApi.saveShopItem).toHaveBeenCalledWith({ id: 'item', name: 'Adena', item_id: 57, price: '5.00', quantity: 3, active: true })
   expect(await screen.findByRole('button', { name: 'Criar item' })).toBeVisible()
+})
+
+it('preenche o catálogo low grade e bloqueia clique duplicado', async () => {
+  let resolveFn: (value: { created: { items: number; packages: number }; items_total: number; packages_total: number }) => void = () => {}
+  const pending = new Promise<{ created: { items: number; packages: number }; items_total: number; packages_total: number }>((resolve) => {
+    resolveFn = resolve
+  })
+  vi.mocked(staffApi.autoconfigShop).mockReturnValue(pending)
+  const user = mount(<AdminShopPage />)
+  const fill = await screen.findByRole('button', { name: 'Preencher catálogo low grade' })
+  await user.click(fill)
+  await user.click(fill)
+  expect(staffApi.autoconfigShop).toHaveBeenCalledTimes(1)
+  resolveFn({ created: { items: 33, packages: 8 }, items_total: 33, packages_total: 8 })
+  await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Catálogo low grade aplicado (33 itens e 8 pacotes novos)'))
+})
+
+it('cria pacote da loja a partir do item já cadastrado', async () => {
+  const user = mount(<AdminShopPage />)
+  await user.click(await screen.findByRole('tab', { name: 'Pacotes' }))
+  await user.click(await screen.findByRole('button', { name: 'Novo pacote' }))
+  await screen.findByRole('option', { name: /Adena/ })
+  await user.type(screen.getByLabelText('Nome do pacote'), 'Kit Iniciante')
+  await user.type(screen.getByLabelText('Preço (moedas)'), '16')
+  await user.selectOptions(screen.getByLabelText('Item'), 'item')
+  await user.click(screen.getByRole('button', { name: 'Salvar pacote' }))
+  expect(commerceApi.save).toHaveBeenCalledWith(
+    'packages',
+    { name: 'Kit Iniciante', total_price: '16', active: true, items: [{ item: 'item', quantity: 1 }] },
+    undefined,
+  )
 })
 
 it('cria notícia como rascunho sem publicar implicitamente', async () => {

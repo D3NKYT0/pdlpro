@@ -7,6 +7,8 @@ export type ApiGameStoreItem = {
   quantity: number
   price: number
   enchant: number
+  result_item_id?: number | null
+  result_name?: string | null
 }
 
 export type ApiGameStore = {

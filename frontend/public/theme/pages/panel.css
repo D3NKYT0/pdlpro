@@ -1186,6 +1186,12 @@ html.pdl-panel .admin-shop-form > .btn {
   height: 40px;
 }
 
+html.pdl-panel .admin-shop-pack-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 html.pdl-panel .shop-page { display: grid; gap: 22px; }
 html.pdl-panel .shop-hero { display: flex; align-items: center; gap: 18px; min-height: 132px; }
 html.pdl-panel .shop-hero > span { display: grid; place-items: center; width: 64px; height: 64px; color: var(--panel-gold-bright); border: 1px solid rgba(218,174,81,.28); background: rgba(218,174,81,.07); transform: rotate(45deg); }

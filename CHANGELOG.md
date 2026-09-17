@@ -2,15 +2,18 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **17 de setembro de 2026** — Não publicado: home no Vite
+Última atualização: **17 de setembro de 2026** — Não publicado: configurador
+da loja em `/panel/admin/shop` com catálogo low grade (itens e pacotes
+Interlude NG/D/C); home no Vite
 Windows volta a montar (barrel `.ts` do retrato); moderação da
 equipe em `/panel/admin/moderation` (kick, prisão, banimento e teleporte);
 taverna da
 ficha (teleporte, visual, karma/PK), caça do dia nas recompensas (snapshot do
 personagem e progresso no chrome do passe) e vitrine
 pública de lojas offline com retrato Interlude (e o mesmo retrato em ficha,
-contas, rankings, marketplace, leilão, caça, inventário, troca e moderação)
-e coordenadas; extensões
+contas, rankings, marketplace, leilão, caça, inventário, troca e moderação),
+coordenadas e cor por tipo (venda, compra, pacote, craft), com o ícone do
+item produzido ao lado das receitas; extensões
 embarcam SQL Lineage (overlay ou dialeto próprio, contrato versionado), a SPA
 descobre módulos/slots/APIs sem editar o catálogo, e o overlay se encaixa em
 hooks de checkout/pagamento/vínculo, gateways e recursos Programs; notícias,

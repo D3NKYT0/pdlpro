@@ -7,6 +7,7 @@ import pytest
 from apps.server.infrastructure.lineage.item_catalog import (
     LineageItemCatalog,
     item_display_name,
+    recipe_product_name,
 )
 
 SAMPLE = """
@@ -72,3 +73,57 @@ def test_real_xml_has_adena():
     assert catalog.is_tradeable(57) is True
     assert item_display_name(57) == "Adena"
     assert item_display_name(99999999) == "Item 99999999"
+
+
+def test_recipe_product_name_strips_prefix_and_success_rate():
+    assert recipe_product_name("Recipe: Sword of Valhalla (60%)") == "Sword of Valhalla"
+    assert recipe_product_name("Receita: Kris (100%)") == "Kris"
+    assert recipe_product_name("Receta: Wooden Arrow") == "Wooden Arrow"
+    assert recipe_product_name("Adena") is None
+
+
+def test_recipe_item_maps_to_lowest_id_product(tmp_path: Path):
+    (tmp_path / "items.xml").write_text(
+        """
+        <list>
+          <weapon id="148" name="Sword of Valhalla">
+            <set name="type" value="SWORD"/>
+            <set name="icon" value="icon.weapon_sword_of_valhalla_i00"/>
+          </weapon>
+          <weapon id="7722" name="Sword of Valhalla">
+            <set name="type" value="SWORD"/>
+            <set name="icon" value="icon.weapon_sword_of_valhalla_i01"/>
+          </weapon>
+          <etcitem id="4967" name="Recipe: Sword of Valhalla (60%)">
+            <set name="class" value="RECIPIES"/>
+            <set name="type" value="RECIPE"/>
+            <set name="icon" value="icon.etc_recipe_red_i00"/>
+          </etcitem>
+          <etcitem id="57" name="Adena">
+            <set name="type" value="MONEY"/>
+          </etcitem>
+        </list>
+        """,
+        encoding="utf-8",
+    )
+    catalog = LineageItemCatalog.load(tmp_path)
+    recipe = catalog.get(4967)
+    assert recipe is not None
+    assert recipe.is_recipe is True
+    assert recipe.recipe_result_id == 148
+    assert catalog.get(57).is_recipe is False
+    assert catalog.get(57).recipe_result_id is None
+
+
+@pytest.mark.django_db
+def test_real_xml_recipe_maps_valhalla_and_kris():
+    catalog = LineageItemCatalog.load()
+    valhalla = catalog.get(4967)
+    kris = catalog.get(4968)
+    if valhalla is None or kris is None:
+        pytest.skip("XML do catálogo L2 não está presente")
+    assert valhalla.is_recipe is True
+    assert valhalla.recipe_result_id == 148
+    assert kris.is_recipe is True
+    assert kris.recipe_result_id == 229
+
