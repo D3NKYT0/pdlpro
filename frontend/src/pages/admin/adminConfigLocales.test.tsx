@@ -94,12 +94,15 @@ describe('admin configuration pages follow the active language', () => {
     const portuguese = await inLanguage('pt', () => render(<AdminGameContentPage />))
     expect(portuguese).toContain('Temporadas do passe')
     expect(portuguese).toContain('Oficina de recompensas')
+    expect(portuguese).toContain('Preencher passe low rate')
     const english = await inLanguage('en', () => render(<AdminGameContentPage />))
     expect(english).toContain('Rewards workshop')
     expect(english).toContain('Battle pass seasons')
+    expect(english).toContain('Fill low-rate battle pass')
     expect(english).toContain('Fishing baits')
     expect(english).not.toContain('Temporadas do passe')
-    expect(await inLanguage('es', () => render(<AdminGameContentPage />))).toContain('Taller de recompensas')
+    expect(english).not.toContain('Preencher passe low rate')
+    expect(await inLanguage('es', () => render(<AdminGameContentPage />))).toContain('Rellenar pase low rate')
   })
 
   it('translates the custom item catalog editor', async () => {

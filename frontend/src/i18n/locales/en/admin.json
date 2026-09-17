@@ -1056,8 +1056,14 @@
   "gameContent": {
     "kicker": "Games and rewards",
     "title": "Rewards workshop",
-    "description": "Set up seasons, objectives, prizes and baits. Players only receive rewards after meeting the rules on the server.",
+    "description": "Set up seasons, objectives, prizes and baits. Fill a low-rate battle pass (30 free and premium levels, missions and milestones) or edit by hand. Players only receive rewards after meeting the rules on the server.",
     "areaLabel": "Configuration area",
+    "autoconfig": "Fill low-rate battle pass",
+    "autoconfigBusy": "Filling battle pass...",
+    "toast": {
+      "autoconfig": "Low-rate battle pass applied ({{levels}} levels and {{quests}} new missions)",
+      "error": "Could not fill the battle pass."
+    },
     "newRecord": "New record",
     "saved": "Configuration saved.",
     "editorEdit": "Edit",

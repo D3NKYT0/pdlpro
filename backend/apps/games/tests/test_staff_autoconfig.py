@@ -5,6 +5,12 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from apps.games.infrastructure.models import (
+    BattlePassExchange,
+    BattlePassLevel,
+    BattlePassMilestone,
+    BattlePassQuest,
+    BattlePassReward,
+    BattlePassSeason,
     BoxType,
     CatalogItem,
     DailyBonusPoolEntry,
@@ -154,6 +160,7 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
         "fishing",
         "economy",
         "boxes",
+        "battle_pass",
     ]
     assert BoxType.objects.filter(active=True).count() >= 1
     assert CatalogItem.objects.filter(item_id=6577, active=True).exists()
@@ -232,6 +239,10 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     assert boxes["created"]["box_types"] == 0
     assert boxes["created"]["catalog_items"] == 0
     assert BoxType.objects.get(name="Baú Comum").boosters_amount == 20
+    assert BattlePassLevel.objects.filter(season__name="Temporada Low Rate").count() == 30
+    battle_pass = next(item for item in repeat.data["games"] if item["code"] == "battle_pass")
+    assert battle_pass["created"]["levels"] == 0
+    assert battle_pass["created"]["quests"] == 0
 
 
 @pytest.mark.django_db
@@ -273,3 +284,130 @@ def test_autoconfig_replaces_unit_prizes_with_low_rate_stacks(api, staff):
     stacked = Prize.objects.get(item_id=1835, quantity=2000, active=True)
     assert stacked.weight == 16
     assert Prize.objects.filter(item_id=57, quantity=50_000, active=True).exists()
+
+
+@pytest.mark.django_db
+def test_battle_pass_autoconfig_fills_30_levels_quests_and_is_idempotent(api, staff, player):
+    from apps.games.domain.battle_pass_catalog import (
+        BATTLE_PASS_EXCHANGES,
+        BATTLE_PASS_FREE,
+        BATTLE_PASS_LEVELS,
+        BATTLE_PASS_MILESTONES,
+        BATTLE_PASS_PREMIUM,
+        BATTLE_PASS_PREMIUM_EXTRA,
+        BATTLE_PASS_QUESTS,
+        BATTLE_PASS_SEASON_NAME,
+        BATTLE_PASS_XP_STEP,
+    )
+
+    api.force_authenticate(user=staff)
+    first = api.post(AUTOCONFIG, {"code": "battle_pass"}, format="json")
+    assert first.status_code == 200, first.data
+    entry = first.data["games"][0]
+    assert entry["code"] == "battle_pass"
+    assert entry["activated"] is True
+    assert len(BATTLE_PASS_FREE) == BATTLE_PASS_LEVELS
+    assert len(BATTLE_PASS_PREMIUM) == BATTLE_PASS_LEVELS
+    assert entry["created"]["levels"] == BATTLE_PASS_LEVELS - 3
+    assert entry["created"]["quests"] == len(BATTLE_PASS_QUESTS)
+    assert entry["created"]["exchanges"] == len(BATTLE_PASS_EXCHANGES)
+    assert entry["created"]["milestones"] == len(BATTLE_PASS_MILESTONES)
+
+    season = BattlePassSeason.objects.get(name=BATTLE_PASS_SEASON_NAME)
+    assert season.active is True
+    assert BattlePassLevel.objects.filter(season=season).count() == BATTLE_PASS_LEVELS
+    level_30 = BattlePassLevel.objects.get(season=season, level=30)
+    assert level_30.required_xp == BATTLE_PASS_XP_STEP * 29
+    free_ids = set(
+        BattlePassReward.objects.filter(level_row__season=season, is_premium=False).values_list(
+            "item_id", flat=True
+        )
+    )
+    premium_ids = set(
+        BattlePassReward.objects.filter(level_row__season=season, is_premium=True).values_list(
+            "item_id", flat=True
+        )
+    )
+    assert 57 in free_ids
+    assert 1835 in free_ids
+    assert 3470 in free_ids
+    assert 951 in premium_ids
+    assert 3470 in premium_ids
+    extra_total = sum(len(items) for items in BATTLE_PASS_PREMIUM_EXTRA.values())
+    assert BattlePassReward.objects.filter(level_row__season=season, is_premium=False).count() == len(
+        BATTLE_PASS_FREE
+    )
+    assert BattlePassReward.objects.filter(level_row__season=season, is_premium=True).count() == (
+        len(BATTLE_PASS_PREMIUM) + extra_total
+    )
+    soulshot = BattlePassReward.objects.get(
+        level_row__season=season, level_row__level=2, is_premium=False, item_id=1835
+    )
+    assert soulshot.item_name == "Soulshot: No Grade"
+    assert soulshot.quantity == 800
+    assert BattlePassReward.objects.filter(
+        level_row__season=season, level_row__level=30, is_premium=True, item_id=57, quantity=3_000_000
+    ).exists()
+    assert BattlePassQuest.objects.filter(season=season, period="daily").count() == 4
+    assert BattlePassQuest.objects.filter(season=season, event="fishing").count() == 3
+    assert BattlePassExchange.objects.filter(season=season, required_item_id=1835).exists()
+    champ = BattlePassMilestone.objects.get(season=season, name="Marco do campeão")
+    assert champ.required_xp == level_30.required_xp
+
+    api.force_authenticate(user=player)
+    payload = api.get("/api/v1/customer/games/battle-pass/")
+    assert payload.status_code == 200, payload.data
+    assert payload.data["season"]["name"] == BATTLE_PASS_SEASON_NAME
+    assert len(payload.data["levels"]) == BATTLE_PASS_LEVELS
+    first_level = payload.data["levels"][0]
+    assert any(not row["is_premium"] for row in first_level["rewards"])
+    assert any(row["is_premium"] for row in first_level["rewards"])
+    details = api.get("/api/v1/customer/games/battle-pass/details/")
+    assert details.status_code == 200, details.data
+    assert len(details.data["quests"]) == len(BATTLE_PASS_QUESTS)
+    assert len(details.data["exchanges"]) == len(BATTLE_PASS_EXCHANGES)
+    assert len(details.data["milestones"]) == len(BATTLE_PASS_MILESTONES)
+
+    api.force_authenticate(user=staff)
+    second = api.post(AUTOCONFIG, {"code": "battle_pass"}, format="json")
+    assert second.status_code == 200, second.data
+    created = second.data["games"][0]["created"]
+    assert created["levels"] == 0
+    assert created["rewards"] == 0
+    assert created["quests"] == 0
+    assert created["exchanges"] == 0
+    assert created["milestones"] == 0
+    assert BattlePassLevel.objects.filter(season=season).count() == BATTLE_PASS_LEVELS
+
+
+@pytest.mark.django_db
+def test_battle_pass_autoconfig_expands_legacy_season_without_keeping_seed_rewards(api, staff, player):
+    from datetime import timedelta
+
+    from django.utils import timezone
+
+    from apps.games.domain.battle_pass_catalog import BATTLE_PASS_SEASON_NAME
+
+    season = BattlePassSeason.objects.get(name="Temporada 1")
+    assert BattlePassLevel.objects.filter(season=season).count() == 3
+    season.ends_at = timezone.now() - timedelta(days=1)
+    season.save(update_fields=["ends_at"])
+    api.force_authenticate(user=staff)
+    response = api.post(AUTOCONFIG, {"code": "battle_pass"}, format="json")
+    assert response.status_code == 200, response.data
+    season.refresh_from_db()
+    assert season.name == BATTLE_PASS_SEASON_NAME
+    assert season.ends_at > timezone.now()
+    assert BattlePassLevel.objects.filter(season=season, level=2).get().required_xp == 120
+    assert not BattlePassReward.objects.filter(description="Livre Nv.1").exists()
+    free_one = BattlePassReward.objects.get(
+        level_row__season=season, level_row__level=1, is_premium=False
+    )
+    assert free_one.item_id == 57
+    assert free_one.quantity == 80_000
+    api.force_authenticate(user=player)
+    payload = api.get("/api/v1/customer/games/battle-pass/")
+    assert payload.status_code == 200, payload.data
+    assert payload.data["season"]["name"] == BATTLE_PASS_SEASON_NAME
+    assert len(payload.data["levels"]) == 30
+

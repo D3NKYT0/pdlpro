@@ -16,6 +16,7 @@ import { Modal } from '../src/components/ui/Modal'
 import { RichTextContent, RichTextEditor } from '../src/components/ui/RichText'
 import { useAsyncAction } from '../src/hooks/useAsyncAction'
 import { PdlSymbol } from '../src/components/PdlSymbol'
+import { ENAMEL_ICONS } from '../src/components/icons'
 import '../src/styles/global.css'
 import './ui.css'
 
@@ -40,6 +41,15 @@ function Showcase() {
         <Card className="ui-showcase-brand">
           <PdlSymbol className="ui-showcase-brand-mark" />
           <div><span className="panel-eyebrow">Identidade PDL</span><h2>Emblema da jornada</h2><p className="muted">Escudo, lâmina, coroa e ramos de linhagem em um símbolo sem iniciais.</p></div>
+        </Card>
+        <Card className="ui-showcase-enamel">
+          <h2>Ícones esmaltados</h2>
+          <p className="muted">Artes do painel no mesmo desenho das conquistas. Importe de <code>components/icons</code>; não pinte Lucide com <code>--gold</code>.</p>
+          <div className="ui-showcase-icons">
+            {Object.entries(ENAMEL_ICONS).map(([key, Icon]) => (
+              <span key={key} title={key}><Icon /></span>
+            ))}
+          </div>
         </Card>
         <Card className="ui-showcase-buttons">
           <h2>Botões do painel</h2><p className="muted">As mesmas texturas do projeto, com opções para cada ação.</p>

@@ -4,13 +4,12 @@ import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import {
-  ShoppingCart,
-  Package,
   Plus,
   Minus,
   CheckCircle2,
   Trash2,
 } from "lucide-react";
+import { CartIcon, PackageBoxIcon } from "../components/icons";
 import { ItemIcon } from "../components/ItemIcon";
 import { shopApi, walletApi } from "../services/api";
 import {
@@ -175,7 +174,7 @@ export function ShopPage() {
               {tab === "packages" &&
                 packages.data?.map((pack) => (
                   <article className="program-item" key={pack.id}>
-                    <Package color="var(--gold)" size={32} />
+                    <PackageBoxIcon />
                     <h3>{pack.name}</h3>
                     <div className="program-rewards">
                       {pack.contents.map((i, index) => (
@@ -222,7 +221,7 @@ export function ShopPage() {
           <Card as="aside" className="program-section">
             <div className="program-section-heading">
               <h2>{t("shop.cart.title")}</h2>
-              <ShoppingCart color="var(--gold)" />
+              <CartIcon width={32} height={32} />
             </div>
             {cart.isPending && <Loading />}
             {cart.data?.items.map((row) => (

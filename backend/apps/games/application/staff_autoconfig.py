@@ -10,7 +10,7 @@ class BootstrapStaffGamesUseCase(UseCase[dict, dict]):
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``dict`` (``code`` opcional). O
     retorno é ``dict``. Código desconhecido levanta ``ValidationDomainError``. A operação é
-    idempotente: uma segunda chamada não duplica prêmios, iscas ou baús.
+    idempotente: uma segunda chamada não duplica prêmios, iscas, baús ou o passe de batalha.
     """
 
     def __init__(self, autoconfig: IGameAutoconfigService, unit_of_work: UnitOfWork) -> None:

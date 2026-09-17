@@ -2,9 +2,12 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **17 de setembro de 2026** — Não publicado: configurador
+Última atualização: **17 de setembro de 2026** — Não publicado: ícones
+esmaltados compartilhados em `components/icons` no lugar dos Lucide `--gold`
+(loja, troca Adena, roadmap e recompensas); configurador
 da loja em `/panel/admin/shop` com catálogo low grade (itens e pacotes
-Interlude NG/D/C); home no Vite
+Interlude NG/D/C); passe de batalha low rate (30 níveis livres e premium,
+missões, trocas e marcos) em `/panel/admin/rewards`; home no Vite
 Windows volta a montar (barrel `.ts` do retrato); moderação da
 equipe em `/panel/admin/moderation` (kick, prisão, banimento e teleporte);
 taverna da

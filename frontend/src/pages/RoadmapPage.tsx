@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Flag, CalendarDays, ArrowLeft, ArrowUpRight } from 'lucide-react'
+import { CalendarDays, ArrowLeft, ArrowUpRight } from 'lucide-react'
+import { BannerFlagIcon } from '../components/icons'
 import { programsApi } from '../services/api'
 import { contentLang, INTL_LOCALES } from '../i18n/locale'
 import {
@@ -40,7 +41,7 @@ export function RoadmapPage() {
           <h1>{t('roadmap.title')}</h1>
           <p>{t('roadmap.lead')}</p>
         </div>
-        <Flag />
+        <BannerFlagIcon />
       </Card>
       <ErrorNotice error={query.error} />
       {query.isPending && <Loading />}

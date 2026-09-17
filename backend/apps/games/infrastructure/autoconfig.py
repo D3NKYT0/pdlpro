@@ -7,8 +7,29 @@ from django.utils import timezone
 
 from apps.games.domain.arena_roster import ARENA_MONSTERS
 from apps.games.domain.autoconfig import KNOWN_GAME_CODES, IGameAutoconfigService
+from apps.games.domain.battle_pass_catalog import (
+    BATTLE_PASS_EXCHANGES,
+    BATTLE_PASS_FREE,
+    BATTLE_PASS_MILESTONES,
+    BATTLE_PASS_PREMIUM,
+    BATTLE_PASS_PREMIUM_EXTRA,
+    BATTLE_PASS_PREMIUM_PRICE,
+    BATTLE_PASS_QUESTS,
+    BATTLE_PASS_SEASON_DAYS,
+    BATTLE_PASS_SEASON_NAME,
+    BATTLE_PASS_XP_STEP,
+    LEGACY_BATTLE_PASS_REWARD_DESCRIPTIONS,
+    LEGACY_BATTLE_PASS_SEASON_NAMES,
+    SEED_BATTLE_PASS_XP,
+)
 from apps.games.domain.fishing_i18n import BAIT_CONTENT_I18N, FISH_CONTENT_I18N
 from apps.games.infrastructure.models import (
+    BattlePassExchange,
+    BattlePassLevel,
+    BattlePassMilestone,
+    BattlePassQuest,
+    BattlePassReward,
+    BattlePassSeason,
     BoxType,
     CatalogItem,
     DailyBonusDay,
@@ -39,6 +60,7 @@ GAME_DEFAULTS: dict[str, dict] = {
     "fishing": {"name": "Pescaria", "settings": {"cost_per_cast": 1, "baits_per_token": 10}},
     "economy": {"name": "Arena das Feras", "settings": {}},
     "boxes": {"name": "Baús Encantados", "settings": None},
+    "battle_pass": {"name": "Passe de Batalha", "settings": None},
 }
 
 # IDs Interlude do catálogo XML (`data/items`). Nomes vêm do catálogo na hora do seed.
@@ -193,7 +215,7 @@ DAILY_POOL = (
 
 
 class DjangoGameAutoconfigService(IGameAutoconfigService):
-    """Preenche GameConfig e catálogos jogáveis com itens Interlude; não apaga o que já existe."""
+    """Preenche GameConfig, baús e o passe de batalha com itens Interlude; não apaga o que já existe."""
 
     def __init__(self, catalog: IItemCatalog) -> None:
         self._catalog = catalog
@@ -208,6 +230,14 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
     def _bootstrap_one(self, code: str) -> dict:
         created: dict[str, int] = {}
         spec = GAME_DEFAULTS[code]
+        if code == "battle_pass":
+            created.update(self._ensure_battle_pass())
+            return {
+                "code": code,
+                "name": spec["name"],
+                "activated": BattlePassSeason.objects.filter(active=True).exists(),
+                "created": created,
+            }
         if spec["settings"] is None:
             created.update(self._ensure_boxes())
             return {
@@ -529,3 +559,134 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                     box.items.set(tier)
                     counts["box_links"] += 1
         return counts
+
+    def _item_payload(self, item_id: int, quantity: int) -> dict:
+        return {
+            "kind": "item",
+            "item_id": item_id,
+            "name": self._item_name(item_id),
+            "quantity": quantity,
+            "enchant": 0,
+        }
+
+    def _ensure_battle_pass(self) -> dict[str, int]:
+        counts = {"season": 0, "levels": 0, "rewards": 0, "quests": 0, "exchanges": 0, "milestones": 0}
+        season, season_created = self._ensure_battle_pass_season()
+        self._refresh_battle_pass_window(season)
+        counts["season"] = int(season_created)
+        BattlePassReward.objects.filter(
+            level_row__season=season,
+            description__in=LEGACY_BATTLE_PASS_REWARD_DESCRIPTIONS,
+        ).delete()
+        for index, (free, premium) in enumerate(zip(BATTLE_PASS_FREE, BATTLE_PASS_PREMIUM, strict=True)):
+            level_number = index + 1
+            xp = BATTLE_PASS_XP_STEP * index
+            row, was = BattlePassLevel.objects.get_or_create(
+                season=season,
+                level=level_number,
+                defaults={"required_xp": xp},
+            )
+            counts["levels"] += int(was)
+            if not was and SEED_BATTLE_PASS_XP.get(level_number) == row.required_xp and row.required_xp != xp:
+                row.required_xp = xp
+                row.save(update_fields=["required_xp"])
+            counts["rewards"] += int(self._ensure_pass_reward(row, False, *free))
+            counts["rewards"] += int(self._ensure_pass_reward(row, True, *premium))
+            for extra_id, extra_qty in BATTLE_PASS_PREMIUM_EXTRA.get(level_number, ()):
+                counts["rewards"] += int(self._ensure_pass_reward(row, True, extra_id, extra_qty))
+        for spec in BATTLE_PASS_QUESTS:
+            _, was = BattlePassQuest.objects.get_or_create(
+                season=season,
+                name=spec.name,
+                defaults={
+                    "description": spec.description,
+                    "event": spec.event,
+                    "target": spec.target,
+                    "xp": spec.xp,
+                    "period": spec.period,
+                    "active": True,
+                },
+            )
+            counts["quests"] += int(was)
+        for spec in BATTLE_PASS_EXCHANGES:
+            _, was = BattlePassExchange.objects.get_or_create(
+                season=season,
+                name=spec.name,
+                defaults={
+                    "required_item_id": spec.required_item_id,
+                    "required_enchant": 0,
+                    "required_quantity": spec.required_quantity,
+                    "limit_per_user": spec.limit_per_user,
+                    "rewards": [self._item_payload(item_id, quantity) for item_id, quantity in spec.rewards],
+                    "active": True,
+                },
+            )
+            counts["exchanges"] += int(was)
+        for spec in BATTLE_PASS_MILESTONES:
+            _, was = BattlePassMilestone.objects.get_or_create(
+                season=season,
+                name=spec.name,
+                defaults={
+                    "required_xp": spec.required_xp,
+                    "rewards": [self._item_payload(item_id, quantity) for item_id, quantity in spec.rewards],
+                },
+            )
+            counts["milestones"] += int(was)
+        return counts
+
+    def _ensure_battle_pass_season(self) -> tuple[BattlePassSeason, bool]:
+        season = BattlePassSeason.objects.filter(name=BATTLE_PASS_SEASON_NAME).first()
+        if season is None:
+            legacy = (
+                BattlePassSeason.objects.filter(name__in=LEGACY_BATTLE_PASS_SEASON_NAMES)
+                .order_by("-starts_at")
+                .first()
+            )
+            if legacy is not None:
+                legacy.name = BATTLE_PASS_SEASON_NAME
+                legacy.active = True
+                legacy.save(update_fields=["name", "active"])
+                return legacy, False
+            now = timezone.now()
+            season = BattlePassSeason.objects.create(
+                name=BATTLE_PASS_SEASON_NAME,
+                starts_at=now - timedelta(hours=1),
+                ends_at=now + timedelta(days=BATTLE_PASS_SEASON_DAYS),
+                active=True,
+                premium_price=Decimal(BATTLE_PASS_PREMIUM_PRICE),
+            )
+            return season, True
+        if not season.active:
+            season.active = True
+            season.save(update_fields=["active"])
+        return season, False
+
+    def _refresh_battle_pass_window(self, season: BattlePassSeason) -> None:
+        now = timezone.now()
+        if season.starts_at <= now <= season.ends_at:
+            return
+        season.starts_at = now - timedelta(hours=1)
+        season.ends_at = now + timedelta(days=BATTLE_PASS_SEASON_DAYS)
+        season.save(update_fields=["starts_at", "ends_at"])
+
+    def _ensure_pass_reward(
+        self, level_row: BattlePassLevel, is_premium: bool, item_id: int, quantity: int
+    ) -> bool:
+        if BattlePassReward.objects.filter(
+            level_row=level_row,
+            is_premium=is_premium,
+            item_id=item_id,
+            quantity=quantity,
+        ).exists():
+            return False
+        BattlePassReward.objects.create(
+            level_row=level_row,
+            is_premium=is_premium,
+            item_id=item_id,
+            item_name=self._item_name(item_id),
+            quantity=quantity,
+            enchant=0,
+            description="",
+        )
+        return True
+

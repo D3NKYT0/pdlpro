@@ -86,6 +86,10 @@ html.pdl-panel .program-page .program-switch::after {
   color: var(--gold);
   opacity: 0.8;
 }
+.program-hero > svg.enamel-glyph {
+  color: inherit;
+  opacity: 1;
+}
 .program-hero > div {
   min-width: 0;
 }

@@ -1056,8 +1056,14 @@
   "gameContent": {
     "kicker": "Juegos y recompensas",
     "title": "Taller de recompensas",
-    "description": "Configura temporadas, objetivos, premios y cebos. Los jugadores solo reciben recompensas después de cumplir las reglas en el servidor.",
+    "description": "Configura temporadas, objetivos, premios y cebos. Rellena el pase low rate (30 niveles gratis y premium, misiones e hitos) o edita a mano. Los jugadores solo reciben recompensas después de cumplir las reglas en el servidor.",
     "areaLabel": "Área de configuración",
+    "autoconfig": "Rellenar pase low rate",
+    "autoconfigBusy": "Rellenando el pase...",
+    "toast": {
+      "autoconfig": "Pase low rate aplicado ({{levels}} niveles y {{quests}} misiones nuevas)",
+      "error": "No se pudo rellenar el pase."
+    },
     "newRecord": "Nuevo registro",
     "saved": "Configuración guardada.",
     "editorEdit": "Editar",

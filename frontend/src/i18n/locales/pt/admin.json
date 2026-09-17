@@ -1056,8 +1056,14 @@
   "gameContent": {
     "kicker": "Jogos e recompensas",
     "title": "Oficina de recompensas",
-    "description": "Configure temporadas, objetivos, prêmios e iscas. Os jogadores só recebem recompensas após cumprir as regras no servidor.",
+    "description": "Configure temporadas, objetivos, prêmios e iscas. Preencha o passe low rate (30 níveis livres e premium, missões e marcos) ou edite à mão. Os jogadores só recebem recompensas após cumprir as regras no servidor.",
     "areaLabel": "Área de configuração",
+    "autoconfig": "Preencher passe low rate",
+    "autoconfigBusy": "Preenchendo passe...",
+    "toast": {
+      "autoconfig": "Passe low rate aplicado ({{levels}} níveis e {{quests}} missões novas)",
+      "error": "Não foi possível preencher o passe."
+    },
     "newRecord": "Novo registro",
     "saved": "Configuração salva.",
     "editorEdit": "Editar",

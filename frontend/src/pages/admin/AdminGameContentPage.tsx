@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
-import { useQueries } from '@tanstack/react-query'
+import { useQueries, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Plus } from 'lucide-react'
+import { Plus, WandSparkles } from 'lucide-react'
+import toast from 'react-hot-toast'
 import { Button } from '../../components/ui/Button'
 import {
+  staffApi,
   staffGameContentApi,
   type ConfigRow,
 } from '../../services/api'
@@ -12,6 +14,8 @@ import {
   Loading,
 } from '../../components/programs/ProgramUI'
 import { useProgramAction } from '../../components/programs/useProgramAction'
+import { useAsyncAction } from '../../hooks/useAsyncAction'
+import { apiErrorMessage } from '../../lib/errors'
 import { AdminHeader } from './AdminChrome'
 import { GameContentEditor } from '../../components/admin/gameContent/GameContentEditor'
 import { GameContentRecordList } from '../../components/admin/gameContent/GameContentRecordList'
@@ -22,10 +26,12 @@ import {
 
 export function AdminGameContentPage() {
   const { t } = useTranslation('admin')
+  const queryClient = useQueryClient()
   const [section, setSection] = useState('seasons')
   const [draft, setDraft] = useState<Record<string, unknown> | null>(null)
   const [editId, setEditId] = useState<string | undefined>()
   const action = useProgramAction()
+  const bootstrap = useAsyncAction()
   const gameConfigSections = useMemo(() => buildGameContentConfig(t), [t])
   const queries = useQueries({
     queries: gameConfigSections.map((s) => ({
@@ -38,6 +44,26 @@ export function AdminGameContentPage() {
   const rows = (source: string) =>
     queries[gameConfigSections.findIndex((s) => s.id === source)]?.data || []
   const rowLabel = (row: ConfigRow) => buildRowLabel(t, row, rows('seasons'))
+
+  async function fillBattlePass() {
+    const result = await bootstrap.run(async () => {
+      const payload = await staffApi.autoconfigGames('battle_pass')
+      await queryClient.invalidateQueries({ queryKey: ['game-config'] })
+      return payload
+    })
+    if (result.ok) {
+      const created = result.value.games[0]?.created ?? {}
+      toast.success(
+        t('gameContent.toast.autoconfig', {
+          levels: created.levels ?? 0,
+          quests: created.quests ?? 0,
+        }),
+      )
+    } else if (!result.skipped) {
+      toast.error(apiErrorMessage(result.error, t('gameContent.toast.error')))
+    }
+  }
+
   function open(row?: ConfigRow) {
     setEditId(row?.id)
     setDraft(
@@ -59,6 +85,18 @@ export function AdminGameContentPage() {
         description={t('gameContent.description')}
       />
       <ErrorNotice error={query.error || action.error} />
+      <div className="admin-games-toolbar">
+        <Button
+          type="button"
+          size="sm"
+          onClick={() => void fillBattlePass()}
+          busy={bootstrap.pending}
+          busyLabel={t('gameContent.autoconfigBusy')}
+        >
+          <WandSparkles aria-hidden="true" />
+          {t('gameContent.autoconfig')}
+        </Button>
+      </div>
       <div className="program-form">
         <label>
           {t('gameContent.areaLabel')}

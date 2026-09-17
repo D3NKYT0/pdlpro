@@ -47,6 +47,14 @@ it('seleciona pacote e preserva ID comercial', async () => {
   await user.click(await screen.findByRole('button', { name: 'Adicionar pacote' }))
   expect(commerceApi.packageQuantity).toHaveBeenCalledWith('pack', 1)
 })
+it('usa ilustração esmaltada no pacote e no carrinho', async () => {
+  const user = mount()
+  await user.click(screen.getByRole('button', { name: 'Pacotes' }))
+  expect(await screen.findByText('Starter')).toBeTruthy()
+  expect(document.querySelector('[data-enamel-icon="package"]')).not.toBeNull()
+  expect(document.querySelector('[data-enamel-icon="cart"]')).not.toBeNull()
+  expect(document.querySelector('[data-enamel-icon="package"]')?.classList.contains('enamel-glyph')).toBe(true)
+})
 it('aplica cupom e seleciona uso de bônus', async () => {
   const user = mount()
   await user.type(screen.getByLabelText('Cupom de desconto'), 'SAVE')

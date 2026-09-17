@@ -98,6 +98,8 @@ describe("program screens", () => {
     );
     for (const text of ["Saldo", "Bônus", "Fichas", "Creditado"])
       expect(html).toContain(text);
+    expect(html).toContain('data-enamel-icon="gift"');
+    expect(html).not.toContain("var(--gold)");
   });
   it("renders package cart totals, coupon and bonus explicitly", () => {
     const html = render(<ShopPage />, [
@@ -139,6 +141,8 @@ describe("program screens", () => {
     ])
       expect(html).toContain(text);
     expect(html).toContain("Aumentar Kit especial");
+    expect(html).toContain('data-enamel-icon="cart"');
+    expect(html).not.toContain("var(--gold)");
   });
   it("disables exchange until the real game integration is ready", () => {
     const html = render(<GameExchangePage />, [
@@ -156,5 +160,8 @@ describe("program screens", () => {
     expect(html).toContain("Recibos não preparados");
     expect(html).toMatch(/<button[^>]*disabled=""[^>]*>Revisar transferência/);
     expect(html).toContain("Saldo bônus não é transferível");
+    expect(html).toContain('data-enamel-icon="exchange"');
+    expect(html).toContain('data-enamel-icon="shield-ok"');
+    expect(html).not.toContain("var(--gold)");
   });
 });

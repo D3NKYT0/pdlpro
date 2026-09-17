@@ -16,7 +16,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Conteúdo público do site | Rankings, lojas do jogo, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
 | Pacotes, cupons, bônus e histórico | `/panel/shop` | Itens e pacotes em `/panel/admin/shop` (com **Preencher catálogo low grade**); cupons em `/panel/admin/commerce` |
-| Passe, bônus diário, caça do dia e rankings | `/panel/rewards` | `/panel/admin/rewards` (missões da caça em `hunt-quests`) |
+| Passe, bônus diário, caça do dia e rankings | `/panel/rewards` | `/panel/admin/rewards` (missões da caça em `hunt-quests`; **Preencher passe low rate** cria 30 níveis livres e premium, missões, trocas e marcos) |
 | Lojas offline do jogo | `/stores` | Consulta somente leitura; SQL opcional por dialeto |
 | Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar, **Configurar** por jogo e **Configurar todos**) |
 | Pesca, iscas e coleção | `/panel/games?tab=fishing` | `/panel/admin/rewards` |
@@ -55,6 +55,15 @@ crystal/gemstone D–C, encantes D–C, Gold Bar e Coin of Luck) e monta
 pacotes com desconto (iniciante, mago NG, farm D, PvP, encante D, C-Grade,
 semanal e premium). Não sobrescreve preço, nome, ativação nem pacotes já
 existentes com o mesmo nome. A operação é idempotente.
+
+Em `/panel/admin/rewards`, **Preencher passe low rate** reaproveita a temporada
+semente (`Temporada 1` → `Temporada Low Rate`) e monta **30 níveis** com pista
+gratuita e premium (Adena, soulshot NG/D/C, poções, SoE/BSoE, crystal D,
+encantes D–C, Gold Bar e Coin of Luck), mais missões diárias/semanais/da
+temporada, trocas e marcos. XP 120 por nível; premium R$ 50. Não duplica
+níveis nem prêmios já existentes; só troca XP e descrições do seed original.
+Reabre a janela de 90 dias se a temporada semente já tiver expirado.
+**Configurar todos** em `/panel/admin/games` também preenche o passe.
 
 ## Regras importantes
 

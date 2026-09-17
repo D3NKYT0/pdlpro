@@ -15,6 +15,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   soulshot, poções, SoE/SoR, crystal/gemstone, encantes D–C) e pacotes de
   iniciante, mago, farm, PvP, encante, C-Grade, semanal e premium. Idempotente:
   não sobrescreve preço, nome ou pacotes já definidos.
+- **Passe de batalha low rate** em `/panel/admin/rewards`: **Preencher passe
+  low rate** (e `POST /api/v1/staff/games/autoconfig/` com `battle_pass`) cria
+  30 níveis livres e premium, missões, trocas e marcos com stacks Interlude
+  NG/D/C. Reaproveita a temporada semente, é idempotente e não apaga
+  customizações.
 - **Moderação da equipe** em `/panel/admin/moderation`: lista personagens
   (nick, conta L2, e-mail, online) e aplica kick, prisão/soltar, ban/desban e
   teleporte para vila, com motivo e histórico. As escritas vão ao SQL do
@@ -35,6 +40,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   Schema sem as tabelas de offline trade devolve a página como indisponível,
   sem 500. O mesmo retrato (raça × sexo) aparece em ficha, contas, rankings,
   marketplace, leilão, caça, inventário, troca Adena e moderação da equipe.
+- Biblioteca compartilhada de ícones esmaltados em
+  `frontend/src/components/icons`: pacote, carrinho, troca Adena, escudo
+  conferido e estandarte, no mesmo desenho das conquistas. O kit (`Glyph`,
+  tons e faíscas) também passa a alimentar as artes das conquistas.
 
 - CRUD de **calendário**, **FAQ**, **wiki**, **downloads** e **avisos** na central
   da staff (`/panel/admin/calendar`, `/panel/admin/faq`, `/panel/admin/wiki`,
@@ -120,6 +129,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   azul na compra, violeta no pacote e verde no craft (borda, selo, preço e
   retrato). Pacotes de tema podem remapear `--theme-store-sell|buy|package|craft`.
   Receitas mostram o ícone do item produzido ao lado do pergaminho.
+- Ícones decorativos pintados com `--gold` (pacotes e carrinho da loja, hero e
+  resumo da troca Adena, estandarte do roadmap e recompensa sem item) passam a
+  usar ilustrações esmaltadas em `frontend/src/components/icons`, no mesmo
+  desenho das conquistas.
 
 ### Corrigido
 

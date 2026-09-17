@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { CheckCircle2, CircleDashed, Gift } from 'lucide-react'
+import { CheckCircle2, CircleDashed } from 'lucide-react'
+import { GiftBoxIcon } from '../icons'
 import type { Reward, RewardHistory } from '../../services/api'
 import { formatDateTime } from '../../lib/formatters'
 import { ItemIcon } from '../ItemIcon'
@@ -43,7 +44,7 @@ export function RewardList({ rewards }: { rewards: Reward[] }) {
           {reward.kind === 'item' ? (
             <ItemIcon itemId={reward.item_id || 0} size={28} />
           ) : (
-            <Gift size={20} />
+            <GiftBoxIcon data-enamel-icon="gift" width={28} height={28} />
           )}
           <span>
             <strong>

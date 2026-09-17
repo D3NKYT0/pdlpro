@@ -3,7 +3,8 @@ import { Button } from '../components/ui/Button'
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { ArrowLeftRight, ShieldCheck, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import { ExchangeIcon, ShieldOkIcon } from "../components/icons";
 import { Link } from "react-router-dom";
 import {
   commerceApi,
@@ -64,7 +65,7 @@ export function GameExchangePage() {
           <h1>{t("exchange.title")}</h1>
           <p>{t("exchange.description")}</p>
         </div>
-        <ArrowLeftRight />
+        <ExchangeIcon />
       </Card>
       <ErrorNotice
         error={query.error || accounts.error || chars.error || action.error}
@@ -207,7 +208,7 @@ export function GameExchangePage() {
         <Card className="program-section">
           <div className="program-section-heading">
             <h2>{t("exchange.summary.title")}</h2>
-            <ShieldCheck color="var(--gold)" />
+            <ShieldOkIcon width={32} height={32} />
           </div>
           <div className="program-stat">
             <small>

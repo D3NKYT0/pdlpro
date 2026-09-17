@@ -10,6 +10,7 @@ KNOWN_GAME_CODES = (
     "fishing",
     "economy",
     "boxes",
+    "battle_pass",
 )
 
 
