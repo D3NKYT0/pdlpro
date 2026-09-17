@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Corrigido
+
+- Ícone Jazzmin do duelo do chefe (`games.economybossduel`) e typecheck da SPA
+  (`Timeout` do golpe da Queen Ant e arquivos `.test.tsx` fora do tsconfig da
+  aplicação).
+
 ## [2.5.0] - 2026-09-17
 
 Alterações desde **13 de setembro de 2026** (após `[2.4.0]`), consolidadas pelo histórico

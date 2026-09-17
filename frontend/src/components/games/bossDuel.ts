@@ -68,11 +68,11 @@ export function playBossRound({
   onDone: () => void
 }) {
   let stopped = false
-  let timer = 0
+  let timer: ReturnType<typeof globalThis.setTimeout> | undefined
 
   const clear = () => {
-    globalThis.clearTimeout(timer)
-    timer = 0
+    if (timer !== undefined) globalThis.clearTimeout(timer)
+    timer = undefined
   }
 
   onPhase('playerAct')

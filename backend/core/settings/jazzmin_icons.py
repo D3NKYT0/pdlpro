@@ -103,6 +103,7 @@ JAZZMIN_ICONS_PDL = {
     "games.fishingcatch": "fas fa-anchor",
     "games.fishingbait": "fas fa-bug",
     "games.economyweapon": "fas fa-shield-alt",
+    "games.economybossduel": "fas fa-skull",
     "games.monster": "fas fa-dragon",
     "games.economyfightlog": "fas fa-fist-raised",
     "games.battlepassseason": "fas fa-calendar",
