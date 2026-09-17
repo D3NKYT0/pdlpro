@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.1] - 2026-09-17
+
+Correções de concorrência, CSP, sessão JWT, OpenAPI e carga da vitrine de
+lojas, a partir da avaliação de segurança de
+[Victor Mendonça (@mend3)](https://github.com/mend3).
+
 ### Corrigido
 
 - Compra (e cancelamento) de personagem no marketplace deixa de aceitar venda
