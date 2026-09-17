@@ -97,6 +97,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   três células de isca e o poço de lançar). O palco anima a vara do nível
   (junco → divina, `rod-1.webp`–`rod-10.webp`) e pinta boia, linha e ritmo
   conforme a isca (comum, aprendiz ou encantada).
+- No caça-níquel da Mesa da Taverna, os nomes sob os cilindros giram com a
+  fita e só param no resultado quando o giro acaba. Os cinco símbolos
+  (espada, escudo, coroa, Adena e pergaminho) passam ao desenho esmaltado
+  das conquistas.
 - O **controle de recursos** em `/panel/admin/resources` passa ao chrome de
   Jogos/Serviços: cartões por categoria, código do módulo, interruptor
   compartilhado e nomes atuais (**Pescaria**, **Caça do dia**, **Lojas do

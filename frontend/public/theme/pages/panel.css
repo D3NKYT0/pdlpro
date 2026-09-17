@@ -9924,6 +9924,7 @@ html.pdl-panel .chance-reel-plate svg,
 html.pdl-panel .chance-reel-strip svg {
   width: 52px;
   height: 52px;
+  overflow: visible;
 }
 
 html.pdl-panel .chance-reel-strip {
@@ -9992,16 +9993,44 @@ html.pdl-panel .chance-slots.is-win .chance-reel-plate {
     0 0 18px color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
 }
 
-html.pdl-panel .chance-reel small {
+html.pdl-panel .chance-reel-caption {
+  display: grid;
+  height: 1.2em;
   max-width: 100%;
   overflow: hidden;
   color: color-mix(in srgb, var(--panel-gold-bright) 82%, #fff);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-overflow: ellipsis;
   text-transform: uppercase;
+}
+
+html.pdl-panel .chance-reel-caption-rest,
+html.pdl-panel .chance-reel-caption-spin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+html.pdl-panel .chance-reel-caption-rest,
+html.pdl-panel .chance-reel-caption-spin b {
+  max-width: 100%;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+html.pdl-panel .chance-slots.is-spinning .chance-reel-caption-spin {
+  animation: chance-reel-caption 0.42s linear infinite;
+}
+
+html.pdl-panel .chance-slots.is-spinning .chance-reel:nth-child(3) .chance-reel-caption-spin {
+  animation-duration: 0.52s;
+}
+
+html.pdl-panel .chance-slots.is-spinning .chance-reel:nth-child(4) .chance-reel-caption-spin {
+  animation-duration: 0.64s;
 }
 
 html.pdl-panel .chance-dice-form,
@@ -10250,6 +10279,7 @@ html.pdl-panel .game-chance-reveal-reel {
 html.pdl-panel .game-chance-reveal-reel svg {
   width: 56px;
   height: 56px;
+  overflow: visible;
 }
 
 html.pdl-panel .game-chance-reveal-reel em {
@@ -12635,6 +12665,11 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   to { transform: translateY(-50%); }
 }
 
+@keyframes chance-reel-caption {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
 @keyframes chance-slots-lamp {
   0%, 100% { opacity: 0.35; }
   50% { opacity: 1; }
@@ -13174,6 +13209,7 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
   html.pdl-panel .chance-dice.is-chosen .chance-die-face.is-front::after,
   html.pdl-panel .chance-slots.is-spinning .chance-reel,
   html.pdl-panel .chance-slots.is-spinning .chance-reel-strip,
+  html.pdl-panel .chance-slots.is-spinning .chance-reel-caption-spin,
   html.pdl-panel .chance-slots.is-spinning .chance-slots-marquee i,
   html.pdl-panel .chance-slots.is-win .chance-slots-marquee i,
   html.pdl-panel .chance-slots.is-win .chance-slots-payline,

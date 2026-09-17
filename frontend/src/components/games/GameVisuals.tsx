@@ -352,6 +352,7 @@ export function ChanceStage({
   const face = roll && roll >= 1 && roll <= 6 ? roll : 5
   const slots = visibleSlotReels(reels, symbols)
   const strip = [...SLOT_SYMBOLS, ...SLOT_SYMBOLS, ...SLOT_SYMBOLS, ...SLOT_SYMBOLS]
+  const captionLoop = [...SLOT_SYMBOLS, ...SLOT_SYMBOLS]
   const diceState = rolling
     ? ' is-rolling'
     : chosen
@@ -397,7 +398,17 @@ export function ChanceStage({
                       ))}
                     </span>
                   </span>
-                  <small>{symbolLabel(symbol)}</small>
+                  <small className="chance-reel-caption">
+                    {spinningSlots ? (
+                      <span className="chance-reel-caption-spin" aria-hidden="true">
+                        {captionLoop.map((item, itemIndex) => (
+                          <b key={`${item}-${itemIndex}`}>{symbolLabel(item)}</b>
+                        ))}
+                      </span>
+                    ) : (
+                      <span className="chance-reel-caption-rest">{symbolLabel(symbol)}</span>
+                    )}
+                  </small>
                 </span>
               ))}
             </div>

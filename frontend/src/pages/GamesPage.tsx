@@ -328,8 +328,7 @@ export function GamesPage() {
         diceRoll: current.diceRoll,
         diceWon: current.diceWon,
         diceChosen: current.diceChosen,
-        slotsReels: result.reels,
-        slotsWon: result.won,
+        slotsReels: current.slotsReels,
       }))
       await waitForSlotsReveal(startedAt)
       await refresh()

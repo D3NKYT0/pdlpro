@@ -703,6 +703,34 @@ it('mostra os cilindros com ícone e nome completo, sem cortar o id inglês', as
   expect(document.querySelector('.chance-slots-marquee')).toBeTruthy()
   expect(screen.queryByText('sword')).not.toBeInTheDocument()
 })
+it('só mostra o nome sorteado quando o giro dos cilindros termina', async () => {
+  let release!: () => void
+  slotsReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))
+  vi.mocked(gamesApi.minigames).mockResolvedValue({
+    fichas: 10,
+    dice: { active: true, min_bet: 1 },
+    slots: { active: true, cost: 1, symbols: ['sword', 'shield', 'crown'] },
+  } as any)
+  vi.mocked(gamesApi.slots).mockResolvedValue({
+    won: false,
+    reels: ['adena', 'scroll', 'adena'],
+    payout: 0,
+  } as any)
+  const user = mount('chance')
+  expect(await screen.findByText('Espada')).toBeVisible()
+  expect(screen.queryByText('Adena')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: 'Girar cilindros · 1 ficha' }))
+  await waitFor(() => expect(document.querySelector('.chance-slots.is-spinning')).toBeTruthy())
+  expect(document.querySelectorAll('.chance-reel-caption-spin')).toHaveLength(3)
+  expect(document.querySelector('.chance-reel-caption-rest')).toBeNull()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  release()
+  await waitFor(() => expect(document.querySelector('.chance-slots.is-spinning')).toBeNull())
+  expect(document.querySelectorAll('.chance-reel-caption-rest')).toHaveLength(3)
+  expect(screen.getAllByText('Adena').length).toBeGreaterThanOrEqual(2)
+  expect(screen.getAllByText('Pergaminho').length).toBeGreaterThanOrEqual(1)
+})
+
 it('abre o modal de derrota depois do giro do caça-níquel, sem toast', async () => {
   let release!: () => void
   slotsReveal.setWait(() => new Promise<void>((resolve) => { release = resolve }))

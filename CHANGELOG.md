@@ -4,7 +4,8 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 
 Última atualização: **17 de setembro de 2026** — Não publicado: pescaria
 com escolha da isca nos quadros, Obter visível, guia «?», vara que sobe
-de junco a divina no lago e animação por tipo de isca; controle de
+de junco a divina no lago e animação por tipo de isca; caça-níquel com
+símbolos esmaltados no desenho das conquistas e nomes só no fim do giro; controle de
 recursos em `/panel/admin/resources` no chrome de Jogos/Serviços, com Caça do
 dia, Lojas do jogo, Pescaria e Nível e conquistas; ícones
 esmaltados compartilhados em `components/icons` no lugar dos Lucide `--gold`
