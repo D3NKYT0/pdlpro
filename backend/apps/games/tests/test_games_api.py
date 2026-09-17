@@ -531,12 +531,88 @@ def test_economy_fight_and_enchant(api, player):
     weapon.fragments = 10
     weapon.save(update_fields=["level", "fragments"])
     with patch("apps.games.application.economy_use_cases.random.randint", return_value=1):
-        jackpot = api.post("/api/v1/customer/games/economy/enchant/")
-    assert jackpot.status_code == 200
-    assert jackpot.data["success"] is True
-    assert jackpot.data["weapon"]["level"] == 0
+        peak = api.post("/api/v1/customer/games/economy/enchant/")
+    assert peak.status_code == 200
+    assert peak.data["success"] is True
+    assert peak.data["weapon"]["level"] == 10
     bag = api.get("/api/v1/customer/games/bag/")
-    assert any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
+    assert not any(item["item_id"] == 57 and item["quantity"] == 250_000 for item in bag.data)
+    blocked = api.post("/api/v1/customer/games/economy/enchant/")
+    assert blocked.status_code == 400
+
+
+@pytest.mark.django_db
+def test_economy_boss_grants_prize_and_resets_weapon(api, player):
+    from apps.games.domain.arena_roster import ARENA_BOSS_ADENA, ARENA_WEAPON_MAX
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    boss = Monster.objects.create(
+        name="Queen Ant Teste",
+        level=12,
+        required_weapon_level=0,
+        fragment_reward=0,
+        hp=10,
+        attack=1,
+        defense=0,
+        respawn_seconds=5,
+        is_boss=True,
+    )
+    player.fichas = 2
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = 0
+    weapon.fragments = 4
+    weapon.save(update_fields=["level", "fragments"])
+    api.force_authenticate(user=player)
+    too_soon = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert too_soon.status_code == 400
+    weapon.level = ARENA_WEAPON_MAX
+    weapon.save(update_fields=["level"])
+    state = api.get("/api/v1/customer/games/economy/")
+    assert state.status_code == 200
+    listed = next(row for row in state.data["monsters"] if row["id"] == str(boss.id))
+    assert listed["is_boss"] is True
+    fight = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is True
+    assert fight.data["fragments_earned"] == 0
+    assert fight.data["prize"]["item_id"] == 57
+    assert fight.data["prize"]["quantity"] == ARENA_BOSS_ADENA
+    assert fight.data["weapon"]["level"] == 0
+    assert fight.data["weapon"]["fragments"] == 4
+    bag = api.get("/api/v1/customer/games/bag/")
+    assert any(item["item_id"] == 57 and item["quantity"] == ARENA_BOSS_ADENA for item in bag.data)
+
+
+@pytest.mark.django_db
+def test_queen_ant_loses_to_max_weapon(api, player):
+    from apps.games.domain.arena_roster import ARENA_BOSS, ARENA_WEAPON_MAX
+    from apps.games.infrastructure.models import EconomyWeapon, Monster
+
+    GameConfig.objects.update_or_create(code="economy", defaults={"name": "Economia", "active": True, "settings": {}})
+    name, level, weapon_req, fragments, hp, attack, defense, respawn = ARENA_BOSS
+    boss = Monster.objects.create(
+        name=f"{name} Stats",
+        level=level,
+        required_weapon_level=weapon_req,
+        fragment_reward=fragments,
+        hp=hp,
+        attack=attack,
+        defense=defense,
+        respawn_seconds=respawn,
+        is_boss=True,
+    )
+    player.fichas = 1
+    player.save(update_fields=["fichas"])
+    weapon = EconomyWeapon.objects.get_or_create(user=player)[0]
+    weapon.level = ARENA_WEAPON_MAX
+    weapon.save(update_fields=["level"])
+    api.force_authenticate(user=player)
+    fight = api.post(f"/api/v1/customer/games/economy/{boss.id}/fight/")
+    assert fight.status_code == 200, fight.data
+    assert fight.data["won"] is True
+    assert fight.data["weapon"]["level"] == 0
 
 
 @pytest.mark.django_db

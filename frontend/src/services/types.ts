@@ -347,6 +347,7 @@ export interface ApiEconomyState {
     level: number
     required_weapon_level: number
     fragment_reward: number
+    is_boss?: boolean
     alive: boolean
     respawn_in: number
   }>

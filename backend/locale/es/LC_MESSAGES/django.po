@@ -5138,5 +5138,24 @@ msgstr "Schema"
 msgid "Admin"
 msgstr "Admin"
 
+#: .\apps\games\application\economy_use_cases.py
+msgid "Você precisa de 10 fragmentos."
+msgstr "Necesitas 10 fragmentos."
+
+msgid "O monstro ainda não respawnou."
+msgstr "El monstruo aún no ha reaparecido."
+
+msgid "Sua arma é fraca demais para este monstro."
+msgstr "Tu arma es demasiado débil para este monstruo."
+
+msgid "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
+msgstr "El arma ya está al máximo. Derrota al jefe de la arena para recibir el premio."
+
+msgid "Chefe da arena"
+msgstr "Jefe de la arena"
+
+msgid "A vitória contra o chefe entrega o prêmio e zera a arma no máximo."
+msgstr "Vencer al jefe entrega el premio y reinicia el arma en el encantamiento máximo."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

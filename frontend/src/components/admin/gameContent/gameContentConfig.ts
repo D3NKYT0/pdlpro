@@ -152,6 +152,7 @@ export function buildGameContentConfig(t: TFunction): GameContentSection[] {
       number(t, 'attack', 8),
       number(t, 'defense', 2),
       number(t, 'respawn_seconds', 30),
+      field(t, 'is_boss', { type: 'checkbox', initial: false }),
       active,
     ]),
     section('box-items', [

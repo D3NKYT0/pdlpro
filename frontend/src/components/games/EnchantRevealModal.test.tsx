@@ -51,12 +51,12 @@ it('revela derrota com a tentativa falha e brasas', async () => {
   expect(onClose).toHaveBeenCalledTimes(1)
 })
 
-it('celebra o encante máximo com o prêmio e o reinício', () => {
-  render(<EnchantRevealModal open attempting={false} success from={9} toward={10} level={0} onClose={vi.fn()} />)
+it('celebra o encante máximo e aponta o chefe', () => {
+  render(<EnchantRevealModal open attempting={false} success from={9} toward={10} level={10} onClose={vi.fn()} />)
   const dialog = screen.getByRole('dialog', { name: 'Encante máximo' })
   expect(dialog).toHaveClass('is-win', 'is-peak')
   expect(dialog.querySelector('.enchant-reveal-kicker')).toHaveTextContent('+9 → +10')
-  expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('O +10 entrega o prêmio e a arma recomeça')
+  expect(dialog.querySelector('.enchant-reveal-outcome')).toHaveTextContent('O +10 destrava o chefe da arena')
   expect(dialog.querySelector('.weapon-art.is-toward')).toHaveAttribute('data-enchant', '10')
   expect(dialog.querySelector('.enchant-reveal-level .is-toward')).toHaveTextContent('+10')
   expect(dialog.querySelectorAll('.enchant-reveal-orb').length).toBe(5)

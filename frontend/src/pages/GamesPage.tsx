@@ -74,6 +74,8 @@ type PlayFx = {
   fightWon?: boolean
   fightRounds?: number
   fightFragments?: number
+  fightPrize?: { item_id: number; item_name: string; quantity: number } | null
+  fightBoss?: boolean
   enchantOverlay?: boolean
   enchantSuccess?: boolean
   enchantFrom?: number
@@ -358,7 +360,7 @@ export function GamesPage() {
   async function fight(monsterId: string) {
     if (needTokens(FIGHT_COST)) return
     const monster = economy.data?.monsters.find((row) => row.id === monsterId)
-    setFx({ playing: 'fight', targetId: monsterId, fightName: monster?.name })
+    setFx({ playing: 'fight', targetId: monsterId, fightName: monster?.name, fightBoss: Boolean(monster?.is_boss) })
     const outcome = await action.run(async () => {
       const startedAt = Date.now()
       const result = await gamesApi.fight(monsterId)
@@ -374,6 +376,8 @@ export function GamesPage() {
         fightWon: outcome.value.won,
         fightRounds: outcome.value.rounds,
         fightFragments: outcome.value.fragments_earned,
+        fightPrize: outcome.value.prize ?? null,
+        fightBoss: Boolean(monster?.is_boss),
       })
     } else {
       noteTokenFailure(outcome.error)
@@ -884,8 +888,8 @@ export function GamesPage() {
                 </div>
                 <Button
                   type="button"
-                  variant={fragments >= ENCHANT_COST ? 'success' : undefined}
-                  disabled={fragments < ENCHANT_COST}
+                  variant={fragments >= ENCHANT_COST && weaponLevel < ENCHANT_GOAL ? 'success' : undefined}
+                  disabled={fragments < ENCHANT_COST || weaponLevel >= ENCHANT_GOAL}
                   onClick={() => void enchant()}
                 >
                   <Sparkles aria-hidden="true" /> {t('games.economy.enchant', { count: ENCHANT_COST })}
@@ -897,14 +901,18 @@ export function GamesPage() {
                   const canFight = monster.alive && weaponLevel >= monster.required_weapon_level
                   const canAffordFight = knownTokens == null || knownTokens >= FIGHT_COST
                   return (
-                    <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}`} key={monster.id}>
+                    <article className={`monster-item${fx.playing === 'fight' && fx.targetId === monster.id ? ' is-fighting' : ''}${monster.alive ? '' : ' is-down'}${monster.is_boss ? ' is-boss' : ''}`} key={monster.id}>
                       <MonsterPortrait
                         id={monster.id}
                         name={monster.name}
                         down={!monster.alive}
                         fighting={fx.playing === 'fight' && fx.targetId === monster.id}
                       />
-                      <span><strong>{monster.name}</strong><small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small></span>
+                      <span>
+                        <strong>{monster.name}</strong>
+                        {monster.is_boss ? <em className="monster-boss-badge">{t('games.economy.bossBadge')}</em> : null}
+                        <small>{t('games.economy.requiredWeapon', { level: monster.required_weapon_level })}</small>
+                      </span>
                       <div className="monster-actions">
                         {!monster.alive ? (
                           <RespawnTimer
@@ -914,7 +922,7 @@ export function GamesPage() {
                           />
                         ) : null}
                         <Button
-                          variant={canFight && !canAffordFight ? 'yellow' : 'ghost'}
+                          variant={!canFight ? 'danger' : !canAffordFight ? 'yellow' : 'ghost'}
                           type="button"
                           disabled={!canFight}
                           onClick={() => void fight(monster.id)}
@@ -933,13 +941,21 @@ export function GamesPage() {
                 monsterId={fx.targetId}
                 monsterName={fx.fightName}
                 weaponLevel={weaponLevel}
-                idleLabel={t('games.economy.idle')}
+                boss={Boolean(fx.fightBoss)}
+                idleLabel={weaponLevel >= ENCHANT_GOAL ? t('games.economy.idleBoss') : t('games.economy.idle')}
                 clashLabel={t('games.economy.clashing')}
                 playerLabel={t('games.economy.player')}
                 versusLabel={t('games.economy.versus')}
                 winLabel={t('games.economy.revealWin')}
                 lossLabel={t('games.economy.revealLoss')}
-                fragmentsLabel={t('games.economy.revealFragments', { fragments: fx.fightFragments ?? 0 })}
+                fragmentsLabel={
+                  fx.fightPrize
+                    ? t('games.economy.revealPrize', {
+                        quantity: formatCompactQuantity(fx.fightPrize.quantity),
+                        item: fx.fightPrize.item_name,
+                      })
+                    : t('games.economy.revealFragments', { fragments: fx.fightFragments ?? 0 })
+                }
                 roundsLabel={fx.fightRounds ? t('games.economy.rounds', { count: fx.fightRounds }) : undefined}
               />
             </div>

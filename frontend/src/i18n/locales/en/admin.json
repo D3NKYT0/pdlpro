@@ -1140,6 +1140,7 @@
       "attack": "Attack",
       "defense": "Defense",
       "respawn_seconds": "Respawn (s)",
+      "is_boss": "Arena boss",
       "metric": "Character metric"
     },
     "huntMetrics": {

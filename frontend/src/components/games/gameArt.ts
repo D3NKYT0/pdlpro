@@ -168,6 +168,7 @@ export type MonsterArtId =
   | 'ogre'
   | 'drake'
   | 'death-knight'
+  | 'queen-ant'
   | 'default'
 
 const MONSTER_NAME_ART: Array<{ pattern: RegExp; id: Exclude<MonsterArtId, 'default'> }> = [
@@ -176,6 +177,7 @@ const MONSTER_NAME_ART: Array<{ pattern: RegExp; id: Exclude<MonsterArtId, 'defa
   { pattern: /\bwolf\b|\blobo\b/i, id: 'wolf' },
   { pattern: /goblin/i, id: 'goblin' },
   { pattern: /lizard|lagarto/i, id: 'lizardman' },
+  { pattern: /queen.?ant|formiga rainha/i, id: 'queen-ant' },
   { pattern: /\bant\b|formiga/i, id: 'ant' },
   { pattern: /ogre|ogro/i, id: 'ogre' },
   { pattern: /drake/i, id: 'drake' },

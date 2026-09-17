@@ -3,9 +3,9 @@ export const ENCHANT_REVEAL_MS = 1800
 
 export type EnchantRevealKind = 'attempting' | 'win' | 'peak' | 'loss'
 
-/** Pico: sucesso em +9 que entrega o prêmio e zera a arma. */
+/** Pico: sucesso em +9 que deixa a arma no máximo e destrava o chefe. */
 export function isEnchantPeak(success: boolean, attempting: boolean, from: number, level: number) {
-  return success && !attempting && from >= 9 && level === 0
+  return success && !attempting && from >= 9 && level >= 10
 }
 
 export function enchantRevealKind({

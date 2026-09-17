@@ -228,6 +228,11 @@ def test_autoconfig_all_fills_boxes_baits_and_monsters(api, staff):
     drake = Monster.objects.get(name="Drake")
     assert drake.required_weapon_level == 5
     assert Monster.objects.get(name="Death Knight").level == 10
+    queen = Monster.objects.get(name="Queen Ant")
+    assert queen.is_boss is True
+    assert queen.required_weapon_level == 10
+    assert queen.fragment_reward == 0
+    assert Monster.objects.get(name="Death Knight").is_boss is False
     listed = api.get("/api/v1/staff/games/")
     assert listed.status_code == 200
     assert {item["code"] for item in listed.data} >= {"roulette", "fishing", "economy"}

@@ -490,6 +490,7 @@ export function BattleStage({
   lossLabel,
   fragmentsLabel,
   roundsLabel,
+  boss = false,
 }: {
   phase?: BattlePhase
   monsterId?: string
@@ -503,13 +504,14 @@ export function BattleStage({
   lossLabel: string
   fragmentsLabel?: string
   roundsLabel?: string
+  boss?: boolean
 }) {
   const fighting = phase === 'clash'
   const won = phase === 'win'
   const lost = phase === 'loss'
   const status = won ? winLabel : lost ? lossLabel : fighting ? clashLabel : idleLabel
   return (
-    <div className={`battle-stage is-${phase}`} data-theme-part="game-stage">
+    <div className={`battle-stage is-${phase}${boss ? ' is-boss' : ''}`} data-theme-part="game-stage">
       <div className="battle-field" aria-hidden="true">
         <i className="battle-field-veil" />
         <i className="battle-field-wash" />

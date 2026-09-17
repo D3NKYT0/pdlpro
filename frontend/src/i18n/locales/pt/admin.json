@@ -1140,6 +1140,7 @@
       "attack": "Ataque",
       "defense": "Defesa",
       "respawn_seconds": "Respawn (s)",
+      "is_boss": "Chefe da arena",
       "metric": "Métrica do personagem"
     },
     "huntMetrics": {

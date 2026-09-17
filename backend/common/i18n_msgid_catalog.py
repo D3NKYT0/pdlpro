@@ -43,6 +43,10 @@ _("Este jogo não está ativo.")
 _("Esta caixa não tem boosters restantes.")
 _("Essa caixa não pertence a você.")
 _("Recompensa inválida.")
+_("Você precisa de 10 fragmentos.")
+_("O monstro ainda não respawnou.")
+_("Sua arma é fraca demais para este monstro.")
+_("A arma já está no máximo. Derrote o chefe da arena para receber o prêmio.")
 
 # apps.inventory.domain.exceptions
 _("Inventário não encontrado.")

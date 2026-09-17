@@ -68,6 +68,7 @@ html.pdl-panel {
   --theme-art-games-monster-ogre: url(/theme/default/images/games/monster-ogre.webp);
   --theme-art-games-monster-drake: url(/theme/default/images/games/monster-drake.webp);
   --theme-art-games-monster-death-knight: url(/theme/default/images/games/monster-death-knight.webp);
+  --theme-art-games-monster-queen-ant: url(/theme/default/images/games/monster-queen-ant.webp);
   --theme-art-games-sword-0: url(/theme/default/images/games/sword-0.webp);
   --theme-art-games-sword-1: url(/theme/default/images/games/sword-1.webp);
   --theme-art-games-sword-2: url(/theme/default/images/games/sword-2.webp);
@@ -4802,6 +4803,10 @@ html.pdl-panel .btn {
   transition: filter 180ms ease, text-shadow 180ms ease, transform 180ms ease;
 }
 
+html.pdl-panel .btn:disabled {
+  cursor: not-allowed;
+}
+
 html.pdl-panel .btn svg {
   width: 16px;
   height: 16px;
@@ -7949,6 +7954,16 @@ html.pdl-panel .game-list-item small,
 html.pdl-panel .monster-item small {
   color: rgba(255, 255, 255, 0.38);
   font-size: 10px;
+}
+
+html.pdl-panel .monster-boss-badge {
+  margin-top: 2px;
+  color: var(--panel-gold);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 html.pdl-panel .prize-item > b,
@@ -11983,6 +11998,15 @@ html.pdl-panel .monster-portrait.is-fighting {
 
 html.pdl-panel .monster-item.is-fighting {
   border-color: rgba(230, 199, 125, 0.42);
+}
+
+html.pdl-panel .monster-item.is-boss {
+  border-color: rgba(230, 199, 125, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.14);
+}
+
+html.pdl-panel .battle-stage.is-boss {
+  border-color: rgba(230, 199, 125, 0.46);
 }
 
 html.pdl-panel .battle-stage {

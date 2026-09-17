@@ -51,10 +51,10 @@ ou substituir a interação implementada pelo componente.
 | `variant="ghost"` | Alias compatível de `secondary`, usado pelas telas anteriores |
 | `size` | `sm` compacto, `md` padrão e `lg` amplo |
 | `busy`, `busyLabel` | Desabilita a ação, mostra indicador e anuncia o texto de envio |
-| `disabled` | Indisponibilidade sem anunciar uma operação em andamento |
+| `disabled` | Indisponibilidade sem anunciar uma operação em andamento; o cursor fica `not-allowed` |
 | `type` | Padrão `button`; informe `submit` para enviar o formulário |
 
-As variantes mantêm as imagens `button/1.png` e `button/2.png` do tema. Sucesso, atenção e perigo tonalizam a mesma arte; hover e clique preservam essa tonalidade. O estado desabilitado não recebe a animação de hover e o indicador respeita preferência por movimento reduzido. A largura acompanha o texto e o ícone, com padding lateral; não há largura fixa, mínima artificial ou preenchimento da linha. `size` altera altura, fonte e padding.
+As variantes mantêm as imagens `button/1.png` e `button/2.png` do tema. Sucesso, atenção e perigo tonalizam a mesma arte; hover e clique preservam essa tonalidade. O estado desabilitado não recebe a animação de hover, usa o cursor de proibido e o indicador respeita preferência por movimento reduzido. A largura acompanha o texto e o ícone, com padding lateral; não há largura fixa, mínima artificial ou preenchimento da linha. `size` altera altura, fonte e padding.
 
 ```tsx
 import { Save, Trash2 } from 'lucide-react'

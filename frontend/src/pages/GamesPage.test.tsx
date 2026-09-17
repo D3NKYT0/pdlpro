@@ -299,6 +299,7 @@ it('bônus resgatado e monstro em respawn não oferecem nova ação', async () =
   expect(fights).toHaveLength(2)
   expect(fights[0]).toBeEnabled()
   expect(fights[1]).toBeDisabled()
+  expect(fights[1]).toHaveClass('ui-button--danger')
   const timer = screen.getByRole('timer')
   expect(timer).toHaveAccessibleName(/Retorna em/)
   expect(timer.querySelector('b')).toHaveTextContent(/^\d{2}:\d{2}$/)
@@ -751,6 +752,57 @@ it('abre o modal de derrota depois do giro do caça-níquel, sem toast', async (
   expect(toast.success).not.toHaveBeenCalled()
   expect(toast.error).not.toHaveBeenCalled()
 })
+it('no +10 trava Encantar, destaca o chefe e pede o combate final', async () => {
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 10,
+    weapon: { level: 10, fragments: 10 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0, is_boss: false },
+      { id: 'boss', name: 'Queen Ant', alive: true, level: 12, required_weapon_level: 10, fragment_reward: 0, respawn_in: 0, is_boss: true },
+    ],
+  } as any)
+  mount('economy')
+  await screen.findByText('Queen Ant')
+  expect(screen.getByText('O +10 destrava o chefe da arena')).toBeVisible()
+  expect(screen.getByText('Enfrente o chefe para reivindicar o prêmio.')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).not.toHaveClass('ui-button--success')
+  expect(document.querySelector('.monster-item.is-boss')).toBeTruthy()
+  expect(screen.getByText('Chefe')).toBeVisible()
+  expect(document.querySelector('.monster-portrait[data-monster="queen-ant"]')).toBeTruthy()
+  const steps = [...screen.getByRole('progressbar', { name: 'Arma +10 de +10' }).querySelectorAll('.weapon-path-steps li')]
+  expect(steps.filter((step) => step.classList.contains('is-done'))).toHaveLength(10)
+})
+it('revela o prêmio do chefe no palco e zera a arma sem toast', async () => {
+  vi.mocked(gamesApi.economy).mockResolvedValue({
+    fichas: 10,
+    weapon: { level: 10, fragments: 10 },
+    monsters: [
+      { id: 'monster', name: 'Orc', alive: true, level: 1, required_weapon_level: 1, fragment_reward: 2, respawn_in: 0, is_boss: false },
+      { id: 'boss', name: 'Queen Ant', alive: true, level: 12, required_weapon_level: 10, fragment_reward: 0, respawn_in: 0, is_boss: true },
+    ],
+  } as any)
+  vi.mocked(gamesApi.fight).mockResolvedValue({
+    won: true,
+    rounds: 6,
+    fragments_earned: 0,
+    prize: { item_id: 57, item_name: 'Adena', quantity: 250000 },
+    weapon: { level: 0, fragments: 10 },
+    fichas: 9,
+  } as any)
+  const user = mount('economy')
+  await screen.findByText('Queen Ant')
+  const bossRow = document.querySelector('.monster-item.is-boss')
+  expect(bossRow).toBeTruthy()
+  await user.click(within(bossRow as HTMLElement).getByRole('button', { name: 'Lutar · 1 ficha' }))
+  await waitFor(() => expect(document.querySelector('.battle-stage.is-win.is-boss')).toBeTruthy())
+  expect(gamesApi.fight).toHaveBeenCalledWith('boss')
+  expect(screen.getByRole('status')).toHaveTextContent('Vitória')
+  expect(screen.getByRole('status')).toHaveTextContent('+250K Adena')
+  expect(screen.getByRole('status')).toHaveTextContent('6 rodadas')
+  expect(toast.success).not.toHaveBeenCalled()
+  expect(toast.error).not.toHaveBeenCalled()
+})
 it('mostra a trilha de encante até +10 com o próximo passo em destaque', async () => {
   mount('economy')
   await screen.findByText('Orc')
@@ -769,6 +821,8 @@ it('pinta Lutar de amarelo sem fichas e Encantar de verde com fragmentos', async
   mount('economy')
   await screen.findByText('Orc')
   expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })[0]).toHaveClass('ui-button--secondary')
+  expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })[1]).toHaveClass('ui-button--danger')
+  expect(screen.getAllByRole('button', { name: 'Lutar · 1 ficha' })[1]).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toHaveClass('ui-button--success')
   expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toBeEnabled()
   const bar = screen.getByRole('progressbar', { name: '10 de 10 fragmentos' })
@@ -798,6 +852,7 @@ it('abre a compra de fichas pelo Lutar amarelo e trava Encantar sem fragmentos',
   expect(ready).toHaveClass('ui-button--yellow')
   expect(ready).toBeEnabled()
   expect(locked).toBeDisabled()
+  expect(locked).toHaveClass('ui-button--danger')
   expect(locked).not.toHaveClass('ui-button--yellow')
   expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).toBeDisabled()
   expect(screen.getByRole('button', { name: 'Encantar · 10 fragmentos' })).not.toHaveClass('ui-button--success')

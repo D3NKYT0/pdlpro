@@ -68,6 +68,9 @@ it('aplica superfícies e densidade a partir do layout do pacote', () => {
   expect(style.getPropertyValue('--theme-art-games-monster-death-knight')).toContain(
     'games/monster-death-knight.webp',
   )
+  expect(style.getPropertyValue('--theme-art-games-monster-queen-ant')).toContain(
+    'games/monster-queen-ant.webp',
+  )
 })
 it('remapeia arte dos jogos pelo mapa de assets do pacote', () => {
   configureRuntimeTheme({

@@ -228,6 +228,7 @@ export const gamesApi = {
       won: boolean
       rounds: number
       fragments_earned: number
+      prize?: { item_id: number; item_name: string; quantity: number } | null
       weapon: { level: number; fragments: number }
       fichas: number
     }>(`/customer/games/economy/${monsterId}/fight/`, { method: 'POST' }),

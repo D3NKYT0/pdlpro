@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from django.utils import timezone
 
-from apps.games.domain.arena_roster import ARENA_MONSTERS
+from apps.games.domain.arena_roster import ARENA_BOSS, ARENA_MONSTERS
 from apps.games.domain.autoconfig import KNOWN_GAME_CODES, IGameAutoconfigService
 from apps.games.domain.battle_pass_catalog import (
     BATTLE_PASS_EXCHANGES,
@@ -456,8 +456,18 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
         return created
 
     def _ensure_monsters(self) -> int:
+        created = self._upsert_arena_monsters(MONSTERS, is_boss=False)
+        created += self._upsert_arena_monsters((ARENA_BOSS,), is_boss=True)
+        return created
+
+    def _upsert_arena_monsters(
+        self,
+        roster: tuple[tuple[str, int, int, int, int, int, int, int], ...],
+        *,
+        is_boss: bool,
+    ) -> int:
         created = 0
-        for name, level, weapon, fragments, hp, attack, defense, respawn in MONSTERS:
+        for name, level, weapon, fragments, hp, attack, defense, respawn in roster:
             monster, was = Monster.objects.get_or_create(
                 name=name,
                 defaults={
@@ -468,6 +478,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                     "attack": attack,
                     "defense": defense,
                     "respawn_seconds": respawn,
+                    "is_boss": is_boss,
                     "active": True,
                 },
             )
@@ -483,6 +494,7 @@ class DjangoGameAutoconfigService(IGameAutoconfigService):
                 "attack": attack,
                 "defense": defense,
                 "respawn_seconds": respawn,
+                "is_boss": is_boss,
                 "active": True,
             }
             for field, value in values.items():

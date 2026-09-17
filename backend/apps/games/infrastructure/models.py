@@ -318,6 +318,11 @@ class Monster(BaseModel):
     defense = models.PositiveIntegerField(default=2)
     respawn_seconds = models.PositiveIntegerField(default=30)
     defeated_at = models.DateTimeField(null=True, blank=True)
+    is_boss = models.BooleanField(
+        default=False,
+        verbose_name=_("Chefe da arena"),
+        help_text=_("A vitória contra o chefe entrega o prêmio e zera a arma no máximo."),
+    )
     active = models.BooleanField(default=True)
 
     class Meta:

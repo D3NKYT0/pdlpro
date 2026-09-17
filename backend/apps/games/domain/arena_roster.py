@@ -4,7 +4,13 @@ from __future__ import annotations
 
 Cada tupla é ``(nome, nível, arma mínima, fragmentos, hp, ataque, defesa, respawn)``.
 O nome casa a arte do tema (`monster-keltir.webp`, etc.).
+O chefe só entra após a arma no máximo: a vitória entrega o prêmio e zera o encante.
 """
+
+ARENA_WEAPON_MAX = 10
+ARENA_BOSS_ADENA = 250_000
+ARENA_BOSS_ITEM_ID = 57
+ARENA_BOSS_ITEM_NAME = "Adena"
 
 # name, level, required_weapon_level, fragment_reward, hp, attack, defense, respawn_seconds
 ARENA_MONSTERS: tuple[tuple[str, int, int, int, int, int, int, int], ...] = (
@@ -19,3 +25,20 @@ ARENA_MONSTERS: tuple[tuple[str, int, int, int, int, int, int, int], ...] = (
     ("Drake", 8, 5, 20, 120, 18, 8, 60),
     ("Death Knight", 10, 8, 25, 180, 26, 12, 90),
 )
+
+ARENA_BOSS: tuple[str, int, int, int, int, int, int, int] = (
+    "Queen Ant",
+    12,
+    ARENA_WEAPON_MAX,
+    0,
+    480,
+    48,
+    28,
+    150,
+)
+
+
+def is_arena_boss(monster) -> bool:
+    """Verdadeiro quando o oponente é o chefe que entrega o prêmio da arena."""
+
+    return bool(getattr(monster, "is_boss", False))

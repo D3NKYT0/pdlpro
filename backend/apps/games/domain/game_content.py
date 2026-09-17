@@ -70,6 +70,7 @@ GAME_CONTENT_FIELDS: dict[str, list[str]] = {
         "attack",
         "defense",
         "respawn_seconds",
+        "is_boss",
         "active",
     ],
     "box-items": ["name", "item_id", "enchant", "quantity", "rarity", "weight", "active"],

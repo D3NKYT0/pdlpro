@@ -220,6 +220,7 @@ _FIELD_TYPES = {
     "attack": serializers.IntegerField(min_value=0, required=False, default=8),
     "defense": serializers.IntegerField(min_value=0, required=False, default=2),
     "respawn_seconds": serializers.IntegerField(min_value=0, required=False, default=30),
+    "is_boss": serializers.BooleanField(required=False, default=False),
 }
 
 

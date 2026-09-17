@@ -10,6 +10,13 @@ from apps.accounts.application.progress import add_xp
 from apps.accounts.domain.repositories import IProgressRepository
 from apps.games.application.bag import add_to_bag
 from apps.games.application.battle_pass_xp import add_battle_pass_xp
+from apps.games.domain.arena_roster import (
+    ARENA_BOSS_ADENA,
+    ARENA_BOSS_ITEM_ID,
+    ARENA_BOSS_ITEM_NAME,
+    ARENA_WEAPON_MAX,
+    is_arena_boss,
+)
 from apps.games.domain.exceptions import GameInactiveError, InsufficientTokensError
 from apps.games.domain.repositories import (
     IBagRepository,
@@ -18,8 +25,6 @@ from apps.games.domain.repositories import (
 )
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import EntityNotFoundError, ValidationDomainError
-
-ARENA_ENCHANT_ADENA = 250_000
 
 
 def _monster_alive(monster) -> bool:
@@ -61,6 +66,7 @@ class GetEconomyStateUseCase(UseCase[UUID, dict]):
                     "level": monster.level,
                     "required_weapon_level": monster.required_weapon_level,
                     "fragment_reward": monster.fragment_reward,
+                    "is_boss": is_arena_boss(monster),
                     "alive": alive,
                     "respawn_in": remaining,
                 }
@@ -120,7 +126,10 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
             if not _monster_alive(monster):
                 raise ValidationDomainError("O monstro ainda não respawnou.")
             weapon = self._economy.get_or_create_weapon_locked(user)
-            if weapon.level < monster.required_weapon_level:
+            needed = monster.required_weapon_level
+            if is_arena_boss(monster):
+                needed = max(needed, ARENA_WEAPON_MAX)
+            if weapon.level < needed:
                 raise ValidationDomainError("Sua arma é fraca demais para este monstro.")
             user.fichas -= 1
             player_hp = 50 + weapon.level * 10
@@ -134,9 +143,26 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
                 player_hp -= max(1, monster.attack - weapon.level * 2)
             won = monster_hp <= 0
             fragments = monster.fragment_reward if won else 0
+            prize = None
             if won:
                 weapon.fragments += fragments
-                self._economy.save_weapon(weapon, update_fields=["fragments", "updated_at"])
+                weapon_fields = ["fragments", "updated_at"]
+                if is_arena_boss(monster):
+                    add_to_bag(
+                        user,
+                        item_id=ARENA_BOSS_ITEM_ID,
+                        item_name=ARENA_BOSS_ITEM_NAME,
+                        quantity=ARENA_BOSS_ADENA,
+                        bags=self._bags,
+                    )
+                    weapon.level = 0
+                    weapon_fields = ["level", "fragments", "updated_at"]
+                    prize = {
+                        "item_id": ARENA_BOSS_ITEM_ID,
+                        "item_name": ARENA_BOSS_ITEM_NAME,
+                        "quantity": ARENA_BOSS_ADENA,
+                    }
+                self._economy.save_weapon(weapon, update_fields=weapon_fields)
                 monster.defeated_at = timezone.now()
                 self._economy.save_monster(
                     monster, update_fields=["defeated_at", "updated_at"]
@@ -157,6 +183,7 @@ class FightMonsterUseCase(UseCase[FightMonsterInput, dict]):
             "won": won,
             "rounds": rounds,
             "fragments_earned": fragments,
+            "prize": prize,
             "weapon": {"level": weapon.level, "fragments": weapon.fragments},
             "fichas": user.fichas,
         }
@@ -175,27 +202,28 @@ class EnchantWeaponInput:
 
 
 class EnchantWeaponUseCase(UseCase[EnchantWeaponInput, dict]):
-    """Consome fragmentos para tentar evoluir a arma e aplica o resultado do sorteio e eventuais
-    recompensas.
+    """Consome fragmentos para tentar evoluir a arma até o máximo da arena.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``EnchantWeaponInput``. O retorno
-    é ``dict``.
+    é ``dict``. O prêmio da arena sai da vitória contra o chefe, não deste encante.
     """
 
     def __init__(
         self,
         economy: IEconomyRepository,
-        bags: IBagRepository,
         unit_of_work: UnitOfWork,
     ) -> None:
         self._economy = economy
-        self._bags = bags
         self._unit_of_work = unit_of_work
 
     def execute(self, data: EnchantWeaponInput) -> dict:
         with self._unit_of_work:
             user = self._economy.require_user(data.user_id)
             weapon = self._economy.get_or_create_weapon_locked(user)
+            if weapon.level >= ARENA_WEAPON_MAX:
+                raise ValidationDomainError(
+                    "A arma já está no máximo. Derrote o chefe da arena para receber o prêmio."
+                )
             if weapon.fragments < 10:
                 raise ValidationDomainError("Você precisa de 10 fragmentos.")
             weapon.fragments -= 10
@@ -203,15 +231,6 @@ class EnchantWeaponUseCase(UseCase[EnchantWeaponInput, dict]):
             success = random.randint(1, 100) <= chance
             if success:
                 weapon.level += 1
-                if weapon.level >= 10:
-                    add_to_bag(
-                        user,
-                        item_id=57,
-                        item_name="Adena",
-                        quantity=ARENA_ENCHANT_ADENA,
-                        bags=self._bags,
-                    )
-                    weapon.level = 0
             self._economy.save_weapon(
                 weapon, update_fields=["level", "fragments", "updated_at"]
             )

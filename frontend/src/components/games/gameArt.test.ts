@@ -125,6 +125,8 @@ it('escolhe a sprite da fera pelo nome e cai no retrato padrão', () => {
   expect(resolveMonsterArt('Werewolf')).toBe('werewolf')
   expect(resolveMonsterArt('Homem-lobo')).toBe('werewolf')
   expect(resolveMonsterArt('Ant Recruit')).toBe('ant')
+  expect(resolveMonsterArt('Queen Ant')).toBe('queen-ant')
+  expect(resolveMonsterArt('Formiga Rainha')).toBe('queen-ant')
   expect(resolveMonsterArt('Death Knight')).toBe('death-knight')
   expect(resolveMonsterArt('Cavaleiro Negro')).toBe('death-knight')
   expect(resolveMonsterArt('Orc')).toBe('orc')

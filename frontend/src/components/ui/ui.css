@@ -1,4 +1,8 @@
-.ui-button:disabled { opacity: .55; cursor: not-allowed; }
+.ui-button:disabled,
+html.pdl-panel .btn.ui-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
 .ui-button[aria-busy="true"] { cursor: progress; }
 .ui-button:focus-visible, .ui-field :is(input, select, textarea):focus-visible, .ui-select-trigger:focus-visible, .ui-toggle input:focus-visible + span {
   outline: 2px solid var(--gold); outline-offset: 3px;

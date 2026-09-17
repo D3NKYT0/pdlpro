@@ -268,7 +268,7 @@ class MonsterAdmin(PDLModelAdmin):
     reutilizáveis ficam na aplicação.
     """
 
-    list_display = ("name", "level", "required_weapon_level", "active")
+    list_display = ("name", "level", "required_weapon_level", "is_boss", "active")
 
 
 @admin.register(EconomyFightLog)

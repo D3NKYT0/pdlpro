@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Chefe da Arena das Feras:** ao chegar em +10 a arma permanece e destrava a
+  **Queen Ant**. Só a vitória contra o chefe entrega 250k Adena e zera o
+  encante. Encantar no máximo fica bloqueado até essa luta.
+
 - **Configurador da loja** em `/panel/admin/shop`: itens avulsos, pacotes e
   **Preencher catálogo low grade** com stacks Interlude NG/D/C (Adena,
   soulshot, poções, SoE/SoR, crystal/gemstone, encantes D–C) e pacotes de
@@ -89,6 +93,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Lutar na **Arena das Feras** fica vermelho quando a fera não pode ser
+  combatida (arma fraca ou respawn), com o cursor de proibido no hover, e
+  amarelo sem fichas.
+- Encantar na **Arena das Feras** para no +10: a arma não zera mais nesse
+  passo e o prêmio de 250k Adena passa a sair só da vitória contra o chefe.
 - A **pescaria** em `/panel/games?tab=fishing` deixa de misturar escolha e
   compra no mesmo clique: o quadro põe a isca na linha, **Obter** reposição
   fica visível (nome, bônus e custo, sem hover) e um «?» explica vara, iscas
