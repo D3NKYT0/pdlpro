@@ -18,6 +18,7 @@ Comece identificando ambiente, URL, revisão e operação que falhou. Registre h
 | Vitest não encontra testes | Diretório e padrão de descoberta | Consulte [Testes](../desenvolvimento/testes.md) |
 | Tema não carrega ou fica sem imagens | Endpoint ativo, `/media/themes/` e manifesto | Confira proxy, volume e caminhos do pacote |
 | `No space left on device` no `pip install` do backend | Disco da VPS e cache do BuildKit | Veja [espaço em disco no build](#espaço-em-disco-no-build-docker) |
+| `install.sh` aborta com `REDIS_PASSWORD is required` | `.env` ainda sem senha quando o Compose sobe o Postgres | Veja [Release sem REDIS_PASSWORD](#installsh-aborta-com-redis_password-is-required) |
 
 ## Backend e proxy
 
@@ -80,6 +81,28 @@ atualização: isso apaga PostgreSQL, Redis, mídia e modelos do Ollama.
 Depois, atualize o código com o torch CPU e suba de novo. Confira se o log do
 `pip install` lista `torch-…+cpu` e **não** lista `nvidia-cudnn`, `cuda-toolkit`
 ou `nvidia-cublas`.
+
+## `install.sh` aborta com `REDIS_PASSWORD is required`
+
+O primeiro ZIP da 2.5.2 gerava a senha do Redis só depois de `docker compose up -d db`.
+O Compose interpola o YAML inteiro, então a instalação nova aborta e restaura o `.env`
+de exemplo (senha vazia). A 2.5.2 republicada já grava `REDIS_PASSWORD` antes do Compose.
+
+Se o `install.sh` antigo ainda estiver na VPS, grave uma senha forte e rode de novo:
+
+```bash
+cd /opt/pdlpro
+REDIS_PW="$(openssl rand -hex 24)"
+sed -i "s/^REDIS_PASSWORD=.*/REDIS_PASSWORD=${REDIS_PW}/" .env
+grep -q '^REDIS_PASSWORD=.\+' .env || echo "REDIS_PASSWORD=${REDIS_PW}" >> .env
+sed -i "s|^REDIS_URL=.*|REDIS_URL=redis://:${REDIS_PW}@redis:6379/0|" .env
+grep -q '^REDIS_URL=' .env || echo "REDIS_URL=redis://:${REDIS_PW}@redis:6379/0" >> .env
+unset REDIS_PW
+cd ~
+bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
+```
+
+Baixar de novo `install.sh` e o ZIP da 2.5.2 também resolve, sem o `sed`.
 
 ## Redis e execução nativa
 

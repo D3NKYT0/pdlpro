@@ -39,7 +39,11 @@ Opções úteis: `--version 2.5.2`, `--dir /opt/pdlpro`, `--port 8080`,
 O instalador configura o `.env` (equivalente a
 `./setup.sh configure-production`), grava as imagens publicadas e executa
 `./setup.sh install --production`, que **puxa** as imagens em vez de
-construí-las.
+construí-las. A senha do Redis entra no `.env` antes do primeiro Compose: o
+arquivo de produção interpola `REDIS_PASSWORD` mesmo só para subir o Postgres.
+
+Se um ZIP antigo da 2.5.2 abortar com `REDIS_PASSWORD is required`, veja
+[Solução de problemas](solucao-de-problemas.md#installsh-aborta-com-redis_password-is-required).
 
 ## Windows
 

@@ -324,6 +324,12 @@ trap rollback_on_failure EXIT
 
 [[ "$had_env" -eq 1 ]] && merge_missing_env_keys
 
+# Compose interpola o YAML inteiro em qualquer comando (`ps`, `up -d db`). Sem
+# REDIS_PASSWORD no .env a instalação nova aborta antes de gravar a senha.
+set_env_value REDIS_PASSWORD "$new_redis_password"
+set_env_value REDIS_URL "redis://:${new_redis_password}@redis:6379/0"
+chmod 600 "$ENV_FILE"
+
 # PDL_SKIP_DOCKER=1 evita compose na suíte de testes; não use em implantação.
 if [[ "${PDL_SKIP_DOCKER:-0}" != "1" ]] && command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
   docker_ready=1

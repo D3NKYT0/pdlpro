@@ -55,11 +55,22 @@ merge_missing_env_keys
     )
 
 
-def _run_configure(env_file: Path, backup_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+def _run_configure(
+    env_file: Path,
+    backup_dir: Path,
+    *args: str,
+    skip_docker: bool = True,
+    extra_env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     env["PDL_ENV_FILE"] = _bash_path(env_file)
     env["PDL_CONFIG_BACKUP_DIR"] = _bash_path(backup_dir)
-    env["PDL_SKIP_DOCKER"] = "1"
+    if skip_docker:
+        env["PDL_SKIP_DOCKER"] = "1"
+    else:
+        env.pop("PDL_SKIP_DOCKER", None)
+    if extra_env:
+        env.update(extra_env)
     return subprocess.run(
         [_bash(), _bash_path(CONFIGURE), *args],
         env=env,
@@ -319,3 +330,115 @@ def test_configure_production_writes_a_config_backup(tmp_path: Path):
     assert len(backups) == 1
     mode = stat.S_IMODE(backups[0].stat().st_mode)
     assert mode == 0o600 or os.name == "nt"
+
+
+def _install_fake_compose_docker(tmp_path: Path) -> Path:
+    """Docker de teste: recusa Compose se REDIS_PASSWORD ainda estiver vazia."""
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    state_dir = tmp_path / "fake-docker-state"
+    state_dir.mkdir()
+    docker = bin_dir / "docker"
+    docker.write_text(
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+STATE="{_bash_path(state_dir)}"
+if [[ "${{1:-}}" == "info" ]]; then
+  exit 0
+fi
+if [[ "${{1:-}}" == "compose" && "${{2:-}}" == "version" ]]; then
+  printf 'Docker Compose version v2.29.0\\n'
+  exit 0
+fi
+if [[ "${{1:-}}" != "compose" ]]; then
+  printf 'unexpected docker %s\\n' "$*" >&2
+  exit 1
+fi
+shift
+env_file=""
+args=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --env-file)
+      env_file="$2"
+      shift 2
+      ;;
+    --project-directory|-f|--file)
+      shift 2
+      ;;
+    *)
+      args+=("$1")
+      shift
+      ;;
+  esac
+done
+redis_pw=""
+if [[ -n "$env_file" && -f "$env_file" ]]; then
+  redis_pw="$(awk -F= '$1 == "REDIS_PASSWORD" {{ sub(/\\r$/, "", $2); print $2; exit }}' "$env_file")"
+fi
+if [[ -z "$redis_pw" ]]; then
+  printf 'error while interpolating services.redis.command: required variable REDIS_PASSWORD is missing a value: REDIS_PASSWORD is required\\n' >&2
+  exit 1
+fi
+printf '%s\\n' "${{args[*]}}" >> "$STATE/commands.log"
+set -- "${{args[@]}}"
+service="${{!#}}"
+case "$1" in
+  ps)
+    if [[ -f "$STATE/${{service}}.up" ]]; then
+      printf 'container-%s\\n' "$service"
+    fi
+    exit 0
+    ;;
+  up|start)
+    : > "$STATE/${{service}}.up"
+    exit 0
+    ;;
+  exec|stop)
+    exit 0
+    ;;
+esac
+printf 'unexpected compose %s\\n' "$*" >&2
+exit 1
+""",
+        encoding="utf-8",
+        newline="\n",
+    )
+    docker.chmod(docker.stat().st_mode | 0o111)
+    return bin_dir
+
+
+def test_configure_production_writes_redis_password_before_compose(tmp_path: Path):
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "DEBUG=false\n"
+        "SECRET_KEY=change-me-to-a-long-random-string-at-least-50-chars\n"
+        "DJANGO_SETTINGS_MODULE=core.settings.development\n"
+        "DOMAIN=l2saga.club\n"
+        "DB_NAME=pdl\n"
+        "DB_USER=pdl\n"
+        "DB_PASSWORD=pdl\n"
+        "REDIS_PASSWORD=\n"
+        "REDIS_URL=redis://redis:6379/0\n",
+        encoding="utf-8",
+    )
+    bin_dir = _install_fake_compose_docker(tmp_path)
+    path = f"{_bash_path(bin_dir)}:{os.environ.get('PATH', '')}"
+
+    result = _run_configure(
+        env_file,
+        tmp_path / "backups",
+        "-y",
+        "--domain",
+        "l2saga.club",
+        skip_docker=False,
+        extra_env={"PATH": path},
+    )
+
+    output = result.stdout + result.stderr
+    assert result.returncode == 0, output
+    assert "REDIS_PASSWORD is required" not in output
+    redis_password = _read(env_file, "REDIS_PASSWORD")
+    assert len(redis_password) >= 16
+    assert _read(env_file, "REDIS_URL") == f"redis://:{redis_password}@redis:6379/0"
+    assert _read(env_file, "DB_PASSWORD") != "pdl"

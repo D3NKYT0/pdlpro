@@ -84,8 +84,10 @@ cd /opt/pdlpro
 ```
 
 Esse comando cria o `.env`, gera os segredos sem exibi-los e salva o arquivo
-anterior em `backups/config/`. O Docker deve estar em execucao para que a senha
-gerada seja sincronizada com o PostgreSQL. Para substituir segredos expostos:
+anterior em `backups/config/`. A senha do Redis é gravada antes de qualquer
+`docker compose`, porque o YAML de produção interpola `REDIS_PASSWORD` mesmo
+só para subir o Postgres. O Docker deve estar em execucao para que a senha
+do banco seja sincronizada com o PostgreSQL. Para substituir segredos expostos:
 
 ```bash
 ./setup.sh configure-production --rotate-secrets

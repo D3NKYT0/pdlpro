@@ -60,6 +60,9 @@ consolidados em **18 de setembro de 2026**.
   pose de assalto.
 - A ativação do 2FA em Conta e segurança mostra o QR Code do autenticador (PNG da URI
   `otpauth`) além da chave manual.
+- A instalação pela Release deixa de abortar em `REDIS_PASSWORD is required`: o
+  configurador grava a senha do Redis no `.env` antes de qualquer `docker compose`
+  (`ps` / `up -d db`), porque o Compose interpola o YAML inteiro.
 
 ## [2.5.1] - 2026-09-17
 
