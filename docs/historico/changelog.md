@@ -8,8 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.2] - 2026-09-18
+
 Cifra em repouso, códigos de recuperação 2FA, dumps PostgreSQL cifrados, sanitização de
-webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de 2026**.
+webhooks, TLS opcional no MySQL do Lineage, hall do painel e Coming Soon cinemático,
+consolidados em **18 de setembro de 2026**.
 
 ### Adicionado
 
