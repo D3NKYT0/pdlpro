@@ -42,6 +42,7 @@ def test_staff_can_update_panel_and_services(api, staff):
         "/api/v1/staff/panel/",
         {
             "name": "Imperium",
+            "slogan": "Reino",
             "chronicle": "High Five",
             "description": "Servidor de testes",
             "rates": {"xp": "x10", "sp": "x10", "adena": "x5", "drop": "x3", "spoil": "x3"},
@@ -59,11 +60,13 @@ def test_staff_can_update_panel_and_services(api, staff):
     )
     assert saved.status_code == 200, saved.data
     assert saved.data["name"] == "Imperium"
+    assert saved.data["slogan"] == "Reino"
     assert saved.data["coming_soon"] is True
     assert saved.data["coming_soon_title"] == "Abertura Imperium"
     assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
     public = api.get("/api/v1/public/server/info/")
     assert public.data["name"] == "Imperium"
+    assert public.data["slogan"] == "Reino"
     assert public.data["rates"]["xp"] == "x10"
     assert public.data["coming_soon"] is True
     assert public.data["coming_soon_title"] == "Abertura Imperium"

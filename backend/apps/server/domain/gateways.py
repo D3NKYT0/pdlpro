@@ -26,6 +26,7 @@ class ServerInfo:
     """
 
     name: str
+    slogan: str
     description: str
     chronicle: str
     rates: dict[str, str]

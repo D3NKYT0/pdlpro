@@ -11,6 +11,7 @@ import { ComingSoonPage } from './ComingSoonPage'
 
 const info: ApiServerInfo = {
   name: 'Imperium',
+  slogan: '',
   description: 'Servidor de testes',
   chronicle: 'Interlude',
   rates: {},
@@ -63,14 +64,89 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(document.querySelector('.launch-gate__panel-texture')).toHaveStyle({
     backgroundImage: 'url("/theme/default/images/bg/1.png")',
   })
-  expect(document.querySelectorAll('.launch-gate__panel-corner')).toHaveLength(4)
-  expect(screen.queryByText('Crônica e Rates')).not.toBeInTheDocument()
+  expect(document.querySelectorAll('.launch-gate__panel-corner')).toHaveLength(8)
+  expect(document.querySelector('.launch-gate__tableau.is-split')).not.toBeNull()
+  expect(screen.getByLabelText('Informações do servidor')).toHaveClass('launch-gate__dossier')
+  expect(screen.getByRole('heading', { name: 'O portal se abre' }).closest('.launch-gate__hero-panel')).not.toBeNull()
+  expect(screen.getByLabelText('Informações do servidor')).toHaveTextContent('Interlude')
+  expect(screen.getByLabelText('Informações do servidor')).toHaveTextContent('80')
+  expect(document.querySelectorAll('.launch-gate__champion')).toHaveLength(4)
+  expect(document.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/phoenix-knight.png?v=2',
+  )
+  expect(document.querySelector('.launch-gate__champion.is-right-front')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/spell-singer.png?v=2',
+  )
 })
 
 it('usa o nome do servidor como hero quando o título é genérico', () => {
   mount(<ComingSoonPage info={{ ...info, coming_soon_title: 'Em breve' }} />)
   expect(screen.getByRole('heading', { name: 'Imperium' })).toBeVisible()
   expect(screen.getByText('Em breve')).toBeVisible()
+})
+
+it('mostra slogan, descrição, crônica, rates e encantamento do painel', () => {
+  mount(
+    <ComingSoonPage
+      info={{
+        ...info,
+        name: 'The One',
+        slogan: 'O Número Um',
+        description: 'O melhor servidor do mundo',
+        coming_soon_title: 'Em breve',
+        coming_soon_subtitle: '',
+        chronicle: 'Interlude',
+        max_level: 77,
+        rates: { xp: 'x10', sp: 'x10', adena: 'x5', drop: 'x3', spoil: 'x3' },
+        enchant: { safe: '+3', max: '+16' },
+      }}
+    />,
+  )
+
+  expect(screen.getByRole('heading', { name: 'The One' })).toBeVisible()
+  expect(screen.getByText('O Número Um')).toBeVisible()
+  expect(screen.getByText('O melhor servidor do mundo')).toBeVisible()
+  const facts = screen.getByLabelText('Informações do servidor')
+  expect(document.querySelector('.launch-gate__tableau.is-split')).not.toBeNull()
+  expect(facts).toHaveClass('launch-gate__dossier')
+  expect(screen.getByRole('heading', { name: 'The One' }).closest('.launch-gate__hero-panel')).not.toBeNull()
+  expect(facts).toHaveTextContent('O servidor')
+  expect(facts).toHaveTextContent('Crônica')
+  expect(facts).toHaveTextContent('Interlude')
+  expect(facts).toHaveTextContent('Nível')
+  expect(facts).toHaveTextContent('77')
+  expect(facts).toHaveTextContent('XP')
+  expect(facts).toHaveTextContent('x10')
+  expect(facts).toHaveTextContent('Adena')
+  expect(facts).toHaveTextContent('x5')
+  expect(facts).toHaveTextContent('Safe')
+  expect(facts).toHaveTextContent('+3')
+  expect(facts).toHaveTextContent('Max')
+  expect(facts).toHaveTextContent('+16')
+  expect(facts).toHaveTextContent('Rates')
+  expect(facts).toHaveTextContent('Encantamento')
+  expect(facts).not.toHaveTextContent('The One')
+})
+
+it('mantém o slogan do painel mesmo com subtítulo de lançamento antigo', () => {
+  mount(
+    <ComingSoonPage
+      info={{
+        ...info,
+        name: 'The One',
+        slogan: 'O Número Um',
+        description: 'O melhor servidor do mundo',
+        coming_soon_title: 'The One',
+        coming_soon_subtitle: 'O melhor servidor do brasil!',
+      }}
+    />,
+  )
+
+  expect(screen.getByRole('heading', { name: 'The One' })).toBeVisible()
+  expect(screen.getByText('O Número Um')).toBeVisible()
+  expect(screen.getByText('O melhor servidor do brasil!')).toBeVisible()
 })
 
 it('usa os botões texturizados compartilhados do projeto', () => {
@@ -111,6 +187,9 @@ it('anuncia o fim da contagem com efeitos de abertura', () => {
     '/theme/default/images/bg/dynasty-couple-hold.png?v=6',
   )
   expect(container.querySelector('.launch-gate__tableau.is-held')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__tableau.is-split')).toBeNull()
+  expect(container.querySelector('.launch-gate__dossier')).toBeNull()
+  expect(container.querySelector('.launch-gate__roster')).toBeNull()
   expect(container.querySelectorAll('.launch-gate__shell').length).toBeGreaterThan(3)
   expect(container.querySelector('.launch-gate__bg--open.is-active')).not.toBeNull()
   expect(container.querySelector('.launch-gate__bg--waiting.is-active')).toBeNull()
@@ -124,6 +203,7 @@ it('anuncia o fim da contagem com efeitos de abertura', () => {
 it('não mostra o casal Dynasty enquanto a contagem está ativa', () => {
   const { container } = mount(<ComingSoonPage info={info} />)
   expect(container.querySelector('.launch-gate__heroes')).toBeNull()
+  expect(container.querySelector('.launch-gate__roster')).not.toBeNull()
 })
 
 it('traduz a abertura do servidor para inglês', async () => {

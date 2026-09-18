@@ -11,9 +11,11 @@ enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o 
 
 | Campo | Uso |
 | --- | --- |
+| Nome, slogan, descrição | Identidade no hero (o slogan aparece abaixo do título) |
+| Crônica, nível máximo, rates, encantamento | Faixa de dados na página de lançamento |
 | Ativar Coming Soon | Liga a página de lançamento em `/` |
-| Título | Headline da página |
-| Subtítulo | Texto de apoio |
+| Título | Headline opcional; se genérico (“Em breve”), usa o nome do servidor |
+| Subtítulo | Texto de apoio opcional; se vazio, usa slogan ou descrição |
 | Data e hora do lançamento | Alvo da contagem regressiva (obrigatória com o modo ativo) |
 | Login apenas para staff | Bloqueia jogadores comuns no login |
 
@@ -28,13 +30,20 @@ A ativação sem data de lançamento é rejeitada pela API.
    `portal-v1` e “voltar ao site” do painel) apontam para `/home` quando há sessão,
    para que quem já entrou não volte à contagem regressiva. Visitante anônimo e site
    aberto continuam indo para `/`.
-3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor.
-4. Entrar é a ação principal; Downloads fica secundário.
-5. Login e Downloads permanecem acessíveis pelos botões da página.
-6. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
-7. Com restrição de staff, senha/passkey/OAuth/2FA respondem
+3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor,
+   o slogan do painel e a descrição (ou o subtítulo de lançamento, se houver).
+4. A coluna da esquerda lista crônica, nível máximo, rates e encantamento; a da
+   direita mantém o hero original (título, slogan, subtítulo, contagem e botões).
+   Em telas estreitas as colunas empilham, com o hero primeiro.
+5. Enquanto a contagem está ativa, quatro personagens em pose de batalha
+   (`images/coming-soon/*.png`) flanqueiam os painéis, olhando para o visitante.
+   Some na abertura (quando entra o casal Dynasty) e em telas estreitas.
+6. Entrar é a ação principal; Downloads fica secundário.
+7. Login e Downloads permanecem acessíveis pelos botões da página.
+8. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
+9. Com restrição de staff, senha/passkey/OAuth/2FA respondem
    `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns.
-8. Quem já está autenticado em `/login` é enviado à landing (`/home`), salvo `?next=`
+10. Quem já está autenticado em `/login` é enviado à landing (`/home`), salvo `?next=`
    local válido. Conta social sem senha utilizável vai para `/complete-account`.
 
 No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
@@ -48,6 +57,7 @@ O Coming Soon continua ativo até a equipe desligar o modo no painel.
 
 Contrato público em `GET /api/v1/public/server/info/`:
 
+- `name`, `slogan`, `description`, `chronicle`, `rates`, `enchant`, `max_level`
 - `coming_soon`
 - `coming_soon_title`
 - `coming_soon_subtitle`

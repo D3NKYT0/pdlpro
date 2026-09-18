@@ -75,6 +75,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         features = [item.strip() for item in getattr(settings, "SERVER_FEATURES", []) if str(item).strip()]
         info = ServerInfo(
             name=str(getattr(settings, "PROJECT_TITLE", "PDL PRO")),
+            slogan="",
             description=str(getattr(settings, "PROJECT_DESCRIPTION", "")),
             chronicle=chronicle,
             rates={
@@ -113,9 +114,12 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         overlay_features = [str(item).strip() for item in (row.features or []) if str(item).strip()]
         title = str(row.coming_soon_title or "").strip()
         subtitle = str(row.coming_soon_subtitle or "").strip()
+        slogan = str(row.slogan or "").strip()
+        description = str(row.description or "").strip() or info.description
         return ServerInfo(
             name=row.name or info.name,
-            description=row.description or info.description,
+            slogan=slogan,
+            description=description,
             chronicle=row.chronicle or info.chronicle,
             rates=rates,
             enchant=enchant,
@@ -124,7 +128,7 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
             notes=notes,
             coming_soon=bool(row.coming_soon),
             coming_soon_title=title or (row.name or info.name or "Em breve"),
-            coming_soon_subtitle=subtitle or (row.description or info.description or ""),
+            coming_soon_subtitle=subtitle or slogan or description,
             coming_soon_at=_coming_soon_at_iso(row.coming_soon_at),
         )
 

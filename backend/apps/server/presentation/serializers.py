@@ -8,12 +8,13 @@ class ServerInfoSerializer(serializers.Serializer):
     Use ``Serializer(instancia).data`` (com o nome desta classe) para representar a saída;
     ``many=True`` representa uma coleção.
 
-    Campos declarados: ``name``, ``description``, ``chronicle``, ``rates``, ``enchant``,
-    ``max_level``, ``features``, ``notes``, ``coming_soon``, ``coming_soon_title``,
-    ``coming_soon_subtitle``, ``coming_soon_at``.
+    Campos declarados: ``name``, ``slogan``, ``description``, ``chronicle``, ``rates``,
+    ``enchant``, ``max_level``, ``features``, ``notes``, ``coming_soon``,
+    ``coming_soon_title``, ``coming_soon_subtitle``, ``coming_soon_at``.
     """
 
     name = serializers.CharField()
+    slogan = serializers.CharField(allow_blank=True)
     description = serializers.CharField()
     chronicle = serializers.CharField()
     rates = serializers.DictField(child=serializers.CharField())

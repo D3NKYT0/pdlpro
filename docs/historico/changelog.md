@@ -43,6 +43,10 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
 
 ### Corrigido
 
+- A página **Coming Soon** passa a exibir slogan, descrição, crônica, rates e
+  encantamento salvos em Painel e servidor: uma coluna só com as infos e outra
+  com o hero original (título, contagem e botões). Personagens em pose de batalha
+  (`images/coming-soon/`) flanqueiam os painéis, olhando para o visitante.
 - A ativação do 2FA em Conta e segurança mostra o QR Code do autenticador (PNG da URI
   `otpauth`) além da chave manual.
 

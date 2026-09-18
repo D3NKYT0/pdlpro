@@ -51,7 +51,19 @@ function useSecondTick(secs: string, enabled: boolean) {
 
 const UNIT_KEYS = ['days', 'hours', 'mins', 'secs'] as const
 
+const LAUNCH_CHAMPIONS = [
+  { id: 'phoenix-knight', file: 'coming-soon/phoenix-knight.png', side: 'left-back' },
+  { id: 'abyss-walker', file: 'coming-soon/abyss-walker.png', side: 'left-front' },
+  { id: 'spell-singer', file: 'coming-soon/spell-singer.png', side: 'right-front' },
+  { id: 'temple-knight', file: 'coming-soon/temple-knight.png', side: 'right-back' },
+] as const
+
 const GENERIC_TITLES = new Set(['em breve', 'coming soon', 'próximamente', 'proximamente'])
+const RATE_FACT_KEYS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
+
+function sameText(left: string, right: string) {
+  return left.trim().toLocaleLowerCase() === right.trim().toLocaleLowerCase()
+}
 
 function LaunchParticles({ count = 68 }: { count?: number }) {
   const particles = useMemo(
@@ -177,13 +189,75 @@ function resolveHeroTitle(info: ApiServerInfo, waitingKicker: string) {
   return configured
 }
 
+function resolveHeroSlogan(info: ApiServerInfo, title: string) {
+  const slogan = info.slogan?.trim() || ''
+  if (!slogan || sameText(slogan, title)) return ''
+  return slogan
+}
+
+function resolveHeroSubtitle(info: ApiServerInfo, title: string, slogan: string, fallback: string) {
+  const candidates = [info.coming_soon_subtitle?.trim() || '', info.description?.trim() || '', fallback]
+  return candidates.find((text) => text && !sameText(text, title) && !sameText(text, slogan)) || ''
+}
+
+type LaunchFact = { key: string; label: string; value: string }
+type LaunchFactGroup = { id: string; title: string; facts: LaunchFact[] }
+
+function pushFact(facts: LaunchFact[], key: string, label: string, value: string) {
+  const trimmed = value.trim()
+  if (trimmed) facts.push({ key, label, value: trimmed })
+}
+
+function launchFactGroups(info: ApiServerInfo, label: (key: string) => string): LaunchFactGroup[] {
+  const identity: LaunchFact[] = []
+  pushFact(identity, 'chronicle', label('comingSoon.fact.chronicle'), info.chronicle || '')
+  if (info.max_level) {
+    pushFact(identity, 'maxLevel', label('comingSoon.fact.maxLevel'), String(info.max_level))
+  }
+
+  const rates: LaunchFact[] = []
+  for (const key of RATE_FACT_KEYS) {
+    pushFact(rates, key, label(`comingSoon.fact.${key}`), String(info.rates?.[key] || ''))
+  }
+
+  const enchant: LaunchFact[] = []
+  pushFact(enchant, 'enchantSafe', label('comingSoon.fact.enchantSafe'), String(info.enchant?.safe || ''))
+  pushFact(enchant, 'enchantMax', label('comingSoon.fact.enchantMax'), String(info.enchant?.max || ''))
+
+  return [
+    { id: 'identity', title: '', facts: identity },
+    { id: 'rates', title: label('comingSoon.factsRates'), facts: rates },
+    { id: 'enchant', title: label('comingSoon.factsEnchant'), facts: enchant },
+  ].filter((group) => group.facts.length > 0)
+}
+
+function LaunchPanelChrome() {
+  return (
+    <>
+      <span className="launch-gate__panel-glow" aria-hidden="true" />
+      <span
+        className="launch-gate__panel-texture"
+        aria-hidden="true"
+        style={{ backgroundImage: `url(${themeImage('bg/1.png')})` }}
+      />
+      <span className="launch-gate__panel-rim" aria-hidden="true" />
+      <span className="launch-gate__panel-sheen" aria-hidden="true" />
+      <span className="launch-gate__panel-corner is-tl" aria-hidden="true" />
+      <span className="launch-gate__panel-corner is-tr" aria-hidden="true" />
+      <span className="launch-gate__panel-corner is-bl" aria-hidden="true" />
+      <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
+      <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
+    </>
+  )
+}
+
 export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const { t } = useTranslation('public')
   const title = resolveHeroTitle(info, t('comingSoon.kickerWaiting'))
-  const subtitle =
-    info.coming_soon_subtitle?.trim() ||
-    info.description ||
-    t('comingSoon.subtitleFallback')
+  const slogan = resolveHeroSlogan(info, title)
+  const subtitle = resolveHeroSubtitle(info, title, slogan, t('comingSoon.subtitleFallback'))
+  const factGroups = launchFactGroups(info, (key) => t(key))
+  const splitLayout = factGroups.length > 0
   const countdown = useLaunchCountdown(info.coming_soon_at)
   const finished = countdown.finished && Boolean(info.coming_soon_at)
   const ticking = useSecondTick(countdown.secs, !finished)
@@ -230,31 +304,54 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         {finished ? <LaunchFireworks /> : null}
       </div>
 
+      {!finished ? (
+        <div className="launch-gate__roster" aria-hidden="true">
+          {LAUNCH_CHAMPIONS.map((champion) => (
+            <img
+              key={champion.id}
+              className={`launch-gate__champion is-${champion.side}`}
+              src={`${themeImage(champion.file)}?v=2`}
+              alt=""
+            />
+          ))}
+        </div>
+      ) : null}
+
       <div className="launch-gate__locale">
         <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
       </div>
 
       <main className="launch-gate__stage">
-        <div className={`launch-gate__tableau${finished ? ' is-held' : ''}`}>
-          <div className="launch-gate__panel">
-            <span className="launch-gate__panel-glow" aria-hidden="true" />
-            <span
-              className="launch-gate__panel-texture"
-              aria-hidden="true"
-              style={{ backgroundImage: `url(${themeImage('bg/1.png')})` }}
-            />
-            <span className="launch-gate__panel-rim" aria-hidden="true" />
-            <span className="launch-gate__panel-sheen" aria-hidden="true" />
-            <span className="launch-gate__panel-corner is-tl" aria-hidden="true" />
-            <span className="launch-gate__panel-corner is-tr" aria-hidden="true" />
-            <span className="launch-gate__panel-corner is-bl" aria-hidden="true" />
-            <span className="launch-gate__panel-corner is-br" aria-hidden="true" />
-            <span className="launch-gate__panel-ornament is-top" aria-hidden="true" />
+        <div className={`launch-gate__tableau${finished ? ' is-held' : ''}${!finished && splitLayout ? ' is-split' : ''}`}>
+          {!finished && splitLayout ? (
+            <aside className="launch-gate__panel launch-gate__dossier" aria-label={t('comingSoon.factsLabel')}>
+              <LaunchPanelChrome />
+              <p className="launch-gate__kicker">{t('comingSoon.factsTitle')}</p>
+              {factGroups.map((group) => (
+                <section key={group.id} className="launch-gate__fact-group">
+                  {group.title ? <h2 className="launch-gate__fact-heading">{group.title}</h2> : null}
+                  <dl className="launch-gate__facts">
+                    {group.facts.map((fact) => (
+                      <div key={fact.key} className="launch-gate__fact">
+                        <dt>{fact.label}</dt>
+                        <dd>{fact.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))}
+              <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
+            </aside>
+          ) : null}
+
+          <div className="launch-gate__panel launch-gate__hero-panel">
+            <LaunchPanelChrome />
 
             <p className="launch-gate__kicker">
               {finished ? t('comingSoon.kickerOpen') : t('comingSoon.kickerWaiting')}
             </p>
             <h1 className="launch-gate__title">{title}</h1>
+            {slogan ? <p className="launch-gate__slogan">{slogan}</p> : null}
             <p className="launch-gate__subtitle">
               {finished ? t('comingSoon.subtitleOpen') : subtitle}
             </p>

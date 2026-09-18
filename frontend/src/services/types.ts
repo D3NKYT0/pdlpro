@@ -23,6 +23,7 @@ export interface ApiUser {
 
 export interface ApiServerInfo {
   name: string
+  slogan: string
   description: string
   chronicle: string
   rates: Record<string, string>

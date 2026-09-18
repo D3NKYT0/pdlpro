@@ -189,15 +189,17 @@ export function AdminServerPage() {
               />
             </Field>
           </div>
-          <Field>
-            {t('server.launchSubtitle')}
-            <textarea
-              value={comingSoonSubtitle}
-              disabled={!comingSoon}
-              onChange={(e) => setComingSoonSubtitle(e.target.value)}
-              rows={2}
-            />
-          </Field>
+            <Field>
+              {t('server.launchSubtitle')}
+              <small>{t('server.launchSubtitleHint')}</small>
+              <textarea
+                value={comingSoonSubtitle}
+                disabled={!comingSoon}
+                onChange={(e) => setComingSoonSubtitle(e.target.value)}
+                placeholder={slogan || description || t('server.launchSubtitlePlaceholder')}
+                rows={2}
+              />
+            </Field>
           {comingSoon ? (
             <div className="admin-coming-soon-preview" style={{ marginTop: 12 }}>
               <ButtonLink to="/" target="_blank" rel="noreferrer" variant="secondary" size="sm">
