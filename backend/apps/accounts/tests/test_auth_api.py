@@ -360,12 +360,17 @@ def test_two_factor_login_challenge(api, user):
 
 @pytest.mark.django_db
 def test_setup_and_confirm_two_factor(api, user):
+    import base64
+
     import pyotp
 
     api.force_authenticate(user=user)
     setup = api.post("/api/v1/shared/me/2fa/", {"action": "setup"}, format="json")
     assert setup.status_code == 200, setup.data
     secret = setup.data["secret"]
+    assert setup.data["otpauth_url"].startswith("otpauth://totp/")
+    assert secret in setup.data["otpauth_url"]
+    assert base64.b64decode(setup.data["qr_code_base64"]).startswith(b"\x89PNG")
     confirm = api.post(
         "/api/v1/shared/me/2fa/",
         {"action": "confirm", "code": pyotp.TOTP(secret).now()},

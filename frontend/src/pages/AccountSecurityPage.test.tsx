@@ -49,7 +49,7 @@ beforeEach(() => {
     { id: 'current', created_at: '2026-09-01T12:00:00Z', expires_at: '2026-09-08T12:00:00Z', current: true },
     { id: 'other', created_at: '2026-09-02T08:00:00Z', expires_at: '2026-09-09T08:00:00Z', current: false },
   ])
-  vi.mocked(authApi.setupTwoFactor).mockResolvedValue({ secret: 'SECRET123', enabled: false, otpauth_url: 'otpauth://totp/PDL' })
+  vi.mocked(authApi.setupTwoFactor).mockResolvedValue({ secret: 'SECRET123', enabled: false, otpauth_url: 'otpauth://totp/PDL', qr_code_base64: 'iVBORw0KGgo' })
   vi.mocked(authApi.confirmTwoFactor).mockResolvedValue({ enabled: true, recovery_codes: ['AAAA-BBBB', 'CCCC-DDDD'] })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
@@ -106,6 +106,15 @@ it.each([false, true])('confirma 2FA com código; erro=%s', async fail => {
   const user = mount()
   await user.click(screen.getByRole('button', { name: 'Ativar 2FA' }))
   expect(await screen.findByText('SECRET123')).toBeVisible()
+  const setup = screen.getByText('SECRET123').closest('.security-2fa-setup')
+  expect(setup).toBeTruthy()
+  expect(setup?.querySelector('.security-2fa-qr')).toBeTruthy()
+  expect(setup?.querySelector('.security-2fa-manual')).toContainElement(screen.getByText('SECRET123'))
+  expect(screen.getByRole('img', { name: 'QR Code do autenticador' })).toHaveAttribute(
+    'src',
+    'data:image/png;base64,iVBORw0KGgo',
+  )
+  expect(screen.getByRole('link', { name: 'Abrir no aplicativo autenticador' })).toHaveAttribute('href', 'otpauth://totp/PDL')
   await user.type(screen.getByRole('textbox', { name: 'Código do autenticador ou de recuperação' }), '123456')
   await user.click(screen.getByRole('button', { name: 'Confirmar ativação' }))
   expect(authApi.confirmTwoFactor).toHaveBeenCalledWith('123456')
@@ -116,6 +125,7 @@ it.each([false, true])('confirma 2FA com código; erro=%s', async fail => {
   } else {
     expect(session.refreshUser).toHaveBeenCalledTimes(1)
     expect(screen.queryByText('SECRET123')).not.toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: 'QR Code do autenticador' })).not.toBeInTheDocument()
     expect(screen.getByText('AAAA-BBBB')).toBeVisible()
     expect(screen.getByText('CCCC-DDDD')).toBeVisible()
     expect(screen.getByRole('button', { name: 'Copiar códigos' })).toBeVisible()
@@ -167,8 +177,16 @@ it('lista sessões e encerra outra sem sair da conta', async () => {
   vi.mocked(authApi.revokeSession).mockResolvedValue({ ok: true, current: false })
   const user = mount()
   expect(await screen.findByRole('heading', { name: 'Sessões abertas' })).toBeVisible()
+  expect(screen.getByText(/Cada linha é um acesso ativo/)).toBeVisible()
   expect(await screen.findByText('Este navegador')).toBeVisible()
-  expect(screen.getByText('Outra sessão')).toBeVisible()
+  expect(screen.getByText('Atual')).toBeVisible()
+  expect(screen.getByText('Outro dispositivo')).toBeVisible()
+  expect(screen.getByText('Remota')).toBeVisible()
+  expect(screen.getByText(/Encerrar aqui sai da conta neste navegador/)).toBeVisible()
+  expect(screen.getByText(/Encerrar não te tira desta tela/)).toBeVisible()
+  const rows = document.querySelectorAll('.security-session-list article')
+  expect(rows[0]).toHaveClass('is-current')
+  expect(rows[0]).toHaveTextContent('Este navegador')
   await user.click(screen.getByTitle('Encerrar sessão'))
   expect(authApi.revokeSession).toHaveBeenCalledWith('other')
   expect(session.logout).not.toHaveBeenCalled()
@@ -203,6 +221,7 @@ it('traduz títulos, sessões e avisos de 2FA no idioma ativo', async () => {
   expect(screen.getByText('Loading sessions...')).toBeVisible()
   expect(screen.getByRole('heading', { name: 'Open sessions' })).toBeVisible()
   expect(await screen.findByText('This browser')).toBeVisible()
+  expect(screen.getByText('Current')).toBeVisible()
   expect(screen.getByTitle('End session')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Resend verification' }))
   expect(toast.success).toHaveBeenCalledWith('Your e-mail is already verified.')

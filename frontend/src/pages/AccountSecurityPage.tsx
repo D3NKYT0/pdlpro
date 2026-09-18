@@ -28,6 +28,8 @@ export function AccountSecurityPage() {
   const passkeys = useQuery({ queryKey: ['passkeys'], queryFn: authApi.passkeys })
   const sessions = useQuery({ queryKey: ['auth-sessions'], queryFn: authApi.sessions })
   const [secret, setSecret] = useState('')
+  const [otpauthUrl, setOtpauthUrl] = useState('')
+  const [qrCode, setQrCode] = useState('')
   const [recoveryCodes, setRecoveryCodes] = useState<string[]>([])
   const [code, setCode] = useState('')
   const [nickname, setNickname] = useState(() => t('security.defaultDeviceName'))
@@ -42,6 +44,7 @@ export function AccountSecurityPage() {
   const discordConnected = capabilities.data?.connected_providers?.includes('discord') ?? false
   const activeSessions = sessions.data ?? []
   const otherSessions = activeSessions.filter((row) => !row.current)
+  const orderedSessions = [...activeSessions].sort((left, right) => Number(right.current) - Number(left.current))
 
   async function requestVerification() {
     setBusy('email')
@@ -58,6 +61,8 @@ export function AccountSecurityPage() {
     try {
       const result = await authApi.setupTwoFactor()
       setSecret(result.secret)
+      setOtpauthUrl(result.otpauth_url)
+      setQrCode(result.qr_code_base64)
       toast.success(t('security.twoFactorStarted'))
     } catch (error) {
       toast.error(apiErrorMessage(error, t('security.twoFactorStartError')))
@@ -77,6 +82,8 @@ export function AccountSecurityPage() {
       }
       setCode('')
       setSecret('')
+      setOtpauthUrl('')
+      setQrCode('')
       await refreshUser()
       toast.success(user?.is_2fa_enabled ? t('security.twoFactorDisabled') : t('security.twoFactorEnabled'))
     } catch (error) {
@@ -214,24 +221,30 @@ export function AccountSecurityPage() {
             </div>
             <b className={activeSessions.length ? 'is-on' : 'is-off'}>{activeSessions.length}</b>
           </header>
-          <p className="muted">{t('security.sessionsHint')}</p>
-          {otherSessions.length ? (
-            <Button type="button" className="ghost" disabled={busy === 'sessions-others'} onClick={() => void revokeOthers()}>
-              <LogOut /> {t('security.revokeOthers')}
-            </Button>
-          ) : null}
-          <div className="security-passkey-list">
-            {activeSessions.map((row) => (
-              <article key={row.id}>
+          <div className="security-sessions-intro">
+            <p className="muted">{t('security.sessionsHint')}</p>
+            {otherSessions.length ? (
+              <Button type="button" className="ghost" disabled={busy === 'sessions-others'} onClick={() => void revokeOthers()}>
+                <LogOut /> {t('security.revokeOthers')}
+              </Button>
+            ) : null}
+          </div>
+          <div className="security-session-list">
+            {orderedSessions.map((row) => (
+              <article key={row.id} className={row.current ? 'is-current' : undefined}>
                 <MonitorSmartphone />
                 <span>
-                  <strong>{row.current ? t('security.thisBrowser') : t('security.otherSession')}</strong>
+                  <strong>
+                    {row.current ? t('security.thisBrowser') : t('security.otherSession')}
+                    <b className={row.current ? 'is-on' : 'is-off'}>{row.current ? t('security.sessionCurrent') : t('security.sessionOther')}</b>
+                  </strong>
                   <small>
                     {t('security.sessionWhen', {
                       created: formatSessionWhen(row.created_at, t('security.unknownDate')),
                       expires: formatSessionWhen(row.expires_at, t('security.unknownDate')),
                     })}
                   </small>
+                  <small>{row.current ? t('security.sessionCurrentHint') : t('security.sessionOtherHint')}</small>
                 </span>
                 <button
                   type="button"
@@ -258,7 +271,29 @@ export function AccountSecurityPage() {
           <Card className="security-card">
             <header><span><KeyRound /></span><div><h2>{t('security.twoFactorTitle')}</h2><p>{t('security.twoFactorSubtitle')}</p></div><b className={user?.is_2fa_enabled ? 'is-on' : 'is-off'}>{user?.is_2fa_enabled ? t('security.active') : t('security.inactive')}</b></header>
             {!user?.is_2fa_enabled && !secret ? <Button type="submit" className="security-2fa-start" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> {t('security.enableTwoFactor')}</Button> : null}
-            {secret ? <div className="security-secret"><span>{t('security.secretLabel')}</span><strong>{secret}</strong><small>{t('security.secretHint')}</small></div> : null}
+            {secret ? (
+              <div className="security-secret security-2fa-setup">
+                {qrCode ? (
+                  <img
+                    className="security-2fa-qr"
+                    alt={t('security.qrAlt')}
+                    src={`data:image/png;base64,${qrCode}`}
+                    width={180}
+                    height={180}
+                  />
+                ) : null}
+                <div className="security-2fa-manual">
+                  <span>{t('security.secretLabel')}</span>
+                  <strong>{secret}</strong>
+                  <small>{t('security.secretHint')}</small>
+                  {otpauthUrl ? (
+                    <a className="security-otpauth-link" href={otpauthUrl}>
+                      {t('security.openAuthenticator')}
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
             {recoveryCodes.length ? (
               <div className="security-secret security-recovery-codes">
                 <span>{t('security.recoveryTitle')}</span>

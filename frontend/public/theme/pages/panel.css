@@ -13961,16 +13961,26 @@ html.pdl-panel .security-hero p { margin: 4px 0 0; }
 html.pdl-panel .security-grid { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.85fr); gap: 18px; align-items: start; }
 html.pdl-panel .security-side { display: grid; gap: 14px; align-content: start; }
 html.pdl-panel .security-card { display: grid; gap: 12px; }
-html.pdl-panel .security-sessions { align-self: stretch; }
-html.pdl-panel .security-sessions .security-passkey-list { gap: 14px; }
-html.pdl-panel .security-sessions .security-passkey-list article { padding: 14px 14px; }
+html.pdl-panel .security-sessions { align-self: stretch; align-content: start; gap: 14px; }
+html.pdl-panel .security-sessions-intro { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; gap: 10px 16px; }
+html.pdl-panel .security-sessions-intro > p { margin: 0; }
+html.pdl-panel .security-session-list { display: grid; gap: 8px; }
+html.pdl-panel .security-session-list article { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(218,174,81,.14); background: rgba(218,174,81,.035); }
+html.pdl-panel .security-session-list article.is-current { border-color: rgba(111,191,115,.28); background: rgba(111,191,115,.06); }
+html.pdl-panel .security-session-list article > svg { width: 21px; color: #d9ae59; }
+html.pdl-panel .security-session-list article span { display: grid; gap: 3px; min-width: 0; }
+html.pdl-panel .security-session-list article strong { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+html.pdl-panel .security-session-list article small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-session-list article button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #cf7a6d; background: transparent; border: 1px solid rgba(207,122,109,.25); cursor: pointer; }
+html.pdl-panel .security-session-list article button svg { width: 15px; }
 html.pdl-panel .security-card > header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; }
 html.pdl-panel .security-card > header > span { width: 42px; height: 42px; display: grid; place-items: center; color: #e1bd70; border: 1px solid rgba(218,174,81,.24); background: rgba(218,174,81,.07); }
 html.pdl-panel .security-card > header > span svg { width: 20px; height: 20px; }
 html.pdl-panel .security-card h2 { margin: 0; font-size: 20px; }
 html.pdl-panel .security-card header p { margin: 2px 0 0; color: rgba(239,224,194,.52); font-size: 12px; }
 html.pdl-panel .security-card header > b,
-html.pdl-panel .security-provider > b:last-child { padding: 5px 9px; border-radius: 999px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+html.pdl-panel .security-provider > b:last-child,
+html.pdl-panel .security-session-list article strong > b { padding: 5px 9px; border-radius: 999px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 html.pdl-panel .security-card .is-on { color: #8fd19e; border: 1px solid rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
 html.pdl-panel .security-card .is-off { color: #d6a767; border: 1px solid rgba(214,167,103,.3); background: rgba(214,167,103,.08); }
 html.pdl-panel .security-email { gap: 10px; }
@@ -13981,6 +13991,11 @@ html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border
 html.pdl-panel .security-secret span { color: rgba(239,224,194,.56); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
 html.pdl-panel .security-secret strong { color: #f0d28c; font-family: monospace; overflow-wrap: anywhere; }
 html.pdl-panel .security-secret small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-2fa-setup { grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 14px 18px; }
+html.pdl-panel .security-2fa-setup:not(:has(.security-2fa-qr)) { grid-template-columns: minmax(0,1fr); }
+html.pdl-panel .security-2fa-qr { width: 180px; height: 180px; padding: 8px; background: #fff; }
+html.pdl-panel .security-2fa-manual { display: grid; gap: 6px; align-content: center; min-width: 0; }
+html.pdl-panel .security-otpauth-link { color: var(--panel-accent, #e1bd70); font-size: 13px; width: fit-content; }
 html.pdl-panel .security-recovery-codes ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 4px; }
 html.pdl-panel .security-recovery-codes li { color: var(--panel-text, #efe0c2); }
 html.pdl-panel .security-inline-form { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
@@ -14015,6 +14030,8 @@ html.pdl-panel .security-provider small { color: rgba(239,224,194,.48); }
   html.pdl-panel .security-card > header > b { grid-column: 2; justify-self: start; }
   html.pdl-panel .security-inline-form,
   html.pdl-panel .security-add-passkey { grid-template-columns: 1fr; }
+  html.pdl-panel .security-sessions-intro,
+  html.pdl-panel .security-2fa-setup { grid-template-columns: 1fr; }
   html.pdl-panel .security-provider { grid-template-columns: 30px 1fr; }
   html.pdl-panel .security-provider > :last-child { grid-column: 2; justify-self: start; }
   html.pdl-panel .security-lgpd-delete-row { grid-template-columns: 1fr; }

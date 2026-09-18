@@ -79,7 +79,7 @@ Login, cadastro, conclusão de 2FA, passkey e OAuth devolvem somente os dados fu
 operação. Access e refresh tokens não são incluídos no JSON: permanecem exclusivamente nos
 cookies `HttpOnly`. O refresh bem-sucedido responde `{"ok": true}` e substitui os cookies.
 
-Quando 2FA está habilitado, o login retorna um desafio; conclua-o em `POST /api/v1/auth/2fa/verify/` com o código do autenticador ou um código de recuperação de uso único antes de considerar a sessão autenticada. A confirmação da ativação (`POST /api/v1/shared/me/2fa/` com `action=confirm`) devolve `recovery_codes` **somente nessa resposta**.
+Quando 2FA está habilitado, o login retorna um desafio; conclua-o em `POST /api/v1/auth/2fa/verify/` com o código do autenticador ou um código de recuperação de uso único antes de considerar a sessão autenticada. O início da ativação (`POST /api/v1/shared/me/2fa/` com `action=setup`) devolve `secret`, `otpauth_url` e `qr_code_base64` (PNG) para o painel mostrar o QR; a confirmação (`action=confirm`) devolve `recovery_codes` **somente nessa resposta**.
 
 ## CSRF
 

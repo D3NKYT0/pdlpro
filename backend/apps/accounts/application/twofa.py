@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import base64
+import io
 from dataclasses import dataclass
 from uuid import UUID
 
 import pyotp
+import qrcode
 from django.core import signing
 
 from apps.accounts.application.recovery_codes import generate_recovery_codes
@@ -38,6 +41,14 @@ def _verify(secret: str, code: str) -> bool:
     return pyotp.TOTP(secret).verify(code.strip(), valid_window=1)
 
 
+def provisioning_qr_png(otpauth_url: str) -> str:
+    """Gera o PNG Base64 da URI TOTP para o autenticador escanear no painel."""
+    image = qrcode.make(otpauth_url)
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    return base64.b64encode(buffer.getvalue()).decode("ascii")
+
+
 def _accept_second_factor(
     state,
     code: str,
@@ -49,7 +60,7 @@ def _accept_second_factor(
 
 
 class SetupTwoFactorUseCase(UseCase[UUID, dict]):
-    """Gera e salva um segredo TOTP e retorna a URI de provisionamento. O 2FA só é ativado depois
+    """Gera e salva um segredo TOTP e devolve URI, QR em PNG e a chave. O 2FA só é ativado depois
     da confirmação do código.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``UUID``. O retorno é ``dict``.
@@ -67,7 +78,12 @@ class SetupTwoFactorUseCase(UseCase[UUID, dict]):
         secret = pyotp.random_base32()
         self._users.set_totp_secret(data, secret)
         uri = pyotp.TOTP(secret).provisioning_uri(name=state.username, issuer_name="PDL PRO")
-        return {"secret": secret, "otpauth_url": uri, "enabled": False}
+        return {
+            "secret": secret,
+            "otpauth_url": uri,
+            "qr_code_base64": provisioning_qr_png(uri),
+            "enabled": False,
+        }
 
 
 @dataclass(frozen=True, slots=True)

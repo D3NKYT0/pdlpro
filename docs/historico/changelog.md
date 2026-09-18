@@ -33,6 +33,11 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
   se estiverem ausentes ou fracas, sem reescrever chaves já fortes ao rotacionar a
   `SECRET_KEY`.
 
+### Corrigido
+
+- A ativação do 2FA em Conta e segurança mostra o QR Code do autenticador (PNG da URI
+  `otpauth`) além da chave manual.
+
 ## [2.5.1] - 2026-09-17
 
 Correções de concorrência, CSP, sessão JWT, OpenAPI e carga da vitrine de

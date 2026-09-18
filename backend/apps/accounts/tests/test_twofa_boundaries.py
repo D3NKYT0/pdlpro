@@ -1,4 +1,5 @@
 """Segundo fator: expiração, assinatura e desativação entre as etapas do login."""
+import base64
 from uuid import uuid4
 
 import pyotp
@@ -15,6 +16,7 @@ from apps.accounts.application.twofa import (
     DisableTwoFactorUseCase,
     SetupTwoFactorUseCase,
     make_login_challenge,
+    provisioning_qr_png,
     read_login_challenge,
 )
 from apps.accounts.domain.exceptions import InvalidTwoFactorError
@@ -46,6 +48,13 @@ def test_malformed_signed_payload_is_domain_error(payload):
         read_login_challenge(signing.dumps(payload, salt=TWOFA_SALT))
 
 
+def test_provisioning_qr_png_encodes_otpauth_uri():
+    uri = "otpauth://totp/PDL%20PRO:hero?secret=JBSWY3DPEHPK3PXP&issuer=PDL%20PRO"
+    png = base64.b64decode(provisioning_qr_png(uri))
+    assert png.startswith(b"\x89PNG")
+    assert len(png) > 200
+
+
 @pytest.mark.django_db
 def test_setup_confirm_disable_lifecycle():
     scope = DependencyInjection.root().create_scope()
@@ -59,6 +68,10 @@ def test_setup_confirm_disable_lifecycle():
     assert user.totp_secret
     assert user.totp_secret != setup["secret"]
     assert users.get_totp_state(user.id).totp_secret == setup["secret"]
+    assert setup["otpauth_url"].startswith("otpauth://totp/")
+    assert setup["secret"] in setup["otpauth_url"]
+    qr_png = base64.b64decode(setup["qr_code_base64"])
+    assert qr_png.startswith(b"\x89PNG")
     code = pyotp.TOTP(setup["secret"]).now()
     confirmed = confirm.execute(ConfirmTwoFactorInput(user.id, code))
     assert confirmed["enabled"] is True

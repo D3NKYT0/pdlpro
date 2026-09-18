@@ -26,7 +26,7 @@ export const authApi = {
       body: JSON.stringify({ challenge, code }),
     }),
   setupTwoFactor: () =>
-    request<{ secret: string; otpauth_url: string; enabled: boolean }>('/shared/me/2fa/', {
+    request<{ secret: string; otpauth_url: string; qr_code_base64: string; enabled: boolean }>('/shared/me/2fa/', {
       method: 'POST',
       body: JSON.stringify({ action: 'setup' }),
     }),
