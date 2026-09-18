@@ -15,7 +15,7 @@ Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
 | Avisos, atendimento e ajuda | sino da barra superior, `/panel/help` (Atendimento só pela Ajuda) | `/panel/admin/notifications`, `/panel/admin/support` |
 | Conteúdo público do site | Rankings, lojas do jogo, notícias, wiki, FAQ, downloads, calendário | `/panel/admin/news`, `/panel/admin/wiki`, `/panel/admin/faq`, `/panel/admin/downloads`, `/panel/admin/calendar` (notícias, calendário, FAQ, wiki e roadmap em PT/EN/ES) |
 | Carteira ↔ jogo | `/panel/wallet/game` | Configuração da moeda + integração Lineage |
-| Pacotes, cupons, bônus e histórico | `/panel/shop` | Itens e pacotes em `/panel/admin/shop` (com **Preencher catálogo low grade**); cupons em `/panel/admin/commerce` |
+| Pacotes, cupons, bônus e histórico | `/panel/shop` (hall, vitrine, carrinho e recibos clicáveis do histórico com arte `--theme-art-shop-*`) | Itens e pacotes em `/panel/admin/shop` (com **Preencher catálogo low grade**); cupons em `/panel/admin/commerce` |
 | Passe, bônus diário, caça do dia e rankings | `/panel/rewards` | `/panel/admin/rewards` (missões da caça em `hunt-quests`; **Preencher passe low rate** cria 30 níveis livres e premium, missões, trocas e marcos) |
 | Lojas offline do jogo | `/stores` | Consulta somente leitura; SQL opcional por dialeto |
 | Minigames (roleta, baús, dados, pesca, arena) | `/panel/games` | `/panel/admin/games` (ligar/desligar, **Configurar** por jogo e **Configurar todos**) |

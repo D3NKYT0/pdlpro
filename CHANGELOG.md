@@ -4,7 +4,7 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 
 Última atualização: **18 de setembro de 2026** — Não publicado: cifra em repouso
 (TOTP, códigos de recuperação 2FA, LGPD), QR na ativação do 2FA, hall do painel
-e perfil, dumps AES-256, webhooks enxutos e TLS opcional no MySQL do Lineage.
+e perfil, mercado da loja, dumps AES-256, webhooks enxutos e TLS opcional no MySQL do Lineage.
 Publicado: **[2.5.1]** —
 concorrência no marketplace, leilão e resgates; CSP sem `script-src` inline
 na SPA/API; cookie de acesso alinhado ao JWT; OpenAPI privado em produção;

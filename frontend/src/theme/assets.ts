@@ -80,6 +80,9 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-games-rod-8',
   '--theme-art-games-rod-9',
   '--theme-art-games-rod-10',
+  '--theme-art-shop-hall',
+  '--theme-art-shop-crate',
+  '--theme-art-shop-coins',
 ] as const
 
 const GAME_ART = {
@@ -141,6 +144,12 @@ const GAME_ART = {
   '--theme-art-games-rod-8': 'games/rod-8.webp',
   '--theme-art-games-rod-9': 'games/rod-9.webp',
   '--theme-art-games-rod-10': 'games/rod-10.webp',
+} as const
+
+const SHOP_ART = {
+  '--theme-art-shop-hall': 'shop/hall.png',
+  '--theme-art-shop-crate': 'shop/crate.png',
+  '--theme-art-shop-coins': 'shop/coins.png',
 } as const
 
 const DENSITY_PRESETS = {
@@ -212,7 +221,7 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   style.setProperty('--theme-art-bg-2', cssUrl(themeImage('bg/2.jpg')))
   style.setProperty('--theme-art-bg-3', cssUrl(themeImage('bg/3.jpg')))
   style.setProperty('--theme-art-bg-4', cssUrl(themeImage('bg/4.jpg')))
-  for (const [key, path] of Object.entries(GAME_ART)) {
+  for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART })) {
     style.setProperty(key, cssUrl(themeImage(path)))
   }
 

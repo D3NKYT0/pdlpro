@@ -106,3 +106,14 @@ it('publica as sprites da pescaria no tema', () => {
     'games/rod-10.webp',
   )
 })
+it('publica a arte da loja no tema', () => {
+  applyThemeSurfaceVars()
+  expect(document.documentElement.style.getPropertyValue('--theme-art-shop-hall')).toContain('shop/hall.png')
+  expect(document.documentElement.style.getPropertyValue('--theme-art-shop-crate')).toContain('shop/crate.png')
+  expect(document.documentElement.style.getPropertyValue('--theme-art-shop-coins')).toContain('shop/coins.png')
+})
+it('remapeia arte da loja pelo mapa de assets do pacote', () => {
+  configureRuntimeTheme({ 'images/shop/hall.png': '/media/themes/demo/bazaar.png' })
+  applyThemeSurfaceVars()
+  expect(document.documentElement.style.getPropertyValue('--theme-art-shop-hall')).toContain('bazaar.png')
+})

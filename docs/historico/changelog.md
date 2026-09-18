@@ -36,6 +36,10 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
   e proteção, além do progresso e das conquistas.
 - `/panel/profile` coloca identidade, recado e números da jornada sobre a capa, com
   atalho para segurança.
+- `/panel/shop` vira o mercado do painel: hall com arte própria, vitrine animada,
+  carrinho e tokens `--theme-art-shop-*` remapeáveis pelo tema. No cartão, a arte
+  fica só no banner; ícone, texto e botão seguem lado a lado. O histórico vira
+  recibos com selo e total; o clique abre o detalhe da compra.
 
 ### Corrigido
 

@@ -142,7 +142,10 @@ que cresce do aço ao glow santo) e aceita textura opcional em
 (junco no 1 até a divina no 10; nível 11+ reusa a arte 10).
 A Mesa da Taverna aceita textura opcional em
 `--theme-art-games-chance-felt` e `--theme-art-games-chance-cabinet` (o default
-desenha feltro e gabinete só com tokens). O script `frontend/scripts/paint-box-chests.py` regenera os baús
+desenha feltro e gabinete só com tokens). A loja do painel usa
+`images/shop/hall.png`, `images/shop/crate.png` e `images/shop/coins.png`
+(`--theme-art-shop-hall`, `--theme-art-shop-crate`, `--theme-art-shop-coins`)
+no hall, nos pacotes e no carrinho. O script `frontend/scripts/paint-box-chests.py` regenera os baús
 fechados, entreabertos e abertos. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
