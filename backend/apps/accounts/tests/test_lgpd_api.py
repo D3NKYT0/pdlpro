@@ -44,7 +44,11 @@ def test_export_data_creates_package_and_emails_link(api, user, settings, tmp_pa
 
     export = DataExportLog.objects.get(user=user)
     with export.export_file.open("rb") as handle:
-        payload = json.loads(gzip.decompress(handle.read()).decode("utf-8"))
+        stored = handle.read()
+    assert not stored.startswith(b"\x1f\x8b")
+    from common.crypto import field_cipher_from_settings
+
+    payload = json.loads(gzip.decompress(field_cipher_from_settings().unseal_bytes(stored)).decode("utf-8"))
     assert payload["user"]["email"] == "lgpdhero@pdl.dev"
     assert payload["user"]["username"] == "lgpdhero"
 
@@ -90,6 +94,8 @@ def test_export_download_serves_signed_file(api, settings, tmp_path):
     download = APIClient().get(path)
     assert download.status_code == 200
     assert "gzip" in download["Content-Type"]
+    payload = json.loads(gzip.decompress(download.content).decode("utf-8"))
+    assert payload["user"]["username"] == "lgpddl"
 
 
 @pytest.mark.django_db

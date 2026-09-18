@@ -49,7 +49,8 @@ class UserAdmin(PDLModelAdmin):
                 "fields": ("is_email_verified", "is_2fa_enabled", "last_login"),
                 "description": _(
                     "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em "
-                    "dois fatores apaga o segredo e o usuário precisa cadastrá-la novamente."
+                    "dois fatores apaga o segredo e os códigos de recuperação; o usuário "
+                    "precisa cadastrar o 2FA novamente."
                 ),
             },
         ),

@@ -156,12 +156,29 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         row.save(update_fields=fields)
         return self.to_entity(row)
 
+    def _scrub_payment_secrets(self, row: PedidoPagamento) -> list[str]:
+        """Remove ``client_secret`` e códigos PIX/boleto após o pedido encerrar."""
+
+        fields = ["client_secret"]
+        row.client_secret = ""
+        gateway_data = dict(row.gateway_data or {})
+        removed = False
+        for key in ("pix_qr_code", "pix_qr_code_base64", "boleto_barcode"):
+            if key in gateway_data:
+                gateway_data.pop(key, None)
+                removed = True
+        if removed:
+            row.gateway_data = gateway_data
+            fields.append("gateway_data")
+        return fields
+
     def mark_cancelled(self, order_id: UUID) -> PaymentOrderEntity:
         row = PedidoPagamento.objects.select_related("user").select_for_update(of=("self",)).get(id=order_id)
         if row.status not in {"pending", "processing"}:
             return self.to_entity(row)
         row.status = PedidoPagamento.Status.CANCELLED
-        row.save(update_fields=["status", "updated_at"])
+        fields = ["status", "updated_at", *self._scrub_payment_secrets(row)]
+        row.save(update_fields=fields)
         return self.to_entity(row)
 
     def mark_failed(self, order_id: UUID) -> PaymentOrderEntity:
@@ -169,7 +186,8 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         if row.status not in {"pending", "processing"}:
             return self.to_entity(row)
         row.status = PedidoPagamento.Status.FAILED
-        row.save(update_fields=["status", "updated_at"])
+        fields = ["status", "updated_at", *self._scrub_payment_secrets(row)]
+        row.save(update_fields=fields)
         return self.to_entity(row)
 
     def mark_confirmed(self, order_id: UUID, *, bonus_applied: Decimal, total_credited: Decimal) -> PaymentOrderEntity:
@@ -178,5 +196,13 @@ class DjangoPaymentOrderRepository(IPaymentOrderRepository):
         row.bonus_applied = bonus_applied
         row.total_credited = total_credited
         row.paid_at = timezone.now()
-        row.save(update_fields=["status", "bonus_applied", "total_credited", "paid_at", "updated_at"])
+        fields = [
+            "status",
+            "bonus_applied",
+            "total_credited",
+            "paid_at",
+            "updated_at",
+            *self._scrub_payment_secrets(row),
+        ]
+        row.save(update_fields=fields)
         return self.to_entity(row)

@@ -365,7 +365,16 @@ def test_install_ps1_dry_run_and_production_script_contract(tmp_path: Path):
         "DB_PASSWORD",
         "WEBAUTHN_RP_ID",
         "PAYMENT_ALLOW_MOCK",
+        "PDL_DATA_ENCRYPTION_KEY",
+        "BACKUP_ENCRYPTION_KEY",
     ):
         assert f"'{key}'" in configure
     assert "-Yes" in configure
     assert "[Console]" not in configure
+
+    backup = (REPO_ROOT / "scripts" / "backup.sh").read_text(encoding="utf-8")
+    restore = (REPO_ROOT / "scripts" / "restore.sh").read_text(encoding="utf-8")
+    assert "aes-256-cbc" in backup
+    assert "BACKUP_ENCRYPTION_KEY" in backup
+    assert ".dump.enc" in restore
+    assert "aes-256-cbc" in restore

@@ -98,6 +98,10 @@ Tambem e possivel rotacionar apenas um segredo:
 ./setup.sh configure-production --rotate-db-password
 ```
 
+`PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem vazias
+ou fracas. `--rotate-secret-key` e `--rotate-secrets` **não** as trocam: rotacionar a
+Fernet sem regravar TOTP, códigos de recuperação e pacotes LGPD impede a leitura.
+
 Em uma instalacao existente, a rotacao atualiza o role PostgreSQL, grava o novo
 `.env` e recria os servicos dependentes. Se alguma etapa falhar, o comando tenta
 restaurar tanto a senha anterior do banco quanto o arquivo de configuracao.

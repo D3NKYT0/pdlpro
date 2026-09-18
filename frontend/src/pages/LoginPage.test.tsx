@@ -91,11 +91,21 @@ it('pede o segundo fator antes de abrir a área privada', async () => {
   session.verifyTwoFactor.mockResolvedValue(undefined)
   const user = mount()
   await fill(user)
-  await user.type(await screen.findByLabelText('Código do autenticador'), '123456')
+  await user.type(await screen.findByLabelText('Código do autenticador ou de recuperação'), '123456')
   expect(screen.queryByRole('heading', { name: '/panel' })).toBeNull()
   await user.click(screen.getByRole('button', { name: 'Confirmar' }))
   expect(session.verifyTwoFactor).toHaveBeenCalledWith('signed', '123456')
   expect(await screen.findByRole('heading', { name: '/panel' })).toBeTruthy()
+})
+
+it('aceita código de recuperação no desafio 2FA', async () => {
+  session.login.mockResolvedValue({ requires_2fa: true, challenge: 'signed' })
+  session.verifyTwoFactor.mockResolvedValue(undefined)
+  const user = mount()
+  await fill(user)
+  await user.type(await screen.findByLabelText('Código do autenticador ou de recuperação'), 'AAAA-BBBB')
+  await user.click(screen.getByRole('button', { name: 'Confirmar' }))
+  expect(session.verifyTwoFactor).toHaveBeenCalledWith('signed', 'AAAA-BBBB')
 })
 
 it('mostra erro da API e envia CAPTCHA quando solicitado', async () => {

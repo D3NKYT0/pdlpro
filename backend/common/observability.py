@@ -23,6 +23,10 @@ _SENSITIVE_KEYS = frozenset(
         "secret",
         "set_cookie",
         "token",
+        "totp",
+        "recovery",
+        "pdl_data_encryption_key",
+        "backup_encryption_key",
     }
 )
 

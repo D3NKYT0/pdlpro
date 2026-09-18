@@ -111,7 +111,7 @@ da ativação de outra versão ou do default. Veja [Temas instaláveis](../funci
 
 ## Jogo e pagamentos
 
-Para desenvolver sem MySQL, use `LINEAGE_DB_ENABLED=false`. Para uma integração real, confirme o dialeto e o schema antes de escritas. Falhas de prontidão do câmbio podem indicar ausência de recibos ou tabelas sem InnoDB; siga [a preparação específica](../integracoes/cambio-painel-jogo.md).
+Para desenvolver sem MySQL, use `LINEAGE_DB_ENABLED=false`. Para uma integração real, confirme o dialeto e o schema antes de escritas. Se o host do MySQL não for a própria máquina do painel, ligue TLS (`LINEAGE_DB_SSL=true`) conforme [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md). Falhas de prontidão do câmbio podem indicar ausência de recibos ou tabelas sem InnoDB; siga [a preparação específica](../integracoes/cambio-painel-jogo.md).
 
 Uma queda de conexão pode ocorrer depois de o jogo ou o provedor confirmar uma operação. Não altere status nem estorne manualmente antes da conciliação. Em webhooks, confira URL pública, segredo, headers e assinatura; não desative a validação para fazer um teste passar.
 

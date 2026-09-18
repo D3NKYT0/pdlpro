@@ -1,4 +1,5 @@
 from common.architecture.base import UnitOfWork
+from common.crypto import IFieldCipher, field_cipher_from_settings
 from common.di.container import Container
 from common.di.lifetime import Lifetime
 from common.di.provider import AppProvider
@@ -15,5 +16,6 @@ class CommonProvider(AppProvider):
     """
 
     def register(self, container: Container) -> None:
+        container.register(IFieldCipher, factory=field_cipher_from_settings, lifetime=Lifetime.SINGLETON)
         container.register(UnitOfWork, DjangoUnitOfWork, lifetime=Lifetime.SCOPED)
         container.register(IHookBus, instance=InProcessHookBus(), lifetime=Lifetime.SINGLETON)

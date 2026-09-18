@@ -66,7 +66,7 @@ Não mantenha estado específico de usuário em singletons.
 
 | App | Responsabilidade principal |
 |---|---|
-| `accounts` | Usuários, autenticação, e-mail, 2FA e progresso |
+| `accounts` | Usuários, autenticação, e-mail, 2FA (TOTP cifrado e códigos de recuperação) e progresso |
 | `server` | Status, contas, personagens, rankings e gateway Lineage |
 | `wallet` | Saldo, transferências e bônus de compra |
 | `shop` | Catálogo, carrinho e checkout |

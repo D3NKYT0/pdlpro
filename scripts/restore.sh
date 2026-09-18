@@ -12,10 +12,10 @@ Restaura um backup PostgreSQL criado pelo comando backup.
 Uso:
   ./setup.sh restore [--path ARQUIVO] [--force]
 
-Sem --path, usa o backup .dump mais recente de backups/db.
+Sem --path, usa o backup .dump.enc (ou .dump) mais recente de backups/db.
 
 Opções:
-  --path FILE  Arquivo .dump a restaurar.
+  --path FILE  Arquivo .dump.enc ou .dump a restaurar.
   --force      Não pede confirmação interativa.
   -h, --help   Exibe esta ajuda.
 EOF
@@ -48,8 +48,8 @@ require_docker
 ensure_env_file
 
 if [[ -z "$backup_path" ]]; then
-  backup_path="$(find "${ROOT_DIR}/backups/db" -maxdepth 1 -type f -name '*.dump' -print 2>/dev/null | LC_ALL=C sort | tail -n 1)"
-  [[ -n "$backup_path" ]] || die "nenhum backup .dump encontrado em ${ROOT_DIR}/backups/db"
+  backup_path="$(find "${ROOT_DIR}/backups/db" -maxdepth 1 -type f \( -name '*.dump.enc' -o -name '*.dump' \) -print 2>/dev/null | LC_ALL=C sort | tail -n 1)"
+  [[ -n "$backup_path" ]] || die "nenhum backup .dump.enc/.dump encontrado em ${ROOT_DIR}/backups/db"
 fi
 
 [[ -f "$backup_path" ]] || die "arquivo de backup não encontrado: $backup_path"
@@ -64,8 +64,30 @@ else
   warn "arquivo de checksum não encontrado: ${backup_path}.sha256"
 fi
 
+restore_source="$backup_path"
+decrypted_temp=""
+cleanup_decrypt() {
+  [[ -n "$decrypted_temp" ]] && rm -f -- "$decrypted_temp"
+  decrypted_temp=""
+}
+
+if [[ "$backup_path" == *.enc ]] || { [[ -f "$backup_path" ]] && [[ "$(head -c 8 "$backup_path" 2>/dev/null || true)" == "Salted__" ]]; }; then
+  backup_encryption_key="$(read_env_value BACKUP_ENCRYPTION_KEY)"
+  [[ -n "$backup_encryption_key" ]] || die "BACKUP_ENCRYPTION_KEY é necessária para decifrar $backup_path"
+  command -v openssl >/dev/null 2>&1 || die "openssl é necessário para decifrar o backup"
+  decrypted_temp="$(mktemp)"
+  BACKUP_ENCRYPTION_KEY="$backup_encryption_key"
+  export BACKUP_ENCRYPTION_KEY
+  openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
+    -in "$backup_path" -out "$decrypted_temp" \
+    -pass env:BACKUP_ENCRYPTION_KEY
+  unset BACKUP_ENCRYPTION_KEY backup_encryption_key
+  restore_source="$decrypted_temp"
+  info "Backup cifrado decifrado para restauração."
+fi
+
 ensure_database_running
-operational_compose exec -T db sh -c 'exec pg_restore --list' < "$backup_path" >/dev/null || die "arquivo de backup inválido"
+operational_compose exec -T db sh -c 'exec pg_restore --list' < "$restore_source" >/dev/null || die "arquivo de backup inválido"
 
 if [[ "$force" -ne 1 ]]; then
   if [[ ! -t 0 ]]; then
@@ -89,7 +111,11 @@ restart_services() {
     operational_compose up -d "${services_to_restart[@]}"
   fi
 }
-trap restart_services EXIT
+finish_restore() {
+  cleanup_decrypt
+  restart_services
+}
+trap finish_restore EXIT
 
 if [[ ${#services_to_restart[@]} -gt 0 ]]; then
   info "Pausando serviços da aplicação durante a restauração..."
@@ -97,8 +123,9 @@ if [[ ${#services_to_restart[@]} -gt 0 ]]; then
 fi
 
 info "Restaurando $backup_path..."
-operational_compose exec -T db sh -c 'exec pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --no-owner --no-privileges --exit-on-error' < "$backup_path"
+operational_compose exec -T db sh -c 'exec pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --no-owner --no-privileges --exit-on-error' < "$restore_source"
 
 restart_services
+cleanup_decrypt
 trap - EXIT
 success "Restauração concluída."

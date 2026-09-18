@@ -33,6 +33,7 @@ from apps.server.domain.services import SERVICE_QUERY_NAMES
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.lineage.crests import crest_to_png_base64
 from apps.server.infrastructure.lineage.item_catalog import item_display_name
+from apps.server.infrastructure.lineage_ssl import lineage_connect_args_from_settings
 from apps.server.infrastructure.null_gateway import SocketStatusProbe
 from apps.server.infrastructure.passwords import LineagePasswordHasher
 from apps.server.infrastructure.read_cache import GAME_STORES_TTL, cached_fetch
@@ -77,6 +78,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
                 pool_size=settings.LINEAGE_DB_POOL_SIZE,
                 max_overflow=settings.LINEAGE_DB_MAX_OVERFLOW,
                 pool_pre_ping=True,
+                connect_args=lineage_connect_args_from_settings(settings),
             )
         return self._engine
 

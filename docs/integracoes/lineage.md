@@ -26,6 +26,10 @@ LINEAGE_DB_ENABLED=true
 LINEAGE_QUERY_MODULE=lucerav2
 ```
 
+O transporte até o MySQL é escolhido no `.env`: `LINEAGE_DB_SSL=false` mantém o TCP
+atual (sem TLS); `LINEAGE_DB_SSL=true` cifra o canal. O guia com certificados, volume
+Docker e quando usar cada opção está em [TLS no MySQL do Lineage 2](lineage-mysql-ssl.md).
+
 Cada fork precisa de consultas compatíveis com suas tabelas e colunas. Não selecione
 um módulo apenas pelo nome da crônica: confirme o schema e teste primeiro com uma base
 de desenvolvimento.
@@ -70,7 +74,7 @@ antes de liberar cadastro/troca de senha, especialmente em bancos com hashes mis
 
 Teste primeiro em um schema de desenvolvimento com a mesma estrutura do servidor. O rollback do Django não desfaz chamadas SQLAlchemy ao jogo. Confirme o algoritmo de senhas, a fila de entrega e a propriedade dos personagens antes de liberar escritas. Para transferências de moedas, siga [o protocolo de câmbio](cambio-painel-jogo.md).
 
-Consulte também [as variáveis de conexão](../configuracao/ambiente.md), [o catálogo de itens](catalogo-de-itens.md) e [a observação de itens](../funcionalidades/observacao-de-itens.md).
+Consulte também [as variáveis de conexão](../configuracao/ambiente.md), [TLS no MySQL](lineage-mysql-ssl.md), [o catálogo de itens](catalogo-de-itens.md) e [a observação de itens](../funcionalidades/observacao-de-itens.md).
 
 ## Propriedade e serviços pagos
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib
 
 import pytest
+from cryptography.fernet import Fernet
 from django.core.exceptions import ImproperlyConfigured
 
 from core.settings.security import (
@@ -14,6 +15,7 @@ from core.settings.security import (
 )
 
 STRONG_KEY = "9f" * 40
+FERNET_KEY = Fernet.generate_key().decode()
 
 
 def test_strong_key_is_accepted_without_explanation():
@@ -51,6 +53,7 @@ def _load_production_settings():
 
 def test_importing_production_settings_fails_with_the_example_secret_key(monkeypatch):
     monkeypatch.setenv("SECRET_KEY", "django-insecure-change-me-in-production-right-now")
+    monkeypatch.setenv("PDL_DATA_ENCRYPTION_KEY", FERNET_KEY)
 
     with pytest.raises(ImproperlyConfigured):
         _load_production_settings()
@@ -58,6 +61,7 @@ def test_importing_production_settings_fails_with_the_example_secret_key(monkeyp
 
 def test_importing_production_settings_succeeds_with_a_strong_secret_key(monkeypatch):
     monkeypatch.setenv("SECRET_KEY", STRONG_KEY)
+    monkeypatch.setenv("PDL_DATA_ENCRYPTION_KEY", FERNET_KEY)
 
     production = _load_production_settings()
 
@@ -70,8 +74,18 @@ def test_importing_production_settings_succeeds_with_a_strong_secret_key(monkeyp
 
 def test_production_keeps_openapi_docs_private_even_when_env_enables_them(monkeypatch):
     monkeypatch.setenv("SECRET_KEY", STRONG_KEY)
+    monkeypatch.setenv("PDL_DATA_ENCRYPTION_KEY", FERNET_KEY)
     monkeypatch.setenv("OPENAPI_DOCS_PUBLIC", "true")
 
     production = _load_production_settings()
 
     assert production.OPENAPI_DOCS_PUBLIC is False
+
+
+def test_importing_production_settings_fails_without_data_encryption_key(monkeypatch):
+    monkeypatch.setenv("SECRET_KEY", STRONG_KEY)
+    monkeypatch.setenv("PDL_DATA_ENCRYPTION_KEY", "")
+
+    with pytest.raises(ImproperlyConfigured) as error:
+        _load_production_settings()
+    assert "PDL_DATA_ENCRYPTION_KEY" in str(error.value)

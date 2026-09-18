@@ -8,6 +8,31 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+Cifra em repouso, códigos de recuperação 2FA, dumps PostgreSQL cifrados, sanitização de
+webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de 2026**.
+
+### Adicionado
+
+- **Cifra em repouso** com Fernet (`PDL_DATA_ENCRYPTION_KEY`): segredo TOTP, códigos de
+  recuperação 2FA (HMAC-SHA256 + Fernet) e pacotes LGPD no disco. Produção recusa chave
+  vazia ou inválida; o configurador gera a chave sem rotacioná-la junto com `SECRET_KEY`.
+- **Códigos de recuperação** na ativação do 2FA: dez códigos `XXXX-XXXX` aparecem uma vez
+  na confirmação, valem no lugar do autenticador (login, painel e admin) e são consumidos
+  na primeira utilização.
+- **Dumps PostgreSQL cifrados** (`./setup.sh backup`): AES-256-CBC via openssl quando
+  `BACKUP_ENCRYPTION_KEY` está definida; produção exige a chave. A restauração aceita
+  `.dump.enc` ou `.dump`.
+- **TLS opcional no MySQL do Lineage** (`LINEAGE_DB_SSL`): o padrão continua sem SSL;
+  `true` cifra o canal. Guia em [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md).
+
+### Alterado
+
+- Logs de webhook de pagamento guardam só identificadores e status, sem PII nem
+  `client_secret`. Pedidos encerrados perdem `client_secret` e códigos PIX/boleto.
+- O configurador de produção preenche `PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY`
+  se estiverem ausentes ou fracas, sem reescrever chaves já fortes ao rotacionar a
+  `SECRET_KEY`.
+
 ## [2.5.1] - 2026-09-17
 
 Correções de concorrência, CSP, sessão JWT, OpenAPI e carga da vitrine de

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hmac
 from datetime import datetime
 from typing import Any
 from uuid import UUID
@@ -17,6 +18,7 @@ from rest_framework_simplejwt.token_blacklist.models import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from apps.accounts.application.recovery_codes import normalize_recovery_code
 from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import (
     SessionAuthenticationError,
@@ -26,6 +28,7 @@ from apps.accounts.domain.repositories import (
     IProgressRepository,
     ISessionStore,
     ISocialAccountRepository,
+    ITwoFactorRecoveryCodeRepository,
     IUserRepository,
     IWebAuthnCredentialRepository,
     SessionRecord,
@@ -37,10 +40,12 @@ from apps.accounts.infrastructure.models import (
     GamerProfile,
     RewardClaim,
     RewardDefinition,
+    TwoFactorRecoveryCode,
     UserAchievement,
     WebAuthnCredential,
 )
 from common.architecture.exceptions import ValidationDomainError
+from common.crypto import IFieldCipher
 
 User = get_user_model()
 
@@ -53,6 +58,9 @@ class DjangoUserRepository(IUserRepository):
     combinar alterações em uma operação de negócio, o chamador deve delimitar a transação com
     UnitOfWork.
     """
+
+    def __init__(self, cipher: IFieldCipher) -> None:
+        self._cipher = cipher
 
     def _to_entity(self, user) -> UserEntity:
         avatar_url = user.avatar.url if user.avatar else None
@@ -194,13 +202,13 @@ class DjangoUserRepository(IUserRepository):
             user_id=user.id,
             username=user.username,
             is_2fa_enabled=bool(user.is_2fa_enabled),
-            totp_secret=user.totp_secret or "",
+            totp_secret=self._cipher.unseal_text(user.totp_secret or ""),
             is_active=bool(user.is_active),
         )
 
     def set_totp_secret(self, user_id: UUID, secret: str) -> None:
         user = User.objects.get(id=user_id)
-        user.totp_secret = secret
+        user.totp_secret = self._cipher.seal_text(secret)
         user.save(update_fields=["totp_secret", "updated_at"])
 
     def enable_2fa(self, user_id: UUID) -> None:
@@ -256,6 +264,52 @@ class DjangoUserRepository(IUserRepository):
 
     def require_orm_user(self, user_id: UUID):
         return User.objects.get(id=user_id)
+
+
+class DjangoTwoFactorRecoveryCodeRepository(ITwoFactorRecoveryCodeRepository):
+    """Persiste hashes HMAC cifrados dos códigos de recuperação de 2FA."""
+
+    def __init__(self, cipher: IFieldCipher) -> None:
+        self._cipher = cipher
+
+    def _digest(self, plaintext: str) -> str:
+        return self._cipher.hmac_hex(normalize_recovery_code(plaintext))
+
+    def replace_codes(self, user_id: UUID, plaintext_codes: list[str]) -> None:
+        user = User.objects.get(id=user_id)
+        with transaction.atomic():
+            TwoFactorRecoveryCode.objects.filter(user=user).delete()
+            TwoFactorRecoveryCode.objects.bulk_create(
+                [
+                    TwoFactorRecoveryCode(
+                        user=user,
+                        code_cipher=self._cipher.seal_text(self._digest(code)),
+                    )
+                    for code in plaintext_codes
+                    if normalize_recovery_code(code)
+                ]
+            )
+
+    def consume(self, user_id: UUID, plaintext_code: str) -> bool:
+        offered = self._digest(plaintext_code)
+        if not offered or not normalize_recovery_code(plaintext_code):
+            return False
+        with transaction.atomic():
+            rows = list(
+                TwoFactorRecoveryCode.objects.select_for_update()
+                .filter(user__id=user_id, used_at__isnull=True)
+                .order_by("created_at")
+            )
+            for row in rows:
+                stored = self._cipher.unseal_text(row.code_cipher)
+                if stored and hmac.compare_digest(stored, offered):
+                    row.used_at = timezone.now()
+                    row.save(update_fields=["used_at", "updated_at"])
+                    return True
+        return False
+
+    def clear(self, user_id: UUID) -> None:
+        TwoFactorRecoveryCode.objects.filter(user__id=user_id).delete()
 
 
 class DjangoSocialAccountRepository(ISocialAccountRepository):

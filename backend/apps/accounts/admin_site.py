@@ -7,25 +7,28 @@ from django.utils.crypto import constant_time_compare, salted_hmac
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from apps.accounts.application.twofa import _verify
+from apps.accounts.infrastructure.two_factor import (
+    accept_admin_second_factor,
+    plaintext_totp_secret,
+)
 
 
 def mfa_session_proof(user):
     """Vincula a prova MFA à senha e ao segredo TOTP atuais, sem guardar o segredo na sessão."""
     return salted_hmac(
-        "pdl-admin-mfa", user.get_session_auth_hash() + user.totp_secret
+        "pdl-admin-mfa", user.get_session_auth_hash() + plaintext_totp_secret(user)
     ).hexdigest()
 
 
 class MFAAdminAuthenticationForm(AdminAuthenticationForm):
-    """Exige TOTP para contas que o ativaram e registra a prova na sessão validada."""
+    """Exige TOTP ou código de recuperação para contas que ativaram o 2FA."""
 
     otp = forms.CharField(
-        label=gettext_lazy("Código do autenticador"),
+        label=gettext_lazy("Código do autenticador ou de recuperação"),
         required=False,
-        max_length=6,
+        max_length=19,
         widget=forms.TextInput(
-            attrs={"autocomplete": "one-time-code", "inputmode": "numeric"}
+            attrs={"autocomplete": "one-time-code"}
         ),
     )
 
@@ -38,9 +41,9 @@ class MFAAdminAuthenticationForm(AdminAuthenticationForm):
         cleaned = super().clean()
         user = self.get_user()
         if user is not None and user.is_2fa_enabled:
-            if not _verify(user.totp_secret, cleaned.get("otp", "")):
+            if not accept_admin_second_factor(user, cleaned.get("otp", "")):
                 raise forms.ValidationError(
-                    _("Informe um código válido do autenticador.")
+                    _("Informe um código válido do autenticador ou de recuperação.")
                 )
             self.request.session["admin_mfa"] = mfa_session_proof(user)
         return cleaned

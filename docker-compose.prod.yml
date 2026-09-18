@@ -85,6 +85,8 @@ services:
       - static_files:/app/staticfiles
       - media_files:/app/media
       - private_files:/app/private
+      # TLS do MySQL L2: docs/integracoes/lineage-mysql-ssl.md
+      # - ./secrets/lineage-mysql:/run/secrets/lineage-mysql:ro
     depends_on:
       db:
         condition: service_healthy
@@ -110,6 +112,8 @@ services:
     volumes:
       - media_files:/app/media
       - private_files:/app/private
+      # TLS do MySQL L2: docs/integracoes/lineage-mysql-ssl.md
+      # - ./secrets/lineage-mysql:/run/secrets/lineage-mysql:ro
     depends_on:
       backend:
         condition: service_started
@@ -133,6 +137,8 @@ services:
     volumes:
       - media_files:/app/media
       - private_files:/app/private
+      # TLS do MySQL L2: docs/integracoes/lineage-mysql-ssl.md
+      # - ./secrets/lineage-mysql:/run/secrets/lineage-mysql:ro
     depends_on:
       backend:
         condition: service_started

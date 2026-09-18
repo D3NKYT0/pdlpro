@@ -86,3 +86,32 @@ def require_production_secret_key(secret_key: str) -> None:
         "Gere uma chave forte com './setup.sh configure-production --rotate-secret-key' "
         "(ou scripts/configure-production.ps1) antes de iniciar o serviço."
     )
+
+
+def data_encryption_key_rejection_reason(key: str) -> str | None:
+    """Explica por que a chave Fernet de dados não serve para produção."""
+
+    value = (key or "").strip()
+    if not value:
+        return "a chave está vazia"
+    try:
+        from cryptography.fernet import Fernet
+
+        Fernet(value.encode("ascii"))
+    except (ValueError, TypeError):
+        return "a chave não é um token Fernet URL-safe de 32 bytes"
+    return None
+
+
+def require_production_data_encryption_key(key: str) -> None:
+    """Interrompe a inicialização quando falta ``PDL_DATA_ENCRYPTION_KEY`` válida."""
+
+    reason = data_encryption_key_rejection_reason(key)
+    if reason is None:
+        return
+    raise ImproperlyConfigured(
+        f"PDL_DATA_ENCRYPTION_KEY inválida para produção: {reason}. "
+        "Gere uma chave com './setup.sh configure-production' "
+        "(ou scripts/configure-production.ps1). Rotacioná-la sem regravar TOTP e "
+        "pacotes LGPD impede a leitura dos valores já cifrados."
+    )

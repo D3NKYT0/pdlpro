@@ -60,3 +60,9 @@ class ILgpdPrivacyService(ABC):
     @abstractmethod
     def mark_export_downloaded(self, export_log: Any) -> None:
         raise NotImplementedError
+
+    @abstractmethod
+    def read_export_content(self, export_log: Any) -> bytes:
+        """Devolve o JSON gzip para o titular, decifrando o arquivo em disco."""
+
+        raise NotImplementedError

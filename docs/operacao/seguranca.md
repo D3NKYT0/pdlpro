@@ -11,7 +11,7 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 ## Contas e autenticação
 
 - A propriedade de contas Lineage vem do vínculo do gateway. Coincidência de nome e registro local não autorizam operações. Contas antigas devem ser vinculadas com a senha do jogo ou confirmação por e-mail.
-- O Django Admin exige o código TOTP quando o usuário habilitou 2FA. Sessões administrativas sem a prova do segundo fator atual precisam autenticar novamente. O layout preserva CSRF e os assets compartilhados.
+- O Django Admin exige o código TOTP ou um código de recuperação quando o usuário habilitou 2FA. Sessões administrativas sem a prova do segundo fator atual precisam autenticar novamente. O layout preserva CSRF e os assets compartilhados. O segredo TOTP e os hashes dos códigos ficam cifrados em repouso (`PDL_DATA_ENCRYPTION_KEY`); cada código de recuperação vale uma vez e só aparece em claro na confirmação da ativação.
 - Refresh tokens são rotacionados e consumidos uma única vez, com bloqueio por usuário. Logout revoga o refresh apresentado; access tokens já emitidos expiram em até 15 minutos por padrão. Redefinir a senha invalida também os access tokens imediatamente nas novas requisições, incluindo autenticação WebSocket.
 - O usuário autenticado lista sessões ativas em `GET /api/v1/auth/sessions/`, revoga uma em
   `DELETE /api/v1/auth/sessions/<jti>/` e encerra as demais em
@@ -58,7 +58,7 @@ Escolha somente um resultado após conferência. `rejected` estorna; `completed`
 
 ## Pagamentos
 
-Liquidação e cancelamento bloqueiam o pedido antes de ler seu estado. O bloqueio permanece até o commit do crédito e da confirmação. Respostas tardias de checkout/status não reabrem pedidos encerrados. A carteira e o pedido continuam no mesmo UnitOfWork; isso não torna chamadas a provedores ou ao jogo parte da transação Django.
+Liquidação e cancelamento bloqueiam o pedido antes de ler seu estado. O bloqueio permanece até o commit do crédito e da confirmação. Respostas tardias de checkout/status não reabrem pedidos encerrados. A carteira e o pedido continuam no mesmo UnitOfWork; isso não torna chamadas a provedores ou ao jogo parte da transação Django. Depois de confirmar, falhar ou cancelar, o repositório apaga `client_secret` e códigos PIX/boleto do pedido. O log de webhook guarda só identificadores e status, sem PII nem `client_secret`.
 
 ## Validação
 

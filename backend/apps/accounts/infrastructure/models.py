@@ -78,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
     is_2fa_enabled = models.BooleanField(default=False)
-    totp_secret = models.CharField(max_length=32, blank=True, default="")
+    totp_secret = models.CharField(max_length=255, blank=True, default="")
     fichas = models.PositiveIntegerField(default=0)
     terms_accepted_at = models.DateTimeField(null=True, blank=True)
     terms_and_privacy_version = models.CharField(max_length=64, blank=True, default="")
@@ -259,6 +259,28 @@ class DataExportLog(BaseModel):
 
     def __str__(self) -> str:
         return f"Export {self.user_id} @ {self.created_at}"
+
+
+class TwoFactorRecoveryCode(BaseModel):
+    """Hash HMAC cifrado de um código de recuperação de 2FA, de uso único.
+
+    O valor em claro só aparece uma vez, na ativação. Relaciona os registros por ``user``.
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="two_factor_recovery_codes",
+    )
+    code_cipher = models.TextField()
+    used_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("Código de recuperação 2FA")
+        verbose_name_plural = _("Códigos de recuperação 2FA")
+        indexes = [
+            models.Index(fields=["user", "used_at"], name="pdl_2fa_recovery_lookup"),
+        ]
 
 
 class AccountActionCode(models.Model):

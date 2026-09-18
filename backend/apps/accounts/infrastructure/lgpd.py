@@ -46,10 +46,12 @@ from apps.accounts.infrastructure.models import (
     DataExportLog,
     GamerProfile,
     RewardClaim,
+    TwoFactorRecoveryCode,
     User,
     UserAchievement,
     WebAuthnCredential,
 )
+from common.crypto import IFieldCipher
 
 logger = logging.getLogger(__name__)
 
@@ -83,8 +85,9 @@ def get_export_max_age_seconds() -> int:
 class DjangoLgpdPrivacyService(ILgpdPrivacyService):
     """Implementação ORM + e-mail da porta ``ILgpdPrivacyService``."""
 
-    def __init__(self, mailer: IMailer) -> None:
+    def __init__(self, mailer: IMailer, cipher: IFieldCipher) -> None:
         self._mailer = mailer
+        self._cipher = cipher
 
     def request_export(
         self,
@@ -223,6 +226,11 @@ class DjangoLgpdPrivacyService(ILgpdPrivacyService):
         export_log.downloaded_at = timezone.now()
         export_log.save(update_fields=["downloaded_at", "updated_at"])
 
+    def read_export_content(self, export_log: DataExportLog) -> bytes:
+        with export_log.export_file.open("rb") as handle:
+            stored = handle.read()
+        return self._cipher.unseal_bytes(stored)
+
     def _download_url(self, export_log: DataExportLog) -> str:
         token = signing.dumps(
             {"export_id": str(export_log.id), "user_id": str(export_log.user.id)},
@@ -245,8 +253,9 @@ class DjangoLgpdPrivacyService(ILgpdPrivacyService):
             json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"),
             compresslevel=6,
         )
-        export_log.export_file.save(filename, ContentFile(compressed), save=False)
-        export_log.file_size_bytes = len(compressed)
+        sealed = self._cipher.seal_bytes(compressed)
+        export_log.export_file.save(filename, ContentFile(sealed), save=False)
+        export_log.file_size_bytes = len(sealed)
         export_log.expires_at = timezone.now() + timedelta(seconds=get_export_max_age_seconds())
 
     def _build_portability_export(self, user: User) -> dict[str, Any]:
@@ -356,6 +365,7 @@ class DjangoLgpdPrivacyService(ILgpdPrivacyService):
         user.set_unusable_password()
         user.save()
 
+        TwoFactorRecoveryCode.objects.filter(user=user).delete()
         WebAuthnCredential.objects.filter(user=user).delete()
         SocialAccount.objects.filter(user=user).delete()
         AccountActionCode.objects.filter(user=user).delete()

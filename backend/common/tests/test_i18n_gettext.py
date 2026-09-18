@@ -20,7 +20,7 @@ from common.middleware import ApiLanguageMiddleware
 
 TOTP_ADMIN_HELP = (
     "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois fatores "
-    "apaga o segredo e o usuário precisa cadastrá-la novamente."
+    "apaga o segredo e os códigos de recuperação; o usuário precisa cadastrar o 2FA novamente."
 )
 
 
@@ -298,6 +298,14 @@ class CatalogResolutionTests(SimpleTestCase):
             self.assertEqual(
                 _("Informe um código válido do autenticador."),
                 "Enter a valid authenticator code.",
+            )
+            self.assertEqual(
+                _("Informe um código válido do autenticador ou de recuperação."),
+                "Enter a valid authenticator or recovery code.",
+            )
+            self.assertEqual(
+                _("Código do autenticador ou de recuperação"),
+                "Authenticator or recovery code",
             )
         finally:
             translation.deactivate()

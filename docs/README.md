@@ -62,6 +62,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Documento | O que explica |
 | --- | --- |
 | [Lineage 2](integracoes/lineage.md) | Gateways, dialetos SQL, schema e homologação |
+| [TLS no MySQL do Lineage 2](integracoes/lineage-mysql-ssl.md) | Escolha entre TCP simples e TLS, certificados e volume Docker |
 | [Catálogo de itens](integracoes/catalogo-de-itens.md) | XML, customs, imagens, cache e permissões |
 | [Ícones de itens e skills](integracoes/icones.md) | Importação, pacote de assets e publicação |
 | [Câmbio entre painel e jogo](integracoes/cambio-painel-jogo.md) | Recibos, requisitos transacionais e retomada |

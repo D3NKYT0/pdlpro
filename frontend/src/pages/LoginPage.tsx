@@ -121,7 +121,7 @@ export function LoginPage() {
       <form className="auth-form" onSubmit={onSubmit}>
         {challenge ? (
           <AuthField label={t('login.codeLabel')}>
-            <input value={code} onChange={(event) => setCode(event.target.value)} required autoFocus inputMode="numeric" />
+            <input value={code} onChange={(event) => setCode(event.target.value)} required autoFocus autoComplete="one-time-code" />
           </AuthField>
         ) : (
           <>

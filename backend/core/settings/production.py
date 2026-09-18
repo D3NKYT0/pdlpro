@@ -1,8 +1,13 @@
 from .base import *
 from .monitoring import configure_error_monitoring
-from .security import build_content_security_policy, require_production_secret_key
+from .security import (
+    build_content_security_policy,
+    require_production_data_encryption_key,
+    require_production_secret_key,
+)
 
 require_production_secret_key(SECRET_KEY)
+require_production_data_encryption_key(PDL_DATA_ENCRYPTION_KEY)
 
 DEBUG = False
 # Cópia de .env.example não pode abrir schema/Swagger em produção.

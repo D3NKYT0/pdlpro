@@ -67,6 +67,24 @@ def test_confirmation_repeated_does_not_credit_twice(order):
     assert WalletTransaction.objects.filter(wallet__user=order.user, kind="ENTRADA").count() == 1
 
 
+def test_confirmation_clears_client_secret_and_pix_payload(order):
+    order.client_secret = "pi_live_secret"
+    order.gateway_data = {
+        "pix_qr_code": "00020126",
+        "pix_qr_code_base64": "iVBORw0KGgo",
+        "pix_ticket_url": "https://pay.example/ticket",
+        "message": "pending",
+    }
+    order.save(update_fields=["client_secret", "gateway_data"])
+    response = confirm_mock_payment(order.id)
+    assert response.status_code == 200, response.data
+    order.refresh_from_db()
+    assert order.client_secret == ""
+    assert "pix_qr_code" not in (order.gateway_data or {})
+    assert "pix_qr_code_base64" not in (order.gateway_data or {})
+    assert order.gateway_data.get("pix_ticket_url") == "https://pay.example/ticket"
+
+
 def test_identical_pending_requests_reuse_order(api):
     responses = [api.post("/api/v1/customer/payments/", {"amount": "12.34", "method": "mock"}, format="json") for _ in range(2)]
     assert [response.status_code for response in responses] == [200, 200]

@@ -16,7 +16,7 @@ class IWebhookLogRepository(ABC):
 
     @abstractmethod
     def create(self, *, kind: str, data_id: str, payload: dict | Any) -> None:
-        """Persiste o payload bruto do evento para auditoria."""
+        """Persiste um recorte do evento (sem PII nem segredos do provedor)."""
 
         raise NotImplementedError
 

@@ -118,6 +118,8 @@ def test_merge_adds_missing_denkynho_keys_without_changing_existing_values(tmp_p
     assert _read(env_file, "DENKYNHO_LLM_PROVIDER") == "ollama"
     assert _count(env_file, "DENKYNHO_LLM_API_URL") == 1
     assert _count(env_file, "DENKYNHO_LLM_API_KEY") == 1
+    assert _read(env_file, "LINEAGE_DB_SSL") == "false"
+    assert _count(env_file, "PDL_DATA_ENCRYPTION_KEY") == 1
     assert "openai/gpt-oss" not in env_file.read_text(encoding="utf-8")
 
 
@@ -156,6 +158,27 @@ def test_configure_production_adds_missing_keys_and_keeps_llm_off(tmp_path: Path
     assert _read(env_file, "DENKYNHO_LLM_PROVIDER") == "ollama"
     assert _read(env_file, "DENKYNHO_EMBEDDINGS_ENABLED") == "false"
     assert _count(env_file, "DENKYNHO_LLM_API_KEY") == 1
+    assert len(_read(env_file, "PDL_DATA_ENCRYPTION_KEY")) >= 32
+    assert len(_read(env_file, "BACKUP_ENCRYPTION_KEY")) >= 32
+
+
+def test_configure_production_keeps_encryption_keys_when_rotating_secret(tmp_path: Path):
+    fernet = "MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="
+    backup_key = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        _production_stub()
+        + f"PDL_DATA_ENCRYPTION_KEY={fernet}\n"
+        + f"BACKUP_ENCRYPTION_KEY={backup_key}\n",
+        encoding="utf-8",
+    )
+
+    result = _run_configure(env_file, tmp_path / "backups", "-y", "--rotate-secret-key")
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert _read(env_file, "SECRET_KEY") != "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    assert _read(env_file, "PDL_DATA_ENCRYPTION_KEY") == fernet
+    assert _read(env_file, "BACKUP_ENCRYPTION_KEY") == backup_key
 
 
 def test_configure_production_preserves_existing_embeddings_flag(tmp_path: Path):

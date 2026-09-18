@@ -31,8 +31,11 @@ Opcoes:
 
 Sem flags de rotacao, segredos fortes existentes sao preservados. Chaves novas
 do .env.example sao acrescentadas sem alterar valores ja definidos. Flags do
-Denkynho so mudam as variaveis correspondentes. Se o banco de producao ja
-existir, a senha do role PostgreSQL e atualizada de forma coordenada.
+Denkynho so mudam as variaveis correspondentes. PDL_DATA_ENCRYPTION_KEY e
+BACKUP_ENCRYPTION_KEY sao geradas se estiverem fracas e nao acompanham
+--rotate-secret-key (rotaciona-las sem regravar TOTP/LGPD impede a leitura).
+Se o banco de producao ja existir, a senha do role PostgreSQL e atualizada de
+forma coordenada.
 EOF
 }
 
@@ -175,6 +178,24 @@ generate_hex() {
   fi
 }
 
+generate_fernet_key() {
+  # OpenSSL primeiro: no Git Bash do Windows o `python` do Store é um stub.
+  if command -v openssl >/dev/null 2>&1; then
+    openssl rand -base64 32 | tr '+/' '-_' | tr -d '\r\n'
+    return
+  fi
+  for py in python3 python; do
+    if command -v "$py" >/dev/null 2>&1; then
+      if key="$("$py" -c 'import base64,os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())' 2>/dev/null)"; then
+        [[ -n "$key" ]] || continue
+        printf '%s\n' "$key"
+        return
+      fi
+    fi
+  done
+  die "python ou openssl e necessario para gerar PDL_DATA_ENCRYPTION_KEY"
+}
+
 is_weak_value() {
   local value="$1"
   local minimum_length="$2"
@@ -207,6 +228,8 @@ alter_database_password() {
 current_secret_key="$(read_env_value SECRET_KEY)"
 current_db_password="$(read_env_value DB_PASSWORD)"
 current_redis_password="$(read_env_value REDIS_PASSWORD)"
+current_data_key="$(read_env_value PDL_DATA_ENCRYPTION_KEY)"
+current_backup_key="$(read_env_value BACKUP_ENCRYPTION_KEY)"
 database_user="$(read_env_value DB_USER)"
 database_name="$(read_env_value DB_NAME)"
 database_user="${database_user:-pdl}"
@@ -252,9 +275,17 @@ chmod 600 "$backup_path"
 new_secret_key="$current_secret_key"
 new_db_password="$current_db_password"
 new_redis_password="$current_redis_password"
+new_data_key="$current_data_key"
+new_backup_key="$current_backup_key"
 [[ "$rotate_secret_key" -eq 1 ]] && new_secret_key="$(generate_hex 64)"
 [[ "$rotate_db_password" -eq 1 ]] && new_db_password="$(generate_hex 32)"
 [[ "$rotate_redis_password" -eq 1 ]] && new_redis_password="$(generate_hex 24)"
+if [[ ${#new_data_key} -lt 32 || "$new_data_key" == change-me-* ]]; then
+  new_data_key="$(generate_fernet_key)"
+fi
+if is_weak_value "$new_backup_key" 32; then
+  new_backup_key="$(generate_hex 32)"
+fi
 
 database_container=""
 database_started_for_rotation=0
@@ -286,6 +317,7 @@ rollback_on_failure() {
 
   unset current_secret_key current_db_password current_redis_password
   unset new_secret_key new_db_password new_redis_password denkynho_api_key
+  unset current_data_key current_backup_key new_data_key new_backup_key
   exit "$status"
 }
 trap rollback_on_failure EXIT
@@ -339,6 +371,8 @@ fi
 
 set_env_value DEBUG false
 set_env_value SECRET_KEY "$new_secret_key"
+set_env_value PDL_DATA_ENCRYPTION_KEY "$new_data_key"
+set_env_value BACKUP_ENCRYPTION_KEY "$new_backup_key"
 set_env_value DJANGO_SETTINGS_MODULE core.settings.production
 set_env_value ALLOWED_HOSTS "$domain"
 set_env_value CORS_ALLOWED_ORIGINS "https://${domain}"
@@ -394,6 +428,7 @@ fi
 
 trap - EXIT
 unset current_secret_key current_db_password new_secret_key new_db_password denkynho_api_key
+unset current_data_key current_backup_key new_data_key new_backup_key
 
 success "Configuracao de producao salva em $ENV_FILE"
 info "Dominio publico: https://${domain}"

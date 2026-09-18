@@ -13981,6 +13981,8 @@ html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border
 html.pdl-panel .security-secret span { color: rgba(239,224,194,.56); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
 html.pdl-panel .security-secret strong { color: #f0d28c; font-family: monospace; overflow-wrap: anywhere; }
 html.pdl-panel .security-secret small { color: rgba(239,224,194,.48); }
+html.pdl-panel .security-recovery-codes ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 4px; }
+html.pdl-panel .security-recovery-codes li { color: var(--panel-text, #efe0c2); }
 html.pdl-panel .security-inline-form { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
 html.pdl-panel .security-inline-form .field { margin: 0; }
 html.pdl-panel .security-add-passkey { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }

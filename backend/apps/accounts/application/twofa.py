@@ -6,11 +6,15 @@ from uuid import UUID
 import pyotp
 from django.core import signing
 
+from apps.accounts.application.recovery_codes import generate_recovery_codes
 from apps.accounts.domain.entities import UserEntity
 from apps.accounts.domain.exceptions import InvalidTwoFactorError, UserNotFoundError
-from apps.accounts.domain.repositories import IUserRepository
+from apps.accounts.domain.repositories import (
+    ITwoFactorRecoveryCodeRepository,
+    IUserRepository,
+)
 from apps.server.domain.repositories import IIndexConfigRepository
-from common.architecture.base import UseCase
+from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 TWOFA_SALT = "pdl-2fa-login"
@@ -32,6 +36,16 @@ def _verify(secret: str, code: str) -> bool:
     if not secret or not code:
         return False
     return pyotp.TOTP(secret).verify(code.strip(), valid_window=1)
+
+
+def _accept_second_factor(
+    state,
+    code: str,
+    recovery_codes: ITwoFactorRecoveryCodeRepository,
+) -> bool:
+    if _verify(state.totp_secret, code):
+        return True
+    return recovery_codes.consume(state.user_id, code)
 
 
 class SetupTwoFactorUseCase(UseCase[UUID, dict]):
@@ -70,14 +84,22 @@ class ConfirmTwoFactorInput:
 
 
 class ConfirmTwoFactorUseCase(UseCase[ConfirmTwoFactorInput, dict]):
-    """Confere o código TOTP contra o segredo salvo e ativa o segundo fator.
+    """Confere o código TOTP contra o segredo salvo, ativa o segundo fator e emite códigos de
+    recuperação de uso único.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``ConfirmTwoFactorInput``. O
-    retorno é ``dict``.
+    retorno é ``dict`` com ``recovery_codes`` em claro apenas nesta resposta.
     """
 
-    def __init__(self, users: IUserRepository) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        recovery_codes: ITwoFactorRecoveryCodeRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._users = users
+        self._recovery_codes = recovery_codes
+        self._unit_of_work = unit_of_work
 
     def execute(self, data: ConfirmTwoFactorInput) -> dict:
         state = self._users.get_totp_state(data.user_id)
@@ -85,8 +107,11 @@ class ConfirmTwoFactorUseCase(UseCase[ConfirmTwoFactorInput, dict]):
             raise UserNotFoundError()
         if not _verify(state.totp_secret, data.code):
             raise InvalidTwoFactorError()
-        self._users.enable_2fa(data.user_id)
-        return {"enabled": True}
+        codes = generate_recovery_codes()
+        with self._unit_of_work:
+            self._users.enable_2fa(data.user_id)
+            self._recovery_codes.replace_codes(data.user_id, codes)
+        return {"enabled": True, "recovery_codes": codes}
 
 
 @dataclass(frozen=True, slots=True)
@@ -103,22 +128,31 @@ class DisableTwoFactorInput:
 
 
 class DisableTwoFactorUseCase(UseCase[DisableTwoFactorInput, dict]):
-    """Exige 2FA ativo e código válido para desativar o segundo fator e apagar o segredo TOTP.
+    """Exige 2FA ativo e código TOTP ou de recuperação para desativar o segundo fator.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``DisableTwoFactorInput``. O
     retorno é ``dict``.
     """
 
-    def __init__(self, users: IUserRepository) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        recovery_codes: ITwoFactorRecoveryCodeRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
         self._users = users
+        self._recovery_codes = recovery_codes
+        self._unit_of_work = unit_of_work
 
     def execute(self, data: DisableTwoFactorInput) -> dict:
         state = self._users.get_totp_state(data.user_id)
         if state is None:
             raise UserNotFoundError()
-        if not state.is_2fa_enabled or not _verify(state.totp_secret, data.code):
+        if not state.is_2fa_enabled or not _accept_second_factor(state, data.code, self._recovery_codes):
             raise InvalidTwoFactorError()
-        self._users.disable_2fa(data.user_id)
+        with self._unit_of_work:
+            self._users.disable_2fa(data.user_id)
+            self._recovery_codes.clear(data.user_id)
         return {"enabled": False}
 
 
@@ -135,16 +169,21 @@ class VerifyTwoFactorLoginInput:
 
 
 class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, UserEntity]):
-    """Valida o desafio assinado e o código TOTP e retorna a entidade do usuário para concluir o
-    login.
+    """Valida o desafio assinado e o código TOTP ou de recuperação e retorna o usuário.
 
     Uso: resolva pelo container e chame ``execute(data)`` com ``VerifyTwoFactorLoginInput``. O
     retorno é ``UserEntity``.
     """
 
-    def __init__(self, users: IUserRepository, index_config: IIndexConfigRepository) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        index_config: IIndexConfigRepository,
+        recovery_codes: ITwoFactorRecoveryCodeRepository,
+    ) -> None:
         self._users = users
         self._index_config = index_config
+        self._recovery_codes = recovery_codes
 
     def execute(self, data: VerifyTwoFactorLoginInput) -> UserEntity:
         user_id = read_login_challenge(data.challenge)
@@ -152,7 +191,7 @@ class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, UserEntity]
         state = self._users.get_totp_state(user_id)
         if state is None or not state.is_active:
             raise UserNotFoundError()
-        if not state.is_2fa_enabled or not _verify(state.totp_secret, data.code):
+        if not state.is_2fa_enabled or not _accept_second_factor(state, data.code, self._recovery_codes):
             raise InvalidTwoFactorError()
         user = self._users.get_by_id(user_id)
         if user is None:

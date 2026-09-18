@@ -84,6 +84,13 @@ function Test-WeakValue {
     return $false
 }
 
+function New-FernetKey {
+    $bytes = New-Object byte[] 32
+    $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+    try { $rng.GetBytes($bytes) } finally { $rng.Dispose() }
+    return [Convert]::ToBase64String($bytes).Replace('+','-').Replace('/','_')
+}
+
 function New-HexSecret {
     param([int]$ByteCount)
     $bytes = New-Object byte[] $ByteCount
@@ -134,6 +141,10 @@ if (Test-WeakValue $secret 50) { $secret = New-HexSecret 64 }
 if (Test-WeakValue $password 16) { $password = New-HexSecret 32 }
 # O Compose de producao exige REDIS_PASSWORD e monta REDIS_URL com ela.
 if (Test-WeakValue $redisPassword 16) { $redisPassword = New-HexSecret 24 }
+$dataKey = Read-EnvValue 'PDL_DATA_ENCRYPTION_KEY'
+$backupKey = Read-EnvValue 'BACKUP_ENCRYPTION_KEY'
+if (Test-WeakValue $dataKey 32) { $dataKey = New-FernetKey }
+if (Test-WeakValue $backupKey 32) { $backupKey = New-HexSecret 32 }
 
 if (-not $Yes) {
     throw 'execucao nao interativa exige -Yes'
@@ -147,6 +158,8 @@ Copy-Item -LiteralPath $EnvFile -Destination $backupPath
 
 Set-EnvValue 'DEBUG' 'false'
 Set-EnvValue 'SECRET_KEY' $secret
+Set-EnvValue 'PDL_DATA_ENCRYPTION_KEY' $dataKey
+Set-EnvValue 'BACKUP_ENCRYPTION_KEY' $backupKey
 Set-EnvValue 'DJANGO_SETTINGS_MODULE' 'core.settings.production'
 Set-EnvValue 'ALLOWED_HOSTS' $Domain
 Set-EnvValue 'CORS_ALLOWED_ORIGINS' "https://$Domain"

@@ -56,6 +56,7 @@ from apps.accounts.domain.repositories import (
     IProgressRepository,
     ISessionStore,
     ISocialAccountRepository,
+    ITwoFactorRecoveryCodeRepository,
     IUserRepository,
     IWebAuthnCredentialRepository,
 )
@@ -68,6 +69,7 @@ from apps.accounts.infrastructure.repositories import (
     DjangoProgressRepository,
     DjangoSessionStore,
     DjangoSocialAccountRepository,
+    DjangoTwoFactorRecoveryCodeRepository,
     DjangoUserRepository,
     DjangoWebAuthnCredentialRepository,
 )
@@ -86,6 +88,11 @@ class AccountsProvider(AppProvider):
 
     def register(self, container: Container) -> None:
         container.register(IUserRepository, DjangoUserRepository, lifetime=Lifetime.SCOPED)
+        container.register(
+            ITwoFactorRecoveryCodeRepository,
+            DjangoTwoFactorRecoveryCodeRepository,
+            lifetime=Lifetime.SCOPED,
+        )
         container.register(
             ISocialAccountRepository, DjangoSocialAccountRepository, lifetime=Lifetime.SCOPED
         )

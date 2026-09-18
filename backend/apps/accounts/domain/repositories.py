@@ -201,6 +201,26 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
 
+class ITwoFactorRecoveryCodeRepository(ABC):
+    """Porta dos códigos de recuperação de 2FA (hash HMAC cifrado, uso único)."""
+
+    @abstractmethod
+    def replace_codes(self, user_id: UUID, plaintext_codes: list[str]) -> None:
+        """Apaga os códigos anteriores e grava o novo conjunto já selado."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def consume(self, user_id: UUID, plaintext_code: str) -> bool:
+        """Consome um código válido ainda não usado; False se não houver correspondência."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def clear(self, user_id: UUID) -> None:
+        raise NotImplementedError
+
+
 class ISocialAccountRepository(ABC):
     """Porta de vínculos sociais (allauth SocialAccount)."""
 

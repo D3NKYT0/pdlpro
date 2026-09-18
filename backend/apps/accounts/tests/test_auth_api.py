@@ -373,8 +373,10 @@ def test_setup_and_confirm_two_factor(api, user):
     )
     assert confirm.status_code == 200
     assert confirm.data["enabled"] is True
+    assert len(confirm.data["recovery_codes"]) == 10
     user.refresh_from_db()
     assert user.is_2fa_enabled is True
+    assert user.totp_secret != secret
 
 
 @pytest.mark.django_db

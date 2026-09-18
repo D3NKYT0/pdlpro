@@ -74,8 +74,8 @@ class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):
     oferecer o hash como campo de texto editável. ``totp_secret`` fica fora do formulário:
     quem administra contas não precisa ler o segredo — com ele seria possível gerar códigos
     válidos e passar pelo segundo fator da vítima. Desmarcar ``is_2fa_enabled`` apaga o
-    segredo, de modo que reativar o 2FA exija um novo cadastro pelo próprio usuário. Usado por
-    UserAdmin.
+    segredo e os códigos de recuperação, de modo que reativar o 2FA exija um novo cadastro
+    pelo próprio usuário. Usado por UserAdmin.
     """
 
     class Meta(UserChangeForm.Meta):
@@ -86,6 +86,10 @@ class PDLUserChangeForm(PDLAdminFormMixin, PDLUserLabelsMixin, UserChangeForm):
         user = super().save(commit=False)
         if "is_2fa_enabled" in self.fields and not user.is_2fa_enabled:
             user.totp_secret = ""
+            from apps.accounts.infrastructure.models import TwoFactorRecoveryCode
+
+            if user.pk:
+                TwoFactorRecoveryCode.objects.filter(user=user).delete()
         if commit:
             user.save()
             self.save_m2m()

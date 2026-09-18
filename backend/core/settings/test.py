@@ -11,6 +11,7 @@ PAYMENT_METHODS = ["mock", "mercadopago", "stripe"]
 PAYMENT_ALLOW_MOCK = True
 PAYMENT_MOCK_AUTO_CONFIRM = True
 SECRET_KEY = "django-insecure-test-key-with-more-than-thirty-two-characters-for-jwt"
+PDL_DATA_ENCRYPTION_KEY = "MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="
 DEBUG = False
 LINEAGE_DB_ENABLED = False
 

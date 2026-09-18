@@ -11,7 +11,7 @@
     {{ field.label_tag }} {{ field }} {{ field.errors }}
   </div>
   {% endfor %}
-  <p>{% translate "Preencha o código do autenticador se o segundo fator estiver ativado." %}</p>
+  <p>{% translate "Preencha o código do autenticador ou um código de recuperação se o segundo fator estiver ativado." %}</p>
   <input type="hidden" name="next" value="{{ next }}">
   <button type="submit" class="btn btn-primary">{% translate "Acessar" %}</button>
 </form>

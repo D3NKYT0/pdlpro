@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from django.http import FileResponse
+from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -117,14 +117,9 @@ class LgpdExportDownloadView(InjectedAPIView):
         description=gettext_lazy("Baixa o arquivo .json.gz mediante token assinado enviado por e-mail."),
     )
     def get(self, request, token: str):
-        export_log = self.resolve(ResolveLgpdExportDownloadUseCase).execute(
+        export = self.resolve(ResolveLgpdExportDownloadUseCase).execute(
             ResolveLgpdExportDownloadInput(token=token)
         )
-        handle = export_log.export_file.open("rb")
-        response = FileResponse(
-            handle,
-            as_attachment=True,
-            filename=export_log.export_file.name.rsplit("/", 1)[-1],
-            content_type="application/gzip",
-        )
+        response = HttpResponse(export.content, content_type=export.content_type)
+        response["Content-Disposition"] = f'attachment; filename="{export.filename}"'
         return response

@@ -50,6 +50,7 @@ beforeEach(() => {
     { id: 'other', created_at: '2026-09-02T08:00:00Z', expires_at: '2026-09-09T08:00:00Z', current: false },
   ])
   vi.mocked(authApi.setupTwoFactor).mockResolvedValue({ secret: 'SECRET123', enabled: false, otpauth_url: 'otpauth://totp/PDL' })
+  vi.mocked(authApi.confirmTwoFactor).mockResolvedValue({ enabled: true, recovery_codes: ['AAAA-BBBB', 'CCCC-DDDD'] })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(async () => { cleanup(); client.clear(); vi.unstubAllGlobals(); vi.restoreAllMocks(); await i18n.changeLanguage('pt') })
@@ -105,22 +106,26 @@ it.each([false, true])('confirma 2FA com código; erro=%s', async fail => {
   const user = mount()
   await user.click(screen.getByRole('button', { name: 'Ativar 2FA' }))
   expect(await screen.findByText('SECRET123')).toBeVisible()
-  await user.type(screen.getByRole('textbox', { name: 'Código de 6 dígitos' }), '123456')
+  await user.type(screen.getByRole('textbox', { name: 'Código do autenticador ou de recuperação' }), '123456')
   await user.click(screen.getByRole('button', { name: 'Confirmar ativação' }))
   expect(authApi.confirmTwoFactor).toHaveBeenCalledWith('123456')
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Código incorreto')
-    expect(screen.getByRole('textbox', { name: 'Código de 6 dígitos' })).toHaveValue('123456')
+    expect(screen.getByRole('textbox', { name: 'Código do autenticador ou de recuperação' })).toHaveValue('123456')
     expect(session.refreshUser).not.toHaveBeenCalled()
   } else {
     expect(session.refreshUser).toHaveBeenCalledTimes(1)
     expect(screen.queryByText('SECRET123')).not.toBeInTheDocument()
+    expect(screen.getByText('AAAA-BBBB')).toBeVisible()
+    expect(screen.getByText('CCCC-DDDD')).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Copiar códigos' })).toBeVisible()
+    expect(toast.success).toHaveBeenCalledWith('2FA ativado. Guarde os códigos de recuperação.')
   }
 })
 it('desativa 2FA usando código atual', async () => {
   session.user.is_2fa_enabled = true
   const user = mount()
-  await user.type(screen.getByRole('textbox', { name: 'Código de 6 dígitos' }), '654321')
+  await user.type(screen.getByRole('textbox', { name: 'Código do autenticador ou de recuperação' }), '654321')
   await user.click(screen.getByRole('button', { name: 'Desativar 2FA' }))
   expect(authApi.disableTwoFactor).toHaveBeenCalledWith('654321')
   expect(toast.success).toHaveBeenCalledWith('2FA desativado.')

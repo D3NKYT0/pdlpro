@@ -81,6 +81,14 @@ class InvalidDestinationError(ValidationDomainError):
 
 `RequestIdMiddleware` aceita um X-Request-ID válido ou gera outro, o disponibiliza em `request.request_id` e o devolve no header. Mensagens e detalhes das exceções previstas podem chegar ao cliente; não inclua credenciais ou diagnósticos internos nesses campos.
 
+## Cifra em repouso
+
+`IFieldCipher` (em `common/crypto.py`, registrado pelo `CommonProvider` como singleton) sela
+texto e bytes com Fernet (`PDL_DATA_ENCRYPTION_KEY`). Os adaptadores de contas e LGPD usam a
+porta; o domínio não importa a implementação. Produção recusa chave vazia ou inválida.
+Desenvolvimento pode derivar uma chave da `SECRET_KEY` somente com `DEBUG` e fora da suíte.
+Rotacionar a Fernet sem regravar TOTP, códigos de recuperação e pacotes LGPD impede a leitura.
+
 ## Admin, autenticação e documentação HTTP
 
 O [guia da interface do backend](../desenvolvimento/interface-admin.md) explica a base visual compartilhada, os botões, o catálogo do Jazzmin e a preservação das ações de envio.

@@ -47,7 +47,8 @@ O argumento `--ds` explicita o ambiente de teste mesmo quando o container está 
 | Componente | Comportamento na suíte |
 | --- | --- |
 | Banco Django | SQLite gerenciado pelo runner de testes |
-| Lineage | Gateway em memória, com `LINEAGE_DB_ENABLED=False` |
+| Cifra em repouso | `PDL_DATA_ENCRYPTION_KEY` Fernet fixa de teste |
+| Lineage | Gateway em memória, com `LINEAGE_DB_ENABLED=False` (`LINEAGE_DB_SSL` permanece `false`) |
 | Cache e Channels | Backends em memória |
 | Celery | Execução eager; broker e resultado em memória |
 | E-mail e arquivos | Armazenamento em memória |

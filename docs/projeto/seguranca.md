@@ -34,10 +34,10 @@ Relatos responsáveis que resultaram em correção no produto:
 
 ## Escopo prioritário
 
-- autenticação, cookies JWT, CSRF, 2FA e recuperação de conta;
+- autenticação, cookies JWT, CSRF, 2FA, códigos de recuperação e recuperação de conta;
 - autorização sobre contas e personagens do Lineage 2;
 - carteira, pagamentos, webhooks, loja, marketplace e leilões;
-- SQL configurável e acesso ao banco do jogo;
+- SQL configurável, TLS opcional e acesso ao banco do jogo;
 - WebSockets, amizades, mensagens e Web Push;
 - upload ou exposição de arquivos de mídia;
 - instalação de temas, validação de ZIP/CSS, path traversal e XSS persistente;
@@ -52,10 +52,11 @@ Relatos responsáveis que resultaram em correção no produto:
 - Aplique atualizações de dependências, faça backups testados e monitore os health checks.
 - Permita instalar/ativar temas somente a superadministradores, mantenha o limite de upload
   no proxy e não contorne a validação para aceitar HTML, JavaScript ou URLs externas.
-- Gere `SECRET_KEY` e `REDIS_PASSWORD` pelo configurador de produção. Produção recusa iniciar
-  com chave de exemplo e o Redis do Compose exige senha.
+- Gere `SECRET_KEY`, `REDIS_PASSWORD`, `PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` pelo configurador de produção. Produção recusa iniciar com chave de exemplo ou Fernet inválido, e o Redis do Compose exige senha. Não rotacione a Fernet junto com a `SECRET_KEY`.
 - Mantenha `PRIVATE_MEDIA_ROOT` fora do diretório servido pelo proxy: os pacotes LGPD só devem
-  sair pela view com token assinado.
+  sair pela view com token assinado (o arquivo em disco permanece cifrado).
+- Se o MySQL do Lineage não estiver na mesma máquina, ligue `LINEAGE_DB_SSL=true` e siga
+  [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md).
 - Preserve os cabeçalhos de segurança e a negação de `/media/lgpd_exports/` no Nginx, e mantenha
   o `X-Forwarded-For` confiável restrito aos proxies internos usados pelo rate limit.
 - Rotacione imediatamente qualquer segredo que possa ter sido exposto.

@@ -28,6 +28,7 @@ export function AccountSecurityPage() {
   const passkeys = useQuery({ queryKey: ['passkeys'], queryFn: authApi.passkeys })
   const sessions = useQuery({ queryKey: ['auth-sessions'], queryFn: authApi.sessions })
   const [secret, setSecret] = useState('')
+  const [recoveryCodes, setRecoveryCodes] = useState<string[]>([])
   const [code, setCode] = useState('')
   const [nickname, setNickname] = useState(() => t('security.defaultDeviceName'))
   const [busy, setBusy] = useState('')
@@ -67,8 +68,13 @@ export function AccountSecurityPage() {
     event.preventDefault()
     setBusy('2fa')
     try {
-      if (user?.is_2fa_enabled) await authApi.disableTwoFactor(code)
-      else await authApi.confirmTwoFactor(code)
+      if (user?.is_2fa_enabled) {
+        await authApi.disableTwoFactor(code)
+        setRecoveryCodes([])
+      } else {
+        const result = await authApi.confirmTwoFactor(code)
+        setRecoveryCodes(result.recovery_codes ?? [])
+      }
       setCode('')
       setSecret('')
       await refreshUser()
@@ -253,7 +259,30 @@ export function AccountSecurityPage() {
             <header><span><KeyRound /></span><div><h2>{t('security.twoFactorTitle')}</h2><p>{t('security.twoFactorSubtitle')}</p></div><b className={user?.is_2fa_enabled ? 'is-on' : 'is-off'}>{user?.is_2fa_enabled ? t('security.active') : t('security.inactive')}</b></header>
             {!user?.is_2fa_enabled && !secret ? <Button type="submit" className="security-2fa-start" disabled={busy === '2fa'} onClick={() => void setup2fa()}><Plus /> {t('security.enableTwoFactor')}</Button> : null}
             {secret ? <div className="security-secret"><span>{t('security.secretLabel')}</span><strong>{secret}</strong><small>{t('security.secretHint')}</small></div> : null}
-            {(secret || user?.is_2fa_enabled) ? <form className="security-inline-form" onSubmit={submit2fa}><Field>{t('security.codeLabel')}<input value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" required /></Field><Button type="submit" disabled={busy === '2fa'}>{user?.is_2fa_enabled ? t('security.disableTwoFactor') : t('security.confirmTwoFactor')}</Button></form> : null}
+            {recoveryCodes.length ? (
+              <div className="security-secret security-recovery-codes">
+                <span>{t('security.recoveryTitle')}</span>
+                <ol>
+                  {recoveryCodes.map((item) => (
+                    <li key={item}><strong>{item}</strong></li>
+                  ))}
+                </ol>
+                <small>{t('security.recoveryHint')}</small>
+                <Button
+                  type="button"
+                  className="ghost"
+                  onClick={() => {
+                    void navigator.clipboard.writeText(recoveryCodes.join('\n')).then(
+                      () => toast.success(t('security.recoveryCopied')),
+                      () => toast.error(t('security.recoveryCopyError')),
+                    )
+                  }}
+                >
+                  {t('security.recoveryCopy')}
+                </Button>
+              </div>
+            ) : null}
+            {(secret || user?.is_2fa_enabled) ? <form className="security-inline-form" onSubmit={submit2fa}><Field>{t('security.codeLabel')}<input value={code} onChange={(event) => setCode(event.target.value)} autoComplete="one-time-code" required /></Field><Button type="submit" disabled={busy === '2fa'}>{user?.is_2fa_enabled ? t('security.disableTwoFactor') : t('security.confirmTwoFactor')}</Button></form> : null}
           </Card>
 
           <Card className="security-card security-passkeys">

@@ -14,6 +14,8 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 |---|---|---|
 | `DJANGO_SETTINGS_MODULE` | Seleciona settings de development, test ou production | `core.settings.development` |
 | `SECRET_KEY` | Assinatura criptográfica do Django | Trocar o valor de exemplo; produção recusa iniciar com valor vazio, com marcador de exemplo (`django-insecure`, `change-me`) ou menor que 50 caracteres |
+| `PDL_DATA_ENCRYPTION_KEY` | Fernet (URL-safe Base64 de 32 bytes) para TOTP, códigos de recuperação 2FA e pacotes LGPD em disco | Vazio no exemplo; o configurador de produção gera. Não rotaciona com `--rotate-secret-key` |
+| `BACKUP_ENCRYPTION_KEY` | Senha AES-256-CBC dos dumps `./setup.sh backup` | Vazio no desenvolvimento (dump em claro com aviso); obrigatória em produção |
 | `DEBUG` | Modo de debug nos settings base | `true` |
 | `ALLOWED_HOSTS` | Hosts HTTP aceitos, separados por vírgula | `localhost,127.0.0.1` |
 | `DATABASE_URL` | Banco principal do painel | `sqlite:///db.sqlite3` |
@@ -44,6 +46,10 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `LINEAGE_DB_ENABLED` | Ativa o gateway SQLAlchemy para o banco do jogo |
 | `LINEAGE_DB_HOST`, `LINEAGE_DB_PORT` | Endereço do MySQL |
 | `LINEAGE_DB_NAME`, `LINEAGE_DB_USER`, `LINEAGE_DB_PASSWORD` | Credenciais do schema Lineage |
+| `LINEAGE_DB_SSL` | `false` = TCP atual, sem TLS; `true` = TLS até o MySQL. Escolha explícita; o host remoto não liga sozinho. Guia: [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md) |
+| `LINEAGE_DB_SSL_VERIFY` | `true` valida o certificado e o hostname; `false` cifra sem verificar (só rede isolada) |
+| `LINEAGE_DB_SSL_CA` | Caminho do PEM da CA visto pelo processo Django (no Compose: `/run/secrets/lineage-mysql/ca.pem`) |
+| `LINEAGE_DB_SSL_CERT`, `LINEAGE_DB_SSL_KEY` | Cliente mTLS, se o MySQL exigir `REQUIRE X509` |
 | `LINEAGE_QUERY_MODULE` | Catálogo SQL: `lucerav2`, `dreamv3`, `mobius` ou dialeto da extensão |
 | `LINEAGE_PASSWORD_ALGO` | Hash de senha nova: vazio (convenção do módulo), `whirlpool` ou `sha1` |
 | `LINEAGE_DB_POOL_SIZE` | Conexões permanentes no pool |
@@ -58,6 +64,7 @@ Use um usuário MySQL com o menor conjunto de permissões possível. Recursos qu
 ### Guias da integração
 
 - [Dialetos, schema e homologação do Lineage](../integracoes/lineage.md).
+- [TLS no MySQL do Lineage 2](../integracoes/lineage-mysql-ssl.md).
 - [Catálogo XML e itens customizados](../integracoes/catalogo-de-itens.md).
 - [Observação de itens e permissões](../funcionalidades/observacao-de-itens.md).
 - [Câmbio entre carteira e jogo](../integracoes/cambio-painel-jogo.md).
@@ -151,6 +158,8 @@ No mínimo:
 DJANGO_SETTINGS_MODULE=core.settings.production
 DEBUG=false
 SECRET_KEY=<segredo-longo-e-aleatorio>
+PDL_DATA_ENCRYPTION_KEY=<fernet-urlsafe-32-bytes>
+BACKUP_ENCRYPTION_KEY=<senha-longa-dos-dumps>
 REDIS_PASSWORD=<senha-longa-e-aleatoria>
 ALLOWED_HOSTS=painel.exemplo.com
 PROJECT_URL=https://painel.exemplo.com
@@ -165,9 +174,12 @@ RUN_COLLECTSTATIC=true
 Não reutilize os valores de exemplo e não armazene o `.env` de produção no repositório.
 `./setup.sh configure-production --rotate-secret-key --rotate-redis-password` gera os dois
 segredos e reescreve a `REDIS_URL` com a senha; no Windows,
-`scripts/configure-production.ps1` faz o mesmo ao preencher valores fracos ou ausentes. O
-`deploy.sh` recusa subir sem `REDIS_PASSWORD` e os settings de produção recusam iniciar com
-`SECRET_KEY` de exemplo.
+`scripts/configure-production.ps1` faz o mesmo ao preencher valores fracos ou ausentes.
+`PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem vazias ou
+fracas e **não** acompanham `--rotate-secret-key`: rotacioná-las sem regravar TOTP, códigos
+de recuperação e pacotes LGPD impede a leitura do que já está cifrado. O `deploy.sh` recusa
+subir sem `REDIS_PASSWORD` e os settings de produção recusam iniciar com `SECRET_KEY` de
+exemplo ou sem Fernet válido.
 
 ## Denkynho
 

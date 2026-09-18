@@ -32,7 +32,8 @@ msgstr ""
 #: .\apps\accounts\admin.py:51
 msgid ""
 "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois "
-"fatores apaga o segredo e o usuário precisa cadastrá-la novamente."
+"fatores apaga o segredo e os códigos de recuperação; o usuário precisa "
+"cadastrar o 2FA novamente."
 msgstr ""
 
 #: .\apps\accounts\admin.py:56
@@ -51,13 +52,32 @@ msgstr ""
 msgid "Nova conta"
 msgstr ""
 
-#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:177
+#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:185
+msgid "Código do autenticador ou de recuperação"
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:184
 msgid "Código do autenticador"
 msgstr ""
 
-#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:176
-#: .\common\tests\test_i18n_gettext.py:299
+#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:183
+msgid "Informe um código válido do autenticador ou de recuperação."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:182 .\common\tests\test_i18n_gettext.py:299
 msgid "Informe um código válido do autenticador."
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:186
+msgid "Código de recuperação 2FA"
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:187
+msgid "Códigos de recuperação 2FA"
+msgstr ""
+
+#: .\common\i18n_msgid_catalog.py:188
+msgid "Desafio 2FA expirado. Entre novamente."
 msgstr ""
 
 #: .\apps\accounts\application\email_use_cases.py:56
@@ -4633,7 +4653,7 @@ msgid "Configuração visual"
 msgstr ""
 
 #: .\templates\admin\mfa_login.html:14
-msgid "Preencha o código do autenticador se o segundo fator estiver ativado."
+msgid "Preencha o código do autenticador ou um código de recuperação se o segundo fator estiver ativado."
 msgstr ""
 
 #: .\templates\admin\mfa_login.html:16

@@ -31,7 +31,7 @@ export const authApi = {
       body: JSON.stringify({ action: 'setup' }),
     }),
   confirmTwoFactor: (code: string) =>
-    request<{ enabled: boolean }>('/shared/me/2fa/', {
+    request<{ enabled: boolean; recovery_codes?: string[] }>('/shared/me/2fa/', {
       method: 'POST',
       body: JSON.stringify({ action: 'confirm', code }),
     }),

@@ -138,9 +138,33 @@ FIXES: dict[str, tuple[str, str]] = {
         "Enter a valid authenticator code.",
         "Introduce un código válido del autenticador.",
     ),
+    "Informe um código válido do autenticador ou de recuperação.": (
+        "Enter a valid authenticator or recovery code.",
+        "Introduce un código válido del autenticador o de recuperación.",
+    ),
     "Código do autenticador": (
         "Authenticator code",
         "Código del autenticador",
+    ),
+    "Código do autenticador ou de recuperação": (
+        "Authenticator or recovery code",
+        "Código del autenticador o de recuperación",
+    ),
+    "Código de recuperação 2FA": (
+        "2FA recovery code",
+        "Código de recuperación 2FA",
+    ),
+    "Códigos de recuperação 2FA": (
+        "2FA recovery codes",
+        "Códigos de recuperación 2FA",
+    ),
+    "Desafio 2FA expirado. Entre novamente.": (
+        "2FA challenge expired. Sign in again.",
+        "El desafío 2FA expiró. Vuelve a iniciar sesión.",
+    ),
+    "Preencha o código do autenticador ou um código de recuperação se o segundo fator estiver ativado.": (
+        "Enter the authenticator or recovery code if the second factor is enabled.",
+        "Introduce el código del autenticador o uno de recuperación si el segundo factor está activado.",
     ),
     '{"chave": "valor"}': ('{"key": "value"}', '{"clave": "valor"}'),
     "Exemplo: [57, 4037]. Em sobreposições, vale a primeira categoria na ordem.": (
@@ -148,14 +172,15 @@ FIXES: dict[str, tuple[str, str]] = {
         "Ejemplo: [57, 4037]. En solapamientos, vale la primera categoría en el orden.",
     ),
     # admin, LGPD, termos e catálogo de itens/iscas
-    "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois fatores apaga o segredo e o usuário precisa cadastrá-la novamente.": (
+    "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois fatores apaga o segredo e os códigos de recuperação; o usuário precisa cadastrar o 2FA novamente.": (
         (
             "The TOTP secret is neither shown nor editable. Clearing two-factor authentication "
-            "deletes the secret and the user must set it up again."
+            "deletes the secret and the recovery codes; the user must set 2FA up again."
         ),
         (
             "El secreto TOTP no se muestra ni se puede editar. Desmarcar la autenticación en dos "
-            "pasos borra el secreto y el usuario debe configurarla de nuevo."
+            "pasos borra el secreto y los códigos de recuperación; el usuario debe configurar "
+            "el 2FA de nuevo."
         ),
     ),
     "IP do aceite": ("Acceptance IP", "IP de la aceptación"),

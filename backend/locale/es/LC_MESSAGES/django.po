@@ -34,10 +34,12 @@ msgstr "Seguridad"
 #: .\apps\accounts\admin.py:51
 msgid ""
 "O segredo TOTP não é exibido nem editável. Desmarcar a autenticação em dois "
-"fatores apaga o segredo e o usuário precisa cadastrá-la novamente."
+"fatores apaga o segredo e os códigos de recuperação; o usuário precisa "
+"cadastrar o 2FA novamente."
 msgstr ""
 "El secreto TOTP no se muestra ni se puede editar. Desmarcar la autenticación "
-"en dos pasos borra el secreto y el usuario debe configurarla de nuevo."
+"en dos pasos borra el secreto y los códigos de recuperación; el usuario debe "
+"configurar el 2FA de nuevo."
 
 #: .\apps\accounts\admin.py:56
 msgid "Economia"
@@ -55,14 +57,33 @@ msgstr "Metadatos"
 msgid "Nova conta"
 msgstr "Nueva cuenta"
 
-#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:177
+#: .\apps\accounts\admin_site.py:24 .\common\i18n_msgid_catalog.py:185
+msgid "Código do autenticador ou de recuperação"
+msgstr "Código del autenticador o de recuperación"
+
+#: .\common\i18n_msgid_catalog.py:184
 msgid "Código do autenticador"
 msgstr "Código del autenticador"
 
-#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:176
-#: .\common\tests\test_i18n_gettext.py:299
+#: .\apps\accounts\admin_site.py:43 .\common\i18n_msgid_catalog.py:183
+msgid "Informe um código válido do autenticador ou de recuperação."
+msgstr "Introduce un código válido del autenticador o de recuperación."
+
+#: .\common\i18n_msgid_catalog.py:182 .\common\tests\test_i18n_gettext.py:299
 msgid "Informe um código válido do autenticador."
 msgstr "Introduce un código válido del autenticador."
+
+#: .\common\i18n_msgid_catalog.py:186
+msgid "Código de recuperação 2FA"
+msgstr "Código de recuperación 2FA"
+
+#: .\common\i18n_msgid_catalog.py:187
+msgid "Códigos de recuperação 2FA"
+msgstr "Códigos de recuperación 2FA"
+
+#: .\common\i18n_msgid_catalog.py:188
+msgid "Desafio 2FA expirado. Entre novamente."
+msgstr "El desafío 2FA expiró. Vuelve a iniciar sesión."
 
 #: .\apps\accounts\application\email_use_cases.py:56
 msgid "Confirme seu e-mail no PDL PRO"
@@ -4998,9 +5019,9 @@ msgid "Configuração visual"
 msgstr "Configuración visual"
 
 #: .\templates\admin\mfa_login.html:14
-msgid "Preencha o código do autenticador se o segundo fator estiver ativado."
+msgid "Preencha o código do autenticador ou um código de recuperação se o segundo fator estiver ativado."
 msgstr ""
-"Complete el código del autenticador si el segundo factor está activado."
+"Introduce el código del autenticador o uno de recuperación si el segundo factor está activado."
 
 #: .\templates\admin\mfa_login.html:16
 msgid "Acessar"

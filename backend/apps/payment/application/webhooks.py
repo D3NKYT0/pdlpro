@@ -22,6 +22,33 @@ from common.architecture.base import UseCase
 
 logger = logging.getLogger(__name__)
 
+_WEBHOOK_TOP_KEYS = ("id", "type", "action", "livemode", "live_mode")
+_WEBHOOK_OBJECT_KEYS = ("id", "status", "object")
+
+
+def sanitize_webhook_payload(payload: Any) -> dict:
+    """Guarda só identificadores e status do evento, sem PII nem ``client_secret``."""
+
+    if not isinstance(payload, dict):
+        return {"stored": False}
+    slim: dict[str, Any] = {}
+    for key in _WEBHOOK_TOP_KEYS:
+        if key in payload:
+            slim[key] = payload[key]
+    data = payload.get("data")
+    if isinstance(data, dict):
+        obj = data.get("object") if isinstance(data.get("object"), dict) else data
+        nested: dict[str, Any] = {}
+        if isinstance(obj, dict):
+            for key in _WEBHOOK_OBJECT_KEYS:
+                if key in obj:
+                    nested[key] = obj[key]
+            meta = obj.get("metadata")
+            if isinstance(meta, dict) and meta.get("order_id"):
+                nested["order_id"] = str(meta["order_id"])
+        slim["data"] = nested
+    return slim
+
 
 class WebhookSignatureService:
     """Valida a autenticidade de notificações antes de aplicar pagamentos.
@@ -109,7 +136,7 @@ class HandleMercadoPagoWebhookUseCase(UseCase[HandleMercadoPagoWebhookInput, Non
         payload = data.payload
         event_id = str(payload.get("id") or data.request_id or "")
         data_id = str((payload.get("data") or {}).get("id") or "")
-        self._logs.create(kind="mercadopago", data_id=event_id or data_id, payload=payload)
+        self._logs.create(kind="mercadopago", data_id=event_id or data_id, payload=sanitize_webhook_payload(payload))
         action = payload.get("action") or payload.get("type")
         if action in {"payment.created", "payment", "payment.updated"} and data_id:
             result = self._gateways.get("mercadopago").fetch_by_external_id(data_id)
@@ -150,7 +177,7 @@ class HandleStripeWebhookUseCase(UseCase[HandleStripeWebhookInput, None]):
 
     def execute(self, data: HandleStripeWebhookInput) -> None:
         event = data.event
-        self._logs.create(kind=event["type"], data_id=event["id"], payload=event)
+        self._logs.create(kind=event["type"], data_id=event["id"], payload=sanitize_webhook_payload(event))
         if event["type"] in {"payment_intent.succeeded", "checkout.session.completed"}:
             obj = event["data"]["object"]
             external_id = (

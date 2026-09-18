@@ -35,6 +35,10 @@ local_settings.py
 .env.staging
 !.env.example
 
+# Certificados TLS do MySQL L2 (pasta versionada, PEMs fora do Git)
+/secrets/lineage-mysql/*
+!/secrets/lineage-mysql/.gitkeep
+
 # Node.js
 node_modules/
 /frontend/dist/

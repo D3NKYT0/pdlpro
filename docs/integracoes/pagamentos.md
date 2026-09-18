@@ -46,7 +46,7 @@ Use `PAYMENT_METHODS` para selecionar métodos expostos e configure as chaves e 
 - `CancelPaymentOrderUseCase` cancela o estado local do pedido. Isso não equivale a cancelar ou estornar uma cobrança no provedor.
 - Chamadas HTTP ao gateway não participam do rollback de `DjangoUnitOfWork`. Uma falha após a chamada externa exige verificar o estado no provedor antes de tentar corrigir o pedido.
 
-Para Mercado Pago, o serviço confere a assinatura HMAC e o timestamp. Para Stripe, a validação usa o SDK com os bytes originais do corpo. Preserve corpo e headers necessários no proxy. Segredos privados não devem aparecer no catálogo público nem em logs.
+Para Mercado Pago, o serviço confere a assinatura HMAC e o timestamp. Para Stripe, a validação usa o SDK com os bytes originais do corpo. Preserve corpo e headers necessários no proxy. Segredos privados não devem aparecer no catálogo público nem em logs. O registro persistido do webhook (`sanitize_webhook_payload`) guarda só `id`, tipo, status e `order_id` de metadados — sem e-mail, documento, `client_secret` ou payload completo do provedor. Depois que o pedido confirma, falha ou cancela, `client_secret` e códigos PIX/boleto saem da linha do pedido; o checkout Stripe ainda usa o `client_secret` enquanto o pagamento está pendente.
 
 ## Homologação
 

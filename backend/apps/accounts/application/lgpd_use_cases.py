@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 from uuid import UUID
 
 from apps.accounts.domain.lgpd import (
@@ -11,6 +10,15 @@ from apps.accounts.domain.lgpd import (
     ILgpdPrivacyService,
 )
 from common.architecture.base import UseCase
+
+
+@dataclass(frozen=True, slots=True)
+class LgpdExportFile:
+    """Pacote gzip já decifrado, pronto para o titular baixar."""
+
+    filename: str
+    content: bytes
+    content_type: str = "application/gzip"
 
 
 @dataclass(frozen=True, slots=True)
@@ -70,13 +78,15 @@ class ResolveLgpdExportDownloadInput:
     token: str
 
 
-class ResolveLgpdExportDownloadUseCase(UseCase[ResolveLgpdExportDownloadInput, Any]):
-    """Resolve o token assinado do pacote LGPD para download."""
+class ResolveLgpdExportDownloadUseCase(UseCase[ResolveLgpdExportDownloadInput, LgpdExportFile]):
+    """Resolve o token assinado do pacote LGPD e devolve o gzip decifrado."""
 
     def __init__(self, lgpd: ILgpdPrivacyService) -> None:
         self._lgpd = lgpd
 
-    def execute(self, data: ResolveLgpdExportDownloadInput) -> Any:
+    def execute(self, data: ResolveLgpdExportDownloadInput) -> LgpdExportFile:
         export_log = self._lgpd.resolve_export_download(data.token)
+        content = self._lgpd.read_export_content(export_log)
         self._lgpd.mark_export_downloaded(export_log)
-        return export_log
+        filename = export_log.export_file.name.rsplit("/", 1)[-1]
+        return LgpdExportFile(filename=filename, content=content)
