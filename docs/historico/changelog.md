@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- `./setup.sh nginx` instala o Nginx da máquina e grava um único site
+  (`scripts/nginx/pdlpro.conf.template`) com HTTP, HTTPS, WebSocket e ACME.
+  Let's Encrypt entra com `certbot certonly --webroot` e não reescreve o arquivo.
+  No PDL 1 isso era `install-nginx.sh` + `nginx-proxy.sh`.
+
 ## [2.5.2] - 2026-09-18
 
 Cifra em repouso, códigos de recuperação 2FA, dumps PostgreSQL cifrados, sanitização de

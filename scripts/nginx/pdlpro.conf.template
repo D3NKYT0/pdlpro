@@ -1,0 +1,111 @@
+# PDL PRO — um arquivo, todas as opções do proxy da máquina.
+# Gerado por ./setup.sh nginx  (não edite à mão se for rodar o comando de novo)
+#
+#   domain     {{domain}}
+#   upstream   {{upstream}}
+#   ssl        {{ssl}}
+#   web_root   {{web_root}}
+
+# --- HTTP :80 (ACME; com SSL só redireciona) --------------------------------
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{domain}}{{www_alias}};
+
+    client_max_body_size 50M;
+
+    location /.well-known/acme-challenge/ {
+        root {{web_root}};
+    }
+
+{{#ssl}}
+    location / {
+        return 301 https://$host$request_uri;
+    }
+{{/ssl}}
+{{#http}}
+    location /ws/ {
+        proxy_pass http://{{upstream}};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+
+    location / {
+        proxy_pass http://{{upstream}};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+{{/http}}
+}
+
+{{#ssl}}
+# --- HTTPS :443 -------------------------------------------------------------
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name {{domain}}{{www_alias}};
+
+    ssl_certificate     {{ssl_cert}};
+    ssl_certificate_key {{ssl_key}};
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:PDLSSL:10m;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    client_max_body_size 50M;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    location /ws/ {
+        proxy_pass http://{{upstream}};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+
+    location / {
+        proxy_pass http://{{upstream}};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+}
+{{/ssl}}
+
+# --- Outros Host: fecha a conexão -------------------------------------------
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}

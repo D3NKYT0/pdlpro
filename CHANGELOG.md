@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **18 de setembro de 2026** — Publicado: **[2.5.2]** —
+Última atualização: **18 de setembro de 2026** — Não publicado:
+`./setup.sh nginx` (um comando, um site) para o HTTPS da máquina.
+Publicado: **[2.5.2]** —
 cifra em repouso (TOTP, códigos de recuperação 2FA, LGPD), QR na ativação do 2FA,
 hall do painel e perfil, mercado da loja, dumps AES-256, webhooks enxutos,
 TLS opcional no MySQL do Lineage, Coming Soon com identidade/rates do painel,

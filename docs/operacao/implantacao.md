@@ -170,23 +170,24 @@ Sem `PDL_BACKEND_IMAGE` / `PDL_WEB_IMAGE`, o Compose constrói
 `pdl_backend:local` e `pdl_web:local`. Com as variáveis da [release](distribuicao.md),
 `deploy --production` passa a puxar as imagens publicadas.
 
-Configure o proxy externo com destino `http://IP_PRIVADO_DO_PDL:8080`. Depois,
-acesse `https://pdl.denky.dev.br` e crie o admin:
+O Compose publica o painel em `http://127.0.0.1:8080`. Na mesma máquina Ubuntu,
+o Nginx do sistema faz o HTTPS:
 
-Exemplo do bloco no proxy Nginx externo:
-
-```nginx
-location / {
-    proxy_pass http://IP_PRIVADO_DO_PDL:8080;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto https;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-}
+```bash
+cd /opt/pdlpro
+./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
 ```
+
+Sem flags o comando pergunta domínio, porta, `www` e SSL. `--domain` e `--port`
+vêm do `.env` se você omitir. `--ssl` emite Let's Encrypt sem o Certbot
+reescrever o site. O DNS `A` precisa apontar para este servidor.
+
+O arquivo único fica em `/etc/nginx/sites-available/pdlpro` (HTTP, HTTPS,
+WebSocket, ACME e recusa de outros `Host`). Não publique a porta `8080` na
+internet.
+
+Se o proxy estiver em outro host, aponte-o para `http://IP_PRIVADO_DO_PDL:8080`
+com os mesmos cabeçalhos. Depois acesse `https://painel.exemplo.com` e crie o admin:
 
 ```bash
 docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser

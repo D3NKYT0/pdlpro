@@ -125,6 +125,9 @@ def test_pack_release_zip_contains_installer_without_application_source(tmp_path
         assert "pdl-pro-2.4.0/docker-compose.prod.yml" in names
         assert "pdl-pro-2.4.0/packaging/install.sh" in names
         assert "pdl-pro-2.4.0/scripts/configure-production.ps1" in names
+        assert "pdl-pro-2.4.0/scripts/nginx.sh" in names
+        assert "pdl-pro-2.4.0/scripts/lib/nginx.sh" in names
+        assert "pdl-pro-2.4.0/scripts/nginx/pdlpro.conf.template" in names
         assert not any(name.startswith("pdl-pro-2.4.0/backend/") for name in names)
         assert not any(name.startswith("pdl-pro-2.4.0/frontend/src/") for name in names)
         compose = archive.read("pdl-pro-2.4.0/docker-compose.prod.yml").decode("utf-8")

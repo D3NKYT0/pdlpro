@@ -63,8 +63,15 @@ O destino padrão é `%LOCALAPPDATA%\PDL\PRO`. Passe `-InstallDir`,
 
 ## Depois da instalação
 
-1. Aponte o proxy HTTPS para `http://IP:8080` (ou a porta escolhida), como em
-   [Implantação](implantacao.md).
+1. No Ubuntu da mesma máquina, suba o Nginx do sistema e o certificado:
+
+```bash
+cd /opt/pdlpro
+./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
+```
+
+O proxy aponta para `http://127.0.0.1:8080` (ou a porta do `.env`). Detalhe em
+[Implantação](implantacao.md).
 2. Crie o administrador:
 
 ```bash
