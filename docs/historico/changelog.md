@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Alterado
+
+- Os guias de [distribuição](../operacao/distribuicao.md) e
+  [implantação](../operacao/implantacao.md) ensinam o fluxo atual em passos:
+  latest, `./setup.sh nginx`, administrador, FTP do launcher e atualização no
+  mesmo diretório.
+
 ## [2.5.3] - 2026-09-18
 
 Comandos de máquina do PDL 1 no `setup.sh` da release: Nginx e FTP, cada um

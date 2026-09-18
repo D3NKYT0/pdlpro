@@ -1,10 +1,10 @@
 # Implantação
 
-[← Índice da documentação](../README.md)
+[← Índice da documentação](../README.md) · [Instalar a latest](distribuicao.md)
 
-Para instalar uma **tag publicada** (ZIP + imagens no GHCR, sem build no
-servidor), use o [guia de distribuição](distribuicao.md). As seções abaixo
-descrevem o deploy a partir do clone Git.
+Na VPS o caminho usual é a [instalação pela Release](distribuicao.md): latest,
+`./setup.sh nginx`, administrador e, se precisar, `./setup.sh ftp`. As seções
+abaixo descrevem topologia, clone Git, checklist e o detalhe do proxy.
 
 ## Formas de implantação
 
@@ -61,7 +61,10 @@ Gunicorn/Daphne/Celery ──> PostgreSQL + Redis
 
 ## Primeira implantação
 
-Antes do deploy:
+Quem já rodou o `install.sh` da [Release](distribuicao.md) **não** clona o
+repositório. Pule para [HTTPS e launcher na máquina](#https-e-launcher-na-máquina).
+
+Antes do deploy pelo Git:
 
 1. Crie um registro DNS `A` para `pdl.denky.dev.br` apontando para o IPv4 do
    servidor (e `AAAA` somente se o IPv6 funcionar no servidor).
@@ -170,43 +173,46 @@ Sem `PDL_BACKEND_IMAGE` / `PDL_WEB_IMAGE`, o Compose constrói
 `pdl_backend:local` e `pdl_web:local`. Com as variáveis da [release](distribuicao.md),
 `deploy --production` passa a puxar as imagens publicadas.
 
-O Compose publica o painel em `http://127.0.0.1:8080`. Na mesma máquina Ubuntu,
-o Nginx do sistema faz o HTTPS:
+O Compose publica o painel em `http://127.0.0.1:8080`. **Não abra essa porta
+na internet.**
+
+## HTTPS e launcher na máquina
+
+Na mesma VPS Ubuntu, o Nginx do sistema termina o TLS. O DNS `A` precisa
+apontar para este servidor. Receita completa na
+[instalação pela Release](distribuicao.md):
 
 ```bash
 cd /opt/pdlpro
 ./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
-```
-
-Sem flags o comando pergunta domínio, porta, `www` e SSL. `--domain` e `--port`
-vêm do `.env` se você omitir. `--ssl` emite Let's Encrypt sem o Certbot
-reescrever o site. O DNS `A` precisa apontar para este servidor.
-
-O arquivo único fica em `/etc/nginx/sites-available/pdlpro` (HTTP, HTTPS,
-WebSocket, ACME e recusa de outros `Host`). Não publique a porta `8080` na
-internet.
-
-Se o proxy estiver em outro host, aponte-o para `http://IP_PRIVADO_DO_PDL:8080`
-com os mesmos cabeçalhos. Depois acesse `https://painel.exemplo.com` e crie o admin:
-
-```bash
 docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
 ```
 
-O launcher (arquivos para download) usa o mesmo estilo: um comando e um
-`vsftpd.conf`. Sem flags o assistente pergunta pasta, usuário e senha.
+`--ssl` emite Let's Encrypt com `certbot certonly --webroot` e não reescreve o
+site. Sem `--yes` o comando pergunta domínio, porta, `www` e SSL. O arquivo
+único fica em `/etc/nginx/sites-available/pdlpro` (HTTP, HTTPS, WebSocket, ACME
+e recusa de outros `Host`). Ajuda: `./setup.sh help nginx`.
+
+Se o proxy estiver em outro host, aponte-o para
+`http://IP_PRIVADO_DO_PDL:8080` com `Host`, `X-Forwarded-For`,
+`X-Forwarded-Proto: https` e upgrade de WebSocket.
+
+O launcher (arquivos para download) é outro comando, outro arquivo
+(`scripts/ftp/vsftpd.conf.template`):
 
 ```bash
-./setup.sh ftp --yes --password-file /root/ftp.secret
 ./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
 ```
 
-`--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`), sem
-misturar com o site do painel. FTPS opcional: `--ftps`.
+`--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`),
+sem misturar com o site do painel. FTPS: `--ftps`. Ajuda: `./setup.sh help ftp`.
 
 ## Atualizações
 
-Faça backup antes de aplicar uma nova versão:
+Quem instalou pela Release: backup e o mesmo `install.sh` no mesmo diretório,
+sem `--version`. Passo a passo em [Distribuição](distribuicao.md#atualizar).
+
+Quem implantou pelo clone Git:
 
 ```bash
 cd /opt/pdlpro

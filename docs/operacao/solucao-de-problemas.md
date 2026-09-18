@@ -1,6 +1,6 @@
 # Solução de problemas
 
-[Índice](../README.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
+[Índice](../README.md) · [Instalar a latest](distribuicao.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
 
 Comece identificando ambiente, URL, revisão e operação que falhou. Registre horário, status HTTP, `error_code` e `X-Request-ID` quando disponíveis. Não compartilhe `.env`, cookies, tokens ou payloads privados em logs públicos.
 
@@ -18,7 +18,10 @@ Comece identificando ambiente, URL, revisão e operação que falhou. Registre h
 | Vitest não encontra testes | Diretório e padrão de descoberta | Consulte [Testes](../desenvolvimento/testes.md) |
 | Tema não carrega ou fica sem imagens | Endpoint ativo, `/media/themes/` e manifesto | Confira proxy, volume e caminhos do pacote |
 | `No space left on device` no `pip install` do backend | Disco da VPS e cache do BuildKit | Veja [espaço em disco no build](#espaço-em-disco-no-build-docker) |
-| `install.sh` aborta com `REDIS_PASSWORD is required` | `.env` ainda sem senha quando o Compose sobe o Postgres | Veja [Release sem REDIS_PASSWORD](#installsh-aborta-com-redis_password-is-required) |
+| `install.sh` aborta com `REDIS_PASSWORD is required` | ZIP antigo da 2.5.2; a latest já grava a senha antes do Compose | Veja [Release sem REDIS_PASSWORD](#installsh-aborta-com-redis_password-is-required) |
+| Certificado Let's Encrypt não emite | DNS `A` e portas 80/443 | Veja [Nginx da máquina](#nginx-da-maquina) |
+| Site em 502 ou WebSocket morto | Nginx da máquina e `127.0.0.1:8080` | Veja [Nginx da máquina](#nginx-da-maquina) |
+| FTP recusa login ou pasta vazia | Usuário, senha gerada e portas passivas | Veja [FTP do launcher](#ftp-do-launcher) |
 
 ## Backend e proxy
 
@@ -82,13 +85,42 @@ Depois, atualize o código com o torch CPU e suba de novo. Confira se o log do
 `pip install` lista `torch-…+cpu` e **não** lista `nvidia-cudnn`, `cuda-toolkit`
 ou `nvidia-cublas`.
 
+## Nginx da máquina
+
+O site fica em `/etc/nginx/sites-available/pdlpro` e aponta para
+`127.0.0.1:8080`. Se o certificado não sair, o DNS `A` ainda não chegou neste
+servidor ou as portas `80`/`443` estão ocupadas. Sem `--ssl` o comando só
+grava HTTP. Ajuda: `./setup.sh help nginx`. Receita em
+[Distribuição](distribuicao.md).
+
+Um `502` com o Nginx no ar costuma ser o Compose parado ou a porta do `.env`
+diferente da que o site usa. Confira:
+
+```bash
+cd /opt/pdlpro
+docker compose --env-file .env -f docker-compose.prod.yml ps
+curl -sS http://127.0.0.1:8080/api/v1/system/health/
+```
+
+Não publique o `8080` na internet para “testar o HTTPS”.
+
+## FTP do launcher
+
+O usuário padrão é `launcher` (sem shell). `--yes` sem `--password-file` gera
+a senha e imprime uma vez: se perdeu, rode de novo com
+`--password-file /root/ftp.secret`. A pasta padrão é `/var/www/launcher`.
+`--http` usa outro `server_name` (`pdlpro-launcher`); o painel continua no
+site `pdlpro`. Abra `21` e `40000-50000` no firewall. Ajuda:
+`./setup.sh help ftp`.
+
 ## `install.sh` aborta com `REDIS_PASSWORD is required`
 
 O primeiro ZIP da 2.5.2 gerava a senha do Redis só depois de `docker compose up -d db`.
 O Compose interpola o YAML inteiro, então a instalação nova aborta e restaura o `.env`
-de exemplo (senha vazia). A 2.5.2 republicada já grava `REDIS_PASSWORD` antes do Compose.
+de exemplo (senha vazia). A latest já grava `REDIS_PASSWORD` antes do Compose.
 
-Se o `install.sh` antigo ainda estiver na VPS, grave uma senha forte e rode de novo:
+Se o `install.sh` antigo ainda estiver na VPS, grave uma senha forte e rode de novo
+(ou baixe de novo o `install.sh` da latest):
 
 ```bash
 cd /opt/pdlpro
@@ -99,10 +131,11 @@ sed -i "s|^REDIS_URL=.*|REDIS_URL=redis://:${REDIS_PW}@redis:6379/0|" .env
 grep -q '^REDIS_URL=' .env || echo "REDIS_URL=redis://:${REDIS_PW}@redis:6379/0" >> .env
 unset REDIS_PW
 cd ~
+curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
 bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
 ```
 
-Baixar de novo `install.sh` e o ZIP da 2.5.2 também resolve, sem o `sed`.
+Baixar de novo o `install.sh` da latest também resolve, sem o `sed`.
 
 ## Redis e execução nativa
 

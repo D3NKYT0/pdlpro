@@ -1,55 +1,133 @@
-# Distribuição das versões publicadas
+# Instalar uma versão publicada
 
-[← Índice da documentação](../README.md) · [Implantação](implantacao.md)
+[← Índice da documentação](../README.md) · [Implantação pelo Git](implantacao.md) ·
+[Backup](backup-e-restauracao.md) · [Problemas](solucao-de-problemas.md)
 
-O operador instala uma **tag publicada** (imagens Docker no GHCR + ZIP com
-Compose e `setup.sh`). O jogador só acessa o domínio do painel; ele não
-instala o PDL.
+Este é o caminho usual de produção: baixar a **latest** da GitHub Release, subir
+as imagens prontas e configurar a máquina. O jogador só acessa o domínio; ele
+não instala o PDL.
 
-A primeira release com este fluxo é a próxima tag `v*` após o workflow
-existir. Enquanto a Release não estiver no GitHub, use o [clone + Compose](implantacao.md).
+Quem precisa buildar a partir do código segue a [implantação pelo clone](implantacao.md).
 
-## O que cada tag publica
+## O que você vai fazer
 
-| Artefato | Função |
-| --- | --- |
-| `ghcr.io/<repo>/backend:X.Y.Z` | API, ASGI e Celery |
-| `ghcr.io/<repo>/web:X.Y.Z` | SPA compilada + Nginx |
-| `pdl-pro-X.Y.Z.zip` | Compose sem build, `setup.sh`, scripts e `.env.example` |
-| `pdl-pro-X.Y.Z.zip.sha256` | Checksum do ZIP |
-| `install.sh` / `install.ps1` | Bootstrap Linux e Windows |
+1. Instalar o Docker e apontar o DNS para o servidor.
+2. Rodar o `install.sh` (ou o `install.ps1` no Windows). O painel sobe em
+   `http://127.0.0.1:8080`.
+3. No Ubuntu da mesma máquina, ligar o HTTPS com `./setup.sh nginx`.
+4. Criar o administrador.
+5. Conferir health e version.
+6. Se o launcher precisar de FTP, rodar `./setup.sh ftp`.
 
-O ZIP **não** inclui o código-fonte da aplicação. Quem precisa buildar a
-partir do Git continua usando `docker-compose.prod.yml` no clone, com
-`pdl_backend:local` / `pdl_web:local`.
+**Não publique a porta 8080 na internet.** O Nginx da máquina (ou outro proxy
+na rede privada) é quem recebe 80/443.
+
+## Antes de começar
+
+- Docker Engine com Compose v2 (Linux) ou Docker Desktop (Windows).
+- `curl` no Linux.
+- Um domínio com registro `A` (e `AAAA` só se o IPv6 do servidor funcionar),
+  por exemplo `painel.exemplo.com`.
+- Portas `80` e `443` livres no servidor, para o certificado e o HTTPS.
+- Permissão de escrita no diretório (`/opt/pdlpro` ou `~/pdlpro`).
+
+O instalador sem `--version` pega sempre a última release publicada.
 
 ## Linux
 
-Pré-requisitos: Docker Engine com Compose v2, `curl` e permissão de escrita
-no diretório de instalação (`/opt/pdlpro` ou `~/pdlpro`).
+Os comandos abaixo assumem Ubuntu e `/opt/pdlpro`. Troque o domínio e o e-mail
+pelos seus.
+
+### 1. Instalar a aplicação
 
 ```bash
 curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
-bash install.sh --domain painel.exemplo.com --yes
+bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
 ```
 
-Opções úteis: `--version 2.5.3`, `--dir /opt/pdlpro`, `--port 8080`,
-`--no-start`. Sem `--yes` o script pede o domínio e confirma.
+Sem `--yes` o script pergunta o domínio e pede confirmação. `--dir`, `--port`
+e `--no-start` existem se precisar mudar pasta, porta interna ou só preparar o
+`.env` sem subir os containers.
 
-O instalador configura o `.env` (equivalente a
-`./setup.sh configure-production`), grava as imagens publicadas e executa
-`./setup.sh install --production`, que **puxa** as imagens em vez de
-construí-las. A senha do Redis entra no `.env` antes do primeiro Compose: o
-arquivo de produção interpola `REDIS_PASSWORD` mesmo só para subir o Postgres.
+O que o instalador faz: baixa o ZIP, preenche o `.env` (segredos, Redis e
+imagens), puxa `backend` e `web` do GHCR e sobe o Compose de produção. A senha
+do Redis entra no `.env` **antes** do primeiro `docker compose`.
 
-Se um ZIP antigo da 2.5.2 abortar com `REDIS_PASSWORD is required`, veja
-[Solução de problemas](solucao-de-problemas.md#installsh-aborta-com-redis_password-is-required).
+Como conferir:
+
+```bash
+cd /opt/pdlpro
+docker compose --env-file .env -f docker-compose.prod.yml ps
+```
+
+`web`, `backend`, `db` e `redis` precisam estar no ar. O painel responde em
+`http://127.0.0.1:8080` nesta máquina.
+
+### 2. Ligar o HTTPS
+
+O DNS já precisa apontar para este servidor. Na pasta da instalação:
+
+```bash
+cd /opt/pdlpro
+./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
+```
+
+Um comando, um arquivo de site (`/etc/nginx/sites-available/pdlpro`). Ele
+instala o Nginx da distro, emite Let's Encrypt com `certbot certonly --webroot`
+(sem reescrever o site) e encaminha o domínio para `127.0.0.1:8080` — HTTP,
+HTTPS e WebSocket.
+
+Sem `--yes` o script pergunta domínio, porta, `www` e SSL. `--domain` e
+`--port` vêm do `.env` se você omitir. Ajuda: `./setup.sh help nginx`.
+
+Se o proxy estiver em **outra** máquina, não rode este comando lá: aponte esse
+proxy para `http://IP_PRIVADO_DO_PDL:8080` com `Host`, `X-Forwarded-For`,
+`X-Forwarded-Proto: https` e upgrade de WebSocket.
+
+Como conferir: o navegador abre `https://painel.exemplo.com` sem aviso de
+certificado.
+
+### 3. Criar o administrador
+
+```bash
+cd /opt/pdlpro
+docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
+```
+
+O Django pede usuário, e-mail e senha. Essa conta entra no Django Admin e no
+painel staff. Depois abra `https://painel.exemplo.com/admin/`.
+
+### 4. Conferir se está no ar
+
+No navegador, ou com `curl` no servidor:
+
+- `https://painel.exemplo.com/api/v1/system/health/`
+- `https://painel.exemplo.com/api/v1/system/version/`
+
+A version deve ser a da latest que o instalador baixou.
+
+### 5. Launcher por FTP (opcional)
+
+Um comando e um `vsftpd.conf`. Sem flags o assistente pergunta pasta, usuário
+e senha.
+
+```bash
+cd /opt/pdlpro
+./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
+```
+
+`--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`),
+sem misturar com o site do painel. `--yes` sem `--password-file` gera a senha
+e mostra uma vez no final. FTPS: `--ftps`. Ajuda: `./setup.sh help ftp`.
+
+O DNS de `launcher.painel.exemplo.com` também precisa apontar para este
+servidor. Abra as portas `21` e a faixa passiva `40000-50000` no firewall.
 
 ## Windows
 
-Pré-requisitos: Docker Desktop em execução. Git Bash é opcional: quando
-existe, o instalador reutiliza o `setup.sh`; senão, usa
-`scripts/configure-production.ps1` e o `docker compose` nativo.
+Pré-requisito: Docker Desktop em execução. Git Bash é opcional: quando existe,
+o instalador reutiliza o `setup.sh`; senão, usa `scripts/configure-production.ps1`
+e o `docker compose` nativo.
 
 ```powershell
 Invoke-WebRequest -UseBasicParsing `
@@ -58,47 +136,75 @@ Invoke-WebRequest -UseBasicParsing `
 powershell -File .\install.ps1 -Domain painel.exemplo.com -Yes
 ```
 
-O destino padrão é `%LOCALAPPDATA%\PDL\PRO`. Passe `-InstallDir`,
-`-Version`, `-Port` ou `-NoStart` quando precisar.
+Pasta padrão: `%LOCALAPPDATA%\PDL\PRO`. Também aceita `-InstallDir`, `-Port` e
+`-NoStart`.
 
-## Depois da instalação
-
-1. No Ubuntu da mesma máquina, suba o Nginx do sistema e o certificado:
-
-```bash
-cd /opt/pdlpro
-./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
-```
-
-O proxy aponta para `http://127.0.0.1:8080` (ou a porta do `.env`). Para o
-launcher: `./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com`.
-Detalhe em [Implantação](implantacao.md).
-2. Crie o administrador:
-
-```bash
-docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
-```
-
-No Windows, o mesmo comando vale no PowerShell a partir da pasta de instalação.
-
-3. Confira `/api/v1/system/health/` e `/api/v1/system/version/`.
+`./setup.sh nginx` e `./setup.sh ftp` são do Ubuntu da máquina. No Windows o
+HTTPS costuma ficar no Cloudflare ou em outro proxy na frente de
+`http://IP:8080`. O administrador e o health usam o mesmo `docker compose`
+acima, a partir da pasta da instalação.
 
 ## Atualizar
 
-Faça backup, baixe a tag nova no mesmo diretório e suba de novo. O `.env`
-existente é preservado; as chaves `PDL_*_IMAGE` passam a apontar para a
-versão pedida.
+Backup → rode o instalador de novo no **mesmo diretório**. Sem `--version` ele
+instala a latest. O `.env` existente é preservado; só as imagens mudam.
 
 ```bash
 cd /opt/pdlpro
 ./setup.sh backup
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --version 2.5.3 --yes
+curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
+bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
 ```
 
-Não misture um clone Git que constrói imagens locais com um diretório
-instalado por release sem revisar `PDL_BACKEND_IMAGE` e
-`PDL_IMAGE_PULL_POLICY`. Para voltar ao build a partir do código, esvazie
-essas variáveis e use `./setup.sh deploy --production --build`.
+Não misture um clone Git que constrói imagens locais com um diretório instalado
+por release sem revisar `PDL_BACKEND_IMAGE` e `PDL_IMAGE_PULL_POLICY`. Para
+voltar ao build a partir do código, esvazie essas variáveis e use
+`./setup.sh deploy --production --build`. Detalhe em
+[Implantação](implantacao.md).
+
+## Comandos do dia a dia
+
+Tudo na pasta da instalação (`cd /opt/pdlpro`). `./setup.sh list` mostra o
+catálogo; `./setup.sh help <comando>` a ajuda de cada um.
+
+| Quero | Comando |
+| --- | --- |
+| Ver os containers | `docker compose --env-file .env -f docker-compose.prod.yml ps` |
+| Ver logs | `docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web backend` |
+| Criar o admin | `docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser` |
+| Ligar HTTPS | `./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com` |
+| Ligar o FTP do launcher | `./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com` |
+| Backup do PostgreSQL | `./setup.sh backup` |
+| Restaurar um dump | `./setup.sh restore --path backups/db/ARQUIVO.dump.enc` |
+
+## Se algo falhar
+
+| Sintoma | Onde olhar |
+| --- | --- |
+| `REDIS_PASSWORD is required` num ZIP antigo | [Solução de problemas](solucao-de-problemas.md#installsh-aborta-com-redis_password-is-required) |
+| Certificado não emite | DNS `A`, portas 80/443 e `./setup.sh help nginx` |
+| Site em HTTP, 502 ou WebSocket morto | Nginx da máquina apontando para `127.0.0.1:8080`; 8080 fechado na internet |
+| FTP recusa login ou pasta vazia | `./setup.sh help ftp` e firewall 21 + 40000–50000 |
+
+## O que cada release publica
+
+| Artefato | Função |
+| --- | --- |
+| `ghcr.io/<repo>/backend:X.Y.Z` | API, ASGI e Celery |
+| `ghcr.io/<repo>/web:X.Y.Z` | SPA compilada + Nginx interno |
+| `pdl-pro-X.Y.Z.zip` | Compose sem build, `setup.sh`, scripts e `.env.example` |
+| `pdl-pro-X.Y.Z.zip.sha256` | Checksum do ZIP |
+| `install.sh` / `install.ps1` | Bootstrap Linux e Windows |
+
+O ZIP **não** inclui o código-fonte. Quem precisa buildar a partir do Git
+continua usando `docker-compose.prod.yml` no clone, com `pdl_backend:local` /
+`pdl_web:local`.
+
+## Fixar uma versão
+
+O padrão é latest. `--version X.Y.Z` (Linux) ou `-Version X.Y.Z` (Windows)
+existe para repetir uma tag já conhecida, por exemplo num rollback. Não use
+isso no anúncio nem na instalação nova.
 
 ## Publicar uma versão (mantenedor)
 

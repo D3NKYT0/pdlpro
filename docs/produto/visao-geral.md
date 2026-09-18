@@ -138,3 +138,9 @@ infraestrutura e apresentação, com casos de uso e injeção de dependência ex
 ├── setup.sh
 └── version.json         # Versões do produto e da API
 ```
+
+## Como instalar
+
+Na VPS use a [latest da Release](../operacao/distribuicao.md): `install.sh`,
+`./setup.sh nginx`, `createsuperuser` e, se precisar, `./setup.sh ftp`. Para
+experimentar no Docker local, o [início rápido](../primeiros-passos/docker.md).

@@ -1,6 +1,6 @@
 # Backup e restauração
 
-[Índice](../README.md) · [Implantação](implantacao.md) · [Segurança](../projeto/seguranca.md)
+[Índice](../README.md) · [Instalar a latest](distribuicao.md) · [Implantação](implantacao.md) · [Segurança](../projeto/seguranca.md)
 
 Os scripts operacionais são Bash e usam Docker Compose. Execute a partir da raiz do projeto em um ambiente preparado para esses scripts. Antes de qualquer restauração, confirme qual instalação e qual banco serão afetados.
 
