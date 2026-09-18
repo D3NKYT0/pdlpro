@@ -728,6 +728,7 @@
     "launchHeadlineHint": "Shown as the headline. If it stays generic, the page uses the server name.",
     "launchHeadlinePlaceholder": "Server name",
     "launchDate": "Launch date and time",
+    "launchDateHint": "Countdown target. Required while Coming Soon is active.",
     "launchSubtitle": "Subtitle",
     "launchSubtitleHint": "If empty, the page uses the server slogan or description.",
     "launchSubtitlePlaceholder": "Slogan or description",

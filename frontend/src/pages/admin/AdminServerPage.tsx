@@ -166,10 +166,12 @@ export function AdminServerPage() {
               <p>{t('server.launchDescription')}</p>
             </div>
           </header>
-          <div className="account-form-fields">
+          <div className="account-form-fields admin-launch-fields">
             <Field>
-              {t('server.launchHeadline')}
-              <small>{t('server.launchHeadlineHint')}</small>
+              <span>
+                {t('server.launchHeadline')}
+                <small>{t('server.launchHeadlineHint')}</small>
+              </span>
               <input
                 value={comingSoonTitle}
                 disabled={!comingSoon}
@@ -179,7 +181,10 @@ export function AdminServerPage() {
               />
             </Field>
             <Field>
-              {t('server.launchDate')}
+              <span>
+                {t('server.launchDate')}
+                <small>{t('server.launchDateHint')}</small>
+              </span>
               <input
                 type="datetime-local"
                 value={comingSoonAt}
@@ -188,10 +193,11 @@ export function AdminServerPage() {
                 required={comingSoon}
               />
             </Field>
-          </div>
-            <Field>
-              {t('server.launchSubtitle')}
-              <small>{t('server.launchSubtitleHint')}</small>
+            <Field className="admin-launch-subtitle">
+              <span>
+                {t('server.launchSubtitle')}
+                <small>{t('server.launchSubtitleHint')}</small>
+              </span>
               <textarea
                 value={comingSoonSubtitle}
                 disabled={!comingSoon}
@@ -200,6 +206,7 @@ export function AdminServerPage() {
                 rows={2}
               />
             </Field>
+          </div>
           {comingSoon ? (
             <div className="admin-coming-soon-preview" style={{ marginTop: 12 }}>
               <ButtonLink to="/" target="_blank" rel="noreferrer" variant="secondary" size="sm">

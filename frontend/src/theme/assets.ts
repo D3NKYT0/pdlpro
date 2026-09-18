@@ -190,6 +190,10 @@ export function themeImage(path: string) {
   return themeAsset(`images/${path.replace(/^\//, '')}`)
 }
 
+export function themeVideo(path: string) {
+  return themeAsset(`videos/${path.replace(/^\//, '')}`)
+}
+
 /** Folhas estruturais em `/theme/public` e `/theme/pages`; pacotes remapam via `assets`. */
 export function themeStylesheet(logicalPath: string, builtinFallback: string) {
   return runtimeAssets[logicalPath] || builtinFallback

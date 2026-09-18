@@ -223,6 +223,8 @@ chaves lógicas `css/public/*` e `css/pages/*` (por exemplo `css/pages/coming-so
 entrypoint. A página Coming Soon é superfície pública tematizada
 (`data-theme-surface="public"`, `data-theme-page="coming-soon"`) e carrega
 `css/pages/coming-soon.css` pela lista de estilos do tema, não por import local.
+O vídeo de entrada do botão Entrar fica em `videos/coming-soon/video.mp4` e é resolvido
+por `themeVideo` (o mesmo mapa `assets` do pacote).
 
 ## Segurança e limites
 

@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 import type { ReactNode } from 'react'
 import '@testing-library/jest-dom/vitest'
-import { act, cleanup, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import i18n from '../i18n'
@@ -28,9 +29,30 @@ const info: ApiServerInfo = {
 function mount(ui: ReactNode) {
   return render(
     <I18nextProvider i18n={i18n}>
-      <MemoryRouter>{ui}</MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={ui} />
+          <Route path="/login" element={<p>Tela de login</p>} />
+          <Route path="/downloads" element={<p>Tela de downloads</p>} />
+        </Routes>
+      </MemoryRouter>
     </I18nextProvider>,
   )
+}
+
+function stubMediaPlayback() {
+  const play = vi.fn().mockResolvedValue(undefined)
+  Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+    configurable: true,
+    writable: true,
+    value: play,
+  })
+  Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
+    configurable: true,
+    writable: true,
+    value: vi.fn(),
+  })
+  return play
 }
 
 beforeEach(async () => {
@@ -41,6 +63,7 @@ beforeEach(async () => {
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
+  vi.unstubAllGlobals()
 })
 
 it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
@@ -58,6 +81,11 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
   expect(screen.getByRole('link', { name: 'Download' })).toHaveClass('launch-gate__secondary')
   expect(screen.getByRole('combobox', { name: 'Idioma do site' })).toBeVisible()
+  expect(document.querySelector('.launch-gate__bg--cinematic')).toHaveAttribute(
+    'src',
+    '/theme/default/videos/coming-soon/video.mp4',
+  )
+  expect(document.querySelector('.launch-gate.is-entering')).toBeNull()
   expect(document.querySelector('.launch-gate__panel')).not.toBeNull()
   expect(document.querySelector('.launch-gate__panel-rim')).not.toBeNull()
   expect(document.querySelector('.launch-gate__panel-texture')).not.toBeNull()
@@ -177,33 +205,43 @@ it('pulsa o bloco de segundos quando a contagem avança', () => {
   vi.useRealTimers()
 })
 
-it('anuncia o fim da contagem com efeitos de abertura', () => {
+it('anuncia o fim da contagem com o assalto ao castelo', () => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-04T00:00:00Z').getTime())
   const { container } = mount(<ComingSoonPage info={info} />)
   expect(container.querySelector('.launch-gate.is-open')).not.toBeNull()
-  expect(container.querySelector('.launch-gate__fireworks')).not.toBeNull()
-  expect(container.querySelector('.launch-gate__heroes-img')).toHaveAttribute(
-    'src',
-    '/theme/default/images/bg/dynasty-couple-hold.png?v=6',
-  )
-  expect(container.querySelector('.launch-gate__tableau.is-held')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__fireworks')).toBeNull()
+  expect(container.querySelector('.launch-gate__heroes')).toBeNull()
+  expect(container.querySelector('.launch-gate__tableau.is-held')).toBeNull()
+  expect(container.querySelector('.launch-gate__tableau.is-assault')).not.toBeNull()
   expect(container.querySelector('.launch-gate__tableau.is-split')).toBeNull()
   expect(container.querySelector('.launch-gate__dossier')).toBeNull()
-  expect(container.querySelector('.launch-gate__roster')).toBeNull()
-  expect(container.querySelectorAll('.launch-gate__shell').length).toBeGreaterThan(3)
+  expect(container.querySelector('.launch-gate__roster.is-assault')).not.toBeNull()
+  expect(container.querySelectorAll('.launch-gate__champion')).toHaveLength(4)
+  expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/assault-vanguard.png?v=1',
+  )
+  expect(container.querySelector('.launch-gate__champion.is-right-front')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/assault-mage.png?v=1',
+  )
   expect(container.querySelector('.launch-gate__bg--open.is-active')).not.toBeNull()
   expect(container.querySelector('.launch-gate__bg--waiting.is-active')).toBeNull()
-  expect(screen.getByText('Servidor aberto')).toBeVisible()
-  expect(screen.getByRole('status')).toHaveTextContent('O momento chegou')
-  expect(screen.getByText(/As portas se abriram/)).toBeVisible()
+  expect(screen.getByText('A guerra começou')).toBeVisible()
+  expect(screen.getByRole('status')).toHaveTextContent('O assalto começou')
+  expect(screen.getByText(/O exército entra no castelo/)).toBeVisible()
   expect(screen.queryByLabelText('Contagem regressiva do lançamento')).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Entrar' }).closest('.launch-gate__actions')).toHaveClass('is-emphasis')
 })
 
-it('não mostra o casal Dynasty enquanto a contagem está ativa', () => {
+it('não mostra o exército de assalto enquanto a contagem está ativa', () => {
   const { container } = mount(<ComingSoonPage info={info} />)
-  expect(container.querySelector('.launch-gate__heroes')).toBeNull()
+  expect(container.querySelector('.launch-gate__roster.is-assault')).toBeNull()
   expect(container.querySelector('.launch-gate__roster')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/phoenix-knight.png?v=2',
+  )
 })
 
 it('traduz a abertura do servidor para inglês', async () => {
@@ -211,9 +249,88 @@ it('traduz a abertura do servidor para inglês', async () => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-04T00:00:00Z').getTime())
   mount(<ComingSoonPage info={info} />)
 
-  expect(screen.getByText('Server open')).toBeVisible()
-  expect(screen.getByRole('status')).toHaveTextContent('The moment has come')
-  expect(screen.getByText(/The gates have opened/)).toBeVisible()
+  expect(screen.getByText('The war has begun')).toBeVisible()
+  expect(screen.getByRole('status')).toHaveTextContent('The assault has begun')
+  expect(screen.getByText(/The army storms the castle/)).toBeVisible()
   expect(screen.getByRole('link', { name: 'Sign in' })).toHaveAttribute('href', '/login')
   expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
+})
+
+it('some a interface, reproduz o vídeo e só então abre o login', async () => {
+  const play = stubMediaPlayback()
+  const user = userEvent.setup()
+  const { container } = mount(<ComingSoonPage info={info} />)
+
+  await user.click(screen.getByRole('link', { name: 'Entrar' }))
+
+  expect(container.querySelector('.launch-gate.is-entering')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__bg--cinematic.is-active')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__bg--cinematic')).toHaveProperty('muted', true)
+  expect(container.querySelector('.launch-gate__stage')).toHaveAttribute('hidden')
+  expect(container.querySelector('.launch-gate__hero-panel')).not.toBeVisible()
+  expect(screen.queryByRole('link', { name: 'Entrar' })).not.toBeInTheDocument()
+  expect(play).toHaveBeenCalledTimes(1)
+  expect(screen.getByRole('status')).toHaveTextContent('Entrando no site')
+  expect(screen.queryByText('Tela de login')).not.toBeInTheDocument()
+
+  fireEvent.ended(container.querySelector('.launch-gate__bg--cinematic')!)
+
+  expect(screen.getByText('Tela de login')).toBeVisible()
+})
+
+it('abre o login se o vídeo falhar depois do clique', async () => {
+  stubMediaPlayback()
+  const user = userEvent.setup()
+  const { container } = mount(<ComingSoonPage info={info} />)
+
+  await user.click(screen.getByRole('link', { name: 'Entrar' }))
+  fireEvent.error(container.querySelector('.launch-gate__bg--cinematic')!)
+
+  expect(screen.getByText('Tela de login')).toBeVisible()
+})
+
+it('permite pular o vídeo de entrada', async () => {
+  stubMediaPlayback()
+  const user = userEvent.setup()
+  mount(<ComingSoonPage info={info} />)
+
+  await user.click(screen.getByRole('link', { name: 'Entrar' }))
+  await user.click(screen.getByRole('button', { name: 'Pular' }))
+
+  expect(screen.getByText('Tela de login')).toBeVisible()
+})
+
+it('ignora o vídeo quando o sistema pede menos movimento', async () => {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn((query: string) => ({
+      matches: query.includes('prefers-reduced-motion'),
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+      onchange: null,
+    })),
+  )
+  const play = stubMediaPlayback()
+  const user = userEvent.setup()
+  mount(<ComingSoonPage info={info} />)
+
+  await user.click(screen.getByRole('link', { name: 'Entrar' }))
+
+  expect(play).not.toHaveBeenCalled()
+  expect(screen.getByText('Tela de login')).toBeVisible()
+})
+
+it('não dispara a cena com Ctrl+clique no Entrar', async () => {
+  const play = stubMediaPlayback()
+  const { container } = mount(<ComingSoonPage info={info} />)
+
+  fireEvent.click(screen.getByRole('link', { name: 'Entrar' }), { ctrlKey: true })
+
+  expect(play).not.toHaveBeenCalled()
+  expect(container.querySelector('.launch-gate.is-entering')).toBeNull()
+  expect(screen.queryByText('Tela de login')).not.toBeInTheDocument()
 })

@@ -728,6 +728,7 @@
     "launchHeadlineHint": "Se muestra como titular. Si queda genérico, la página usa el nombre del servidor.",
     "launchHeadlinePlaceholder": "Nombre del servidor",
     "launchDate": "Fecha y hora del lanzamiento",
+    "launchDateHint": "Objetivo de la cuenta regresiva. Obligatoria con Coming Soon activo.",
     "launchSubtitle": "Subtítulo",
     "launchSubtitleHint": "Si está vacío, la página usa el eslogan o la descripción del servidor.",
     "launchSubtitlePlaceholder": "Eslogan o descripción",

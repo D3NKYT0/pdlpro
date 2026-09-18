@@ -19,6 +19,9 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
 - **Códigos de recuperação** na ativação do 2FA: dez códigos `XXXX-XXXX` aparecem uma vez
   na confirmação, valem no lugar do autenticador (login, painel e admin) e são consumidos
   na primeira utilização.
+- Na página **Coming Soon**, o Entrar some a interface, troca o fundo estático pelo vídeo
+  `videos/coming-soon/video.mp4` (sem áudio) e só então abre o login. Pular ou Esc interrompem; com
+  menos movimento no sistema, o vídeo é ignorado.
 - **Dumps PostgreSQL cifrados** (`./setup.sh backup`): AES-256-CBC via openssl quando
   `BACKUP_ENCRYPTION_KEY` está definida; produção exige a chave. A restauração aceita
   `.dump.enc` ou `.dump`.
@@ -43,10 +46,15 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
 
 ### Corrigido
 
+- Em Painel e servidor, título, data e subtítulo do lançamento passam a
+  compartilhar a mesma grade: rótulos e campos alinhados, sem o vazio ao lado
+  da dica do título.
 - A página **Coming Soon** passa a exibir slogan, descrição, crônica, rates e
   encantamento salvos em Painel e servidor: uma coluna só com as infos e outra
   com o hero original (título, contagem e botões). Personagens em pose de batalha
-  (`images/coming-soon/`) flanqueiam os painéis, olhando para o visitante.
+  (`images/coming-soon/`) flanqueiam os painéis, olhando para o visitante. Com a
+  data vencida, o fundo vira o exército entrando no castelo e a party avança em
+  pose de assalto.
 - A ativação do 2FA em Conta e segurança mostra o QR Code do autenticador (PNG da URI
   `otpauth`) além da chave manual.
 

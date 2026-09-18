@@ -37,8 +37,11 @@ A ativação sem data de lançamento é rejeitada pela API.
    Em telas estreitas as colunas empilham, com o hero primeiro.
 5. Enquanto a contagem está ativa, quatro personagens em pose de batalha
    (`images/coming-soon/*.png`) flanqueiam os painéis, olhando para o visitante.
-   Some na abertura (quando entra o casal Dynasty) e em telas estreitas.
-6. Entrar é a ação principal; Downloads fica secundário.
+   Na abertura entram as poses de assalto; some em telas estreitas.
+6. Entrar é a ação principal: o clique some a interface, troca o fundo estático pelo vídeo
+   (`videos/coming-soon/video.mp4`, sem áudio) e, ao terminar (ou se a reprodução falhar), abre o login.
+   Pular ou Esc interrompem a cena. Com `prefers-reduced-motion`, o vídeo é ignorado.
+   Ctrl+clique (e equivalentes) no Entrar segue direto ao login. Downloads fica secundário.
 7. Login e Downloads permanecem acessíveis pelos botões da página.
 8. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
 9. Com restrição de staff, senha/passkey/OAuth/2FA respondem
@@ -49,10 +52,9 @@ A ativação sem data de lançamento é rejeitada pela API.
 No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `/` em nova aba.
 
 Quando a data chega, a contagem some e a página entra no estado de abertura: troca o fundo
-para a arte de comemoração com fogos (`bg/coming-soon-open.png`), fogos de artifício animados
-em loop, casal humano em Dynasty (`bg/dynasty-couple-hold.png`) segurando uma moldura dourada onde o
-painel HTML encaixa com precisão (coordenadas `--frame-*`; oculto em ≤1200px, só o painel),
-anel luminoso, kicker “Servidor aberto”, mensagem “O momento chegou” e ênfase no botão Entrar.
+para o assalto ao castelo (`bg/coming-soon-open.png`), a party avança pelo portão
+(`images/coming-soon/assault-*.png`), kicker “A guerra começou”, mensagem “O assalto começou”
+e ênfase no botão Entrar. Sem fogos nem casal comemorativo.
 O Coming Soon continua ativo até a equipe desligar o modo no painel.
 
 Contrato público em `GET /api/v1/public/server/info/`:
@@ -75,7 +77,9 @@ hero do tema.
 - Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, chrome em
   `SiteNav.test.tsx`, `SiteFooter.test.tsx`, `PrivateLayout.test.tsx`, `PortalTheme.test.tsx`,
   admin em `AdminSettings.test.tsx`.
-- Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
+-   Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
   abrir `/home` e confirmar a landing; autenticado, clicar em Início no menu e conferir que
   permanece em `/home`; tentar login de jogador com restrição de staff;
-  visitar `/login` já autenticado e confirmar o redirect para `/home`.
+  visitar `/login` já autenticado e confirmar o redirect para `/home`;
+  clicar em Entrar na página de lançamento, conferir que a UI some e o vídeo ocupa o fundo,
+  e que o fim da cena (ou Pular) abre `/login`.

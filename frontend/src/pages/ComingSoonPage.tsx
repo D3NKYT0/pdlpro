@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '../components/i18n/LanguageSwitcher'
-import { ButtonLink } from '../components/ui/Button'
+import { Button, ButtonLink } from '../components/ui/Button'
 import type { ApiServerInfo } from '../services/types'
-import { themeImage } from '../theme/assets'
+import { themeImage, themeVideo } from '../theme/assets'
 
 type CountdownValue = { days: string; hours: string; mins: string; secs: string; finished: boolean }
 
@@ -58,8 +60,96 @@ const LAUNCH_CHAMPIONS = [
   { id: 'temple-knight', file: 'coming-soon/temple-knight.png', side: 'right-back' },
 ] as const
 
+const ASSAULT_CHAMPIONS = [
+  { id: 'assault-vanguard', file: 'coming-soon/assault-vanguard.png', side: 'left-back' },
+  { id: 'assault-raider', file: 'coming-soon/assault-raider.png', side: 'left-front' },
+  { id: 'assault-mage', file: 'coming-soon/assault-mage.png', side: 'right-front' },
+  { id: 'assault-warden', file: 'coming-soon/assault-warden.png', side: 'right-back' },
+] as const
+
 const GENERIC_TITLES = new Set(['em breve', 'coming soon', 'próximamente', 'proximamente'])
 const RATE_FACT_KEYS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
+const ENTER_PATH = '/login'
+const LAUNCH_CINEMATIC = 'coming-soon/video.mp4'
+const CINEMATIC_FALLBACK_MS = 45_000
+
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+}
+
+function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
+  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0
+}
+
+function useLaunchCinematic() {
+  const navigate = useNavigate()
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const started = useRef(false)
+  const finished = useRef(false)
+  const [playing, setPlaying] = useState(false)
+
+  const finish = useCallback(() => {
+    if (finished.current) return
+    finished.current = true
+    started.current = true
+    navigate(ENTER_PATH)
+  }, [navigate])
+
+  const begin = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (isModifiedClick(event)) return
+      event.preventDefault()
+      if (started.current || finished.current) return
+      if (prefersReducedMotion()) {
+        finish()
+        return
+      }
+      started.current = true
+      setPlaying(true)
+      const video = videoRef.current
+      if (!video) {
+        finish()
+        return
+      }
+      try {
+        video.currentTime = 0
+      } catch {
+        /* o elemento pode ainda não ter mídia */
+      }
+      void (async () => {
+        try {
+          video.muted = true
+          await video.play()
+        } catch {
+          finish()
+        }
+      })()
+    },
+    [finish],
+  )
+
+  useEffect(() => {
+    if (!playing) return undefined
+    const video = videoRef.current
+    const durationMs =
+      video && Number.isFinite(video.duration) && video.duration > 0
+        ? Math.ceil(video.duration * 1000) + 1500
+        : CINEMATIC_FALLBACK_MS
+    const timer = window.setTimeout(finish, durationMs)
+    return () => window.clearTimeout(timer)
+  }, [playing, finish])
+
+  useEffect(() => {
+    if (!playing) return undefined
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') finish()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [playing, finish])
+
+  return { playing, videoRef, begin, finish }
+}
 
 function sameText(left: string, right: string) {
   return left.trim().toLocaleLowerCase() === right.trim().toLocaleLowerCase()
@@ -104,77 +194,6 @@ function LaunchParticles({ count = 68 }: { count?: number }) {
             ['--spark-drift' as string]: particle.drift,
           }}
         />
-      ))}
-    </div>
-  )
-}
-
-const FIREWORK_COLORS = ['gold', 'crimson', 'emerald', 'sapphire', 'amber'] as const
-
-function LaunchFireworks({ shells = 7, sparksPerShell = 18 }: { shells?: number; sparksPerShell?: number }) {
-  const bursts = useMemo(
-    () =>
-      Array.from({ length: shells }, (_, shell) => {
-        const color = FIREWORK_COLORS[shell % FIREWORK_COLORS.length]
-        const left = 12 + ((shell * 37) % 76)
-        const top = 8 + ((shell * 23) % 38)
-        const cycle = 2.6 + (shell % 4) * 0.45
-        const delay = (shell * 0.55) % 3.2
-        const sparks = Array.from({ length: sparksPerShell }, (_, spark) => {
-          const angle = (spark / sparksPerShell) * 360 + (shell % 2 === 0 ? 0 : 10)
-          const distance = 70 + (spark % 6) * 28 + (shell % 3) * 12
-          return {
-            id: spark,
-            size: `${3 + (spark % 4)}px`,
-            delay: `${delay + (spark % 5) * 0.02}s`,
-            ['--fw-x' as string]: `${Math.cos((angle * Math.PI) / 180) * distance}px`,
-            ['--fw-y' as string]: `${Math.sin((angle * Math.PI) / 180) * distance}px`,
-          }
-        })
-        return {
-          id: shell,
-          color,
-          left: `${left}%`,
-          top: `${top}%`,
-          duration: `${cycle}s`,
-          delay: `${delay}s`,
-          sparks,
-        }
-      }),
-    [shells, sparksPerShell],
-  )
-
-  return (
-    <div className="launch-gate__fireworks" aria-hidden="true">
-      <span className="launch-gate__shockwave" />
-      <span className="launch-gate__flare" />
-      {bursts.map((burst) => (
-        <span
-          key={burst.id}
-          className={`launch-gate__shell is-${burst.color}`}
-          style={{
-            left: burst.left,
-            top: burst.top,
-            animationDelay: burst.delay,
-            animationDuration: burst.duration,
-          }}
-        >
-          <span className="launch-gate__shell-core" />
-          {burst.sparks.map((spark) => (
-            <span
-              key={spark.id}
-              className="launch-gate__fw-spark"
-              style={{
-                width: spark.size,
-                height: spark.size,
-                animationDelay: spark.delay,
-                animationDuration: burst.duration,
-                ['--fw-x' as string]: spark['--fw-x'],
-                ['--fw-y' as string]: spark['--fw-y'],
-              }}
-            />
-          ))}
-        </span>
       ))}
     </div>
   )
@@ -260,7 +279,9 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const splitLayout = factGroups.length > 0
   const countdown = useLaunchCountdown(info.coming_soon_at)
   const finished = countdown.finished && Boolean(info.coming_soon_at)
+  const roster = finished ? ASSAULT_CHAMPIONS : LAUNCH_CHAMPIONS
   const ticking = useSecondTick(countdown.secs, !finished)
+  const cinematic = useLaunchCinematic()
   const unitLabels = {
     days: t('comingSoon.unitDays'),
     hours: t('comingSoon.unitHours'),
@@ -282,7 +303,11 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   }, [])
 
   return (
-    <div className={`launch-gate${finished ? ' is-open' : ''}`} data-theme-surface="public" data-theme-page="coming-soon">
+    <div
+      className={`launch-gate${finished ? ' is-open' : ''}${cinematic.playing ? ' is-entering' : ''}`}
+      data-theme-surface="public"
+      data-theme-page="coming-soon"
+    >
       <div className="launch-gate__sky" aria-hidden="true">
         <img
           className={`launch-gate__bg launch-gate__bg--waiting${!finished ? ' is-active' : ''}`}
@@ -294,6 +319,19 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           src={themeImage('bg/coming-soon-open.png')}
           alt=""
         />
+        <video
+          ref={cinematic.videoRef}
+          className={`launch-gate__bg launch-gate__bg--cinematic${cinematic.playing ? ' is-active' : ''}`}
+          src={themeVideo(LAUNCH_CINEMATIC)}
+          poster={themeImage(finished ? 'bg/coming-soon-open.png' : 'bg/coming-soon.png')}
+          muted
+          playsInline
+          preload="auto"
+          onEnded={cinematic.finish}
+          onError={() => {
+            if (cinematic.playing) cinematic.finish()
+          }}
+        />
         <span className="launch-gate__rays" />
         <span className="launch-gate__glow launch-gate__glow--a" />
         <span className="launch-gate__glow launch-gate__glow--b" />
@@ -301,28 +339,40 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         <span className="launch-gate__haze" />
         <span className="launch-gate__vignette" />
         <LaunchParticles count={finished ? 96 : 68} />
-        {finished ? <LaunchFireworks /> : null}
       </div>
 
-      {!finished ? (
-        <div className="launch-gate__roster" aria-hidden="true">
-          {LAUNCH_CHAMPIONS.map((champion) => (
-            <img
-              key={champion.id}
-              className={`launch-gate__champion is-${champion.side}`}
-              src={`${themeImage(champion.file)}?v=2`}
-              alt=""
-            />
-          ))}
-        </div>
-      ) : null}
+      <div
+        className={`launch-gate__roster${finished ? ' is-assault' : ''}`}
+        aria-hidden="true"
+        hidden={cinematic.playing}
+      >
+        {roster.map((champion) => (
+          <img
+            key={champion.id}
+            className={`launch-gate__champion is-${champion.side}`}
+            src={`${themeImage(champion.file)}?v=${finished ? '1' : '2'}`}
+            alt=""
+          />
+        ))}
+      </div>
 
-      <div className="launch-gate__locale">
+      <div className="launch-gate__locale" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
         <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
       </div>
 
-      <main className="launch-gate__stage">
-        <div className={`launch-gate__tableau${finished ? ' is-held' : ''}${!finished && splitLayout ? ' is-split' : ''}`}>
+      {cinematic.playing ? (
+        <div className="launch-gate__cinematic-ui">
+          <p className="visually-hidden" role="status">
+            {t('comingSoon.enteringLabel')}
+          </p>
+          <Button type="button" variant="secondary" size="sm" className="launch-gate__skip" onClick={cinematic.finish}>
+            {t('comingSoon.skipCinematic')}
+          </Button>
+        </div>
+      ) : null}
+
+      <main className="launch-gate__stage" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
+        <div className={`launch-gate__tableau${finished ? ' is-assault' : ''}${!finished && splitLayout ? ' is-split' : ''}`}>
           {!finished && splitLayout ? (
             <aside className="launch-gate__panel launch-gate__dossier" aria-label={t('comingSoon.factsLabel')}>
               <LaunchPanelChrome />
@@ -376,7 +426,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
             )}
 
             <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
-              <ButtonLink to="/login" size="lg">
+              <ButtonLink to={ENTER_PATH} size="lg" onClick={cinematic.begin}>
                 {t('nav.signIn')}
               </ButtonLink>
               <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
@@ -386,16 +436,6 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
 
             <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
           </div>
-
-          {finished ? (
-            <div className="launch-gate__heroes" aria-hidden="true">
-              <img
-                className="launch-gate__heroes-img"
-                src={`${themeImage('bg/dynasty-couple-hold.png')}?v=6`}
-                alt=""
-              />
-            </div>
-          ) : null}
         </div>
       </main>
     </div>

@@ -2060,6 +2060,52 @@ html.pdl-panel .admin-config-section header p { margin: 0; color: var(--panel-mu
 html.pdl-panel .admin-config-section .field { margin: 0; }
 html.pdl-panel .admin-config-section .field > small { margin-left: 6px; color: rgba(255,255,255,.38); font-weight: 400; }
 html.pdl-panel .admin-config-section textarea { min-height: 96px; }
+html.pdl-panel .admin-launch-fields {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 8px;
+}
+html.pdl-panel .admin-launch-fields > .field {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  gap: 8px;
+}
+html.pdl-panel .admin-launch-fields > .admin-launch-subtitle {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+}
+html.pdl-panel .admin-launch-fields > .field > span {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+html.pdl-panel .admin-launch-fields .field small {
+  margin-left: 0;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 400;
+  line-height: 1.45;
+}
+@supports not (grid-template-rows: subgrid) {
+  html.pdl-panel .admin-launch-fields > .field {
+    display: flex;
+    flex-direction: column;
+    grid-row: auto;
+    gap: 7px;
+  }
+}
+@media (max-width: 720px) {
+  html.pdl-panel .admin-launch-fields {
+    grid-template-columns: 1fr;
+  }
+  html.pdl-panel .admin-launch-fields > .field {
+    display: flex;
+    flex-direction: column;
+    grid-row: auto;
+  }
+}
 html.pdl-panel .admin-server-rate-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
 html.pdl-panel .admin-toggle-list { display: grid; gap: 10px; }
 html.pdl-panel .admin-toggle { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 14px; min-height: 68px; padding: 12px 14px; border: 1px solid rgba(197,161,97,.15); background: rgba(0,0,0,.18); cursor: pointer; transition: border-color 180ms ease, background 180ms ease; }

@@ -304,6 +304,20 @@ it('notícia rejeitada mantém o conteúdo para correção', async () => {
   expect(screen.getByRole('textbox', { name: 'Conteúdo' })).toHaveValue('Texto')
 })
 
+it('campos de lançamento compartilham a mesma grade', async () => {
+  mount(<AdminServerPage />)
+  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+  const title = screen.getByLabelText(/Título do lançamento/)
+  const date = screen.getByLabelText(/Data e hora do lançamento/)
+  const subtitle = screen.getByLabelText(/Subtítulo/)
+  const grid = title.closest('.admin-launch-fields')
+  expect(grid).toBeTruthy()
+  expect(date.closest('.admin-launch-fields')).toBe(grid)
+  expect(subtitle.closest('.admin-launch-fields')).toBe(grid)
+  expect(subtitle.closest('.admin-launch-subtitle')).toBeTruthy()
+  expect(grid).toHaveTextContent('Alvo da contagem regressiva')
+})
+
 it('servidor normaliza recursos e habilita restrição de login durante coming soon', async () => {
   const user = mount(<AdminServerPage />)
   await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))

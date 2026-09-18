@@ -66,6 +66,60 @@
   animation: launch-drift-open 18s ease-in-out infinite alternate;
 }
 
+.launch-gate__bg--cinematic {
+  z-index: 1;
+  transform: none;
+  filter: none;
+  object-position: center;
+}
+
+.launch-gate.is-entering .launch-gate__bg--waiting.is-active,
+.launch-gate.is-entering .launch-gate__bg--open.is-active {
+  opacity: 0;
+  animation: none;
+}
+
+.launch-gate.is-entering .launch-gate__rays,
+.launch-gate.is-entering .launch-gate__glow,
+.launch-gate.is-entering .launch-gate__haze,
+.launch-gate.is-entering .launch-gate__vignette,
+.launch-gate.is-entering .launch-gate__particles {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.launch-gate.is-entering .launch-gate__roster,
+.launch-gate.is-entering .launch-gate__locale,
+.launch-gate.is-entering .launch-gate__stage,
+.launch-gate.is-entering .launch-gate__panel,
+.launch-gate.is-entering .launch-gate__champion,
+.launch-gate.is-entering .launch-gate__kicker,
+.launch-gate.is-entering .launch-gate__title,
+.launch-gate.is-entering .launch-gate__subtitle,
+.launch-gate.is-entering .launch-gate__countdown,
+.launch-gate.is-entering .launch-gate__actions,
+.launch-gate.is-entering .launch-gate__finale {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.launch-gate__cinematic-ui {
+  position: absolute;
+  z-index: 5;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+}
+
+.launch-gate__skip {
+  opacity: 0.82;
+}
+
+.launch-gate [hidden] {
+  display: none !important;
+}
+
 .launch-gate__rays {
   position: absolute;
   inset: -10% 0 auto;
@@ -208,6 +262,30 @@
   animation-delay: 0.16s;
 }
 
+.launch-gate__roster.is-assault .launch-gate__champion.is-left-back {
+  left: -3%;
+  height: min(94vh, 980px);
+  animation: launch-assault-in-left 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
+}
+
+.launch-gate__roster.is-assault .launch-gate__champion.is-left-front {
+  left: 11%;
+  height: min(68vh, 720px);
+  animation: launch-assault-in-left 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.launch-gate__roster.is-assault .launch-gate__champion.is-right-back {
+  right: -3%;
+  height: min(92vh, 960px);
+  animation: launch-assault-in-right 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+
+.launch-gate__roster.is-assault .launch-gate__champion.is-right-front {
+  right: 10%;
+  height: min(72vh, 760px);
+  animation: launch-assault-in-right 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
 .launch-gate__stage {
   position: relative;
   z-index: 2;
@@ -223,10 +301,10 @@
 }
 
 .launch-gate.is-open .launch-gate__stage {
-  width: 100%;
+  width: min(1180px, 100%);
   max-width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 36px clamp(18px, 5vw, 64px) 56px;
   overflow: hidden;
   place-items: center;
 }
@@ -246,84 +324,8 @@
   width: min(100%, 76rem);
 }
 
-.launch-gate__tableau.is-held {
-  /* Medidas do furo interno da moldura em dynasty-couple-hold.png (1536×1024). */
-  --frame-left: 29.102%;
-  --frame-top: 35.938%;
-  --frame-width: 45.378%;
-  --frame-height: 47.266%;
-  /* Cabe no viewport mantendo aspect da arte (evita distorcer o encaixe da moldura). */
-  width: min(100vw, calc(100dvh * 1536 / 1024));
-  max-width: 100%;
-  aspect-ratio: 1536 / 1024;
-  height: auto;
-  padding-top: 0;
-  place-items: stretch;
-}
-
-.launch-gate__heroes {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  width: 100%;
-  max-width: none;
-  transform: none;
-  pointer-events: none;
-  animation: launch-heroes-in 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
-}
-
-.launch-gate__heroes-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.48));
-  animation: launch-heroes-sway 5.5s ease-in-out 1.2s infinite alternate;
-}
-
-.launch-gate__tableau.is-held .launch-gate__panel {
-  position: absolute;
-  left: var(--frame-left);
-  top: var(--frame-top);
-  z-index: 1;
-  width: var(--frame-width);
-  height: var(--frame-height);
-  max-width: none;
-  margin: 0;
-  padding: clamp(14px, 1.8vw, 28px) clamp(14px, 1.8vw, 32px);
-  gap: clamp(8px, 1.2vw, 14px);
-  border-color: transparent;
-  border-radius: 2px;
-  overflow: hidden;
-  align-content: center;
-}
-
-.launch-gate__tableau.is-held .launch-gate__title {
-  max-width: 12ch;
-  font-size: clamp(1.8rem, 4.2vw, 3.4rem);
-}
-
-.launch-gate__tableau.is-held .launch-gate__subtitle {
-  max-width: 28ch;
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-}
-
-.launch-gate__tableau.is-held .launch-gate__slogan {
-  font-size: 0.78rem;
-}
-
-.launch-gate__tableau.is-held .launch-gate__finale {
-  min-height: 0;
-  margin-top: 0;
-}
-
-.launch-gate__tableau.is-held .launch-gate__finale-ring {
-  width: 72px;
-  height: 72px;
-}
-
-.launch-gate__tableau.is-held .launch-gate__actions {
-  margin-top: 2px;
+.launch-gate__tableau.is-assault {
+  width: min(100%, 38rem);
 }
 
 .launch-gate__panel {
@@ -515,37 +517,33 @@
 
 .launch-gate.is-open .launch-gate__panel {
   background:
-    linear-gradient(180deg, rgba(18, 13, 8, 0.72) 0%, rgba(8, 6, 4, 0.8) 100%),
-    radial-gradient(ellipse at 50% 10%, rgba(255, 196, 110, 0.14), transparent 58%);
-  border-color: transparent;
+    linear-gradient(180deg, rgba(18, 12, 6, 0.82) 0%, rgba(8, 5, 3, 0.88) 100%),
+    radial-gradient(ellipse at 50% 10%, rgba(255, 140, 64, 0.16), transparent 58%);
+  border-color: rgba(212, 162, 74, 0.42);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.1),
-    0 18px 40px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px) saturate(1.08);
-  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+    inset 0 1px 0 rgba(246, 236, 212, 0.12),
+    0 22px 56px rgba(0, 0, 0, 0.55),
+    0 0 42px rgba(180, 70, 20, 0.22);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
   animation: launch-panel-breathe 3.6s ease-in-out infinite;
 }
 
-.launch-gate.is-open .launch-gate__panel-corner,
-.launch-gate.is-open .launch-gate__panel-rim {
-  opacity: 0;
-}
-
 .launch-gate.is-open .launch-gate__panel-glow {
-  opacity: 0.55;
+  opacity: 0.7;
   animation-duration: 4.2s;
 }
 
 .launch-gate.is-open .launch-gate__panel-texture {
-  opacity: 0.32;
+  opacity: 0.38;
   mix-blend-mode: soft-light;
-  background-color: rgba(8, 6, 4, 0.22);
+  background-color: rgba(8, 6, 4, 0.28);
 }
 
 .launch-gate.is-open .launch-gate__panel-texture::after {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(212, 162, 74, 0.08), transparent 55%),
-    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.18) 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(255, 140, 64, 0.1), transparent 55%),
+    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.22) 100%);
 }
 
 .launch-gate.is-open .launch-gate__panel-rim {
@@ -553,8 +551,8 @@
 }
 
 .launch-gate.is-open .launch-gate__panel-corner {
-  border-color: rgba(255, 230, 170, 0.92);
-  filter: drop-shadow(0 0 10px rgba(255, 214, 140, 0.65));
+  border-color: rgba(255, 196, 120, 0.92);
+  filter: drop-shadow(0 0 10px rgba(255, 140, 64, 0.45));
 }
 
 .launch-gate__actions {
@@ -851,142 +849,40 @@
   animation: launch-ring 2.4s ease-out infinite;
 }
 
-.launch-gate__fireworks {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.launch-gate__shockwave {
-  position: absolute;
-  left: 50%;
-  top: 38%;
-  width: 24px;
-  height: 24px;
-  border: 2px solid rgba(255, 214, 140, 0.55);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: launch-shockwave 1.4s ease-out both;
-}
-
-.launch-gate__flare {
-  position: absolute;
-  left: 50%;
-  top: 38%;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 224, 160, 0.6), rgba(212, 162, 74, 0.2) 42%, transparent 70%);
-  transform: translate(-50%, -50%);
-  animation: launch-flare 1.8s ease-out both;
-}
-
-.launch-gate__shell {
-  --fw-core: #ffe6a8;
-  --fw-mid: #d4a24a;
-  --fw-glow: rgba(255, 214, 140, 0.85);
-  position: absolute;
-  width: 0;
-  height: 0;
-  animation-name: launch-shell-pulse;
-  animation-timing-function: ease-out;
-  animation-iteration-count: infinite;
-}
-
-.launch-gate__shell.is-gold {
-  --fw-core: #fff3c4;
-  --fw-mid: #f0c14a;
-  --fw-glow: rgba(255, 214, 120, 0.95);
-}
-
-.launch-gate__shell.is-crimson {
-  --fw-core: #ffd0d8;
-  --fw-mid: #e84a5f;
-  --fw-glow: rgba(255, 90, 110, 0.9);
-}
-
-.launch-gate__shell.is-emerald {
-  --fw-core: #d8ffe8;
-  --fw-mid: #3dcf8a;
-  --fw-glow: rgba(80, 230, 150, 0.9);
-}
-
-.launch-gate__shell.is-sapphire {
-  --fw-core: #d8ecff;
-  --fw-mid: #4aa3ff;
-  --fw-glow: rgba(90, 170, 255, 0.9);
-}
-
-.launch-gate__shell.is-amber {
-  --fw-core: #fff0d0;
-  --fw-mid: #ff9a3c;
-  --fw-glow: rgba(255, 160, 70, 0.95);
-}
-
-.launch-gate__shell-core {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--fw-core) 35%, var(--fw-mid) 70%, transparent 78%);
-  box-shadow:
-    0 0 18px var(--fw-glow),
-    0 0 42px var(--fw-glow);
-  transform: translate(-50%, -50%);
-  animation: launch-shell-core var(--fw-cycle, 3s) ease-out infinite;
-  animation-delay: inherit;
-  animation-duration: inherit;
-}
-
-.launch-gate__fw-spark {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--fw-core) 28%, var(--fw-mid) 62%, transparent 78%);
-  box-shadow: 0 0 10px var(--fw-glow);
-  animation-name: launch-fw-spark;
-  animation-timing-function: cubic-bezier(0.12, 0.7, 0.25, 1);
-  animation-iteration-count: infinite;
-}
-
 .launch-gate.is-open .launch-gate__haze {
   background:
-    linear-gradient(180deg, rgba(7, 5, 4, 0.28) 0%, rgba(7, 5, 4, 0.08) 28%, rgba(7, 5, 4, 0.72) 100%),
-    radial-gradient(ellipse at 50% 22%, rgba(255, 180, 90, 0.22), transparent 58%);
+    linear-gradient(180deg, rgba(7, 5, 4, 0.38) 0%, rgba(7, 5, 4, 0.1) 30%, rgba(7, 5, 4, 0.58) 100%),
+    radial-gradient(ellipse at 50% 42%, rgba(180, 70, 20, 0.22), transparent 58%);
 }
 
 .launch-gate.is-open .launch-gate__vignette {
-  background: radial-gradient(ellipse at center, transparent 48%, rgba(0, 0, 0, 0.42) 100%);
+  background: radial-gradient(ellipse at center, transparent 46%, rgba(0, 0, 0, 0.52) 100%);
 }
 
 .launch-gate.is-open .launch-gate__bg--open.is-active {
-  filter: saturate(1.2) contrast(1.08) brightness(0.88);
+  filter: saturate(1.08) contrast(1.1) brightness(0.78);
+  object-position: center 38%;
 }
 
 .launch-gate.is-open .launch-gate__rays {
-  opacity: 1;
+  opacity: 0.72;
   animation: launch-rays-open 8s ease-in-out infinite alternate;
 }
 
 .launch-gate.is-open .launch-gate__glow--c {
-  opacity: 0.85;
+  opacity: 0.7;
   animation: launch-pulse 3.2s ease-in-out infinite;
 }
 
 .launch-gate.is-open .launch-gate__kicker {
   color: #f0d48a;
-  text-shadow: 0 0 24px rgba(255, 214, 140, 0.55);
+  text-shadow: 0 0 24px rgba(255, 160, 80, 0.5);
 }
 
 .launch-gate.is-open .launch-gate__title {
   text-shadow:
-    0 0 48px rgba(255, 214, 140, 0.42),
-    0 8px 30px rgba(0, 0, 0, 0.55);
+    0 0 48px rgba(255, 160, 80, 0.32),
+    0 8px 30px rgba(0, 0, 0, 0.65);
 }
 
 .launch-gate__actions.is-emphasis .btn.ui-button:not(.ghost) {
@@ -1032,22 +928,6 @@
   }
 }
 
-@keyframes launch-heroes-in {
-  from {
-    opacity: 0;
-    transform: translateY(28px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes launch-heroes-sway {
-  from { transform: translate3d(0, 3px, 0); }
-  to { transform: translate3d(0, -3px, 0); }
-}
-
 @keyframes launch-drift {
   from { transform: scale(1.06) translate3d(0, 0, 0); }
   to { transform: scale(1.12) translate3d(-1.4%, 1.2%, 0); }
@@ -1086,6 +966,28 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes launch-assault-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-14%, 28px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(4%, 0, 0) scale(1);
+  }
+}
+
+@keyframes launch-assault-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(14%, 28px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-4%, 0, 0) scale(1);
   }
 }
 
@@ -1148,47 +1050,6 @@
   100% { transform: scale(1.55); opacity: 0; }
 }
 
-@keyframes launch-shockwave {
-  0% { width: 24px; height: 24px; opacity: 0.9; }
-  100% { width: 520px; height: 520px; opacity: 0; }
-}
-
-@keyframes launch-flare {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
-  25% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.1); }
-}
-
-@keyframes launch-shell-pulse {
-  0%, 100% { opacity: 1; }
-}
-
-@keyframes launch-shell-core {
-  0%, 8% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-  14% { opacity: 1; transform: translate(-50%, -50%) scale(1.35); }
-  42% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.7); }
-  70%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-}
-
-@keyframes launch-fw-spark {
-  0%, 8% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.25);
-  }
-  14% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.15);
-  }
-  55% {
-    opacity: 0.85;
-    transform: translate(calc(-50% + var(--fw-x)), calc(-50% + var(--fw-y) + 18px)) scale(0.85);
-  }
-  85%, 100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--fw-x) * 1.05), calc(-50% + var(--fw-y) + 56px)) scale(0.15);
-  }
-}
-
 @keyframes launch-cta-pulse {
   0%, 100% { filter: brightness(1); transform: translateY(0); }
   50% { filter: brightness(1.28); transform: translateY(-2px); text-shadow: 0 0 16px orange; }
@@ -1199,50 +1060,6 @@
     width: min(100%, 980px);
     height: 100%;
     padding: 28px clamp(16px, 3vw, 32px);
-  }
-
-  .launch-gate__heroes {
-    display: none;
-  }
-
-  .launch-gate__tableau.is-held {
-    width: min(100%, 44rem);
-    aspect-ratio: auto;
-    height: auto;
-    place-items: center;
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__panel {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: min(100%, 44rem);
-    height: auto;
-    max-width: 100%;
-    margin: 0;
-    padding: clamp(24px, 3vw, 40px) clamp(18px, 3vw, 36px);
-    gap: 16px;
-    border-color: rgba(255, 214, 140, 0.42);
-    border-radius: 8px;
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__title {
-    max-width: 14ch;
-    font-size: clamp(2.2rem, 6vw, 4rem);
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__subtitle {
-    max-width: 34ch;
-    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__finale {
-    min-height: 72px;
-  }
-
-  .launch-gate.is-open .launch-gate__panel-corner,
-  .launch-gate.is-open .launch-gate__panel-rim {
-    opacity: 1;
   }
 
   .launch-gate__champion.is-left-front,
@@ -1273,18 +1090,6 @@
 
   .launch-gate.is-open .launch-gate__stage {
     padding: 28px 16px;
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__panel {
-    padding: 24px 18px;
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__title {
-    font-size: clamp(2.2rem, 10vw, 3.4rem);
-  }
-
-  .launch-gate__tableau.is-held .launch-gate__subtitle {
-    font-size: clamp(0.95rem, 3.4vw, 1.1rem);
   }
 
   .launch-gate__panel {
@@ -1337,24 +1142,28 @@
   .launch-gate__block.is-tick,
   .launch-gate__finale,
   .launch-gate__finale-ring,
-  .launch-gate__shockwave,
-  .launch-gate__flare,
-  .launch-gate__shell,
-  .launch-gate__shell-core,
-  .launch-gate__fw-spark,
   .launch-gate__panel,
   .launch-gate.is-open .launch-gate__panel,
   .launch-gate__panel-glow,
   .launch-gate__panel-rim,
   .launch-gate__panel-sheen,
-  .launch-gate__heroes,
-  .launch-gate__heroes-img,
+  .launch-gate__champion,
   .launch-gate__actions.is-emphasis .btn.ui-button:not(.ghost) {
     animation: none !important;
   }
 
+  .launch-gate.is-entering .launch-gate__roster,
+  .launch-gate.is-entering .launch-gate__locale,
+  .launch-gate.is-entering .launch-gate__stage,
+  .launch-gate.is-entering .launch-gate__rays,
+  .launch-gate.is-entering .launch-gate__glow,
+  .launch-gate.is-entering .launch-gate__haze,
+  .launch-gate.is-entering .launch-gate__vignette,
+  .launch-gate.is-entering .launch-gate__particles {
+    transition: none;
+  }
+
   .launch-gate__spark,
-  .launch-gate__fireworks,
   .launch-gate__panel-sheen {
     display: none;
   }
