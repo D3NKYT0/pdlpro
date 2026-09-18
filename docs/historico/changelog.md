@@ -8,12 +8,21 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.3] - 2026-09-18
+
+Comandos de máquina do PDL 1 no `setup.sh` da release: Nginx e FTP, cada um
+num arquivo só, consolidados em **18 de setembro de 2026**.
+
 ### Adicionado
 
 - `./setup.sh nginx` instala o Nginx da máquina e grava um único site
   (`scripts/nginx/pdlpro.conf.template`) com HTTP, HTTPS, WebSocket e ACME.
   Let's Encrypt entra com `certbot certonly --webroot` e não reescreve o arquivo.
   No PDL 1 isso era `install-nginx.sh` + `nginx-proxy.sh`.
+- `./setup.sh ftp` instala o vsftpd e grava um único `vsftpd.conf`
+  (`scripts/ftp/vsftpd.conf.template`) para o launcher. `--http` publica a
+  mesma pasta com index no Nginx. No PDL 1 isso era `setup-ftp.sh` +
+  `setup-nginx-launcher.sh`.
 
 ## [2.5.2] - 2026-09-18
 

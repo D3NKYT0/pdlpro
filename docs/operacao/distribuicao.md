@@ -33,7 +33,7 @@ curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh
 bash install.sh --domain painel.exemplo.com --yes
 ```
 
-Opções úteis: `--version 2.5.2`, `--dir /opt/pdlpro`, `--port 8080`,
+Opções úteis: `--version 2.5.3`, `--dir /opt/pdlpro`, `--port 8080`,
 `--no-start`. Sem `--yes` o script pede o domínio e confirma.
 
 O instalador configura o `.env` (equivalente a
@@ -70,8 +70,9 @@ cd /opt/pdlpro
 ./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
 ```
 
-O proxy aponta para `http://127.0.0.1:8080` (ou a porta do `.env`). Detalhe em
-[Implantação](implantacao.md).
+O proxy aponta para `http://127.0.0.1:8080` (ou a porta do `.env`). Para o
+launcher: `./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com`.
+Detalhe em [Implantação](implantacao.md).
 2. Crie o administrador:
 
 ```bash
@@ -91,7 +92,7 @@ versão pedida.
 ```bash
 cd /opt/pdlpro
 ./setup.sh backup
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --version 2.5.2 --yes
+bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --version 2.5.3 --yes
 ```
 
 Não misture um clone Git que constrói imagens locais com um diretório

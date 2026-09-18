@@ -89,7 +89,7 @@ Os marcadores `unit`, `integration` e `architecture` estão registrados no Pytes
 | Área | Referências |
 | --- | --- |
 | DI, admin e OpenAPI | [common/tests](../../backend/common/tests/) |
-| Release e instaladores | [test_release_packaging.py](../../backend/common/tests/test_release_packaging.py), [test_configure_env.py](../../backend/common/tests/test_configure_env.py), [test_nginx_proxy.py](../../backend/common/tests/test_nginx_proxy.py) |
+| Release e instaladores | [test_release_packaging.py](../../backend/common/tests/test_release_packaging.py), [test_configure_env.py](../../backend/common/tests/test_configure_env.py), [test_nginx_proxy.py](../../backend/common/tests/test_nginx_proxy.py), [test_ftp.py](../../backend/common/tests/test_ftp.py) |
 | Sessão, e-mail e progresso | [accounts/tests](../../backend/apps/accounts/tests/) |
 | Carteira e comércio | [shop/tests](../../backend/apps/shop/tests/), [payment/tests](../../backend/apps/payment/tests/), [auction/tests](../../backend/apps/auction/tests/) |
 | Itens, vínculos e SQL | [server/tests](../../backend/apps/server/tests/), [inventory/tests](../../backend/apps/inventory/tests/) |

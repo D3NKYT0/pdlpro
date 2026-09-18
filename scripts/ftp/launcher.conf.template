@@ -1,0 +1,61 @@
+# PDL PRO — listagem HTTP do launcher (opção --http do ./setup.sh ftp).
+#   domain     {{domain}}
+#   directory  {{directory}}
+#   ssl        {{ssl}}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{domain}};
+
+    root {{directory}};
+    index index.html index.htm;
+    autoindex on;
+    autoindex_exact_size off;
+    autoindex_localtime on;
+    client_max_body_size 100M;
+
+    location /.well-known/acme-challenge/ {
+        root {{web_root}};
+    }
+
+{{#ssl}}
+    location / {
+        return 301 https://$host$request_uri;
+    }
+{{/ssl}}
+{{#http}}
+    location / {
+        try_files $uri $uri/ =404;
+        add_header X-Content-Type-Options nosniff always;
+        add_header X-Frame-Options SAMEORIGIN always;
+    }
+{{/http}}
+}
+
+{{#ssl}}
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name {{domain}};
+
+    ssl_certificate     {{ssl_cert}};
+    ssl_certificate_key {{ssl_key}};
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    root {{directory}};
+    index index.html index.htm;
+    autoindex on;
+    autoindex_exact_size off;
+    autoindex_localtime on;
+    client_max_body_size 100M;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options SAMEORIGIN always;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+{{/ssl}}

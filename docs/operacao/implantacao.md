@@ -193,6 +193,17 @@ com os mesmos cabeçalhos. Depois acesse `https://painel.exemplo.com` e crie o a
 docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
 ```
 
+O launcher (arquivos para download) usa o mesmo estilo: um comando e um
+`vsftpd.conf`. Sem flags o assistente pergunta pasta, usuário e senha.
+
+```bash
+./setup.sh ftp --yes --password-file /root/ftp.secret
+./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
+```
+
+`--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`), sem
+misturar com o site do painel. FTPS opcional: `--ftps`.
+
 ## Atualizações
 
 Faça backup antes de aplicar uma nova versão:
