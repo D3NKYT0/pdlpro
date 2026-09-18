@@ -6,11 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent 
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
-  BadgeCheck,
-  Camera,
-  CircleUserRound,
   Coins,
-  Mail,
   Save,
   ShieldCheck,
   Sparkles,
@@ -19,6 +15,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { AchievementGrid } from '../components/AchievementGrid'
+import { ProfileHero } from '../components/profile/ProfileHero'
 import { useAuth } from '../contexts/AuthContext'
 import { authApi } from '../services/api'
 
@@ -94,31 +91,21 @@ export function ProfilePage() {
 
   return (
     <div className="user-profile-page">
-      <Card className="user-profile-hero">
-        <div className="user-profile-cover" />
-        <div className="user-profile-identity">
-          <button className="user-profile-avatar" type="button" onClick={() => fileInput.current?.click()} aria-label={t('profile.changeAvatar')}>
-            {avatarPreview ? <img src={avatarPreview} alt={t('profile.avatarAlt', { username: user?.username })} /> : <CircleUserRound aria-hidden="true" />}
-            <span><Camera aria-hidden="true" /></span>
-          </button>
-          <div>
-            <span className="panel-eyebrow">{t('profile.eyebrow')}</span>
-            <h1>{displayName || user?.username}</h1>
-            <p>@{user?.username}</p>
-          </div>
-          <div className={`user-profile-verified ${user?.is_email_verified ? 'is-verified' : ''}`}>
-            {user?.is_email_verified ? <BadgeCheck aria-hidden="true" /> : <Mail aria-hidden="true" />}
-            <span>{user?.is_email_verified ? t('profile.verifiedAccount') : t('profile.emailPending')}</span>
-          </div>
-        </div>
-      </Card>
+      <ProfileHero
+        user={user}
+        displayName={displayName}
+        bio={bio}
+        avatarPreview={avatarPreview}
+        onPickAvatar={() => fileInput.current?.click()}
+        progress={progress.data}
+      />
 
       <div className="user-profile-layout">
         <div className="user-profile-main">
           <Card className="user-profile-completeness">
             <div className="user-profile-section-title">
               <span><Sparkles aria-hidden="true" /></span>
-              <div><span className="panel-eyebrow">{t('profile.personalization')}</span><h2>{t('profile.completenessTitle')}</h2></div>
+              <div><span className="panel-eyebrow">{t('profile.hearth')}</span><h2>{t('profile.completenessTitle')}</h2></div>
               <strong>{completeness}%</strong>
             </div>
             <div className="progress-bar"><i style={{ width: `${completeness}%` }} /></div>

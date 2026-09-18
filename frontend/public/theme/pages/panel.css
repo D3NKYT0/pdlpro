@@ -4653,6 +4653,265 @@ html.pdl-panel .panel-welcome {
     var(--theme-art-bg-3) center 38% / cover no-repeat;
 }
 
+html.pdl-panel .panel-welcome.dashboard-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.7fr);
+  align-items: center;
+  gap: 24px;
+  min-height: 248px;
+  padding-right: clamp(20px, 2.4vw, 28px);
+}
+
+html.pdl-panel .dashboard-hero-identity {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+
+html.pdl-panel .dashboard-hero-avatar {
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  object-fit: cover;
+  border: 1px solid rgba(230, 199, 125, 0.38);
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  background: rgba(8, 7, 5, 0.8);
+}
+
+html.pdl-panel .dashboard-hero-avatar.is-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .dashboard-hero-avatar.is-fallback svg {
+  width: 48px;
+  height: 48px;
+}
+
+html.pdl-panel .dashboard-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+html.pdl-panel .dashboard-hero-status {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html.pdl-panel .dashboard-hero-status li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(218, 174, 81, 0.18);
+  background: rgba(5, 5, 5, 0.52);
+}
+
+html.pdl-panel .dashboard-hero-status svg {
+  width: 16px;
+  height: 16px;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .dashboard-hero-status span {
+  color: rgba(239, 224, 194, 0.62);
+  font-size: 12px;
+}
+
+html.pdl-panel .dashboard-hero-status b,
+html.pdl-panel .dashboard-hero-status strong {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .dashboard-hero-status .is-on,
+html.pdl-panel .dashboard-summary-card .is-on,
+html.pdl-panel .dashboard-roster-card .is-on {
+  color: #8fd19e;
+}
+
+html.pdl-panel .dashboard-hero-status .is-off,
+html.pdl-panel .dashboard-roster-card .is-off {
+  color: #d6a767;
+}
+
+html.pdl-panel .dashboard-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+html.pdl-panel .dashboard-summary-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 118px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background:
+    linear-gradient(160deg, rgba(12, 10, 8, 0.92), rgba(12, 10, 8, 0.72)),
+    var(--theme-art-bg-2) center / cover no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .dashboard-summary-card[data-art="wallet"] {
+  background-image:
+    linear-gradient(160deg, rgba(12, 10, 8, 0.9), rgba(12, 10, 8, 0.7)),
+    var(--theme-art-bg-4);
+}
+
+html.pdl-panel .dashboard-summary-card[data-art="games"],
+html.pdl-panel .dashboard-summary-card[data-art="bag"] {
+  background-image:
+    linear-gradient(160deg, rgba(12, 10, 8, 0.9), rgba(12, 10, 8, 0.7)),
+    var(--theme-art-games-fishing);
+}
+
+html.pdl-panel .dashboard-summary-card[data-art="characters"],
+html.pdl-panel .dashboard-summary-card[data-art="accounts"] {
+  background-image:
+    linear-gradient(160deg, rgba(12, 10, 8, 0.88), rgba(12, 10, 8, 0.68)),
+    var(--theme-art-bg-3);
+}
+
+html.pdl-panel .dashboard-summary-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(230, 199, 125, 0.22);
+  background: rgba(197, 161, 97, 0.08);
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .dashboard-summary-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+html.pdl-panel .dashboard-summary-card span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+html.pdl-panel .dashboard-summary-card small {
+  color: rgba(239, 224, 194, 0.58);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .dashboard-summary-card strong {
+  color: var(--panel-text);
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
+html.pdl-panel .dashboard-summary-card em {
+  color: rgba(239, 224, 194, 0.48);
+  font-size: 12px;
+  font-style: normal;
+}
+
+html.pdl-panel .dashboard-roster-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+html.pdl-panel .dashboard-roster-heading h2 {
+  margin: 4px 0 0;
+}
+
+html.pdl-panel .dashboard-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .dashboard-roster-card {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 16px 12px 14px;
+  border: 1px solid rgba(218, 174, 81, 0.16);
+  background:
+    linear-gradient(180deg, rgba(18, 14, 10, 0.2), rgba(8, 7, 5, 0.88)),
+    var(--theme-art-bg-4) center 20% / cover no-repeat;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+html.pdl-panel .dashboard-roster-card.is-online {
+  border-color: rgba(111, 191, 115, 0.32);
+}
+
+html.pdl-panel .dashboard-roster-card span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+html.pdl-panel .dashboard-roster-card strong {
+  overflow-wrap: anywhere;
+}
+
+html.pdl-panel .dashboard-roster-card small,
+html.pdl-panel .dashboard-roster-card b {
+  color: rgba(239, 224, 194, 0.52);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .shortcut-card[data-art="games"] {
+  background-image:
+    linear-gradient(120deg, rgba(12, 10, 8, 0.94), rgba(12, 10, 8, 0.78)),
+    var(--theme-art-games-fishing);
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="wallet"] {
+  background-image:
+    linear-gradient(120deg, rgba(12, 10, 8, 0.94), rgba(12, 10, 8, 0.78)),
+    var(--theme-art-bg-4);
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="accounts"],
+html.pdl-panel .shortcut-card[data-art="inventory"] {
+  background-image:
+    linear-gradient(120deg, rgba(12, 10, 8, 0.94), rgba(12, 10, 8, 0.8)),
+    var(--theme-art-bg-3);
+  background-size: cover;
+  background-position: center;
+}
+
 html.pdl-panel .panel-welcome::after {
   position: absolute;
   right: -80px;
@@ -14157,43 +14416,128 @@ html.pdl-panel .security-cookie-version { margin: 0; font-size: 0.75rem; }
   html.pdl-panel .security-legal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-html.pdl-panel .user-profile-hero {
-  padding: 0;
+html.pdl-panel .card.user-profile-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.7fr);
+  align-items: end;
+  gap: 24px;
+  min-height: 228px;
   overflow: hidden;
-}
-
-html.pdl-panel .user-profile-cover {
-  height: 170px;
+  padding: clamp(20px, 2.4vw, 28px);
   background:
-    linear-gradient(110deg, rgba(25, 17, 8, 0.28), rgba(5, 5, 5, 0.72)),
-    radial-gradient(circle at 22% 35%, rgba(221, 174, 76, 0.52), transparent 32%),
-    url('/theme/default/images/bg/5.jpg') center 36% / cover;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.3);
+    linear-gradient(105deg, rgba(12, 10, 8, 0.94) 0%, rgba(12, 10, 8, 0.78) 46%, rgba(12, 10, 8, 0.38) 100%),
+    radial-gradient(ellipse at 12% 86%, rgba(218, 174, 81, 0.28), transparent 46%),
+    var(--theme-art-bg-2) right 32% / cover no-repeat;
 }
 
-html.pdl-panel .user-profile-identity {
-  min-height: 122px;
+html.pdl-panel .user-profile-hero::after {
+  position: absolute;
+  right: -72px;
+  bottom: -80px;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(197, 161, 97, 0.14);
+  border-radius: 50%;
+  content: '';
+  box-shadow: inset 0 0 0 28px rgba(197, 161, 97, 0.02), inset 0 0 0 78px rgba(197, 161, 97, 0.02);
+  pointer-events: none;
+}
+
+html.pdl-panel .user-profile-hero-main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+
+html.pdl-panel .user-profile-hero-copy h1 {
+  margin: 4px 0 0;
+}
+
+html.pdl-panel .user-profile-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 6px 0 0;
+  color: rgba(239, 224, 194, 0.62);
+  font-size: 13px;
+}
+
+html.pdl-panel .user-profile-hero-meta b {
+  color: rgba(240, 210, 140, 0.86);
+  font-weight: 600;
+}
+
+html.pdl-panel .user-profile-hero-bio {
+  max-width: 48ch;
+  margin: 10px 0 0;
+  color: rgba(239, 224, 194, 0.8);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+html.pdl-panel .user-profile-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+html.pdl-panel .user-profile-hero-facts {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html.pdl-panel .user-profile-hero-facts li {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 22px;
-  padding: 0 28px 24px;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(218, 174, 81, 0.18);
+  background: rgba(5, 5, 5, 0.52);
+}
+
+html.pdl-panel .user-profile-hero-facts svg {
+  width: 16px;
+  height: 16px;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .user-profile-hero-facts span {
+  color: rgba(239, 224, 194, 0.62);
+  font-size: 12px;
+}
+
+html.pdl-panel .user-profile-hero-facts strong {
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
 html.pdl-panel .user-profile-avatar {
   position: relative;
-  width: 132px;
-  height: 132px;
-  margin-top: -54px;
+  width: 112px;
+  height: 112px;
   display: grid;
   place-items: center;
   overflow: hidden;
   padding: 0;
   color: #dcb765;
   background: #11100d;
-  border: 4px solid #d6ad55;
+  border: 3px solid #d6ad55;
   border-radius: 50%;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(218, 174, 81, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(218, 174, 81, 0.22);
   cursor: pointer;
 }
 
@@ -14228,15 +14572,6 @@ html.pdl-panel .user-profile-avatar:focus-visible > span {
 html.pdl-panel .user-profile-avatar > span svg {
   width: 18px;
   height: 18px;
-}
-
-html.pdl-panel .user-profile-identity h1 {
-  margin: 2px 0 0;
-}
-
-html.pdl-panel .user-profile-identity p {
-  margin: 2px 0 0;
-  color: rgba(239, 224, 194, 0.62);
 }
 
 html.pdl-panel .user-profile-verified {
@@ -14315,6 +14650,12 @@ html.pdl-panel .user-profile-section-title > strong {
 
 html.pdl-panel .user-profile-section-title.compact {
   grid-template-columns: auto 1fr;
+}
+
+html.pdl-panel .user-profile-completeness {
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(232, 186, 92, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(31, 26, 19, 0.95), rgba(17, 14, 11, 0.96));
 }
 
 html.pdl-panel .user-profile-completeness .progress-bar {
@@ -14444,27 +14785,32 @@ html.pdl-panel .panel-user-copy {
 }
 
 @media (max-width: 900px) {
-  html.pdl-panel .user-profile-layout {
+  html.pdl-panel .user-profile-layout,
+  html.pdl-panel .card.user-profile-hero {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 620px) {
-  html.pdl-panel .user-profile-cover {
-    height: 120px;
-  }
-
-  html.pdl-panel .user-profile-identity {
+  html.pdl-panel .user-profile-hero-main {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    gap: 12px;
-    padding: 0 18px 22px;
+  }
+
+  html.pdl-panel .user-profile-hero-meta,
+  html.pdl-panel .user-profile-hero-actions {
+    justify-content: center;
+  }
+
+  html.pdl-panel .user-profile-hero-bio {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   html.pdl-panel .user-profile-avatar {
-    width: 112px;
-    height: 112px;
+    width: 104px;
+    height: 104px;
   }
 
   html.pdl-panel .user-profile-section-title {
@@ -15120,6 +15466,20 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .panel-welcome {
     min-height: 170px;
     padding-right: 24px;
+  }
+
+  html.pdl-panel .panel-welcome.dashboard-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  html.pdl-panel .dashboard-hero-identity {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .dashboard-summary-grid,
+  html.pdl-panel .dashboard-roster-grid {
+    grid-template-columns: 1fr;
   }
 
   html.pdl-panel .panel-welcome::after {

@@ -6,17 +6,26 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
-import { authApi, programsApi, serverApi } from '../services/api'
+import { authApi, gamesApi, lineageApi, programsApi, serverApi, walletApi } from '../services/api'
 import i18n from '../i18n'
 import { PainelPage } from './PainelPage'
 
 const session = vi.hoisted(() => ({
-  user: { id: 'u1', username: 'denky', display_name: 'Denky' },
+  user: { id: 'u1', username: 'denky', display_name: 'Denky', fichas: 8, is_email_verified: true, is_2fa_enabled: false },
   refreshUser: vi.fn(),
 }))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('../services/domain/programs.service', () => ({ programsApi: { resources: vi.fn() } }))
 vi.mock('../services/domain/server.service', () => ({ serverApi: { status: vi.fn() } }))
+vi.mock('../services/domain/wallet.service', () => ({ walletApi: { me: vi.fn() } }))
+vi.mock('../services/domain/lineage.service', async original => ({
+  ...await original<object>(),
+  lineageApi: { accounts: vi.fn(), characters: vi.fn() },
+}))
+vi.mock('../services/domain/games.service', async original => ({
+  ...await original<object>(),
+  gamesApi: { bag: vi.fn() },
+}))
 vi.mock('../services/domain/auth.service', async original => ({
   ...await original<object>(),
   authApi: { progress: vi.fn(), claimReward: vi.fn() },
@@ -52,6 +61,37 @@ beforeEach(() => {
   vi.mocked(programsApi.resources).mockResolvedValue([])
   vi.mocked(serverApi.status).mockResolvedValue({ game_online: true, login_online: false, players_online: 42 })
   vi.mocked(authApi.progress).mockResolvedValue(profile)
+  vi.mocked(walletApi.me).mockResolvedValue({ id: 'w1', balance: '12.50', bonus_balance: '1.00' })
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  })
+  vi.mocked(lineageApi.characters).mockResolvedValue([
+    {
+      char_id: 7,
+      name: 'SirDenky',
+      level: 80,
+      online: true,
+      sex: 0,
+      pvp: 0,
+      pk: 0,
+      class_id: 88,
+      title: '',
+      clan_name: '',
+      is_clan_leader: false,
+      karma: 0,
+      adena: 0,
+      online_time: 0,
+      last_access: 0,
+      clan_id: 0,
+      ally_id: 0,
+      ally_name: '',
+      clan_crest_base64: '',
+      ally_crest_base64: '',
+    },
+  ])
+  vi.mocked(gamesApi.bag).mockResolvedValue([{ item_id: 57, item_name: 'Adena', quantity: 10, enchant: 0 }])
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 
@@ -70,10 +110,20 @@ it('apresenta saudação, status do servidor e atalhos habilitados', async () =>
   expect(screen.getByRole('heading', { name: 'Olá, Denky' })).toBeVisible()
   expect(screen.getByText('Jogadores online')).toBeVisible()
   expect(await screen.findByText('42')).toBeVisible()
-  expect(screen.getByText('Online')).toBeVisible()
+  expect(screen.getAllByText('Online').length).toBeGreaterThan(0)
   expect(screen.getByText('Offline')).toBeVisible()
-  expect(screen.getByRole('link', { name: /Carteira/ })).toHaveAttribute('href', '/panel/wallet')
+  expect(screen.getByRole('link', { name: /Saldo, PIX/ })).toHaveAttribute('href', '/panel/wallet')
   expect(screen.queryByRole('link', { name: /Conquistas/ })).not.toBeInTheDocument()
+})
+
+it('mostra o resumo da conta, retrato do personagem e atalho do perfil', async () => {
+  mount()
+  expect(await screen.findByRole('region', { name: 'Resumo da conta' })).toBeVisible()
+  expect(screen.getByRole('link', { name: /Abrir meu perfil/ })).toHaveAttribute('href', '/panel/profile')
+  expect(await screen.findByText('12.50')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Seus personagens' })).toBeVisible()
+  expect(await screen.findByText('SirDenky')).toBeVisible()
+  expect(screen.getByRole('link', { name: /SirDenky/ })).toHaveAttribute('href', '/panel/accounts/denky/7')
 })
 
 it('mostra nível, prêmios da conta e conquistas no próprio painel', async () => {
@@ -136,12 +186,15 @@ it('esconde progresso e o atalho do recurso pausado', async () => {
   vi.mocked(programsApi.resources).mockResolvedValue([
     { code: 'wallet', enabled: false },
     { code: 'progress', enabled: false },
+    { code: 'accounts', enabled: false },
+    { code: 'games', enabled: false },
   ] as Awaited<ReturnType<typeof programsApi.resources>>)
   mount()
-  await waitFor(() => expect(screen.queryByRole('link', { name: /Carteira/ })).not.toBeInTheDocument())
-  expect(screen.getByRole('link', { name: /Meu perfil/ })).toBeVisible()
+  await waitFor(() => expect(screen.queryByRole('link', { name: /Saldo, PIX/ })).not.toBeInTheDocument())
+  expect(screen.getByRole('link', { name: /Avatar, nome/ })).toBeVisible()
   expect(screen.queryByRole('heading', { name: 'Seu progresso' })).not.toBeInTheDocument()
   expect(screen.queryByRole('heading', { name: 'Conquistas' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: 'Seus personagens' })).not.toBeInTheDocument()
 })
 
 it('traduz saudação, status e atalhos no idioma ativo', async () => {
@@ -153,4 +206,5 @@ it('traduz saudação, status e atalhos no idioma ativo', async () => {
   expect(screen.getByRole('heading', { name: 'Continue your adventure' })).toBeVisible()
   expect(screen.getByText('Balance, PIX and transfers')).toBeVisible()
   expect(await screen.findByRole('heading', { name: 'Your progress' })).toBeVisible()
+  expect(screen.getByRole('region', { name: 'Account summary' })).toBeVisible()
 })

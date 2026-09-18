@@ -1,124 +1,38 @@
-import { Card } from '../components/ui/Card'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import {
-  ArrowUpRight,
-  Gamepad2,
-  KeyRound,
-  Package,
-  Server,
-  ShoppingBag,
-  SlidersHorizontal,
-  UserRoundCog,
-  CircleUserRound,
-  Users,
-  WalletCards,
-  type LucideIcon,
-} from 'lucide-react'
 import { AchievementGrid } from '../components/AchievementGrid'
+import { DashboardHero } from '../components/dashboard/DashboardHero'
+import { DashboardRoster } from '../components/dashboard/DashboardRoster'
+import { DashboardShortcuts } from '../components/dashboard/DashboardShortcuts'
+import { DashboardSummary } from '../components/dashboard/DashboardSummary'
+import { usePanelDashboard } from '../components/dashboard/usePanelDashboard'
 import { AccountProgress } from '../components/progress/AccountProgress'
-import { useAuth } from '../contexts/AuthContext'
-import { canAccessStaff } from '../lib/staff'
-import { authApi, programsApi, serverApi } from '../services/api'
 import { ExtensionSlotOutlet } from '../extensions'
 
-const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: string }> = [
-  { to: '/panel/profile', key: 'profile', icon: CircleUserRound, resource: 'profile' },
-  { to: '/panel/accounts', key: 'accounts', icon: UserRoundCog, resource: 'accounts' },
-  { to: '/panel/inventory', key: 'inventory', icon: Package, resource: 'inventory' },
-  { to: '/panel/wallet', key: 'wallet', icon: WalletCards, resource: 'wallet' },
-  { to: '/panel/shop', key: 'shop', icon: ShoppingBag, resource: 'shop' },
-  { to: '/panel/games', key: 'games', icon: Gamepad2, resource: 'games' },
-]
-
 export function PainelPage() {
-  const { t } = useTranslation('panel')
-  const { user } = useAuth()
-  const resources = useQuery({
-    queryKey: ['resources'],
-    queryFn: programsApi.resources,
-    staleTime: 15000,
-  })
-  const resourceEnabled = (code?: string) =>
-    !code || !resources.data?.some((r) => r.code === code && !r.enabled)
-  const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
-  const progressEnabled = Boolean(user) && resourceEnabled('progress')
-  const progress = useQuery({
-    queryKey: ['progress'],
-    queryFn: authApi.progress,
-    enabled: progressEnabled,
-  })
-  const baseShortcuts = shortcuts.filter((item) => resourceEnabled(item.resource))
-  const dashboardShortcuts = canAccessStaff(user)
-    ? [...baseShortcuts, { to: '/panel/admin', key: 'admin', icon: SlidersHorizontal }]
-    : baseShortcuts
+  const dash = usePanelDashboard()
 
   return (
     <div className="grid panel-dashboard">
-      <Card className="panel-welcome">
-        <span className="panel-eyebrow">{t('dashboard.eyebrow')}</span>
-        <h1>{t('dashboard.greeting', { name: user?.display_name || user?.username })}</h1>
-        <p className="muted">{t('dashboard.subtitle')}</p>
-      </Card>
-
-      <section className="grid cols-3 panel-status-grid" aria-label={t('dashboard.statusAria')}>
-        <Card as="article" className="status-card">
-          <Server aria-hidden="true" />
-          <div className="status-copy">
-            <span className="muted">{t('dashboard.gameServer')}</span>
-            <div className={status.data?.game_online ? 'badge' : 'badge off'}>
-              {status.data?.game_online ? t('dashboard.online') : t('dashboard.offline')}
-            </div>
-          </div>
-        </Card>
-        <Card as="article" className="status-card">
-          <KeyRound aria-hidden="true" />
-          <div className="status-copy">
-            <span className="muted">{t('dashboard.loginServer')}</span>
-            <div className={status.data?.login_online ? 'badge' : 'badge off'}>
-              {status.data?.login_online ? t('dashboard.online') : t('dashboard.offline')}
-            </div>
-          </div>
-        </Card>
-        <Card as="article" className="status-card">
-          <Users aria-hidden="true" />
-          <div className="status-copy">
-            <span className="muted">{t('dashboard.playersOnline')}</span>
-            <div className="stat">{status.data?.players_online ?? 0}</div>
-          </div>
-        </Card>
-      </section>
-
-      {progressEnabled ? <AccountProgress profile={progress.data} /> : null}
-
-      {progressEnabled ? <AchievementGrid achievements={progress.data?.achievements ?? []} showRewardsLink={false} /> : null}
-
-      <section className="panel-section-heading">
-        <div>
-          <span className="panel-eyebrow">{t('dashboard.quickAccessEyebrow')}</span>
-          <h2>{t('dashboard.quickAccessTitle')}</h2>
-        </div>
-      </section>
-
-      <section className="grid cols-3 panel-shortcuts">
-        {dashboardShortcuts.map((item) => {
-          const Icon = item.icon
-          return (
-            <Link className="card shortcut-card" key={item.to} to={item.to}>
-              <span className="shortcut-icon">
-                <Icon aria-hidden="true" />
-              </span>
-              <span className="shortcut-copy">
-                <h3>{t(`dashboard.shortcuts.${item.key}.label`)}</h3>
-                <p className="muted">{t(`dashboard.shortcuts.${item.key}.text`)}</p>
-              </span>
-              <ArrowUpRight className="shortcut-arrow" aria-hidden="true" />
-            </Link>
-          )
-        })}
-      </section>
-
+      <DashboardHero user={dash.user} status={dash.status} gamesEnabled={dash.gamesEnabled} />
+      <DashboardSummary
+        user={dash.user}
+        progress={dash.progress}
+        progressEnabled={dash.progressEnabled}
+        wallet={dash.wallet}
+        walletEnabled={dash.walletEnabled}
+        accountsCount={dash.accountsCount}
+        accountsEnabled={dash.accountsEnabled}
+        rosterTotal={dash.rosterTotal}
+        bagCount={dash.bagCount}
+        gamesEnabled={dash.gamesEnabled}
+      />
+      {dash.accountsEnabled ? (
+        <DashboardRoster login={dash.selectedLogin} characters={dash.roster} pending={dash.accountsPending} />
+      ) : null}
+      {dash.progressEnabled ? <AccountProgress profile={dash.progress} /> : null}
+      {dash.progressEnabled ? (
+        <AchievementGrid achievements={dash.progress?.achievements ?? []} showRewardsLink={false} />
+      ) : null}
+      <DashboardShortcuts items={dash.dashboardShortcuts} />
       <ExtensionSlotOutlet slot="panel.dashboard" />
     </div>
   )

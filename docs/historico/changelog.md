@@ -32,6 +32,10 @@ webhooks e TLS opcional no MySQL do Lineage, consolidados em **18 de setembro de
 - O configurador de produção preenche `PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY`
   se estiverem ausentes ou fracas, sem reescrever chaves já fortes ao rotacionar a
   `SECRET_KEY`.
+- O índice `/panel` passa a ser o hall da conta: arte, retratos, saldo, bag, logins L2
+  e proteção, além do progresso e das conquistas.
+- `/panel/profile` coloca identidade, recado e números da jornada sobre a capa, com
+  atalho para segurança.
 
 ### Corrigido
 
