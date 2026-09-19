@@ -17,7 +17,7 @@ export function DashboardHero({
   const name = user?.display_name || user?.username || ''
 
   return (
-    <Card className="panel-welcome dashboard-hero">
+    <Card className="panel-welcome dashboard-hero" data-theme-part="page-header">
       <div className="dashboard-hero-identity">
         {user?.avatar_url ? (
           <img className="dashboard-hero-avatar" src={user.avatar_url} alt={t('profile.avatarAlt', { username: user.username })} />

@@ -108,6 +108,7 @@ function mount() {
 it('apresenta saudação, status do servidor e atalhos habilitados', async () => {
   mount()
   expect(screen.getByRole('heading', { name: 'Olá, Denky' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Olá, Denky' }).closest('[data-theme-part="page-header"]')).not.toBeNull()
   expect(screen.getByText('Jogadores online')).toBeVisible()
   expect(await screen.findByText('42')).toBeVisible()
   expect(screen.getAllByText('Online').length).toBeGreaterThan(0)

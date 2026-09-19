@@ -163,13 +163,13 @@ html.pdl-panel .program-hero--editorial p {
 .program-record {
   gap: 14px;
   padding: 16px 18px;
-  border-color: rgba(63, 185, 160, 0.22);
+  border-color: color-mix(in srgb, var(--theme-accent, #3fb9a0) 22%, transparent);
   background:
-    linear-gradient(135deg, rgba(63, 185, 160, 0.06), transparent 48%),
-    rgba(8, 7, 5, 0.55);
+    linear-gradient(135deg, color-mix(in srgb, var(--theme-accent, #3fb9a0) 8%, transparent), transparent 48%),
+    var(--theme-surface);
 }
 .program-record.is-active {
-  box-shadow: inset 3px 0 0 #3fb9a0;
+  box-shadow: inset 3px 0 0 var(--theme-accent, #3fb9a0);
 }
 .program-record.is-inactive {
   opacity: 0.72;
@@ -189,7 +189,7 @@ html.pdl-panel .program-hero--editorial p {
 }
 .program-record-head h3 {
   margin: 0;
-  color: #7ad7c2;
+  color: var(--theme-accent-bright, #7ad7c2);
   font-size: 1.05rem;
   line-height: 1.2;
 }

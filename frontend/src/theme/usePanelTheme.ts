@@ -18,7 +18,7 @@ export function usePanelTheme() {
   useEffect(() => {
     document.documentElement.classList.add('pdl-panel')
     document.body.style.background = `url(${themeImage('bg/5.jpg')}) top fixed no-repeat`
-    document.body.style.backgroundColor = '#050505'
+    document.body.style.backgroundColor = 'var(--theme-bg-deep)'
     document.body.style.backgroundSize = 'cover'
     document.body.style.minHeight = '100vh'
 

@@ -30,6 +30,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Temas com acento ciano/verde deixavam o quadro da Coming Soon e boa parte do
   painel dourados porque as folhas estruturais ignoravam os tokens.
+- Cartas do painel (`.card`, registros do passe como «Temporada Low Rate»)
+  ainda pintavam um fundo marrom clássico (`rgba(31,26,19)` / `rgba(8,7,5)`)
+  por cima do acento do pacote. O `body::before` e o herói do hall
+  (`.panel-welcome`) também deixavam um véu âmbar/marrom no tema ativo.
 
 ## [2.5.3] - 2026-09-18
 

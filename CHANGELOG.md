@@ -4,7 +4,8 @@ O registro completo segue em [histórico de versões](docs/historico/changelog.m
 
 Última atualização: **19 de setembro de 2026** — Não publicado: chrome
 estrutural (header, auth, painel, admin, Info, Rankings, loader e barras)
-segue o acento do tema ativo; heróis do admin com `data-theme-part` e
+segue o acento do tema ativo; cartas do painel, hall e `body` sem
+fundo marrom clássico; heróis do admin com `data-theme-part` e
 `--theme-art-bg-*`; guias de instalação em passos (latest, HTTPS, admin,
 FTP e atualização).
 Publicado: **[2.5.3]** —
