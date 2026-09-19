@@ -1,23 +1,42 @@
 /// <reference types="node" />
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
-function crumaThemeDir() {
-  const candidates = [
+const crumaFixtureDir = resolve(__dirname, 'fixtures/cruma')
+
+function installedCrumaDirs() {
+  const root = resolve(__dirname, '../../../backend/media/themes/cruma')
+  if (!existsSync(root)) return []
+  return readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => resolve(root, entry.name))
+    .filter((dir) => existsSync(resolve(dir, 'theme.json')))
+    .sort()
+    .reverse()
+}
+
+function crumaLiveDir() {
+  return [
     resolve(__dirname, '../../theme-packages/cruma'),
-    resolve(__dirname, '../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7'),
-  ]
-  const dir = candidates.find((path) => existsSync(resolve(path, 'theme.json')))
-  if (!dir) {
-    throw new Error('Cruma theme.json não encontrado no pacote nem no media.')
-  }
-  return dir
+    ...installedCrumaDirs(),
+  ].find((dir) => existsSync(resolve(dir, 'theme.json'))) ?? null
 }
 
 function readCrumaThemeFile(name: 'theme.css' | 'theme.json') {
-  return readFileSync(resolve(crumaThemeDir(), name), 'utf8')
+  const file = resolve(crumaFixtureDir, name)
+  if (!existsSync(file)) {
+    throw new Error('Contrato do Cruma ausente: versione frontend/src/theme/fixtures/cruma.')
+  }
+  return readFileSync(file, 'utf8')
+}
+
+function crumaLiveAsset(relativePath: string) {
+  const liveDir = crumaLiveDir()
+  if (!liveDir) return null
+  const file = resolve(liveDir, ...relativePath.split('/'))
+  return existsSync(file) ? file : null
 }
 
 const themeRoot = resolve(__dirname, '../../public/theme')
@@ -323,8 +342,12 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
   expect(crumaJson.assets['images/video.mp4']).toBe('images/video.mp4')
   expect(crumaJson.assets['images/video-mobile.mp4']).toBe('images/video-mobile.mp4')
-  expect(existsSync(resolve(crumaThemeDir(), 'images', 'video.mp4'))).toBe(true)
-  expect(existsSync(resolve(crumaThemeDir(), 'images', 'video-mobile.mp4'))).toBe(true)
+  const liveVideos = ['images/video.mp4', 'images/video-mobile.mp4'].filter((path) =>
+    crumaLiveAsset(path),
+  )
+  if (liveVideos.length > 0) {
+    expect(liveVideos).toEqual(['images/video.mp4', 'images/video-mobile.mp4'])
+  }
   expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\] \.launch-gate\s*\{[\s\S]*?--launch-panel:\s*color-mix\(in srgb, var\(--theme-surface\)/,
   )
@@ -361,17 +384,33 @@ it('o Sair do menu do painel usa o botão padrão, sem círculo nem texto recort
 it('os baús do Cruma têm frames fechado, entreaberto e aberto distintos', () => {
   for (const rarity of ['common', 'rare', 'epic', 'legendary'] as const) {
     const hashes = ['', '-ajar', '-open'].map((pose) => {
-      const file = resolve(crumaThemeDir(), 'images', 'games', `box-${rarity}${pose}.webp`)
-      expect(existsSync(file), file).toBe(true)
-      expect(crumaJson.assets[`images/games/box-${rarity}${pose}.webp`]).toBe(
-        `images/games/box-${rarity}${pose}.webp`,
-      )
+      const relative = `images/games/box-${rarity}${pose}.webp`
+      expect(crumaJson.assets[relative]).toBe(relative)
+      const file = crumaLiveAsset(relative)
+      if (!file) return null
       return createHash('md5').update(readFileSync(file)).digest('hex')
     })
-    expect(new Set(hashes).size, rarity).toBe(3)
+    const present = hashes.filter((hash): hash is string => hash !== null)
+    if (present.length > 0) {
+      expect(present, rarity).toHaveLength(3)
+      expect(new Set(present).size, rarity).toBe(3)
+    }
   }
   expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\]\.pdl-panel \.game-chest-art\s*\{[\s\S]*?image-rendering:\s*auto/,
+  )
+})
+
+it('o contrato versionado do Cruma existe e acompanha o pacote local', () => {
+  expect(existsSync(resolve(crumaFixtureDir, 'theme.css'))).toBe(true)
+  expect(existsSync(resolve(crumaFixtureDir, 'theme.json'))).toBe(true)
+  const liveDir = crumaLiveDir()
+  if (!liveDir) return
+  expect(readFileSync(resolve(crumaFixtureDir, 'theme.css'), 'utf8')).toBe(
+    readFileSync(resolve(liveDir, 'theme.css'), 'utf8'),
+  )
+  expect(readFileSync(resolve(crumaFixtureDir, 'theme.json'), 'utf8')).toBe(
+    readFileSync(resolve(liveDir, 'theme.json'), 'utf8'),
   )
 })
 

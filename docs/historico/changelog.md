@@ -28,6 +28,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- A suíte do frontend no CI falhava ao coletar `accent-chrome.test.ts`
+  porque o `theme.json` do Cruma só existia em `theme-packages/` ou
+  `media/` (ambos fora do Git). O contrato textual (`theme.css` e
+  `theme.json`) passa a ser versionado em
+  `frontend/src/theme/fixtures/cruma`.
 - Os balões do Denkynho (chat, status e o selo do nome) ainda
   pintavam pergaminho e ouro clássicos (`rgba(84,58,28)`,
   `#f0d78a`). Passam a `--theme-surface` / `--theme-accent` do

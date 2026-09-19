@@ -28,6 +28,11 @@ O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e
 assets comerciais são distribuídos fora do repositório e instalados pelo painel.
 
+O contrato textual do Cruma (`theme.css` e `theme.json`) usado pela suíte fica em
+`frontend/src/theme/fixtures/cruma`. Sem isso, o CI não encontra o pacote — `theme-packages/`
+e `media/` continuam fora do Git. Quando o CSS ou o manifesto do pacote mudar, atualize o
+fixture no mesmo conjunto.
+
 O pacote de referência atual usa o identificador `valorem`, a versão `2.1.3` e o renderer
 `portal-v1`. Seu conteúdo de autoria pode permanecer em `frontend/theme-packages/valorem/`,
 também fora do Git. Para gerar o instalador no PowerShell, execute na raiz do repositório:

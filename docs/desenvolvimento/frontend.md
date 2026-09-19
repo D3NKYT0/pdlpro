@@ -85,6 +85,7 @@ por componentes React confiáveis. Novas telas devem continuar usando a bibliote
 Pacotes locais de desenvolvimento ficam em `frontend/theme-packages/`, que é ignorada
 pelo Git. Não importe arquivos dessa pasta no bundle: gere o ZIP e instale-o pela tela
 administrativa. O tema `default` em `public/theme/default` continua versionado e deve
-funcionar integralmente quando nenhum pacote está ativo. Veja o [contrato de temas](../funcionalidades/temas.md).
+funcionar integralmente quando nenhum pacote está ativo. O contrato textual do Cruma
+usado pelos testes fica em `src/theme/fixtures/cruma`. Veja o [contrato de temas](../funcionalidades/temas.md).
 
 A suíte atual usa Node e renderização estática em parte dos cenários. Para mudanças visuais, confira desktop e celular, navegação, formulários, modais e estados vazios. Veja [Testes e qualidade](testes.md) para as limitações e exemplos existentes.
