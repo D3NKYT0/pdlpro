@@ -28,10 +28,10 @@ O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e
 assets comerciais são distribuídos fora do repositório e instalados pelo painel.
 
-`theme-packages/` e `media/` ficam fora do Git. Pacote de cliente (Cruma, Valorem
-ou outro) não entra em `frontend/src/`: o core testa o chrome estrutural e o Classic.
-Toda `url()` do `theme.css` do ZIP precisa existir no arquivo; o instalador recusa
-referência ausente.
+`theme-packages/` e `media/` ficam fora do Git. Pacote de cliente não entra em
+`frontend/src/`: o core testa o chrome estrutural e o Classic. Toda `url()` do
+`theme.css` do ZIP precisa existir no arquivo; o instalador recusa referência
+ausente.
 
 O pacote de referência atual usa o identificador `valorem`, a versão `2.1.3` e o renderer
 `portal-v1`. Seu conteúdo de autoria pode permanecer em `frontend/theme-packages/valorem/`,
@@ -108,16 +108,16 @@ herda o tema ativo e, por último, as variáveis de ambiente.
 {
   "schemaVersion": 1,
   "site": {
-    "name": "Cruma",
-    "slogan": "Pedra antiga. Luz ciano.",
-    "description": "A elfa da Torre guia o retorno.",
-    "title": "Cruma — Lineage 2"
+    "name": "Valorem",
+    "slogan": "O reino desperta.",
+    "description": "Identidade pública do pacote ativo.",
+    "title": "Valorem — Lineage 2"
   },
   "seo": {
-    "title": "Cruma — Lineage 2 Interlude",
-    "description": "Torre de Cruma em pintura renascentista.",
-    "ogTitle": "Cruma — Lineage 2",
-    "ogDescription": "A elfa da Torre guia o retorno.",
+    "title": "Valorem — Lineage 2 Interlude",
+    "description": "Pacote de tema com metadados públicos.",
+    "ogTitle": "Valorem — Lineage 2",
+    "ogDescription": "Identidade pública do pacote ativo.",
     "ogImage": "images/favicon.png"
   },
   "social": {
@@ -138,7 +138,7 @@ herda o tema ativo e, por último, as variáveis de ambiente.
 `seo.ogImage` precisa existir em `assets`. Discord exige HTTPS; o trailer é o
 id de 11 caracteres do YouTube. A equipe edita os mesmos campos em
 **Painel → Administração → Painel e servidor**. `LEGAL_*` continua só no
-`.env`. O fixture do Cruma versiona `metadados.json` junto com o manifesto.
+`.env`. O pacote versiona `metadados.json` junto com o manifesto.
 
 Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer. Os
 blocos aceitos pelo `portal-v1` são:
@@ -193,8 +193,8 @@ O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáve
 de seção (`images/bg/1.png` e `images/bg/2.jpg` … `bg/5.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
 `assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús do default
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`).
-O Cruma troca esses arquivos por baús pintados (ciano-esmeralda) no
-próprio pacote e desliga o `image-rendering: pixelated` da arte.
+Um pacote instalado pode trocar esses arquivos e desligar o
+`image-rendering: pixelated` da arte.
 A central também usa `images/games/fishing-pond.webp`,
 `images/games/fish-{lambari,tilapia,traira,dourado,tucunare,tambaqui,piraiba,surubim,pirarucu,koi,boiuna,serafim}.webp` e
 `images/games/monster-default.webp`, os retratos
@@ -211,8 +211,7 @@ desenha feltro e gabinete só com tokens). A loja do painel usa
 `images/shop/hall.png`, `images/shop/crate.png` e `images/shop/coins.png`
 (`--theme-art-shop-hall`, `--theme-art-shop-crate`, `--theme-art-shop-coins`)
 no hall, nos pacotes e no carrinho. O script `frontend/scripts/paint-box-chests.py` regenera os baús
-pixelados do default. `frontend/scripts/prepare-cruma-box-chests.py`
-recorta o chroma magenta e grava os 12 WebP do Cruma. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
+pixelados do default. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 
