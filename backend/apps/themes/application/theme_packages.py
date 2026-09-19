@@ -376,6 +376,34 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
     return manifest, files
 
 
+def _safe_rel_asset(value: str) -> bool:
+    path = PurePosixPath(str(value).replace("\\", "/"))
+    return bool(value) and not path.is_absolute() and ".." not in path.parts
+
+
+def _live_manifest(theme: Any) -> dict:
+    """Prefere o theme.json instalado em media/themes para o mapa de assets ao vivo."""
+
+    stored = dict(theme.manifest or {})
+    disk = _themes_root() / theme.storage_path / "theme.json"
+    if not disk.is_file():
+        return stored
+    try:
+        data = json.loads(disk.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return stored
+    if not isinstance(data, dict):
+        return stored
+    disk_assets = data.get("assets")
+    if isinstance(disk_assets, dict):
+        merged = dict(stored.get("assets") or {})
+        for key, value in disk_assets.items():
+            if isinstance(key, str) and isinstance(value, str) and _safe_rel_asset(value):
+                merged[key] = value
+        stored["assets"] = merged
+    return stored
+
+
 def serialize_theme(theme: Any | None = None) -> dict:
     """Produz o contrato público; sem registro ativo retorna o default imutável."""
 
@@ -386,17 +414,18 @@ def serialize_theme(theme: Any | None = None) -> dict:
             "active": True, "builtin": True, "base_url": "/theme/default/",
             "stylesheet_url": None, "assets": {}, "presentation": None, "layout": None,
         }
+    manifest = _live_manifest(theme)
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
     assets = {
-        key: f"{base_url}{value}" for key, value in theme.manifest.get("assets", {}).items()
+        key: f"{base_url}{value}" for key, value in manifest.get("assets", {}).items()
     }
     return {
         "id": theme.slug, "package_id": str(theme.id), "name": theme.name,
         "version": theme.version, "author": theme.author, "description": theme.description,
         "active": theme.is_active, "builtin": False, "base_url": base_url,
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
-        "presentation": theme.manifest.get("presentation"),
-        "layout": theme.manifest.get("layout"),
+        "presentation": manifest.get("presentation"),
+        "layout": manifest.get("layout"),
     }
 
 

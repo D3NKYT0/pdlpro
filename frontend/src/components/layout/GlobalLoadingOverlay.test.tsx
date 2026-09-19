@@ -20,6 +20,7 @@ vi.mock('../../theme/assets', () => ({
 
 afterEach(async () => {
   cleanup()
+  document.getElementById('app-bootstrap-loader')?.remove()
   document.body.classList.remove('global-loading')
   await i18n.changeLanguage('pt')
 })
@@ -45,6 +46,24 @@ it('mostra o texto de loading em português', () => {
   mount()
   expect(screen.getByRole('status', { name: 'Carregando a página' })).toBeVisible()
   expect(screen.getByText('Preparando sua jornada')).toBeVisible()
+  expect(document.querySelector('.global-loader__marks')).toBeTruthy()
+  expect(document.querySelector('.global-loader__wordmark')).toBeTruthy()
+  expect(document.querySelector('.global-loader__progress')).toBeTruthy()
+})
+
+it('no primeiro boot não empilha o overlay React em cima do splash HTML', () => {
+  const splash = document.createElement('div')
+  splash.id = 'app-bootstrap-loader'
+  splash.setAttribute('role', 'status')
+  splash.setAttribute('aria-label', 'Carregando a aplicação')
+  splash.innerHTML = '<span>Preparando sua jornada</span>'
+  document.body.append(splash)
+
+  mount()
+
+  expect(document.getElementById('app-bootstrap-loader')).toBeTruthy()
+  expect(document.querySelector('.global-loader')).toHaveClass('global-loader--hidden')
+  expect(document.querySelector('.global-loader')).toHaveAttribute('aria-hidden', 'true')
 })
 
 it('traduz o overlay de loading', async () => {

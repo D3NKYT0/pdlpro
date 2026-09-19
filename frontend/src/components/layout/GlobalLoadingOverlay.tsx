@@ -67,24 +67,32 @@ async function waitForVisualAssets() {
   await Promise.race([waitForImages(), delay(1800)])
 }
 
+const EXIT_MS = 420
+
+function dismissBootstrapLoader() {
+  const node = document.getElementById('app-bootstrap-loader')
+  if (!node) return
+  node.classList.add('is-leaving', 'global-loader--leaving')
+  window.setTimeout(() => node.remove(), EXIT_MS)
+}
+
 export function GlobalLoadingOverlay() {
   const { t } = useTranslation('common')
   const { pathname, search } = useLocation()
   const { loading: authLoading } = useAuth()
   const fetching = useIsFetching()
   const routeKey = `${pathname}${search}`
-  const [phase, setPhase] = useState<LoaderPhase>('visible')
+  const firstBootRef = useRef(Boolean(document.getElementById('app-bootstrap-loader')))
+  const [phase, setPhase] = useState<LoaderPhase>(() => (firstBootRef.current ? 'hidden' : 'visible'))
   const [forceReady, setForceReady] = useState(false)
-  const phaseRef = useRef<LoaderPhase>('visible')
+  const phaseRef = useRef<LoaderPhase>(firstBootRef.current ? 'hidden' : 'visible')
   const hasCompletedFirstLoad = useRef(false)
 
   useLayoutEffect(() => {
-    document.getElementById('app-bootstrap-loader')?.remove()
-  }, [])
-
-  useLayoutEffect(() => {
-    phaseRef.current = 'visible'
-    setPhase('visible')
+    const firstBoot = firstBootRef.current && !hasCompletedFirstLoad.current
+    const next: LoaderPhase = firstBoot ? 'hidden' : 'visible'
+    phaseRef.current = next
+    setPhase(next)
     setForceReady(false)
     document.body.classList.add('global-loading')
 
@@ -93,7 +101,8 @@ export function GlobalLoadingOverlay() {
   }, [routeKey])
 
   useEffect(() => {
-    if (phaseRef.current !== 'visible') return
+    const firstBoot = firstBootRef.current && !hasCompletedFirstLoad.current
+    if (!firstBoot && phaseRef.current !== 'visible') return
     if ((authLoading || fetching > 0) && !forceReady) return
 
     let cancelled = false
@@ -103,8 +112,19 @@ export function GlobalLoadingOverlay() {
     void waitForVisualAssets().then(async () => {
       const remainingDuration = minimumDuration - (performance.now() - startedAt)
       if (remainingDuration > 0) await delay(remainingDuration)
-      if (cancelled || phaseRef.current !== 'visible') return
+      if (cancelled) return
 
+      if (firstBootRef.current && !hasCompletedFirstLoad.current) {
+        dismissBootstrapLoader()
+        firstBootRef.current = false
+        hasCompletedFirstLoad.current = true
+        phaseRef.current = 'hidden'
+        setPhase('hidden')
+        document.body.classList.remove('global-loading')
+        return
+      }
+
+      if (phaseRef.current !== 'visible') return
       phaseRef.current = 'leaving'
       setPhase('leaving')
     })
@@ -122,7 +142,7 @@ export function GlobalLoadingOverlay() {
       setPhase('hidden')
       hasCompletedFirstLoad.current = true
       document.body.classList.remove('global-loading')
-    }, 420)
+    }, EXIT_MS)
 
     return () => window.clearTimeout(exitTimer)
   }, [phase])
@@ -144,10 +164,12 @@ export function GlobalLoadingOverlay() {
     >
       <div className="global-loader__glow" aria-hidden="true" />
       <div className="global-loader__content">
-        <div className="global-loader__crest">
-          <PdlSymbol />
+        <div className="global-loader__marks">
+          <div className="global-loader__crest">
+            <PdlSymbol />
+          </div>
+          <img className="global-loader__wordmark" src={themeImage('logo.png')} alt={t('brand')} />
         </div>
-        <img className="global-loader__wordmark" src={themeImage('logo.png')} alt={t('brand')} />
         <span>{t('preparingJourney')}</span>
         <div className="global-loader__progress" aria-hidden="true">
           <i />

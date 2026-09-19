@@ -1,0 +1,193 @@
+/* Splash HTML e overlay de rota: o mesmo chrome (emblema, wordmark, barra, losango). */
+.global-loader,
+#app-bootstrap-loader {
+  --loader-mark: var(--loader-accent, var(--theme-accent, #d4ad62));
+  --loader-mark-bright: var(--loader-accent-bright, var(--theme-accent-bright, #e0bd72));
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  color: var(--loader-mark);
+  font-family: "Outfit", "Source Sans Pro", sans-serif;
+  background: var(--loader-bg, #050403);
+  transition: opacity 420ms ease, visibility 420ms ease, transform 420ms ease;
+  isolation: isolate;
+}
+
+.global-loader::before,
+#app-bootstrap-loader::before,
+.global-loader::after,
+#app-bootstrap-loader::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.global-loader::before,
+#app-bootstrap-loader::before {
+  inset: 0;
+  opacity: 0.07;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--loader-mark) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--loader-mark) 22%, transparent) 1px, transparent 1px);
+  background-size: 78px 78px;
+  mask-image: radial-gradient(circle at center, #000, transparent 72%);
+}
+
+.global-loader::after,
+#app-bootstrap-loader::after {
+  width: min(440px, 78vw);
+  height: min(440px, 78vw);
+  border: 1px solid color-mix(in srgb, var(--loader-mark) 14%, transparent);
+  transform: rotate(45deg);
+}
+
+.global-loader--leaving,
+#app-bootstrap-loader.is-leaving {
+  opacity: 0;
+  transform: scale(1.035);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.global-loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.global-loader__glow {
+  position: absolute;
+  width: min(680px, 92vw);
+  height: min(680px, 92vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--loader-mark) 14%, transparent),
+    color-mix(in srgb, var(--loader-mark) 4%, transparent) 38%,
+    transparent 70%
+  );
+  animation: globalLoaderGlow 2.6s ease-in-out infinite;
+}
+
+.global-loader__content {
+  position: relative;
+  z-index: 1;
+  width: min(420px, calc(100vw - 48px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.global-loader__marks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-loader__crest {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+}
+
+.global-loader__crest::before,
+.global-loader__crest::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--loader-mark) 22%, transparent);
+  transform: rotate(45deg);
+}
+
+.global-loader__crest::after {
+  inset: 10px;
+  border-color: color-mix(in srgb, var(--loader-mark) 12%, transparent);
+  animation: globalLoaderDiamond 2.4s ease-in-out infinite;
+}
+
+.global-loader__crest img,
+.global-loader__wordmark {
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--loader-mark) 32%, transparent));
+}
+
+.global-loader__crest img {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  animation: globalLoaderMark 2.6s ease-in-out infinite;
+}
+
+.global-loader__wordmark {
+  width: auto;
+  height: 48px;
+  max-width: min(240px, 64vw);
+}
+
+.global-loader__content > span {
+  color: color-mix(in srgb, var(--loader-mark) 72%, transparent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 22px;
+}
+
+.global-loader__progress {
+  position: relative;
+  width: 190px;
+  height: 1px;
+  overflow: hidden;
+  margin-top: 18px;
+  background: color-mix(in srgb, var(--loader-mark) 16%, transparent);
+}
+
+.global-loader__progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, var(--loader-mark-bright), transparent);
+  animation: globalLoaderProgress 1.25s ease-in-out infinite;
+}
+
+@keyframes globalLoaderMark {
+  0%, 100% { opacity: 0.72; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes globalLoaderDiamond {
+  0%, 100% { opacity: 0.3; transform: rotate(45deg) scale(0.92); }
+  50% { opacity: 0.8; transform: rotate(45deg) scale(1.08); }
+}
+
+@keyframes globalLoaderGlow {
+  0%, 100% { opacity: 0.55; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes globalLoaderProgress {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(340%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-loader,
+  #app-bootstrap-loader,
+  .global-loader__glow,
+  .global-loader__crest img,
+  .global-loader__crest::after,
+  .global-loader__progress i {
+    animation: none;
+    transition-duration: 120ms;
+  }
+}

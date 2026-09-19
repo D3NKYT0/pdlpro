@@ -25,10 +25,13 @@ function Consumer() {
 beforeEach(() => vi.mocked(themeApi.active).mockReset())
 afterEach(() => {
   cleanup()
+  localStorage.clear()
+  document.getElementById('app-bootstrap-loader')?.remove()
   document.querySelectorAll('link[data-pdl-installed-theme]').forEach((link) => link.remove())
   document.querySelectorAll('link[rel="icon"]').forEach((link) => link.remove())
   document.documentElement.removeAttribute('data-pdl-theme')
   document.documentElement.removeAttribute('data-pdl-renderer')
+  document.documentElement.removeAttribute('data-pdl-loader-theme')
   document.documentElement.removeAttribute('data-panel-density')
   document.documentElement.style.cssText = ''
   vi.restoreAllMocks()
@@ -55,6 +58,35 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
   expect(document.documentElement.dataset.pdlRenderer).toBe('portal-v1')
+})
+
+it('pinta o splash HTML com o brasão e o acento do tema ativo', async () => {
+  document.body.insertAdjacentHTML(
+    'afterbegin',
+    '<div id="app-bootstrap-loader"><img src="/theme/default/images/pdl-symbol.svg" alt="" /></div>',
+  )
+  document.documentElement.style.setProperty('--theme-accent', '#3dd6c6')
+  document.documentElement.style.setProperty('--theme-accent-bright', '#7ef0e4')
+  document.documentElement.style.setProperty('--theme-bg-deep', '#050a0c')
+  vi.mocked(themeApi.active).mockResolvedValue({
+    ...valorem,
+    id: 'cruma',
+    name: 'Cruma',
+    assets: {
+      ...valorem.assets,
+      'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    },
+  })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="cruma"]')).not.toBeNull())
+  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="cruma"]')!)
+  await screen.findByText(/Cruma/)
+  expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
+    'src',
+    '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+  )
+  expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
+  expect(JSON.parse(localStorage.getItem('pdl.loaderChrome') || '{}').id).toBe('cruma')
 })
 
 it('injeta knobs de layout como CSS variables', async () => {

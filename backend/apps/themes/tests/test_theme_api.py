@@ -163,6 +163,15 @@ def test_install_activate_restore_default_and_delete(api, admin, tmp_path, setti
     assert activated.data["id"] == "valorem"
     assert api.get("/api/v1/public/theme/").data["stylesheet_url"].endswith("/theme.css")
 
+    live = tmp_path / "themes" / storage_path / "theme.json"
+    payload = json.loads(live.read_text(encoding="utf-8"))
+    payload["assets"]["images/pdl-symbol.svg"] = "images/pdl-symbol.png"
+    live.write_text(json.dumps(payload), encoding="utf-8")
+    (tmp_path / "themes" / storage_path / "images").mkdir(exist_ok=True)
+    (tmp_path / "themes" / storage_path / "images" / "pdl-symbol.png").write_bytes(b"crest")
+    published = api.get("/api/v1/public/theme/").data
+    assert published["assets"]["images/pdl-symbol.svg"].endswith("images/pdl-symbol.png")
+
     cannot_delete = api.delete(f"/api/v1/staff/themes/{package_id}/")
     assert cannot_delete.status_code == 409
     restored = api.post("/api/v1/staff/themes/default/activate/")

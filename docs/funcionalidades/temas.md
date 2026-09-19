@@ -77,7 +77,18 @@ Manifesto mínimo:
 ```
 
 `assets` mapeia o nome lógico usado pelo frontend para um arquivo do pacote. O caminho deve ser
-relativo e existir no ZIP. Não declare um asset para manter a versão do default.
+relativo e existir no ZIP. Não declare um asset para manter a versão do default. O emblema do
+chrome (`PdlSymbol`, nav, rodapé, splash de boot, overlay de rota e auth) lê
+`images/pdl-symbol.svg`; um PNG no pacote pode ocupar esse slot
+(`images/pdl-symbol.png`). O splash HTML (`#app-bootstrap-loader`) também lê
+`--theme-accent`, `--theme-accent-bright` e `--theme-bg-deep`: depois da primeira
+visita o chrome fica em `localStorage` (`pdl.loaderChrome`) e o script estático
+reabre o loader já com o brasão e o acento do pacote ativo. O splash e o
+overlay de rota compartilham `bootstrap-loader.css`: emblema, wordmark,
+losango, brilho e barra de progresso. O contrato público
+relê só o mapa de `assets` do `theme.json` em `media/themes/<pacote>/`.
+`presentation` e `layout` continuam os gravados na instalação, para um ajuste
+de arte no media não trocar o template da home.
 
 Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer. Os
 blocos aceitos pelo `portal-v1` são:

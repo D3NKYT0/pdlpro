@@ -1059,8 +1059,53 @@
     var(--section-art) center / cover no-repeat;
 }
 
+.w.home-wiki {
+  height: auto;
+  min-height: 851px;
+  overflow: visible;
+}
+
 .home-wiki .w-list {
   margin-top: 96px;
+  overflow: visible;
+}
+
+.home-wiki .w-list .line {
+  display: none;
+}
+
+.w.home-wiki .w-list .wiki,
+.w.home-wiki .w-list .wiki div,
+.w.home-wiki .w-list a.update,
+.w.home-wiki .w-list a.update > div,
+.w.home-wiki .w-list a:nth-child(3),
+.w.home-wiki .w-list a:nth-child(3) div,
+.w.home-wiki .w-list a:nth-child(4),
+.w.home-wiki .w-list a:nth-child(4) div {
+  -webkit-clip-path: none;
+  clip-path: none;
+}
+
+.w.home-wiki .w-list .wiki,
+.w.home-wiki .w-list a.update {
+  height: auto;
+  min-height: 320px;
+  background-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, var(--theme-bg-deep, #100e0b));
+}
+
+.w.home-wiki .w-list .wiki div {
+  height: auto;
+  min-height: 318px;
+  background: color-mix(in srgb, var(--theme-bg-deep, #050a0c) 88%, var(--theme-surface, #0a1418));
+  padding: 32px 28px 28px;
+}
+
+.w.home-wiki .w-list .wiki div ul li a:hover {
+  text-shadow: 0 0 18px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
+}
+
+.w.home-wiki .w-list .wiki div ul li a span {
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 42%, transparent);
 }
 
 .home-wiki .wiki div span {
@@ -1208,7 +1253,7 @@
     height: auto;
     min-height: 0;
     padding: 72px 0 56px;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .home-wiki .w-list .line {

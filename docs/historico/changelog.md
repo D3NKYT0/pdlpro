@@ -16,15 +16,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   mesmo diretório.
 - O chrome estrutural (Coming Soon, painel, auth, header, loader e páginas
   públicas) passa a usar `--theme-accent` / `--panel-gold` em vez de ouro
-  clássico fixo, para o pacote ativo — inclusive a Cruma — pintar todas as
-  superfícies. O botão Download e os fundos de Info/Rankings leem
-  `--theme-button-tab` e `--theme-art-bg-1` / `--theme-art-bg-5`. No painel,
-  segurança e loja deixam o ouro cravado (`#e1bd70`, `rgba(218,174,81)`),
-  as barras de progresso do painel, do help nativo, do Denkynho, do
-  battle/fragmentos e as thumbs de scroll leem `--theme-accent` /
-  `--panel-gold`. Os heróis do admin passam a ter `data-theme-part` e
-  `--theme-art-bg-*` (hub, suporte, segurança e observação), e o
-  `html.pdl-panel` deixa de sobrescrever o acento do pacote.
+  clássico fixo, para o pacote ativo pintar todas as superfícies. O botão
+  Download e os fundos de Info/Rankings leem `--theme-button-tab` e
+  `--theme-art-bg-1` / `--theme-art-bg-5`. No painel, segurança e loja
+  deixam o ouro cravado (`#e1bd70`, `rgba(218,174,81)`), as barras de
+  progresso do painel, do help nativo, do Denkynho, do battle/fragmentos
+  e as thumbs de scroll leem `--theme-accent` / `--panel-gold`. Os heróis
+  do admin passam a ter `data-theme-part` e `--theme-art-bg-*` (hub,
+  suporte, segurança e observação), e o `html.pdl-panel` deixa de
+  sobrescrever o acento do pacote.
 
 ### Corrigido
 
@@ -34,6 +34,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   ainda pintavam um fundo marrom clássico (`rgba(31,26,19)` / `rgba(8,7,5)`)
   por cima do acento do pacote. O `body::before` e o herói do hall
   (`.panel-welcome`) também deixavam um véu âmbar/marrom no tema ativo.
+- Na home, o card de Guias (e os de Crônica/Temporada) usava `clip-path` em
+  chanfro e altura fixa de 320px, o que cortava a lista e a área do card.
+  A seção agora cresce com o conteúdo, sem recorte.
+- O splash HTML e o overlay React da SPA mostravam o mesmo «Preparando sua
+  jornada» em sequência. No primeiro boot fica só o splash; o overlay entra
+  nas navegações seguintes.
+- O splash de boot seguia o ouro clássico mesmo com outro tema ativo. Agora
+  ele pinta o brasão e o acento do pacote (`--theme-accent` / `pdl-symbol`).
+- O splash de boot e o overlay de rota passam a usar o mesmo chrome
+  (emblema no losango, wordmark, texto e barra), no acento do tema.
 
 ## [2.5.3] - 2026-09-18
 

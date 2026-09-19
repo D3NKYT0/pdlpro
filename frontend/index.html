@@ -34,65 +34,33 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/bootstrap-loader.css" />
     <style>
+      html {
+        --loader-accent: #d4ad62;
+        --loader-accent-bright: #e0bd72;
+        --loader-bg: #080705;
+      }
+
       html,
       body {
         margin: 0;
-        background: #050403;
-      }
-
-      #app-bootstrap-loader {
-        position: fixed;
-        inset: 0;
-        z-index: 2147483647;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-        background: #080705;
-      }
-
-      #app-bootstrap-loader::before {
-        content: '';
-        position: absolute;
-        width: 520px;
-        height: 520px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(190, 129, 48, 0.12), transparent 68%);
-      }
-
-      #app-bootstrap-loader div {
-        position: relative;
-        display: grid;
-        place-items: center;
-      }
-
-      #app-bootstrap-loader img {
-        width: 132px;
-        height: 132px;
-        object-fit: contain;
-        filter: drop-shadow(0 0 18px rgba(212, 173, 98, 0.3));
-        animation: bootstrap-loader-mark 2.6s ease-in-out infinite;
-      }
-
-      #app-bootstrap-loader span {
-        margin-top: 22px;
-        color: #b49356;
-        font: 600 10px/1.4 Arial, sans-serif;
-        letter-spacing: 2.6px;
-        text-transform: uppercase;
-      }
-
-      @keyframes bootstrap-loader-mark {
-        0%, 100% { opacity: 0.72; transform: scale(0.96); }
-        50% { opacity: 1; transform: scale(1.04); }
+        background: var(--loader-bg, #050403);
       }
     </style>
   </head>
   <body>
-    <div id="app-bootstrap-loader" role="status" aria-label="Carregando a aplicação">
-      <div>
-        <img src="/theme/default/images/pdl-symbol.svg" alt="" />
+    <div id="app-bootstrap-loader" class="global-loader" role="status" aria-label="Carregando a aplicação">
+      <div class="global-loader__glow" aria-hidden="true"></div>
+      <div class="global-loader__content">
+        <div class="global-loader__marks">
+          <div class="global-loader__crest">
+            <img src="/theme/default/images/pdl-symbol.svg" alt="" />
+          </div>
+          <img class="global-loader__wordmark" src="/theme/default/images/logo.png" alt="" />
+        </div>
         <span>Preparando sua jornada</span>
+        <div class="global-loader__progress" aria-hidden="true"><i></i></div>
       </div>
     </div>
     <script src="/bootstrap-language.js"></script>

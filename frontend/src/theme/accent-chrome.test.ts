@@ -3,14 +3,14 @@ import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
-function readCrumaThemeCss() {
+function readCrumaThemeFile(name: 'theme.css' | 'theme.json') {
   const candidates = [
-    resolve(__dirname, '../../theme-packages/cruma/theme.css'),
-    resolve(__dirname, '../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7/theme.css'),
+    resolve(__dirname, `../../theme-packages/cruma/${name}`),
+    resolve(__dirname, `../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7/${name}`),
   ]
   const file = candidates.find((path) => existsSync(path))
   if (!file) {
-    throw new Error('Cruma theme.css não encontrado no pacote nem no media.')
+    throw new Error(`Cruma ${name} não encontrado no pacote nem no media.`)
   }
   return readFileSync(file, 'utf8')
 }
@@ -23,15 +23,18 @@ const layout = readFileSync(resolve(themeRoot, 'public/css/layout.css'), 'utf8')
 const info = readFileSync(resolve(themeRoot, 'pages/info-page.css'), 'utf8')
 const rankings = readFileSync(resolve(themeRoot, 'pages/rankings-page.css'), 'utf8')
 const extras = readFileSync(resolve(themeRoot, 'pages/extras.css'), 'utf8')
+const homeExtras = readFileSync(resolve(themeRoot, 'pages/home-extras.css'), 'utf8')
 const emblem = readFileSync(resolve(themeRoot, 'default/css/main.css'), 'utf8')
 const globalCss = readFileSync(resolve(__dirname, '../styles/global.css'), 'utf8')
+const loaderCss = readFileSync(resolve(__dirname, '../../public/bootstrap-loader.css'), 'utf8')
 const uiCss = readFileSync(resolve(__dirname, '../components/ui/ui.css'), 'utf8')
 const helpCss = readFileSync(resolve(__dirname, '../components/help/help.css'), 'utf8')
 const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-progress.css'), 'utf8')
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
-const crumaCss = readCrumaThemeCss()
+const crumaCss = readCrumaThemeFile('theme.css')
+const crumaJson = JSON.parse(readCrumaThemeFile('theme.json'))
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
@@ -87,10 +90,14 @@ it('Info, Rankings, extras e o loader usam tokens em vez de ouro/default cravado
   expect(rankings).toContain('var(--theme-art-bg-3')
   expect(rankings).not.toMatch(/rgba\(\s*212\s*,\s*173\s*,\s*98/)
   expect(extras).toContain('color: var(--theme-accent, #d4af37)')
+  expect(homeExtras).toMatch(/\.home-wiki \.w-list \.line\s*\{[\s\S]*?display:\s*none/)
+  expect(homeExtras).toMatch(/\.w\.home-wiki\s*\{[\s\S]*?overflow:\s*visible/)
+  expect(homeExtras).toMatch(/\.w\.home-wiki \.w-list \.wiki[\s\S]*?clip-path:\s*none/)
+  expect(homeExtras).toMatch(/\.w\.home-wiki \.w-list \.wiki[\s\S]*?min-height:\s*320px/)
   expect(globalCss).toContain('--theme-button-tab:')
   expect(globalCss).toContain('--theme-art-bg-1:')
   expect(globalCss).toContain('--theme-art-bg-5:')
-  expect(globalCss).toContain('var(--theme-art-bg-5, url(\'/theme/default/images/bg/5.jpg\'))')
+  expect(loaderCss).toContain('background: var(--loader-bg, #050403)')
   expect(uiCss).toContain('outline: 2px solid var(--theme-accent, var(--gold))')
   expect(uiCss).toContain('.ui-select-trigger::after')
   expect(uiCss).not.toMatch(/stroke='%23C5A161'/)
@@ -120,7 +127,11 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(panel).not.toMatch(/rgba\(\s*137\s*,\s*72\s*,\s*24/)
   expect(panel).toMatch(/html\.pdl-panel \.panel-welcome\s*\{[\s\S]*?var\(--theme-bg-deep/)
   expect(panel).toMatch(/html\.pdl-panel \.account-hero\s*\{[\s\S]*?var\(--theme-bg-deep/)
-  expect(globalCss).toMatch(/\.global-loader__progress i\s*\{[\s\S]*?var\(--theme-accent-bright/)
+  expect(globalCss).toContain("@import url('/bootstrap-loader.css')")
+  expect(loaderCss).toMatch(/\.global-loader__progress i\s*\{[\s\S]*?var\(--loader-mark-bright/)
+  expect(loaderCss).toContain('global-loader__wordmark')
+  expect(loaderCss).toMatch(/\.global-loader__marks\s*\{[\s\S]*?gap:\s*8px/)
+  expect(loaderCss).not.toContain('globalLoaderOrbit')
   expect(uiCss).toMatch(/\.ui-select-list::-webkit-scrollbar-thumb\s*\{[\s\S]*?var\(--theme-accent/)
 })
 
@@ -135,4 +146,5 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaCss).toContain('--theme-art-bg-3: url("images/bg/3.jpg")')
   expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
   expect(crumaCss).toContain('var(--theme-art-bg-3)')
+  expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
 })

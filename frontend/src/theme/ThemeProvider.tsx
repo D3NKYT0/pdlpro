@@ -1,6 +1,7 @@
 import { createContext, Fragment, useContext, useEffect, useState, type ReactNode } from 'react'
 import { themeApi, type ApiTheme } from '../services/api'
 import { applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
+import { persistAppliedLoaderChrome } from './loaderChrome'
 
 const DEFAULT_THEME: ApiTheme = {
   id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
@@ -61,6 +62,7 @@ async function applyTheme(theme: ApiTheme) {
     await loaded
   }
   setFavicon(theme)
+  persistAppliedLoaderChrome(theme.id)
 }
 
 /** Mantém o CSS instalado depois das folhas estruturais adicionadas pelos layouts. */
