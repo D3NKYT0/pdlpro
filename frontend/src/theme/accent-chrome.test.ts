@@ -59,6 +59,9 @@ it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => 
   )
   expect(comingSoon).not.toMatch(/height:\s*min\(62vh/)
   expect(comingSoon).not.toMatch(/height:\s*min\(68vh/)
+  expect(comingSoon).toMatch(/\.launch-gate__mist\s*\{/)
+  expect(comingSoon).toMatch(/\.launch-gate__mist-bank[\s\S]*?var\(--launch-deep\)/)
+  expect(comingSoon).toMatch(/\.launch-gate__mist-bank[\s\S]*?var\(--launch-ember\)/)
 })
 
 it('o chrome do painel e do auth seguem --panel-gold / --theme-accent', () => {

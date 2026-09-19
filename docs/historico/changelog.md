@@ -54,6 +54,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Na Coming Soon, a personagem da frente esquerda (Cruma) ficava bem menor
   que o resto da party: o PNG tinha folga no quadro e o CSS usava 62/68vh.
   O recorte preenche a arte e as frentes acompanham a escala das demais.
+- A Coming Soon ganhou névoa no rodapé (acento do tema) e a arte do
+  `assault-raider` do Cruma foi refeita em alta, sem o upscale que
+  deixava a personagem mole.
 
 ## [2.5.3] - 2026-09-18
 

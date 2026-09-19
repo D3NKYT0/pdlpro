@@ -91,7 +91,8 @@
 .launch-gate.is-entering .launch-gate__glow,
 .launch-gate.is-entering .launch-gate__haze,
 .launch-gate.is-entering .launch-gate__vignette,
-.launch-gate.is-entering .launch-gate__particles {
+.launch-gate.is-entering .launch-gate__particles,
+.launch-gate.is-entering .launch-gate__mist {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
@@ -294,9 +295,55 @@
   animation: launch-assault-in-right 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
 }
 
+.launch-gate__mist {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  height: min(46vh, 460px);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.launch-gate__mist-bank {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -12%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 100%, color-mix(in srgb, var(--launch-deep) 88%, transparent), transparent 72%),
+    radial-gradient(ellipse 42% 70% at 18% 100%, color-mix(in srgb, var(--theme-surface, #0c1214) 70%, transparent), transparent 70%),
+    radial-gradient(ellipse 46% 64% at 84% 100%, color-mix(in srgb, var(--theme-surface, #0c1214) 62%, transparent), transparent 68%),
+    radial-gradient(ellipse 70% 55% at 50% 110%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 62%);
+  filter: blur(14px);
+  animation: launch-mist-drift 16s ease-in-out infinite alternate;
+}
+
+.launch-gate__mist-bank.is-soft {
+  height: 78%;
+  opacity: 0.72;
+  filter: blur(28px);
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+}
+
+.launch-gate__mist-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--launch-deep) 8%, transparent) 42%,
+    color-mix(in srgb, var(--launch-deep) 55%, transparent) 78%,
+    color-mix(in srgb, var(--launch-deep) 82%, transparent) 100%
+  );
+}
+
 .launch-gate__stage {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   place-items: center;
   width: min(1180px, 100%);
@@ -966,6 +1013,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes launch-mist-drift {
+  from { transform: translate3d(-3%, 0, 0) scaleX(1.02); }
+  to { transform: translate3d(3%, 4%, 0) scaleX(1.08); }
+}
+
 @keyframes launch-champion-in {
   from {
     opacity: 0;
@@ -1156,6 +1208,7 @@
   .launch-gate__panel-rim,
   .launch-gate__panel-sheen,
   .launch-gate__champion,
+  .launch-gate__mist-bank,
   .launch-gate__actions.is-emphasis .btn.ui-button:not(.ghost) {
     animation: none !important;
   }
@@ -1167,7 +1220,8 @@
   .launch-gate.is-entering .launch-gate__glow,
   .launch-gate.is-entering .launch-gate__haze,
   .launch-gate.is-entering .launch-gate__vignette,
-  .launch-gate.is-entering .launch-gate__particles {
+  .launch-gate.is-entering .launch-gate__particles,
+  .launch-gate.is-entering .launch-gate__mist {
     transition: none;
   }
 
