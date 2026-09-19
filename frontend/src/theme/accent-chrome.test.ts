@@ -1,6 +1,19 @@
-import { readFileSync } from 'node:fs'
+/// <reference types="node" />
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
+
+function readCrumaThemeCss() {
+  const candidates = [
+    resolve(__dirname, '../../theme-packages/cruma/theme.css'),
+    resolve(__dirname, '../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7/theme.css'),
+  ]
+  const file = candidates.find((path) => existsSync(path))
+  if (!file) {
+    throw new Error('Cruma theme.css não encontrado no pacote nem no media.')
+  }
+  return readFileSync(file, 'utf8')
+}
 
 const themeRoot = resolve(__dirname, '../../public/theme')
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
@@ -18,7 +31,7 @@ const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-p
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
-const crumaCss = readFileSync(resolve(__dirname, '../../theme-packages/cruma/theme.css'), 'utf8')
+const crumaCss = readCrumaThemeCss()
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
@@ -108,5 +121,7 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(observationCss).toMatch(/\.observation-hero \.account-hero[\s\S]*?var\(--theme-art-bg-3/)
   expect(crumaCss).toContain('[data-theme-part="page-header"]')
   expect(crumaCss).toContain('[data-theme-part="admin-category"]')
+  expect(crumaCss).toContain('--theme-art-bg-3: url("images/bg/3.jpg")')
+  expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
   expect(crumaCss).toContain('var(--theme-art-bg-3)')
 })
