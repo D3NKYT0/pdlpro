@@ -234,6 +234,12 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(panel).not.toMatch(/\.theme-active-badge\s*\{[\s\S]*?#9ac49f/)
   expect(panel).not.toMatch(/\.security-secret strong\s*\{[^}]*#f0d28c/)
   expect(panel).not.toMatch(/\.user-profile-stat-list strong\s*\{[\s\S]*?#f0d28c/)
+  expect(panel).toMatch(/\.dashboard-hero-status \.is-off[\s\S]*?var\(--theme-warn,\s*var\(--theme-accent/)
+  expect(panel).not.toMatch(/\.dashboard-hero-status \.is-off[\s\S]*?color:\s*#d6a767/)
+  expect(panel).toMatch(/\.security-card \.is-off\s*\{[^}]*var\(--theme-warn,\s*var\(--theme-accent/)
+  expect(panel).toMatch(/\.admin-game-card code\s*\{[^}]*var\(--theme-accent/)
+  expect(globalCss).toMatch(/\.staff-support-section-label[^{]*\{[^}]*var\(--theme-accent/)
+  expect(globalCss).not.toMatch(/\.staff-support-section-label[^{]*\{[^}]*color:\s*#bea769/)
   expect(globalCss).toContain("@import url('/bootstrap-loader.css')")
   expect(loaderCss).toMatch(/\.global-loader::after,\s*#app-bootstrap-loader::after\s*\{[\s\S]*?width:\s*440px/)
   expect(loaderCss).toMatch(/\.global-loader__crest\s*\{[\s\S]*?width:\s*138px/)
@@ -264,6 +270,9 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
     /html\[data-pdl-theme="cruma"\] \.launch-gate \.btn\.ui-button:hover[\s\S]*?var\(--launch-ember-bright\)/,
   )
   expect(crumaCss).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.h \.h-scroll img\s*\{[\s\S]*?width:\s*24px/,
+  )
   expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\] \.h \.h-scroll img\s*\{[\s\S]*?var\(--theme-accent\)/,
   )

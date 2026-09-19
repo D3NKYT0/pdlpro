@@ -75,6 +75,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - No roadmap público, o selo «Em andamento» ainda pintava ouro
   clássico (`#d9bb70`). O aviso dos programas lê `--theme-warn` e,
   se o pacote não definir, `--theme-accent`.
+- No painel/admin, selos OFF/REMOTE, o código dos jogos, o rótulo
+  de prioridade do suporte e a barra ativa da fila ainda usavam
+  ouro cravado (`#d6a767`, `#bea769`). Passam a `--theme-accent`.
 - A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
   clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
   e `--theme-accent`.

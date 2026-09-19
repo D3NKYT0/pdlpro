@@ -17,6 +17,7 @@ títulos e valores sem ouro cravado (leem o acento do tema);
 hover da FAQ e listas públicas sem glow `orange`;
 losangos da FAQ e cookies/legais sem parchment;
 selo «Em andamento» do roadmap no acento do tema;
+selos OFF/REMOTE, códigos dos jogos e fila de suporte no acento do tema;
 Coming Soon sem residual marrom (incluindo o glow
 do Entrar), com névoa no rodapé e a party na mesma escala; cards da
 home (Crônica/Castelos/Fama) sem moldura marrom clássica; guias de

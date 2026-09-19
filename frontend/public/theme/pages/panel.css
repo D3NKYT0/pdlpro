@@ -1142,7 +1142,7 @@ html.pdl-panel .admin-entry {
 
 html.pdl-panel .admin-entry:hover {
   border-color: var(--admin-tone);
-  background: rgba(18, 14, 10, 0.72);
+  background: color-mix(in srgb, var(--theme-bg-deep, #100e0b) 72%, transparent);
   box-shadow: inset 0 0 0 1px var(--admin-tone-glow);
 }
 
@@ -2450,7 +2450,7 @@ html.pdl-panel .admin-game-card.is-active { border-color: color-mix(in srgb, var
 html.pdl-panel .admin-game-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: color-mix(in srgb, var(--panel-gold) 6%, transparent); }
 html.pdl-panel .admin-game-icon svg { width: 19px; }
 html.pdl-panel .admin-game-card h3 { margin: 0 0 3px; font-size: 18px; }
-html.pdl-panel .admin-game-card code { color: rgba(219,185,118,.55); font-size: 10px; letter-spacing: .05em; }
+html.pdl-panel .admin-game-card code { color: color-mix(in srgb, var(--theme-accent, #d6a767) 55%, transparent); font-size: 10px; letter-spacing: .05em; }
 html.pdl-panel .admin-game-card p { margin: 11px 0 0; color: var(--panel-muted); font-size: 12px; line-height: 1.5; }
 html.pdl-panel .admin-game-switch { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; color: var(--panel-muted); border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); font-size: 11px; cursor: pointer; }
 html.pdl-panel .admin-game-switch > input[type='checkbox'] { position: absolute; width: 1px; min-height: 1px; height: 1px; padding: 0; opacity: 0; pointer-events: none; }
@@ -5524,7 +5524,7 @@ html.pdl-panel .dashboard-roster-card .is-on {
 
 html.pdl-panel .dashboard-hero-status .is-off,
 html.pdl-panel .dashboard-roster-card .is-off {
-  color: #d6a767;
+  color: var(--theme-warn, var(--theme-accent, #d6a767));
 }
 
 html.pdl-panel .dashboard-summary-grid {
@@ -15019,7 +15019,7 @@ html.pdl-panel .security-card header > b,
 html.pdl-panel .security-provider > b:last-child,
 html.pdl-panel .security-session-list article strong > b { padding: 5px 9px; border-radius: 999px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 html.pdl-panel .security-card .is-on { color: #8fd19e; border: 1px solid rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
-html.pdl-panel .security-card .is-off { color: #d6a767; border: 1px solid rgba(214,167,103,.3); background: rgba(214,167,103,.08); }
+html.pdl-panel .security-card .is-off { color: var(--theme-warn, var(--theme-accent, #d6a767)); border: 1px solid color-mix(in srgb, var(--theme-warn, var(--theme-accent, #d6a767)) 30%, transparent); background: color-mix(in srgb, var(--theme-warn, var(--theme-accent, #d6a767)) 8%, transparent); }
 html.pdl-panel .security-email { gap: 10px; }
 html.pdl-panel .security-success { display: flex; align-items: center; gap: 9px; color: #8fd19e; }
 html.pdl-panel .security-success svg { width: 19px; }
@@ -15150,7 +15150,7 @@ html.pdl-panel .security-cookie-summary__head {
   gap: 8px;
 }
 html.pdl-panel .security-cookie-summary__head > svg { color: var(--panel-gold-bright); }
-html.pdl-panel .security-cookie-summary__warn { color: #d6a767; font-size: 0.82rem; }
+html.pdl-panel .security-cookie-summary__warn { color: var(--theme-warn, var(--theme-accent, #d6a767)); font-size: 0.82rem; }
 html.pdl-panel .security-cookie-chips {
   display: flex;
   flex-wrap: wrap;
@@ -15357,10 +15357,10 @@ html.pdl-panel .user-profile-verified {
   align-items: center;
   gap: 8px;
   padding: 9px 13px;
-  color: #d6a767;
-  border: 1px solid rgba(214, 167, 103, 0.3);
+  color: var(--theme-warn, var(--theme-accent, #d6a767));
+  border: 1px solid color-mix(in srgb, var(--theme-warn, var(--theme-accent, #d6a767)) 30%, transparent);
   border-radius: 999px;
-  background: rgba(214, 167, 103, 0.08);
+  background: color-mix(in srgb, var(--theme-warn, var(--theme-accent, #d6a767)) 8%, transparent);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
