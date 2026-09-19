@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.4] - 2026-09-19
+
+Identidade pública dinâmica (`.env`, admin e `metadados.json` do tema) e
+chrome estrutural no acento do pacote ativo, consolidados em
+**19 de setembro de 2026**.
+
 ### Adicionado
 
 - Identidade pública do site (nome, SEO, Open Graph, Discord e trailer)
