@@ -101,11 +101,11 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
   expect(document.querySelectorAll('.launch-gate__champion')).toHaveLength(4)
   expect(document.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
     'src',
-    '/theme/default/images/coming-soon/phoenix-knight.png?v=2',
+    '/theme/default/images/coming-soon/phoenix-knight.png?v=3',
   )
   expect(document.querySelector('.launch-gate__champion.is-right-front')).toHaveAttribute(
     'src',
-    '/theme/default/images/coming-soon/spell-singer.png?v=2',
+    '/theme/default/images/coming-soon/spell-singer.png?v=3',
   )
 })
 
@@ -219,11 +219,11 @@ it('anuncia o fim da contagem com o assalto ao castelo', () => {
   expect(container.querySelectorAll('.launch-gate__champion')).toHaveLength(4)
   expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
     'src',
-    '/theme/default/images/coming-soon/assault-vanguard.png?v=1',
+    '/theme/default/images/coming-soon/assault-vanguard.png?v=3',
   )
   expect(container.querySelector('.launch-gate__champion.is-right-front')).toHaveAttribute(
     'src',
-    '/theme/default/images/coming-soon/assault-mage.png?v=1',
+    '/theme/default/images/coming-soon/assault-mage.png?v=3',
   )
   expect(container.querySelector('.launch-gate__bg--open.is-active')).not.toBeNull()
   expect(container.querySelector('.launch-gate__bg--waiting.is-active')).toBeNull()
@@ -240,7 +240,7 @@ it('não mostra o exército de assalto enquanto a contagem está ativa', () => {
   expect(container.querySelector('.launch-gate__roster')).not.toBeNull()
   expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
     'src',
-    '/theme/default/images/coming-soon/phoenix-knight.png?v=2',
+    '/theme/default/images/coming-soon/phoenix-knight.png?v=3',
   )
 })
 

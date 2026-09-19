@@ -28,6 +28,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- No tema Cruma, o `theme.css` do portal centralizava `.site-footer` e deslocava
+  os títulos (Explorar, Conta, Legal) das colunas do rodapé clássico. O estilo
+  do portal fica só em `.portal-shell` e o layout público trava `text-align: left`
+  nos títulos.
 - Temas com acento ciano/verde deixavam o quadro da Coming Soon e boa parte do
   painel dourados porque as folhas estruturais ignoravam os tokens.
 - Cartas do painel (`.card`, registros do passe como «Temporada Low Rate»)
@@ -47,6 +51,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
   clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
   e `--theme-accent`.
+- Na Coming Soon, a personagem da frente esquerda (Cruma) ficava bem menor
+  que o resto da party: o PNG tinha folga no quadro e o CSS usava 62/68vh.
+  O recorte preenche a arte e as frentes acompanham a escala das demais.
 
 ## [2.5.3] - 2026-09-18
 

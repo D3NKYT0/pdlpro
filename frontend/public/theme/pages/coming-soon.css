@@ -233,7 +233,7 @@
   position: absolute;
   bottom: 0;
   width: auto;
-  max-width: 30vw;
+  max-width: 34vw;
   object-fit: contain;
   object-position: bottom center;
   filter:
@@ -250,9 +250,9 @@
 }
 
 .launch-gate__champion.is-left-front {
-  left: 10%;
+  left: 8%;
   z-index: 4;
-  height: min(62vh, 640px);
+  height: min(80vh, 840px);
   animation-delay: 0.14s;
 }
 
@@ -264,9 +264,9 @@
 }
 
 .launch-gate__champion.is-right-front {
-  right: 9%;
+  right: 8%;
   z-index: 4;
-  height: min(68vh, 720px);
+  height: min(80vh, 840px);
   animation-delay: 0.16s;
 }
 
@@ -277,8 +277,8 @@
 }
 
 .launch-gate__roster.is-assault .launch-gate__champion.is-left-front {
-  left: 11%;
-  height: min(68vh, 720px);
+  left: 9%;
+  height: min(86vh, 900px);
   animation: launch-assault-in-left 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
@@ -289,8 +289,8 @@
 }
 
 .launch-gate__roster.is-assault .launch-gate__champion.is-right-front {
-  right: 10%;
-  height: min(72vh, 760px);
+  right: 9%;
+  height: min(86vh, 900px);
   animation: launch-assault-in-right 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
 }
 

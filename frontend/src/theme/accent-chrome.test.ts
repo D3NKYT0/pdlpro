@@ -51,6 +51,14 @@ it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => 
   expect(comingSoon).not.toMatch(/rgba\(\s*246\s*,\s*236\s*,\s*212/)
   expect(comingSoon).not.toMatch(/#f0d48a/i)
   expect(comingSoon).not.toMatch(/#c5a161/i)
+  expect(comingSoon).toMatch(
+    /\.launch-gate__champion\.is-left-front\s*\{[\s\S]*?height:\s*min\(80vh/,
+  )
+  expect(comingSoon).toMatch(
+    /\.launch-gate__roster\.is-assault \.launch-gate__champion\.is-left-front\s*\{[\s\S]*?height:\s*min\(86vh/,
+  )
+  expect(comingSoon).not.toMatch(/height:\s*min\(62vh/)
+  expect(comingSoon).not.toMatch(/height:\s*min\(68vh/)
 })
 
 it('o chrome do painel e do auth seguem --panel-gold / --theme-accent', () => {
@@ -155,4 +163,11 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
   expect(crumaCss).toContain('var(--theme-art-bg-3)')
   expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
+})
+
+it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {
+  expect(crumaCss).toMatch(/html\[data-pdl-theme="cruma"\] \.portal-shell \.site-footer\s*\{/)
+  expect(crumaCss).not.toMatch(/html\[data-pdl-theme="cruma"\] \.site-footer\s*\{/)
+  expect(layout).toMatch(/html\.pdl-public \.site-footer-col\s*\{[\s\S]*?text-align:\s*left/)
+  expect(layout).toMatch(/html\.pdl-public \.site-footer-col h2\s*\{[\s\S]*?text-align:\s*left/)
 })

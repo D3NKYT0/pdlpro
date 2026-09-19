@@ -37,6 +37,7 @@ A ativação sem data de lançamento é rejeitada pela API.
    Em telas estreitas as colunas empilham, com o hero primeiro.
 5. Enquanto a contagem está ativa, quatro personagens em pose de batalha
    (`images/coming-soon/*.png`) flanqueiam os painéis, olhando para o visitante.
+   As artes compartilham a mesma escala em pé (recorte sem folga no quadro).
    Na abertura entram as poses de assalto; some em telas estreitas.
 6. Entrar é a ação principal: o clique some a interface, troca o fundo estático pelo vídeo
    (`videos/coming-soon/video.mp4`, sem áudio) e, ao terminar (ou se a reprodução falhar), abre o login.

@@ -149,6 +149,10 @@ html.pdl-public .site-footer-actions .site-footer-download {
     border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 48%, transparent);
 }
 
+html.pdl-public .site-footer-col {
+    text-align: left;
+}
+
 html.pdl-public .site-footer-col h2 {
     margin: 0 0 16px;
     font-family: Cambria, "Times New Roman", serif;
@@ -156,6 +160,7 @@ html.pdl-public .site-footer-col h2 {
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+    text-align: left;
     color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 

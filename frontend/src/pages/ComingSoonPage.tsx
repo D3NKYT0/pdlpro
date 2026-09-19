@@ -70,6 +70,7 @@ const ASSAULT_CHAMPIONS = [
 const GENERIC_TITLES = new Set(['em breve', 'coming soon', 'próximamente', 'proximamente'])
 const RATE_FACT_KEYS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
 const ENTER_PATH = '/login'
+const CHAMPION_ART_VERSION = '3'
 const LAUNCH_CINEMATIC = 'coming-soon/video.mp4'
 const CINEMATIC_FALLBACK_MS = 45_000
 
@@ -350,7 +351,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           <img
             key={champion.id}
             className={`launch-gate__champion is-${champion.side}`}
-            src={`${themeImage(champion.file)}?v=${finished ? '1' : '2'}`}
+            src={`${themeImage(champion.file)}?v=${CHAMPION_ART_VERSION}`}
             alt=""
           />
         ))}
