@@ -320,9 +320,12 @@ Pacotes ficam em `MEDIA_ROOT/themes/<tema>/<versão-hash>/` e são entregues sob
 e Nginx. `backend/media/` também é ignorado pelo Git. Preserve o volume `media_files` em
 upgrades e backups; ele é a fonte persistente dos temas instalados.
 
-No deploy, o entrypoint cria `/app/media/themes` e corrige sua permissão antes de iniciar a
-aplicação. O instalador também cria `MEDIA_ROOT/themes` com todos os diretórios pais, tornando
-seguros tanto o primeiro deploy com volume vazio quanto uma execução local sem a pasta criada.
+No deploy, o entrypoint cria `/app/media/themes`, ajusta o dono para o processo Django e
+libera leitura (`a+rX`) para o Nginx do container `web`, que monta o mesmo volume com
+outro uid. Sem isso o CSS ativo existe em disco e a API responde, mas `/media/themes/`
+volta **403**. O instalador também cria `MEDIA_ROOT/themes` com todos os diretórios pais,
+tornando seguros tanto o primeiro deploy com volume vazio quanto uma execução local sem
+a pasta criada. Cada ZIP publicado recebe `0644`/`0755` para o mesmo motivo.
 
 O endpoint público `GET /api/v1/public/theme/` informa o tema ativo. A administração usa
 `/api/v1/staff/themes/`; não exponha essas operações sem autenticação e papel de superusuário.

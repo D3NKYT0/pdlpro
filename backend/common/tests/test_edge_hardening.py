@@ -120,3 +120,10 @@ def test_web_edge_never_mounts_the_private_storage(production_compose):
     volumes = production_compose["services"]["web"]["volumes"]
 
     assert all("private" not in volume for volume in volumes)
+
+
+def test_entrypoint_makes_media_readable_for_the_web_nginx():
+    text = (REPO_ROOT / "backend" / "entrypoint.sh").read_text(encoding="utf-8")
+
+    assert "chmod -R a+rX /app/media" in text
+    assert text.index("chmod -R a+rX /app/media") < text.index("migrate --noinput")

@@ -131,6 +131,10 @@ def test_pack_release_zip_contains_installer_without_application_source(tmp_path
         assert "pdl-pro-2.4.0/scripts/ftp.sh" in names
         assert "pdl-pro-2.4.0/scripts/ftp/vsftpd.conf.template" in names
         assert "pdl-pro-2.4.0/scripts/ftp/launcher.conf.template" in names
+        assert "pdl-pro-2.4.0/scripts/deploy.sh" in names
+        deploy = archive.read("pdl-pro-2.4.0/scripts/deploy.sh").decode("utf-8")
+        assert "uses_published_images" in deploy
+        assert "--force-recreate" in deploy
         assert not any(name.startswith("pdl-pro-2.4.0/backend/") for name in names)
         assert not any(name.startswith("pdl-pro-2.4.0/frontend/src/") for name in names)
         compose = archive.read("pdl-pro-2.4.0/docker-compose.prod.yml").decode("utf-8")

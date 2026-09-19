@@ -49,6 +49,28 @@ def _themes_root() -> Path:
     return root
 
 
+def _chmod_public(path: Path) -> None:
+    try:
+        if path.is_dir():
+            path.chmod(0o755)
+        elif path.is_file():
+            path.chmod(0o644)
+    except OSError:
+        return
+
+
+def _publish_nginx_readable(tree: Path) -> None:
+    """O Nginx do web lê o volume com outro uid; 0700/0600 vira 403 em /media/."""
+
+    media_root = Path(settings.MEDIA_ROOT).resolve()
+    for current in [tree, *tree.rglob("*")]:
+        _chmod_public(current)
+    for ancestor in tree.parents:
+        _chmod_public(ancestor)
+        if ancestor == media_root:
+            break
+
+
 def _safe_member_name(raw_name: str) -> str:
     normalized = raw_name.replace("\\", "/")
     path = PurePosixPath(normalized)
@@ -516,6 +538,7 @@ def install_theme(
             destination.write_bytes(content)
         final.parent.mkdir(parents=True, exist_ok=True)
         os.replace(staging, final)
+        _publish_nginx_readable(final)
         try:
             with work:
                 theme = packages.create(

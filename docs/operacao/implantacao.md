@@ -259,7 +259,7 @@ git pull --ff-only
 - Defina política de retry, observabilidade e fila de falhas para tarefas críticas.
 - Faça backups automáticos de banco e mídia e teste a restauração.
 - Preserve o volume `media_files`: ele contém versões de temas instaladas e outros uploads.
-  O entrypoint cria `/app/media/themes` e ajusta sua permissão no primeiro deploy.
+  O entrypoint cria `/app/media/themes` e libera `a+rX` para o Nginx do `web`.
 - Preserve o volume `private_files` (`/app/private`, modo 700): guarda os pacotes de
   portabilidade LGPD, que só saem pela view com token assinado e não são servidos em `/media/`.
 

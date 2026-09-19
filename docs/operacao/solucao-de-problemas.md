@@ -156,10 +156,14 @@ Veja [Catálogo de itens](../integracoes/catalogo-de-itens.md) e [Ícones](../in
 ## Temas
 
 Consulte `/api/v1/public/theme/` e abra diretamente `stylesheet_url` e um asset retornado.
-Se a API responder Valorem, mas o arquivo retornar 404, confira o volume `media_files`, o proxy
-de `/media/` e a existência de `MEDIA_ROOT/themes/<storage_path>`. Em erro de permissão no upload,
-verifique se o processo Django escreve em `MEDIA_ROOT/themes`; o entrypoint do container cria e
-ajusta `/app/media/themes`, enquanto a execução nativa cria os diretórios pais no instalador.
+Se a API responder o pacote ativo, mas o arquivo retornar **403**, a imagem do backend
+ainda não liberou leitura do volume para o Nginx do `web`. Rode de novo o
+`install.sh` da release no mesmo diretório: o entrypoint passa a aplicar `a+rX` em
+`/app/media` antes das migrações. Se retornar 404, confira o volume `media_files`, o
+proxy de `/media/` e a existência de `MEDIA_ROOT/themes/<storage_path>`. Em erro de
+permissão no upload, verifique se o processo Django escreve em `MEDIA_ROOT/themes`;
+o entrypoint do container cria e ajusta `/app/media/themes`, enquanto a execução nativa
+cria os diretórios pais no instalador.
 
 Um ZIP rejeitado deve ser corrigido na origem. Não remova as validações de extensão, caminho,
 CSS ou tamanho. IDs e versões não podem se repetir; um pacote ativo só pode ser removido depois

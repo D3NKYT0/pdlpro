@@ -110,6 +110,11 @@ up_args=(up -d --remove-orphans)
 if [[ "$build" -eq 1 ]]; then
   up_args+=(--build)
 fi
+# Mesma tag SemVer com digest novo (republicação): sem recreate o
+# entrypoint antigo continua e /media/themes/ segue em 403.
+if uses_published_images; then
+  up_args+=(--force-recreate)
+fi
 
 info "Iniciando deploy..."
 "$compose_runner" "${compose_args[@]}" "${up_args[@]}"

@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import zipfile
 
 import pytest
@@ -141,6 +142,30 @@ def test_only_superadmin_can_install_theme(api, tmp_path, settings):
     )
     assert response.status_code == 403
     assert ThemePackage.objects.count() == 0
+
+
+@pytest.mark.django_db
+@pytest.mark.skipif(os.name == "nt", reason="umask e modo POSIX não se aplicam no Windows")
+def test_installed_theme_is_readable_by_the_web_nginx_user(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    previous = os.umask(0o077)
+    try:
+        installed = api.post(
+            "/api/v1/staff/themes/",
+            {"package": SimpleUploadedFile("valorem.zip", theme_zip(), content_type="application/zip")},
+            format="multipart",
+        )
+    finally:
+        os.umask(previous)
+    assert installed.status_code == 201, installed.data
+    storage = tmp_path / "themes" / ThemePackage.objects.get().storage_path
+    css = storage / "theme.css"
+    assert css.is_file()
+    assert css.stat().st_mode & 0o004
+    assert storage.stat().st_mode & 0o001
+    assert (tmp_path / "themes").stat().st_mode & 0o001
+    assert tmp_path.stat().st_mode & 0o001
 
 
 @pytest.mark.django_db

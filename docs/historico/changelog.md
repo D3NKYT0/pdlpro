@@ -44,6 +44,10 @@ chrome estrutural no acento do pacote ativo, consolidados em
 
 ### Corrigido
 
+- Pacote de tema ativo no banco e presente no volume, mas `/media/themes/`
+  respondia **403**: o Django grava como `appuser` e o Nginx do `web` lê com
+  outro uid. A publicação do ZIP e o entrypoint da imagem liberam `a+rX`
+  no boot, sem comando manual no servidor.
 - A suíte do frontend no CI deixa de depender de manifesto de pacote de
   cliente em `src/`.
 - Os balões do Denkynho (chat, status e o selo do nome) ainda
