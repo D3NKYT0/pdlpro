@@ -27,6 +27,7 @@
   --theme-art-bg-3: url(/theme/default/images/bg/3.jpg);
   --theme-art-bg-4: url(/theme/default/images/bg/4.jpg);
   --theme-art-bg-5: url(/theme/default/images/bg/5.jpg);
+  --theme-art-wallet-promo: url(/theme/default/images/bg/wallet-promo-banner.png);
   line-height: 1.5;
 }
 
@@ -376,7 +377,7 @@ button, input, select { font: inherit; }
 /* Central de atendimento */
 .support-page, .staff-support-page { display: grid; gap: 18px; min-width: 0; }
 .support-hero, .staff-support-hero { display: flex; align-items: center; justify-content: space-between; gap: 24px; overflow: hidden; position: relative; }
-.support-hero::after, .staff-support-hero::after { content: ''; position: absolute; width: 320px; height: 320px; right: -100px; top: -190px; border-radius: 50%; background: radial-gradient(circle, rgba(204,155,63,.18), transparent 70%); pointer-events: none; }
+.support-hero::after, .staff-support-hero::after { content: ''; position: absolute; width: 320px; height: 320px; right: -100px; top: -190px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #cc9b3f)) 18%, transparent), transparent 70%); pointer-events: none; }
 .support-hero h1, .staff-support-hero h1 { margin: 5px 0 4px; font-size: clamp(1.65rem, 3vw, 2.35rem); }
 .support-hero p, .staff-support-hero p { margin: 0; }
 .support-hero .panel-eyebrow, .staff-support-hero .panel-eyebrow { display: inline-flex; align-items: center; gap: 7px; }

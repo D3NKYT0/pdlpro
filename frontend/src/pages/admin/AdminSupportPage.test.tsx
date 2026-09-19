@@ -68,6 +68,13 @@ function mount(path = '/panel/admin/support?ticket=ticket-6') {
   return userEvent.setup()
 }
 
+it('marca o herói do suporte staff com a tag de tema do cabeçalho', async () => {
+  mount()
+  const hero = await screen.findByRole('heading', { name: 'Fila de chamados' })
+  expect(hero.closest('[data-theme-part="page-header"]')).not.toBeNull()
+  expect(hero.closest('.account-hero')).not.toBeNull()
+})
+
 it('permite responder chamado aberto', async () => {
   const user = mount()
   const input = await screen.findByRole('textbox', { name: /O jogador receberá uma notificação/ })

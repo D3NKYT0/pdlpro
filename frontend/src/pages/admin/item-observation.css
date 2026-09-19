@@ -31,7 +31,13 @@
 .observation-section section { display: grid; gap: 16px; border-top: 1px solid var(--theme-border, #bf9a5426); padding-top: 20px; min-width: 0; }
 .observation-section summary { cursor: pointer; }
 .observation-hero { position: relative; }
-.observation-hero .account-hero { padding-right: 130px; background: radial-gradient(ellipse at top right, var(--panel-gold-soft, #c7a3661c), transparent 65%); }
+.observation-hero .account-hero {
+  padding-right: 130px;
+  background:
+    radial-gradient(ellipse at top right, var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, #c7a366) 11%, transparent)), transparent 65%),
+    linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.88) 58%, rgba(22, 16, 10, 0.72)),
+    var(--theme-art-bg-3, url(/theme/default/images/bg/3.jpg)) center 38% / cover no-repeat;
+}
 .observation-hero-mark { position: absolute; right: 32px; top: 50%; transform: translateY(-50%); width: 76px; height: 76px; border: 1px solid var(--theme-border, #c7a36636); border-radius: 20px; display: grid; place-items: center; color: var(--observation-gold); background: var(--panel-gold-soft, #c7a3660c); }
 .observation-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #00000022; border: 1px solid var(--theme-border, #c7a36620); border-radius: 12px; width: fit-content; max-width: 100%; }
 .observation-tabs button { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 19px; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; font: inherit; font-size: .84rem; }

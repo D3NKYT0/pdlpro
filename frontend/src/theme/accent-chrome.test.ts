@@ -17,6 +17,8 @@ const helpCss = readFileSync(resolve(__dirname, '../components/help/help.css'), 
 const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-progress.css'), 'utf8')
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
+const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
+const crumaCss = readFileSync(resolve(__dirname, '../../theme-packages/cruma/theme.css'), 'utf8')
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
@@ -97,4 +99,14 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(programsCss).toMatch(/\.program-meter span\s*\{[\s\S]*?var\(--theme-accent/)
   expect(globalCss).toMatch(/\.global-loader__progress i\s*\{[\s\S]*?var\(--theme-accent-bright/)
   expect(uiCss).toMatch(/\.ui-select-list::-webkit-scrollbar-thumb\s*\{[\s\S]*?var\(--theme-accent/)
+})
+
+it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () => {
+  expect(panel).toMatch(/\.security-hero[\s\S]*?var\(--theme-art-bg-2\)/)
+  expect(globalCss).toMatch(/\.support-hero::after[\s\S]*?var\(--theme-accent/)
+  expect(globalCss).not.toMatch(/rgba\(\s*204\s*,\s*155\s*,\s*63/)
+  expect(observationCss).toMatch(/\.observation-hero \.account-hero[\s\S]*?var\(--theme-art-bg-3/)
+  expect(crumaCss).toContain('[data-theme-part="page-header"]')
+  expect(crumaCss).toContain('[data-theme-part="admin-category"]')
+  expect(crumaCss).toContain('var(--theme-art-bg-3)')
 })

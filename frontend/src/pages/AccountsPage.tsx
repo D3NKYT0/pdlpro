@@ -109,7 +109,7 @@ export function AccountsPage() {
 
   return (
     <div className="account-page">
-      <Card as="header" className="account-hero">
+      <Card as="header" className="account-hero" data-theme-part="page-header">
         <div>
           <span className="panel-eyebrow">{t('accounts.eyebrow')}</span>
           <h1>{t('accounts.title')}</h1>

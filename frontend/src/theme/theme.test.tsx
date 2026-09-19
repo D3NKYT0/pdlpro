@@ -69,6 +69,7 @@ it('aplica superfícies e densidade a partir do layout do pacote', () => {
   expect(style.getPropertyValue('--theme-art-bg-1')).toContain('bg/1.png')
   expect(style.getPropertyValue('--theme-art-bg-3')).toContain('art-3.jpg')
   expect(style.getPropertyValue('--theme-art-bg-5')).toContain('art-5.jpg')
+  expect(style.getPropertyValue('--theme-art-wallet-promo')).toContain('wallet-promo-banner.png')
   expect(style.getPropertyValue('--theme-art-games-monster')).toContain('games/monster-default.webp')
   expect(style.getPropertyValue('--theme-art-games-monster-drake')).toContain('games/monster-drake.webp')
   expect(style.getPropertyValue('--theme-art-games-monster-death-knight')).toContain(

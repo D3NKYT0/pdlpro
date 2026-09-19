@@ -192,7 +192,7 @@ export function CharacterPage() {
 
   return (
     <div className="account-page character-page">
-      <Card as="header" className="account-hero">
+      <Card as="header" className="account-hero" data-theme-part="page-header">
         <div className="character-hero-identity">
           {char ? (
             <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="xl" />

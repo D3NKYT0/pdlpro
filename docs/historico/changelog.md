@@ -22,8 +22,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   segurança e loja deixam o ouro cravado (`#e1bd70`, `rgba(218,174,81)`),
   as barras de progresso do painel, do help nativo, do Denkynho, do
   battle/fragmentos e as thumbs de scroll leem `--theme-accent` /
-  `--panel-gold`, e o `html.pdl-panel` deixa de sobrescrever o acento do
-  pacote.
+  `--panel-gold`. Os heróis do admin passam a ter `data-theme-part` e
+  `--theme-art-bg-*` (hub, suporte, segurança e observação), e o
+  `html.pdl-panel` deixa de sobrescrever o acento do pacote.
 
 ### Corrigido
 

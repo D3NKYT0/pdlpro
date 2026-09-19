@@ -121,7 +121,7 @@ export function AdminHubPage() {
   )
   return (
     <div className="account-page admin-hub">
-      <Card as="header" className="account-hero">
+      <Card as="header" className="account-hero" data-theme-part="page-header">
         <div>
           <span className="panel-eyebrow">{t('hub.eyebrow')}</span>
           <h1>{t('hub.title')}</h1>
@@ -134,7 +134,7 @@ export function AdminHubPage() {
       </Card>
 
       {categories.map((category) => (
-        <Card className="admin-category" data-tone={category.tone} key={category.key}>
+        <Card className="admin-category" data-theme-part="admin-category" data-tone={category.tone} key={category.key}>
           <div className="account-section-heading">
             <div>
               <span className="panel-eyebrow">{t('hub.module')}</span>

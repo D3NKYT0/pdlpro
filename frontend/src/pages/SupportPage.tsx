@@ -138,7 +138,7 @@ export function SupportPage() {
 
   return (
     <div className="support-page">
-      <Card as="header" className="support-hero">
+      <Card as="header" className="support-hero account-hero" data-theme-part="page-header">
         <div>
           <span className="panel-eyebrow"><Headphones aria-hidden="true" /> {t('support.eyebrow')}</span>
           <h1>{t('support.title')}</h1>

@@ -113,7 +113,7 @@ export function AdminSupportPage() {
 
   return (
     <div className="staff-support-page">
-      <Card as="header" className="staff-support-hero">
+      <Card as="header" className="staff-support-hero account-hero" data-theme-part="page-header">
         <div>
           <a className="character-back" href="/panel/admin"><ArrowLeft /> {t('support.back')}</a>
           <span className="panel-eyebrow"><Headphones /> {t('support.eyebrow')}</span>

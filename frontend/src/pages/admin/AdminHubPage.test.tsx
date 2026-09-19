@@ -19,6 +19,8 @@ describe('AdminHubPage', () => {
         createElement(MemoryRouter, null, createElement(AdminHubPage)),
       ),
     )
+    expect(html).toContain('data-theme-part="page-header"')
+    expect(html).toContain('data-theme-part="admin-category"')
     for (const tone of ['programs', 'support', 'system', 'reports', 'finance', 'games', 'content', 'server']) {
       expect(html).toContain(`data-tone="${tone}"`)
     }

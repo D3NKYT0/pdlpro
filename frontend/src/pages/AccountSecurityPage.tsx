@@ -206,7 +206,7 @@ export function AccountSecurityPage() {
 
   return (
     <div className="security-page">
-      <Card className="security-hero">
+      <Card className="security-hero account-hero" data-theme-part="page-header">
         <span><ShieldCheck aria-hidden="true" /></span>
         <div><span className="panel-eyebrow">{t('security.eyebrow')}</span><h1>{t('security.title')}</h1><p className="muted">{t('security.subtitle')}</p></div>
       </Card>

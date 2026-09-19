@@ -14988,7 +14988,8 @@ html.pdl-panel .conquista-pagination .btn:disabled {
 }
 
 html.pdl-panel .security-page { display: grid; gap: 18px; }
-html.pdl-panel .security-hero { display: flex; align-items: center; gap: 20px; min-height: 122px; }
+html.pdl-panel .security-hero { display: flex; align-items: center; gap: 20px; min-height: 122px; overflow: hidden; background: linear-gradient(90deg, rgba(12, 11, 9, 0.98), rgba(17, 14, 11, 0.88) 58%, rgba(22, 16, 10, 0.72)), var(--theme-art-bg-2) center 38% / cover no-repeat; }
+html.pdl-panel .security-hero > * { position: relative; z-index: 1; }
 html.pdl-panel .security-hero > span { width: 72px; height: 72px; display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 30%, transparent); background: color-mix(in srgb, var(--panel-gold) 8%, transparent); transform: rotate(45deg); }
 html.pdl-panel .security-hero > span svg { width: 32px; height: 32px; transform: rotate(-45deg); }
 html.pdl-panel .security-hero h1 { margin: 2px 0; }

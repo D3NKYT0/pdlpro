@@ -25,6 +25,7 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-bg-3',
   '--theme-art-bg-4',
   '--theme-art-bg-5',
+  '--theme-art-wallet-promo',
   '--theme-art-games-box-common',
   '--theme-art-games-box-common-ajar',
   '--theme-art-games-box-common-open',
@@ -232,6 +233,7 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   style.setProperty('--theme-art-bg-3', cssUrl(themeImage('bg/3.jpg')))
   style.setProperty('--theme-art-bg-4', cssUrl(themeImage('bg/4.jpg')))
   style.setProperty('--theme-art-bg-5', cssUrl(themeImage('bg/5.jpg')))
+  style.setProperty('--theme-art-wallet-promo', cssUrl(themeImage('bg/wallet-promo-banner.png')))
   for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART })) {
     style.setProperty(key, cssUrl(themeImage(path)))
   }
