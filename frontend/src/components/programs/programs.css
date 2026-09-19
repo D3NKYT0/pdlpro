@@ -29,7 +29,7 @@ html.pdl-panel .program-page .program-check input[type="checkbox"] {
   padding: 0;
   margin: 0;
   flex: 0 0 18px;
-  accent-color: var(--gold);
+  accent-color: var(--theme-accent, var(--gold));
 }
 .program-grid:has(> .program-stat) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -83,7 +83,7 @@ html.pdl-panel .program-page .program-switch::after {
   width: 58px;
   height: 58px;
   flex-shrink: 0;
-  color: var(--gold);
+  color: var(--theme-accent, var(--gold));
   opacity: 0.8;
 }
 .program-hero > svg.enamel-glyph {
@@ -256,7 +256,7 @@ html.pdl-panel .program-hero--editorial p {
 .program-stat strong {
   display: block;
   font-size: 28px;
-  color: var(--gold);
+  color: var(--theme-accent, var(--gold));
   margin-top: 6px;
 }
 .program-form {
@@ -306,7 +306,7 @@ html.pdl-panel .program-hero--editorial p {
 .program-check input {
   width: 18px;
   height: 18px;
-  accent-color: var(--gold);
+  accent-color: var(--theme-accent, var(--gold));
 }
 .program-actions {
   display: flex;
@@ -338,7 +338,7 @@ html.pdl-panel .program-hero--editorial p {
   font: inherit;
 }
 .program-tabs .active {
-  color: var(--gold);
+  color: var(--theme-accent, var(--gold));
   background: rgba(212, 175, 55, 0.1);
   border-color: var(--gold-dim);
 }
@@ -386,7 +386,7 @@ html.pdl-panel .program-hero--editorial p {
   font-size: 13px;
 }
 .program-reward svg {
-  color: var(--gold);
+  color: var(--theme-accent, var(--gold));
 }
 .program-reward strong,
 .program-reward small {
@@ -523,7 +523,7 @@ html.pdl-panel .program-hero--editorial p {
   background: var(--theme-accent-bright, #e2bd66);
 }
 .program-day.is-today {
-  border-color: var(--gold);
+  border-color: var(--theme-accent, var(--gold));
   background: var(--panel-gold-soft, rgba(212, 175, 55, 0.09));
 }
 .program-day.is-locked {

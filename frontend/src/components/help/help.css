@@ -139,10 +139,32 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   gap:8px;
   font-size:12px;
 }
-.denk-pet-attributes progress {
+.denk-pet-attributes progress,
+.denk-progress progress {
   width:100%;
   height:8px;
-  accent-color:var(--help-accent, var(--panel-gold, #c89b3c));
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  border-radius:999px;
+  overflow:hidden;
+  background:color-mix(in srgb, var(--help-accent, var(--theme-accent, #c5a161)) 16%, #0a0a0a);
+  accent-color:var(--help-accent, var(--theme-accent, #c5a161));
+}
+.denk-pet-attributes progress::-webkit-progress-bar,
+.denk-progress progress::-webkit-progress-bar {
+  background:color-mix(in srgb, var(--help-accent, var(--theme-accent, #c5a161)) 16%, #0a0a0a);
+  border-radius:inherit;
+}
+.denk-pet-attributes progress::-webkit-progress-value,
+.denk-progress progress::-webkit-progress-value {
+  background:linear-gradient(90deg, var(--help-accent, var(--theme-accent, #c5a161)), var(--help-accent-bright, var(--theme-accent-bright, #e6c77d)));
+  border-radius:inherit;
+}
+.denk-pet-attributes progress::-moz-progress-bar,
+.denk-progress progress::-moz-progress-bar {
+  background:linear-gradient(90deg, var(--help-accent, var(--theme-accent, #c5a161)), var(--help-accent-bright, var(--theme-accent-bright, #e6c77d)));
+  border-radius:inherit;
 }
 .denk-pet-attributes b {
   text-align:right;
@@ -211,7 +233,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 .help-companion::-webkit-scrollbar-thumb,
 .help-companion-menu::-webkit-scrollbar-thumb,
 .help-activities[role=group]::-webkit-scrollbar-thumb {
-  background:linear-gradient(180deg, rgba(210, 170, 86, 0.55), rgba(117, 85, 34, 0.7));
+  background:linear-gradient(180deg, color-mix(in srgb, var(--help-accent-bright, var(--theme-accent-bright, #e6c77d)) 55%, transparent), color-mix(in srgb, var(--help-accent, var(--theme-accent, #c5a161)) 70%, transparent));
   border:2px solid transparent;
   background-clip:padding-box;
   border-radius:999px;
@@ -220,7 +242,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 .help-companion::-webkit-scrollbar-thumb:hover,
 .help-companion-menu::-webkit-scrollbar-thumb:hover,
 .help-activities[role=group]::-webkit-scrollbar-thumb:hover {
-  background:linear-gradient(180deg, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 75%, transparent), rgba(156, 121, 55, 0.85));
+  background:linear-gradient(180deg, color-mix(in srgb, var(--help-accent-bright, var(--theme-accent-bright, #e6c77d)) 75%, transparent), color-mix(in srgb, var(--help-accent, var(--theme-accent, #c5a161)) 85%, transparent));
   background-clip:padding-box;
 }
 .help-companion,

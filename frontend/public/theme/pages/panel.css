@@ -1,8 +1,17 @@
-html.pdl-panel {
+html.pdl-panel[data-pdl-theme="default"],
+html.pdl-panel:not([data-pdl-theme]) {
   --panel-gold: #c5a161;
   --panel-gold-bright: #e6c77d;
+  --theme-accent: var(--panel-gold);
+  --theme-accent-bright: var(--panel-gold-bright);
+}
+
+html.pdl-panel {
+  --panel-gold: var(--theme-accent, #c5a161);
+  --panel-gold-bright: var(--theme-accent-bright, #e6c77d);
   --panel-gold-soft: color-mix(in srgb, var(--panel-gold) 14%, transparent);
   --panel-border: color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
+  --panel-accent: var(--panel-gold);
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
@@ -12,8 +21,6 @@ html.pdl-panel {
   --panel-box-legendary: var(--theme-legendary, var(--panel-gold-bright));
   --theme-text: var(--panel-text);
   --theme-muted: var(--panel-muted);
-  --theme-accent: var(--panel-gold);
-  --theme-accent-bright: var(--panel-gold-bright);
   --theme-surface: var(--panel-surface);
   --theme-border: var(--panel-border);
   --theme-bg-deep: #100e0b;
@@ -257,7 +264,7 @@ html.pdl-panel .site-back svg {
 
 html.pdl-panel .site-back:hover {
   color: #fff;
-  text-shadow: 0 0 10px rgba(255, 166, 0, 0.75);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 75%, transparent);
   transform: translateX(-2px);
 }
 
@@ -325,7 +332,7 @@ html.pdl-panel .panel-menu a.active {
   border-color: color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 13%, transparent), color-mix(in srgb, var(--panel-gold) 2.5%, transparent));
   color: #fff;
-  text-shadow: 0 0 10px rgba(255, 166, 0, 0.48);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
   transform: none;
 }
 
@@ -1258,7 +1265,7 @@ html.pdl-panel .shop-hero-motes {
   pointer-events: none;
   background:
     radial-gradient(circle at 78% 28%, rgba(255, 232, 170, 0.14), transparent 14%),
-    radial-gradient(circle at 88% 72%, rgba(218, 174, 81, 0.16), transparent 16%);
+    radial-gradient(circle at 88% 72%, color-mix(in srgb, var(--panel-gold) 16%, transparent), transparent 16%);
   animation: shop-mote-drift 9s ease-in-out infinite alternate;
 }
 
@@ -1326,7 +1333,7 @@ html.pdl-panel .shop-hero-facts li {
   gap: 10px;
   min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid rgba(218, 174, 81, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background: rgba(6, 5, 4, 0.86);
 }
 
@@ -1376,7 +1383,7 @@ html.pdl-panel .shop-section-heading {
   justify-content: space-between;
   gap: 15px;
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.14);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .shop-section-heading h2 {
@@ -1400,7 +1407,7 @@ html.pdl-panel .shop-section-heading > b {
   min-width: 30px;
   height: 30px;
   padding: 0 8px;
-  border: 1px solid rgba(218, 174, 81, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
   border-radius: 50%;
   color: var(--panel-gold-bright);
 }
@@ -1419,7 +1426,7 @@ html.pdl-panel .shop-product {
   min-height: 0;
   padding: 0;
   overflow: hidden;
-  border: 1px solid rgba(218, 174, 81, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
   background: linear-gradient(180deg, rgba(16, 13, 10, 0.96), rgba(8, 7, 5, 0.98));
   animation: shop-card-enter 480ms ease both;
 }
@@ -1452,7 +1459,7 @@ html.pdl-panel .shop-product-art {
   display: block;
   height: 64px;
   border: 0;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.22);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background:
     linear-gradient(180deg, rgba(8, 7, 5, 0.12), rgba(8, 7, 5, 0.55)),
     var(--theme-art-shop-coins) center / cover no-repeat;
@@ -1495,7 +1502,7 @@ html.pdl-panel .shop-product-icon::before,
 html.pdl-panel .shop-history-seal::before {
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(218, 174, 81, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   content: '';
   pointer-events: none;
 }
@@ -1569,7 +1576,7 @@ html.pdl-panel .shop-cart-item {
   align-items: center;
   gap: 10px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.11);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   animation: shop-card-enter 380ms ease both;
 }
 
@@ -1619,7 +1626,7 @@ html.pdl-panel .shop-cart-empty {
   overflow: hidden;
   color: rgba(247, 242, 232, 0.78);
   text-align: center;
-  border: 1px dashed rgba(218, 174, 81, 0.16);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(6, 5, 4, 0.72);
 }
 
@@ -1645,7 +1652,7 @@ html.pdl-panel .shop-cart-summary {
   display: grid;
   gap: 10px;
   padding-top: 15px;
-  border-top: 1px solid rgba(218, 174, 81, 0.18);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
 }
 
 html.pdl-panel .shop-cart-summary p {
@@ -1663,7 +1670,7 @@ html.pdl-panel .shop-cart-summary p strong {
 html.pdl-panel .shop-cart-summary .shop-cart-total {
   padding-top: 10px;
   font-size: 18px;
-  border-top: 1px solid rgba(218, 174, 81, 0.1);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .shop-cart-summary .shop-cart-total strong {
@@ -1691,7 +1698,7 @@ html.pdl-panel .shop-history-item {
   gap: 16px;
   padding: 14px 16px;
   overflow: hidden;
-  border: 1px solid rgba(218, 174, 81, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
   background: linear-gradient(180deg, rgba(16, 13, 10, 0.96), rgba(8, 7, 5, 0.98));
   color: inherit;
   font: inherit;
@@ -1737,7 +1744,7 @@ html.pdl-panel .shop-history-lines > span {
   gap: 8px;
   padding: 6px 10px;
   color: rgba(239, 224, 194, 0.86);
-  border: 1px solid rgba(218, 174, 81, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(6, 5, 4, 0.72);
 }
 
@@ -1751,7 +1758,7 @@ html.pdl-panel .shop-history-facts > span {
   padding: 4px 8px;
   color: rgba(239, 224, 194, 0.78);
   font-size: 12px;
-  border: 1px solid rgba(218, 174, 81, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .shop-history-total {
@@ -1782,7 +1789,7 @@ html.pdl-panel .shop-history-empty {
   padding: 36px 18px 28px;
   color: rgba(247, 242, 232, 0.78);
   text-align: center;
-  border: 1px dashed rgba(218, 174, 81, 0.16);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(6, 5, 4, 0.72);
 }
 
@@ -1827,7 +1834,7 @@ html.pdl-panel .shop-history-detail-line {
   align-items: start;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .shop-history-detail-line:first-child {
@@ -1877,7 +1884,7 @@ html.pdl-panel .shop-history-grants > span {
   padding: 4px 8px;
   color: rgba(239, 224, 194, 0.86);
   font-size: 12px;
-  border: 1px solid rgba(218, 174, 81, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(6, 5, 4, 0.72);
 }
 
@@ -2487,7 +2494,7 @@ html.pdl-panel .admin-news-item > span svg { width: 17px; }
 html.pdl-panel .admin-news-item > div > div { display: flex; align-items: center; gap: 9px; }
 html.pdl-panel .admin-news-item h3 { margin: 0; font-size: 15px; }
 html.pdl-panel .admin-news-item p { margin: 5px 0 0; color: var(--panel-muted); font-size: 12px; }
-html.pdl-panel .admin-news-item b { padding: 4px 7px; color: #d8b068; border: 1px solid rgba(216,176,104,.24); border-radius: 999px; font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
+html.pdl-panel .admin-news-item b { padding: 4px 7px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); border-radius: 999px; font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
 html.pdl-panel .admin-news-item b.is-published { color: #8fd19e; border-color: rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
 html.pdl-panel .admin-news-item .btn { height: 36px; }
 html.pdl-panel .admin-news-item .btn svg { width: 14px; }
@@ -5486,7 +5493,7 @@ html.pdl-panel .dashboard-hero-status li {
   gap: 10px;
   min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid rgba(218, 174, 81, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(5, 5, 5, 0.52);
 }
 
@@ -5624,7 +5631,7 @@ html.pdl-panel .dashboard-roster-card {
   justify-items: center;
   gap: 10px;
   padding: 16px 12px 14px;
-  border: 1px solid rgba(218, 174, 81, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background:
     linear-gradient(180deg, rgba(18, 14, 10, 0.2), rgba(8, 7, 5, 0.88)),
     var(--theme-art-bg-4) center 20% / cover no-repeat;
@@ -5847,7 +5854,7 @@ html.pdl-panel .btn.ghost {
 
 html.pdl-panel .btn:hover:not(:disabled) {
   filter: var(--ui-button-tone, brightness(1)) brightness(135%);
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   transform: translateY(-1px);
 }
 
@@ -7253,7 +7260,7 @@ html.pdl-panel .progress-bar i {
   position: absolute;
   inset: 0 auto 0 0;
   min-width: 3px;
-  background: linear-gradient(90deg, #76551f, #d1a94f 65%, #f1d88c);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 55%, #0a1418), var(--panel-gold) 65%, var(--panel-gold-bright));
   box-shadow: 0 0 13px color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
   transition: width 350ms ease;
 }
@@ -7901,7 +7908,7 @@ html.pdl-panel .game-tabs button.active {
   border-color: color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
   background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4.5%, transparent));
   color: #fff;
-  text-shadow: 0 0 12px rgba(255, 166, 0, 0.34);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
 }
 
 html.pdl-panel .game-tabs button.active::after {
@@ -8856,7 +8863,7 @@ html.pdl-panel .prize-list::-webkit-scrollbar-track {
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 72%, transparent), rgba(117, 85, 34, 0.78));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 72%, transparent), color-mix(in srgb, var(--panel-gold) 78%, transparent));
   border: 2px solid transparent;
   border-radius: 999px;
   background-clip: padding-box;
@@ -8864,7 +8871,7 @@ html.pdl-panel .prize-list::-webkit-scrollbar-thumb {
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 92%, transparent), rgba(156, 121, 55, 0.9));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 92%, transparent), color-mix(in srgb, var(--panel-gold) 90%, transparent));
   background-clip: padding-box;
 }
 
@@ -9358,7 +9365,7 @@ html.pdl-panel .fragment-progress-fill {
   z-index: 1;
   inset: 0 auto 0 0;
   min-width: 0;
-  background: linear-gradient(90deg, #76551f, #d1a94f 65%, #f1d88c);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 55%, #0a1418), var(--panel-gold) 65%, var(--panel-gold-bright));
   box-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   transition: width 400ms ease;
 }
@@ -9367,7 +9374,7 @@ html.pdl-panel .fragment-progress-sheen {
   position: absolute;
   z-index: 2;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 246, 208, 0.38), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--panel-gold-bright) 38%, transparent), transparent);
   transform: translateX(-80%);
   opacity: 0.35;
 }
@@ -14982,7 +14989,7 @@ html.pdl-panel .conquista-pagination .btn:disabled {
 
 html.pdl-panel .security-page { display: grid; gap: 18px; }
 html.pdl-panel .security-hero { display: flex; align-items: center; gap: 20px; min-height: 122px; }
-html.pdl-panel .security-hero > span { width: 72px; height: 72px; display: grid; place-items: center; color: #e1bd70; border: 1px solid rgba(218,174,81,.3); background: rgba(218,174,81,.08); transform: rotate(45deg); }
+html.pdl-panel .security-hero > span { width: 72px; height: 72px; display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 30%, transparent); background: color-mix(in srgb, var(--panel-gold) 8%, transparent); transform: rotate(45deg); }
 html.pdl-panel .security-hero > span svg { width: 32px; height: 32px; transform: rotate(-45deg); }
 html.pdl-panel .security-hero h1 { margin: 2px 0; }
 html.pdl-panel .security-hero p { margin: 4px 0 0; }
@@ -14993,7 +15000,7 @@ html.pdl-panel .security-sessions { align-self: stretch; align-content: start; g
 html.pdl-panel .security-sessions-intro { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; gap: 10px 16px; }
 html.pdl-panel .security-sessions-intro > p { margin: 0; }
 html.pdl-panel .security-session-list { display: grid; gap: 8px; }
-html.pdl-panel .security-session-list article { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(218,174,81,.14); background: rgba(218,174,81,.035); }
+html.pdl-panel .security-session-list article { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: color-mix(in srgb, var(--panel-gold) 4%, transparent); }
 html.pdl-panel .security-session-list article.is-current { border-color: rgba(111,191,115,.28); background: rgba(111,191,115,.06); }
 html.pdl-panel .security-session-list article > svg { width: 21px; color: #d9ae59; }
 html.pdl-panel .security-session-list article span { display: grid; gap: 3px; min-width: 0; }
@@ -15002,7 +15009,7 @@ html.pdl-panel .security-session-list article small { color: rgba(239,224,194,.4
 html.pdl-panel .security-session-list article button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #cf7a6d; background: transparent; border: 1px solid rgba(207,122,109,.25); cursor: pointer; }
 html.pdl-panel .security-session-list article button svg { width: 15px; }
 html.pdl-panel .security-card > header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; }
-html.pdl-panel .security-card > header > span { width: 42px; height: 42px; display: grid; place-items: center; color: #e1bd70; border: 1px solid rgba(218,174,81,.24); background: rgba(218,174,81,.07); }
+html.pdl-panel .security-card > header > span { width: 42px; height: 42px; display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .security-card > header > span svg { width: 20px; height: 20px; }
 html.pdl-panel .security-card h2 { margin: 0; font-size: 20px; }
 html.pdl-panel .security-card header p { margin: 2px 0 0; color: rgba(239,224,194,.52); font-size: 12px; }
@@ -15015,7 +15022,7 @@ html.pdl-panel .security-email { gap: 10px; }
 html.pdl-panel .security-success { display: flex; align-items: center; gap: 9px; color: #8fd19e; }
 html.pdl-panel .security-success svg { width: 19px; }
 html.pdl-panel .security-2fa-start { justify-self: start; }
-html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border: 1px solid rgba(218,174,81,.22); background: rgba(5,5,5,.38); }
+html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent); background: rgba(5,5,5,.38); }
 html.pdl-panel .security-secret span { color: rgba(239,224,194,.56); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
 html.pdl-panel .security-secret strong { color: #f0d28c; font-family: monospace; overflow-wrap: anywhere; }
 html.pdl-panel .security-secret small { color: rgba(239,224,194,.48); }
@@ -15023,7 +15030,7 @@ html.pdl-panel .security-2fa-setup { grid-template-columns: auto minmax(0,1fr); 
 html.pdl-panel .security-2fa-setup:not(:has(.security-2fa-qr)) { grid-template-columns: minmax(0,1fr); }
 html.pdl-panel .security-2fa-qr { width: 180px; height: 180px; padding: 8px; background: #fff; }
 html.pdl-panel .security-2fa-manual { display: grid; gap: 6px; align-content: center; min-width: 0; }
-html.pdl-panel .security-otpauth-link { color: var(--panel-accent, #e1bd70); font-size: 13px; width: fit-content; }
+html.pdl-panel .security-otpauth-link { color: var(--panel-accent, var(--panel-gold-bright)); font-size: 13px; width: fit-content; }
 html.pdl-panel .security-recovery-codes ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 4px; }
 html.pdl-panel .security-recovery-codes li { color: var(--panel-text, #efe0c2); }
 html.pdl-panel .security-inline-form { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
@@ -15031,13 +15038,13 @@ html.pdl-panel .security-inline-form .field { margin: 0; }
 html.pdl-panel .security-add-passkey { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 12px; }
 html.pdl-panel .security-add-passkey .field { margin: 0; }
 html.pdl-panel .security-passkey-list { display: grid; gap: 8px; }
-html.pdl-panel .security-passkey-list article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; border: 1px solid rgba(218,174,81,.14); background: rgba(218,174,81,.035); }
+html.pdl-panel .security-passkey-list article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: color-mix(in srgb, var(--panel-gold) 4%, transparent); }
 html.pdl-panel .security-passkey-list article > svg { width: 21px; color: #d9ae59; }
 html.pdl-panel .security-passkey-list article span { display: flex; min-width: 0; flex-direction: column; }
 html.pdl-panel .security-passkey-list article small { color: rgba(239,224,194,.48); }
 html.pdl-panel .security-passkey-list article button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #cf7a6d; background: transparent; border: 1px solid rgba(207,122,109,.25); cursor: pointer; }
 html.pdl-panel .security-passkey-list article button svg { width: 15px; }
-html.pdl-panel .security-provider { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; min-height: 48px; padding: 8px 0; border-bottom: 1px solid rgba(218,174,81,.12); }
+html.pdl-panel .security-provider { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; min-height: 48px; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent); }
 html.pdl-panel .security-provider:last-child { border: 0; }
 html.pdl-panel .security-provider > svg,
 html.pdl-panel .security-provider > i { width: 22px; height: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
@@ -15107,7 +15114,7 @@ html.pdl-panel .security-lgpd-box__head {
   gap: 12px;
   align-items: start;
 }
-html.pdl-panel .security-lgpd-box__head > svg { color: #e1bd70; margin-top: 2px; }
+html.pdl-panel .security-lgpd-box__head > svg { color: var(--panel-gold-bright); margin-top: 2px; }
 html.pdl-panel .security-lgpd-box__head strong { display: block; margin-bottom: 4px; }
 html.pdl-panel .security-lgpd-box__head p { margin: 0; }
 html.pdl-panel .security-lgpd-msg { margin: 0; font-size: 0.9rem; }
@@ -15140,7 +15147,7 @@ html.pdl-panel .security-cookie-summary__head {
   align-items: center;
   gap: 8px;
 }
-html.pdl-panel .security-cookie-summary__head > svg { color: #e1bd70; }
+html.pdl-panel .security-cookie-summary__head > svg { color: var(--panel-gold-bright); }
 html.pdl-panel .security-cookie-summary__warn { color: #d6a767; font-size: 0.82rem; }
 html.pdl-panel .security-cookie-chips {
   display: flex;
@@ -15177,7 +15184,7 @@ html.pdl-panel .security-legal-inline-link {
 }
 html.pdl-panel .security-legal-inline-link:hover {
   color: #fff;
-  text-shadow: 0 0 12px orange;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
 }
 html.pdl-panel .security-cookie-version { margin: 0; font-size: 0.75rem; }
 
@@ -15196,7 +15203,7 @@ html.pdl-panel .card.user-profile-hero {
   padding: clamp(20px, 2.4vw, 28px);
   background:
     linear-gradient(105deg, rgba(12, 10, 8, 0.94) 0%, rgba(12, 10, 8, 0.78) 46%, rgba(12, 10, 8, 0.38) 100%),
-    radial-gradient(ellipse at 12% 86%, rgba(218, 174, 81, 0.28), transparent 46%),
+    radial-gradient(ellipse at 12% 86%, color-mix(in srgb, var(--panel-gold) 28%, transparent), transparent 46%),
     var(--theme-art-bg-2) right 32% / cover no-repeat;
 }
 
@@ -15274,7 +15281,7 @@ html.pdl-panel .user-profile-hero-facts li {
   gap: 10px;
   min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid rgba(218, 174, 81, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(5, 5, 5, 0.52);
 }
 
@@ -15306,7 +15313,7 @@ html.pdl-panel .user-profile-avatar {
   background: #11100d;
   border: 3px solid #d6ad55;
   border-radius: 50%;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(218, 174, 81, 0.22);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px color-mix(in srgb, var(--panel-gold) 22%, transparent);
   cursor: pointer;
 }
 
@@ -15395,9 +15402,9 @@ html.pdl-panel .user-profile-section-title > span {
   height: 42px;
   display: grid;
   place-items: center;
-  color: #e1bd70;
-  border: 1px solid rgba(218, 174, 81, 0.26);
-  background: rgba(218, 174, 81, 0.08);
+  color: var(--panel-gold-bright);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 26%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   transform: rotate(45deg);
 }
 
@@ -15412,7 +15419,7 @@ html.pdl-panel .user-profile-section-title h2 {
 }
 
 html.pdl-panel .user-profile-section-title > strong {
-  color: #e1bd70;
+  color: var(--panel-gold-bright);
   font-family: 'Cinzel', serif;
   font-size: 24px;
 }
@@ -15423,7 +15430,7 @@ html.pdl-panel .user-profile-section-title.compact {
 
 html.pdl-panel .user-profile-completeness {
   background:
-    radial-gradient(ellipse at 8% 0%, rgba(232, 186, 92, 0.12), transparent 48%),
+    radial-gradient(ellipse at 8% 0%, color-mix(in srgb, var(--panel-gold) 12%, transparent), transparent 48%),
     linear-gradient(180deg, rgba(31, 26, 19, 0.95), rgba(17, 14, 11, 0.96));
 }
 
@@ -15452,7 +15459,7 @@ html.pdl-panel .user-profile-form-card .field textarea {
   padding: 12px 14px;
   color: #f3e6c9;
   background: rgba(5, 5, 5, 0.58);
-  border: 1px solid rgba(218, 174, 81, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent);
   border-radius: 7px;
   outline: 0;
   resize: vertical;
@@ -15487,8 +15494,8 @@ html.pdl-panel .user-profile-stat-list > div {
   align-items: center;
   gap: 12px;
   padding: 13px;
-  border: 1px solid rgba(218, 174, 81, 0.14);
-  background: rgba(218, 174, 81, 0.035);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4%, transparent);
 }
 
 html.pdl-panel .user-profile-stat-list > div > svg {
@@ -15523,7 +15530,7 @@ html.pdl-panel .user-profile-account dl > div {
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 12px;
   padding: 11px 0;
-  border-bottom: 1px solid rgba(218, 174, 81, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .user-profile-account dl > div:last-child {
@@ -15532,7 +15539,7 @@ html.pdl-panel .user-profile-account dl > div:last-child {
 
 html.pdl-panel .user-profile-account dd {
   margin: 0;
-  color: #ead6aa;
+  color: var(--panel-gold-bright);
   text-align: right;
   overflow-wrap: anywhere;
 }

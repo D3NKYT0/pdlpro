@@ -398,7 +398,7 @@ button, input, select { font: inherit; }
 .support-inbox-head button svg, .support-icon-button svg { width: 18px; }
 .support-filter-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 14px 12px; border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent); }
 .support-filter-tabs button { padding: 8px 5px; color: var(--muted); background: transparent; border: 0; border-radius: 8px; cursor: pointer; font-size: .78rem; font-weight: 700; }
-.support-filter-tabs button.active { color: #ead09a; background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 11%, transparent); }
+.support-filter-tabs button.active { color: var(--theme-accent-bright, #ead09a); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 11%, transparent); }
 .support-ticket-list { overflow: auto; }
 .support-ticket-row { width: 100%; display: grid; gap: 8px; padding: 16px 18px; color: var(--text); text-align: left; background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 9%, transparent); cursor: pointer; position: relative; }
 .support-ticket-row::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: transparent; }
@@ -430,7 +430,7 @@ button, input, select { font: inherit; }
 .support-category-grid small { color: var(--muted); font-size: .69rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .support-category-grid svg { width: 15px; color: #b49352; }
 .support-page textarea, .staff-support-page textarea { width: 100%; resize: vertical; color: var(--text); background: rgba(8,11,16,.7); border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent); border-radius: 10px; padding: 12px 13px; font: inherit; }
-.support-page textarea:focus, .staff-support-page textarea:focus { outline: 2px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent); border-color: #b8944c; }
+.support-page textarea:focus, .staff-support-page textarea:focus { outline: 2px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent); border-color: var(--theme-accent, #b8944c); }
 .support-form-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
 .support-form-footer .field { flex: 1; margin-bottom: 0; }
 .support-form-footer .btn { margin-bottom: 1px; }
@@ -451,7 +451,7 @@ button, input, select { font: inherit; }
 .support-message.player { align-self: flex-end; grid-template-columns: minmax(0, 1fr) 36px; }
 .support-message.player .support-message-avatar { grid-column: 2; grid-row: 1; }
 .support-message.player > div:last-child { grid-column: 1; grid-row: 1; }
-.support-message-avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; color: #ead09a; background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 11%, transparent); border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 19%, transparent); font-weight: 800; }
+.support-message-avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; color: var(--theme-accent-bright, #ead09a); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 11%, transparent); border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 19%, transparent); font-weight: 800; }
 .support-message-avatar svg { width: 17px; }
 .support-message > div:last-child { min-width: 0; }
 .support-message header { display: flex; align-items: center; gap: 12px; margin: 0 3px 5px; }
@@ -529,7 +529,7 @@ button, input, select { font: inherit; }
 .staff-reply.internal { background: rgba(155,111,36,.06); }
 .staff-reply-mode { position: absolute; top: 10px; left: 24px; display: flex; gap: 4px; }
 .staff-reply-mode button { padding: 5px 8px; color: var(--muted); background: transparent; border: 0; border-radius: 6px; font-size: .68rem; cursor: pointer; }
-.staff-reply-mode button.active { color: #e1c47f; background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent); }
+.staff-reply-mode button.active { color: var(--theme-accent-bright, #e1c47f); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent); }
 
 @media (max-width: 1180px) {
   .staff-support-metrics { grid-template-columns: repeat(3, 1fr); }

@@ -1,6 +1,29 @@
 .denk-progress,.denk-wardrobe,.denk-wardrobe>div,.denk-care-gains { display:grid; gap:8px; }
 .denk-progress { border-top:1px solid var(--panel-border); padding-top:12px; }
 .denk-progress p { margin:0; }
+.denk-progress progress {
+  width:100%;
+  height:8px;
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  border-radius:999px;
+  overflow:hidden;
+  background:color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, #0a0a0a);
+  accent-color:var(--theme-accent, var(--panel-gold, #c5a161));
+}
+.denk-progress progress::-webkit-progress-bar {
+  background:color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, #0a0a0a);
+  border-radius:inherit;
+}
+.denk-progress progress::-webkit-progress-value {
+  background:linear-gradient(90deg, var(--theme-accent, var(--panel-gold, #c5a161)), var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)));
+  border-radius:inherit;
+}
+.denk-progress progress::-moz-progress-bar {
+  background:linear-gradient(90deg, var(--theme-accent, var(--panel-gold, #c5a161)), var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)));
+  border-radius:inherit;
+}
 .denk-wardrobe>div { justify-items:start; padding:8px 0; }
 .denk-care-gains { padding:10px; border-radius:8px; background:var(--panel-surface); color:var(--panel-gold-bright); }
 .denk-mascot .denk-cosmetics { position:absolute; inset:0; pointer-events:none; }

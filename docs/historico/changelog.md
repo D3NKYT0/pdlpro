@@ -18,7 +18,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   públicas) passa a usar `--theme-accent` / `--panel-gold` em vez de ouro
   clássico fixo, para o pacote ativo — inclusive a Cruma — pintar todas as
   superfícies. O botão Download e os fundos de Info/Rankings leem
-  `--theme-button-tab` e `--theme-art-bg-1` / `--theme-art-bg-5`.
+  `--theme-button-tab` e `--theme-art-bg-1` / `--theme-art-bg-5`. No painel,
+  segurança e loja deixam o ouro cravado (`#e1bd70`, `rgba(218,174,81)`),
+  as barras de progresso do painel, do help nativo, do Denkynho, do
+  battle/fragmentos e as thumbs de scroll leem `--theme-accent` /
+  `--panel-gold`, e o `html.pdl-panel` deixa de sobrescrever o acento do
+  pacote.
 
 ### Corrigido
 

@@ -6,7 +6,7 @@
 .card.contextual-help-panel {
   --contextual-ink: var(--theme-text, var(--panel-text, #eef6f2));
   --contextual-muted: var(--theme-muted, var(--panel-muted, #95b3a8));
-  --contextual-accent: #3fb9a0;
+  --contextual-accent: var(--theme-accent, #3fb9a0);
   --contextual-gold: var(--theme-accent, var(--panel-gold, #d4a24a));
   --contextual-panel: rgba(8, 22, 20, 0.72);
   width: 100%;
@@ -302,7 +302,7 @@
   width: var(--need, 0%);
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #2f8f7d, var(--contextual-accent) 55%, #7ad7c2);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--theme-accent, #2f8f7d) 82%, #0a1418), var(--contextual-accent) 55%, var(--theme-accent-bright, #7ad7c2));
 }
 
 .contextual-help-tip,

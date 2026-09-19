@@ -5,7 +5,7 @@ html.pdl-panel .btn.ui-button:disabled {
 }
 .ui-button[aria-busy="true"] { cursor: progress; }
 .ui-button:focus-visible, .ui-field :is(input, select, textarea):focus-visible, .ui-select-trigger:focus-visible, .ui-toggle input:focus-visible + span {
-  outline: 2px solid var(--gold); outline-offset: 3px;
+  outline: 2px solid var(--theme-accent, var(--gold)); outline-offset: 3px;
 }
 .btn.ui-button.danger { color: rgba(235, 145, 127, 0.82); }
 /* Variações usam a arte existente do tema; a tonalidade também acompanha o hover. */
@@ -32,6 +32,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 
 .ui-select { position: relative; width: 100%; }
 .ui-select-trigger {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,14 +44,24 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
   border-radius: 2px;
   outline: none;
   background-color: rgba(6, 6, 5, 0.7);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23C5A161' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 12px 8px;
+  background-image: none;
   color: var(--theme-text, #fff);
   font: inherit;
   text-align: left;
   cursor: pointer;
+}
+.ui-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 12px;
+  height: 8px;
+  transform: translateY(-50%);
+  background: var(--theme-accent, var(--panel-gold, #c5a161));
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
 }
 .ui-select-trigger:hover { border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent); }
 .ui-select-trigger:focus-visible,
@@ -74,7 +85,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 }
 .ui-select-list::-webkit-scrollbar { width: 8px; }
 .ui-select-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(210, 170, 86, 0.55), rgba(117, 85, 34, 0.7));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 55%, transparent), color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 70%, transparent));
   border-radius: 999px;
 }
 .ui-select-list [role="option"] {
@@ -177,12 +188,12 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 }
 .ui-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
 .ui-tabs > button { display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-panel); color: var(--muted); font: inherit; cursor: pointer; }
-.ui-tabs > button[aria-selected="true"] { color: var(--gold); border-color: var(--gold); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent); }
-.ui-tabs > button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.ui-tabs > button[aria-selected="true"] { color: var(--theme-accent, var(--gold)); border-color: var(--theme-accent, var(--gold)); background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent); }
+.ui-tabs > button:focus-visible { outline: 2px solid var(--theme-accent, var(--gold)); outline-offset: 3px; }
 .ui-toggle > input[type="checkbox"] { position: absolute; width: 1px; height: 1px; min-height: 0; margin: 0; padding: 0; border: 0; opacity: 0; clip-path: inset(50%); }
 .ui-toggle .admin-toggle-control { display: inline-flex; align-items: center; flex-shrink: 0; width: 42px; height: 24px; padding: 3px; border: 1px solid var(--border); border-radius: 20px; background: #0f0d0a; }
 .ui-toggle .admin-toggle-control i { width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform .15s; }
-.ui-toggle input:checked + .admin-toggle-control { border-color: var(--gold); }
-.ui-toggle input:checked + .admin-toggle-control i { transform: translateX(17px); background: var(--gold); }
+.ui-toggle input:checked + .admin-toggle-control { border-color: var(--theme-accent, var(--gold)); }
+.ui-toggle input:checked + .admin-toggle-control i { transform: translateX(17px); background: var(--theme-accent, var(--gold)); }
 @media (prefers-reduced-motion: reduce) { .ui-toggle .admin-toggle-control i { transition: none; } }
 @media (max-width: 640px) { .ui-page-header { align-items: flex-start; flex-wrap: wrap; } }
