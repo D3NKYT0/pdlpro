@@ -74,8 +74,10 @@ from apps.server.domain.repositories import (
     IModerationStateRepository,
     IServicePriceRepository,
 )
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from apps.server.domain.skill_catalog import ISkillCatalog
 from apps.server.infrastructure.access import DjangoAccountAccessService
+from apps.server.infrastructure.empty_site_metadata import EmptyPackagedSiteMetadata
 from apps.server.infrastructure.item_catalog_adapter import LineageItemCatalogAdapter
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.moderation_repository import (
@@ -120,6 +122,7 @@ class ServerProvider(AppProvider):
             container.register(ILineageGateway, NullLineageGateway, lifetime=Lifetime.SINGLETON)
         container.register(IServicePriceRepository, DjangoServicePriceRepository, lifetime=Lifetime.SCOPED)
         container.register(IIndexConfigRepository, DjangoIndexConfigRepository, lifetime=Lifetime.SCOPED)
+        container.register(IPackagedSiteMetadata, EmptyPackagedSiteMetadata, lifetime=Lifetime.SINGLETON)
         container.register(ILinkSlotRepository, DjangoLinkSlotRepository, lifetime=Lifetime.SCOPED)
         container.register(
             IManagedLineageAccountRepository,

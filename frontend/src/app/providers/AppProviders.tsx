@@ -7,6 +7,7 @@ import { ConsentEnforcementBridge } from '../../components/legal/ConsentEnforcem
 import i18n from '../../i18n'
 import { queryClient } from '../../services/infra/queryClient'
 import { AppRoutes } from '../routes/AppRoutes'
+import { SiteMetadataSync } from '../../theme/SiteMetadataSync'
 import { ThemeProvider } from '../../theme/ThemeProvider'
 
 export function AppProviders() {
@@ -14,6 +15,7 @@ export function AppProviders() {
     <I18nextProvider i18n={i18n}>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
+          <SiteMetadataSync />
           <CookieConsentProvider>
             <ConsentEnforcementBridge />
             <AuthProvider>

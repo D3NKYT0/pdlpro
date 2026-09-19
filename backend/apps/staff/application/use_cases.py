@@ -7,6 +7,10 @@ from django.utils.text import slugify
 
 from apps.content.domain.repositories import INewsAdminRepository
 from apps.games.domain.repositories import IGameConfigAdminRepository
+from apps.server.application.site_identity import (
+    optional_https_url,
+    optional_youtube_id,
+)
 from apps.server.application.use_cases import GetServerInfoUseCase
 from apps.server.domain.item_catalog import IItemDisplayName
 from apps.server.domain.repositories import (
@@ -49,6 +53,11 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "coming_soon_title": (row.coming_soon_title if row else "") or "Em breve",
         "coming_soon_subtitle": (row.coming_soon_subtitle if row else "") or "",
         "coming_soon_at": info.coming_soon_at,
+        "seo_title": str(getattr(row, "seo_title", "") or "") if row else "",
+        "seo_description": str(getattr(row, "seo_description", "") or "") if row else "",
+        "og_image": str(getattr(row, "og_image", "") or "") if row else "",
+        "discord_url": str(getattr(row, "discord_url", "") or "") if row else "",
+        "trailer_youtube_id": str(getattr(row, "trailer_youtube_id", "") or "") if row else "",
         "is_active": True,
     }
 
@@ -190,6 +199,16 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.coming_soon_subtitle = str(data.get("coming_soon_subtitle") or "").strip()[:300]
         if "coming_soon_at" in data:
             row.coming_soon_at = _parse_coming_soon_at(data.get("coming_soon_at"))
+        if "seo_title" in data:
+            row.seo_title = str(data.get("seo_title") or "").strip()[:200]
+        if "seo_description" in data:
+            row.seo_description = str(data.get("seo_description") or "").strip()[:500]
+        if "og_image" in data:
+            row.og_image = str(data.get("og_image") or "").strip()[:300]
+        if "discord_url" in data:
+            row.discord_url = optional_https_url(data.get("discord_url"), "discord_url")
+        if "trailer_youtube_id" in data:
+            row.trailer_youtube_id = optional_youtube_id(data.get("trailer_youtube_id"), "trailer_youtube_id")
         if row.coming_soon and row.coming_soon_at is None:
             raise ValidationDomainError("Defina a data e hora do lançamento para ativar o Coming Soon.")
         if not row.coming_soon_title:

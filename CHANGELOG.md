@@ -3,7 +3,8 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **19 de setembro de 2026** — Não publicado:
-contrato textual do Cruma versionado para a suíte do CI;
+metadados do site dinâmicos via `.env`, admin e `metadados.json` do
+tema; contrato textual do Cruma versionado para a suíte do CI;
 balões do Denkynho no acento do tema (sem pergaminho/ouro clássicos);
 hover do play do trailer no acento do tema (sem marrom clássico);
 Sair do menu do painel no botão padrão do tema (sem círculo/tambor no

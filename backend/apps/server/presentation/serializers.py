@@ -10,7 +10,9 @@ class ServerInfoSerializer(serializers.Serializer):
 
     Campos declarados: ``name``, ``slogan``, ``description``, ``chronicle``, ``rates``,
     ``enchant``, ``max_level``, ``features``, ``notes``, ``coming_soon``,
-    ``coming_soon_title``, ``coming_soon_subtitle``, ``coming_soon_at``.
+    ``coming_soon_title``, ``coming_soon_subtitle``, ``coming_soon_at``,
+    ``seo_title``, ``seo_description``, ``og_title``, ``og_description``,
+    ``og_image``, ``discord_url``, ``trailer_youtube_id``.
     """
 
     name = serializers.CharField()
@@ -26,6 +28,15 @@ class ServerInfoSerializer(serializers.Serializer):
     coming_soon_title = serializers.CharField(allow_blank=True)
     coming_soon_subtitle = serializers.CharField(allow_blank=True)
     coming_soon_at = serializers.CharField(allow_null=True, required=False)
+    seo_title = serializers.CharField(allow_blank=True)
+    seo_description = serializers.CharField(allow_blank=True)
+    og_title = serializers.CharField(allow_blank=True)
+    og_description = serializers.CharField(allow_blank=True)
+    og_image = serializers.CharField(allow_blank=True)
+    discord_url = serializers.CharField(allow_blank=True)
+    trailer_youtube_id = serializers.CharField(allow_blank=True)
+    site_name_customized = serializers.BooleanField()
+    site_description_customized = serializers.BooleanField()
 
 
 class ServerStatusSerializer(serializers.Serializer):

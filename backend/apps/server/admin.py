@@ -102,6 +102,7 @@ class IndexConfigAdmin(PDLModelAdmin):
     list_display = ("name", "chronicle", "coming_soon", "coming_soon_at", "is_active", "updated_at")
     fieldsets = (
         (_("Identidade"), {"fields": ("name", "slogan", "description", "chronicle", "is_active")}),
+        (_("SEO e redes"), {"fields": ("seo_title", "seo_description", "og_image", "discord_url", "trailer_youtube_id")}),
         (_("Rates"), {"fields": ("rates", "enchant", "max_level", "features", "notes")}),
         (
             _("Coming Soon"),

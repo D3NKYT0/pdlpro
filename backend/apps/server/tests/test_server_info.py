@@ -67,3 +67,39 @@ def test_public_server_info_exposes_panel_identity_on_coming_soon():
     assert response.data["enchant"]["max"] == "+16"
     assert response.data["coming_soon"] is True
     assert response.data["coming_soon_subtitle"] == "O Número Um"
+
+
+@pytest.mark.django_db
+def test_public_server_info_exposes_seo_and_social_from_admin(settings):
+    settings.SITE_SEO_TITLE = "Env SEO"
+    settings.DISCORD_URL = "https://discord.gg/env"
+    settings.TRAILER_YOUTUBE_ID = "envtrailer1"
+    IndexConfig.objects.create(
+        name="Imperium",
+        seo_title="Imperium SEO",
+        seo_description="Reino público",
+        discord_url="https://discord.gg/imperium",
+        trailer_youtube_id="abcdefghijk",
+        is_active=True,
+    )
+    response = APIClient().get("/api/v1/public/server/info/")
+    assert response.status_code == 200
+    assert response.data["seo_title"] == "Imperium SEO"
+    assert response.data["seo_description"] == "Reino público"
+    assert response.data["og_title"] == "Imperium SEO"
+    assert response.data["discord_url"] == "https://discord.gg/imperium"
+    assert response.data["trailer_youtube_id"] == "abcdefghijk"
+    assert response.data["site_name_customized"] is True
+
+
+@pytest.mark.django_db
+def test_public_server_info_falls_back_to_env_seo(settings):
+    settings.SITE_SEO_TITLE = "Env SEO"
+    settings.SITE_SEO_DESCRIPTION = "Env desc"
+    settings.DISCORD_URL = "https://discord.gg/env"
+    response = APIClient().get("/api/v1/public/server/info/")
+    assert response.status_code == 200
+    assert response.data["seo_title"] == "Env SEO"
+    assert response.data["seo_description"] == "Env desc"
+    assert response.data["discord_url"] == "https://discord.gg/env"
+    assert response.data["site_name_customized"] is False

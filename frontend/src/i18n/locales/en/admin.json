@@ -686,7 +686,7 @@
     "description": "Name, rates and the coming soon notice shown on the site.",
     "identityEyebrow": "Identity",
     "identityTitle": "Server information",
-    "identityDescription": "Main data shown on the home page.",
+    "identityDescription": "Main data shown on the home page. Empty fields inherit the active theme, then the .env file.",
     "name": "Name",
     "slogan": "Slogan",
     "descriptionField": "Description",
@@ -736,7 +736,16 @@
     "actionsTitle": "Server settings",
     "actionsHint": "Review the fields before publishing the changes.",
     "saved": "Server settings saved",
-    "saveError": "Could not save"
+    "saveError": "Could not save",
+    "seoEyebrow": "Discovery",
+    "seoTitle": "SEO and social",
+    "seoDescription": "Browser title, Open Graph, Discord and trailer. Empty fields use the theme metadados.json or .env.",
+    "seoTitleField": "SEO title",
+    "seoDescriptionField": "SEO description",
+    "ogImage": "Open Graph image",
+    "ogImagePlaceholder": "Public URL or theme path",
+    "discordUrl": "Discord URL",
+    "trailerYoutubeId": "YouTube trailer ID"
   },
   "themes": {
     "kicker": "Appearance",
@@ -755,8 +764,8 @@
     "compatibleDescription": "Packages in the installable PDL 2.0 format, with the manifest at the ZIP root.",
     "rules": {
       "schema": "<s>schemaVersion</s> 1 and <s>pdlVersion</s> 2 in <c>theme.json</c>",
-      "files": "Files at the root: <c>theme.json</c>, <c>theme.css</c>, folders <c>images/</c> and <c>fonts/</c>",
-      "accepted": "Accepted: CSS, images and local fonts referenced in <c>assets</c>",
+      "files": "Files at the root: <c>theme.json</c>, <c>theme.css</c>, optional <c>metadados.json</c>, folders <c>images/</c> and <c>fonts/</c>",
+      "accepted": "Accepted: CSS, images, local fonts and <c>metadados.json</c> pointed to by <c>theme.json</c>",
       "blocked": "Blocked: scripts, executable HTML, Markdown and path traversal",
       "renderer": "Optional approved renderer: <c>portal-v1</c> (navigation, home, shells)",
       "activation": "Installing ≠ activating: activate it in the catalog after validation"

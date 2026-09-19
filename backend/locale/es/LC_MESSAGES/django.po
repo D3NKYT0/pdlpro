@@ -5193,5 +5193,26 @@ msgstr "Jefe de la arena"
 msgid "A vitória contra o chefe entrega o prêmio e zera a arma no máximo."
 msgstr "Vencer al jefe entrega el premio y reinicia el arma en el encantamiento máximo."
 
+msgid "A URL do Discord precisa ser HTTPS."
+msgstr "La URL de Discord debe usar HTTPS."
+
+msgid "O trailer precisa ser o identificador de 11 caracteres do YouTube."
+msgstr "El tráiler debe ser el identificador de 11 caracteres de YouTube."
+
+msgid "Título SEO"
+msgstr "Título SEO"
+
+msgid "Descrição SEO"
+msgstr "Descripción SEO"
+
+msgid "Imagem Open Graph"
+msgstr "Imagen Open Graph"
+
+msgid "URL do Discord"
+msgstr "URL de Discord"
+
+msgid "ID do trailer no YouTube"
+msgstr "ID del tráiler en YouTube"
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

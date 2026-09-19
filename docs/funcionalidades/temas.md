@@ -55,6 +55,7 @@ O ZIP contém seus arquivos diretamente na raiz:
 ```text
 theme.json
 theme.css
+metadados.json
 images/
   logo.png
   background.webp
@@ -74,6 +75,7 @@ Manifesto mínimo:
   "author": "Equipe",
   "description": "Identidade visual do servidor.",
   "entrypoint": "theme.css",
+  "metadata": "metadados.json",
   "assets": {
     "images/logo.png": "images/logo.png",
     "images/bg/5.jpg": "images/background.webp"
@@ -90,10 +92,53 @@ chrome (`PdlSymbol`, nav, rodapé, splash de boot, overlay de rota e auth) lê
 visita o chrome fica em `localStorage` (`pdl.loaderChrome`) e o script estático
 reabre o loader já com o brasão e o acento do pacote ativo. O splash e o
 overlay de rota compartilham o layout clássico com losango: emblema,
-wordmark `logo.png`, texto e barra. O contrato público
-relê só o mapa de `assets` do `theme.json` em `media/themes/<pacote>/`.
+wordmark `logo.png`, texto e barra. O contrato público relê o mapa de `assets` do `theme.json` e o
+`metadados.json` apontado por `metadata` em `media/themes/<pacote>/`.
 `presentation` e `layout` continuam os gravados na instalação, para um ajuste
 de arte no media não trocar o template da home.
+
+## Metadados do site
+
+O pacote pode declarar identidade pública em `metadados.json`, apontado por
+`theme.json` com `"metadata": "metadados.json"`. Sem o ponteiro o arquivo extra
+é recusado. O merge público é **`.env` → tema → admin**: campo vazio no painel
+herda o tema ativo e, por último, as variáveis de ambiente.
+
+```json
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "Cruma",
+    "slogan": "Pedra antiga. Luz ciano.",
+    "description": "A elfa da Torre guia o retorno.",
+    "title": "Cruma — Lineage 2"
+  },
+  "seo": {
+    "title": "Cruma — Lineage 2 Interlude",
+    "description": "Torre de Cruma em pintura renascentista.",
+    "ogTitle": "Cruma — Lineage 2",
+    "ogDescription": "A elfa da Torre guia o retorno.",
+    "ogImage": "images/favicon.png"
+  },
+  "social": {
+    "discordUrl": "https://discord.gg/exemplo",
+    "trailerYoutubeId": "Mm19W1PKMFQ"
+  },
+  "server": {
+    "chronicle": "Interlude",
+    "maxLevel": 80,
+    "rates": { "xp": "x1", "sp": "x1", "adena": "x1", "drop": "x1", "spoil": "x1" },
+    "enchant": { "safe": "+3", "max": "+16" },
+    "features": ["PvP e guerras de castelo"],
+    "notes": { "pvp": "Combate livre.", "start": "Crie a conta mestra." }
+  }
+}
+```
+
+`seo.ogImage` precisa existir em `assets`. Discord exige HTTPS; o trailer é o
+id de 11 caracteres do YouTube. A equipe edita os mesmos campos em
+**Painel → Administração → Painel e servidor**. `LEGAL_*` continua só no
+`.env`. O fixture do Cruma versiona `metadados.json` junto com o manifesto.
 
 Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer. Os
 blocos aceitos pelo `portal-v1` são:

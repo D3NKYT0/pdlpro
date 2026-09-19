@@ -8,6 +8,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Identidade pública do site (nome, SEO, Open Graph, Discord e trailer)
+  passa a ser dinâmica em três camadas: `.env`,
+  **Painel e servidor** e `metadados.json` do tema, apontado por
+  `theme.json`. O merge é env → tema → admin. A SPA atualiza title e
+  tags Open Graph sem rebuild.
+
 ### Alterado
 
 - Os guias de [distribuição](../operacao/distribuicao.md) e

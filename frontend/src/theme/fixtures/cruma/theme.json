@@ -7,6 +7,7 @@
   "author": "PDL",
   "description": "Torre de Cruma em pintura renascentista: a elfa protagonista, pedra antiga e o brilho ciano-esmeralda.",
   "entrypoint": "theme.css",
+  "metadata": "metadados.json",
   "assets": {
     "images/logo.png": "images/logo.png",
     "images/logo-circle.png": "images/logo-circle.png",

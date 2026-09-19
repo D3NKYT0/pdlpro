@@ -686,7 +686,7 @@
     "description": "Nombre, rates y aviso de coming soon mostrados en el sitio.",
     "identityEyebrow": "Identidad",
     "identityTitle": "Información del servidor",
-    "identityDescription": "Datos principales mostrados en la página de inicio.",
+    "identityDescription": "Datos principales mostrados en la página de inicio. Vacío hereda el tema activo y, al final, el .env.",
     "name": "Nombre",
     "slogan": "Eslogan",
     "descriptionField": "Descripción",
@@ -736,7 +736,16 @@
     "actionsTitle": "Configuración del servidor",
     "actionsHint": "Revisa los campos antes de publicar los cambios.",
     "saved": "Configuración del servidor guardada",
-    "saveError": "No fue posible guardar"
+    "saveError": "No fue posible guardar",
+    "seoEyebrow": "Descubrimiento",
+    "seoTitle": "SEO y redes",
+    "seoDescription": "Título de la pestaña, Open Graph, Discord y tráiler. Los campos vacíos usan el metadados.json del tema o el .env.",
+    "seoTitleField": "Título SEO",
+    "seoDescriptionField": "Descripción SEO",
+    "ogImage": "Imagen Open Graph",
+    "ogImagePlaceholder": "URL pública o ruta del tema",
+    "discordUrl": "URL de Discord",
+    "trailerYoutubeId": "ID del tráiler en YouTube"
   },
   "themes": {
     "kicker": "Apariencia",
@@ -755,8 +764,8 @@
     "compatibleDescription": "Paquetes en el formato instalable del PDL 2.0, con el manifiesto en la raíz del ZIP.",
     "rules": {
       "schema": "<s>schemaVersion</s> 1 y <s>pdlVersion</s> 2 en <c>theme.json</c>",
-      "files": "Archivos en la raíz: <c>theme.json</c>, <c>theme.css</c>, carpetas <c>images/</c> y <c>fonts/</c>",
-      "accepted": "Aceptados: CSS, imágenes y fuentes locales referenciadas en <c>assets</c>",
+      "files": "Archivos en la raíz: <c>theme.json</c>, <c>theme.css</c>, <c>metadados.json</c> opcional, carpetas <c>images/</c> y <c>fonts/</c>",
+      "accepted": "Aceptados: CSS, imágenes, fuentes locales y <c>metadados.json</c> apuntado por <c>theme.json</c>",
       "blocked": "Bloqueados: scripts, HTML ejecutable, Markdown y path traversal",
       "renderer": "Renderer homologado opcional: <c>portal-v1</c> (navigation, home, shells)",
       "activation": "Instalar ≠ activar: actívalo en el catálogo después de la validación"

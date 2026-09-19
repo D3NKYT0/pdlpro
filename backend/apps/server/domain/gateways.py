@@ -38,6 +38,15 @@ class ServerInfo:
     coming_soon_title: str = ""
     coming_soon_subtitle: str = ""
     coming_soon_at: str | None = None
+    seo_title: str = ""
+    seo_description: str = ""
+    og_title: str = ""
+    og_description: str = ""
+    og_image: str = ""
+    discord_url: str = ""
+    trailer_youtube_id: str = ""
+    site_name_customized: bool = False
+    site_description_customized: bool = False
 
 
 @dataclass(frozen=True, slots=True)

@@ -54,7 +54,7 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
-        "presentation": None, "layout": None,
+        "presentation": None, "layout": None, "metadata": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]
@@ -381,4 +381,119 @@ def test_presentation_rejects_duplicate_or_unknown_sections(api, admin, tmp_path
         format="multipart",
     )
     assert response.status_code == 400
+    assert ThemePackage.objects.count() == 0
+
+
+def _site_metadata():
+    return {
+        "schemaVersion": 1,
+        "site": {"name": "Cruma", "slogan": "A Torre", "description": "Pedra antiga"},
+        "seo": {"title": "Cruma SEO", "ogImage": "images/logo.png"},
+        "social": {"discordUrl": "https://discord.gg/cruma", "trailerYoutubeId": "abcdefghijk"},
+        "server": {"chronicle": "Interlude", "maxLevel": 77, "rates": {"xp": "x10"}},
+    }
+
+
+@pytest.mark.django_db
+def test_metadata_file_is_validated_and_published(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    metadata = _site_metadata()
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {
+            "package": SimpleUploadedFile(
+                "valorem.zip",
+                theme_zip(
+                    extra={"metadados.json": json.dumps(metadata)},
+                    manifest_overrides={"metadata": "metadados.json"},
+                ),
+                content_type="application/zip",
+            )
+        },
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["metadata"]["site"]["name"] == "Cruma"
+    assert installed.data["metadata"]["seo"]["ogImage"] == "images/logo.png"
+    activated = api.post(f"/api/v1/staff/themes/{installed.data['package_id']}/activate/")
+    assert activated.status_code == 200
+    public = api.get("/api/v1/public/theme/").data
+    assert public["metadata"]["social"]["discordUrl"] == "https://discord.gg/cruma"
+    info = api.get("/api/v1/public/server/info/").data
+    assert info["name"] == "Cruma"
+    assert info["seo_title"] == "Cruma SEO"
+    assert info["discord_url"] == "https://discord.gg/cruma"
+    assert info["rates"]["xp"] == "x10"
+    assert info["site_name_customized"] is True
+    from apps.server.infrastructure.models import IndexConfig
+    IndexConfig.objects.create(name="Imperium", seo_title="Admin SEO", is_active=True)
+    overridden = api.get("/api/v1/public/server/info/").data
+    assert overridden["name"] == "Imperium"
+    assert overridden["seo_title"] == "Admin SEO"
+    assert overridden["discord_url"] == "https://discord.gg/cruma"
+
+
+@pytest.mark.django_db
+def test_metadata_live_reload_updates_public_overlay(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {
+            "package": SimpleUploadedFile(
+                "valorem.zip",
+                theme_zip(
+                    extra={"metadados.json": json.dumps(_site_metadata())},
+                    manifest_overrides={"metadata": "metadados.json"},
+                ),
+                content_type="application/zip",
+            )
+        },
+        format="multipart",
+    )
+    api.post(f"/api/v1/staff/themes/{installed.data['package_id']}/activate/")
+    storage = tmp_path / "themes" / ThemePackage.objects.get().storage_path
+    live = json.loads((storage / "metadados.json").read_text(encoding="utf-8"))
+    live["site"]["name"] = "Cruma Live"
+    (storage / "metadados.json").write_text(json.dumps(live), encoding="utf-8")
+    assert api.get("/api/v1/public/theme/").data["metadata"]["site"]["name"] == "Cruma Live"
+    assert api.get("/api/v1/public/server/info/").data["name"] == "Cruma Live"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "archive, message",
+    [
+        (
+            theme_zip(extra={"metadados.json": json.dumps({"schemaVersion": 1, "site": {"name": "X"}})}),
+            "aponta",
+        ),
+        (
+            theme_zip(manifest_overrides={"metadata": "metadados.json"}),
+            "não está no pacote",
+        ),
+        (
+            theme_zip(
+                extra={"metadados.json": json.dumps({"schemaVersion": 1, "unknown": True})},
+                manifest_overrides={"metadata": "metadados.json"},
+            ),
+            "desconhecidas",
+        ),
+        (
+            theme_zip(extra={"extra.json": "{}"}),
+            "formato JSON",
+        ),
+    ],
+)
+def test_metadata_contract_is_enforced(api, admin, tmp_path, settings, archive, message):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile("theme.zip", archive, content_type="application/zip")},
+        format="multipart",
+    )
+    assert response.status_code == 400
+    assert message.lower() in response.data["message"].lower()
     assert ThemePackage.objects.count() == 0

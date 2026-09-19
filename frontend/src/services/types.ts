@@ -35,6 +35,15 @@ export interface ApiServerInfo {
   coming_soon_title: string
   coming_soon_subtitle: string
   coming_soon_at: string | null
+  seo_title?: string
+  seo_description?: string
+  og_title?: string
+  og_description?: string
+  og_image?: string
+  discord_url?: string
+  trailer_youtube_id?: string
+  site_name_customized?: boolean
+  site_description_customized?: boolean
 }
 
 export interface ApiServerStatus {

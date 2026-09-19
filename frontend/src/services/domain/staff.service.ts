@@ -17,6 +17,11 @@ export interface ApiPanelSettings {
   coming_soon_title: string
   coming_soon_subtitle: string
   coming_soon_at: string | null
+  seo_title: string
+  seo_description: string
+  og_image: string
+  discord_url: string
+  trailer_youtube_id: string
   is_active: boolean
 }
 

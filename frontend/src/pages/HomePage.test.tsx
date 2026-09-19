@@ -15,7 +15,7 @@ vi.mock('../services/domain/content.service', () => ({
   contentApi: { news: vi.fn(), wiki: vi.fn() },
 }))
 vi.mock('../services/domain/server.service', () => ({
-  serverApi: { status: vi.fn(), rankings: vi.fn() },
+  serverApi: { status: vi.fn(), rankings: vi.fn(), info: vi.fn() },
 }))
 
 function mount() {
@@ -32,6 +32,11 @@ function mount() {
 beforeEach(() => {
   vi.mocked(serverApi.status).mockResolvedValue({ players_online: 12, game_online: true, login_online: true } as never)
   vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Dawn', value: 9800 }])
+  vi.mocked(serverApi.info).mockResolvedValue({
+    name: 'PDL PRO',
+    description: '',
+    site_name_customized: false,
+  } as never)
   vi.mocked(contentApi.news).mockResolvedValue([])
   vi.mocked(contentApi.wiki).mockResolvedValue([])
 })
@@ -181,6 +186,18 @@ it('marca a home default com data-theme-part e usa nome/descrição de pacote cu
   expect(document.querySelector('[data-theme-part="home"]')).toBeTruthy()
   expect(screen.getByRole('heading', { level: 1, name: 'Reino Temático' })).toBeVisible()
   expect(screen.getByText(/Descrição do pacote de tema/)).toBeVisible()
+})
+
+it('usa o nome salvo no painel quando a identidade foi customizada', async () => {
+  vi.mocked(serverApi.info).mockResolvedValue({
+    name: 'Imperium',
+    description: 'O reino oficial',
+    site_name_customized: true,
+    site_description_customized: true,
+  } as never)
+  mount()
+  expect(await screen.findByRole('heading', { level: 1, name: 'Imperium' })).toBeVisible()
+  expect(screen.getByText(/O reino oficial/)).toBeVisible()
 })
 
 it('no tema builtin usa o copy de marketing traduzível, não o nome do pacote', async () => {

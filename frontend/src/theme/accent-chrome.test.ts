@@ -24,7 +24,7 @@ function crumaLiveDir() {
   ].find((dir) => existsSync(resolve(dir, 'theme.json'))) ?? null
 }
 
-function readCrumaThemeFile(name: 'theme.css' | 'theme.json') {
+function readCrumaThemeFile(name: 'theme.css' | 'theme.json' | 'metadados.json') {
   const file = resolve(crumaFixtureDir, name)
   if (!existsSync(file)) {
     throw new Error('Contrato do Cruma ausente: versione frontend/src/theme/fixtures/cruma.')
@@ -404,6 +404,7 @@ it('os baús do Cruma têm frames fechado, entreaberto e aberto distintos', () =
 it('o contrato versionado do Cruma existe e acompanha o pacote local', () => {
   expect(existsSync(resolve(crumaFixtureDir, 'theme.css'))).toBe(true)
   expect(existsSync(resolve(crumaFixtureDir, 'theme.json'))).toBe(true)
+  expect(existsSync(resolve(crumaFixtureDir, 'metadados.json'))).toBe(true)
   const liveDir = crumaLiveDir()
   if (!liveDir) return
   expect(readFileSync(resolve(crumaFixtureDir, 'theme.css'), 'utf8')).toBe(
@@ -412,6 +413,11 @@ it('o contrato versionado do Cruma existe e acompanha o pacote local', () => {
   expect(readFileSync(resolve(crumaFixtureDir, 'theme.json'), 'utf8')).toBe(
     readFileSync(resolve(liveDir, 'theme.json'), 'utf8'),
   )
+  if (existsSync(resolve(liveDir, 'metadados.json'))) {
+    expect(readFileSync(resolve(crumaFixtureDir, 'metadados.json'), 'utf8')).toBe(
+      readFileSync(resolve(liveDir, 'metadados.json'), 'utf8'),
+    )
+  }
 })
 
 it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {

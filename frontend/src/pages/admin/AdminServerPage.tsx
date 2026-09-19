@@ -5,7 +5,7 @@ import { ButtonLink } from '../../components/ui/Button'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { CalendarClock, ExternalLink, FileText, Gauge, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
+import { CalendarClock, ExternalLink, FileText, Gauge, Globe, LockKeyhole, ServerCog, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { staffApi } from '../../services/api'
 import { fromDatetimeLocal, toDatetimeLocal } from '../../lib/datetime'
@@ -35,6 +35,11 @@ export function AdminServerPage() {
   const [comingSoonTitle, setComingSoonTitle] = useState('')
   const [comingSoonSubtitle, setComingSoonSubtitle] = useState('')
   const [comingSoonAt, setComingSoonAt] = useState('')
+  const [seoTitle, setSeoTitle] = useState('')
+  const [seoDescription, setSeoDescription] = useState('')
+  const [ogImage, setOgImage] = useState('')
+  const [discordUrl, setDiscordUrl] = useState('')
+  const [trailerYoutubeId, setTrailerYoutubeId] = useState('')
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
@@ -60,6 +65,11 @@ export function AdminServerPage() {
     setComingSoonTitle(data.coming_soon_title || data.name || '')
     setComingSoonSubtitle(data.coming_soon_subtitle || '')
     setComingSoonAt(toDatetimeLocal(data.coming_soon_at))
+    setSeoTitle(data.seo_title || '')
+    setSeoDescription(data.seo_description || '')
+    setOgImage(data.og_image || '')
+    setDiscordUrl(data.discord_url || '')
+    setTrailerYoutubeId(data.trailer_youtube_id || '')
   }, [panel.data])
 
   async function onSubmit(event: FormEvent) {
@@ -81,6 +91,11 @@ export function AdminServerPage() {
         coming_soon_title: comingSoonTitle,
         coming_soon_subtitle: comingSoonSubtitle,
         coming_soon_at: fromDatetimeLocal(comingSoonAt),
+        seo_title: seoTitle,
+        seo_description: seoDescription,
+        og_image: ogImage,
+        discord_url: discordUrl,
+        trailer_youtube_id: trailerYoutubeId,
       })
       toast.success(t('server.saved'))
       await queryClient.invalidateQueries({ queryKey: ['staff-panel'] })
@@ -106,6 +121,19 @@ export function AdminServerPage() {
           <div className="account-form-fields">
             <Field>{t('server.chronicle')}<input value={chronicle} onChange={(e) => setChronicle(e.target.value)} /></Field>
             <Field>{t('server.maxLevel')}<input type="number" min="1" value={maxLevel} onChange={(e) => setMaxLevel(e.target.value)} /></Field>
+          </div>
+        </Card>
+
+        <Card className="admin-config-section">
+          <header><span><Globe /></span><div><span className="panel-eyebrow">{t('server.seoEyebrow')}</span><h2>{t('server.seoTitle')}</h2><p>{t('server.seoDescription')}</p></div></header>
+          <div className="account-form-fields">
+            <Field>{t('server.seoTitleField')}<input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} placeholder={name} /></Field>
+            <Field>{t('server.ogImage')}<input value={ogImage} onChange={(e) => setOgImage(e.target.value)} placeholder={t('server.ogImagePlaceholder')} /></Field>
+          </div>
+          <Field>{t('server.seoDescriptionField')}<textarea value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} rows={3} placeholder={description} /></Field>
+          <div className="account-form-fields">
+            <Field>{t('server.discordUrl')}<input value={discordUrl} onChange={(e) => setDiscordUrl(e.target.value)} placeholder="https://discord.gg/..." /></Field>
+            <Field>{t('server.trailerYoutubeId')}<input value={trailerYoutubeId} onChange={(e) => setTrailerYoutubeId(e.target.value)} placeholder="Mm19W1PKMFQ" /></Field>
           </div>
         </Card>
 

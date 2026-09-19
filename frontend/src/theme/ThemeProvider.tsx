@@ -6,7 +6,7 @@ import { persistAppliedLoaderChrome } from './loaderChrome'
 const DEFAULT_THEME: ApiTheme = {
   id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
   description: 'Visual clássico do PDL PRO — Aden, tipografia e a identidade original.', active: true, builtin: true,
-  base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null, layout: null,
+  base_url: '/theme/default/', stylesheet_url: null, assets: {}, presentation: null, layout: null, metadata: null,
 }
 
 const ThemeContext = createContext<ApiTheme>(DEFAULT_THEME)

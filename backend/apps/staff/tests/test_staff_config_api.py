@@ -55,6 +55,10 @@ def test_staff_can_update_panel_and_services(api, staff):
             "coming_soon_subtitle": "Contagem oficial",
             "coming_soon_at": "2027-01-03T18:00:00Z",
             "staff_only_login": False,
+            "seo_title": "Imperium SEO",
+            "seo_description": "Reino de testes",
+            "discord_url": "https://discord.gg/imperium",
+            "trailer_youtube_id": "abcdefghijk",
         },
         format="json",
     )
@@ -64,12 +68,16 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert saved.data["coming_soon"] is True
     assert saved.data["coming_soon_title"] == "Abertura Imperium"
     assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
+    assert saved.data["seo_title"] == "Imperium SEO"
+    assert saved.data["discord_url"] == "https://discord.gg/imperium"
     public = api.get("/api/v1/public/server/info/")
     assert public.data["name"] == "Imperium"
     assert public.data["slogan"] == "Reino"
     assert public.data["rates"]["xp"] == "x10"
     assert public.data["coming_soon"] is True
     assert public.data["coming_soon_title"] == "Abertura Imperium"
+    assert public.data["seo_title"] == "Imperium SEO"
+    assert public.data["discord_url"] == "https://discord.gg/imperium"
 
     prices = api.put(
         "/api/v1/staff/services/",

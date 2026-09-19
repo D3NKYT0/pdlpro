@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from django.conf import settings
 
+from apps.server.application.site_identity import first_text, overlay_list, overlay_map
 from apps.server.domain.gateways import (
     ILineageGateway,
     RankingEntry,
@@ -11,6 +12,7 @@ from apps.server.domain.gateways import (
     ServerStatus,
 )
 from apps.server.domain.repositories import IIndexConfigRepository
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 
@@ -64,8 +66,13 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
     retorno é ``ServerInfo``.
     """
 
-    def __init__(self, index_config: IIndexConfigRepository) -> None:
+    def __init__(
+        self,
+        index_config: IIndexConfigRepository,
+        packaged_metadata: IPackagedSiteMetadata,
+    ) -> None:
         self._index_config = index_config
+        self._packaged_metadata = packaged_metadata
 
     def execute(self, data: None = None) -> ServerInfo:
         module = str(getattr(settings, "LINEAGE_QUERY_MODULE", "") or "")
@@ -73,63 +80,115 @@ class GetServerInfoUseCase(UseCase[None, ServerInfo]):
         if not chronicle:
             chronicle = CHRONICLE_BY_MODULE.get(module, module.capitalize() if module else "Lineage 2")
         features = [item.strip() for item in getattr(settings, "SERVER_FEATURES", []) if str(item).strip()]
+        theme = self._packaged_metadata.get_overlay()
+        env_name = str(getattr(settings, "PROJECT_TITLE", "PDL PRO"))
+        env_description = str(getattr(settings, "PROJECT_DESCRIPTION", ""))
+        env_seo_title = first_text(getattr(settings, "SITE_SEO_TITLE", ""), env_name)
+        env_seo_description = first_text(getattr(settings, "SITE_SEO_DESCRIPTION", ""), env_description)
+        env_og_image = str(getattr(settings, "SITE_OG_IMAGE", "") or "")
+        name = first_text(theme.get("name"), env_name) or "PDL PRO"
+        slogan = first_text(theme.get("slogan"))
+        description = first_text(theme.get("description"), env_description)
+        seo_title = first_text(theme.get("seo_title"), env_seo_title, name)
+        seo_description = first_text(theme.get("seo_description"), env_seo_description, description)
+        og_title = first_text(theme.get("og_title"), seo_title)
+        og_description = first_text(theme.get("og_description"), seo_description)
+        og_image = first_text(theme.get("og_image"), env_og_image)
+        discord_url = first_text(theme.get("discord_url"), getattr(settings, "DISCORD_URL", ""))
+        trailer_youtube_id = first_text(
+            theme.get("trailer_youtube_id"),
+            getattr(settings, "TRAILER_YOUTUBE_ID", ""),
+        )
         info = ServerInfo(
-            name=str(getattr(settings, "PROJECT_TITLE", "PDL PRO")),
-            slogan="",
-            description=str(getattr(settings, "PROJECT_DESCRIPTION", "")),
-            chronicle=chronicle,
-            rates={
-                "xp": str(getattr(settings, "XP_RATE", "x1")),
-                "sp": str(getattr(settings, "SP_RATE", "x1")),
-                "adena": str(getattr(settings, "ADENA_RATE", "x1")),
-                "drop": str(getattr(settings, "DROP_RATE", "x1")),
-                "spoil": str(getattr(settings, "SPOIL_RATE", "x1")),
-            },
-            enchant={
-                "safe": str(getattr(settings, "ENCHANT_SAFE", "+3")),
-                "max": str(getattr(settings, "ENCHANT_MAX", "+16")),
-            },
-            max_level=int(getattr(settings, "MAX_LEVEL", 80)),
-            features=features
-            or [
-                "PvP e guerras de castelo",
-                "Eventos periódicos",
-                "Loja e marketplace no painel",
-            ],
-            notes={
-                "pvp": str(getattr(settings, "SERVER_PVP_NOTE", "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.")),
-                "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
-            },
+            name=name,
+            slogan=slogan,
+            description=description,
+            chronicle=first_text(theme.get("chronicle"), chronicle) or chronicle,
+            rates=overlay_map(
+                {
+                    "xp": str(getattr(settings, "XP_RATE", "x1")),
+                    "sp": str(getattr(settings, "SP_RATE", "x1")),
+                    "adena": str(getattr(settings, "ADENA_RATE", "x1")),
+                    "drop": str(getattr(settings, "DROP_RATE", "x1")),
+                    "spoil": str(getattr(settings, "SPOIL_RATE", "x1")),
+                },
+                theme.get("rates"),
+            ),
+            enchant=overlay_map(
+                {
+                    "safe": str(getattr(settings, "ENCHANT_SAFE", "+3")),
+                    "max": str(getattr(settings, "ENCHANT_MAX", "+16")),
+                },
+                theme.get("enchant"),
+            ),
+            max_level=int(theme.get("max_level") or getattr(settings, "MAX_LEVEL", 80)),
+            features=overlay_list(
+                features
+                or [
+                    "PvP e guerras de castelo",
+                    "Eventos periódicos",
+                    "Loja e marketplace no painel",
+                ],
+                theme.get("features"),
+            ),
+            notes=overlay_map(
+                {
+                    "pvp": str(getattr(settings, "SERVER_PVP_NOTE", "Combate livre nas zonas de PvP. Castelos seguem o calendário de siege.")),
+                    "start": str(getattr(settings, "SERVER_START_NOTE", "Crie a conta mestra, baixe o cliente e vincule o login Lineage no painel.")),
+                },
+                theme.get("notes"),
+            ),
             coming_soon=False,
             coming_soon_title="",
             coming_soon_subtitle="",
             coming_soon_at=None,
+            seo_title=seo_title,
+            seo_description=seo_description,
+            og_title=og_title,
+            og_description=og_description,
+            og_image=og_image,
+            discord_url=discord_url,
+            trailer_youtube_id=trailer_youtube_id,
+            site_name_customized=bool(theme.get("name")),
+            site_description_customized=bool(theme.get("description")),
         )
         row = self._index_config.get_active()
         if row is None:
             return info
-        rates = {**info.rates, **{key: str(value) for key, value in (row.rates or {}).items() if value}}
-        enchant = {**info.enchant, **{key: str(value) for key, value in (row.enchant or {}).items() if value}}
-        notes = {**info.notes, **{key: str(value) for key, value in (row.notes or {}).items() if value}}
-        overlay_features = [str(item).strip() for item in (row.features or []) if str(item).strip()]
+        rates = overlay_map(info.rates, row.rates)
+        enchant = overlay_map(info.enchant, row.enchant)
+        notes = overlay_map(info.notes, row.notes)
+        overlay_features = overlay_list(info.features, row.features)
         title = str(row.coming_soon_title or "").strip()
         subtitle = str(row.coming_soon_subtitle or "").strip()
-        slogan = str(row.slogan or "").strip()
-        description = str(row.description or "").strip() or info.description
+        slogan = first_text(row.slogan, info.slogan)
+        description = first_text(row.description, info.description)
+        name = first_text(row.name, info.name)
+        seo_title = first_text(getattr(row, "seo_title", ""), info.seo_title, name)
+        seo_description = first_text(getattr(row, "seo_description", ""), info.seo_description, description)
         return ServerInfo(
-            name=row.name or info.name,
+            name=name,
             slogan=slogan,
             description=description,
-            chronicle=row.chronicle or info.chronicle,
+            chronicle=first_text(row.chronicle, info.chronicle),
             rates=rates,
             enchant=enchant,
             max_level=int(row.max_level or info.max_level),
             features=overlay_features or info.features,
             notes=notes,
             coming_soon=bool(row.coming_soon),
-            coming_soon_title=title or (row.name or info.name or "Em breve"),
+            coming_soon_title=title or (name or "Em breve"),
             coming_soon_subtitle=subtitle or slogan or description,
             coming_soon_at=_coming_soon_at_iso(row.coming_soon_at),
+            seo_title=seo_title,
+            seo_description=seo_description,
+            og_title=first_text(getattr(row, "og_title", ""), seo_title, info.og_title),
+            og_description=first_text(getattr(row, "og_description", ""), seo_description, info.og_description),
+            og_image=first_text(getattr(row, "og_image", ""), info.og_image),
+            discord_url=first_text(getattr(row, "discord_url", ""), info.discord_url),
+            trailer_youtube_id=first_text(getattr(row, "trailer_youtube_id", ""), info.trailer_youtube_id),
+            site_name_customized=bool(first_text(row.name, theme.get("name"))),
+            site_description_customized=bool(first_text(row.description, theme.get("description"))),
         )
 
 

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next'
+import { resolveHomeIdentity } from '../lib/site-metadata'
 import { contentApi, serverApi } from '../services/api'
 import { contentLang } from '../i18n/locale'
 import { themeImage } from '../theme/assets'
@@ -23,11 +24,12 @@ function DefaultHomePage() {
   const theme = useTheme()
   const language = contentLang(i18n.language)
   const status = useQuery({ queryKey: ['server-status'], queryFn: serverApi.status })
+  const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const news = useQuery({ queryKey: ['news', language], queryFn: () => contentApi.news(language) })
   const wiki = useQuery({ queryKey: ['wiki', language], queryFn: () => contentApi.wiki(undefined, language) })
   const clans = useQuery({ queryKey: ['rankings', 'clans'], queryFn: () => serverApi.rankings('clans') })
-  const discord = import.meta.env.VITE_DISCORD_URL as string | undefined
-  const trailerId = (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
+  const discord = info.data?.discord_url || (import.meta.env.VITE_DISCORD_URL as string | undefined)
+  const trailerId = info.data?.trailer_youtube_id || (import.meta.env.VITE_TRAILER_YOUTUBE_ID as string | undefined) || 'Mm19W1PKMFQ'
   const [trailerPlaying, setTrailerPlaying] = useState(false)
   const numberLocale = i18n.language === 'en' ? 'en-US' : i18n.language === 'es' ? 'es-ES' : 'pt-BR'
   const formatScore = (value: number) => value.toLocaleString(numberLocale)
@@ -85,12 +87,16 @@ function DefaultHomePage() {
     },
   ]
 
-  const envName = (import.meta.env.VITE_SERVER_NAME as string | undefined)?.trim()
-  const envDescription = (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined)?.trim()
-  const packagedName = !theme.builtin ? theme.name?.trim() : ''
-  const packagedDescription = !theme.builtin ? theme.description?.trim() : ''
-  const serverName = envName || packagedName || t('home.defaultTitle')
-  const serverDescription = envDescription || packagedDescription || t('home.defaultDescription')
+  const envName = (import.meta.env.VITE_SERVER_NAME as string | undefined)?.trim() || ''
+  const envDescription = (import.meta.env.VITE_SERVER_DESCRIPTION as string | undefined)?.trim() || ''
+  const { name: serverName, description: serverDescription } = resolveHomeIdentity(
+    info.data,
+    theme,
+    envName,
+    envDescription,
+    t('home.defaultTitle'),
+    t('home.defaultDescription'),
+  )
   const wikiItems = wiki.data?.length
     ? wiki.data.slice(0, 5).map((page) => ({ to: `/wiki/${page.slug}`, label: page.title }))
     : wikiLinks

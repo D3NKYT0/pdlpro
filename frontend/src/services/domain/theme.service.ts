@@ -58,6 +58,34 @@ export interface ThemePresentation {
   }
 }
 
+export interface ThemeSiteMetadata {
+  site: {
+    name?: string
+    slogan?: string
+    description?: string
+    title?: string
+  }
+  seo: {
+    title?: string
+    description?: string
+    ogTitle?: string
+    ogDescription?: string
+    ogImage?: string
+  }
+  social: {
+    discordUrl?: string
+    trailerYoutubeId?: string
+  }
+  server: {
+    chronicle?: string
+    maxLevel?: number
+    rates?: Record<string, string>
+    enchant?: Record<string, string>
+    features?: string[]
+    notes?: Record<string, string>
+  }
+}
+
 export interface ThemeLayout {
   panel?: {
     sidebarWidth?: number
@@ -89,6 +117,7 @@ export interface ApiTheme {
   assets: Record<string, string>
   presentation?: ThemePresentation | null
   layout?: ThemeLayout | null
+  metadata?: ThemeSiteMetadata | null
 }
 
 export const themeApi = {

@@ -63,6 +63,8 @@ O Coming Soon continua ativo até a equipe desligar o modo no painel.
 Contrato público em `GET /api/v1/public/server/info/`:
 
 - `name`, `slogan`, `description`, `chronicle`, `rates`, `enchant`, `max_level`
+- `seo_title`, `seo_description`, `og_title`, `og_description`, `og_image`
+- `discord_url`, `trailer_youtube_id`
 - `coming_soon`
 - `coming_soon_title`
 - `coming_soon_subtitle`

@@ -200,6 +200,11 @@ JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS_PDL
 
 PROJECT_TITLE = env("PROJECT_TITLE", default="PDL PRO")
 PROJECT_DESCRIPTION = env("PROJECT_DESCRIPTION", default="Painel Definitivo Lineage 2.0")
+SITE_SEO_TITLE = env("SITE_SEO_TITLE", default="")
+SITE_SEO_DESCRIPTION = env("SITE_SEO_DESCRIPTION", default="")
+SITE_OG_IMAGE = env("SITE_OG_IMAGE", default="")
+DISCORD_URL = env("DISCORD_URL", default=env("VITE_DISCORD_URL", default=""))
+TRAILER_YOUTUBE_ID = env("TRAILER_YOUTUBE_ID", default=env("VITE_TRAILER_YOUTUBE_ID", default=""))
 SERVER_CHRONICLE = env("SERVER_CHRONICLE", default="")
 XP_RATE = env("XP_RATE", default="x1")
 SP_RATE = env("SP_RATE", default="x1")

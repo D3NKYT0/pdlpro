@@ -1,3 +1,5 @@
+from apps.server.domain.site_metadata import IPackagedSiteMetadata
+from apps.themes.application.packaged_site_metadata import ThemePackagedSiteMetadata
 from apps.themes.application.use_cases import (
     ActivateThemeUseCase,
     DeleteThemeUseCase,
@@ -23,6 +25,9 @@ class ThemesProvider(AppProvider):
     def register(self, container: Container) -> None:
         container.register(
             IThemePackageRepository, DjangoThemePackageRepository, lifetime=Lifetime.SCOPED
+        )
+        container.register(
+            IPackagedSiteMetadata, ThemePackagedSiteMetadata, lifetime=Lifetime.SCOPED
         )
         for use_case in (
             GetActiveThemeUseCase,

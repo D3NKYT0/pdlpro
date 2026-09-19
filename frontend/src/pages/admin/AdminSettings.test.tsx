@@ -71,6 +71,11 @@ beforeEach(() => {
     coming_soon_title: 'Em breve',
     coming_soon_subtitle: '',
     coming_soon_at: null,
+    seo_title: '',
+    seo_description: '',
+    og_image: '',
+    discord_url: '',
+    trailer_youtube_id: '',
   } as any)
 })
 afterEach(() => { cleanup(); vi.restoreAllMocks() })
@@ -337,6 +342,9 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
     max_level: 80,
     coming_soon_title: 'Abertura do reino',
     coming_soon_at: expect.stringMatching(/^2027-01-03T/),
+    seo_title: '',
+    discord_url: '',
+    trailer_youtube_id: '',
   }))
   expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')
 })

@@ -22,7 +22,13 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 | `REDIS_URL` | Cache, Channels e broker/result backend Celery | `redis://redis:6379/0` no Compose |
 | `REDIS_PASSWORD` | Senha exigida pelo Redis em produção (`--requirepass`); entra também na `REDIS_URL` | vazio em desenvolvimento, onde o Redis não é publicado |
 | `PRIVATE_MEDIA_ROOT` | Diretório dos arquivos que nunca são publicados (pacote de portabilidade LGPD) | `backend/private/` |
-| `PROJECT_TITLE` | Nome exibido pelo projeto | `PDL PRO` |
+| `PROJECT_TITLE` | Nome exibido pelo projeto (fallback de identidade) | `PDL PRO` |
+| `PROJECT_DESCRIPTION` | Descrição pública inicial | `Painel Definitivo Lineage 2.0` |
+| `SITE_SEO_TITLE` | Título da aba / SEO quando o admin e o tema não preenchem | vazio (usa `PROJECT_TITLE`) |
+| `SITE_SEO_DESCRIPTION` | Meta description inicial | vazio (usa `PROJECT_DESCRIPTION`) |
+| `SITE_OG_IMAGE` | Imagem Open Graph inicial | vazio |
+| `DISCORD_URL` | Comunidade Discord (`VITE_DISCORD_URL` ainda vale no build) | vazio |
+| `TRAILER_YOUTUBE_ID` | Trailer da home (`VITE_TRAILER_YOUTUBE_ID` ainda vale no build) | vazio |
 | `PROJECT_URL` | URL pública do backend/proxy | `http://localhost` |
 | `FRONTEND_URL` | URL usada em links enviados ao usuário | `http://localhost:3000` |
 | `LEGAL_DOCS_VERSION` | Versão aceita dos documentos legais (bump força reaceitação) | `2026-09-10` |

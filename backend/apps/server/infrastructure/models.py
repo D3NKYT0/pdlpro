@@ -86,6 +86,11 @@ class IndexConfig(BaseModel):
     coming_soon_title = models.CharField(max_length=200, blank=True, default="Em breve")
     coming_soon_subtitle = models.CharField(max_length=300, blank=True)
     coming_soon_at = models.DateTimeField(null=True, blank=True)
+    seo_title = models.CharField(_("Título SEO"), max_length=200, blank=True)
+    seo_description = models.TextField(_("Descrição SEO"), blank=True)
+    og_image = models.CharField(_("Imagem Open Graph"), max_length=300, blank=True)
+    discord_url = models.CharField(_("URL do Discord"), max_length=300, blank=True)
+    trailer_youtube_id = models.CharField(_("ID do trailer no YouTube"), max_length=11, blank=True)
 
     class Meta:
         verbose_name=_("Configuração do painel")

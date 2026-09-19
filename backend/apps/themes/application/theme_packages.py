@@ -13,6 +13,11 @@ from typing import Any, BinaryIO
 
 from django.conf import settings
 
+from apps.themes.application.theme_metadata import (
+    METADATA_FILENAME,
+    empty_theme_metadata,
+    parse_theme_metadata,
+)
 from apps.themes.domain.repositories import IThemePackageRepository
 from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import (
@@ -72,6 +77,7 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
     allowed = {
         "schemaVersion", "pdlVersion", "id", "name", "version", "author",
         "description", "entrypoint", "assets", "presentation", "layout",
+        "metadata",
     }
     unknown = sorted(set(manifest) - allowed)
     if unknown:
@@ -104,6 +110,12 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
         _validate_presentation(manifest["presentation"], manifest["assets"])
     if "layout" in manifest:
         _validate_layout(manifest["layout"], manifest["assets"])
+    if "metadata" in manifest:
+        pointer = manifest["metadata"]
+        if not isinstance(pointer, str) or _safe_member_name(pointer) != METADATA_FILENAME:
+            raise ValidationDomainError(
+                "metadata precisa apontar para metadados.json na raiz do pacote."
+            )
     return manifest
 
 
@@ -343,9 +355,10 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
             raise ValidationDomainError(
                 "O pacote contém um tipo de arquivo não permitido.", details={"file": name}
             )
-        if suffix == ".json" and name != "theme.json":
+        if suffix == ".json" and name not in {"theme.json", METADATA_FILENAME}:
             raise ValidationDomainError(
-                "Somente o manifesto theme.json pode usar o formato JSON.", details={"file": name}
+                "Somente theme.json e metadados.json podem usar o formato JSON.",
+                details={"file": name},
             )
         if info.file_size > MAX_FILE_BYTES:
             raise ValidationDomainError(f"O arquivo {name} excede o limite individual.")
@@ -361,6 +374,12 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
     entrypoint = _safe_member_name(str(manifest["entrypoint"]))
     if not entrypoint.endswith(".css") or entrypoint not in files:
         raise ValidationDomainError("O entrypoint CSS declarado não existe no pacote.")
+    if "metadata" in manifest:
+        if METADATA_FILENAME not in files:
+            raise ValidationDomainError("O manifesto aponta para metadados.json, mas o arquivo não está no pacote.")
+        parse_theme_metadata(files[METADATA_FILENAME], manifest["assets"])
+    elif METADATA_FILENAME in files:
+        raise ValidationDomainError("metadados.json só pode entrar no pacote quando theme.json aponta para ele.")
     for logical_name, asset_path in manifest["assets"].items():
         if not isinstance(logical_name, str) or not logical_name or not isinstance(asset_path, str):
             raise ValidationDomainError("O mapa de assets contém uma entrada inválida.")
@@ -401,7 +420,25 @@ def _live_manifest(theme: Any) -> dict:
             if isinstance(key, str) and isinstance(value, str) and _safe_rel_asset(value):
                 merged[key] = value
         stored["assets"] = merged
+    pointer = data.get("metadata")
+    if isinstance(pointer, str) and _safe_rel_asset(pointer) and pointer == METADATA_FILENAME:
+        stored["metadata"] = pointer
     return stored
+
+
+def _live_metadata(theme: Any, manifest: dict) -> dict | None:
+    """Relê metadados.json do pacote instalado quando o manifesto o aponta."""
+
+    pointer = manifest.get("metadata")
+    if pointer != METADATA_FILENAME:
+        return None
+    disk = _themes_root() / theme.storage_path / METADATA_FILENAME
+    if not disk.is_file():
+        return empty_theme_metadata()
+    try:
+        return parse_theme_metadata(disk.read_bytes(), manifest.get("assets") or {})
+    except (OSError, ValidationDomainError):
+        return empty_theme_metadata()
 
 
 def serialize_theme(theme: Any | None = None) -> dict:
@@ -413,6 +450,7 @@ def serialize_theme(theme: Any | None = None) -> dict:
             "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
             "active": True, "builtin": True, "base_url": "/theme/default/",
             "stylesheet_url": None, "assets": {}, "presentation": None, "layout": None,
+            "metadata": None,
         }
     manifest = _live_manifest(theme)
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
@@ -426,6 +464,7 @@ def serialize_theme(theme: Any | None = None) -> dict:
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
         "presentation": manifest.get("presentation"),
         "layout": manifest.get("layout"),
+        "metadata": _live_metadata(theme, manifest),
     }
 
 
