@@ -265,6 +265,9 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   )
   expect(crumaCss).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
   expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.h \.h-scroll img\s*\{[\s\S]*?var\(--theme-accent\)/,
+  )
+  expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\] \.f\.home-features[\s\S]*?var\(--theme-art-bg-2\)/,
   )
   expect(crumaCss).toMatch(
