@@ -1,9 +1,10 @@
 .launch-gate {
-  --launch-ink: var(--theme-text, #f6ecd4);
-  --launch-muted: var(--theme-muted, #c2b08a);
+  --launch-ink: var(--theme-text, #f4f7f6);
+  --launch-muted: var(--theme-muted, #9aa8a6);
   --launch-ember: var(--theme-accent, #d4a24a);
   --launch-ember-bright: var(--theme-accent-bright, #ffe09e);
-  --launch-deep: var(--theme-bg-deep, #070504);
+  --launch-deep: var(--theme-bg-deep, #05080a);
+  --launch-panel: color-mix(in srgb, var(--theme-surface, #0c1214) 78%, #000);
   position: fixed;
   inset: 0;
   isolation: isolate;
@@ -31,6 +32,12 @@
 
 .launch-gate__language .ui-select {
   min-width: 7.5rem;
+}
+
+.launch-gate__language .ui-select-trigger {
+  color: var(--launch-ember-bright);
+  background-color: color-mix(in srgb, var(--launch-deep) 72%, transparent);
+  border-color: color-mix(in srgb, var(--launch-ember) 22%, transparent);
 }
 
 .launch-gate__sky {
@@ -162,7 +169,7 @@
   height: min(44vw, 380px);
   right: -8%;
   bottom: 4%;
-  background: radial-gradient(circle, rgba(120, 68, 22, 0.55), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--launch-ember) 55%, transparent), transparent 70%);
   animation-delay: -4s;
 }
 
@@ -179,7 +186,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(7, 5, 4, 0.62) 0%, rgba(7, 5, 4, 0.18) 34%, rgba(7, 5, 4, 0.78) 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-deep) 62%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 18%, transparent) 34%, color-mix(in srgb, var(--launch-deep) 78%, transparent) 100%),
     radial-gradient(ellipse at 50% 28%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 55%);
 }
 
@@ -199,7 +206,7 @@
   position: absolute;
   bottom: -8%;
   border-radius: 50%;
-  background: radial-gradient(circle, #ffe6a8 0%, var(--launch-ember) 45%, transparent 72%);
+  background: radial-gradient(circle, var(--launch-ember-bright) 0%, var(--launch-ember) 45%, transparent 72%);
   opacity: 0;
   box-shadow: 0 0 12px color-mix(in srgb, var(--launch-ember) 55%, transparent);
   animation-name: launch-spark;
@@ -341,10 +348,10 @@
   border: 1px solid color-mix(in srgb, var(--launch-ember) 34%, transparent);
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(18, 13, 8, 0.78) 0%, rgba(8, 6, 4, 0.86) 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-panel) 78%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 86%, transparent) 100%),
     radial-gradient(ellipse at 50% 12%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 58%);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.12),
+    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 12%, transparent),
     inset 0 0 0 1px color-mix(in srgb, var(--launch-ember) 8%, transparent),
     0 28px 70px rgba(0, 0, 0, 0.52),
     0 0 48px color-mix(in srgb, var(--launch-ember) 10%, transparent);
@@ -364,7 +371,7 @@
   z-index: 0;
   background:
     radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--launch-ember) 22%, transparent), transparent 58%),
-    radial-gradient(ellipse at 20% 80%, rgba(120, 68, 22, 0.18), transparent 48%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 48%),
     radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--launch-ember-bright) 12%, transparent), transparent 42%);
   filter: blur(18px);
   animation: launch-panel-glow 7s ease-in-out infinite alternate;
@@ -375,7 +382,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-color: rgba(8, 6, 4, 0.55);
+  background-color: color-mix(in srgb, var(--launch-deep) 55%, transparent);
   background-position: center 40%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -390,7 +397,7 @@
   inset: 0;
   background:
     radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--launch-ember) 10%, transparent), transparent 55%),
-    linear-gradient(180deg, rgba(246, 236, 212, 0.04), transparent 28%, rgba(0, 0, 0, 0.28) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-ink) 4%, transparent), transparent 28%, rgba(0, 0, 0, 0.28) 100%);
   pointer-events: none;
 }
 
@@ -430,9 +437,9 @@
   background: linear-gradient(
     115deg,
     transparent 28%,
-    rgba(255, 236, 190, 0.07) 46%,
-    rgba(255, 244, 210, 0.16) 50%,
-    rgba(255, 236, 190, 0.07) 54%,
+    color-mix(in srgb, var(--launch-ember-bright) 7%, transparent) 46%,
+    color-mix(in srgb, var(--launch-ember-bright) 16%, transparent) 50%,
+    color-mix(in srgb, var(--launch-ember-bright) 7%, transparent) 54%,
     transparent 72%
   );
   transform: translateX(-120%);
@@ -518,13 +525,13 @@
 
 .launch-gate.is-open .launch-gate__panel {
   background:
-    linear-gradient(180deg, rgba(18, 12, 6, 0.82) 0%, rgba(8, 5, 3, 0.88) 100%),
-    radial-gradient(ellipse at 50% 10%, rgba(255, 140, 64, 0.16), transparent 58%);
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-panel) 82%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 88%, transparent) 100%),
+    radial-gradient(ellipse at 50% 10%, color-mix(in srgb, var(--launch-ember) 16%, transparent), transparent 58%);
   border-color: color-mix(in srgb, var(--launch-ember) 42%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.12),
+    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 12%, transparent),
     0 22px 56px rgba(0, 0, 0, 0.55),
-    0 0 42px rgba(180, 70, 20, 0.22);
+    0 0 42px color-mix(in srgb, var(--launch-ember) 22%, transparent);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
   animation: launch-panel-breathe 3.6s ease-in-out infinite;
@@ -538,13 +545,13 @@
 .launch-gate.is-open .launch-gate__panel-texture {
   opacity: 0.38;
   mix-blend-mode: soft-light;
-  background-color: rgba(8, 6, 4, 0.28);
+  background-color: color-mix(in srgb, var(--launch-deep) 28%, transparent);
 }
 
 .launch-gate.is-open .launch-gate__panel-texture::after {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(255, 140, 64, 0.1), transparent 55%),
-    linear-gradient(180deg, rgba(246, 236, 212, 0.03), transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+    radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--launch-ember) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-ink) 3%, transparent), transparent 34%, rgba(0, 0, 0, 0.22) 100%);
 }
 
 .launch-gate.is-open .launch-gate__panel-rim {
@@ -552,8 +559,8 @@
 }
 
 .launch-gate.is-open .launch-gate__panel-corner {
-  border-color: rgba(255, 196, 120, 0.92);
-  filter: drop-shadow(0 0 10px rgba(255, 140, 64, 0.45));
+  border-color: color-mix(in srgb, var(--launch-ember-bright) 92%, transparent);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--launch-ember) 45%, transparent));
 }
 
 .launch-gate__actions {
@@ -782,10 +789,10 @@
   border: 1px solid color-mix(in srgb, var(--launch-ember) 34%, transparent);
   border-radius: 4px;
   background:
-    linear-gradient(180deg, rgba(42, 28, 14, 0.78), rgba(12, 9, 6, 0.88)),
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-panel) 78%, transparent), color-mix(in srgb, var(--launch-deep) 88%, transparent)),
     radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 60%);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.1),
+    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 10%, transparent),
     0 0 24px color-mix(in srgb, var(--launch-ember) 12%, transparent);
   backdrop-filter: blur(6px);
   transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
@@ -798,7 +805,7 @@
 .launch-gate__block:hover {
   border-color: color-mix(in srgb, var(--launch-ember) 55%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(246, 236, 212, 0.14),
+    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 14%, transparent),
     0 0 28px color-mix(in srgb, var(--launch-ember) 22%, transparent);
 }
 
@@ -852,8 +859,8 @@
 
 .launch-gate.is-open .launch-gate__haze {
   background:
-    linear-gradient(180deg, rgba(7, 5, 4, 0.38) 0%, rgba(7, 5, 4, 0.1) 30%, rgba(7, 5, 4, 0.58) 100%),
-    radial-gradient(ellipse at 50% 42%, rgba(180, 70, 20, 0.22), transparent 58%);
+    linear-gradient(180deg, color-mix(in srgb, var(--launch-deep) 38%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 10%, transparent) 30%, color-mix(in srgb, var(--launch-deep) 58%, transparent) 100%),
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--launch-ember) 22%, transparent), transparent 58%);
 }
 
 .launch-gate.is-open .launch-gate__vignette {
@@ -876,13 +883,13 @@
 }
 
 .launch-gate.is-open .launch-gate__kicker {
-  color: #f0d48a;
-  text-shadow: 0 0 24px rgba(255, 160, 80, 0.5);
+  color: var(--launch-ember-bright);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--launch-ember) 50%, transparent);
 }
 
 .launch-gate.is-open .launch-gate__title {
   text-shadow:
-    0 0 48px rgba(255, 160, 80, 0.32),
+    0 0 48px color-mix(in srgb, var(--launch-ember) 32%, transparent),
     0 8px 30px rgba(0, 0, 0, 0.65);
 }
 
@@ -915,14 +922,14 @@
 @keyframes launch-panel-breathe {
   0%, 100% {
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.12),
+      inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 12%, transparent),
       inset 0 0 0 1px color-mix(in srgb, var(--launch-ember-bright) 8%, transparent),
       0 28px 64px rgba(0, 0, 0, 0.4),
       0 0 40px color-mix(in srgb, var(--launch-ember) 12%, transparent);
   }
   50% {
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.16),
+      inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 16%, transparent),
       inset 0 0 0 1px color-mix(in srgb, var(--launch-ember-bright) 12%, transparent),
       0 30px 72px rgba(0, 0, 0, 0.45),
       0 0 58px color-mix(in srgb, var(--launch-ember-bright) 22%, transparent);
@@ -1011,20 +1018,20 @@
   0% {
     transform: scale(1);
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.1),
+      inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 10%, transparent),
       0 0 24px color-mix(in srgb, var(--launch-ember) 12%, transparent);
   }
   40% {
     transform: scale(1.04);
     border-color: color-mix(in srgb, var(--launch-ember-bright) 70%, transparent);
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.18),
+      inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 18%, transparent),
       0 0 34px color-mix(in srgb, var(--launch-ember) 42%, transparent);
   }
   100% {
     transform: scale(1);
     box-shadow:
-      inset 0 1px 0 rgba(246, 236, 212, 0.1),
+      inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 10%, transparent),
       0 0 24px color-mix(in srgb, var(--launch-ember) 12%, transparent);
   }
 }

@@ -44,6 +44,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   ele pinta o brasão e o acento do pacote (`--theme-accent` / `pdl-symbol`).
 - O splash de boot e o overlay de rota passam a usar o mesmo chrome
   (emblema no losango, wordmark, texto e barra), no acento do tema.
+- A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
+  clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
+  e `--theme-accent`.
 
 ## [2.5.3] - 2026-09-18
 

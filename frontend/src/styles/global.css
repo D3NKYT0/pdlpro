@@ -419,8 +419,8 @@ button, input, select { font: inherit; }
   min-height: 40px;
   padding: 0 34px 0 12px;
   font-size: 0.8rem;
-  color: var(--theme-accent-bright, #ead092);
-  background-color: rgba(17, 14, 10, 0.72);
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #ead092));
+  background-color: color-mix(in srgb, var(--theme-bg-deep, #0b0a08) 72%, transparent);
   border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
 }
 .site-footer-locale {
@@ -435,7 +435,7 @@ button, input, select { font: inherit; }
   min-height: 30px;
   border-color: transparent;
   background-color: transparent;
-  color: rgba(232, 223, 205, 0.9);
+  color: color-mix(in srgb, var(--theme-text, #f4ead4) 90%, transparent);
   box-shadow: none;
 }
 .panel-language {

@@ -38,10 +38,18 @@ const crumaJson = JSON.parse(readCrumaThemeFile('theme.json'))
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
+  expect(comingSoon).toContain('--launch-panel: color-mix(in srgb, var(--theme-surface')
   expect(comingSoon).toMatch(
     /\.launch-gate__panel\s*\{[\s\S]*?border:\s*1px solid color-mix\(in srgb, var\(--launch-ember\)/,
   )
+  expect(comingSoon).toMatch(/\.launch-gate__panel\s*\{[\s\S]*?var\(--launch-panel\)/)
   expect(comingSoon).not.toMatch(/rgba\(\s*212\s*,\s*162\s*,\s*74/)
+  expect(comingSoon).not.toMatch(/rgba\(\s*18\s*,\s*13\s*,\s*8/)
+  expect(comingSoon).not.toMatch(/rgba\(\s*8\s*,\s*6\s*,\s*4/)
+  expect(comingSoon).not.toMatch(/rgba\(\s*42\s*,\s*28\s*,\s*14/)
+  expect(comingSoon).not.toMatch(/rgba\(\s*120\s*,\s*68\s*,\s*22/)
+  expect(comingSoon).not.toMatch(/rgba\(\s*246\s*,\s*236\s*,\s*212/)
+  expect(comingSoon).not.toMatch(/#f0d48a/i)
   expect(comingSoon).not.toMatch(/#c5a161/i)
 })
 
