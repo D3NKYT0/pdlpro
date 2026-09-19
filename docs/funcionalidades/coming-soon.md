@@ -55,7 +55,8 @@ No admin, com Coming Soon ativo, use **Ver página de lançamento** para abrir `
 
 Quando a data chega, a contagem some e a página entra no estado de abertura: troca o fundo
 para o assalto ao castelo (`bg/coming-soon-open.png`), a party avança pelo portão
-(`images/coming-soon/assault-*.png`), kicker “A guerra começou”, mensagem “O assalto começou”
+(`images/coming-soon/assault-*.png`; a vanguard fica na frente da raider à esquerda),
+kicker “A guerra começou”, mensagem “O assalto começou”
 e ênfase no botão Entrar. Sem fogos nem casal comemorativo.
 O Coming Soon continua ativo até a equipe desligar o modo no painel.
 

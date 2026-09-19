@@ -61,8 +61,8 @@ const LAUNCH_CHAMPIONS = [
 ] as const
 
 const ASSAULT_CHAMPIONS = [
-  { id: 'assault-vanguard', file: 'coming-soon/assault-vanguard.png', side: 'left-back' },
-  { id: 'assault-raider', file: 'coming-soon/assault-raider.png', side: 'left-front' },
+  { id: 'assault-vanguard', file: 'coming-soon/assault-vanguard.png', side: 'left-front' },
+  { id: 'assault-raider', file: 'coming-soon/assault-raider.png', side: 'left-back' },
   { id: 'assault-mage', file: 'coming-soon/assault-mage.png', side: 'right-front' },
   { id: 'assault-warden', file: 'coming-soon/assault-warden.png', side: 'right-back' },
 ] as const

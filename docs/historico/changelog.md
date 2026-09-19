@@ -56,7 +56,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   O recorte preenche a arte e as frentes acompanham a escala das demais.
 - A Coming Soon ganhou névoa no rodapé (acento do tema) e a arte do
   `assault-raider` do Cruma foi refeita em alta, sem o upscale que
-  deixava a personagem mole.
+  deixava a personagem mole. No assalto, a vanguard fica na frente da
+  raider.
 
 ## [2.5.3] - 2026-09-18
 

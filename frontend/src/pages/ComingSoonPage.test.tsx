@@ -218,9 +218,13 @@ it('anuncia o fim da contagem com o assalto ao castelo', () => {
   expect(container.querySelector('.launch-gate__dossier')).toBeNull()
   expect(container.querySelector('.launch-gate__roster.is-assault')).not.toBeNull()
   expect(container.querySelectorAll('.launch-gate__champion')).toHaveLength(4)
-  expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
+  expect(container.querySelector('.launch-gate__champion.is-left-front')).toHaveAttribute(
     'src',
     '/theme/default/images/coming-soon/assault-vanguard.png?v=4',
+  )
+  expect(container.querySelector('.launch-gate__champion.is-left-back')).toHaveAttribute(
+    'src',
+    '/theme/default/images/coming-soon/assault-raider.png?v=4',
   )
   expect(container.querySelector('.launch-gate__champion.is-right-front')).toHaveAttribute(
     'src',
