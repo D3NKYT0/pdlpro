@@ -70,23 +70,21 @@ it('pinta o splash HTML com o brasão e o acento do tema ativo', async () => {
   document.documentElement.style.setProperty('--theme-bg-deep', '#050a0c')
   vi.mocked(themeApi.active).mockResolvedValue({
     ...valorem,
-    id: 'cruma',
-    name: 'Cruma',
     assets: {
       ...valorem.assets,
-      'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+      'images/pdl-symbol.svg': '/media/themes/valorem/images/pdl-symbol.png',
     },
   })
   render(<ThemeProvider><Consumer /></ThemeProvider>)
-  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="cruma"]')).not.toBeNull())
-  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="cruma"]')!)
-  await screen.findByText(/Cruma/)
+  await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
+  fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
+  await screen.findByText(/Valorem/)
   expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
     'src',
-    '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    '/media/themes/valorem/images/pdl-symbol.png',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
-  expect(JSON.parse(localStorage.getItem('pdl.loaderChrome') || '{}').id).toBe('cruma')
+  expect(JSON.parse(localStorage.getItem('pdl.loaderChrome') || '{}').id).toBe('valorem')
 })
 
 it('injeta knobs de layout como CSS variables', async () => {

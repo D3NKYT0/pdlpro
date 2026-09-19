@@ -1,43 +1,8 @@
 /// <reference types="node" />
 import { createHash } from 'node:crypto'
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
-
-const crumaFixtureDir = resolve(__dirname, 'fixtures/cruma')
-
-function installedCrumaDirs() {
-  const root = resolve(__dirname, '../../../backend/media/themes/cruma')
-  if (!existsSync(root)) return []
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => resolve(root, entry.name))
-    .filter((dir) => existsSync(resolve(dir, 'theme.json')))
-    .sort()
-    .reverse()
-}
-
-function crumaLiveDir() {
-  return [
-    resolve(__dirname, '../../theme-packages/cruma'),
-    ...installedCrumaDirs(),
-  ].find((dir) => existsSync(resolve(dir, 'theme.json'))) ?? null
-}
-
-function readCrumaThemeFile(name: 'theme.css' | 'theme.json' | 'metadados.json') {
-  const file = resolve(crumaFixtureDir, name)
-  if (!existsSync(file)) {
-    throw new Error('Contrato do Cruma ausente: versione frontend/src/theme/fixtures/cruma.')
-  }
-  return readFileSync(file, 'utf8')
-}
-
-function crumaLiveAsset(relativePath: string) {
-  const liveDir = crumaLiveDir()
-  if (!liveDir) return null
-  const file = resolve(liveDir, ...relativePath.split('/'))
-  return existsSync(file) ? file : null
-}
 
 const themeRoot = resolve(__dirname, '../../public/theme')
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
@@ -62,8 +27,6 @@ const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-p
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
-const crumaCss = readCrumaThemeFile('theme.css')
-const crumaJson = JSON.parse(readCrumaThemeFile('theme.json'))
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
@@ -333,43 +296,6 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(globalCss).toMatch(/\.support-hero::after[\s\S]*?var\(--theme-accent/)
   expect(globalCss).not.toMatch(/rgba\(\s*204\s*,\s*155\s*,\s*63/)
   expect(observationCss).toMatch(/\.observation-hero \.account-hero[\s\S]*?var\(--theme-art-bg-3/)
-  expect(crumaCss).toContain('[data-theme-part="page-header"]')
-  expect(crumaCss).toContain('.panel-welcome')
-  expect(crumaCss).toContain('[data-theme-part="admin-category"]')
-  expect(crumaCss).toContain('--theme-art-bg-3: url("images/bg/3.jpg")')
-  expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
-  expect(crumaCss).toContain('var(--theme-art-bg-3)')
-  expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
-  expect(crumaJson.assets['images/video.mp4']).toBe('images/video.mp4')
-  expect(crumaJson.assets['images/video-mobile.mp4']).toBe('images/video-mobile.mp4')
-  const liveVideos = ['images/video.mp4', 'images/video-mobile.mp4'].filter((path) =>
-    crumaLiveAsset(path),
-  )
-  if (liveVideos.length > 0) {
-    expect(liveVideos).toEqual(['images/video.mp4', 'images/video-mobile.mp4'])
-  }
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.launch-gate\s*\{[\s\S]*?--launch-panel:\s*color-mix\(in srgb, var\(--theme-surface\)/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.launch-gate \.btn\.ui-button:hover[\s\S]*?var\(--launch-ember-bright\)/,
-  )
-  expect(crumaCss).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.h \.h-scroll img\s*\{[\s\S]*?width:\s*24px/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.h \.h-scroll img\s*\{[\s\S]*?var\(--theme-accent\)/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.f\.home-features[\s\S]*?var\(--theme-art-bg-2\)/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.home-features \.f-list a\s*\{[\s\S]*?var\(--theme-surface\)/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.home-features \.f-list a div::before[\s\S]*?var\(--theme-bg-deep\)/,
-  )
 })
 
 it('o Sair do menu do painel usa o botão padrão, sem círculo nem texto recortado', () => {
@@ -381,54 +307,19 @@ it('o Sair do menu do painel usa o botão padrão, sem círculo nem texto recort
   expect(panel).not.toMatch(/html\.pdl-panel \.panel-user \.btn span\s*\{[\s\S]*?clip:\s*rect/)
 })
 
-it('os baús do Cruma têm frames fechado, entreaberto e aberto distintos', () => {
+it('os baús do Classic têm frames fechado, entreaberto e aberto distintos', () => {
+  const gamesDir = resolve(themeRoot, 'default/images/games')
   for (const rarity of ['common', 'rare', 'epic', 'legendary'] as const) {
     const hashes = ['', '-ajar', '-open'].map((pose) => {
-      const relative = `images/games/box-${rarity}${pose}.webp`
-      expect(crumaJson.assets[relative]).toBe(relative)
-      const file = crumaLiveAsset(relative)
-      if (!file) return null
+      const file = resolve(gamesDir, `box-${rarity}${pose}.webp`)
+      expect(existsSync(file), file).toBe(true)
       return createHash('md5').update(readFileSync(file)).digest('hex')
     })
-    const present = hashes.filter((hash): hash is string => hash !== null)
-    if (present.length > 0) {
-      expect(present, rarity).toHaveLength(3)
-      expect(new Set(present).size, rarity).toBe(3)
-    }
-  }
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\]\.pdl-panel \.game-chest-art\s*\{[\s\S]*?image-rendering:\s*auto/,
-  )
-})
-
-it('o contrato versionado do Cruma existe e acompanha o pacote local', () => {
-  expect(existsSync(resolve(crumaFixtureDir, 'theme.css'))).toBe(true)
-  expect(existsSync(resolve(crumaFixtureDir, 'theme.json'))).toBe(true)
-  expect(existsSync(resolve(crumaFixtureDir, 'metadados.json'))).toBe(true)
-  const liveDir = crumaLiveDir()
-  if (!liveDir) return
-  expect(readFileSync(resolve(crumaFixtureDir, 'theme.css'), 'utf8')).toBe(
-    readFileSync(resolve(liveDir, 'theme.css'), 'utf8'),
-  )
-  expect(readFileSync(resolve(crumaFixtureDir, 'theme.json'), 'utf8')).toBe(
-    readFileSync(resolve(liveDir, 'theme.json'), 'utf8'),
-  )
-  if (existsSync(resolve(liveDir, 'metadados.json'))) {
-    expect(readFileSync(resolve(crumaFixtureDir, 'metadados.json'), 'utf8')).toBe(
-      readFileSync(resolve(liveDir, 'metadados.json'), 'utf8'),
-    )
+    expect(new Set(hashes).size, rarity).toBe(3)
   }
 })
 
-it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {
-  expect(crumaCss).toMatch(/html\[data-pdl-theme="cruma"\] \.portal-shell \.site-footer\s*\{/)
-  expect(crumaCss).not.toMatch(/html\[data-pdl-theme="cruma"\] \.site-footer\s*\{/)
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\]\.pdl-public \.site-footer\s*\{[\s\S]*?var\(--theme-bg-deep\)/,
-  )
-  expect(crumaCss).toMatch(
-    /html\[data-pdl-theme="cruma"\] \.ui-select-list\s*\{[\s\S]*?var\(--theme-surface\)/,
-  )
+it('o rodapé público do Classic alinha os títulos das colunas à esquerda', () => {
   expect(layout).toMatch(/html\.pdl-public \.site-footer-col\s*\{[\s\S]*?text-align:\s*left/)
   expect(layout).toMatch(/html\.pdl-public \.site-footer-col h2\s*\{[\s\S]*?text-align:\s*left/)
 })

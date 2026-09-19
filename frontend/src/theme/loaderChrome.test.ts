@@ -56,25 +56,25 @@ it('pinta o splash com o chrome do tema e grava o cache', () => {
   document.documentElement.style.setProperty('--theme-accent-bright', '#7ef0e4')
   document.documentElement.style.setProperty('--theme-bg-deep', '#050a0c')
   configureRuntimeTheme({
-    'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
-    'images/logo.png': '/media/themes/cruma/1.0.0/images/logo.png',
+    'images/pdl-symbol.svg': '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
+    'images/logo.png': '/media/themes/packaged/1.0.0/images/logo.png',
   })
 
-  persistAppliedLoaderChrome('cruma')
+  persistAppliedLoaderChrome('packaged')
 
   expect(document.querySelector('#app-bootstrap-loader .global-loader__crest img')).toHaveAttribute(
     'src',
-    '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   )
   expect(document.querySelector('#app-bootstrap-loader .global-loader__wordmark')).toHaveAttribute(
     'src',
-    '/media/themes/cruma/1.0.0/images/logo.png',
+    '/media/themes/packaged/1.0.0/images/logo.png',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
-  expect(document.documentElement.dataset.pdlLoaderTheme).toBe('cruma')
+  expect(document.documentElement.dataset.pdlLoaderTheme).toBe('packaged')
   expect(JSON.parse(localStorage.getItem(LOADER_CHROME_STORAGE_KEY) || '{}')).toMatchObject({
-    id: 'cruma',
-    symbol: '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    id: 'packaged',
+    symbol: '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
     accent: '#3dd6c6',
     background: '#050a0c',
   })
@@ -84,8 +84,8 @@ it('o cache reabre o splash com o tema da visita anterior', () => {
   document.body.innerHTML =
     '<div id="app-bootstrap-loader"><img src="/theme/default/images/pdl-symbol.svg" alt="" /></div>'
   writeLoaderChrome({
-    id: 'cruma',
-    symbol: '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    id: 'packaged',
+    symbol: '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
     accent: '#3dd6c6',
     accentBright: '#7ef0e4',
     background: '#050a0c',
@@ -95,7 +95,7 @@ it('o cache reabre o splash com o tema da visita anterior', () => {
 
   expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
     'src',
-    '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
 })
@@ -109,9 +109,9 @@ it('o tema default ignora acento residual e grava o ouro clássico', () => {
 
 it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapeado', () => {
   configureRuntimeTheme({
-    'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    'images/pdl-symbol.svg': '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   })
-  const chrome = captureLoaderChrome('cruma')
+  const chrome = captureLoaderChrome('packaged')
   expect(chrome.symbol).toContain('pdl-symbol.png')
   expect(chrome.accent).toBe(DEFAULT_LOADER_CHROME.accent)
 })
@@ -132,8 +132,8 @@ it('o script estático de bootstrap aplica o chrome gravado', () => {
   localStorage.setItem(
     LOADER_CHROME_STORAGE_KEY,
     JSON.stringify({
-      id: 'cruma',
-      symbol: '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+      id: 'packaged',
+      symbol: '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
       accent: '#3dd6c6',
       accentBright: '#7ef0e4',
       background: '#050a0c',
@@ -143,8 +143,8 @@ it('o script estático de bootstrap aplica o chrome gravado', () => {
   window.eval(source)
   expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
     'src',
-    '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
+    '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
-  expect(document.documentElement.getAttribute('data-pdl-loader-theme')).toBe('cruma')
+  expect(document.documentElement.getAttribute('data-pdl-loader-theme')).toBe('packaged')
 })

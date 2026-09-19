@@ -8,13 +8,13 @@ import {
 
 const theme = {
   builtin: false,
-  name: 'Cruma',
+  name: 'Packaged',
   description: 'Pacote visual',
-  assets: { 'images/favicon.png': '/media/themes/cruma/images/favicon.png' },
+  assets: { 'images/favicon.png': '/media/themes/packaged/images/favicon.png' },
   metadata: {
-    site: { name: 'Cruma', description: 'A Torre desperta' },
-    seo: { title: 'Cruma SEO', ogImage: 'images/favicon.png' },
-    social: { discordUrl: 'https://discord.gg/cruma', trailerYoutubeId: 'abcdefghijk' },
+    site: { name: 'Packaged', description: 'O servidor desperta' },
+    seo: { title: 'Packaged SEO', ogImage: 'images/favicon.png' },
+    social: { discordUrl: 'https://discord.gg/packaged', trailerYoutubeId: 'abcdefghijk' },
     server: {},
   },
 }
@@ -46,7 +46,7 @@ it('a home prefere admin customizado, depois tema, depois o copy padrão', () =>
     'Fallback',
     'Desc fallback',
   )
-  expect(themeName.name).toBe('Cruma')
+  expect(themeName.name).toBe('Packaged')
 
   const builtin = resolveHomeIdentity(
     { name: 'PDL PRO', description: '', site_name_customized: false } as never,
@@ -71,24 +71,24 @@ it('resolve SEO, Discord e trailer com env < tema < admin', () => {
   )
   expect(resolved.seoTitle).toBe('Imperium SEO')
   expect(resolved.discordUrl).toBe('https://discord.gg/imperium')
-  expect(resolved.ogImage).toBe('/media/themes/cruma/images/favicon.png')
+  expect(resolved.ogImage).toBe('/media/themes/packaged/images/favicon.png')
   expect(resolved.trailerYoutubeId).toBe('abcdefghijk')
 })
 
 it('aplica title e Open Graph no documento', () => {
   applyDocumentMetadata({
-    name: 'Cruma',
+    name: 'Packaged',
     slogan: '',
-    description: 'A Torre',
-    seoTitle: 'Cruma — Lineage 2',
+    description: 'O servidor',
+    seoTitle: 'Packaged — Lineage 2',
     seoDescription: 'Pedra antiga',
-    ogTitle: 'Cruma OG',
+    ogTitle: 'Packaged OG',
     ogDescription: 'OG desc',
-    ogImage: '/media/themes/cruma/images/favicon.png',
+    ogImage: '/media/themes/packaged/images/favicon.png',
     discordUrl: '',
     trailerYoutubeId: 'Mm19W1PKMFQ',
   })
-  expect(document.title).toBe('Cruma — Lineage 2')
+  expect(document.title).toBe('Packaged — Lineage 2')
   expect(document.querySelector('meta[name="description"]')?.getAttribute('content')).toBe('Pedra antiga')
-  expect(document.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBe('Cruma OG')
+  expect(document.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBe('Packaged OG')
 })

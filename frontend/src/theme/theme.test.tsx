@@ -33,9 +33,9 @@ it('monta tema público e remove recursos na desmontagem', () => {
   expect(document.documentElement.classList.contains('pdl-public')).toBe(false)
   expect(document.querySelectorAll('link[data-pdl-theme]')).toHaveLength(0)
 })
-it('o brasão da Cruma substitui o pdl-symbol padrão', () => {
+it('o brasão do pacote instalado substitui o pdl-symbol padrão', () => {
   configureRuntimeTheme({
-    'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0-3cb72e9dcda7/images/pdl-symbol.png',
+    'images/pdl-symbol.svg': '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   })
   expect(themeImage('pdl-symbol.svg')).toContain('pdl-symbol.png')
 })

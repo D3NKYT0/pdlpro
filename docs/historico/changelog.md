@@ -39,14 +39,18 @@ chrome estrutural no acento do pacote ativo, consolidados em
   do admin passam a ter `data-theme-part` e `--theme-art-bg-*` (hub,
   suporte, segurança e observação), e o `html.pdl-panel` deixa de
   sobrescrever o acento do pacote.
+- Pacote de cliente (Cruma, Valorem ou outro) não entra em `frontend/src/`.
+  A suíte cobre o chrome estrutural e o Classic; o ZIP do tema fica em
+  `theme-packages/` (fora do Git) e se instala pelo painel.
+- O pacote **Cruma 1.0.1** cabe no teto de 32 MB do instalador de temas:
+  fundos opacos viram JPEG no arquivo físico (chaves lógicas `.png`
+  iguais). O `theme.css` usa `images/button/1.png`–`3.png` no lugar de
+  `images/ui/btn-*`.
 
 ### Corrigido
 
-- A suíte do frontend no CI falhava ao coletar `accent-chrome.test.ts`
-  porque o `theme.json` do Cruma só existia em `theme-packages/` ou
-  `media/` (ambos fora do Git). O contrato textual (`theme.css` e
-  `theme.json`) passa a ser versionado em
-  `frontend/src/theme/fixtures/cruma`.
+- A suíte do frontend no CI deixa de depender do `theme.json` / `theme.css`
+  do Cruma em `src/`: pacote de cliente não é contrato do core.
 - Os balões do Denkynho (chat, status e o selo do nome) ainda
   pintavam pergaminho e ouro clássicos (`rgba(84,58,28)`,
   `#f0d78a`). Passam a `--theme-surface` / `--theme-accent` do
