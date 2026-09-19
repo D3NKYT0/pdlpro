@@ -84,8 +84,8 @@ chrome (`PdlSymbol`, nav, rodapé, splash de boot, overlay de rota e auth) lê
 `--theme-accent`, `--theme-accent-bright` e `--theme-bg-deep`: depois da primeira
 visita o chrome fica em `localStorage` (`pdl.loaderChrome`) e o script estático
 reabre o loader já com o brasão e o acento do pacote ativo. O splash e o
-overlay de rota compartilham `bootstrap-loader.css`: emblema, wordmark,
-losango, brilho e barra de progresso. O contrato público
+overlay de rota compartilham o layout clássico com losango: emblema,
+wordmark `logo.png`, texto e barra. O contrato público
 relê só o mapa de `assets` do `theme.json` em `media/themes/<pacote>/`.
 `presentation` e `layout` continuam os gravados na instalação, para um ajuste
 de arte no media não trocar o template da home.

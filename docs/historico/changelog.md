@@ -46,8 +46,22 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   nas navegações seguintes.
 - O splash de boot seguia o ouro clássico mesmo com outro tema ativo. Agora
   ele pinta o brasão e o acento do pacote (`--theme-accent` / `pdl-symbol`).
-- O splash de boot e o overlay de rota passam a usar o mesmo chrome
-  (emblema no losango, wordmark, texto e barra), no acento do tema.
+- O splash HTML e o overlay de rota voltam ao layout clássico com
+  losango (emblema, wordmark, texto e barra), no acento do tema.
+- O card do tema ativo no admin usava verde sálvia fixo (borda e selo
+  ATIVO). Agora segue `--theme-accent`: ouro no Classic e acento do
+  pacote no Cruma. O splash do tema `default` também ignora acento
+  residual e volta ao ouro clássico.
+- Na home, o pódio de clãs, a lista 4º/5º e os tiles de ranking ainda
+  tinham moldura marrom clássica (`#3d3223` / `#8d775a`). A borda lê
+  `--theme-accent`; o mesmo vale para o pódio e a tabela de `/rankings`.
+- A faixa de Apoiadores da home ainda pintava parchment
+  (`#1b160e` / `rgba(28,22,12)`). O fundo lê `--theme-bg-deep` com um
+  véu do `--theme-accent`.
+- Em Informações, o glow do herói ainda era âmbar
+  (`rgba(191,121,39)`) e os cards/nav usavam parchment. O véu, o
+  quadro e as placas leem `--theme-bg-deep` / `--theme-accent`; o
+  mesmo glow some de Rankings.
 - A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
   clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
   e `--theme-accent`.
@@ -60,6 +74,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   raider. O botão Entrar deixou o glow `orange` e pulsa no acento do
   tema. O `theme.css` do Cruma em media passa a declarar o mesmo glow e
   o `--launch-panel` da Coming Soon.
+- Os cards de Crônica/Castelos/Fama da home clássica ainda usavam moldura
+  `#3d3223` e véu `rgba(8,6,4)`. A faixa lê `--theme-surface` /
+  `--theme-bg-deep`, e o `theme.css` do Cruma em media reforça o mesmo.
+  O fundo da seção ainda puxava o `bg/2.jpg` clássico (névoa marrom);
+  agora lê `--theme-art-bg-2` (templo ciano no Cruma).
+- O rodapé público e o select de idioma ainda usavam parchment/`#12100c`.
+  Fundo, trigger e lista leem `--theme-bg-deep` / `--theme-surface`; o
+  `theme.css` do Cruma em media reforça o mesmo.
 
 ## [2.5.3] - 2026-09-18
 

@@ -75,8 +75,8 @@ it('pinta o splash com o chrome do tema e grava o cache', () => {
   expect(JSON.parse(localStorage.getItem(LOADER_CHROME_STORAGE_KEY) || '{}')).toMatchObject({
     id: 'cruma',
     symbol: '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
-    logo: '/media/themes/cruma/1.0.0/images/logo.png',
     accent: '#3dd6c6',
+    background: '#050a0c',
   })
 })
 
@@ -100,6 +100,13 @@ it('o cache reabre o splash com o tema da visita anterior', () => {
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
 })
 
+it('o tema default ignora acento residual e grava o ouro clássico', () => {
+  document.documentElement.style.setProperty('--theme-accent', '#3dd6c6')
+  document.documentElement.style.setProperty('--theme-accent-bright', '#7ef0e4')
+  const chrome = captureLoaderChrome('default')
+  expect(chrome).toEqual(DEFAULT_LOADER_CHROME)
+})
+
 it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapeado', () => {
   configureRuntimeTheme({
     'images/pdl-symbol.svg': '/media/themes/cruma/1.0.0/images/pdl-symbol.png',
@@ -109,14 +116,14 @@ it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapead
   expect(chrome.accent).toBe(DEFAULT_LOADER_CHROME.accent)
 })
 
-it('o splash HTML pinta acento e fundo com tokens, não ouro clássico cravado', () => {
+it('o splash HTML usa o layout clássico com losango, wordmark e barra', () => {
   const html = readFileSync(resolve(__dirname, '../../index.html'), 'utf8')
-  expect(html).toContain('--loader-accent')
   expect(html).toContain('bootstrap-loader.css')
-  expect(html).toContain('global-loader__marks')
+  expect(html).toContain('global-loader__crest')
   expect(html).toContain('global-loader__wordmark')
   expect(html).toContain('global-loader__progress')
-  expect(html).not.toMatch(/#app-bootstrap-loader span \{\s*color: #b49356/)
+  expect(html).toContain('/theme/default/images/logo.png')
+  expect(html).not.toContain('<span>LINE</span>')
 })
 
 it('o script estático de bootstrap aplica o chrome gravado', () => {

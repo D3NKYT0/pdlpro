@@ -2,7 +2,7 @@
   --rank-gold: var(--theme-accent, #d4ad62);
   --rank-gold-soft: var(--theme-accent, #8d7040);
   --rank-line: color-mix(in srgb, var(--theme-accent, #d4ad62) 20%, transparent);
-  --rank-panel: rgba(14, 12, 9, 0.9);
+  --rank-panel: color-mix(in srgb, var(--theme-bg-deep, #0e0c09) 90%, #000);
   padding: 0 0 100px;
 }
 
@@ -14,7 +14,7 @@
   overflow: hidden;
   border-bottom: 1px solid var(--rank-line);
   background:
-    linear-gradient(90deg, rgba(3, 3, 3, 0.96) 0%, rgba(4, 4, 4, 0.78) 48%, rgba(4, 3, 2, 0.42) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-bg-deep, #030303) 96%, #000) 0%, color-mix(in srgb, var(--theme-bg-deep, #040404) 78%, transparent) 48%, color-mix(in srgb, var(--theme-bg-deep, #040302) 42%, transparent) 100%),
     var(--theme-art-bg-3, url('/theme/default/images/bg/3.jpg')) center 30% / cover no-repeat;
 }
 
@@ -52,7 +52,7 @@
   top: -260px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(191, 121, 39, 0.16), transparent 66%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--rank-gold) 16%, transparent), transparent 66%);
 }
 
 .rankings-hero-inner {
@@ -110,7 +110,7 @@
   position: relative;
   padding: 34px;
   border: 1px solid color-mix(in srgb, var(--rank-gold) 32%, transparent);
-  background: linear-gradient(145deg, rgba(20, 16, 11, 0.94), rgba(6, 6, 5, 0.82));
+  background: linear-gradient(145deg, color-mix(in srgb, var(--theme-surface, #14100b) 94%, #000), color-mix(in srgb, var(--theme-bg-deep, #060605) 82%, transparent));
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.46);
 }
 
@@ -270,7 +270,7 @@
   margin-bottom: 56px;
   padding: 6px;
   border: 1px solid color-mix(in srgb, var(--rank-gold) 26%, transparent);
-  background: rgba(8, 7, 5, 0.94);
+  background: color-mix(in srgb, var(--theme-bg-deep, #080705) 94%, #000);
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(14px);
 }
@@ -374,14 +374,14 @@
 .rankings-card {
   flex: 1 1 220px;
   max-width: 340px;
-  background: #3d3223;
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 70%, #000);
   padding: 1px;
   clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
   transition: transform 0.45s, background-color 0.45s;
 }
 
 .rankings-card:hover {
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
   transform: translateY(-8px);
 }
 
@@ -389,7 +389,7 @@
   min-height: 268px;
   height: 100%;
   padding: 32px 20px 26px;
-  background: #0a0907;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 92%, #000);
   clip-path: inherit;
   display: flex;
   flex-direction: column;
@@ -401,7 +401,7 @@
 .rankings-card.place-1 {
   order: 2;
   transform: translateY(-16px);
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
 }
 
 .rankings-card.place-1:hover {
@@ -532,8 +532,8 @@
   list-style: none;
   margin: 0;
   padding: 8px 0;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(61, 50, 35, 0.9);
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rank-gold, var(--theme-accent, #c5a161)) 46%, transparent);
 }
 
 .rankings-board li {
@@ -652,7 +652,7 @@
 
 .rankings-siege-summary > div {
   padding: 18px 20px;
-  background: rgba(8, 7, 5, 0.96);
+  background: color-mix(in srgb, var(--theme-bg-deep, #080705) 96%, #000);
 }
 
 .rankings-siege-summary dt {
@@ -781,7 +781,7 @@
   letter-spacing: 1.4px;
   text-transform: uppercase;
   border: 1px solid color-mix(in srgb, var(--rank-gold) 38%, transparent);
-  background: rgba(8, 7, 5, 0.82);
+  background: color-mix(in srgb, var(--theme-bg-deep, #080705) 82%, transparent);
   backdrop-filter: blur(8px);
 }
 
@@ -939,8 +939,8 @@
 
 .rankings-table-wrap {
   overflow-x: auto;
-  border: 1px solid rgba(61, 50, 35, 0.9);
-  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid color-mix(in srgb, var(--rank-gold, var(--theme-accent, #c5a161)) 46%, transparent);
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
 }
 
 .rankings-table {
@@ -990,8 +990,8 @@
 
 .rankings-search-field input {
   width: 100%;
-  background: #0a0907;
-  border: 1px solid #3d3223;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 92%, #000);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
   color: #fff;
   padding: 16px 18px 16px 48px;
   font: 300 16px 'Source Sans Pro', sans-serif;
@@ -1018,8 +1018,8 @@
   margin: 12px auto 20px;
   padding: 56px 32px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.72);
-  border: 1px solid #3d3223;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 88%, #000);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
   color: rgba(255, 255, 255, 0.72);
 }
 

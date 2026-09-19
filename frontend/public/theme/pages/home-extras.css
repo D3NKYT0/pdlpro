@@ -35,7 +35,7 @@
 
 .trailer-section {
   background:
-    linear-gradient(180deg, rgba(4, 7, 9, 0.72), rgba(5, 5, 4, 0.92)),
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #040709) 72%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050504) 92%, #000)),
     var(--section-art) center / cover no-repeat;
 }
 
@@ -70,8 +70,8 @@
   max-width: 560px;
   margin: 70px auto 0;
   padding: 56px 32px;
-  background: rgba(0, 0, 0, 0.72);
-  border: 1px solid #3d3223;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 88%, #000);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -91,7 +91,7 @@
 .home-empty a:hover,
 .home-more a:hover {
   color: #fff;
-  text-shadow: 0 0 18px orange;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .clan-podium {
@@ -105,14 +105,16 @@
 .clan-card {
   flex: 1 1 240px;
   max-width: 320px;
-  background: #3d3223;
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 70%, #000);
   padding: 1px;
+  border: 0;
+  border-radius: 0;
   clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
   transition: transform 0.5s, background-color 0.5s;
 }
 
 .clan-card:hover {
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
   transform: translateY(-10px);
 }
 
@@ -120,7 +122,7 @@
   height: 100%;
   min-height: 280px;
   padding: 36px 22px 28px;
-  background: #0a0907;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 92%, #000);
   clip-path: inherit;
   display: flex;
   flex-direction: column;
@@ -131,7 +133,7 @@
 .clan-card.place-1 {
   order: 2;
   transform: translateY(-18px);
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
 }
 
 .clan-card.place-1:hover {
@@ -194,8 +196,8 @@
   max-width: 860px;
   margin: 36px auto 0;
   padding: 8px 0;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(61, 50, 35, 0.9);
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
 }
 
 .clan-board li {
@@ -256,14 +258,16 @@
 }
 
 .ranking-tile {
-  background: #3d3223;
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 70%, #000);
   padding: 1px;
+  border: 0;
+  border-radius: 0;
   clip-path: polygon(0 0, 92% 0, 100% 14%, 100% 100%, 8% 100%, 0 86%);
   color: rgba(255, 255, 255, 0.78);
 }
 
 .ranking-tile:hover {
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
   transform: translateY(-10px);
   color: #fff;
 }
@@ -275,7 +279,7 @@
   justify-content: center;
   gap: 14px;
   min-height: 150px;
-  background: #0a0907;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 92%, #000);
   clip-path: inherit;
 }
 
@@ -286,7 +290,7 @@
 
 .ranking-tile:hover i,
 .ranking-tile:hover strong {
-  text-shadow: 0 0 18px orange;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .ranking-tile strong {
@@ -300,8 +304,8 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 36px;
-  background: rgba(0, 0, 0, 0.62);
-  border: 1px solid #3d3223;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
 }
 
 .server-plaque > div {
@@ -412,7 +416,7 @@
 }
 
 .home-cta-links a:hover {
-  text-shadow: 0 0 20px orange;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
   transform: translateY(-10px);
   filter: brightness(140%);
 }
@@ -422,7 +426,7 @@
   max-width: 980px;
   margin: 56px auto 0;
   padding: 14px;
-  background: #3d3223;
+  background: color-mix(in srgb, var(--theme-surface, #3d3223) 82%, #000);
 }
 
 .trailer-frame::before,
@@ -971,6 +975,12 @@
 }
 
 /* Features: arte original do PDL com guardião em primeiro plano */
+.f.home-features {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #05080a) 22%, transparent) 0%, color-mix(in srgb, var(--theme-bg-deep, #05080a) 10%, transparent) 40%, color-mix(in srgb, var(--theme-bg-deep, #05080a) 62%, transparent) 100%),
+    var(--theme-art-bg-2, url(/theme/default/images/bg/2.jpg)) top center / cover no-repeat;
+}
+
 .home-features .f-title {
   position: relative;
   z-index: 12;
@@ -990,7 +1000,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 52%, rgba(196, 151, 65, 0.16), transparent 34%);
+  background: radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--theme-accent, #d4a24a) 16%, transparent), transparent 34%);
 }
 
 .home-features .character img {
@@ -998,11 +1008,25 @@
   max-height: 690px;
   object-fit: contain;
   object-position: center bottom;
-  filter: drop-shadow(0 22px 36px rgba(0, 0, 0, 0.86)) drop-shadow(0 0 18px rgba(174, 128, 48, 0.18));
+  filter:
+    drop-shadow(0 22px 36px rgba(0, 0, 0, 0.86))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--theme-accent, #d4a24a) 18%, transparent));
 }
 
 .home-features .f-list {
   margin-top: 72px;
+}
+
+.home-features .f-list a {
+  background-color: color-mix(in srgb, var(--theme-surface, #0c1214) 88%, #000);
+}
+
+.home-features .f-list a:hover {
+  background-color: color-mix(in srgb, var(--theme-accent, #d4a24a) 38%, var(--theme-bg-deep, #05080a));
+}
+
+.home-features .f-list a:hover div span p {
+  text-shadow: 0 0 20px color-mix(in srgb, var(--theme-accent-bright, #ffe09e) 72%, transparent);
 }
 
 .home-features .f-list a div {
@@ -1016,8 +1040,8 @@
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(8, 6, 4, 0.28) 0%, rgba(8, 6, 4, 0.55) 42%, rgba(0, 0, 0, 0.92) 100%),
-    linear-gradient(90deg, rgba(8, 6, 4, 0.22), transparent 35%, transparent 65%, rgba(8, 6, 4, 0.22));
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #05080a) 28%, transparent) 0%, color-mix(in srgb, var(--theme-bg-deep, #05080a) 55%, transparent) 42%, rgba(0, 0, 0, 0.92) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-bg-deep, #05080a) 22%, transparent), transparent 35%, transparent 65%, color-mix(in srgb, var(--theme-bg-deep, #05080a) 22%, transparent));
   pointer-events: none;
 }
 
@@ -1048,7 +1072,7 @@
 }
 
 .home-features .f-list a:hover div span em {
-  color: rgba(255, 220, 150, 0.95);
+  color: color-mix(in srgb, var(--theme-accent-bright, #ffe09e) 92%, #fff);
 }
 
 /* Wiki + crônica: fundo e cards com identidade de Aden */

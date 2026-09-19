@@ -24,6 +24,7 @@ const info = readFileSync(resolve(themeRoot, 'pages/info-page.css'), 'utf8')
 const rankings = readFileSync(resolve(themeRoot, 'pages/rankings-page.css'), 'utf8')
 const extras = readFileSync(resolve(themeRoot, 'pages/extras.css'), 'utf8')
 const homeExtras = readFileSync(resolve(themeRoot, 'pages/home-extras.css'), 'utf8')
+const carousel = readFileSync(resolve(themeRoot, 'public/css/index-carousel.css'), 'utf8')
 const emblem = readFileSync(resolve(themeRoot, 'default/css/main.css'), 'utf8')
 const globalCss = readFileSync(resolve(__dirname, '../styles/global.css'), 'utf8')
 const loaderCss = readFileSync(resolve(__dirname, '../../public/bootstrap-loader.css'), 'utf8')
@@ -111,6 +112,15 @@ it('Info, Rankings, extras e o loader usam tokens em vez de ouro/default cravado
   expect(info).not.toMatch(/background:\s*linear-gradient\(135deg, #efd18e/)
   expect(info).not.toMatch(/color:\s*#c8a65f/)
   expect(info).not.toMatch(/color:\s*#e8c777/)
+  expect(info).toMatch(/\.info-hero-glow\s*\{[\s\S]*?var\(--info-gold/)
+  expect(info).toMatch(/--info-panel:\s*color-mix\(in srgb, var\(--theme-bg-deep/)
+  expect(info).toMatch(/\.info-hero-card\s*\{[\s\S]*?var\(--theme-surface/)
+  expect(info).not.toMatch(/rgba\(\s*191\s*,\s*121\s*,\s*39/)
+  expect(info).not.toMatch(/rgba\(\s*20\s*,\s*16\s*,\s*11/)
+  expect(info).not.toMatch(/rgba\(\s*28\s*,\s*22\s*,\s*14/)
+  expect(info).not.toMatch(/#3d3223/)
+  expect(rankings).toMatch(/\.rankings-hero-glow\s*\{[\s\S]*?var\(--rank-gold/)
+  expect(rankings).not.toMatch(/rgba\(\s*191\s*,\s*121\s*,\s*39/)
   expect(rankings).not.toMatch(/color:\s*#e8c777/)
   expect(rankings).toContain('--rank-gold: var(--theme-accent')
   expect(rankings).toContain('var(--theme-art-bg-3')
@@ -120,12 +130,54 @@ it('Info, Rankings, extras e o loader usam tokens em vez de ouro/default cravado
   expect(homeExtras).toMatch(/\.w\.home-wiki\s*\{[\s\S]*?overflow:\s*visible/)
   expect(homeExtras).toMatch(/\.w\.home-wiki \.w-list \.wiki[\s\S]*?clip-path:\s*none/)
   expect(homeExtras).toMatch(/\.w\.home-wiki \.w-list \.wiki[\s\S]*?min-height:\s*320px/)
+  expect(homeExtras).toMatch(
+    /\.f\.home-features\s*\{[\s\S]*?var\(--theme-art-bg-2/,
+  )
+  expect(homeExtras).not.toMatch(/\.f\.home-features\s*\{[\s\S]*?url\(\.\.\/images\/bg\/2\.jpg\)/)
+  expect(homeExtras).toMatch(
+    /\.home-features \.f-list a\s*\{[\s\S]*?background-color:\s*color-mix\(in srgb, var\(--theme-surface/,
+  )
+  expect(homeExtras).toMatch(
+    /\.home-features \.f-list a div::before[\s\S]*?var\(--theme-bg-deep/,
+  )
+  expect(homeExtras).not.toMatch(/\.home-features \.f-list a div::before\s*\{[^}]*rgba\(\s*8\s*,\s*6\s*,\s*4/)
+  expect(homeExtras).not.toMatch(/rgba\(\s*196\s*,\s*151\s*,\s*65/)
+  expect(homeExtras).not.toMatch(/rgba\(\s*174\s*,\s*128\s*,\s*48/)
+  expect(homeExtras).not.toMatch(/rgba\(\s*255\s*,\s*220\s*,\s*150/)
+  expect(homeExtras).toMatch(/\.clan-card\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(homeExtras).toMatch(/\.clan-board\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(homeExtras).toMatch(/\.ranking-tile\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(homeExtras).not.toMatch(/\.clan-card\s*\{[\s\S]*?background:\s*#3d3223/)
+  expect(homeExtras).not.toMatch(/\.clan-board\s*\{[\s\S]*?rgba\(\s*61\s*,\s*50\s*,\s*35/)
+  expect(homeExtras).not.toMatch(/\.ranking-tile\s*\{[\s\S]*?background:\s*#3d3223/)
+  expect(homeExtras).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
+  expect(carousel).toMatch(/\.apoiadores-banner\s*\{[\s\S]*?var\(--theme-bg-deep/)
+  expect(carousel).toMatch(/\.apoiadores-banner\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(carousel).not.toMatch(/#1b160e/)
+  expect(carousel).not.toMatch(/rgba\(\s*28\s*,\s*22\s*,\s*12/)
+  expect(carousel).not.toMatch(/rgba\(\s*10\s*,\s*8\s*,\s*5/)
+  expect(rankings).toMatch(/\.rankings-card\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(rankings).toMatch(/\.rankings-board\s*\{[\s\S]*?var\(--rank-gold/)
+  expect(rankings).not.toMatch(/\.rankings-card\s*\{[\s\S]*?background:\s*#3d3223/)
+  expect(rankings).not.toMatch(/\.rankings-board\s*\{[\s\S]*?rgba\(\s*61\s*,\s*50\s*,\s*35/)
   expect(globalCss).toContain('--theme-button-tab:')
   expect(globalCss).toContain('--theme-art-bg-1:')
   expect(globalCss).toContain('--theme-art-bg-5:')
-  expect(loaderCss).toContain('background: var(--loader-bg, #050403)')
+  expect(loaderCss).toContain("var(--theme-art-bg-5, url('/theme/default/images/bg/5.jpg'))")
   expect(uiCss).toContain('outline: 2px solid var(--theme-accent, var(--gold))')
   expect(uiCss).toContain('.ui-select-trigger::after')
+  expect(uiCss).toMatch(
+    /\.ui-select-trigger\s*\{[\s\S]*?background-color:\s*color-mix\(in srgb, var\(--theme-bg-deep/,
+  )
+  expect(uiCss).toMatch(
+    /\.ui-select-list\s*\{[\s\S]*?background:\s*color-mix\(in srgb, var\(--theme-surface/,
+  )
+  expect(uiCss).not.toMatch(/background:\s*#12100c/)
+  expect(uiCss).not.toMatch(/background-color:\s*rgba\(\s*6\s*,\s*6\s*,\s*5/)
+  expect(layout).toMatch(
+    /html\.pdl-public \.site-footer\s*\{[\s\S]*?var\(--theme-bg-deep/,
+  )
+  expect(layout).not.toMatch(/html\.pdl-public \.site-footer\s*\{[\s\S]*?rgba\(\s*10\s*,\s*8\s*,\s*6/)
   expect(uiCss).not.toMatch(/stroke='%23C5A161'/)
   expect(uiCss).not.toMatch(/rgba\(\s*210\s*,\s*170\s*,\s*86/)
 })
@@ -153,10 +205,17 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(panel).not.toMatch(/rgba\(\s*137\s*,\s*72\s*,\s*24/)
   expect(panel).toMatch(/html\.pdl-panel \.panel-welcome\s*\{[\s\S]*?var\(--theme-bg-deep/)
   expect(panel).toMatch(/html\.pdl-panel \.account-hero\s*\{[\s\S]*?var\(--theme-bg-deep/)
+  expect(panel).toMatch(/\.theme-package\.is-active\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(panel).toMatch(/\.theme-active-badge\s*\{[\s\S]*?var\(--theme-accent-bright/)
+  expect(panel).not.toMatch(/\.theme-package\.is-active\s*\{[\s\S]*?rgba\(\s*126\s*,\s*170\s*,\s*131/)
+  expect(panel).not.toMatch(/\.theme-active-badge\s*\{[\s\S]*?#9ac49f/)
   expect(globalCss).toContain("@import url('/bootstrap-loader.css')")
+  expect(loaderCss).toMatch(/\.global-loader::after,\s*#app-bootstrap-loader::after\s*\{[\s\S]*?width:\s*440px/)
+  expect(loaderCss).toMatch(/\.global-loader__crest\s*\{[\s\S]*?width:\s*138px/)
+  expect(loaderCss).toMatch(/\.global-loader__wordmark\s*\{[\s\S]*?min\(250px/)
   expect(loaderCss).toMatch(/\.global-loader__progress i\s*\{[\s\S]*?var\(--loader-mark-bright/)
-  expect(loaderCss).toContain('global-loader__wordmark')
-  expect(loaderCss).toMatch(/\.global-loader__marks\s*\{[\s\S]*?gap:\s*8px/)
+  expect(loaderCss).toMatch(/\.global-loader__crest::before/)
+  expect(loaderCss).not.toContain('global-loader__marks')
   expect(loaderCss).not.toContain('globalLoaderOrbit')
   expect(uiCss).toMatch(/\.ui-select-list::-webkit-scrollbar-thumb\s*\{[\s\S]*?var\(--theme-accent/)
 })
@@ -180,11 +239,26 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
     /html\[data-pdl-theme="cruma"\] \.launch-gate \.btn\.ui-button:hover[\s\S]*?var\(--launch-ember-bright\)/,
   )
   expect(crumaCss).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.f\.home-features[\s\S]*?var\(--theme-art-bg-2\)/,
+  )
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.home-features \.f-list a\s*\{[\s\S]*?var\(--theme-surface\)/,
+  )
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.home-features \.f-list a div::before[\s\S]*?var\(--theme-bg-deep\)/,
+  )
 })
 
 it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {
   expect(crumaCss).toMatch(/html\[data-pdl-theme="cruma"\] \.portal-shell \.site-footer\s*\{/)
   expect(crumaCss).not.toMatch(/html\[data-pdl-theme="cruma"\] \.site-footer\s*\{/)
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\]\.pdl-public \.site-footer\s*\{[\s\S]*?var\(--theme-bg-deep\)/,
+  )
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.ui-select-list\s*\{[\s\S]*?var\(--theme-surface\)/,
+  )
   expect(layout).toMatch(/html\.pdl-public \.site-footer-col\s*\{[\s\S]*?text-align:\s*left/)
   expect(layout).toMatch(/html\.pdl-public \.site-footer-col h2\s*\{[\s\S]*?text-align:\s*left/)
 })

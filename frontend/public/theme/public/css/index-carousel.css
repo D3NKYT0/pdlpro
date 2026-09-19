@@ -32,8 +32,12 @@
   width: 100%;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(10, 8, 5, 0.96), rgba(28, 22, 12, 0.92) 50%, rgba(10, 8, 5, 0.96)),
-    #1b160e;
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-bg-deep, #0a0907) 96%, #000),
+      color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, var(--theme-bg-deep, #100e0b)) 50%,
+      color-mix(in srgb, var(--theme-bg-deep, #0a0907) 96%, #000)
+    );
   border-top: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
   padding: 14px 0;

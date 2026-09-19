@@ -45,7 +45,7 @@
       html,
       body {
         margin: 0;
-        background: var(--loader-bg, #050403);
+        background: #050403;
       }
     </style>
   </head>
@@ -53,12 +53,10 @@
     <div id="app-bootstrap-loader" class="global-loader" role="status" aria-label="Carregando a aplicação">
       <div class="global-loader__glow" aria-hidden="true"></div>
       <div class="global-loader__content">
-        <div class="global-loader__marks">
-          <div class="global-loader__crest">
-            <img src="/theme/default/images/pdl-symbol.svg" alt="" />
-          </div>
-          <img class="global-loader__wordmark" src="/theme/default/images/logo.png" alt="" />
+        <div class="global-loader__crest">
+          <img src="/theme/default/images/pdl-symbol.svg" alt="" />
         </div>
+        <img class="global-loader__wordmark" src="/theme/default/images/logo.png" alt="" />
         <span>Preparando sua jornada</span>
         <div class="global-loader__progress" aria-hidden="true"><i></i></div>
       </div>

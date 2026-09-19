@@ -16590,14 +16590,14 @@ html.pdl-panel .theme-list-heading h2 { margin: 3px 0 0; }
 html.pdl-panel .theme-list-heading > span { color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .theme-package-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
 html.pdl-panel .theme-package { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 15px; position: relative; overflow: hidden; }
-html.pdl-panel .theme-package.is-active { border-color: rgba(126,170,131,.46); box-shadow: inset 0 0 32px rgba(80,132,87,.06); }
+html.pdl-panel .theme-package.is-active { border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent); box-shadow: inset 0 0 32px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent); }
 html.pdl-panel .theme-package-icon { display: grid; place-items: center; width: 48px; height: 48px; color: var(--panel-gold-bright); border: 1px solid var(--panel-border); background: var(--panel-gold-soft); }
 html.pdl-panel .theme-package-icon svg { width: 22px; }
 html.pdl-panel .theme-package-copy h3 { margin: 3px 0 7px; font-size: 20px; }
 html.pdl-panel .theme-package-copy p { min-height: 38px; margin: 0 0 7px; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .theme-package-copy small { color: rgba(255,255,255,.42); }
 html.pdl-panel .theme-package-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent); }
-html.pdl-panel .theme-active-badge { display: inline-flex; align-items: center; gap: 6px; color: #9ac49f; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+html.pdl-panel .theme-active-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 html.pdl-panel .theme-active-badge svg { width: 16px; }
 @media (max-width: 900px) {
   html.pdl-panel .theme-installer-layout { grid-template-columns: 1fr; }

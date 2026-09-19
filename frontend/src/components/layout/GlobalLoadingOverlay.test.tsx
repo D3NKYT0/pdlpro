@@ -46,9 +46,10 @@ it('mostra o texto de loading em português', () => {
   mount()
   expect(screen.getByRole('status', { name: 'Carregando a página' })).toBeVisible()
   expect(screen.getByText('Preparando sua jornada')).toBeVisible()
-  expect(document.querySelector('.global-loader__marks')).toBeTruthy()
-  expect(document.querySelector('.global-loader__wordmark')).toBeTruthy()
+  expect(document.querySelector('.global-loader__crest')).toBeTruthy()
+  expect(document.querySelector('.global-loader__wordmark')).toHaveAttribute('src', '/theme/logo.png')
   expect(document.querySelector('.global-loader__progress')).toBeTruthy()
+  expect(document.querySelector('.global-loader__marks')).toBeNull()
 })
 
 it('no primeiro boot não empilha o overlay React em cima do splash HTML', () => {

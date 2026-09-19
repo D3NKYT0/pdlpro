@@ -1,4 +1,4 @@
-/* Splash HTML e overlay de rota: o mesmo chrome (emblema, wordmark, barra, losango). */
+/* Splash HTML e overlay de rota: o layout clássico com losango. */
 .global-loader,
 #app-bootstrap-loader {
   --loader-mark: var(--loader-accent, var(--theme-accent, #d4ad62));
@@ -11,9 +11,11 @@
   overflow: hidden;
   opacity: 1;
   visibility: visible;
-  color: var(--loader-mark);
+  color: var(--loader-mark, #d6b66f);
   font-family: "Outfit", "Source Sans Pro", sans-serif;
-  background: var(--loader-bg, #050403);
+  background:
+    linear-gradient(rgba(5, 4, 3, 0.94), rgba(5, 4, 3, 0.98)),
+    var(--theme-art-bg-5, url('/theme/default/images/bg/5.jpg')) center / cover no-repeat;
   transition: opacity 420ms ease, visibility 420ms ease, transform 420ms ease;
   isolation: isolate;
 }
@@ -30,19 +32,19 @@
 .global-loader::before,
 #app-bootstrap-loader::before {
   inset: 0;
-  opacity: 0.07;
+  opacity: 0.09;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--loader-mark) 22%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--loader-mark) 22%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--loader-mark) 24%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--loader-mark) 24%, transparent) 1px, transparent 1px);
   background-size: 78px 78px;
   mask-image: radial-gradient(circle at center, #000, transparent 72%);
 }
 
 .global-loader::after,
 #app-bootstrap-loader::after {
-  width: min(440px, 78vw);
-  height: min(440px, 78vw);
-  border: 1px solid color-mix(in srgb, var(--loader-mark) 14%, transparent);
+  width: 440px;
+  height: 440px;
+  border: 1px solid color-mix(in srgb, var(--loader-mark) 12%, transparent);
   transform: rotate(45deg);
 }
 
@@ -67,7 +69,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--loader-mark) 14%, transparent),
+    color-mix(in srgb, var(--loader-mark) 15%, transparent),
     color-mix(in srgb, var(--loader-mark) 4%, transparent) 38%,
     transparent 70%
   );
@@ -84,17 +86,10 @@
   text-align: center;
 }
 
-.global-loader__marks {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
 .global-loader__crest {
   position: relative;
-  width: 76px;
-  height: 76px;
+  width: 138px;
+  height: 138px;
   display: grid;
   place-items: center;
 }
@@ -103,35 +98,33 @@
 .global-loader__crest::after {
   content: '';
   position: absolute;
-  inset: 0;
-  border: 1px solid color-mix(in srgb, var(--loader-mark) 22%, transparent);
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, var(--loader-mark) 18%, transparent);
   transform: rotate(45deg);
 }
 
 .global-loader__crest::after {
-  inset: 10px;
-  border-color: color-mix(in srgb, var(--loader-mark) 12%, transparent);
+  inset: 22px;
+  border-color: color-mix(in srgb, var(--loader-mark) 10%, transparent);
   animation: globalLoaderDiamond 2.4s ease-in-out infinite;
-}
-
-.global-loader__crest img,
-.global-loader__wordmark {
-  object-fit: contain;
-  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--loader-mark) 32%, transparent));
 }
 
 .global-loader__crest img {
   position: relative;
   z-index: 1;
-  width: 48px;
-  height: 48px;
+  width: 126px;
+  height: 126px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--loader-mark) 32%, transparent));
   animation: globalLoaderMark 2.6s ease-in-out infinite;
 }
 
 .global-loader__wordmark {
-  width: auto;
-  height: 48px;
-  max-width: min(240px, 64vw);
+  width: min(250px, 70vw);
+  height: auto;
+  object-fit: contain;
+  margin-top: 14px;
+  filter: sepia(0.18) brightness(1.08);
 }
 
 .global-loader__content > span {
@@ -140,7 +133,7 @@
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-top: 22px;
+  margin-top: 24px;
 }
 
 .global-loader__progress {

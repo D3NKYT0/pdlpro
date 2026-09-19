@@ -46,12 +46,12 @@ html.pdl-public .site-footer {
     margin-top: 0;
     padding: 0;
     text-align: left;
-    color: #d8cebc;
+    color: var(--theme-text, #d8cebc);
     background:
-        linear-gradient(180deg, rgba(10, 8, 6, 0.98), rgba(5, 4, 3, 0.99)),
+        linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #0a0806) 98%, #000), color-mix(in srgb, var(--theme-bg-deep, #050403) 99%, #000)),
         radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent), transparent 42%);
     border-top: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
-    box-shadow: inset 0 1px 0 rgba(255, 236, 190, 0.04);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--theme-accent-bright, #ffe09e) 8%, transparent);
 }
 
 html.pdl-public .site-footer-shell {
@@ -96,7 +96,7 @@ html.pdl-public .site-footer-brand-copy strong {
     font-size: 1.35rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    color: #f3e6c8;
+    color: var(--theme-text, #f3e6c8);
 }
 
 html.pdl-public .site-footer-brand-copy small {
@@ -112,7 +112,7 @@ html.pdl-public .site-footer-brand > p {
     font-size: 0.95rem;
     line-height: 1.65;
     font-weight: 300;
-    color: rgba(216, 206, 188, 0.78);
+    color: color-mix(in srgb, var(--theme-muted, #d8cebc) 78%, transparent);
 }
 
 html.pdl-public .site-footer-actions {
@@ -128,7 +128,7 @@ html.pdl-public .site-footer-actions a {
     min-height: 40px;
     padding: 0 16px;
     border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
-    color: #f0e2c2;
+    color: var(--theme-text, #f0e2c2);
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -138,7 +138,7 @@ html.pdl-public .site-footer-actions a {
 }
 
 html.pdl-public .site-footer-actions a:hover {
-    color: #fff6df;
+    color: var(--theme-accent-bright, #fff6df);
     border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 55%, transparent);
     background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, transparent);
     transform: translateY(-1px);
@@ -215,7 +215,7 @@ html.pdl-public .site-footer-col ul li.active a {
 html.pdl-public .site-footer-col a:hover,
 html.pdl-public .site-footer-col ul li:hover a,
 html.pdl-public .site-footer-col ul li.active a {
-    color: #f6e7c4;
+    color: var(--theme-accent-bright, #f6e7c4);
     text-shadow: none;
     filter: none;
 }
@@ -238,7 +238,7 @@ html.pdl-public .site-footer-bar p {
     margin: 0;
     font-size: 0.82rem;
     font-weight: 300;
-    color: rgba(176, 164, 142, 0.72);
+    color: color-mix(in srgb, var(--theme-muted, #b0a48e) 72%, transparent);
 }
 
 html.pdl-public .site-footer-locale {
@@ -608,13 +608,13 @@ html.pdl-public .site-nav-language .ui-select-trigger {
     min-height: 40px;
     padding: 0 34px 0 12px;
     border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
-    background-color: rgba(17, 14, 10, 0.72);
+    background-color: color-mix(in srgb, var(--theme-bg-deep, #110e0a) 72%, transparent);
     color: var(--theme-accent-bright, #ead092);
     font-size: 0.8rem;
 }
 
 html.pdl-public .site-footer-locale .language-switcher .ui-select-trigger {
-    color: rgba(232, 223, 205, 0.9);
+    color: color-mix(in srgb, var(--theme-text, #e8dfcd) 90%, transparent);
 }
 
 html.pdl-public .site-nav-actions .user {

@@ -98,15 +98,23 @@ function readThemeColor(name: string, fallback: string) {
 }
 
 export function captureLoaderChrome(themeId: string): LoaderChrome {
+  const id = THEME_ID.test(themeId) ? themeId : DEFAULT_LOADER_CHROME.id
+  const pinDefaultAccent = id === DEFAULT_LOADER_CHROME.id
   const symbol = themeImage('pdl-symbol.svg')
   const logo = themeImage('logo.png')
   return {
-    id: THEME_ID.test(themeId) ? themeId : DEFAULT_LOADER_CHROME.id,
+    id,
     symbol: isLoaderSymbol(symbol) ? symbol : DEFAULT_LOADER_CHROME.symbol,
     logo: isLoaderSymbol(logo) ? logo : DEFAULT_LOADER_CHROME.logo,
-    accent: readThemeColor('--theme-accent', DEFAULT_LOADER_CHROME.accent),
-    accentBright: readThemeColor('--theme-accent-bright', DEFAULT_LOADER_CHROME.accentBright),
-    background: readThemeColor('--theme-bg-deep', DEFAULT_LOADER_CHROME.background),
+    accent: pinDefaultAccent
+      ? DEFAULT_LOADER_CHROME.accent
+      : readThemeColor('--theme-accent', DEFAULT_LOADER_CHROME.accent),
+    accentBright: pinDefaultAccent
+      ? DEFAULT_LOADER_CHROME.accentBright
+      : readThemeColor('--theme-accent-bright', DEFAULT_LOADER_CHROME.accentBright),
+    background: pinDefaultAccent
+      ? DEFAULT_LOADER_CHROME.background
+      : readThemeColor('--theme-bg-deep', DEFAULT_LOADER_CHROME.background),
   }
 }
 

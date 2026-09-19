@@ -43,7 +43,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
   border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 27%, transparent);
   border-radius: 2px;
   outline: none;
-  background-color: rgba(6, 6, 5, 0.7);
+  background-color: color-mix(in srgb, var(--theme-bg-deep, #060605) 70%, transparent);
   background-image: none;
   color: var(--theme-text, #fff);
   font: inherit;
@@ -66,8 +66,8 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 .ui-select-trigger:hover { border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent); }
 .ui-select-trigger:focus-visible,
 .ui-select-trigger[aria-expanded="true"] {
-  border-color: var(--panel-gold, #c5a161);
-  background-color: rgba(8, 7, 5, 0.9);
+  border-color: var(--theme-accent, var(--panel-gold, #c5a161));
+  background-color: color-mix(in srgb, var(--theme-bg-deep, #080705) 90%, #000);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 9%, transparent);
 }
 .ui-select-list {
@@ -77,7 +77,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
   overflow: auto;
   border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 42%, transparent);
   border-radius: 2px;
-  background: #12100c;
+  background: color-mix(in srgb, var(--theme-surface, #12141a) 92%, #000);
   box-shadow: 0 12px 28px #000a, inset 0 0 0 1px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent);
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent) transparent;
@@ -91,19 +91,19 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 .ui-select-list [role="option"] {
   padding: 10px 12px;
   border-radius: 2px;
-  color: #f5efe3;
+  color: var(--theme-text, #f5efe3);
   cursor: pointer;
 }
 .ui-select-list [role="option"].is-active {
   background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
-  color: #f3d79a;
+  color: var(--theme-accent-bright, #f3d79a);
 }
 .ui-select-list [role="option"][aria-selected="true"] {
   color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
 }
 .ui-select-list [role="option"][aria-selected="true"].is-active {
   background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 38%, transparent);
-  color: #f8e2a8;
+  color: var(--theme-text, #f8e2a8);
 }
 .ui-page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .ui-page-header > div { min-width: 0; }

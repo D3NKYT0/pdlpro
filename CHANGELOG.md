@@ -8,9 +8,14 @@ vazar o `text-align: center` do portal); chrome estrutural segue o
 acento do tema ativo; cartas do painel, hall e `body` sem fundo marrom
 clássico; heróis do admin com `data-theme-part` e `--theme-art-bg-*`;
 card de Guias da home sem `clip-path` nem altura que corte a lista; um
-splash só no primeiro boot no mesmo chrome do overlay (emblema,
-wordmark e barra); Coming Soon sem residual marrom (incluindo o glow
-do Entrar), com névoa no rodapé e a party na mesma escala; guias de
+splash só no primeiro boot no layout clássico com losango;
+selo ATIVO do catálogo de temas no ouro/acento do pacote (sem verde
+sálvia no Classic); pódio e lista de clãs da home sem moldura marrom
+clássica; faixa de Apoiadores sem fundo parchment;
+Informações/Rankings sem glow âmbar nem véu parchment;
+Coming Soon sem residual marrom (incluindo o glow
+do Entrar), com névoa no rodapé e a party na mesma escala; cards da
+home (Crônica/Castelos/Fama) sem moldura marrom clássica; guias de
 instalação em passos
 (latest, HTTPS, admin, FTP e atualização).
 Publicado: **[2.5.3]** —

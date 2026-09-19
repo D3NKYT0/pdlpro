@@ -164,12 +164,10 @@ export function GlobalLoadingOverlay() {
     >
       <div className="global-loader__glow" aria-hidden="true" />
       <div className="global-loader__content">
-        <div className="global-loader__marks">
-          <div className="global-loader__crest">
-            <PdlSymbol />
-          </div>
-          <img className="global-loader__wordmark" src={themeImage('logo.png')} alt={t('brand')} />
+        <div className="global-loader__crest">
+          <PdlSymbol />
         </div>
+        <img className="global-loader__wordmark" src={themeImage('logo.png')} alt={t('brand')} />
         <span>{t('preparingJourney')}</span>
         <div className="global-loader__progress" aria-hidden="true">
           <i />
