@@ -100,7 +100,7 @@
 
 .auth-password-toggle:hover {
   color: #fff;
-  text-shadow: 0 0 10px orange;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .auth-check {
@@ -151,7 +151,7 @@
 
 .h.auth-hero .h-link button:hover,
 .h.auth-hero .h-link a:hover {
-  text-shadow: 0 0 20px orange;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
   transform: translateY(-6px);
   filter: brightness(140%);
 }
@@ -171,7 +171,7 @@
 
 .auth-extra a:hover {
   color: #fff;
-  text-shadow: 0 0 10px orange;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .auth-captcha {
@@ -314,7 +314,7 @@ html.pdl-public .info-actions .theme-btn-gold:hover,
 html.pdl-public .info-actions .theme-btn-outline:hover,
 html.pdl-public .cta-buttons .theme-btn-gold:hover,
 html.pdl-public .cta-buttons .theme-btn-outline:hover {
-  text-shadow: 0 0 20px orange;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
   transform: translateY(-8px);
   filter: brightness(140%);
 }

@@ -62,6 +62,19 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   (`rgba(191,121,39)`) e os cards/nav usavam parchment. O véu, o
   quadro e as placas leem `--theme-bg-deep` / `--theme-accent`; o
   mesmo glow some de Rankings.
+- Títulos e valores ainda pintavam ouro clássico (`#f0d28c`,
+  `#f0d18b`, `#e6c77d`) em Informações, Rankings, wiki, tops e
+  painel. Esses textos leem `--theme-accent` / `--info-gold` /
+  `--rank-gold` / `--panel-gold-bright`.
+- O hover da FAQ e das listas públicas ainda usava glow `orange`.
+  O brilho e a borda da accordion leem `--theme-accent`; o mesmo
+  vale para auth, cookies e o nav clássico.
+- Os losangos da FAQ (`#725d42`) e as molduras de cookies/legais
+  (`#3d3223`) ainda eram parchment. Também as molduras clássicas
+  da home em `main.css`.
+- No roadmap público, o selo «Em andamento» ainda pintava ouro
+  clássico (`#d9bb70`). O aviso dos programas lê `--theme-warn` e,
+  se o pacote não definir, `--theme-accent`.
 - A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
   clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
   e `--theme-accent`.

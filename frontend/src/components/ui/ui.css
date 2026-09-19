@@ -153,7 +153,7 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
 .ui-modal-header h2 {
   margin: 0;
   min-width: 0;
-  color: var(--panel-gold-bright, #e6c77d);
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-size: 20px;
   font-weight: 500;

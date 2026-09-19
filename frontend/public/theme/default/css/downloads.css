@@ -33,7 +33,7 @@ body {
     width: auto;
 }
 .downloads-logo h1 {
-    color: #e6c77d;
+    color: var(--theme-accent-bright, #e6c77d);
     font-size: 26px;
     margin: 0;
     text-shadow: 0px 0px 10px rgba(230, 199, 125, 0.3);

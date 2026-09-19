@@ -238,7 +238,7 @@ button, input, select { font: inherit; }
 .support-ticket-row.active::before { background: #d5ac58; }
 .support-ticket-row.needs-reply::after { content: ''; position: absolute; width: 7px; height: 7px; right: 12px; top: 42px; border-radius: 50%; background: #e5a647; box-shadow: 0 0 12px rgba(229,166,71,.7); }
 .support-ticket-row-top, .support-ticket-row-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.support-ticket-row-top b { color: #c8a964; font-size: .7rem; letter-spacing: .05em; }
+.support-ticket-row-top b { color: var(--theme-accent, var(--panel-gold, #c5a161)); font-size: .7rem; letter-spacing: .05em; }
 .support-ticket-row small { color: var(--muted); font-size: .7rem; }
 .support-ticket-row > strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .9rem; }
 .support-status { display: inline-flex; align-items: center; width: fit-content; padding: 4px 8px; border-radius: 999px; font-size: .67rem; line-height: 1; font-weight: 800; letter-spacing: .02em; color: #91c5f1; background: rgba(70,130,180,.13); border: 1px solid rgba(109,169,218,.22); white-space: nowrap; }

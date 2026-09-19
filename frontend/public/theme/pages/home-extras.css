@@ -1160,7 +1160,7 @@
 .home-wiki .w-list a.update > div > div span {
   display: inline-block;
   padding: 6px 14px;
-  color: #e8d09a;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 48%, transparent);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent), rgba(8, 6, 4, 0.62));

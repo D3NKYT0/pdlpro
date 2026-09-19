@@ -28,7 +28,7 @@
   padding: 56px 32px;
   text-align: center;
   background: rgba(0, 0, 0, 0.72);
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -44,7 +44,7 @@
 
 .public-empty a:hover {
   color: #fff;
-  text-shadow: 0 0 18px orange;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-diamond {
@@ -60,7 +60,7 @@
   height: 8px;
   flex: 0 0 8px;
   border-width: 2px;
-  border-color: #725d42;
+  border-color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .public-kicker {
@@ -77,7 +77,7 @@
   width: min(560px, 100%);
   margin: 0 auto 40px;
   background: #0a0907;
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   color: #fff;
   padding: 14px 18px;
   font: 300 16px 'Source Sans Pro', sans-serif;
@@ -311,7 +311,7 @@
 }
 
 .stores-page .public-faq-tools[data-store-filter]:not([data-store-filter="all"]) select {
-  border-color: color-mix(in srgb, var(--store-filter-accent) 58%, #3d3223);
+  border-color: color-mix(in srgb, var(--store-filter-accent) 58%, transparent);
   color: var(--store-filter-accent);
 }
 
@@ -326,7 +326,7 @@
 }
 
 .public-tile {
-  background: #3d3223;
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 70%, #000);
   padding: 1px;
   clip-path: polygon(0 0, 94% 0, 100% 10%, 100% 100%, 6% 100%, 0 90%);
   color: rgba(255, 255, 255, 0.78);
@@ -344,7 +344,7 @@
 }
 
 .public-tile:hover {
-  background: #8d775a;
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 86%, #000);
   transform: translateY(-8px);
 }
 
@@ -382,14 +382,14 @@
 .public-tile:hover em,
 .public-tile:hover strong,
 .public-tile:hover .public-tile-action {
-  text-shadow: 0 0 16px orange;
+  text-shadow: 0 0 16px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-rows {
   display: flex;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
 }
 
 .public-rows a,
@@ -420,7 +420,7 @@
 
 .public-rows a:hover h3 {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-rows p {
@@ -431,8 +431,8 @@
 }
 
 .public-accordion {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #3d3223;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
 }
 
 .public-faq-tools {
@@ -456,7 +456,7 @@
   padding: 9px 12px;
   color: #fff;
   background: rgba(0, 0, 0, 0.58);
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
 }
 
 .public-accordion article {
@@ -486,7 +486,7 @@
 .public-accordion button:hover,
 .public-accordion article.is-open button {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-accordion-body {
@@ -552,7 +552,7 @@
   padding: 10px 12px;
   margin: 0 auto 40px;
   background: rgba(10, 8, 6, 0.92);
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
 }
 
 .public-nav a {
@@ -565,14 +565,14 @@
 .public-nav a:hover,
 .public-nav a.is-active {
   color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-prose {
   max-width: 840px;
   margin: 0 auto;
   background: rgba(10, 9, 7, 0.92);
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   padding: 40px 36px;
   text-align: left;
   color: rgba(255, 255, 255, 0.78);
@@ -609,7 +609,7 @@
 .public-prose a:hover,
 .public-body a:hover {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-body h2,
@@ -658,7 +658,7 @@
 
 .public-body th,
 .public-body td {
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   padding: 0.55rem 0.7rem;
   text-align: left;
   vertical-align: top;
@@ -682,7 +682,7 @@
   padding: 0;
   display: grid;
   gap: 0;
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   background: rgba(0, 0, 0, 0.28);
 }
 
@@ -740,7 +740,7 @@ button.linkish {
 
 button.linkish:hover {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-back {
@@ -755,7 +755,7 @@ button.linkish:hover {
 
 .public-back:hover {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .public-meta {

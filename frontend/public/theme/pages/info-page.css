@@ -240,7 +240,7 @@
 
 .info-server-heading strong {
   display: block;
-  color: #f0d28c;
+  color: var(--info-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 30px;
   font-weight: 400;
@@ -452,7 +452,7 @@
 }
 
 .info-story-card h3 {
-  color: #f0ce80;
+  color: var(--info-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 34px;
   font-weight: 400;
@@ -581,7 +581,7 @@
 
 .info-rate-card > strong {
   display: block;
-  color: #f0d18b;
+  color: var(--info-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 38px;
   font-weight: 400;
@@ -621,7 +621,7 @@
 }
 
 .info-enchant article span {
-  color: #e7d6b3;
+  color: var(--info-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 18px;
 }
@@ -634,7 +634,7 @@
 }
 
 .info-enchant article strong {
-  color: #f0d18b;
+  color: var(--info-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 40px;
   font-weight: 400;

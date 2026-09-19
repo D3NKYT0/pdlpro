@@ -14,8 +14,8 @@
   max-width: 1100px;
   margin: 0 auto;
   padding: 1.15rem 1.4rem;
-  border: 1px solid #3d3223;
-  background: rgba(10, 9, 7, 0.96);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0907) 96%, #000);
   color: rgba(255, 255, 255, 0.78);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
 }
@@ -49,7 +49,7 @@
 
 .cookie-banner-copy a:hover {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .cookie-banner-actions {
@@ -112,7 +112,7 @@
   padding: 0;
   display: grid;
   gap: 0;
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   background: rgba(0, 0, 0, 0.35);
 }
 
@@ -164,7 +164,7 @@
 .terms-reacceptance-links {
   margin: 0 0 1rem;
   padding: 0.85rem 0.85rem 0.85rem 1.6rem;
-  border: 1px solid #3d3223;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 32%, transparent);
   background: rgba(0, 0, 0, 0.35);
   list-style: disc;
 }
@@ -179,7 +179,7 @@
 
 .terms-reacceptance-links a:hover {
   color: #fff;
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
 }
 
 .terms-reacceptance-panel .auth-check {

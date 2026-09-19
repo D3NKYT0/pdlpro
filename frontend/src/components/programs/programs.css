@@ -1,7 +1,7 @@
 .program-page {
   --program-ok: var(--theme-success, #9cc89a);
   --program-danger: var(--theme-danger, #e5a293);
-  --program-warn: var(--theme-warn, #d9bb70);
+  --program-warn: var(--theme-warn, var(--theme-accent, #d9bb70));
   color: var(--theme-text, #f7f2e8);
   display: grid;
   gap: 22px;
@@ -76,7 +76,7 @@ html.pdl-panel .program-page .program-switch::after {
   gap: 24px;
   padding: 30px;
   background:
-    linear-gradient(115deg, rgba(169, 125, 45, 0.12), transparent 75%),
+    linear-gradient(115deg, color-mix(in srgb, var(--theme-accent, #d1a44f) 12%, transparent), transparent 75%),
     var(--bg-elevated);
 }
 .program-hero > svg {
@@ -247,7 +247,7 @@ html.pdl-panel .program-hero--editorial p {
 }
 .program-stat {
   padding: 20px 24px;
-  border-left: 2px solid var(--gold-dim);
+  border-left: 2px solid var(--theme-accent, var(--gold-dim));
 }
 .program-stat small {
   display: block;
@@ -291,7 +291,7 @@ html.pdl-panel .program-hero--editorial p {
 .program-form input:focus-visible,
 .program-form select:focus-visible,
 .program-form textarea:focus-visible {
-  outline: 2px solid var(--gold-dim);
+  outline: 2px solid var(--theme-accent, var(--gold-dim));
   outline-offset: 2px;
 }
 .program-form textarea {
@@ -339,8 +339,8 @@ html.pdl-panel .program-hero--editorial p {
 }
 .program-tabs .active {
   color: var(--theme-accent, var(--gold));
-  background: rgba(212, 175, 55, 0.1);
-  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--theme-accent, #d4af37) 10%, transparent);
+  border-color: var(--theme-accent, var(--gold-dim));
 }
 .program-status {
   width: fit-content;
@@ -379,7 +379,7 @@ html.pdl-panel .program-hero--editorial p {
   display: inline-flex;
   gap: 9px;
   align-items: center;
-  background: var(--panel-gold-soft, rgba(212, 175, 55, 0.045));
+  background: var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, #d4af37) 5%, transparent));
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 9px 12px;
@@ -439,7 +439,7 @@ html.pdl-panel .program-hero--editorial p {
   border-bottom: 1px solid var(--border);
 }
 .program-timeline article > svg {
-  color: var(--gold-dim);
+  color: var(--theme-accent, var(--gold-dim));
   margin-top: 4px;
   flex-shrink: 0;
 }
@@ -475,9 +475,9 @@ html.pdl-panel .program-hero--editorial p {
 }
 .program-note {
   padding: 15px 18px;
-  border-left: 2px solid var(--gold-dim);
+  border-left: 2px solid var(--theme-accent, var(--gold-dim));
   color: var(--muted);
-  background: var(--panel-gold-soft, rgba(212, 175, 55, 0.045));
+  background: var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, #d4af37) 5%, transparent));
   font-size: 14px;
 }
 .program-avatar {
@@ -515,8 +515,8 @@ html.pdl-panel .program-hero--editorial p {
   transition: transform 0.15s;
 }
 .program-switch[aria-checked="true"] {
-  background: #57421b;
-  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--theme-accent, #d4af37) 28%, #111);
+  border-color: var(--theme-accent, var(--gold-dim));
 }
 .program-switch[aria-checked="true"] span {
   transform: translateX(18px);
@@ -524,7 +524,7 @@ html.pdl-panel .program-hero--editorial p {
 }
 .program-day.is-today {
   border-color: var(--theme-accent, var(--gold));
-  background: var(--panel-gold-soft, rgba(212, 175, 55, 0.09));
+  background: var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, #d4af37) 9%, transparent));
 }
 .program-day.is-locked {
   opacity: 0.65;

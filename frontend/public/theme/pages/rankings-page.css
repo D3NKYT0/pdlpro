@@ -217,7 +217,7 @@
 
 .rankings-hero-card > strong {
   display: block;
-  color: #f0d28c;
+  color: var(--rank-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 32px;
   font-weight: 400;
@@ -602,7 +602,7 @@
 
 .rankings-world-card > strong {
   display: block;
-  color: #f0d18b;
+  color: var(--rank-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 26px;
   font-weight: 400;
@@ -663,7 +663,7 @@
 }
 
 .rankings-siege-summary dd {
-  color: #f0d18b;
+  color: var(--rank-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 22px;
   margin: 8px 0 0;
@@ -808,7 +808,7 @@
 }
 
 .rankings-castle-body h3 {
-  color: #f0d18b;
+  color: var(--rank-gold);
   font-family: Cambria, Georgia, serif;
   font-size: 30px;
   font-weight: 400;

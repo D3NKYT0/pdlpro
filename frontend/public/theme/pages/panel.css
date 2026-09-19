@@ -2853,7 +2853,7 @@ html.pdl-panel .character-equipment-slot-enchant {
   position: absolute;
   right: 2px;
   bottom: 1px;
-  color: #e8d39a;
+  color: var(--panel-gold-bright);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -3110,7 +3110,7 @@ html.pdl-panel .character-bag-slot-enchant {
   position: absolute;
   right: 3px;
   bottom: 2px;
-  color: #e8d39a;
+  color: var(--panel-gold-bright);
   font-size: 9px;
   font-weight: 700;
   line-height: 1;
@@ -3309,7 +3309,7 @@ html.pdl-panel .character-skills-group-toggle {
   padding: 0 8px 0 4px;
   border: 0;
   background: linear-gradient(180deg, rgba(42, 38, 32, 0.95), rgba(22, 20, 16, 0.95));
-  color: #d7c28a;
+  color: var(--panel-gold);
   font-size: 12px;
   text-align: left;
   cursor: pointer;
@@ -15026,7 +15026,7 @@ html.pdl-panel .security-success svg { width: 19px; }
 html.pdl-panel .security-2fa-start { justify-self: start; }
 html.pdl-panel .security-secret { display: grid; gap: 5px; padding: 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent); background: rgba(5,5,5,.38); }
 html.pdl-panel .security-secret span { color: rgba(239,224,194,.56); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
-html.pdl-panel .security-secret strong { color: #f0d28c; font-family: monospace; overflow-wrap: anywhere; }
+html.pdl-panel .security-secret strong { color: var(--panel-gold-bright); font-family: monospace; overflow-wrap: anywhere; }
 html.pdl-panel .security-secret small { color: rgba(239,224,194,.48); }
 html.pdl-panel .security-2fa-setup { grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 14px 18px; }
 html.pdl-panel .security-2fa-setup:not(:has(.security-2fa-qr)) { grid-template-columns: minmax(0,1fr); }
@@ -15519,7 +15519,7 @@ html.pdl-panel .user-profile-account dt {
 }
 
 html.pdl-panel .user-profile-stat-list strong {
-  color: #f0d28c;
+  color: var(--panel-gold-bright);
   font-size: 18px;
 }
 

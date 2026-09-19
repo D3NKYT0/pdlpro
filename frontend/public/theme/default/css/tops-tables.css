@@ -39,13 +39,13 @@
 
 .tops-empty-state i {
     font-size: 48px;
-    color: #e6c77d;
+    color: var(--theme-accent-bright, #e6c77d);
     margin-bottom: 20px;
     display: block;
 }
 
 .tops-empty-state h3 {
-    color: #e6c77d;
+    color: var(--theme-accent-bright, #e6c77d);
     font-size: 24px;
     margin-bottom: 15px;
     text-shadow: 0px 0px 10px rgba(230, 199, 125, 0.3);
@@ -82,7 +82,7 @@
 }
 
 .tops-table thead th {
-    color: #e6c77d;
+    color: var(--theme-accent-bright, #e6c77d);
     font-weight: 700;
     font-size: 14px;
     text-transform: uppercase;
@@ -353,7 +353,7 @@
 
 /* Nomes dos jogadores */
 .tops-player-name {
-    color: #e6c77d;
+    color: var(--theme-accent-bright, #e6c77d);
     font-weight: 600;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
