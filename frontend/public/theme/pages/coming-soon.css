@@ -668,7 +668,7 @@
 
 .launch-gate .btn.ui-button:hover {
   filter: brightness(135%);
-  text-shadow: 0 0 14px orange;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--launch-ember-bright) 78%, transparent);
   transform: translateY(-1px);
   opacity: 1;
 }
@@ -1112,7 +1112,11 @@
 
 @keyframes launch-cta-pulse {
   0%, 100% { filter: brightness(1); transform: translateY(0); }
-  50% { filter: brightness(1.28); transform: translateY(-2px); text-shadow: 0 0 16px orange; }
+  50% {
+    filter: brightness(1.28);
+    transform: translateY(-2px);
+    text-shadow: 0 0 16px color-mix(in srgb, var(--launch-ember-bright) 80%, transparent);
+  }
 }
 
 @media (max-width: 1200px) {

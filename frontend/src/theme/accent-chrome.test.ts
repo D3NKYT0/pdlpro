@@ -62,6 +62,13 @@ it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => 
   expect(comingSoon).toMatch(/\.launch-gate__mist\s*\{/)
   expect(comingSoon).toMatch(/\.launch-gate__mist-bank[\s\S]*?var\(--launch-deep\)/)
   expect(comingSoon).toMatch(/\.launch-gate__mist-bank[\s\S]*?var\(--launch-ember\)/)
+  expect(comingSoon).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
+  expect(comingSoon).toMatch(
+    /\.launch-gate \.btn\.ui-button:hover\s*\{[\s\S]*?var\(--launch-ember-bright\)/,
+  )
+  expect(comingSoon).toMatch(
+    /@keyframes launch-cta-pulse[\s\S]*?var\(--launch-ember-bright\)/,
+  )
 })
 
 it('o chrome do painel e do auth seguem --panel-gold / --theme-accent', () => {
@@ -166,6 +173,13 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
   expect(crumaCss).toContain('var(--theme-art-bg-3)')
   expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.launch-gate\s*\{[\s\S]*?--launch-panel:\s*color-mix\(in srgb, var\(--theme-surface\)/,
+  )
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\] \.launch-gate \.btn\.ui-button:hover[\s\S]*?var\(--launch-ember-bright\)/,
+  )
+  expect(crumaCss).not.toMatch(/text-shadow:\s*0 0 \d+px orange/)
 })
 
 it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {

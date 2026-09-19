@@ -9,8 +9,9 @@ acento do tema ativo; cartas do painel, hall e `body` sem fundo marrom
 clássico; heróis do admin com `data-theme-part` e `--theme-art-bg-*`;
 card de Guias da home sem `clip-path` nem altura que corte a lista; um
 splash só no primeiro boot no mesmo chrome do overlay (emblema,
-wordmark e barra); Coming Soon sem residual marrom, com névoa no
-rodapé e a party na mesma escala; guias de instalação em passos
+wordmark e barra); Coming Soon sem residual marrom (incluindo o glow
+do Entrar), com névoa no rodapé e a party na mesma escala; guias de
+instalação em passos
 (latest, HTTPS, admin, FTP e atualização).
 Publicado: **[2.5.3]** —
 `./setup.sh nginx` e `./setup.sh ftp` (um comando e um arquivo cada) para o

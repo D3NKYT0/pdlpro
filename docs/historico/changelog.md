@@ -57,7 +57,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - A Coming Soon ganhou névoa no rodapé (acento do tema) e a arte do
   `assault-raider` do Cruma foi refeita em alta, sem o upscale que
   deixava a personagem mole. No assalto, a vanguard fica na frente da
-  raider.
+  raider. O botão Entrar deixou o glow `orange` e pulsa no acento do
+  tema. O `theme.css` do Cruma em media passa a declarar o mesmo glow e
+  o `--launch-panel` da Coming Soon.
 
 ## [2.5.3] - 2026-09-18
 
