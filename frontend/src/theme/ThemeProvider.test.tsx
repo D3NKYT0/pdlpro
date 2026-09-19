@@ -64,6 +64,9 @@ it('injeta knobs de layout como CSS variables', async () => {
       ...valorem.assets,
       'images/button/1.png': '/media/themes/valorem/images/button-a.png',
       'images/button/2.png': '/media/themes/valorem/images/button-b.png',
+      'images/button/3.png': '/media/themes/valorem/images/button-c.png',
+      'images/bg/1.png': '/media/themes/valorem/images/bg-1.png',
+      'images/bg/5.jpg': '/media/themes/valorem/images/bg-5.jpg',
     },
     layout: {
       panel: { sidebarWidth: 300, density: 'compact', radius: 8 },
@@ -71,6 +74,7 @@ it('injeta knobs de layout como CSS variables', async () => {
       surfaces: {
         buttonPrimary: 'images/button/1.png',
         buttonSecondary: 'images/button/2.png',
+        buttonTab: 'images/button/3.png',
       },
     },
   })
@@ -84,6 +88,9 @@ it('injeta knobs de layout como CSS variables', async () => {
   expect(document.documentElement.style.getPropertyValue('--public-header-height')).toBe('64px')
   expect(document.documentElement.style.getPropertyValue('--public-container-width')).toBe('1100px')
   expect(document.documentElement.style.getPropertyValue('--theme-button-primary')).toContain('button-a.png')
+  expect(document.documentElement.style.getPropertyValue('--theme-button-tab')).toContain('button-c.png')
+  expect(document.documentElement.style.getPropertyValue('--theme-art-bg-1')).toContain('bg-1.png')
+  expect(document.documentElement.style.getPropertyValue('--theme-art-bg-5')).toContain('bg-5.jpg')
 })
 
 it('restaura o favicon original ao voltar para o tema default', async () => {

@@ -7,7 +7,7 @@ html.pdl-public nav .close {
 html.pdl-public .theme-panel {
   width: min(1100px, 100%);
   background: rgba(53, 47, 35, 0.95);
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 20%, transparent);
   border-radius: 15px;
   padding: 30px;
   color: #fff;
@@ -17,7 +17,7 @@ html.pdl-public .theme-panel h1 {
   font-size: 36px;
   line-height: 1.15;
   letter-spacing: 0;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
 }
 
 html.pdl-public .theme-page {
@@ -26,20 +26,20 @@ html.pdl-public .theme-page {
 
 html.pdl-public .theme-panel h3,
 html.pdl-public .theme-panel a {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
 }
 
 html.pdl-public .theme-panel article + article {
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 1px solid rgba(230, 199, 125, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 15%, transparent);
 }
 
 html.pdl-public .field input,
 html.pdl-public .field select,
 html.pdl-public .theme-panel input {
   background: #0f0d0a;
-  border: 1px solid rgba(230, 199, 125, 0.25);
+  border: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 25%, transparent);
   color: #fff;
 }
 
@@ -62,7 +62,7 @@ html.pdl-public .tops-content .table th,
 html.pdl-public .tops-content .table td {
   text-align: left;
   padding: 10px 8px;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 15%, transparent);
 }
 
 html.pdl-public .tops-content .btn {
@@ -91,6 +91,6 @@ html.pdl-public .banner-track {
 }
 
 .site-back {
-  color: #d4af37;
+  color: var(--theme-accent, #d4af37);
   font-size: 0.9rem;
 }

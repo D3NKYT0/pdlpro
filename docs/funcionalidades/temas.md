@@ -110,6 +110,7 @@ CSS variables no `html`. Pacotes sem `layout` preservam os defaults atuais.
 | `public.containerWidth` | 720–1600 (px) | `--public-container-width` |
 | `surfaces.buttonPrimary` | caminho lógico em `assets` | `--theme-button-primary` |
 | `surfaces.buttonSecondary` | caminho lógico em `assets` | `--theme-button-secondary` |
+| `surfaces.buttonTab` | caminho lógico em `assets` | `--theme-button-tab` (Download do header; fallback `images/button/3.png`) |
 
 Exemplo:
 
@@ -120,14 +121,15 @@ Exemplo:
     "public": { "headerHeight": 72, "containerWidth": 1200 },
     "surfaces": {
       "buttonPrimary": "images/button/1.png",
-      "buttonSecondary": "images/button/2.png"
+      "buttonSecondary": "images/button/2.png",
+      "buttonTab": "images/button/3.png"
     }
   }
 }
 ```
 
 O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
-de seção (`images/bg/2.jpg` … `bg/4.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
+de seção (`images/bg/1.png` e `images/bg/2.jpg` … `bg/5.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
 `assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`)
 e as artes `images/games/fishing-pond.webp`,
@@ -211,8 +213,10 @@ autenticação, painel e toasts. O identificador do pacote é aplicado como `dat
 
 O CSS de features do painel (ajuda/companheiro, programas do jogador e painéis admin como
 relatórios financeiros, itens customizados e observação de itens) consome tokens `--theme-*` e
-`--panel-*` (texto, muted, accent, surface, border, fundo profundo). Pacotes personalizam essas
-cores via `theme.css`; os fallbacks hex preservam a aparência default quando o token não existe.
+`--panel-*` (texto, muted, accent, surface, border, fundo profundo). As folhas estruturais
+(`coming-soon.css`, `panel.css`, `auth.css`, páginas públicas e chrome compartilhado) pintam
+bordas e glows com `color-mix` desses tokens — o ouro clássico fica só como fallback. Pacotes
+personalizam essas cores via `theme.css`; os fallbacks hex preservam a aparência default quando o token não existe.
 A vitrine pública de lojas usa `--theme-store-sell`, `--theme-store-buy`,
 `--theme-store-package` e `--theme-store-craft` para a cor predominante de cada tipo.
 

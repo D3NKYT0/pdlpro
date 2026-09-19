@@ -49,7 +49,7 @@
 
 .auth-field > span,
 .auth-check {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-weight: 300;
   font-size: 16px;
 }
@@ -57,7 +57,7 @@
 .auth-field input:not([type='checkbox']) {
   width: 100%;
   background: rgba(10, 8, 6, 0.72);
-  border: 1px solid rgba(197, 161, 97, 0.35);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 35%, transparent);
   color: #fff;
   border-radius: 0;
   padding: 14px 16px;
@@ -93,7 +93,7 @@
   transform: translateY(-50%);
   background: none;
   border: 0;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   cursor: pointer;
   padding: 6px;
 }
@@ -112,7 +112,7 @@
 }
 
 .auth-check a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .h.auth-hero .h-link {
@@ -196,7 +196,7 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(197, 161, 97, 0.22);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
 }
 
 .auth-methods {
@@ -214,14 +214,14 @@
   padding: 9px 10px;
   color: rgba(255, 255, 255, 0.84);
   background: rgba(10, 8, 6, 0.72);
-  border: 1px solid rgba(197, 161, 97, 0.3);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 30%, transparent);
   cursor: pointer;
 }
 
 .auth-method:hover:not(:disabled) {
   color: #fff;
-  border-color: #c5a161;
-  background: rgba(197, 161, 97, 0.1);
+  border-color: var(--theme-accent, var(--panel-gold, #c5a161));
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent);
 }
 
 .auth-method:disabled {
@@ -238,7 +238,7 @@
   text-align: center;
 }
 
-.auth-security-note i { color: #c5a161; margin-right: 5px; }
+.auth-security-note i { color: var(--theme-accent, var(--panel-gold, #c5a161)); margin-right: 5px; }
 
 @media (max-width: 980px) {
   .h.auth-hero {

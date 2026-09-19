@@ -52,18 +52,23 @@ it('remapeia folhas estruturais via assets lógicos', () => {
 it('aplica superfícies e densidade a partir do layout do pacote', () => {
   configureRuntimeTheme({
     'images/button/1.png': '/media/themes/demo/btn-a.png',
+    'images/button/3.png': '/media/themes/demo/btn-c.png',
     'images/bg/3.jpg': '/media/themes/demo/art-3.jpg',
+    'images/bg/5.jpg': '/media/themes/demo/art-5.jpg',
   })
   applyThemeSurfaceVars({
     panel: { sidebarWidth: 240, density: 'spacious', radius: 4 },
-    surfaces: { buttonPrimary: 'images/button/1.png' },
+    surfaces: { buttonPrimary: 'images/button/1.png', buttonTab: 'images/button/3.png' },
   })
   const style = document.documentElement.style
   expect(document.documentElement.dataset.panelDensity).toBe('spacious')
   expect(style.getPropertyValue('--panel-sidebar-width')).toBe('240px')
   expect(style.getPropertyValue('--panel-shell-gap')).toBe('36px')
   expect(style.getPropertyValue('--theme-button-primary')).toContain('btn-a.png')
+  expect(style.getPropertyValue('--theme-button-tab')).toContain('btn-c.png')
+  expect(style.getPropertyValue('--theme-art-bg-1')).toContain('bg/1.png')
   expect(style.getPropertyValue('--theme-art-bg-3')).toContain('art-3.jpg')
+  expect(style.getPropertyValue('--theme-art-bg-5')).toContain('art-5.jpg')
   expect(style.getPropertyValue('--theme-art-games-monster')).toContain('games/monster-default.webp')
   expect(style.getPropertyValue('--theme-art-games-monster-drake')).toContain('games/monster-drake.webp')
   expect(style.getPropertyValue('--theme-art-games-monster-death-knight')).toContain(

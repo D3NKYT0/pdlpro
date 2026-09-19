@@ -49,8 +49,8 @@ html.pdl-public .site-footer {
     color: #d8cebc;
     background:
         linear-gradient(180deg, rgba(10, 8, 6, 0.98), rgba(5, 4, 3, 0.99)),
-        radial-gradient(circle at 12% 0%, rgba(197, 161, 97, 0.1), transparent 42%);
-    border-top: 1px solid rgba(197, 161, 97, 0.2);
+        radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent), transparent 42%);
+    border-top: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
     box-shadow: inset 0 1px 0 rgba(255, 236, 190, 0.04);
 }
 
@@ -82,7 +82,7 @@ html.pdl-public .site-footer-mark {
     width: 54px;
     height: 54px;
     object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(197, 161, 97, 0.22));
+    filter: drop-shadow(0 0 12px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent));
 }
 
 html.pdl-public .site-footer-brand-copy {
@@ -103,7 +103,7 @@ html.pdl-public .site-footer-brand-copy small {
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #c5a161;
+    color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 html.pdl-public .site-footer-brand > p {
@@ -127,26 +127,26 @@ html.pdl-public .site-footer-actions a {
     justify-content: center;
     min-height: 40px;
     padding: 0 16px;
-    border: 1px solid rgba(197, 161, 97, 0.28);
+    border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
     color: #f0e2c2;
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     text-decoration: none;
-    background: rgba(197, 161, 97, 0.08);
+    background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent);
     transition: color .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
 }
 
 html.pdl-public .site-footer-actions a:hover {
     color: #fff6df;
-    border-color: rgba(216, 178, 98, 0.55);
-    background: rgba(197, 161, 97, 0.16);
+    border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 55%, transparent);
+    background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, transparent);
     transform: translateY(-1px);
 }
 
 html.pdl-public .site-footer-actions .site-footer-download {
-    background: linear-gradient(180deg, rgba(197, 161, 97, 0.28), rgba(197, 161, 97, 0.12));
-    border-color: rgba(216, 178, 98, 0.48);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent), color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent));
+    border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 48%, transparent);
 }
 
 html.pdl-public .site-footer-col h2 {
@@ -156,7 +156,7 @@ html.pdl-public .site-footer-col h2 {
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #c5a161;
+    color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 html.pdl-public .site-footer-col ul {
@@ -216,7 +216,7 @@ html.pdl-public .site-footer-col ul li.active a {
 }
 
 html.pdl-public .site-footer-bar {
-    border-top: 1px solid rgba(197, 161, 97, 0.14);
+    border-top: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 14%, transparent);
     background: rgba(0, 0, 0, 0.35);
 }
 
@@ -242,7 +242,7 @@ html.pdl-public .site-footer-locale {
     gap: 8px;
     min-height: 34px;
     padding: 0 12px;
-    border: 1px solid rgba(197, 161, 97, 0.18);
+    border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent);
     background: rgba(20, 16, 12, 0.72);
     color: rgba(232, 223, 205, 0.82);
     font-size: 0.8rem;
@@ -451,8 +451,8 @@ html.pdl-public .site-nav {
     height: 82px;
     background:
         linear-gradient(180deg, rgba(12, 10, 7, 0.96), rgba(5, 5, 4, 0.92)),
-        radial-gradient(circle at 14% 0%, rgba(197, 161, 97, 0.12), transparent 34%);
-    border-bottom: 1px solid rgba(197, 161, 97, 0.18);
+        radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent), transparent 34%);
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent);
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
     backdrop-filter: blur(14px) saturate(115%);
     transition: height .25s ease, background-color .25s ease, box-shadow .25s ease;
@@ -481,7 +481,7 @@ html.pdl-public .site-nav-brand {
     gap: 10px;
     flex: 0 0 auto;
     padding-right: 20px;
-    border-right: 1px solid rgba(197, 161, 97, 0.18);
+    border-right: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent);
 }
 
 html.pdl-public .site-nav .site-brand-mark {
@@ -492,7 +492,7 @@ html.pdl-public .site-nav .site-brand-mark {
 }
 
 html.pdl-public .site-nav-brand:hover .site-brand-mark {
-    filter: drop-shadow(0 0 14px rgba(226, 189, 112, 0.48));
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 48%, transparent));
     transform: translateY(-1px);
 }
 
@@ -503,7 +503,7 @@ html.pdl-public .site-brand-copy {
 }
 
 html.pdl-public .site-brand-copy strong {
-    color: #ead092;
+    color: var(--theme-accent-bright, #ead092);
     font-family: 'Cinzel', serif;
     font-size: 13px;
     letter-spacing: .16em;
@@ -569,8 +569,8 @@ html.pdl-public .site-nav-drawer ul li a::after {
     bottom: 0;
     left: 12px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #d9b665, transparent);
-    box-shadow: 0 0 12px rgba(217, 182, 101, .48);
+    background: linear-gradient(90deg, transparent, var(--theme-accent, #d9b665), transparent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 48%, transparent);
     opacity: 0;
     transform: scaleX(.35);
     transition: opacity .2s ease, transform .2s ease;
@@ -579,8 +579,8 @@ html.pdl-public .site-nav-drawer ul li a::after {
 html.pdl-public .site-nav-drawer ul li:hover a,
 html.pdl-public .site-nav-drawer ul li.active a {
     color: #f4e5c3;
-    background: linear-gradient(180deg, transparent 34%, rgba(197, 161, 97, .08));
-    text-shadow: 0 0 14px rgba(197, 161, 97, .24);
+    background: linear-gradient(180deg, transparent 34%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent));
+    text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 24%, transparent);
 }
 
 html.pdl-public .site-nav-drawer ul li:hover a::after,
@@ -602,9 +602,9 @@ html.pdl-public .site-nav-language .ui-select-trigger {
     height: 40px;
     min-height: 40px;
     padding: 0 34px 0 12px;
-    border-color: rgba(197, 161, 97, 0.22);
+    border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
     background-color: rgba(17, 14, 10, 0.72);
-    color: #ead092;
+    color: var(--theme-accent-bright, #ead092);
     font-size: 0.8rem;
 }
 
@@ -617,7 +617,7 @@ html.pdl-public .site-nav-actions .user {
     margin: 0;
     padding: 0 22px;
     gap: 10px;
-    border: 1px solid rgba(197, 161, 97, .18);
+    border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent);
     background:
         linear-gradient(180deg, rgba(255, 255, 255, .025), transparent),
         rgba(17, 14, 10, .58);
@@ -634,16 +634,16 @@ html.pdl-public .site-nav-actions .user svg {
     width: 21px;
     height: 21px;
     margin: 0;
-    color: #caa55f;
+    color: var(--theme-accent, #caa55f);
     stroke-width: 1.45;
-    filter: drop-shadow(0 0 7px rgba(197, 161, 97, .18));
+    filter: drop-shadow(0 0 7px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent));
 }
 
 html.pdl-public .site-nav-actions .user:hover {
-    color: #f5e7c8;
-    border-color: rgba(222, 187, 111, .46);
-    background-color: rgba(197, 161, 97, .08);
-    text-shadow: 0 0 12px rgba(197, 161, 97, .28);
+    color: var(--theme-accent-bright, #f5e7c8);
+    border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 46%, transparent);
+    background-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
     transform: translateY(-1px);
 }
 
@@ -653,8 +653,8 @@ html.pdl-public .site-nav-actions .download {
     margin: 0;
     padding: 0 10px 0 28px;
     border: 0;
-    background: url('/theme/default/images/button/3.png') center / 100% 100% no-repeat;
-    color: rgba(255, 247, 226, .82);
+    background: var(--theme-button-tab, url('/theme/default/images/button/3.png')) center / 100% 100% no-repeat;
+    color: var(--theme-text, rgba(255, 247, 226, .82));
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 17px;
     font-weight: 300;
@@ -666,16 +666,16 @@ html.pdl-public .site-nav-actions .download {
 
 html.pdl-public .site-nav-actions .download:hover {
     color: #fff;
-    text-shadow: 0 0 14px rgba(255, 174, 66, .72);
+    text-shadow: 0 0 14px color-mix(in srgb, var(--theme-accent-bright, #ffae42) 72%, transparent);
     filter: brightness(1.28);
     transform: translateY(-2px);
 }
 
 html.pdl-public .site-nav .open,
 html.pdl-public .site-nav .close {
-    border: 1px solid rgba(197, 161, 97, .24);
-    background: rgba(197, 161, 97, .06) !important;
-    color: #d7b66d;
+    border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 24%, transparent);
+    background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 6%, transparent) !important;
+    color: var(--theme-accent, #d7b66d);
 }
 
 html.pdl-public .site-nav-backdrop {
@@ -720,7 +720,7 @@ html.pdl-public .site-nav-backdrop {
         flex-direction: column;
         align-items: stretch;
         background: linear-gradient(165deg, #17130d, #090806 62%);
-        border-right: 1px solid rgba(197, 161, 97, .3);
+        border-right: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 30%, transparent);
         box-shadow: 28px 0 70px rgba(0, 0, 0, .58);
         transform: translateX(-105%);
         visibility: hidden;
@@ -733,8 +733,8 @@ html.pdl-public .site-nav-backdrop {
         align-items: center;
         gap: 12px;
         padding: 0 2px 20px;
-        border-bottom: 1px solid rgba(197, 161, 97, .16);
-        color: #d8bd82;
+        border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, transparent);
+        color: var(--theme-accent, #d8bd82);
         font-family: 'Cinzel', serif;
         font-size: 11px;
         letter-spacing: .14em;
@@ -779,8 +779,8 @@ html.pdl-public .site-nav-backdrop {
     html.pdl-public .site-nav-drawer ul li a::after { display: none; }
     html.pdl-public .site-nav-drawer ul li:hover a,
     html.pdl-public .site-nav-drawer ul li.active a {
-        border-left-color: #d9b665;
-        background: linear-gradient(90deg, rgba(197, 161, 97, .14), transparent 88%);
+        border-left-color: var(--theme-accent, #d9b665);
+        background: linear-gradient(90deg, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 14%, transparent), transparent 88%);
     }
     html.pdl-public .site-nav-backdrop {
         position: fixed;

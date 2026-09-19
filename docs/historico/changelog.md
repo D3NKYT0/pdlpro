@@ -14,6 +14,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   [implantação](../operacao/implantacao.md) ensinam o fluxo atual em passos:
   latest, `./setup.sh nginx`, administrador, FTP do launcher e atualização no
   mesmo diretório.
+- O chrome estrutural (Coming Soon, painel, auth, header, loader e páginas
+  públicas) passa a usar `--theme-accent` / `--panel-gold` em vez de ouro
+  clássico fixo, para o pacote ativo — inclusive a Cruma — pintar todas as
+  superfícies. O botão Download e os fundos de Info/Rankings leem
+  `--theme-button-tab` e `--theme-art-bg-1` / `--theme-art-bg-5`.
+
+### Corrigido
+
+- Temas com acento ciano/verde deixavam o quadro da Coming Soon e boa parte do
+  painel dourados porque as folhas estruturais ignoravam os tokens.
 
 ## [2.5.3] - 2026-09-18
 

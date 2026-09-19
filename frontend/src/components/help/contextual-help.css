@@ -20,7 +20,7 @@
   border-color: rgba(63, 185, 160, 0.4);
   background:
     radial-gradient(ellipse at 0% 0%, rgba(63, 185, 160, 0.2), transparent 40%),
-    radial-gradient(ellipse at 100% 0%, rgba(212, 162, 74, 0.12), transparent 36%),
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent), transparent 36%),
     linear-gradient(160deg, rgba(16, 40, 37, 0.98), rgba(11, 20, 22, 0.98) 55%, rgba(18, 28, 26, 0.96));
   box-shadow:
     inset 0 1px 0 rgba(238, 246, 242, 0.06),
@@ -136,8 +136,8 @@
 .contextual-help-level small,
 .contextual-help-status {
   color: var(--theme-accent-bright, #f0e0b8);
-  border-color: var(--theme-border, rgba(212, 162, 74, 0.3));
-  background: var(--panel-gold-soft, rgba(212, 162, 74, 0.1));
+  border-color: var(--theme-border, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 30%, transparent));
+  background: var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent));
 }
 
 .contextual-help-level small {
@@ -187,7 +187,7 @@
 }
 
 .contextual-help-guide {
-  border-color: rgba(212, 162, 74, 0.2);
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
   background: rgba(20, 18, 12, 0.35);
   justify-content: center;
   align-items: center;
@@ -211,9 +211,9 @@
 }
 
 .contextual-help-daily {
-  border-color: rgba(212, 162, 74, 0.35);
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 35%, transparent);
   background:
-    radial-gradient(ellipse at 100% 0%, rgba(212, 162, 74, 0.14), transparent 55%),
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 14%, transparent), transparent 55%),
     rgba(20, 18, 12, 0.4);
   padding: 8px 12px;
   min-width: 0;
@@ -237,8 +237,8 @@
   font-style: italic;
   line-height: 1.45;
   border-radius: 8px;
-  border-left: 2px solid rgba(212, 162, 74, 0.45);
-  background: rgba(212, 162, 74, 0.06);
+  border-left: 2px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 6%, transparent);
 }
 
 .contextual-help-daily .contextual-help-tip::before,

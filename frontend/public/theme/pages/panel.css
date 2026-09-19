@@ -1,8 +1,8 @@
 html.pdl-panel {
   --panel-gold: #c5a161;
   --panel-gold-bright: #e6c77d;
-  --panel-gold-soft: rgba(197, 161, 97, 0.14);
-  --panel-border: rgba(230, 199, 125, 0.2);
+  --panel-gold-soft: color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  --panel-border: color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   --panel-surface: rgba(18, 15, 11, 0.93);
   --panel-text: #f7f2e8;
   --panel-muted: rgba(255, 255, 255, 0.58);
@@ -28,9 +28,12 @@ html.pdl-panel {
   --character-slot-icon: 32px;
   --theme-button-primary: url(/theme/default/images/button/1.png);
   --theme-button-secondary: url(/theme/default/images/button/2.png);
+  --theme-button-tab: url(/theme/default/images/button/3.png);
+  --theme-art-bg-1: url(/theme/default/images/bg/1.png);
   --theme-art-bg-2: url(/theme/default/images/bg/2.jpg);
   --theme-art-bg-3: url(/theme/default/images/bg/3.jpg);
   --theme-art-bg-4: url(/theme/default/images/bg/4.jpg);
+  --theme-art-bg-5: url(/theme/default/images/bg/5.jpg);
   --theme-art-wallet-promo: url(/theme/default/images/bg/wallet-promo-banner.png);
   --theme-art-shop-hall: url(/theme/default/images/shop/hall.png);
   --theme-art-shop-crate: url(/theme/default/images/shop/crate.png);
@@ -166,7 +169,7 @@ html.pdl-panel .sidebar {
   border: 1px solid var(--panel-border);
   border-radius: var(--panel-radius);
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.08), transparent 34%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 8%, transparent), transparent 34%),
     var(--panel-surface);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
   backdrop-filter: blur(18px);
@@ -194,7 +197,7 @@ html.pdl-panel .card::before {
   left: 18px;
   height: 1px;
   content: '';
-  background: linear-gradient(90deg, transparent, rgba(230, 199, 125, 0.75), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--panel-gold-bright) 75%, transparent), transparent);
 }
 
 html.pdl-panel .panel-brand {
@@ -203,7 +206,7 @@ html.pdl-panel .panel-brand {
   gap: 12px;
   min-height: 58px;
   padding: 0 7px 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.14);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .panel-brand-mark {
@@ -211,7 +214,7 @@ html.pdl-panel .panel-brand-mark {
   height: 48px;
   object-fit: contain;
   opacity: 0.96;
-  filter: drop-shadow(0 0 12px rgba(197, 161, 97, 0.24));
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--panel-gold) 24%, transparent));
 }
 
 html.pdl-panel .panel-kicker,
@@ -232,7 +235,7 @@ html.pdl-panel .brand {
   font-weight: 300;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 18px rgba(230, 199, 125, 0.2);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
 }
 
 html.pdl-panel .site-back {
@@ -241,7 +244,7 @@ html.pdl-panel .site-back {
   gap: 8px;
   width: fit-content;
   padding: 3px 8px;
-  color: rgba(230, 199, 125, 0.72);
+  color: color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   font-size: 13px;
   font-weight: 400;
   transition: color 180ms ease, transform 180ms ease;
@@ -268,7 +271,7 @@ html.pdl-panel .panel-menu {
   overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: rgba(197, 161, 97, 0.35) transparent;
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 35%, transparent) transparent;
 }
 
 html.pdl-panel .panel-menu a {
@@ -312,15 +315,15 @@ html.pdl-panel .panel-menu a svg {
   flex: 0 0 auto;
   width: 17px;
   height: 17px;
-  color: rgba(197, 161, 97, 0.58);
+  color: color-mix(in srgb, var(--panel-gold) 58%, transparent);
   stroke-width: 1.5;
   transition: color 180ms ease;
 }
 
 html.pdl-panel .panel-menu a:hover,
 html.pdl-panel .panel-menu a.active {
-  border-color: rgba(197, 161, 97, 0.14);
-  background: linear-gradient(90deg, rgba(197, 161, 97, 0.13), rgba(197, 161, 97, 0.025));
+  border-color: color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 13%, transparent), color-mix(in srgb, var(--panel-gold) 2.5%, transparent));
   color: #fff;
   text-shadow: 0 0 10px rgba(255, 166, 0, 0.48);
   transform: none;
@@ -340,9 +343,9 @@ html.pdl-panel .menu-badge {
   min-width: 20px;
   margin-left: auto;
   padding: 3px 6px;
-  border: 1px solid rgba(230, 199, 125, 0.3);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 30%, transparent);
   border-radius: 999px;
-  background: rgba(197, 161, 97, 0.16);
+  background: color-mix(in srgb, var(--panel-gold) 16%, transparent);
   color: var(--panel-gold-bright);
   font-size: 10px;
   line-height: 1;
@@ -357,7 +360,7 @@ html.pdl-panel .panel-user {
   gap: 10px;
   min-width: 0;
   padding: 16px 2px 0;
-  border-top: 1px solid rgba(197, 161, 97, 0.16);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .panel-user-account {
@@ -381,9 +384,9 @@ html.pdl-panel .panel-user-avatar {
   place-items: center;
   overflow: hidden;
   padding: 0;
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   border-radius: 50%;
-  background: rgba(197, 161, 97, 0.08);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold);
   line-height: 0;
 }
@@ -423,9 +426,9 @@ html.pdl-panel .panel-user-copy span {
 html.pdl-panel .panel-user .btn {
   height: 34px;
   padding: 0 9px;
-  border: 1px solid rgba(197, 161, 97, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
   border-radius: 50%;
-  background: rgba(197, 161, 97, 0.06);
+  background: color-mix(in srgb, var(--panel-gold) 6%, transparent);
 }
 
 html.pdl-panel .panel-user .btn svg {
@@ -456,7 +459,7 @@ html.pdl-panel .panel-topbar {
   border: 1px solid var(--panel-border);
   border-radius: var(--panel-radius);
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.08), transparent 34%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 8%, transparent), transparent 34%),
     var(--panel-surface);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
   backdrop-filter: blur(18px);
@@ -555,9 +558,9 @@ html.pdl-panel .card {
   border: 1px solid var(--panel-border);
   border-radius: var(--panel-radius);
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.065), transparent 32%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 6.5%, transparent), transparent 32%),
     linear-gradient(180deg, rgba(31, 26, 19, 0.95), rgba(17, 14, 11, 0.96));
-  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.38), inset 0 0 35px rgba(197, 161, 97, 0.018);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.38), inset 0 0 35px color-mix(in srgb, var(--panel-gold) 1.8%, transparent);
   color: var(--panel-text);
   backdrop-filter: blur(14px);
 }
@@ -567,8 +570,8 @@ html.pdl-panel a.card {
 }
 
 html.pdl-panel a.card:hover {
-  border-color: rgba(230, 199, 125, 0.48);
-  box-shadow: 0 25px 68px rgba(0, 0, 0, 0.5), 0 0 25px rgba(197, 161, 97, 0.06);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
+  box-shadow: 0 25px 68px rgba(0, 0, 0, 0.5), 0 0 25px color-mix(in srgb, var(--panel-gold) 6%, transparent);
   transform: translateY(-3px);
 }
 
@@ -635,7 +638,7 @@ html.pdl-panel .account-hero::after {
   right: 8%;
   width: 230px;
   height: 230px;
-  border: 1px solid rgba(197, 161, 97, 0.09);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
   content: '';
   pointer-events: none;
   transform: rotate(45deg);
@@ -660,7 +663,7 @@ html.pdl-panel .character-avatar {
   object-fit: cover;
   object-position: center center;
   background: rgba(5, 5, 4, 0.7);
-  border: 1px solid rgba(197, 161, 97, 0.38);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 38%, transparent);
   clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
 }
 
@@ -707,7 +710,7 @@ html.pdl-panel .account-slot-summary {
   align-items: center;
   gap: 1px 12px;
   padding: 14px 17px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background: rgba(5, 5, 4, 0.62);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
 }
@@ -717,7 +720,7 @@ html.pdl-panel .account-slot-summary > svg {
   width: 39px;
   height: 39px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.25);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 25%, transparent);
   border-radius: 50%;
   color: var(--panel-gold-bright);
   stroke-width: 1.35;
@@ -747,7 +750,7 @@ html.pdl-panel .account-section-heading {
   gap: 18px;
   margin-bottom: 20px;
   padding-bottom: 17px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .account-section-heading h2 {
@@ -761,8 +764,8 @@ html.pdl-panel .account-login-chip {
   align-items: center;
   gap: 7px;
   padding: 7px 10px;
-  border: 1px solid rgba(230, 199, 125, 0.17);
-  background: rgba(197, 161, 97, 0.05);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 17%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 5%, transparent);
   color: rgba(255, 255, 255, 0.48);
   font-size: 10px;
   letter-spacing: 0.04em;
@@ -787,7 +790,7 @@ html.pdl-panel .account-status-pill.is-conflict {
 }
 
 html.pdl-panel .account-login-chip {
-  border-color: rgba(230, 199, 125, 0.24);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   color: var(--panel-gold-bright);
   text-transform: none;
 }
@@ -804,7 +807,7 @@ html.pdl-panel .account-list-item {
   gap: 12px;
   min-height: 64px;
   padding: 11px 13px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -813,8 +816,8 @@ html.pdl-panel .account-list-icon {
   width: 36px;
   height: 36px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.2);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold-bright);
   transform: rotate(45deg);
 }
@@ -895,7 +898,7 @@ html.pdl-panel .account-created-state.is-conflict > svg {
 html.pdl-panel .account-management .account-action-form {
   margin-top: 24px;
   padding-top: 22px;
-  border-top: 1px solid rgba(197, 161, 97, 0.13);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .account-management .account-action-form h3 {
@@ -918,7 +921,7 @@ html.pdl-panel .account-form-title > svg {
   width: 34px;
   height: 34px;
   padding: 8px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.4;
 }
@@ -961,7 +964,7 @@ html.pdl-panel .account-empty-state {
   justify-content: center;
   gap: 6px;
   padding: 24px;
-  border: 1px dashed rgba(197, 161, 97, 0.16);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 16%, transparent);
   color: var(--panel-muted);
   flex-direction: column;
   text-align: center;
@@ -971,7 +974,7 @@ html.pdl-panel .account-empty-state > svg {
   width: 34px;
   height: 34px;
   margin-bottom: 5px;
-  color: rgba(197, 161, 97, 0.58);
+  color: color-mix(in srgb, var(--panel-gold) 58%, transparent);
   stroke-width: 1.25;
 }
 
@@ -1037,9 +1040,9 @@ html.pdl-panel .admin-hub {
 
 html.pdl-panel .admin-category {
   --admin-tone: var(--panel-gold-bright);
-  --admin-tone-soft: rgba(197, 161, 97, 0.1);
-  --admin-tone-border: rgba(197, 161, 97, 0.22);
-  --admin-tone-glow: rgba(197, 161, 97, 0.08);
+  --admin-tone-soft: color-mix(in srgb, var(--panel-gold) 10%, transparent);
+  --admin-tone-border: color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  --admin-tone-glow: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   padding: 22px 24px;
   border-color: var(--admin-tone-border);
   background:
@@ -1061,10 +1064,10 @@ html.pdl-panel .admin-category[data-tone="support"] {
   --admin-tone-glow: rgba(107, 163, 212, 0.12);
 }
 html.pdl-panel .admin-category[data-tone="system"] {
-  --admin-tone: #d4a24a;
-  --admin-tone-soft: rgba(212, 162, 74, 0.12);
-  --admin-tone-border: rgba(212, 162, 74, 0.3);
-  --admin-tone-glow: rgba(212, 162, 74, 0.12);
+  --admin-tone: var(--panel-gold);
+  --admin-tone-soft: color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  --admin-tone-border: color-mix(in srgb, var(--panel-gold) 30%, transparent);
+  --admin-tone-glow: color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 html.pdl-panel .admin-category[data-tone="reports"] {
   --admin-tone: #5a9fbf;
@@ -1098,9 +1101,9 @@ html.pdl-panel .admin-category[data-tone="server"] {
 }
 html.pdl-panel .admin-category[data-tone="extensions"] {
   --admin-tone: var(--panel-gold-bright, #c5a161);
-  --admin-tone-soft: rgba(197, 161, 97, 0.12);
-  --admin-tone-border: rgba(197, 161, 97, 0.28);
-  --admin-tone-glow: rgba(197, 161, 97, 0.12);
+  --admin-tone-soft: color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  --admin-tone-border: color-mix(in srgb, var(--panel-gold) 28%, transparent);
+  --admin-tone-glow: color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .admin-category .panel-eyebrow {
@@ -1234,11 +1237,11 @@ html.pdl-panel .shop-hero::after {
   bottom: -90px;
   width: 280px;
   height: 280px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
-  box-shadow: inset 0 0 0 28px rgba(197, 161, 97, 0.02), inset 0 0 0 78px rgba(197, 161, 97, 0.02);
+  box-shadow: inset 0 0 0 28px color-mix(in srgb, var(--panel-gold) 2%, transparent), inset 0 0 0 78px color-mix(in srgb, var(--panel-gold) 2%, transparent);
 }
 
 html.pdl-panel .shop-hero-motes,
@@ -1277,7 +1280,7 @@ html.pdl-panel .shop-title-icon {
   height: 42px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.27);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
   background: rgba(8, 7, 5, 0.72);
   color: var(--panel-gold-bright);
   transform: rotate(45deg);
@@ -1437,7 +1440,7 @@ html.pdl-panel .shop-product::after {
 }
 
 html.pdl-panel .shop-product:hover {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   transform: translateY(-2px);
 }
 
@@ -1478,14 +1481,14 @@ html.pdl-panel .shop-history-seal {
   flex: 0 0 auto;
   place-items: center;
   background:
-    radial-gradient(circle at 50% 38%, rgba(230, 199, 125, 0.18), transparent 64%),
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--panel-gold-bright) 18%, transparent), transparent 64%),
     rgba(6, 5, 4, 0.96);
-  border: 1px solid rgba(230, 199, 125, 0.4);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
   border-left: 3px solid var(--panel-gold-bright);
   box-shadow:
     0 10px 24px rgba(0, 0, 0, 0.45),
     inset 0 0 0 1px rgba(255, 232, 170, 0.1),
-    inset 10px 0 18px rgba(230, 199, 125, 0.08);
+    inset 10px 0 18px color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
 }
 
 html.pdl-panel .shop-product-icon::before,
@@ -1702,7 +1705,7 @@ html.pdl-panel .shop-history-item:nth-child(3) { animation-delay: 120ms; }
 html.pdl-panel .shop-history-item:nth-child(4) { animation-delay: 180ms; }
 
 html.pdl-panel .shop-history-item:hover {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
 }
 
 html.pdl-panel .shop-history-item:focus-visible {
@@ -1895,7 +1898,7 @@ html.pdl-panel .shop-history-grants > span {
 
 @keyframes shop-icon-glow {
   0%, 100% { filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.45)); }
-  50% { filter: drop-shadow(0 8px 16px rgba(230, 199, 125, 0.35)); }
+  50% { filter: drop-shadow(0 8px 16px color-mix(in srgb, var(--panel-gold-bright) 35%, transparent)); }
 }
 
 @media (max-width: 1120px) {
@@ -1992,7 +1995,7 @@ html.pdl-panel .admin-service-row {
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .admin-service-row:last-of-type {
@@ -2001,34 +2004,34 @@ html.pdl-panel .admin-service-row:last-of-type {
 
 html.pdl-panel .admin-services-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-services-panel { display: grid; gap: 20px; }
-html.pdl-panel .admin-services-heading { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 14px; padding-bottom: 17px; border-bottom: 1px solid rgba(197,161,97,.15); }
-html.pdl-panel .admin-services-heading > span { display: grid; place-items: center; width: 48px; height: 48px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.28); background: rgba(197,161,97,.07); }
+html.pdl-panel .admin-services-heading { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 14px; padding-bottom: 17px; border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 15%, transparent); }
+html.pdl-panel .admin-services-heading > span { display: grid; place-items: center; width: 48px; height: 48px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-services-heading > span svg { width: 22px; }
 html.pdl-panel .admin-services-heading h2 { margin: 2px 0; }
 html.pdl-panel .admin-services-heading p { margin: 0; color: var(--panel-muted); font-size: 12px; }
-html.pdl-panel .admin-services-summary { display: grid; grid-template-columns: auto auto; align-items: baseline; gap: 7px; min-width: 110px; padding: 11px 13px; border: 1px solid rgba(197,161,97,.18); background: rgba(0,0,0,.18); }
+html.pdl-panel .admin-services-summary { display: grid; grid-template-columns: auto auto; align-items: baseline; gap: 7px; min-width: 110px; padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent); background: rgba(0,0,0,.18); }
 html.pdl-panel .admin-services-summary strong { color: var(--panel-gold-bright); font-size: 25px; }
 html.pdl-panel .admin-services-summary small { color: var(--panel-muted); }
 html.pdl-panel .admin-service-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
-html.pdl-panel .admin-service-card { display: grid; gap: 15px; min-height: 205px; padding: 17px; border: 1px solid rgba(197,161,97,.18); background: linear-gradient(135deg,rgba(197,161,97,.045),rgba(0,0,0,.16)); transition: border-color 180ms ease, opacity 180ms ease; }
-html.pdl-panel .admin-service-card.is-active { border-color: rgba(197,161,97,.3); }
+html.pdl-panel .admin-service-card { display: grid; gap: 15px; min-height: 205px; padding: 17px; border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent); background: linear-gradient(135deg,color-mix(in srgb, var(--panel-gold) 4.5%, transparent),rgba(0,0,0,.16)); transition: border-color 180ms ease, opacity 180ms ease; }
+html.pdl-panel .admin-service-card.is-active { border-color: color-mix(in srgb, var(--panel-gold) 30%, transparent); }
 html.pdl-panel .admin-service-card.is-inactive { opacity: .62; }
 html.pdl-panel .admin-service-card > header { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; }
-html.pdl-panel .admin-service-card > header > span { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.24); background: rgba(197,161,97,.06); }
+html.pdl-panel .admin-service-card > header > span { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: color-mix(in srgb, var(--panel-gold) 6%, transparent); }
 html.pdl-panel .admin-service-card > header svg { width: 19px; }
 html.pdl-panel .admin-service-card h3 { margin: 0 0 3px; font-size: 18px; }
 html.pdl-panel .admin-service-card code { color: rgba(219,185,118,.55); font-size: 10px; letter-spacing: .05em; }
 html.pdl-panel .admin-service-card > header > b { padding: 5px 9px; color: var(--panel-muted); border: 1px solid rgba(255,255,255,.11); border-radius: 999px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 html.pdl-panel .admin-service-card.is-active > header > b { color: #8fd19e; border-color: rgba(111,191,115,.3); background: rgba(111,191,115,.08); }
 html.pdl-panel .admin-service-card > p { margin: 0; color: var(--panel-muted); font-size: 13px; line-height: 1.5; }
-html.pdl-panel .admin-service-controls { display: grid; grid-template-columns: minmax(150px,210px) auto; align-items: end; justify-content: space-between; gap: 15px; margin-top: auto; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.1); }
+html.pdl-panel .admin-service-controls { display: grid; grid-template-columns: minmax(150px,210px) auto; align-items: end; justify-content: space-between; gap: 15px; margin-top: auto; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); }
 html.pdl-panel .admin-service-price { margin: 0; }
 html.pdl-panel .admin-service-price > span { display: grid; grid-template-columns: 42px minmax(0,1fr); margin-top: 7px; }
-html.pdl-panel .admin-service-price > span > b { display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.27); border-right: 0; background: rgba(197,161,97,.08); font-size: 12px; }
+html.pdl-panel .admin-service-price > span > b { display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 27%, transparent); border-right: 0; background: color-mix(in srgb, var(--panel-gold) 8%, transparent); font-size: 12px; }
 html.pdl-panel .admin-service-price input { margin: 0; }
 html.pdl-panel .admin-service-switch { display: flex; align-items: center; gap: 9px; min-height: 45px; color: var(--panel-muted); font-size: 12px; cursor: pointer; }
 html.pdl-panel .admin-service-switch > input[type='checkbox'] { position: absolute; width: 1px; min-height: 1px; height: 1px; padding: 0; opacity: 0; pointer-events: none; }
-html.pdl-panel .admin-service-switch > input:checked + .admin-toggle-control { border-color: rgba(197,161,97,.72); background: rgba(197,161,97,.2); }
+html.pdl-panel .admin-service-switch > input:checked + .admin-toggle-control { border-color: color-mix(in srgb, var(--panel-gold) 72%, transparent); background: color-mix(in srgb, var(--panel-gold) 20%, transparent); }
 html.pdl-panel .admin-service-switch > input:checked + .admin-toggle-control i { background: var(--panel-gold-bright); transform: translateX(21px); box-shadow: 0 0 10px rgba(223,185,107,.42); }
 
 @media (max-width: 950px) {
@@ -2052,8 +2055,8 @@ html.pdl-panel .admin-check {
 html.pdl-panel .admin-server-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-server-columns { display: grid; grid-template-columns: 1.25fr .75fr; gap: 20px; align-items: stretch; }
 html.pdl-panel .admin-config-section { display: grid; align-content: start; gap: 17px; }
-html.pdl-panel .admin-config-section > header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px; padding-bottom: 15px; border-bottom: 1px solid rgba(197,161,97,.14); }
-html.pdl-panel .admin-config-section > header > span { display: grid; place-items: center; width: 44px; height: 44px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.26); background: rgba(197,161,97,.07); }
+html.pdl-panel .admin-config-section > header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px; padding-bottom: 15px; border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); }
+html.pdl-panel .admin-config-section > header > span { display: grid; place-items: center; width: 44px; height: 44px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 26%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-config-section > header svg { width: 20px; }
 html.pdl-panel .admin-config-section h2 { margin: 2px 0; font-size: 22px; }
 html.pdl-panel .admin-config-section header p { margin: 0; color: var(--panel-muted); font-size: 12px; }
@@ -2108,13 +2111,13 @@ html.pdl-panel .admin-launch-fields .field small {
 }
 html.pdl-panel .admin-server-rate-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
 html.pdl-panel .admin-toggle-list { display: grid; gap: 10px; }
-html.pdl-panel .admin-toggle { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 14px; min-height: 68px; padding: 12px 14px; border: 1px solid rgba(197,161,97,.15); background: rgba(0,0,0,.18); cursor: pointer; transition: border-color 180ms ease, background 180ms ease; }
-html.pdl-panel .admin-toggle:hover { border-color: rgba(197,161,97,.34); background: rgba(197,161,97,.035); }
+html.pdl-panel .admin-toggle { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 14px; min-height: 68px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 15%, transparent); background: rgba(0,0,0,.18); cursor: pointer; transition: border-color 180ms ease, background 180ms ease; }
+html.pdl-panel .admin-toggle:hover { border-color: color-mix(in srgb, var(--panel-gold) 34%, transparent); background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent); }
 html.pdl-panel .admin-toggle.is-disabled { opacity: .48; cursor: not-allowed; }
 html.pdl-panel .admin-toggle > input[type='checkbox'] { position: absolute; width: 1px; min-height: 1px; height: 1px; padding: 0; opacity: 0; pointer-events: none; }
-html.pdl-panel .admin-toggle-control { position: relative; display: block; width: 44px; height: 23px; border: 1px solid rgba(197,161,97,.34); border-radius: 999px; background: rgba(0,0,0,.45); transition: background 180ms ease, border-color 180ms ease; }
+html.pdl-panel .admin-toggle-control { position: relative; display: block; width: 44px; height: 23px; border: 1px solid color-mix(in srgb, var(--panel-gold) 34%, transparent); border-radius: 999px; background: rgba(0,0,0,.45); transition: background 180ms ease, border-color 180ms ease; }
 html.pdl-panel .admin-toggle-control i { position: absolute; top: 3px; left: 3px; width: 15px; height: 15px; border-radius: 50%; background: rgba(255,255,255,.42); transition: transform 180ms ease, background 180ms ease; }
-html.pdl-panel .admin-toggle > input:checked + .admin-toggle-control { border-color: rgba(197,161,97,.72); background: rgba(197,161,97,.2); }
+html.pdl-panel .admin-toggle > input:checked + .admin-toggle-control { border-color: color-mix(in srgb, var(--panel-gold) 72%, transparent); background: color-mix(in srgb, var(--panel-gold) 20%, transparent); }
 html.pdl-panel .admin-toggle > input:checked + .admin-toggle-control i { background: var(--panel-gold-bright); transform: translateX(21px); box-shadow: 0 0 10px rgba(223,185,107,.42); }
 html.pdl-panel .admin-toggle > span:nth-of-type(2) { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
 html.pdl-panel .admin-toggle strong { color: var(--panel-text); }
@@ -2143,8 +2146,8 @@ html.pdl-panel .admin-accounts-search {
   gap: 12px;
   margin: 0;
   padding: 16px 18px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
-  background: linear-gradient(180deg, rgba(197, 161, 97, 0.045), rgba(0, 0, 0, 0.22));
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 4.5%, transparent), rgba(0, 0, 0, 0.22));
 }
 
 html.pdl-panel .admin-accounts-search label {
@@ -2177,7 +2180,7 @@ html.pdl-panel .admin-accounts-result-head {
   align-items: center;
   gap: 14px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.14);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .admin-accounts-result-icon {
@@ -2186,8 +2189,8 @@ html.pdl-panel .admin-accounts-result-icon {
   width: 48px;
   height: 48px;
   color: var(--panel-gold-bright);
-  border: 1px solid rgba(197, 161, 97, 0.28);
-  background: rgba(197, 161, 97, 0.07);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 7%, transparent);
 }
 
 html.pdl-panel .admin-accounts-result.is-linked .admin-accounts-result-icon {
@@ -2232,8 +2235,8 @@ html.pdl-panel .admin-accounts-facts article {
   justify-content: space-between;
   gap: 10px;
   padding: 14px 16px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
-  background: linear-gradient(180deg, rgba(197, 161, 97, 0.05), rgba(0, 0, 0, 0.24));
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 5%, transparent), rgba(0, 0, 0, 0.24));
 }
 
 html.pdl-panel .admin-accounts-facts small {
@@ -2356,8 +2359,8 @@ html.pdl-panel .admin-moderation-search {
   gap: 12px;
   margin: 0;
   padding: 16px 18px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
-  background: linear-gradient(180deg, rgba(197, 161, 97, 0.045), rgba(0, 0, 0, 0.22));
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 4.5%, transparent), rgba(0, 0, 0, 0.22));
 }
 html.pdl-panel .admin-moderation-search .field { flex: 1 1 180px; margin: 0; max-width: 320px; }
 html.pdl-panel .admin-moderation-layout {
@@ -2388,8 +2391,8 @@ html.pdl-panel .admin-moderation-row > span {
 }
 html.pdl-panel .admin-moderation-row small { color: var(--panel-muted); font-size: 11px; }
 html.pdl-panel .admin-moderation-list .table tbody tr.is-selected {
-  outline: 1px solid rgba(197, 161, 97, 0.45);
-  background: rgba(197, 161, 97, 0.08);
+  outline: 1px solid color-mix(in srgb, var(--panel-gold) 45%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 html.pdl-panel .admin-moderation-list .badge + .badge { margin-left: 6px; }
 html.pdl-panel .admin-moderation-list .badge.is-warn {
@@ -2409,7 +2412,7 @@ html.pdl-panel .admin-moderation-log li {
   display: grid;
   gap: 2px;
   padding: 10px 12px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(0, 0, 0, 0.16);
 }
 html.pdl-panel .admin-moderation-log span,
@@ -2421,34 +2424,34 @@ html.pdl-panel .admin-coins-form { display: grid; gap: 20px; }
 html.pdl-panel .admin-coin-identity .account-form-fields { align-items: start; }
 html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
 html.pdl-panel .admin-coin-metric { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 13px; margin: 0; padding: 17px; }
-html.pdl-panel .admin-coin-metric-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.25); background: rgba(197,161,97,.07); }
+html.pdl-panel .admin-coin-metric-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 25%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-coin-metric-icon svg { width: 19px; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) b { color: var(--panel-text); font-size: 13px; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) small { color: var(--panel-muted); font-weight: 400; }
 html.pdl-panel .admin-coin-input { display: grid; grid-column: 1 / -1; grid-template-columns: 42px minmax(0,1fr); }
-html.pdl-panel .admin-coin-input > b { display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.27); border-right: 0; background: rgba(197,161,97,.08); font-size: 14px; }
+html.pdl-panel .admin-coin-input > b { display: grid; place-items: center; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 27%, transparent); border-right: 0; background: color-mix(in srgb, var(--panel-gold) 8%, transparent); font-size: 14px; }
 html.pdl-panel .admin-coin-input input { margin: 0; }
 
 html.pdl-panel .admin-games-panel { display: grid; gap: 20px; }
 html.pdl-panel .admin-game-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 13px; }
-html.pdl-panel .admin-game-card { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: start; gap: 13px; min-height: 178px; padding: 17px; border: 1px solid rgba(197,161,97,.17); background: linear-gradient(135deg,rgba(197,161,97,.045),rgba(0,0,0,.16)); transition: opacity 180ms ease, border-color 180ms ease, transform 180ms ease; }
-html.pdl-panel .admin-game-card:hover { border-color: rgba(197,161,97,.34); transform: translateY(-1px); }
+html.pdl-panel .admin-game-card { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: start; gap: 13px; min-height: 178px; padding: 17px; border: 1px solid color-mix(in srgb, var(--panel-gold) 17%, transparent); background: linear-gradient(135deg,color-mix(in srgb, var(--panel-gold) 4.5%, transparent),rgba(0,0,0,.16)); transition: opacity 180ms ease, border-color 180ms ease, transform 180ms ease; }
+html.pdl-panel .admin-game-card:hover { border-color: color-mix(in srgb, var(--panel-gold) 34%, transparent); transform: translateY(-1px); }
 html.pdl-panel .admin-game-card.is-inactive { opacity: .58; }
-html.pdl-panel .admin-game-card.is-active { border-color: rgba(197,161,97,.3); }
-html.pdl-panel .admin-game-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.24); background: rgba(197,161,97,.06); }
+html.pdl-panel .admin-game-card.is-active { border-color: color-mix(in srgb, var(--panel-gold) 30%, transparent); }
+html.pdl-panel .admin-game-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: color-mix(in srgb, var(--panel-gold) 6%, transparent); }
 html.pdl-panel .admin-game-icon svg { width: 19px; }
 html.pdl-panel .admin-game-card h3 { margin: 0 0 3px; font-size: 18px; }
 html.pdl-panel .admin-game-card code { color: rgba(219,185,118,.55); font-size: 10px; letter-spacing: .05em; }
 html.pdl-panel .admin-game-card p { margin: 11px 0 0; color: var(--panel-muted); font-size: 12px; line-height: 1.5; }
-html.pdl-panel .admin-game-switch { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; color: var(--panel-muted); border-top: 1px solid rgba(197,161,97,.1); font-size: 11px; cursor: pointer; }
+html.pdl-panel .admin-game-switch { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; color: var(--panel-muted); border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); font-size: 11px; cursor: pointer; }
 html.pdl-panel .admin-game-switch > input[type='checkbox'] { position: absolute; width: 1px; min-height: 1px; height: 1px; padding: 0; opacity: 0; pointer-events: none; }
-html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control { border-color: rgba(197,161,97,.72); background: rgba(197,161,97,.2); }
+html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control { border-color: color-mix(in srgb, var(--panel-gold) 72%, transparent); background: color-mix(in srgb, var(--panel-gold) 20%, transparent); }
 html.pdl-panel .admin-game-switch > input:checked + .admin-toggle-control i { background: var(--panel-gold-bright); transform: translateX(21px); box-shadow: 0 0 10px rgba(223,185,107,.42); }
 html.pdl-panel .admin-game-switch > span:last-child { margin-left: auto; color: var(--panel-text); font-weight: 700; }
 html.pdl-panel .admin-game-switch.is-busy { opacity: .55; cursor: wait; }
 html.pdl-panel .admin-games-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
-html.pdl-panel .admin-game-card-actions { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.1); }
+html.pdl-panel .admin-game-card-actions { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent); }
 html.pdl-panel .admin-game-card-actions .admin-game-switch { grid-column: auto; margin-top: 0; padding-top: 0; border-top: 0; flex: 1; min-width: 0; }
 html.pdl-panel .admin-game-configurator { width: min(100%, 760px); max-height: min(90vh, 860px); }
 html.pdl-panel .admin-game-settings { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin: 0 0 16px; }
@@ -2457,7 +2460,7 @@ html.pdl-panel .admin-game-settings > .btn { flex: 0 0 auto; height: 45px; }
 html.pdl-panel .admin-game-config-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
 html.pdl-panel .admin-game-config-hint { margin: 8px 0 0; color: var(--panel-muted); font-size: 13px; }
 html.pdl-panel .admin-game-loot-preview { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
-html.pdl-panel .admin-game-loot-preview li { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid rgba(197,161,97,.18); background: rgba(0,0,0,.18); font-size: 12px; }
+html.pdl-panel .admin-game-loot-preview li { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent); background: rgba(0,0,0,.18); font-size: 12px; }
 
 @media (max-width: 560px) {
   html.pdl-panel .admin-games-toolbar { grid-column: 1 / -1; justify-content: space-between; }
@@ -2466,20 +2469,20 @@ html.pdl-panel .admin-game-loot-preview li { display: flex; align-items: center;
 html.pdl-panel .admin-news-editor { display: grid; grid-template-columns: minmax(0,1fr) 330px; align-items: start; gap: 20px; }
 html.pdl-panel .admin-news-editor textarea { min-height: 205px; line-height: 1.6; }
 html.pdl-panel .admin-news-publish { position: sticky; top: 24px; display: grid; gap: 16px; }
-html.pdl-panel .admin-news-publish > header { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(197,161,97,.14); }
-html.pdl-panel .admin-news-publish > header > span { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.25); background: rgba(197,161,97,.07); }
+html.pdl-panel .admin-news-publish > header { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); }
+html.pdl-panel .admin-news-publish > header > span { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 25%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-news-publish > header svg { width: 19px; }
 html.pdl-panel .admin-news-publish h2 { margin: 2px 0 0; font-size: 20px; }
 html.pdl-panel .admin-news-publish .admin-toggle { grid-template-columns: auto minmax(0,1fr); }
 html.pdl-panel .admin-news-publish .admin-toggle > b { grid-column: 2; justify-self: start; }
-html.pdl-panel .admin-news-checklist { display: grid; gap: 8px; padding: 12px; border: 1px solid rgba(197,161,97,.14); background: rgba(0,0,0,.16); }
+html.pdl-panel .admin-news-checklist { display: grid; gap: 8px; padding: 12px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: rgba(0,0,0,.16); }
 html.pdl-panel .admin-news-checklist > span { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 html.pdl-panel .admin-news-checklist small { color: var(--panel-muted); }
 html.pdl-panel .admin-news-checklist b { color: var(--panel-gold-bright); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 html.pdl-panel .admin-news-library { display: grid; gap: 20px; }
 html.pdl-panel .admin-news-list { display: grid; gap: 9px; }
-html.pdl-panel .admin-news-item { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 13px; padding: 13px 14px; border: 1px solid rgba(197,161,97,.14); background: rgba(0,0,0,.15); }
-html.pdl-panel .admin-news-item > span { display: grid; place-items: center; width: 38px; height: 38px; color: var(--panel-gold-bright); border: 1px solid rgba(197,161,97,.2); background: rgba(197,161,97,.05); }
+html.pdl-panel .admin-news-item { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 13px; padding: 13px 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: rgba(0,0,0,.15); }
+html.pdl-panel .admin-news-item > span { display: grid; place-items: center; width: 38px; height: 38px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent); background: color-mix(in srgb, var(--panel-gold) 5%, transparent); }
 html.pdl-panel .admin-news-item > span svg { width: 17px; }
 html.pdl-panel .admin-news-item > div > div { display: flex; align-items: center; gap: 9px; }
 html.pdl-panel .admin-news-item h3 { margin: 0; font-size: 15px; }
@@ -2521,7 +2524,7 @@ html.pdl-panel .field textarea {
   width: 100%;
   min-height: 92px;
   padding: 11px 12px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(5, 5, 4, 0.42);
   color: inherit;
   resize: vertical;
@@ -2549,7 +2552,7 @@ html.pdl-panel .character-overview-side {
 
 html.pdl-panel .character-stats > div {
   padding: 12px 13px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -2603,8 +2606,8 @@ html.pdl-panel .character-readonly-chip {
   align-items: center;
   gap: 7px;
   padding: 7px 10px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
-  background: rgba(197, 161, 97, 0.055);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 5.5%, transparent);
   color: var(--panel-gold-bright);
   font-size: 10px;
   letter-spacing: 0.05em;
@@ -2623,9 +2626,9 @@ html.pdl-panel .character-equipment-summary {
   gap: 8px;
   margin-bottom: 18px;
   padding: 12px 15px;
-  border: 1px solid rgba(230, 199, 125, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   background:
-    linear-gradient(90deg, rgba(197, 161, 97, 0.1), transparent 45%),
+    linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 45%),
     rgba(5, 5, 4, 0.38);
 }
 
@@ -2669,7 +2672,7 @@ html.pdl-panel .character-paperdoll {
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.55),
     inset 0 0 28px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(230, 199, 125, 0.08);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
 }
 
 html.pdl-panel .character-paperdoll-frame {
@@ -2774,10 +2777,10 @@ html.pdl-panel .character-equipment-slot.is-interactive {
 
 html.pdl-panel .character-equipment-slot.is-interactive:hover .character-equipment-slot-cell,
 html.pdl-panel .character-equipment-slot.is-interactive:focus-visible .character-equipment-slot-cell {
-  border-color: rgba(230, 199, 125, 0.72);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   box-shadow:
-    inset 0 0 14px rgba(197, 161, 97, 0.14),
-    0 0 14px rgba(197, 161, 97, 0.16);
+    inset 0 0 14px color-mix(in srgb, var(--panel-gold) 14%, transparent),
+    0 0 14px color-mix(in srgb, var(--panel-gold) 16%, transparent);
   transform: translateY(-1px);
 }
 
@@ -2809,11 +2812,11 @@ html.pdl-panel .character-equipment-slot-cell {
 html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell {
   border-color: rgba(214, 188, 128, 0.55);
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.14), transparent 58%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 58%),
     rgba(12, 10, 8, 0.88);
   box-shadow:
-    inset 0 0 14px rgba(197, 161, 97, 0.08),
-    0 0 10px rgba(197, 161, 97, 0.06);
+    inset 0 0 14px color-mix(in srgb, var(--panel-gold) 8%, transparent),
+    0 0 10px color-mix(in srgb, var(--panel-gold) 6%, transparent);
 }
 
 html.pdl-panel .character-equipment-slot-cell > svg,
@@ -2884,7 +2887,7 @@ html.pdl-panel .character-equipment-message {
   display: grid;
   min-height: 170px;
   place-items: center;
-  border: 1px dashed rgba(197, 161, 97, 0.16);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 16%, transparent);
   color: var(--panel-muted);
   font-size: 12px;
 }
@@ -2896,7 +2899,7 @@ html.pdl-panel .character-equipment-message.is-error {
 html.pdl-panel .character-equipment-additional {
   margin-top: 18px;
   padding-top: 16px;
-  border-top: 1px solid rgba(197, 161, 97, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .character-equipment-additional > span {
@@ -2920,7 +2923,7 @@ html.pdl-panel .character-equipment-additional button {
   gap: 9px;
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.34);
   color: inherit;
   cursor: pointer;
@@ -2934,9 +2937,9 @@ html.pdl-panel .character-equipment-additional button {
 
 html.pdl-panel .character-equipment-additional button:hover,
 html.pdl-panel .character-equipment-additional button:focus-visible {
-  border-color: rgba(230, 199, 125, 0.48);
-  background: rgba(197, 161, 97, 0.08);
-  box-shadow: 0 0 12px rgba(197, 161, 97, 0.1);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .character-equipment-additional svg {
@@ -2961,14 +2964,14 @@ html.pdl-panel .character-equipment-additional strong {
 }
 
 html.pdl-panel .character-equipment-additional small {
-  color: rgba(230, 199, 125, 0.5);
+  color: color-mix(in srgb, var(--panel-gold-bright) 50%, transparent);
   font-size: 8px;
 }
 
 html.pdl-panel .character-bag {
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 1px solid rgba(197, 161, 97, 0.14);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .character-bag-tabs {
@@ -2991,7 +2994,7 @@ html.pdl-panel .character-bag-tabs button {
   gap: 8px;
   min-height: 42px;
   padding: 0 14px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(5, 5, 4, 0.42);
   color: var(--panel-muted);
   font-size: 12px;
@@ -3006,14 +3009,14 @@ html.pdl-panel .character-bag-tabs button > svg {
 }
 
 html.pdl-panel .character-bag-tabs button:hover {
-  border-color: rgba(197, 161, 97, 0.34);
+  border-color: color-mix(in srgb, var(--panel-gold) 34%, transparent);
   color: rgba(255, 255, 255, 0.78);
 }
 
 html.pdl-panel .character-bag-tabs button.active {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   background:
-    linear-gradient(180deg, rgba(197, 161, 97, 0.14), rgba(197, 161, 97, 0.04)),
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4%, transparent)),
     rgba(10, 8, 6, 0.88);
   color: var(--panel-gold-bright);
 }
@@ -3075,15 +3078,15 @@ html.pdl-panel .character-bag-slot.is-filled {
 html.pdl-panel .character-bag-slot.is-filled:hover,
 html.pdl-panel .character-bag-slot.is-filled:focus-visible {
   z-index: 1;
-  outline: 1px solid rgba(230, 199, 125, 0.62);
+  outline: 1px solid color-mix(in srgb, var(--panel-gold-bright) 62%, transparent);
   outline-offset: -1px;
   background:
-    radial-gradient(circle at 50% 45%, rgba(197, 161, 97, 0.18), transparent 64%),
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--panel-gold) 18%, transparent), transparent 64%),
     #171411;
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.06),
     inset -1px -1px 0 rgba(0, 0, 0, 0.55),
-    0 0 12px rgba(197, 161, 97, 0.14);
+    0 0 12px color-mix(in srgb, var(--panel-gold) 14%, transparent);
   transform: translateY(-1px);
 }
 
@@ -3160,7 +3163,7 @@ html.pdl-panel .character-skills-window {
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.55),
     inset 0 0 28px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(230, 199, 125, 0.08);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
 }
 
 html.pdl-panel .character-skills-window-frame {
@@ -3220,7 +3223,7 @@ html.pdl-panel .character-skills-titlebar {
   justify-content: center;
   min-height: 28px;
   margin: 0 4px 8px;
-  color: #e6c77d;
+  color: var(--panel-gold-bright);
   text-shadow: 0 1px 0 #000;
 }
 
@@ -3270,7 +3273,7 @@ html.pdl-panel .character-skills-tabs button.active {
   background:
     linear-gradient(180deg, #5a4e3a 0%, #3b3328 60%, #2a241c 100%);
   color: #f3e6c4;
-  box-shadow: inset 0 1px 0 rgba(230, 199, 125, 0.22);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
 }
 
 html.pdl-panel .character-skills-body {
@@ -3363,9 +3366,9 @@ html.pdl-panel .character-item-modal-hero {
   align-items: center;
   gap: 14px;
   padding: 12px 14px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background:
-    linear-gradient(90deg, rgba(197, 161, 97, 0.1), transparent 55%),
+    linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 55%),
     rgba(5, 5, 4, 0.42);
 }
 
@@ -3469,7 +3472,7 @@ html.pdl-panel .inventory-character-heading {
   gap: 13px;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .inventory-control-heading > svg,
@@ -3477,8 +3480,8 @@ html.pdl-panel .inventory-character-heading > svg {
   width: 39px;
   height: 39px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
   transform: rotate(45deg);
@@ -3512,7 +3515,7 @@ html.pdl-panel .inventory-withdraw-form {
   gap: 12px;
   margin: 0;
   padding: 18px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.3);
 }
 
@@ -3534,7 +3537,7 @@ html.pdl-panel .inventory-character-pick select {
 html.pdl-panel .inventory-game-items {
   margin-top: 18px;
   padding: 18px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.28);
 }
 
@@ -3574,7 +3577,7 @@ html.pdl-panel .inventory-game-items-summary {
 }
 
 html.pdl-panel .inventory-game-items-summary b {
-  color: rgba(197, 161, 97, 0.5);
+  color: color-mix(in srgb, var(--panel-gold) 50%, transparent);
   font-weight: 400;
 }
 
@@ -3597,7 +3600,7 @@ html.pdl-panel .inventory-game-search > svg {
   left: 13px;
   width: 15px;
   height: 15px;
-  color: rgba(230, 199, 125, 0.58);
+  color: color-mix(in srgb, var(--panel-gold-bright) 58%, transparent);
   pointer-events: none;
 }
 
@@ -3605,7 +3608,7 @@ html.pdl-panel .inventory-game-search input,
 html.pdl-panel .inventory-game-page-size select {
   width: 100%;
   height: 39px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   border-radius: 0;
   outline: 0;
   background: rgba(0, 0, 0, 0.26);
@@ -3639,11 +3642,11 @@ html.pdl-panel .inventory-game-search input:hover,
 html.pdl-panel .inventory-game-page-size select:hover,
 html.pdl-panel .inventory-game-search input:focus,
 html.pdl-panel .inventory-game-page-size select:focus {
-  border-color: rgba(230, 199, 125, 0.38);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
 }
 
 html.pdl-panel .inventory-game-table {
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(0, 0, 0, 0.12);
 }
 
@@ -3658,8 +3661,8 @@ html.pdl-panel .inventory-game-item {
 html.pdl-panel .inventory-game-table-head {
   min-height: 35px;
   padding: 0 12px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
-  background: rgba(197, 161, 97, 0.045);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
   color: rgba(255, 255, 255, 0.36);
   font-size: 9px;
   letter-spacing: 0.1em;
@@ -3673,7 +3676,7 @@ html.pdl-panel .inventory-game-table-body {
 html.pdl-panel .inventory-game-item {
   min-height: 65px;
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.075);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 7.5%, transparent);
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
@@ -3682,8 +3685,8 @@ html.pdl-panel .inventory-game-item:last-child {
 }
 
 html.pdl-panel .inventory-game-item:hover {
-  border-color: rgba(197, 161, 97, 0.16);
-  background: rgba(197, 161, 97, 0.035);
+  border-color: color-mix(in srgb, var(--panel-gold) 16%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .inventory-game-item-main {
@@ -3695,7 +3698,7 @@ html.pdl-panel .inventory-game-item-main {
 }
 
 html.pdl-panel .inventory-game-item-main .l2-item-icon {
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   background: rgba(0, 0, 0, 0.42);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
   image-rendering: auto;
@@ -3781,7 +3784,7 @@ html.pdl-panel .inventory-game-state {
   min-height: 112px;
   place-items: center;
   padding: 18px;
-  border: 1px dashed rgba(197, 161, 97, 0.14);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 14%, transparent);
   color: var(--panel-muted);
   font-size: 11px;
   text-align: center;
@@ -3813,7 +3816,7 @@ html.pdl-panel .inventory-game-pagination button {
   height: 30px;
   padding: 0;
   place-items: center;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(0, 0, 0, 0.24);
   color: rgba(255, 255, 255, 0.52);
   cursor: pointer;
@@ -3824,8 +3827,8 @@ html.pdl-panel .inventory-game-pagination button {
 
 html.pdl-panel .inventory-game-pagination button:hover:not(:disabled),
 html.pdl-panel .inventory-game-pagination button.active {
-  border-color: rgba(230, 199, 125, 0.42);
-  background: rgba(197, 161, 97, 0.12);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 12%, transparent);
   color: var(--panel-gold-bright);
 }
 
@@ -3856,13 +3859,13 @@ html.pdl-panel .inventory-panel-item {
   justify-content: space-between;
   gap: 15px;
   padding: 10px 12px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(5, 5, 4, 0.3);
 }
 
 html.pdl-panel .inventory-panel-item.action-open {
-  border-color: rgba(230, 199, 125, 0.26);
-  background: rgba(197, 161, 97, 0.035);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .inventory-panel-item > span {
@@ -3905,7 +3908,7 @@ html.pdl-panel .inventory-item-action-panel {
   width: 100%;
   margin-top: 4px;
   padding: 17px;
-  border-top: 1px solid rgba(197, 161, 97, 0.14);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(0, 0, 0, 0.22);
 }
 
@@ -3920,7 +3923,7 @@ html.pdl-panel .inventory-item-action-heading > svg {
   width: 34px;
   height: 34px;
   padding: 8px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.4;
 }
@@ -3995,7 +3998,7 @@ html.pdl-panel .inventory-panel-empty {
   display: grid;
   min-height: 88px;
   place-items: center;
-  border: 1px dashed rgba(197, 161, 97, 0.14);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 14%, transparent);
   color: var(--panel-muted);
   font-size: 11px;
 }
@@ -4005,7 +4008,7 @@ html.pdl-panel .inventory-tabs {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
   padding: 6px;
-  border: 1px solid rgba(230, 199, 125, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   background: rgba(10, 9, 7, 0.82);
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
 }
@@ -4042,14 +4045,14 @@ html.pdl-panel .inventory-tabs button::after {
 }
 
 html.pdl-panel .inventory-tabs button:hover {
-  border-color: rgba(197, 161, 97, 0.12);
-  background: rgba(197, 161, 97, 0.045);
+  border-color: color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
   color: rgba(255, 255, 255, 0.82);
 }
 
 html.pdl-panel .inventory-tabs button.active {
-  border-color: rgba(230, 199, 125, 0.26);
-  background: linear-gradient(180deg, rgba(197, 161, 97, 0.14), rgba(197, 161, 97, 0.045));
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4.5%, transparent));
   color: #fff;
 }
 
@@ -4061,7 +4064,7 @@ html.pdl-panel .inventory-tabs button > svg {
   flex: 0 0 auto;
   width: 18px;
   height: 18px;
-  color: rgba(197, 161, 97, 0.62);
+  color: color-mix(in srgb, var(--panel-gold) 62%, transparent);
   stroke-width: 1.45;
 }
 
@@ -4072,7 +4075,7 @@ html.pdl-panel .inventory-tabs button.active > svg {
 html.pdl-panel .inventory-tabs button > b {
   min-width: 21px;
   padding: 3px 6px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold-bright);
   font-size: 9px;
   font-weight: 500;
@@ -4108,7 +4111,7 @@ html.pdl-panel .inventory-bag-heading {
   gap: 18px;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .inventory-bag-title {
@@ -4123,8 +4126,8 @@ html.pdl-panel .inventory-bag-title > svg {
   width: 41px;
   height: 41px;
   padding: 10px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
 }
@@ -4146,8 +4149,8 @@ html.pdl-panel .inventory-bag-summary {
   align-items: flex-end;
   gap: 4px;
   padding: 10px 13px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
-  background: rgba(197, 161, 97, 0.035);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .inventory-bag-summary span {
@@ -4184,14 +4187,14 @@ html.pdl-panel .inventory-bag-item {
   gap: 11px;
   min-width: 0;
   padding: 11px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.035), transparent 52%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 3.5%, transparent), transparent 52%),
     rgba(5, 5, 4, 0.35);
 }
 
 html.pdl-panel .inventory-bag-item .l2-item-icon {
-  border-color: rgba(230, 199, 125, 0.26);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
 }
 
@@ -4234,7 +4237,7 @@ html.pdl-panel .inventory-bag-transfer {
   gap: 13px;
   margin: 0;
   padding-left: 22px;
-  border-left: 1px solid rgba(197, 161, 97, 0.12);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .inventory-bag-transfer-heading {
@@ -4247,7 +4250,7 @@ html.pdl-panel .inventory-bag-transfer-heading > svg {
   width: 34px;
   height: 34px;
   padding: 8px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
 }
@@ -4283,7 +4286,7 @@ html.pdl-panel .inventory-bag-empty {
   align-content: center;
   gap: 6px;
   padding: 20px;
-  border: 1px dashed rgba(197, 161, 97, 0.14);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 14%, transparent);
   color: var(--panel-muted);
   font-size: 10px;
   text-align: center;
@@ -4292,7 +4295,7 @@ html.pdl-panel .inventory-bag-empty {
 html.pdl-panel .inventory-bag-empty > svg {
   width: 25px;
   height: 25px;
-  color: rgba(197, 161, 97, 0.42);
+  color: color-mix(in srgb, var(--panel-gold) 42%, transparent);
   stroke-width: 1.35;
 }
 
@@ -4363,7 +4366,7 @@ html.pdl-panel .marketplace-section-heading {
   gap: 16px;
   margin-bottom: 18px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .marketplace-section-heading h2 {
@@ -4383,7 +4386,7 @@ html.pdl-panel .marketplace-section-heading.compact > svg {
   width: 37px;
   height: 37px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
   transform: rotate(45deg);
@@ -4406,7 +4409,7 @@ html.pdl-panel .marketplace-listing-card {
   width: 100%;
   min-width: 0;
   padding: 17px;
-  border: 1px solid rgba(197, 161, 97, 0.13);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
   background: rgba(5, 5, 4, 0.3);
   color: inherit;
   cursor: pointer;
@@ -4417,8 +4420,8 @@ html.pdl-panel .marketplace-listing-card {
 
 html.pdl-panel .marketplace-listing-card:hover,
 html.pdl-panel .marketplace-listing-card.is-owner {
-  border-color: rgba(230, 199, 125, 0.28);
-  background: rgba(197, 161, 97, 0.045);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
 }
 
 html.pdl-panel .marketplace-listing-card:hover {
@@ -4448,8 +4451,8 @@ html.pdl-panel .marketplace-character-emblem {
   width: 43px;
   height: 43px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.22);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold);
   transform: rotate(45deg);
 }
@@ -4485,8 +4488,8 @@ html.pdl-panel .marketplace-detail-identity p {
 html.pdl-panel .marketplace-listing-card-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid rgba(197, 161, 97, 0.09);
-  border-bottom: 1px solid rgba(197, 161, 97, 0.09);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
 }
 
 html.pdl-panel .marketplace-listing-card-stats span {
@@ -4496,7 +4499,7 @@ html.pdl-panel .marketplace-listing-card-stats span {
   justify-content: center;
   gap: 4px;
   padding: 10px 5px;
-  border-right: 1px solid rgba(197, 161, 97, 0.09);
+  border-right: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
   color: var(--panel-muted);
   font-size: 9px;
 }
@@ -4550,9 +4553,9 @@ html.pdl-panel .marketplace-listing-detail {
   gap: 18px;
   margin-bottom: 18px;
   padding: 20px;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.055), transparent 42%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 5.5%, transparent), transparent 42%),
     rgba(4, 4, 3, 0.42);
   box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.22);
 }
@@ -4563,7 +4566,7 @@ html.pdl-panel .marketplace-listing-detail-hero {
   justify-content: space-between;
   gap: 18px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .marketplace-detail-identity h2 {
@@ -4583,7 +4586,7 @@ html.pdl-panel .marketplace-status {
   gap: 5px;
   min-height: 25px;
   padding: 0 9px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   color: rgba(255, 255, 255, 0.6);
   font-size: 9px;
   letter-spacing: 0.04em;
@@ -4621,14 +4624,14 @@ html.pdl-panel .marketplace-detail-close {
   height: 29px;
   padding: 0;
   place-items: center;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(0, 0, 0, 0.2);
   color: var(--panel-muted);
   cursor: pointer;
 }
 
 html.pdl-panel .marketplace-detail-close:hover {
-  border-color: rgba(230, 199, 125, 0.34);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
   color: var(--panel-gold-bright);
 }
 
@@ -4649,7 +4652,7 @@ html.pdl-panel .marketplace-character-preview-stats {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   margin: 0;
-  background: rgba(197, 161, 97, 0.1);
+  background: color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .marketplace-character-stats > div,
@@ -4688,8 +4691,8 @@ html.pdl-panel .marketplace-purchase-summary {
   flex-direction: column;
   gap: 7px;
   padding: 16px;
-  border: 1px solid rgba(197, 161, 97, 0.13);
-  background: rgba(197, 161, 97, 0.035);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .marketplace-purchase-summary > span,
@@ -4723,7 +4726,7 @@ html.pdl-panel .marketplace-detail-copy {
 html.pdl-panel .marketplace-detail-copy > div {
   min-width: 0;
   padding: 13px;
-  border: 1px solid rgba(197, 161, 97, 0.1);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
   background: rgba(0, 0, 0, 0.16);
 }
 
@@ -4748,7 +4751,7 @@ html.pdl-panel .marketplace-detail-section-heading > svg {
   width: 30px;
   height: 30px;
   padding: 7px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold);
 }
 
@@ -4772,13 +4775,13 @@ html.pdl-panel .marketplace-equipment-item {
   gap: 9px;
   min-width: 0;
   padding: 8px;
-  border: 1px solid rgba(197, 161, 97, 0.09);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
   background: rgba(0, 0, 0, 0.18);
 }
 
 html.pdl-panel .marketplace-equipment-item .l2-item-icon,
 html.pdl-panel .marketplace-character-preview-equipment .l2-item-icon {
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   background: rgba(0, 0, 0, 0.34);
 }
 
@@ -4809,7 +4812,7 @@ html.pdl-panel .marketplace-empty {
   display: grid;
   min-height: 82px;
   place-items: center;
-  border: 1px dashed rgba(197, 161, 97, 0.13);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 13%, transparent);
   color: var(--panel-muted);
   font-size: 10px;
   text-align: center;
@@ -4819,7 +4822,7 @@ html.pdl-panel .marketplace-empty svg {
   width: 24px;
   height: 24px;
   margin-bottom: 6px;
-  color: rgba(197, 161, 97, 0.4);
+  color: color-mix(in srgb, var(--panel-gold) 40%, transparent);
 }
 
 html.pdl-panel .marketplace-sell-card form {
@@ -4840,8 +4843,8 @@ html.pdl-panel .marketplace-character-preview {
   display: grid;
   gap: 12px;
   padding: 14px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
-  background: rgba(197, 161, 97, 0.035);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .marketplace-character-preview-head > div:nth-child(2) {
@@ -4923,7 +4926,7 @@ html.pdl-panel .marketplace-sale-row {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   padding: 12px;
-  border: 1px solid rgba(197, 161, 97, 0.1);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
   background: rgba(5, 5, 4, 0.25);
 }
 
@@ -4959,7 +4962,7 @@ html.pdl-panel .marketplace-sale-actions {
   justify-content: flex-end;
   gap: 7px;
   padding-top: 10px;
-  border-top: 1px solid rgba(197, 161, 97, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .marketplace-sale-actions .btn {
@@ -5005,9 +5008,9 @@ html.pdl-panel .auction-listing-card {
   width: 100%;
   min-width: 0;
   padding: 17px;
-  border: 1px solid rgba(197, 161, 97, 0.13);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.035), transparent 45%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 3.5%, transparent), transparent 45%),
     rgba(5, 5, 4, 0.3);
   color: inherit;
   cursor: pointer;
@@ -5018,8 +5021,8 @@ html.pdl-panel .auction-listing-card {
 
 html.pdl-panel .auction-listing-card:hover,
 html.pdl-panel .auction-listing-card.is-owner {
-  border-color: rgba(230, 199, 125, 0.28);
-  background: rgba(197, 161, 97, 0.05);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 5%, transparent);
 }
 
 html.pdl-panel .auction-listing-card:hover {
@@ -5049,12 +5052,12 @@ html.pdl-panel .auction-item-icon {
   width: 52px;
   height: 52px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.09), transparent),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 9%, transparent), transparent),
     rgba(0, 0, 0, 0.32);
   box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.3);
-  color: rgba(230, 199, 125, 0.88);
+  color: color-mix(in srgb, var(--panel-gold-bright) 88%, transparent);
 }
 
 html.pdl-panel .auction-character-layout,
@@ -5069,7 +5072,7 @@ html.pdl-panel .marketplace-character-layout {
 html.pdl-panel .auction-character-equipment,
 html.pdl-panel .marketplace-character-equipment {
   padding: 14px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(5, 5, 4, 0.28);
 }
 
@@ -5188,8 +5191,8 @@ html.pdl-panel .auction-listing-card-head p {
 html.pdl-panel .auction-listing-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid rgba(197, 161, 97, 0.09);
-  border-bottom: 1px solid rgba(197, 161, 97, 0.09);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
 }
 
 html.pdl-panel .auction-listing-stats > span {
@@ -5201,7 +5204,7 @@ html.pdl-panel .auction-listing-stats > span {
   flex-direction: column;
   gap: 3px;
   padding: 8px 5px;
-  border-right: 1px solid rgba(197, 161, 97, 0.09);
+  border-right: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
   color: var(--panel-muted);
   font-size: 8px;
   text-align: center;
@@ -5214,7 +5217,7 @@ html.pdl-panel .auction-listing-stats > span:last-child {
 html.pdl-panel .auction-listing-stats svg {
   width: 12px;
   height: 12px;
-  color: rgba(197, 161, 97, 0.56);
+  color: color-mix(in srgb, var(--panel-gold) 56%, transparent);
   stroke-width: 1.4;
 }
 
@@ -5276,8 +5279,8 @@ html.pdl-panel .auction-item-stats {
 
 html.pdl-panel .auction-ending-card {
   padding: 13px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
-  background: rgba(197, 161, 97, 0.03);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 3%, transparent);
 }
 
 html.pdl-panel .auction-ending-card > svg {
@@ -5285,7 +5288,7 @@ html.pdl-panel .auction-ending-card > svg {
   width: 31px;
   height: 31px;
   padding: 7px;
-  border: 1px solid rgba(230, 199, 125, 0.19);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 19%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
 }
@@ -5321,7 +5324,7 @@ html.pdl-panel .auction-bid-form {
   width: 100%;
   margin-top: 8px;
   padding-top: 13px;
-  border-top: 1px solid rgba(197, 161, 97, 0.11);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
 }
 
 html.pdl-panel .auction-bid-form .field,
@@ -5331,7 +5334,7 @@ html.pdl-panel .auction-create-card .field {
 
 html.pdl-panel .auction-inventory-summary {
   padding: 11px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   background: rgba(0, 0, 0, 0.17);
 }
 
@@ -5340,7 +5343,7 @@ html.pdl-panel .auction-inventory-summary > svg {
   width: 33px;
   height: 33px;
   padding: 8px;
-  border: 1px solid rgba(230, 199, 125, 0.19);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 19%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.35;
 }
@@ -5371,9 +5374,9 @@ html.pdl-panel .auction-selected-item > div:last-child > span:last-child {
 
 html.pdl-panel .auction-selected-item {
   padding: 13px;
-  border: 1px solid rgba(230, 199, 125, 0.23);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 23%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.065), transparent 55%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 6.5%, transparent), transparent 55%),
     rgba(0, 0, 0, 0.2);
 }
 
@@ -5404,7 +5407,7 @@ html.pdl-panel .auction-security-note svg {
 }
 
 html.pdl-panel .auction-history-row .auction-item-icon {
-  border-color: rgba(197, 161, 97, 0.15);
+  border-color: color-mix(in srgb, var(--panel-gold) 15%, transparent);
 }
 
 html.pdl-panel .panel-welcome {
@@ -5442,7 +5445,7 @@ html.pdl-panel .dashboard-hero-avatar {
   height: 96px;
   overflow: hidden;
   object-fit: cover;
-  border: 1px solid rgba(230, 199, 125, 0.38);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
   border-radius: 50%;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
   background: rgba(8, 7, 5, 0.8);
@@ -5563,8 +5566,8 @@ html.pdl-panel .dashboard-summary-icon {
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.22);
-  background: rgba(197, 161, 97, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold);
 }
 
@@ -5683,10 +5686,10 @@ html.pdl-panel .panel-welcome::after {
   right: -80px;
   width: 360px;
   height: 360px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   border-radius: 50%;
   content: '';
-  box-shadow: inset 0 0 0 35px rgba(197, 161, 97, 0.018), inset 0 0 0 95px rgba(197, 161, 97, 0.018);
+  box-shadow: inset 0 0 0 35px color-mix(in srgb, var(--panel-gold) 1.8%, transparent), inset 0 0 0 95px color-mix(in srgb, var(--panel-gold) 1.8%, transparent);
 }
 
 html.pdl-panel .panel-welcome .panel-eyebrow {
@@ -5716,9 +5719,9 @@ html.pdl-panel .status-card > svg {
   width: 38px;
   height: 38px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   border-radius: 50%;
-  background: rgba(197, 161, 97, 0.07);
+  background: color-mix(in srgb, var(--panel-gold) 7%, transparent);
   color: var(--panel-gold);
   stroke-width: 1.4;
 }
@@ -5768,8 +5771,8 @@ html.pdl-panel .shortcut-icon {
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.2);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold);
   transform: rotate(45deg);
 }
@@ -5800,7 +5803,7 @@ html.pdl-panel .shortcut-card p {
 html.pdl-panel .shortcut-arrow {
   width: 17px;
   height: 17px;
-  color: rgba(230, 199, 125, 0.42);
+  color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   transition: color 180ms ease, transform 180ms ease;
 }
 
@@ -5860,7 +5863,7 @@ html.pdl-panel form {
 html.pdl-panel form + form {
   margin-top: 28px;
   padding-top: 25px;
-  border-top: 1px solid rgba(197, 161, 97, 0.14);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .field {
@@ -5882,7 +5885,7 @@ html.pdl-panel textarea {
   width: 100%;
   min-height: 45px;
   padding: 10px 13px;
-  border: 1px solid rgba(197, 161, 97, 0.27);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 27%, transparent);
   border-radius: 2px;
   outline: none;
   background: rgba(6, 6, 5, 0.7);
@@ -5902,7 +5905,7 @@ html.pdl-panel .field select:hover,
 html.pdl-panel input:hover,
 html.pdl-panel select:hover,
 html.pdl-panel textarea:hover {
-  border-color: rgba(197, 161, 97, 0.46);
+  border-color: color-mix(in srgb, var(--panel-gold) 46%, transparent);
 }
 
 html.pdl-panel .field input:focus,
@@ -5912,7 +5915,7 @@ html.pdl-panel select:focus,
 html.pdl-panel textarea:focus {
   border-color: var(--panel-gold);
   background: rgba(8, 7, 5, 0.9);
-  box-shadow: 0 0 0 3px rgba(197, 161, 97, 0.09), 0 0 18px rgba(197, 161, 97, 0.06);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--panel-gold) 9%, transparent), 0 0 18px color-mix(in srgb, var(--panel-gold) 6%, transparent);
 }
 
 html.pdl-panel input::placeholder,
@@ -5930,7 +5933,7 @@ html.pdl-panel .table {
 html.pdl-panel .table th,
 html.pdl-panel .table td {
   padding: 13px 11px;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold-bright) 12%, transparent);
   color: rgba(255, 255, 255, 0.82);
   text-align: left;
 }
@@ -5948,7 +5951,7 @@ html.pdl-panel .table tbody tr {
 }
 
 html.pdl-panel .table tbody tr:hover {
-  background: rgba(197, 161, 97, 0.045);
+  background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
 }
 
 /* Wallet */
@@ -5974,14 +5977,14 @@ html.pdl-panel .wallet-hero::after {
   right: 4.5%;
   width: 280px;
   height: 280px;
-  border: 1px solid rgba(230, 199, 125, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 33px rgba(197, 161, 97, 0.018),
-    inset 0 0 0 82px rgba(197, 161, 97, 0.014),
-    0 0 60px rgba(197, 161, 97, 0.025);
+    inset 0 0 0 33px color-mix(in srgb, var(--panel-gold) 1.8%, transparent),
+    inset 0 0 0 82px color-mix(in srgb, var(--panel-gold) 1.4%, transparent),
+    0 0 60px color-mix(in srgb, var(--panel-gold) 2.5%, transparent);
 }
 
 html.pdl-panel .wallet-hero-copy,
@@ -6007,8 +6010,8 @@ html.pdl-panel .wallet-title-icon {
   height: 42px;
   margin: 13px 13px 7px 2px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.27);
-  background: rgba(197, 161, 97, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold-bright);
   vertical-align: middle;
   transform: rotate(45deg);
@@ -6045,7 +6048,7 @@ html.pdl-panel .wallet-trust-row span {
   align-items: center;
   gap: 7px;
   padding: 7px 10px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background: rgba(5, 5, 4, 0.42);
   color: rgba(255, 255, 255, 0.48);
   font-size: 10px;
@@ -6066,11 +6069,11 @@ html.pdl-panel .wallet-balance-card {
   gap: 12px 15px;
   min-width: 0;
   padding: 23px 24px;
-  border: 1px solid rgba(230, 199, 125, 0.25);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 25%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.13), rgba(5, 5, 4, 0.72) 48%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 13%, transparent), rgba(5, 5, 4, 0.72) 48%),
     rgba(5, 5, 4, 0.72);
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), inset 0 0 28px rgba(197, 161, 97, 0.025);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), inset 0 0 28px color-mix(in srgb, var(--panel-gold) 2.5%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -6084,11 +6087,11 @@ html.pdl-panel .wallet-game-exchange {
   gap: 7px;
   max-width: 160px;
   padding: 10px 12px;
-  border: 1px solid rgba(230, 199, 125, 0.25);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 25%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.13), rgba(5, 5, 4, 0.72) 48%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 13%, transparent), rgba(5, 5, 4, 0.72) 48%),
     rgba(5, 5, 4, 0.72);
-  box-shadow: inset 0 0 18px rgba(197, 161, 97, 0.025);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold) 2.5%, transparent);
   color: var(--panel-gold-bright);
   font-family: Cambria, serif;
   font-size: 11px;
@@ -6101,9 +6104,9 @@ html.pdl-panel .wallet-game-exchange {
 
 html.pdl-panel .wallet-game-exchange:hover,
 html.pdl-panel .wallet-game-exchange:focus-visible {
-  border-color: rgba(230, 199, 125, 0.48);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
   background:
-    linear-gradient(135deg, rgba(197, 161, 97, 0.2), rgba(5, 5, 4, 0.78) 48%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 20%, transparent), rgba(5, 5, 4, 0.78) 48%),
     rgba(5, 5, 4, 0.78);
   color: #fff1c9;
   outline: none;
@@ -6121,7 +6124,7 @@ html.pdl-panel .wallet-balance-card::after {
   position: absolute;
   width: 7px;
   height: 7px;
-  border: 1px solid rgba(230, 199, 125, 0.35);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 35%, transparent);
   content: '';
   transform: rotate(45deg);
 }
@@ -6141,11 +6144,11 @@ html.pdl-panel .wallet-balance-icon {
   width: 52px;
   height: 52px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(197, 161, 97, 0.16), rgba(197, 161, 97, 0.035));
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold) 16%, transparent), color-mix(in srgb, var(--panel-gold) 3.5%, transparent));
   color: var(--panel-gold-bright);
-  box-shadow: 0 0 24px rgba(197, 161, 97, 0.08);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .wallet-balance-icon svg {
@@ -6174,7 +6177,7 @@ html.pdl-panel .wallet-balance-card strong {
 }
 
 html.pdl-panel .wallet-balance-card strong span {
-  color: rgba(230, 199, 125, 0.66);
+  color: color-mix(in srgb, var(--panel-gold-bright) 66%, transparent);
   font-size: 0.45em;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -6187,7 +6190,7 @@ html.pdl-panel .wallet-bonus-chip {
   gap: 8px;
   margin-top: 2px;
   padding-top: 13px;
-  border-top: 1px solid rgba(197, 161, 97, 0.13);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
   color: rgba(255, 255, 255, 0.43);
   font-size: 11px;
 }
@@ -6223,7 +6226,7 @@ html.pdl-panel .wallet-activity-heading {
 html.pdl-panel .wallet-section-heading {
   margin-bottom: 18px;
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .wallet-section-heading > div:nth-child(2),
@@ -6255,8 +6258,8 @@ html.pdl-panel .wallet-section-icon {
   width: 41px;
   height: 41px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.24);
-  background: rgba(197, 161, 97, 0.065);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6.5%, transparent);
   color: var(--panel-gold-bright);
   transform: rotate(45deg);
 }
@@ -6274,7 +6277,7 @@ html.pdl-panel .wallet-currency-switch {
   gap: 3px;
   margin-left: auto;
   padding: 3px;
-  border: 1px solid rgba(197, 161, 97, 0.19);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 19%, transparent);
   background: rgba(4, 4, 3, 0.5);
 }
 
@@ -6309,10 +6312,10 @@ html.pdl-panel .wallet-currency-switch button:hover {
 }
 
 html.pdl-panel .wallet-currency-switch button.is-active {
-  border-color: rgba(230, 199, 125, 0.27);
-  background: linear-gradient(135deg, rgba(197, 161, 97, 0.18), rgba(197, 161, 97, 0.06));
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 18%, transparent), color-mix(in srgb, var(--panel-gold) 6%, transparent));
   color: var(--panel-gold-bright);
-  box-shadow: inset 0 0 18px rgba(197, 161, 97, 0.035);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
 }
 
 html.pdl-panel .wallet-payment-note {
@@ -6365,10 +6368,10 @@ html.pdl-panel .pay-pack {
   flex-direction: column;
   padding: 18px 15px 14px;
   overflow: hidden;
-  border: 1px solid rgba(197, 161, 97, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
   border-radius: 2px;
   background:
-    linear-gradient(155deg, rgba(197, 161, 97, 0.055), transparent 45%),
+    linear-gradient(155deg, color-mix(in srgb, var(--panel-gold) 5.5%, transparent), transparent 45%),
     rgba(6, 6, 5, 0.62);
   color: #fff;
   font: inherit;
@@ -6383,26 +6386,26 @@ html.pdl-panel .pay-pack::after {
   bottom: -53px;
   width: 104px;
   height: 104px;
-  border: 1px solid rgba(230, 199, 125, 0.07);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 7%, transparent);
   content: '';
   pointer-events: none;
   transform: rotate(45deg);
 }
 
 html.pdl-panel .pay-pack.is-featured {
-  border-color: rgba(230, 199, 125, 0.34);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
   background:
-    radial-gradient(circle at 84% 10%, rgba(197, 161, 97, 0.17), transparent 40%),
-    linear-gradient(155deg, rgba(197, 161, 97, 0.1), transparent 53%),
+    radial-gradient(circle at 84% 10%, color-mix(in srgb, var(--panel-gold) 17%, transparent), transparent 40%),
+    linear-gradient(155deg, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 53%),
     rgba(7, 6, 5, 0.76);
 }
 
 html.pdl-panel .pay-pack:hover,
 html.pdl-panel .pay-pack:focus-visible {
   z-index: 1;
-  border-color: rgba(230, 199, 125, 0.7);
-  background: rgba(197, 161, 97, 0.09);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.36), 0 0 22px rgba(197, 161, 97, 0.07);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 9%, transparent);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.36), 0 0 22px color-mix(in srgb, var(--panel-gold) 7%, transparent);
   transform: translateY(-3px);
 }
 
@@ -6420,8 +6423,8 @@ html.pdl-panel .pay-pack-badge {
   margin-bottom: 11px;
   padding: 3px 6px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.19);
-  background: rgba(197, 161, 97, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 19%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold-bright);
   font-size: 8px;
   letter-spacing: 0.06em;
@@ -6462,7 +6465,7 @@ html.pdl-panel .pay-pack-coins svg {
 
 html.pdl-panel .pay-pack > small {
   margin: 3px 0 0 23px;
-  color: rgba(230, 199, 125, 0.52);
+  color: color-mix(in srgb, var(--panel-gold-bright) 52%, transparent);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -6486,8 +6489,8 @@ html.pdl-panel .pay-pack-action {
   width: 100%;
   margin-top: 10px;
   padding-top: 8px;
-  border-top: 1px solid rgba(197, 161, 97, 0.12);
-  color: rgba(230, 199, 125, 0.52);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  color: color-mix(in srgb, var(--panel-gold-bright) 52%, transparent);
   font-size: 9px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -6504,7 +6507,7 @@ html.pdl-panel .wallet-inline-state {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px dashed rgba(197, 161, 97, 0.16);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 16%, transparent);
   color: var(--panel-muted);
   font-size: 11px;
 }
@@ -6521,7 +6524,7 @@ html.pdl-panel .wallet-custom-purchase {
   gap: 24px;
   margin-top: 18px;
   padding: 18px;
-  border: 1px solid rgba(197, 161, 97, 0.15);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 15%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -6533,12 +6536,12 @@ html.pdl-panel .wallet-promo-banner {
   min-height: 320px;
   margin-top: 20px;
   padding: 36px 40px;
-  border: 1px solid rgba(230, 199, 125, 0.38);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
   background: #090807;
   box-shadow:
     0 22px 48px rgba(0, 0, 0, 0.4),
-    inset 0 0 0 1px rgba(230, 199, 125, 0.06),
-    inset 0 0 56px rgba(197, 161, 97, 0.04);
+    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 6%, transparent),
+    inset 0 0 56px color-mix(in srgb, var(--panel-gold) 4%, transparent);
   --promo-mx: 0;
   --promo-my: 0;
 }
@@ -6563,7 +6566,7 @@ html.pdl-panel .wallet-promo-banner-shade {
   z-index: 0;
   background:
     linear-gradient(105deg, rgba(5, 4, 3, 0.72) 0%, rgba(7, 6, 4, 0.48) 36%, rgba(10, 8, 5, 0.18) 62%, transparent 100%),
-    radial-gradient(ellipse at 76% 42%, rgba(230, 199, 125, 0.12), transparent 46%);
+    radial-gradient(ellipse at 76% 42%, color-mix(in srgb, var(--panel-gold-bright) 12%, transparent), transparent 46%);
 }
 
 html.pdl-panel .wallet-promo-banner::before,
@@ -6572,11 +6575,11 @@ html.pdl-panel .wallet-promo-banner::after {
   z-index: 2;
   width: 11px;
   height: 11px;
-  border: 1px solid rgba(230, 199, 125, 0.55);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
   content: '';
   pointer-events: none;
   transform: rotate(45deg);
-  box-shadow: 0 0 12px rgba(230, 199, 125, 0.18);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
 }
 
 html.pdl-panel .wallet-promo-banner::before {
@@ -6603,7 +6606,7 @@ html.pdl-panel .wallet-promo-banner-copy .panel-eyebrow {
   color: var(--panel-gold-bright);
   font-size: 12px;
   letter-spacing: 0.16em;
-  text-shadow: 0 0 18px rgba(230, 199, 125, 0.28);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .wallet-promo-banner-copy strong {
@@ -6631,14 +6634,14 @@ html.pdl-panel .wallet-promo-banner-offer {
   gap: 10px;
   margin-top: 6px;
   padding: 14px 18px 12px;
-  border: 1px solid rgba(230, 199, 125, 0.4);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 40%, transparent);
   background:
-    linear-gradient(160deg, rgba(230, 199, 125, 0.22), rgba(8, 7, 5, 0.72) 58%),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold-bright) 22%, transparent), rgba(8, 7, 5, 0.72) 58%),
     rgba(8, 7, 5, 0.55);
   color: var(--panel-gold-bright);
   box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.35),
-    inset 0 0 22px rgba(197, 161, 97, 0.1);
+    inset 0 0 22px color-mix(in srgb, var(--panel-gold) 10%, transparent);
   backdrop-filter: blur(10px);
 }
 
@@ -6648,7 +6651,7 @@ html.pdl-panel .wallet-promo-banner-offer b {
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.92;
-  text-shadow: 0 0 24px rgba(230, 199, 125, 0.35);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--panel-gold-bright) 35%, transparent);
 }
 
 html.pdl-panel .wallet-promo-banner-offer span {
@@ -6705,7 +6708,7 @@ html.pdl-panel .wallet-checkout .field > span {
 html.pdl-panel .wallet-checkout:not(:empty) {
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 1px solid rgba(197, 161, 97, 0.13);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .wallet-checkout form {
@@ -6738,7 +6741,7 @@ html.pdl-panel .wallet-side-column {
 html.pdl-panel .wallet-compact-heading {
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .wallet-compact-heading h2,
@@ -6800,7 +6803,7 @@ html.pdl-panel .wallet-transfer-warning svg {
   flex: 0 0 auto;
   width: 13px;
   height: 13px;
-  color: rgba(197, 161, 97, 0.65);
+  color: color-mix(in srgb, var(--panel-gold) 65%, transparent);
 }
 
 html.pdl-panel .wallet-activity-card {
@@ -6811,7 +6814,7 @@ html.pdl-panel .wallet-activity-card {
 html.pdl-panel .wallet-activity-section + .wallet-activity-section {
   margin-top: 21px;
   padding-top: 21px;
-  border-top: 1px solid rgba(197, 161, 97, 0.14);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .wallet-activity-heading {
@@ -6834,10 +6837,10 @@ html.pdl-panel .wallet-activity-heading > b {
   height: 26px;
   margin-left: auto;
   place-items: center;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   border-radius: 50%;
-  background: rgba(197, 161, 97, 0.05);
-  color: rgba(230, 199, 125, 0.62);
+  background: color-mix(in srgb, var(--panel-gold) 5%, transparent);
+  color: color-mix(in srgb, var(--panel-gold-bright) 62%, transparent);
   font-size: 10px;
   font-weight: 500;
 }
@@ -6847,7 +6850,7 @@ html.pdl-panel .wallet-activity-list {
   gap: 7px;
   max-height: 290px;
   overflow-y: auto;
-  scrollbar-color: rgba(197, 161, 97, 0.35) transparent;
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 35%, transparent) transparent;
   scrollbar-width: thin;
 }
 
@@ -6859,7 +6862,7 @@ html.pdl-panel .wallet-activity-item {
   width: 100%;
   min-height: 58px;
   padding: 9px 10px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   background: rgba(5, 5, 4, 0.33);
   color: inherit;
   font: inherit;
@@ -6868,8 +6871,8 @@ html.pdl-panel .wallet-activity-item {
 }
 
 html.pdl-panel button.wallet-activity-item:hover {
-  border-color: rgba(230, 199, 125, 0.28);
-  background: rgba(197, 161, 97, 0.08);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .wallet-history-link {
@@ -6891,9 +6894,9 @@ html.pdl-panel .wallet-row-icon {
   width: 32px;
   height: 32px;
   place-items: center;
-  border: 1px solid rgba(197, 161, 97, 0.17);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 17%, transparent);
   border-radius: 50%;
-  background: rgba(197, 161, 97, 0.05);
+  background: color-mix(in srgb, var(--panel-gold) 5%, transparent);
   color: var(--panel-gold);
 }
 
@@ -6941,8 +6944,8 @@ html.pdl-panel .wallet-row-copy small {
 
 html.pdl-panel .wallet-status {
   padding: 4px 6px;
-  border: 1px solid rgba(230, 199, 125, 0.15);
-  color: rgba(230, 199, 125, 0.68);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 15%, transparent);
+  color: color-mix(in srgb, var(--panel-gold-bright) 68%, transparent);
   font-size: 8px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -6982,9 +6985,9 @@ html.pdl-panel .wallet-empty-state {
   justify-content: center;
   gap: 11px;
   padding: 14px;
-  border: 1px dashed rgba(197, 161, 97, 0.15);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 15%, transparent);
   background: rgba(5, 5, 4, 0.22);
-  color: rgba(197, 161, 97, 0.36);
+  color: color-mix(in srgb, var(--panel-gold) 36%, transparent);
 }
 
 html.pdl-panel .wallet-empty-state > svg {
@@ -7132,11 +7135,11 @@ html.pdl-panel .profile-progress-hero::after {
   right: 8%;
   width: 230px;
   height: 230px;
-  border: 1px solid rgba(230, 199, 125, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
-  box-shadow: inset 0 0 0 34px rgba(197, 161, 97, 0.017), inset 0 0 0 80px rgba(197, 161, 97, 0.012);
+  box-shadow: inset 0 0 0 34px color-mix(in srgb, var(--panel-gold) 1.7%, transparent), inset 0 0 0 80px color-mix(in srgb, var(--panel-gold) 1.2%, transparent);
 }
 
 html.pdl-panel .profile-progress-title {
@@ -7164,8 +7167,8 @@ html.pdl-panel .battle-pass-emblem {
   width: 48px;
   height: 48px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.25);
-  background: rgba(197, 161, 97, 0.075);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 25%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 7.5%, transparent);
   color: var(--panel-gold-bright);
   transform: rotate(45deg);
 }
@@ -7188,10 +7191,10 @@ html.pdl-panel .profile-level-badge {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
   background: rgba(6, 6, 5, 0.58);
-  box-shadow: inset 0 0 0 8px rgba(197, 161, 97, 0.025), 0 0 28px rgba(197, 161, 97, 0.05);
+  box-shadow: inset 0 0 0 8px color-mix(in srgb, var(--panel-gold) 2.5%, transparent), 0 0 28px color-mix(in srgb, var(--panel-gold) 5%, transparent);
 }
 
 html.pdl-panel .profile-level-badge span {
@@ -7241,7 +7244,7 @@ html.pdl-panel .progress-bar {
   position: relative;
   height: 12px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   background: rgba(3, 3, 3, 0.75);
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
 }
@@ -7251,7 +7254,7 @@ html.pdl-panel .progress-bar i {
   inset: 0 auto 0 0;
   min-width: 3px;
   background: linear-gradient(90deg, #76551f, #d1a94f 65%, #f1d88c);
-  box-shadow: 0 0 13px rgba(230, 199, 125, 0.48);
+  box-shadow: 0 0 13px color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
   transition: width 350ms ease;
 }
 
@@ -7278,7 +7281,7 @@ html.pdl-panel .progress-module-heading {
   gap: 13px;
   margin-bottom: 17px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .progress-module-heading > span {
@@ -7303,7 +7306,7 @@ html.pdl-panel .progress-module-heading h2 {
 html.pdl-panel .progress-module-heading > b {
   margin-left: auto;
   padding: 5px 8px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   color: var(--panel-gold-bright);
   font-size: 10px;
   font-weight: 500;
@@ -7322,7 +7325,7 @@ html.pdl-panel .profile-reward {
   gap: 10px;
   min-height: 58px;
   padding: 10px 11px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -7389,7 +7392,7 @@ html.pdl-panel .progress-empty {
   justify-content: center;
   gap: 8px;
   padding: 14px;
-  border: 1px dashed rgba(197, 161, 97, 0.18);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 18%, transparent);
   color: var(--panel-muted);
   font-size: 11px;
   text-align: center;
@@ -7420,7 +7423,7 @@ html.pdl-panel .setup-secret {
   gap: 3px;
   margin-top: 13px;
   padding: 10px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(4, 4, 3, 0.45);
 }
 
@@ -7451,7 +7454,7 @@ html.pdl-panel .security-form .field {
 html.pdl-panel .battle-pass-card {
   overflow: hidden;
   background:
-    linear-gradient(145deg, rgba(197, 161, 97, 0.09), transparent 29%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 9%, transparent), transparent 29%),
     linear-gradient(180deg, rgba(31, 26, 19, 0.97), rgba(15, 13, 10, 0.98));
 }
 
@@ -7462,7 +7465,7 @@ html.pdl-panel .battle-pass-header {
   gap: 20px;
   margin-bottom: 18px;
   padding-bottom: 17px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.16);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .battle-pass-title {
@@ -7487,8 +7490,8 @@ html.pdl-panel .premium-active {
   align-items: center;
   gap: 7px;
   padding: 8px 11px;
-  border: 1px solid rgba(230, 199, 125, 0.27);
-  background: rgba(197, 161, 97, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 27%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold-bright);
   font-size: 11px;
 }
@@ -7511,7 +7514,7 @@ html.pdl-panel .battle-pass-overview > div {
   justify-content: center;
   flex-direction: column;
   padding: 11px 13px;
-  border: 1px solid rgba(197, 161, 97, 0.13);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -7579,7 +7582,7 @@ html.pdl-panel .pass-tier::before {
   left: 31px;
   width: 1px;
   content: '';
-  background: rgba(197, 161, 97, 0.18);
+  background: color-mix(in srgb, var(--panel-gold) 18%, transparent);
 }
 
 html.pdl-panel .pass-tier:first-child::before { top: 50%; }
@@ -7602,7 +7605,7 @@ html.pdl-panel .pass-tier-level > span {
   height: 34px;
   place-items: center;
   align-self: center;
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   border-radius: 50%;
   background: #17130e;
   color: var(--panel-gold);
@@ -7644,13 +7647,13 @@ html.pdl-panel .pass-tier-lane {
   justify-content: center;
   gap: 6px;
   padding: 7px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   background: rgba(5, 5, 4, 0.3);
 }
 
 html.pdl-panel .premium-lane {
-  border-color: rgba(230, 199, 125, 0.2);
-  background: linear-gradient(90deg, rgba(197, 161, 97, 0.06), rgba(5, 5, 4, 0.34));
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 6%, transparent), rgba(5, 5, 4, 0.34));
 }
 
 html.pdl-panel .pass-reward {
@@ -7660,7 +7663,7 @@ html.pdl-panel .pass-reward {
   gap: 8px;
   min-height: 50px;
   padding: 8px 9px;
-  border: 1px solid rgba(197, 161, 97, 0.1);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
   background: rgba(17, 14, 10, 0.68);
 }
 
@@ -7753,11 +7756,11 @@ html.pdl-panel .games-hero::after {
   right: 7%;
   width: 240px;
   height: 240px;
-  border: 1px solid rgba(230, 199, 125, 0.09);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 9%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
-  box-shadow: inset 0 0 0 34px rgba(197, 161, 97, 0.018), inset 0 0 0 78px rgba(197, 161, 97, 0.014);
+  box-shadow: inset 0 0 0 34px color-mix(in srgb, var(--panel-gold) 1.8%, transparent), inset 0 0 0 78px color-mix(in srgb, var(--panel-gold) 1.4%, transparent);
 }
 
 html.pdl-panel .games-hero-copy {
@@ -7780,7 +7783,7 @@ html.pdl-panel .games-hero-jump {
   width: fit-content;
   margin-top: 14px;
   padding: 8px 12px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background: rgba(6, 6, 5, 0.5);
   color: var(--panel-gold-bright);
   font-size: 11px;
@@ -7796,8 +7799,8 @@ html.pdl-panel .games-hero-jump svg {
 }
 
 html.pdl-panel .games-hero-jump:hover {
-  border-color: rgba(230, 199, 125, 0.42);
-  background: rgba(197, 161, 97, 0.08);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: #fff;
 }
 
@@ -7810,7 +7813,7 @@ html.pdl-panel .token-balance {
   gap: 1px 12px;
   min-width: 215px;
   padding: 16px 19px;
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   background: rgba(6, 6, 5, 0.64);
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
 }
@@ -7820,7 +7823,7 @@ html.pdl-panel .token-balance > svg {
   width: 40px;
   height: 40px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
   color: var(--panel-gold-bright);
   stroke-width: 1.4;
@@ -7843,7 +7846,7 @@ html.pdl-panel .game-tabs {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   padding: 6px;
-  border: 1px solid rgba(230, 199, 125, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   background: rgba(10, 9, 7, 0.82);
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
 }
@@ -7884,19 +7887,19 @@ html.pdl-panel .game-tabs button svg {
   flex: 0 0 auto;
   width: 18px;
   height: 18px;
-  color: rgba(197, 161, 97, 0.62);
+  color: color-mix(in srgb, var(--panel-gold) 62%, transparent);
   stroke-width: 1.45;
 }
 
 html.pdl-panel .game-tabs button:hover {
-  border-color: rgba(197, 161, 97, 0.12);
-  background: rgba(197, 161, 97, 0.045);
+  border-color: color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
   color: rgba(255, 255, 255, 0.82);
 }
 
 html.pdl-panel .game-tabs button.active {
-  border-color: rgba(230, 199, 125, 0.26);
-  background: linear-gradient(180deg, rgba(197, 161, 97, 0.14), rgba(197, 161, 97, 0.045));
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4.5%, transparent));
   color: #fff;
   text-shadow: 0 0 12px rgba(255, 166, 0, 0.34);
 }
@@ -7907,7 +7910,7 @@ html.pdl-panel .game-tabs button.active::after {
 
 html.pdl-panel .game-tabs button.active svg {
   color: var(--panel-gold-bright);
-  filter: drop-shadow(0 0 7px rgba(197, 161, 97, 0.3));
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--panel-gold) 30%, transparent));
 }
 
 html.pdl-panel .game-tab-panels {
@@ -7953,7 +7956,7 @@ html.pdl-panel .game-module-heading {
   gap: 13px;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .game-boxes .game-module-heading {
@@ -8037,8 +8040,8 @@ html.pdl-panel .game-module-icon {
   width: 39px;
   height: 39px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.25);
-  background: rgba(197, 161, 97, 0.07);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 25%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 7%, transparent);
   color: var(--panel-gold);
   transform: rotate(45deg);
 }
@@ -8053,9 +8056,9 @@ html.pdl-panel .game-module-icon svg {
 html.pdl-panel .game-cost {
   margin-left: auto;
   padding: 6px 9px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
-  background: rgba(197, 161, 97, 0.055);
-  color: rgba(230, 199, 125, 0.72);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 5.5%, transparent);
+  color: color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   font-size: 10px;
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -8666,9 +8669,9 @@ html.pdl-panel .roulette-orbit.is-miss .roulette-core-glow {
 }
 
 html.pdl-panel .prize-item.is-hit {
-  border-color: rgba(230, 199, 125, 0.55);
-  background: rgba(197, 161, 97, 0.12);
-  box-shadow: 0 0 18px rgba(197, 161, 97, 0.18);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 12%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--panel-gold) 18%, transparent);
 }
 
 @keyframes game-spin-ring {
@@ -8789,7 +8792,7 @@ html.pdl-panel .roulette-action p {
 
 html.pdl-panel .roulette-side {
   padding-left: 24px;
-  border-left: 1px solid rgba(197, 161, 97, 0.12);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .game-inline-form,
@@ -8839,7 +8842,7 @@ html.pdl-panel .prize-list {
   overflow: auto;
   padding-right: 10px;
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--panel-gold) 55%, transparent) rgba(197, 161, 97, 0.08);
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 55%, transparent) color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar {
@@ -8847,21 +8850,21 @@ html.pdl-panel .prize-list::-webkit-scrollbar {
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar-track {
-  background: rgba(197, 161, 97, 0.06);
-  border: 1px solid rgba(197, 161, 97, 0.1);
+  background: color-mix(in srgb, var(--panel-gold) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 10%, transparent);
   border-radius: 999px;
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(230, 199, 125, 0.72), rgba(117, 85, 34, 0.78));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 72%, transparent), rgba(117, 85, 34, 0.78));
   border: 2px solid transparent;
   border-radius: 999px;
   background-clip: padding-box;
-  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.18);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
 }
 
 html.pdl-panel .prize-list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(230, 199, 125, 0.92), rgba(156, 121, 55, 0.9));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 92%, transparent), rgba(156, 121, 55, 0.9));
   background-clip: padding-box;
 }
 
@@ -8877,7 +8880,7 @@ html.pdl-panel .bag-item {
   align-items: center;
   gap: 10px;
   padding: 10px 11px;
-  border: 1px solid rgba(197, 161, 97, 0.11);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 11%, transparent);
   background: rgba(5, 5, 4, 0.35);
 }
 
@@ -8897,7 +8900,7 @@ html.pdl-panel .l2-item-icon {
   object-fit: contain;
   image-rendering: pixelated;
   background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .item-cell {
@@ -8925,7 +8928,7 @@ html.pdl-panel .item-id-suggestions {
   left: 0;
   max-height: 240px;
   overflow: auto;
-  border: 1px solid rgba(197, 161, 97, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background: rgba(8, 7, 6, 0.96);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
@@ -8944,7 +8947,7 @@ html.pdl-panel .item-id-suggestions button {
 }
 
 html.pdl-panel .item-id-suggestions button:hover {
-  background: rgba(197, 161, 97, 0.12);
+  background: color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .item-id-suggestions strong,
@@ -9014,12 +9017,12 @@ html.pdl-panel .game-guide {
   gap: 10px;
   margin-top: 20px;
   padding-top: 18px;
-  border-top: 1px solid rgba(197, 161, 97, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .game-guide h3 {
   margin: 0;
-  color: rgba(230, 199, 125, 0.82);
+  color: color-mix(in srgb, var(--panel-gold-bright) 82%, transparent);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -9070,8 +9073,8 @@ html.pdl-panel .daily-value {
   justify-content: center;
   flex-direction: column;
   margin-bottom: 18px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
-  background: radial-gradient(circle, rgba(197, 161, 97, 0.09), transparent 67%);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold) 9%, transparent), transparent 67%);
 }
 
 html.pdl-panel .daily-value span {
@@ -9094,7 +9097,7 @@ html.pdl-panel .game-empty {
   gap: 8px;
   min-height: 46px;
   padding: 10px 13px;
-  border: 1px dashed rgba(197, 161, 97, 0.17);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold) 17%, transparent);
   color: var(--panel-muted);
   font-size: 12px;
   text-align: center;
@@ -9148,7 +9151,7 @@ html.pdl-panel .game-stats-row > span {
   display: flex;
   min-width: 0;
   padding: 11px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(5, 5, 4, 0.3);
   flex-direction: column;
 }
@@ -9186,9 +9189,9 @@ html.pdl-panel .weapon-now {
   min-width: 0;
   max-width: min(720px, 100%);
   padding: 7px 10px 7px 12px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background:
-    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(197, 161, 97, 0.12), transparent 46%),
+    radial-gradient(ellipse 80% 120% at 0% 50%, color-mix(in srgb, var(--panel-gold) 12%, transparent), transparent 46%),
     rgba(6, 5, 4, 0.45);
 }
 
@@ -9199,7 +9202,7 @@ html.pdl-panel .weapon-level {
   gap: 6px;
   padding: 0 12px 0 0;
   border: 0;
-  border-right: 1px solid rgba(230, 199, 125, 0.18);
+  border-right: 1px solid color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   background: none;
   color: var(--panel-muted);
   font-size: 11px;
@@ -9225,9 +9228,9 @@ html.pdl-panel .weapon-forge {
   gap: 14px;
   margin-bottom: 14px;
   padding: 13px 13px 14px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   background:
-    radial-gradient(ellipse 70% 80% at 8% 0%, rgba(197, 161, 97, 0.14), transparent 52%),
+    radial-gradient(ellipse 70% 80% at 8% 0%, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 52%),
     rgba(6, 5, 4, 0.58);
 }
 
@@ -9285,7 +9288,7 @@ html.pdl-panel .weapon-path-steps::before {
   position: absolute;
   inset: 50% 4px auto;
   height: 2px;
-  background: rgba(230, 199, 125, 0.16);
+  background: color-mix(in srgb, var(--panel-gold-bright) 16%, transparent);
   content: "";
 }
 
@@ -9297,7 +9300,7 @@ html.pdl-panel .weapon-path-steps li {
   min-width: 28px;
   height: 28px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 16%, transparent);
   background: rgba(5, 5, 4, 0.72);
   color: rgba(255, 255, 255, 0.38);
   font-size: 10px;
@@ -9307,16 +9310,16 @@ html.pdl-panel .weapon-path-steps li {
 }
 
 html.pdl-panel .weapon-path-steps li.is-done {
-  border-color: rgba(230, 199, 125, 0.42);
-  background: rgba(197, 161, 97, 0.22);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 22%, transparent);
   color: var(--panel-gold-bright);
 }
 
 html.pdl-panel .weapon-path-steps li.is-next {
   border-color: var(--panel-gold-bright);
-  background: rgba(197, 161, 97, 0.4);
+  background: color-mix(in srgb, var(--panel-gold) 40%, transparent);
   color: var(--panel-gold-bright);
-  box-shadow: 0 0 14px rgba(230, 199, 125, 0.28);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   filter: hue-rotate(65deg) saturate(1.35);
 }
 
@@ -9345,7 +9348,7 @@ html.pdl-panel .fragment-progress-track {
   position: relative;
   height: 12px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background: rgba(3, 3, 3, 0.72);
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.55);
 }
@@ -9356,7 +9359,7 @@ html.pdl-panel .fragment-progress-fill {
   inset: 0 auto 0 0;
   min-width: 0;
   background: linear-gradient(90deg, #76551f, #d1a94f 65%, #f1d88c);
-  box-shadow: 0 0 14px rgba(230, 199, 125, 0.42);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   transition: width 400ms ease;
 }
 
@@ -9386,8 +9389,8 @@ html.pdl-panel .fragment-progress-pips i:last-child {
 }
 
 html.pdl-panel .weapon-forge .fragment-progress.is-ready .fragment-progress-track {
-  border-color: rgba(230, 199, 125, 0.42);
-  box-shadow: 0 0 16px rgba(197, 161, 97, 0.16);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .fragment-progress.is-ready .fragment-progress-sheen {
@@ -9434,7 +9437,7 @@ html.pdl-panel .monster-list {
   overflow: auto;
   padding-right: 6px;
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--panel-gold) 55%, transparent) rgba(197, 161, 97, 0.08);
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 55%, transparent) color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .respawn {
@@ -9474,7 +9477,7 @@ html.pdl-panel .respawn-timer-fill {
 }
 
 html.pdl-panel .respawn-timer-track {
-  stroke: rgba(230, 199, 125, 0.16);
+  stroke: color-mix(in srgb, var(--panel-gold-bright) 16%, transparent);
 }
 
 html.pdl-panel .respawn-timer-fill {
@@ -11813,7 +11816,7 @@ html.pdl-panel .boss-victory-wash {
 }
 
 html.pdl-panel .boss-victory-veil {
-  background: radial-gradient(ellipse 70% 40% at 50% 100%, rgba(230, 199, 125, 0.16), transparent 70%);
+  background: radial-gradient(ellipse 70% 40% at 50% 100%, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), transparent 70%);
 }
 
 html.pdl-panel .boss-victory-rays {
@@ -11936,7 +11939,7 @@ html.pdl-panel .fishing-pond {
   position: relative;
   min-height: 280px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 16%, transparent);
 }
 
 html.pdl-panel .fishing-pond-art,
@@ -11984,7 +11987,7 @@ html.pdl-panel .fishing-pond-caustic {
   z-index: 1;
   background:
     radial-gradient(ellipse 42% 16% at 28% 64%, rgba(186, 220, 255, 0.16), transparent 70%),
-    radial-gradient(ellipse 34% 14% at 72% 72%, rgba(230, 199, 125, 0.1), transparent 68%),
+    radial-gradient(ellipse 34% 14% at 72% 72%, color-mix(in srgb, var(--panel-gold-bright) 10%, transparent), transparent 68%),
     radial-gradient(ellipse 22% 10% at 48% 58%, rgba(255, 255, 255, 0.08), transparent 70%);
   mix-blend-mode: screen;
   opacity: 0.72;
@@ -12006,7 +12009,7 @@ html.pdl-panel .fishing-glint {
   height: 2px;
   border-radius: 999px;
   background: rgba(255, 248, 220, 0.85);
-  box-shadow: 0 0 8px rgba(230, 199, 125, 0.45);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
   opacity: 0;
   pointer-events: none;
   animation: fishing-glint 3.4s ease-in-out var(--glint-d, 0s) infinite;
@@ -12082,7 +12085,7 @@ html.pdl-panel .fishing-swimmer-wake {
   width: 42px;
   height: 10px;
   border-radius: 50%;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   opacity: 0;
   animation: fishing-wake 1.1s ease-out var(--swim-delay, 0s) infinite;
 }
@@ -12127,7 +12130,7 @@ html.pdl-panel .fishing-line {
   top: 0;
   width: 1px;
   height: 58%;
-  background: linear-gradient(180deg, transparent, rgba(230, 199, 125, 0.62));
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--panel-gold-bright) 62%, transparent));
   opacity: 0;
   transform-origin: top center;
 }
@@ -12202,7 +12205,7 @@ html.pdl-panel .fishing-rod-glow {
   width: 18%;
   height: 64%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.2), transparent 72%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 20%, transparent), transparent 72%);
   opacity: 0;
   pointer-events: none;
 }
@@ -12246,7 +12249,7 @@ html.pdl-panel .fishing-pond[data-rod="10"] .fishing-rod-glow {
 html.pdl-panel .fishing-pond[data-rod="8"] .fishing-rod,
 html.pdl-panel .fishing-pond[data-rod="9"] .fishing-rod,
 html.pdl-panel .fishing-pond[data-rod="10"] .fishing-rod {
-  filter: drop-shadow(0 0 16px rgba(230, 199, 125, 0.4)) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--panel-gold-bright) 40%, transparent)) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
 }
 
 html.pdl-panel .fishing-lure-spark {
@@ -12257,7 +12260,7 @@ html.pdl-panel .fishing-lure-spark {
   height: 6px;
   border-radius: 50%;
   background: #fff4c8;
-  box-shadow: 0 0 8px rgba(230, 199, 125, 0.7);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
   opacity: 0;
   pointer-events: none;
 }
@@ -12276,11 +12279,11 @@ html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-lure-spark {
 }
 
 html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-line {
-  background: linear-gradient(180deg, transparent, rgba(230, 199, 125, 0.88));
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--panel-gold-bright) 88%, transparent));
 }
 
 html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-bobber {
-  background: linear-gradient(#6b8f3a 52%, #e6c77d 52%);
+  background: linear-gradient(#6b8f3a 52%, var(--panel-gold-bright) 52%);
   box-shadow: 0 0 12px rgba(107, 143, 58, 0.45);
 }
 
@@ -12298,14 +12301,14 @@ html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-bobber {
 html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-pond-caustic {
   background:
     radial-gradient(ellipse 42% 16% at 28% 64%, rgba(186, 220, 255, 0.14), transparent 70%),
-    radial-gradient(ellipse 34% 14% at 72% 72%, rgba(230, 199, 125, 0.2), transparent 68%),
+    radial-gradient(ellipse 34% 14% at 72% 72%, color-mix(in srgb, var(--panel-gold-bright) 20%, transparent), transparent 68%),
     radial-gradient(ellipse 22% 10% at 48% 58%, rgba(255, 255, 255, 0.1), transparent 70%);
 }
 
 html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-pond-caustic {
   background:
     radial-gradient(ellipse 42% 16% at 28% 64%, rgba(155, 231, 220, 0.28), transparent 70%),
-    radial-gradient(ellipse 34% 14% at 72% 72%, rgba(230, 199, 125, 0.16), transparent 68%),
+    radial-gradient(ellipse 34% 14% at 72% 72%, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), transparent 68%),
     radial-gradient(ellipse 22% 10% at 48% 58%, rgba(255, 255, 255, 0.12), transparent 70%);
 }
 
@@ -12341,11 +12344,11 @@ html.pdl-panel .fishing-pond[data-bait="enchanted"].is-bite .fishing-line {
 }
 
 html.pdl-panel .fishing-pond[data-bait="apprentice"] .fishing-splash {
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.55), rgba(107, 143, 58, 0.22) 42%, transparent 72%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 55%, transparent), rgba(107, 143, 58, 0.22) 42%, transparent 72%);
 }
 
 html.pdl-panel .fishing-pond[data-bait="enchanted"] .fishing-splash {
-  background: radial-gradient(circle, rgba(155, 231, 220, 0.5), rgba(230, 199, 125, 0.22) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(155, 231, 220, 0.5), color-mix(in srgb, var(--panel-gold-bright) 22%, transparent) 42%, transparent 72%);
 }
 
 html.pdl-panel .fishing-pond[data-bait="enchanted"].is-caught .fishing-impact,
@@ -12375,7 +12378,7 @@ html.pdl-panel .fishing-pond-ripple {
   top: calc(58% - 9px);
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(230, 199, 125, 0);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 0%, transparent);
   border-radius: 50%;
   opacity: 0;
 }
@@ -12392,7 +12395,7 @@ html.pdl-panel .fishing-pond.is-casting .fishing-pond-ripple,
 html.pdl-panel .fishing-pond.is-bite .fishing-pond-ripple,
 html.pdl-panel .fishing-pond.is-caught .fishing-pond-ripple,
 html.pdl-panel .fishing-pond.is-escaped .fishing-pond-ripple {
-  border-color: rgba(230, 199, 125, 0.7);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
   animation: game-pond-ripple 1.1s ease-out infinite;
 }
 
@@ -12407,7 +12410,7 @@ html.pdl-panel .fishing-splash {
   width: 80px;
   height: 44px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.42), rgba(186, 220, 255, 0.18) 42%, transparent 72%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 42%, transparent), rgba(186, 220, 255, 0.18) 42%, transparent 72%);
   opacity: 0;
 }
 
@@ -12500,7 +12503,7 @@ html.pdl-panel .fishing-pond.is-caught .fishing-catch-sheen {
 html.pdl-panel .fishing-catch-glow {
   filter: blur(16px);
   opacity: 0.45;
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.45), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 45%, transparent), transparent 70%);
 }
 
 html.pdl-panel .fishing-catch[data-rarity="rare"] .fishing-catch-glow {
@@ -12512,7 +12515,7 @@ html.pdl-panel .fishing-catch[data-rarity="epic"] .fishing-catch-glow {
 }
 
 html.pdl-panel .fishing-catch[data-rarity="legendary"] .fishing-catch-glow {
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.62), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 62%, transparent), transparent 70%);
 }
 
 html.pdl-panel .fishing-catch[data-rarity="divine"] .fishing-catch-glow {
@@ -12566,7 +12569,7 @@ html.pdl-panel .fishing-catch-spark {
   margin: -7px -2px;
   border-radius: 999px;
   background: #fff4c8;
-  box-shadow: 0 0 10px rgba(230, 199, 125, 0.7);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--panel-gold-bright) 70%, transparent);
   transform: rotate(var(--spark-a)) translateY(0);
   animation: fishing-catch-spark 0.9s ease-out var(--spark-d, 0ms) both;
 }
@@ -12584,7 +12587,7 @@ html.pdl-panel .fishing-catch[data-rarity="epic"] .fishing-catch-spark {
 html.pdl-panel .fishing-catch[data-rarity="legendary"] .fishing-catch-spark,
 html.pdl-panel .fishing-catch[data-rarity="divine"] .fishing-catch-spark {
   background: #fff6d2;
-  box-shadow: 0 0 12px rgba(230, 199, 125, 0.85);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--panel-gold-bright) 85%, transparent);
 }
 
 html.pdl-panel .fishing-pond.is-caught {
@@ -12600,7 +12603,7 @@ html.pdl-panel .fishing-pond.is-caught[data-rarity="epic"] {
 }
 
 html.pdl-panel .fishing-pond.is-caught[data-rarity="legendary"] {
-  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.5), 0 0 32px rgba(230, 199, 125, 0.2);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 50%, transparent), 0 0 32px color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
 }
 
 html.pdl-panel .fishing-pond.is-caught[data-rarity="divine"] {
@@ -12616,7 +12619,7 @@ html.pdl-panel .fishing-fish {
   place-items: center;
   overflow: hidden;
   background: radial-gradient(circle at 50% 40%, rgba(18, 22, 26, 0.2), rgba(8, 7, 6, 0.72));
-  border: 1px solid rgba(230, 199, 125, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 16%, transparent);
 }
 
 html.pdl-panel .fishing-fish.is-card {
@@ -12677,7 +12680,7 @@ html.pdl-panel .fishing-game .fishing-pond {
 html.pdl-panel .fishing-console {
   display: grid;
   min-width: 0;
-  border: 1px solid rgba(230, 199, 125, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 14%, transparent);
   background: rgba(8, 7, 6, 0.35);
 }
 
@@ -12685,13 +12688,13 @@ html.pdl-panel .fishing-hud {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
 }
 
 html.pdl-panel .fishing-stat {
   min-width: 0;
   padding: 6px 10px;
-  border-right: 1px solid rgba(230, 199, 125, 0.1);
+  border-right: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
 }
 
 html.pdl-panel .fishing-stat:last-child {
@@ -12731,7 +12734,7 @@ html.pdl-panel .fishing-rod-portrait {
   width: 40px;
   height: 40px;
   background: var(--rod-art) center / contain no-repeat;
-  filter: drop-shadow(0 0 8px rgba(230, 199, 125, 0.28));
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent));
 }
 
 html.pdl-panel .fishing-stat .progress-bar {
@@ -12755,7 +12758,7 @@ html.pdl-panel .fishing-console-note {
   display: grid;
   gap: 4px;
   padding: 0 10px 8px;
-  border-top: 1px solid rgba(230, 199, 125, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
 }
 
 html.pdl-panel .fishing-console-note:empty {
@@ -12769,7 +12772,7 @@ html.pdl-panel .fishing-side {
   gap: 4px;
   min-width: 0;
   padding-left: 24px;
-  border-left: 1px solid rgba(197, 161, 97, 0.12);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .fishing-side .game-subsection:first-child {
@@ -12800,8 +12803,8 @@ html.pdl-panel .fishing-cast-pane {
   justify-items: center;
   align-content: center;
   padding: 12px 14px;
-  border-left: 1px solid rgba(230, 199, 125, 0.1);
-  background: rgba(230, 199, 125, 0.04);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
+  background: color-mix(in srgb, var(--panel-gold-bright) 4%, transparent);
   text-align: center;
 }
 
@@ -12812,7 +12815,7 @@ html.pdl-panel .fishing-pane-head {
   justify-content: space-between;
   gap: 8px 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
 }
 
 html.pdl-panel .fishing-pane-title {
@@ -12858,13 +12861,13 @@ html.pdl-panel .fishing-bait-slot {
   gap: 6px;
   min-width: 0;
   padding: 10px 6px 8px;
-  border: 1px solid rgba(230, 199, 125, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 12%, transparent);
   background: rgba(8, 7, 6, 0.28);
 }
 
 html.pdl-panel .fishing-bait-slot.is-selected {
-  border-color: rgba(230, 199, 125, 0.38);
-  background: rgba(230, 199, 125, 0.07);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
+  background: color-mix(in srgb, var(--panel-gold-bright) 7%, transparent);
 }
 
 html.pdl-panel .fishing-bait-icon {
@@ -12878,7 +12881,7 @@ html.pdl-panel .fishing-bait-status {
   left: 50%;
   z-index: 2;
   padding: 1px 5px;
-  border: 1px solid rgba(230, 199, 125, 0.35);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 35%, transparent);
   background: rgba(10, 8, 6, 0.94);
   color: var(--panel-gold);
   font-size: 9px;
@@ -12983,19 +12986,19 @@ html.pdl-panel .fishing-bait-frame[data-kind="enchanted"] {
 
 html.pdl-panel .fishing-bait-frame:hover:not(:disabled),
 html.pdl-panel .fishing-bait-frame:focus-visible {
-  border-color: rgba(230, 199, 125, 0.78);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 78%, transparent);
   box-shadow:
-    inset 0 0 0 1px rgba(230, 199, 125, 0.16),
+    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 16%, transparent),
     inset 0 0 18px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(230, 199, 125, 0.18);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
 }
 
 html.pdl-panel .fishing-bait-frame.is-selected {
-  border-color: rgba(230, 199, 125, 0.88);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 88%, transparent);
   box-shadow:
-    inset 0 0 0 1px rgba(230, 199, 125, 0.2),
+    inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 20%, transparent),
     inset 0 0 18px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(230, 199, 125, 0.22);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
 }
 
 html.pdl-panel .fishing-bait-frame:disabled {
@@ -13095,7 +13098,7 @@ html.pdl-panel .fishing-recent time {
 html.pdl-panel .fishing-recent-miss {
   width: 28px;
   height: 20px;
-  border: 1px dashed rgba(230, 199, 125, 0.2);
+  border: 1px dashed color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
 }
 
 html.pdl-panel .fishing-tiers {
@@ -13113,7 +13116,7 @@ html.pdl-panel .fishing-tiers-col {
 
 html.pdl-panel .fishing-tiers-col[data-side="right"] {
   padding-left: 20px;
-  border-left: 1px solid rgba(197, 161, 97, 0.14);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
 }
 
 html.pdl-panel .fishing-tier {
@@ -13121,7 +13124,7 @@ html.pdl-panel .fishing-tier {
   gap: 10px;
   min-width: 0;
   padding: 12px 0 0;
-  border-top: 1px solid rgba(197, 161, 97, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .fishing-tier:first-child {
@@ -13178,7 +13181,7 @@ html.pdl-panel .fishing-collection-card {
   gap: 6px;
   min-width: 0;
   padding: 8px;
-  border: 1px solid rgba(230, 199, 125, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 14%, transparent);
   background: rgba(8, 7, 6, 0.4);
 }
 
@@ -13201,7 +13204,7 @@ html.pdl-panel .monster-portrait {
   width: 52px;
   height: 52px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background: var(--monster-art, var(--theme-art-games-monster)) center 18% / cover no-repeat;
   box-shadow: inset 0 -10px 16px rgba(0, 0, 0, 0.35);
 }
@@ -13222,20 +13225,20 @@ html.pdl-panel .monster-portrait.is-fighting {
 }
 
 html.pdl-panel .monster-item.is-fighting {
-  border-color: rgba(230, 199, 125, 0.42);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
 }
 
 html.pdl-panel .monster-item.is-boss {
-  border-color: rgba(230, 199, 125, 0.5);
-  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.14);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 50%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 14%, transparent);
 }
 
 html.pdl-panel .battle-stage.is-boss {
-  border-color: rgba(230, 199, 125, 0.46);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 46%, transparent);
 }
 
 html.pdl-panel .battle-stage.is-duel {
-  box-shadow: inset 0 0 90px rgba(230, 199, 125, 0.12);
+  box-shadow: inset 0 0 90px color-mix(in srgb, var(--panel-gold-bright) 12%, transparent);
 }
 
 html.pdl-panel .battle-duel {
@@ -13250,9 +13253,9 @@ html.pdl-panel .battle-duel {
 html.pdl-panel .battle-duel-ring {
   width: 64px;
   height: 64px;
-  border: 2px solid rgba(230, 199, 125, 0.28);
+  border: 2px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
-  box-shadow: inset 0 0 18px rgba(230, 199, 125, 0.08);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
 }
 
 html.pdl-panel .battle-duel-ring i {
@@ -13264,7 +13267,7 @@ html.pdl-panel .battle-duel-ring i {
 
 html.pdl-panel .battle-duel-ring.is-open {
   border-color: var(--panel-gold-bright);
-  box-shadow: 0 0 22px rgba(230, 199, 125, 0.48);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
   animation: battle-duel-pulse 280ms ease infinite alternate;
 }
 
@@ -13281,12 +13284,12 @@ html.pdl-panel .battle-duel-hits i {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(230, 199, 125, 0.22);
+  background: color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
 }
 
 html.pdl-panel .battle-duel-hits i.is-lit {
   background: var(--panel-gold-bright);
-  box-shadow: 0 0 8px rgba(230, 199, 125, 0.55);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
 }
 
 html.pdl-panel .battle-stage.is-duel .battle-fighter.is-player,
@@ -13318,12 +13321,12 @@ html.pdl-panel .battle-stage {
   isolation: isolate;
   overflow: hidden;
   padding: 28px 22px 20px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   background:
     var(--theme-art-games-arena),
-    radial-gradient(ellipse 70% 36% at 50% 86%, rgba(197, 161, 97, 0.16), transparent 70%),
-    radial-gradient(circle at 18% 28%, rgba(197, 161, 97, 0.08), transparent 32%),
-    radial-gradient(circle at 82% 24%, rgba(197, 161, 97, 0.07), transparent 30%),
+    radial-gradient(ellipse 70% 36% at 50% 86%, color-mix(in srgb, var(--panel-gold) 16%, transparent), transparent 70%),
+    radial-gradient(circle at 18% 28%, color-mix(in srgb, var(--panel-gold) 8%, transparent), transparent 32%),
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--panel-gold) 7%, transparent), transparent 30%),
     linear-gradient(180deg, rgba(14, 12, 9, 0.28), rgba(6, 5, 4, 0.88));
 }
 
@@ -13406,8 +13409,8 @@ html.pdl-panel .battle-floor {
   left: 8%;
   height: 52px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(197, 161, 97, 0.2), transparent 68%);
-  box-shadow: 0 0 28px rgba(197, 161, 97, 0.12);
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--panel-gold) 20%, transparent), transparent 68%);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .battle-mote {
@@ -13460,14 +13463,14 @@ html.pdl-panel .battle-fighter-art {
   height: 132px;
   overflow: hidden;
   place-items: center;
-  border: 2px solid rgba(230, 199, 125, 0.34);
+  border: 2px solid color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
   background:
-    radial-gradient(circle at 50% 38%, rgba(197, 161, 97, 0.28), transparent 62%),
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--panel-gold) 28%, transparent), transparent 62%),
     rgba(8, 7, 6, 0.78);
   color: var(--panel-gold-bright);
   box-shadow:
     inset 0 -16px 22px rgba(0, 0, 0, 0.38),
-    0 0 0 1px rgba(197, 161, 97, 0.08);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .battle-stage .monster-portrait.is-hero {
@@ -13476,11 +13479,11 @@ html.pdl-panel .battle-stage .monster-portrait.is-hero {
   width: 132px;
   height: 132px;
   overflow: hidden;
-  border: 2px solid rgba(230, 199, 125, 0.34);
+  border: 2px solid color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
   background: var(--monster-art, var(--theme-art-games-monster)) center 22% / cover no-repeat;
   box-shadow:
     inset 0 -16px 22px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(197, 161, 97, 0.08);
+    0 0 0 1px color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .weapon-art {
@@ -13498,7 +13501,7 @@ html.pdl-panel .battle-fighter-art .weapon-art {
 html.pdl-panel .battle-fighter-art.is-empty {
   opacity: 0.38;
   background:
-    repeating-linear-gradient(-32deg, transparent, transparent 7px, rgba(197, 161, 97, 0.06) 7px, rgba(197, 161, 97, 0.06) 8px),
+    repeating-linear-gradient(-32deg, transparent, transparent 7px, color-mix(in srgb, var(--panel-gold) 6%, transparent) 7px, color-mix(in srgb, var(--panel-gold) 6%, transparent) 8px),
     rgba(8, 7, 6, 0.5);
 }
 
@@ -13519,7 +13522,7 @@ html.pdl-panel .battle-hp {
   width: 132px;
   height: 8px;
   overflow: hidden;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   background: rgba(5, 5, 4, 0.62);
 }
 
@@ -13558,7 +13561,7 @@ html.pdl-panel .battle-hp-fill {
   height: 100%;
   transform: scaleX(var(--hp, 1));
   transform-origin: left center;
-  background: linear-gradient(90deg, rgba(197, 161, 97, 0.42), rgba(230, 199, 125, 0.88));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--panel-gold) 42%, transparent), color-mix(in srgb, var(--panel-gold-bright) 88%, transparent));
   transition: transform 480ms ease;
 }
 
@@ -13570,7 +13573,7 @@ html.pdl-panel .battle-plate {
   justify-items: center;
   gap: 1px;
   padding: 5px 10px;
-  border: 1px solid rgba(230, 199, 125, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
   background: rgba(6, 5, 4, 0.72);
 }
 
@@ -13631,7 +13634,7 @@ html.pdl-panel .battle-vs {
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.08em;
-  text-shadow: 0 0 16px rgba(230, 199, 125, 0.35);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold-bright) 35%, transparent);
 }
 
 html.pdl-panel .battle-stage.is-clash .battle-vs,
@@ -13656,7 +13659,7 @@ html.pdl-panel .battle-slash.is-late { transform: rotate(12deg); }
 html.pdl-panel .battle-impact,
 html.pdl-panel .battle-shock {
   inset: 8%;
-  border: 1px solid rgba(230, 199, 125, 0.5);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 50%, transparent);
   border-radius: 50%;
   opacity: 0;
 }
@@ -13689,7 +13692,7 @@ html.pdl-panel .battle-spark {
   margin: -3px;
   border-radius: 50%;
   background: var(--panel-gold-bright);
-  box-shadow: 0 0 8px rgba(230, 199, 125, 0.55);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
 }
 
 html.pdl-panel .battle-status {
@@ -13706,7 +13709,7 @@ html.pdl-panel .battle-status strong {
   color: var(--panel-gold-bright);
   font-size: 20px;
   font-weight: 600;
-  text-shadow: 0 0 18px rgba(230, 199, 125, 0.28);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .battle-status small {
@@ -14222,10 +14225,10 @@ html.pdl-panel .battle-stage.is-win .battle-flash {
       0 -26px 0 -2px #ffe7a3,
       18px -18px 0 -2px #ffd36a,
       26px 0 0 -2px #fff6d0,
-      18px 18px 0 -2px #e6c77d,
+      18px 18px 0 -2px var(--panel-gold-bright),
       0 26px 0 -2px #ffd36a,
       -18px 18px 0 -2px #fff6d0,
-      -26px 0 0 -2px #e6c77d,
+      -26px 0 0 -2px var(--panel-gold-bright),
       -18px -18px 0 -2px #ffe7a3,
       0 0 22px 8px color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   }
@@ -14788,7 +14791,7 @@ html.pdl-panel .bag-transfer {
   display: grid;
   gap: 11px;
   padding-left: 24px;
-  border-left: 1px solid rgba(197, 161, 97, 0.12);
+  border-left: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .bag-transfer .btn {
@@ -14811,7 +14814,7 @@ html.pdl-panel .conquista-heading {
   gap: 16px;
   margin-bottom: 18px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.13);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 13%, transparent);
 }
 
 html.pdl-panel .conquista-heading h2 {
@@ -14827,7 +14830,7 @@ html.pdl-panel .conquista-heading-actions {
 
 html.pdl-panel .conquista-heading-actions > b {
   padding: 5px 8px;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   color: var(--panel-gold-bright);
   font-size: 10px;
   font-weight: 500;
@@ -14852,14 +14855,14 @@ html.pdl-panel .conquista-card {
   min-height: 148px;
   padding: 16px 12px;
   text-align: center;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(5, 5, 4, 0.42);
   transition: transform 180ms ease, border-color 180ms ease;
 }
 
 html.pdl-panel .conquista-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(230, 199, 125, 0.38);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 38%, transparent);
 }
 
 html.pdl-panel .conquista-card.locked {
@@ -14892,7 +14895,7 @@ html.pdl-panel .conquista-card-icon::before {
   position: absolute;
   inset: -9px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 199, 125, 0.16), rgba(230, 199, 125, 0) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), color-mix(in srgb, var(--panel-gold-bright) 0%, transparent) 70%);
   opacity: 0;
   transition: opacity 180ms ease;
 }
@@ -15073,17 +15076,17 @@ html.pdl-panel .security-legal-card {
   display: grid;
   gap: 6px;
   padding: 12px 14px;
-  border: 1px solid rgba(197, 161, 97, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background: rgba(0, 0, 0, 0.28);
   color: inherit;
   text-decoration: none;
 }
 html.pdl-panel .security-legal-card:hover {
-  border-color: rgba(230, 199, 125, 0.45);
-  background: rgba(197, 161, 97, 0.08);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 45%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 html.pdl-panel .security-legal-card strong {
-  color: #e6c77d;
+  color: var(--panel-gold-bright);
   font-size: 0.95rem;
 }
 html.pdl-panel .security-legal-card small {
@@ -15095,7 +15098,7 @@ html.pdl-panel .security-lgpd-box {
   display: grid;
   gap: 12px;
   padding: 14px;
-  border: 1px solid rgba(197, 161, 97, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   background: rgba(0, 0, 0, 0.22);
 }
 html.pdl-panel .security-lgpd-box__head {
@@ -15128,8 +15131,8 @@ html.pdl-panel .security-cookie-summary {
   display: grid;
   gap: 10px;
   padding: 14px;
-  border: 1px solid rgba(197, 161, 97, 0.28);
-  background: rgba(197, 161, 97, 0.06);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 6%, transparent);
 }
 html.pdl-panel .security-cookie-summary__head {
   display: flex;
@@ -15149,7 +15152,7 @@ html.pdl-panel .security-cookie-chips {
 }
 html.pdl-panel .security-cookie-chips li {
   padding: 4px 10px;
-  border: 1px solid rgba(197, 161, 97, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -15169,7 +15172,7 @@ html.pdl-panel .security-cookie-actions {
   align-items: center;
 }
 html.pdl-panel .security-legal-inline-link {
-  color: #c5a161;
+  color: var(--panel-gold);
   font-size: 0.85rem;
 }
 html.pdl-panel .security-legal-inline-link:hover {
@@ -15203,10 +15206,10 @@ html.pdl-panel .user-profile-hero::after {
   bottom: -80px;
   width: 280px;
   height: 280px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   border-radius: 50%;
   content: '';
-  box-shadow: inset 0 0 0 28px rgba(197, 161, 97, 0.02), inset 0 0 0 78px rgba(197, 161, 97, 0.02);
+  box-shadow: inset 0 0 0 28px color-mix(in srgb, var(--panel-gold) 2%, transparent), inset 0 0 0 78px color-mix(in srgb, var(--panel-gold) 2%, transparent);
   pointer-events: none;
 }
 
@@ -15683,7 +15686,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .inventory-bag-transfer {
     padding-top: 20px;
     padding-left: 0;
-    border-top: 1px solid rgba(197, 161, 97, 0.12);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
     border-left: 0;
   }
 
@@ -15751,9 +15754,9 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     min-width: 92px;
     min-height: 42px;
     padding: 0 14px;
-    border: 1px solid rgba(230, 199, 125, 0.26);
+    border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
     border-radius: 2px;
-    background: rgba(197, 161, 97, 0.08);
+    background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
     color: var(--panel-gold-bright);
     cursor: pointer;
   }
@@ -15783,7 +15786,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     border: 1px solid var(--panel-border);
     border-radius: 3px;
     background:
-      linear-gradient(145deg, rgba(197, 161, 97, 0.08), transparent 34%),
+      linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 8%, transparent), transparent 34%),
       rgba(13, 11, 8, 0.985);
     box-shadow: 20px 28px 80px rgba(0, 0, 0, 0.7);
     opacity: 0;
@@ -15824,7 +15827,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     padding: 12px 0 0;
     overflow-x: hidden;
     overflow-y: auto;
-    border-top: 1px solid rgba(197, 161, 97, 0.14);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   }
 
   html.pdl-panel .panel-menu a:hover,
@@ -15942,7 +15945,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .inventory-game-item-main {
     grid-column: 1 / -1;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(197, 161, 97, 0.075);
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 7.5%, transparent);
   }
 
   html.pdl-panel .inventory-game-item-data small {
@@ -15957,7 +15960,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     grid-column: 1 / -1;
     justify-content: flex-end;
     padding-top: 9px;
-    border-top: 1px solid rgba(197, 161, 97, 0.075);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold) 7.5%, transparent);
   }
 
   html.pdl-panel .inventory-item-action-fields {
@@ -15992,7 +15995,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     display: flex;
     overflow-x: auto;
     scrollbar-width: thin;
-    scrollbar-color: rgba(197, 161, 97, 0.35) transparent;
+    scrollbar-color: color-mix(in srgb, var(--panel-gold) 35%, transparent) transparent;
   }
 
   html.pdl-panel .game-tabs button {
@@ -16049,7 +16052,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   html.pdl-panel .bag-transfer {
     padding-top: 20px;
     padding-left: 0;
-    border-top: 1px solid rgba(197, 161, 97, 0.12);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
     border-left: 0;
   }
 
@@ -16096,7 +16099,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
     overflow-x: auto;
     padding-bottom: 5px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(197, 161, 97, 0.35) transparent;
+    scrollbar-color: color-mix(in srgb, var(--panel-gold) 35%, transparent) transparent;
   }
 
   html.pdl-panel .pass-track-legend,
@@ -16147,7 +16150,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
 
   html.pdl-panel .auction-listing-stats > span:last-child {
     grid-column: 1 / -1;
-    border-top: 1px solid rgba(197, 161, 97, 0.09);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold) 9%, transparent);
   }
 
   html.pdl-panel .marketplace-hero {
@@ -16365,7 +16368,7 @@ html.pdl-panel :is(a, button, input, select, textarea):focus-visible {
   }
 
   html.pdl-panel .fishing-cast-pane {
-    border-top: 1px solid rgba(230, 199, 125, 0.1);
+    border-top: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
     border-left: 0;
   }
 
@@ -16535,7 +16538,7 @@ html.pdl-panel .theme-installer input[type="file"]::file-selector-button {
   margin-right: 12px;
   padding: 7px 12px;
   color: var(--panel-text);
-  background: rgba(197,161,97,.12);
+  background: color-mix(in srgb, var(--panel-gold) 12%, transparent);
   border: 1px solid var(--panel-border);
   cursor: pointer;
 }
@@ -16544,7 +16547,7 @@ html.pdl-panel .theme-compat {
   gap: 8px;
   align-content: start;
   padding: 14px 16px;
-  border: 1px solid rgba(197,161,97,.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   background: rgba(8,7,5,.45);
 }
 html.pdl-panel .theme-compat h3 {
@@ -16584,7 +16587,7 @@ html.pdl-panel .theme-package-icon svg { width: 22px; }
 html.pdl-panel .theme-package-copy h3 { margin: 3px 0 7px; font-size: 20px; }
 html.pdl-panel .theme-package-copy p { min-height: 38px; margin: 0 0 7px; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .theme-package-copy small { color: rgba(255,255,255,.42); }
-html.pdl-panel .theme-package-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid rgba(197,161,97,.12); }
+html.pdl-panel .theme-package-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent); }
 html.pdl-panel .theme-active-badge { display: inline-flex; align-items: center; gap: 6px; color: #9ac49f; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 html.pdl-panel .theme-active-badge svg { width: 16px; }
 @media (max-width: 900px) {
@@ -16617,14 +16620,14 @@ html.pdl-panel .rewards-hero::after {
   right: 6%;
   width: 248px;
   height: 248px;
-  border: 1px solid rgba(230, 199, 125, 0.1);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 34px rgba(197, 161, 97, 0.02),
-    inset 0 0 0 78px rgba(197, 161, 97, 0.016),
-    0 0 64px rgba(197, 161, 97, 0.04);
+    inset 0 0 0 34px color-mix(in srgb, var(--panel-gold) 2%, transparent),
+    inset 0 0 0 78px color-mix(in srgb, var(--panel-gold) 1.6%, transparent),
+    0 0 64px color-mix(in srgb, var(--panel-gold) 4%, transparent);
 }
 
 html.pdl-panel .rewards-hero > div {
@@ -16654,12 +16657,12 @@ html.pdl-panel .rewards-hero-emblem {
   width: 56px;
   height: 56px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.32);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 32%, transparent);
   background:
-    linear-gradient(160deg, rgba(230, 199, 125, 0.16), rgba(197, 161, 97, 0.04)),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), color-mix(in srgb, var(--panel-gold) 4%, transparent)),
     rgba(8, 7, 5, 0.7);
   color: var(--panel-gold-bright);
-  box-shadow: 0 0 24px rgba(197, 161, 97, 0.12);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--panel-gold) 12%, transparent);
   transform: rotate(45deg);
 }
 
@@ -16678,7 +16681,7 @@ html.pdl-panel .rewards-hero-jump {
   gap: 8px;
   flex: 0 0 auto;
   padding: 14px 16px;
-  border: 1px solid rgba(230, 199, 125, 0.26);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 26%, transparent);
   background: rgba(6, 6, 5, 0.64);
   color: var(--panel-gold-bright);
   font-size: 11px;
@@ -16694,8 +16697,8 @@ html.pdl-panel .rewards-hero-jump svg {
 }
 
 html.pdl-panel .rewards-hero-jump:hover {
-  border-color: rgba(230, 199, 125, 0.48);
-  background: rgba(197, 161, 97, 0.1);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 48%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 10%, transparent);
   color: #fff;
 }
 
@@ -16703,7 +16706,7 @@ html.pdl-panel .rewards-page .ui-tabs.game-tabs {
   display: grid;
   gap: 4px;
   padding: 6px;
-  border: 1px solid rgba(230, 199, 125, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 18%, transparent);
   background: rgba(10, 9, 7, 0.82);
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
 }
@@ -16759,9 +16762,9 @@ html.pdl-panel .rewards-page .battle-pass-overview > div {
   position: relative;
   min-height: 78px;
   padding: 13px 14px 13px 46px;
-  border-color: rgba(197, 161, 97, 0.16);
+  border-color: color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background:
-    linear-gradient(160deg, rgba(197, 161, 97, 0.06), transparent 58%),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold) 6%, transparent), transparent 58%),
     rgba(5, 5, 4, 0.42);
 }
 
@@ -16808,11 +16811,11 @@ html.pdl-panel .daily-hero::after {
   right: 7%;
   width: 220px;
   height: 220px;
-  border: 1px solid rgba(230, 199, 125, 0.08);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 8%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
-  box-shadow: inset 0 0 0 32px rgba(197, 161, 97, 0.016), inset 0 0 0 74px rgba(197, 161, 97, 0.012);
+  box-shadow: inset 0 0 0 32px color-mix(in srgb, var(--panel-gold) 1.6%, transparent), inset 0 0 0 74px color-mix(in srgb, var(--panel-gold) 1.2%, transparent);
 }
 
 html.pdl-panel .pass-season-banner,
@@ -16868,14 +16871,14 @@ html.pdl-panel .stats-rate-seal {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid rgba(230, 199, 125, 0.34);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 38%, rgba(230, 199, 125, 0.16), transparent 58%),
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), transparent 58%),
     rgba(6, 6, 5, 0.72);
   box-shadow:
-    inset 0 0 0 8px rgba(197, 161, 97, 0.04),
-    0 0 32px rgba(197, 161, 97, 0.1);
+    inset 0 0 0 8px color-mix(in srgb, var(--panel-gold) 4%, transparent),
+    0 0 32px color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .pass-level-seal span,
@@ -16902,7 +16905,7 @@ html.pdl-panel .stats-rate-seal strong {
 }
 
 html.pdl-panel .pass-season .premium-active {
-  box-shadow: 0 0 20px rgba(197, 161, 97, 0.08);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--panel-gold) 8%, transparent);
 }
 
 html.pdl-panel .pass-auto-claim {
@@ -16910,7 +16913,7 @@ html.pdl-panel .pass-auto-claim {
   z-index: 1;
   gap: 10px;
   padding: 13px 15px;
-  border: 1px solid rgba(197, 161, 97, 0.16);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background: rgba(5, 5, 4, 0.46);
   color: rgba(255, 255, 255, 0.78);
   font-size: 12px;
@@ -16936,14 +16939,14 @@ html.pdl-panel .pass-season-empty .ui-empty svg {
 }
 
 html.pdl-panel .rewards-page .pass-tier.is-current {
-  box-shadow: inset 0 0 0 1px rgba(230, 199, 125, 0.2);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
 }
 
 html.pdl-panel .rewards-page .pass-tier.is-current .pass-tier-level > span {
-  border-color: rgba(230, 199, 125, 0.5);
-  background: rgba(197, 161, 97, 0.12);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 50%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 12%, transparent);
   color: var(--panel-gold-bright);
-  box-shadow: 0 0 16px rgba(197, 161, 97, 0.16);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .pass-track-card,
@@ -16975,13 +16978,13 @@ html.pdl-panel .pass-quest {
   align-content: start;
   padding: 19px;
   background:
-    linear-gradient(150deg, rgba(197, 161, 97, 0.055), transparent 42%),
+    linear-gradient(150deg, color-mix(in srgb, var(--panel-gold) 5.5%, transparent), transparent 42%),
     rgba(10, 9, 7, 0.72);
 }
 
 html.pdl-panel .pass-quest.is-complete {
-  border-color: rgba(230, 199, 125, 0.34);
-  box-shadow: inset 0 0 30px rgba(197, 161, 97, 0.05);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
+  box-shadow: inset 0 0 30px color-mix(in srgb, var(--panel-gold) 5%, transparent);
 }
 
 html.pdl-panel .pass-quest.is-claimed {
@@ -17010,7 +17013,7 @@ html.pdl-panel .pass-quest-head {
   align-items: center;
   gap: 12px;
   padding-bottom: 13px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .pass-quest-head > div {
@@ -17028,8 +17031,8 @@ html.pdl-panel .pass-quest-icon {
   width: 36px;
   height: 36px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.24);
-  background: rgba(197, 161, 97, 0.075);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 7.5%, transparent);
   color: var(--panel-gold-bright);
   transform: rotate(45deg);
 }
@@ -17046,7 +17049,7 @@ html.pdl-panel .pass-chip {
   align-items: center;
   gap: 5px;
   padding: 5px 8px;
-  border: 1px solid rgba(230, 199, 125, 0.2);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
   color: var(--panel-gold-bright);
   font-size: 10px;
   letter-spacing: 0.04em;
@@ -17096,7 +17099,7 @@ html.pdl-panel .pass-exchange-cost {
   gap: 9px;
   min-height: 50px;
   padding: 8px 10px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(5, 5, 4, 0.4);
 }
 
@@ -17138,7 +17141,7 @@ html.pdl-panel .rewards-page .program-rewards {
 html.pdl-panel .rewards-page .program-reward {
   gap: 8px;
   padding: 8px 10px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   border-radius: 0;
   background: rgba(5, 5, 4, 0.4);
   font-size: 12px;
@@ -17156,7 +17159,7 @@ html.pdl-panel .rewards-page .program-reward small {
 
 html.pdl-panel .rewards-page .program-timeline article {
   padding: 14px 0;
-  border-bottom-color: rgba(197, 161, 97, 0.12);
+  border-bottom-color: color-mix(in srgb, var(--panel-gold) 12%, transparent);
 }
 
 html.pdl-panel .rewards-page .program-timeline article > svg {
@@ -17253,9 +17256,9 @@ html.pdl-panel .daily-day {
   align-content: start;
   overflow: hidden;
   padding: 16px 14px 14px;
-  border: 1px solid rgba(197, 161, 97, 0.14);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
   background:
-    linear-gradient(160deg, rgba(197, 161, 97, 0.05), transparent 50%),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold) 5%, transparent), transparent 50%),
     rgba(5, 5, 4, 0.4);
 }
 
@@ -17263,7 +17266,7 @@ html.pdl-panel .daily-day-stamp {
   position: absolute;
   top: 8px;
   right: 10px;
-  color: rgba(230, 199, 125, 0.12);
+  color: color-mix(in srgb, var(--panel-gold-bright) 12%, transparent);
   font-family: Cambria, serif;
   font-size: 42px;
   font-weight: 400;
@@ -17288,15 +17291,15 @@ html.pdl-panel .daily-day strong {
 }
 
 html.pdl-panel .daily-day.is-today {
-  border-color: rgba(230, 199, 125, 0.46);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 46%, transparent);
   background:
-    linear-gradient(160deg, rgba(197, 161, 97, 0.14), transparent 55%),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 55%),
     rgba(8, 7, 5, 0.55);
-  box-shadow: 0 0 28px rgba(197, 161, 97, 0.1);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--panel-gold) 10%, transparent);
 }
 
 html.pdl-panel .daily-day.is-today .daily-day-stamp {
-  color: rgba(230, 199, 125, 0.2);
+  color: color-mix(in srgb, var(--panel-gold-bright) 20%, transparent);
 }
 
 html.pdl-panel .daily-day.is-released .pass-chip {
@@ -17329,7 +17332,7 @@ html.pdl-panel .daily-pool-entry {
   gap: 10px;
   align-content: start;
   padding: 14px;
-  border: 1px solid rgba(197, 161, 97, 0.12);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
   background: rgba(5, 5, 4, 0.34);
 }
 
@@ -17387,22 +17390,22 @@ html.pdl-panel .stats-rank {
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid rgba(197, 161, 97, 0.18);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
   color: var(--panel-muted);
   font-family: Cambria, serif;
   font-size: 14px;
 }
 
 html.pdl-panel .stats-table .is-podium .stats-rank {
-  border-color: rgba(230, 199, 125, 0.36);
-  background: rgba(197, 161, 97, 0.08);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 36%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 8%, transparent);
   color: var(--panel-gold-bright);
 }
 
 html.pdl-panel .stats-table .is-podium-1 .stats-rank {
-  border-color: rgba(230, 199, 125, 0.55);
-  background: linear-gradient(180deg, rgba(230, 199, 125, 0.22), rgba(197, 161, 97, 0.08));
-  box-shadow: 0 0 14px rgba(197, 161, 97, 0.16);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-gold-bright) 22%, transparent), color-mix(in srgb, var(--panel-gold) 8%, transparent));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--panel-gold) 16%, transparent);
 }
 
 html.pdl-panel .stats-table .is-podium-2 .stats-rank {
@@ -17511,14 +17514,14 @@ html.pdl-panel .supporters-hero::after {
   right: 6%;
   width: 248px;
   height: 248px;
-  border: 1px solid rgba(230, 199, 125, 0.1);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 10%, transparent);
   border-radius: 50%;
   content: '';
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 34px rgba(197, 161, 97, 0.02),
-    inset 0 0 0 78px rgba(197, 161, 97, 0.016),
-    0 0 64px rgba(197, 161, 97, 0.04);
+    inset 0 0 0 34px color-mix(in srgb, var(--panel-gold) 2%, transparent),
+    inset 0 0 0 78px color-mix(in srgb, var(--panel-gold) 1.6%, transparent),
+    0 0 64px color-mix(in srgb, var(--panel-gold) 4%, transparent);
 }
 
 html.pdl-panel .supporters-hero > div {
@@ -17547,12 +17550,12 @@ html.pdl-panel .supporters-hero-emblem {
   width: 56px;
   height: 56px;
   place-items: center;
-  border: 1px solid rgba(230, 199, 125, 0.32);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 32%, transparent);
   background:
-    linear-gradient(160deg, rgba(230, 199, 125, 0.16), rgba(197, 161, 97, 0.04)),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold-bright) 16%, transparent), color-mix(in srgb, var(--panel-gold) 4%, transparent)),
     rgba(8, 7, 5, 0.7);
   color: var(--panel-gold-bright);
-  box-shadow: 0 0 24px rgba(197, 161, 97, 0.12);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--panel-gold) 12%, transparent);
   transform: rotate(45deg);
 }
 
@@ -17572,7 +17575,7 @@ html.pdl-panel .supporters-balance {
   gap: 1px 12px;
   min-width: 215px;
   padding: 16px 19px;
-  border: 1px solid rgba(230, 199, 125, 0.24);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 24%, transparent);
   background: rgba(6, 6, 5, 0.64);
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
 }
@@ -17582,7 +17585,7 @@ html.pdl-panel .supporters-balance > svg {
   width: 40px;
   height: 40px;
   padding: 9px;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
   color: var(--panel-gold-bright);
   stroke-width: 1.4;
@@ -17613,9 +17616,9 @@ html.pdl-panel .supporters-stat {
   align-content: center;
   gap: 4px;
   padding: 16px 16px 16px 50px;
-  border-color: rgba(197, 161, 97, 0.16);
+  border-color: color-mix(in srgb, var(--panel-gold) 16%, transparent);
   background:
-    linear-gradient(160deg, rgba(197, 161, 97, 0.06), transparent 58%),
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-gold) 6%, transparent), transparent 58%),
     rgba(5, 5, 4, 0.42);
 }
 

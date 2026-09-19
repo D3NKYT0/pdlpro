@@ -219,6 +219,7 @@ def test_layout_block_is_validated_and_published(api, admin, tmp_path, settings)
         "surfaces": {
             "buttonPrimary": "images/logo.png",
             "buttonSecondary": "images/logo.png",
+            "buttonTab": "images/logo.png",
         },
     }
     api.force_authenticate(admin)

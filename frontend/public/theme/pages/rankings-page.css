@@ -1,7 +1,7 @@
 .rankings-page {
-  --rank-gold: #d4ad62;
-  --rank-gold-soft: #8d7040;
-  --rank-line: rgba(212, 173, 98, 0.2);
+  --rank-gold: var(--theme-accent, #d4ad62);
+  --rank-gold-soft: var(--theme-accent, #8d7040);
+  --rank-line: color-mix(in srgb, var(--theme-accent, #d4ad62) 20%, transparent);
   --rank-panel: rgba(14, 12, 9, 0.9);
   padding: 0 0 100px;
 }
@@ -15,7 +15,7 @@
   border-bottom: 1px solid var(--rank-line);
   background:
     linear-gradient(90deg, rgba(3, 3, 3, 0.96) 0%, rgba(4, 4, 4, 0.78) 48%, rgba(4, 3, 2, 0.42) 100%),
-    url('/theme/default/images/bg/3.jpg') center 30% / cover no-repeat;
+    var(--theme-art-bg-3, url('/theme/default/images/bg/3.jpg')) center 30% / cover no-repeat;
 }
 
 .rankings-hero::before,
@@ -29,8 +29,8 @@
   inset: 0;
   opacity: 0.1;
   background-image:
-    linear-gradient(rgba(212, 173, 98, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 173, 98, 0.18) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--rank-gold) 18%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--rank-gold) 18%, transparent) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(90deg, #000, transparent 75%);
 }
@@ -40,7 +40,7 @@
   height: 440px;
   right: -150px;
   bottom: -310px;
-  border: 1px solid rgba(212, 173, 98, 0.22);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 22%, transparent);
   transform: rotate(45deg);
 }
 
@@ -109,7 +109,7 @@
 .rankings-hero-card {
   position: relative;
   padding: 34px;
-  border: 1px solid rgba(212, 173, 98, 0.32);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 32%, transparent);
   background: linear-gradient(145deg, rgba(20, 16, 11, 0.94), rgba(6, 6, 5, 0.82));
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.46);
 }
@@ -144,8 +144,8 @@
   height: 58px;
   margin-bottom: 22px;
   color: var(--rank-gold);
-  border: 1px solid rgba(212, 173, 98, 0.28);
-  background: rgba(212, 173, 98, 0.06);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 28%, transparent);
+  background: color-mix(in srgb, var(--rank-gold) 6%, transparent);
   transform: rotate(45deg);
 }
 
@@ -237,7 +237,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 1px;
   margin: 22px 0 0;
-  background: rgba(212, 173, 98, 0.18);
+  background: color-mix(in srgb, var(--rank-gold) 18%, transparent);
 }
 
 .rankings-hero-metrics > div {
@@ -269,7 +269,7 @@
   margin-top: -25px;
   margin-bottom: 56px;
   padding: 6px;
-  border: 1px solid rgba(212, 173, 98, 0.26);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 26%, transparent);
   background: rgba(8, 7, 5, 0.94);
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(14px);
@@ -297,9 +297,9 @@
 
 .rankings-nav a:hover,
 .rankings-nav a.is-active {
-  color: #e8c777;
-  border-color: rgba(212, 173, 98, 0.27);
-  background: linear-gradient(180deg, rgba(212, 173, 98, 0.11), rgba(212, 173, 98, 0.03));
+  color: var(--rank-gold);
+  border-color: color-mix(in srgb, var(--rank-gold) 27%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rank-gold) 11%, transparent), color-mix(in srgb, var(--rank-gold) 3%, transparent));
 }
 
 .rankings-section,
@@ -319,7 +319,7 @@
   height: 1px;
   flex: 1;
   margin-left: 8px;
-  background: linear-gradient(90deg, rgba(212, 173, 98, 0.32), transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--rank-gold) 32%, transparent), transparent);
 }
 
 .rankings-heading > span {
@@ -329,9 +329,9 @@
   place-items: center;
   flex: 0 0 44px;
   color: var(--rank-gold);
-  border: 1px solid rgba(212, 173, 98, 0.36);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 36%, transparent);
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  background: rgba(212, 173, 98, 0.04);
+  background: color-mix(in srgb, var(--rank-gold) 4%, transparent);
 }
 
 .rankings-heading svg {
@@ -424,14 +424,14 @@
 
 .rankings-card.place-1 .rankings-card-inner {
   min-height: 300px;
-  box-shadow: inset 0 0 40px rgba(230, 199, 125, 0.08);
+  box-shadow: inset 0 0 40px color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 8%, transparent);
 }
 
 .rankings-place {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -444,7 +444,7 @@
 }
 
 .rankings-card.place-1 .rankings-place {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
 }
 
 .rankings-crest {
@@ -453,14 +453,14 @@
   justify-content: center;
   width: 68px;
   height: 68px;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-size: 26px;
   font-weight: 600;
-  background: linear-gradient(160deg, rgba(230, 199, 125, 0.18), rgba(0, 0, 0, 0.6));
-  border: 1px solid rgba(230, 199, 125, 0.45);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 18%, transparent), rgba(0, 0, 0, 0.6));
+  border: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 45%, transparent);
   transform: rotate(45deg);
-  box-shadow: inset 0 0 18px rgba(230, 199, 125, 0.12);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 12%, transparent);
 }
 
 .rankings-crest > * {
@@ -514,7 +514,7 @@
 }
 
 .rankings-card strong {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-size: 26px;
   font-weight: 600;
 }
@@ -543,7 +543,7 @@
   gap: 16px;
   padding: 14px 28px;
   color: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid rgba(230, 199, 125, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 8%, transparent);
 }
 
 .rankings-board li:last-child {
@@ -551,7 +551,7 @@
 }
 
 .rankings-board-rank {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-family: Cambria, Georgia, serif;
   font-size: 18px;
 }
@@ -570,7 +570,7 @@
 }
 
 .rankings-board-score {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-weight: 600;
 }
 
@@ -596,7 +596,7 @@
   height: 80px;
   right: -48px;
   bottom: -48px;
-  border: 1px solid rgba(212, 173, 98, 0.24);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 24%, transparent);
   transform: rotate(45deg);
 }
 
@@ -646,7 +646,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   margin: 0;
-  background: rgba(212, 173, 98, 0.18);
+  background: color-mix(in srgb, var(--rank-gold) 18%, transparent);
   border: 1px solid var(--rank-line);
 }
 
@@ -686,7 +686,7 @@
 
 .rankings-castle:hover {
   transform: translateY(-4px);
-  border-color: rgba(212, 173, 98, 0.45);
+  border-color: color-mix(in srgb, var(--rank-gold) 45%, transparent);
   box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38);
 }
 
@@ -722,7 +722,7 @@
   inset: 0;
   display: grid;
   place-items: center;
-  color: rgba(212, 173, 98, 0.35);
+  color: color-mix(in srgb, var(--rank-gold) 35%, transparent);
 }
 
 .rankings-castle-fallback svg {
@@ -774,13 +774,13 @@
   right: 16px;
   z-index: 3;
   padding: 7px 11px;
-  color: #e8c777;
+  color: var(--rank-gold);
   font-size: 10px;
   font-style: normal;
   font-weight: 700;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  border: 1px solid rgba(212, 173, 98, 0.38);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 38%, transparent);
   background: rgba(8, 7, 5, 0.82);
   backdrop-filter: blur(8px);
 }
@@ -829,7 +829,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 1px;
   margin: 0;
-  background: rgba(212, 173, 98, 0.16);
+  background: color-mix(in srgb, var(--rank-gold) 16%, transparent);
 }
 
 .rankings-castle-meta > div {
@@ -858,7 +858,7 @@
 .rankings-castle-meta dd small {
   display: block;
   width: 100%;
-  color: #e8c777;
+  color: var(--rank-gold);
   font-size: 11px;
   letter-spacing: 0.4px;
 }
@@ -879,15 +879,15 @@
 
 .rankings-castle-forces > div {
   padding: 14px 16px;
-  border: 1px solid rgba(212, 173, 98, 0.14);
-  background: rgba(212, 173, 98, 0.04);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 14%, transparent);
+  background: color-mix(in srgb, var(--rank-gold) 4%, transparent);
 }
 
 .rankings-castle-forces h4 {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #e8c777;
+  color: var(--rank-gold);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.4px;
@@ -918,7 +918,7 @@
 
 .rankings-castle-forces li {
   padding: 5px 10px;
-  border: 1px solid rgba(212, 173, 98, 0.18);
+  border: 1px solid color-mix(in srgb, var(--rank-gold) 18%, transparent);
   background: rgba(0, 0, 0, 0.28);
 }
 
@@ -953,11 +953,11 @@
 .rankings-table td {
   text-align: left;
   padding: 14px 22px;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 10%, transparent);
 }
 
 .rankings-table th {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 1.5px;
@@ -984,7 +984,7 @@
   top: 50%;
   width: 16px;
   height: 16px;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   transform: translateY(-50%);
 }
 
@@ -999,7 +999,7 @@
 
 .rankings-search-field input:focus {
   outline: 0;
-  border-color: #c5a161;
+  border-color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .rankings-search-field input::placeholder {
@@ -1033,7 +1033,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  border: 2px solid #c5a161;
+  border: 2px solid var(--theme-accent, var(--panel-gold, #c5a161));
   transform: rotate(45deg);
 }
 

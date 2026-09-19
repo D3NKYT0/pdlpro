@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  border: 1px solid rgba(197, 161, 97, 0.27);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 27%, transparent);
   border-radius: 2px;
   background: rgba(6, 6, 5, 0.7);
 }
@@ -18,15 +18,15 @@
   flex-wrap: wrap;
   gap: 4px;
   padding: 8px;
-  border-bottom: 1px solid rgba(197, 161, 97, 0.16);
-  background: rgba(197, 161, 97, 0.05);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 16%, transparent);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 5%, transparent);
 }
 
 .rich-text-toolbar-sep {
   width: 1px;
   align-self: stretch;
   margin: 2px 4px;
-  background: rgba(197, 161, 97, 0.2);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
 }
 
 .rich-text-tool {
@@ -43,15 +43,15 @@
 }
 
 .rich-text-tool:hover:not(:disabled) {
-  border-color: rgba(197, 161, 97, 0.35);
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 35%, transparent);
   color: #fff;
-  background: rgba(197, 161, 97, 0.1);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 10%, transparent);
 }
 
 .rich-text-tool.is-active {
-  border-color: rgba(197, 161, 97, 0.45);
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent);
   color: var(--panel-gold-bright, #c5a161);
-  background: rgba(197, 161, 97, 0.14);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 14%, transparent);
 }
 
 .rich-text-tool:disabled {
@@ -141,14 +141,14 @@
 .rich-text-editor .tiptap blockquote {
   margin: 0 0 0.85em;
   padding-left: 12px;
-  border-left: 3px solid rgba(197, 161, 97, 0.45);
+  border-left: 3px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent);
   color: rgba(255, 255, 255, 0.65);
 }
 
 .rich-text-content code,
 .rich-text-editor .tiptap code {
   padding: 0.1em 0.35em;
-  border: 1px solid rgba(197, 161, 97, 0.2);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
   background: rgba(0, 0, 0, 0.35);
   font-size: 0.92em;
 }

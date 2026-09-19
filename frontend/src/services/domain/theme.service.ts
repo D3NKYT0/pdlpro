@@ -71,6 +71,7 @@ export interface ThemeLayout {
   surfaces?: {
     buttonPrimary?: string
     buttonSecondary?: string
+    buttonTab?: string
   }
 }
 

@@ -28,7 +28,7 @@
 .cookie-banner-copy strong {
   display: block;
   margin-bottom: 0.4rem;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-size: 1.15rem;
   font-weight: 300;
@@ -44,7 +44,7 @@
 }
 
 .cookie-banner-copy a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .cookie-banner-copy a:hover {
@@ -81,7 +81,7 @@
   max-height: min(86vh, 720px);
   overflow: auto;
   padding: 1.5rem 1.6rem 1.4rem;
-  border: 1px solid rgba(230, 199, 125, 0.28);
+  border: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 28%, transparent);
   background: rgba(12, 10, 8, 0.96);
   color: rgba(255, 255, 255, 0.78);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
@@ -90,7 +90,7 @@
 .cookie-modal header h2,
 .terms-reacceptance-panel h2 {
   margin: 0 0 0.45rem;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-size: 1.35rem;
   font-weight: 300;
@@ -117,7 +117,7 @@
 }
 
 .cookie-modal-categories li {
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 10%, transparent);
 }
 
 .cookie-modal-categories li:last-child {
@@ -134,12 +134,12 @@
 
 .cookie-modal-categories input[type='checkbox'] {
   margin-top: 0.2rem;
-  accent-color: #c5a161;
+  accent-color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .cookie-modal-categories strong {
   display: block;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-weight: 400;
 }
 
@@ -174,7 +174,7 @@
 }
 
 .terms-reacceptance-links a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .terms-reacceptance-links a:hover {
@@ -187,7 +187,7 @@
 }
 
 .terms-reacceptance-panel .auth-check a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .terms-reacceptance-panel .ui-error {

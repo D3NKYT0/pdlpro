@@ -7,7 +7,7 @@
   --help-accent: var(--theme-accent, var(--panel-gold, #c5a161));
   --help-accent-bright: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   --help-surface: var(--theme-surface, var(--panel-surface, #18202d));
-  --help-border: var(--theme-border, var(--panel-border, rgba(230, 199, 125, 0.2)));
+  --help-border: var(--theme-border, var(--panel-border, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 20%, transparent)));
 }
 
 .help-companion-host { position:relative; min-height:0; }
@@ -192,7 +192,7 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
   overflow-y:auto;
   overscroll-behavior:contain;
   scrollbar-width:thin;
-  scrollbar-color:var(--panel-gold-soft, rgba(197, 161, 97, 0.45)) transparent;
+  scrollbar-color:var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent)) transparent;
 }
 .help-messages::-webkit-scrollbar,
 .help-companion::-webkit-scrollbar,
@@ -220,14 +220,14 @@ html.pdl-panel .help-activities .denk-activity-button.btn svg {
 .help-companion::-webkit-scrollbar-thumb:hover,
 .help-companion-menu::-webkit-scrollbar-thumb:hover,
 .help-activities[role=group]::-webkit-scrollbar-thumb:hover {
-  background:linear-gradient(180deg, rgba(230, 199, 125, 0.75), rgba(156, 121, 55, 0.85));
+  background:linear-gradient(180deg, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 75%, transparent), rgba(156, 121, 55, 0.85));
   background-clip:padding-box;
 }
 .help-companion,
 .help-companion-menu,
 .help-activities[role=group] {
   scrollbar-width:thin;
-  scrollbar-color:var(--panel-gold-soft, rgba(197, 161, 97, 0.45)) transparent;
+  scrollbar-color:var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent)) transparent;
 }
 .help-message.from-user { align-self:flex-end; }
 .help-message.from-assistant { align-self:flex-start; }

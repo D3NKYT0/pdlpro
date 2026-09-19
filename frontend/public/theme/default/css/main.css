@@ -382,7 +382,7 @@ nav .site-brand-mark {
   width: 54px;
   height: 54px;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(197, 161, 97, 0.28));
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent));
 }
 
 nav ul li:not(:last-child) {
@@ -579,7 +579,7 @@ nav ul li a {
   height: 244px;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 0 22px rgba(197, 161, 97, 0.2));
+  filter: drop-shadow(0 0 22px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent));
 }
 
 .pdl-emblem-stage::after {
@@ -587,7 +587,7 @@ nav ul li a {
   position: absolute;
   inset: 35px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(216, 173, 93, .12), transparent 68%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 12%, transparent), transparent 68%);
 }
 
 .pdl-emblem-symbol {
@@ -602,11 +602,11 @@ nav ul li a {
   position: absolute;
   z-index: 1;
   inset: 5px;
-  border: 1px solid rgba(216, 178, 98, .22);
-  border-top-color: #d9b665;
-  border-right-color: rgba(216, 178, 98, .52);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
+  border-top-color: var(--theme-accent, #d9b665);
+  border-right-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 52%, transparent);
   border-radius: 50%;
-  box-shadow: 0 0 16px rgba(197, 161, 97, .08), inset 0 0 16px rgba(197, 161, 97, .05);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent), inset 0 0 16px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 5%, transparent);
   animation: pdlEmblemOrbit 11s linear infinite;
 }
 
@@ -618,10 +618,10 @@ nav ul li a {
   width: 8px;
   height: 8px;
   margin-top: -5px;
-  border: 1px solid #d7b263;
+  border: 1px solid var(--theme-accent, #d7b263);
   background: #171109;
   transform: rotate(45deg);
-  box-shadow: 0 0 8px rgba(217, 182, 101, .4);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 40%, transparent);
 }
 
 .pdl-emblem-orbit::before { left: -5px; }
@@ -630,7 +630,7 @@ nav ul li a {
 .pdl-emblem-orbit--inner {
   inset: 20px;
   border-style: dashed;
-  border-color: rgba(216, 178, 98, .34);
+  border-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 34%, transparent);
   animation-duration: 17s;
   animation-direction: reverse;
 }
@@ -725,7 +725,7 @@ nav ul li a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 26px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -945,7 +945,7 @@ nav ul li a {
 }
 
 .w .w-list .wiki div span {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -1056,8 +1056,8 @@ nav ul li a {
 .w .w-list a div div span {
   display: inline-block;
   padding: 6px 14px;
-  color: #c5a161;
-  border: 1px solid rgba(197, 161, 97, 0.42);
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 42%, transparent);
   background: rgba(8, 6, 4, 0.72);
   font-size: 11px;
   font-weight: 600;

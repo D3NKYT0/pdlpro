@@ -170,9 +170,10 @@ def _validate_layout(value, assets: dict) -> None:
             _int_range(public["containerWidth"], "layout.public.containerWidth", 720, 1600)
     if "surfaces" in layout:
         surfaces = _object(
-            layout["surfaces"], "layout.surfaces", set(), {"buttonPrimary", "buttonSecondary"},
+            layout["surfaces"], "layout.surfaces", set(),
+            {"buttonPrimary", "buttonSecondary", "buttonTab"},
         )
-        for key in ("buttonPrimary", "buttonSecondary"):
+        for key in ("buttonPrimary", "buttonSecondary", "buttonTab"):
             if key not in surfaces:
                 continue
             asset = _text(surfaces[key], f"layout.surfaces.{key}", limit=160)

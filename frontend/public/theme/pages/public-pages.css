@@ -39,7 +39,7 @@
 }
 
 .public-empty a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .public-empty a:hover {
@@ -51,7 +51,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  border: 2px solid #c5a161;
+  border: 2px solid var(--theme-accent, var(--panel-gold, #c5a161));
   transform: rotate(45deg);
 }
 
@@ -65,7 +65,7 @@
 
 .public-kicker {
   display: inline-block;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 13px;
   letter-spacing: 1.6px;
   text-transform: uppercase;
@@ -85,7 +85,7 @@
 
 .public-search:focus {
   outline: 0;
-  border-color: #c5a161;
+  border-color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .public-search::placeholder {
@@ -105,7 +105,7 @@
   object-fit: cover;
   object-position: center center;
   background: #16120c;
-  border: 1px solid rgba(197, 161, 97, 0.45);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 45%, transparent);
   clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
 }
 
@@ -155,7 +155,7 @@
   height: 16px;
   margin-top: 3px;
   flex: none;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .stores-place strong,
@@ -227,7 +227,7 @@
 }
 
 .stores-item-list b {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-weight: 400;
 }
 
@@ -372,7 +372,7 @@
 .public-tile em,
 .public-tile .public-tile-action {
   margin-top: auto;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-style: normal;
   font-size: 15px;
   font-weight: 300;
@@ -396,7 +396,7 @@
 .public-rows .public-row {
   display: block;
   padding: 22px 28px;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 10%, transparent);
   color: inherit;
   text-align: left;
 }
@@ -407,11 +407,11 @@
 }
 
 .public-rows a:hover {
-  background: rgba(230, 199, 125, 0.06);
+  background: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 6%, transparent);
 }
 
 .public-rows h3 {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, serif;
   font-size: 24px;
   font-weight: 300;
@@ -460,7 +460,7 @@
 }
 
 .public-accordion article {
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 10%, transparent);
 }
 
 .public-accordion article:last-child {
@@ -474,7 +474,7 @@
   gap: 16px;
   background: transparent;
   border: 0;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, serif;
   font-size: 22px;
   font-weight: 300;
@@ -499,7 +499,7 @@
 }
 
 .public-accordion-body small {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-weight: 700;
 }
 
@@ -509,7 +509,7 @@
 
 .public-accordion .public-chevron {
   margin-left: auto;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 14px;
   transition: transform 0.4s;
 }
@@ -523,7 +523,7 @@
 }
 
 .public-section > h2 {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 22px;
   font-weight: 300;
   text-align: center;
@@ -531,7 +531,7 @@
 }
 
 .public-download i {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 22px;
   margin-bottom: 16px;
 }
@@ -564,7 +564,7 @@
 
 .public-nav a:hover,
 .public-nav a.is-active {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   text-shadow: 0 0 14px orange;
 }
 
@@ -603,7 +603,7 @@
 
 .public-prose a,
 .public-body a {
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .public-prose a:hover,
@@ -615,7 +615,7 @@
 .public-body h2,
 .public-body h3,
 .public-body h4 {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-weight: 300;
   line-height: 1.3;
@@ -665,9 +665,9 @@
 }
 
 .public-body th {
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-weight: 400;
-  background: rgba(197, 161, 97, 0.08);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 8%, transparent);
 }
 
 .public-prose .muted,
@@ -688,7 +688,7 @@
 
 .legal-history-item {
   padding: 1.35rem 1.4rem;
-  border-bottom: 1px solid rgba(230, 199, 125, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 10%, transparent);
 }
 
 .legal-history-item:last-child {
@@ -697,7 +697,7 @@
 
 .legal-history-item h2 {
   margin: 0 0 0.45rem;
-  color: #e6c77d;
+  color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
   font-family: Cambria, Georgia, serif;
   font-size: 1.35rem;
   font-weight: 300;
@@ -705,7 +705,7 @@
 
 .legal-history-item h3 {
   margin: 1rem 0 0.4rem;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 0.95rem;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -731,7 +731,7 @@ button.linkish {
   background: none;
   border: 0;
   padding: 0;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   text-decoration: underline;
   text-underline-offset: 0.15em;
   cursor: pointer;
@@ -747,7 +747,7 @@ button.linkish:hover {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #c5a161;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
   font-size: 16px;
   font-weight: 300;
   margin-bottom: 28px;

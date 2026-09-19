@@ -19,9 +19,12 @@ const LAYOUT_STYLE_KEYS = [
 const SURFACE_STYLE_KEYS = [
   '--theme-button-primary',
   '--theme-button-secondary',
+  '--theme-button-tab',
+  '--theme-art-bg-1',
   '--theme-art-bg-2',
   '--theme-art-bg-3',
   '--theme-art-bg-4',
+  '--theme-art-bg-5',
   '--theme-art-games-box-common',
   '--theme-art-games-box-common-ajar',
   '--theme-art-games-box-common-open',
@@ -220,11 +223,15 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
 
   const buttonPrimary = layout?.surfaces?.buttonPrimary ?? 'images/button/1.png'
   const buttonSecondary = layout?.surfaces?.buttonSecondary ?? 'images/button/2.png'
+  const buttonTab = layout?.surfaces?.buttonTab ?? 'images/button/3.png'
   style.setProperty('--theme-button-primary', cssUrl(themeAsset(buttonPrimary)))
   style.setProperty('--theme-button-secondary', cssUrl(themeAsset(buttonSecondary)))
+  style.setProperty('--theme-button-tab', cssUrl(themeAsset(buttonTab)))
+  style.setProperty('--theme-art-bg-1', cssUrl(themeImage('bg/1.png')))
   style.setProperty('--theme-art-bg-2', cssUrl(themeImage('bg/2.jpg')))
   style.setProperty('--theme-art-bg-3', cssUrl(themeImage('bg/3.jpg')))
   style.setProperty('--theme-art-bg-4', cssUrl(themeImage('bg/4.jpg')))
+  style.setProperty('--theme-art-bg-5', cssUrl(themeImage('bg/5.jpg')))
   for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART })) {
     style.setProperty(key, cssUrl(themeImage(path)))
   }
