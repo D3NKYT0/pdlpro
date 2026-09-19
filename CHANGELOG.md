@@ -10,6 +10,8 @@ Cruma); avatar e ícones do Resumo do perfil no acento do pacote;
 ícones da segurança (sessões, passkeys e contas) no acento;
 paperdoll e herói do marketplace no acento do pacote;
 janela de Skills sem ouro L2 (abas e grupos no acento);
+baús do Cruma com frames fechado/entreaberto/aberto (sem buracos
+nem plinto);
 hero do Cruma com o vídeo da elfa (paisagem + recorte 9:16 no mobile);
 títulos do rodapé clássico alinhados à esquerda no tema Cruma (sem
 vazar o `text-align: center` do portal); chrome estrutural segue o

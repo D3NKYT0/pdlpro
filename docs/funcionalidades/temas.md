@@ -141,9 +141,11 @@ Exemplo:
 
 O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
 de seção (`images/bg/1.png` e `images/bg/2.jpg` … `bg/5.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
-`assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús
-(`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`)
-e as artes `images/games/fishing-pond.webp`,
+`assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús do default
+(`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`).
+O Cruma troca esses arquivos por baús pintados (ciano-esmeralda) no
+próprio pacote e desliga o `image-rendering: pixelated` da arte.
+A central também usa `images/games/fishing-pond.webp`,
 `images/games/fish-{lambari,tilapia,traira,dourado,tucunare,tambaqui,piraiba,surubim,pirarucu,koi,boiuna,serafim}.webp` e
 `images/games/monster-default.webp`, os retratos
 `images/games/monster-{keltir,wolf,goblin,orc,lizardman,ant,werewolf,ogre,drake,death-knight,queen-ant}.webp`
@@ -159,7 +161,8 @@ desenha feltro e gabinete só com tokens). A loja do painel usa
 `images/shop/hall.png`, `images/shop/crate.png` e `images/shop/coins.png`
 (`--theme-art-shop-hall`, `--theme-art-shop-crate`, `--theme-art-shop-coins`)
 no hall, nos pacotes e no carrinho. O script `frontend/scripts/paint-box-chests.py` regenera os baús
-fechados, entreabertos e abertos. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
+pixelados do default. `frontend/scripts/prepare-cruma-box-chests.py`
+recorta o chroma magenta e grava os 12 WebP do Cruma. `frontend/scripts/paint-fishing-rods.py` confere as dez varas.
 Variantes de chrome do painel (`topnav`) ficam para um bump futuro
 do renderer; nesta versão o shell permanece sidebar.
 

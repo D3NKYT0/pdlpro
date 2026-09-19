@@ -50,6 +50,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `#2a2620`) e leem `--panel-gold` / `--theme-bg-deep`. A janela de
   Skills (abas Ativas/Passivas, grupos e fold) deixa o ouro L2
   (`#b7aa8f`, `#d7c28a`) e usa o mesmo chrome das abas de inventário.
+- No tema Cruma, os baús de `/panel/games` repetiam o frame fechado
+  (comum/raro/épico) e deixavam buracos brancos na pedra; o épico
+  ainda sentava num plinto. Os 12 WebP passam a ter poses fechado,
+  entreaberto e aberto na paleta ciano-esmeralda, sem pedestal.
 - No tema Cruma, o `theme.css` do portal centralizava `.site-footer` e deslocava
   os títulos (Explorar, Conta, Legal) das colunas do rodapé clássico. O estilo
   do portal fica só em `.portal-shell` e o layout público trava `text-align: left`

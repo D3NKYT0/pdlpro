@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
@@ -355,6 +356,23 @@ it('o Sair do menu do painel usa o botão padrão, sem círculo nem texto recort
   expect(panel).toMatch(/html\.pdl-panel \.panel-user-account > \.btn\s*\{[\s\S]*?justify-self:\s*end/)
   expect(panel).not.toMatch(/html\.pdl-panel \.panel-user \.btn\s*\{[\s\S]*?border-radius:\s*50%/)
   expect(panel).not.toMatch(/html\.pdl-panel \.panel-user \.btn span\s*\{[\s\S]*?clip:\s*rect/)
+})
+
+it('os baús do Cruma têm frames fechado, entreaberto e aberto distintos', () => {
+  for (const rarity of ['common', 'rare', 'epic', 'legendary'] as const) {
+    const hashes = ['', '-ajar', '-open'].map((pose) => {
+      const file = resolve(crumaThemeDir(), 'images', 'games', `box-${rarity}${pose}.webp`)
+      expect(existsSync(file), file).toBe(true)
+      expect(crumaJson.assets[`images/games/box-${rarity}${pose}.webp`]).toBe(
+        `images/games/box-${rarity}${pose}.webp`,
+      )
+      return createHash('md5').update(readFileSync(file)).digest('hex')
+    })
+    expect(new Set(hashes).size, rarity).toBe(3)
+  }
+  expect(crumaCss).toMatch(
+    /html\[data-pdl-theme="cruma"\]\.pdl-panel \.game-chest-art\s*\{[\s\S]*?image-rendering:\s*auto/,
+  )
 })
 
 it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {
