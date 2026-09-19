@@ -248,7 +248,12 @@ it('mantém o seletor de idioma fora da grade do perfil no rodapé do menu', () 
   expect(account?.querySelector('.panel-user-copy')).toBeTruthy()
   expect(screen.getByRole('combobox', { name: 'Idioma do site' })).toBeVisible()
   expect(screen.getByRole('link', { name: 'Abrir meu perfil' })).toBeVisible()
-  expect(screen.getByRole('button', { name: 'Sair' })).toBeVisible()
+  const logout = screen.getByRole('button', { name: 'Sair' })
+  expect(logout).toBeVisible()
+  expect(logout).toHaveClass('btn', 'ui-button', 'ghost', 'ui-button--secondary', 'ui-button--sm')
+  expect(logout).not.toHaveClass('ui-button--icon')
+  expect(logout).toHaveTextContent('Sair')
+  expect(account).toContainElement(logout)
 })
 
 it('traduz o rodapé e o cabeçalho do menu quando o idioma muda', async () => {

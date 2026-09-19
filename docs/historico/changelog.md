@@ -28,6 +28,28 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Os balões do Denkynho (chat, status e o selo do nome) ainda
+  pintavam pergaminho e ouro clássicos (`rgba(84,58,28)`,
+  `#f0d78a`). Passam a `--theme-surface` / `--theme-accent` do
+  pacote ativo.
+- O play do trailer da home ainda pintava marrom clássico no hover
+  (`rgba(190,129,48)`). O botão e o hover leem `--theme-bg-deep` /
+  `--theme-accent` do pacote ativo.
+- O Sair do rodapé do menu do painel deixava de usar o `Button` padrão: no
+  Classic virava um círculo sem a arte do tema e, no Cruma, a textura
+  `btn-primary` / `btn-secondary` esticava nesse disco e virava um
+  “tambor”. A ação volta a ser o botão compartilhado (`ghost` + `sm`)
+  ao lado do avatar e do nome, com o rótulo visível e a arte do pacote
+  ativo.
+- No perfil, a borda do avatar e os ícones do Resumo (e os fatos do
+  herói) ainda pintavam ouro clássico (`#d6ad55`, `#d9ae59`). Passam a
+  ler `--panel-gold` / `--panel-gold-bright` do pacote ativo. Na
+  segurança, sessões, passkeys e contas ligadas também deixam o
+  `#d9ae59` e leem o acento. No marketplace, o paperdoll (moldura,
+  cantos e slots) e o herói deixam o parchment (`rgba(198,176,130)`,
+  `#2a2620`) e leem `--panel-gold` / `--theme-bg-deep`. A janela de
+  Skills (abas Ativas/Passivas, grupos e fold) deixa o ouro L2
+  (`#b7aa8f`, `#d7c28a`) e usa o mesmo chrome das abas de inventário.
 - No tema Cruma, o `theme.css` do portal centralizava `.site-footer` e deslocava
   os títulos (Explorar, Conta, Legal) das colunas do rodapé clássico. O estilo
   do portal fica só em `.portal-shell` e o layout público trava `text-align: left`
@@ -78,6 +100,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - No painel/admin, selos OFF/REMOTE, o código dos jogos, o rótulo
   de prioridade do suporte e a barra ativa da fila ainda usavam
   ouro cravado (`#d6a767`, `#bea769`). Passam a `--theme-accent`.
+- O tema Cruma passa a publicar o hero da elfa em `images/video.mp4`
+  e o recorte vertical `images/video-mobile.mp4` (720×1280), com
+  posters novos no lugar da torre Classic. O instalador de pacotes
+  aceita `.mp4` para esses assets.
 - A Coming Soon ainda pintava o quadro, o véu e os cantos com âmbar/marrom
   clássico. O painel, a névoa e o seletor de idioma leem `--theme-surface`
   e `--theme-accent`.

@@ -183,6 +183,33 @@ def test_install_activate_restore_default_and_delete(api, admin, tmp_path, setti
 
 
 @pytest.mark.django_db
+def test_package_can_include_hero_mp4(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    archive = theme_zip(
+        extra={"images/video.mp4": b"hero-mp4"},
+        manifest_overrides={
+            "assets": {
+                "images/logo.png": "assets/logo.png",
+                "images/video.mp4": "images/video.mp4",
+            }
+        },
+    )
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile("valorem.zip", archive, content_type="application/zip")},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    storage = tmp_path / "themes" / ThemePackage.objects.get().storage_path
+    assert (storage / "images" / "video.mp4").read_bytes() == b"hero-mp4"
+    activated = api.post(f"/api/v1/staff/themes/{installed.data['package_id']}/activate/")
+    assert activated.status_code == 200
+    published = api.get("/api/v1/public/theme/").data
+    assert published["assets"]["images/video.mp4"].endswith("images/video.mp4")
+
+
+@pytest.mark.django_db
 def test_duplicate_version_is_rejected_without_overwriting(api, admin, tmp_path, settings):
     settings.MEDIA_ROOT = tmp_path
     api.force_authenticate(admin)

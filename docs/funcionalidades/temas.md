@@ -228,8 +228,9 @@ relatórios financeiros, itens customizados e observação de itens) consome tok
 `--panel-*` (texto, muted, accent, surface, border, fundo profundo). As folhas estruturais
 (`coming-soon.css`, `panel.css`, `auth.css`, páginas públicas e chrome compartilhado) pintam
 bordas, glows e barras (progresso do painel, fragmentos, HP, loader, `program-meter`,
-`<progress>` do help/Denkynho e thumbs de scroll) com `color-mix` desses tokens — o ouro
-clássico fica só como fallback. Pacotes personalizam essas cores via `theme.css`; os
+`<progress>` do help/Denkynho, thumbs de scroll, o play do trailer da home e os
+balões de fala do companheiro) com `color-mix` desses tokens — o ouro clássico
+fica só como fallback. Pacotes personalizam essas cores via `theme.css`; os
 fallbacks hex preservam a aparência default quando o token não existe.
 A vitrine pública de lojas usa `--theme-store-sell`, `--theme-store-buy`,
 `--theme-store-package` e `--theme-store-craft` para a cor predominante de cada tipo.
@@ -243,6 +244,9 @@ entrypoint. A página Coming Soon é superfície pública tematizada
 `css/pages/coming-soon.css` pela lista de estilos do tema, não por import local.
 O vídeo de entrada do botão Entrar fica em `videos/coming-soon/video.mp4` e é resolvido
 por `themeVideo` (o mesmo mapa `assets` do pacote).
+O hero da home lê `images/video.mp4` (paisagem) e `images/video-mobile.mp4`
+(recorte 9:16), com `video-poster.jpg` / `video-mobile-poster.jpg`. O instalador
+aceita `.mp4` nesses assets para o pacote substituir o Classic.
 
 ## Segurança e limites
 

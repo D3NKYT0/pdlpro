@@ -3,16 +3,20 @@ import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
-function readCrumaThemeFile(name: 'theme.css' | 'theme.json') {
+function crumaThemeDir() {
   const candidates = [
-    resolve(__dirname, `../../theme-packages/cruma/${name}`),
-    resolve(__dirname, `../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7/${name}`),
+    resolve(__dirname, '../../theme-packages/cruma'),
+    resolve(__dirname, '../../../backend/media/themes/cruma/1.0.0-3cb72e9dcda7'),
   ]
-  const file = candidates.find((path) => existsSync(path))
-  if (!file) {
-    throw new Error(`Cruma ${name} não encontrado no pacote nem no media.`)
+  const dir = candidates.find((path) => existsSync(resolve(path, 'theme.json')))
+  if (!dir) {
+    throw new Error('Cruma theme.json não encontrado no pacote nem no media.')
   }
-  return readFileSync(file, 'utf8')
+  return dir
+}
+
+function readCrumaThemeFile(name: 'theme.css' | 'theme.json') {
+  return readFileSync(resolve(crumaThemeDir(), name), 'utf8')
 }
 
 const themeRoot = resolve(__dirname, '../../public/theme')
@@ -33,6 +37,7 @@ const globalCss = readFileSync(resolve(__dirname, '../styles/global.css'), 'utf8
 const loaderCss = readFileSync(resolve(__dirname, '../../public/bootstrap-loader.css'), 'utf8')
 const uiCss = readFileSync(resolve(__dirname, '../components/ui/ui.css'), 'utf8')
 const helpCss = readFileSync(resolve(__dirname, '../components/help/help.css'), 'utf8')
+const speechCss = readFileSync(resolve(__dirname, '../components/help/speech-bubble.css'), 'utf8')
 const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-progress.css'), 'utf8')
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
@@ -168,6 +173,14 @@ it('Info, Rankings, extras e o loader usam tokens em vez de ouro/default cravado
   expect(homeExtras).toMatch(/\.clan-card\s*\{[\s\S]*?var\(--theme-accent/)
   expect(homeExtras).toMatch(/\.clan-board\s*\{[\s\S]*?var\(--theme-accent/)
   expect(homeExtras).toMatch(/\.ranking-tile\s*\{[\s\S]*?var\(--theme-accent/)
+  expect(homeExtras).toMatch(
+    /\.trailer-facade-play\s*\{[\s\S]*?var\(--theme-bg-deep/,
+  )
+  expect(homeExtras).toMatch(
+    /\.trailer-facade:hover \.trailer-facade-play[\s\S]*?var\(--theme-accent/,
+  )
+  expect(homeExtras).not.toMatch(/rgba\(\s*190\s*,\s*129\s*,\s*48/)
+  expect(homeExtras).not.toMatch(/rgba\(\s*12\s*,\s*10\s*,\s*8/)
   expect(homeExtras).not.toMatch(/\.clan-card\s*\{[\s\S]*?background:\s*#3d3223/)
   expect(homeExtras).not.toMatch(/\.clan-board\s*\{[\s\S]*?rgba\(\s*61\s*,\s*50\s*,\s*35/)
   expect(homeExtras).not.toMatch(/\.ranking-tile\s*\{[\s\S]*?background:\s*#3d3223/)
@@ -207,11 +220,30 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(helpCss).toContain('::-webkit-progress-value')
   expect(helpCss).toContain('::-moz-progress-bar')
   expect(helpCss).toMatch(/progress::-webkit-progress-value[\s\S]*?var\(--help-accent/)
+  expect(helpCss).toMatch(/\.denk-pet-panel header strong\s*\{[\s\S]*?var\(--help-accent-bright/)
+  expect(helpCss).toMatch(/\.help-follow-up\s*\{[\s\S]*?var\(--help-accent-bright/)
   expect(helpCss).not.toMatch(/rgba\(\s*210\s*,\s*170\s*,\s*86/)
   expect(helpCss).not.toMatch(/rgba\(\s*117\s*,\s*85\s*,\s*34/)
   expect(helpCss).not.toMatch(/rgba\(\s*156\s*,\s*121\s*,\s*55/)
+  expect(speechCss).toMatch(/--speech-fill:\s*linear-gradient\([\s\S]*?var\(--theme-surface/)
+  expect(speechCss).toMatch(/\.help-speech-bubble--assistant[\s\S]*?var\(--theme-accent/)
+  expect(speechCss).toMatch(/\.help-speech-bubble--user[\s\S]*?var\(--theme-accent/)
+  expect(speechCss).toMatch(/\.help-speech-bubble--status[\s\S]*?var\(--theme-surface/)
+  expect(speechCss).toMatch(/\.help-speech-bubble--assistant \.help-speech-bubble__name[\s\S]*?var\(--theme-accent/)
+  expect(speechCss).not.toMatch(/rgba\(\s*62\s*,\s*48\s*,\s*28/)
+  expect(speechCss).not.toMatch(/rgba\(\s*84\s*,\s*58\s*,\s*28/)
+  expect(speechCss).not.toMatch(/rgba\(\s*72\s*,\s*52\s*,\s*28/)
+  expect(speechCss).not.toMatch(/rgba\(\s*28\s*,\s*22\s*,\s*16/)
+  expect(speechCss).not.toMatch(/rgba\(\s*34\s*,\s*26\s*,\s*16/)
+  expect(speechCss).not.toMatch(/rgba\(\s*30\s*,\s*24\s*,\s*16/)
+  expect(speechCss).not.toMatch(/rgba\(\s*210\s*,\s*160\s*,\s*70/)
+  expect(speechCss).not.toMatch(/rgba\(\s*240\s*,\s*215\s*,\s*138/)
+  expect(speechCss).not.toMatch(/rgba\(\s*255\s*,\s*236\s*,\s*190/)
+  expect(speechCss).not.toMatch(/#f0d78a/i)
+  expect(speechCss).not.toMatch(/#9ec4e8/i)
   expect(petProgressCss).toContain('::-webkit-progress-value')
   expect(petProgressCss).toMatch(/denk-progress progress::-webkit-progress-value[\s\S]*?var\(--theme-accent/)
+  expect(petProgressCss).toMatch(/\.denk-care-gains\s*\{[\s\S]*?var\(--theme-accent-bright/)
   expect(contextualHelpCss).toContain('--contextual-accent: var(--theme-accent')
   expect(contextualHelpCss).toMatch(/\.contextual-help-need-fill\s*\{[\s\S]*?var\(--theme-accent/)
   expect(contextualHelpCss).not.toMatch(/background:\s*linear-gradient\(90deg, #2f8f7d/)
@@ -234,6 +266,31 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(panel).not.toMatch(/\.theme-active-badge\s*\{[\s\S]*?#9ac49f/)
   expect(panel).not.toMatch(/\.security-secret strong\s*\{[^}]*#f0d28c/)
   expect(panel).not.toMatch(/\.user-profile-stat-list strong\s*\{[\s\S]*?#f0d28c/)
+  expect(panel).toMatch(/\.user-profile-avatar\s*\{[\s\S]*?border:\s*1px solid color-mix\(in srgb, var\(--panel-gold-bright\)/)
+  expect(panel).not.toMatch(/\.user-profile-avatar\s*\{[\s\S]*?#d6ad55/)
+  expect(panel).not.toMatch(/\.user-profile-avatar\s*\{[\s\S]*?#dcb765/)
+  expect(panel).toMatch(/\.user-profile-stat-list > div > svg\s*\{[\s\S]*?color:\s*var\(--panel-gold\)/)
+  expect(panel).not.toMatch(/\.user-profile-stat-list > div > svg\s*\{[\s\S]*?#d9ae59/)
+  expect(panel).toMatch(/\.user-profile-hero-facts svg\s*\{[\s\S]*?color:\s*var\(--panel-gold-bright\)/)
+  expect(panel).toMatch(/\.security-session-list article > svg\s*\{[^}]*color:\s*var\(--panel-gold\)/)
+  expect(panel).toMatch(/\.security-passkey-list article > svg\s*\{[^}]*color:\s*var\(--panel-gold\)/)
+  expect(panel).toMatch(/\.security-provider > i\s*\{[^}]*color:\s*var\(--panel-gold\)/)
+  expect(panel).not.toMatch(/#d9ae59/)
+  expect(panel).toMatch(
+    /html\.pdl-panel \.character-paperdoll\s*\{[^}]*border:\s*1px solid color-mix\(in srgb, var\(--panel-gold-bright\)/,
+  )
+  expect(panel).toMatch(
+    /html\.pdl-panel \.character-paperdoll-corner\s*\{[^}]*border-color:\s*color-mix\(in srgb, var\(--panel-gold-bright\)/,
+  )
+  expect(panel).toMatch(
+    /html\.pdl-panel \.marketplace-hero\s*\{[^}]*var\(--theme-bg-deep\)/,
+  )
+  expect(panel).not.toMatch(/html\.pdl-panel \.character-paperdoll\s*\{[^}]*rgba\(\s*198\s*,\s*176\s*,\s*130/)
+  expect(panel).not.toMatch(/html\.pdl-panel \.character-paperdoll-corner\s*\{[^}]*rgba\(\s*214\s*,\s*188\s*,\s*128/)
+  expect(panel).toMatch(/html\.pdl-panel \.character-skills-tabs button\s*\{[^}]*var\(--panel-muted\)/)
+  expect(panel).toMatch(/html\.pdl-panel \.character-skills-tabs button\.active\s*\{[^}]*var\(--panel-gold-bright\)/)
+  expect(panel).toMatch(/html\.pdl-panel \.character-skills-fold::before[\s\S]*?background:\s*var\(--panel-gold-bright\)/)
+  expect(panel).not.toMatch(/#b7aa8f|#f3e6c4|#d7c28a|#8a7a58/)
   expect(panel).toMatch(/\.dashboard-hero-status \.is-off[\s\S]*?var\(--theme-warn,\s*var\(--theme-accent/)
   expect(panel).not.toMatch(/\.dashboard-hero-status \.is-off[\s\S]*?color:\s*#d6a767/)
   expect(panel).toMatch(/\.security-card \.is-off\s*\{[^}]*var\(--theme-warn,\s*var\(--theme-accent/)
@@ -263,6 +320,10 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaCss).toContain('--theme-button-tab: url("images/button/3.png")')
   expect(crumaCss).toContain('var(--theme-art-bg-3)')
   expect(crumaJson.assets['images/pdl-symbol.svg']).toBe('images/pdl-symbol.png')
+  expect(crumaJson.assets['images/video.mp4']).toBe('images/video.mp4')
+  expect(crumaJson.assets['images/video-mobile.mp4']).toBe('images/video-mobile.mp4')
+  expect(existsSync(resolve(crumaThemeDir(), 'images', 'video.mp4'))).toBe(true)
+  expect(existsSync(resolve(crumaThemeDir(), 'images', 'video-mobile.mp4'))).toBe(true)
   expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\] \.launch-gate\s*\{[\s\S]*?--launch-panel:\s*color-mix\(in srgb, var\(--theme-surface\)/,
   )
@@ -285,6 +346,15 @@ it('heróis do admin e do suporte leem --theme-art-bg e não apagam a arte', () 
   expect(crumaCss).toMatch(
     /html\[data-pdl-theme="cruma"\] \.home-features \.f-list a div::before[\s\S]*?var\(--theme-bg-deep\)/,
   )
+})
+
+it('o Sair do menu do painel usa o botão padrão, sem círculo nem texto recortado', () => {
+  expect(panel).toMatch(
+    /html\.pdl-panel \.panel-user-account\s*\{[\s\S]*?grid-template-columns:\s*40px minmax\(0,\s*1fr\) auto/,
+  )
+  expect(panel).toMatch(/html\.pdl-panel \.panel-user-account > \.btn\s*\{[\s\S]*?justify-self:\s*end/)
+  expect(panel).not.toMatch(/html\.pdl-panel \.panel-user \.btn\s*\{[\s\S]*?border-radius:\s*50%/)
+  expect(panel).not.toMatch(/html\.pdl-panel \.panel-user \.btn span\s*\{[\s\S]*?clip:\s*rect/)
 })
 
 it('o rodapé portal do Cruma não desloca os títulos das colunas do shell clássico', () => {

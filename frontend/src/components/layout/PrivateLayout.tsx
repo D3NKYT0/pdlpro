@@ -228,7 +228,8 @@ export function PrivateLayout() {
                     </span>
                   </NavLink>
                   <Button
-                    className="ghost"
+                    variant="ghost"
+                    size="sm"
                     type="button"
                     title={t("shell.logoutTitle")}
                     onClick={() => {

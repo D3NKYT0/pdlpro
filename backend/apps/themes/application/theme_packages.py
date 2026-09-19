@@ -26,7 +26,7 @@ MAX_EXPANDED_BYTES = 64 * 1024 * 1024
 MAX_FILES = 256
 MAX_FILE_BYTES = 16 * 1024 * 1024
 ALLOWED_SUFFIXES = {
-    ".css", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif",
+    ".css", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".mp4",
     ".woff", ".woff2", ".ttf", ".otf", ".ico", ".json",
 }
 SLUG_RE = re.compile(r"^[a-z][a-z0-9-]{1,63}$")

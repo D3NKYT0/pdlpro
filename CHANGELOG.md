@@ -3,6 +3,14 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **19 de setembro de 2026** — Não publicado:
+balões do Denkynho no acento do tema (sem pergaminho/ouro clássicos);
+hover do play do trailer no acento do tema (sem marrom clássico);
+Sair do menu do painel no botão padrão do tema (sem círculo/tambor no
+Cruma); avatar e ícones do Resumo do perfil no acento do pacote;
+ícones da segurança (sessões, passkeys e contas) no acento;
+paperdoll e herói do marketplace no acento do pacote;
+janela de Skills sem ouro L2 (abas e grupos no acento);
+hero do Cruma com o vídeo da elfa (paisagem + recorte 9:16 no mobile);
 títulos do rodapé clássico alinhados à esquerda no tema Cruma (sem
 vazar o `text-align: center` do portal); chrome estrutural segue o
 acento do tema ativo; cartas do painel, hall e `body` sem fundo marrom

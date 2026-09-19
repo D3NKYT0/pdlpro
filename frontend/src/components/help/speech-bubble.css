@@ -1,9 +1,11 @@
 .help-speech-bubble {
   --speech-ink: var(--theme-text, var(--panel-text, #f7f2e8));
-  --speech-fill: linear-gradient(165deg, rgba(62, 48, 28, 0.96), rgba(28, 22, 16, 0.98));
+  --speech-fill: linear-gradient(165deg, color-mix(in srgb, var(--theme-surface, #18202d) 96%, #000), color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 98%, #000));
   --speech-edge: var(--theme-border, color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 45%, transparent));
-  --speech-glow: var(--panel-gold-soft, color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent));
+  --speech-glow: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 18%, transparent);
   --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
+  --speech-sheen: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 14%, transparent);
+  --speech-tail: color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 98%, #000);
   --speech-tail-x: 18px;
   --speech-radius: 18px 18px 18px 7px;
   position: relative;
@@ -20,7 +22,7 @@
   background: var(--speech-fill);
   box-shadow:
     0 10px 24px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 236, 190, 0.12),
+    inset 0 1px 0 var(--speech-sheen),
     0 0 0 1px var(--speech-glow);
   overflow-wrap: anywhere;
 }
@@ -31,7 +33,7 @@
   width: 38%;
   height: 42%;
   border-radius: inherit;
-  background: linear-gradient(145deg, rgba(255, 236, 190, 0.14), transparent 70%);
+  background: linear-gradient(145deg, var(--speech-sheen), transparent 70%);
   pointer-events: none;
 }
 .help-speech-bubble__panel::after {
@@ -41,7 +43,7 @@
   bottom: -9px;
   width: 16px;
   height: 16px;
-  background: linear-gradient(135deg, transparent 48%, rgba(28, 22, 16, 0.98) 50%);
+  background: linear-gradient(135deg, transparent 48%, var(--speech-tail) 50%);
   border-right: 1px solid var(--speech-edge);
   border-bottom: 1px solid var(--speech-edge);
   transform: rotate(45deg);
@@ -79,28 +81,31 @@
 }
 .help-speech-bubble__content > .muted,
 .help-speech-bubble__content > small.muted {
-  color: var(--theme-muted, rgba(247, 242, 232, 0.72));
+  color: var(--theme-muted, var(--panel-muted, rgba(247, 242, 232, 0.72)));
 }
 
 .help-speech-bubble--assistant {
-  --speech-fill: linear-gradient(165deg, rgba(84, 58, 28, 0.95), rgba(34, 26, 16, 0.98) 55%, rgba(22, 34, 36, 0.96));
+  --speech-fill: linear-gradient(165deg, color-mix(in srgb, var(--theme-surface, #18202d) 88%, var(--theme-accent, var(--panel-gold, #c5a161))), color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 96%, transparent) 55%, color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 94%, var(--theme-accent, var(--panel-gold, #c5a161))));
   --speech-edge: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 55%, transparent);
   --speech-glow: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 22%, transparent);
-  --speech-accent: var(--theme-accent-bright, #f0d78a);
+  --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
+  --speech-tail: color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 94%, var(--theme-accent, var(--panel-gold, #c5a161)));
   --speech-tail-x: 22px;
   --speech-radius: 20px 20px 20px 8px;
   align-self: flex-start;
 }
 .help-speech-bubble--assistant .help-speech-bubble__name {
-  background: linear-gradient(90deg, rgba(210, 160, 70, 0.28), rgba(70, 140, 120, 0.18));
-  border-color: rgba(240, 215, 138, 0.35);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 28%, transparent);
+  border-color: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 35%, transparent);
 }
 
 .help-speech-bubble--user {
-  --speech-fill: linear-gradient(165deg, rgba(36, 58, 82, 0.96), rgba(18, 28, 42, 0.98));
-  --speech-edge: rgba(120, 168, 210, 0.42);
-  --speech-glow: rgba(90, 140, 190, 0.16);
-  --speech-accent: #9ec4e8;
+  --speech-fill: linear-gradient(165deg, color-mix(in srgb, var(--theme-bg-deep, #121820) 88%, var(--theme-accent, var(--panel-gold, #c5a161))), color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 96%, #000));
+  --speech-edge: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 38%, transparent);
+  --speech-glow: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 14%, transparent);
+  --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
+  --speech-sheen: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 12%, transparent);
+  --speech-tail: color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 96%, #000);
   --speech-tail-x: auto;
   --speech-radius: 20px 20px 8px 20px;
   align-self: flex-end;
@@ -109,21 +114,22 @@
 .help-speech-bubble--user .help-speech-bubble__panel::after {
   left: auto;
   right: 22px;
-  background: linear-gradient(135deg, transparent 48%, rgba(18, 28, 42, 0.98) 50%);
-  border-right-color: rgba(120, 168, 210, 0.42);
-  border-bottom-color: rgba(120, 168, 210, 0.42);
+  background: linear-gradient(135deg, transparent 48%, var(--speech-tail) 50%);
+  border-right-color: var(--speech-edge);
+  border-bottom-color: var(--speech-edge);
 }
 .help-speech-bubble--user .help-speech-bubble__name {
-  background: rgba(90, 140, 190, 0.22);
-  border-color: rgba(158, 196, 232, 0.3);
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
+  border-color: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 30%, transparent);
   margin-left: auto;
 }
 
 .help-speech-bubble--status {
-  --speech-fill: linear-gradient(180deg, rgba(72, 52, 28, 0.97), rgba(30, 24, 16, 0.98));
+  --speech-fill: linear-gradient(180deg, color-mix(in srgb, var(--theme-surface, #18202d) 92%, var(--theme-accent, var(--panel-gold, #c5a161))), color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 98%, #000));
   --speech-edge: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 50%, transparent);
   --speech-glow: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 20%, transparent);
   --speech-accent: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d));
+  --speech-tail: color-mix(in srgb, var(--theme-surface, #18202d) 92%, var(--theme-accent, var(--panel-gold, #c5a161)));
   --speech-radius: 16px 16px 16px 16px;
   width: 100%;
 }
@@ -137,7 +143,7 @@
   bottom: auto;
   top: -8px;
   margin-left: -8px;
-  background: linear-gradient(135deg, rgba(72, 52, 28, 0.97) 50%, transparent 52%);
+  background: linear-gradient(135deg, var(--speech-tail) 50%, transparent 52%);
   border: 0;
   border-top: 1px solid var(--speech-edge);
   border-left: 1px solid var(--speech-edge);
@@ -182,6 +188,6 @@
   }
 }
 @keyframes help-speech-glow {
-  0%, 100% { box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 236, 190, 0.12), 0 0 0 1px color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 18%, transparent); }
-  50% { box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 236, 190, 0.18), 0 0 0 1px rgba(240, 215, 138, 0.42); }
+  0%, 100% { box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 var(--speech-sheen), 0 0 0 1px color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 18%, transparent); }
+  50% { box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3), inset 0 1px 0 color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 42%, transparent); }
 }

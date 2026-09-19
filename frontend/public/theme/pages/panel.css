@@ -373,7 +373,7 @@ html.pdl-panel .panel-user {
 
 html.pdl-panel .panel-user-account {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 36px;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   align-items: center;
   gap: 9px;
   min-width: 0;
@@ -431,27 +431,8 @@ html.pdl-panel .panel-user-copy span {
   white-space: nowrap;
 }
 
-html.pdl-panel .panel-user .btn {
-  height: 34px;
-  padding: 0 9px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--panel-gold) 6%, transparent);
-}
-
-html.pdl-panel .panel-user .btn svg {
-  width: 15px;
-  height: 15px;
-}
-
-html.pdl-panel .panel-user .btn span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
+html.pdl-panel .panel-user-account > .btn {
+  justify-self: end;
 }
 
 html.pdl-panel .panel-topbar {
@@ -2665,18 +2646,18 @@ html.pdl-panel .character-paperdoll {
   margin: 0 auto;
   padding: 24px 22px 22px;
   isolation: isolate;
-  border: 1px solid rgba(198, 176, 130, 0.42);
-  outline: 1px solid rgba(90, 78, 54, 0.85);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
   outline-offset: 3px;
   background:
-    radial-gradient(ellipse at 50% 18%, rgba(120, 104, 72, 0.16), transparent 42%),
-    radial-gradient(ellipse at 50% 78%, rgba(70, 58, 40, 0.2), transparent 48%),
+    radial-gradient(ellipse at 50% 18%, color-mix(in srgb, var(--panel-gold) 16%, transparent), transparent 42%),
+    radial-gradient(ellipse at 50% 78%, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 48%),
     repeating-linear-gradient(
       -32deg,
       rgba(255, 255, 255, 0.012) 0 1px,
       transparent 1px 3px
     ),
-    linear-gradient(180deg, #2a2620 0%, #1a1713 42%, #12100d 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #12100d) 82%, var(--panel-gold) 8%) 0%, var(--theme-bg-deep, #12100d) 100%);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.55),
     inset 0 0 28px rgba(0, 0, 0, 0.45),
@@ -2687,7 +2668,7 @@ html.pdl-panel .character-paperdoll-frame {
   pointer-events: none;
   position: absolute;
   inset: 6px;
-  border: 1px solid rgba(168, 148, 108, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   z-index: 0;
 }
 
@@ -2695,7 +2676,7 @@ html.pdl-panel .character-paperdoll-corner {
   position: absolute;
   width: 16px;
   height: 16px;
-  border-color: rgba(214, 188, 128, 0.72);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   border-style: solid;
   border-width: 0;
 }
@@ -2705,7 +2686,7 @@ html.pdl-panel .character-paperdoll-corner.is-tl {
   left: -1px;
   border-top-width: 2px;
   border-left-width: 2px;
-  box-shadow: -3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: -3px -3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-paperdoll-corner.is-tr {
@@ -2713,7 +2694,7 @@ html.pdl-panel .character-paperdoll-corner.is-tr {
   right: -1px;
   border-top-width: 2px;
   border-right-width: 2px;
-  box-shadow: 3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: 3px -3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-paperdoll-corner.is-bl {
@@ -2721,7 +2702,7 @@ html.pdl-panel .character-paperdoll-corner.is-bl {
   left: -1px;
   border-bottom-width: 2px;
   border-left-width: 2px;
-  box-shadow: -3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: -3px 3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-paperdoll-corner.is-br {
@@ -2729,7 +2710,7 @@ html.pdl-panel .character-paperdoll-corner.is-br {
   bottom: -1px;
   border-right-width: 2px;
   border-bottom-width: 2px;
-  box-shadow: 3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: 3px 3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-paperdoll-band {
@@ -2739,7 +2720,7 @@ html.pdl-panel .character-paperdoll-band {
   right: 18px;
   height: 34px;
   border-radius: 999px;
-  background: radial-gradient(ellipse at center, rgba(90, 78, 56, 0.45), transparent 72%);
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--panel-gold) 28%, transparent), transparent 72%);
   opacity: 0.55;
   z-index: 0;
 }
@@ -2803,11 +2784,11 @@ html.pdl-panel .character-equipment-slot-cell {
   height: 58px;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(150, 140, 120, 0.28);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   border-radius: 2px;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.03), transparent 46%),
-    rgba(8, 7, 6, 0.72);
+    color-mix(in srgb, var(--theme-bg-deep, #080706) 72%, transparent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
     inset 0 0 10px rgba(0, 0, 0, 0.55);
@@ -2818,10 +2799,10 @@ html.pdl-panel .character-equipment-slot-cell {
 }
 
 html.pdl-panel .character-equipment-slot.is-filled .character-equipment-slot-cell {
-  border-color: rgba(214, 188, 128, 0.55);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), transparent 58%),
-    rgba(12, 10, 8, 0.88);
+    color-mix(in srgb, var(--theme-bg-deep, #0c0a08) 88%, transparent);
   box-shadow:
     inset 0 0 14px color-mix(in srgb, var(--panel-gold) 8%, transparent),
     0 0 10px color-mix(in srgb, var(--panel-gold) 6%, transparent);
@@ -3025,14 +3006,14 @@ html.pdl-panel .character-bag-tabs button.active {
   border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4%, transparent)),
-    rgba(10, 8, 6, 0.88);
+    color-mix(in srgb, var(--theme-bg-deep, #0a0806) 88%, transparent);
   color: var(--panel-gold-bright);
 }
 
 html.pdl-panel .character-bag-panel {
   padding: 10px;
-  border: 1px solid rgba(90, 82, 70, 0.55);
-  background: #0a0a0a;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  background: var(--theme-bg-deep, #0a0a0a);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.65);
 }
 
@@ -3162,12 +3143,12 @@ html.pdl-panel .character-skills-window {
   position: relative;
   padding: 10px 10px 12px;
   isolation: isolate;
-  border: 1px solid rgba(198, 176, 130, 0.42);
-  outline: 1px solid rgba(90, 78, 54, 0.85);
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--panel-gold) 28%, transparent);
   outline-offset: 3px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(120, 104, 72, 0.16), transparent 38%),
-    linear-gradient(180deg, #2a2620 0%, #16130f 38%, #100e0c 100%);
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--panel-gold) 16%, transparent), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #100e0c) 82%, var(--panel-gold) 8%) 0%, var(--theme-bg-deep, #100e0c) 100%);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.55),
     inset 0 0 28px rgba(0, 0, 0, 0.45),
@@ -3178,7 +3159,7 @@ html.pdl-panel .character-skills-window-frame {
   pointer-events: none;
   position: absolute;
   inset: 5px;
-  border: 1px solid rgba(168, 148, 108, 0.22);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
   z-index: 0;
 }
 
@@ -3186,7 +3167,7 @@ html.pdl-panel .character-skills-corner {
   position: absolute;
   width: 14px;
   height: 14px;
-  border-color: rgba(214, 188, 128, 0.72);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 72%, transparent);
   border-style: solid;
   border-width: 0;
 }
@@ -3196,7 +3177,7 @@ html.pdl-panel .character-skills-corner.is-tl {
   left: -1px;
   border-top-width: 2px;
   border-left-width: 2px;
-  box-shadow: -3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: -3px -3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-skills-corner.is-tr {
@@ -3204,7 +3185,7 @@ html.pdl-panel .character-skills-corner.is-tr {
   right: -1px;
   border-top-width: 2px;
   border-right-width: 2px;
-  box-shadow: 3px -3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: 3px -3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-skills-corner.is-bl {
@@ -3212,7 +3193,7 @@ html.pdl-panel .character-skills-corner.is-bl {
   left: -1px;
   border-bottom-width: 2px;
   border-left-width: 2px;
-  box-shadow: -3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: -3px 3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-skills-corner.is-br {
@@ -3220,7 +3201,7 @@ html.pdl-panel .character-skills-corner.is-br {
   bottom: -1px;
   border-right-width: 2px;
   border-bottom-width: 2px;
-  box-shadow: 3px 3px 0 -1px rgba(214, 188, 128, 0.28);
+  box-shadow: 3px 3px 0 -1px color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
 }
 
 html.pdl-panel .character-skills-titlebar {
@@ -3261,26 +3242,28 @@ html.pdl-panel .character-skills-tabs button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 28px;
-  padding: 0 12px;
-  border: 1px solid rgba(70, 62, 48, 0.95);
-  border-radius: 2px 2px 0 0;
-  background:
-    linear-gradient(180deg, #3a342c 0%, #2a251f 55%, #1c1915 100%);
-  color: #b7aa8f;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--theme-bg-deep, #050504) 42%, transparent);
+  color: var(--panel-muted);
   font-size: 12px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 html.pdl-panel .character-skills-tabs button:hover {
-  color: #efe6d2;
+  border-color: color-mix(in srgb, var(--panel-gold) 34%, transparent);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 html.pdl-panel .character-skills-tabs button.active {
-  border-color: rgba(198, 176, 130, 0.55);
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 42%, transparent);
   background:
-    linear-gradient(180deg, #5a4e3a 0%, #3b3328 60%, #2a241c 100%);
-  color: #f3e6c4;
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-gold) 14%, transparent), color-mix(in srgb, var(--panel-gold) 4%, transparent)),
+    color-mix(in srgb, var(--theme-bg-deep, #0a0806) 88%, transparent);
+  color: var(--panel-gold-bright);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--panel-gold-bright) 22%, transparent);
 }
 
@@ -3291,8 +3274,8 @@ html.pdl-panel .character-skills-body {
   gap: 6px;
   min-height: 120px;
   padding: 8px;
-  border: 1px solid rgba(40, 36, 30, 0.9);
-  background: #0c0b0a;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 16%, transparent);
+  background: var(--theme-bg-deep, #0c0b0a);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.65);
 }
 
@@ -3308,7 +3291,7 @@ html.pdl-panel .character-skills-group-toggle {
   min-height: 22px;
   padding: 0 8px 0 4px;
   border: 0;
-  background: linear-gradient(180deg, rgba(42, 38, 32, 0.95), rgba(22, 20, 16, 0.95));
+  background: color-mix(in srgb, var(--panel-gold) 7%, var(--theme-bg-deep, #161410));
   color: var(--panel-gold);
   font-size: 12px;
   text-align: left;
@@ -3316,16 +3299,16 @@ html.pdl-panel .character-skills-group-toggle {
 }
 
 html.pdl-panel .character-skills-group-toggle:hover {
-  color: #f3e6c4;
+  color: var(--panel-gold-bright);
 }
 
 html.pdl-panel .character-skills-fold {
   width: 12px;
   height: 12px;
   flex: 0 0 12px;
-  border: 1px solid #8a7a58;
-  background: #1a1713;
-  box-shadow: inset 0 0 0 1px #000;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 40%, transparent);
+  background: var(--theme-bg-deep, #1a1713);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.65);
 }
 
 html.pdl-panel .character-skills-fold::before,
@@ -3335,7 +3318,7 @@ html.pdl-panel .character-skills-fold::after {
   width: 6px;
   height: 1px;
   margin: 5px auto 0;
-  background: #d7c28a;
+  background: var(--panel-gold-bright);
 }
 
 html.pdl-panel .character-skills-fold::after {
@@ -4338,7 +4321,7 @@ html.pdl-panel .marketplace-hero {
   gap: 24px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(10, 9, 8, 0.98), rgba(17, 13, 10, 0.84) 64%, rgba(20, 14, 9, 0.62)),
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-bg-deep) 98%, transparent), color-mix(in srgb, var(--theme-bg-deep) 84%, transparent) 64%, color-mix(in srgb, var(--theme-bg-deep) 62%, transparent)),
     var(--theme-art-bg-4) center 42% / cover no-repeat;
 }
 
@@ -4990,7 +4973,7 @@ html.pdl-panel .marketplace-auth-card {
 /* Auctions */
 html.pdl-panel .auction-hero {
   background:
-    linear-gradient(90deg, rgba(10, 9, 8, 0.98), rgba(17, 13, 10, 0.84) 64%, rgba(20, 14, 9, 0.62)),
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-bg-deep) 98%, transparent), color-mix(in srgb, var(--theme-bg-deep) 84%, transparent) 64%, color-mix(in srgb, var(--theme-bg-deep) 62%, transparent)),
     var(--theme-art-bg-3) center 46% / cover no-repeat;
 }
 
@@ -15004,7 +14987,7 @@ html.pdl-panel .security-sessions-intro > p { margin: 0; }
 html.pdl-panel .security-session-list { display: grid; gap: 8px; }
 html.pdl-panel .security-session-list article { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: color-mix(in srgb, var(--panel-gold) 4%, transparent); }
 html.pdl-panel .security-session-list article.is-current { border-color: rgba(111,191,115,.28); background: rgba(111,191,115,.06); }
-html.pdl-panel .security-session-list article > svg { width: 21px; color: #d9ae59; }
+html.pdl-panel .security-session-list article > svg { width: 21px; color: var(--panel-gold); }
 html.pdl-panel .security-session-list article span { display: grid; gap: 3px; min-width: 0; }
 html.pdl-panel .security-session-list article strong { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 html.pdl-panel .security-session-list article small { color: rgba(239,224,194,.48); }
@@ -15041,7 +15024,7 @@ html.pdl-panel .security-add-passkey { display: grid; grid-template-columns: min
 html.pdl-panel .security-add-passkey .field { margin: 0; }
 html.pdl-panel .security-passkey-list { display: grid; gap: 8px; }
 html.pdl-panel .security-passkey-list article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent); background: color-mix(in srgb, var(--panel-gold) 4%, transparent); }
-html.pdl-panel .security-passkey-list article > svg { width: 21px; color: #d9ae59; }
+html.pdl-panel .security-passkey-list article > svg { width: 21px; color: var(--panel-gold); }
 html.pdl-panel .security-passkey-list article span { display: flex; min-width: 0; flex-direction: column; }
 html.pdl-panel .security-passkey-list article small { color: rgba(239,224,194,.48); }
 html.pdl-panel .security-passkey-list article button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #cf7a6d; background: transparent; border: 1px solid rgba(207,122,109,.25); cursor: pointer; }
@@ -15049,7 +15032,7 @@ html.pdl-panel .security-passkey-list article button svg { width: 15px; }
 html.pdl-panel .security-provider { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; min-height: 48px; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent); }
 html.pdl-panel .security-provider:last-child { border: 0; }
 html.pdl-panel .security-provider > svg,
-html.pdl-panel .security-provider > i { width: 22px; height: 22px; color: #d9ae59; font-size: 20px; text-align: center; }
+html.pdl-panel .security-provider > i { width: 22px; height: 22px; color: var(--panel-gold); font-size: 20px; text-align: center; }
 html.pdl-panel .security-provider > span { display: flex; min-width: 0; flex-direction: column; }
 html.pdl-panel .security-provider small { color: rgba(239,224,194,.48); }
 
@@ -15290,7 +15273,7 @@ html.pdl-panel .user-profile-hero-facts li {
 html.pdl-panel .user-profile-hero-facts svg {
   width: 16px;
   height: 16px;
-  color: var(--panel-gold);
+  color: var(--panel-gold-bright);
 }
 
 html.pdl-panel .user-profile-hero-facts span {
@@ -15311,11 +15294,11 @@ html.pdl-panel .user-profile-avatar {
   place-items: center;
   overflow: hidden;
   padding: 0;
-  color: #dcb765;
-  background: #11100d;
-  border: 3px solid #d6ad55;
+  color: var(--panel-gold);
+  background: color-mix(in srgb, var(--panel-gold) 8%, var(--theme-bg-deep, #100e0b));
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 28%, transparent);
   border-radius: 50%;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px color-mix(in srgb, var(--panel-gold) 18%, transparent);
   cursor: pointer;
 }
 
@@ -15336,8 +15319,8 @@ html.pdl-panel .user-profile-avatar > span {
   height: 36px;
   display: grid;
   place-items: center;
-  color: #f8e7bd;
-  background: rgba(5, 5, 5, 0.8);
+  color: var(--panel-text);
+  background: color-mix(in srgb, var(--theme-bg-deep, #100e0b) 82%, transparent);
   transform: translateY(100%);
   transition: transform 180ms ease;
 }
@@ -15503,7 +15486,7 @@ html.pdl-panel .user-profile-stat-list > div {
 html.pdl-panel .user-profile-stat-list > div > svg {
   width: 21px;
   height: 21px;
-  color: #d9ae59;
+  color: var(--panel-gold);
 }
 
 html.pdl-panel .user-profile-stat-list span {

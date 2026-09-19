@@ -25,7 +25,7 @@
   border-radius:inherit;
 }
 .denk-wardrobe>div { justify-items:start; padding:8px 0; }
-.denk-care-gains { padding:10px; border-radius:8px; background:var(--panel-surface); color:var(--panel-gold-bright); }
+.denk-care-gains { padding:10px; border-radius:8px; background:var(--theme-surface, var(--panel-surface)); color:var(--theme-accent-bright, var(--panel-gold-bright)); }
 .denk-mascot .denk-cosmetics { position:absolute; inset:0; pointer-events:none; }
 /* Âncora fixa no bolso do peito (pose de boas-vindas); não reposicionar por emoção. */
 .denk-cosmetics .denk-pin {
