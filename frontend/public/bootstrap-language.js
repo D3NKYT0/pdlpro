@@ -48,6 +48,8 @@
     root.style.setProperty('--loader-accent-bright', chrome.accentBright)
     root.style.setProperty('--loader-bg', chrome.background)
     root.setAttribute('data-pdl-loader-theme', chrome.id)
+    if (chrome.hideWordmark === true) root.setAttribute('data-pdl-loader-wordmark', 'off')
+    else root.removeAttribute('data-pdl-loader-wordmark')
     var mark =
       document.querySelector('#app-bootstrap-loader .global-loader__crest img') ||
       document.querySelector('#app-bootstrap-loader img:not(.global-loader__wordmark)')

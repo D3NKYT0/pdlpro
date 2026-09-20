@@ -10,6 +10,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- O splash HTML e o overlay de rota do tema Saga ficam só com o
+  brasão grande no losango. O wordmark some nos dois loaders.
 - O header do `club-v1` volta ao chrome original do portal: select de
   idioma, Minha conta e Download com as placas e o recorte clássicos.
   O JOGAR AGORA permanece só no hero.

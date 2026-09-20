@@ -22,6 +22,7 @@ afterEach(() => {
   configureRuntimeTheme({})
   document.documentElement.style.cssText = ''
   delete document.documentElement.dataset.pdlLoaderTheme
+  delete document.documentElement.dataset.pdlLoaderWordmark
   document.getElementById('app-bootstrap-loader')?.remove()
 })
 
@@ -98,6 +99,51 @@ it('o cache reabre o splash com o tema da visita anterior', () => {
     '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
+})
+
+it('o tema pode esconder o wordmark nos dois loaders via --loader-wordmark', () => {
+  document.body.innerHTML = `
+    <div id="app-bootstrap-loader" class="global-loader">
+      <div class="global-loader__content">
+        <div class="global-loader__crest"><img src="/theme/default/images/pdl-symbol.svg" alt="" /></div>
+        <img class="global-loader__wordmark" src="/theme/default/images/logo.png" alt="" />
+        <span>Preparando sua jornada</span>
+      </div>
+    </div>`
+  document.documentElement.style.setProperty('--loader-wordmark', 'none')
+  configureRuntimeTheme({
+    'images/pdl-symbol.svg': '/media/themes/saga/1.0.0/images/pdl-symbol.png?v=crest2',
+    'images/logo.png': '/media/themes/saga/1.0.0/images/logo.png',
+  })
+
+  persistAppliedLoaderChrome('saga')
+
+  expect(document.documentElement.dataset.pdlLoaderWordmark).toBe('off')
+  expect(JSON.parse(localStorage.getItem(LOADER_CHROME_STORAGE_KEY) || '{}').hideWordmark).toBe(true)
+})
+
+it('o bootstrap HTML aplica o splash sem wordmark quando o cache pede', () => {
+  document.body.innerHTML = `
+    <div id="app-bootstrap-loader" class="global-loader">
+      <div class="global-loader__content">
+        <img class="global-loader__wordmark" src="/theme/default/images/logo.png" alt="" />
+        <span>Preparando sua jornada</span>
+      </div>
+    </div>`
+  localStorage.setItem(
+    LOADER_CHROME_STORAGE_KEY,
+    JSON.stringify({
+      id: 'saga',
+      symbol: '/media/themes/saga/1.0.0/images/pdl-symbol.png?v=crest2',
+      hideWordmark: true,
+      accent: '#c9a227',
+      accentBright: '#e0bd72',
+      background: '#080705',
+    }),
+  )
+  const source = readFileSync(resolve(__dirname, '../../public/bootstrap-language.js'), 'utf8')
+  window.eval(source)
+  expect(document.documentElement.getAttribute('data-pdl-loader-wordmark')).toBe('off')
 })
 
 it('o tema default ignora acento residual e grava o ouro clássico', () => {

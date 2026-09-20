@@ -127,6 +127,26 @@
   filter: sepia(0.18) brightness(1.08);
 }
 
+html[data-pdl-loader-wordmark="off"] .global-loader__wordmark,
+html[data-pdl-loader-wordmark="off"] .global-loader__content > span {
+  display: none;
+}
+
+html[data-pdl-loader-wordmark="off"] .global-loader__crest {
+  width: 280px;
+  height: 280px;
+}
+
+html[data-pdl-loader-wordmark="off"] .global-loader__crest::before,
+html[data-pdl-loader-wordmark="off"] .global-loader__crest::after {
+  display: none;
+}
+
+html[data-pdl-loader-wordmark="off"] .global-loader__crest img {
+  width: 260px;
+  height: 260px;
+}
+
 .global-loader__content > span {
   color: color-mix(in srgb, var(--loader-mark) 72%, transparent);
   font-size: 10px;

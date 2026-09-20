@@ -381,6 +381,8 @@ it('todas as barras de progresso e thumbs de scroll leem o acento do tema', () =
   expect(loaderCss).toMatch(/\.global-loader::after,\s*#app-bootstrap-loader::after\s*\{[\s\S]*?width:\s*440px/)
   expect(loaderCss).toMatch(/\.global-loader__crest\s*\{[\s\S]*?width:\s*138px/)
   expect(loaderCss).toMatch(/\.global-loader__wordmark\s*\{[\s\S]*?min\(250px/)
+  expect(loaderCss).toMatch(/html\[data-pdl-loader-wordmark="off"\] \.global-loader__wordmark[\s\S]*?display:\s*none/)
+  expect(loaderCss).toMatch(/html\[data-pdl-loader-wordmark="off"\] \.global-loader__crest img[\s\S]*?width:\s*260px/)
   expect(loaderCss).toMatch(/\.global-loader__progress i\s*\{[\s\S]*?var\(--loader-mark-bright/)
   expect(loaderCss).toMatch(/\.global-loader__crest::before/)
   expect(loaderCss).not.toContain('global-loader__marks')

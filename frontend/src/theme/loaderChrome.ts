@@ -6,6 +6,7 @@ export type LoaderChrome = {
   id: string
   symbol: string
   logo?: string
+  hideWordmark?: boolean
   accent: string
   accentBright: string
   background: string
@@ -15,6 +16,7 @@ export const DEFAULT_LOADER_CHROME: LoaderChrome = {
   id: 'default',
   symbol: '/theme/default/images/pdl-symbol.svg',
   logo: '/theme/default/images/logo.png',
+  hideWordmark: false,
   accent: '#d4ad62',
   accentBright: '#e0bd72',
   background: '#080705',
@@ -48,6 +50,7 @@ export function sanitizeLoaderChrome(value: unknown): LoaderChrome | null {
     id: row.id,
     symbol: row.symbol,
     logo: typeof row.logo === 'string' ? row.logo : undefined,
+    hideWordmark: row.hideWordmark === true,
     accent: row.accent.trim(),
     accentBright: row.accentBright.trim(),
     background: row.background.trim(),
@@ -82,6 +85,8 @@ export function applyLoaderChrome(chrome: LoaderChrome) {
   root.style.setProperty('--loader-accent-bright', safe.accentBright)
   root.style.setProperty('--loader-bg', safe.background)
   root.dataset.pdlLoaderTheme = safe.id
+  if (safe.hideWordmark) root.dataset.pdlLoaderWordmark = 'off'
+  else delete root.dataset.pdlLoaderWordmark
   const mark =
     document.querySelector<HTMLImageElement>('#app-bootstrap-loader .global-loader__crest img') ??
     document.querySelector<HTMLImageElement>('#app-bootstrap-loader img:not(.global-loader__wordmark)')
@@ -97,6 +102,14 @@ function readThemeColor(name: string, fallback: string) {
   return isLoaderColor(inline) ? inline : fallback
 }
 
+function readLoaderWordmarkHidden() {
+  if (typeof document === 'undefined') return false
+  const computed = getComputedStyle(document.documentElement).getPropertyValue('--loader-wordmark').trim()
+  if (computed === 'none') return true
+  const inline = document.documentElement.style.getPropertyValue('--loader-wordmark').trim()
+  return inline === 'none'
+}
+
 export function captureLoaderChrome(themeId: string): LoaderChrome {
   const id = THEME_ID.test(themeId) ? themeId : DEFAULT_LOADER_CHROME.id
   const pinDefaultAccent = id === DEFAULT_LOADER_CHROME.id
@@ -106,6 +119,7 @@ export function captureLoaderChrome(themeId: string): LoaderChrome {
     id,
     symbol: isLoaderSymbol(symbol) ? symbol : DEFAULT_LOADER_CHROME.symbol,
     logo: isLoaderSymbol(logo) ? logo : DEFAULT_LOADER_CHROME.logo,
+    hideWordmark: pinDefaultAccent ? false : readLoaderWordmarkHidden(),
     accent: pinDefaultAccent
       ? DEFAULT_LOADER_CHROME.accent
       : readThemeColor('--theme-accent', DEFAULT_LOADER_CHROME.accent),
