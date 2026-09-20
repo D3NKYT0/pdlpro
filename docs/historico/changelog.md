@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.6] - 2026-09-20
+
+Painel e admin do Saga Club sem foto de fundo, splash só com o brasão
+e header do `club-v1` no chrome clássico, consolidados em **20 de setembro de 2026**.
+
 ### Alterado
 
 - No tema Saga Club, painel e admin deixam de usar foto de fundo: só
