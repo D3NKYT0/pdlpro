@@ -522,6 +522,17 @@
     "colCharacterClan": "CHARACTER / CLAN",
     "colScore": "SCORE"
   },
+  "club": {
+    "statsAria": "Server figures",
+    "statsLoading": "Checking the realm...",
+    "statsError": "Could not load the server figures.",
+    "live": "Live",
+    "offline": "Offline",
+    "newsLoading": "Loading news...",
+    "newsError": "Could not load the news.",
+    "newsEmpty": "No news yet.",
+    "viewAllNews": "View all"
+  },
   "downloads": {
     "kicker": "Client",
     "title": "Downloads",

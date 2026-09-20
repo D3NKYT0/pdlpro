@@ -32,6 +32,7 @@ import { supportApi, contentApi } from "../../services/api";
 import { usePanelTheme } from "../../theme/usePanelTheme";
 import { programsApi } from "../../services/api";
 import { useTheme } from "../../theme/ThemeProvider";
+import { isPackagedRenderer } from "../../theme/renderers";
 import { CONTEXTUAL_HELP_OUTLET_ID, ContextualHelp } from "../help/ContextualHelp";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { NotificationCenter } from "../notifications/NotificationCenter";
@@ -89,7 +90,7 @@ export function PrivateLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const isPortal = theme.presentation?.renderer === "portal-v1";
+  const isPortal = isPackagedRenderer(theme.presentation?.renderer);
   const isAdmin = location.pathname.startsWith("/panel/admin");
   const shellCopy = isPortal
     ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)

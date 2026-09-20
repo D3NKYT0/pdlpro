@@ -8,6 +8,8 @@ import { contentLang } from '../i18n/locale'
 import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
+import { ClubHomePage } from '../components/themes/ClubTheme'
+import { isClubRenderer } from '../theme/renderers'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
 import { ThemeHeroVideo } from '../components/ThemeHeroVideo'
 
@@ -392,6 +394,9 @@ function DefaultHomePage() {
 
 export function HomePage() {
   const theme = useTheme()
+  if (isClubRenderer(theme.presentation?.renderer) && theme.presentation) {
+    return <ClubHomePage presentation={theme.presentation} />
+  }
   if (theme.presentation?.renderer === 'portal-v1') {
     return <PortalHomePage presentation={theme.presentation} />
   }

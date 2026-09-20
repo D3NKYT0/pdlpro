@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Renderer homologado `club-v1` para landings cinematográficas (wordmark,
+  dois CTAs, faixa de stats, cards com arte e doca notícia/CTA/ranking).
+  O `portal-v1` continua o portal de gemas; o tema escolhe o layout no
+  `presentation.renderer`.
+
 ## [2.5.4] - 2026-09-19
 
 Identidade pública dinâmica (`.env`, admin e `metadados.json` do tema) e

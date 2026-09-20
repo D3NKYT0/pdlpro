@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { themeAsset } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
+import { isPackagedRenderer } from '../../theme/renderers'
 import { PdlHeroEmblem } from '../PdlSymbol'
 import { ThemeHeroVideo } from '../ThemeHeroVideo'
 
@@ -16,7 +17,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
   const { t } = useTranslation('auth')
   const theme = useTheme()
   const resolvedLead = lead || t('panel.defaultLead')
-  if (theme.presentation?.renderer === 'portal-v1') {
+  if (isPackagedRenderer(theme.presentation?.renderer)) {
     const shell = theme.presentation.shells?.auth
     return (
       <section className="portal-auth-shell" data-theme-surface="auth">

@@ -140,17 +140,21 @@ id de 11 caracteres do YouTube. A equipe edita os mesmos campos em
 **Painel → Administração → Painel e servidor**. `LEGAL_*` continua só no
 `.env`. O pacote versiona `metadados.json` junto com o manifesto.
 
-Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer. Os
-blocos aceitos pelo `portal-v1` são:
+Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer.
+Os renderers homologados são `portal-v1` (portal de gemas, countdown e cards de ícone) e
+`club-v1` (landing cinematográfica: wordmark, dois CTAs, faixa de stats, cards com arte,
+pilares e doca notícia/CTA/ranking). Os blocos comuns são:
 
 | Bloco | Responsabilidade |
 | --- | --- |
 | `navigation` | De 1 a 12 links internos do cabeçalho |
-| `home.hero` | Título, descrição, countdown ISO 8601 e CTA |
-| `home.features` | De 1 a 12 recursos com assets declarados |
+| `home.hero` | Título, descrição, countdown ISO 8601 e CTA. No `club-v1`: `kicker`, `subtitle` e o par `secondaryLabel`/`secondaryTo` |
+| `home.features` | De 1 a 12 recursos com assets declarados. No `club-v1` a arte vira capa do card |
 | `home.ranking` | Abas de ranking ligadas aos dados reais do PDL |
 | `home.cta` e `home.news` | Conversão e listagem de notícias |
-| `home.sections` | Opcional: ordem e visibilidade (`hero`, `features`, `ranking`, `cta`, `news`) |
+| `home.stats` | Só `club-v1`: 1 a 8 itens (`online`, `chronicle`, `rates`, `status`, `custom`) |
+| `home.pillars` | Só `club-v1`: 1 a 8 pilares de texto |
+| `home.sections` | Opcional: ordem e visibilidade. `club-v1` também aceita `stats` e `pillars` |
 | `footer` | Tagline e copyright |
 | `shells.auth`, `shells.panel`, `shells.admin` | Marca e contexto das telas internas |
 
@@ -219,7 +223,9 @@ do renderer; nesta versão o shell permanece sidebar.
 
 O campo opcional `presentation` seleciona um renderer confiável do PDL. O renderer `portal-v1`
 entrega cabeçalho e rodapé próprios, menu móvel, hero com countdown, cards de recursos, rankings
-com abas e dados reais, CTA e notícias. Ele também tematiza as páginas públicas internas,
+com abas e dados reais, CTA e notícias. O renderer `club-v1` troca essa composição pela landing
+cinematográfica (wordmark, CTAs em pílula, stats ao vivo e doca notícia/CTA/ranking) sem
+executar HTML ou JS do ZIP. Os dois tematizam as páginas públicas internas,
 autenticação, painel do jogador e administração. Textos, rotas, itens, assets e os títulos dos
 shells `auth`, `panel` e `admin` são declarados pelo pacote. Com `home.sections`, o pacote
 controla ordem e quais blocos da home aparecem.
@@ -288,7 +294,8 @@ A vitrine pública de lojas usa `--theme-store-sell`, `--theme-store-buy`,
 `--theme-store-package` e `--theme-store-craft` para a cor predominante de cada tipo.
 
 As folhas estruturais em `/theme/public` e `/theme/pages` entram na lista de estilos do default via
-chaves lógicas `css/public/*` e `css/pages/*` (por exemplo `css/pages/coming-soon.css`). Fontes e
+chaves lógicas `css/public/*` e `css/pages/*` (por exemplo `css/pages/coming-soon.css` e
+`css/pages/club.css`). Fontes e
 ícones externos usam `vendor/fonts-public.css`, `vendor/fonts-panel.css` e `vendor/font-awesome.css`
 (fallback CDN). Um pacote pode remapear qualquer uma dessas chaves em `assets` sem alterar o
 entrypoint. A página Coming Soon é superfície pública tematizada
@@ -339,7 +346,7 @@ cd backend
 python -m pytest apps/themes/tests
 
 cd ../frontend
-npm run test:run -- src/theme/ThemeProvider.test.tsx src/theme/theme.test.tsx src/components/themes/PortalTheme.test.tsx src/components/auth/AuthPanel.test.tsx src/components/layout/PrivateLayout.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
+npm run test:run -- src/theme/ThemeProvider.test.tsx src/theme/theme.test.tsx src/theme/renderers.test.ts src/components/themes/PortalTheme.test.tsx src/components/themes/ClubTheme.test.tsx src/components/auth/AuthPanel.test.tsx src/components/layout/PrivateLayout.test.tsx src/pages/admin/AdminThemesPage.test.tsx src/services/domain/theme.service.test.ts
 ```
 
 Homologue o catálogo de componentes, uma página pública, autenticação e painel em desktop e

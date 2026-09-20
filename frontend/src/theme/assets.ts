@@ -291,6 +291,7 @@ function publicThemeStyles(): string[] {
     themeStylesheet('css/pages/rankings-page.css', '/theme/pages/rankings-page.css'),
     themeStylesheet('css/pages/auth.css', '/theme/pages/auth.css'),
     themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css'),
+    themeStylesheet('css/pages/club.css', '/theme/pages/club.css'),
   ]
 }
 

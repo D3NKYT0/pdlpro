@@ -4,7 +4,9 @@ import { useDefaultTheme } from '../../theme/useDefaultTheme'
 import { SiteNav } from './SiteNav'
 import { SiteFooter } from './SiteFooter'
 import { PortalPublicLayout } from '../themes/PortalTheme'
+import { ClubPublicLayout } from '../themes/ClubTheme'
 import { useTheme } from '../../theme/ThemeProvider'
+import { isClubRenderer } from '../../theme/renderers'
 import { serverApi } from '../../services/api'
 import { ComingSoonPage } from '../../pages/ComingSoonPage'
 
@@ -26,6 +28,10 @@ export function PublicLayout() {
 
   if (launchGate && info.data) {
     return <ComingSoonPage info={info.data} />
+  }
+
+  if (isClubRenderer(theme.presentation?.renderer) && theme.presentation) {
+    return <ClubPublicLayout presentation={theme.presentation} />
   }
 
   if (theme.presentation?.renderer === 'portal-v1') {

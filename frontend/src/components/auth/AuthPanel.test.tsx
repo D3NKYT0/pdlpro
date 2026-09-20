@@ -42,6 +42,18 @@ it('renderiza o shell de autenticação declarado pelo tema sem executar HTML do
   expect(screen.getByRole('button', { name: 'Continuar' })).toBeVisible()
 })
 
+it('reusa o shell de autenticação no renderer club-v1', () => {
+  themeState.presentation = {
+    renderer: 'club-v1',
+    shells: { auth: { kicker: 'ENTRE NA SAGA', brand: 'SAGA CLUB' } },
+  }
+
+  render(<AuthPanel title="Entrar" lead="Bem-vindo"><form><button type="submit">Continuar</button></form></AuthPanel>)
+
+  expect(screen.getByText('ENTRE NA SAGA')).toBeVisible()
+  expect(screen.getByRole('img', { name: 'SAGA CLUB' })).toBeVisible()
+})
+
 it('marca a superfície auth no caminho default sem portal', () => {
   themeState.id = 'default'
   themeState.name = 'PDL Classic'

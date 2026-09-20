@@ -159,7 +159,7 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
     enabled: sections.includes('news'),
   })
 
-  const sectionNodes: Record<ThemeHomeSection, ReactNode> = {
+  const sectionNodes: Partial<Record<ThemeHomeSection, ReactNode>> = {
     hero: (
       <section className="hero" key="hero">
         <div className="hero__bg" aria-hidden="true" />

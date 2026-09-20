@@ -176,7 +176,12 @@ def _int_range(value, label: str, minimum: int, maximum: int) -> int:
     return value
 
 
-HOME_SECTIONS = ("hero", "features", "ranking", "cta", "news")
+SUPPORTED_RENDERERS = ("portal-v1", "club-v1")
+HOME_SECTIONS = {
+    "portal-v1": ("hero", "features", "ranking", "cta", "news"),
+    "club-v1": ("hero", "stats", "features", "pillars", "ranking", "cta", "news"),
+}
+STAT_KINDS = ("online", "chronicle", "rates", "status", "custom")
 PANEL_DENSITIES = ("compact", "comfortable", "spacious")
 
 
@@ -223,7 +228,8 @@ def _validate_presentation(value, assets: dict) -> None:
     presentation = _object(
         value, "presentation", {"renderer", "navigation", "home", "footer"}, {"shells"}
     )
-    if presentation["renderer"] != "portal-v1":
+    renderer = presentation["renderer"]
+    if renderer not in SUPPORTED_RENDERERS:
         raise ValidationDomainError("O renderer solicitado pelo tema não é suportado.")
 
     navigation = presentation["navigation"]
@@ -237,19 +243,33 @@ def _validate_presentation(value, assets: dict) -> None:
     home = _object(
         presentation["home"], "presentation.home",
         {"hero", "features", "ranking", "cta", "news"},
-        {"sections"},
+        {"sections", "stats", "pillars"},
     )
     hero = _object(
         home["hero"], "presentation.home.hero",
         {"title", "description", "countdownLabel", "countdownAt", "actionLabel", "actionTo"},
+        {"kicker", "subtitle", "secondaryLabel", "secondaryTo"},
     )
     for key in ("title", "description", "countdownLabel", "actionLabel"):
         _text(hero[key], f"presentation.home.hero.{key}", limit=500 if key == "description" else 120)
+    for key in ("kicker", "subtitle", "secondaryLabel"):
+        if key in hero:
+            _text(hero[key], f"presentation.home.hero.{key}", limit=160)
     _route(hero["actionTo"], "presentation.home.hero.actionTo")
+    if "secondaryLabel" in hero or "secondaryTo" in hero:
+        if "secondaryLabel" not in hero or "secondaryTo" not in hero:
+            raise ValidationDomainError(
+                "presentation.home.hero.secondaryLabel e secondaryTo precisam ser declarados juntos."
+            )
+        _route(hero["secondaryTo"], "presentation.home.hero.secondaryTo")
     try:
         datetime.fromisoformat(_text(hero["countdownAt"], "presentation.home.hero.countdownAt"))
     except ValueError:
         raise ValidationDomainError("presentation.home.hero.countdownAt precisa usar data ISO 8601.") from None
+    if "stats" in home:
+        _validate_home_stats(home["stats"])
+    if "pillars" in home:
+        _validate_home_pillars(home["pillars"])
 
     features = _object(
         home["features"], "presentation.home.features",
@@ -300,14 +320,15 @@ def _validate_presentation(value, assets: dict) -> None:
         _text(section["title"], f"presentation.home.{section_name}.title", limit=120)
 
     if "sections" in home:
+        allowed_sections = HOME_SECTIONS[renderer]
         sections = home["sections"]
         if not isinstance(sections, list) or not sections:
             raise ValidationDomainError("presentation.home.sections precisa ser uma lista não vazia.")
-        if len(sections) > len(HOME_SECTIONS):
+        if len(sections) > len(allowed_sections):
             raise ValidationDomainError("presentation.home.sections possui entradas demais.")
         seen: set[str] = set()
         for index, name in enumerate(sections):
-            if name not in HOME_SECTIONS:
+            if name not in allowed_sections:
                 raise ValidationDomainError(
                     f"presentation.home.sections[{index}] precisa ser uma seção conhecida.",
                 )
@@ -327,6 +348,39 @@ def _validate_presentation(value, assets: dict) -> None:
             )
             _text(shell["kicker"], f"presentation.shells.{shell_name}.kicker", limit=80)
             _text(shell["brand"], f"presentation.shells.{shell_name}.brand", limit=80)
+
+
+def _validate_home_stats(value) -> None:
+    stats = _object(value, "presentation.home.stats", {"items"})
+    items = stats["items"]
+    if not isinstance(items, list) or not 1 <= len(items) <= 8:
+        raise ValidationDomainError("presentation.home.stats.items precisa ter entre 1 e 8 itens.")
+    for index, raw_item in enumerate(items):
+        item = _object(
+            raw_item, f"stats.items[{index}]", {"id", "label", "kind"}, {"value"},
+        )
+        if not isinstance(item["id"], str) or not SLUG_RE.fullmatch(item["id"]):
+            raise ValidationDomainError("Um item de stats possui identificador inválido.")
+        _text(item["label"], f"stats.items[{index}].label", limit=40)
+        if item["kind"] not in STAT_KINDS:
+            raise ValidationDomainError("Um item de stats solicita um tipo não permitido.")
+        if item["kind"] == "custom" and "value" not in item:
+            raise ValidationDomainError("stats.items com kind custom precisa declarar value.")
+        if "value" in item:
+            _text(item["value"], f"stats.items[{index}].value", limit=40)
+
+
+def _validate_home_pillars(value) -> None:
+    pillars = _object(value, "presentation.home.pillars", {"items"}, {"title"})
+    if "title" in pillars:
+        _text(pillars["title"], "presentation.home.pillars.title", limit=120)
+    items = pillars["items"]
+    if not isinstance(items, list) or not 1 <= len(items) <= 8:
+        raise ValidationDomainError("presentation.home.pillars.items precisa ter entre 1 e 8 itens.")
+    for index, raw_item in enumerate(items):
+        item = _object(raw_item, f"pillars.items[{index}]", {"title", "description"})
+        _text(item["title"], f"pillars.items[{index}].title", limit=80)
+        _text(item["description"], f"pillars.items[{index}].description", limit=240)
 
 
 def _validate_css(path: str, content: bytes, available: set[str]) -> None:

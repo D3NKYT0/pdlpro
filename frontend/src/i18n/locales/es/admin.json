@@ -767,7 +767,7 @@
       "files": "Archivos en la raíz: <c>theme.json</c>, <c>theme.css</c>, <c>metadados.json</c> opcional, carpetas <c>images/</c> y <c>fonts/</c>",
       "accepted": "Aceptados: CSS, imágenes, fuentes locales y <c>metadados.json</c> apuntado por <c>theme.json</c>",
       "blocked": "Bloqueados: scripts, HTML ejecutable, Markdown y path traversal",
-      "renderer": "Renderer homologado opcional: <c>portal-v1</c> (navigation, home, shells)",
+      "renderer": "Renderers homologados: <c>portal-v1</c> y <c>club-v1</c> (navigation, home, shells)",
       "activation": "Instalar ≠ activar: actívalo en el catálogo después de la validación"
     },
     "catalogEyebrow": "Catálogo",

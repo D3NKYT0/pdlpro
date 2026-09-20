@@ -17,10 +17,24 @@ export interface ThemeRankingTab {
   kind: 'pvp' | 'pk' | 'clans' | 'level' | 'adena' | 'online'
 }
 
-export type ThemeHomeSection = 'hero' | 'features' | 'ranking' | 'cta' | 'news'
+export type ThemeHomeSection = 'hero' | 'stats' | 'features' | 'pillars' | 'ranking' | 'cta' | 'news'
+
+export type ThemeStatKind = 'online' | 'chronicle' | 'rates' | 'status' | 'custom'
+
+export interface ThemeStatItem {
+  id: string
+  label: string
+  kind: ThemeStatKind
+  value?: string
+}
+
+export interface ThemePillarItem {
+  title: string
+  description: string
+}
 
 export interface ThemePresentation {
-  renderer: 'portal-v1'
+  renderer: 'portal-v1' | 'club-v1'
   navigation: ThemeNavigationItem[]
   home: {
     hero: {
@@ -30,6 +44,10 @@ export interface ThemePresentation {
       countdownAt: string
       actionLabel: string
       actionTo: string
+      kicker?: string
+      subtitle?: string
+      secondaryLabel?: string
+      secondaryTo?: string
     }
     features: {
       title: string
@@ -47,6 +65,8 @@ export interface ThemePresentation {
     }
     cta: { title: string; description: string; actionLabel: string; actionTo: string }
     news: { title: string }
+    stats?: { items: ThemeStatItem[] }
+    pillars?: { title?: string; items: ThemePillarItem[] }
     /** Ordem e visibilidade das seções da home; omitido = ordem padrão completa. */
     sections?: ThemeHomeSection[]
   }

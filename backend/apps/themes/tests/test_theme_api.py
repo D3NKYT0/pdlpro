@@ -322,6 +322,96 @@ def test_layout_rejects_invalid_knobs(api, admin, tmp_path, settings, layout):
 
 
 @pytest.mark.django_db
+def test_club_renderer_accepts_cinematic_home_contract(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    presentation = {
+        "renderer": "club-v1",
+        "navigation": [{"label": "HOME", "to": "/"}],
+        "home": {
+            "hero": {
+                "title": "Saga Club", "kicker": "LINEAGE 2", "subtitle": "INTERLUDE 20X",
+                "description": "Classic spirit", "countdownLabel": "OPENING IN",
+                "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "PLAY NOW",
+                "actionTo": "/register", "secondaryLabel": "LEARN MORE", "secondaryTo": "/info",
+            },
+            "features": {
+                "title": "Why", "subtitle": "Balance", "actionLabel": "SEE ALL",
+                "actionTo": "/info", "items": [
+                    {"title": "Interlude", "description": "Golden era", "asset": "images/logo.png"},
+                ],
+            },
+            "ranking": {
+                "title": "Top", "subtitle": "Names", "actionLabel": "FULL",
+                "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "PVP", "kind": "pvp"}],
+            },
+            "cta": {"title": "Join", "description": "Now", "actionLabel": "CREATE", "actionTo": "/register"},
+            "news": {"title": "NEWS"},
+            "stats": {"items": [
+                {"id": "online", "label": "Online", "kind": "online"},
+                {"id": "rates", "label": "Rates", "kind": "custom", "value": "20x"},
+            ]},
+            "pillars": {"title": "Pillars", "items": [{"title": "PvP", "description": "Skill wins"}]},
+            "sections": ["hero", "stats", "features", "pillars", "cta"],
+        },
+        "footer": {"tagline": "Club", "copyright": "Saga"},
+    }
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "saga.zip", theme_zip(slug="saga", manifest_overrides={"presentation": presentation}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["presentation"]["renderer"] == "club-v1"
+    assert installed.data["presentation"]["home"]["stats"]["items"][1]["value"] == "20x"
+
+
+@pytest.mark.django_db
+def test_club_renderer_rejects_portal_only_section_abuse(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    response = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "bad.zip",
+            theme_zip(manifest_overrides={
+                "presentation": {
+                    "renderer": "portal-v1",
+                    "navigation": [{"label": "HOME", "to": "/"}],
+                    "home": {
+                        "hero": {
+                            "title": "Welcome", "description": "Valorem", "countdownLabel": "OPENING IN",
+                            "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT",
+                            "actionTo": "/downloads",
+                        },
+                        "features": {
+                            "title": "Systems", "subtitle": "Exclusive", "actionLabel": "SEE ALL",
+                            "actionTo": "/info",
+                            "items": [{"title": "Economy", "description": "Balanced", "asset": "images/logo.png"}],
+                        },
+                        "ranking": {
+                            "title": "Rating", "subtitle": "Info", "actionLabel": "FULL",
+                            "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "PVP", "kind": "pvp"}],
+                        },
+                        "cta": {"title": "Ready", "description": "Join", "actionLabel": "GO", "actionTo": "/register"},
+                        "news": {"title": "NEWS"},
+                        "sections": ["stats"],
+                    },
+                    "footer": {"tagline": "X", "copyright": "Y"},
+                },
+            }),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert response.status_code == 400
+    assert ThemePackage.objects.count() == 0
+
+
+@pytest.mark.django_db
 def test_presentation_sections_order_is_published(api, admin, tmp_path, settings):
     settings.MEDIA_ROOT = tmp_path
     presentation = {

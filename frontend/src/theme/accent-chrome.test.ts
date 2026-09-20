@@ -6,6 +6,7 @@ import { expect, it } from 'vitest'
 
 const themeRoot = resolve(__dirname, '../../public/theme')
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
+const club = readFileSync(resolve(themeRoot, 'pages/club.css'), 'utf8')
 const panel = readFileSync(resolve(themeRoot, 'pages/panel.css'), 'utf8')
 const auth = readFileSync(resolve(themeRoot, 'pages/auth.css'), 'utf8')
 const layout = readFileSync(resolve(themeRoot, 'public/css/layout.css'), 'utf8')
@@ -27,6 +28,14 @@ const petProgressCss = readFileSync(resolve(__dirname, '../components/help/pet-p
 const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/contextual-help.css'), 'utf8')
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
+
+it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () => {
+  expect(club).toContain('var(--theme-accent')
+  expect(club).toContain('var(--theme-bg-deep')
+  expect(club).toContain('[data-pdl-renderer="club-v1"]')
+  expect(club).not.toMatch(/#d4ad62/i)
+  expect(club).not.toMatch(/#c5a161/i)
+})
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')

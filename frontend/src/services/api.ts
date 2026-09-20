@@ -58,7 +58,15 @@ export type {
 } from './domain/staffModeration.service'
 export { supportApi, staffSupportApi } from './domain/support.service'
 export { themeApi } from './domain/theme.service'
-export type { ApiTheme, ThemeLayout, ThemePresentation, ThemeHomeSection, ThemeSiteMetadata } from './domain/theme.service'
+export type {
+  ApiTheme,
+  ThemeLayout,
+  ThemePresentation,
+  ThemeHomeSection,
+  ThemeSiteMetadata,
+  ThemeStatItem,
+  ThemePillarItem,
+} from './domain/theme.service'
 export type {
   ApiPanelSettings,
   ApiStaffCoin,

@@ -522,6 +522,17 @@
     "colCharacterClan": "PERSONAGEM / CLÃ",
     "colScore": "PONTUAÇÃO"
   },
+  "club": {
+    "statsAria": "Números do servidor",
+    "statsLoading": "Consultando o reino...",
+    "statsError": "Não foi possível carregar os números do servidor.",
+    "live": "Ao vivo",
+    "offline": "Offline",
+    "newsLoading": "Carregando notícias...",
+    "newsError": "Não foi possível carregar as notícias.",
+    "newsEmpty": "Nenhuma notícia ainda.",
+    "viewAllNews": "Ver todas"
+  },
   "downloads": {
     "kicker": "Cliente",
     "title": "Downloads",
