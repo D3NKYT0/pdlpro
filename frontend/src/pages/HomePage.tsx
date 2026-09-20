@@ -137,9 +137,11 @@ function DefaultHomePage() {
           </span>
           <h1>{t('home.featuresTitle')}</h1>
         </div>
-        <div className="character" aria-hidden="true">
-          <img src={themeImage('home/aden-guardian-v2.webp')} alt="" />
-        </div>
+        {theme.id !== 'saga' ? (
+          <div className="character" aria-hidden="true">
+            <img src={themeImage('home/aden-guardian-v2.webp')} alt="" />
+          </div>
+        ) : null}
         <div className="f-list container">
           {features.map((item, index) => (
             <Link className={`f${index + 1}`} key={item.to} to={item.to}>

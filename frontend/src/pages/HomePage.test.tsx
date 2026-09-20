@@ -29,7 +29,9 @@ function mount() {
   )
 }
 
-beforeEach(() => {
+beforeEach(async () => {
+  const { useTheme } = await import('../theme/ThemeProvider')
+  vi.mocked(useTheme).mockReturnValue({ presentation: null, name: undefined, description: undefined } as never)
   vi.mocked(serverApi.status).mockResolvedValue({ players_online: 12, game_online: true, login_online: true } as never)
   vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Dawn', value: 9800 }])
   vi.mocked(serverApi.info).mockResolvedValue({
@@ -82,6 +84,22 @@ it('usa artes próprias do PDL nos destaques e mantém o guardião central', asy
     'src',
     expect.stringContaining('home/aden-guardian-v2.webp'),
   )
+})
+
+it('no tema saga a home clássica fica só com o fundo, sem o guardião flutuante', async () => {
+  const { useTheme } = await import('../theme/ThemeProvider')
+  vi.mocked(useTheme).mockReturnValue({
+    id: 'saga',
+    presentation: null,
+    builtin: false,
+    name: 'Saga Club',
+  } as never)
+
+  mount()
+  await screen.findByRole('link', { name: /Crônica e Rates/i })
+
+  expect(document.querySelector('.home-features .character')).not.toBeInTheDocument()
+  expect(document.querySelector('.f .character')).not.toBeInTheDocument()
 })
 
 it('aplica cenários próprios às demais alas da página inicial', async () => {

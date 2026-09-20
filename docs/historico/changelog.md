@@ -18,6 +18,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- O brasão S do Saga Club ganha gravura no metal e fundo transparente,
+  sem a placa branca atrás do selo.
+- No tema Saga Club a home clássica fica só com o fundo dos destaques,
+  sem a elfa flutuante no centro.
 - O primeiro paint não mostra mais a página sem CSS: o `#root` fica
   oculto enquanto o splash HTML cobre a tela, e o overlay só some
   depois das folhas públicas/painel e da folha do tema instalado.

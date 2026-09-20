@@ -1013,6 +1013,11 @@
     drop-shadow(0 0 18px color-mix(in srgb, var(--theme-accent, #d4a24a) 18%, transparent));
 }
 
+html[data-pdl-theme="saga"] .home-features .character,
+html[data-pdl-theme="saga"] .f .character {
+  display: none;
+}
+
 .home-features .f-list {
   margin-top: 72px;
 }

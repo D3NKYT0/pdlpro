@@ -53,6 +53,9 @@ it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () =
   expect(club).toContain('.club-hero__character')
   expect(club).toContain('--club-ember')
   expect(club).toMatch(/\.club-hero__character\s*\{[\s\S]*?display:\s*none/)
+  expect(homeExtras).toMatch(
+    /html\[data-pdl-theme="saga"\] \.home-features \.character[\s\S]*?display:\s*none/,
+  )
   expect(club).toMatch(/\.club-hero__title\s*\{[\s\S]*?max-width:\s*18ch/)
   expect(club).toMatch(/\.club-kicker\s*\{[\s\S]*?color:\s*var\(--club-ember\)/)
   expect(club).toMatch(/\.club-nav a::after\s*\{[\s\S]*?background:\s*var\(--club-ember\)/)
