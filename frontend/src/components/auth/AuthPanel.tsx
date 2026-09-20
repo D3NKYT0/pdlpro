@@ -25,7 +25,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
         <div className="portal-auth-frame">
           <div className="portal-auth-brand">
             <span>{shell?.kicker ?? t('panel.kickerFallback')}</span>
-            <img src={themeAsset('images/logo-text.png')} alt={shell?.brand ?? theme.name} />
+            <img src={themeAsset(theme.presentation?.renderer === 'club-v1' ? 'images/logo.png' : 'images/logo-text.png')} alt={shell?.brand ?? theme.name} />
             <h1>{title}</h1>
             <p>{resolvedLead}</p>
           </div>

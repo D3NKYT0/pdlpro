@@ -44,7 +44,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .auth-field > span,
@@ -104,18 +104,33 @@
 }
 
 .auth-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 10px;
   color: rgba(255, 255, 255, 0.75);
-  margin: 8px 0 8px;
+  margin: 4px 0 6px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.auth-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 0;
+  margin: 0.2em 0 0;
+  padding: 0;
+  flex-shrink: 0;
+  accent-color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
 .auth-check a {
   color: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 
-.h.auth-hero .h-link {
+.h.auth-hero .h-link,
+.portal-auth-card .h-link {
   margin-top: 24px;
   margin-bottom: 8px;
   flex-direction: row;
@@ -125,8 +140,14 @@
   gap: 8px;
 }
 
+.portal-auth-card .h-link {
+  flex-direction: column;
+}
+
 .h.auth-hero .h-link button,
-.h.auth-hero .h-link a {
+.h.auth-hero .h-link a,
+.portal-auth-card .h-link button,
+.portal-auth-card .h-link a {
   width: 228px;
   max-width: 100%;
   height: 58px;
@@ -135,6 +156,7 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  padding: 0 16px;
   font-size: 16px;
   line-height: 18px;
   font-weight: 300;
@@ -145,18 +167,23 @@
 }
 
 .h.auth-hero .h-link a:nth-child(2),
-.h.auth-hero .h-link button + a {
+.h.auth-hero .h-link button + a,
+.portal-auth-card .h-link a:nth-child(2),
+.portal-auth-card .h-link button + a {
   background-image: var(--theme-button-secondary, url(/theme/default/images/button/2.png));
 }
 
 .h.auth-hero .h-link button:hover,
-.h.auth-hero .h-link a:hover {
+.h.auth-hero .h-link a:hover,
+.portal-auth-card .h-link button:hover,
+.portal-auth-card .h-link a:hover {
   text-shadow: 0 0 20px color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 50%, transparent);
   transform: translateY(-6px);
   filter: brightness(140%);
 }
 
-.h.auth-hero .h-link button:disabled {
+.h.auth-hero .h-link button:disabled,
+.portal-auth-card .h-link button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
@@ -201,7 +228,7 @@
 
 .auth-methods {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 9px;
 }
 
@@ -262,12 +289,15 @@
 
 @media (max-width: 560px) {
   .auth-methods { grid-template-columns: 1fr; }
-  .h.auth-hero .h-link {
+  .h.auth-hero .h-link,
+  .portal-auth-card .h-link {
     flex-direction: column;
   }
 
   .h.auth-hero .h-link button,
-  .h.auth-hero .h-link a {
+  .h.auth-hero .h-link a,
+  .portal-auth-card .h-link button,
+  .portal-auth-card .h-link a {
     width: min(228px, 100%);
   }
 }

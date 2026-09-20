@@ -27,6 +27,7 @@ vi.mock('../../extensions', () => ({
 }))
 vi.mock('../../theme/assets', () => ({
   themeAsset: (path: string) => `/media/themes/saga/${path}`,
+  themeImage: (path: string) => `/media/themes/saga/images/${path}`,
 }))
 
 const presentation: ThemePresentation = {
@@ -137,14 +138,20 @@ function renderChrome(comingSoon = false) {
   ))
 }
 
-it('compõe o hero dos mockups com wordmark e dois CTAs', () => {
+it('compõe o hero no desenho clássico, sem personagem sobre o castelo', () => {
   renderHome()
+  expect(document.querySelector('.club-hero')).toHaveClass('h')
+  expect(document.querySelector('.pdl-emblem-stage')).toBeTruthy()
+  expect(document.querySelector('.club-hero__character')).not.toBeInTheDocument()
+  expect(document.querySelector('.club-hero__crest')).not.toBeInTheDocument()
   expect(screen.getByRole('heading', { name: 'Saga Club' })).toBeVisible()
-  expect(screen.getByRole('img', { name: 'Saga Club' })).toHaveAttribute('src', '/media/themes/saga/images/logo-text.png')
+  expect(screen.queryByRole('img', { name: 'Saga Club' })).not.toBeInTheDocument()
   expect(screen.getByText('LINEAGE 2')).toBeVisible()
   expect(screen.getByText('INTERLUDE 20X')).toBeVisible()
   expect(screen.getByRole('link', { name: 'JOGAR AGORA' })).toHaveAttribute('href', '/register')
   expect(screen.getByRole('link', { name: 'SAIBA MAIS' })).toHaveAttribute('href', '/info')
+  expect(screen.getByRole('link', { name: 'Explore o reino' })).toHaveAttribute('href', '#club-stats')
+  expect(document.querySelector('.h-link')?.querySelectorAll('a')).toHaveLength(2)
   expect(screen.queryByLabelText('ABERTURA')).not.toBeInTheDocument()
 })
 
@@ -156,6 +163,8 @@ it('pinta os cards com a arte declarada e lê stats reais', async () => {
   expect(screen.getByRole('heading', { name: 'Interlude' })).toBeVisible()
   expect(screen.getByText('x20')).toBeVisible()
   expect(screen.getByText('PvP real')).toBeVisible()
+  expect(document.querySelector('.club-pillar__index')?.textContent).toBe('01')
+  expect(screen.getByRole('link', { name: 'RANKING COMPLETO' })).toHaveAttribute('href', '/rankings')
 })
 
 it('doca notícias, CTA e ranking com dados da API', async () => {
@@ -178,6 +187,9 @@ it('mostra vazio, erro e carregamento nas colunas do dock', async () => {
 
 it('entrega o chrome do clube e o menu móvel', () => {
   renderChrome()
+  expect(document.querySelector('.club-header .club-logo')).toBeNull()
+  expect(document.querySelector('.club-header img[src*="logo-text"]')).toBeNull()
+  expect(document.querySelector('.club-logo--footer img')).toHaveAttribute('src', '/media/themes/saga/images/logo-circle.png')
   expect(screen.getByRole('link', { name: 'JOGAR AGORA' })).toBeVisible()
   fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
   expect(screen.getByRole('navigation', { name: 'Navegação móvel' })).toBeVisible()
@@ -190,5 +202,12 @@ it('aponta a home do tema para /home durante o Coming Soon quando há sessão', 
   session.user = { username: 'root' }
   renderChrome(true)
   expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/home')
-  expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/home')
+  expect(document.querySelector('.club-logo--footer')).toHaveAttribute('href', '/home')
+})
+
+it('com sessão mantém o CTA de jogar e um único Painel no header', () => {
+  session.user = { username: 'root' }
+  renderChrome()
+  expect(screen.getAllByRole('link', { name: 'PAINEL' })).toHaveLength(1)
+  expect(screen.getByRole('link', { name: 'JOGAR AGORA' })).toHaveAttribute('href', '/panel')
 })

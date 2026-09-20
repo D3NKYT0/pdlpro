@@ -15,6 +15,35 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   O `portal-v1` continua o portal de gemas; o tema escolhe o layout no
   `presentation.renderer`.
 
+### Corrigido
+
+- No `club-v1`, o `nav` do header deixava de herdar a SiteNav clássica
+  (`position: fixed` + barra preta): o wordmark e as ações sumiam e um
+  blob dourado aparecia à esquerda do menu.
+- Com sessão aberta, o header do clube repetia **Dashboard** no link de
+  conta e no CTA dourado. O ouro volta a ser o JOGAR AGORA do hero.
+- A faixa de pilares e a doca (notícias, CTA e ranking) do `club-v1`
+  deixa de parecer três caixas soltas: cartões numerados, títulos mais
+  curtos e ações de texto no cabeçalho.
+
+### Alterado
+
+- O tema Saga ganha um brasão de selo (estrela, louro e o dragão de
+  pedra) e três variações da marca, todas sem fundo: wordmark no loader
+  e ícone no favicon. O selo vai ao hero, ao rodapé e ao crest do
+  loader; o wordmark do splash e do login fica só com o nome, sem o
+  dragão ao lado. O header do `club-v1` fica só com menu e ações, sem
+  wordmark. Login e cadastro do `club-v1` usam as placas do tema
+  (`--theme-button-primary` / `--theme-button-secondary`) no tamanho do
+  auth clássico, com o formulário mais espaçado e o aceite de termos
+  alinhado, com o checkbox na mesma linha do texto. No painel, as
+  placas do Saga deixam de inflar altura e padding — o tamanho volta
+  ao botão compartilhado. Os botões do pacote (`1` / `2` / `3`)
+  passam à mesma pedra dourada rachada da marca — placa ouro, placa
+  obsidiana e aba — sem as escamas carmesim. A paleta do chrome volta
+  ao ouro (`--theme-accent`). No hero, o clube segue o Classic (emblema,
+  título, dois CTAs e scroll) sobre o castelo, sem personagem.
+
 ## [2.5.4] - 2026-09-19
 
 Identidade pública dinâmica (`.env`, admin e `metadados.json` do tema) e

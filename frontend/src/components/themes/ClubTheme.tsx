@@ -10,8 +10,10 @@ import type { ThemeHomeSection, ThemePresentation, ThemeStatItem } from '../../s
 import { formatDate, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { rankingPortrait } from '../rankings/rankingsFormat'
-import { themeAsset } from '../../theme/assets'
+import { themeAsset, themeImage } from '../../theme/assets'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
+import { PdlHeroEmblem } from '../PdlSymbol'
+import { ThemeHeroVideo } from '../ThemeHeroVideo'
 import { ButtonLink } from '../ui/Button'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { ErrorNotice, LoadingState } from '../ui/Feedback'
@@ -58,7 +60,7 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
       })),
   ]
   const playTo = user ? '/panel' : presentation.home.hero.actionTo
-  const playLabel = user ? t('portal.dashboard') : presentation.home.hero.actionLabel
+  const playLabel = presentation.home.hero.actionLabel
 
   useEffect(() => setMenuOpen(false), [pathname])
   useEffect(() => {
@@ -70,9 +72,6 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
     <div className="club-shell" data-theme-surface="public" data-theme-renderer="club-v1">
       <header className="club-header">
         <div className="club-header__inner club-wrap">
-          <Link to={landingPath} className="club-logo" aria-label={t('portal.homeAria')}>
-            <img src={themeAsset('images/logo-text.png')} alt={presentation.shells?.auth.brand ?? presentation.footer.copyright} />
-          </Link>
           <nav className="club-nav" aria-label={t('nav.main')}>
             {navigation.map((item) => (
               <Link className={activeRoute(pathname, item.to) ? 'is-active' : undefined} key={`${item.to}-${item.label}`} to={item.to}>
@@ -106,17 +105,21 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
 
       <footer className="club-footer">
         <div className="club-wrap club-footer__inner">
-          <Link to={landingPath} className="club-logo club-logo--footer">
-            <img src={themeAsset('images/logo-footer.png')} alt={presentation.footer.copyright} />
-          </Link>
-          <p className="club-footer__tagline">{presentation.footer.tagline}</p>
+          <div className="club-footer__brand">
+            <Link to={landingPath} className="club-logo club-logo--footer">
+              <img src={themeAsset('images/logo-circle.png')} alt={presentation.footer.copyright} />
+            </Link>
+            <p className="club-footer__tagline">{presentation.footer.tagline}</p>
+          </div>
           <nav className="club-footer__nav" aria-label={t('portal.footerNav')}>
             {navigation.slice(0, 5).map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
           </nav>
-          <p className="club-footer__copy">{presentation.footer.copyright}</p>
-          <p className="club-footer__legal">
-            <Link to="/terms">{t('footer.terms')}</Link> · <Link to="/privacy">{t('footer.privacy')}</Link> · <Link to="/agreement">{t('footer.agreement')}</Link> · <Link to="/cookies">{t('footer.cookies')}</Link> · <Link to="/lgpd">{t('footer.lgpd')}</Link>
-          </p>
+          <div className="club-footer__base">
+            <p className="club-footer__copy">{presentation.footer.copyright}</p>
+            <p className="club-footer__legal">
+              <Link to="/terms">{t('footer.terms')}</Link> · <Link to="/privacy">{t('footer.privacy')}</Link> · <Link to="/agreement">{t('footer.agreement')}</Link> · <Link to="/cookies">{t('footer.cookies')}</Link> · <Link to="/lgpd">{t('footer.lgpd')}</Link>
+            </p>
+          </div>
         </div>
       </footer>
     </div>
@@ -172,28 +175,30 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
 
   const sectionNodes: Partial<Record<ThemeHomeSection, ReactNode>> = {
     hero: (
-      <section className="club-hero" key="hero">
-        <div className="club-hero__bg" aria-hidden="true" />
-        <div className="club-hero__content club-wrap">
-          {hero.kicker ? <p className="club-kicker">{hero.kicker}</p> : null}
-          <h1 className="club-hero__title">
-            <img src={themeAsset('images/logo-text.png')} alt={hero.title} />
-          </h1>
-          {hero.subtitle ? <p className="club-hero__subtitle">{hero.subtitle}</p> : null}
-          <p className="club-hero__desc">{hero.description}</p>
-          <div className="club-hero__actions">
-            <ButtonLink className="club-cta-primary" size="lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
-            {hero.secondaryLabel && hero.secondaryTo ? (
-              <ButtonLink className="club-cta-secondary" variant="secondary" size="lg" to={hero.secondaryTo}>
-                {hero.secondaryLabel}
-              </ButtonLink>
-            ) : null}
-          </div>
+      <section className="h club-hero" key="hero">
+        <ThemeHeroVideo />
+        <div className="h-logo">
+          <PdlHeroEmblem />
+        </div>
+        {hero.kicker ? <p className="club-kicker">{hero.kicker}</p> : null}
+        <h1 className="club-hero__title">{hero.title}</h1>
+        {hero.subtitle ? <p className="club-hero__subtitle">{hero.subtitle}</p> : null}
+        <p className="hero-description">{hero.description}</p>
+        <div className="h-link">
+          <Link to={hero.actionTo}>{hero.actionLabel}</Link>
+          {hero.secondaryLabel && hero.secondaryTo ? (
+            <Link to={hero.secondaryTo}>{hero.secondaryLabel}</Link>
+          ) : null}
+        </div>
+        <div className="h-scroll">
+          <a href={sections.includes('stats') ? '#club-stats' : '#features'} aria-label={t('nav.exploreRealm')}>
+            <img src={themeImage('icons/scroll.png')} alt="" />
+          </a>
         </div>
       </section>
     ),
     stats: stats ? (
-      <section className="club-stats" key="stats" aria-label={t('club.statsAria')}>
+      <section className="club-stats" id="club-stats" key="stats" aria-label={t('club.statsAria')}>
         <div className="club-wrap club-stats__grid">
           {status.isLoading || info.isLoading ? (
             <LoadingState>{t('club.statsLoading')}</LoadingState>
@@ -242,8 +247,9 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
         <div className="club-wrap">
           {pillars.title ? <h2 className="club-pillars__title">{pillars.title}</h2> : null}
           <div className="club-pillars__grid">
-            {pillars.items.map((item) => (
-              <article key={item.title}>
+            {pillars.items.map((item, index) => (
+              <article className="club-pillar" key={item.title}>
+                <span className="club-pillar__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
               </article>
@@ -255,8 +261,13 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
     ranking: (
       <section className="club-ranking" key="ranking">
         <header className="club-section__head">
-          <p className="club-kicker">{ranking.subtitle}</p>
-          <h2>{ranking.title}</h2>
+          <div>
+            {ranking.subtitle ? <p className="club-kicker">{ranking.subtitle}</p> : null}
+            <h2>{ranking.title}</h2>
+          </div>
+          <ButtonLink className="club-dock__more" variant="secondary" size="sm" to={ranking.actionTo}>
+            {ranking.actionLabel}
+          </ButtonLink>
         </header>
         <div className="club-ranking__tabs" role="tablist" aria-label={ranking.title}>
           {ranking.tabs.map((tab) => (
@@ -309,9 +320,6 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
             </table>
           )}
         </div>
-        <ButtonLink className="club-cta-secondary" variant="secondary" to={ranking.actionTo}>
-          {ranking.actionLabel}
-        </ButtonLink>
       </section>
     ),
     cta: (
@@ -327,7 +335,7 @@ export function ClubHomePage({ presentation }: { presentation: ThemePresentation
       <section className="club-news" key="news">
         <header className="club-section__head">
           <h2>{newsContent.title}</h2>
-          <ButtonLink className="club-cta-secondary" variant="secondary" size="sm" to="/news">
+          <ButtonLink className="club-dock__more" variant="secondary" size="sm" to="/news">
             {t('club.viewAllNews')}
           </ButtonLink>
         </header>

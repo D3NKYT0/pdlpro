@@ -68,7 +68,9 @@ export function RegisterPage() {
         </AuthField>
         <label className="auth-check">
           <input type="checkbox" checked={acceptTerms} onChange={(event) => setAcceptTerms(event.target.checked)} required />
-          {t('common.acceptTermsPrefix')} <Link to="/terms">{t('common.terms')}</Link> {t('common.acceptTermsAnd')} <Link to="/privacy">{t('common.privacy')}</Link> {t('common.acceptTermsAlso')} <Link to="/agreement">{t('common.agreement')}</Link>
+          <span>
+            {t('common.acceptTermsPrefix')} <Link to="/terms">{t('common.terms')}</Link> {t('common.acceptTermsAnd')} <Link to="/privacy">{t('common.privacy')}</Link> {t('common.acceptTermsAlso')} <Link to="/agreement">{t('common.agreement')}</Link>
+          </span>
         </label>
         {capabilities.data?.captcha && capabilities.data.hcaptcha_site_key ? (
           <div className="auth-captcha">

@@ -35,6 +35,73 @@ it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () =
   expect(club).toContain('[data-pdl-renderer="club-v1"]')
   expect(club).not.toMatch(/#d4ad62/i)
   expect(club).not.toMatch(/#c5a161/i)
+  expect(club).toMatch(
+    /\[data-pdl-renderer="club-v1"\] \.club-shell nav\s*\{[\s\S]*?position:\s*static/,
+  )
+  expect(club).toMatch(
+    /\[data-pdl-renderer="club-v1"\] \.club-header__inner\s*\{[\s\S]*?grid-template-columns:\s*1fr auto/,
+  )
+  expect(club).toContain('.club-pillar')
+  expect(club).toContain('.club-dock__more')
+  expect(club).toContain('.club-hero__character')
+  expect(club).toContain('--club-ember')
+  expect(club).toMatch(/\.club-hero__character\s*\{[\s\S]*?display:\s*none/)
+  expect(club).toMatch(/\.club-hero__title\s*\{[\s\S]*?max-width:\s*18ch/)
+  expect(club).toMatch(/\.club-kicker\s*\{[\s\S]*?color:\s*var\(--club-ember\)/)
+  expect(club).toMatch(/\.club-nav a::after\s*\{[\s\S]*?background:\s*var\(--club-ember\)/)
+  expect(club).toMatch(/\.club-pillar__index\s*\{[\s\S]*?color:\s*var\(--club-ember\)/)
+  expect(club).toMatch(/\.club-stat strong\s*\{[\s\S]*?var\(--theme-accent-bright/)
+  expect(club).toMatch(/\.club-dock \.club-dock__more\.ui-button\s*\{[\s\S]*?color:\s*var\(--club-ember\)/)
+})
+
+it('no Saga club-v1 o hero segue o Classic no castelo, sem personagem', () => {
+  const sagaTheme = resolve(__dirname, '../../theme-packages/saga/pkg/theme.css')
+  const css = readFileSync(sagaTheme, 'utf8')
+  const character = css.match(
+    /html\[data-pdl-theme="saga"\]\[data-pdl-renderer="club-v1"\] \.club-hero__character\s*\{[\s\S]*?\}/,
+  )?.[0] ?? ''
+  expect(character).toMatch(/display:\s*none/)
+  expect(css).toMatch(/\.h\.club-hero\s*\{[\s\S]*?url\("images\/hero-bg\.jpg"\)/)
+  expect(css).not.toMatch(/images\/bg\/1\.png/)
+  expect(css).toMatch(/\.nav-main a::after\s*\{[\s\S]*?var\(--theme-accent\)/)
+  expect(css).toMatch(/--launch-ember:\s*var\(--theme-accent\)/)
+  expect(css).toMatch(/--theme-ember:\s*var\(--theme-accent\)/)
+  expect(css).toMatch(
+    /\.portal-auth-card \.h-link :is\(button, a\)\s*\{[\s\S]*?var\(--theme-button-primary/,
+  )
+  expect(css).toMatch(
+    /\.portal-auth-card :is\(input:not\(\[type="checkbox"\]\):not\(\[type="radio"\]\), select\)/,
+  )
+  expect(css).toMatch(
+    /\.portal-auth-card \.auth-check\s*\{[\s\S]*?grid-template-columns:\s*16px 1fr/,
+  )
+  const panelButtons = css.match(
+    /html\[data-pdl-theme="saga"\]\.pdl-panel \.btn,\s*html\[data-pdl-theme="saga"\]\.pdl-panel \.btn\.ui-button\s*\{[\s\S]*?\}/,
+  )?.[0] ?? ''
+  expect(panelButtons).toContain('var(--theme-button-primary')
+  expect(panelButtons).not.toMatch(/padding:\s*0 28px/)
+  expect(panelButtons).not.toMatch(/min-height:\s*52px/)
+  const sagaManifest = JSON.parse(
+    readFileSync(resolve(__dirname, '../../theme-packages/saga/pkg/theme.json'), 'utf8'),
+  ) as { assets: Record<string, string> }
+  expect(sagaManifest.assets['images/logo.png']).toBe('images/logo.png')
+  expect(sagaManifest.assets['images/logo.png']).not.toBe('images/logo-text.png')
+  const sagaImages = resolve(__dirname, '../../theme-packages/saga/pkg/images')
+  const hashes = ['logo-circle.png', 'logo-text.png', 'logo.png', 'logo-icon.png'].map((file) => {
+    const path = resolve(sagaImages, file)
+    expect(existsSync(path)).toBe(true)
+    return createHash('md5').update(readFileSync(path)).digest('hex')
+  })
+  expect(new Set(hashes).size).toBe(4)
+  const buttons = ['button/1.png', 'button/2.png', 'button/3.png'].map((file) => {
+    const path = resolve(sagaImages, file)
+    expect(existsSync(path)).toBe(true)
+    const bytes = readFileSync(path)
+    expect(bytes.subarray(12, 16).toString()).toBe('IHDR')
+    expect(bytes[25]).toBe(6)
+    return createHash('md5').update(bytes).digest('hex')
+  })
+  expect(new Set(buttons).size).toBe(3)
 })
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
@@ -91,6 +158,11 @@ it('o chrome do painel e do auth seguem --panel-gold / --theme-accent', () => {
   expect(panelBody).not.toMatch(/rgba\(\s*197\s*,\s*161\s*,\s*97/)
   expect(auth).toContain('var(--theme-accent, var(--panel-gold, #c5a161))')
   expect(auth).not.toMatch(/rgba\(\s*197\s*,\s*161\s*,\s*97/)
+  expect(auth).toMatch(/\.portal-auth-card \.h-link button[\s\S]*?var\(--theme-button-primary/)
+  expect(auth).toMatch(/\.portal-auth-card \.h-link\s*\{[\s\S]*?flex-direction:\s*column/)
+  expect(auth).toMatch(/\.auth-check\s*\{[\s\S]*?grid-template-columns:\s*auto 1fr/)
+  expect(auth).toMatch(/\.auth-check input\[type="checkbox"\]\s*\{[\s\S]*?min-height:\s*0/)
+  expect(auth).toMatch(/\.auth-methods\s*\{[\s\S]*?auto-fit/)
 })
 
 it('o header público e o emblema de auth leem o acento e as artes do tema', () => {

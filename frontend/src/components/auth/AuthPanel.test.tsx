@@ -51,7 +51,7 @@ it('reusa o shell de autenticação no renderer club-v1', () => {
   render(<AuthPanel title="Entrar" lead="Bem-vindo"><form><button type="submit">Continuar</button></form></AuthPanel>)
 
   expect(screen.getByText('ENTRE NA SAGA')).toBeVisible()
-  expect(screen.getByRole('img', { name: 'SAGA CLUB' })).toBeVisible()
+  expect(screen.getByRole('img', { name: 'SAGA CLUB' })).toHaveAttribute('src', '/media/themes/valorem/images/logo.png')
 })
 
 it('marca a superfície auth no caminho default sem portal', () => {
