@@ -38,6 +38,13 @@ function setFavicon(theme: ApiTheme) {
   favicon.href = href
 }
 
+const INSTALLED_STYLE_REV = 'wide1'
+
+export function installedStylesheetHref(url: string, version: string) {
+  const bust = `${version.trim() || '1'}.${INSTALLED_STYLE_REV}`
+  return `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(bust)}`
+}
+
 async function applyTheme(theme: ApiTheme) {
   configureRuntimeTheme(theme.assets)
   applyThemeSurfaceVars(theme.layout)
@@ -49,7 +56,7 @@ async function applyTheme(theme: ApiTheme) {
   if (theme.stylesheet_url) {
     const link = document.createElement('link')
     link.rel = 'stylesheet'
-    link.href = theme.stylesheet_url
+    link.href = installedStylesheetHref(theme.stylesheet_url, theme.version)
     link.dataset.pdlInstalledTheme = theme.id
     activeThemeLink = link
     const loaded = new Promise<void>((resolve) => {

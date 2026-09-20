@@ -158,8 +158,16 @@ html.pdl-panel .shell {
     "sidebar content";
   gap: var(--panel-shell-gap);
   width: 100%;
+  max-width: none;
   min-height: 100vh;
   padding: var(--panel-shell-pad-y) var(--panel-shell-pad-x) var(--panel-shell-pad-bottom);
+}
+
+html[data-pdl-theme="saga"].pdl-panel .shell {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 12px;
 }
 
 html.pdl-panel .sidebar {

@@ -17,6 +17,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- O `accent-chrome` deixa de abrir `theme-packages/saga` na CI: o pacote
+  fica fora do Git, então o caso do Saga só roda quando o ZIP local
+  existe. O chrome estrutural e o Classic continuam obrigatórios.
 - No `club-v1`, o `nav` do header deixava de herdar a SiteNav clássica
   (`position: fixed` + barra preta): o wordmark e as ações sumiam e um
   blob dourado aparecia à esquerda do menu.
@@ -38,7 +41,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   auth clássico, com o formulário mais espaçado e o aceite de termos
   alinhado, com o checkbox na mesma linha do texto. No painel, as
   placas do Saga deixam de inflar altura e padding — o tamanho volta
-  ao botão compartilhado. Os botões do pacote (`1` / `2` / `3`)
+  ao botão compartilhado. O shell do painel Saga deixa de travar em
+  1480px, fica com 12px de margem lateral e acompanha a largura da
+  tela; a folha instalada recarrega com `?v=` para não ficar CSS
+  antigo. Os botões do
+  pacote (`1` / `2` / `3`)
   passam à mesma pedra dourada rachada da marca — placa ouro, placa
   obsidiana e aba — sem as escamas carmesim. A paleta do chrome volta
   ao ouro (`--theme-accent`). No hero, o clube segue o Classic (emblema,

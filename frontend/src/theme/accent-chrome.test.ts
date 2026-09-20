@@ -5,6 +5,8 @@ import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
 const themeRoot = resolve(__dirname, '../../public/theme')
+const sagaPkg = resolve(__dirname, '../../theme-packages/saga/pkg')
+const sagaTheme = resolve(sagaPkg, 'theme.css')
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
 const club = readFileSync(resolve(themeRoot, 'pages/club.css'), 'utf8')
 const panel = readFileSync(resolve(themeRoot, 'pages/panel.css'), 'utf8')
@@ -54,8 +56,9 @@ it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () =
   expect(club).toMatch(/\.club-dock \.club-dock__more\.ui-button\s*\{[\s\S]*?color:\s*var\(--club-ember\)/)
 })
 
-it('no Saga club-v1 o hero segue o Classic no castelo, sem personagem', () => {
-  const sagaTheme = resolve(__dirname, '../../theme-packages/saga/pkg/theme.css')
+it.skipIf(!existsSync(sagaTheme))(
+  'no Saga club-v1 o hero segue o Classic no castelo, sem personagem',
+  () => {
   const css = readFileSync(sagaTheme, 'utf8')
   const character = css.match(
     /html\[data-pdl-theme="saga"\]\[data-pdl-renderer="club-v1"\] \.club-hero__character\s*\{[\s\S]*?\}/,
@@ -81,12 +84,16 @@ it('no Saga club-v1 o hero segue o Classic no castelo, sem personagem', () => {
   expect(panelButtons).toContain('var(--theme-button-primary')
   expect(panelButtons).not.toMatch(/padding:\s*0 28px/)
   expect(panelButtons).not.toMatch(/min-height:\s*52px/)
+  expect(css).toMatch(
+    /html\[data-pdl-theme="saga"\] \.portal-panel-shell \.shell\s*\{[\s\S]*?width:\s*100%/,
+  )
+  expect(css).not.toContain('1480px')
   const sagaManifest = JSON.parse(
-    readFileSync(resolve(__dirname, '../../theme-packages/saga/pkg/theme.json'), 'utf8'),
+    readFileSync(resolve(sagaPkg, 'theme.json'), 'utf8'),
   ) as { assets: Record<string, string> }
   expect(sagaManifest.assets['images/logo.png']).toBe('images/logo.png')
   expect(sagaManifest.assets['images/logo.png']).not.toBe('images/logo-text.png')
-  const sagaImages = resolve(__dirname, '../../theme-packages/saga/pkg/images')
+  const sagaImages = resolve(sagaPkg, 'images')
   const hashes = ['logo-circle.png', 'logo-text.png', 'logo.png', 'logo-icon.png'].map((file) => {
     const path = resolve(sagaImages, file)
     expect(existsSync(path)).toBe(true)
@@ -102,7 +109,8 @@ it('no Saga club-v1 o hero segue o Classic no castelo, sem personagem', () => {
     return createHash('md5').update(bytes).digest('hex')
   })
   expect(new Set(buttons).size).toBe(3)
-})
+  },
+)
 
 it('o quadro da coming soon usa o acento do tema, não o ouro clássico', () => {
   expect(comingSoon).toContain('--launch-ember: var(--theme-accent')
@@ -163,6 +171,9 @@ it('o chrome do painel e do auth seguem --panel-gold / --theme-accent', () => {
   expect(auth).toMatch(/\.auth-check\s*\{[\s\S]*?grid-template-columns:\s*auto 1fr/)
   expect(auth).toMatch(/\.auth-check input\[type="checkbox"\]\s*\{[\s\S]*?min-height:\s*0/)
   expect(auth).toMatch(/\.auth-methods\s*\{[\s\S]*?auto-fit/)
+  expect(panel).toMatch(
+    /html\[data-pdl-theme="saga"\]\.pdl-panel \.shell\s*\{[\s\S]*?max-width:\s*none[\s\S]*?padding-inline:\s*12px/,
+  )
 })
 
 it('o header público e o emblema de auth leem o acento e as artes do tema', () => {

@@ -5,7 +5,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 
 import { themeApi, type ApiTheme } from '../services/api'
 import { themeImage } from './assets'
-import { ThemeProvider, useTheme } from './ThemeProvider'
+import { ThemeProvider, installedStylesheetHref, useTheme } from './ThemeProvider'
 
 vi.mock('../services/domain/theme.service', () => ({ themeApi: { active: vi.fn() } }))
 
@@ -37,6 +37,15 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
+it('versiona a folha instalada para não reusar CSS antigo no mesmo URL', () => {
+  expect(installedStylesheetHref('/media/themes/saga/theme.css', '1.0.0')).toBe(
+    '/media/themes/saga/theme.css?v=1.0.0.wide1',
+  )
+  expect(installedStylesheetHref('/media/themes/saga/theme.css?x=1', '  ')).toBe(
+    '/media/themes/saga/theme.css?x=1&v=1.wide1',
+  )
+})
+
 it('aplica o default preservado retornado pela API', async () => {
   vi.mocked(themeApi.active).mockResolvedValue({
     id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
@@ -54,6 +63,10 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   vi.mocked(themeApi.active).mockResolvedValue(valorem)
   render(<ThemeProvider><Consumer /></ThemeProvider>)
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
+  expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).toHaveAttribute(
+    'href',
+    '/media/themes/valorem/theme.css?v=1.0.0.wide1',
+  )
   fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
