@@ -14,9 +14,12 @@ function nextFrame() {
   return new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()))
 }
 
+export const LOADER_STYLE_SELECTOR =
+  'link[data-pdl-theme], link[data-pdl-panel-theme], link[data-pdl-installed-theme]'
+
 function waitForStylesheets() {
   const links = Array.from(
-    document.querySelectorAll<HTMLLinkElement>('link[data-pdl-theme], link[data-pdl-panel-theme]'),
+    document.querySelectorAll<HTMLLinkElement>(LOADER_STYLE_SELECTOR),
   )
 
   return Promise.all(
@@ -56,9 +59,22 @@ function waitForImages() {
   ).then(() => undefined)
 }
 
+async function waitForLayoutChrome() {
+  const startedAt = performance.now()
+  while (performance.now() - startedAt < 2200) {
+    const ready =
+      document.documentElement.classList.contains('pdl-public') ||
+      document.documentElement.classList.contains('pdl-panel') ||
+      Boolean(document.querySelector(LOADER_STYLE_SELECTOR))
+    if (ready) return
+    await delay(32)
+  }
+}
+
 async function waitForVisualAssets() {
   await nextFrame()
   await nextFrame()
+  await waitForLayoutChrome()
 
   const fontsReady = document.fonts?.ready?.then(() => undefined) ?? Promise.resolve()
   await Promise.race([Promise.all([fontsReady, waitForStylesheets()]), delay(2200)])
@@ -69,7 +85,8 @@ async function waitForVisualAssets() {
 
 const EXIT_MS = 420
 
-function dismissBootstrapLoader() {
+export function dismissBootstrapLoader() {
+  document.documentElement.classList.remove('pdl-booting')
   const node = document.getElementById('app-bootstrap-loader')
   if (!node) return
   node.classList.add('is-leaving', 'global-loader--leaving')

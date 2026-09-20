@@ -194,6 +194,9 @@ it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapead
 it('o splash HTML usa o layout clássico com losango, wordmark e barra', () => {
   const html = readFileSync(resolve(__dirname, '../../index.html'), 'utf8')
   expect(html).toContain('bootstrap-loader.css')
+  expect(html).toContain('class="pdl-booting"')
+  expect(html).toMatch(/html\.pdl-booting #root\s*\{\s*visibility:\s*hidden/)
+  expect(html).toMatch(/#app-bootstrap-loader\s*\{[\s\S]*?position:\s*fixed/)
   expect(html).toContain('global-loader__crest')
   expect(html).toContain('global-loader__wordmark')
   expect(html).toContain('global-loader__progress')

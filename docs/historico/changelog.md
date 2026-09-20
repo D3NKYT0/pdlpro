@@ -18,6 +18,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- O primeiro paint não mostra mais a página sem CSS: o `#root` fica
+  oculto enquanto o splash HTML cobre a tela, e o overlay só some
+  depois das folhas públicas/painel e da folha do tema instalado.
 - O splash do loader voltava ao brasão clássico quando o pacote ativo
   publicava o `pdl-symbol` com `?v=` de cache-bust. O chrome aceita essa
   query curta e mantém o selo do tema.

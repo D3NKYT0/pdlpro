@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="pdl-booting">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,6 +45,26 @@
       html,
       body {
         margin: 0;
+        background: #050403;
+      }
+
+      /* Cobre o #root antes do bootstrap-loader.css e do React, sem FOUC. */
+      html.pdl-booting,
+      html.pdl-booting body {
+        overflow: hidden;
+      }
+
+      html.pdl-booting #root {
+        visibility: hidden;
+      }
+
+      #app-bootstrap-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
         background: #050403;
       }
     </style>
