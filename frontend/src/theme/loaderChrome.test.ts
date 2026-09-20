@@ -107,6 +107,35 @@ it('o tema default ignora acento residual e grava o ouro clássico', () => {
   expect(chrome).toEqual(DEFAULT_LOADER_CHROME)
 })
 
+it('mantém o brasão instalado quando a URL traz cache-bust', () => {
+  document.body.innerHTML = `
+    <div id="app-bootstrap-loader">
+      <div class="global-loader__crest"><img src="/theme/default/images/pdl-symbol.svg" alt="" /></div>
+    </div>`
+  configureRuntimeTheme({
+    'images/pdl-symbol.svg': '/media/themes/saga/1.0.0/images/pdl-symbol.png?v=crest2',
+  })
+
+  persistAppliedLoaderChrome('saga')
+
+  expect(document.querySelector('#app-bootstrap-loader .global-loader__crest img')).toHaveAttribute(
+    'src',
+    '/media/themes/saga/1.0.0/images/pdl-symbol.png?v=crest2',
+  )
+  expect(JSON.parse(localStorage.getItem(LOADER_CHROME_STORAGE_KEY) || '{}').symbol).toBe(
+    '/media/themes/saga/1.0.0/images/pdl-symbol.png?v=crest2',
+  )
+})
+
+it('recusa query injetável no brasão do loader', () => {
+  expect(
+    sanitizeLoaderChrome({
+      ...DEFAULT_LOADER_CHROME,
+      symbol: '/media/themes/saga/images/pdl-symbol.png?url=https://evil.test',
+    }),
+  ).toBeNull()
+})
+
 it('sem tokens do pacote cai no chrome clássico, mas mantém o brasão remapeado', () => {
   configureRuntimeTheme({
     'images/pdl-symbol.svg': '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
@@ -133,7 +162,7 @@ it('o script estático de bootstrap aplica o chrome gravado', () => {
     LOADER_CHROME_STORAGE_KEY,
     JSON.stringify({
       id: 'packaged',
-      symbol: '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
+      symbol: '/media/themes/packaged/1.0.0/images/pdl-symbol.png?v=crest2',
       accent: '#3dd6c6',
       accentBright: '#7ef0e4',
       background: '#050a0c',
@@ -143,7 +172,7 @@ it('o script estático de bootstrap aplica o chrome gravado', () => {
   window.eval(source)
   expect(document.querySelector('#app-bootstrap-loader img')).toHaveAttribute(
     'src',
-    '/media/themes/packaged/1.0.0/images/pdl-symbol.png',
+    '/media/themes/packaged/1.0.0/images/pdl-symbol.png?v=crest2',
   )
   expect(document.documentElement.style.getPropertyValue('--loader-accent')).toBe('#3dd6c6')
   expect(document.documentElement.getAttribute('data-pdl-loader-theme')).toBe('packaged')

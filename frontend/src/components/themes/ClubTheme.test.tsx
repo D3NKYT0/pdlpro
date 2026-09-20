@@ -125,6 +125,7 @@ function renderHome(value: ThemePresentation = presentation) {
 function renderChrome(comingSoon = false) {
   const client = queryClient()
   client.setQueryData(['server-info'], { coming_soon: comingSoon })
+  client.setQueryData(['resources'], [])
   return render(wrap(
     <QueryClientProvider client={client}>
       <MemoryRouter>
@@ -190,12 +191,35 @@ it('entrega o chrome do clube e o menu móvel', () => {
   expect(document.querySelector('.club-header .club-logo')).toBeNull()
   expect(document.querySelector('.club-header img[src*="logo-text"]')).toBeNull()
   expect(document.querySelector('.club-logo--footer img')).toHaveAttribute('src', '/media/themes/saga/images/logo-circle.png')
-  expect(screen.getByRole('link', { name: 'JOGAR AGORA' })).toBeVisible()
+  expect(document.querySelector('.club-header .site-nav-actions')).toBeTruthy()
+  expect(document.querySelector('.club-header .site-nav-language')).toBeTruthy()
+  expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute('href', '/login')
+  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
+  expect(screen.queryByRole('link', { name: 'JOGAR AGORA' })).not.toBeInTheDocument()
   fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
   expect(screen.getByRole('navigation', { name: 'Navegação móvel' })).toBeVisible()
   expect(document.body.style.overflow).toBe('hidden')
   fireEvent.click(screen.getByRole('button', { name: 'Fechar menu' }))
   expect(screen.queryByRole('navigation', { name: 'Navegação móvel' })).toBeNull()
+})
+
+it('oculta o Download do header quando o recurso está pausado', () => {
+  const client = queryClient()
+  client.setQueryData(['server-info'], { coming_soon: false })
+  client.setQueryData(['resources'], [{ code: 'downloads', enabled: false }])
+  render(wrap(
+    <QueryClientProvider client={client}>
+      <MemoryRouter>
+        <Routes>
+          <Route element={<ClubPublicLayout presentation={presentation} />}>
+            <Route index element={<p>Conteúdo</p>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  ))
+  expect(screen.getByRole('link', { name: 'Entrar' })).toBeVisible()
+  expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
 })
 
 it('aponta a home do tema para /home durante o Coming Soon quando há sessão', () => {
@@ -205,9 +229,11 @@ it('aponta a home do tema para /home durante o Coming Soon quando há sessão', 
   expect(document.querySelector('.club-logo--footer')).toHaveAttribute('href', '/home')
 })
 
-it('com sessão mantém o CTA de jogar e um único Painel no header', () => {
+it('com sessão o header usa Minha Conta e Download, sem Painel nem JOGAR AGORA', () => {
   session.user = { username: 'root' }
   renderChrome()
-  expect(screen.getAllByRole('link', { name: 'PAINEL' })).toHaveLength(1)
-  expect(screen.getByRole('link', { name: 'JOGAR AGORA' })).toHaveAttribute('href', '/panel')
+  expect(screen.getByRole('link', { name: 'Minha Conta' })).toHaveAttribute('href', '/panel')
+  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
+  expect(screen.queryByRole('link', { name: 'PAINEL' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'JOGAR AGORA' })).not.toBeInTheDocument()
 })

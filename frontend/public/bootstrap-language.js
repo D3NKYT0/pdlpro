@@ -24,7 +24,7 @@
 
 ;(function () {
   var THEME_ID = /^[a-z0-9][a-z0-9._-]{0,40}$/i
-  var SYMBOL = /^\/(?:theme|media\/themes)\/[A-Za-z0-9._/-]+$/
+  var SYMBOL = /^\/(?:theme|media\/themes)\/[A-Za-z0-9._/-]+(?:\?[A-Za-z0-9._=-]{1,40})?$/
   var COLOR =
     /^(#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})|rgba?\(|hsla?\(|oklch\(|oklab\(|hwb\(|color\()/i
 

@@ -43,6 +43,11 @@ it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () =
   expect(club).toMatch(
     /\[data-pdl-renderer="club-v1"\] \.club-header__inner\s*\{[\s\S]*?grid-template-columns:\s*1fr auto/,
   )
+  expect(club).toMatch(
+    /\[data-pdl-renderer="club-v1"\] \.club-header \.site-nav-actions \.user[\s\S]*?display:\s*flex/,
+  )
+  expect(club).not.toContain('.club-header__lang')
+  expect(club).not.toContain('.club-header__login')
   expect(club).toContain('.club-pillar')
   expect(club).toContain('.club-dock__more')
   expect(club).toContain('.club-hero__character')

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CircleUserRound } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
@@ -59,8 +60,7 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
         to: item.to,
       })),
   ]
-  const playTo = user ? '/panel' : presentation.home.hero.actionTo
-  const playLabel = presentation.home.hero.actionLabel
+  const downloadsEnabled = !resources.data?.some((item) => item.code === 'downloads' && !item.enabled)
 
   useEffect(() => setMenuOpen(false), [pathname])
   useEffect(() => {
@@ -79,12 +79,13 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
               </Link>
             ))}
           </nav>
-          <div className="club-header__actions">
-            <Link className="club-header__login" to={user ? '/panel' : '/login'}>
-              {user ? t('portal.dashboard') : t('portal.login')}
+          <div className="club-header__actions site-nav-actions">
+            <LanguageSwitcher className="language-switcher site-nav-language" id="club-language" />
+            <Link className="user" to={user ? '/panel' : '/login'}>
+              <CircleUserRound aria-hidden="true" />
+              <span>{user ? t('nav.myAccount') : t('nav.signIn')}</span>
             </Link>
-            <ButtonLink className="club-cta-primary" size="sm" to={playTo}>{playLabel}</ButtonLink>
-            <LanguageSwitcher className="club-header__lang" id="club-language" />
+            {downloadsEnabled ? <Link className="download" to="/downloads">{t('nav.download')}</Link> : null}
             <button className="club-hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
@@ -96,7 +97,8 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
         <button className="club-mobile__close" type="button" aria-label={t('nav.closeMenu')} onClick={() => setMenuOpen(false)}>×</button>
         <nav aria-label={t('portal.mobileNav')}>
           {navigation.map((item) => <Link key={`${item.to}-${item.label}`} to={item.to}>{item.label}</Link>)}
-          <Link to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
+          <Link to={user ? '/panel' : '/login'}>{user ? t('nav.myAccount') : t('nav.signIn')}</Link>
+          {downloadsEnabled ? <Link to="/downloads">{t('nav.download')}</Link> : null}
           {!user ? <Link to="/register">{t('portal.createAccount')}</Link> : null}
         </nav>
       </div>

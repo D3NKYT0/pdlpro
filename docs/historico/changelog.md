@@ -8,6 +8,18 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Alterado
+
+- O header do `club-v1` volta ao chrome original do portal: select de
+  idioma, Minha conta e Download com as placas e o recorte clássicos.
+  O JOGAR AGORA permanece só no hero.
+
+### Corrigido
+
+- O splash do loader voltava ao brasão clássico quando o pacote ativo
+  publicava o `pdl-symbol` com `?v=` de cache-bust. O chrome aceita essa
+  query curta e mantém o selo do tema.
+
 ## [2.5.5] - 2026-09-20
 
 Renderer `club-v1`, identidade Saga Club e painel sem teto de 1480px,
