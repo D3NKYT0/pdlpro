@@ -15,6 +15,7 @@ afterEach(() => {
 it('monta tema privado e limpa estilos ao sair', () => {
   const { unmount, rerender } = renderHook(usePanelTheme)
   expect(document.documentElement.classList.contains('pdl-panel')).toBe(true)
+  expect(document.body.style.backgroundImage).toContain('var(--theme-panel-body-bg')
   expect(document.body.style.backgroundColor).toBe('var(--theme-bg-deep)')
   expect(document.querySelectorAll('link[data-pdl-panel-theme]')).toHaveLength(PANEL_THEME_STYLES.length)
   rerender()

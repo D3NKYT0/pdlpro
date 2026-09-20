@@ -10,6 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- No tema Saga Club, painel e admin deixam de usar foto de fundo: só
+  preto, ouro, degradê e glow. As imagens continuam nas áreas públicas
+  (home, auth, coming soon, Info e Rankings).
 - O splash HTML e o overlay de rota do tema Saga ficam só com o
   brasão grande no losango. O wordmark some nos dois loaders.
 - O header do `club-v1` volta ao chrome original do portal: select de

@@ -195,7 +195,11 @@ Exemplo:
 
 O CSS estrutural do painel (`panel.css`) e botões públicos usam essas variáveis. Assets de arte
 de seção (`images/bg/1.png` e `images/bg/2.jpg` … `bg/5.jpg`) também entram como `--theme-art-bg-*` a partir do mapa
-`assets`, mesmo sem `layout`. A central de jogos usa pixel art nos baús do default
+`assets`, mesmo sem `layout`. O fundo do `body` no painel/admin lê
+`--theme-panel-body-bg` (degradê ou cor); sem o token, cai na foto `images/bg/5.jpg`.
+Um pacote que queira só cor e efeitos no painel define esse token e zera
+`--theme-art-bg-*`, `--theme-art-shop-hall` e `--theme-art-wallet-promo` nas
+superfícies `panel`/`admin`. A central de jogos usa pixel art nos baús do default
 (`images/games/box-{common,rare,epic,legendary}{,-ajar,-open}.webp`, tokens `--theme-art-games-box-*`).
 Um pacote instalado pode trocar esses arquivos e desligar o
 `image-rendering: pixelated` da arte.

@@ -1,12 +1,19 @@
 /// <reference types="node" />
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, it } from 'vitest'
 
 const themeRoot = resolve(__dirname, '../../public/theme')
 const sagaPkg = resolve(__dirname, '../../theme-packages/saga/pkg')
 const sagaTheme = resolve(sagaPkg, 'theme.css')
+const sagaMediaRoot = resolve(__dirname, '../../../backend/media/themes/saga')
+const sagaInstalledCss = existsSync(sagaMediaRoot)
+  ? readdirSync(sagaMediaRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => resolve(sagaMediaRoot, entry.name, 'theme.css'))
+      .find((path) => existsSync(path)) ?? ''
+  : ''
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
 const club = readFileSync(resolve(themeRoot, 'pages/club.css'), 'utf8')
 const panel = readFileSync(resolve(themeRoot, 'pages/panel.css'), 'utf8')
@@ -117,6 +124,38 @@ it.skipIf(!existsSync(sagaTheme))(
     return createHash('md5').update(bytes).digest('hex')
   })
   expect(new Set(buttons).size).toBe(3)
+  },
+)
+
+it.skipIf(!sagaInstalledCss)(
+  'o Saga Club no painel e no admin usa só degradê, sem foto de fundo',
+  () => {
+    const css = readFileSync(sagaInstalledCss, 'utf8')
+    expect(css).toMatch(
+      /html\[data-pdl-theme="saga"\]\.pdl-panel\s*\{[\s\S]*?--theme-panel-body-bg:/,
+    )
+    expect(css).toMatch(
+      /html\[data-pdl-theme="saga"\]\.pdl-panel body[\s\S]*?--theme-art-bg-1:\s*none/,
+    )
+    expect(css).toMatch(
+      /html\[data-pdl-theme="saga"\]\.pdl-panel body[\s\S]*?--theme-art-shop-hall:\s*none/,
+    )
+    expect(css).toMatch(
+      /html\[data-pdl-theme="saga"\]\.pdl-panel body[\s\S]*?--theme-art-wallet-promo:\s*none/,
+    )
+    const panelShell = css.match(
+      /html\[data-pdl-theme="saga"\] \.portal-panel-shell\s*\{[^}]*min-height:\s*100vh[^}]*\}/,
+    )?.[0] ?? ''
+    expect(panelShell).toContain('linear-gradient(115deg')
+    expect(panelShell).not.toContain('url("images/')
+    expect(css).toMatch(/\[data-theme-surface="auth"\][\s\S]*?url\("images\/hero-bg\.jpg"\)/)
+    const manifest = JSON.parse(
+      readFileSync(resolve(sagaInstalledCss, '..', 'theme.json'), 'utf8'),
+    ) as { assets: Record<string, string> }
+    expect(manifest.assets['images/shop/hall.png']).toBeUndefined()
+    expect(manifest.assets['images/bg/wallet-promo-banner.png']).toBeUndefined()
+    expect(manifest.assets['images/cta-banner.jpg']).toBe('images/cta-banner.jpg')
+    expect(manifest.assets['images/hero-bg.jpg']).toBe('images/hero-bg.jpg')
   },
 )
 

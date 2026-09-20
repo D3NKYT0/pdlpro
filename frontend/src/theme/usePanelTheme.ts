@@ -14,10 +14,14 @@ function upsertPanelStyle(href: string) {
   return link
 }
 
+/** Painel/admin. `--theme-panel-body-bg` no tema troca a foto por cor/degradê. */
 export function usePanelTheme() {
   useEffect(() => {
     document.documentElement.classList.add('pdl-panel')
-    document.body.style.background = `url(${themeImage('bg/5.jpg')}) top fixed no-repeat`
+    document.body.style.backgroundImage = `var(--theme-panel-body-bg, url(${JSON.stringify(themeImage('bg/5.jpg'))}))`
+    document.body.style.backgroundPosition = 'top'
+    document.body.style.backgroundAttachment = 'fixed'
+    document.body.style.backgroundRepeat = 'no-repeat'
     document.body.style.backgroundColor = 'var(--theme-bg-deep)'
     document.body.style.backgroundSize = 'cover'
     document.body.style.minHeight = '100vh'
@@ -28,6 +32,10 @@ export function usePanelTheme() {
     return () => {
       document.documentElement.classList.remove('pdl-panel')
       document.body.style.background = ''
+      document.body.style.backgroundImage = ''
+      document.body.style.backgroundPosition = ''
+      document.body.style.backgroundAttachment = ''
+      document.body.style.backgroundRepeat = ''
       document.body.style.backgroundColor = ''
       document.body.style.backgroundSize = ''
       document.body.style.minHeight = ''
