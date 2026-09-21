@@ -2,6 +2,8 @@
 [data-pdl-template] .tpl-shell {
   --tpl-wrap: var(--public-container-width, 1200px);
   --tpl-header: var(--public-header-height, 76px);
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   color: var(--theme-text, #f4efe4);
   background: var(--theme-bg-deep, #050505);
@@ -231,7 +233,9 @@
   position: relative;
   min-height: 200px;
   padding: 32px;
-  background: var(--theme-surface, #151515) center / cover no-repeat;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 28%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 62%, transparent)),
+    var(--tpl-art-cta, var(--theme-art-bg-5)) center / cover no-repeat;
 }
 
 [data-pdl-template] .tpl-cta__content { position: relative; z-index: 1; max-width: 40rem; }
@@ -254,6 +258,13 @@
 
 [data-pdl-template] .tpl-podium li:first-child { transform: translateY(-12px); }
 
+[data-pdl-template] :is(.tpl-classing__intro, .tpl-atlas__legend, .tpl-path__intro, .tpl-codex__open, .tpl-arena, .tpl-hall, .tpl-manuscript > header) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 32%, transparent), var(--theme-bg-deep, #050505)),
+    var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover no-repeat;
+  padding: 48px 16px 32px;
+}
+
 /* Ironspine — três colunas 2008 */
 [data-theme-template="ironspine"] { padding-top: 0; }
 [data-theme-template="ironspine"] .tpl-spine__banner {
@@ -261,7 +272,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 4%;
-  background: color-mix(in srgb, var(--theme-bg-deep, #050505) 70%, black);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 35%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 72%, transparent)),
+    var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover no-repeat;
 }
 [data-theme-template="ironspine"] .tpl-spine__grid {
   display: grid;
@@ -281,11 +294,14 @@
 
 /* Ashen Ledger — gazeta */
 [data-theme-template="ashenledger"] .tpl-ledger__mast {
-  max-width: 48rem;
+  max-width: none;
   margin-inline: auto;
   text-align: center;
-  padding-bottom: 24px;
+  padding: 48px 16px 32px;
   border-bottom: 2px solid var(--theme-accent, #d4af61);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 30%, transparent), var(--theme-bg-deep, #050505)),
+    var(--tpl-art-hero, var(--theme-art-bg-4)) center / cover no-repeat;
 }
 [data-theme-template="ashenledger"] .tpl-ledger__columns {
   display: grid;
@@ -308,7 +324,7 @@
   padding: 48px 16px;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 40%, transparent), var(--theme-bg-deep, #050505)),
-    var(--theme-art-bg-5, none) center / cover;
+    var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover;
 }
 [data-theme-template="warhorn"] .tpl-war__enlist { display: flex; gap: 12px; }
 
@@ -321,7 +337,9 @@
   margin-inline: auto;
   padding: 32px;
   border: 1px solid color-mix(in srgb, var(--theme-accent, #d4af61) 24%, transparent);
-  background: var(--theme-surface, #151515);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 42%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 78%, transparent)),
+    var(--tpl-art-hero, var(--theme-surface, #151515)) center / cover no-repeat;
 }
 
 /* Laurelwake — pódio */
@@ -352,10 +370,14 @@
   padding: 48px;
 }
 [data-theme-template="twinwake"] .tpl-split article:first-child {
-  background: color-mix(in srgb, var(--theme-surface, #151515) 80%, black);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 38%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 72%, transparent)),
+    var(--tpl-art-hero, var(--theme-art-bg-5)) left center / cover no-repeat;
 }
 [data-theme-template="twinwake"] .tpl-split article:last-child {
-  background: color-mix(in srgb, var(--theme-accent, #d4af61) 12%, var(--theme-bg-deep, #050505));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 38%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 72%, transparent)),
+    var(--tpl-art-cta, var(--theme-art-bg-4)) right center / cover no-repeat;
 }
 
 /* Cartograph — mapa */
@@ -427,7 +449,9 @@
 }
 [data-theme-template="hearthspire"] .tpl-tavern__board {
   padding: 24px;
-  background: color-mix(in srgb, var(--theme-surface, #151515) 88%, var(--theme-bg-deep, #050505));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 45%, transparent), color-mix(in srgb, var(--theme-bg-deep, #050505) 78%, transparent)),
+    var(--tpl-art-hero, var(--theme-art-bg-4)) center / cover no-repeat;
 }
 
 /* Goldleaf — corte */
@@ -438,6 +462,9 @@
   text-align: center;
   gap: 12px;
   padding: 48px 16px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 32%, transparent), var(--theme-bg-deep, #050505)),
+    var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover no-repeat;
 }
 [data-theme-template="goldleaf"] .tpl-court__decrees {
   width: min(100% - 32px, 880px);
@@ -506,6 +533,9 @@
   justify-items: center;
   text-align: center;
   padding: 48px 16px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-bg-deep, #050505) 35%, transparent), var(--theme-bg-deep, #050505)),
+    var(--tpl-art-hero, var(--theme-art-bg-5)) center / cover no-repeat;
 }
 [data-theme-template="watchfire"] .tpl-vigil .tpl-stats {
   width: min(100%, 960px);

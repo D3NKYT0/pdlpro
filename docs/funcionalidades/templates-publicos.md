@@ -74,8 +74,18 @@ frontend/public/theme/pages/templates.css
 backend/apps/themes/application/template_catalog.py
 ```
 
+No **PDL Classic**, o template só muda a composição da landing. Cores, logos e
+brasão continuam os do tema original. Os slots (hero, CTA, features) usam
+recortes em `default/images/bg/<id>-hero.webp`, `default/images/bg/<id>-cta.webp`
+e `default/images/home/<id>-1.webp`. Cada slot é um enquadramento de uma cena
+completa do Classic (`home/*-v2`, `bg/coming-soon*`, `bg/4.jpg`) — sem colar
+PNG de personagem. Regenerar: `py -3 frontend/scripts/compose-layout-art.py`.
+
 Vesperlyn e Gemwright continuam em `ClubTheme` / `PortalTheme`. Os outros 18
-passam por `TemplateShell` + `CatalogHomePage`.
+passam por `TemplateShell` + `CatalogHomePage`. Login, cadastro e o restante
+do `AuthPanel` usam o casco `portal-auth-shell` (arte em `--tpl-art-hero`).
+No Vesperlyn o casco ganha `club-auth`: cartão central, brasão do Classic e
+botões no estilo da landing — sem o wordmark solto nem o `h1` de 72px.
 
 ## Testes
 

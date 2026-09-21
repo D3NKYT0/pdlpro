@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { ThemeCatalogId, ThemePresentation } from '../../services/api'
 import { themeAsset } from '../assets'
@@ -100,7 +101,7 @@ export function CatalogHomePage({
     </section>
   ) : null
 
-  let body = null
+  let body: ReactNode = null
 
   if (templateId === 'ironspine') {
     body = (

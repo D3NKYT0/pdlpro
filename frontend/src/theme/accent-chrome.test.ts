@@ -39,6 +39,23 @@ const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/co
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
 
+it('o casco de autenticação do catálogo tem layout e o Vesperlyn empilha no club', () => {
+  expect(auth).toMatch(/\.portal-auth-shell\s*\{[\s\S]*?min-height:\s*100svh/)
+  expect(auth).toMatch(/\.portal-auth-backdrop\s*\{[\s\S]*?var\(--tpl-art-hero/)
+  expect(auth).toMatch(/\.portal-auth-frame\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\)/)
+  expect(auth).toMatch(/\.portal-auth-card \.auth-field input:not\(\[type='checkbox'\]\)\s*\{[\s\S]*?min-height:\s*48px/)
+  expect(club).toMatch(/\.club-auth \.portal-auth-frame\s*\{[\s\S]*?grid-template-columns:\s*1fr/)
+  expect(club).toMatch(/\.club-auth \.portal-auth-brand\s*\{[\s\S]*?align-items:\s*center/)
+  expect(club).toMatch(/\.club-logo--footer\s*\{[\s\S]*?border-radius:\s*50%/)
+  expect(club).toMatch(/\.club-auth \.portal-auth-card \.h-link :is\(button, a\)\s*\{[\s\S]*?background-image:\s*none/)
+})
+
+it('o véu público não come clique das seções da landing', () => {
+  expect(layout).toMatch(/body::before\s*\{[\s\S]*?pointer-events:\s*none/)
+  expect(club).toMatch(/\.club-shell\s*\{[\s\S]*?z-index:\s*1/)
+  expect(templates).toMatch(/\.tpl-shell\s*\{[\s\S]*?z-index:\s*1/)
+})
+
 it('o catálogo clássico pinta cada composição com tokens, sem ouro cravado', () => {
   expect(templates).toContain('var(--theme-accent')
   expect(templates).toContain('var(--theme-bg-deep')

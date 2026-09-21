@@ -3,6 +3,8 @@
   --club-wrap: var(--public-container-width, 1200px);
   --club-header: var(--public-header-height, 76px);
   --club-ember: var(--theme-accent, #c9a227);
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   color: var(--theme-text, #f4efe4);
   background: var(--theme-bg-deep, #050505);
@@ -46,10 +48,31 @@
   object-fit: contain;
 }
 
-:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-logo--footer img {
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-logo--footer {
+  display: grid;
+  place-items: center;
+  width: 96px;
   height: 96px;
-  max-width: 96px;
   margin-inline: auto;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--club-ember) 42%, transparent);
+  background: color-mix(in srgb, var(--theme-surface, #121212) 55%, #000);
+  color: inherit;
+  text-decoration: none;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-logo--footer:hover {
+  border-color: var(--club-ember);
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-logo--footer img,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-logo--footer .club-logo__mark {
+  display: block;
+  width: 58px;
+  height: 58px;
+  max-width: 58px;
+  margin: 0;
+  object-fit: contain;
 }
 
 /* main.css + layout.css pintam todo `nav` como a SiteNav clássica (fixed + barra preta). */
@@ -636,6 +659,85 @@
   font-size: 12px;
 }
 
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth.portal-auth-shell {
+  padding-top: calc(var(--club-header) + 36px);
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-frame {
+  width: min(520px, 100%);
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card {
+  width: 100%;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand img,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand .pdl-emblem-stage,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-emblem,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand__mark,
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand p {
+  margin-inline: auto;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-brand .pdl-emblem-symbol {
+  margin: 0;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card {
+  text-align: left;
+  background: color-mix(in srgb, var(--theme-surface, #121212) 78%, #000);
+  border-color: color-mix(in srgb, var(--club-ember) 28%, transparent);
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link {
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link :is(button, a) {
+  width: auto;
+  max-width: none;
+  height: auto;
+  min-height: 44px;
+  padding: 0 22px;
+  background: var(--theme-accent, #c9a227);
+  background-image: none;
+  color: var(--theme-bg-deep, #050505);
+  border: 1px solid transparent;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link a:nth-child(2),
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link button + a {
+  background: transparent;
+  background-image: none;
+  color: var(--theme-text, #f4efe4);
+  border-color: var(--club-ember);
+}
+
+:is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link :is(button, a):hover {
+  transform: none;
+  filter: none;
+  text-shadow: none;
+}
+
 @media (max-width: 1100px) {
   :is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-features {
     grid-template-columns: 1fr 1fr;
@@ -667,4 +769,10 @@
 @media (max-width: 640px) {
   :is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-features,
   :is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-pillars__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  :is([data-pdl-renderer="club-v1"], [data-pdl-renderer="vesperlyn"], [data-pdl-template="vesperlyn"]) .club-auth .portal-auth-card .h-link :is(button, a) {
+    width: auto;
+  }
 }

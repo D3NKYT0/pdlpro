@@ -47,6 +47,35 @@ it('versiona a folha instalada para não reusar CSS antigo no mesmo URL', () => 
   )
 })
 
+it('no Classic, o template só troca o layout e preserva as artes originais', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue({
+    id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
+    description: '', active: true, builtin: true, base_url: '/theme/default/',
+    stylesheet_url: null, assets: {}, layout: null, selected_template: 'ironspine',
+    presentation: { renderer: 'ironspine' } as ApiTheme['presentation'],
+  })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  expect(await screen.findByText(/PDL Classic/)).toHaveTextContent('/theme/default/images/logo.png')
+  expect(document.documentElement.dataset.pdlTemplate).toBe('ironspine')
+  expect(document.documentElement.style.getPropertyValue('--theme-art-bg-1')).toContain('/theme/default/images/bg/1.png')
+  expect(document.documentElement.style.getPropertyValue('--tpl-art-hero')).toContain('/theme/default/images/bg/ironspine-hero.webp')
+  expect(document.documentElement.style.getPropertyValue('--tpl-art-cta')).toContain('/theme/default/images/bg/ironspine-cta.webp')
+  expect(themeImage('cta-banner.jpg')).toBe('/theme/default/images/bg/ironspine-cta.webp')
+})
+
+it('marca o template do Classic mesmo sem presentation no payload', async () => {
+  vi.mocked(themeApi.active).mockResolvedValue({
+    id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
+    description: '', active: true, builtin: true, base_url: '/theme/default/',
+    stylesheet_url: null, assets: {}, layout: null, selected_template: 'warhorn',
+  })
+  render(<ThemeProvider><Consumer /></ThemeProvider>)
+  await screen.findByText(/PDL Classic/)
+  expect(document.documentElement.dataset.pdlTheme).toBe('default')
+  expect(document.documentElement.dataset.pdlTemplate).toBe('warhorn')
+  expect(document.documentElement).not.toHaveAttribute('data-pdl-renderer')
+})
+
 it('aplica o default preservado retornado pela API', async () => {
   vi.mocked(themeApi.active).mockResolvedValue({
     id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
@@ -58,6 +87,7 @@ it('aplica o default preservado retornado pela API', async () => {
   expect(document.documentElement.dataset.pdlTheme).toBe('default')
   expect(document.documentElement.dataset.panelDensity).toBe('comfortable')
   expect(document.documentElement.style.getPropertyValue('--theme-button-primary')).toContain('/theme/default/images/button/1.png')
+  expect(themeImage('cta-banner.jpg')).toBe('/theme/default/images/cta-banner.jpg')
 })
 
 it('carrega CSS e resolve somente os assets declarados pelo pacote', async () => {

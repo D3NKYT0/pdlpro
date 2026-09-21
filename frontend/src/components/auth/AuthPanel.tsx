@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { themeAsset } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
-import { isPackagedRenderer } from '../../theme/renderers'
+import { isPackagedRenderer, isVesperlyn } from '../../theme/renderers'
 import { resolveTemplate } from '../../theme/templates'
 import { PdlHeroEmblem } from '../PdlSymbol'
 import { ThemeHeroVideo } from '../ThemeHeroVideo'
@@ -18,15 +18,30 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
   const { t } = useTranslation('auth')
   const theme = useTheme()
   const resolvedLead = lead || t('panel.defaultLead')
-  if (isPackagedRenderer(theme.presentation?.renderer)) {
-    const shell = theme.presentation.shells?.auth
+  const presentation = theme.presentation
+  const renderer = presentation?.renderer
+  if (presentation && isPackagedRenderer(renderer)) {
+    const shell = presentation.shells?.auth
+    const club = isVesperlyn(renderer)
+    const packagedBrand = theme.id !== 'default'
+    const kicker = shell?.kicker && shell.kicker !== theme.name
+      ? shell.kicker
+      : t('panel.kickerFallback')
+    const brand = shell?.brand && shell.brand !== theme.name ? shell.brand : theme.name
+    const mark = resolveTemplate(renderer)?.mark === 'wordmark' ? 'images/logo-text.png' : 'images/logo.png'
     return (
-      <section className="portal-auth-shell" data-theme-surface="auth">
+      <section className={`portal-auth-shell${club ? ' club-auth' : ''}`} data-theme-surface="auth">
         <div className="portal-auth-backdrop" aria-hidden="true" />
         <div className="portal-auth-frame">
           <div className="portal-auth-brand">
-            <span>{shell?.kicker ?? t('panel.kickerFallback')}</span>
-            <img src={themeAsset(resolveTemplate(theme.presentation?.renderer)?.mark === 'wordmark' ? 'images/logo-text.png' : 'images/logo.png')} alt={shell?.brand ?? theme.name} />
+            <span className="portal-auth-kicker">{kicker}</span>
+            <div className="portal-auth-brand__mark">
+              {packagedBrand ? (
+                <img src={themeAsset(mark)} alt={brand} />
+              ) : (
+                <PdlHeroEmblem className="portal-auth-emblem" />
+              )}
+            </div>
             <h1>{title}</h1>
             <p>{resolvedLead}</p>
           </div>

@@ -28,7 +28,11 @@ Somente um superadministrador pode alterar a aparência global:
 Para reverter, ative **PDL Classic**. Um pacote ativo não pode ser removido; primeiro ative o
 default ou outra versão. A ativação é transacional e nunca deixa dois temas ativos.
 O Classic também escolhe template: `POST /api/v1/staff/themes/default/template/` grava a
-preferência sem criar um ZIP. Vazio no campo volta ao chrome interno.
+preferência sem criar um ZIP. Vazio no campo volta ao chrome interno. O seletor
+só troca a composição da landing; cores, logos e o brasão continuam os do Classic.
+Hero, CTA e features usam recortes em `images/bg/<id>-*.webp` e
+`images/home/<id>-*.webp`: enquadramentos de cenas completas do Classic,
+sem colar PNG de personagem.
 
 O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e

@@ -58,6 +58,11 @@ def fallback_presentation(*, name: str, description: str, renderer: str) -> dict
     title = name.strip() or "PDL"
     blurb = description.strip() or title
     canonical = resolve_renderer(renderer)
+    feature_items = [
+        {"title": "Crônica", "description": blurb, "asset": f"images/home/{canonical}-1.webp"},
+        {"title": "Reino", "description": blurb, "asset": f"images/home/{canonical}-2.webp"},
+        {"title": "Guerra", "description": blurb, "asset": f"images/home/{canonical}-3.webp"},
+    ]
     presentation = {
         "renderer": canonical,
         "navigation": [
@@ -83,7 +88,7 @@ def fallback_presentation(*, name: str, description: str, renderer: str) -> dict
                 "subtitle": blurb,
                 "actionLabel": "Saiba mais",
                 "actionTo": "/info",
-                "items": [{"title": title, "description": blurb, "asset": "images/logo.png"}],
+                "items": feature_items,
             },
             "ranking": {
                 "title": "Rankings",

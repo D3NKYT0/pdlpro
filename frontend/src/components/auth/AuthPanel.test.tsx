@@ -50,8 +50,27 @@ it('reusa o shell de autenticação no renderer club-v1', () => {
 
   render(<AuthPanel title="Entrar" lead="Bem-vindo"><form><button type="submit">Continuar</button></form></AuthPanel>)
 
+  expect(screen.getByRole('heading', { name: 'Entrar' }).closest('[data-theme-surface="auth"]')).toHaveClass('club-auth')
   expect(screen.getByText('ENTRE NA SAGA')).toBeVisible()
   expect(screen.getByRole('img', { name: 'SAGA CLUB' })).toHaveAttribute('src', '/media/themes/valorem/images/logo.png')
+})
+
+it('no Vesperlyn do Classic usa o casco do club com o brasão, sem repetir o nome do tema', () => {
+  themeState.id = 'default'
+  themeState.name = 'PDL Classic'
+  themeState.presentation = {
+    renderer: 'vesperlyn',
+    shells: { auth: { kicker: 'PDL Classic', brand: 'PDL Classic' } },
+  }
+
+  render(<AuthPanel title="Entre no Reino" lead="Sessão expirada"><form><button type="submit">Entrar</button></form></AuthPanel>)
+
+  const surface = screen.getByRole('heading', { name: 'Entre no Reino' }).closest('[data-theme-surface="auth"]')
+  expect(surface).toHaveClass('portal-auth-shell')
+  expect(surface).toHaveClass('club-auth')
+  expect(screen.getByText('Acesso ao reino')).toBeVisible()
+  expect(screen.queryByRole('img', { name: 'PDL Classic' })).toBeNull()
+  expect(surface?.querySelector('.portal-auth-brand__mark .pdl-emblem-stage')).not.toBeNull()
 })
 
 it('marca a superfície auth no caminho default sem portal', () => {

@@ -534,6 +534,7 @@ def test_staff_picks_catalog_template_on_default_theme(api, admin):
     assert chosen.data["selected_template"] == "ironspine"
     assert chosen.data["presentation"]["renderer"] == "ironspine"
     assert chosen.data["presentation"]["home"]["hero"]["title"] == "PDL Classic"
+    assert chosen.data["presentation"]["home"]["features"]["items"][0]["asset"] == "images/home/ironspine-1.webp"
     public = api.get("/api/v1/public/theme/")
     assert public.data["selected_template"] == "ironspine"
     assert public.data["presentation"]["renderer"] == "ironspine"

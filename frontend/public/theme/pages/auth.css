@@ -34,6 +34,115 @@
   text-align: left;
 }
 
+.portal-auth-shell {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 80px;
+}
+
+.portal-auth-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--theme-bg-deep, #050505) 38%, transparent) 0%,
+      color-mix(in srgb, var(--theme-bg-deep, #050505) 78%, transparent) 52%,
+      var(--theme-bg-deep, #050505) 100%
+    ),
+    var(--tpl-art-hero, none) center / cover no-repeat;
+}
+
+.portal-auth-frame {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+  gap: 40px 64px;
+  align-items: center;
+}
+
+.portal-auth-brand {
+  text-align: left;
+}
+
+.portal-auth-kicker,
+.portal-auth-brand > span {
+  display: block;
+  margin: 0 0 16px;
+  color: var(--theme-accent, var(--panel-gold, #c5a161));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.portal-auth-brand__mark {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 0 22px;
+}
+
+.portal-auth-brand > img,
+.portal-auth-brand__mark > img {
+  display: block;
+  width: auto;
+  height: 64px;
+  max-width: 240px;
+  margin: 0 auto 22px;
+  object-fit: contain;
+}
+
+.portal-auth-brand .pdl-emblem-stage,
+.portal-auth-emblem {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto;
+}
+
+.portal-auth-brand .pdl-emblem-symbol {
+  width: 124px;
+  height: 124px;
+  margin: 0;
+  justify-self: center;
+}
+
+.portal-auth-brand h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.portal-auth-brand p {
+  margin: 0;
+  max-width: 36ch;
+  color: var(--theme-muted, rgba(244, 239, 228, 0.72));
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.portal-auth-card {
+  box-sizing: border-box;
+  padding: 28px 28px 24px;
+  background: color-mix(in srgb, var(--theme-bg-deep, #0a0806) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 26%, transparent);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.portal-auth-card .auth-field input:not([type='checkbox']) {
+  min-height: 48px;
+}
+
 .auth-form {
   width: 100%;
   margin: 0;
@@ -270,6 +379,25 @@
 @media (max-width: 980px) {
   .h.auth-hero {
     padding-top: 180px;
+  }
+
+  .portal-auth-frame {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .portal-auth-brand {
+    text-align: center;
+  }
+
+  .portal-auth-brand img,
+  .portal-auth-brand .pdl-emblem-stage,
+  .portal-auth-emblem,
+  .portal-auth-brand__mark,
+  .portal-auth-brand p {
+    margin-inline: auto;
   }
 
   .auth-split {

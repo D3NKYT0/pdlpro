@@ -87,6 +87,8 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-shop-hall',
   '--theme-art-shop-crate',
   '--theme-art-shop-coins',
+  '--tpl-art-hero',
+  '--tpl-art-cta',
 ] as const
 
 const GAME_ART = {
@@ -233,6 +235,8 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   style.setProperty('--theme-art-bg-3', cssUrl(themeImage('bg/3.jpg')))
   style.setProperty('--theme-art-bg-4', cssUrl(themeImage('bg/4.jpg')))
   style.setProperty('--theme-art-bg-5', cssUrl(themeImage('bg/5.jpg')))
+  style.setProperty('--tpl-art-hero', cssUrl(themeImage('bg/5.jpg')))
+  style.setProperty('--tpl-art-cta', cssUrl(themeAsset('images/cta-banner.jpg')))
   style.setProperty('--theme-art-wallet-promo', cssUrl(themeImage('bg/wallet-promo-banner.png')))
   for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART })) {
     style.setProperty(key, cssUrl(themeImage(path)))
@@ -259,6 +263,14 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   if (layout?.public?.containerWidth != null) {
     style.setProperty('--public-container-width', `${layout.public.containerWidth}px`)
   }
+}
+
+/** Slots de landing no Classic: recortes do tema original, sem trocar logo ou brasão. */
+export function applyClassicLayoutArt(themeId: string, templateId: string | null) {
+  const style = document.documentElement.style
+  if (themeId !== 'default' || !templateId) return
+  style.setProperty('--tpl-art-hero', cssUrl(themeAsset(`images/bg/${templateId}-hero.webp`)))
+  style.setProperty('--tpl-art-cta', cssUrl(themeAsset(`images/bg/${templateId}-cta.webp`)))
 }
 
 function publicThemeStyles(): string[] {

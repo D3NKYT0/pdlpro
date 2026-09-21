@@ -12,8 +12,9 @@ import { formatDate, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { rankingPortrait } from '../rankings/rankingsFormat'
 import { themeAsset, themeImage } from '../../theme/assets'
+import { useTheme } from '../../theme/ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
-import { PdlHeroEmblem } from '../PdlSymbol'
+import { PdlHeroEmblem, PdlSymbol } from '../PdlSymbol'
 import { ThemeHeroVideo } from '../ThemeHeroVideo'
 import { ButtonLink } from '../ui/Button'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
@@ -43,6 +44,8 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
   const { user } = useAuth()
   const { pathname } = useLocation()
   const landingPath = useLandingPath()
+  const theme = useTheme()
+  const packedCircle = theme.assets['images/logo-circle.png']
   const [menuOpen, setMenuOpen] = useState(false)
   const resources = useQuery({
     queryKey: ['resources'],
@@ -108,8 +111,12 @@ export function ClubPublicLayout({ presentation }: { presentation: ThemePresenta
       <footer className="club-footer">
         <div className="club-wrap club-footer__inner">
           <div className="club-footer__brand">
-            <Link to={landingPath} className="club-logo club-logo--footer">
-              <img src={themeAsset('images/logo-circle.png')} alt={presentation.footer.copyright} />
+            <Link to={landingPath} className="club-logo club-logo--footer" aria-label={t('nav.home')}>
+              {packedCircle ? (
+                <img src={packedCircle} alt="" />
+              ) : (
+                <PdlSymbol className="club-logo__mark" />
+              )}
             </Link>
             <p className="club-footer__tagline">{presentation.footer.tagline}</p>
           </div>

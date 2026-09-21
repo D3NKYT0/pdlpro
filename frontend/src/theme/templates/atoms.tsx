@@ -251,7 +251,7 @@ export function CtaPanel({
   actionTo: string
 }) {
   return (
-    <section className="tpl-cta" style={{ backgroundImage: `url(${themeAsset('images/cta-banner.jpg')})` }}>
+    <section className="tpl-cta">
       <div className="tpl-cta__content">
         <h2>{title}</h2>
         <p>{description}</p>

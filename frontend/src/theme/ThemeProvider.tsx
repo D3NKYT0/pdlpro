@@ -1,6 +1,6 @@
 import { createContext, Fragment, useContext, useEffect, useState, type ReactNode } from 'react'
 import { themeApi, type ApiTheme } from '../services/api'
-import { applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
+import { applyClassicLayoutArt, applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
 import { persistAppliedLoaderChrome } from './loaderChrome'
 import { resolveTemplateId } from './templates/resolve'
 
@@ -47,17 +47,21 @@ export function installedStylesheetHref(url: string, version: string) {
 }
 
 async function applyTheme(theme: ApiTheme) {
-  configureRuntimeTheme(theme.assets)
+  const templateId = resolveTemplateId(theme.selected_template || theme.presentation?.renderer)
+  const classicSlots: Record<string, string> = {}
+  if (theme.id === 'default' && templateId) {
+    classicSlots['images/cta-banner.jpg'] = `/theme/default/images/bg/${templateId}-cta.webp`
+  }
+  configureRuntimeTheme({ ...theme.assets, ...classicSlots })
   applyThemeSurfaceVars(theme.layout)
+  applyClassicLayoutArt(theme.id, templateId)
   document.documentElement.dataset.pdlTheme = theme.id
+  if (templateId) document.documentElement.dataset.pdlTemplate = templateId
+  else delete document.documentElement.dataset.pdlTemplate
   if (theme.presentation?.renderer) {
     document.documentElement.dataset.pdlRenderer = theme.presentation.renderer
-    const templateId = resolveTemplateId(theme.presentation.renderer)
-    if (templateId) document.documentElement.dataset.pdlTemplate = templateId
-    else delete document.documentElement.dataset.pdlTemplate
   } else {
     delete document.documentElement.dataset.pdlRenderer
-    delete document.documentElement.dataset.pdlTemplate
   }
   activeThemeLink?.remove()
   activeThemeLink = null

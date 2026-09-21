@@ -20,12 +20,24 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `POST /staff/themes/default/template/`) sem reenviar o ZIP. Marca, textos
   e artes ficam no pacote. Pacotes só-CSS e o Classic recebem um contrato
   mínimo montado com o nome do tema.
+- Os layouts do Classic preenchem hero, CTA e features com enquadramentos
+  de cenas completas do tema (`home/*-v2`, portões de `coming-soon`, `bg/4`),
+  sem colar PNG de personagem e sem trocar logo, brasão ou paleta.
 
 ### Alterado
 
 - O contrato de `presentation.renderer` deixa de ser só dois ids de versão.
   A camada vive em `frontend/src/theme/templates/` e
   `backend/apps/themes/application/template_catalog.py`.
+
+### Corrigido
+
+- O véu escuro do `body` na landing deixava de passar clique para CTA,
+  pilares e o restante das seções abaixo do hero.
+- No **Vesperlyn** (club), login e cadastro deixavam o wordmark, o título
+  de 72px e os campos sem casco. O formulário volta a um cartão central
+  sobre a arte do layout. O brasão do login fica no centro do casco; o
+  círculo do rodapé leva o mesmo brasão e aponta para a landing.
 
 ## [2.5.6] - 2026-09-20
 
