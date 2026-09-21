@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from apps.themes.domain.repositories import IThemePackageRepository
-from apps.themes.infrastructure.models import ThemePackage
+from apps.themes.infrastructure.models import ThemePackage, ThemeSettings
 
 
 class DjangoThemePackageRepository(IThemePackageRepository):
@@ -53,3 +53,12 @@ class DjangoThemePackageRepository(IThemePackageRepository):
 
     def delete(self, row: ThemePackage) -> None:
         row.delete()
+
+    def get_default_template(self) -> str:
+        row = ThemeSettings.objects.filter(key="default").first()
+        return str(getattr(row, "default_template", "") or "")
+
+    def set_default_template(self, template: str) -> None:
+        row, _ = ThemeSettings.objects.select_for_update().get_or_create(key="default")
+        row.default_template = template
+        row.save(update_fields=["default_template", "updated_at"])

@@ -3819,9 +3819,34 @@ msgstr "Lets staff assign owners and update the status of a ticket."
 msgid "Temas"
 msgstr "Themes"
 
-#: .\apps\themes\infrastructure\models.py:36 .\templates\admin\base.html:149
+#: .\apps\themes\infrastructure\models.py:43 .\templates\admin\base.html:149
 msgid "Tema"
 msgstr "Theme"
+
+#: .\apps\themes\admin.py:15 .\apps\themes\infrastructure\models.py:28
+#: .\apps\themes\infrastructure\models.py:66
+msgid "Template do catálogo"
+msgstr "Catalog template"
+
+#: .\apps\themes\infrastructure\models.py:69
+msgid "Layout público do PDL Classic. Vazio usa o chrome interno."
+msgstr "Public layout of PDL Classic. Empty uses the built-in chrome."
+
+#: .\apps\themes\infrastructure\models.py:73
+msgid "Preferência de tema"
+msgstr "Theme preference"
+
+#: .\apps\themes\infrastructure\models.py:74
+msgid "Preferências de tema"
+msgstr "Theme preferences"
+
+#: .\apps\themes\admin.py:18
+msgid "Usar o renderer do ZIP"
+msgstr "Use the ZIP renderer"
+
+#: .\apps\themes\admin.py:19 .\apps\themes\infrastructure\models.py:32
+msgid "Layout público escolhido depois da instalação. Vazio usa o renderer do ZIP."
+msgstr "Public layout chosen after install. Empty uses the ZIP renderer."
 
 #: .\apps\themes\presentation\views.py:31
 msgid "Envie um arquivo .zip."
@@ -3879,6 +3904,28 @@ msgid ""
 "Remove um pacote inativo; o tema default não possui endpoint de exclusão."
 msgstr ""
 "Removes an inactive package; the default theme has no deletion endpoint."
+
+#: .\apps\themes\presentation\views.py:123
+msgid "Escolher template do tema"
+msgstr "Choose theme template"
+
+#: .\apps\themes\presentation\views.py:124
+msgid ""
+"Aplica um layout do catálogo clássico ao tema default ou a um pacote "
+"instalado. O ZIP continua dono da marca, textos e artes."
+msgstr ""
+"Applies a classic catalog layout to the default theme or an installed "
+"package. The ZIP still owns brand, copy and art."
+
+#: .\apps\themes\application\theme_packages.py:665
+#: .\apps\themes\presentation\views.py:48 .\common\i18n_msgid_catalog.py:201
+msgid "O template solicitado não faz parte do catálogo."
+msgstr "The requested template is not in the catalog."
+
+#: .\apps\themes\admin.py:30 .\apps\themes\application\theme_packages.py:675
+#: .\common\i18n_msgid_catalog.py:202
+msgid "Este pacote não declara presentation; o catálogo de layouts não se aplica."
+msgstr "This package does not declare presentation; the layout catalog does not apply."
 
 #: .\apps\wallet\apps.py:15 .\apps\wallet\infrastructure\models.py:24
 msgid "Carteira"

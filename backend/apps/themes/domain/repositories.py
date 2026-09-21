@@ -53,3 +53,15 @@ class IThemePackageRepository(ABC):
     @abstractmethod
     def delete(self, row: Any) -> None:
         raise NotImplementedError
+
+    @abstractmethod
+    def get_default_template(self) -> str:
+        """Template do catálogo no PDL Classic, ou string vazia."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_default_template(self, template: str) -> None:
+        """Grava o template do PDL Classic. String vazia restaura o chrome interno."""
+
+        raise NotImplementedError

@@ -16587,6 +16587,8 @@ html.pdl-panel .theme-package-icon svg { width: 22px; }
 html.pdl-panel .theme-package-copy h3 { margin: 3px 0 7px; font-size: 20px; }
 html.pdl-panel .theme-package-copy p { min-height: 38px; margin: 0 0 7px; color: var(--panel-muted); font-size: 12px; }
 html.pdl-panel .theme-package-copy small { color: rgba(255,255,255,.42); }
+html.pdl-panel .theme-package-template { grid-column: 1 / -1; }
+html.pdl-panel .theme-package-template .ui-field { display: grid; gap: 6px; }
 html.pdl-panel .theme-package-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent); }
 html.pdl-panel .theme-active-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 html.pdl-panel .theme-active-badge svg { width: 16px; }

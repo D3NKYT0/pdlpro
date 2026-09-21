@@ -14,8 +14,10 @@ from typing import Any, BinaryIO
 from django.conf import settings
 
 from apps.themes.application.template_catalog import (
+    fallback_presentation,
     home_sections_for,
     is_supported_renderer,
+    resolve_renderer,
 )
 from apps.themes.application.theme_metadata import (
     METADATA_FILENAME,
@@ -516,40 +518,84 @@ def _live_metadata(theme: Any, manifest: dict) -> dict | None:
         return empty_theme_metadata()
 
 
-def serialize_theme(theme: Any | None = None) -> dict:
+def _published_presentation(theme: Any, manifest: dict) -> dict | None:
+    """Aplica o template escolhido na staff sem regravar o manifesto do ZIP."""
+
+    presentation = manifest.get("presentation")
+    chosen = str(getattr(theme, "selected_template", "") or "").strip()
+    canonical = resolve_renderer(chosen) if chosen and is_supported_renderer(chosen) else None
+    if isinstance(presentation, dict):
+        if canonical:
+            return {**presentation, "renderer": canonical}
+        return presentation
+    if canonical:
+        return fallback_presentation(
+            name=str(getattr(theme, "name", "") or ""),
+            description=str(getattr(theme, "description", "") or ""),
+            renderer=canonical,
+        )
+    return None
+
+
+DEFAULT_THEME_NAME = "PDL Classic"
+DEFAULT_THEME_DESCRIPTION = (
+    "Visual clássico do PDL PRO — Aden, tipografia e a identidade original."
+)
+
+
+def _resolved_template(value: str | None) -> str | None:
+    chosen = str(value or "").strip()
+    if chosen and is_supported_renderer(chosen):
+        return resolve_renderer(chosen)
+    return None
+
+
+def serialize_theme(theme: Any | None = None, *, default_template: str = "") -> dict:
     """Produz o contrato público; sem registro ativo retorna o default imutável."""
 
     if theme is None:
+        chosen = _resolved_template(default_template)
+        presentation = (
+            fallback_presentation(
+                name=DEFAULT_THEME_NAME,
+                description=DEFAULT_THEME_DESCRIPTION,
+                renderer=chosen,
+            )
+            if chosen
+            else None
+        )
         return {
-            "id": "default", "package_id": None, "name": "PDL Classic", "version": "2.0.0",
-            "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
+            "id": "default", "package_id": None, "name": DEFAULT_THEME_NAME, "version": "2.0.0",
+            "author": "PDL", "description": DEFAULT_THEME_DESCRIPTION,
             "active": True, "builtin": True, "base_url": "/theme/default/",
-            "stylesheet_url": None, "assets": {}, "presentation": None, "layout": None,
-            "metadata": None,
+            "stylesheet_url": None, "assets": {}, "presentation": presentation, "layout": None,
+            "metadata": None, "selected_template": chosen,
         }
     manifest = _live_manifest(theme)
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
     assets = {
         key: f"{base_url}{value}" for key, value in manifest.get("assets", {}).items()
     }
+    chosen = str(getattr(theme, "selected_template", "") or "").strip() or None
     return {
         "id": theme.slug, "package_id": str(theme.id), "name": theme.name,
         "version": theme.version, "author": theme.author, "description": theme.description,
         "active": theme.is_active, "builtin": False, "base_url": base_url,
         "stylesheet_url": f"{base_url}{theme.entrypoint}", "assets": assets,
-        "presentation": manifest.get("presentation"),
+        "presentation": _published_presentation(theme, manifest),
         "layout": manifest.get("layout"),
         "metadata": _live_metadata(theme, manifest),
+        "selected_template": resolve_renderer(chosen) if chosen and is_supported_renderer(chosen) else chosen,
     }
 
 
 def get_active_theme(packages: IThemePackageRepository) -> dict:
-    return serialize_theme(packages.get_active())
+    return serialize_theme(packages.get_active(), default_template=packages.get_default_template())
 
 
 def list_themes(packages: IThemePackageRepository) -> list[dict]:
     active_package = packages.exists_active()
-    default = serialize_theme()
+    default = serialize_theme(default_template=packages.get_default_template())
     default["active"] = not active_package
     return [default, *(serialize_theme(theme) for theme in packages.list_all())]
 
@@ -629,12 +675,42 @@ def activate_theme(
     with work:
         packages.deactivate_all()
         if package_id is None:
-            return serialize_theme()
+            payload = serialize_theme(default_template=packages.get_default_template())
+            payload["active"] = True
+            return payload
         theme = packages.lock_get(package_id)
         if theme is None:
             raise EntityNotFoundError("Tema não encontrado.")
         theme.is_active = True
         packages.save(theme, update_fields=("is_active", "updated_at"))
+        return serialize_theme(theme)
+
+
+def set_theme_template(
+    package_id: str | None,
+    template: str,
+    packages: IThemePackageRepository,
+    unit_of_work: UnitOfWork,
+) -> dict:
+    """Troca o layout do catálogo no default ou num pacote, sem reinstalar o ZIP."""
+
+    chosen = ""
+    if template:
+        if not is_supported_renderer(template):
+            raise ValidationDomainError("O template solicitado não faz parte do catálogo.")
+        chosen = resolve_renderer(template)
+    work = unit_of_work
+    with work:
+        if not package_id:
+            packages.set_default_template(chosen)
+            payload = serialize_theme(default_template=chosen)
+            payload["active"] = not packages.exists_active()
+            return payload
+        theme = packages.lock_get(package_id)
+        if theme is None:
+            raise EntityNotFoundError("Tema não encontrado.")
+        theme.selected_template = chosen
+        packages.save(theme, update_fields=("selected_template", "updated_at"))
         return serialize_theme(theme)
 
 

@@ -7,6 +7,10 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from apps.themes.application.template_catalog import (
+    is_supported_renderer,
+    resolve_renderer,
+)
 from apps.themes.application.use_cases import (
     ActivateThemeInput,
     ActivateThemeUseCase,
@@ -16,6 +20,8 @@ from apps.themes.application.use_cases import (
     InstallThemeInput,
     InstallThemeUseCase,
     ListThemesUseCase,
+    SetThemeTemplateInput,
+    SetThemeTemplateUseCase,
 )
 from common.permissions import IsSuperAdmin
 from common.views import InjectedAPIView
@@ -30,6 +36,20 @@ class ThemeUploadSerializer(serializers.Serializer):
         if not value.name.lower().endswith(".zip"):
             raise serializers.ValidationError(_("Envie um arquivo .zip."))
         return value
+
+
+class ThemeTemplateSerializer(serializers.Serializer):
+    """Escolhe um layout do catálogo clássico num pacote já instalado."""
+
+    template = serializers.CharField(allow_blank=True)
+
+    def validate_template(self, value):
+        chosen = str(value or "").strip()
+        if not chosen:
+            return ""
+        if not is_supported_renderer(chosen):
+            raise serializers.ValidationError(_("O template solicitado não faz parte do catálogo."))
+        return resolve_renderer(chosen)
 
 
 class ActiveThemeView(InjectedAPIView):
@@ -92,6 +112,33 @@ class StaffThemeActivateView(InjectedAPIView):
         return Response(
             self.resolve(ActivateThemeUseCase).execute(
                 ActivateThemeInput(package_id=str(package_id) if package_id else None)
+            )
+        )
+
+
+class StaffThemeTemplateView(InjectedAPIView):
+    """Troca o template público do default ou de um pacote instalado, sem reenviar o ZIP."""
+
+    permission_classes = [IsAuthenticated, IsSuperAdmin]
+
+    @extend_schema(
+        tags=["Staff"],
+        summary=gettext_lazy("Escolher template do tema"),
+        description=gettext_lazy(
+            "Aplica um layout do catálogo clássico ao tema default ou a um pacote instalado. "
+            "O ZIP continua dono da marca, textos e artes."
+        ),
+        request=ThemeTemplateSerializer,
+    )
+    def post(self, request, package_id=None):
+        serializer = ThemeTemplateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(
+            self.resolve(SetThemeTemplateUseCase).execute(
+                SetThemeTemplateInput(
+                    package_id=str(package_id) if package_id else None,
+                    template=serializer.validated_data["template"],
+                )
             )
         )
 

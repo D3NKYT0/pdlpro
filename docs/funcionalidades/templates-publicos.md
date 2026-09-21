@@ -14,7 +14,7 @@ Layout que nenhum destes cobre (outro casco em React) continua sendo
 
 ## Como escolher
 
-No `theme.json`:
+O `theme.json` aponta um layout inicial:
 
 ```json
 {
@@ -24,7 +24,15 @@ No `theme.json`:
 }
 ```
 
-O `ThemeProvider` grava `data-pdl-renderer` com o id do ZIP e `data-pdl-template`
+A staff troca o layout em **Painel → Administração → Temas**, no cartão de
+qualquer tema — inclusive o **PDL Classic**. `POST /api/v1/staff/themes/<id>/template/`
+grava `selected_template` no pacote; `POST /api/v1/staff/themes/default/template/`
+grava a preferência do Classic. O `GET /theme/` público publica
+`presentation.renderer` já resolvido. Vazio no campo = renderer do manifesto,
+ou o chrome interno do Classic. Sem `presentation` no ZIP, o core monta o
+contrato mínimo com o nome do tema.
+
+O `ThemeProvider` grava `data-pdl-renderer` com o id efetivo e `data-pdl-template`
 com o nome canônico. A folha `css/pages/templates.css` pinta por
 `[data-theme-template]` / `[data-pdl-template]`.
 
@@ -76,5 +84,5 @@ cd frontend
 npm run test:run -- src/theme/templates src/theme/renderers.test.ts src/theme/accent-chrome.test.ts
 
 cd ../backend
-python -m pytest apps/themes/tests/test_theme_api.py -k "club_renderer or catalog_renderer or declarative_presentation"
+python -m pytest apps/themes/tests/test_theme_api.py -k "club_renderer or catalog_renderer or declarative_presentation or theme_template"
 ```

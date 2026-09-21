@@ -750,10 +750,10 @@
   "themes": {
     "kicker": "Appearance",
     "title": "PDL themes",
-    "description": "Install validated packages and apply a visual identity across the whole frontend.",
+    "description": "Install the ZIP and pick the landing template on the package. Activate applies the identity to the site.",
     "installEyebrow": "PDL 2.0 package",
     "installTitle": "Install theme",
-    "installDescription": "Upload a validated ZIP. Installing does not activate the theme automatically.",
+    "installDescription": "Upload a validated ZIP. After install, pick the template on the package card. Installing does not activate the theme.",
     "fileLabel": "Theme file",
     "fileHint": "ZIP up to 32 MB, PDL 2.0 schema.",
     "installBusy": "Validating and installing…",
@@ -789,7 +789,13 @@
     "installed": "Theme validated and installed",
     "defaultRestored": "Default theme restored",
     "activated": "{{name}} activated",
-    "removed": "Package removed"
+    "removed": "Package removed",
+    "templateLabel": "Landing template",
+    "templateHint": "Changes the layout only. Brand, copy and art stay with the package.",
+    "templateFromPackage": "Package layout",
+    "templateClassic": "Classic chrome",
+    "templateSaved": "{{name}} template updated",
+    "templateError": "Could not apply the template."
   },
   "commerce": {
     "kicker": "Economy",

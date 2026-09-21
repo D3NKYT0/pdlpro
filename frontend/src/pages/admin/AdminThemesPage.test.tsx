@@ -11,7 +11,7 @@ import { themeApi, type ApiTheme } from '../../services/api'
 import { AdminThemesPage } from './AdminThemesPage'
 
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
-vi.mock('../../services/domain/theme.service', () => ({ themeApi: { list: vi.fn(), install: vi.fn(), activate: vi.fn(), remove: vi.fn() } }))
+vi.mock('../../services/domain/theme.service', () => ({ themeApi: { list: vi.fn(), install: vi.fn(), activate: vi.fn(), setTemplate: vi.fn(), remove: vi.fn() } }))
 
 const defaultTheme: ApiTheme = { id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL', description: 'Original', active: true, builtin: true, base_url: '/theme/default/', stylesheet_url: null, assets: {} }
 const valorem: ApiTheme = { id: 'valorem', package_id: 'id-1', name: 'Valorem', version: '1.0.0', author: 'PDL Team', description: 'Dark fantasy', active: false, builtin: false, base_url: '/media/themes/valorem/', stylesheet_url: '/media/themes/valorem/theme.css', assets: {} }
@@ -29,6 +29,7 @@ beforeEach(() => {
   vi.mocked(themeApi.install).mockResolvedValue(valorem)
   vi.mocked(themeApi.activate).mockResolvedValue(valorem)
   vi.mocked(themeApi.remove).mockResolvedValue(undefined)
+  vi.mocked(themeApi.setTemplate).mockResolvedValue(valorem)
   vi.spyOn(window, 'confirm').mockReturnValue(true)
 })
 afterEach(() => { cleanup(); client?.clear(); vi.restoreAllMocks() })
@@ -76,6 +77,26 @@ it('restaura explicitamente o default quando um pacote está ativo', async () =>
   await user.click(await screen.findByRole('button', { name: 'Ativar' }))
   expect(themeApi.activate).toHaveBeenCalledWith(expect.objectContaining({ id: 'default', builtin: true }))
   expect(toast.success).toHaveBeenCalledWith('Tema default restaurado')
+})
+
+it('permite escolher o template no Classic e em todo pacote instalado', async () => {
+  const crumma = { ...valorem, id: 'crumma', name: 'Crumma', package_id: 'id-2', presentation: null, selected_template: null }
+  const packaged = {
+    ...valorem,
+    presentation: { renderer: 'portal-v1' },
+    selected_template: null,
+  } as ApiTheme
+  vi.mocked(themeApi.list).mockResolvedValue([defaultTheme, crumma, packaged])
+  vi.mocked(themeApi.setTemplate).mockResolvedValue({ ...defaultTheme, selected_template: 'ironspine' } as ApiTheme)
+  const user = mount()
+  expect(await screen.findAllByRole('combobox', { name: 'Template da landing' })).toHaveLength(3)
+  expect(screen.getAllByRole('combobox', { name: 'Template da landing' })[0]).toHaveTextContent('Chrome clássico')
+  expect(screen.getAllByRole('combobox', { name: 'Template da landing' })[1]).toHaveTextContent('Layout do pacote')
+  expect(screen.getAllByRole('combobox', { name: 'Template da landing' })[2]).toHaveTextContent('Gemwright')
+  await user.click(screen.getAllByRole('combobox', { name: 'Template da landing' })[0])
+  await user.click(await screen.findByRole('option', { name: 'Ironspine' }))
+  await waitFor(() => expect(themeApi.setTemplate).toHaveBeenCalledWith(defaultTheme, 'ironspine'))
+  expect(toast.success).toHaveBeenCalledWith('Template de PDL Classic atualizado')
 })
 
 it('oferece retry quando a listagem falha', async () => {

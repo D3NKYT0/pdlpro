@@ -24,6 +24,13 @@ class ThemePackage(BaseModel):
     storage_path = models.CharField(max_length=180, unique=True)
     entrypoint = models.CharField(max_length=180)
     is_active = models.BooleanField(default=False, db_index=True)
+    selected_template = models.CharField(
+        _("Template do catálogo"),
+        max_length=40,
+        blank=True,
+        default="",
+        help_text=_("Layout público escolhido depois da instalação. Vazio usa o renderer do ZIP."),
+    )
     installed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -47,4 +54,24 @@ class ThemePackage(BaseModel):
 
     def __str__(self) -> str:
         return f"{self.name} {self.version}"
+
+
+class ThemeSettings(BaseModel):
+    """Preferências do tema default, que não vive na tabela de pacotes."""
+
+    key = models.CharField(max_length=16, default="default", unique=True, editable=False)
+    default_template = models.CharField(
+        _("Template do catálogo"),
+        max_length=40,
+        blank=True,
+        default="",
+        help_text=_("Layout público do PDL Classic. Vazio usa o chrome interno."),
+    )
+
+    class Meta:
+        verbose_name = _("Preferência de tema")
+        verbose_name_plural = _("Preferências de tema")
+
+    def __str__(self) -> str:
+        return self.default_template or "classic"
 

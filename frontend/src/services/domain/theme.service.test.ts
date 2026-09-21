@@ -21,6 +21,8 @@ it('usa os contratos públicos e administrativos de temas', async () => {
   await themeApi.install(file)
   await themeApi.activate(custom)
   await themeApi.activate({ ...custom, id: 'default', package_id: null, builtin: true })
+  await themeApi.setTemplate(custom, 'ironspine')
+  await themeApi.setTemplate({ ...custom, id: 'default', package_id: null, builtin: true }, 'vesperlyn')
   await themeApi.remove(custom)
 
   expect(send.mock.calls[0]).toEqual(['/public/theme/'])
@@ -30,5 +32,13 @@ it('usa os contratos públicos e administrativos de temas', async () => {
   expect(send.mock.calls[2]?.[1]?.body).toBeInstanceOf(FormData)
   expect(send.mock.calls[3]).toEqual(['/staff/themes/package-id/activate/', { method: 'POST', body: '{}' }])
   expect(send.mock.calls[4]).toEqual(['/staff/themes/default/activate/', { method: 'POST', body: '{}' }])
-  expect(send.mock.calls[5]).toEqual(['/staff/themes/package-id/', { method: 'DELETE' }])
+  expect(send.mock.calls[5]).toEqual([
+    '/staff/themes/package-id/template/',
+    { method: 'POST', body: JSON.stringify({ template: 'ironspine' }) },
+  ])
+  expect(send.mock.calls[6]).toEqual([
+    '/staff/themes/default/template/',
+    { method: 'POST', body: JSON.stringify({ template: 'vesperlyn' }) },
+  ])
+  expect(send.mock.calls[7]).toEqual(['/staff/themes/package-id/', { method: 'DELETE' }])
 })

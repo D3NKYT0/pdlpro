@@ -149,6 +149,8 @@ export interface ApiTheme {
   presentation?: ThemePresentation | null
   layout?: ThemeLayout | null
   metadata?: ThemeSiteMetadata | null
+  /** Layout do catálogo escolhido na staff; vazio usa o renderer do ZIP. */
+  selected_template?: string | null
 }
 
 export const themeApi = {
@@ -162,6 +164,10 @@ export const themeApi = {
   activate: (theme: ApiTheme) => request<ApiTheme>(
     theme.builtin ? '/staff/themes/default/activate/' : `/staff/themes/${theme.package_id}/activate/`,
     { method: 'POST', body: '{}' },
+  ),
+  setTemplate: (theme: ApiTheme, template: string) => request<ApiTheme>(
+    theme.builtin ? '/staff/themes/default/template/' : `/staff/themes/${theme.package_id}/template/`,
+    { method: 'POST', body: JSON.stringify({ template }) },
   ),
   remove: (theme: ApiTheme) => request<void>(`/staff/themes/${theme.package_id}/`, { method: 'DELETE' }),
 }

@@ -8,9 +8,19 @@ import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { ErrorNotice, LoadingState } from '../../components/ui/Feedback'
 import { Field } from '../../components/ui/Field'
+import { Select } from '../../components/ui/Select'
 import { useFeedbackAction } from '../../hooks/useFeedbackAction'
 import { themeApi, type ApiTheme } from '../../services/api'
+import { PUBLIC_TEMPLATE_LIST } from '../../theme/templates'
+import { resolveTemplateId } from '../../theme/templates/resolve'
 import { AdminHeader } from './AdminChrome'
+
+function themeTemplateValue(theme: ApiTheme) {
+  if (theme.selected_template) {
+    return resolveTemplateId(theme.selected_template) ?? theme.selected_template
+  }
+  return resolveTemplateId(theme.presentation?.renderer) ?? ''
+}
 
 const RULE_KEYS = ['schema', 'files', 'accepted', 'blocked', 'renderer', 'activation'] as const
 
@@ -48,6 +58,18 @@ export function AdminThemesPage() {
     if (result.ok) {
       toast.success(theme.builtin ? t('themes.defaultRestored') : t('themes.activated', { name: theme.name }))
       window.dispatchEvent(new Event('pdl-theme-refresh'))
+    }
+  }
+
+  async function chooseTemplate(theme: ApiTheme, template: string) {
+    if (themeTemplateValue(theme) === template) return
+    const result = await action.run(async () => {
+      await themeApi.setTemplate(theme, template)
+      await refresh()
+    }, t('themes.templateError'))
+    if (result.ok) {
+      toast.success(t('themes.templateSaved', { name: theme.name }))
+      if (theme.active) window.dispatchEvent(new Event('pdl-theme-refresh'))
     }
   }
 
@@ -109,6 +131,20 @@ export function AdminThemesPage() {
               <h3>{theme.name}</h3>
               <p>{theme.description || t('themes.fallbackDescription')}</p>
               <small>{t('themes.byAuthor', { author: theme.author || t('themes.unknownAuthor') })}</small>
+            </div>
+            <div className="theme-package-template">
+              <Field label={t('themes.templateLabel')} hint={t('themes.templateHint')}>
+                <Select
+                  aria-label={t('themes.templateLabel')}
+                  value={themeTemplateValue(theme)}
+                  options={[
+                    { value: '', label: theme.builtin ? t('themes.templateClassic') : t('themes.templateFromPackage') },
+                    ...PUBLIC_TEMPLATE_LIST.map((item) => ({ value: item.id, label: item.name })),
+                  ]}
+                  disabled={action.pending}
+                  onChange={(template) => void chooseTemplate(theme, template)}
+                />
+              </Field>
             </div>
             <div className="theme-package-actions">
               {theme.active ? <span className="theme-active-badge"><Check aria-hidden="true" /> {t('themes.activeBadge')}</span> : <Button size="sm" busy={action.pending} onClick={() => void activate(theme)}>{t('themes.activate')}</Button>}

@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 
+from apps.themes.admin import ThemePackageAdminForm
 from apps.themes.infrastructure.models import ThemePackage
 
 User = get_user_model()
@@ -55,7 +56,7 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
-        "presentation": None, "layout": None, "metadata": None,
+        "presentation": None, "layout": None, "metadata": None, "selected_template": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]
@@ -408,6 +409,149 @@ def test_catalog_renderer_accepts_classic_name_without_shipping_a_new_core_id(ap
     )
     assert installed.status_code == 201, installed.data
     assert installed.data["presentation"]["renderer"] == "ironspine"
+
+
+def _presentation(renderer="portal-v1"):
+    return {
+        "renderer": renderer,
+        "navigation": [{"label": "HOME", "to": "/"}],
+        "home": {
+            "hero": {
+                "title": "Welcome", "description": "Valorem", "countdownLabel": "OPENING IN",
+                "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT", "actionTo": "/downloads",
+            },
+            "features": {
+                "title": "Systems", "subtitle": "Exclusive", "actionLabel": "SEE ALL",
+                "actionTo": "/info", "items": [
+                    {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
+                ],
+            },
+            "ranking": {
+                "title": "Rating", "subtitle": "Info", "actionLabel": "FULL",
+                "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "PVP", "kind": "pvp"}],
+            },
+            "cta": {"title": "Ready", "description": "Join", "actionLabel": "GO", "actionTo": "/register"},
+            "news": {"title": "NEWS"},
+        },
+        "footer": {"tagline": "Spine", "copyright": "PDL"},
+    }
+
+
+@pytest.mark.django_db
+def test_staff_picks_catalog_template_after_install_without_reuploading(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "valorem.zip",
+            theme_zip(manifest_overrides={"presentation": _presentation("portal-v1")}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["selected_template"] is None
+    assert installed.data["presentation"]["renderer"] == "portal-v1"
+    package_id = installed.data["package_id"]
+    chosen = api.post(f"/api/v1/staff/themes/{package_id}/template/", {"template": "ironspine"}, format="json")
+    assert chosen.status_code == 200, chosen.data
+    assert chosen.data["selected_template"] == "ironspine"
+    assert chosen.data["presentation"]["renderer"] == "ironspine"
+    assert chosen.data["presentation"]["home"]["hero"]["title"] == "Welcome"
+    api.post(f"/api/v1/staff/themes/{package_id}/activate/")
+    public = api.get("/api/v1/public/theme/")
+    assert public.data["presentation"]["renderer"] == "ironspine"
+    assert public.data["selected_template"] == "ironspine"
+
+
+@pytest.mark.django_db
+def test_theme_template_rejects_unknown_layout_and_allows_css_only_package(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    with_presentation = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "valorem.zip",
+            theme_zip(manifest_overrides={"presentation": _presentation()}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    css_only = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "plain.zip", theme_zip(slug="plain", version="1.0.1"), content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    unknown = api.post(
+        f"/api/v1/staff/themes/{with_presentation.data['package_id']}/template/",
+        {"template": "javascript"},
+        format="json",
+    )
+    assert unknown.status_code == 400
+    chosen = api.post(
+        f"/api/v1/staff/themes/{css_only.data['package_id']}/template/",
+        {"template": "ironspine"},
+        format="json",
+    )
+    assert chosen.status_code == 200, chosen.data
+    assert chosen.data["selected_template"] == "ironspine"
+    assert chosen.data["presentation"]["renderer"] == "ironspine"
+    assert chosen.data["presentation"]["home"]["hero"]["title"] == "Valorem"
+    api.post(f"/api/v1/staff/themes/{css_only.data['package_id']}/activate/")
+    public = api.get("/api/v1/public/theme/")
+    assert public.data["presentation"]["renderer"] == "ironspine"
+    cleared = api.post(
+        f"/api/v1/staff/themes/{css_only.data['package_id']}/template/",
+        {"template": ""},
+        format="json",
+    )
+    assert cleared.status_code == 200, cleared.data
+    assert cleared.data["selected_template"] is None
+    assert cleared.data["presentation"] is None
+    player = User.objects.create_user("hero", "hero@pdl.dev", "Secret123", is_staff=True)
+    api.force_authenticate(player)
+    forbidden = api.post(
+        f"/api/v1/staff/themes/{with_presentation.data['package_id']}/template/",
+        {"template": "warhorn"},
+        format="json",
+    )
+    assert forbidden.status_code == 403
+
+
+@pytest.mark.django_db
+def test_staff_picks_catalog_template_on_default_theme(api, admin):
+    api.force_authenticate(admin)
+    listed = api.get("/api/v1/staff/themes/")
+    assert listed.data[0]["id"] == "default"
+    assert listed.data[0]["selected_template"] is None
+    chosen = api.post("/api/v1/staff/themes/default/template/", {"template": "ironspine"}, format="json")
+    assert chosen.status_code == 200, chosen.data
+    assert chosen.data["id"] == "default"
+    assert chosen.data["builtin"] is True
+    assert chosen.data["selected_template"] == "ironspine"
+    assert chosen.data["presentation"]["renderer"] == "ironspine"
+    assert chosen.data["presentation"]["home"]["hero"]["title"] == "PDL Classic"
+    public = api.get("/api/v1/public/theme/")
+    assert public.data["selected_template"] == "ironspine"
+    assert public.data["presentation"]["renderer"] == "ironspine"
+    listed = api.get("/api/v1/staff/themes/")
+    assert listed.data[0]["selected_template"] == "ironspine"
+    cleared = api.post("/api/v1/staff/themes/default/template/", {"template": ""}, format="json")
+    assert cleared.status_code == 200, cleared.data
+    assert cleared.data["selected_template"] is None
+    assert cleared.data["presentation"] is None
+    public = api.get("/api/v1/public/theme/")
+    assert public.data["presentation"] is None
+
+
+def test_theme_admin_form_lists_catalog_including_empty_package_layout():
+    values = {value for value, _label in ThemePackageAdminForm.base_fields["selected_template"].choices}
+    assert "" in values
+    assert "ironspine" in values
+    assert "javascript" not in values
 
 
 @pytest.mark.django_db

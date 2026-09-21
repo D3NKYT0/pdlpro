@@ -9,6 +9,7 @@ from apps.themes.application.theme_packages import (
     get_active_theme,
     install_theme,
     list_themes,
+    set_theme_template,
 )
 from apps.themes.domain.repositories import IThemePackageRepository
 from common.architecture.base import UnitOfWork, UseCase
@@ -93,6 +94,36 @@ class ActivateThemeUseCase(UseCase[ActivateThemeInput, dict]):
     def execute(self, data: ActivateThemeInput) -> dict:
         return activate_theme(
             data.package_id,
+            packages=self._packages,
+            unit_of_work=self._unit_of_work,
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class SetThemeTemplateInput:
+    """Dados de entrada de ``SetThemeTemplateUseCase.execute``.
+
+    ``package_id`` None aplica o template ao tema default.
+    """
+
+    package_id: str | None
+    template: str
+
+
+class SetThemeTemplateUseCase(UseCase[SetThemeTemplateInput, dict]):
+    """Escolhe o layout do catálogo no default ou num pacote já instalado.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``SetThemeTemplateInput``.
+    """
+
+    def __init__(self, packages: IThemePackageRepository, unit_of_work: UnitOfWork) -> None:
+        self._packages = packages
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: SetThemeTemplateInput) -> dict:
+        return set_theme_template(
+            data.package_id,
+            data.template,
             packages=self._packages,
             unit_of_work=self._unit_of_work,
         )

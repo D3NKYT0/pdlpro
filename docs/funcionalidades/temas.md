@@ -19,10 +19,16 @@ Somente um superadministrador pode alterar a aparência global:
 2. Na coluna de instalação, selecione um ZIP PDL 2.0 de até 32 MB. A coluna ao lado resume o
    contrato dos temas compatíveis.
 3. Instale o pacote. A instalação não o ativa automaticamente.
-4. Confira nome, autor e versão e pressione **Ativar**.
+4. No cartão do pacote, escolha o **template da landing** (Vesperlyn, Ironspine,
+   Warhorn…). O ZIP continua dono da marca, textos e artes; o seletor só troca o
+   layout do catálogo. Pacotes só-CSS, sem `presentation`, também escolhem: o
+   core monta o contrato mínimo com o nome e a descrição do tema.
+5. Confira nome, autor e versão e pressione **Ativar**.
 
 Para reverter, ative **PDL Classic**. Um pacote ativo não pode ser removido; primeiro ative o
 default ou outra versão. A ativação é transacional e nunca deixa dois temas ativos.
+O Classic também escolhe template: `POST /api/v1/staff/themes/default/template/` grava a
+preferência sem criar um ZIP. Vazio no campo volta ao chrome interno.
 
 O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e
@@ -226,12 +232,13 @@ do renderer; nesta versão o shell permanece sidebar.
 ## Estrutura e comportamento
 
 O campo opcional `presentation` seleciona um layout confiável do PDL. O catálogo clássico
-tem 20 composições (ver [Templates públicos](templates-publicos.md)): o ZIP só aponta o
-nome — `ironspine`, `warhorn`, `vesperlyn`… — e o React homologado monta o casco. Não há
-HTML ou JS no pacote. Qualquer template do catálogo tematiza páginas públicas internas,
-autenticação, painel e administração. Textos, rotas, itens, assets e os títulos dos
-shells `auth`, `panel` e `admin` vêm do pacote. Com `home.sections`, o pacote controla
-ordem e quais blocos da home aparecem.
+tem 20 composições (ver [Templates públicos](templates-publicos.md)): o ZIP aponta o
+nome inicial — `ironspine`, `warhorn`, `vesperlyn`… — e o React homologado monta o casco.
+Depois da instalação a staff pode trocar esse nome no cartão do tema, sem reenviar o
+ZIP. Não há HTML ou JS no pacote. Qualquer template do catálogo tematiza páginas
+públicas internas, autenticação, painel e administração. Textos, rotas, itens, assets e
+os títulos dos shells `auth`, `panel` e `admin` vêm do pacote. Com `home.sections`, o
+pacote controla ordem e quais blocos da home aparecem.
 
 O pacote Valorem usa esse contrato para portar a experiência que existia nos templates Django de
 `PDL/SITE`: o HTML virou componentes React sem perder a composição, e o comportamento de
@@ -337,8 +344,11 @@ volta **403**. O instalador também cria `MEDIA_ROOT/themes` com todos os diret�
 tornando seguros tanto o primeiro deploy com volume vazio quanto uma execução local sem
 a pasta criada. Cada ZIP publicado recebe `0644`/`0755` para o mesmo motivo.
 
-O endpoint público `GET /api/v1/public/theme/` informa o tema ativo. A administração usa
-`/api/v1/staff/themes/`; não exponha essas operações sem autenticação e papel de superusuário.
+O endpoint público `GET /api/v1/public/theme/` informa o tema ativo, já com o
+`presentation.renderer` resolvido para o template escolhido na staff. A administração
+usa `/api/v1/staff/themes/` e `POST /api/v1/staff/themes/<id>/template/`; não exponha
+essas operações sem autenticação e papel de superusuário. `selected_template` vazio
+continua usando o `renderer` gravado no ZIP.
 
 ## Validação
 

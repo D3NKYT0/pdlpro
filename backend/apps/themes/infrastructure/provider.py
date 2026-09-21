@@ -6,6 +6,7 @@ from apps.themes.application.use_cases import (
     GetActiveThemeUseCase,
     InstallThemeUseCase,
     ListThemesUseCase,
+    SetThemeTemplateUseCase,
 )
 from apps.themes.domain.repositories import IThemePackageRepository
 from apps.themes.infrastructure.repositories import DjangoThemePackageRepository
@@ -35,5 +36,6 @@ class ThemesProvider(AppProvider):
             InstallThemeUseCase,
             ActivateThemeUseCase,
             DeleteThemeUseCase,
+            SetThemeTemplateUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)

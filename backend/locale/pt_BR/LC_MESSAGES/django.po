@@ -3630,8 +3630,33 @@ msgstr ""
 msgid "Temas"
 msgstr ""
 
-#: .\apps\themes\infrastructure\models.py:36 .\templates\admin\base.html:149
+#: .\apps\themes\infrastructure\models.py:43 .\templates\admin\base.html:149
 msgid "Tema"
+msgstr ""
+
+#: .\apps\themes\admin.py:15 .\apps\themes\infrastructure\models.py:28
+#: .\apps\themes\infrastructure\models.py:66
+msgid "Template do catálogo"
+msgstr ""
+
+#: .\apps\themes\infrastructure\models.py:69
+msgid "Layout público do PDL Classic. Vazio usa o chrome interno."
+msgstr ""
+
+#: .\apps\themes\infrastructure\models.py:73
+msgid "Preferência de tema"
+msgstr ""
+
+#: .\apps\themes\infrastructure\models.py:74
+msgid "Preferências de tema"
+msgstr ""
+
+#: .\apps\themes\admin.py:18
+msgid "Usar o renderer do ZIP"
+msgstr ""
+
+#: .\apps\themes\admin.py:19 .\apps\themes\infrastructure\models.py:32
+msgid "Layout público escolhido depois da instalação. Vazio usa o renderer do ZIP."
 msgstr ""
 
 #: .\apps\themes\presentation\views.py:31
@@ -3682,6 +3707,26 @@ msgstr ""
 #: .\apps\themes\presentation\views.py:107
 msgid ""
 "Remove um pacote inativo; o tema default não possui endpoint de exclusão."
+msgstr ""
+
+#: .\apps\themes\presentation\views.py:123
+msgid "Escolher template do tema"
+msgstr ""
+
+#: .\apps\themes\presentation\views.py:124
+msgid ""
+"Aplica um layout do catálogo clássico ao tema default ou a um pacote "
+"instalado. O ZIP continua dono da marca, textos e artes."
+msgstr ""
+
+#: .\apps\themes\application\theme_packages.py:665
+#: .\apps\themes\presentation\views.py:48 .\common\i18n_msgid_catalog.py:201
+msgid "O template solicitado não faz parte do catálogo."
+msgstr ""
+
+#: .\apps\themes\admin.py:30 .\apps\themes\application\theme_packages.py:675
+#: .\common\i18n_msgid_catalog.py:202
+msgid "Este pacote não declara presentation; o catálogo de layouts não se aplica."
 msgstr ""
 
 #: .\apps\wallet\apps.py:15 .\apps\wallet\infrastructure\models.py:24

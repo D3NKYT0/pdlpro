@@ -15,6 +15,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   Cartograph, Classing, Parchment, Obsidian, Hearthspire, Goldleaf, Lampmarket,
   Bracket, Eventide, Wayfarer, Watchfire). O `theme.json` escolhe o layout pelo
   nome; `portal-v1` e `club-v1` continuam como aliases.
+- Nos temas já instalados **e no PDL Classic**, a staff escolhe o template
+  do catálogo (`POST /staff/themes/<id>/template/` ou
+  `POST /staff/themes/default/template/`) sem reenviar o ZIP. Marca, textos
+  e artes ficam no pacote. Pacotes só-CSS e o Classic recebem um contrato
+  mínimo montado com o nome do tema.
 
 ### Alterado
 

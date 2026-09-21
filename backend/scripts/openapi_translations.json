@@ -1443,6 +1443,14 @@
     "Activates an installed version or explicitly restores the default theme.",
     "Activa una versión instalada o restaura explícitamente el tema default."
   ],
+  "Escolher template do tema": [
+    "Choose theme template",
+    "Elegir plantilla del tema"
+  ],
+  "Aplica um layout do catálogo clássico ao tema default ou a um pacote instalado. O ZIP continua dono da marca, textos e artes.": [
+    "Applies a classic catalog layout to the default theme or an installed package. The ZIP still owns brand, copy and art.",
+    "Aplica un layout del catálogo clásico al tema default o a un paquete instalado. El ZIP sigue siendo dueño de la marca, los textos y el arte."
+  ],
   "Excluir tema": [
     "Delete theme",
     "Eliminar tema"

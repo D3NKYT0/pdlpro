@@ -5,6 +5,7 @@ from apps.themes.presentation.views import (
     StaffThemeActivateView,
     StaffThemeDetailView,
     StaffThemeListInstallView,
+    StaffThemeTemplateView,
 )
 
 public_urlpatterns = [
@@ -14,6 +15,8 @@ public_urlpatterns = [
 staff_urlpatterns = [
     path("themes/", StaffThemeListInstallView.as_view(), name="staff-themes"),
     path("themes/default/activate/", StaffThemeActivateView.as_view(), name="staff-theme-default"),
+    path("themes/default/template/", StaffThemeTemplateView.as_view(), name="staff-theme-default-template"),
     path("themes/<uuid:package_id>/activate/", StaffThemeActivateView.as_view(), name="staff-theme-activate"),
+    path("themes/<uuid:package_id>/template/", StaffThemeTemplateView.as_view(), name="staff-theme-template"),
     path("themes/<uuid:package_id>/", StaffThemeDetailView.as_view(), name="staff-theme-detail"),
 ]
