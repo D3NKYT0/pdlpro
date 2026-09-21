@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { themeAsset } from '../../theme/assets'
 import { useTheme } from '../../theme/ThemeProvider'
 import { isPackagedRenderer } from '../../theme/renderers'
+import { resolveTemplate } from '../../theme/templates'
 import { PdlHeroEmblem } from '../PdlSymbol'
 import { ThemeHeroVideo } from '../ThemeHeroVideo'
 
@@ -25,7 +26,7 @@ export function AuthPanel({ title, lead, children, footer }: AuthPanelProps) {
         <div className="portal-auth-frame">
           <div className="portal-auth-brand">
             <span>{shell?.kicker ?? t('panel.kickerFallback')}</span>
-            <img src={themeAsset(theme.presentation?.renderer === 'club-v1' ? 'images/logo.png' : 'images/logo-text.png')} alt={shell?.brand ?? theme.name} />
+            <img src={themeAsset(resolveTemplate(theme.presentation?.renderer)?.mark === 'wordmark' ? 'images/logo-text.png' : 'images/logo.png')} alt={shell?.brand ?? theme.name} />
             <h1>{title}</h1>
             <p>{resolvedLead}</p>
           </div>

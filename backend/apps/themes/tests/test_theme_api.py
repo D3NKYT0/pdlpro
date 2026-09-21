@@ -370,6 +370,47 @@ def test_club_renderer_accepts_cinematic_home_contract(api, admin, tmp_path, set
 
 
 @pytest.mark.django_db
+def test_catalog_renderer_accepts_classic_name_without_shipping_a_new_core_id(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    presentation = {
+        "renderer": "ironspine",
+        "navigation": [{"label": "HOME", "to": "/"}],
+        "home": {
+            "hero": {
+                "title": "Ironspine", "description": "Classic well", "countdownLabel": "OPENING IN",
+                "countdownAt": "2027-01-01T18:00:00Z", "actionLabel": "CONNECT", "actionTo": "/downloads",
+            },
+            "features": {
+                "title": "Systems", "subtitle": "Exclusive", "actionLabel": "SEE ALL",
+                "actionTo": "/info", "items": [
+                    {"title": "Economy", "description": "Balanced", "asset": "images/logo.png"},
+                ],
+            },
+            "ranking": {
+                "title": "Rating", "subtitle": "Info", "actionLabel": "FULL",
+                "actionTo": "/rankings", "tabs": [{"id": "pvp", "label": "PVP", "kind": "pvp"}],
+            },
+            "cta": {"title": "Ready", "description": "Join", "actionLabel": "GO", "actionTo": "/register"},
+            "news": {"title": "NEWS"},
+            "stats": {"items": [{"id": "online", "label": "Online", "kind": "online"}]},
+            "sections": ["hero", "news", "ranking", "stats"],
+        },
+        "footer": {"tagline": "Spine", "copyright": "PDL"},
+    }
+    api.force_authenticate(admin)
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile(
+            "spine.zip", theme_zip(slug="spine", manifest_overrides={"presentation": presentation}),
+            content_type="application/zip",
+        )},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["presentation"]["renderer"] == "ironspine"
+
+
+@pytest.mark.django_db
 def test_club_renderer_rejects_portal_only_section_abuse(api, admin, tmp_path, settings):
     settings.MEDIA_ROOT = tmp_path
     api.force_authenticate(admin)

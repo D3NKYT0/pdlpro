@@ -533,6 +533,20 @@
     "newsEmpty": "Nenhuma notícia ainda.",
     "viewAllNews": "Ver todas"
   },
+  "templates": {
+    "gazette": "Gazeta do reino",
+    "warRoom": "Sala de guerra",
+    "clientNotes": "Notas do cliente",
+    "realmMap": "Mapa do reino",
+    "choosePath": "Escolha seu caminho",
+    "chapter": "Capítulo {{n}}",
+    "houseRules": "Regras da casa",
+    "decrees": "Decretos da corte",
+    "arenaRules": "Regras da arena",
+    "startPath": "Seu primeiro login",
+    "step": "Passo {{n}}",
+    "watch": "Vigília"
+  },
   "downloads": {
     "kicker": "Cliente",
     "title": "Downloads",

@@ -80,8 +80,9 @@ Valores monetários e quantidades grandes podem chegar como strings para preserv
 `html`, carrega a folha instalada e configura os assets lógicos.
 `SiteMetadataSync` lê `/public/server/info/` (já mesclado com o
 `metadados.json` do tema) e atualiza title, description e Open Graph. O renderer opcional
-`portal-v1` e `club-v1` trocam o chrome público e os shells de autenticação, jogador e administração
-por componentes React confiáveis. Novas telas devem continuar usando a biblioteca de UI:
+O catálogo clássico (`vesperlyn`, `ironspine`, `wayfarer`…; aliases `portal-v1` /
+`club-v1`) troca o chrome público e os shells de autenticação, jogador e administração
+por componentes React confiáveis. Ver [Templates públicos](../funcionalidades/templates-publicos.md). Novas telas devem continuar usando a biblioteca de UI:
 `data-theme-surface` identifica o contexto e `data-theme-part` expõe partes estáveis ao CSS.
 
 Pacotes locais de desenvolvimento ficam em `frontend/theme-packages/`, que é ignorada

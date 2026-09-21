@@ -5,8 +5,8 @@ import { SiteNav } from './SiteNav'
 import { SiteFooter } from './SiteFooter'
 import { PortalPublicLayout } from '../themes/PortalTheme'
 import { ClubPublicLayout } from '../themes/ClubTheme'
+import { TemplateShell, isGemwright, isVesperlyn, resolveTemplateId } from '../../theme/templates'
 import { useTheme } from '../../theme/ThemeProvider'
-import { isClubRenderer } from '../../theme/renderers'
 import { serverApi } from '../../services/api'
 import { ComingSoonPage } from '../../pages/ComingSoonPage'
 
@@ -30,12 +30,15 @@ export function PublicLayout() {
     return <ComingSoonPage info={info.data} />
   }
 
-  if (isClubRenderer(theme.presentation?.renderer) && theme.presentation) {
+  const templateId = resolveTemplateId(theme.presentation?.renderer)
+  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
     return <ClubPublicLayout presentation={theme.presentation} />
   }
-
-  if (theme.presentation?.renderer === 'portal-v1') {
+  if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
     return <PortalPublicLayout presentation={theme.presentation} />
+  }
+  if (templateId && theme.presentation) {
+    return <TemplateShell presentation={theme.presentation} templateId={templateId} />
   }
 
   return (

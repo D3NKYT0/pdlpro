@@ -17,7 +17,18 @@ export interface ThemeRankingTab {
   kind: 'pvp' | 'pk' | 'clans' | 'level' | 'adena' | 'online'
 }
 
+import {
+  THEME_CATALOG_IDS,
+  THEME_RENDERER_ALIASES,
+  type ThemeCatalogId,
+  type ThemeRendererAlias,
+  type ThemeRendererId,
+} from '../../theme/templates/ids'
+
 export type ThemeHomeSection = 'hero' | 'stats' | 'features' | 'pillars' | 'ranking' | 'cta' | 'news'
+
+export { THEME_CATALOG_IDS, THEME_RENDERER_ALIASES }
+export type { ThemeCatalogId, ThemeRendererAlias, ThemeRendererId }
 
 export type ThemeStatKind = 'online' | 'chronicle' | 'rates' | 'status' | 'custom'
 
@@ -34,7 +45,7 @@ export interface ThemePillarItem {
 }
 
 export interface ThemePresentation {
-  renderer: 'portal-v1' | 'club-v1'
+  renderer: ThemeRendererId
   navigation: ThemeNavigationItem[]
   home: {
     hero: {

@@ -57,7 +57,7 @@ export type {
   ModerationStatus,
 } from './domain/staffModeration.service'
 export { supportApi, staffSupportApi } from './domain/support.service'
-export { themeApi } from './domain/theme.service'
+export { themeApi, THEME_CATALOG_IDS, THEME_RENDERER_ALIASES } from './domain/theme.service'
 export type {
   ApiTheme,
   ThemeLayout,
@@ -66,6 +66,11 @@ export type {
   ThemeSiteMetadata,
   ThemeStatItem,
   ThemePillarItem,
+  ThemeFeatureItem,
+  ThemeRankingTab,
+  ThemeCatalogId,
+  ThemeRendererId,
+  ThemeRendererAlias,
 } from './domain/theme.service'
 export type {
   ApiPanelSettings,

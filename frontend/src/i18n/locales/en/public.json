@@ -533,6 +533,20 @@
     "newsEmpty": "No news yet.",
     "viewAllNews": "View all"
   },
+  "templates": {
+    "gazette": "Realm gazette",
+    "warRoom": "War room",
+    "clientNotes": "Client notes",
+    "realmMap": "Map of the realm",
+    "choosePath": "Choose your path",
+    "chapter": "Chapter {{n}}",
+    "houseRules": "House rules",
+    "decrees": "Court decrees",
+    "arenaRules": "Arena rules",
+    "startPath": "Your first login",
+    "step": "Step {{n}}",
+    "watch": "Vigil"
+  },
   "downloads": {
     "kicker": "Client",
     "title": "Downloads",

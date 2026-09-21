@@ -2,6 +2,7 @@ import { createContext, Fragment, useContext, useEffect, useState, type ReactNod
 import { themeApi, type ApiTheme } from '../services/api'
 import { applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
 import { persistAppliedLoaderChrome } from './loaderChrome'
+import { resolveTemplateId } from './templates/resolve'
 
 const DEFAULT_THEME: ApiTheme = {
   id: 'default', package_id: null, name: 'PDL Classic', version: '2.0.0', author: 'PDL',
@@ -49,8 +50,15 @@ async function applyTheme(theme: ApiTheme) {
   configureRuntimeTheme(theme.assets)
   applyThemeSurfaceVars(theme.layout)
   document.documentElement.dataset.pdlTheme = theme.id
-  if (theme.presentation?.renderer) document.documentElement.dataset.pdlRenderer = theme.presentation.renderer
-  else delete document.documentElement.dataset.pdlRenderer
+  if (theme.presentation?.renderer) {
+    document.documentElement.dataset.pdlRenderer = theme.presentation.renderer
+    const templateId = resolveTemplateId(theme.presentation.renderer)
+    if (templateId) document.documentElement.dataset.pdlTemplate = templateId
+    else delete document.documentElement.dataset.pdlTemplate
+  } else {
+    delete document.documentElement.dataset.pdlRenderer
+    delete document.documentElement.dataset.pdlTemplate
+  }
   activeThemeLink?.remove()
   activeThemeLink = null
   if (theme.stylesheet_url) {

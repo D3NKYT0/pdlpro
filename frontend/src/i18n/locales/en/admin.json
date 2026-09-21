@@ -767,7 +767,7 @@
       "files": "Files at the root: <c>theme.json</c>, <c>theme.css</c>, optional <c>metadados.json</c>, folders <c>images/</c> and <c>fonts/</c>",
       "accepted": "Accepted: CSS, images, local fonts and <c>metadados.json</c> pointed to by <c>theme.json</c>",
       "blocked": "Blocked: scripts, executable HTML, Markdown and path traversal",
-      "renderer": "Approved renderers: <c>portal-v1</c> and <c>club-v1</c> (navigation, home, shells)",
+      "renderer": "Catalog of 20 layouts (Vesperlyn, Ironspine, Warhorn…) or aliases <c>portal-v1</c> and <c>club-v1</c>",
       "activation": "Installing ≠ activating: activate it in the catalog after validation"
     },
     "catalogEyebrow": "Catalog",

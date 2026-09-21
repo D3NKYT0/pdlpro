@@ -31,6 +31,7 @@ afterEach(() => {
   document.querySelectorAll('link[rel="icon"]').forEach((link) => link.remove())
   document.documentElement.removeAttribute('data-pdl-theme')
   document.documentElement.removeAttribute('data-pdl-renderer')
+  document.documentElement.removeAttribute('data-pdl-template')
   document.documentElement.removeAttribute('data-pdl-loader-theme')
   document.documentElement.removeAttribute('data-panel-density')
   document.documentElement.style.cssText = ''
@@ -71,6 +72,7 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')
   expect(screen.getByText(/Valorem/)).toHaveTextContent('/theme/default/images/missing.png')
   expect(document.documentElement.dataset.pdlRenderer).toBe('portal-v1')
+  expect(document.documentElement.dataset.pdlTemplate).toBe('gemwright')
 })
 
 it('pinta o splash HTML com o brasão e o acento do tema ativo', async () => {

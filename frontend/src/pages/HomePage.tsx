@@ -9,7 +9,7 @@ import { themeImage } from '../theme/assets'
 import { useTheme } from '../theme/ThemeProvider'
 import { PortalHomePage } from '../components/themes/PortalTheme'
 import { ClubHomePage } from '../components/themes/ClubTheme'
-import { isClubRenderer } from '../theme/renderers'
+import { CatalogHomePage, isGemwright, isVesperlyn, resolveTemplateId } from '../theme/templates'
 import { PdlHeroEmblem } from '../components/PdlSymbol'
 import { ThemeHeroVideo } from '../components/ThemeHeroVideo'
 
@@ -396,11 +396,15 @@ function DefaultHomePage() {
 
 export function HomePage() {
   const theme = useTheme()
-  if (isClubRenderer(theme.presentation?.renderer) && theme.presentation) {
+  const templateId = resolveTemplateId(theme.presentation?.renderer)
+  if (isVesperlyn(theme.presentation?.renderer) && theme.presentation) {
     return <ClubHomePage presentation={theme.presentation} />
   }
-  if (theme.presentation?.renderer === 'portal-v1') {
+  if (isGemwright(theme.presentation?.renderer) && theme.presentation) {
     return <PortalHomePage presentation={theme.presentation} />
+  }
+  if (templateId && theme.presentation) {
+    return <CatalogHomePage presentation={theme.presentation} templateId={templateId} />
   }
   return <DefaultHomePage />
 }

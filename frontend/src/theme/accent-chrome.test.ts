@@ -16,6 +16,7 @@ const sagaInstalledCss = existsSync(sagaMediaRoot)
   : ''
 const comingSoon = readFileSync(resolve(themeRoot, 'pages/coming-soon.css'), 'utf8')
 const club = readFileSync(resolve(themeRoot, 'pages/club.css'), 'utf8')
+const templates = readFileSync(resolve(themeRoot, 'pages/templates.css'), 'utf8')
 const panel = readFileSync(resolve(themeRoot, 'pages/panel.css'), 'utf8')
 const auth = readFileSync(resolve(themeRoot, 'pages/auth.css'), 'utf8')
 const layout = readFileSync(resolve(themeRoot, 'public/css/layout.css'), 'utf8')
@@ -38,6 +39,23 @@ const contextualHelpCss = readFileSync(resolve(__dirname, '../components/help/co
 const programsCss = readFileSync(resolve(__dirname, '../components/programs/programs.css'), 'utf8')
 const observationCss = readFileSync(resolve(__dirname, '../pages/admin/item-observation.css'), 'utf8')
 
+it('o catálogo clássico pinta cada composição com tokens, sem ouro cravado', () => {
+  expect(templates).toContain('var(--theme-accent')
+  expect(templates).toContain('var(--theme-bg-deep')
+  expect(templates).not.toMatch(/#d4ad62/i)
+  expect(templates).not.toMatch(/#c5a161/i)
+  for (const id of [
+    'ironspine', 'ashenledger', 'warhorn', 'ironpatch', 'laurelwake', 'meridian',
+    'twinwake', 'cartograph', 'classing', 'parchment', 'obsidian', 'hearthspire',
+    'goldleaf', 'lampmarket', 'bracket', 'eventide', 'wayfarer', 'watchfire',
+  ]) {
+    expect(templates).toContain(`[data-theme-template="${id}"]`)
+  }
+  expect(templates).toMatch(/\.tpl-spine__grid\s*\{[\s\S]*?grid-template-columns:\s*180px/)
+  expect(templates).toMatch(/\.tpl-split\s*\{[\s\S]*?grid-template-columns:\s*1fr 1fr/)
+  expect(templates).toMatch(/\.tpl-manuscript\s*\{[\s\S]*?width:\s*min\(100% - 32px, 680px\)/)
+})
+
 it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () => {
   expect(club).toContain('var(--theme-accent')
   expect(club).toContain('var(--theme-bg-deep')
@@ -45,13 +63,13 @@ it('o layout club-v1 pinta com tokens do tema, sem ouro clássico cravado', () =
   expect(club).not.toMatch(/#d4ad62/i)
   expect(club).not.toMatch(/#c5a161/i)
   expect(club).toMatch(
-    /\[data-pdl-renderer="club-v1"\] \.club-shell nav\s*\{[\s\S]*?position:\s*static/,
+    /\[data-pdl-renderer="club-v1"\][\s\S]*?\.club-shell nav\s*\{[\s\S]*?position:\s*static/,
   )
   expect(club).toMatch(
-    /\[data-pdl-renderer="club-v1"\] \.club-header__inner\s*\{[\s\S]*?grid-template-columns:\s*1fr auto/,
+    /\[data-pdl-renderer="club-v1"\][\s\S]*?\.club-header__inner\s*\{[\s\S]*?grid-template-columns:\s*1fr auto/,
   )
   expect(club).toMatch(
-    /\[data-pdl-renderer="club-v1"\] \.club-header \.site-nav-actions \.user[\s\S]*?display:\s*flex/,
+    /\[data-pdl-renderer="club-v1"\][\s\S]*?\.club-header \.site-nav-actions \.user[\s\S]*?display:\s*flex/,
   )
   expect(club).not.toContain('.club-header__lang')
   expect(club).not.toContain('.club-header__login')

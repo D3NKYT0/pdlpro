@@ -8,6 +8,20 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- Catálogo de **20 templates públicos clássicos** (Vesperlyn, Gemwright,
+  Ironspine, Ashen Ledger, Warhorn, Ironpatch, Laurelwake, Meridian, Twinwake,
+  Cartograph, Classing, Parchment, Obsidian, Hearthspire, Goldleaf, Lampmarket,
+  Bracket, Eventide, Wayfarer, Watchfire). O `theme.json` escolhe o layout pelo
+  nome; `portal-v1` e `club-v1` continuam como aliases.
+
+### Alterado
+
+- O contrato de `presentation.renderer` deixa de ser só dois ids de versão.
+  A camada vive em `frontend/src/theme/templates/` e
+  `backend/apps/themes/application/template_catalog.py`.
+
 ## [2.5.6] - 2026-09-20
 
 Painel e admin do Saga Club sem foto de fundo, splash só com o brasão

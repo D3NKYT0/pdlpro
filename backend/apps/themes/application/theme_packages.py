@@ -13,6 +13,10 @@ from typing import Any, BinaryIO
 
 from django.conf import settings
 
+from apps.themes.application.template_catalog import (
+    home_sections_for,
+    is_supported_renderer,
+)
 from apps.themes.application.theme_metadata import (
     METADATA_FILENAME,
     empty_theme_metadata,
@@ -176,11 +180,6 @@ def _int_range(value, label: str, minimum: int, maximum: int) -> int:
     return value
 
 
-SUPPORTED_RENDERERS = ("portal-v1", "club-v1")
-HOME_SECTIONS = {
-    "portal-v1": ("hero", "features", "ranking", "cta", "news"),
-    "club-v1": ("hero", "stats", "features", "pillars", "ranking", "cta", "news"),
-}
 STAT_KINDS = ("online", "chronicle", "rates", "status", "custom")
 PANEL_DENSITIES = ("compact", "comfortable", "spacious")
 
@@ -229,7 +228,7 @@ def _validate_presentation(value, assets: dict) -> None:
         value, "presentation", {"renderer", "navigation", "home", "footer"}, {"shells"}
     )
     renderer = presentation["renderer"]
-    if renderer not in SUPPORTED_RENDERERS:
+    if not is_supported_renderer(renderer):
         raise ValidationDomainError("O renderer solicitado pelo tema não é suportado.")
 
     navigation = presentation["navigation"]
@@ -320,7 +319,7 @@ def _validate_presentation(value, assets: dict) -> None:
         _text(section["title"], f"presentation.home.{section_name}.title", limit=120)
 
     if "sections" in home:
-        allowed_sections = HOME_SECTIONS[renderer]
+        allowed_sections = home_sections_for(renderer)
         sections = home["sections"]
         if not isinstance(sections, list) or not sections:
             raise ValidationDomainError("presentation.home.sections precisa ser uma lista não vazia.")
