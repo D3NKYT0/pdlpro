@@ -3,7 +3,7 @@ import { cleanup, render, renderHook } from '@testing-library/react'
 import { afterEach, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { usePanelTheme } from './usePanelTheme'
-import { useDefaultTheme } from './useDefaultTheme'
+import { applyPublicBodyBackground, useDefaultTheme } from './useDefaultTheme'
 import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage, themeStylesheet, themeVideo } from './assets'
 
 afterEach(() => {
@@ -25,6 +25,19 @@ it('monta tema privado e limpa estilos ao sair', () => {
   expect(document.querySelectorAll('link[data-pdl-panel-theme]')).toHaveLength(0)
   expect(document.body.style.minHeight).toBe('')
 })
+it('no saga o corpo das telas internas fica só com cor', () => {
+  applyPublicBodyBackground('saga', '/roadmap')
+  expect(document.body.style.backgroundImage).toBe('none')
+  expect(document.body.style.background).not.toContain('bg/5')
+  expect(document.body.style.backgroundColor).toBe('rgb(5, 5, 5)')
+
+  applyPublicBodyBackground('saga', '/')
+  expect(document.body.style.background).toContain('bg/5')
+
+  applyPublicBodyBackground('default', '/roadmap')
+  expect(document.body.style.background).toContain('bg/5')
+})
+
 it('monta tema público e remove recursos na desmontagem', () => {
   function Page() { useDefaultTheme(); return <p>Conteúdo</p> }
   const { unmount } = render(<MemoryRouter><Page /></MemoryRouter>)
