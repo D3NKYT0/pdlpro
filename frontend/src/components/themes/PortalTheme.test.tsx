@@ -12,6 +12,10 @@ import type { ThemePresentation } from '../../services/api'
 import { PortalHomePage, PortalPublicLayout } from './PortalTheme'
 
 const session = vi.hoisted(() => ({ user: null as { username: string } | null }))
+const themeState = vi.hoisted(() => ({
+  id: 'valorem',
+  assets: {} as Record<string, string>,
+}))
 
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => ({ user: session.user }) }))
 vi.mock('../../services/domain/content.service', () => ({ contentApi: { news: vi.fn() } }))
@@ -24,6 +28,13 @@ vi.mock('../../services/domain/programs.service', () => ({
 vi.mock('../../extensions', () => ({
   extensionNavItems: () => [],
   isExtensionResourceEnabled: () => true,
+}))
+vi.mock('../../theme/ThemeProvider', () => ({
+  useTheme: () => themeState,
+}))
+vi.mock('../../theme/assets', () => ({
+  themeAsset: (path: string) => `/media/themes/${themeState.id}/${path}`,
+  themeImage: (path: string) => `/media/themes/${themeState.id}/images/${path}`,
 }))
 
 const presentation: ThemePresentation = {
@@ -67,6 +78,8 @@ beforeEach(() => {
   vi.mocked(contentApi.news).mockReset()
   vi.mocked(serverApi.rankings).mockResolvedValue([{ position: 1, name: 'Equinox', value: 1240, extra: { class_id: 0, sex: 0 } }])
   vi.mocked(contentApi.news).mockResolvedValue([])
+  themeState.id = 'valorem'
+  themeState.assets = {}
 })
 
 afterEach(() => {
@@ -131,6 +144,52 @@ it('mantém a home do tema na raiz para visitante durante o Coming Soon', () => 
 
   expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/')
   expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/')
+})
+
+it('no Classic usa o brasão e cenas nos cards, sem countdown', async () => {
+  themeState.id = 'default'
+  render(wrap(
+    <QueryClientProvider client={queryClient()}>
+      <MemoryRouter>
+        <Routes>
+          <Route element={<PortalPublicLayout presentation={presentation} />}>
+            <Route index element={<PortalHomePage presentation={{
+              ...presentation,
+              home: {
+                ...presentation.home,
+                hero: {
+                  ...presentation.home.hero,
+                  secondaryLabel: 'Download',
+                  secondaryTo: '/downloads',
+                },
+                features: {
+                  ...presentation.home.features,
+                  items: [{ title: 'Crônica', description: 'Arquivo', asset: 'images/home/gemwright-1.webp' }],
+                },
+              },
+            }} />} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
+  ))
+  expect(document.querySelector('.portal-shell--classic')).not.toBeNull()
+  expect(document.querySelector('.logo img')).toHaveAttribute('src', '/media/themes/default/images/logo.png')
+  expect(document.querySelector('.logo img[src*="logo-text"]')).toBeNull()
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveClass('portal-footer-mark')
+  expect(screen.getByRole('link', { name: 'Início' }).querySelector('img')).toBeTruthy()
+  expect(document.querySelector('.pdl-emblem-stage')).not.toBeNull()
+  expect(document.querySelector('.countdown')).toBeNull()
+  expect(screen.queryByLabelText('SERVER IS OPENING IN')).not.toBeInTheDocument()
+  expect(screen.getByText('Acesso ao reino')).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'CONNECT' })).toHaveAttribute('href', '/downloads')
+  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/downloads')
+  expect(screen.getByRole('link', { name: 'Explore o reino' })).toHaveAttribute('href', '#features')
+  const art = document.querySelector('.feature-card__art') as HTMLElement
+  expect(art.style.backgroundImage).toContain('images/home/gemwright-1.webp')
+  expect(document.querySelector('.feature-card--scene')).not.toBeNull()
+  expect(document.querySelector('.feature-card__icon')).toBeNull()
+  expect(screen.getByRole('link', { name: 'Entrar' })).toHaveAttribute('href', '/login')
 })
 
 it('respeita ordem e omissão de seções declaradas no presentation', async () => {

@@ -7,12 +7,12 @@ import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
 import { programsApi, type ThemePresentation } from '../../services/api'
 import { themeAsset } from '../assets'
+import { useTheme } from '../ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
 import { LanguageSwitcher } from '../../components/i18n/LanguageSwitcher'
 import { PdlSymbol } from '../../components/PdlSymbol'
 import { PUBLIC_TEMPLATES } from './catalog'
 import type { ThemeCatalogId } from '../../services/api'
-import { formatDate } from '../../lib/formatters'
 
 function activeRoute(pathname: string, target: string) {
   if (LANDING_PATHS.includes(target)) return LANDING_PATHS.includes(pathname)
@@ -31,6 +31,7 @@ export function TemplateShell({
   const { pathname } = useLocation()
   const landingPath = useLandingPath()
   const template = PUBLIC_TEMPLATES[templateId]
+  const theme = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const resources = useQuery({
     queryKey: ['resources'],
@@ -49,11 +50,12 @@ export function TemplateShell({
       })),
   ]
   const downloadsEnabled = !resources.data?.some((item) => item.code === 'downloads' && !item.enabled)
+  const packedWordmark = theme.assets['images/logo-text.png']
   const markSrc =
-    template.mark === 'wordmark'
-      ? themeAsset('images/logo-text.png')
-      : template.mark === 'symbol'
-        ? themeAsset('images/pdl-symbol.svg')
+    template.mark === 'symbol'
+      ? themeAsset('images/pdl-symbol.svg')
+      : template.mark === 'wordmark' && packedWordmark
+        ? packedWordmark
         : themeAsset('images/logo.png')
 
   useEffect(() => setMenuOpen(false), [pathname])
@@ -77,12 +79,9 @@ export function TemplateShell({
     >
       <header className="tpl-header">
         <div className="tpl-header__inner tpl-wrap">
-          {template.shell === 'masthead' ? (
-            <p className="tpl-masthead-date">{formatDate(new Date().toISOString())}</p>
-          ) : null}
           <Link to={landingPath} className="tpl-brand" aria-label={t('portal.homeAria')}>
             {template.shell === 'court' ? <PdlSymbol className="tpl-brand__mark" /> : null}
-            <img src={markSrc} alt={presentation.footer.copyright} />
+            <img src={markSrc} alt="" />
           </Link>
           {template.shell !== 'banner' && template.shell !== 'minimal' ? (
             <nav className="tpl-nav" aria-label={t('nav.main')}>{links}</nav>
@@ -116,8 +115,8 @@ export function TemplateShell({
       <footer className="tpl-footer">
         <div className="tpl-wrap tpl-footer__inner">
           <div className="tpl-footer__brand">
-            <Link to={landingPath} className="tpl-brand tpl-brand--footer">
-              <img src={markSrc} alt={presentation.footer.copyright} />
+            <Link to={landingPath} className="tpl-brand tpl-brand--footer" aria-label={t('portal.homeAria')}>
+              <img src={markSrc} alt="" />
             </Link>
             <p className="tpl-footer__tagline">{presentation.footer.tagline}</p>
           </div>

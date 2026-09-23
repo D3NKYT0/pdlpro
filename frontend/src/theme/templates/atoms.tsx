@@ -148,17 +148,25 @@ export function RankingBoard({
       </div>
       {variant === 'podium' && podium.length ? (
         <ol className="tpl-podium">
-          {podium.map((row) => (
-            <li key={`${row.position}-${row.name}`}>
-              <span>{String(row.position).padStart(2, '0')}</span>
-              <strong>{row.name}</strong>
-              <em>{formatNumber(row.value)}</em>
-            </li>
-          ))}
+          {podium.map((row) => {
+            const portrait = rankingPortrait(row)
+            return (
+              <li key={`${row.position}-${row.name}`}>
+                <span>{String(row.position).padStart(2, '0')}</span>
+                {portrait ? (
+                  <CharacterAvatar name={row.name} classId={portrait.classId} sex={portrait.sex} size="sm" />
+                ) : null}
+                <strong>{row.name}</strong>
+                <em>{formatNumber(row.value)}</em>
+              </li>
+            )
+          })}
         </ol>
       ) : null}
       {query.isLoading ? <LoadingState>{t('portal.ratingLoading')}</LoadingState> : query.isError ? (
         <ErrorNotice error={query.error} fallback={t('portal.ratingError')} />
+      ) : variant === 'podium' ? (
+        rows.length ? null : <p className="tpl-empty">{t('portal.ratingEmpty')}</p>
       ) : (
         <table className="tpl-ranking__table">
           <thead>
@@ -200,24 +208,39 @@ export function NewsFeed({
   query,
   t,
   variant = 'list',
+  showTitle = true,
+  hideWhenEmpty = false,
 }: {
   title: string
   items?: ApiNews[]
   query: UseQueryResult<ApiNews[]>
   t: TFunction
   variant?: 'list' | 'featured' | 'ticker'
+  showTitle?: boolean
+  hideWhenEmpty?: boolean
 }) {
   const rows = items ?? query.data ?? []
+  const heading = showTitle ? (
+    <header className="tpl-news__head">
+      <h2>{title}</h2>
+      {rows.length ? <ButtonLink variant="secondary" size="sm" to="/news">{t('club.viewAllNews')}</ButtonLink> : null}
+    </header>
+  ) : null
   if (query.isLoading) return <LoadingState>{t('club.newsLoading')}</LoadingState>
   if (query.isError) return <ErrorNotice error={query.error} fallback={t('club.newsError')} />
-  if (!rows.length) return <p className="tpl-empty">{t('club.newsEmpty')}</p>
+  if (!rows.length) {
+    if (hideWhenEmpty) return null
+    return (
+      <div className="tpl-news">
+        {heading}
+        <p className="tpl-empty">{t('club.newsEmpty')}</p>
+      </div>
+    )
+  }
   const [lead, ...rest] = rows
   return (
     <div className={`tpl-news tpl-news--${variant}`}>
-      <header className="tpl-news__head">
-        <h2>{title}</h2>
-        <ButtonLink variant="secondary" size="sm" to="/news">{t('club.viewAllNews')}</ButtonLink>
-      </header>
+      {heading}
       {variant === 'featured' && lead ? (
         <Link className="tpl-news__lead" to={`/news/${lead.slug}`}>
           <strong>{lead.title}</strong>

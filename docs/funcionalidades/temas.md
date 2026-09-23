@@ -32,7 +32,10 @@ preferência sem criar um ZIP. Vazio no campo volta ao chrome interno. O seletor
 só troca a composição da landing; cores, logos e o brasão continuam os do Classic.
 Hero, CTA e features usam recortes em `images/bg/<id>-*.webp` e
 `images/home/<id>-*.webp`: enquadramentos de cenas completas do Classic,
-sem colar PNG de personagem.
+sem colar PNG de personagem. No Classic, **Gemwright** usa o casco de portal
+com esses tokens — header em duas faixas, hero em tela cheia com kicker e
+dois CTAs, cards de cena, sem countdown (o relógio fica no ZIP que declara
+data) e um único brasão no rodapé.
 
 O pacote Valorem de referência pode ser gerado e mantido localmente em
 `frontend/theme-packages/valorem-pdl2.zip`. Essa pasta é ignorada pelo Git: pacotes, fontes e

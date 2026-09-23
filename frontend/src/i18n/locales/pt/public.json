@@ -507,6 +507,7 @@
   "portal": {
     "login": "LOGIN",
     "createAccount": "CRIAR CONTA",
+    "kicker": "Acesso ao reino",
     "dashboard": "PAINEL",
     "homeAria": "Página inicial",
     "mobileNav": "Navegação móvel",
@@ -536,16 +537,21 @@
   "templates": {
     "gazette": "Gazeta do reino",
     "warRoom": "Sala de guerra",
+    "reports": "Relatórios",
     "clientNotes": "Notas do cliente",
+    "patchNotes": "Notas do patch",
     "realmMap": "Mapa do reino",
     "choosePath": "Escolha seu caminho",
     "chapter": "Capítulo {{n}}",
+    "chapters": "Capítulos",
     "houseRules": "Regras da casa",
+    "board": "Mural da taverna",
     "decrees": "Decretos da corte",
     "arenaRules": "Regras da arena",
     "startPath": "Seu primeiro login",
     "step": "Passo {{n}}",
-    "watch": "Vigília"
+    "watch": "Vigília",
+    "hall": "Hall da fama"
   },
   "downloads": {
     "kicker": "Cliente",

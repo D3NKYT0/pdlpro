@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { ThemeCatalogId, ThemePresentation } from '../../services/api'
-import { themeAsset } from '../assets'
 import { PdlHeroEmblem } from '../../components/PdlSymbol'
 import { ThemeHeroVideo } from '../../components/ThemeHeroVideo'
 import { ButtonLink } from '../../components/ui/Button'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
+import { formatDate } from '../../lib/formatters'
 import {
   CountdownGrid,
   CtaPanel,
@@ -78,6 +78,8 @@ export function CatalogHomePage({
       title={newsContent.title}
       query={home.news}
       t={t}
+      showTitle={templateId !== 'obsidian'}
+      hideWhenEmpty={templateId === 'obsidian'}
       variant={templateId === 'ashenledger' || templateId === 'goldleaf' ? 'featured' : templateId === 'obsidian' ? 'ticker' : 'list'}
     />
   ) : null
@@ -106,52 +108,68 @@ export function CatalogHomePage({
   if (templateId === 'ironspine') {
     body = (
       <>
-        {has('hero') ? (
-          <section className="tpl-spine__banner">
-            <img src={themeAsset('images/logo-text.png')} alt="" />
-            <p>{hero.kicker || hero.subtitle}</p>
-          </section>
-        ) : null}
-        <div className="tpl-spine__grid">
-          <nav className="tpl-spine__nav" aria-label={t('nav.main')}>{nav}</nav>
-          <article className="tpl-spine__well">
-            {newsBlock}
-            {has('features') ? <FeatureCards items={features.items} /> : null}
-          </article>
-          <aside className="tpl-spine__widgets">
-            {statsBlock}
-            {rankingBlock}
-          </aside>
+        <div className="tpl-spine">
+          {has('hero') ? (
+            <section className="tpl-spine__banner">
+              <div className="tpl-spine__banner-copy">
+                {hero.kicker && hero.kicker !== hero.title ? <p className="tpl-kicker">{hero.kicker}</p> : null}
+                <h1>{hero.title}</h1>
+                <p>{hero.description}</p>
+              </div>
+            </section>
+          ) : null}
+          <div className="tpl-spine__grid">
+            <nav className="tpl-spine__nav" aria-label={t('nav.main')}>{nav}</nav>
+            <article className="tpl-spine__well">
+              {newsBlock}
+              {has('features') ? <FeatureCards items={features.items} /> : null}
+            </article>
+            <aside className="tpl-spine__widgets">
+              {statsBlock}
+              {has('ranking') ? (
+                <section className="tpl-spine__panel">
+                  <h2 className="tpl-spine__panel-title">{ranking.title}</h2>
+                  {rankingBlock}
+                </section>
+              ) : null}
+            </aside>
+          </div>
+          {ctaBlock}
         </div>
-        {ctaBlock}
       </>
     )
   } else if (templateId === 'ashenledger') {
     body = (
-      <>
+      <div className="tpl-ledger">
         <section className="tpl-ledger__mast">
+          <p className="tpl-ledger__date">{formatDate(new Date().toISOString())}</p>
           <p className="tpl-kicker">{hero.kicker || t('templates.gazette')}</p>
           <h1>{hero.title}</h1>
           <p>{hero.description}</p>
         </section>
         <div className="tpl-ledger__columns">
-          <div className="tpl-ledger__main">{newsBlock}</div>
-          <aside className="tpl-ledger__rail">
-            {rankingBlock}
+          <div className="tpl-ledger__main">
+            {newsBlock}
             {has('features') ? <FeatureCards items={features.items.slice(0, 3)} /> : null}
+          </div>
+          <aside className="tpl-ledger__rail">
+            <h2 className="tpl-ledger__rail-title">{ranking.title}</h2>
+            {rankingBlock}
           </aside>
         </div>
         {ctaBlock}
-      </>
+      </div>
     )
   } else if (templateId === 'warhorn') {
+    const siegeClock = !hero.countdownAt.startsWith('2099-01-01')
+    const featureTitle = features.title === hero.title ? t('templates.reports') : features.title
     body = (
-      <>
+      <div className="tpl-warroom">
         <section className="tpl-war">
           <p className="tpl-kicker">{hero.kicker || t('templates.warRoom')}</p>
           <h1>{hero.title}</h1>
           <p>{hero.description}</p>
-          <CountdownGrid label={hero.countdownLabel} value={home.countdown} t={t} />
+          {siegeClock ? <CountdownGrid label={hero.countdownLabel} value={home.countdown} t={t} /> : null}
           <div className="tpl-war__enlist">
             <ButtonLink to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
             {hero.secondaryLabel && hero.secondaryTo ? (
@@ -162,57 +180,89 @@ export function CatalogHomePage({
         {statsBlock}
         {has('features') ? (
           <section className="tpl-block">
-            <SectionHead kicker={features.subtitle} title={features.title} />
+            <SectionHead title={featureTitle} />
             <FeatureCards items={features.items} />
           </section>
         ) : null}
-        {ctaBlock}
         {rankingBlock}
         {newsBlock}
-      </>
+        {ctaBlock}
+      </div>
     )
   } else if (templateId === 'ironpatch') {
+    const notes = (
+      <NewsFeed title={newsContent.title} query={home.news} t={t} showTitle={false} />
+    )
+    const featureTitle = features.title === hero.title ? t('templates.patchNotes') : features.title
     body = (
       <div className="tpl-launcher">
         {has('hero') ? (
           <section className="tpl-launcher__hero">
-            <div>
-              <p className="tpl-kicker">{hero.kicker}</p>
+            <div className="tpl-launcher__lead">
+              {hero.kicker && hero.kicker !== hero.title && hero.kicker !== hero.description ? <p className="tpl-kicker">{hero.kicker}</p> : null}
               <h1>{hero.title}</h1>
               <p>{hero.description}</p>
               <ButtonLink size="lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
             </div>
             <aside className="tpl-launcher__notes">
               <h2>{t('templates.clientNotes')}</h2>
-              {newsBlock}
+              {notes}
             </aside>
           </section>
         ) : null}
         {has('features') ? (
           <section className="tpl-block">
-            <SectionHead title={features.title} kicker={features.subtitle} />
+            <SectionHead title={featureTitle} />
             <FeatureCards items={features.items} />
           </section>
         ) : null}
-        {ctaBlock}
-        {rankingBlock}
+        {has('ranking') ? (
+          <section className="tpl-launcher__rank">
+            <h2>{ranking.title}</h2>
+            {rankingBlock}
+          </section>
+        ) : null}
+        {has('cta') && cta.title === hero.title ? (
+          <div className="tpl-launcher__bar">
+            <p>{cta.description}</p>
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </div>
+        ) : ctaBlock}
       </div>
     )
   } else if (templateId === 'laurelwake') {
+    const hallKicker = ranking.subtitle && ranking.subtitle !== ranking.title && ranking.subtitle !== hero.title
+      ? ranking.subtitle
+      : t('templates.hall')
+    const featureTitle = features.title === hero.title ? '' : features.title
     body = (
-      <>
+      <div className="tpl-fame">
         <section className="tpl-hall">
-          <SectionHead kicker={ranking.subtitle} title={ranking.title} action={<ButtonLink variant="secondary" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>} />
+          <SectionHead
+            kicker={hallKicker}
+            title={ranking.title}
+            action={<ButtonLink variant="secondary" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>}
+          />
           {rankingBlock}
         </section>
         {statsBlock}
         {newsBlock}
-        {has('features') ? <FeatureCards items={features.items} /> : null}
-        {ctaBlock}
-        {has('hero') ? <p className="tpl-hall__tag">{hero.description}</p> : null}
-      </>
+        {has('features') ? (
+          <section className="tpl-block">
+            {featureTitle ? <SectionHead title={featureTitle} /> : null}
+            <FeatureCards items={features.items} />
+          </section>
+        ) : null}
+        {has('cta') && cta.title === hero.title ? (
+          <div className="tpl-fame__bar">
+            <p>{cta.description}</p>
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </div>
+        ) : ctaBlock}
+      </div>
     )
   } else if (templateId === 'meridian') {
+    const chapterTitle = features.title === hero.title ? t('templates.chapters') : features.title
     body = (
       <div className="tpl-codex">
         <header className="tpl-codex__open">
@@ -223,97 +273,135 @@ export function CatalogHomePage({
         {statsBlock}
         {has('features') ? (
           <section className="tpl-block">
-            <SectionHead title={features.title} kicker={features.subtitle} />
+            <SectionHead title={chapterTitle} />
             <FeatureCards items={features.items} variant="chapters" />
           </section>
         ) : null}
         {pillarsBlock}
         {newsBlock}
-        {ctaBlock}
-        {rankingBlock}
+        {has('ranking') ? (
+          <section className="tpl-codex__rank">
+            <h2>{ranking.title}</h2>
+            {rankingBlock}
+          </section>
+        ) : null}
+        {has('cta') && cta.title === hero.title ? (
+          <div className="tpl-codex__bar">
+            <p>{cta.description}</p>
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </div>
+        ) : ctaBlock}
       </div>
     )
   } else if (templateId === 'twinwake') {
+    const sameAct = cta.title === hero.title && cta.actionTo === hero.actionTo
     body = (
-      <>
+      <div className="tpl-gate">
         <section className="tpl-split">
-          <article>
-            <p className="tpl-kicker">{hero.kicker}</p>
+          <article className="tpl-split__account">
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
             <ButtonLink size="lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
           </article>
-          <article>
-            <p className="tpl-kicker">{hero.subtitle}</p>
+          <article className="tpl-split__client">
             <h2>{hero.secondaryLabel || t('nav.download')}</h2>
-            <p>{cta.description}</p>
-            <ButtonLink variant="secondary" size="lg" to={hero.secondaryTo || '/downloads'}>
+            {cta.description && cta.description !== hero.description ? <p>{cta.description}</p> : null}
+            <ButtonLink size="lg" to={hero.secondaryTo || '/downloads'}>
               {hero.secondaryLabel || t('nav.download')}
             </ButtonLink>
           </article>
         </section>
-        {has('features') ? <FeatureCards items={features.items} /> : null}
+        {has('features') ? (
+          <section className="tpl-block">
+            {features.title !== hero.title ? <SectionHead title={features.title} /> : null}
+            <FeatureCards items={features.items} />
+          </section>
+        ) : null}
         {newsBlock}
-        {ctaBlock}
-      </>
+        {has('cta') && !sameAct ? ctaBlock : null}
+      </div>
     )
   } else if (templateId === 'cartograph') {
     body = (
-      <>
+      <div className="tpl-atlas">
         {has('hero') ? (
           <header className="tpl-atlas__legend">
-            <p className="tpl-kicker">{hero.kicker || t('templates.realmMap')}</p>
+            <p className="tpl-kicker">{hero.kicker && hero.kicker !== hero.title ? hero.kicker : t('templates.realmMap')}</p>
             <h1>{hero.title}</h1>
+            <p>{hero.description}</p>
           </header>
         ) : null}
         {has('features') ? <FeatureCards items={features.items} variant="regions" /> : null}
         {statsBlock}
         {newsBlock}
-        {ctaBlock}
-      </>
+        {has('cta') && cta.title === hero.title ? (
+          <div className="tpl-atlas__bar">
+            {cta.description && cta.description !== hero.description ? <p>{cta.description}</p> : null}
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </div>
+        ) : ctaBlock}
+      </div>
     )
   } else if (templateId === 'classing') {
+    const creed = (pillars?.items ?? []).filter((item) => item.title !== hero.title)
     body = (
-      <>
+      <div className="tpl-select">
         {has('hero') ? (
-          <header className="tpl-classing__intro">
-            <p className="tpl-kicker">{hero.kicker || t('templates.choosePath')}</p>
+          <header className="tpl-select__prompt">
+            <p className="tpl-kicker">{hero.kicker && hero.kicker !== hero.title ? hero.kicker : t('templates.choosePath')}</p>
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
           </header>
         ) : null}
         {has('features') ? <FeatureCards items={features.items} variant="paths" /> : null}
-        {pillarsBlock}
-        {ctaBlock}
+        {creed.length ? (
+          <ul className="tpl-select__creed">
+            {creed.map((item) => (
+              <li key={item.title}>
+                <strong>{item.title}</strong>
+                <span>{item.description}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {has('cta') ? (
+          <div className="tpl-select__act">
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </div>
+        ) : null}
         {newsBlock}
-      </>
+      </div>
     )
   } else if (templateId === 'parchment') {
+    const leaves = (pillars?.items ?? []).filter((item) => item.title !== hero.title)
+    const chapters = [
+      ...leaves.map((item) => ({ title: item.title, text: item.description })),
+      ...(has('features') ? features.items.map((item) => ({ title: item.title, text: item.description })) : []),
+    ]
     body = (
       <article className="tpl-manuscript">
         {has('hero') ? (
           <header>
-            <p className="tpl-kicker">{hero.kicker}</p>
+            {hero.kicker && hero.kicker !== hero.title ? <p className="tpl-kicker">{hero.kicker}</p> : null}
             <h1>{hero.title}</h1>
             <p>{hero.description}</p>
           </header>
         ) : null}
-        {pillars?.items.map((item, index) => (
+        {chapters.map((item, index) => (
           <section key={item.title}>
             <span>{t('templates.chapter', { n: roman(index + 1) })}</span>
             <h2>{item.title}</h2>
-            <p>{item.description}</p>
+            <p>{item.text}</p>
           </section>
         ))}
-        {has('features') ? features.items.map((item, index) => (
-          <section key={item.title}>
-            <span>{t('templates.chapter', { n: roman((pillars?.items.length ?? 0) + index + 1) })}</span>
-            <h2>{item.title}</h2>
-            <p>{item.description}</p>
-          </section>
-        )) : null}
         {newsBlock}
-        {ctaBlock}
+        {has('cta') ? (
+          <footer className="tpl-manuscript__close">
+            {cta.title !== hero.title ? <h2>{cta.title}</h2> : null}
+            {cta.description && cta.description !== hero.description ? <p>{cta.description}</p> : null}
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          </footer>
+        ) : null}
       </article>
     )
   } else if (templateId === 'obsidian') {
@@ -330,25 +418,45 @@ export function CatalogHomePage({
           </div>
         </div>
         {newsBlock}
-        {ctaBlock}
       </section>
     )
   } else if (templateId === 'hearthspire') {
+    const rules = (pillars?.items ?? []).filter((item) => item.title !== hero.title)
     body = (
       <div className="tpl-tavern">
         <section className="tpl-tavern__board">
-          <SectionHead kicker={t('templates.houseRules')} title={newsContent.title} />
+          <p className="tpl-kicker">{t('templates.board')}</p>
           {newsBlock}
+          {has('cta') && cta.title === hero.title ? (
+            <ButtonLink to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+          ) : null}
         </section>
-        {ctaBlock}
         {has('features') ? (
-          <section className="tpl-block">
-            <SectionHead title={features.title} kicker={features.subtitle} />
+          <section className="tpl-tavern__hall">
+            {features.title !== hero.title ? <h2>{features.title}</h2> : null}
             <FeatureCards items={features.items} />
           </section>
         ) : null}
-        {pillarsBlock}
-        {rankingBlock}
+        {rules.length ? (
+          <section className="tpl-tavern__rules">
+            <h2>{t('templates.houseRules')}</h2>
+            <ul>
+              {rules.map((item) => (
+                <li key={item.title}>
+                  <strong>{item.title}</strong>
+                  <span>{item.description}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+        {has('ranking') ? (
+          <section className="tpl-tavern__slate">
+            <h2>{ranking.title}</h2>
+            {rankingBlock}
+          </section>
+        ) : null}
+        {has('cta') && cta.title !== hero.title ? ctaBlock : null}
       </div>
     )
   } else if (templateId === 'goldleaf') {

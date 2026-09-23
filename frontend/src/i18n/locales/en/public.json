@@ -507,6 +507,7 @@
   "portal": {
     "login": "LOGIN",
     "createAccount": "CREATE ACCOUNT",
+    "kicker": "Realm access",
     "dashboard": "DASHBOARD",
     "homeAria": "Home page",
     "mobileNav": "Mobile navigation",
@@ -536,16 +537,21 @@
   "templates": {
     "gazette": "Realm gazette",
     "warRoom": "War room",
+    "reports": "Reports",
     "clientNotes": "Client notes",
+    "patchNotes": "Patch notes",
     "realmMap": "Map of the realm",
     "choosePath": "Choose your path",
     "chapter": "Chapter {{n}}",
+    "chapters": "Chapters",
     "houseRules": "House rules",
+    "board": "Tavern board",
     "decrees": "Court decrees",
     "arenaRules": "Arena rules",
     "startPath": "Your first login",
     "step": "Step {{n}}",
-    "watch": "Vigil"
+    "watch": "Vigil",
+    "hall": "Hall of fame"
   },
   "downloads": {
     "kicker": "Client",

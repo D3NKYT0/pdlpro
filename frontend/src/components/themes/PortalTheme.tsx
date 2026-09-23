@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CircleUserRound } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
@@ -10,8 +11,34 @@ import type { ThemeHomeSection, ThemePresentation } from '../../services/api'
 import { formatDate, formatNumber } from '../../lib/formatters'
 import { CharacterAvatar } from '../character/CharacterAvatar'
 import { rankingPortrait } from '../rankings/rankingsFormat'
-import { themeAsset } from '../../theme/assets'
+import { themeAsset, themeImage } from '../../theme/assets'
+import { useTheme } from '../../theme/ThemeProvider'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
+import { PdlHeroEmblem, PdlSymbol } from '../PdlSymbol'
+import { ButtonLink } from '../ui/Button'
+
+function isSceneAsset(asset: string) {
+  return /images\/home\//.test(asset)
+}
+
+function FeatureMedia({ asset }: { asset: string }) {
+  const src = themeAsset(asset)
+  if (isSceneAsset(asset)) {
+    return (
+      <div
+        className="feature-card__art"
+        style={{ backgroundImage: `url(${JSON.stringify(src)})` } as CSSProperties}
+        aria-hidden="true"
+      />
+    )
+  }
+  return (
+    <div className="feature-card__icon">
+      <img src={src} alt="" />
+    </div>
+  )
+}
 
 const DEFAULT_HOME_SECTIONS: ThemeHomeSection[] = ['hero', 'features', 'ranking', 'cta', 'news']
 
@@ -25,6 +52,9 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   const { user } = useAuth()
   const { pathname } = useLocation()
   const landingPath = useLandingPath()
+  const theme = useTheme()
+  const classic = theme.id === 'default'
+  const packedCircle = theme.assets['images/logo-circle.png']
   const [menuOpen, setMenuOpen] = useState(false)
   const resources = useQuery({
     queryKey: ['resources'],
@@ -50,11 +80,15 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
   }, [menuOpen])
 
   return (
-    <div className="portal-shell" data-theme-surface="public">
+    <div
+      className={`portal-shell${classic ? ' portal-shell--classic' : ''}`}
+      data-theme-surface="public"
+      data-theme-renderer={presentation.renderer}
+    >
       <header className="site-header">
         <div className="site-header__inner container">
           <Link to={landingPath} className="logo" aria-label={t('portal.homeAria')}>
-            <img src={themeAsset('images/logo-text.png')} alt="Valorem" />
+            <img src={themeAsset(classic ? 'images/logo.png' : 'images/logo-text.png')} alt="" />
           </Link>
           <nav className="nav-main" aria-label={t('nav.main')}>
             {navigation.map((item) => (
@@ -63,9 +97,23 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
               </Link>
             ))}
           </nav>
-          <div className="header-actions">
-            <Link className="btn-text" to={user ? '/panel' : '/login'}>{user ? t('portal.dashboard') : t('portal.login')}</Link>
-            <Link className="btn-gem btn-gem--sm" to="/register">{t('portal.createAccount')}</Link>
+          <div className={`header-actions${classic ? ' site-nav-actions' : ''}`}>
+            {classic ? <LanguageSwitcher className="language-switcher site-nav-language" id="portal-language" /> : null}
+            <Link className={classic ? 'user' : 'btn-text'} to={user ? '/panel' : '/login'}>
+              {classic ? (
+                <>
+                  <CircleUserRound aria-hidden="true" />
+                  <span>{user ? t('nav.myAccount') : t('nav.signIn')}</span>
+                </>
+              ) : (
+                user ? t('portal.dashboard') : t('portal.login')
+              )}
+            </Link>
+            {classic ? (
+              <ButtonLink className="portal-cta" variant="primary" size="sm" to="/register">{t('portal.createAccount')}</ButtonLink>
+            ) : (
+              <Link className="btn-gem btn-gem--sm" to="/register">{t('portal.createAccount')}</Link>
+            )}
             <button className="hamburger" type="button" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
               <span /><span /><span />
             </button>
@@ -86,8 +134,12 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
 
       <footer className="site-footer">
         <div className="container">
-          <Link to={landingPath} className="logo logo--footer">
-            <img src={themeAsset('images/logo-footer.png')} alt="Valorem" />
+          <Link to={landingPath} className={classic ? 'portal-footer-mark' : 'logo logo--footer'} aria-label={t('nav.home')}>
+            {classic ? (
+              packedCircle ? <img src={packedCircle} alt="" /> : <PdlSymbol />
+            ) : (
+              <img src={themeAsset('images/logo-footer.png')} alt="" />
+            )}
           </Link>
           <p className="site-footer__tagline">{presentation.footer.tagline}</p>
           <nav className="footer-nav" aria-label={t('portal.footerNav')}>
@@ -106,6 +158,8 @@ export function PortalPublicLayout({ presentation }: { presentation: ThemePresen
 type CountdownValue = { days: string; hours: string; mins: string; secs: string }
 
 function countdownValue(target: string): CountdownValue {
+  const empty = { days: '00', hours: '00', mins: '00', secs: '00' }
+  if (!target) return empty
   const remaining = Math.max(0, Date.parse(target) - Date.now())
   const total = Math.floor(remaining / 1000)
   const pad = (value: number) => String(Math.max(0, value)).padStart(2, '0')
@@ -120,6 +174,7 @@ function countdownValue(target: string): CountdownValue {
 function useCountdown(target: string) {
   const [value, setValue] = useState(() => countdownValue(target))
   useEffect(() => {
+    if (!target) return
     setValue(countdownValue(target))
     const timer = window.setInterval(() => setValue(countdownValue(target)), 1000)
     return () => window.clearInterval(timer)
@@ -140,9 +195,11 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 export function PortalHomePage({ presentation }: { presentation: ThemePresentation }) {
   const { t, i18n } = useTranslation('public')
   const language = contentLang(i18n.language)
+  const classic = useTheme().id === 'default'
   const { hero, features, ranking, cta, news: newsContent } = presentation.home
   const sections = presentation.home.sections ?? DEFAULT_HOME_SECTIONS
-  const countdown = useCountdown(hero.countdownAt)
+  const showCountdown = !classic
+  const countdown = useCountdown(showCountdown ? hero.countdownAt : '')
   const [activeTab, setActiveTab] = useState(ranking.tabs[0]?.id ?? '')
   const selectedTab = useMemo(
     () => ranking.tabs.find((item) => item.id === activeTab) ?? ranking.tabs[0],
@@ -159,31 +216,67 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
     enabled: sections.includes('news'),
   })
 
+  const heroKicker = hero.kicker && hero.kicker !== hero.title
+    ? hero.kicker
+    : classic
+      ? t('portal.kicker')
+      : ''
+  const afterHero = sections.find((name) => name !== 'hero')
+  const exploreHref = afterHero === 'ranking'
+    ? '#rating'
+    : afterHero === 'news'
+      ? '#news'
+      : afterHero === 'features'
+        ? '#features'
+        : undefined
+
   const sectionNodes: Partial<Record<ThemeHomeSection, ReactNode>> = {
     hero: (
       <section className="hero" key="hero">
         <div className="hero__bg" aria-hidden="true" />
         <div className="hero__content">
+          {classic ? <PdlHeroEmblem /> : null}
+          {heroKicker ? <p className="hero__kicker">{heroKicker}</p> : null}
           <h1 className="hero__title">{hero.title}</h1>
           <p className="hero__desc">{hero.description}</p>
-          <div className="countdown" aria-label={hero.countdownLabel}>
-            <p className="countdown__label">{hero.countdownLabel}</p>
-            <div className="countdown__grid">
-              {([
-                ['days', 'portal.unitDays'],
-                ['hours', 'portal.unitHours'],
-                ['mins', 'portal.unitMins'],
-                ['secs', 'portal.unitSecs'],
-              ] as const).map(([key, labelKey]) => (
-                <div className="countdown__item" key={key}>
-                  <span className="countdown__value">{countdown[key]}</span>
-                  <span className="countdown__unit">{t(labelKey)}</span>
-                </div>
-              ))}
+          {showCountdown ? (
+            <div className="countdown" aria-label={hero.countdownLabel}>
+              <p className="countdown__label">{hero.countdownLabel}</p>
+              <div className="countdown__grid">
+                {([
+                  ['days', 'portal.unitDays'],
+                  ['hours', 'portal.unitHours'],
+                  ['mins', 'portal.unitMins'],
+                  ['secs', 'portal.unitSecs'],
+                ] as const).map(([key, labelKey]) => (
+                  <div className="countdown__item" key={key}>
+                    <span className="countdown__value">{countdown[key]}</span>
+                    <span className="countdown__unit">{t(labelKey)}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+          ) : null}
+          <div className="hero__actions">
+            {classic ? (
+              <ButtonLink className="portal-cta" variant="primary" size="lg" to={hero.actionTo}>{hero.actionLabel}</ButtonLink>
+            ) : (
+              <Link className="btn-gem btn-gem--lg" to={hero.actionTo}>{hero.actionLabel}</Link>
+            )}
+            {hero.secondaryLabel && hero.secondaryTo ? (
+              classic ? (
+                <ButtonLink className="portal-cta" variant="secondary" size="lg" to={hero.secondaryTo}>{hero.secondaryLabel}</ButtonLink>
+              ) : (
+                <Link className="btn-gem" to={hero.secondaryTo}>{hero.secondaryLabel}</Link>
+              )
+            ) : null}
           </div>
-          <Link className="btn-gem btn-gem--lg" to={hero.actionTo}>{hero.actionLabel}</Link>
         </div>
+        {classic && exploreHref ? (
+          <a className="hero__scroll" href={exploreHref} aria-label={t('nav.exploreRealm')}>
+            <img src={themeImage('icons/scroll.png')} alt="" />
+          </a>
+        ) : null}
       </section>
     ),
     features: (
@@ -192,14 +285,22 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
           <SectionHeading title={features.title} subtitle={features.subtitle} />
           <div className="features-grid">
             {features.items.map((item) => (
-              <article className="feature-card" key={item.title}>
-                <div className="feature-card__icon"><img src={themeAsset(item.asset)} alt="" /></div>
-                <h3 className="feature-card__title">{item.title}</h3>
-                <p className="feature-card__desc">{item.description}</p>
+              <article className={`feature-card${isSceneAsset(item.asset) ? ' feature-card--scene' : ''}`} key={item.title}>
+                <FeatureMedia asset={item.asset} />
+                <div className="feature-card__copy">
+                  <h3 className="feature-card__title">{item.title}</h3>
+                  <p className="feature-card__desc">{item.description}</p>
+                </div>
               </article>
             ))}
           </div>
-          <div className="section__action"><Link className="btn-gem" to={features.actionTo}>{features.actionLabel}</Link></div>
+          <div className="section__action">
+            {classic ? (
+              <ButtonLink className="portal-cta" variant="secondary" to={features.actionTo}>{features.actionLabel}</ButtonLink>
+            ) : (
+              <Link className="btn-gem" to={features.actionTo}>{features.actionLabel}</Link>
+            )}
+          </div>
         </div>
       </section>
     ),
@@ -248,17 +349,30 @@ export function PortalHomePage({ presentation }: { presentation: ThemePresentati
               </table>
             )}
           </div>
-          <div className="section__action"><Link className="btn-gem" to={ranking.actionTo}>{ranking.actionLabel}</Link></div>
+          <div className="section__action">
+            {classic ? (
+              <ButtonLink className="portal-cta" variant="secondary" to={ranking.actionTo}>{ranking.actionLabel}</ButtonLink>
+            ) : (
+              <Link className="btn-gem" to={ranking.actionTo}>{ranking.actionLabel}</Link>
+            )}
+          </div>
         </div>
       </section>
     ),
     cta: (
       <section className="section section--cta" key="cta">
-        <div className="cta-banner" style={{ backgroundImage: `url(${themeAsset('images/cta-banner.jpg')})` }}>
+        <div
+          className="cta-banner"
+          style={classic ? undefined : { backgroundImage: `url(${themeAsset('images/cta-banner.jpg')})` }}
+        >
           <div className="cta-banner__content">
             <h2 className="cta-banner__title">{cta.title}</h2>
             <p className="cta-banner__desc">{cta.description}</p>
-            <Link className="btn-gem" to={cta.actionTo}>{cta.actionLabel}</Link>
+            {classic ? (
+              <ButtonLink className="portal-cta" variant="primary" to={cta.actionTo}>{cta.actionLabel}</ButtonLink>
+            ) : (
+              <Link className="btn-gem" to={cta.actionTo}>{cta.actionLabel}</Link>
+            )}
           </div>
         </div>
       </section>

@@ -29,6 +29,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - O contrato de `presentation.renderer` deixa de ser só dois ids de versão.
   A camada vive em `frontend/src/theme/templates/` e
   `backend/apps/themes/application/template_catalog.py`.
+- No **PDL Classic**, o template **Gemwright** deixa de renderizar o HTML do
+  portal sem casco: hero em tela cheia, cards de cena e CTA usam os tokens e
+  o brasão do tema original. O countdown do portal Valorem não entra nessa
+  home. O casco passa a um header em duas faixas (navegação numa linha),
+  painel central com kicker e dois CTAs, e cards com a cena por baixo do
+  título.
 
 ### Corrigido
 
@@ -38,6 +44,52 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   de 72px e os campos sem casco. O formulário volta a um cartão central
   sobre a arte do layout. O brasão do login fica no centro do casco; o
   círculo do rodapé leva o mesmo brasão e aponta para a landing.
+- No **Hearthspire**, a taverna abre pelo mural. O título de notícias
+  deixa de aparecer duas vezes, as regras da casa vêm depois dos cards
+  e o banner que repetia a home sai.
+- No **Obsidian**, o palco ocupa a tela: brasão e os dois atos.
+  O banner que repetia o mesmo título sai. Sem notícia, o ticker não aparece.
+- No **Parchment**, o manuscrito continua numa coluna estreita. O
+  título perde a foto, o capítulo que só repete o nome do tema sai, e o
+  fecho é o botão no fim do texto, não outro banner.
+- No **Classing**, a home vira uma seleção de caminho: três retratos
+  em tela cheia, sem o quadro usado nos outros layouts. O pilar que só
+  repete o nome do tema sai, e o CTA deixa de ser um segundo banner.
+- No **Cartograph**, o mapa, as regiões e os números do servidor ficam
+  no mesmo quadro. O CTA deixa de repetir o título quando é o mesmo da
+  legenda, e o rodapé centraliza o brasão e os links.
+- No **Twinwake**, os dois caminhos ficam no mesmo quadro, com o
+  mesmo botão dourado. A frase da home não se repete no lado do download
+  nem num segundo CTA, e o rodapé centraliza os links.
+- No **Meridian**, o códice alinha com a largura do header: abertura
+  com o brasão, números numa faixa, capítulos sem repetir a frase da home
+  e o ranking dentro do quadro.
+- No **Laurelwake**, o hall fica só com o pódio dos três primeiros.
+  A tabela deixa de repetir os mesmos nomes, e o rodapé centraliza os links.
+- No **Ironpatch**, o launcher vira um quadro: download e notas do cliente
+  no painel, cards sem repetir o título da home, ranking dentro do quadro
+  e o rodapé centralizado.
+- No **Warhorn**, a sala de guerra vira um quadro: o relógio de 2099
+  some, os números do servidor ficam numa faixa e o ranking deixa de
+  ocupar a página solto. O Download do hero acompanha o botão principal.
+- No **Ashen Ledger**, a data sai do header e vai para a manchete. Notícias
+  e cards ficam na coluna principal; o ranking fica na lateral. O Download
+  do catálogo deixa o sprite fixo e alinha com Minha Conta.
+- No **Ironspine**, o botão Minha Conta fica na mesma linha e na mesma
+  altura do idioma e do Download.
+- No **Ironspine**, banner, menu, poço e CTA passam a um quadro só.
+  O ranking deixa de vazar a coluna e o rodapé centraliza marca e links.
+- No **Ironspine**, o menu esquerdo herdava o `space-between` da navegação
+  clássica, o wordmark apontava para `logo-text.png` (ausente no Classic) e
+  o Download usava o sprite fixo de 247px. O banner passa a ser a cena do
+  layout, com logo do tema e colunas alinhadas no topo.
+- No **Gemwright** do Classic, o brasão do hero ficava fora do palco: o
+  símbolo de 184px transbordava a caixa de 120px e o kicker cortava o selo.
+  Palco e símbolo passam a caber juntos, com o texto abaixo.
+- No **Gemwright** do Classic, o hero herdava `max-width: 720px` do CSS
+  global, o countdown dummy de 2099 aparecia na home e o CTA usava
+  `cta-banner.jpg` (dois motivos na mesma faixa) em vez da arte do layout.
+  O rodapé volta a um único brasão.
 
 ## [2.5.6] - 2026-09-20
 

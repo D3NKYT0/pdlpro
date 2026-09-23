@@ -86,6 +86,11 @@ passam por `TemplateShell` + `CatalogHomePage`. Login, cadastro e o restante
 do `AuthPanel` usam o casco `portal-auth-shell` (arte em `--tpl-art-hero`).
 No Vesperlyn o casco ganha `club-auth`: cartão central, brasão do Classic e
 botões no estilo da landing — sem o wordmark solto nem o `h1` de 72px.
+No Classic, o Gemwright ganha o casco de portal (hero em tela cheia, cards
+de cena e CTA) com logo, brasão e tokens do tema original — sem countdown e
+sem a folha do ZIP Valorem. O header fica em duas faixas (marca/ações e
+navegação numa linha); o hero abre dois caminhos quando o contrato traz
+`secondaryLabel`. O relógio fica só no tema instalado que declara data.
 
 ## Testes
 

@@ -41,8 +41,8 @@ LAYOUTS: dict[str, dict] = {
         ],
     },
     "gemwright": {
-        "hero": ("archive", 0.60, 0.46, 1.02),
-        "cta": ("map", 0.62, 0.48, 1.12),
+        "hero": ("cinema", 0.50, 0.46, 1.00),
+        "cta": ("ember", 0.50, 0.44, 1.00),
         "features": [
             ("archive", 0.86, 0.52, 1.58),
             ("map", 0.16, 0.50, 1.52),
@@ -269,24 +269,37 @@ def save_webp(image: Image.Image, path: Path) -> None:
     image.save(path, "WEBP", quality=88, method=4)
 
 
-def paint_all() -> None:
-    cache: dict[str, Image.Image] = {}
-    for plate, relative in PLATES.items():
-        cache[plate] = open_rgb(relative)
+def paint_template(template_id: str, cache: dict[str, Image.Image] | None = None) -> None:
+    if template_id not in LAYOUTS:
+        raise KeyError(template_id)
+    plates = cache or {name: open_rgb(relative) for name, relative in PLATES.items()}
+    shots = LAYOUTS[template_id]
 
     def make(spec: tuple, size: tuple[int, int]) -> Image.Image:
         plate, fx, fy, zoom = spec
-        return finish(frame(cache[plate], size, fx, fy, zoom))
+        return finish(frame(plates[plate], size, fx, fy, zoom))
 
-    for template_id, shots in LAYOUTS.items():
-        save_webp(make(shots["hero"], SIZES["hero"]), IMG / "bg" / f"{template_id}-hero.webp")
-        save_webp(make(shots["cta"], SIZES["cta"]), IMG / "bg" / f"{template_id}-cta.webp")
-        for index, spec in enumerate(shots["features"], start=1):
-            save_webp(make(spec, SIZES["feature"]), IMG / "home" / f"{template_id}-{index}.webp")
-    classic_cta = make(LAYOUTS["vesperlyn"]["cta"], SIZES["cta"])
+    save_webp(make(shots["hero"], SIZES["hero"]), IMG / "bg" / f"{template_id}-hero.webp")
+    save_webp(make(shots["cta"], SIZES["cta"]), IMG / "bg" / f"{template_id}-cta.webp")
+    for index, spec in enumerate(shots["features"], start=1):
+        save_webp(make(spec, SIZES["feature"]), IMG / "home" / f"{template_id}-{index}.webp")
+
+
+def paint_all() -> None:
+    cache = {name: open_rgb(relative) for name, relative in PLATES.items()}
+    for template_id in LAYOUTS:
+        paint_template(template_id, cache)
+    classic_cta = finish(frame(cache[LAYOUTS["vesperlyn"]["cta"][0]], SIZES["cta"], *LAYOUTS["vesperlyn"]["cta"][1:]))
     classic_cta.save(IMG / "cta-banner.jpg", "JPEG", quality=90)
 
 
 if __name__ == "__main__":
-    paint_all()
-    print(f"composed scene slots -> {IMG / 'bg'} and {IMG / 'home'}")
+    import sys
+    targets = sys.argv[1:]
+    if targets:
+        for template_id in targets:
+            paint_template(template_id)
+        print(f"composed {', '.join(targets)} -> {IMG / 'bg'} and {IMG / 'home'}")
+    else:
+        paint_all()
+        print(f"composed scene slots -> {IMG / 'bg'} and {IMG / 'home'}")
