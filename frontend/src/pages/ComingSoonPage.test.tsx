@@ -97,6 +97,10 @@ it('mostra título, subtítulo e contagem regressiva configuráveis', () => {
     'src',
     '/theme/default/videos/coming-soon/video.mp4',
   )
+  expect(document.querySelector('.launch-gate__bg--waiting')).toHaveAttribute(
+    'src',
+    '/theme/default/images/bg/1.png',
+  )
   expect(document.querySelector('.launch-gate.is-entering')).toBeNull()
   expect(document.querySelector('.launch-gate__panel')).not.toBeNull()
   expect(document.querySelector('.launch-gate__panel-rim')).not.toBeNull()

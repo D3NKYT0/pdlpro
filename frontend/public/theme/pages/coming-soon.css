@@ -121,15 +121,16 @@
   border: 0;
   background: transparent;
   background-color: transparent;
-  color: var(--launch-ember-bright);
+  color: var(--launch-ember-bright, var(--theme-accent-bright, #e6c77d));
   text-decoration: none;
   box-shadow: none;
-  transition: transform 160ms ease, opacity 160ms ease;
+  transition: transform 160ms ease, color 160ms ease, opacity 160ms ease;
 }
 
 .launch-gate__social:hover {
   transform: translateY(-2px);
-  opacity: 0.88;
+  color: #fff4c8;
+  opacity: 1;
   background: transparent;
   background-color: transparent;
 }
@@ -138,6 +139,10 @@
   width: 26px;
   height: 26px;
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+}
+
+.launch-gate__social svg path {
+  fill: currentColor;
 }
 
 .launch-gate__scroll-cue:hover {
@@ -556,16 +561,10 @@
   padding: clamp(34px, 5vw, 52px) clamp(26px, 4.5vw, 56px);
   border: 1px solid color-mix(in srgb, var(--launch-ember) 34%, transparent);
   border-radius: 8px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--launch-panel) 78%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 86%, transparent) 100%),
-    radial-gradient(ellipse at 50% 12%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 58%);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 12%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--launch-ember) 8%, transparent),
-    0 28px 70px rgba(0, 0, 0, 0.52),
-    0 0 48px color-mix(in srgb, var(--launch-ember) 10%, transparent);
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   overflow: hidden;
 }
 
@@ -575,39 +574,15 @@
 }
 
 .launch-gate__panel-glow {
-  position: absolute;
-  inset: -28% -18%;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--launch-ember) 22%, transparent), transparent 58%),
-    radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--launch-ember) 18%, transparent), transparent 48%),
-    radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--launch-ember-bright) 12%, transparent), transparent 42%);
-  filter: blur(18px);
-  animation: launch-panel-glow 7s ease-in-out infinite alternate;
-  pointer-events: none;
+  display: none;
 }
 
 .launch-gate__panel-texture {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-color: color-mix(in srgb, var(--launch-deep) 55%, transparent);
-  background-position: center 40%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.55;
-  mix-blend-mode: soft-light;
-  pointer-events: none;
+  display: none;
 }
 
 .launch-gate__panel-texture::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--launch-ember) 10%, transparent), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--launch-ink) 4%, transparent), transparent 28%, rgba(0, 0, 0, 0.28) 100%);
-  pointer-events: none;
+  content: none;
 }
 
 .launch-gate__panel-rim {
@@ -733,34 +708,24 @@
 }
 
 .launch-gate.is-open .launch-gate__panel {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--launch-panel) 82%, transparent) 0%, color-mix(in srgb, var(--launch-deep) 88%, transparent) 100%),
-    radial-gradient(ellipse at 50% 10%, color-mix(in srgb, var(--launch-ember) 16%, transparent), transparent 58%);
+  background: transparent;
   border-color: color-mix(in srgb, var(--launch-ember) 42%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--launch-ink) 12%, transparent),
-    0 22px 56px rgba(0, 0, 0, 0.55),
-    0 0 42px color-mix(in srgb, var(--launch-ember) 22%, transparent);
-  backdrop-filter: blur(12px) saturate(1.1);
-  -webkit-backdrop-filter: blur(12px) saturate(1.1);
-  animation: launch-panel-breathe 3.6s ease-in-out infinite;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
 }
 
 .launch-gate.is-open .launch-gate__panel-glow {
-  opacity: 0.7;
-  animation-duration: 4.2s;
+  display: none;
 }
 
 .launch-gate.is-open .launch-gate__panel-texture {
-  opacity: 0.38;
-  mix-blend-mode: soft-light;
-  background-color: color-mix(in srgb, var(--launch-deep) 28%, transparent);
+  display: none;
 }
 
 .launch-gate.is-open .launch-gate__panel-texture::after {
-  background:
-    radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--launch-ember) 10%, transparent), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--launch-ink) 3%, transparent), transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+  content: none;
 }
 
 .launch-gate.is-open .launch-gate__panel-rim {

@@ -196,6 +196,14 @@ export function themeImage(path: string) {
   return themeAsset(`images/${path.replace(/^\//, '')}`)
 }
 
+/** Castelo/hero da landing: `hero-bg.jpg` nos pacotes club; senão `bg/1.png` do Classic. */
+export function themeLandingHeroImage() {
+  if (runtimeAssets['images/hero-bg.jpg']) {
+    return themeImage('hero-bg.jpg')
+  }
+  return themeImage('bg/1.png')
+}
+
 export function themeVideo(path: string) {
   return themeAsset(`videos/${path.replace(/^\//, '')}`)
 }

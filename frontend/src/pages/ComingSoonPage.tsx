@@ -9,7 +9,7 @@ import { DiscordIcon, FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } f
 import { Button, ButtonLink } from '../components/ui/Button'
 import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/types'
-import { themeImage, themeVideo } from '../theme/assets'
+import { themeImage, themeLandingHeroImage, themeVideo } from '../theme/assets'
 
 type CountdownValue = { days: string; hours: string; mins: string; secs: string; finished: boolean }
 
@@ -296,6 +296,8 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const roster = finished ? ASSAULT_CHAMPIONS : LAUNCH_CHAMPIONS
   const ticking = useSecondTick(countdown.secs, !finished)
   const cinematic = useLaunchCinematic()
+  const waitingBg = themeLandingHeroImage()
+  const openBg = themeImage('bg/coming-soon-open.png')
   const status = useQuery({
     queryKey: ['server-status'],
     queryFn: serverApi.status,
@@ -338,19 +340,19 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
         <div className="launch-gate__sky" aria-hidden="true">
           <img
             className={`launch-gate__bg launch-gate__bg--waiting${!finished ? ' is-active' : ''}`}
-            src={themeImage('bg/coming-soon.png')}
+            src={waitingBg}
             alt=""
           />
           <img
             className={`launch-gate__bg launch-gate__bg--open${finished ? ' is-active' : ''}`}
-            src={themeImage('bg/coming-soon-open.png')}
+            src={openBg}
             alt=""
           />
           <video
             ref={cinematic.videoRef}
             className={`launch-gate__bg launch-gate__bg--cinematic${cinematic.playing ? ' is-active' : ''}`}
             src={themeVideo(LAUNCH_CINEMATIC)}
-            poster={themeImage(finished ? 'bg/coming-soon-open.png' : 'bg/coming-soon.png')}
+            poster={finished ? openBg : waitingBg}
             muted
             playsInline
             preload="auto"

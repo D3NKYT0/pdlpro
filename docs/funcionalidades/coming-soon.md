@@ -70,6 +70,10 @@ kicker “A guerra começou”, mensagem “O assalto começou”
 e ênfase no botão Entrar. Sem fogos nem casal comemorativo.
 O Coming Soon continua ativo até a equipe desligar o modo no painel.
 
+Enquanto a contagem está ativa, o fundo usa o **mesmo castelo do hero da landing**
+(`hero-bg.jpg` nos temas club; `bg/1.png` no Classic), não a arte de personagem de
+`coming-soon.png`.
+
 Contrato público em `GET /api/v1/public/server/info/`:
 
 - `name`, `slogan`, `description`, `chronicle`, `rates`, `enchant`, `max_level`

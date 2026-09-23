@@ -4,7 +4,7 @@ import { afterEach, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { usePanelTheme } from './usePanelTheme'
 import { applyPublicBodyBackground, useDefaultTheme } from './useDefaultTheme'
-import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage, themeStylesheet, themeVideo } from './assets'
+import { PANEL_THEME_STYLES, PUBLIC_THEME_STYLES, applyThemeSurfaceVars, configureRuntimeTheme, themeAsset, themeImage, themeLandingHeroImage, themeStylesheet, themeVideo } from './assets'
 
 afterEach(() => {
   cleanup()
@@ -58,6 +58,14 @@ it('normaliza barra inicial nos caminhos de assets', () => {
   expect(themeAsset('/css/main.css')).toBe('/theme/default/css/main.css')
   expect(themeImage('/bg/5.jpg')).toBe('/theme/default/images/bg/5.jpg')
   expect(themeVideo('/coming-soon/video.mp4')).toBe('/theme/default/videos/coming-soon/video.mp4')
+})
+
+it('usa o castelo do hero da landing quando o tema club declara hero-bg', () => {
+  expect(themeLandingHeroImage()).toBe('/theme/default/images/bg/1.png')
+  configureRuntimeTheme({
+    'images/hero-bg.jpg': '/media/themes/saga/1.0.0/images/hero-bg.jpg',
+  })
+  expect(themeLandingHeroImage()).toBe('/media/themes/saga/1.0.0/images/hero-bg.jpg')
 })
 it('remapeia folhas estruturais via assets lógicos', () => {
   expect(themeStylesheet('css/pages/coming-soon.css', '/theme/pages/coming-soon.css')).toBe('/theme/pages/coming-soon.css')
