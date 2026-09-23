@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -6,7 +7,7 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
 import { LoginPage } from './LoginPage'
-import { authApi, ApiError } from '../services/api'
+import { authApi, ApiError, serverApi } from '../services/api'
 
 const session = vi.hoisted(() => ({
   user: null as null | { username: string; has_usable_password?: boolean },
@@ -18,6 +19,16 @@ const session = vi.hoisted(() => ({
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('../services/domain/auth.service', async original => ({ ...await original<object>(), authApi: { capabilities: vi.fn() } }))
+vi.mock('../services/domain/server.service', () => ({
+  serverApi: {
+    info: vi.fn(async () => ({
+      coming_soon: false,
+      allow_registration: true,
+      allow_l2_registration: true,
+      staff_only_login: false,
+    })),
+  },
+}))
 vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify }: { onVerify: (token: string) => void }) => <button type="button" onClick={() => onVerify('captcha-token')}>Resolver CAPTCHA</button> }))
 beforeEach(() => {
   vi.clearAllMocks()
@@ -25,6 +36,12 @@ beforeEach(() => {
   session.user = null
   session.loading = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ google: false, discord: false, hcaptcha_site_key: 'sitekey' } as any)
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: false,
+    allow_registration: true,
+    allow_l2_registration: true,
+    staff_only_login: false,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
 })
 afterEach(() => {
   cleanup()
@@ -71,11 +88,26 @@ it('mostra espera enquanto a sessão carrega', () => {
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
 })
 
-it('explica que a sessão expirou ao voltar para o login', () => {
+it('explica que a sessão expirou ao voltar para o login', async () => {
   sessionStorage.setItem('pdl.sessionExpired', '1')
   mount('/login')
-  expect(screen.getByText('Sua sessão expirou. Entre novamente para continuar.')).toBeTruthy()
+  expect(await screen.findByText('Sua sessão expirou. Entre novamente para continuar.')).toBeTruthy()
   expect(sessionStorage.getItem('pdl.sessionExpired')).toBeNull()
+})
+
+it('mostra tela de login fechado e libera formulário para a equipe', async () => {
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: true,
+    allow_registration: false,
+    allow_l2_registration: false,
+    staff_only_login: true,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
+  const user = mount('/login')
+  expect(await screen.findByRole('heading', { name: 'Login ainda não liberado' })).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
+  await user.click(screen.getByRole('button', { name: 'Sou da equipe' }))
+  expect(await screen.findByRole('heading', { name: 'Acesso da equipe' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Entrar no Reino' })).toBeVisible()
 })
 
 it.each(['/panel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redireciona apenas para destino local: %s', async next => {

@@ -145,8 +145,8 @@ it('esconde criação de conta L2 quando o Coming Soon fecha o cadastro', async 
 
   mount()
 
-  expect(await screen.findByText('Criação de conta L2 fechada')).toBeVisible()
-  expect(screen.getByText(/criação de contas do jogo está fechada/i)).toBeVisible()
+  expect(await screen.findByText('Conta L2 ainda não liberada')).toBeVisible()
+  expect(screen.getByText(/criação de contas do jogo ainda não foi liberada/i)).toBeVisible()
   expect(screen.queryByRole('heading', { name: 'Criar conta principal' })).not.toBeInTheDocument()
   expect(screen.getByRole('heading', { name: 'Vincular conta existente' })).toBeVisible()
 })

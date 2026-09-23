@@ -124,7 +124,7 @@ it('mostra aviso quando o cadastro está fechado no Coming Soon', async () => {
     staff_only_login: true,
   } as Awaited<ReturnType<typeof serverApi.info>>)
   mount()
-  expect(await screen.findByRole('heading', { name: 'Cadastro temporariamente fechado' })).toBeVisible()
-  expect(screen.getByText(/cadastro de novas contas está fechado/i)).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Cadastro ainda não liberado' })).toBeVisible()
+  expect(screen.getByText(/cadastro de novas contas mestras está fechado/i)).toBeVisible()
   expect(screen.queryByRole('button', { name: 'Crie sua conta mestra' })).toBeNull()
 })

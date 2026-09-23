@@ -12,7 +12,8 @@ import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, Use
 import { useAuth } from '../contexts/AuthContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { getClassName } from '../lib/lineage'
-import { isApiError, lineageApi, serverApi } from '../services/api'
+import { isApiError, lineageApi } from '../services/api'
+import { useLaunchAccess } from '../hooks/useLaunchAccess'
 
 export function AccountsPage() {
   const { t } = useTranslation('panel')
@@ -20,7 +21,7 @@ export function AccountsPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
-  const serverInfo = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
+  const launch = useLaunchAccess()
   const [params, setParams] = useSearchParams()
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -37,11 +38,7 @@ export function AccountsPage() {
   const primaryTaken = Boolean(!primaryAccount && (primaryStatus === 'taken' || useAlternateLogin))
   const primaryUnclaimed = Boolean(!primaryAccount && primaryStatus === 'unclaimed' && !useAlternateLogin)
   const isStaff = Boolean(user?.is_staff || user?.is_superuser || user?.is_staff_member)
-  const l2RegistrationClosed = Boolean(
-    serverInfo.data?.coming_soon
-    && serverInfo.data.allow_l2_registration === false
-    && !isStaff,
-  )
+  const l2RegistrationClosed = !launch.l2RegistrationOpen && !isStaff
 
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],

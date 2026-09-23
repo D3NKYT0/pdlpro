@@ -62,7 +62,8 @@ export function Select({
   useLayoutEffect(() => {
     if (!open) return
     placeMenu()
-    listRef.current?.focus()
+    // Sem preventScroll o browser rola a página ao focar a listbox (portal fixed).
+    listRef.current?.focus({ preventScroll: true })
   }, [open, options.length])
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export function Select({
     const onKey = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false)
-        trigger.current?.focus()
+        trigger.current?.focus({ preventScroll: true })
       }
     }
     const onReposition = () => placeMenu()
@@ -95,7 +96,7 @@ export function Select({
   function choose(next: string) {
     onChange(next)
     setOpen(false)
-    trigger.current?.focus()
+    trigger.current?.focus({ preventScroll: true })
   }
 
   function move(delta: number) {
@@ -129,7 +130,7 @@ export function Select({
     } else if (event.key === 'Escape' || event.key === 'Tab') {
       if (event.key === 'Escape') event.preventDefault()
       setOpen(false)
-      trigger.current?.focus()
+      trigger.current?.focus({ preventScroll: true })
     }
   }
 

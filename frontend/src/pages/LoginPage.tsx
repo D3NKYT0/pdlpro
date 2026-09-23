@@ -10,6 +10,7 @@ import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
+import { useLaunchAccess } from '../hooks/useLaunchAccess'
 import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
@@ -31,6 +32,7 @@ export function LoginPage() {
   const { t, i18n } = useTranslation('auth')
   const { user, loading, login, verifyTwoFactor, refreshUser } = useAuth()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
+  const launch = useLaunchAccess()
   const navigate = useNavigate()
   const location = useLocation()
   const [params] = useSearchParams()
@@ -43,6 +45,8 @@ export function LoginPage() {
   const [captchaToken, setCaptchaToken] = useState('')
   const [passkeyLoading, setPasskeyLoading] = useState(false)
   const [sessionExpired] = useState(() => consumeSessionExpiredNotice())
+  const [staffUnlock, setStaffUnlock] = useState(false)
+  const loginRestricted = !launch.playerLoginOpen
 
   if (loading) {
     return (
@@ -108,10 +112,30 @@ export function LoginPage() {
     }
   }
 
+  if (!launch.isPending && loginRestricted && !staffUnlock && !challenge) {
+    return (
+      <AuthPanel title={t('login.closedTitle')} lead={t('login.closedLead')}>
+        <p className="muted">{t('login.closedHint')}</p>
+        <div className="h-link">
+          <button type="button" onClick={() => setStaffUnlock(true)}>{t('login.staffAccess')}</button>
+          <Link to="/home">{t('common.backHome')}</Link>
+        </div>
+      </AuthPanel>
+    )
+  }
+
   return (
     <AuthPanel
-      title={challenge ? t('login.title2fa') : t('login.title')}
-      lead={challenge ? t('login.lead2fa') : sessionExpired ? t('login.sessionExpired') : undefined}
+      title={challenge ? t('login.title2fa') : loginRestricted ? t('login.staffTitle') : t('login.title')}
+      lead={
+        challenge
+          ? t('login.lead2fa')
+          : loginRestricted
+            ? t('login.staffLead')
+            : sessionExpired
+              ? t('login.sessionExpired')
+              : undefined
+      }
       footer={
         <p>
           <Link to="/forgot-password">{t('login.forgotLink')}</Link>
@@ -146,7 +170,11 @@ export function LoginPage() {
         )}
         <div className="h-link">
           <button type="submit">{challenge ? t('login.confirm') : t('login.submit')}</button>
-          <Link to="/register">{t('login.createAccount')}</Link>
+          {launch.registrationOpen ? (
+            <Link to="/register">{t('login.createAccount')}</Link>
+          ) : (
+            <Link to="/home">{t('common.backHome')}</Link>
+          )}
         </div>
       </form>
       {!challenge ? (

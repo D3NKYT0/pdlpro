@@ -8,8 +8,9 @@ import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
+import { useLaunchAccess } from '../hooks/useLaunchAccess'
 import { beginOAuth } from '../lib/oauth'
-import { authApi, serverApi } from '../services/api'
+import { authApi } from '../services/api'
 import { hcaptchaLanguage } from '../i18n/locale'
 
 const SESSION_MANAGER_PATH = '/panel/security'
@@ -19,15 +20,12 @@ export function RegisterPage() {
   const { user, loading, register } = useAuth()
   const navigate = useNavigate()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
-  const serverInfo = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
+  const launch = useLaunchAccess()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [captchaToken, setCaptchaToken] = useState('')
-  const registrationClosed = Boolean(
-    serverInfo.data?.coming_soon && serverInfo.data.allow_registration === false,
-  )
 
   if (loading) {
     return (
@@ -44,12 +42,16 @@ export function RegisterPage() {
     return <Navigate to={SESSION_MANAGER_PATH} replace />
   }
 
-  if (registrationClosed) {
+  if (!launch.isPending && !launch.registrationOpen) {
     return (
       <AuthPanel title={t('register.closedTitle')} lead={t('register.closedLead')}>
         <p className="muted">{t('register.closedHint')}</p>
         <div className="h-link">
-          <Link to="/login">{t('common.enterRealm')}</Link>
+          {launch.playerLoginOpen ? (
+            <Link to="/login">{t('common.enterRealm')}</Link>
+          ) : (
+            <Link to="/home">{t('common.backHome')}</Link>
+          )}
         </div>
       </AuthPanel>
     )
