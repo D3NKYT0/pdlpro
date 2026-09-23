@@ -200,3 +200,51 @@ def test_link_account_publishes_extension_hook(api):
     assert recorder.events
     assert recorder.events[0].payload["user_id"] == str(player.id)
     assert recorder.events[0].payload["login"] == "knight"
+
+
+@pytest.mark.django_db
+def test_l2_registration_blocked_during_coming_soon_when_closed(api):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(
+        name="Imperium",
+        coming_soon=True,
+        allow_l2_registration=False,
+        is_active=True,
+    )
+    player = User.objects.create_user(username="hero", email="hero@pdl.dev", password="Secret123")
+    api.force_authenticate(user=player)
+    blocked = api.post(
+        "/api/v1/customer/server/accounts/register/",
+        {"password": "GamePass1"},
+        format="json",
+    )
+    assert blocked.status_code == 403
+    assert blocked.data["error_code"] == "COMING_SOON_L2_REGISTRATION_RESTRICTED"
+    assert "jogo" in blocked.data["message"].lower()
+
+
+@pytest.mark.django_db
+def test_l2_registration_allowed_for_staff_when_closed_to_players(api):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(
+        name="Imperium",
+        coming_soon=True,
+        allow_l2_registration=False,
+        is_active=True,
+    )
+    staff = User.objects.create_user(
+        username="gm",
+        email="gm@pdl.dev",
+        password="Secret123",
+        is_staff=True,
+    )
+    api.force_authenticate(user=staff)
+    created = api.post(
+        "/api/v1/customer/server/accounts/register/",
+        {"password": "GamePass1"},
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert created.data["login"] == "gm"

@@ -40,6 +40,19 @@ class GameAccountAlreadyExistsError(ConflictError):
     message = "Já existe uma conta Lineage com este login."
 
 
+class ComingSoonL2RegistrationRestrictedError(DomainError):
+    """Falha de domínio: criação de conta L2 fechada durante o Coming Soon.
+
+    A apresentação expõe o código ``COMING_SOON_L2_REGISTRATION_RESTRICTED`` com status HTTP 403.
+    """
+
+    error_code = "COMING_SOON_L2_REGISTRATION_RESTRICTED"
+    status_code = 403
+    message = (
+        "O servidor está em período de lançamento. A criação de contas do jogo está fechada no momento."
+    )
+
+
 class AccountAlreadyLinkedError(ConflictError):
     """Falha de domínio: Esta conta Lineage já está vinculada.
 

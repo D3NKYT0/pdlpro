@@ -40,6 +40,9 @@ class ServerInfo:
     coming_soon_title: str = ""
     coming_soon_subtitle: str = ""
     coming_soon_at: str | None = None
+    staff_only_login: bool = False
+    allow_registration: bool = True
+    allow_l2_registration: bool = True
     seo_title: str = ""
     seo_description: str = ""
     og_title: str = ""

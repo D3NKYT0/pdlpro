@@ -110,6 +110,8 @@ class IndexConfigAdmin(PDLModelAdmin):
                 "fields": (
                     "coming_soon",
                     "staff_only_login",
+                    "allow_registration",
+                    "allow_l2_registration",
                     "coming_soon_show_info",
                     "coming_soon_show_champions",
                     "coming_soon_title",

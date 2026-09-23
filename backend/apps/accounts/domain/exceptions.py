@@ -59,6 +59,19 @@ class ComingSoonLoginRestrictedError(DomainError):
     )
 
 
+class ComingSoonRegistrationRestrictedError(DomainError):
+    """Falha de domínio: cadastro no site fechado durante o Coming Soon.
+
+    A apresentação expõe o código ``COMING_SOON_REGISTRATION_RESTRICTED`` com status HTTP 403.
+    """
+
+    error_code = "COMING_SOON_REGISTRATION_RESTRICTED"
+    status_code = 403
+    message = (
+        "O servidor está em período de lançamento. O cadastro de novas contas está fechado no momento."
+    )
+
+
 class InvalidTwoFactorError(DomainError):
     """Falha de domínio: Código 2FA inválido.
 

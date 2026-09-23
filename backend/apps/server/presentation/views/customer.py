@@ -63,7 +63,15 @@ from common.views import InjectedAPIView
 
 
 def actor_from(request) -> AccountActor:
-    return AccountActor(user_id=request.user.id, username=request.user.username, email=request.user.email)
+    user = request.user
+    return AccountActor(
+        user_id=user.id,
+        username=user.username,
+        email=user.email,
+        is_staff=bool(getattr(user, "is_staff", False)),
+        is_superuser=bool(getattr(user, "is_superuser", False)),
+        is_staff_member=bool(getattr(user, "is_staff_member", False)),
+    )
 
 
 class LineageAccountsView(InjectedAPIView):

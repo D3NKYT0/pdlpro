@@ -12,7 +12,7 @@ import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, Use
 import { useAuth } from '../contexts/AuthContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { getClassName } from '../lib/lineage'
-import { isApiError, lineageApi } from '../services/api'
+import { isApiError, lineageApi, serverApi } from '../services/api'
 
 export function AccountsPage() {
   const { t } = useTranslation('panel')
@@ -20,6 +20,7 @@ export function AccountsPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
+  const serverInfo = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
   const [params, setParams] = useSearchParams()
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -35,6 +36,12 @@ export function AccountsPage() {
   const primaryStatus = accounts.data?.primary?.status
   const primaryTaken = Boolean(!primaryAccount && (primaryStatus === 'taken' || useAlternateLogin))
   const primaryUnclaimed = Boolean(!primaryAccount && primaryStatus === 'unclaimed' && !useAlternateLogin)
+  const isStaff = Boolean(user?.is_staff || user?.is_superuser || user?.is_staff_member)
+  const l2RegistrationClosed = Boolean(
+    serverInfo.data?.coming_soon
+    && serverInfo.data.allow_l2_registration === false
+    && !isStaff,
+  )
 
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],
@@ -164,7 +171,17 @@ export function AccountsPage() {
             </div>
           ) : null}
 
-          {!accounts.isLoading && !primaryAccount ? (
+          {!accounts.isLoading && !primaryAccount && l2RegistrationClosed ? (
+            <div className="account-created-state is-conflict">
+              <ShieldAlert aria-hidden="true" />
+              <div>
+                <strong>{t('accounts.l2RegistrationClosedTitle')}</strong>
+                <span>{t('accounts.l2RegistrationClosedText')}</span>
+              </div>
+            </div>
+          ) : null}
+
+          {!accounts.isLoading && !primaryAccount && !l2RegistrationClosed ? (
             <form className="account-action-form" onSubmit={onRegister}>
               <div className="account-form-title">
                 <UserRoundPlus aria-hidden="true" />

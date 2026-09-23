@@ -8,6 +8,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+### Adicionado
+
+- No Coming Soon, controles separados para **criar conta no site**, **login só
+  staff** e **criar conta L2**, com mensagens `COMING_SOON_*_RESTRICTED` e
+  bloqueio na API (cadastro, OAuth, login e registro L2).
+- Tela admin própria **Coming Soon** (`/panel/admin/coming-soon`), separada de
+  **Painel e servidor** (antes os dois cards do hub abriam a mesma página).
+
 ## [2.5.7] - 2026-09-23
 
 Coming Soon com personagens laterais e redes configuráveis, catálogo de

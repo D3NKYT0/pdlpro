@@ -57,6 +57,8 @@ def test_staff_can_update_panel_and_services(api, staff):
             "coming_soon_subtitle": "Contagem oficial",
             "coming_soon_at": "2027-01-03T18:00:00Z",
             "staff_only_login": False,
+            "allow_registration": False,
+            "allow_l2_registration": False,
             "seo_title": "Imperium SEO",
             "seo_description": "Reino de testes",
             "discord_url": "https://discord.gg/imperium",
@@ -76,6 +78,8 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert saved.data["coming_soon_show_champions"] is False
     assert saved.data["coming_soon_title"] == "Abertura Imperium"
     assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
+    assert saved.data["allow_registration"] is False
+    assert saved.data["allow_l2_registration"] is False
     assert saved.data["seo_title"] == "Imperium SEO"
     assert saved.data["discord_url"] == "https://discord.gg/imperium"
     assert saved.data["whatsapp_url"] == "https://wa.me/5511999999999"
@@ -90,6 +94,9 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert public.data["coming_soon_show_info"] is True
     assert public.data["coming_soon_show_champions"] is False
     assert public.data["coming_soon_title"] == "Abertura Imperium"
+    assert public.data["allow_registration"] is False
+    assert public.data["allow_l2_registration"] is False
+    assert public.data["staff_only_login"] is False
     assert public.data["seo_title"] == "Imperium SEO"
     assert public.data["discord_url"] == "https://discord.gg/imperium"
     assert public.data["whatsapp_url"] == "https://wa.me/5511999999999"

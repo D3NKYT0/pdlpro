@@ -48,12 +48,17 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
         users: IUserRepository,
         unit_of_work: UnitOfWork,
         request_email_verification: RequestEmailVerificationUseCase,
+        index_config: IIndexConfigRepository,
     ) -> None:
         self._users = users
         self._unit_of_work = unit_of_work
         self._request_email_verification = request_email_verification
+        self._index_config = index_config
 
     def execute(self, data: RegisterUserInput) -> UserEntity:
+        from apps.server.application.access import assert_registration_allowed
+
+        assert_registration_allowed(self._index_config)
         if not data.accept_terms:
             raise ValidationDomainError("Aceite os termos de uso e a política de privacidade.")
         username = data.username.strip()

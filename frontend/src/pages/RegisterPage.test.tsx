@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import toast from 'react-hot-toast'
-import { authApi, ApiError } from '../services/api'
+import { authApi, ApiError, serverApi } from '../services/api'
 import { RegisterPage } from './RegisterPage'
 
 const session = vi.hoisted(() => ({
@@ -18,6 +18,16 @@ const oauth = vi.hoisted(() => ({ beginOAuth: vi.fn() }))
 vi.mock('../contexts/AuthContext', () => ({ useAuth: () => session }))
 vi.mock('../lib/oauth', () => ({ beginOAuth: oauth.beginOAuth }))
 vi.mock('../services/domain/auth.service', async original => ({ ...await original<object>(), authApi: { capabilities: vi.fn() } }))
+vi.mock('../services/domain/server.service', () => ({
+  serverApi: {
+    info: vi.fn(async () => ({
+      coming_soon: false,
+      allow_registration: true,
+      allow_l2_registration: true,
+      staff_only_login: false,
+    })),
+  },
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('@hcaptcha/react-hcaptcha', () => ({ default: ({ onVerify, onExpire }: { onVerify: (token: string) => void; onExpire: () => void }) => <><button type="button" onClick={() => onVerify('captcha')}>Resolver</button><button type="button" onClick={onExpire}>Expirar</button></> }))
 let client: QueryClient
@@ -26,6 +36,12 @@ beforeEach(() => {
   session.user = null
   session.loading = false
   vi.mocked(authApi.capabilities).mockResolvedValue({ passkeys: true, two_factor: true, email_verification: true, captcha: false, hcaptcha_site_key: 'sitekey', google: false, discord: false, connected_providers: [] })
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: false,
+    allow_registration: true,
+    allow_l2_registration: true,
+    staff_only_login: false,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 afterEach(() => { cleanup(); client.clear() })
@@ -98,4 +114,17 @@ it('envia conta social sem senha para completar o cadastro', async () => {
   session.user = { username: 'oauth', has_usable_password: false }
   mount()
   expect(await screen.findByRole('heading', { name: 'Completar conta' })).toBeVisible()
+})
+
+it('mostra aviso quando o cadastro está fechado no Coming Soon', async () => {
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: true,
+    allow_registration: false,
+    allow_l2_registration: true,
+    staff_only_login: true,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
+  mount()
+  expect(await screen.findByRole('heading', { name: 'Cadastro temporariamente fechado' })).toBeVisible()
+  expect(screen.getByText(/cadastro de novas contas está fechado/i)).toBeVisible()
+  expect(screen.queryByRole('button', { name: 'Crie sua conta mestra' })).toBeNull()
 })

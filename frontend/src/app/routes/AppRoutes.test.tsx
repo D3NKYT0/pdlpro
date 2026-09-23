@@ -84,6 +84,7 @@ const pages = [
   ['/panel/admin/items', 'Observar itens'],
   ['/panel/admin/items/customs', 'Itens customizados'],
   ['/panel/admin/server', 'Painel e servidor'],
+  ['/panel/admin/coming-soon', 'Coming Soon'],
   ['/panel/admin/accounts', 'Contas Lineage'],
   ['/panel/admin/moderation', 'Moderação'],
   ['/panel/admin/services', 'Serviços'],

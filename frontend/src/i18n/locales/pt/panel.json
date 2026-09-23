@@ -935,6 +935,8 @@
     "accountClaimed": "Conta Lineage vinculada",
     "accountCreated": "Conta Lineage criada e vinculada",
     "registerError": "Falha ao registrar",
+    "l2RegistrationClosedTitle": "Criação de conta L2 fechada",
+    "l2RegistrationClosedText": "O servidor está em período de lançamento e a criação de contas do jogo está fechada no momento. Você ainda pode vincular uma conta existente.",
     "linkedByEmail": "Conta Lineage vinculada pelo e-mail",
     "confirmLinkError": "Falha ao confirmar vínculo",
     "linkEmailSent": "Enviamos o link para o e-mail da conta Lineage",

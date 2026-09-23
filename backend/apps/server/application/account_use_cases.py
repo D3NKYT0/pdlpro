@@ -25,7 +25,7 @@ from apps.server.domain.gateways import (
     GameSkill,
     ILineageGateway,
 )
-from apps.server.domain.repositories import IManagedLineageAccountRepository
+from apps.server.domain.repositories import IIndexConfigRepository, IManagedLineageAccountRepository
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 from common.hooks import HookNames, IHookBus
@@ -44,6 +44,9 @@ class AccountActor:
     user_id: UUID
     username: str
     email: str
+    is_staff: bool = False
+    is_superuser: bool = False
+    is_staff_member: bool = False
 
 
 class ListAccessibleAccountsUseCase(UseCase[AccountActor, list[AccessibleAccount]]):
@@ -133,12 +136,17 @@ class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount])
         lineage: ILineageGateway,
         unit_of_work: UnitOfWork,
         managed_accounts: IManagedLineageAccountRepository,
+        index_config: IIndexConfigRepository,
     ) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
         self._managed = managed_accounts
+        self._index_config = index_config
 
     def execute(self, data: RegisterGameAccountInput) -> GameAccount:
+        from apps.server.application.access import assert_l2_registration_allowed
+
+        assert_l2_registration_allowed(data.actor, self._index_config)
         if self._managed.has_primary(data.actor.user_id):
             raise ValidationDomainError("Você já possui uma conta principal.")
         preferred = data.actor.username

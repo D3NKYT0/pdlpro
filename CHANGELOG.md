@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **23 de setembro de 2026** — Publicado: **[2.5.7]** —
+Última atualização: **23 de setembro de 2026** — Em curso: tela própria do
+Coming Soon e controles de acesso (cadastro, login e conta L2). Publicado:
+**[2.5.7]** —
 Coming Soon com personagens laterais e redes configuráveis; catálogo
 de 20 templates clássicos, seletor no Classic/instalados e Gemwright
 no Classic com casco de portal.

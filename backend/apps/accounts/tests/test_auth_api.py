@@ -152,6 +152,7 @@ def test_login_blocked_for_players_during_coming_soon_staff_only(api, user):
     )
     assert blocked.status_code == 403
     assert blocked.data["error_code"] == "COMING_SOON_LOGIN_RESTRICTED"
+    assert "restrito à equipe" in blocked.data["message"]
 
     User.objects.create_user(username="gm", email="gm@pdl.dev", password="Secret123", is_staff=True)
     allowed = api.post(
@@ -161,6 +162,56 @@ def test_login_blocked_for_players_during_coming_soon_staff_only(api, user):
     )
     assert allowed.status_code == 200
     assert allowed.data["username"] == "gm"
+
+
+@pytest.mark.django_db
+def test_registration_blocked_during_coming_soon_when_closed(api):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(
+        name="Imperium",
+        coming_soon=True,
+        allow_registration=False,
+        is_active=True,
+    )
+    blocked = api.post(
+        "/api/v1/auth/register/",
+        {
+            "username": "newbie",
+            "email": "newbie@pdl.dev",
+            "password": "Secret123",
+            "accept_terms": True,
+        },
+        format="json",
+    )
+    assert blocked.status_code == 403
+    assert blocked.data["error_code"] == "COMING_SOON_REGISTRATION_RESTRICTED"
+    assert "cadastro" in blocked.data["message"].lower()
+
+
+@pytest.mark.django_db
+def test_registration_allowed_during_coming_soon_when_open(api):
+    from apps.server.infrastructure.models import IndexConfig
+
+    IndexConfig.objects.create(
+        name="Imperium",
+        coming_soon=True,
+        allow_registration=True,
+        staff_only_login=True,
+        is_active=True,
+    )
+    created = api.post(
+        "/api/v1/auth/register/",
+        {
+            "username": "newbie",
+            "email": "newbie@pdl.dev",
+            "password": "Secret123",
+            "accept_terms": True,
+        },
+        format="json",
+    )
+    assert created.status_code == 200
+    assert created.data["username"] == "newbie"
 
 
 @pytest.mark.django_db

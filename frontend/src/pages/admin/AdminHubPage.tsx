@@ -92,7 +92,7 @@ const categories: Category[] = [
       { to: '/panel/admin/wiki', key: 'wiki', icon: BookOpen },
       { to: '/panel/admin/downloads', key: 'downloads', icon: Download },
       { to: '/panel/admin/roadmap', key: 'roadmap', icon: CalendarDays },
-      { to: '/panel/admin/server', key: 'comingSoon', icon: CalendarDays },
+      { to: '/panel/admin/coming-soon', key: 'comingSoon', icon: CalendarDays },
     ],
   },
   {

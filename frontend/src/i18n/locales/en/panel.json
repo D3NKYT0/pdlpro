@@ -935,6 +935,8 @@
     "accountClaimed": "Lineage account linked",
     "accountCreated": "Lineage account created and linked",
     "registerError": "Registration failed",
+    "l2RegistrationClosedTitle": "L2 account creation closed",
+    "l2RegistrationClosedText": "The server is in its launch period and game account creation is currently closed. You can still link an existing account.",
     "linkedByEmail": "Lineage account linked by e-mail",
     "confirmLinkError": "Could not confirm the link",
     "linkEmailSent": "We sent the link to the Lineage account e-mail",

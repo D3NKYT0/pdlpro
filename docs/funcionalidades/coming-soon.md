@@ -5,6 +5,7 @@
 O Coming Soon exibe uma **página de lançamento própria** em `/`, sem o chrome público
 (nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/home`
 enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o modo em
+**Painel > Administração > Coming Soon**. Identidade, rates e SEO ficam em
 **Painel > Administração > Painel e servidor**.
 
 ## Configuração
@@ -20,7 +21,9 @@ enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o 
 | Título | Headline opcional; se genérico (“Em breve”), usa o nome do servidor |
 | Subtítulo | Texto de apoio opcional; se vazio, usa slogan ou descrição |
 | Data e hora do lançamento | Alvo da contagem regressiva (obrigatória com o modo ativo) |
-| Login apenas para staff | Bloqueia jogadores comuns no login |
+| Login apenas para staff | Bloqueia o login de jogadores comuns |
+| Permitir criar conta no site | Liga ou desliga o cadastro público (e-mail e OAuth) |
+| Permitir criar conta L2 | Liga ou desliga a criação de contas do jogo no painel (staff continua liberada) |
 
 A ativação sem data de lançamento é rejeitada pela API.
 
@@ -56,8 +59,10 @@ A ativação sem data de lançamento é rejeitada pela API.
    Ctrl+clique (e equivalentes) no Entrar segue direto ao login. Downloads fica secundário.
 8. Login e Downloads permanecem acessíveis pelos botões da página.
 9. Outras rotas públicas (notícias, wiki, etc.) continuam com o layout normal.
-10. Com restrição de staff, senha/passkey/OAuth/2FA respondem
-   `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns.
+10. Controles de acesso no Coming Soon (independentes entre si):
+   - cadastro fechado → `COMING_SOON_REGISTRATION_RESTRICTED` em registro e OAuth de novas contas;
+   - login só staff → `COMING_SOON_LOGIN_RESTRICTED` para jogadores comuns (senha/passkey/OAuth/2FA);
+   - criação L2 fechada → `COMING_SOON_L2_REGISTRATION_RESTRICTED` para jogadores (staff continua autorizada).
 11. Quem já está autenticado em `/login` é enviado à landing (`/home`), salvo `?next=`
    local válido. Conta social sem senha utilizável vai para `/complete-account`.
 
@@ -85,6 +90,9 @@ Contrato público em `GET /api/v1/public/server/info/`:
 - `coming_soon_title`
 - `coming_soon_subtitle`
 - `coming_soon_at` (ISO 8601 ou `null`)
+- `staff_only_login`
+- `allow_registration`
+- `allow_l2_registration`
 
 Persistência em `IndexConfig` via `PUT /api/v1/staff/panel/`.
 
@@ -97,9 +105,10 @@ hero do tema.
   login restrito em `apps/accounts/tests/test_auth_api.py`.
 - Frontend: `ComingSoonPage.test.tsx`, `PublicLayout.test.tsx`, `LoginPage.test.tsx`, chrome em
   `SiteNav.test.tsx`, `SiteFooter.test.tsx`, `PrivateLayout.test.tsx`, `PortalTheme.test.tsx`,
-  admin em `AdminSettings.test.tsx`.
--   Manual: definir título/data, ativar Coming Soon, abrir `/` anônimo e conferir a contagem;
-  abrir `/home` e confirmar a landing; autenticado, clicar em Início no menu e conferir que
+  admin em `AdminSettings.test.tsx` (Coming Soon e Painel/servidor separados), `AdminHubPage.test.tsx`.
+-   Manual: abrir **Coming Soon** no hub (`/panel/admin/coming-soon`), definir título/data, ativar,
+  abrir `/` anônimo e conferir a contagem; em **Painel e servidor** alterar nome/rates sem misturar
+  controles de lançamento; autenticado, clicar em Início no menu e conferir que
   permanece em `/home`; tentar login de jogador com restrição de staff;
   visitar `/login` já autenticado e confirmar o redirect para `/home`;
   clicar em Entrar na página de lançamento, conferir que a UI some e o vídeo ocupa o fundo,

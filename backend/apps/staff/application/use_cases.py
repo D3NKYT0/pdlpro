@@ -50,6 +50,8 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "notes": info.notes,
         "coming_soon": bool(row.coming_soon) if row else False,
         "staff_only_login": bool(row.staff_only_login) if row else False,
+        "allow_registration": bool(getattr(row, "allow_registration", True)) if row else True,
+        "allow_l2_registration": bool(getattr(row, "allow_l2_registration", True)) if row else True,
         "coming_soon_show_info": bool(getattr(row, "coming_soon_show_info", False)) if row else False,
         "coming_soon_show_champions": bool(getattr(row, "coming_soon_show_champions", True)) if row else True,
         "coming_soon_title": (row.coming_soon_title if row else "") or "Em breve",
@@ -199,6 +201,10 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.coming_soon = bool(data.get("coming_soon"))
         if "staff_only_login" in data:
             row.staff_only_login = bool(data.get("staff_only_login"))
+        if "allow_registration" in data:
+            row.allow_registration = bool(data.get("allow_registration"))
+        if "allow_l2_registration" in data:
+            row.allow_l2_registration = bool(data.get("allow_l2_registration"))
         if "coming_soon_show_info" in data:
             row.coming_soon_show_info = bool(data.get("coming_soon_show_info"))
         if "coming_soon_show_champions" in data:

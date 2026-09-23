@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { ApiError, lineageApi } from '../services/api'
+import { ApiError, lineageApi, serverApi } from '../services/api'
 import i18n from '../i18n'
 import { AccountsPage } from './AccountsPage'
 
@@ -21,12 +21,24 @@ vi.mock('../services/domain/lineage.service', () => ({
     confirmLinkByEmail: vi.fn(),
   },
 }))
+vi.mock('../services/domain/server.service', () => ({
+  serverApi: {
+    info: vi.fn(),
+  },
+}))
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
 
 let client: QueryClient
 
 beforeEach(() => {
   vi.resetAllMocks()
+  session.user = { id: 'u1', username: 'denky' }
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: false,
+    allow_registration: true,
+    allow_l2_registration: true,
+    staff_only_login: false,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 
@@ -116,4 +128,25 @@ it('mostra retrato Interlude na lista de personagens', async () => {
   mount()
 
   expect(await screen.findByRole('img', { name: 'Retrato de Hero' })).toHaveAttribute('src', '/theme/avatars/human-m.png')
+})
+
+it('esconde criação de conta L2 quando o Coming Soon fecha o cadastro', async () => {
+  vi.mocked(serverApi.info).mockResolvedValue({
+    coming_soon: true,
+    allow_registration: true,
+    allow_l2_registration: false,
+    staff_only_login: true,
+  } as Awaited<ReturnType<typeof serverApi.info>>)
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [],
+    slots: { used: 0, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'available' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+
+  mount()
+
+  expect(await screen.findByText('Criação de conta L2 fechada')).toBeVisible()
+  expect(screen.getByText(/criação de contas do jogo está fechada/i)).toBeVisible()
+  expect(screen.queryByRole('heading', { name: 'Criar conta principal' })).not.toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Vincular conta existente' })).toBeVisible()
 })

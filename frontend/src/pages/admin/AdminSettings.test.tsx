@@ -16,6 +16,7 @@ import { AdminGamesPage } from './AdminGamesPage'
 import { AdminShopPage } from './AdminShopPage'
 import { AdminNewsPage } from './AdminNewsPage'
 import { AdminServerPage } from './AdminServerPage'
+import { AdminComingSoonPage } from './AdminComingSoonPage'
 import { AdminAccountsPage } from './AdminAccountsPage'
 
 vi.mock('react-hot-toast', () => ({ default: { success: vi.fn(), error: vi.fn() } }))
@@ -68,6 +69,8 @@ beforeEach(() => {
     max_level: 80,
     coming_soon: false,
     staff_only_login: false,
+    allow_registration: true,
+    allow_l2_registration: true,
     coming_soon_show_info: false,
     coming_soon_show_champions: true,
     coming_soon_title: 'Em breve',
@@ -316,8 +319,8 @@ it('notícia rejeitada mantém o conteúdo para correção', async () => {
 })
 
 it('campos de lançamento compartilham a mesma grade', async () => {
-  mount(<AdminServerPage />)
-  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+  mount(<AdminComingSoonPage />)
+  await waitFor(() => expect(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ })).toBeInTheDocument())
   const title = screen.getByLabelText(/Título do lançamento/)
   const date = screen.getByLabelText(/Data e hora do lançamento/)
   const subtitle = screen.getByLabelText(/Subtítulo/)
@@ -329,9 +332,9 @@ it('campos de lançamento compartilham a mesma grade', async () => {
   expect(grid).toHaveTextContent('Alvo da contagem regressiva')
 })
 
-it('servidor normaliza recursos e habilita restrição de login durante coming soon', async () => {
-  const user = mount(<AdminServerPage />)
-  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+it('Coming Soon habilita restrição de login e salva controles de acesso', async () => {
+  const user = mount(<AdminComingSoonPage />)
+  await waitFor(() => expect(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ })).toBeInTheDocument())
   const restricted = screen.getByRole('checkbox', { name: /Permitir login apenas/ })
   expect(restricted).toBeDisabled()
   await user.click(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ }))
@@ -343,26 +346,36 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
   await user.clear(screen.getByLabelText(/Título do lançamento/))
   await user.type(screen.getByLabelText(/Título do lançamento/), 'Abertura do reino')
   await user.type(screen.getByLabelText(/Data e hora do lançamento/), '2027-01-03T18:00')
+  await user.click(screen.getByRole('button', { name: /Salvar/ }))
+  expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({
+    coming_soon: true,
+    staff_only_login: true,
+    allow_registration: true,
+    allow_l2_registration: true,
+    coming_soon_show_info: true,
+    coming_soon_show_champions: false,
+    coming_soon_title: 'Abertura do reino',
+    coming_soon_at: expect.stringMatching(/^2027-01-03T/),
+    discord_url: 'https://discord.gg/theone',
+    whatsapp_url: 'https://wa.me/5511999999999',
+  }))
+  expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')
+})
+
+it('painel e servidor normaliza recursos sem misturar Coming Soon', async () => {
+  const user = mount(<AdminServerPage />)
+  await waitFor(() => expect(screen.getByLabelText('Nome')).toHaveValue('PDL'))
+  expect(screen.queryByRole('checkbox', { name: /Ativar Coming Soon/ })).not.toBeInTheDocument()
   await user.type(screen.getByRole('textbox', { name: /Recursos/ }), ' PvP \n\n Eventos ')
   await user.click(screen.getByRole('button', { name: /Salvar/ }))
   expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({
     features: ['PvP', 'Eventos'],
-    coming_soon: true,
-    staff_only_login: true,
-    coming_soon_show_info: true,
-    coming_soon_show_champions: false,
+    name: 'PDL',
     max_level: 80,
-    coming_soon_title: 'Abertura do reino',
-    coming_soon_at: expect.stringMatching(/^2027-01-03T/),
-    seo_title: '',
-    discord_url: 'https://discord.gg/theone',
-    whatsapp_url: 'https://wa.me/5511999999999',
-    facebook_url: '',
-    instagram_url: '',
-    youtube_url: '',
-    trailer_youtube_id: '',
   }))
-  expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')
+  expect(staffApi.savePanel).toHaveBeenCalledWith(expect.objectContaining({
+    coming_soon: false,
+  }))
 })
 
 it.each([false, true])('desvinculação exige confirmação, confirmada=%s', async confirm => {

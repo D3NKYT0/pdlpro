@@ -83,6 +83,16 @@ class IndexConfig(BaseModel):
     notes = models.JSONField(default=dict, blank=True)
     coming_soon = models.BooleanField(default=False)
     staff_only_login = models.BooleanField(default=False)
+    allow_registration = models.BooleanField(
+        _("Permitir criar conta no site"),
+        default=True,
+        help_text=_("Com Coming Soon ativo, permite criar contas no site."),
+    )
+    allow_l2_registration = models.BooleanField(
+        _("Permitir criar conta L2"),
+        default=True,
+        help_text=_("Com Coming Soon ativo, permite criar contas Lineage no painel."),
+    )
     coming_soon_show_info = models.BooleanField(
         _("Mostrar informações na Coming Soon"),
         default=False,

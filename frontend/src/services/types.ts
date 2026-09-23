@@ -32,6 +32,9 @@ export interface ApiServerInfo {
   features: string[]
   notes: Record<string, string>
   coming_soon: boolean
+  staff_only_login: boolean
+  allow_registration: boolean
+  allow_l2_registration: boolean
   coming_soon_show_info: boolean
   coming_soon_show_champions: boolean
   coming_soon_title: string

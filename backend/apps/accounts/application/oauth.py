@@ -14,6 +14,7 @@ from django.core.cache import cache
 
 from apps.accounts.domain.exceptions import OAuthError
 from apps.accounts.domain.repositories import ISocialAccountRepository, IUserRepository
+from apps.server.domain.repositories import IIndexConfigRepository
 from common.architecture.base import UseCase
 
 PROVIDERS = {
@@ -172,11 +173,19 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
     ``(user, linked)``.
     """
 
-    def __init__(self, users: IUserRepository, social: ISocialAccountRepository) -> None:
+    def __init__(
+        self,
+        users: IUserRepository,
+        social: ISocialAccountRepository,
+        index_config: IIndexConfigRepository,
+    ) -> None:
         self._users = users
         self._social = social
+        self._index_config = index_config
 
     def execute(self, data: CompleteOAuthInput) -> tuple:
+        from apps.server.application.access import assert_registration_allowed
+
         state_key = f"oauth-state:{data.state}"
         stored = cache.get(state_key)
         if (
@@ -251,6 +260,7 @@ class CompleteOAuthUseCase(UseCase[CompleteOAuthInput, tuple]):
                     status_code=409,
                 )
             if not user:
+                assert_registration_allowed(self._index_config)
                 display_name = str(
                     profile.get("name") or profile.get("global_name") or profile.get("username") or ""
                 )[:80]

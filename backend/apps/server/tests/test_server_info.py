@@ -19,6 +19,9 @@ def test_public_server_info_is_classic_lineage_page():
     assert response.data["coming_soon"] is False
     assert response.data["coming_soon_show_info"] is False
     assert response.data["coming_soon_show_champions"] is True
+    assert response.data["allow_registration"] is True
+    assert response.data["allow_l2_registration"] is True
+    assert response.data["staff_only_login"] is False
     assert response.data["whatsapp_url"] == ""
     assert response.data["facebook_url"] == ""
     assert response.data["instagram_url"] == ""

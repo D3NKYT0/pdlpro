@@ -4195,6 +4195,14 @@ msgstr ""
 "restringido al staff en este momento."
 
 #: .\common\i18n_msgid_catalog.py:23
+msgid ""
+"O servidor está em período de lançamento. O cadastro de novas contas está "
+"fechado no momento."
+msgstr ""
+"El servidor está en período de lanzamiento. El registro de nuevas cuentas "
+"está cerrado por ahora."
+
+#: .\common\i18n_msgid_catalog.py:24
 msgid "Código 2FA inválido."
 msgstr "Código 2FA no válido."
 
@@ -4372,7 +4380,15 @@ msgstr "Cuenta Lineage no encontrada."
 msgid "Já existe uma conta Lineage com este login."
 msgstr "Ya existe una cuenta Lineage con este login."
 
-#: .\common\i18n_msgid_catalog.py:82
+#: .\common\i18n_msgid_catalog.py:90
+msgid ""
+"O servidor está em período de lançamento. A criação de contas do jogo está "
+"fechada no momento."
+msgstr ""
+"El servidor está en período de lanzamiento. La creación de cuentas del juego "
+"está cerrada por ahora."
+
+#: .\common\i18n_msgid_catalog.py:91
 msgid "Esta conta Lineage já está vinculada."
 msgstr "Esta cuenta Lineage ya está vinculada."
 
