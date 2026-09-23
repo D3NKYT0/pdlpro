@@ -14,6 +14,7 @@ enquanto o modo estiver ativo — as duas rotas coexistem. A equipe configura o 
 | Nome, slogan, descrição | Identidade no hero (o slogan aparece abaixo do título) |
 | Crônica, nível máximo, rates, encantamento | Faixa de dados na página de lançamento |
 | Ativar Coming Soon | Liga a página de lançamento em `/` |
+| Permitir rolagem com Informações | Com a contagem ativa, libera o scroll e exibe as seções públicas de Informações (Visão geral, Rates, Encantamento, Recursos, PvP e Como começar) |
 | Título | Headline opcional; se genérico (“Em breve”), usa o nome do servidor |
 | Subtítulo | Texto de apoio opcional; se vazio, usa slogan ou descrição |
 | Data e hora do lançamento | Alvo da contagem regressiva (obrigatória com o modo ativo) |
@@ -35,6 +36,9 @@ A ativação sem data de lançamento é rejeitada pela API.
 4. A coluna da esquerda lista crônica, nível máximo, rates e encantamento; a da
    direita mantém o hero original (título, slogan, subtítulo, contagem e botões).
    Em telas estreitas as colunas empilham, com o hero primeiro.
+   Se **Permitir rolagem com Informações** estiver ativo, o dossier compacto some,
+   a página passa a rolar e as seções completas de `/info` aparecem abaixo do hero
+   (enquanto a contagem ainda estiver em andamento).
 5. Enquanto a contagem está ativa, quatro personagens em pose de batalha
    (`images/coming-soon/*.png`) flanqueiam os painéis, olhando para o visitante.
    As artes compartilham a mesma escala em pé (recorte sem folga no quadro).
@@ -66,6 +70,7 @@ Contrato público em `GET /api/v1/public/server/info/`:
 - `seo_title`, `seo_description`, `og_title`, `og_description`, `og_image`
 - `discord_url`, `trailer_youtube_id`
 - `coming_soon`
+- `coming_soon_show_info`
 - `coming_soon_title`
 - `coming_soon_subtitle`
 - `coming_soon_at` (ISO 8601 ou `null`)

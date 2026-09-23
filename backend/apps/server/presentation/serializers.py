@@ -25,6 +25,7 @@ class ServerInfoSerializer(serializers.Serializer):
     features = serializers.ListField(child=serializers.CharField())
     notes = serializers.DictField(child=serializers.CharField())
     coming_soon = serializers.BooleanField()
+    coming_soon_show_info = serializers.BooleanField()
     coming_soon_title = serializers.CharField(allow_blank=True)
     coming_soon_subtitle = serializers.CharField(allow_blank=True)
     coming_soon_at = serializers.CharField(allow_null=True, required=False)

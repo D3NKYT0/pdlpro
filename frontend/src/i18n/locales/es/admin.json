@@ -719,6 +719,8 @@
     "enableComingSoonHint": "Muestra la página de lanzamiento a los visitantes.",
     "staffOnly": "Permitir el inicio de sesión solo al staff",
     "staffOnlyHint": "Bloquea a los jugadores comunes durante el Coming Soon.",
+    "showInfoOnComingSoon": "Permitir desplazamiento con Información",
+    "showInfoOnComingSoonHint": "Mientras la cuenta regresiva esté activa, la página de lanzamiento se desplaza y muestra Visión general, Rates, Encantamiento, Recursos, PvP y Cómo empezar.",
     "active": "Activo",
     "inactive": "Inactivo",
     "launchEyebrow": "Lanzamiento",

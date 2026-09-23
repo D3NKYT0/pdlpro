@@ -1,38 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import {
-  Activity,
   BookOpen,
-  Check,
-  Coins,
   Crown,
   Download,
-  Gem,
-  PackageOpen,
   Rocket,
   Server,
   ShieldCheck,
   Sparkles,
   Swords,
   UserPlus,
-  Zap,
+  Activity,
   type LucideIcon,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
+import { INFO_SECTION_IDS, InfoSections } from '../components/info/InfoSections'
 import { serverApi } from '../services/api'
 
-const RATE_IDS = ['xp', 'sp', 'adena', 'drop', 'spoil'] as const
-const RATE_ICONS: Record<(typeof RATE_IDS)[number], LucideIcon> = {
-  xp: Zap,
-  sp: Sparkles,
-  adena: Coins,
-  drop: PackageOpen,
-  spoil: Gem,
-}
-
-const SECTION_IDS = ['geral', 'rates', 'enchant', 'features', 'pvp', 'comecar'] as const
-const SECTION_ICONS: Record<(typeof SECTION_IDS)[number], LucideIcon> = {
+const SECTION_ICONS: Record<(typeof INFO_SECTION_IDS)[number], LucideIcon> = {
   geral: Server,
   rates: Activity,
   enchant: ShieldCheck,
@@ -55,14 +41,7 @@ export function InfoPage() {
       : t('info.statusOffline')
   const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
 
-  const rateCards = RATE_IDS.map((key) => ({
-    key,
-    label: t(`info.rate.${key}.label`),
-    detail: t(`info.rate.${key}.detail`),
-    icon: RATE_ICONS[key],
-  }))
-
-  const sections = SECTION_IDS.map((id) => ({
+  const sections = INFO_SECTION_IDS.map((id) => ({
     id,
     label: t(`info.nav.${id}`),
     icon: SECTION_ICONS[id],
@@ -82,9 +61,9 @@ export function InfoPage() {
 
     const updateActiveSection = () => {
       const marker = window.scrollY + Math.min(window.innerHeight * 0.32, 280)
-      let currentSection: (typeof SECTION_IDS)[number] = SECTION_IDS[0]
+      let currentSection: (typeof INFO_SECTION_IDS)[number] = INFO_SECTION_IDS[0]
 
-      SECTION_IDS.forEach((id) => {
+      INFO_SECTION_IDS.forEach((id) => {
         const element = document.getElementById(id)
         if (!element) return
 
@@ -178,160 +157,32 @@ export function InfoPage() {
       </nav>
 
       <main className="container info-content">
-        {info.isLoading ? (
-          <div className="info-empty">
-            <span className="info-diamond" aria-hidden="true" />
-            <p>{t('info.loading')}</p>
-          </div>
-        ) : info.isError ? (
-          <div className="info-empty">
-            <span className="info-diamond" aria-hidden="true" />
-            <p>{t('info.error')}</p>
-          </div>
+        {info.isLoading || info.isError || !data ? (
+          <InfoSections
+            data={{
+              name: '',
+              slogan: '',
+              description: '',
+              chronicle: '',
+              rates: {},
+              enchant: {},
+              max_level: 0,
+              features: [],
+              notes: {},
+              coming_soon: false,
+              coming_soon_show_info: false,
+              coming_soon_title: '',
+              coming_soon_subtitle: '',
+              coming_soon_at: null,
+            }}
+            statusLabel={statusLabel}
+            statusClass={statusClass}
+            loading={info.isLoading}
+            error={info.isError}
+          />
         ) : (
           <>
-            <section className="info-section info-overview" id="geral">
-              <div className="info-section-heading">
-                <span>01</span>
-                <div>
-                  <small>{t('info.overviewKicker')}</small>
-                  <h2>{t('info.overviewTitle')}</h2>
-                </div>
-              </div>
-              <div className="info-overview-grid">
-                <article className="info-story-card">
-                  <span className="info-card-kicker">{t('info.storyKicker')}</span>
-                  <h3>{data?.name ?? 'PDL PRO'}</h3>
-                  <p>{data?.description || t('info.descriptionFallback')}</p>
-                  <div className="info-story-line">
-                    <span />
-                    {t('info.chronicleLine', { chronicle: data?.chronicle ?? '—' })}
-                  </div>
-                </article>
-
-                <div className="info-plaque">
-                  <div>
-                    <Server aria-hidden="true" />
-                    <span>{t('info.server')}</span>
-                    <strong>{data?.name ?? '—'}</strong>
-                  </div>
-                  <div>
-                    <BookOpen aria-hidden="true" />
-                    <span>{t('info.chronicle')}</span>
-                    <strong>{data?.chronicle ?? '—'}</strong>
-                  </div>
-                  <div>
-                    <Crown aria-hidden="true" />
-                    <span>{t('info.maxLevel')}</span>
-                    <strong>{data?.max_level ?? '—'}</strong>
-                  </div>
-                  <div>
-                    <Activity aria-hidden="true" />
-                    <span>{t('info.status')}</span>
-                    <strong className={statusClass}>{statusLabel}</strong>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="info-section" id="rates">
-              <div className="info-section-heading">
-                <span>02</span>
-                <div>
-                  <small>{t('info.ratesKicker')}</small>
-                  <h2>{t('info.ratesTitle')}</h2>
-                </div>
-              </div>
-              <div className="info-rate-grid">
-                {rateCards.map(({ key, label, detail, icon: Icon }) => (
-                  <article className="info-rate-card" key={key}>
-                    <div className="info-card-icon">
-                      <Icon aria-hidden="true" />
-                    </div>
-                    <span>{label}</span>
-                    <strong>{data?.rates[key] ?? '—'}</strong>
-                    <small>{detail}</small>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="info-section" id="enchant">
-              <div className="info-section-heading">
-                <span>03</span>
-                <div>
-                  <small>{t('info.enchantKicker')}</small>
-                  <h2>{t('info.enchantTitle')}</h2>
-                </div>
-              </div>
-              <div className="info-enchant">
-                <article>
-                  <div className="info-enchant-icon">
-                    <ShieldCheck aria-hidden="true" />
-                  </div>
-                  <div>
-                    <span>{t('info.enchantSafe')}</span>
-                    <p>{t('info.enchantSafeBlurb')}</p>
-                  </div>
-                  <strong>{data?.enchant.safe ?? '—'}</strong>
-                </article>
-                <article>
-                  <div className="info-enchant-icon">
-                    <Sparkles aria-hidden="true" />
-                  </div>
-                  <div>
-                    <span>{t('info.enchantMax')}</span>
-                    <p>{t('info.enchantMaxBlurb')}</p>
-                  </div>
-                  <strong>{data?.enchant.max ?? '—'}</strong>
-                </article>
-              </div>
-            </section>
-
-            <section className="info-section" id="features">
-              <div className="info-section-heading">
-                <span>04</span>
-                <div>
-                  <small>{t('info.featuresKicker')}</small>
-                  <h2>{t('info.featuresTitle')}</h2>
-                </div>
-              </div>
-              {(data?.features ?? []).length ? (
-                <ul className="info-features">
-                  {(data?.features ?? []).map((item, index) => (
-                    <li key={item}>
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <Check aria-hidden="true" />
-                      <strong>{item}</strong>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="info-lead">{t('info.featuresEmpty')}</p>
-              )}
-            </section>
-
-            <div className="info-split">
-              <section className="info-panel" id="pvp">
-                <div className="info-panel-icon">
-                  <Swords aria-hidden="true" />
-                </div>
-                <small>{t('info.pvpKicker')}</small>
-                <h2>{t('info.pvpTitle')}</h2>
-                <p>{data?.notes.pvp || t('info.pvpFallback')}</p>
-                <span className="info-panel-number">05</span>
-              </section>
-              <section className="info-panel" id="comecar">
-                <div className="info-panel-icon">
-                  <Rocket aria-hidden="true" />
-                </div>
-                <small>{t('info.startKicker')}</small>
-                <h2>{t('info.startTitle')}</h2>
-                <p>{data?.notes.start || t('info.startFallback')}</p>
-                <span className="info-panel-number">06</span>
-              </section>
-            </div>
-
+            <InfoSections data={data} statusLabel={statusLabel} statusClass={statusClass} />
             <section className="info-cta">
               <div>
                 <span className="info-eyebrow">

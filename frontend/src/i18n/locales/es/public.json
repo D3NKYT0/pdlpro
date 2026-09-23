@@ -125,6 +125,8 @@
     "factsTitle": "El servidor",
     "factsRates": "Rates",
     "factsEnchant": "Encantamiento",
+    "scrollForInfo": "Desplázate para ver la información",
+    "infoSectionsLabel": "Información del servidor",
     "fact": {
       "chronicle": "Crónica",
       "maxLevel": "Nivel",

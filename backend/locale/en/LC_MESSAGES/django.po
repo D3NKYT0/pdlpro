@@ -5154,5 +5154,11 @@ msgstr "Discord URL"
 msgid "ID do trailer no YouTube"
 msgstr "YouTube trailer ID"
 
+msgid "Mostrar informações na Coming Soon"
+msgstr "Show information on Coming Soon"
+
+msgid "Permite rolar a página de lançamento e exibe as seções públicas de Informações."
+msgstr "Allows scrolling the launch page and shows the public Information sections."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"

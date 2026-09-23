@@ -51,6 +51,7 @@ def test_staff_can_update_panel_and_services(api, staff):
             "features": ["Siege", "Olympiad"],
             "notes": {"pvp": "PvP livre", "start": "Crie a conta"},
             "coming_soon": True,
+            "coming_soon_show_info": True,
             "coming_soon_title": "Abertura Imperium",
             "coming_soon_subtitle": "Contagem oficial",
             "coming_soon_at": "2027-01-03T18:00:00Z",
@@ -66,6 +67,7 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert saved.data["name"] == "Imperium"
     assert saved.data["slogan"] == "Reino"
     assert saved.data["coming_soon"] is True
+    assert saved.data["coming_soon_show_info"] is True
     assert saved.data["coming_soon_title"] == "Abertura Imperium"
     assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
     assert saved.data["seo_title"] == "Imperium SEO"
@@ -75,6 +77,7 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert public.data["slogan"] == "Reino"
     assert public.data["rates"]["xp"] == "x10"
     assert public.data["coming_soon"] is True
+    assert public.data["coming_soon_show_info"] is True
     assert public.data["coming_soon_title"] == "Abertura Imperium"
     assert public.data["seo_title"] == "Imperium SEO"
     assert public.data["discord_url"] == "https://discord.gg/imperium"

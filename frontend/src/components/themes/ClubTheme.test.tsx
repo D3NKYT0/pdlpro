@@ -101,6 +101,7 @@ beforeEach(async () => {
   vi.mocked(serverApi.info).mockResolvedValue({
     name: 'Saga Club', slogan: '', description: '', chronicle: 'Interlude', rates: { xp: 'x20' },
     enchant: {}, max_level: 80, features: [], notes: {}, coming_soon: false,
+    coming_soon_show_info: false,
     coming_soon_title: '', coming_soon_subtitle: '', coming_soon_at: null,
   })
   vi.mocked(contentApi.news).mockResolvedValue([

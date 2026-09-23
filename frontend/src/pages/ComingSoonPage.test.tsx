@@ -1,42 +1,52 @@
 // @vitest-environment jsdom
 import type { ReactNode } from 'react'
 import '@testing-library/jest-dom/vitest'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import i18n from '../i18n'
+import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/types'
 import { ComingSoonPage } from './ComingSoonPage'
+
+vi.mock('../services/api', () => ({
+  serverApi: { status: vi.fn() },
+}))
 
 const info: ApiServerInfo = {
   name: 'Imperium',
   slogan: '',
   description: 'Servidor de testes',
   chronicle: 'Interlude',
-  rates: {},
-  enchant: {},
+  rates: { xp: 'x10', sp: 'x10', adena: 'x10', drop: 'x1', spoil: 'x1' },
+  enchant: { safe: '+3', max: '+16' },
   max_level: 80,
-  features: [],
-  notes: {},
+  features: ['PvP e guerras de castelo', 'Eventos periódicos'],
+  notes: { pvp: 'Combate livre', start: 'Crie a conta' },
   coming_soon: true,
+  coming_soon_show_info: false,
   coming_soon_title: 'O portal se abre',
   coming_soon_subtitle: 'Prepare suas armas',
   coming_soon_at: '2027-01-03T00:00:00Z',
 }
 
 function mount(ui: ReactNode) {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
-    <I18nextProvider i18n={i18n}>
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path="/" element={ui} />
-          <Route path="/login" element={<p>Tela de login</p>} />
-          <Route path="/downloads" element={<p>Tela de downloads</p>} />
-        </Routes>
-      </MemoryRouter>
-    </I18nextProvider>,
+    <QueryClientProvider client={client}>
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route path="/" element={ui} />
+            <Route path="/login" element={<p>Tela de login</p>} />
+            <Route path="/downloads" element={<p>Tela de downloads</p>} />
+          </Routes>
+        </MemoryRouter>
+      </I18nextProvider>
+    </QueryClientProvider>,
   )
 }
 
@@ -57,6 +67,7 @@ function stubMediaPlayback() {
 
 beforeEach(async () => {
   vi.spyOn(Date, 'now').mockReturnValue(new Date('2027-01-02T00:00:00Z').getTime())
+  vi.mocked(serverApi.status).mockResolvedValue({ game_online: false, login_online: true, players_online: 0 })
   await i18n.changeLanguage('pt')
 })
 
@@ -338,4 +349,28 @@ it('não dispara a cena com Ctrl+clique no Entrar', async () => {
   expect(play).not.toHaveBeenCalled()
   expect(container.querySelector('.launch-gate.is-entering')).toBeNull()
   expect(screen.queryByText('Tela de login')).not.toBeInTheDocument()
+})
+
+it('com informações habilitadas libera rolagem e mostra as seções da /info', async () => {
+  const { container } = mount(
+    <ComingSoonPage
+      info={{
+        ...info,
+        coming_soon_show_info: true,
+        description: 'O melhor servidor do mundo!',
+      }}
+    />,
+  )
+
+  expect(container.querySelector('.launch-gate--scrollable')).not.toBeNull()
+  expect(document.documentElement.style.overflow).not.toBe('hidden')
+  expect(screen.getByRole('link', { name: /Role para ver as informações/i })).toBeVisible()
+  expect(container.querySelector('.launch-gate__scroll-chevron')).not.toBeNull()
+  expect(container.querySelector('.launch-gate__info.info-page')).not.toBeNull()
+  expect(screen.getByLabelText('Informações do servidor')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Visão geral' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Rates do servidor' })).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Encantamento' })).toBeVisible()
+  expect(screen.getByText('PvP e guerras de castelo')).toBeVisible()
+  expect(container.querySelector('.launch-gate__dossier')).toBeNull()
 })

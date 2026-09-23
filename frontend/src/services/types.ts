@@ -32,6 +32,7 @@ export interface ApiServerInfo {
   features: string[]
   notes: Record<string, string>
   coming_soon: boolean
+  coming_soon_show_info: boolean
   coming_soon_title: string
   coming_soon_subtitle: string
   coming_soon_at: string | null

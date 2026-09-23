@@ -719,6 +719,8 @@
     "enableComingSoonHint": "Shows the launch page to visitors.",
     "staffOnly": "Allow staff logins only",
     "staffOnlyHint": "Blocks regular players during Coming Soon.",
+    "showInfoOnComingSoon": "Allow scrolling with Information",
+    "showInfoOnComingSoonHint": "While the countdown is running, the launch page scrolls and shows Overview, Rates, Enchantment, Features, PvP, and Getting started.",
     "active": "Active",
     "inactive": "Inactive",
     "launchEyebrow": "Launch",

@@ -68,6 +68,7 @@ beforeEach(() => {
     max_level: 80,
     coming_soon: false,
     staff_only_login: false,
+    coming_soon_show_info: false,
     coming_soon_title: 'Em breve',
     coming_soon_subtitle: '',
     coming_soon_at: null,
@@ -330,6 +331,7 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
   expect(restricted).toBeDisabled()
   await user.click(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ }))
   await user.click(restricted)
+  await user.click(screen.getByRole('checkbox', { name: /Permitir rolagem com Informações/ }))
   await user.clear(screen.getByLabelText(/Título do lançamento/))
   await user.type(screen.getByLabelText(/Título do lançamento/), 'Abertura do reino')
   await user.type(screen.getByLabelText(/Data e hora do lançamento/), '2027-01-03T18:00')
@@ -339,6 +341,7 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
     features: ['PvP', 'Eventos'],
     coming_soon: true,
     staff_only_login: true,
+    coming_soon_show_info: true,
     max_level: 80,
     coming_soon_title: 'Abertura do reino',
     coming_soon_at: expect.stringMatching(/^2027-01-03T/),

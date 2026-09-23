@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '../components/i18n/LanguageSwitcher'
+import { InfoSections } from '../components/info/InfoSections'
 import { Button, ButtonLink } from '../components/ui/Button'
+import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/types'
 import { themeImage, themeVideo } from '../theme/assets'
 
@@ -277,12 +280,24 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const slogan = resolveHeroSlogan(info, title)
   const subtitle = resolveHeroSubtitle(info, title, slogan, t('comingSoon.subtitleFallback'))
   const factGroups = launchFactGroups(info, (key) => t(key))
-  const splitLayout = factGroups.length > 0
   const countdown = useLaunchCountdown(info.coming_soon_at)
   const finished = countdown.finished && Boolean(info.coming_soon_at)
+  const showInfo = Boolean(info.coming_soon_show_info) && !finished
+  const splitLayout = factGroups.length > 0 && !showInfo
   const roster = finished ? ASSAULT_CHAMPIONS : LAUNCH_CHAMPIONS
   const ticking = useSecondTick(countdown.secs, !finished)
   const cinematic = useLaunchCinematic()
+  const status = useQuery({
+    queryKey: ['server-status'],
+    queryFn: serverApi.status,
+    enabled: showInfo,
+  })
+  const statusLabel = status.isLoading
+    ? t('info.statusChecking')
+    : status.data?.game_online
+      ? t('info.statusOnline')
+      : t('info.statusOffline')
+  const statusClass = status.isLoading ? 'is-checking' : status.data?.game_online ? 'is-online' : 'is-offline'
   const unitLabels = {
     days: t('comingSoon.unitDays'),
     hours: t('comingSoon.unitHours'),
@@ -291,6 +306,7 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   } as const
 
   useEffect(() => {
+    if (showInfo) return undefined
     const html = document.documentElement
     const body = document.body
     const prevHtmlOverflow = html.style.overflow
@@ -301,150 +317,179 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
       html.style.overflow = prevHtmlOverflow
       body.style.overflow = prevBodyOverflow
     }
-  }, [])
+  }, [showInfo])
 
   return (
     <div
-      className={`launch-gate${finished ? ' is-open' : ''}${cinematic.playing ? ' is-entering' : ''}`}
+      className={`launch-gate${finished ? ' is-open' : ''}${cinematic.playing ? ' is-entering' : ''}${showInfo ? ' launch-gate--scrollable' : ''}`}
       data-theme-surface="public"
       data-theme-page="coming-soon"
     >
-      <div className="launch-gate__sky" aria-hidden="true">
-        <img
-          className={`launch-gate__bg launch-gate__bg--waiting${!finished ? ' is-active' : ''}`}
-          src={themeImage('bg/coming-soon.png')}
-          alt=""
-        />
-        <img
-          className={`launch-gate__bg launch-gate__bg--open${finished ? ' is-active' : ''}`}
-          src={themeImage('bg/coming-soon-open.png')}
-          alt=""
-        />
-        <video
-          ref={cinematic.videoRef}
-          className={`launch-gate__bg launch-gate__bg--cinematic${cinematic.playing ? ' is-active' : ''}`}
-          src={themeVideo(LAUNCH_CINEMATIC)}
-          poster={themeImage(finished ? 'bg/coming-soon-open.png' : 'bg/coming-soon.png')}
-          muted
-          playsInline
-          preload="auto"
-          onEnded={cinematic.finish}
-          onError={() => {
-            if (cinematic.playing) cinematic.finish()
-          }}
-        />
-        <span className="launch-gate__rays" />
-        <span className="launch-gate__glow launch-gate__glow--a" />
-        <span className="launch-gate__glow launch-gate__glow--b" />
-        <span className="launch-gate__glow launch-gate__glow--c" />
-        <span className="launch-gate__haze" />
-        <span className="launch-gate__vignette" />
-        <LaunchParticles count={finished ? 96 : 68} />
-      </div>
-
-      <div
-        className={`launch-gate__roster${finished ? ' is-assault' : ''}`}
-        aria-hidden="true"
-        hidden={cinematic.playing}
-      >
-        {roster.map((champion) => (
+      <div className="launch-gate__viewport">
+        <div className="launch-gate__sky" aria-hidden="true">
           <img
-            key={champion.id}
-            className={`launch-gate__champion is-${champion.side}`}
-            src={`${themeImage(champion.file)}?v=${CHAMPION_ART_VERSION}`}
+            className={`launch-gate__bg launch-gate__bg--waiting${!finished ? ' is-active' : ''}`}
+            src={themeImage('bg/coming-soon.png')}
             alt=""
           />
-        ))}
-      </div>
-
-      <div className="launch-gate__mist" aria-hidden="true" hidden={cinematic.playing}>
-        <span className="launch-gate__mist-bank" />
-        <span className="launch-gate__mist-bank is-soft" />
-        <span className="launch-gate__mist-veil" />
-      </div>
-
-      <div className="launch-gate__locale" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
-        <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
-      </div>
-
-      {cinematic.playing ? (
-        <div className="launch-gate__cinematic-ui">
-          <p className="visually-hidden" role="status">
-            {t('comingSoon.enteringLabel')}
-          </p>
-          <Button type="button" variant="secondary" size="sm" className="launch-gate__skip" onClick={cinematic.finish}>
-            {t('comingSoon.skipCinematic')}
-          </Button>
+          <img
+            className={`launch-gate__bg launch-gate__bg--open${finished ? ' is-active' : ''}`}
+            src={themeImage('bg/coming-soon-open.png')}
+            alt=""
+          />
+          <video
+            ref={cinematic.videoRef}
+            className={`launch-gate__bg launch-gate__bg--cinematic${cinematic.playing ? ' is-active' : ''}`}
+            src={themeVideo(LAUNCH_CINEMATIC)}
+            poster={themeImage(finished ? 'bg/coming-soon-open.png' : 'bg/coming-soon.png')}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={cinematic.finish}
+            onError={() => {
+              if (cinematic.playing) cinematic.finish()
+            }}
+          />
+          <span className="launch-gate__rays" />
+          <span className="launch-gate__glow launch-gate__glow--a" />
+          <span className="launch-gate__glow launch-gate__glow--b" />
+          <span className="launch-gate__glow launch-gate__glow--c" />
+          <span className="launch-gate__haze" />
+          <span className="launch-gate__vignette" />
+          <LaunchParticles count={finished ? 96 : 68} />
         </div>
-      ) : null}
 
-      <main className="launch-gate__stage" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
-        <div className={`launch-gate__tableau${finished ? ' is-assault' : ''}${!finished && splitLayout ? ' is-split' : ''}`}>
-          {!finished && splitLayout ? (
-            <aside className="launch-gate__panel launch-gate__dossier" aria-label={t('comingSoon.factsLabel')}>
-              <LaunchPanelChrome />
-              <p className="launch-gate__kicker">{t('comingSoon.factsTitle')}</p>
-              {factGroups.map((group) => (
-                <section key={group.id} className="launch-gate__fact-group">
-                  {group.title ? <h2 className="launch-gate__fact-heading">{group.title}</h2> : null}
-                  <dl className="launch-gate__facts">
-                    {group.facts.map((fact) => (
-                      <div key={fact.key} className="launch-gate__fact">
-                        <dt>{fact.label}</dt>
-                        <dd>{fact.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-              ))}
-              <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
-            </aside>
-          ) : null}
+        <div
+          className={`launch-gate__roster${finished ? ' is-assault' : ''}`}
+          aria-hidden="true"
+          hidden={cinematic.playing}
+        >
+          {roster.map((champion) => (
+            <img
+              key={champion.id}
+              className={`launch-gate__champion is-${champion.side}`}
+              src={`${themeImage(champion.file)}?v=${CHAMPION_ART_VERSION}`}
+              alt=""
+            />
+          ))}
+        </div>
 
-          <div className="launch-gate__panel launch-gate__hero-panel">
-            <LaunchPanelChrome />
+        <div className="launch-gate__mist" aria-hidden="true" hidden={cinematic.playing}>
+          <span className="launch-gate__mist-bank" />
+          <span className="launch-gate__mist-bank is-soft" />
+          <span className="launch-gate__mist-veil" />
+        </div>
 
-            <p className="launch-gate__kicker">
-              {finished ? t('comingSoon.kickerOpen') : t('comingSoon.kickerWaiting')}
+        <div className="launch-gate__locale" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
+          <LanguageSwitcher className="language-switcher launch-gate__language" id="coming-soon-language" />
+        </div>
+
+        {cinematic.playing ? (
+          <div className="launch-gate__cinematic-ui">
+            <p className="visually-hidden" role="status">
+              {t('comingSoon.enteringLabel')}
             </p>
-            <h1 className="launch-gate__title">{title}</h1>
-            {slogan ? <p className="launch-gate__slogan">{slogan}</p> : null}
-            <p className="launch-gate__subtitle">
-              {finished ? t('comingSoon.subtitleOpen') : subtitle}
-            </p>
-
-            {finished ? (
-              <div className="launch-gate__finale" role="status">
-                <span className="launch-gate__finale-ring" aria-hidden="true" />
-                <p className="launch-gate__ready">{t('comingSoon.momentArrived')}</p>
-              </div>
-            ) : (
-              <div className="launch-gate__countdown" aria-label={t('comingSoon.countdownLabel')}>
-                {UNIT_KEYS.map((key, index) => (
-                  <div key={key} className="launch-gate__unit">
-                    {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
-                    <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
-                      <span className="launch-gate__value">{countdown[key]}</span>
-                      <span className="launch-gate__label">{unitLabels[key]}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
-              <ButtonLink to={ENTER_PATH} size="lg" onClick={cinematic.begin}>
-                {t('nav.signIn')}
-              </ButtonLink>
-              <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
-                {t('nav.download')}
-              </ButtonLink>
-            </div>
-
-            <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
+            <Button type="button" variant="secondary" size="sm" className="launch-gate__skip" onClick={cinematic.finish}>
+              {t('comingSoon.skipCinematic')}
+            </Button>
           </div>
-        </div>
-      </main>
+        ) : null}
+
+        <main className="launch-gate__stage" hidden={cinematic.playing} aria-hidden={cinematic.playing || undefined}>
+          <div className={`launch-gate__tableau${finished ? ' is-assault' : ''}${!finished && splitLayout ? ' is-split' : ''}`}>
+            {!finished && splitLayout ? (
+              <aside className="launch-gate__panel launch-gate__dossier" aria-label={t('comingSoon.factsLabel')}>
+                <LaunchPanelChrome />
+                <p className="launch-gate__kicker">{t('comingSoon.factsTitle')}</p>
+                {factGroups.map((group) => (
+                  <section key={group.id} className="launch-gate__fact-group">
+                    {group.title ? <h2 className="launch-gate__fact-heading">{group.title}</h2> : null}
+                    <dl className="launch-gate__facts">
+                      {group.facts.map((fact) => (
+                        <div key={fact.key} className="launch-gate__fact">
+                          <dt>{fact.label}</dt>
+                          <dd>{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                ))}
+                <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
+              </aside>
+            ) : null}
+
+            <div className="launch-gate__panel launch-gate__hero-panel">
+              <LaunchPanelChrome />
+
+              <p className="launch-gate__kicker">
+                {finished ? t('comingSoon.kickerOpen') : t('comingSoon.kickerWaiting')}
+              </p>
+              <h1 className="launch-gate__title">{title}</h1>
+              {slogan ? <p className="launch-gate__slogan">{slogan}</p> : null}
+              <p className="launch-gate__subtitle">
+                {finished ? t('comingSoon.subtitleOpen') : subtitle}
+              </p>
+
+              {finished ? (
+                <div className="launch-gate__finale" role="status">
+                  <span className="launch-gate__finale-ring" aria-hidden="true" />
+                  <p className="launch-gate__ready">{t('comingSoon.momentArrived')}</p>
+                </div>
+              ) : (
+                <div className="launch-gate__countdown" aria-label={t('comingSoon.countdownLabel')}>
+                  {UNIT_KEYS.map((key, index) => (
+                    <div key={key} className="launch-gate__unit">
+                      {index > 0 ? <span className="launch-gate__sep" aria-hidden="true">:</span> : null}
+                      <div className={`launch-gate__block${key === 'secs' && ticking ? ' is-tick' : ''}`}>
+                        <span className="launch-gate__value">{countdown[key]}</span>
+                        <span className="launch-gate__label">{unitLabels[key]}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className={`launch-gate__actions${finished ? ' is-emphasis' : ''}`}>
+                <ButtonLink to={ENTER_PATH} size="lg" onClick={cinematic.begin}>
+                  {t('nav.signIn')}
+                </ButtonLink>
+                <ButtonLink to="/downloads" variant="secondary" size="md" className="launch-gate__secondary">
+                  {t('nav.download')}
+                </ButtonLink>
+              </div>
+
+              <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
+            </div>
+          </div>
+        </main>
+
+        {showInfo && !cinematic.playing ? (
+          <a
+            className="launch-gate__scroll-cue"
+            href="#launch-geral"
+            onClick={(event) => {
+              event.preventDefault()
+              document.getElementById('launch-geral')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }}
+          >
+            <span>{t('comingSoon.scrollForInfo')}</span>
+            <i className="launch-gate__scroll-chevron" aria-hidden="true" />
+          </a>
+        ) : null}
+      </div>
+
+      {showInfo ? (
+        <section className="launch-gate__info info-page" aria-label={t('comingSoon.infoSectionsLabel')}>
+          <div className="container info-content launch-gate__info-inner">
+            <InfoSections
+              data={info}
+              statusLabel={statusLabel}
+              statusClass={statusClass}
+              idPrefix="launch-"
+            />
+          </div>
+        </section>
+      ) : null}
     </div>
   )
 }

@@ -719,6 +719,8 @@
     "enableComingSoonHint": "Exibe a página de lançamento para visitantes.",
     "staffOnly": "Permitir login apenas para staff",
     "staffOnlyHint": "Bloqueia jogadores comuns durante o Coming Soon.",
+    "showInfoOnComingSoon": "Permitir rolagem com Informações",
+    "showInfoOnComingSoonHint": "Enquanto a contagem estiver ativa, a página de lançamento rola e mostra Visão geral, Rates, Encantamento, Recursos, PvP e Como começar.",
     "active": "Ativo",
     "inactive": "Inativo",
     "launchEyebrow": "Lançamento",

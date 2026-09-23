@@ -9,7 +9,7 @@ import { PublicLayout } from './PublicLayout'
 
 vi.mock('../../theme/useDefaultTheme', () => ({ useDefaultTheme: () => undefined }))
 vi.mock('../../theme/ThemeProvider', () => ({ useTheme: () => ({ presentation: null }) }))
-vi.mock('../../services/domain/server.service', () => ({ serverApi: { info: vi.fn() } }))
+vi.mock('../../services/domain/server.service', () => ({ serverApi: { info: vi.fn(), status: vi.fn() } }))
 vi.mock('./SiteNav', () => ({ SiteNav: () => <nav>Site nav</nav> }))
 vi.mock('./SiteFooter', () => ({ SiteFooter: () => <footer>Site footer</footer> }))
 
@@ -40,10 +40,12 @@ beforeEach(() => {
     features: [],
     notes: {},
     coming_soon: true,
+    coming_soon_show_info: false,
     coming_soon_title: 'Lançamento Imperium',
     coming_soon_subtitle: 'Contagem oficial',
     coming_soon_at: '2027-06-01T18:00:00Z',
   } as never)
+  vi.mocked(serverApi.status).mockResolvedValue({ game_online: false, login_online: true, players_online: 0 })
 })
 
 afterEach(() => {
@@ -79,6 +81,7 @@ it('redireciona /home para a home quando o Coming Soon está desligado', async (
     features: [],
     notes: {},
     coming_soon: false,
+    coming_soon_show_info: false,
     coming_soon_title: '',
     coming_soon_subtitle: '',
     coming_soon_at: null,

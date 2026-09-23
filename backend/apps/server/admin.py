@@ -110,6 +110,7 @@ class IndexConfigAdmin(PDLModelAdmin):
                 "fields": (
                     "coming_soon",
                     "staff_only_login",
+                    "coming_soon_show_info",
                     "coming_soon_title",
                     "coming_soon_subtitle",
                     "coming_soon_at",

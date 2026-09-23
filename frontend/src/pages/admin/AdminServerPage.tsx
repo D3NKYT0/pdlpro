@@ -32,6 +32,7 @@ export function AdminServerPage() {
   const [start, setStart] = useState('')
   const [comingSoon, setComingSoon] = useState(false)
   const [staffOnly, setStaffOnly] = useState(false)
+  const [comingSoonShowInfo, setComingSoonShowInfo] = useState(false)
   const [comingSoonTitle, setComingSoonTitle] = useState('')
   const [comingSoonSubtitle, setComingSoonSubtitle] = useState('')
   const [comingSoonAt, setComingSoonAt] = useState('')
@@ -62,6 +63,7 @@ export function AdminServerPage() {
     setStart(data.notes.start || '')
     setComingSoon(data.coming_soon)
     setStaffOnly(data.staff_only_login)
+    setComingSoonShowInfo(Boolean(data.coming_soon_show_info))
     setComingSoonTitle(data.coming_soon_title || data.name || '')
     setComingSoonSubtitle(data.coming_soon_subtitle || '')
     setComingSoonAt(toDatetimeLocal(data.coming_soon_at))
@@ -88,6 +90,7 @@ export function AdminServerPage() {
         notes: { pvp, start },
         coming_soon: comingSoon,
         staff_only_login: staffOnly,
+        coming_soon_show_info: comingSoonShowInfo,
         coming_soon_title: comingSoonTitle,
         coming_soon_subtitle: comingSoonSubtitle,
         coming_soon_at: fromDatetimeLocal(comingSoonAt),
@@ -181,6 +184,20 @@ export function AdminServerPage() {
               <span className="admin-toggle-control" aria-hidden="true"><i /></span>
               <span><strong>{t('server.staffOnly')}</strong><small>{t('server.staffOnlyHint')}</small></span>
               <b>{staffOnly && comingSoon ? t('server.active') : t('server.inactive')}</b>
+            </label>
+            <label className={`admin-toggle${!comingSoon ? ' is-disabled' : ''}`}>
+              <input
+                type="checkbox"
+                checked={comingSoonShowInfo}
+                disabled={!comingSoon}
+                onChange={(e) => setComingSoonShowInfo(e.target.checked)}
+              />
+              <span className="admin-toggle-control" aria-hidden="true"><i /></span>
+              <span>
+                <strong>{t('server.showInfoOnComingSoon')}</strong>
+                <small>{t('server.showInfoOnComingSoonHint')}</small>
+              </span>
+              <b>{comingSoonShowInfo && comingSoon ? t('server.active') : t('server.inactive')}</b>
             </label>
           </div>
         </Card>
