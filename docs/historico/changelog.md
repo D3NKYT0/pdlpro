@@ -8,6 +8,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não publicado]
 
+## [2.5.7] - 2026-09-23
+
+Coming Soon com personagens laterais e redes configuráveis, catálogo de
+20 templates públicos clássicos, seletor de template no Classic e nos
+temas instalados, e Gemwright no Classic com casco de portal,
+consolidados em **23 de setembro de 2026**.
+
 ### Adicionado
 
 - Na **Coming Soon**, a staff liga/desliga os personagens laterais e escolhe
