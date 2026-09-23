@@ -100,6 +100,8 @@ it('no tema saga a home clássica fica só com o fundo, sem o guardião flutuant
 
   expect(document.querySelector('.home-features .character')).not.toBeInTheDocument()
   expect(document.querySelector('.f .character')).not.toBeInTheDocument()
+  expect(document.querySelector('.trailer-section')?.getAttribute('style')).toContain('home/cinematic-clean.jpg')
+  expect(document.querySelector('.trailer-section')?.getAttribute('style')).not.toContain('cinematic-elf')
 })
 
 it('aplica cenários próprios às demais alas da página inicial', async () => {

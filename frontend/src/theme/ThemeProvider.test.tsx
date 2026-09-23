@@ -40,10 +40,10 @@ afterEach(() => {
 
 it('versiona a folha instalada para não reusar CSS antigo no mesmo URL', () => {
   expect(installedStylesheetHref('/media/themes/saga/theme.css', '1.0.0')).toBe(
-    '/media/themes/saga/theme.css?v=1.0.0.bg7',
+    '/media/themes/saga/theme.css?v=1.0.0.bg11',
   )
   expect(installedStylesheetHref('/media/themes/saga/theme.css?x=1', '  ')).toBe(
-    '/media/themes/saga/theme.css?x=1&v=1.bg7',
+    '/media/themes/saga/theme.css?x=1&v=1.bg11',
   )
 })
 
@@ -96,7 +96,7 @@ it('carrega CSS e resolve somente os assets declarados pelo pacote', async () =>
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
   expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).toHaveAttribute(
     'href',
-    '/media/themes/valorem/theme.css?v=1.0.0.bg7',
+    '/media/themes/valorem/theme.css?v=1.0.0.bg11',
   )
   fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   expect(await screen.findByText(/Valorem/)).toHaveTextContent('/media/themes/valorem/images/logo.png')

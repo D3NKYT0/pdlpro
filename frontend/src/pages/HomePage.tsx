@@ -333,7 +333,7 @@ function DefaultHomePage() {
         </div>
       </div>
 
-      <section className="trailer-section" style={sectionArt('home/cinematic-v2.webp')}>
+      <section className="trailer-section" style={sectionArt(theme.id === 'saga' ? 'home/cinematic-clean.jpg' : 'home/cinematic-v2.webp')}>
         <div className="title container">
           <span>
             <img src={themeImage('icons/text.png')} alt="" />
