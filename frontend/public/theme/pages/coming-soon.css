@@ -76,9 +76,10 @@
 
 .launch-gate__bg--cinematic {
   z-index: 1;
-  transform: none;
+  /* Mesmo enquadramento da imagem de fundo (cover + foco + leve zoom). */
+  object-position: center 42%;
+  transform: scale(1.06);
   filter: none;
-  object-position: center;
 }
 
 .launch-gate.is-entering .launch-gate__bg--waiting.is-active,
