@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '../components/i18n/LanguageSwitcher'
 import { InfoSections } from '../components/info/InfoSections'
+import { DiscordIcon, FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../components/BrandIcons'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { serverApi } from '../services/api'
 import type { ApiServerInfo } from '../services/types'
@@ -283,7 +284,15 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
   const countdown = useLaunchCountdown(info.coming_soon_at)
   const finished = countdown.finished && Boolean(info.coming_soon_at)
   const showInfo = Boolean(info.coming_soon_show_info) && !finished
+  const showChampions = info.coming_soon_show_champions !== false
   const splitLayout = factGroups.length > 0 && !showInfo
+  const socialLinks = [
+    { id: 'whatsapp', href: info.whatsapp_url?.trim(), label: t('comingSoon.socialWhatsapp'), Icon: WhatsAppIcon },
+    { id: 'facebook', href: info.facebook_url?.trim(), label: t('comingSoon.socialFacebook'), Icon: FacebookIcon },
+    { id: 'instagram', href: info.instagram_url?.trim(), label: t('comingSoon.socialInstagram'), Icon: InstagramIcon },
+    { id: 'youtube', href: info.youtube_url?.trim(), label: t('comingSoon.socialYoutube'), Icon: YouTubeIcon },
+    { id: 'discord', href: info.discord_url?.trim(), label: t('comingSoon.socialDiscord'), Icon: DiscordIcon },
+  ].filter((item): item is typeof item & { href: string } => Boolean(item.href))
   const roster = finished ? ASSAULT_CHAMPIONS : LAUNCH_CHAMPIONS
   const ticking = useSecondTick(countdown.secs, !finished)
   const cinematic = useLaunchCinematic()
@@ -359,20 +368,22 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
           <LaunchParticles count={finished ? 96 : 68} />
         </div>
 
-        <div
-          className={`launch-gate__roster${finished ? ' is-assault' : ''}`}
-          aria-hidden="true"
-          hidden={cinematic.playing}
-        >
-          {roster.map((champion) => (
-            <img
-              key={champion.id}
-              className={`launch-gate__champion is-${champion.side}`}
-              src={`${themeImage(champion.file)}?v=${CHAMPION_ART_VERSION}`}
-              alt=""
-            />
-          ))}
-        </div>
+        {showChampions ? (
+          <div
+            className={`launch-gate__roster${finished ? ' is-assault' : ''}`}
+            aria-hidden="true"
+            hidden={cinematic.playing}
+          >
+            {roster.map((champion) => (
+              <img
+                key={champion.id}
+                className={`launch-gate__champion is-${champion.side}`}
+                src={`${themeImage(champion.file)}?v=${CHAMPION_ART_VERSION}`}
+                alt=""
+              />
+            ))}
+          </div>
+        ) : null}
 
         <div className="launch-gate__mist" aria-hidden="true" hidden={cinematic.playing}>
           <span className="launch-gate__mist-bank" />
@@ -461,6 +472,16 @@ export function ComingSoonPage({ info }: { info: ApiServerInfo }) {
               <span className="launch-gate__panel-ornament is-bottom" aria-hidden="true" />
             </div>
           </div>
+
+          {socialLinks.length > 0 ? (
+            <div className="launch-gate__socials" role="navigation" aria-label={t('comingSoon.socialsLabel')}>
+              {socialLinks.map(({ id, href, label, Icon }) => (
+                <a key={id} className="launch-gate__social" href={href} target="_blank" rel="noreferrer" aria-label={label} title={label}>
+                  <Icon />
+                </a>
+              ))}
+            </div>
+          ) : null}
         </main>
 
         {showInfo && !cinematic.playing ? (

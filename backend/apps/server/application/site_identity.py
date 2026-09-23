@@ -48,14 +48,20 @@ def overlay_list(*lists: Any) -> list[str]:
     return chosen
 
 
-def optional_https_url(value: Any, _field: str = "") -> str:
+def optional_https_url(value: Any, field: str = "") -> str:
     text = str(value or "").strip()
     if not text:
         return ""
     if len(text) > 300 or not HTTPS_URL_RE.fullmatch(text):
-        raise ValidationDomainError(_("A URL do Discord precisa ser HTTPS."))
+        label = {
+            "discord_url": _("A URL do Discord precisa ser HTTPS."),
+            "whatsapp_url": _("A URL do WhatsApp precisa ser HTTPS."),
+            "facebook_url": _("A URL do Facebook precisa ser HTTPS."),
+            "instagram_url": _("A URL do Instagram precisa ser HTTPS."),
+            "youtube_url": _("A URL do YouTube precisa ser HTTPS."),
+        }.get(field, _("A URL precisa ser HTTPS."))
+        raise ValidationDomainError(label)
     return text
-
 
 def optional_youtube_id(value: Any, _field: str = "") -> str:
     text = str(value or "").strip()

@@ -15,6 +15,7 @@ export interface ApiPanelSettings {
   coming_soon: boolean
   staff_only_login: boolean
   coming_soon_show_info: boolean
+  coming_soon_show_champions: boolean
   coming_soon_title: string
   coming_soon_subtitle: string
   coming_soon_at: string | null
@@ -22,6 +23,10 @@ export interface ApiPanelSettings {
   seo_description: string
   og_image: string
   discord_url: string
+  whatsapp_url: string
+  facebook_url: string
+  instagram_url: string
+  youtube_url: string
   trailer_youtube_id: string
   is_active: boolean
 }

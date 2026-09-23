@@ -28,6 +28,7 @@ const info: ApiServerInfo = {
   notes: { pvp: 'Combate livre', start: 'Crie a conta' },
   coming_soon: true,
   coming_soon_show_info: false,
+  coming_soon_show_champions: true,
   coming_soon_title: 'O portal se abre',
   coming_soon_subtitle: 'Prepare suas armas',
   coming_soon_at: '2027-01-03T00:00:00Z',
@@ -373,4 +374,54 @@ it('com informações habilitadas libera rolagem e mostra as seções da /info',
   expect(screen.getByRole('heading', { name: 'Encantamento' })).toBeVisible()
   expect(screen.getByText('PvP e guerras de castelo')).toBeVisible()
   expect(container.querySelector('.launch-gate__dossier')).toBeNull()
+})
+
+it('esconde os personagens laterais quando o admin desliga', () => {
+  const { container } = mount(
+    <ComingSoonPage info={{ ...info, coming_soon_show_champions: false }} />,
+  )
+
+  expect(container.querySelector('.launch-gate__roster')).toBeNull()
+  expect(container.querySelector('.launch-gate__champion')).toBeNull()
+})
+
+it('mostra só as redes com URL preenchida, lado a lado abaixo do contador', () => {
+  const { container } = mount(
+    <ComingSoonPage
+      info={{
+        ...info,
+        whatsapp_url: 'https://wa.me/5511999999999',
+        facebook_url: '',
+        instagram_url: 'https://instagram.com/theone',
+        youtube_url: 'https://youtube.com/@theone',
+        discord_url: 'https://discord.gg/theone',
+      }}
+    />,
+  )
+
+  const socials = container.querySelector('.launch-gate__socials')
+  expect(socials).not.toBeNull()
+  expect(screen.getByRole('navigation', { name: 'Redes sociais' })).toBe(socials)
+  expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute(
+    'href',
+    'https://wa.me/5511999999999',
+  )
+  expect(screen.getByRole('link', { name: 'Instagram' })).toHaveAttribute(
+    'href',
+    'https://instagram.com/theone',
+  )
+  expect(screen.getByRole('link', { name: 'YouTube' })).toHaveAttribute(
+    'href',
+    'https://youtube.com/@theone',
+  )
+  expect(screen.getByRole('link', { name: 'Discord' })).toHaveAttribute(
+    'href',
+    'https://discord.gg/theone',
+  )
+  expect(screen.queryByRole('link', { name: 'Facebook' })).not.toBeInTheDocument()
+})
+
+it('não renderiza a barra de redes quando todas as URLs estão vazias', () => {
+  const { container } = mount(<ComingSoonPage info={info} />)
+  expect(container.querySelector('.launch-gate__socials')).toBeNull()
 })

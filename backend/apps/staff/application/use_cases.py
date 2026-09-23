@@ -51,6 +51,7 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "coming_soon": bool(row.coming_soon) if row else False,
         "staff_only_login": bool(row.staff_only_login) if row else False,
         "coming_soon_show_info": bool(getattr(row, "coming_soon_show_info", False)) if row else False,
+        "coming_soon_show_champions": bool(getattr(row, "coming_soon_show_champions", True)) if row else True,
         "coming_soon_title": (row.coming_soon_title if row else "") or "Em breve",
         "coming_soon_subtitle": (row.coming_soon_subtitle if row else "") or "",
         "coming_soon_at": info.coming_soon_at,
@@ -58,6 +59,10 @@ def _panel_defaults(server_info: GetServerInfoUseCase, index_config: IIndexConfi
         "seo_description": str(getattr(row, "seo_description", "") or "") if row else "",
         "og_image": str(getattr(row, "og_image", "") or "") if row else "",
         "discord_url": str(getattr(row, "discord_url", "") or "") if row else "",
+        "whatsapp_url": str(getattr(row, "whatsapp_url", "") or "") if row else "",
+        "facebook_url": str(getattr(row, "facebook_url", "") or "") if row else "",
+        "instagram_url": str(getattr(row, "instagram_url", "") or "") if row else "",
+        "youtube_url": str(getattr(row, "youtube_url", "") or "") if row else "",
         "trailer_youtube_id": str(getattr(row, "trailer_youtube_id", "") or "") if row else "",
         "is_active": True,
     }
@@ -196,6 +201,8 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.staff_only_login = bool(data.get("staff_only_login"))
         if "coming_soon_show_info" in data:
             row.coming_soon_show_info = bool(data.get("coming_soon_show_info"))
+        if "coming_soon_show_champions" in data:
+            row.coming_soon_show_champions = bool(data.get("coming_soon_show_champions"))
         if "coming_soon_title" in data:
             row.coming_soon_title = str(data.get("coming_soon_title") or "").strip()[:200]
         if "coming_soon_subtitle" in data:
@@ -210,6 +217,14 @@ class UpdatePanelSettingsUseCase(UseCase[dict, dict]):
             row.og_image = str(data.get("og_image") or "").strip()[:300]
         if "discord_url" in data:
             row.discord_url = optional_https_url(data.get("discord_url"), "discord_url")
+        if "whatsapp_url" in data:
+            row.whatsapp_url = optional_https_url(data.get("whatsapp_url"), "whatsapp_url")
+        if "facebook_url" in data:
+            row.facebook_url = optional_https_url(data.get("facebook_url"), "facebook_url")
+        if "instagram_url" in data:
+            row.instagram_url = optional_https_url(data.get("instagram_url"), "instagram_url")
+        if "youtube_url" in data:
+            row.youtube_url = optional_https_url(data.get("youtube_url"), "youtube_url")
         if "trailer_youtube_id" in data:
             row.trailer_youtube_id = optional_youtube_id(data.get("trailer_youtube_id"), "trailer_youtube_id")
         if row.coming_soon and row.coming_soon_at is None:

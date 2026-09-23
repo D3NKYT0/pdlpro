@@ -127,6 +127,12 @@
     "factsEnchant": "Encantamento",
     "scrollForInfo": "Role para ver as informações",
     "infoSectionsLabel": "Informações do servidor",
+    "socialsLabel": "Redes sociais",
+    "socialWhatsapp": "WhatsApp",
+    "socialFacebook": "Facebook",
+    "socialInstagram": "Instagram",
+    "socialYoutube": "YouTube",
+    "socialDiscord": "Discord",
     "fact": {
       "chronicle": "Crônica",
       "maxLevel": "Nível",

@@ -69,6 +69,7 @@ beforeEach(() => {
     coming_soon: false,
     staff_only_login: false,
     coming_soon_show_info: false,
+    coming_soon_show_champions: true,
     coming_soon_title: 'Em breve',
     coming_soon_subtitle: '',
     coming_soon_at: null,
@@ -76,6 +77,10 @@ beforeEach(() => {
     seo_description: '',
     og_image: '',
     discord_url: '',
+    whatsapp_url: '',
+    facebook_url: '',
+    instagram_url: '',
+    youtube_url: '',
     trailer_youtube_id: '',
   } as any)
 })
@@ -332,6 +337,9 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
   await user.click(screen.getByRole('checkbox', { name: /Ativar Coming Soon/ }))
   await user.click(restricted)
   await user.click(screen.getByRole('checkbox', { name: /Permitir rolagem com Informações/ }))
+  await user.click(screen.getByRole('checkbox', { name: /Mostrar personagens laterais/ }))
+  await user.type(screen.getByLabelText(/URL do WhatsApp/), 'https://wa.me/5511999999999')
+  await user.type(screen.getByLabelText(/URL do Discord/), 'https://discord.gg/theone')
   await user.clear(screen.getByLabelText(/Título do lançamento/))
   await user.type(screen.getByLabelText(/Título do lançamento/), 'Abertura do reino')
   await user.type(screen.getByLabelText(/Data e hora do lançamento/), '2027-01-03T18:00')
@@ -342,11 +350,16 @@ it('servidor normaliza recursos e habilita restrição de login durante coming s
     coming_soon: true,
     staff_only_login: true,
     coming_soon_show_info: true,
+    coming_soon_show_champions: false,
     max_level: 80,
     coming_soon_title: 'Abertura do reino',
     coming_soon_at: expect.stringMatching(/^2027-01-03T/),
     seo_title: '',
-    discord_url: '',
+    discord_url: 'https://discord.gg/theone',
+    whatsapp_url: 'https://wa.me/5511999999999',
+    facebook_url: '',
+    instagram_url: '',
+    youtube_url: '',
     trailer_youtube_id: '',
   }))
   expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')

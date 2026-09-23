@@ -52,6 +52,7 @@ def test_staff_can_update_panel_and_services(api, staff):
             "notes": {"pvp": "PvP livre", "start": "Crie a conta"},
             "coming_soon": True,
             "coming_soon_show_info": True,
+            "coming_soon_show_champions": False,
             "coming_soon_title": "Abertura Imperium",
             "coming_soon_subtitle": "Contagem oficial",
             "coming_soon_at": "2027-01-03T18:00:00Z",
@@ -59,6 +60,10 @@ def test_staff_can_update_panel_and_services(api, staff):
             "seo_title": "Imperium SEO",
             "seo_description": "Reino de testes",
             "discord_url": "https://discord.gg/imperium",
+            "whatsapp_url": "https://wa.me/5511999999999",
+            "facebook_url": "https://facebook.com/imperium",
+            "instagram_url": "https://instagram.com/imperium",
+            "youtube_url": "https://youtube.com/@imperium",
             "trailer_youtube_id": "abcdefghijk",
         },
         format="json",
@@ -68,19 +73,29 @@ def test_staff_can_update_panel_and_services(api, staff):
     assert saved.data["slogan"] == "Reino"
     assert saved.data["coming_soon"] is True
     assert saved.data["coming_soon_show_info"] is True
+    assert saved.data["coming_soon_show_champions"] is False
     assert saved.data["coming_soon_title"] == "Abertura Imperium"
     assert saved.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
     assert saved.data["seo_title"] == "Imperium SEO"
     assert saved.data["discord_url"] == "https://discord.gg/imperium"
+    assert saved.data["whatsapp_url"] == "https://wa.me/5511999999999"
+    assert saved.data["facebook_url"] == "https://facebook.com/imperium"
+    assert saved.data["instagram_url"] == "https://instagram.com/imperium"
+    assert saved.data["youtube_url"] == "https://youtube.com/@imperium"
     public = api.get("/api/v1/public/server/info/")
     assert public.data["name"] == "Imperium"
     assert public.data["slogan"] == "Reino"
     assert public.data["rates"]["xp"] == "x10"
     assert public.data["coming_soon"] is True
     assert public.data["coming_soon_show_info"] is True
+    assert public.data["coming_soon_show_champions"] is False
     assert public.data["coming_soon_title"] == "Abertura Imperium"
     assert public.data["seo_title"] == "Imperium SEO"
     assert public.data["discord_url"] == "https://discord.gg/imperium"
+    assert public.data["whatsapp_url"] == "https://wa.me/5511999999999"
+    assert public.data["facebook_url"] == "https://facebook.com/imperium"
+    assert public.data["instagram_url"] == "https://instagram.com/imperium"
+    assert public.data["youtube_url"] == "https://youtube.com/@imperium"
 
     prices = api.put(
         "/api/v1/staff/services/",

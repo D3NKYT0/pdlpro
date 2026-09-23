@@ -127,6 +127,12 @@
     "factsEnchant": "Enchant",
     "scrollForInfo": "Scroll for server information",
     "infoSectionsLabel": "Server information",
+    "socialsLabel": "Social networks",
+    "socialWhatsapp": "WhatsApp",
+    "socialFacebook": "Facebook",
+    "socialInstagram": "Instagram",
+    "socialYoutube": "YouTube",
+    "socialDiscord": "Discord",
     "fact": {
       "chronicle": "Chronicle",
       "maxLevel": "Level",

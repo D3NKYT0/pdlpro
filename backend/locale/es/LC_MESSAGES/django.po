@@ -5243,6 +5243,15 @@ msgstr "Vencer al jefe entrega el premio y reinicia el arma en el encantamiento 
 msgid "A URL do Discord precisa ser HTTPS."
 msgstr "La URL de Discord debe usar HTTPS."
 
+msgid "A URL do WhatsApp precisa ser HTTPS."
+msgstr "La URL de WhatsApp debe usar HTTPS."
+
+msgid "A URL do Facebook precisa ser HTTPS."
+msgstr "La URL de Facebook debe usar HTTPS."
+
+msgid "A URL do Instagram precisa ser HTTPS."
+msgstr "La URL de Instagram debe usar HTTPS."
+
 msgid "O trailer precisa ser o identificador de 11 caracteres do YouTube."
 msgstr "El tráiler debe ser el identificador de 11 caracteres de YouTube."
 
@@ -5258,6 +5267,18 @@ msgstr "Imagen Open Graph"
 msgid "URL do Discord"
 msgstr "URL de Discord"
 
+msgid "URL do WhatsApp"
+msgstr "URL de WhatsApp"
+
+msgid "URL do Facebook"
+msgstr "URL de Facebook"
+
+msgid "URL do Instagram"
+msgstr "URL de Instagram"
+
+msgid "URL do YouTube"
+msgstr "URL de YouTube"
+
 msgid "ID do trailer no YouTube"
 msgstr "ID del tráiler en YouTube"
 
@@ -5266,6 +5287,15 @@ msgstr "Mostrar información en Coming Soon"
 
 msgid "Permite rolar a página de lançamento e exibe as seções públicas de Informações."
 msgstr "Permite desplazar la página de lanzamiento y muestra las secciones públicas de Información."
+
+msgid "Mostrar personagens na Coming Soon"
+msgstr "Mostrar personajes en Coming Soon"
+
+msgid "Exibe os personagens laterais na página de lançamento."
+msgstr "Muestra los personajes laterales en la página de lanzamiento."
+
+msgid "A URL do YouTube precisa ser HTTPS."
+msgstr "La URL de YouTube debe usar HTTPS."
 
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

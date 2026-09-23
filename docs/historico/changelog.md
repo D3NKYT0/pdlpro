@@ -10,6 +10,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Na **Coming Soon**, a staff liga/desliga os personagens laterais e escolhe
+  quais redes sociais (WhatsApp, Facebook, Instagram, YouTube, Discord) aparecem abaixo
+  do contador — só URLs HTTPS preenchidas entram na barra, lado a lado.
 - Catálogo de **20 templates públicos clássicos** (Vesperlyn, Gemwright,
   Ironspine, Ashen Ledger, Warhorn, Ironpatch, Laurelwake, Meridian, Twinwake,
   Cartograph, Classing, Parchment, Obsidian, Hearthspire, Goldleaf, Lampmarket,

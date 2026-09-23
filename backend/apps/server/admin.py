@@ -102,7 +102,7 @@ class IndexConfigAdmin(PDLModelAdmin):
     list_display = ("name", "chronicle", "coming_soon", "coming_soon_at", "is_active", "updated_at")
     fieldsets = (
         (_("Identidade"), {"fields": ("name", "slogan", "description", "chronicle", "is_active")}),
-        (_("SEO e redes"), {"fields": ("seo_title", "seo_description", "og_image", "discord_url", "trailer_youtube_id")}),
+        (_("SEO e redes"), {"fields": ("seo_title", "seo_description", "og_image", "discord_url", "whatsapp_url", "facebook_url", "instagram_url", "youtube_url", "trailer_youtube_id")}),
         (_("Rates"), {"fields": ("rates", "enchant", "max_level", "features", "notes")}),
         (
             _("Coming Soon"),
@@ -111,6 +111,7 @@ class IndexConfigAdmin(PDLModelAdmin):
                     "coming_soon",
                     "staff_only_login",
                     "coming_soon_show_info",
+                    "coming_soon_show_champions",
                     "coming_soon_title",
                     "coming_soon_subtitle",
                     "coming_soon_at",

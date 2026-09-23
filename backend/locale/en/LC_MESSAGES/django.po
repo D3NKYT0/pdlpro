@@ -5136,6 +5136,15 @@ msgstr "Beating the boss grants the prize and resets the weapon at max enchant."
 msgid "A URL do Discord precisa ser HTTPS."
 msgstr "The Discord URL must use HTTPS."
 
+msgid "A URL do WhatsApp precisa ser HTTPS."
+msgstr "The WhatsApp URL must use HTTPS."
+
+msgid "A URL do Facebook precisa ser HTTPS."
+msgstr "The Facebook URL must use HTTPS."
+
+msgid "A URL do Instagram precisa ser HTTPS."
+msgstr "The Instagram URL must use HTTPS."
+
 msgid "O trailer precisa ser o identificador de 11 caracteres do YouTube."
 msgstr "The trailer must be the 11-character YouTube identifier."
 
@@ -5151,6 +5160,18 @@ msgstr "Open Graph image"
 msgid "URL do Discord"
 msgstr "Discord URL"
 
+msgid "URL do WhatsApp"
+msgstr "WhatsApp URL"
+
+msgid "URL do Facebook"
+msgstr "Facebook URL"
+
+msgid "URL do Instagram"
+msgstr "Instagram URL"
+
+msgid "URL do YouTube"
+msgstr "YouTube URL"
+
 msgid "ID do trailer no YouTube"
 msgstr "YouTube trailer ID"
 
@@ -5159,6 +5180,15 @@ msgstr "Show information on Coming Soon"
 
 msgid "Permite rolar a página de lançamento e exibe as seções públicas de Informações."
 msgstr "Allows scrolling the launch page and shows the public Information sections."
+
+msgid "Mostrar personagens na Coming Soon"
+msgstr "Show characters on Coming Soon"
+
+msgid "Exibe os personagens laterais na página de lançamento."
+msgstr "Shows the side characters on the launch page."
+
+msgid "A URL do YouTube precisa ser HTTPS."
+msgstr "The YouTube URL must use HTTPS."
 
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"

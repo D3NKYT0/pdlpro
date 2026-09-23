@@ -171,6 +171,7 @@ export function InfoPage() {
               notes: {},
               coming_soon: false,
               coming_soon_show_info: false,
+              coming_soon_show_champions: true,
               coming_soon_title: '',
               coming_soon_subtitle: '',
               coming_soon_at: null,

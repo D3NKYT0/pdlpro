@@ -36,6 +36,7 @@ class ServerInfo:
     notes: dict[str, str]
     coming_soon: bool = False
     coming_soon_show_info: bool = False
+    coming_soon_show_champions: bool = True
     coming_soon_title: str = ""
     coming_soon_subtitle: str = ""
     coming_soon_at: str | None = None
@@ -45,6 +46,10 @@ class ServerInfo:
     og_description: str = ""
     og_image: str = ""
     discord_url: str = ""
+    whatsapp_url: str = ""
+    facebook_url: str = ""
+    instagram_url: str = ""
+    youtube_url: str = ""
     trailer_youtube_id: str = ""
     site_name_customized: bool = False
     site_description_customized: bool = False

@@ -33,6 +33,7 @@ export function AdminServerPage() {
   const [comingSoon, setComingSoon] = useState(false)
   const [staffOnly, setStaffOnly] = useState(false)
   const [comingSoonShowInfo, setComingSoonShowInfo] = useState(false)
+  const [comingSoonShowChampions, setComingSoonShowChampions] = useState(true)
   const [comingSoonTitle, setComingSoonTitle] = useState('')
   const [comingSoonSubtitle, setComingSoonSubtitle] = useState('')
   const [comingSoonAt, setComingSoonAt] = useState('')
@@ -40,6 +41,10 @@ export function AdminServerPage() {
   const [seoDescription, setSeoDescription] = useState('')
   const [ogImage, setOgImage] = useState('')
   const [discordUrl, setDiscordUrl] = useState('')
+  const [whatsappUrl, setWhatsappUrl] = useState('')
+  const [facebookUrl, setFacebookUrl] = useState('')
+  const [instagramUrl, setInstagramUrl] = useState('')
+  const [youtubeUrl, setYoutubeUrl] = useState('')
   const [trailerYoutubeId, setTrailerYoutubeId] = useState('')
   const [saving, setSaving] = useState(false)
 
@@ -64,6 +69,7 @@ export function AdminServerPage() {
     setComingSoon(data.coming_soon)
     setStaffOnly(data.staff_only_login)
     setComingSoonShowInfo(Boolean(data.coming_soon_show_info))
+    setComingSoonShowChampions(data.coming_soon_show_champions !== false)
     setComingSoonTitle(data.coming_soon_title || data.name || '')
     setComingSoonSubtitle(data.coming_soon_subtitle || '')
     setComingSoonAt(toDatetimeLocal(data.coming_soon_at))
@@ -71,6 +77,10 @@ export function AdminServerPage() {
     setSeoDescription(data.seo_description || '')
     setOgImage(data.og_image || '')
     setDiscordUrl(data.discord_url || '')
+    setWhatsappUrl(data.whatsapp_url || '')
+    setFacebookUrl(data.facebook_url || '')
+    setInstagramUrl(data.instagram_url || '')
+    setYoutubeUrl(data.youtube_url || '')
     setTrailerYoutubeId(data.trailer_youtube_id || '')
   }, [panel.data])
 
@@ -91,6 +101,7 @@ export function AdminServerPage() {
         coming_soon: comingSoon,
         staff_only_login: staffOnly,
         coming_soon_show_info: comingSoonShowInfo,
+        coming_soon_show_champions: comingSoonShowChampions,
         coming_soon_title: comingSoonTitle,
         coming_soon_subtitle: comingSoonSubtitle,
         coming_soon_at: fromDatetimeLocal(comingSoonAt),
@@ -98,6 +109,10 @@ export function AdminServerPage() {
         seo_description: seoDescription,
         og_image: ogImage,
         discord_url: discordUrl,
+        whatsapp_url: whatsappUrl,
+        facebook_url: facebookUrl,
+        instagram_url: instagramUrl,
+        youtube_url: youtubeUrl,
         trailer_youtube_id: trailerYoutubeId,
       })
       toast.success(t('server.saved'))
@@ -134,10 +149,15 @@ export function AdminServerPage() {
             <Field>{t('server.ogImage')}<input value={ogImage} onChange={(e) => setOgImage(e.target.value)} placeholder={t('server.ogImagePlaceholder')} /></Field>
           </div>
           <Field>{t('server.seoDescriptionField')}<textarea value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} rows={3} placeholder={description} /></Field>
+          <p className="muted" style={{ margin: '0 0 12px' }}>{t('server.socialHint')}</p>
           <div className="account-form-fields">
+            <Field>{t('server.whatsappUrl')}<input value={whatsappUrl} onChange={(e) => setWhatsappUrl(e.target.value)} placeholder="https://wa.me/55..." /></Field>
+            <Field>{t('server.facebookUrl')}<input value={facebookUrl} onChange={(e) => setFacebookUrl(e.target.value)} placeholder="https://facebook.com/..." /></Field>
+            <Field>{t('server.instagramUrl')}<input value={instagramUrl} onChange={(e) => setInstagramUrl(e.target.value)} placeholder="https://instagram.com/..." /></Field>
+            <Field>{t('server.youtubeUrl')}<input value={youtubeUrl} onChange={(e) => setYoutubeUrl(e.target.value)} placeholder="https://youtube.com/@..." /></Field>
             <Field>{t('server.discordUrl')}<input value={discordUrl} onChange={(e) => setDiscordUrl(e.target.value)} placeholder="https://discord.gg/..." /></Field>
-            <Field>{t('server.trailerYoutubeId')}<input value={trailerYoutubeId} onChange={(e) => setTrailerYoutubeId(e.target.value)} placeholder="Mm19W1PKMFQ" /></Field>
           </div>
+          <Field>{t('server.trailerYoutubeId')}<input value={trailerYoutubeId} onChange={(e) => setTrailerYoutubeId(e.target.value)} placeholder="Mm19W1PKMFQ" /></Field>
         </Card>
 
         <div className="admin-server-columns">
@@ -198,6 +218,20 @@ export function AdminServerPage() {
                 <small>{t('server.showInfoOnComingSoonHint')}</small>
               </span>
               <b>{comingSoonShowInfo && comingSoon ? t('server.active') : t('server.inactive')}</b>
+            </label>
+            <label className={`admin-toggle${!comingSoon ? ' is-disabled' : ''}`}>
+              <input
+                type="checkbox"
+                checked={comingSoonShowChampions}
+                disabled={!comingSoon}
+                onChange={(e) => setComingSoonShowChampions(e.target.checked)}
+              />
+              <span className="admin-toggle-control" aria-hidden="true"><i /></span>
+              <span>
+                <strong>{t('server.showChampionsOnComingSoon')}</strong>
+                <small>{t('server.showChampionsOnComingSoonHint')}</small>
+              </span>
+              <b>{comingSoonShowChampions && comingSoon ? t('server.active') : t('server.inactive')}</b>
             </label>
           </div>
         </Card>

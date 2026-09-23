@@ -18,6 +18,11 @@ def test_public_server_info_is_classic_lineage_page():
     assert response.data["features"]
     assert response.data["coming_soon"] is False
     assert response.data["coming_soon_show_info"] is False
+    assert response.data["coming_soon_show_champions"] is True
+    assert response.data["whatsapp_url"] == ""
+    assert response.data["facebook_url"] == ""
+    assert response.data["instagram_url"] == ""
+    assert response.data["youtube_url"] == ""
     assert response.data["coming_soon_at"] is None
 
 
@@ -27,18 +32,28 @@ def test_public_server_info_exposes_coming_soon_launch_fields():
         name="Imperium",
         coming_soon=True,
         coming_soon_show_info=True,
+        coming_soon_show_champions=False,
         coming_soon_title="O portal se abre",
         coming_soon_subtitle="Prepare-se",
         coming_soon_at=datetime(2027, 1, 3, 18, 0, tzinfo=UTC),
+        whatsapp_url="https://wa.me/5511999999999",
+        facebook_url="https://facebook.com/imperium",
+        instagram_url="https://instagram.com/imperium",
+        youtube_url="https://youtube.com/@imperium",
         is_active=True,
     )
     response = APIClient().get("/api/v1/public/server/info/")
     assert response.status_code == 200
     assert response.data["coming_soon"] is True
     assert response.data["coming_soon_show_info"] is True
+    assert response.data["coming_soon_show_champions"] is False
     assert response.data["coming_soon_title"] == "O portal se abre"
     assert response.data["coming_soon_subtitle"] == "Prepare-se"
     assert response.data["coming_soon_at"].startswith("2027-01-03T18:00:00")
+    assert response.data["whatsapp_url"] == "https://wa.me/5511999999999"
+    assert response.data["facebook_url"] == "https://facebook.com/imperium"
+    assert response.data["instagram_url"] == "https://instagram.com/imperium"
+    assert response.data["youtube_url"] == "https://youtube.com/@imperium"
     assert response.data["name"] == "Imperium"
     assert response.data["slogan"] == ""
 
