@@ -591,10 +591,12 @@ nav ul li a {
 }
 
 .pdl-emblem-symbol {
-  position: relative;
+  position: absolute;
   z-index: 2;
+  inset: 0;
   width: 184px;
   height: 184px;
+  margin: auto;
   object-fit: contain;
 }
 
