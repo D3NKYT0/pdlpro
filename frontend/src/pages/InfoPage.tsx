@@ -175,6 +175,9 @@ export function InfoPage() {
               coming_soon_title: '',
               coming_soon_subtitle: '',
               coming_soon_at: null,
+              staff_only_login: false,
+              allow_registration: true,
+              allow_l2_registration: true,
             }}
             statusLabel={statusLabel}
             statusClass={statusClass}

@@ -1,7 +1,7 @@
 {
   "name": "pdl-pro-frontend",
   "private": true,
-  "version": "2.5.7",
+  "version": "2.5.8",
   "license": "SEE LICENSE IN ../LICENSE",
   "type": "module",
   "scripts": {

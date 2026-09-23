@@ -116,6 +116,7 @@ beforeEach(async () => {
     enchant: {}, max_level: 80, features: [], notes: {}, coming_soon: false,
     coming_soon_show_info: false,
     coming_soon_title: '', coming_soon_subtitle: '', coming_soon_at: null,
+    staff_only_login: false, allow_registration: true, allow_l2_registration: true,
   } as never)
   vi.mocked(contentApi.news).mockResolvedValue([
     { id: 'n1', title: 'Cerco aberto', slug: 'cerco', excerpt: 'Prepare o clã', body: '', published_at: '2026-09-01T12:00:00Z' },

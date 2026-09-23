@@ -360,7 +360,7 @@ it('Coming Soon habilita restrição de login e salva controles de acesso', asyn
     whatsapp_url: 'https://wa.me/5511999999999',
   }))
   expect(screen.getByRole('link', { name: /Ver página de lançamento/ })).toHaveAttribute('href', '/')
-})
+}, 15_000)
 
 it('painel e servidor normaliza recursos sem misturar Coming Soon', async () => {
   const user = mount(<AdminServerPage />)

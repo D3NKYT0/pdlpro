@@ -32,6 +32,9 @@ const info: ApiServerInfo = {
   coming_soon_title: 'O portal se abre',
   coming_soon_subtitle: 'Prepare suas armas',
   coming_soon_at: '2027-01-03T00:00:00Z',
+  staff_only_login: false,
+  allow_registration: true,
+  allow_l2_registration: true,
 }
 
 function mount(ui: ReactNode) {

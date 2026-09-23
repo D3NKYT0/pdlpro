@@ -6,7 +6,11 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [Não publicado]
+## [2.5.8] - 2026-09-23
+
+Controles de acesso do Coming Soon, tela admin própria e telas de
+“ainda não liberado” no cadastro/login/L2, consolidados em
+**23 de setembro de 2026**.
 
 ### Adicionado
 
@@ -15,6 +19,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   bloqueio na API (cadastro, OAuth, login e registro L2).
 - Tela admin própria **Coming Soon** (`/panel/admin/coming-soon`), separada de
   **Painel e servidor** (antes os dois cards do hub abriam a mesma página).
+
+### Alterado
+
+- Com cadastro, login de jogador ou conta L2 fechados no lançamento, as telas
+  públicas passam a mostrar o aviso de fase não liberada em vez do formulário.
+
+### Corrigido
+
+- O `Select` deixa de rolar a página no primeiro clique ao focar o listbox.
 
 ## [2.5.7] - 2026-09-23
 

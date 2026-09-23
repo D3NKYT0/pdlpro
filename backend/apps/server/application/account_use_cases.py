@@ -25,7 +25,10 @@ from apps.server.domain.gateways import (
     GameSkill,
     ILineageGateway,
 )
-from apps.server.domain.repositories import IIndexConfigRepository, IManagedLineageAccountRepository
+from apps.server.domain.repositories import (
+    IIndexConfigRepository,
+    IManagedLineageAccountRepository,
+)
 from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import AuthorizationError, ValidationDomainError
 from common.hooks import HookNames, IHookBus

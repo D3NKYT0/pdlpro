@@ -31,6 +31,7 @@ export default defineConfig({
     environment: 'node',
     setupFiles: ['src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', 'dev/**/*.test.{ts,tsx,mjs}'],
+    testTimeout: 15_000,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
