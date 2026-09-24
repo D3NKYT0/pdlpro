@@ -19,16 +19,16 @@ from apps.themes.application.template_catalog import (
     is_supported_renderer,
     resolve_renderer,
 )
+from apps.themes.application.theme_locales import (
+    LOCALE_LANGS,
+    LOCALES_DIR,
+    allowed_theme_json_names,
+    resolve_locale_files,
+)
 from apps.themes.application.theme_metadata import (
     METADATA_FILENAME,
     empty_theme_metadata,
     parse_theme_metadata,
-)
-from apps.themes.application.theme_locales import (
-    LOCALES_DIR,
-    LOCALE_LANGS,
-    allowed_theme_json_names,
-    resolve_locale_files,
 )
 from apps.themes.domain.repositories import IThemePackageRepository
 from common.architecture.base import UnitOfWork
