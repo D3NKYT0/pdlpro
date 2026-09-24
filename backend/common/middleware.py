@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import re
-from ipaddress import ip_address
 from time import perf_counter
 from uuid import uuid4
 

@@ -77,7 +77,13 @@ def test_password_reset_cooldown_prevents_email_spamming(api):
 
 
 def test_password_reset_views_use_dedicated_throttles():
-    from apps.accounts.presentation.throttling import LoginRateThrottle, PasswordResetRateThrottle
-    from apps.accounts.presentation.views.auth import ConfirmPasswordResetView, RequestPasswordResetView
+    from apps.accounts.presentation.throttling import (
+        LoginRateThrottle,
+        PasswordResetRateThrottle,
+    )
+    from apps.accounts.presentation.views.auth import (
+        ConfirmPasswordResetView,
+        RequestPasswordResetView,
+    )
     assert PasswordResetRateThrottle in RequestPasswordResetView.throttle_classes
     assert LoginRateThrottle in ConfirmPasswordResetView.throttle_classes

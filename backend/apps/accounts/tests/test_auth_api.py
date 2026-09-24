@@ -465,6 +465,7 @@ def test_gamer_profile_and_claim_level_reward(api, user):
 def test_clear_auth_cookies_sets_secure_flag():
     from rest_framework.response import Response
     from rest_framework.test import APIRequestFactory
+
     from apps.accounts.presentation.auth_cookies import (
         clear_auth_cookies,
         get_access_cookie_name,
