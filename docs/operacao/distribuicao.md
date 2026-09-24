@@ -29,7 +29,8 @@ na rede privada) é quem recebe 80/443.
 - Um domínio com registro `A` (e `AAAA` só se o IPv6 do servidor funcionar),
   por exemplo `painel.exemplo.com`.
 - Portas `80` e `443` livres no servidor, para o certificado e o HTTPS.
-- Permissão de escrita no diretório (`/opt/pdlpro` ou `~/pdlpro`).
+- O diretório de instalação criado e com permissão de escrita pelo usuário que
+  vai rodar o Docker (veja o passo 0 abaixo).
 
 O instalador sem `--version` pega sempre a última release publicada.
 
@@ -37,6 +38,30 @@ O instalador sem `--version` pega sempre a última release publicada.
 
 Os comandos abaixo assumem Ubuntu e `/opt/pdlpro`. Troque o domínio e o e-mail
 pelos seus.
+
+### 0. Criar a pasta de instalação
+
+O instalador **não** cria `/opt/pdlpro` por conta própria — ele apenas grava
+arquivos lá. Crie a pasta uma única vez antes de rodar qualquer script:
+
+```bash
+# Cria o diretório e entrega a propriedade ao seu usuário
+sudo mkdir -p /opt/pdlpro
+sudo chown "$USER":"$USER" /opt/pdlpro
+chmod 750 /opt/pdlpro
+```
+
+> **Por que `750`?** O dono lê, escreve e executa; o grupo (usualmente `docker`
+> ou o próprio usuário) só lê; outros não acessam. Isso protege o `.env` com
+> os segredos gerados pelo instalador.
+
+Se preferir instalar em outra pasta (por exemplo, `~/pdlpro`), crie-a da
+mesma forma e passe `--dir ~/pdlpro` ao instalador:
+
+```bash
+mkdir -p ~/pdlpro
+chmod 750 ~/pdlpro
+```
 
 ### 1. Instalar a aplicação
 
@@ -128,6 +153,24 @@ servidor. Abra as portas `21` e a faixa passiva `40000-50000` no firewall.
 Pré-requisito: Docker Desktop em execução. Git Bash é opcional: quando existe,
 o instalador reutiliza o `setup.sh`; senão, usa `scripts/configure-production.ps1`
 e o `docker compose` nativo.
+
+### 0. Criar a pasta de instalação
+
+O instalador usa `%LOCALAPPDATA%\PDL\PRO` por padrão. Crie-a antes de rodar
+o script (o PowerShell não reclama se já existir):
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\PDL\PRO"
+```
+
+Se quiser outra pasta, passe `-InstallDir` ao instalador e crie-a
+da mesma forma:
+
+```powershell
+New-Item -ItemType Directory -Force -Path "C:\PDL\PRO"
+```
+
+### 1. Instalar a aplicação
 
 ```powershell
 Invoke-WebRequest -UseBasicParsing `
