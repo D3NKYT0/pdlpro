@@ -166,6 +166,42 @@ class ICoinAdminRepository(ABC):
 
         raise NotImplementedError
 
+    @abstractmethod
+    def list_coin_packages(self) -> list[Any]:
+        """Lista todos os pacotes de recarga (ativos e inativos), ordenados."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_coin_package(self, package_id: str) -> Any | None:
+        """Localiza um pacote pelo UUID público; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_coin_package_by_code(self, code: str) -> Any | None:
+        """Localiza um pacote pelo código único; None se inexistente."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def new_coin_package(self) -> Any:
+        """Instancia um pacote ainda não persistido."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_coin_package(self, row: Any) -> Any:
+        """Persiste o pacote de recarga e devolve a linha salva."""
+
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_coin_package(self, row: Any) -> None:
+        """Remove o pacote de recarga."""
+
+        raise NotImplementedError
+
 
 class IGameExchangeRepository(ABC):
     """Porta de recibos de câmbio com o jogo (GameExchange) e bloqueio do usuário.

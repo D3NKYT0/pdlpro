@@ -75,6 +75,7 @@ export type {
 export type {
   ApiPanelSettings,
   ApiStaffCoin,
+  ApiStaffCoinPackage,
   ApiStaffGame,
   ApiStaffGameAccount,
   ApiStaffGameAutoconfig,

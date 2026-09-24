@@ -13,6 +13,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Pacotes de tema podem declarar overlays i18n em `locales/{pt,en,es}.json`
   (`"locales": "locales"` no `theme.json`). A SPA faz merge profundo sobre
   `auth`/`public`/demais namespaces ao ativar o tema.
+- Administração SPA **Pacotes de recarga** (`/panel/admin/coin-packages`) para
+  criar/editar/remover pacotes da carteira com preços **BRL** e **USD**.
 
 ### Alterado
 

@@ -29,6 +29,7 @@
       "api": { "title": "API", "description": "Documentación OpenAPI (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo del sistema" },
       "coins": { "title": "Monedas", "description": "Moneda activa, multiplicador y tasa" },
+      "coinPackages": { "title": "Paquetes de recarga", "description": "Precios en BRL y USD mostrados en la cartera" },
       "shop": { "title": "Tienda", "description": "Ítems, paquetes y catálogo low grade vendidos en el panel" },
       "wallet": { "title": "Configuración de la cartera", "description": "Banner promocional y bono mínimo en las recargas" },
       "gameModules": { "title": "Módulos de juegos", "description": "Encender, apagar y rellenar el contenido de los minijuegos" },
@@ -79,6 +80,40 @@
     "toast": {
       "saved": "Moneda actualizada",
       "error": "No se pudo guardar"
+    }
+  },
+  "coinPackages": {
+    "kicker": "Finanzas",
+    "title": "Paquetes de recarga",
+    "description": "Define los paquetes de la cartera con precios en BRL y USD. El jugador aún puede escribir un valor libre.",
+    "eyebrow": "Cartera",
+    "panelTitle": "Catálogo de paquetes",
+    "panelText": "Estas tarjetas aparecen en Panel → Cartera. Ordena, activa y ajusta monedas y precios.",
+    "activeCount": "{{total}} en total",
+    "code": "Código",
+    "codeHint": "Identificador único (slug). Ej.: plus, elite",
+    "name": "Nombre mostrado",
+    "coins": "Monedas",
+    "priceBrl": "Precio BRL (R$)",
+    "priceUsd": "Precio USD ($)",
+    "badge": "Sello",
+    "badgePlaceholder": "Más elegido",
+    "sortOrder": "Orden",
+    "active": "Paquete activo",
+    "create": "Crear paquete",
+    "update": "Actualizar paquete",
+    "new": "Nuevo paquete",
+    "loading": "Cargando paquetes…",
+    "emptyTitle": "Sin paquetes",
+    "emptyText": "Crea el primer paquete con precios en BRL y USD.",
+    "rowMeta": "{{code}} · {{coins}} monedas · R$ {{brl}} · $ {{usd}} · orden {{order}}",
+    "inactive": "Inactivo",
+    "confirmRemove": "¿Eliminar el paquete {{name}}?",
+    "toast": {
+      "created": "Paquete creado",
+      "updated": "Paquete actualizado",
+      "removed": "Paquete eliminado",
+      "error": "No se pudo guardar el paquete."
     }
   },
   "shop": {

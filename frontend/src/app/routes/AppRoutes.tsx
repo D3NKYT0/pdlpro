@@ -48,6 +48,7 @@ import {
 import { AdminAccountsPage } from '../../pages/admin/AdminAccountsPage'
 import { AdminModerationPage } from '../../pages/admin/AdminModerationPage'
 import { AdminCoinsPage } from '../../pages/admin/AdminCoinsPage'
+import { AdminCoinPackagesPage } from '../../pages/admin/AdminCoinPackagesPage'
 import { AdminReportsPage, AdminFinancialReportsRedirect } from '../../pages/admin/AdminReportsPage'
 import { AdminGamesPage } from '../../pages/admin/AdminGamesPage'
 import { AdminHubPage } from '../../pages/admin/AdminHubPage'
@@ -157,6 +158,7 @@ export function AppRoutes() {
               <Route path="/panel/admin/moderation" element={<AdminModerationPage />} />
               <Route path="/panel/admin/services" element={<AdminServicesPage />} />
               <Route path="/panel/admin/coins" element={<AdminCoinsPage />} />
+              <Route path="/panel/admin/coin-packages" element={<AdminCoinPackagesPage />} />
               <Route path="/panel/admin/wallet" element={<AdminWalletPage />} />
               <Route path="/panel/admin/shop" element={<AdminShopPage />} />
               <Route path="/panel/admin/news" element={<AdminNewsPage />} />

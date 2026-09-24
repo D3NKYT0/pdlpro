@@ -29,6 +29,7 @@
       "api": { "title": "API", "description": "OpenAPI documentation (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "Full system CRUD" },
       "coins": { "title": "Coins", "description": "Active currency, multiplier and rate" },
+      "coinPackages": { "title": "Top-up packages", "description": "BRL and USD prices shown in the wallet" },
       "shop": { "title": "Shop", "description": "Items, bundles and a low-grade catalog sold in the panel" },
       "wallet": { "title": "Wallet settings", "description": "Promo banner and minimum top-up bonus" },
       "gameModules": { "title": "Game modules", "description": "Turn minigames on or off and fill their playable content" },
@@ -79,6 +80,40 @@
     "toast": {
       "saved": "Currency updated",
       "error": "Could not save"
+    }
+  },
+  "coinPackages": {
+    "kicker": "Finance",
+    "title": "Top-up packages",
+    "description": "Configure wallet packages with BRL and USD prices. Players can still enter a custom amount.",
+    "eyebrow": "Wallet",
+    "panelTitle": "Package catalog",
+    "panelText": "These cards appear under Panel → Wallet. Sort, enable and set coins and prices.",
+    "activeCount": "{{total}} total",
+    "code": "Code",
+    "codeHint": "Unique slug. Example: plus, elite",
+    "name": "Display name",
+    "coins": "Coins",
+    "priceBrl": "BRL price (R$)",
+    "priceUsd": "USD price ($)",
+    "badge": "Badge",
+    "badgePlaceholder": "Most popular",
+    "sortOrder": "Order",
+    "active": "Package active",
+    "create": "Create package",
+    "update": "Update package",
+    "new": "New package",
+    "loading": "Loading packages…",
+    "emptyTitle": "No packages",
+    "emptyText": "Create the first package with BRL and USD prices.",
+    "rowMeta": "{{code}} · {{coins}} coins · R$ {{brl}} · $ {{usd}} · order {{order}}",
+    "inactive": "Inactive",
+    "confirmRemove": "Remove package {{name}}?",
+    "toast": {
+      "created": "Package created",
+      "updated": "Package updated",
+      "removed": "Package removed",
+      "error": "Could not save the package."
     }
   },
   "shop": {

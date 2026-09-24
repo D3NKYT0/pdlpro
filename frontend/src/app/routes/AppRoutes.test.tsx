@@ -89,6 +89,7 @@ const pages = [
   ['/panel/admin/moderation', 'Moderação'],
   ['/panel/admin/services', 'Serviços'],
   ['/panel/admin/coins', 'Moedas'],
+  ['/panel/admin/coin-packages', 'Pacotes de recarga'],
   ['/panel/admin/wallet', 'Configuração da carteira'],
   ['/panel/admin/shop', 'Loja'],
   ['/panel/admin/news', 'Notícias'],

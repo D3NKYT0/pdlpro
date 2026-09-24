@@ -12,6 +12,7 @@ import {
   Download,
   ExternalLink,
   Gamepad2,
+  Package,
   PackagePlus,
   Headphones,
   Newspaper,
@@ -73,6 +74,7 @@ const categories: Category[] = [
     tone: 'finance',
     entries: [
       { to: '/panel/admin/coins', key: 'coins', icon: Coins },
+      { to: '/panel/admin/coin-packages', key: 'coinPackages', icon: Package },
       { to: '/panel/admin/shop', key: 'shop', icon: ShoppingBag },
       { to: '/panel/admin/wallet', key: 'wallet', icon: WalletCards },
     ],

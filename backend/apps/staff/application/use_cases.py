@@ -155,6 +155,20 @@ def _wallet_promo_payload(row) -> dict:
     }
 
 
+def _coin_package_payload(row) -> dict:
+    return {
+        "id": str(row.id),
+        "code": row.code,
+        "name": row.name,
+        "coins": str(row.coins),
+        "price_brl": str(row.price_brl),
+        "price_usd": str(row.price_usd),
+        "badge": row.badge or "",
+        "active": bool(row.active),
+        "sort_order": int(row.sort_order or 0),
+    }
+
+
 class GetPanelSettingsUseCase(UseCase[None, dict]):
     """Retorna as configurações efetivas do painel, usando padrões quando não há configuração
     persistida.
@@ -368,6 +382,101 @@ class UpdateStaffWalletPromoUseCase(UseCase[dict, dict]):
             raise ValidationDomainError("A data final deve ser posterior ao início da promoção.")
         self._coins.save_promo(row)
         return _wallet_promo_payload(row)
+
+
+class ListStaffCoinPackagesUseCase(UseCase[None, list[dict]]):
+    """Lista todos os pacotes de recarga da carteira para administração.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``None`` (ou omita o argumento). O
+    retorno é ``list[dict]``.
+    """
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: None = None) -> list[dict]:
+        return [_coin_package_payload(row) for row in self._coins.list_coin_packages()]
+
+
+class UpsertStaffCoinPackageUseCase(UseCase[dict, dict]):
+    """Cria ou atualiza um pacote de recarga com preços em BRL e USD.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict``. O retorno é ``dict``.
+    """
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: dict) -> dict:
+        package_id = str(data.get("id") or "").strip()
+        row = self._coins.get_coin_package(package_id) if package_id else None
+        if package_id and row is None:
+            raise EntityNotFoundError("Pacote de moedas não encontrado.")
+        if row is None:
+            row = self._coins.new_coin_package()
+
+        code = str(data.get("code") or row.code or "").strip().lower()
+        code = slugify(code) or code
+        if not code:
+            raise ValidationDomainError("Informe o código do pacote.")
+        if len(code) > 40:
+            raise ValidationDomainError("O código do pacote pode ter no máximo 40 caracteres.")
+        duplicate = self._coins.find_coin_package_by_code(code)
+        if duplicate is not None and (row.id is None or duplicate.id != row.id):
+            raise ValidationDomainError("Já existe um pacote com este código.")
+
+        name = str(data.get("name") or "").strip()
+        if not name:
+            raise ValidationDomainError("Informe o nome do pacote.")
+        if len(name) > 80:
+            raise ValidationDomainError("O nome do pacote pode ter no máximo 80 caracteres.")
+
+        coins = Decimal(str(data.get("coins") if data.get("coins") is not None else row.coins or "0"))
+        price_brl = Decimal(str(data.get("price_brl") if data.get("price_brl") is not None else row.price_brl or "0"))
+        price_usd = Decimal(str(data.get("price_usd") if data.get("price_usd") is not None else row.price_usd or "0"))
+        if coins <= 0:
+            raise ValidationDomainError("A quantidade de moedas deve ser maior que zero.")
+        if price_brl < 0 or price_usd < 0:
+            raise ValidationDomainError("Os preços não podem ser negativos.")
+
+        badge = str(data.get("badge") if data.get("badge") is not None else row.badge or "").strip()
+        if len(badge) > 40:
+            raise ValidationDomainError("O selo do pacote pode ter no máximo 40 caracteres.")
+        sort_order = int(data.get("sort_order") if data.get("sort_order") is not None else row.sort_order or 0)
+        if sort_order < 0:
+            raise ValidationDomainError("A ordem de exibição não pode ser negativa.")
+
+        row.code = code
+        row.name = name
+        row.coins = coins
+        row.price_brl = price_brl
+        row.price_usd = price_usd
+        row.badge = badge
+        row.active = bool(data.get("active", True if row.id is None else row.active))
+        row.sort_order = sort_order
+        self._coins.save_coin_package(row)
+        return _coin_package_payload(row)
+
+
+class DeleteStaffCoinPackageUseCase(UseCase[dict, dict]):
+    """Remove um pacote de recarga da carteira.
+
+    Uso: resolva pelo container e chame ``execute(data)`` com ``dict`` contendo ``id``. O retorno
+    é ``dict`` com ``deleted``.
+    """
+
+    def __init__(self, coins: ICoinAdminRepository) -> None:
+        self._coins = coins
+
+    def execute(self, data: dict) -> dict:
+        package_id = str(data.get("id") or "").strip()
+        if not package_id:
+            raise ValidationDomainError("Informe o pacote a remover.")
+        row = self._coins.get_coin_package(package_id)
+        if row is None:
+            raise EntityNotFoundError("Pacote de moedas não encontrado.")
+        self._coins.delete_coin_package(row)
+        return {"deleted": True}
 
 
 class ListStaffShopItemsUseCase(UseCase[None, list[dict]]):

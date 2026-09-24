@@ -235,3 +235,62 @@ def test_me_exposes_staff_flags(api, staff):
     assert me.status_code == 200
     assert me.data["is_staff"] is True
     assert me.data["is_staff_member"] is True
+
+
+@pytest.mark.django_db
+def test_staff_can_manage_coin_packages_brl_and_usd(api, staff):
+    api.force_authenticate(user=staff)
+    created = api.post(
+        "/api/v1/staff/coin-packages/",
+        {
+            "code": "Plus Pack",
+            "name": "Plus",
+            "coins": "55.00",
+            "price_brl": "50.00",
+            "price_usd": "9.90",
+            "badge": "Mais escolhido",
+            "active": True,
+            "sort_order": 2,
+        },
+        format="json",
+    )
+    assert created.status_code == 200, created.data
+    assert created.data["code"] == "plus-pack"
+    assert created.data["price_brl"] == "50.00"
+    assert created.data["price_usd"] == "9.90"
+    package_id = created.data["id"]
+
+    updated = api.put(
+        "/api/v1/staff/coin-packages/",
+        {
+            "id": package_id,
+            "code": "plus-pack",
+            "name": "Plus+",
+            "coins": "60.00",
+            "price_brl": "55.00",
+            "price_usd": "10.90",
+            "badge": "Destaque",
+            "active": True,
+            "sort_order": 1,
+        },
+        format="json",
+    )
+    assert updated.status_code == 200, updated.data
+    assert updated.data["name"] == "Plus+"
+    assert updated.data["coins"] == "60.00"
+    assert updated.data["price_usd"] == "10.90"
+
+    listed = api.get("/api/v1/staff/coin-packages/")
+    assert listed.status_code == 200
+    assert any(row["id"] == package_id and row["name"] == "Plus+" for row in listed.data)
+
+    catalog = api.get("/api/v1/customer/payments/catalog/")
+    assert catalog.status_code == 200
+    assert any(row["code"] == "plus-pack" and row["price_brl"] == "55.00" for row in catalog.data["packages"])
+
+    removed = api.delete("/api/v1/staff/coin-packages/", {"id": package_id}, format="json")
+    assert removed.status_code == 200
+    assert removed.data["deleted"] is True
+    remaining = api.get("/api/v1/staff/coin-packages/").data
+    assert all(row["id"] != package_id for row in remaining)
+    assert all(row["code"] != "plus-pack" for row in remaining)

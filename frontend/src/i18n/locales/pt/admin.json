@@ -29,6 +29,7 @@
       "api": { "title": "API", "description": "Documentação OpenAPI (Swagger)" },
       "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo do sistema" },
       "coins": { "title": "Moedas", "description": "Moeda ativa, multiplicador e taxa" },
+      "coinPackages": { "title": "Pacotes de recarga", "description": "Valores em BRL e USD exibidos na carteira" },
       "shop": { "title": "Loja", "description": "Itens, pacotes e catálogo low grade vendidos no painel" },
       "wallet": { "title": "Configuração da carteira", "description": "Banner promocional e bônus mínimo nas recargas" },
       "gameModules": { "title": "Módulos de jogos", "description": "Ligar, desligar e preencher o conteúdo dos minigames" },
@@ -79,6 +80,40 @@
     "toast": {
       "saved": "Moeda atualizada",
       "error": "Não foi possível salvar"
+    }
+  },
+  "coinPackages": {
+    "kicker": "Financeiro",
+    "title": "Pacotes de recarga",
+    "description": "Defina os pacotes da carteira com preços em BRL e USD. O jogador ainda pode digitar um valor avulso.",
+    "eyebrow": "Carteira",
+    "panelTitle": "Catálogo de pacotes",
+    "panelText": "Estes cards aparecem em Painel → Carteira. Ordene, ative e ajuste moedas e preços.",
+    "activeCount": "{{total}} no total",
+    "code": "Código",
+    "codeHint": "Identificador único (slug). Ex.: plus, elite",
+    "name": "Nome exibido",
+    "coins": "Moedas",
+    "priceBrl": "Preço BRL (R$)",
+    "priceUsd": "Preço USD ($)",
+    "badge": "Selo",
+    "badgePlaceholder": "Mais escolhido",
+    "sortOrder": "Ordem",
+    "active": "Pacote ativo",
+    "create": "Criar pacote",
+    "update": "Atualizar pacote",
+    "new": "Novo pacote",
+    "loading": "Carregando pacotes…",
+    "emptyTitle": "Nenhum pacote",
+    "emptyText": "Crie o primeiro pacote com preços em BRL e USD.",
+    "rowMeta": "{{code}} · {{coins}} moedas · R$ {{brl}} · $ {{usd}} · ordem {{order}}",
+    "inactive": "Inativo",
+    "confirmRemove": "Remover o pacote {{name}}?",
+    "toast": {
+      "created": "Pacote criado",
+      "updated": "Pacote atualizado",
+      "removed": "Pacote removido",
+      "error": "Não foi possível salvar o pacote."
     }
   },
   "shop": {

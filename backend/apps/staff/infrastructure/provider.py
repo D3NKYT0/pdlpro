@@ -21,9 +21,11 @@ from apps.staff.application.notifications import (
 from apps.staff.application.observability import PruneObservabilityLogsUseCase
 from apps.staff.application.operational_reports import GetOperationalReportUseCase
 from apps.staff.application.use_cases import (
+    DeleteStaffCoinPackageUseCase,
     GetPanelSettingsUseCase,
     GetStaffCoinConfigUseCase,
     GetStaffWalletPromoUseCase,
+    ListStaffCoinPackagesUseCase,
     ListStaffGamesUseCase,
     ListStaffNewsUseCase,
     ListStaffServicePricesUseCase,
@@ -32,6 +34,7 @@ from apps.staff.application.use_cases import (
     UpdatePanelSettingsUseCase,
     UpdateStaffCoinConfigUseCase,
     UpdateStaffWalletPromoUseCase,
+    UpsertStaffCoinPackageUseCase,
     UpsertStaffNewsUseCase,
     UpsertStaffServicePricesUseCase,
     UpsertStaffShopItemUseCase,
@@ -77,6 +80,9 @@ class StaffProvider(AppProvider):
             UpdateStaffCoinConfigUseCase,
             GetStaffWalletPromoUseCase,
             UpdateStaffWalletPromoUseCase,
+            ListStaffCoinPackagesUseCase,
+            UpsertStaffCoinPackageUseCase,
+            DeleteStaffCoinPackageUseCase,
             ListStaffShopItemsUseCase,
             UpsertStaffShopItemUseCase,
             ListStaffNewsUseCase,

@@ -222,6 +222,29 @@ class DjangoCoinAdminRepository(ICoinAdminRepository):
     ) -> CoinPurchasePromo:
         return CoinPurchasePromo(title=title, percent=percent, active=active)
 
+    def list_coin_packages(self) -> list[CoinPackage]:
+        return list(CoinPackage.objects.order_by("sort_order", "coins", "name"))
+
+    def get_coin_package(self, package_id: str) -> CoinPackage | None:
+        try:
+            package_uuid = UUID(str(package_id))
+        except ValueError:
+            return None
+        return CoinPackage.objects.filter(id=package_uuid).first()
+
+    def find_coin_package_by_code(self, code: str) -> CoinPackage | None:
+        return CoinPackage.objects.filter(code=str(code).strip()).first()
+
+    def new_coin_package(self) -> CoinPackage:
+        return CoinPackage()
+
+    def save_coin_package(self, row: CoinPackage) -> CoinPackage:
+        row.save()
+        return row
+
+    def delete_coin_package(self, row: CoinPackage) -> None:
+        row.delete()
+
 
 class DjangoGameExchangeRepository(IGameExchangeRepository):
     """Adaptador Django de ``IGameExchangeRepository`` para recibos de câmbio com o jogo."""

@@ -61,6 +61,18 @@ export interface ApiStaffWalletPromo {
   currently_active: boolean
 }
 
+export interface ApiStaffCoinPackage {
+  id: string
+  code: string
+  name: string
+  coins: string
+  price_brl: string
+  price_usd: string
+  badge: string
+  active: boolean
+  sort_order: number
+}
+
 export interface ApiStaffShopItem {
   id: string
   name: string
@@ -207,6 +219,14 @@ export const staffApi = {
   walletPromo: () => request<ApiStaffWalletPromo>('/staff/wallet-promo/'),
   saveWalletPromo: (payload: Partial<ApiStaffWalletPromo>) =>
     request<ApiStaffWalletPromo>('/staff/wallet-promo/', { method: 'PUT', body: JSON.stringify(payload) }),
+  coinPackages: () => request<ApiStaffCoinPackage[]>('/staff/coin-packages/'),
+  saveCoinPackage: (payload: Partial<ApiStaffCoinPackage>) =>
+    request<ApiStaffCoinPackage>('/staff/coin-packages/', {
+      method: payload.id ? 'PUT' : 'POST',
+      body: JSON.stringify(payload),
+    }),
+  deleteCoinPackage: (id: string) =>
+    request<{ deleted: boolean }>('/staff/coin-packages/', { method: 'DELETE', body: JSON.stringify({ id }) }),
   shop: () => request<ApiStaffShopItem[]>('/staff/shop/'),
   saveShopItem: (payload: Partial<ApiStaffShopItem>) =>
     request<ApiStaffShopItem>('/staff/shop/', {
