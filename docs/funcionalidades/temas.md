@@ -202,7 +202,8 @@ Exemplo mínimo para customizar o login:
 ```
 
 Namespaces desconhecidos, JSON vazio e folhas não-string são rejeitados na
-instalação. A API pública expõe as URLs em `locales` no tema ativo; a SPA
+instalação. Cada arquivo aceita até 2500 nós (suficiente para o namespace
+`public` completo). A API pública expõe as URLs em `locales` no tema ativo; a SPA
 baixa e aplica o overlay ao ativar o pacote (e restaura o Classic ao
 desativar).
 

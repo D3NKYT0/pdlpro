@@ -14,7 +14,7 @@ LOCALE_NAMESPACES = frozenset(
 )
 MAX_LOCALE_DEPTH = 8
 MAX_LOCALE_STRING = 2000
-MAX_LOCALE_NODES = 500
+MAX_LOCALE_NODES = 2500
 
 
 def locale_json_names() -> set[str]:
