@@ -18,6 +18,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Tela **Pacotes de recarga** no admin: formulário com métricas BRL/USD e catálogo
+  em cards no estilo da carteira (prévia visual, selos e status).
 - Header, rodapé, aria da marca e copyright da área pública passam a usar o
   **nome** (e o slogan) configurados em **Painel → Administração → Painel e
   servidor**, em vez de “PDL PRO” fixo no chrome.

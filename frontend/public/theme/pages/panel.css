@@ -2423,6 +2423,7 @@ html.pdl-panel .admin-coin-metrics { display: grid; grid-template-columns: repea
 html.pdl-panel .admin-coin-metric { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 13px; margin: 0; padding: 17px; }
 html.pdl-panel .admin-coin-metric-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--panel-gold-bright); border: 1px solid color-mix(in srgb, var(--panel-gold) 25%, transparent); background: color-mix(in srgb, var(--panel-gold) 7%, transparent); }
 html.pdl-panel .admin-coin-metric-icon svg { width: 19px; }
+html.pdl-panel .admin-coin-metric-icon > span { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) b { color: var(--panel-text); font-size: 13px; }
 html.pdl-panel .admin-coin-metric > span:nth-child(2) small { color: var(--panel-muted); font-weight: 400; }
@@ -5951,6 +5952,132 @@ html.pdl-panel .table tbody tr {
 
 html.pdl-panel .table tbody tr:hover {
   background: color-mix(in srgb, var(--panel-gold) 4.5%, transparent);
+}
+
+html.pdl-panel .admin-coin-packages-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+html.pdl-panel .admin-coin-packages-catalog .account-section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+html.pdl-panel .admin-coin-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .admin-coin-package-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 248px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px 14px 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
+  border-radius: 2px;
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--panel-gold) 5.5%, transparent), transparent 45%),
+    rgba(6, 6, 5, 0.62);
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+html.pdl-panel .admin-coin-package-card::after {
+  position: absolute;
+  right: -42px;
+  bottom: -53px;
+  width: 104px;
+  height: 104px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright) 7%, transparent);
+  content: '';
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+html.pdl-panel .admin-coin-package-card.is-featured {
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 34%, transparent);
+  background:
+    radial-gradient(circle at 84% 10%, color-mix(in srgb, var(--panel-gold) 17%, transparent), transparent 40%),
+    linear-gradient(155deg, color-mix(in srgb, var(--panel-gold) 10%, transparent), transparent 53%),
+    rgba(7, 6, 5, 0.76);
+}
+
+html.pdl-panel .admin-coin-package-card.is-editing {
+  border-color: color-mix(in srgb, var(--panel-gold-bright) 68%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--panel-gold) 28%, transparent), 0 14px 32px rgba(0, 0, 0, 0.32);
+}
+
+html.pdl-panel .admin-coin-package-card.is-inactive {
+  opacity: 0.58;
+}
+
+html.pdl-panel .admin-coin-package-card-spacer {
+  display: block;
+  min-height: 20px;
+  margin-bottom: 11px;
+}
+
+html.pdl-panel .admin-coin-package-card > code {
+  margin-top: 2px;
+  color: color-mix(in srgb, var(--panel-gold-bright) 55%, transparent);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+html.pdl-panel .admin-coin-package-prices {
+  display: grid;
+  gap: 2px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+html.pdl-panel .admin-coin-package-prices strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+html.pdl-panel .admin-coin-package-prices span {
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+html.pdl-panel .admin-coin-package-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+html.pdl-panel .admin-coin-package-meta small {
+  color: var(--panel-muted);
+  font-size: 11px;
+}
+
+html.pdl-panel .admin-coin-package-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+}
+
+@media (max-width: 900px) {
+  html.pdl-panel .admin-coin-packages-metrics {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Wallet */

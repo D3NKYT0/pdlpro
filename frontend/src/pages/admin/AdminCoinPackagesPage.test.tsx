@@ -75,23 +75,26 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-it('lista pacotes e cria um novo com BRL e USD', async () => {
+it('mostra catálogo em cards e cria pacote BRL/USD', async () => {
   const user = mount()
-  expect(await screen.findByText('Iniciante')).toBeVisible()
-  expect(screen.getByRole('heading', { name: 'Pacotes de recarga' })).toBeVisible()
+  expect(await screen.findByRole('heading', { name: 'Pacotes publicados' })).toBeVisible()
+  expect(screen.getByText('Iniciante')).toBeVisible()
+  expect(screen.getByText('starter')).toBeVisible()
+  expect(screen.getByText('R$ 25.00')).toBeVisible()
+  expect(screen.getByText('$ 4.90')).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Novo pacote' })).toBeVisible()
 
   const form = screen.getByRole('button', { name: 'Criar pacote' }).closest('form') as HTMLElement
   const fields = within(form)
+  await user.type(fields.getByPlaceholderText('Plus'), 'Plus')
   await user.type(fields.getByPlaceholderText('plus'), 'plus')
-  const textInputs = fields.getAllByRole('textbox')
-  await user.type(textInputs[1], 'Plus')
   const numbers = fields.getAllByRole('spinbutton')
-  await user.clear(numbers[0])
-  await user.type(numbers[0], '55')
   await user.clear(numbers[1])
-  await user.type(numbers[1], '50')
+  await user.type(numbers[1], '55')
   await user.clear(numbers[2])
-  await user.type(numbers[2], '9.91')
+  await user.type(numbers[2], '50')
+  await user.clear(numbers[3])
+  await user.type(numbers[3], '9.91')
   await user.click(fields.getByRole('button', { name: 'Criar pacote' }))
 
   await waitFor(() => expect(saveCoinPackage).toHaveBeenCalled())
@@ -107,14 +110,15 @@ it('lista pacotes e cria um novo com BRL e USD', async () => {
   expect(toast.success).toHaveBeenCalled()
 })
 
-it('edita e remove um pacote existente', async () => {
+it('edita e remove um pacote do catálogo', async () => {
   const user = mount()
   expect(await screen.findByText('Iniciante')).toBeVisible()
   await user.click(screen.getByRole('button', { name: 'Editar' }))
   expect(screen.getByDisplayValue('starter')).toBeVisible()
+  expect(screen.getByRole('heading', { name: 'Editar Iniciante' })).toBeVisible()
 
   const form = screen.getByRole('button', { name: 'Atualizar pacote' }).closest('form') as HTMLElement
-  const brl = within(form).getAllByRole('spinbutton')[1]
+  const brl = within(form).getAllByRole('spinbutton')[2]
   await user.clear(brl)
   await user.type(brl, '30')
   await user.click(within(form).getByRole('button', { name: 'Atualizar pacote' }))
@@ -122,6 +126,8 @@ it('edita e remove um pacote existente', async () => {
     expect(saveCoinPackage).toHaveBeenCalledWith(expect.objectContaining({ id: 'pack-1', price_brl: '30' })),
   )
 
-  await user.click(screen.getByRole('button', { name: 'Excluir' }))
+  const remove = screen.getByRole('button', { name: 'Excluir' })
+  expect(remove).toHaveClass('ui-button--danger')
+  await user.click(remove)
   await waitFor(() => expect(deleteCoinPackage).toHaveBeenCalledWith('pack-1'))
 })

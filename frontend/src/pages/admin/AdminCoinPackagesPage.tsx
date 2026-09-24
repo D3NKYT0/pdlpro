@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Coins, Package, Pencil, Trash2 } from 'lucide-react'
+import { Coins, Package, Pencil, Plus, Sparkles, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 import { Button } from '../../components/ui/Button'
@@ -43,6 +43,11 @@ export function AdminCoinPackagesPage() {
   function open(row: ApiStaffCoinPackage) {
     setEditingId(row.id)
     setDraft({ ...row })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function startNew() {
+    reset()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -138,42 +143,6 @@ export function AdminCoinPackagesPage() {
               <small>{t('coinPackages.codeHint')}</small>
             </Field>
             <Field>
-              {t('coinPackages.coins')}
-              <input
-                type="number"
-                min="0.01"
-                step="0.01"
-                value={draft.coins ?? ''}
-                onChange={(event) => setDraft((current) => ({ ...current, coins: event.target.value }))}
-                required
-              />
-            </Field>
-          </div>
-
-          <div className="account-form-fields">
-            <Field>
-              {t('coinPackages.priceBrl')}
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={draft.price_brl ?? ''}
-                onChange={(event) => setDraft((current) => ({ ...current, price_brl: event.target.value }))}
-                required
-              />
-            </Field>
-            <Field>
-              {t('coinPackages.priceUsd')}
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={draft.price_usd ?? ''}
-                onChange={(event) => setDraft((current) => ({ ...current, price_usd: event.target.value }))}
-                required
-              />
-            </Field>
-            <Field>
               {t('coinPackages.badge')}
               <input
                 value={draft.badge ?? ''}
@@ -191,6 +160,63 @@ export function AdminCoinPackagesPage() {
                 value={draft.sort_order ?? 0}
                 onChange={(event) => setDraft((current) => ({ ...current, sort_order: Number(event.target.value) }))}
               />
+            </Field>
+          </div>
+
+          <div className="admin-coin-packages-metrics">
+            <Field className="card admin-coin-metric">
+              <span className="admin-coin-metric-icon"><Coins aria-hidden="true" /></span>
+              <span>
+                <b>{t('coinPackages.coins')}</b>
+                <small>{t('coinPackages.coinsHint')}</small>
+              </span>
+              <span className="admin-coin-input">
+                <b>×</b>
+                <input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  value={draft.coins ?? ''}
+                  onChange={(event) => setDraft((current) => ({ ...current, coins: event.target.value }))}
+                  required
+                />
+              </span>
+            </Field>
+            <Field className="card admin-coin-metric">
+              <span className="admin-coin-metric-icon"><span aria-hidden="true">R$</span></span>
+              <span>
+                <b>{t('coinPackages.priceBrl')}</b>
+                <small>{t('coinPackages.priceBrlHint')}</small>
+              </span>
+              <span className="admin-coin-input">
+                <b>R$</b>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={draft.price_brl ?? ''}
+                  onChange={(event) => setDraft((current) => ({ ...current, price_brl: event.target.value }))}
+                  required
+                />
+              </span>
+            </Field>
+            <Field className="card admin-coin-metric">
+              <span className="admin-coin-metric-icon"><span aria-hidden="true">$</span></span>
+              <span>
+                <b>{t('coinPackages.priceUsd')}</b>
+                <small>{t('coinPackages.priceUsdHint')}</small>
+              </span>
+              <span className="admin-coin-input">
+                <b>$</b>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={draft.price_usd ?? ''}
+                  onChange={(event) => setDraft((current) => ({ ...current, price_usd: event.target.value }))}
+                  required
+                />
+              </span>
             </Field>
           </div>
 
@@ -218,64 +244,68 @@ export function AdminCoinPackagesPage() {
       {packages.isLoading ? <LoadingState label={t('coinPackages.loading')} /> : null}
 
       {!packages.isLoading ? (
-        <Card>
+        <Card className="admin-coin-packages-catalog">
           <div className="account-section-heading">
             <div>
               <span className="panel-eyebrow">{t('coinPackages.listEyebrow')}</span>
               <h2>{t('coinPackages.listTitle')}</h2>
               <p className="muted">{t('coinPackages.listText')}</p>
             </div>
+            <Button type="button" className="ghost" onClick={startNew}>
+              <Plus aria-hidden="true" /> {t('coinPackages.newPackage')}
+            </Button>
           </div>
 
           {rows.length === 0 ? (
             <EmptyState title={t('coinPackages.emptyTitle')} description={t('coinPackages.emptyText')} />
           ) : (
-            <div className="admin-coin-packages-table-wrap">
-              <table className="table admin-coin-packages-table">
-                <thead>
-                  <tr>
-                    <th>{t('coinPackages.columns.package')}</th>
-                    <th>{t('coinPackages.columns.coins')}</th>
-                    <th>{t('coinPackages.columns.brl')}</th>
-                    <th>{t('coinPackages.columns.usd')}</th>
-                    <th>{t('coinPackages.columns.order')}</th>
-                    <th>{t('coinPackages.columns.status')}</th>
-                    <th>{t('coinPackages.columns.actions')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((row) => (
-                    <tr key={row.id} className={editingId === row.id ? 'is-editing' : undefined}>
-                      <td>
-                        <div className="admin-coin-package-cell">
-                          <strong>{row.name}</strong>
-                          <small>{row.code}</small>
-                          {row.badge ? <span className="admin-coin-package-badge">{row.badge}</span> : null}
-                        </div>
-                      </td>
-                      <td>{row.coins}</td>
-                      <td>R$ {row.price_brl}</td>
-                      <td>$ {row.price_usd}</td>
-                      <td>{row.sort_order}</td>
-                      <td>
-                        <span className={`account-status-pill${row.active ? ' is-active' : ''}`}>
-                          {row.active ? t('coinPackages.activeLabel') : t('coinPackages.inactive')}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="admin-cms-actions">
-                          <Button type="button" size="sm" className="ghost" onClick={() => open(row)}>
-                            <Pencil aria-hidden="true" /> {t('chrome.edit')}
-                          </Button>
-                          <Button type="button" size="sm" className="ghost" onClick={() => void remove(row)} disabled={saving}>
-                            <Trash2 aria-hidden="true" /> {t('chrome.delete')}
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="admin-coin-packages-grid">
+              {rows.map((row) => {
+                const featured = Boolean(row.badge)
+                const editing = editingId === row.id
+                return (
+                  <article
+                    key={row.id}
+                    className={[
+                      'admin-coin-package-card',
+                      featured ? 'is-featured' : '',
+                      row.active ? 'is-active' : 'is-inactive',
+                      editing ? 'is-editing' : '',
+                    ].filter(Boolean).join(' ')}
+                  >
+                    {row.badge ? (
+                      <span className="pay-pack-badge">
+                        <Sparkles aria-hidden="true" /> {row.badge}
+                      </span>
+                    ) : (
+                      <span className="admin-coin-package-card-spacer" aria-hidden="true" />
+                    )}
+                    <span className="pay-pack-name">{row.name}</span>
+                    <code>{row.code}</code>
+                    <span className="pay-pack-coins">
+                      <Coins aria-hidden="true" /> {row.coins}
+                    </span>
+                    <div className="admin-coin-package-prices">
+                      <strong>R$ {row.price_brl}</strong>
+                      <span>$ {row.price_usd}</span>
+                    </div>
+                    <div className="admin-coin-package-meta">
+                      <span className={`account-status-pill${row.active ? ' is-active' : ''}`}>
+                        {row.active ? t('coinPackages.activeLabel') : t('coinPackages.inactive')}
+                      </span>
+                      <small>{t('coinPackages.orderLabel', { order: row.sort_order })}</small>
+                    </div>
+                    <div className="admin-coin-package-actions">
+                      <Button type="button" size="sm" className="ghost" onClick={() => open(row)}>
+                        <Pencil aria-hidden="true" /> {t('chrome.edit')}
+                      </Button>
+                      <Button type="button" size="sm" variant="danger" onClick={() => void remove(row)} disabled={saving}>
+                        <Trash2 aria-hidden="true" /> {t('chrome.delete')}
+                      </Button>
+                    </div>
+                  </article>
+                )
+              })}
             </div>
           )}
         </Card>
