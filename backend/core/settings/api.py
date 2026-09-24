@@ -29,6 +29,8 @@ def get_rest_framework_settings(trusted_proxy_count=0):
             "user": "10000/hour",
             "login": "10/minute",
             "register": "10/hour",
+            "twofa": "10/minute",
+            "password_reset": "5/hour",
             "lgpd_export": "5/hour",
             "lgpd_delete": "10/hour",
         },

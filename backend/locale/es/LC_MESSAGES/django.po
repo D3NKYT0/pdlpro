@@ -85,6 +85,10 @@ msgstr "Códigos de recuperación 2FA"
 msgid "Desafio 2FA expirado. Entre novamente."
 msgstr "El desafío 2FA expiró. Vuelve a iniciar sesión."
 
+#: .\common\i18n_msgid_catalog.py:192
+msgid "Limite de tentativas de 2FA excedido. Entre novamente."
+msgstr "Límite de intentos de 2FA excedido. Inicie sesión nuevamente."
+
 #: .\apps\accounts\application\email_use_cases.py:56
 msgid "Confirme seu e-mail no PDL PRO"
 msgstr "Confirma tu correo en PDL PRO"

@@ -59,3 +59,25 @@ def test_password_reset_unknown_email_is_silent(api):
     response = api.post("/api/v1/auth/password-reset/", {"email": "nobody@pdl.dev"}, format="json")
     assert response.status_code == 200
     assert mail.outbox == []
+
+
+@pytest.mark.django_db
+def test_password_reset_cooldown_prevents_email_spamming(api):
+    from django.core.cache import cache
+    cache.clear()
+    User.objects.create_user(username="spam_target", email="target@pdl.dev", password="Secret123")
+    res1 = api.post("/api/v1/auth/password-reset/", {"email": "target@pdl.dev"}, format="json")
+    assert res1.status_code == 200
+    assert len(mail.outbox) == 1
+
+    # Second request within cooldown returns 200 but does NOT send another email
+    res2 = api.post("/api/v1/auth/password-reset/", {"email": "target@pdl.dev"}, format="json")
+    assert res2.status_code == 200
+    assert len(mail.outbox) == 1
+
+
+def test_password_reset_views_use_dedicated_throttles():
+    from apps.accounts.presentation.throttling import LoginRateThrottle, PasswordResetRateThrottle
+    from apps.accounts.presentation.views.auth import ConfirmPasswordResetView, RequestPasswordResetView
+    assert PasswordResetRateThrottle in RequestPasswordResetView.throttle_classes
+    assert LoginRateThrottle in ConfirmPasswordResetView.throttle_classes

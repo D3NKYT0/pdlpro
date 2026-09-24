@@ -35,7 +35,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
-TRUSTED_PROXY_COUNT = env.int("TRUSTED_PROXY_COUNT", default=1)
+TRUSTED_PROXY_COUNT = env.int("TRUSTED_PROXY_COUNT", default=2)
 
 from extensions.loader import (
     discover_extension_locale_paths,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import io
 from dataclasses import dataclass
 from uuid import UUID
@@ -8,6 +9,7 @@ from uuid import UUID
 import pyotp
 import qrcode
 from django.core import signing
+from django.core.cache import cache
 
 from apps.accounts.application.recovery_codes import generate_recovery_codes
 from apps.accounts.domain.entities import UserEntity
@@ -21,6 +23,44 @@ from common.architecture.base import UnitOfWork, UseCase
 from common.architecture.exceptions import ValidationDomainError
 
 TWOFA_SALT = "pdl-2fa-login"
+MAX_TWOFA_ATTEMPTS = 5
+TWOFA_ATTEMPT_TIMEOUT = 300
+
+
+def _challenge_digest(challenge: str) -> str:
+    return hashlib.sha256(challenge.encode("utf-8")).hexdigest()
+
+
+def _is_challenge_consumed(challenge: str) -> bool:
+    return bool(cache.get(f"pdl:2fa-consumed:{_challenge_digest(challenge)}"))
+
+
+def _mark_challenge_consumed(challenge: str) -> None:
+    cache.set(f"pdl:2fa-consumed:{_challenge_digest(challenge)}", True, timeout=TWOFA_ATTEMPT_TIMEOUT)
+
+
+def _user_attempts_key(user_id: UUID) -> str:
+    return f"pdl:2fa-attempts:{user_id}"
+
+
+def _get_twofa_attempts(user_id: UUID) -> int:
+    return int(cache.get(_user_attempts_key(user_id), 0))
+
+
+def _increment_twofa_attempts(user_id: UUID) -> int:
+    key = _user_attempts_key(user_id)
+    if cache.get(key) is None:
+        cache.set(key, 1, timeout=TWOFA_ATTEMPT_TIMEOUT)
+        return 1
+    try:
+        return cache.incr(key)
+    except ValueError:
+        cache.set(key, 1, timeout=TWOFA_ATTEMPT_TIMEOUT)
+        return 1
+
+
+def _clear_twofa_attempts(user_id: UUID) -> None:
+    cache.delete(_user_attempts_key(user_id))
 
 
 def make_login_challenge(user_id: UUID) -> str:
@@ -202,13 +242,20 @@ class VerifyTwoFactorLoginUseCase(UseCase[VerifyTwoFactorLoginInput, UserEntity]
         self._recovery_codes = recovery_codes
 
     def execute(self, data: VerifyTwoFactorLoginInput) -> UserEntity:
+        if _is_challenge_consumed(data.challenge):
+            raise InvalidTwoFactorError("Desafio 2FA expirado. Entre novamente.")
         user_id = read_login_challenge(data.challenge)
+        if _get_twofa_attempts(user_id) >= MAX_TWOFA_ATTEMPTS:
+            raise InvalidTwoFactorError("Limite de tentativas de 2FA excedido. Entre novamente.")
         # O usuário pode ser desativado entre a senha e a conclusão do segundo fator.
         state = self._users.get_totp_state(user_id)
         if state is None or not state.is_active:
             raise UserNotFoundError()
         if not state.is_2fa_enabled or not _accept_second_factor(state, data.code, self._recovery_codes):
+            _increment_twofa_attempts(user_id)
             raise InvalidTwoFactorError()
+        _clear_twofa_attempts(user_id)
+        _mark_challenge_consumed(data.challenge)
         user = self._users.get_by_id(user_id)
         if user is None:
             raise UserNotFoundError()

@@ -102,7 +102,9 @@ from apps.accounts.presentation.serializers import (
 )
 from apps.accounts.presentation.throttling import (
     LoginRateThrottle,
+    PasswordResetRateThrottle,
     RegisterRateThrottle,
+    TwoFactorRateThrottle,
 )
 from apps.server.presentation.item_metadata import ItemCatalogAPIView
 from common.views import InjectedAPIView
@@ -405,7 +407,7 @@ class LogoutView(InjectedAPIView):
             )
         )
         response = Response({"ok": True})
-        return clear_auth_cookies(response)
+        return clear_auth_cookies(response, request)
 
 
 class SessionListView(InjectedAPIView):
@@ -452,7 +454,7 @@ class SessionRevokeView(InjectedAPIView):
         )
         response = Response({"ok": True, "current": closed_current})
         if closed_current:
-            return clear_auth_cookies(response)
+            return clear_auth_cookies(response, request)
         return response
 
 
@@ -555,7 +557,7 @@ class VerifyTwoFactorLoginView(InjectedAPIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [TwoFactorRateThrottle]
 
     @extend_schema(
         tags=["Auth"],
@@ -669,7 +671,7 @@ class RequestPasswordResetView(InjectedAPIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [PasswordResetRateThrottle]
 
     @extend_schema(
         tags=["Auth"],
@@ -693,7 +695,7 @@ class ConfirmPasswordResetView(InjectedAPIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [LoginRateThrottle]
 
     @extend_schema(
         tags=["Auth"],

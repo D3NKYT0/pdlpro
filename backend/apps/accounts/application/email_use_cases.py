@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
 from uuid import UUID
 
 from django.conf import settings
 from django.core import signing
+from django.core.cache import cache
 from django.utils.translation import gettext as _
 
 from apps.accounts.domain.exceptions import UserNotFoundError
@@ -122,12 +124,17 @@ class RequestPasswordResetUseCase(UseCase[RequestPasswordResetInput, dict]):
         self._mailer = mailer
 
     def execute(self, data: RequestPasswordResetInput) -> dict:
-        user = self._users.get_by_email(data.email.strip().lower())
+        email = data.email.strip().lower()
+        user = self._users.get_by_email(email)
         if user is None:
+            return {"sent": True}
+        cooldown_key = f"pdl:pwd-reset:{hashlib.sha256(email.encode('utf-8')).hexdigest()}"
+        if cache.get(cooldown_key):
             return {"sent": True}
         token = self._users.make_password_reset_token(user.id)
         if token is None:
             return {"sent": True}
+        cache.set(cooldown_key, True, timeout=60)
         link = _frontend_url(f"/reset-password?token={token}")
         _activate_user_language(user)
         self._mailer.send(

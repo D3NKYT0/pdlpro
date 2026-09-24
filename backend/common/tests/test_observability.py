@@ -178,3 +178,31 @@ def test_authenticated_staff_api_write_is_audited_end_to_end():
     assert audit.action == "staff-panel-settings:put"
     assert audit.method == "PUT"
     assert audit.status_code == 200
+
+
+@pytest.mark.django_db
+def test_forged_forwarded_for_cannot_spoof_audit_ip():
+    user = get_user_model().objects.create_user(
+        username="anti-spoof-auditor", email="anti-spoof@example.com", is_staff=True
+    )
+    request = RequestFactory().patch(
+        "/api/v1/staff/custom-items/4ebfb08b-6181-4328-88d0-fd606db60ec6/",
+        data={"name": "spoofed-item"},
+        content_type="application/json",
+        HTTP_X_FORWARDED_FOR="198.51.100.99, 203.0.113.10, 10.0.0.4",
+    )
+    request.user = user
+    request.request_id = "trace-anti-spoof"
+    request.resolver_match = SimpleNamespace(
+        view_name="staff-custom-item-detail",
+        route="api/v1/staff/custom-items/<uuid:item_uuid>/",
+        kwargs={"item_uuid": "4ebfb08b-6181-4328-88d0-fd606db60ec6"},
+    )
+
+    response = ObservabilityMiddleware(lambda req: JsonResponse({"ok": True}))(request)
+    assert response.status_code == 200
+    audit = AuditLog.objects.get(request_id="trace-anti-spoof")
+    # 198.51.100.99 é o IP forjado pelo cliente mais à esquerda; o IP confiável é 203.0.113.10
+    assert audit.ip_address == "203.0.113.10"
+    assert audit.ip_address != "198.51.100.99"
+

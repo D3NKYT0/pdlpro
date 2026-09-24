@@ -460,3 +460,21 @@ def test_gamer_profile_and_claim_level_reward(api, user):
     bag = api.get("/api/v1/customer/games/bag/")
     assert bag.status_code == 200
     assert any(item["item_name"] == "Adena" for item in bag.data)
+
+
+def test_clear_auth_cookies_sets_secure_flag():
+    from rest_framework.response import Response
+    from rest_framework.test import APIRequestFactory
+    from apps.accounts.presentation.auth_cookies import (
+        clear_auth_cookies,
+        get_access_cookie_name,
+        get_refresh_cookie_name,
+    )
+
+    factory = APIRequestFactory()
+    request = factory.get("/", secure=True)
+    response = Response()
+    clear_auth_cookies(response, request)
+    assert response.cookies[get_access_cookie_name()]["secure"] is True
+    assert response.cookies[get_refresh_cookie_name()]["secure"] is True
+    assert response.cookies[get_access_cookie_name()]["max-age"] == 0

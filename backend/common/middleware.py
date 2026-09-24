@@ -227,16 +227,9 @@ class ObservabilityMiddleware:
 
     @staticmethod
     def _client_ip(request) -> str | None:
-        forwarded = request.META.get("HTTP_X_FORWARDED_FOR", "")
-        value = (
-            forwarded.split(",", 1)[0]
-            if forwarded
-            else request.META.get("REMOTE_ADDR", "")
-        ).strip()
-        try:
-            return str(ip_address(value))
-        except ValueError:
-            return None
+        from common.client_ip import extract_client_ip
+
+        return extract_client_ip(request)
 
 
 class DependencyInjectionMiddleware:

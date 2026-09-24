@@ -28,6 +28,11 @@ Controles de acesso do Coming Soon, tela admin própria e telas de
 ### Corrigido
 
 - O `Select` deixa de rolar a página no primeiro clique ao focar o listbox.
+- **Proteção contra IP Spoofing**: extração segura de IP do cliente via `extract_client_ip` respeitando o número de proxies confiáveis (`TRUSTED_PROXY_COUNT`) na auditoria de staff e no consentimento LGPD de termos.
+- **Proteção contra Timing Attack no Hasher Lineage 2**: comparação de hash em tempo constante com `hmac.compare_digest`.
+- **Cookies de Sessão Seguros**: garantia da flag `Secure` na invalidação de cookies JWT (`clear_auth_cookies`) em conexões HTTPS.
+- **Rate Limiting e Bloqueio de 2FA**: limitação de taxa dedicada (`TwoFactorRateThrottle`), bloqueio após 5 tentativas incorretas e prevenção contra replay de desafio 2FA.
+- **Rate Limiting e Proteção contra Spam de Redefinição de Senha**: limitação de taxa (`PasswordResetRateThrottle`), proteção de confirmação (`LoginRateThrottle`) e cooldown por e-mail.
 
 ## [2.5.7] - 2026-09-23
 

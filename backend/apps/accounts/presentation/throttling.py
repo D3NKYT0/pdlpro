@@ -32,6 +32,18 @@ class RegisterRateThrottle(ConfiguredAnonRateThrottle):
     scope = "register"
 
 
+class TwoFactorRateThrottle(ConfiguredAnonRateThrottle):
+    """Limita tentativas de validação de segundo fator por endereço IP."""
+
+    scope = "twofa"
+
+
+class PasswordResetRateThrottle(ConfiguredAnonRateThrottle):
+    """Limita pedidos de redefinição de senha para conter abusos."""
+
+    scope = "password_reset"
+
+
 class LgpdExportThrottle(ConfiguredUserRateThrottle):
     """Limita solicitações de exportação LGPD por usuário autenticado."""
 

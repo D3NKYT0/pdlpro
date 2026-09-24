@@ -28,12 +28,11 @@ def get_refresh_cookie_name() -> str:
     return settings.REST_AUTH.get("JWT_AUTH_REFRESH_COOKIE", "PDL-refresh")
 
 
-def _cookie_secure(request) -> bool:
+def _cookie_secure(request=None) -> bool:
     return bool(
-        settings.REST_AUTH.get(
-            "JWT_AUTH_SECURE",
-            getattr(settings, "SESSION_COOKIE_SECURE", False) or request.is_secure(),
-        )
+        settings.REST_AUTH.get("JWT_AUTH_SECURE", False)
+        or getattr(settings, "SESSION_COOKIE_SECURE", False)
+        or (request is not None and request.is_secure())
     )
 
 
@@ -73,11 +72,21 @@ def set_auth_cookies(request, response: Response, *, refresh: RefreshToken) -> R
     return response
 
 
-def clear_auth_cookies(response: Response) -> Response:
+def clear_auth_cookies(response: Response, request=None) -> Response:
     samesite = _cookie_samesite()
     delete_samesite = samesite if isinstance(samesite, str) else "Lax"
-    response.delete_cookie(get_access_cookie_name(), path="/", samesite=delete_samesite)
-    response.delete_cookie(get_refresh_cookie_name(), path="/", samesite=delete_samesite)
+    secure = _cookie_secure(request)
+    for key in (get_access_cookie_name(), get_refresh_cookie_name()):
+        response.set_cookie(
+            key,
+            max_age=0,
+            path="/",
+            domain=None,
+            secure=secure,
+            expires="Thu, 01 Jan 1970 00:00:00 GMT",
+            samesite=delete_samesite,
+            httponly=True,
+        )
     return response
 
 

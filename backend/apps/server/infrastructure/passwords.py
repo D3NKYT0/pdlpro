@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import hmac
 
 from django.conf import settings
 
@@ -42,7 +43,7 @@ class LineagePasswordHasher:
         hashed = self._hash_for_stored(password, stored)
         if hashed is None:
             return False
-        return hashed.lower() == stored.lower()
+        return hmac.compare_digest(hashed.lower(), stored.lower())
 
     def _hash_for_stored(self, password: str, stored: str) -> str | None:
         length = len(stored.strip())

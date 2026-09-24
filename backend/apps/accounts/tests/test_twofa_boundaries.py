@@ -127,3 +127,58 @@ def test_account_disabled_after_first_factor_cannot_receive_session():
     response = APIClient().post("/api/v1/auth/2fa/verify/", {"challenge": challenge, "code": pyotp.TOTP(secret).now()}, format="json")
     assert response.status_code in (400, 401, 403, 404)
     assert not response.cookies
+
+
+@pytest.mark.django_db
+def test_twofa_challenge_lockout_after_max_attempts():
+    from django.core.cache import cache
+    cache.clear()
+    scope = DependencyInjection.root().create_scope()
+    users = scope.resolve(IUserRepository)
+    confirm = scope.resolve(ConfirmTwoFactorUseCase)
+    user = get_user_model().objects.create_user(username="lockout2fa", email="lockout2fa@test.dev", password="Secret123")
+    setup = SetupTwoFactorUseCase(users).execute(user.id)
+    confirm.execute(ConfirmTwoFactorInput(user.id, pyotp.TOTP(setup["secret"]).now()))
+
+    api = APIClient()
+    login = api.post("/api/v1/auth/login/", {"login": "lockout2fa", "password": "Secret123"}, format="json")
+    challenge = login.data["challenge"]
+
+    for _ in range(5):
+        res = api.post("/api/v1/auth/2fa/verify/", {"challenge": challenge, "code": "000000"}, format="json")
+        assert res.status_code == 400
+
+    valid_code = pyotp.TOTP(setup["secret"]).now()
+    blocked = api.post("/api/v1/auth/2fa/verify/", {"challenge": challenge, "code": valid_code}, format="json")
+    assert blocked.status_code == 400
+    assert "Limite de tentativas" in str(blocked.data)
+
+
+@pytest.mark.django_db
+def test_twofa_challenge_cannot_be_replayed():
+    from django.core.cache import cache
+    cache.clear()
+    scope = DependencyInjection.root().create_scope()
+    users = scope.resolve(IUserRepository)
+    confirm = scope.resolve(ConfirmTwoFactorUseCase)
+    user = get_user_model().objects.create_user(username="replay2fa", email="replay2fa@test.dev", password="Secret123")
+    setup = SetupTwoFactorUseCase(users).execute(user.id)
+    confirm.execute(ConfirmTwoFactorInput(user.id, pyotp.TOTP(setup["secret"]).now()))
+
+    api = APIClient()
+    login = api.post("/api/v1/auth/login/", {"login": "replay2fa", "password": "Secret123"}, format="json")
+    challenge = login.data["challenge"]
+
+    valid_code = pyotp.TOTP(setup["secret"]).now()
+    first = api.post("/api/v1/auth/2fa/verify/", {"challenge": challenge, "code": valid_code}, format="json")
+    assert first.status_code == 200
+
+    second = api.post("/api/v1/auth/2fa/verify/", {"challenge": challenge, "code": valid_code}, format="json")
+    assert second.status_code == 400
+    assert "expirado" in str(second.data)
+
+
+def test_twofa_view_uses_twofactor_throttle():
+    from apps.accounts.presentation.throttling import TwoFactorRateThrottle
+    from apps.accounts.presentation.views.auth import VerifyTwoFactorLoginView
+    assert TwoFactorRateThrottle in VerifyTwoFactorLoginView.throttle_classes
