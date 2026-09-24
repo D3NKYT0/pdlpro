@@ -241,7 +241,7 @@ export function AdminCoinPackagesPage() {
         </Card>
       </form>
 
-      {packages.isLoading ? <LoadingState label={t('coinPackages.loading')} /> : null}
+      {packages.isLoading ? <LoadingState>{t('coinPackages.loading')}</LoadingState> : null}
 
       {!packages.isLoading ? (
         <Card className="admin-coin-packages-catalog">
@@ -257,7 +257,7 @@ export function AdminCoinPackagesPage() {
           </div>
 
           {rows.length === 0 ? (
-            <EmptyState title={t('coinPackages.emptyTitle')} description={t('coinPackages.emptyText')} />
+            <EmptyState>{t('coinPackages.emptyTitle')} — {t('coinPackages.emptyText')}</EmptyState>
           ) : (
             <div className="admin-coin-packages-grid">
               {rows.map((row) => {

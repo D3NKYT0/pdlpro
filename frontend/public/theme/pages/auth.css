@@ -34,6 +34,12 @@
   text-align: left;
 }
 
+/* Aviso de login/cadastro fechado: tip alinhado aos botões centrais. */
+.auth-panel > .muted,
+.portal-auth-card > .muted {
+  text-align: center;
+}
+
 .portal-auth-shell {
   position: relative;
   isolation: isolate;

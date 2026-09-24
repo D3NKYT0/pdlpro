@@ -41,7 +41,7 @@ function setFavicon(theme: ApiTheme) {
   favicon.href = href
 }
 
-const INSTALLED_STYLE_REV = 'bg14'
+const INSTALLED_STYLE_REV = 'bg15'
 
 export function installedStylesheetHref(url: string, version: string) {
   const bust = `${version.trim() || '1'}.${INSTALLED_STYLE_REV}`
