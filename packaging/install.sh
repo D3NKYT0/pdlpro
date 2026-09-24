@@ -26,6 +26,8 @@ Opções:
   --bind-address IP   IP do proxy interno (padrão: 0.0.0.0)
   --port PORTA        Porta HTTP interna (padrão: 8080)
   --no-start          Só baixa, extrai e configura o .env
+  --install-docker    Instala Docker Engine + Compose v2 automaticamente
+                      (usa get.docker.com; exige apt, dnf ou yum e root/sudo)
   --skip-docker       Não exige Docker (só para testes / --no-start)
   --skip-checksum     Não baixa nem confere o SHA-256
   --yes               Não pergunta confirmação
@@ -45,6 +47,7 @@ bind_address="0.0.0.0"
 http_port="8080"
 assume_yes=0
 no_start=0
+install_docker=0
 skip_docker=0
 skip_checksum=0
 
@@ -76,6 +79,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --no-start) no_start=1 ;;
+    --install-docker) install_docker=1 ;;
     --skip-docker) skip_docker=1 ;;
     --skip-checksum) skip_checksum=1 ;;
     -y|--yes) assume_yes=1 ;;
@@ -264,10 +268,66 @@ if [[ "$skip_docker" -eq 1 ]]; then
   export PDL_SKIP_DOCKER
 fi
 
+# ---------------------------------------------------------------------------
+# Instalação automática do Docker (--install-docker)
+# ---------------------------------------------------------------------------
+auto_install_docker() {
+  if command -v docker > /dev/null 2>&1; then
+    info "Docker já instalado: $(docker --version)"
+    return 0
+  fi
+
+  info "Instalando Docker Engine via get.docker.com ..."
+
+  # Detecta gerenciador de pacotes
+  if command -v apt-get > /dev/null 2>&1; then
+    PKG_MGR="apt"
+  elif command -v dnf > /dev/null 2>&1; then
+    PKG_MGR="dnf"
+  elif command -v yum > /dev/null 2>&1; then
+    PKG_MGR="yum"
+  else
+    die "--install-docker requer apt, dnf ou yum. Instale o Docker manualmente: https://docs.docker.com/engine/install/"
+  fi
+
+  # Verifica acesso root/sudo
+  if [[ $EUID -ne 0 ]] && ! command -v sudo > /dev/null 2>&1; then
+    die "--install-docker precisa de root ou sudo para instalar pacotes"
+  fi
+  local SUDO=""
+  [[ $EUID -ne 0 ]] && SUDO="sudo"
+
+  # Baixa e executa o script oficial do Docker
+  local get_script
+  get_script="$(mktemp /tmp/get-docker.XXXXXX.sh)"
+  if command -v curl > /dev/null 2>&1; then
+    curl -fsSL "https://get.docker.com" -o "$get_script"
+  elif command -v wget > /dev/null 2>&1; then
+    wget -qO "$get_script" "https://get.docker.com"
+  else
+    die "curl ou wget são necessários para --install-docker"
+  fi
+  chmod +x "$get_script"
+  $SUDO sh "$get_script"
+  rm -f "$get_script"
+
+  # Adiciona o usuário atual ao grupo docker para não precisar de sudo
+  if [[ $EUID -ne 0 ]] && command -v usermod > /dev/null 2>&1; then
+    $SUDO usermod -aG docker "$USER" || true
+    warn "Usuário '$USER' adicionado ao grupo 'docker'."
+    warn "Rode 'newgrp docker' ou abra uma nova sessão para usar Docker sem sudo."
+  fi
+
+  success "Docker instalado: $(docker --version)"
+}
+
 if [[ "${PDL_SKIP_DOCKER:-0}" != "1" ]]; then
-  command -v docker >/dev/null 2>&1 || die "instale o Docker Engine com o plugin Compose v2"
-  docker info >/dev/null 2>&1 || die "o Docker não está em execução"
-  docker compose version >/dev/null 2>&1 || die "Docker Compose v2 não está disponível"
+  if [[ "$install_docker" -eq 1 ]] || [[ "${PDL_INSTALL_DOCKER:-0}" == "1" ]]; then
+    auto_install_docker
+  fi
+  command -v docker > /dev/null 2>&1 || die "instale o Docker Engine com o plugin Compose v2 (ou passe --install-docker)"
+  docker info > /dev/null 2>&1 || die "o Docker não está em execução"
+  docker compose version > /dev/null 2>&1 || die "Docker Compose v2 não está disponível"
 fi
 
 if [[ "$assume_yes" -ne 1 ]]; then

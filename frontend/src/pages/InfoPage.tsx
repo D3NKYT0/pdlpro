@@ -122,7 +122,7 @@ export function InfoPage() {
             </div>
             <div className="info-server-heading">
               <span>{t('info.mainServer')}</span>
-              <strong>{data?.name ?? 'PDL PRO'}</strong>
+              <strong>{data?.name?.trim() || 'PDL PRO'}</strong>
             </div>
             <div className={`info-live-status ${statusClass}`}>
               <i aria-hidden="true" />

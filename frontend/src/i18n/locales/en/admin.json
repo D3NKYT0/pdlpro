@@ -686,7 +686,7 @@
     "description": "Name, rates and SEO metadata shown on the site.",
     "identityEyebrow": "Identity",
     "identityTitle": "Server information",
-    "identityDescription": "Main data shown on the home page. Empty fields inherit the active theme, then the .env file.",
+    "identityDescription": "Main data for the header, footer and home page. Empty fields inherit the active theme, then the .env file.",
     "name": "Name",
     "slogan": "Slogan",
     "descriptionField": "Description",

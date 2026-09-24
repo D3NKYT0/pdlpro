@@ -15,7 +15,7 @@
     "myAccount": "Minha Conta",
     "signIn": "Entrar",
     "download": "Download",
-    "brandHome": "PDL PRO — Início"
+    "brandHome": "{{name}} — Início"
   },
   "footer": {
     "tagline": "Progressão, siege e glória no reino de Aden — um servidor Lineage feito para quem joga de verdade.",
@@ -35,7 +35,7 @@
     "cookies": "Cookies",
     "lgpd": "LGPD",
     "legalHistory": "Histórico legal",
-    "rights": "© {{year}} PDL PRO. Todos os direitos reservados."
+    "rights": "© {{year}} {{name}}. Todos os direitos reservados."
   },
   "faq": {
     "kicker": "Ajuda",

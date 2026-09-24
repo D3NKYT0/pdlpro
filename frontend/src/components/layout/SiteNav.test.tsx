@@ -41,10 +41,14 @@ function CurrentPath() {
   return <p data-testid="current-path">{useLocation().pathname}</p>
 }
 
-function mount(path = '/rankings', resources: Array<{ code: string; enabled: boolean }> = []) {
+function mount(
+  path = '/rankings',
+  resources: Array<{ code: string; enabled: boolean }> = [],
+  serverInfo: Record<string, unknown> = {},
+) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   client.setQueryData(['resources'], resources)
-  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon })
+  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon, ...serverInfo })
   return render(
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={client}>
@@ -105,6 +109,22 @@ it.each(['/', '/home'])('marca Início como página atual em %s', (path) => {
   expect(home).toHaveAttribute('aria-current', 'page')
   expect(home.closest('li')).toHaveClass('active')
   expect(container.querySelector('.site-nav-drawer li.active a')).toBe(home)
+})
+
+it('exibe a marca configurada no painel admin', () => {
+  const { container } = mount('/', [], { name: 'Imperium', slogan: 'O Número Um' })
+
+  expect(screen.getByRole('link', { name: 'Imperium — Início' })).toBeVisible()
+  expect(container.querySelector('.site-brand-copy strong')?.textContent).toBe('Imperium')
+  expect(container.querySelector('.site-brand-copy small')?.textContent).toBe('O Número Um')
+})
+
+it('mantém PDL PRO quando o nome do servidor ainda não veio', () => {
+  const { container } = mount()
+
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toBeVisible()
+  expect(container.querySelector('.site-brand-copy strong')?.textContent).toBe('PDL PRO')
+  expect(container.querySelector('.site-brand-copy small')?.textContent).toBe('Lineage')
 })
 
 it('aponta Início e marca para /home quando o Coming Soon está ligado e há sessão', () => {

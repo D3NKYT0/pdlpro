@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { themeImage } from '../../theme/assets'
 import { useLandingPath } from '../../hooks/useLandingPath'
-import { programsApi } from '../../services/api'
+import { resolveSiteBrand } from '../../lib/site-brand'
+import { programsApi, serverApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
 
@@ -17,6 +18,8 @@ export function SiteFooter() {
     queryFn: programsApi.resources,
     staleTime: 15000,
   })
+  const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
+  const brand = resolveSiteBrand(info.data)
   const visible = (resource?: string) =>
     !resource || !resources.data?.some((r) => r.code === resource && !r.enabled)
   const downloadsEnabled = visible('downloads')
@@ -50,11 +53,11 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="site-footer-shell container">
         <div className="site-footer-brand">
-          <Link className="site-footer-brand-link" to={landingPath} aria-label={t('nav.brandHome')}>
+          <Link className="site-footer-brand-link" to={landingPath} aria-label={t('nav.brandHome', { name: brand.name })}>
             <PdlSymbol className="site-footer-mark" />
             <span className="site-footer-brand-copy">
-              <strong>PDL PRO</strong>
-              <small>Lineage</small>
+              <strong>{brand.name}</strong>
+              <small>{brand.tagline}</small>
             </span>
           </Link>
           <p>{t('footer.tagline')}</p>
@@ -111,7 +114,7 @@ export function SiteFooter() {
 
       <div className="site-footer-bar">
         <div className="site-footer-bar-inner container">
-          <p>{t('footer.rights', { year })}</p>
+          <p>{t('footer.rights', { year, name: brand.name })}</p>
           <span className="site-footer-locale">
             <img src={themeImage('icons/world.png')} alt="" aria-hidden="true" />
             <LanguageSwitcher className="language-switcher site-footer-language" id="footer-language" />

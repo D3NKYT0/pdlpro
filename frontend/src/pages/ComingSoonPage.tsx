@@ -206,7 +206,7 @@ function LaunchParticles({ count = 68 }: { count?: number }) {
 
 function resolveHeroTitle(info: ApiServerInfo, waitingKicker: string) {
   const configured = info.coming_soon_title?.trim() || ''
-  const brand = info.name?.trim() || 'PDL'
+  const brand = info.name?.trim() || 'PDL PRO'
   if (!configured) return brand
   const normalized = configured.toLocaleLowerCase()
   if (GENERIC_TITLES.has(normalized) || normalized === waitingKicker.toLocaleLowerCase()) return brand

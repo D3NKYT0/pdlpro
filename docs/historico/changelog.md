@@ -6,6 +6,14 @@ Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [Unreleased]
+
+### Alterado
+
+- Header, rodapé, aria da marca e copyright da área pública passam a usar o
+  **nome** (e o slogan) configurados em **Painel → Administração → Painel e
+  servidor**, em vez de “PDL PRO” fixo no chrome.
+
 ## [2.5.8] - 2026-09-23
 
 Controles de acesso do Coming Soon, tela admin própria e telas de

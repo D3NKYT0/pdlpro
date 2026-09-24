@@ -25,6 +25,9 @@ na rede privada) é quem recebe 80/443.
 ## Antes de começar
 
 - Docker Engine com Compose v2 (Linux) ou Docker Desktop (Windows).
+  Se ainda não tiver o Docker instalado, passe `--install-docker` ao
+  instalador e ele faz isso automaticamente (requer `apt`, `dnf` ou `yum` e
+  `root`/`sudo`).
 - `curl` no Linux.
 - Um domínio com registro `A` (e `AAAA` só se o IPv6 do servidor funcionar),
   por exemplo `painel.exemplo.com`.
@@ -63,11 +66,22 @@ mkdir -p ~/pdlpro
 chmod 750 ~/pdlpro
 ```
 
+> **Docker não instalado?** Adicione `--install-docker` ao comando do passo 1
+> e o próprio script instala o Docker Engine via `get.docker.com`. Ao fim
+> da instalação você verá um aviso para rodar `newgrp docker` (ou abrir uma
+> nova sessão SSH) para aplicar o grupo sem reiniciar o servidor.
+
 ### 1. Instalar a aplicação
 
 ```bash
 curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
 bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
+```
+
+Se o Docker ainda não estiver instalado, adicione `--install-docker`:
+
+```bash
+bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes --install-docker
 ```
 
 Sem `--yes` o script pergunta o domínio e pede confirmação. `--dir`, `--port`

@@ -686,7 +686,7 @@
     "description": "Nombre, rates y metadatos SEO mostrados en el sitio.",
     "identityEyebrow": "Identidad",
     "identityTitle": "Información del servidor",
-    "identityDescription": "Datos principales mostrados en la página de inicio. Vacío hereda el tema activo y, al final, el .env.",
+    "identityDescription": "Datos principales del encabezado, pie y página de inicio. Vacío hereda el tema activo y, al final, el .env.",
     "name": "Nombre",
     "slogan": "Eslogan",
     "descriptionField": "Descripción",

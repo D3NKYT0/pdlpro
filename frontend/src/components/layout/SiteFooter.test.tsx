@@ -24,10 +24,13 @@ afterEach(() => {
   launch.comingSoon = false
 })
 
-function mount(resources: Array<{ code: string; enabled: boolean }> = []) {
+function mount(
+  resources: Array<{ code: string; enabled: boolean }> = [],
+  serverInfo: Record<string, unknown> = {},
+) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   client.setQueryData(['resources'], resources)
-  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon })
+  client.setQueryData(['server-info'], { coming_soon: launch.comingSoon, ...serverInfo })
   return render(
     <QueryClientProvider client={client}>
       <MemoryRouter>
@@ -78,6 +81,15 @@ it('expõe a comunidade apenas quando a URL do Discord está configurada', () =>
   expect(community).toHaveAttribute('href', 'https://discord.gg/pdl')
   expect(community).toHaveAttribute('target', '_blank')
   expect(community).toHaveAttribute('rel', 'noreferrer')
+})
+
+it('usa a marca do painel no rodapé e no copyright', () => {
+  const { container } = mount([], { name: 'Valorem', slogan: 'O reino desperta.' })
+
+  expect(screen.getByRole('link', { name: 'Valorem — Início' })).toBeVisible()
+  expect(container.querySelector('.site-footer-brand-copy strong')?.textContent).toBe('Valorem')
+  expect(container.querySelector('.site-footer-brand-copy small')?.textContent).toBe('O reino desperta.')
+  expect(screen.getByText(new RegExp(`© ${new Date().getFullYear()} Valorem`))).toBeVisible()
 })
 
 it('leva marca e Início para /home durante o Coming Soon quando há sessão', () => {

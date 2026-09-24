@@ -88,7 +88,7 @@ export function InfoSections({
         <div className="info-overview-grid">
           <article className="info-story-card">
             <span className="info-card-kicker">{t('info.storyKicker')}</span>
-            <h3>{data.name || 'PDL PRO'}</h3>
+            <h3>{data.name?.trim() || 'PDL PRO'}</h3>
             <p>{data.description || t('info.descriptionFallback')}</p>
             <div className="info-story-line">
               <span />

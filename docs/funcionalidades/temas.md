@@ -115,7 +115,10 @@ de arte no media não trocar o template da home.
 O pacote pode declarar identidade pública em `metadados.json`, apontado por
 `theme.json` com `"metadata": "metadados.json"`. Sem o ponteiro o arquivo extra
 é recusado. O merge público é **`.env` → tema → admin**: campo vazio no painel
-herda o tema ativo e, por último, as variáveis de ambiente.
+herda o tema ativo e, por último, as variáveis de ambiente. O **nome** (e o
+slogan) de **Painel → Administração → Painel e servidor** alimentam também o
+header, o rodapé, o aria da marca e o copyright da área pública; tema e `.env`
+só entram quando o admin deixa o campo vazio.
 
 ```json
 {

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { CircleUserRound } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { LANDING_PATHS, useLandingPath } from '../../hooks/useLandingPath'
-import { programsApi } from '../../services/api'
+import { resolveSiteBrand } from '../../lib/site-brand'
+import { programsApi, serverApi } from '../../services/api'
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 import { PdlSymbol } from '../PdlSymbol'
 import { extensionNavItems, isExtensionResourceEnabled } from '../../extensions'
@@ -31,6 +32,8 @@ export function SiteNav() {
     queryFn: programsApi.resources,
     staleTime: 15000,
   })
+  const info = useQuery({ queryKey: ['server-info'], queryFn: serverApi.info })
+  const brand = resolveSiteBrand(info.data)
   const links: Array<{ to: string; label: string; end?: boolean; resource?: string }> = [
     { to: landingPath, label: t('nav.home'), end: true },
     { to: '/info', label: t('nav.info') },
@@ -78,9 +81,9 @@ export function SiteNav() {
   return (
     <nav className={`site-nav${scrolled ? ' scrolled' : ''}`} aria-label={t('nav.main')}>
       <div className="site-nav-shell">
-        <Link className="site-nav-brand" to={landingPath} aria-label={t('nav.brandHome')}>
+        <Link className="site-nav-brand" to={landingPath} aria-label={t('nav.brandHome', { name: brand.name })}>
           <PdlSymbol className="site-brand-mark" />
-          <span className="site-brand-copy"><strong>PDL PRO</strong><small>Lineage</small></span>
+          <span className="site-brand-copy"><strong>{brand.name}</strong><small>{brand.tagline}</small></span>
         </Link>
 
         <button type="button" className="open" aria-label={t('nav.openMenu')} aria-expanded={menuOpen} aria-controls="site-navigation-drawer" onClick={() => setMenuOpen(true)}>
