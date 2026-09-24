@@ -56,7 +56,7 @@ def test_default_is_public_and_preserved_when_no_package_is_active(api):
         "author": "PDL", "description": "Visual clássico do PDL PRO — Aden, tipografia e a identidade original.",
         "active": True, "builtin": True, "base_url": "/theme/default/",
         "stylesheet_url": None, "assets": {},
-        "presentation": None, "layout": None, "metadata": None, "selected_template": None,
+        "presentation": None, "layout": None, "metadata": None, "locales": None, "selected_template": None,
     }
     assert "max-age=0" in response["Cache-Control"]
     assert "must-revalidate" in response["Cache-Control"]
@@ -233,6 +233,72 @@ def test_package_can_include_hero_mp4(api, admin, tmp_path, settings):
     assert activated.status_code == 200
     published = api.get("/api/v1/public/theme/").data
     assert published["assets"]["images/video.mp4"].endswith("images/video.mp4")
+
+
+@pytest.mark.django_db
+def test_package_locales_are_validated_and_published(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    pt = {"auth": {"login": {"title": "Entre no Valorem"}}, "public": {"footer": {"tagline": "Reino"}}}
+    en = {"auth": {"login": {"title": "Enter Valorem"}}}
+    archive = theme_zip(
+        extra={
+            "locales/pt.json": json.dumps(pt),
+            "locales/en.json": json.dumps(en),
+        },
+        manifest_overrides={"locales": "locales"},
+    )
+    installed = api.post(
+        "/api/v1/staff/themes/",
+        {"package": SimpleUploadedFile("valorem.zip", archive, content_type="application/zip")},
+        format="multipart",
+    )
+    assert installed.status_code == 201, installed.data
+    assert installed.data["locales"]["pt"].endswith("locales/pt.json")
+    assert installed.data["locales"]["en"].endswith("locales/en.json")
+    assert "es" not in installed.data["locales"]
+
+    activated = api.post(f"/api/v1/staff/themes/{installed.data['package_id']}/activate/")
+    assert activated.status_code == 200
+    published = api.get("/api/v1/public/theme/").data
+    assert published["locales"]["pt"].endswith("locales/pt.json")
+    storage = tmp_path / "themes" / ThemePackage.objects.get().storage_path
+    assert json.loads((storage / "locales" / "pt.json").read_text(encoding="utf-8")) == pt
+
+
+@pytest.mark.django_db
+def test_locales_without_pointer_or_invalid_namespace_are_rejected(api, admin, tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    api.force_authenticate(admin)
+    missing_pointer = api.post(
+        "/api/v1/staff/themes/",
+        {
+            "package": SimpleUploadedFile(
+                "theme.zip",
+                theme_zip(extra={"locales/pt.json": json.dumps({"auth": {"login": {"title": "X"}}})}),
+                content_type="application/zip",
+            )
+        },
+        format="multipart",
+    )
+    assert missing_pointer.status_code == 400
+    assert "locales" in str(missing_pointer.data).lower() or "theme.json" in str(missing_pointer.data).lower()
+
+    bad_ns = api.post(
+        "/api/v1/staff/themes/",
+        {
+            "package": SimpleUploadedFile(
+                "theme.zip",
+                theme_zip(
+                    extra={"locales/pt.json": json.dumps({"shop": {"title": "Loja"}})},
+                    manifest_overrides={"locales": "locales"},
+                ),
+                content_type="application/zip",
+            )
+        },
+        format="multipart",
+    )
+    assert bad_ns.status_code == 400
 
 
 @pytest.mark.django_db

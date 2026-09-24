@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Adicionado
+
+- Pacotes de tema podem declarar overlays i18n em `locales/{pt,en,es}.json`
+  (`"locales": "locales"` no `theme.json`). A SPA faz merge profundo sobre
+  `auth`/`public`/demais namespaces ao ativar o tema.
+
 ### Alterado
 
 - Header, rodapé, aria da marca e copyright da área pública passam a usar o

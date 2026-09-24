@@ -149,6 +149,8 @@ export interface ApiTheme {
   presentation?: ThemePresentation | null
   layout?: ThemeLayout | null
   metadata?: ThemeSiteMetadata | null
+  /** URLs dos overlays i18n (`locales/{pt,en,es}.json`) do pacote ativo. */
+  locales?: Partial<Record<'pt' | 'en' | 'es', string>> | null
   /** Layout do catálogo escolhido na staff; vazio usa o renderer do ZIP. */
   selected_template?: string | null
 }

@@ -69,6 +69,10 @@ O ZIP contém seus arquivos diretamente na raiz:
 theme.json
 theme.css
 metadados.json
+locales/
+  pt.json
+  en.json
+  es.json
 images/
   logo.png
   background.webp
@@ -89,6 +93,7 @@ Manifesto mínimo:
   "description": "Identidade visual do servidor.",
   "entrypoint": "theme.css",
   "metadata": "metadados.json",
+  "locales": "locales",
   "assets": {
     "images/logo.png": "images/logo.png",
     "images/bg/5.jpg": "images/background.webp"
@@ -155,6 +160,51 @@ só entram quando o admin deixa o campo vazio.
 id de 11 caracteres do YouTube. A equipe edita os mesmos campos em
 **Painel → Administração → Painel e servidor**. `LEGAL_*` continua só no
 `.env`. O pacote versiona `metadados.json` junto com o manifesto.
+
+## Locales (i18n do tema)
+
+O pacote pode sobrescrever strings da SPA com overlays por idioma. Em
+`theme.json`:
+
+```json
+{
+  "locales": "locales"
+}
+```
+
+Arquivos opcionais (pelo menos um quando o ponteiro existe):
+
+```text
+locales/pt.json
+locales/en.json
+locales/es.json
+```
+
+Cada arquivo é um objeto cujas chaves de primeiro nível são namespaces da SPA
+(`common`, `public`, `auth`, `panel`, `admin`, `help`, `personality`). O merge é
+profundo sobre o catálogo embutido; chaves omitidas permanecem as do core.
+Exemplo mínimo para customizar o login:
+
+```json
+{
+  "auth": {
+    "login": {
+      "title": "Entre no Valorem",
+      "submit": "Entrar no reino"
+    }
+  },
+  "public": {
+    "footer": {
+      "tagline": "O reino desperta."
+    }
+  }
+}
+```
+
+Namespaces desconhecidos, JSON vazio e folhas não-string são rejeitados na
+instalação. A API pública expõe as URLs em `locales` no tema ativo; a SPA
+baixa e aplica o overlay ao ativar o pacote (e restaura o Classic ao
+desativar).
 
 Quando `presentation` for usado, ele deve declarar integralmente o contrato do renderer.
 O campo `renderer` escolhe um layout do [catálogo clássico](templates-publicos.md)

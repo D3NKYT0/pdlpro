@@ -789,8 +789,8 @@
     "compatibleDescription": "Paquetes en el formato instalable del PDL 2.0, con el manifiesto en la raíz del ZIP.",
     "rules": {
       "schema": "<s>schemaVersion</s> 1 y <s>pdlVersion</s> 2 en <c>theme.json</c>",
-      "files": "Archivos en la raíz: <c>theme.json</c>, <c>theme.css</c>, <c>metadados.json</c> opcional, carpetas <c>images/</c> y <c>fonts/</c>",
-      "accepted": "Aceptados: CSS, imágenes, fuentes locales y <c>metadados.json</c> apuntado por <c>theme.json</c>",
+      "files": "Archivos en la raíz: <c>theme.json</c>, <c>theme.css</c>, <c>metadados.json</c> y carpeta <c>locales/</c> opcionales, carpetas <c>images/</c> y <c>fonts/</c>",
+      "accepted": "Aceptados: CSS, imágenes, fuentes locales, <c>metadados.json</c> y <c>locales/{pt,en,es}.json</c> apuntados por <c>theme.json</c>",
       "blocked": "Bloqueados: scripts, HTML ejecutable, Markdown y path traversal",
       "renderer": "Catálogo de 20 layouts (Vesperlyn, Ironspine, Warhorn…) o aliases <c>portal-v1</c> y <c>club-v1</c>",
       "activation": "Instalar ≠ activar: actívalo en el catálogo después de la validación"

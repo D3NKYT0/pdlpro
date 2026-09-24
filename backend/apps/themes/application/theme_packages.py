@@ -24,6 +24,12 @@ from apps.themes.application.theme_metadata import (
     empty_theme_metadata,
     parse_theme_metadata,
 )
+from apps.themes.application.theme_locales import (
+    LOCALES_DIR,
+    LOCALE_LANGS,
+    allowed_theme_json_names,
+    resolve_locale_files,
+)
 from apps.themes.domain.repositories import IThemePackageRepository
 from common.architecture.base import UnitOfWork
 from common.architecture.exceptions import (
@@ -105,7 +111,7 @@ def _read_manifest(files: dict[str, bytes]) -> dict:
     allowed = {
         "schemaVersion", "pdlVersion", "id", "name", "version", "author",
         "description", "entrypoint", "assets", "presentation", "layout",
-        "metadata",
+        "metadata", "locales",
     }
     unknown = sorted(set(manifest) - allowed)
     if unknown:
@@ -432,9 +438,9 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
             raise ValidationDomainError(
                 "O pacote contém um tipo de arquivo não permitido.", details={"file": name}
             )
-        if suffix == ".json" and name not in {"theme.json", METADATA_FILENAME}:
+        if suffix == ".json" and name not in allowed_theme_json_names():
             raise ValidationDomainError(
-                "Somente theme.json e metadados.json podem usar o formato JSON.",
+                "Somente theme.json, metadados.json e locales/{pt,en,es}.json podem usar o formato JSON.",
                 details={"file": name},
             )
         if info.file_size > MAX_FILE_BYTES:
@@ -457,6 +463,7 @@ def _validate_package(archive: bytes) -> tuple[dict, dict[str, bytes]]:
         parse_theme_metadata(files[METADATA_FILENAME], manifest["assets"])
     elif METADATA_FILENAME in files:
         raise ValidationDomainError("metadados.json só pode entrar no pacote quando theme.json aponta para ele.")
+    resolve_locale_files(manifest, files)
     for logical_name, asset_path in manifest["assets"].items():
         if not isinstance(logical_name, str) or not logical_name or not isinstance(asset_path, str):
             raise ValidationDomainError("O mapa de assets contém uma entrada inválida.")
@@ -500,6 +507,9 @@ def _live_manifest(theme: Any) -> dict:
     pointer = data.get("metadata")
     if isinstance(pointer, str) and _safe_rel_asset(pointer) and pointer == METADATA_FILENAME:
         stored["metadata"] = pointer
+    locales = data.get("locales")
+    if isinstance(locales, str) and locales == LOCALES_DIR:
+        stored["locales"] = LOCALES_DIR
     return stored
 
 
@@ -516,6 +526,20 @@ def _live_metadata(theme: Any, manifest: dict) -> dict | None:
         return parse_theme_metadata(disk.read_bytes(), manifest.get("assets") or {})
     except (OSError, ValidationDomainError):
         return empty_theme_metadata()
+
+
+def _published_locales(theme: Any, manifest: dict, base_url: str) -> dict[str, str] | None:
+    """URLs públicas dos catálogos i18n instalados no pacote ativo."""
+
+    if manifest.get("locales") != LOCALES_DIR:
+        return None
+    urls: dict[str, str] = {}
+    root = _themes_root() / theme.storage_path
+    for lang in LOCALE_LANGS:
+        rel = f"{LOCALES_DIR}/{lang}.json"
+        if (root / rel).is_file():
+            urls[lang] = f"{base_url}{rel}"
+    return urls or None
 
 
 def _published_presentation(theme: Any, manifest: dict) -> dict | None:
@@ -569,7 +593,7 @@ def serialize_theme(theme: Any | None = None, *, default_template: str = "") -> 
             "author": "PDL", "description": DEFAULT_THEME_DESCRIPTION,
             "active": True, "builtin": True, "base_url": "/theme/default/",
             "stylesheet_url": None, "assets": {}, "presentation": presentation, "layout": None,
-            "metadata": None, "selected_template": chosen,
+            "metadata": None, "locales": None, "selected_template": chosen,
         }
     manifest = _live_manifest(theme)
     base_url = f"{settings.MEDIA_URL.rstrip('/')}/themes/{theme.storage_path}/"
@@ -585,6 +609,7 @@ def serialize_theme(theme: Any | None = None, *, default_template: str = "") -> 
         "presentation": _published_presentation(theme, manifest),
         "layout": manifest.get("layout"),
         "metadata": _live_metadata(theme, manifest),
+        "locales": _published_locales(theme, manifest, base_url),
         "selected_template": resolve_renderer(chosen) if chosen and is_supported_renderer(chosen) else chosen,
     }
 
