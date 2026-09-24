@@ -20,9 +20,11 @@ vi.mock('../../theme/assets', () => ({
 
 afterEach(async () => {
   cleanup()
-  document.getElementById('app-bootstrap-loader')?.remove()
-  document.body.classList.remove('global-loading')
-  document.documentElement.classList.remove('pdl-booting')
+  if (typeof document !== 'undefined') {
+    document.getElementById('app-bootstrap-loader')?.remove()
+    document.body?.classList.remove('global-loading')
+    document.documentElement?.classList.remove('pdl-booting')
+  }
   await i18n.changeLanguage('pt')
 })
 

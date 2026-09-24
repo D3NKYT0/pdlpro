@@ -18,6 +18,7 @@ export const LOADER_STYLE_SELECTOR =
   'link[data-pdl-theme], link[data-pdl-panel-theme], link[data-pdl-installed-theme]'
 
 function waitForStylesheets() {
+  if (typeof document === 'undefined') return Promise.resolve()
   const links = Array.from(
     document.querySelectorAll<HTMLLinkElement>(LOADER_STYLE_SELECTOR),
   )
@@ -40,6 +41,7 @@ function waitForStylesheets() {
 }
 
 function waitForImages() {
+  if (typeof document === 'undefined') return Promise.resolve()
   const images = Array.from(document.images).filter((image) => image.getClientRects().length > 0)
 
   return Promise.all(
@@ -59,38 +61,52 @@ function waitForImages() {
   ).then(() => undefined)
 }
 
-async function waitForLayoutChrome() {
+async function waitForLayoutChrome(isCancelled?: () => boolean) {
   const startedAt = performance.now()
   while (performance.now() - startedAt < 2200) {
+    if (isCancelled?.() || typeof document === 'undefined') return
     const ready =
-      document.documentElement.classList.contains('pdl-public') ||
-      document.documentElement.classList.contains('pdl-panel') ||
+      document.documentElement?.classList.contains('pdl-public') ||
+      document.documentElement?.classList.contains('pdl-panel') ||
       Boolean(document.querySelector(LOADER_STYLE_SELECTOR))
     if (ready) return
     await delay(32)
   }
 }
 
-async function waitForVisualAssets() {
+async function waitForVisualAssets(isCancelled?: () => boolean) {
+  if (isCancelled?.() || typeof document === 'undefined') return
   await nextFrame()
+  if (isCancelled?.() || typeof document === 'undefined') return
   await nextFrame()
-  await waitForLayoutChrome()
+  if (isCancelled?.() || typeof document === 'undefined') return
+  await waitForLayoutChrome(isCancelled)
+  if (isCancelled?.() || typeof document === 'undefined') return
 
-  const fontsReady = document.fonts?.ready?.then(() => undefined) ?? Promise.resolve()
+  const fontsReady =
+    (typeof document !== 'undefined' && document.fonts?.ready?.then(() => undefined)) ||
+    Promise.resolve()
   await Promise.race([Promise.all([fontsReady, waitForStylesheets()]), delay(2200)])
 
+  if (isCancelled?.() || typeof document === 'undefined') return
   await nextFrame()
+  if (isCancelled?.() || typeof document === 'undefined') return
   await Promise.race([waitForImages(), delay(1800)])
 }
 
 const EXIT_MS = 420
 
 export function dismissBootstrapLoader() {
+  if (typeof document === 'undefined') return
   document.documentElement.classList.remove('pdl-booting')
   const node = document.getElementById('app-bootstrap-loader')
   if (!node) return
   node.classList.add('is-leaving', 'global-loader--leaving')
-  window.setTimeout(() => node.remove(), EXIT_MS)
+  window.setTimeout(() => {
+    if (typeof document !== 'undefined') {
+      node.remove()
+    }
+  }, EXIT_MS)
 }
 
 export function GlobalLoadingOverlay() {
@@ -99,7 +115,9 @@ export function GlobalLoadingOverlay() {
   const { loading: authLoading } = useAuth()
   const fetching = useIsFetching()
   const routeKey = `${pathname}${search}`
-  const firstBootRef = useRef(Boolean(document.getElementById('app-bootstrap-loader')))
+  const firstBootRef = useRef(
+    typeof document !== 'undefined' && Boolean(document.getElementById('app-bootstrap-loader')),
+  )
   const [phase, setPhase] = useState<LoaderPhase>(() => (firstBootRef.current ? 'hidden' : 'visible'))
   const [forceReady, setForceReady] = useState(false)
   const phaseRef = useRef<LoaderPhase>(firstBootRef.current ? 'hidden' : 'visible')
@@ -111,7 +129,9 @@ export function GlobalLoadingOverlay() {
     phaseRef.current = next
     setPhase(next)
     setForceReady(false)
-    document.body.classList.add('global-loading')
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('global-loading')
+    }
 
     const safetyTimer = window.setTimeout(() => setForceReady(true), 4500)
     return () => window.clearTimeout(safetyTimer)
@@ -126,7 +146,8 @@ export function GlobalLoadingOverlay() {
     const startedAt = performance.now()
     const minimumDuration = hasCompletedFirstLoad.current ? 260 : 650
 
-    void waitForVisualAssets().then(async () => {
+    void waitForVisualAssets(() => cancelled).then(async () => {
+      if (cancelled) return
       const remainingDuration = minimumDuration - (performance.now() - startedAt)
       if (remainingDuration > 0) await delay(remainingDuration)
       if (cancelled) return
@@ -137,7 +158,9 @@ export function GlobalLoadingOverlay() {
         hasCompletedFirstLoad.current = true
         phaseRef.current = 'hidden'
         setPhase('hidden')
-        document.body.classList.remove('global-loading')
+        if (typeof document !== 'undefined') {
+          document.body.classList.remove('global-loading')
+        }
         return
       }
 
@@ -158,7 +181,9 @@ export function GlobalLoadingOverlay() {
       phaseRef.current = 'hidden'
       setPhase('hidden')
       hasCompletedFirstLoad.current = true
-      document.body.classList.remove('global-loading')
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('global-loading')
+      }
     }, EXIT_MS)
 
     return () => window.clearTimeout(exitTimer)
@@ -166,7 +191,9 @@ export function GlobalLoadingOverlay() {
 
   useEffect(
     () => () => {
-      document.body.classList.remove('global-loading')
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('global-loading')
+      }
     },
     [],
   )
