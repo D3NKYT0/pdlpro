@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+## [2.5.9] - 2026-09-24
+
+Identidade do chrome público pelo nome do servidor, overlays i18n no ZIP do
+tema e administração dos pacotes de recarga (BRL/USD) com catálogo visual,
+consolidados em **24 de setembro de 2026**.
+
 ### Adicionado
 
 - Pacotes de tema podem declarar overlays i18n em `locales/{pt,en,es}.json`

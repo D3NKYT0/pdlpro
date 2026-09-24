@@ -2,10 +2,11 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **24 de setembro de 2026** — Em andamento: **[Unreleased]** —
-pacotes de recarga (BRL/USD) no admin SPA; overlays i18n no ZIP do tema;
-marca do header/rodapé/copyright segue o nome de Painel e servidor.
-Publicado: **[2.5.8]** —
+Última atualização: **24 de setembro de 2026** — Publicado: **[2.5.9]** —
+overlays i18n no ZIP do tema; marca do header/rodapé/copyright segue o nome
+de Painel e servidor; pacotes de recarga (BRL/USD) no admin SPA com catálogo
+em cards no estilo da carteira.
+Anterior: **[2.5.8]** —
 controles de acesso do Coming Soon (cadastro, login staff e conta L2),
 tela admin própria e avisos de fase não liberada; Select sem scroll no
 primeiro clique; correções de segurança (anti-spoofing de IP, timing attack L2,
