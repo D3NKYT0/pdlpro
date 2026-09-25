@@ -3,7 +3,8 @@
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
 Última atualização: **25 de setembro de 2026** — Em andamento: soft-rotate de
-segredos (`SECRET_KEY_FALLBACKS`, MultiFernet, painel admin e Beat).
+segredos; com Ajuda pausada e Atendimento ativo, o menu **Ajuda** aponta para
+`/panel/support`.
 Anterior publicado: **[2.5.10]** —
 com Coming Soon ativo, Início/`home` leva visitante e logado para `/home`
 (sem reabrir a contagem).

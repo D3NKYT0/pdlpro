@@ -39,26 +39,42 @@ import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
 import { extensionNavItems, isExtensionResourceEnabled } from "../../extensions";
 
-const links: Array<{
+type PanelNavLink = {
   to: string;
   labelKey: string;
   icon: LucideIcon;
   end?: boolean;
-}> = [
+  /** Codes that must all be enabled; omit for always-visible items. */
+  resources?: string[];
+  /** Show the waiting-ticket badge on this item. */
+  ticketBadge?: boolean;
+};
+
+const links: PanelNavLink[] = [
   { to: "/panel", labelKey: "nav.dashboard", icon: LayoutDashboard, end: true },
-  { to: "/panel/profile", labelKey: "nav.profile", icon: CircleUserRound },
+  { to: "/panel/profile", labelKey: "nav.profile", icon: CircleUserRound, resources: ["profile"] },
   { to: "/panel/security", labelKey: "nav.security", icon: ShieldCheck },
-  { to: "/panel/accounts", labelKey: "nav.accounts", icon: UserRoundCog },
-  { to: "/panel/inventory", labelKey: "nav.inventory", icon: Package },
-  { to: "/panel/wallet", labelKey: "nav.wallet", icon: WalletCards },
-  { to: "/panel/shop", labelKey: "nav.shop", icon: ShoppingBag },
-  { to: "/panel/marketplace", labelKey: "nav.marketplace", icon: Store },
-  { to: "/panel/auctions", labelKey: "nav.auctions", icon: Gavel },
-  { to: "/panel/games", labelKey: "nav.games", icon: Gamepad2 },
-  { to: "/panel/rewards", labelKey: "nav.rewards", icon: Gift },
-  { to: "/panel/supporters", labelKey: "nav.supporters", icon: Handshake },
-  { to: "/panel/help", labelKey: "nav.help", icon: MessageCircle },
+  { to: "/panel/accounts", labelKey: "nav.accounts", icon: UserRoundCog, resources: ["accounts"] },
+  { to: "/panel/inventory", labelKey: "nav.inventory", icon: Package, resources: ["inventory"] },
+  { to: "/panel/wallet", labelKey: "nav.wallet", icon: WalletCards, resources: ["wallet"] },
+  { to: "/panel/shop", labelKey: "nav.shop", icon: ShoppingBag, resources: ["shop"] },
+  { to: "/panel/marketplace", labelKey: "nav.marketplace", icon: Store, resources: ["marketplace"] },
+  { to: "/panel/auctions", labelKey: "nav.auctions", icon: Gavel, resources: ["auction"] },
+  { to: "/panel/games", labelKey: "nav.games", icon: Gamepad2, resources: ["games"] },
+  { to: "/panel/rewards", labelKey: "nav.rewards", icon: Gift, resources: ["games"] },
+  { to: "/panel/supporters", labelKey: "nav.supporters", icon: Handshake, resources: ["supporters"] },
 ];
+
+/** Ajuda no menu: Denkynho quando ativo; senão Atendimento no mesmo slot. */
+function helpNavLink(helpOn: boolean, supportOn: boolean): PanelNavLink | null {
+  if (helpOn) {
+    return { to: "/panel/help", labelKey: "nav.help", icon: MessageCircle, ticketBadge: supportOn };
+  }
+  if (supportOn) {
+    return { to: "/panel/support", labelKey: "nav.help", icon: MessageCircle, ticketBadge: true };
+  }
+  return null;
+}
 
 export function PrivateLayout() {
   const { t } = useTranslation("panel");
@@ -70,19 +86,6 @@ export function PrivateLayout() {
     queryFn: programsApi.resources,
     staleTime: 15000,
   });
-  const codes: Record<string, string> = {
-    profile: "profile",
-    accounts: "accounts",
-    wallet: "wallet",
-    shop: "shop",
-    inventory: "inventory",
-    marketplace: "marketplace",
-    auctions: "auction",
-    games: "games",
-    rewards: "games",
-    supporters: "supporters",
-    help: "help",
-  };
   const resourceEnabled = (code: string) =>
     !resources.data?.some((r) => r.code === code && !r.enabled);
   const { user, logout } = useAuth();
@@ -96,18 +99,25 @@ export function PrivateLayout() {
     ? (isAdmin ? theme.presentation?.shells?.admin : theme.presentation?.shells?.panel)
     : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
+  const helpOn = resourceEnabled("help");
+  const supportOn = resourceEnabled("support");
   const support = useQuery({
     queryKey: ["support-tickets"],
     queryFn: supportApi.list,
-    enabled: Boolean(user) && resourceEnabled("support"),
+    enabled: Boolean(user) && supportOn,
   });
   const pet = useQuery({
     queryKey: ["denkynho-pet", user?.id],
     queryFn: contentApi.denkynho,
-    enabled: Boolean(user),
+    enabled: Boolean(user) && helpOn,
     staleTime: 15000,
   });
   const waitingSupport = support.data?.summary.waiting_user ?? 0;
+  const helpLink = helpNavLink(helpOn, supportOn);
+  const panelLinks = [
+    ...links.filter((link) => !link.resources?.some((code) => !resourceEnabled(code))),
+    ...(helpLink ? [helpLink] : []),
+  ];
 
   usePanelTheme();
 
@@ -159,22 +169,13 @@ export function PrivateLayout() {
               role="navigation"
               aria-label={t("brand")}
             >
-              {links
-                .filter(
-                  (link) =>
-                    !resources.data?.some(
-                      (r) =>
-                        r.code === codes[link.to.split("/").pop() || ""] &&
-                        !r.enabled,
-                    ),
-                )
-                .map((link) => {
+              {panelLinks.map((link) => {
                   const Icon = link.icon;
                   return (
                     <NavLink key={link.to} to={link.to} end={link.end}>
                       <Icon aria-hidden="true" />
                       <span>{t(link.labelKey)}</span>
-                      {link.to === "/panel/help" && waitingSupport ? (
+                      {link.ticketBadge && waitingSupport ? (
                         <b className="menu-badge">{waitingSupport}</b>
                       ) : null}
                     </NavLink>
@@ -254,7 +255,7 @@ export function PrivateLayout() {
         />
         <header className="panel-topbar" data-theme-part="panel-topbar" aria-label={t("shell.topbar")}>
           <div className="panel-topbar-start">
-            {!location.pathname.startsWith("/panel/help") ? (
+            {helpOn && !location.pathname.startsWith("/panel/help") ? (
               <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
             ) : null}
           </div>

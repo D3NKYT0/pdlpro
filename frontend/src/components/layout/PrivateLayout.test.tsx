@@ -125,7 +125,31 @@ it('mostra resposta da equipe na Ajuda, sem item de Atendimento no menu', () => 
   expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
   const help = screen.getByRole('link', { name: /Ajuda/ })
   expect(help).toBeVisible()
+  expect(help).toHaveAttribute('href', '/panel/help')
   expect(help).toHaveTextContent('2')
+})
+
+it('quando Ajuda está pausada, o menu mantém Ajuda apontando para Atendimento', () => {
+  resourcesMock.data = [{ code: 'help', enabled: false }]
+  supportMock.waitingUser = 3
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
+  const help = screen.getByRole('link', { name: /Ajuda/ })
+  expect(help).toBeVisible()
+  expect(help).toHaveAttribute('href', '/panel/support')
+  expect(help).toHaveTextContent('3')
+  expect(screen.queryByRole('button', { name: 'Denkynho: ajuda nesta tela' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: /Denkynho|sono|fome/i })).not.toBeInTheDocument()
+})
+
+it('esconde Ajuda do menu quando Ajuda e Atendimento estão pausados', () => {
+  resourcesMock.data = [
+    { code: 'help', enabled: false },
+    { code: 'support', enabled: false },
+  ]
+  renderAt('/panel/profile')
+  expect(screen.queryByRole('link', { name: 'Ajuda' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: 'Atendimento' })).not.toBeInTheDocument()
 })
 
 it('distingue visualmente a administração dentro do mesmo renderer', () => {

@@ -18,7 +18,8 @@ A pergunta aparece imediatamente com o estado de espera viva: pose **pensando** 
 
 Ao falar de si, o Denkynho se apresenta como o alter ego virtual do Denky e relaciona sua curiosidade, visão estratégica e espírito jogador à missão de acompanhar a comunidade. Perguntas sobre o criador recebem apenas uma síntese profissional pública — arquitetura de sistemas, liderança técnica, desenvolvimento e tecnologias — sem nome civil, empregador, localização, telefone ou outros dados pessoais. A resposta oferece **Conhecer o criador**, sempre apontando para `https://denky.dev.br/` em nova aba; nenhuma URL produzida pelo modelo é transformada nesse botão.
 
-Fora de `/panel/help`, o shell do painel mostra um mini-mascote com o humor atual. O toque abre a
+Fora de `/panel/help`, o shell do painel mostra um mini-mascote com o humor atual — desde que o
+recurso `help` esteja ativo; com a Ajuda pausada, o botão some da barra superior. O toque abre a
 ajuda contextual da tela em um painel com visual próprio (fundo teal/dourado, distinto do chrome do
 painel), fechamento pelo botão vermelho com **X**, barras de necessidade, atalhos para o cantinho
 do mascote e, quando há aviso de necessidade, um atalho de cuidado correspondente. A última coluna
@@ -192,7 +193,13 @@ Desabilitar a geração, atingir timeout ou receber uma saída inválida resulta
 
 A API antiga, sem `conversation: true`, mantém o contrato de busca editorial. Perguntas com correspondência segura recebem resposta curta, detalhes e fonte; as demais pedem esclarecimento. [dialogue.ts](../../frontend/src/components/help/dialogue.ts) e [personality.ts](../../frontend/src/components/help/personality.ts) mantêm o repertório de contingência e as boas-vindas.
 
-**Atendimento da equipe** abre `/panel/support`. Essa tela não aparece no menu do painel: o jogador chega a ela pela Ajuda (botão no hero ou chamado pré-preenchido da ajuda contextual). O assunto e a tela de origem podem vir preenchidos; o histórico do chat nunca é enviado junto. Chamados aguardando resposta do jogador aparecem como selo no item Ajuda.
+**Atendimento da equipe** abre `/panel/support`. Com a Ajuda (Denkynho) ativa, essa tela
+não aparece como item próprio no menu: o jogador chega pela Ajuda (botão no hero ou chamado
+pré-preenchido da ajuda contextual). Se o recurso `help` estiver pausado e `support`
+continuar ativo, o mesmo slot **Ajuda** do menu aponta para `/panel/support`. O assunto e a
+tela de origem podem vir preenchidos; o histórico do chat nunca é enviado junto. Chamados
+aguardando resposta do jogador aparecem como selo no item Ajuda (seja `/panel/help` ou o
+fallback `/panel/support`).
 
 ## Catálogo inicial
 

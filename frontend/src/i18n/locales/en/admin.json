@@ -1416,7 +1416,7 @@
       "accounts": { "name": "L2 account", "description": "Link, characters and Lineage sheet." },
       "progress": { "name": "Level and achievements", "description": "Level, XP, achievements and account rewards on the Dashboard." },
       "notifications": { "name": "Notices", "description": "Top-bar bell and notice history." },
-      "support": { "name": "Support tickets", "description": "Staff tickets; players open them from Help." },
+      "support": { "name": "Support tickets", "description": "Staff tickets: players open them from Help; if Help is paused, the menu points to Support." },
       "help": { "name": "Help", "description": "Handbook, Denkynho and frequently asked questions." },
       "news": { "name": "News", "description": "Public site news." },
       "rankings": { "name": "Rankings", "description": "Public server rankings." },

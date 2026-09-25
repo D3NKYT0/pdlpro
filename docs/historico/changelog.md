@@ -16,6 +16,13 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   `manage.py apply_secret_rotations` e Beat `secret-maintenance`. Guia:
   [Rotação de segredos](../operacao/rotacao-de-segredos.md).
 
+### Alterado
+
+- Com o recurso Ajuda (Denkynho) pausado e Atendimento ativo, o item **Ajuda** do
+  menu do painel permanece e aponta para `/panel/support`, inclusive com o selo de
+  chamados aguardando resposta. O mini-mascote da barra superior também some.
+  Guia: [Ajuda e Denkynho](../funcionalidades/ajuda.md).
+
 ## [2.5.10] - 2026-09-24
 
 Coming Soon sem reabrir a contagem ao pedir Início, consolidado em

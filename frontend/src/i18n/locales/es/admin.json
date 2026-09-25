@@ -1416,7 +1416,7 @@
       "accounts": { "name": "Cuenta L2", "description": "Vínculo, personajes y ficha Lineage." },
       "progress": { "name": "Nivel y logros", "description": "Nivel, XP, logros y premios de la cuenta en el Panel." },
       "notifications": { "name": "Avisos", "description": "Campana de la barra superior e historial de avisos." },
-      "support": { "name": "Atención", "description": "Tickets del equipo; el jugador entra por Ayuda." },
+      "support": { "name": "Atención", "description": "Tickets del equipo: el jugador entra por Ayuda; si Ayuda está pausada, el menú apunta a Atención." },
       "help": { "name": "Ayuda", "description": "Manual, Denkynho y preguntas frecuentes." },
       "news": { "name": "Noticias", "description": "Noticias públicas del sitio." },
       "rankings": { "name": "Rankings", "description": "Rankings públicos del servidor." },
