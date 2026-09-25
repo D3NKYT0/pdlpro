@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
+import { useLandingPath } from '../hooks/useLandingPath'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 import { beginOAuth } from '../lib/oauth'
 import { authApi } from '../services/api'
@@ -21,6 +22,7 @@ export function RegisterPage() {
   const navigate = useNavigate()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const launch = useLaunchAccess()
+  const landingPath = useLandingPath()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -50,7 +52,7 @@ export function RegisterPage() {
           {launch.playerLoginOpen ? (
             <Link to="/login">{t('common.enterRealm')}</Link>
           ) : (
-            <Link to="/home">{t('common.backHome')}</Link>
+            <Link to={landingPath}>{t('common.backHome')}</Link>
           )}
         </div>
       </AuthPanel>

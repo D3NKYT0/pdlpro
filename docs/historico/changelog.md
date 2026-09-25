@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Alterado
+
+- Com Coming Soon ativo, os atalhos de Início (menu, marca, rodapé, temas, login
+  fechado e “voltar ao site”) apontam para `/home` também para visitante, não só
+  para quem já entrou — evita reabrir a contagem regressiva a cada “home”.
+
 ## [2.5.9] - 2026-09-24
 
 Identidade do chrome público pelo nome do servidor, overlays i18n no ZIP do

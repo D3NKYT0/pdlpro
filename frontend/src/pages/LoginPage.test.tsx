@@ -104,6 +104,7 @@ it('mostra tela de login fechado e libera formulário para a equipe', async () =
   } as Awaited<ReturnType<typeof serverApi.info>>)
   const user = mount('/login')
   expect(await screen.findByRole('heading', { name: 'Login ainda não liberado' })).toBeVisible()
+  expect(screen.getByRole('link', { name: 'Voltar ao início' })).toHaveAttribute('href', '/home')
   expect(screen.queryByRole('button', { name: 'Entrar no Reino' })).toBeNull()
   await user.click(screen.getByRole('button', { name: 'Sou da equipe' }))
   expect(await screen.findByRole('heading', { name: 'Acesso da equipe' })).toBeVisible()

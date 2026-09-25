@@ -139,11 +139,11 @@ it('aponta a home do tema para /home durante o Coming Soon quando há sessão', 
   expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/home')
 })
 
-it('mantém a home do tema na raiz para visitante durante o Coming Soon', () => {
+it('aponta a home do tema para /home para visitante durante o Coming Soon', () => {
   renderChrome(true)
 
-  expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/')
-  expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/')
+  expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'Página inicial' })).toHaveAttribute('href', '/home')
 })
 
 it('no Classic usa o brasão e cenas nos cards, sem countdown', async () => {

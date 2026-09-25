@@ -2,7 +2,8 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **24 de setembro de 2026** — Publicado: **[2.5.9]** —
+Última atualização: **24 de setembro de 2026** — Em curso: Coming Soon leva
+Início/`home` para `/home` também para visitante. Publicado: **[2.5.9]** —
 overlays i18n no ZIP do tema; marca do header/rodapé/copyright segue o nome
 de Painel e servidor; pacotes de recarga (BRL/USD) no admin SPA com catálogo
 em cards no estilo da carteira.

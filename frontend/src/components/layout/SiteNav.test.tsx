@@ -137,12 +137,12 @@ it('aponta Início e marca para /home quando o Coming Soon está ligado e há se
   expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/home')
 })
 
-it('mantém Início na raiz para visitante durante o Coming Soon', () => {
+it('aponta Início e marca para /home para visitante durante o Coming Soon', () => {
   launch.comingSoon = true
   mount('/news')
 
-  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
-  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/')
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/home')
 })
 
 it('mantém Início na raiz com o site aberto mesmo autenticado', () => {
@@ -152,7 +152,16 @@ it('mantém Início na raiz com o site aberto mesmo autenticado', () => {
   expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
 })
 
-it('clicar em Início durante o Coming Soon mantém o visitante autenticado na landing', async () => {
+it('clicar em Início durante o Coming Soon leva o visitante à landing', async () => {
+  const user = userEvent.setup()
+  launch.comingSoon = true
+  mount('/news')
+
+  await user.click(screen.getByRole('link', { name: 'Início' }))
+  expect(screen.getByTestId('current-path').textContent).toBe('/home')
+})
+
+it('clicar em Início durante o Coming Soon mantém o autenticado na landing', async () => {
   const user = userEvent.setup()
   session.user = { username: 'root' }
   launch.comingSoon = true

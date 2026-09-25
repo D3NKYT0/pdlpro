@@ -102,12 +102,13 @@ it('leva marca e Início para /home durante o Coming Soon quando há sessão', (
   expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/home')
 })
 
-it('mantém Início na raiz para visitante durante o Coming Soon', () => {
+it('leva marca e Início para /home para visitante durante o Coming Soon', () => {
   launch.comingSoon = true
 
   mount()
 
-  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/')
+  expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/home')
+  expect(screen.getByRole('link', { name: 'PDL PRO — Início' })).toHaveAttribute('href', '/home')
 })
 
 it('oculta links de conteúdo pausados no rodapé', () => {

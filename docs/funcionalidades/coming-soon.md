@@ -32,10 +32,10 @@ A ativação sem data de lançamento é rejeitada pela API.
 1. Visitantes em `/` veem a tela full-bleed com contagem regressiva.
 2. A landing permanece em `/home` (com chrome público). Sem Coming Soon, `/home`
    redireciona para `/`.
-   Com o modo ativo, os atalhos de Início do chrome (menu, marca, rodapé, tema
-   `portal-v1` e “voltar ao site” do painel) apontam para `/home` quando há sessão,
-   para que quem já entrou não volte à contagem regressiva. Visitante anônimo e site
-   aberto continuam indo para `/`.
+   Com o modo ativo, os atalhos de Início do chrome (menu, marca, rodapé, temas
+   públicos, login/cadastro fechados e “voltar ao site” do painel) apontam para
+   `/home` — visitante ou logado — para não reabrir a contagem a cada clique.
+   Com o site aberto, os atalhos voltam para `/`.
 3. O kicker fixo é “Em breve”; o hero usa o título de lançamento ou o nome do servidor,
    o slogan do painel e a descrição (ou o subtítulo de lançamento, se houver).
 4. A coluna da esquerda lista crônica, nível máximo, rates e encantamento; a da

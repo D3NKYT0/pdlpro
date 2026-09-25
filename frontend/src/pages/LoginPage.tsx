@@ -10,22 +10,16 @@ import toast from 'react-hot-toast'
 import { DiscordIcon, GoogleIcon } from '../components/BrandIcons'
 import { AuthField, AuthPanel, AuthPassword } from '../components/auth/AuthPanel'
 import { useAuth } from '../contexts/AuthContext'
+import { useLandingPath } from '../hooks/useLandingPath'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 import { authApi, isApiError, isTwoFactorChallenge } from '../services/api'
 import { credentialJSON, requestOptions } from '../lib/webauthn'
 import { beginOAuth } from '../lib/oauth'
 import { hcaptchaLanguage } from '../i18n/locale'
 
-const LANDING_PATH = '/home'
-
 function safeNext(value: string | null) {
   if (value && value.startsWith('/') && !value.startsWith('//')) return value
   return '/panel'
-}
-
-function alreadyLoggedInDestination(nextParam: string | null) {
-  if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) return nextParam
-  return LANDING_PATH
 }
 
 export function LoginPage() {
@@ -33,6 +27,14 @@ export function LoginPage() {
   const { user, loading, login, verifyTwoFactor, refreshUser } = useAuth()
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const launch = useLaunchAccess()
+  const landingPath = useLandingPath()
+
+  function alreadyLoggedInDestination(nextParam: string | null) {
+    if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) return nextParam
+    // Alias estável: com Coming Soon fica na landing; sem, o PublicLayout manda para `/`.
+    return '/home'
+  }
+
   const navigate = useNavigate()
   const location = useLocation()
   const [params] = useSearchParams()
@@ -118,7 +120,7 @@ export function LoginPage() {
         <p className="muted">{t('login.closedHint')}</p>
         <div className="h-link">
           <button type="button" onClick={() => setStaffUnlock(true)}>{t('login.staffAccess')}</button>
-          <Link to="/home">{t('common.backHome')}</Link>
+          <Link to={landingPath}>{t('common.backHome')}</Link>
         </div>
       </AuthPanel>
     )
@@ -173,7 +175,7 @@ export function LoginPage() {
           {launch.registrationOpen ? (
             <Link to="/register">{t('login.createAccount')}</Link>
           ) : (
-            <Link to="/home">{t('common.backHome')}</Link>
+            <Link to={landingPath}>{t('common.backHome')}</Link>
           )}
         </div>
       </form>

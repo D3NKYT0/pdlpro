@@ -235,6 +235,12 @@ it('aponta a home do tema para /home durante o Coming Soon quando há sessão', 
   expect(document.querySelector('.club-logo--footer')).toHaveAttribute('href', '/home')
 })
 
+it('aponta a home do tema para /home para visitante durante o Coming Soon', () => {
+  renderChrome(true)
+  expect(screen.getAllByRole('link', { name: 'HOME' })[0]).toHaveAttribute('href', '/home')
+  expect(document.querySelector('.club-logo--footer')).toHaveAttribute('href', '/home')
+})
+
 it('com sessão o header usa Minha Conta e Download, sem Painel nem JOGAR AGORA', () => {
   session.user = { username: 'root' }
   renderChrome()
