@@ -65,6 +65,16 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         self._hasher = hasher or LineagePasswordHasher()
         self._engine: Engine | None = None
 
+    def reset_engine(self) -> None:
+        """Descarta o pool SQLAlchemy para recriar com as settings atuais (hot-apply L2)."""
+
+        if self._engine is not None:
+            try:
+                self._engine.dispose()
+            except Exception:  # noqa: BLE001, S110
+                pass
+            self._engine = None
+
     def _engine_or_create(self) -> Engine:
         if self._engine is None:
             user = settings.LINEAGE_DB_USER

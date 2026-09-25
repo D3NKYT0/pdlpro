@@ -8,11 +8,20 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Adicionado
+
+- Configurador admin de integrações em `/panel/admin/integrations` (abas
+  Pagamentos, Lineage/Game, SMTP): blobs Fernet no banco, API mascarada,
+  hot-apply via revisão no cache e `reset_engine` do gateway SQLAlchemy.
+  Guia: [Integrações admin](../operacao/integracoes-admin.md).
+
 ### Alterado
 
 - O head do SPA aplica o overlay completo do tema ativo em runtime: title/OG/Twitter,
   apple-mobile, todos os favicons/`apple-touch`/`mask-icon` e `theme-color` a partir
   de `metadados.json` + assets (o `index.html` continua só o shell de boot).
+- Settings de e-mail passam a declarar `EMAIL_HOST` / `EMAIL_PORT` / TLS / usuário /
+  senha no boot; o overlay do painel pode sobrescrevê-los em runtime.
 
 ## [2.5.11] - 2026-09-25
 

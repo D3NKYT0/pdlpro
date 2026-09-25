@@ -133,6 +133,12 @@ Mantenha as flags de ativação como `false` até as credenciais, URLs públicas
 | Variável | Descrição |
 |---|---|
 | `EMAIL_BACKEND` | Backend de e-mail do Django; o padrão escreve no console |
+| `EMAIL_HOST` | Host SMTP (quando o backend é SMTP) |
+| `EMAIL_PORT` | Porta SMTP (padrão `587`) |
+| `EMAIL_USE_TLS` | STARTTLS (padrão `true`) |
+| `EMAIL_USE_SSL` | SSL implícito (padrão `false`; não combine com TLS) |
+| `EMAIL_HOST_USER` | Usuário SMTP |
+| `EMAIL_HOST_PASSWORD` | Senha SMTP |
 | `DEFAULT_FROM_EMAIL` | Remetente padrão |
 | `VAPID_PUBLIC_KEY` | Chave pública entregue ao navegador |
 | `VAPID_PRIVATE_KEY` | Chave privada usada para assinar push |
@@ -140,7 +146,11 @@ Mantenha as flags de ativação como `false` até as credenciais, URLs públicas
 
 As chaves VAPID formam um par e devem ser armazenadas como segredo fora do Git. A funcionalidade de push fica indisponível quando o par não está configurado.
 
-Parâmetros SMTP como host, porta, TLS, usuário e senha também precisam existir nos settings Django usados pela implantação. Confirme a configuração efetiva com `python manage.py diffsettings` antes de depender de envio real.
+Stripe, Mercado Pago, Lineage/game e SMTP também podem ser gerenciados em
+runtime pelo painel **Integrações** (`/panel/admin/integrations`), com blobs
+Fernet no banco e hot-apply sem restart. O `.env` continua obrigatório para o
+bootstrap (`SECRET_KEY`, `DATABASE_URL`, `REDIS_*`, `PDL_DATA_ENCRYPTION_KEY`).
+Guia: [Configurador admin de integrações](../operacao/integracoes-admin.md).
 
 ## Operação
 

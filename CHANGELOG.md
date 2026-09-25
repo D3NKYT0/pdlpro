@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **25 de setembro de 2026** — Publicado **[2.5.11]** —
+Última atualização: **25 de setembro de 2026** — Unreleased: configurador admin
+de integrações (Stripe/MP, Lineage/game, SMTP) cifrado com hot-apply; overlay
+completo do head do tema no SPA. Publicado **[2.5.11]** —
 soft-rotate de segredos (`SECRET_KEY_FALLBACKS`, MultiFernet, painel admin e
 Beat); com Ajuda pausada e Atendimento ativo, o menu **Ajuda** aponta para
 `/panel/support` e o mini-mascote some.

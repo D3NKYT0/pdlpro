@@ -32,6 +32,11 @@ from apps.staff.presentation.views.financial_reports import (
     PaymentReportView,
     ReconciliationReportView,
 )
+from apps.staff.presentation.views.integrations import (
+    StaffIntegrationsSectionView,
+    StaffIntegrationsStatusView,
+    StaffIntegrationsTestView,
+)
 from apps.staff.presentation.views.item_observation import (
     ObservationAccessView,
     ObservationCategoriesView,
@@ -70,6 +75,17 @@ urlpatterns = [
         "secrets/jobs/<uuid:job_id>/apply/",
         StaffSecretsApplyJobView.as_view(),
         name="staff-secrets-apply-job",
+    ),
+    path("integrations/", StaffIntegrationsStatusView.as_view(), name="staff-integrations-status"),
+    path(
+        "integrations/<str:section>/",
+        StaffIntegrationsSectionView.as_view(),
+        name="staff-integrations-section",
+    ),
+    path(
+        "integrations/<str:section>/test/",
+        StaffIntegrationsTestView.as_view(),
+        name="staff-integrations-test",
     ),
     path("financial-reports/balances/", BalanceReportView.as_view(), name="staff-report-balances"),
     path("financial-reports/cash-flow/", CashFlowReportView.as_view(), name="staff-report-cash-flow"),

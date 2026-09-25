@@ -12,7 +12,7 @@ class StaffConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.staff"
     label = "staff"
-    verbose_name=_("Staff")
+    verbose_name = _("Staff")
 
     def ready(self):
         from common.di.bootstrap import DependencyInjection

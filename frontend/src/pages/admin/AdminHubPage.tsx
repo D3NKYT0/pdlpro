@@ -25,6 +25,7 @@ import {
   Unlink,
   Gavel,
   KeyRound,
+  PlugZap,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
@@ -59,6 +60,7 @@ const categories: Category[] = [
     entries: [
       { to: '/panel/admin/resources', key: 'resources', icon: Settings2 },
       { to: '/panel/admin/themes', key: 'themes', icon: Palette },
+      { to: '/panel/admin/integrations', key: 'integrations', icon: PlugZap },
       { to: '/panel/admin/secrets', key: 'secrets', icon: KeyRound },
       { to: '/api/docs/swagger-ui/', key: 'api', icon: Braces, external: true },
       { to: '/admin/', key: 'djangoAdmin', icon: ExternalLink, external: true },

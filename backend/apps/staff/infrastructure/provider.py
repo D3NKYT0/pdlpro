@@ -13,6 +13,11 @@ from apps.staff.application.cms import (
     UpsertStaffWikiUseCase,
 )
 from apps.staff.application.financial_reports import GetFinancialReportUseCase
+from apps.staff.application.integrations import (
+    GetIntegrationsStatusUseCase,
+    PatchIntegrationSectionUseCase,
+    TestIntegrationSectionUseCase,
+)
 from apps.staff.application.notifications import (
     DeleteStaffNotificationUseCase,
     ListStaffNotificationsUseCase,
@@ -46,6 +51,11 @@ from apps.staff.application.use_cases import (
     UpsertStaffShopItemUseCase,
 )
 from apps.staff.domain.financial_reports import IFinancialReportRepository
+from apps.staff.domain.integrations import (
+    IIntegrationConfigStore,
+    IIntegrationProbe,
+    IRuntimeSettingsApplier,
+)
 from apps.staff.domain.observability import IObservabilityLogRepository
 from apps.staff.domain.operational_reports import IOperationalReportRepository
 from apps.staff.domain.secrets import (
@@ -55,6 +65,11 @@ from apps.staff.domain.secrets import (
     ISecretsEnvStore,
 )
 from apps.staff.infrastructure.financial_reports import DjangoFinancialReportRepository
+from apps.staff.infrastructure.integrations import (
+    DjangoIntegrationConfigStore,
+    DjangoIntegrationProbe,
+    DjangoRuntimeSettingsApplier,
+)
 from apps.staff.infrastructure.observability import DjangoObservabilityLogRepository
 from apps.staff.infrastructure.operational_reports import (
     DjangoOperationalReportRepository,
@@ -90,6 +105,9 @@ class StaffProvider(AppProvider):
         container.register(ISealedDataReencryptor, DjangoSealedDataReencryptor, lifetime=Lifetime.SCOPED)
         container.register(IGlobalSessionRevoker, DjangoGlobalSessionRevoker, lifetime=Lifetime.SCOPED)
         container.register(ISecretRotationJobStore, DjangoSecretRotationJobStore, lifetime=Lifetime.SCOPED)
+        container.register(IIntegrationConfigStore, DjangoIntegrationConfigStore, lifetime=Lifetime.SCOPED)
+        container.register(IRuntimeSettingsApplier, DjangoRuntimeSettingsApplier, lifetime=Lifetime.SCOPED)
+        container.register(IIntegrationProbe, DjangoIntegrationProbe, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetFinancialReportUseCase,
             GetOperationalReportUseCase,
@@ -98,6 +116,9 @@ class StaffProvider(AppProvider):
             RequestSecretActionUseCase,
             ApplySecretRotationJobUseCase,
             AutoSecretMaintenanceUseCase,
+            GetIntegrationsStatusUseCase,
+            PatchIntegrationSectionUseCase,
+            TestIntegrationSectionUseCase,
             GetPanelSettingsUseCase,
             UpdatePanelSettingsUseCase,
             ListStaffServicePricesUseCase,

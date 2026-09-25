@@ -250,6 +250,34 @@ class DependencyInjectionMiddleware:
             request.container = None
 
 
+class IntegrationOverlayMiddleware:
+    """Hot-apply: se a revisão de integrações no cache mudou, reaplica o overlay nos settings.
+
+    Roda só em rotas ``/api/`` para manter o custo baixo. Falhas são ignoradas (boot sem
+    migration, cache indisponível). Prefere o container da requisição quando disponível.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.path_info.startswith("/api/"):
+            try:
+                from apps.staff.domain.integrations import IRuntimeSettingsApplier
+                from apps.staff.infrastructure.integrations import (
+                    DjangoRuntimeSettingsApplier,
+                )
+
+                container = getattr(request, "container", None)
+                if container is not None and container.is_registered(IRuntimeSettingsApplier):
+                    container.resolve(IRuntimeSettingsApplier).refresh_if_stale()
+                else:
+                    DjangoRuntimeSettingsApplier().refresh_if_stale()
+            except Exception:  # noqa: BLE001, S110
+                pass
+        return self.get_response(request)
+
+
 class ApiErrorContractMiddleware:
     """Uniformiza respostas de erro das rotas /api/ em JSON.
 

@@ -6,6 +6,29 @@ from django.utils.translation import gettext_lazy as _
 from common.models import BaseModel, InternalModel
 
 
+class IntegrationSettings(BaseModel):
+    """Singleton com blobs Fernet das seções de integração (pagamentos, L2, SMTP)."""
+
+    payments_blob = models.TextField(blank=True, default="")
+    lineage_blob = models.TextField(blank=True, default="")
+    smtp_blob = models.TextField(blank=True, default="")
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="integration_settings_updates",
+    )
+
+    class Meta:
+        verbose_name = _("Configuração de integrações")
+        verbose_name_plural = _("Configurações de integrações")
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        return super().save(*args, **kwargs)
+
+
 class SecretRotationJob(BaseModel):
     """Pedido auditável de rotação/prune/reencrypt de segredos operacionais."""
 

@@ -237,6 +237,35 @@ export interface ApiSecretActionResult {
   details: Record<string, unknown>
 }
 
+export interface ApiIntegrationField {
+  key: string
+  configured: boolean
+  fingerprint: string
+  value: string | number | boolean | null
+  masked: string
+}
+
+export interface ApiIntegrationSection {
+  section: string
+  fields: ApiIntegrationField[]
+  updated_at: string | null
+}
+
+export interface ApiIntegrationsStatus {
+  revision: number
+  payments: ApiIntegrationSection
+  lineage: ApiIntegrationSection
+  smtp: ApiIntegrationSection
+}
+
+export interface ApiIntegrationProbeResult {
+  ok: boolean
+  message: string
+  details: Record<string, unknown>
+}
+
+export type IntegrationSectionId = 'payments' | 'lineage' | 'smtp'
+
 export const staffApi = {
   panel: () => request<ApiPanelSettings>('/staff/panel/'),
   savePanel: (payload: Partial<ApiPanelSettings>) =>
@@ -335,4 +364,15 @@ export const staffApi = {
     }),
   secretsApplyJob: (jobId: string) =>
     request<ApiSecretActionResult>(`/staff/secrets/jobs/${jobId}/apply/`, { method: 'POST' }),
+  integrationsStatus: () => request<ApiIntegrationsStatus>('/staff/integrations/'),
+  saveIntegrationSection: (section: IntegrationSectionId, payload: Record<string, unknown>) =>
+    request<ApiIntegrationsStatus>(`/staff/integrations/${section}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    }),
+  testIntegrationSection: (section: IntegrationSectionId, payload?: { to_email?: string }) =>
+    request<ApiIntegrationProbeResult>(`/staff/integrations/${section}/test/`, {
+      method: 'POST',
+      body: JSON.stringify(payload || {}),
+    }),
 }

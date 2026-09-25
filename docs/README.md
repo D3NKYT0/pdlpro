@@ -91,6 +91,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Implantação](operacao/implantacao.md) | Topologias, clone Git, proxy, checklist e rollback |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
 | [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, MultiFernet, painel admin e Beat |
+| [Configurador admin de integrações](operacao/integracoes-admin.md) | Stripe/MP, Lineage/game e SMTP cifrados com hot-apply |
 | [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
 | [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, Nginx, FTP, Redis da install, sessão e disco |
 
