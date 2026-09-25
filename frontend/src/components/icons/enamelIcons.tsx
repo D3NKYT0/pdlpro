@@ -263,6 +263,76 @@ export function KeyRingIcon(props: EnamelIconProps) {
   )
 }
 
+/** Nuvem com balde: S3 / Cloudflare R2. */
+export function CloudBucketIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="cloud-bucket" {...props}>
+      <defs>
+        <Ramp id={id('cloud')} tone="azure" x1={8} y1={8} x2={56} y2={36} />
+        <Ramp id={id('bucket')} tone="bronze" x1={18} y1={28} x2={46} y2={56} />
+        <Ramp id={id('rim')} tone="gold" x1={16} y1={30} x2={48} y2={40} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <path
+        d="M18 28c-5.5 0-10-3.8-10-9.2C8 13.2 12.2 9 18 9c1.4-4.2 5.4-7 10.2-7 6.2 0 11 4.4 11.6 10.2C44 10.4 49.4 14 52.5 19.2 56.2 19.6 59 22.8 59 26.8c0 4.4-3.6 8-8.2 8H18Z"
+        fill={url('cloud')}
+        stroke={INK.azure}
+        strokeWidth="2.8"
+      />
+      <path d="M14 22c3.6-2.4 8-3.8 13-3.8" stroke="#D6F0FF" strokeWidth="2.4" opacity=".7" />
+      <path d="M20 34h24l-3.2 20H23.2L20 34Z" fill={url('bucket')} stroke={INK.bronze} strokeWidth="2.8" />
+      <path d="M18 34h28c0 4-5 7-5 7H23s-5-3-5-7Z" fill={url('rim')} stroke={INK.gold} strokeWidth="2.2" />
+      <path d="M26 42h12M27 48h10" stroke="#8F6015" strokeWidth="2" opacity=".55" />
+      <Sparkle x={52} y={12} s={0.95} />
+      <Sparkle x={12} y={44} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Orbe com faíscas: Denkynho / LLM. */
+export function BrainOrbIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="brain-orb" {...props}>
+      <defs>
+        <Ramp id={id('orb')} tone="arcane" x1={12} y1={10} x2={52} y2={54} />
+        <Ramp id={id('core')} tone="gold" x1={24} y1={24} x2={40} y2={40} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <circle cx="32" cy="30" r="18" fill={url('orb')} stroke={INK.arcane} strokeWidth="3" />
+      <path d="M18 26c4-6 10-9 16-9s12 3 16 9" stroke="#F4E8FF" strokeWidth="2.4" opacity=".55" />
+      <path d="M22 34c3.5 5 8 8 10 8s6.5-3 10-8" stroke="#4B2C8F" strokeWidth="2.4" opacity=".45" />
+      <circle cx="32" cy="30" r="7" fill={url('core')} stroke={INK.gold} strokeWidth="2.2" />
+      <path d="M32 24v12M26 30h12" stroke="#8F6015" strokeWidth="2" />
+      <Sparkle x={50} y={14} s={0.95} />
+      <Sparkle x={12} y={42} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Radar: Sentry / observabilidade. */
+export function RadarPulseIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="radar-pulse" {...props}>
+      <defs>
+        <Ramp id={id('dish')} tone="jade" x1={10} y1={10} x2={54} y2={54} />
+        <Ramp id={id('beam')} tone="gold" x1={32} y1={32} x2={56} y2={14} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <circle cx="32" cy="32" r="18" fill={url('dish')} stroke={INK.jade} strokeWidth="3" />
+      <circle cx="32" cy="32" r="11" fill="none" stroke="#C8F3A8" strokeWidth="2.2" opacity=".55" />
+      <circle cx="32" cy="32" r="5" fill="#FFF6D8" stroke={INK.gold} strokeWidth="2" />
+      <path d="M32 32 52 14" stroke={url('beam')} strokeWidth="4.2" />
+      <path d="M32 32 52 14" stroke={INK.gold} strokeWidth="2" />
+      <path d="M44 20c4 2.5 7 6.5 8.2 11" stroke="#C8F3A8" strokeWidth="2.2" opacity=".7" />
+      <Sparkle x={52} y={12} s={0.95} />
+      <Sparkle x={12} y={44} s={0.7} />
+    </Glyph>
+  )
+}
+
 export const ENAMEL_ICONS = {
   package: PackageBoxIcon,
   cart: CartIcon,
@@ -274,6 +344,9 @@ export const ENAMEL_ICONS = {
   serverTower: ServerTowerIcon,
   mailSeal: MailSealIcon,
   keyRing: KeyRingIcon,
+  cloudBucket: CloudBucketIcon,
+  brainOrb: BrainOrbIcon,
+  radarPulse: RadarPulseIcon,
 } as const satisfies Record<string, ComponentType<EnamelIconProps>>
 
 export type EnamelIconKey = keyof typeof ENAMEL_ICONS

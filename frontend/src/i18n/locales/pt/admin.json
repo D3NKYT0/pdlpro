@@ -42,7 +42,7 @@
       "comingSoon": { "title": "Coming Soon", "description": "Página de lançamento e controle de acesso" },
       "server": { "title": "Painel e servidor", "description": "Nome, rates, chronicle e SEO" },
       "secrets": { "title": "Segredos e rotação", "description": "Status, soft-rotate e reencrypt (somente superadmin)" },
-      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage/game, SMTP e OAuth/hCaptcha (somente superadmin)" },
+      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 e Sentry (somente superadmin)" },
       "itemWatch": { "title": "Observar itens", "description": "Economia do servidor, favoritos, snapshots e comparação entre datas" },
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
       "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
@@ -898,13 +898,16 @@
   "integrations": {
     "kicker": "Sistema",
     "title": "Integrações",
-    "description": "Pagamentos, banco Lineage, hosts do jogo, SMTP e OAuth/hCaptcha. Valores sensíveis ficam cifrados no banco e aplicam sem reiniciar o Docker. Somente superadmin.",
+    "description": "Pagamentos, Lineage, SMTP/push, OAuth/WebAuthn, Denkynho, S3/R2 e Sentry. Valores sensíveis ficam cifrados e aplicam sem reiniciar. Somente superadmin.",
     "tabsLabel": "Seções de integração",
     "tabs": {
       "payments": "Pagamentos",
       "lineage": "Lineage / Game",
-      "smtp": "SMTP",
-      "oauth": "OAuth / hCaptcha"
+      "smtp": "SMTP / Push",
+      "oauth": "OAuth / Auth",
+      "denkynho": "Denkynho",
+      "storage": "S3 / R2",
+      "observability": "Sentry"
     },
     "loadError": "Não foi possível carregar as integrações",
     "toastSaved": "Integração salva e aplicada",
@@ -923,7 +926,11 @@
       "stripeEyebrow": "Stripe",
       "stripeTitle": "Cartões e webhooks Stripe",
       "mpEyebrow": "Mercado Pago",
-      "mpTitle": "Pix, boleto e webhooks MP"
+      "mpTitle": "Pix, boleto e webhooks MP",
+      "policyEyebrow": "Política",
+      "policyTitle": "Métodos, webhook e cotação",
+      "policyHint": "Define quais provedores a loja expõe e a URL pública dos webhooks.",
+      "methodsHint": "Separados por vírgula: mercadopago, stripe, mock"
     },
     "lineage": {
       "dbEyebrow": "MySQL L2",
@@ -934,7 +941,10 @@
     "smtp": {
       "eyebrow": "E-mail",
       "title": "Servidor SMTP",
-      "hint": "O teste envia uma mensagem para o e-mail da sua conta de superadmin."
+      "hint": "O teste envia uma mensagem para o e-mail da sua conta de superadmin.",
+      "pushEyebrow": "Web Push",
+      "pushTitle": "Chaves VAPID",
+      "pushHint": "Par público/privado para notificações push no navegador."
     },
     "oauth": {
       "googleEyebrow": "Google",
@@ -943,7 +953,26 @@
       "discordTitle": "Login com Discord",
       "hcaptchaEyebrow": "hCaptcha",
       "hcaptchaTitle": "Proteção de cadastro",
-      "hcaptchaHint": "O hCaptcha só fica ativo quando site key e secret estão preenchidos."
+      "hcaptchaHint": "O hCaptcha só fica ativo quando site key e secret estão preenchidos.",
+      "webauthnEyebrow": "WebAuthn",
+      "webauthnTitle": "Passkeys / RP",
+      "webauthnHint": "RP ID e origins do domínio HTTPS de produção.",
+      "originsHint": "Separados por vírgula, ex.: https://painel.exemplo.com"
+    },
+    "denkynho": {
+      "eyebrow": "Assistente",
+      "title": "Denkynho LLM",
+      "hint": "Ollama local ou API remota OpenAI-compatível."
+    },
+    "storage": {
+      "eyebrow": "Mídia",
+      "title": "Cloudflare R2 / Amazon S3",
+      "hint": "Endpoint S3-compatível. Compatível com R2 (checksums legacy). Arquivos privados LGPD continuam no filesystem."
+    },
+    "observability": {
+      "eyebrow": "Monitoramento",
+      "title": "Sentry",
+      "hint": "DSN e taxa de traces. O SDK é reinicializado no processo após salvar."
     },
     "fields": {
       "STRIPE_SECRET_KEY": "Stripe secret key",
@@ -954,6 +983,11 @@
       "MERCADO_PAGO_PUBLIC_KEY": "Mercado Pago public key",
       "MERCADO_PAGO_WEBHOOK_SECRET": "Mercado Pago webhook secret",
       "MERCADO_PAGO_ACTIVATE_PAYMENTS": "Ativar Mercado Pago",
+      "PAYMENT_METHODS": "Métodos de pagamento",
+      "PAYMENT_WEBHOOK_BASE_URL": "URL base dos webhooks",
+      "COINS_PER_USD": "Moedas por USD",
+      "PAYMENT_ALLOW_MOCK": "Permitir método mock",
+      "PAYMENT_REUSE_HOURS": "Reuso de pedido (horas)",
       "LINEAGE_DB_ENABLED": "Habilitar MySQL do Lineage",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Porta",
@@ -973,6 +1007,9 @@
       "GAME_SERVER_PORT": "Porta do game server",
       "LOGIN_SERVER_PORT": "Porta do login server",
       "SERVER_STATUS_TIMEOUT": "Timeout do status (s)",
+      "FAKE_PLAYERS_FACTOR": "Fator de jogadores fake",
+      "FAKE_PLAYERS_MIN": "Mínimo fake",
+      "FAKE_PLAYERS_MAX": "Máximo fake",
       "EMAIL_BACKEND": "Backend Django",
       "EMAIL_HOST": "Host SMTP",
       "EMAIL_PORT": "Porta SMTP",
@@ -981,12 +1018,42 @@
       "EMAIL_HOST_USER": "Usuário SMTP",
       "EMAIL_HOST_PASSWORD": "Senha SMTP",
       "DEFAULT_FROM_EMAIL": "Remetente padrão",
+      "VAPID_PUBLIC_KEY": "VAPID public key",
+      "VAPID_PRIVATE_KEY": "VAPID private key",
+      "VAPID_SUBJECT": "VAPID subject",
       "GOOGLE_CLIENT_ID": "Google client ID",
       "GOOGLE_CLIENT_SECRET": "Google client secret",
       "DISCORD_CLIENT_ID": "Discord client ID",
       "DISCORD_CLIENT_SECRET": "Discord client secret",
       "HCAPTCHA_SITE_KEY": "hCaptcha site key",
-      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key"
+      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key",
+      "WEBAUTHN_RP_ID": "WebAuthn RP ID",
+      "WEBAUTHN_RP_NAME": "WebAuthn RP name",
+      "WEBAUTHN_ORIGINS": "WebAuthn origins",
+      "DENKYNHO_LLM_ENABLED": "Habilitar LLM",
+      "DENKYNHO_LLM_PROVIDER": "Provedor (ollama|remote)",
+      "DENKYNHO_OLLAMA_URL": "URL do Ollama",
+      "DENKYNHO_OLLAMA_DOCKER": "Permitir hostname Docker ollama",
+      "DENKYNHO_LLM_MODEL": "Modelo",
+      "DENKYNHO_LLM_TIMEOUT": "Timeout (s)",
+      "DENKYNHO_LLM_API_URL": "URL da API remota",
+      "DENKYNHO_LLM_API_KEY": "API key remota",
+      "DENKYNHO_EMBEDDINGS_ENABLED": "Habilitar embeddings",
+      "DENKYNHO_EMBEDDING_MODEL": "Modelo de embedding",
+      "USE_S3": "Usar S3 / R2",
+      "AWS_ACCESS_KEY_ID": "Access key ID",
+      "AWS_SECRET_ACCESS_KEY": "Secret access key",
+      "AWS_STORAGE_BUCKET_NAME": "Bucket",
+      "AWS_S3_REGION_NAME": "Region",
+      "AWS_S3_ENDPOINT_URL": "Endpoint URL",
+      "AWS_S3_CUSTOM_DOMAIN": "Domínio customizado (CDN)",
+      "AWS_S3_PRIVATE_MEDIA": "Mídia com URL assinada",
+      "AWS_QUERYSTRING_EXPIRE": "Expiração da URL assinada (s)",
+      "AWS_LOCATION": "Prefixo no bucket",
+      "SENTRY_DSN": "Sentry DSN",
+      "SENTRY_ENVIRONMENT": "Ambiente",
+      "SENTRY_RELEASE": "Release",
+      "SENTRY_TRACES_SAMPLE_RATE": "Taxa de traces"
     }
   },
   "comingSoonAdmin": {

@@ -7,12 +7,15 @@ from common.models import BaseModel, InternalModel
 
 
 class IntegrationSettings(BaseModel):
-    """Singleton com blobs Fernet das seções de integração (pagamentos, L2, SMTP, OAuth)."""
+    """Singleton com blobs Fernet das seções de integração."""
 
     payments_blob = models.TextField(blank=True, default="")
     lineage_blob = models.TextField(blank=True, default="")
     smtp_blob = models.TextField(blank=True, default="")
     oauth_blob = models.TextField(blank=True, default="")
+    denkynho_blob = models.TextField(blank=True, default="")
+    storage_blob = models.TextField(blank=True, default="")
+    observability_blob = models.TextField(blank=True, default="")
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,

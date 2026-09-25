@@ -11,9 +11,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Adicionado
 
 - Configurador admin de integrações em `/panel/admin/integrations` (abas
-  Pagamentos, Lineage/Game, SMTP, OAuth/hCaptcha): blobs Fernet no banco, API
-  mascarada, hot-apply via revisão no cache e `reset_engine` do gateway
-  SQLAlchemy. Guia: [Integrações admin](../operacao/integracoes-admin.md).
+  Pagamentos, Lineage/Game, SMTP/Push, OAuth/Auth, Denkynho, S3/R2, Sentry):
+  blobs Fernet, hot-apply, probes e mídia S3-compatível (R2) via
+  `django-storages`/`boto3`. Guia:
+  [Integrações admin](../operacao/integracoes-admin.md).
 
 ### Alterado
 
@@ -22,6 +23,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   de `metadados.json` + assets (o `index.html` continua só o shell de boot).
 - Settings de e-mail passam a declarar `EMAIL_HOST` / `EMAIL_PORT` / TLS / usuário /
   senha no boot; o overlay do painel pode sobrescrevê-los em runtime.
+- Integrações passam a cobrir também `PAYMENT_METHODS` / webhook / `COINS_PER_USD`,
+  `VAPID_*`, `FAKE_PLAYERS_*`, `WEBAUTHN_*`, `DENKYNHO_*`, `USE_S3`/`AWS_*` e
+  `SENTRY_*`.
 
 ## [2.5.11] - 2026-09-25
 

@@ -28,6 +28,9 @@ it('expõe o catálogo esmaltado com arte própria e marca estável', () => {
     'server-tower',
     'mail-seal',
     'key-ring',
+    'cloud-bucket',
+    'brain-orb',
+    'radar-pulse',
   ])
   icons.forEach((icon) => {
     expect(icon).toHaveAttribute('viewBox', '0 0 64 64')

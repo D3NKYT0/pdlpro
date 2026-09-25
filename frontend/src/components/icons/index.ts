@@ -7,7 +7,9 @@ export type { EnamelIconProps, Tone } from './enamel'
 export { Glyph, INK, Ramp, Shadow, Sparkle, TONES, useGlyphIds } from './enamel'
 export {
   BannerFlagIcon,
+  BrainOrbIcon,
   CartIcon,
+  CloudBucketIcon,
   ENAMEL_ICONS,
   ExchangeIcon,
   KeyRingIcon,
@@ -15,6 +17,7 @@ export {
   PackageBoxIcon,
   PaymentCardIcon,
   PurseIcon,
+  RadarPulseIcon,
   ServerTowerIcon,
   ShieldOkIcon,
   type EnamelIconKey,

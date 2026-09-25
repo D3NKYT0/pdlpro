@@ -31,6 +31,9 @@ def _status_payload(status_obj) -> dict:
         "lineage": asdict(status_obj.lineage),
         "smtp": asdict(status_obj.smtp),
         "oauth": asdict(status_obj.oauth),
+        "denkynho": asdict(status_obj.denkynho),
+        "storage": asdict(status_obj.storage),
+        "observability": asdict(status_obj.observability),
     }
 
 

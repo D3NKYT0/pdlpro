@@ -13,13 +13,17 @@ from apps.staff.domain.integrations import (
     CLEAR_SENTINEL,
     FLOAT_KEYS,
     INT_KEYS,
+    LIST_KEYS,
     MASKED_PUBLIC_KEYS,
     SECRET_KEYS,
+    SECTION_DENKYNHO,
     SECTION_KEYS,
     SECTION_LINEAGE,
     SECTION_OAUTH,
+    SECTION_OBSERVABILITY,
     SECTION_PAYMENTS,
     SECTION_SMTP,
+    SECTION_STORAGE,
     SECTIONS,
     FieldStatus,
     IIntegrationConfigStore,
@@ -32,6 +36,15 @@ from apps.staff.domain.integrations import (
 from common.architecture.base import UseCase
 from common.architecture.exceptions import ValidationDomainError
 from common.secrets_env import fingerprint
+
+
+def _coerce_list(raw: Any) -> list[str]:
+    if isinstance(raw, list):
+        return [str(item).strip() for item in raw if str(item).strip()]
+    text = "" if raw is None else str(raw).strip()
+    if not text:
+        return []
+    return [part.strip() for part in text.replace(";", ",").split(",") if part.strip()]
 
 
 def _coerce_value(key: str, raw: Any) -> Any:
@@ -54,6 +67,8 @@ def _coerce_value(key: str, raw: Any) -> Any:
             return float(raw)
         except (TypeError, ValueError) as exc:
             raise ValidationDomainError(_("%(key)s precisa ser um número.") % {"key": key}) from exc
+    if key in LIST_KEYS:
+        return _coerce_list(raw)
     text = "" if raw is None else str(raw).strip()
     return text
 
@@ -95,6 +110,11 @@ def _field_status(section_data: dict[str, Any], key: str) -> FieldStatus:
             masked=_mask_public(text) if configured else "",
             value=None,
         )
+    if key in LIST_KEYS:
+        items = _coerce_list(value) if not isinstance(value, list) else [str(v) for v in value]
+        return FieldStatus(key=key, configured=True, value=items)
+    if key in BOOL_KEYS:
+        return FieldStatus(key=key, configured=True, value=bool(value))
     return FieldStatus(key=key, configured=value is not None and value != "", value=value)
 
 
@@ -111,15 +131,15 @@ def _merge_patch(current: dict[str, Any], patch: dict[str, Any], allowed: tuple[
         if raw is None:
             continue
         if isinstance(raw, str) and raw.strip() == "":
-            # vazio em segredo = manter; em não-segredo string vazia pode limpar paths
             if key in SECRET_KEYS or key in MASKED_PUBLIC_KEYS:
+                continue
+            if key in LIST_KEYS:
+                next_data[key] = []
                 continue
             next_data[key] = ""
             continue
         if isinstance(raw, str) and raw.strip() == CLEAR_SENTINEL:
             next_data.pop(key, None)
-            # também limpa no settings via ausência + applier usa default env
-            # Gravamos sentinel lógico: chave ausente no blob.
             continue
         next_data[key] = _coerce_value(key, raw)
     return next_data
@@ -159,6 +179,9 @@ class GetIntegrationsStatusUseCase(UseCase[None, IntegrationsStatus]):
             lineage=sections[SECTION_LINEAGE],
             smtp=sections[SECTION_SMTP],
             oauth=sections[SECTION_OAUTH],
+            denkynho=sections[SECTION_DENKYNHO],
+            storage=sections[SECTION_STORAGE],
+            observability=sections[SECTION_OBSERVABILITY],
             revision=self._applier.current_revision(),
         )
 
@@ -201,6 +224,12 @@ class TestIntegrationSectionUseCase(UseCase[TestIntegrationSectionInput, ProbeRe
             return self._probe.test_lineage()
         if section == SECTION_OAUTH:
             return self._probe.test_oauth()
+        if section == SECTION_DENKYNHO:
+            return self._probe.test_denkynho()
+        if section == SECTION_STORAGE:
+            return self._probe.test_storage()
+        if section == SECTION_OBSERVABILITY:
+            return self._probe.test_observability()
         email = (command.to_email or "").strip()
         if not email:
             raise ValidationDomainError(_("Informe o e-mail de destino do teste."))

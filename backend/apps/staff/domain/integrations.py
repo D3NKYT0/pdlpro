@@ -12,7 +12,18 @@ SECTION_PAYMENTS = "payments"
 SECTION_LINEAGE = "lineage"
 SECTION_SMTP = "smtp"
 SECTION_OAUTH = "oauth"
-SECTIONS = (SECTION_PAYMENTS, SECTION_LINEAGE, SECTION_SMTP, SECTION_OAUTH)
+SECTION_DENKYNHO = "denkynho"
+SECTION_STORAGE = "storage"
+SECTION_OBSERVABILITY = "observability"
+SECTIONS = (
+    SECTION_PAYMENTS,
+    SECTION_LINEAGE,
+    SECTION_SMTP,
+    SECTION_OAUTH,
+    SECTION_DENKYNHO,
+    SECTION_STORAGE,
+    SECTION_OBSERVABILITY,
+)
 
 # Campos sensíveis: nunca saem em claro na API.
 SECRET_KEYS: frozenset[str] = frozenset(
@@ -24,9 +35,13 @@ SECRET_KEYS: frozenset[str] = frozenset(
         "LINEAGE_DB_PASSWORD",
         "LINEAGE_DB_SSL_KEY",
         "EMAIL_HOST_PASSWORD",
+        "VAPID_PRIVATE_KEY",
         "GOOGLE_CLIENT_SECRET",
         "DISCORD_CLIENT_SECRET",
         "HCAPTCHA_SECRET_KEY",
+        "DENKYNHO_LLM_API_KEY",
+        "AWS_SECRET_ACCESS_KEY",
+        "SENTRY_DSN",
     }
 )
 
@@ -35,9 +50,11 @@ MASKED_PUBLIC_KEYS: frozenset[str] = frozenset(
     {
         "STRIPE_PUBLISHABLE_KEY",
         "MERCADO_PAGO_PUBLIC_KEY",
+        "VAPID_PUBLIC_KEY",
         "GOOGLE_CLIENT_ID",
         "DISCORD_CLIENT_ID",
         "HCAPTCHA_SITE_KEY",
+        "AWS_ACCESS_KEY_ID",
     }
 )
 
@@ -51,6 +68,11 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "MERCADO_PAGO_PUBLIC_KEY",
         "MERCADO_PAGO_WEBHOOK_SECRET",
         "MERCADO_PAGO_ACTIVATE_PAYMENTS",
+        "PAYMENT_METHODS",
+        "PAYMENT_WEBHOOK_BASE_URL",
+        "COINS_PER_USD",
+        "PAYMENT_ALLOW_MOCK",
+        "PAYMENT_REUSE_HOURS",
     ),
     SECTION_LINEAGE: (
         "LINEAGE_DB_ENABLED",
@@ -72,6 +94,9 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "GAME_SERVER_PORT",
         "LOGIN_SERVER_PORT",
         "SERVER_STATUS_TIMEOUT",
+        "FAKE_PLAYERS_FACTOR",
+        "FAKE_PLAYERS_MIN",
+        "FAKE_PLAYERS_MAX",
     ),
     SECTION_SMTP: (
         "EMAIL_BACKEND",
@@ -82,6 +107,9 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "EMAIL_HOST_USER",
         "EMAIL_HOST_PASSWORD",
         "DEFAULT_FROM_EMAIL",
+        "VAPID_PUBLIC_KEY",
+        "VAPID_PRIVATE_KEY",
+        "VAPID_SUBJECT",
     ),
     SECTION_OAUTH: (
         "GOOGLE_CLIENT_ID",
@@ -90,6 +118,39 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "DISCORD_CLIENT_SECRET",
         "HCAPTCHA_SITE_KEY",
         "HCAPTCHA_SECRET_KEY",
+        "WEBAUTHN_RP_ID",
+        "WEBAUTHN_RP_NAME",
+        "WEBAUTHN_ORIGINS",
+    ),
+    SECTION_DENKYNHO: (
+        "DENKYNHO_LLM_ENABLED",
+        "DENKYNHO_LLM_PROVIDER",
+        "DENKYNHO_OLLAMA_URL",
+        "DENKYNHO_OLLAMA_DOCKER",
+        "DENKYNHO_LLM_MODEL",
+        "DENKYNHO_LLM_TIMEOUT",
+        "DENKYNHO_LLM_API_URL",
+        "DENKYNHO_LLM_API_KEY",
+        "DENKYNHO_EMBEDDINGS_ENABLED",
+        "DENKYNHO_EMBEDDING_MODEL",
+    ),
+    SECTION_STORAGE: (
+        "USE_S3",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_STORAGE_BUCKET_NAME",
+        "AWS_S3_REGION_NAME",
+        "AWS_S3_ENDPOINT_URL",
+        "AWS_S3_CUSTOM_DOMAIN",
+        "AWS_S3_PRIVATE_MEDIA",
+        "AWS_QUERYSTRING_EXPIRE",
+        "AWS_LOCATION",
+    ),
+    SECTION_OBSERVABILITY: (
+        "SENTRY_DSN",
+        "SENTRY_ENVIRONMENT",
+        "SENTRY_RELEASE",
+        "SENTRY_TRACES_SAMPLE_RATE",
     ),
 }
 
@@ -102,6 +163,12 @@ BOOL_KEYS = frozenset(
         "LINEAGE_DB_SSL_VERIFY",
         "EMAIL_USE_TLS",
         "EMAIL_USE_SSL",
+        "PAYMENT_ALLOW_MOCK",
+        "DENKYNHO_LLM_ENABLED",
+        "DENKYNHO_OLLAMA_DOCKER",
+        "DENKYNHO_EMBEDDINGS_ENABLED",
+        "USE_S3",
+        "AWS_S3_PRIVATE_MEDIA",
     }
 )
 
@@ -113,10 +180,28 @@ INT_KEYS = frozenset(
         "GAME_SERVER_PORT",
         "LOGIN_SERVER_PORT",
         "EMAIL_PORT",
+        "PAYMENT_REUSE_HOURS",
+        "FAKE_PLAYERS_MIN",
+        "FAKE_PLAYERS_MAX",
+        "AWS_QUERYSTRING_EXPIRE",
     }
 )
 
-FLOAT_KEYS = frozenset({"SERVER_STATUS_TIMEOUT"})
+FLOAT_KEYS = frozenset(
+    {
+        "SERVER_STATUS_TIMEOUT",
+        "FAKE_PLAYERS_FACTOR",
+        "DENKYNHO_LLM_TIMEOUT",
+        "SENTRY_TRACES_SAMPLE_RATE",
+    }
+)
+
+LIST_KEYS = frozenset(
+    {
+        "PAYMENT_METHODS",
+        "WEBAUTHN_ORIGINS",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -141,6 +226,9 @@ class IntegrationsStatus:
     lineage: SectionStatus
     smtp: SectionStatus
     oauth: SectionStatus
+    denkynho: SectionStatus
+    storage: SectionStatus
+    observability: SectionStatus
     revision: int = 0
 
 
@@ -206,4 +294,16 @@ class IIntegrationProbe(ABC):
 
     @abstractmethod
     def test_oauth(self) -> ProbeResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def test_denkynho(self) -> ProbeResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def test_storage(self) -> ProbeResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def test_observability(self) -> ProbeResult:
         raise NotImplementedError

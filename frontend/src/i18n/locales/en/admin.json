@@ -19,42 +19,128 @@
       "extensions": "Extensions"
     },
     "entries": {
-      "supporters": { "title": "Supporters and commissions", "description": "Applications, percentages and commission approval" },
-      "commerce": { "title": "Packages and coupons", "description": "Item packages, discounts and supporter coupons" },
-      "rewardsWorkshop": { "title": "Rewards workshop", "description": "Seasons, quests, exchanges, bonuses and baits" },
-      "tickets": { "title": "Ticket queue", "description": "SLA, owners, replies and player history" },
-      "notifications": { "title": "Alerts", "description": "Send alerts to one player or to every account" },
-      "resources": { "title": "Resource control", "description": "Enable or pause modules by category" },
-      "themes": { "title": "Themes", "description": "Install, activate and restore the frontend look" },
-      "api": { "title": "API", "description": "OpenAPI documentation (Swagger)" },
-      "djangoAdmin": { "title": "Django Admin", "description": "Full system CRUD" },
-      "coins": { "title": "Coins", "description": "Active currency, multiplier and rate" },
-      "coinPackages": { "title": "Top-up packages", "description": "BRL and USD prices shown in the wallet" },
-      "shop": { "title": "Shop", "description": "Items, bundles and a low-grade catalog sold in the panel" },
-      "wallet": { "title": "Wallet settings", "description": "Promo banner and minimum top-up bonus" },
-      "gameModules": { "title": "Game modules", "description": "Turn minigames on or off and fill their playable content" },
-      "news": { "title": "News", "description": "Publish server announcements in PT, EN and ES" },
-      "calendar": { "title": "Calendar", "description": "Public site events in PT, EN and ES" },
-      "faq": { "title": "FAQ", "description": "Help articles and Denkynho handbook" },
-      "wiki": { "title": "Wiki", "description": "Guides and public wiki pages" },
-      "downloads": { "title": "Downloads", "description": "Client, patches and official files" },
-      "roadmap": { "title": "Roadmap", "description": "Planning, milestones and updates in PT, EN and ES" },
-      "comingSoon": { "title": "Coming Soon", "description": "Launch page and access control" },
-      "server": { "title": "Panel and server", "description": "Name, rates, chronicle and SEO" },
-      "secrets": { "title": "Secrets and rotation", "description": "Status, soft-rotate and reencrypt (superadmin only)" },
-      "integrations": { "title": "Integrations", "description": "Payments, Lineage/game, SMTP and OAuth/hCaptcha (superadmin only)" },
-      "itemWatch": { "title": "Item watch", "description": "Server economy, favourites, snapshots and date comparison" },
-      "customItems": { "title": "Custom items", "description": "Register name, ID, image and metadata in the single catalog" },
-      "services": { "title": "Services", "description": "Prices for nickname, sex, slots and unstuck" },
-      "lineageAccounts": { "title": "Lineage accounts", "description": "Look up logins and unlink them from the panel" },
-      "moderation": { "title": "Moderation", "description": "Kick, jail, ban and teleport characters" }
+      "supporters": {
+        "title": "Supporters and commissions",
+        "description": "Applications, percentages and commission approval"
+      },
+      "commerce": {
+        "title": "Packages and coupons",
+        "description": "Item packages, discounts and supporter coupons"
+      },
+      "rewardsWorkshop": {
+        "title": "Rewards workshop",
+        "description": "Seasons, quests, exchanges, bonuses and baits"
+      },
+      "tickets": {
+        "title": "Ticket queue",
+        "description": "SLA, owners, replies and player history"
+      },
+      "notifications": {
+        "title": "Alerts",
+        "description": "Send alerts to one player or to every account"
+      },
+      "resources": {
+        "title": "Resource control",
+        "description": "Enable or pause modules by category"
+      },
+      "themes": {
+        "title": "Themes",
+        "description": "Install, activate and restore the frontend look"
+      },
+      "api": {
+        "title": "API",
+        "description": "OpenAPI documentation (Swagger)"
+      },
+      "djangoAdmin": {
+        "title": "Django Admin",
+        "description": "Full system CRUD"
+      },
+      "coins": {
+        "title": "Coins",
+        "description": "Active currency, multiplier and rate"
+      },
+      "coinPackages": {
+        "title": "Top-up packages",
+        "description": "BRL and USD prices shown in the wallet"
+      },
+      "shop": {
+        "title": "Shop",
+        "description": "Items, bundles and a low-grade catalog sold in the panel"
+      },
+      "wallet": {
+        "title": "Wallet settings",
+        "description": "Promo banner and minimum top-up bonus"
+      },
+      "gameModules": {
+        "title": "Game modules",
+        "description": "Turn minigames on or off and fill their playable content"
+      },
+      "news": {
+        "title": "News",
+        "description": "Publish server announcements in PT, EN and ES"
+      },
+      "calendar": {
+        "title": "Calendar",
+        "description": "Public site events in PT, EN and ES"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Help articles and Denkynho handbook"
+      },
+      "wiki": {
+        "title": "Wiki",
+        "description": "Guides and public wiki pages"
+      },
+      "downloads": {
+        "title": "Downloads",
+        "description": "Client, patches and official files"
+      },
+      "roadmap": {
+        "title": "Roadmap",
+        "description": "Planning, milestones and updates in PT, EN and ES"
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "description": "Launch page and access control"
+      },
+      "server": {
+        "title": "Panel and server",
+        "description": "Name, rates, chronicle and SEO"
+      },
+      "secrets": {
+        "title": "Secrets and rotation",
+        "description": "Status, soft-rotate and reencrypt (superadmin only)"
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Payments, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 and Sentry (superadmin only)"
+      },
+      "itemWatch": {
+        "title": "Item watch",
+        "description": "Server economy, favourites, snapshots and date comparison"
+      },
+      "customItems": {
+        "title": "Custom items",
+        "description": "Register name, ID, image and metadata in the single catalog"
+      },
+      "services": {
+        "title": "Services",
+        "description": "Prices for nickname, sex, slots and unstuck"
+      },
+      "lineageAccounts": {
+        "title": "Lineage accounts",
+        "description": "Look up logins and unlink them from the panel"
+      },
+      "moderation": {
+        "title": "Moderation",
+        "description": "Kick, jail, ban and teleport characters"
+      }
     }
   },
   "chrome": {
     "back": "Hub",
     "save": "Save",
     "saving": "Saving...",
-    "loading": "Loading…",
     "edit": "Edit",
     "delete": "Delete",
     "cancelEdit": "Cancel edit",
@@ -447,7 +533,11 @@
     "title": "News",
     "description": "Announcements on the home and news pages, with Portuguese, English and Spanish copy.",
     "language": "News language",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "editingEyebrow": "Editing",
     "creatingEyebrow": "New post",
     "editTitle": "Edit news",
@@ -492,7 +582,11 @@
     "title": "Calendar",
     "description": "Public site events, with dates and Portuguese, English and Spanish copy.",
     "language": "Event language",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "fieldTitle": "Title",
     "fieldDescription": "Description",
     "startsAt": "Starts",
@@ -526,7 +620,11 @@
     "title": "FAQ",
     "description": "Public help articles and internal Denkynho walkthroughs.",
     "language": "Article language",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "question": "Question",
     "shortAnswer": "Short answer",
     "answer": "Full answer",
@@ -571,7 +669,11 @@
     "title": "Wiki",
     "description": "Public wiki pages, with Portuguese, English and Spanish versions.",
     "language": "Page language",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "fieldTitle": "Title",
     "summary": "Summary",
     "body": "Content",
@@ -724,15 +826,6 @@
       "replySent": "Reply sent to the player",
       "replyError": "Could not reply"
     }
-  },
-  "chrome": {
-    "back": "Hub",
-    "save": "Save",
-    "saving": "Saving...",
-    "edit": "Edit",
-    "delete": "Delete",
-    "cancelEdit": "Cancel edit",
-    "confirmDelete": "Delete this record?"
   },
   "server": {
     "kicker": "Server",
@@ -898,13 +991,16 @@
   "integrations": {
     "kicker": "System",
     "title": "Integrations",
-    "description": "Payments, Lineage database, game hosts, SMTP and OAuth/hCaptcha. Secrets are encrypted in the database and apply without restarting Docker. Superadmin only.",
+    "description": "Payments, Lineage, SMTP/push, OAuth/WebAuthn, Denkynho, S3/R2 and Sentry. Secrets are encrypted and apply without restart. Superadmin only.",
     "tabsLabel": "Integration sections",
     "tabs": {
       "payments": "Payments",
       "lineage": "Lineage / Game",
-      "smtp": "SMTP",
-      "oauth": "OAuth / hCaptcha"
+      "smtp": "SMTP / Push",
+      "oauth": "OAuth / Auth",
+      "denkynho": "Denkynho",
+      "storage": "S3 / R2",
+      "observability": "Sentry"
     },
     "loadError": "Could not load integrations",
     "toastSaved": "Integration saved and applied",
@@ -923,7 +1019,11 @@
       "stripeEyebrow": "Stripe",
       "stripeTitle": "Stripe cards and webhooks",
       "mpEyebrow": "Mercado Pago",
-      "mpTitle": "Pix, boleto and MP webhooks"
+      "mpTitle": "Pix, boleto and MP webhooks",
+      "policyEyebrow": "Policy",
+      "policyTitle": "Methods, webhook and quote",
+      "policyHint": "Which providers the shop exposes and the public webhook base URL.",
+      "methodsHint": "Comma-separated: mercadopago, stripe, mock"
     },
     "lineage": {
       "dbEyebrow": "MySQL L2",
@@ -934,7 +1034,10 @@
     "smtp": {
       "eyebrow": "Email",
       "title": "SMTP server",
-      "hint": "The test sends a message to your superadmin account email."
+      "hint": "The test sends a message to your superadmin account email.",
+      "pushEyebrow": "Web Push",
+      "pushTitle": "VAPID keys",
+      "pushHint": "Public/private pair for browser push notifications."
     },
     "oauth": {
       "googleEyebrow": "Google",
@@ -943,7 +1046,26 @@
       "discordTitle": "Sign in with Discord",
       "hcaptchaEyebrow": "hCaptcha",
       "hcaptchaTitle": "Registration protection",
-      "hcaptchaHint": "hCaptcha is only enabled when both site key and secret are set."
+      "hcaptchaHint": "hCaptcha is only enabled when both site key and secret are set.",
+      "webauthnEyebrow": "WebAuthn",
+      "webauthnTitle": "Passkeys / RP",
+      "webauthnHint": "RP ID and origins for the production HTTPS domain.",
+      "originsHint": "Comma-separated, e.g. https://panel.example.com"
+    },
+    "denkynho": {
+      "eyebrow": "Assistant",
+      "title": "Denkynho LLM",
+      "hint": "Local Ollama or remote OpenAI-compatible API."
+    },
+    "storage": {
+      "eyebrow": "Media",
+      "title": "Cloudflare R2 / Amazon S3",
+      "hint": "S3-compatible endpoint. R2-friendly (legacy checksums). LGPD private files stay on the filesystem."
+    },
+    "observability": {
+      "eyebrow": "Monitoring",
+      "title": "Sentry",
+      "hint": "DSN and traces rate. The SDK is re-initialized in-process after save."
     },
     "fields": {
       "STRIPE_SECRET_KEY": "Stripe secret key",
@@ -954,6 +1076,11 @@
       "MERCADO_PAGO_PUBLIC_KEY": "Mercado Pago public key",
       "MERCADO_PAGO_WEBHOOK_SECRET": "Mercado Pago webhook secret",
       "MERCADO_PAGO_ACTIVATE_PAYMENTS": "Enable Mercado Pago",
+      "PAYMENT_METHODS": "Payment methods",
+      "PAYMENT_WEBHOOK_BASE_URL": "Webhook base URL",
+      "COINS_PER_USD": "Coins per USD",
+      "PAYMENT_ALLOW_MOCK": "Allow mock method",
+      "PAYMENT_REUSE_HOURS": "Order reuse (hours)",
       "LINEAGE_DB_ENABLED": "Enable Lineage MySQL",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Port",
@@ -973,6 +1100,9 @@
       "GAME_SERVER_PORT": "Game server port",
       "LOGIN_SERVER_PORT": "Login server port",
       "SERVER_STATUS_TIMEOUT": "Status timeout (s)",
+      "FAKE_PLAYERS_FACTOR": "Fake players factor",
+      "FAKE_PLAYERS_MIN": "Fake players min",
+      "FAKE_PLAYERS_MAX": "Fake players max",
       "EMAIL_BACKEND": "Django backend",
       "EMAIL_HOST": "SMTP host",
       "EMAIL_PORT": "SMTP port",
@@ -981,12 +1111,42 @@
       "EMAIL_HOST_USER": "SMTP user",
       "EMAIL_HOST_PASSWORD": "SMTP password",
       "DEFAULT_FROM_EMAIL": "Default from address",
+      "VAPID_PUBLIC_KEY": "VAPID public key",
+      "VAPID_PRIVATE_KEY": "VAPID private key",
+      "VAPID_SUBJECT": "VAPID subject",
       "GOOGLE_CLIENT_ID": "Google client ID",
       "GOOGLE_CLIENT_SECRET": "Google client secret",
       "DISCORD_CLIENT_ID": "Discord client ID",
       "DISCORD_CLIENT_SECRET": "Discord client secret",
       "HCAPTCHA_SITE_KEY": "hCaptcha site key",
-      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key"
+      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key",
+      "WEBAUTHN_RP_ID": "WebAuthn RP ID",
+      "WEBAUTHN_RP_NAME": "WebAuthn RP name",
+      "WEBAUTHN_ORIGINS": "WebAuthn origins",
+      "DENKYNHO_LLM_ENABLED": "Enable LLM",
+      "DENKYNHO_LLM_PROVIDER": "Provider (ollama|remote)",
+      "DENKYNHO_OLLAMA_URL": "Ollama URL",
+      "DENKYNHO_OLLAMA_DOCKER": "Allow Docker ollama hostname",
+      "DENKYNHO_LLM_MODEL": "Model",
+      "DENKYNHO_LLM_TIMEOUT": "Timeout (s)",
+      "DENKYNHO_LLM_API_URL": "Remote API URL",
+      "DENKYNHO_LLM_API_KEY": "Remote API key",
+      "DENKYNHO_EMBEDDINGS_ENABLED": "Enable embeddings",
+      "DENKYNHO_EMBEDDING_MODEL": "Embedding model",
+      "USE_S3": "Use S3 / R2",
+      "AWS_ACCESS_KEY_ID": "Access key ID",
+      "AWS_SECRET_ACCESS_KEY": "Secret access key",
+      "AWS_STORAGE_BUCKET_NAME": "Bucket",
+      "AWS_S3_REGION_NAME": "Region",
+      "AWS_S3_ENDPOINT_URL": "Endpoint URL",
+      "AWS_S3_CUSTOM_DOMAIN": "Custom domain (CDN)",
+      "AWS_S3_PRIVATE_MEDIA": "Signed media URLs",
+      "AWS_QUERYSTRING_EXPIRE": "Signed URL expiry (s)",
+      "AWS_LOCATION": "Bucket prefix",
+      "SENTRY_DSN": "Sentry DSN",
+      "SENTRY_ENVIRONMENT": "Environment",
+      "SENTRY_RELEASE": "Release",
+      "SENTRY_TRACES_SAMPLE_RATE": "Traces sample rate"
     }
   },
   "comingSoonAdmin": {
@@ -1485,7 +1645,9 @@
     "disabled": "Resource disabled.",
     "emptyTitle": "No modules registered",
     "emptyText": "Panel resources show up here after the initial migration.",
-    "toast": { "error": "Could not update the resource" },
+    "toast": {
+      "error": "Could not update the resource"
+    },
     "categories": {
       "economy": "Economy",
       "games": "Games",
@@ -1496,31 +1658,106 @@
       "other": "Other"
     },
     "items": {
-      "supporters": { "name": "Supporters", "description": "Creator program, coupons and commissions." },
-      "roadmap": { "name": "Roadmap", "description": "Public server updates in PT, EN and ES." },
-      "shop": { "name": "Shop", "description": "Panel shop items and packages." },
-      "wallet": { "name": "Wallet", "description": "Balance, bonus, tokens and game exchange." },
-      "inventory": { "name": "Inventory", "description": "Bag, warehouse and items of the linked account." },
-      "marketplace": { "name": "Marketplace", "description": "Player-to-player item trading." },
-      "auction": { "name": "Auctions", "description": "Character auctions." },
-      "games": { "name": "Games hub", "description": "Wheel of Fortune, boxes, tavern, fishing and arena." },
-      "battle-pass": { "name": "Battle pass", "description": "Season, quests, exchanges and milestones." },
-      "daily-bonus": { "name": "Daily bonus", "description": "Daily claim from the season calendar." },
-      "fishing": { "name": "Fishing", "description": "Rod, bait and collection in the games hub lake." },
-      "hunt": { "name": "Daily hunt", "description": "PvP, PK, online-time and level quests on the character." },
-      "profile": { "name": "My profile", "description": "Master account details and preferences." },
-      "accounts": { "name": "L2 account", "description": "Link, characters and Lineage sheet." },
-      "progress": { "name": "Level and achievements", "description": "Level, XP, achievements and account rewards on the Dashboard." },
-      "notifications": { "name": "Notices", "description": "Top-bar bell and notice history." },
-      "support": { "name": "Support tickets", "description": "Staff tickets: players open them from Help; if Help is paused, the menu points to Support." },
-      "help": { "name": "Help", "description": "Handbook, Denkynho and frequently asked questions." },
-      "news": { "name": "News", "description": "Public site news." },
-      "rankings": { "name": "Rankings", "description": "Public server rankings." },
-      "wiki": { "name": "Wiki", "description": "Public server encyclopedia." },
-      "faq": { "name": "FAQ", "description": "Public site FAQ." },
-      "downloads": { "name": "Downloads", "description": "Files, patches and client." },
-      "calendar": { "name": "Calendar", "description": "Public server events." },
-      "game-stores": { "name": "In-game shops", "description": "Offline private stores published by the server." }
+      "supporters": {
+        "name": "Supporters",
+        "description": "Creator program, coupons and commissions."
+      },
+      "roadmap": {
+        "name": "Roadmap",
+        "description": "Public server updates in PT, EN and ES."
+      },
+      "shop": {
+        "name": "Shop",
+        "description": "Panel shop items and packages."
+      },
+      "wallet": {
+        "name": "Wallet",
+        "description": "Balance, bonus, tokens and game exchange."
+      },
+      "inventory": {
+        "name": "Inventory",
+        "description": "Bag, warehouse and items of the linked account."
+      },
+      "marketplace": {
+        "name": "Marketplace",
+        "description": "Player-to-player item trading."
+      },
+      "auction": {
+        "name": "Auctions",
+        "description": "Character auctions."
+      },
+      "games": {
+        "name": "Games hub",
+        "description": "Wheel of Fortune, boxes, tavern, fishing and arena."
+      },
+      "battle-pass": {
+        "name": "Battle pass",
+        "description": "Season, quests, exchanges and milestones."
+      },
+      "daily-bonus": {
+        "name": "Daily bonus",
+        "description": "Daily claim from the season calendar."
+      },
+      "fishing": {
+        "name": "Fishing",
+        "description": "Rod, bait and collection in the games hub lake."
+      },
+      "hunt": {
+        "name": "Daily hunt",
+        "description": "PvP, PK, online-time and level quests on the character."
+      },
+      "profile": {
+        "name": "My profile",
+        "description": "Master account details and preferences."
+      },
+      "accounts": {
+        "name": "L2 account",
+        "description": "Link, characters and Lineage sheet."
+      },
+      "progress": {
+        "name": "Level and achievements",
+        "description": "Level, XP, achievements and account rewards on the Dashboard."
+      },
+      "notifications": {
+        "name": "Notices",
+        "description": "Top-bar bell and notice history."
+      },
+      "support": {
+        "name": "Support tickets",
+        "description": "Staff tickets: players open them from Help; if Help is paused, the menu points to Support."
+      },
+      "help": {
+        "name": "Help",
+        "description": "Handbook, Denkynho and frequently asked questions."
+      },
+      "news": {
+        "name": "News",
+        "description": "Public site news."
+      },
+      "rankings": {
+        "name": "Rankings",
+        "description": "Public server rankings."
+      },
+      "wiki": {
+        "name": "Wiki",
+        "description": "Public server encyclopedia."
+      },
+      "faq": {
+        "name": "FAQ",
+        "description": "Public site FAQ."
+      },
+      "downloads": {
+        "name": "Downloads",
+        "description": "Files, patches and client."
+      },
+      "calendar": {
+        "name": "Calendar",
+        "description": "Public server events."
+      },
+      "game-stores": {
+        "name": "In-game shops",
+        "description": "Offline private stores published by the server."
+      }
     }
   },
   "roadmap": {
@@ -1528,7 +1765,11 @@
     "title": "Manage roadmap",
     "description": "Organize the next steps in Portuguese, English and Spanish.",
     "language": "Update language",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "new": "New update",
     "edit": "Edit update",
     "titleRequired": "Provide the update title",
@@ -1669,11 +1910,26 @@
       "price": "Price"
     },
     "categories": {
-      "financial": { "title": "Finance", "description": "Balances, cash flow, orders and wallet reconciliation." },
-      "inventory": { "title": "Inventory", "description": "Panel inventory moves, top items and users." },
-      "auctions": { "title": "Auctions", "description": "Auction status, bids and most active items." },
-      "purchases": { "title": "Shop purchases", "description": "Shop revenue, abandoned carts and top items/coupons." },
-      "marketplace": { "title": "Marketplace", "description": "Character listings, sales and top sellers." }
+      "financial": {
+        "title": "Finance",
+        "description": "Balances, cash flow, orders and wallet reconciliation."
+      },
+      "inventory": {
+        "title": "Inventory",
+        "description": "Panel inventory moves, top items and users."
+      },
+      "auctions": {
+        "title": "Auctions",
+        "description": "Auction status, bids and most active items."
+      },
+      "purchases": {
+        "title": "Shop purchases",
+        "description": "Shop revenue, abandoned carts and top items/coupons."
+      },
+      "marketplace": {
+        "title": "Marketplace",
+        "description": "Character listings, sales and top sellers."
+      }
     },
     "finance": {
       "title": "Finance",

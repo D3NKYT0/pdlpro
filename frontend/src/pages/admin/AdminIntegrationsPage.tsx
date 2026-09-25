@@ -4,11 +4,14 @@ import { Field } from '../../components/ui/Field'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
 import {
+  BrainOrbIcon,
+  CloudBucketIcon,
   ExchangeIcon,
   KeyRingIcon,
   MailSealIcon,
   PaymentCardIcon,
   PurseIcon,
+  RadarPulseIcon,
   ServerTowerIcon,
   ShieldOkIcon,
 } from '../../components/icons'
@@ -34,17 +37,23 @@ const SECRET_KEYS = new Set([
   'LINEAGE_DB_PASSWORD',
   'LINEAGE_DB_SSL_KEY',
   'EMAIL_HOST_PASSWORD',
+  'VAPID_PRIVATE_KEY',
   'GOOGLE_CLIENT_SECRET',
   'DISCORD_CLIENT_SECRET',
   'HCAPTCHA_SECRET_KEY',
+  'DENKYNHO_LLM_API_KEY',
+  'AWS_SECRET_ACCESS_KEY',
+  'SENTRY_DSN',
 ])
 
 const MASKED_KEYS = new Set([
   'STRIPE_PUBLISHABLE_KEY',
   'MERCADO_PAGO_PUBLIC_KEY',
+  'VAPID_PUBLIC_KEY',
   'GOOGLE_CLIENT_ID',
   'DISCORD_CLIENT_ID',
   'HCAPTCHA_SITE_KEY',
+  'AWS_ACCESS_KEY_ID',
 ])
 
 const BOOL_KEYS = new Set([
@@ -55,7 +64,15 @@ const BOOL_KEYS = new Set([
   'LINEAGE_DB_SSL_VERIFY',
   'EMAIL_USE_TLS',
   'EMAIL_USE_SSL',
+  'PAYMENT_ALLOW_MOCK',
+  'DENKYNHO_LLM_ENABLED',
+  'DENKYNHO_OLLAMA_DOCKER',
+  'DENKYNHO_EMBEDDINGS_ENABLED',
+  'USE_S3',
+  'AWS_S3_PRIVATE_MEDIA',
 ])
+
+const LIST_KEYS = new Set(['PAYMENT_METHODS', 'WEBAUTHN_ORIGINS'])
 
 const CLEAR = '__CLEAR__'
 
@@ -63,15 +80,26 @@ type Draft = Record<string, string | boolean>
 type IntegrationTone =
   | 'stripe'
   | 'mercado'
+  | 'policy'
   | 'lineage'
   | 'game'
   | 'smtp'
+  | 'push'
   | 'google'
   | 'discord'
   | 'hcaptcha'
+  | 'webauthn'
+  | 'denkynho'
+  | 'storage'
+  | 'observability'
 
 function fieldMap(section: { fields: ApiIntegrationField[] }) {
   return Object.fromEntries(section.fields.map((field) => [field.key, field]))
+}
+
+function listToDraft(value: unknown) {
+  if (Array.isArray(value)) return value.map(String).join(', ')
+  return value == null ? '' : String(value)
 }
 
 function draftFromStatus(status: ApiIntegrationsStatus, section: IntegrationSectionId): Draft {
@@ -83,6 +111,10 @@ function draftFromStatus(status: ApiIntegrationsStatus, section: IntegrationSect
     }
     if (BOOL_KEYS.has(field.key)) {
       draft[field.key] = Boolean(field.value)
+      continue
+    }
+    if (LIST_KEYS.has(field.key)) {
+      draft[field.key] = listToDraft(field.value)
       continue
     }
     draft[field.key] = field.value == null ? '' : String(field.value)
@@ -103,6 +135,10 @@ function buildPatch(draft: Draft, sectionFields: ApiIntegrationField[]) {
     }
     if (BOOL_KEYS.has(key)) {
       patch[key] = Boolean(value)
+      continue
+    }
+    if (LIST_KEYS.has(key)) {
+      patch[key] = String(value ?? '')
       continue
     }
     patch[key] = String(value ?? '')
@@ -142,16 +178,21 @@ function SectionCard({
   )
 }
 
+const EMPTY_DRAFTS: Record<IntegrationSectionId, Draft> = {
+  payments: {},
+  lineage: {},
+  smtp: {},
+  oauth: {},
+  denkynho: {},
+  storage: {},
+  observability: {},
+}
+
 export function AdminIntegrationsPage() {
   const { t } = useTranslation('admin')
   const queryClient = useQueryClient()
   const [tab, setTab] = useState<IntegrationSectionId>('payments')
-  const [drafts, setDrafts] = useState<Record<IntegrationSectionId, Draft>>({
-    payments: {},
-    lineage: {},
-    smtp: {},
-    oauth: {},
-  })
+  const [drafts, setDrafts] = useState<Record<IntegrationSectionId, Draft>>(EMPTY_DRAFTS)
   const [clears, setClears] = useState<Record<string, boolean>>({})
 
   const status = useQuery({
@@ -166,6 +207,9 @@ export function AdminIntegrationsPage() {
       lineage: draftFromStatus(status.data, 'lineage'),
       smtp: draftFromStatus(status.data, 'smtp'),
       oauth: draftFromStatus(status.data, 'oauth'),
+      denkynho: draftFromStatus(status.data, 'denkynho'),
+      storage: draftFromStatus(status.data, 'storage'),
+      observability: draftFromStatus(status.data, 'observability'),
     })
     setClears({})
   }, [status.data])
@@ -192,25 +236,16 @@ export function AdminIntegrationsPage() {
   const tabs = useMemo(
     () =>
       [
+        { id: 'payments' as const, label: t('integrations.tabs.payments'), icon: <PaymentCardIcon width={28} height={28} /> },
+        { id: 'lineage' as const, label: t('integrations.tabs.lineage'), icon: <ServerTowerIcon width={28} height={28} /> },
+        { id: 'smtp' as const, label: t('integrations.tabs.smtp'), icon: <MailSealIcon width={28} height={28} /> },
+        { id: 'oauth' as const, label: t('integrations.tabs.oauth'), icon: <KeyRingIcon width={28} height={28} /> },
+        { id: 'denkynho' as const, label: t('integrations.tabs.denkynho'), icon: <BrainOrbIcon width={28} height={28} /> },
+        { id: 'storage' as const, label: t('integrations.tabs.storage'), icon: <CloudBucketIcon width={28} height={28} /> },
         {
-          id: 'payments' as const,
-          label: t('integrations.tabs.payments'),
-          icon: <PaymentCardIcon width={28} height={28} />,
-        },
-        {
-          id: 'lineage' as const,
-          label: t('integrations.tabs.lineage'),
-          icon: <ServerTowerIcon width={28} height={28} />,
-        },
-        {
-          id: 'smtp' as const,
-          label: t('integrations.tabs.smtp'),
-          icon: <MailSealIcon width={28} height={28} />,
-        },
-        {
-          id: 'oauth' as const,
-          label: t('integrations.tabs.oauth'),
-          icon: <KeyRingIcon width={28} height={28} />,
+          id: 'observability' as const,
+          label: t('integrations.tabs.observability'),
+          icon: <RadarPulseIcon width={28} height={28} />,
         },
       ] as const,
     [t],
@@ -274,8 +309,8 @@ export function AdminIntegrationsPage() {
     )
   }
 
-  const renderText = (key: string, inputType = 'text') => (
-    <Field key={key} label={t(`integrations.fields.${key}`)}>
+  const renderText = (key: string, inputType = 'text', hint?: string) => (
+    <Field key={key} label={t(`integrations.fields.${key}`)} hint={hint}>
       <input
         type={inputType}
         value={String(draft[key] ?? '')}
@@ -356,6 +391,21 @@ export function AdminIntegrationsPage() {
                   {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
                 </div>
               </SectionCard>
+              <SectionCard
+                icon={<PaymentCardIcon />}
+                tone="policy"
+                eyebrow={t('integrations.payments.policyEyebrow')}
+                title={t('integrations.payments.policyTitle')}
+                description={t('integrations.payments.policyHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('PAYMENT_METHODS', 'text', t('integrations.payments.methodsHint'))}
+                  {renderText('PAYMENT_WEBHOOK_BASE_URL')}
+                  {renderText('COINS_PER_USD')}
+                  {renderText('PAYMENT_REUSE_HOURS', 'number')}
+                  {renderBool('PAYMENT_ALLOW_MOCK')}
+                </div>
+              </SectionCard>
             </>
           ) : null}
 
@@ -399,41 +449,63 @@ export function AdminIntegrationsPage() {
                 eyebrow={t('integrations.lineage.gameEyebrow')}
                 title={t('integrations.lineage.gameTitle')}
               >
-                <div className="account-form-fields">
-                  {renderText('GAME_SERVER_IP')}
-                  {renderText('GAME_SERVER_PORT', 'number')}
-                  {renderText('LOGIN_SERVER_PORT', 'number')}
-                  {renderText('SERVER_STATUS_TIMEOUT', 'number')}
+                <div className="admin-integrations-stack">
+                  <div className="account-form-fields">
+                    {renderText('GAME_SERVER_IP')}
+                    {renderText('GAME_SERVER_PORT', 'number')}
+                    {renderText('LOGIN_SERVER_PORT', 'number')}
+                    {renderText('SERVER_STATUS_TIMEOUT', 'number')}
+                  </div>
+                  <div className="account-form-fields">
+                    {renderText('FAKE_PLAYERS_FACTOR', 'number')}
+                    {renderText('FAKE_PLAYERS_MIN', 'number')}
+                    {renderText('FAKE_PLAYERS_MAX', 'number')}
+                  </div>
                 </div>
               </SectionCard>
             </>
           ) : null}
 
           {tab === 'smtp' ? (
-            <SectionCard
-              icon={<MailSealIcon />}
-              tone="smtp"
-              eyebrow={t('integrations.smtp.eyebrow')}
-              title={t('integrations.smtp.title')}
-              description={t('integrations.smtp.hint')}
-            >
-              <div className="admin-integrations-stack">
-                {renderText('EMAIL_BACKEND')}
-                <div className="account-form-fields">
-                  {renderText('EMAIL_HOST')}
-                  {renderText('EMAIL_PORT', 'number')}
+            <>
+              <SectionCard
+                icon={<MailSealIcon />}
+                tone="smtp"
+                eyebrow={t('integrations.smtp.eyebrow')}
+                title={t('integrations.smtp.title')}
+                description={t('integrations.smtp.hint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('EMAIL_BACKEND')}
+                  <div className="account-form-fields">
+                    {renderText('EMAIL_HOST')}
+                    {renderText('EMAIL_PORT', 'number')}
+                  </div>
+                  <div className="admin-integrations-toggles">
+                    {renderBool('EMAIL_USE_TLS')}
+                    {renderBool('EMAIL_USE_SSL')}
+                  </div>
+                  <div className="account-form-fields">
+                    {renderText('EMAIL_HOST_USER')}
+                    {renderText('DEFAULT_FROM_EMAIL')}
+                  </div>
+                  {renderSecret('EMAIL_HOST_PASSWORD')}
                 </div>
-                <div className="admin-integrations-toggles">
-                  {renderBool('EMAIL_USE_TLS')}
-                  {renderBool('EMAIL_USE_SSL')}
+              </SectionCard>
+              <SectionCard
+                icon={<MailSealIcon />}
+                tone="push"
+                eyebrow={t('integrations.smtp.pushEyebrow')}
+                title={t('integrations.smtp.pushTitle')}
+                description={t('integrations.smtp.pushHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('VAPID_PUBLIC_KEY')}
+                  {renderSecret('VAPID_PRIVATE_KEY')}
+                  {renderText('VAPID_SUBJECT')}
                 </div>
-                <div className="account-form-fields">
-                  {renderText('EMAIL_HOST_USER')}
-                  {renderText('DEFAULT_FROM_EMAIL')}
-                </div>
-                {renderSecret('EMAIL_HOST_PASSWORD')}
-              </div>
-            </SectionCard>
+              </SectionCard>
+            </>
           ) : null}
 
           {tab === 'oauth' ? (
@@ -472,7 +544,91 @@ export function AdminIntegrationsPage() {
                   {renderSecret('HCAPTCHA_SECRET_KEY')}
                 </div>
               </SectionCard>
+              <SectionCard
+                icon={<KeyRingIcon />}
+                tone="webauthn"
+                eyebrow={t('integrations.oauth.webauthnEyebrow')}
+                title={t('integrations.oauth.webauthnTitle')}
+                description={t('integrations.oauth.webauthnHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('WEBAUTHN_RP_ID')}
+                  {renderText('WEBAUTHN_RP_NAME')}
+                  {renderText('WEBAUTHN_ORIGINS', 'text', t('integrations.oauth.originsHint'))}
+                </div>
+              </SectionCard>
             </>
+          ) : null}
+
+          {tab === 'denkynho' ? (
+            <SectionCard
+              icon={<BrainOrbIcon />}
+              tone="denkynho"
+              eyebrow={t('integrations.denkynho.eyebrow')}
+              title={t('integrations.denkynho.title')}
+              description={t('integrations.denkynho.hint')}
+            >
+              <div className="admin-integrations-stack">
+                {renderBool('DENKYNHO_LLM_ENABLED')}
+                <div className="account-form-fields">
+                  {renderText('DENKYNHO_LLM_PROVIDER')}
+                  {renderText('DENKYNHO_LLM_MODEL')}
+                  {renderText('DENKYNHO_LLM_TIMEOUT', 'number')}
+                </div>
+                {renderText('DENKYNHO_OLLAMA_URL')}
+                {renderBool('DENKYNHO_OLLAMA_DOCKER')}
+                {renderText('DENKYNHO_LLM_API_URL')}
+                {renderSecret('DENKYNHO_LLM_API_KEY')}
+                {renderBool('DENKYNHO_EMBEDDINGS_ENABLED')}
+                {renderText('DENKYNHO_EMBEDDING_MODEL')}
+              </div>
+            </SectionCard>
+          ) : null}
+
+          {tab === 'storage' ? (
+            <SectionCard
+              icon={<CloudBucketIcon />}
+              tone="storage"
+              eyebrow={t('integrations.storage.eyebrow')}
+              title={t('integrations.storage.title')}
+              description={t('integrations.storage.hint')}
+            >
+              <div className="admin-integrations-stack">
+                {renderBool('USE_S3')}
+                {renderSecret('AWS_ACCESS_KEY_ID')}
+                {renderSecret('AWS_SECRET_ACCESS_KEY')}
+                <div className="account-form-fields">
+                  {renderText('AWS_STORAGE_BUCKET_NAME')}
+                  {renderText('AWS_S3_REGION_NAME')}
+                </div>
+                {renderText('AWS_S3_ENDPOINT_URL')}
+                {renderText('AWS_S3_CUSTOM_DOMAIN')}
+                {renderBool('AWS_S3_PRIVATE_MEDIA')}
+                <div className="account-form-fields">
+                  {renderText('AWS_QUERYSTRING_EXPIRE', 'number')}
+                  {renderText('AWS_LOCATION')}
+                </div>
+              </div>
+            </SectionCard>
+          ) : null}
+
+          {tab === 'observability' ? (
+            <SectionCard
+              icon={<RadarPulseIcon />}
+              tone="observability"
+              eyebrow={t('integrations.observability.eyebrow')}
+              title={t('integrations.observability.title')}
+              description={t('integrations.observability.hint')}
+            >
+              <div className="admin-integrations-stack">
+                {renderSecret('SENTRY_DSN')}
+                <div className="account-form-fields">
+                  {renderText('SENTRY_ENVIRONMENT')}
+                  {renderText('SENTRY_RELEASE')}
+                  {renderText('SENTRY_TRACES_SAMPLE_RATE', 'number')}
+                </div>
+              </div>
+            </SectionCard>
           ) : null}
 
           <Card as="div" className="admin-server-actions">

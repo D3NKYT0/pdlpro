@@ -19,42 +19,128 @@
       "extensions": "Extensiones"
     },
     "entries": {
-      "supporters": { "title": "Patrocinadores y comisiones", "description": "Candidaturas, porcentajes y aprobación de comisiones" },
-      "commerce": { "title": "Paquetes y cupones", "description": "Paquetes de ítems, descuentos y cupones de patrocinadores" },
-      "rewardsWorkshop": { "title": "Taller de recompensas", "description": "Temporadas, misiones, intercambios, bonos y cebos" },
-      "tickets": { "title": "Cola de tickets", "description": "SLA, responsables, respuestas e historial del jugador" },
-      "notifications": { "title": "Avisos", "description": "Enviar avisos a un jugador o a todas las cuentas" },
-      "resources": { "title": "Control de recursos", "description": "Activar o pausar módulos por categoría" },
-      "themes": { "title": "Temas", "description": "Instalar, activar y restaurar la apariencia del frontend" },
-      "api": { "title": "API", "description": "Documentación OpenAPI (Swagger)" },
-      "djangoAdmin": { "title": "Django Admin", "description": "CRUD completo del sistema" },
-      "coins": { "title": "Monedas", "description": "Moneda activa, multiplicador y tasa" },
-      "coinPackages": { "title": "Paquetes de recarga", "description": "Precios en BRL y USD mostrados en la cartera" },
-      "shop": { "title": "Tienda", "description": "Ítems, paquetes y catálogo low grade vendidos en el panel" },
-      "wallet": { "title": "Configuración de la cartera", "description": "Banner promocional y bono mínimo en las recargas" },
-      "gameModules": { "title": "Módulos de juegos", "description": "Encender, apagar y rellenar el contenido de los minijuegos" },
-      "news": { "title": "Noticias", "description": "Publicar avisos del servidor en PT, EN y ES" },
-      "calendar": { "title": "Calendario", "description": "Eventos públicos del sitio en PT, EN y ES" },
-      "faq": { "title": "FAQ", "description": "Artículos de ayuda y handbook de Denkynho" },
-      "wiki": { "title": "Wiki", "description": "Guías y páginas de la wiki pública" },
-      "downloads": { "title": "Descargas", "description": "Cliente, parches y archivos oficiales" },
-      "roadmap": { "title": "Roadmap", "description": "Planificación, etapas y novedades en PT, EN y ES" },
-      "comingSoon": { "title": "Coming Soon", "description": "Página de lanzamiento y control de acceso" },
-      "server": { "title": "Panel y servidor", "description": "Nombre, rates, chronicle y SEO" },
-      "secrets": { "title": "Secretos y rotación", "description": "Estado, soft-rotate y reencrypt (solo superadmin)" },
-      "integrations": { "title": "Integraciones", "description": "Pagos, Lineage/game, SMTP y OAuth/hCaptcha (solo superadmin)" },
-      "itemWatch": { "title": "Observar ítems", "description": "Economía del servidor, favoritos, snapshots y comparación entre fechas" },
-      "customItems": { "title": "Ítems personalizados", "description": "Registrar nombre, ID, imagen y metadatos en el catálogo único" },
-      "services": { "title": "Servicios", "description": "Precios de apodo, sexo, espacios y desatasco" },
-      "lineageAccounts": { "title": "Cuentas Lineage", "description": "Consultar el login y quitar el vínculo con el panel" },
-      "moderation": { "title": "Moderación", "description": "Kick, prisión, ban y teleporte de personajes" }
+      "supporters": {
+        "title": "Patrocinadores y comisiones",
+        "description": "Candidaturas, porcentajes y aprobación de comisiones"
+      },
+      "commerce": {
+        "title": "Paquetes y cupones",
+        "description": "Paquetes de ítems, descuentos y cupones de patrocinadores"
+      },
+      "rewardsWorkshop": {
+        "title": "Taller de recompensas",
+        "description": "Temporadas, misiones, intercambios, bonos y cebos"
+      },
+      "tickets": {
+        "title": "Cola de tickets",
+        "description": "SLA, responsables, respuestas e historial del jugador"
+      },
+      "notifications": {
+        "title": "Avisos",
+        "description": "Enviar avisos a un jugador o a todas las cuentas"
+      },
+      "resources": {
+        "title": "Control de recursos",
+        "description": "Activar o pausar módulos por categoría"
+      },
+      "themes": {
+        "title": "Temas",
+        "description": "Instalar, activar y restaurar la apariencia del frontend"
+      },
+      "api": {
+        "title": "API",
+        "description": "Documentación OpenAPI (Swagger)"
+      },
+      "djangoAdmin": {
+        "title": "Django Admin",
+        "description": "CRUD completo del sistema"
+      },
+      "coins": {
+        "title": "Monedas",
+        "description": "Moneda activa, multiplicador y tasa"
+      },
+      "coinPackages": {
+        "title": "Paquetes de recarga",
+        "description": "Precios en BRL y USD mostrados en la cartera"
+      },
+      "shop": {
+        "title": "Tienda",
+        "description": "Ítems, paquetes y catálogo low grade vendidos en el panel"
+      },
+      "wallet": {
+        "title": "Configuración de la cartera",
+        "description": "Banner promocional y bono mínimo en las recargas"
+      },
+      "gameModules": {
+        "title": "Módulos de juegos",
+        "description": "Encender, apagar y rellenar el contenido de los minijuegos"
+      },
+      "news": {
+        "title": "Noticias",
+        "description": "Publicar avisos del servidor en PT, EN y ES"
+      },
+      "calendar": {
+        "title": "Calendario",
+        "description": "Eventos públicos del sitio en PT, EN y ES"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Artículos de ayuda y handbook de Denkynho"
+      },
+      "wiki": {
+        "title": "Wiki",
+        "description": "Guías y páginas de la wiki pública"
+      },
+      "downloads": {
+        "title": "Descargas",
+        "description": "Cliente, parches y archivos oficiales"
+      },
+      "roadmap": {
+        "title": "Roadmap",
+        "description": "Planificación, etapas y novedades en PT, EN y ES"
+      },
+      "comingSoon": {
+        "title": "Coming Soon",
+        "description": "Página de lanzamiento y control de acceso"
+      },
+      "server": {
+        "title": "Panel y servidor",
+        "description": "Nombre, rates, chronicle y SEO"
+      },
+      "secrets": {
+        "title": "Secretos y rotación",
+        "description": "Estado, soft-rotate y reencrypt (solo superadmin)"
+      },
+      "integrations": {
+        "title": "Integraciones",
+        "description": "Pagos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 y Sentry (solo superadmin)"
+      },
+      "itemWatch": {
+        "title": "Observar ítems",
+        "description": "Economía del servidor, favoritos, snapshots y comparación entre fechas"
+      },
+      "customItems": {
+        "title": "Ítems personalizados",
+        "description": "Registrar nombre, ID, imagen y metadatos en el catálogo único"
+      },
+      "services": {
+        "title": "Servicios",
+        "description": "Precios de apodo, sexo, espacios y desatasco"
+      },
+      "lineageAccounts": {
+        "title": "Cuentas Lineage",
+        "description": "Consultar el login y quitar el vínculo con el panel"
+      },
+      "moderation": {
+        "title": "Moderación",
+        "description": "Kick, prisión, ban y teleporte de personajes"
+      }
     }
   },
   "chrome": {
     "back": "Central",
     "save": "Guardar",
     "saving": "Guardando...",
-    "loading": "Cargando…",
     "edit": "Editar",
     "delete": "Eliminar",
     "cancelEdit": "Cancelar edición",
@@ -447,7 +533,11 @@
     "title": "Noticias",
     "description": "Avisos de la portada y de la página de noticias, con texto en portugués, inglés y español.",
     "language": "Idioma de la noticia",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "editingEyebrow": "Edición",
     "creatingEyebrow": "Nueva publicación",
     "editTitle": "Editar noticia",
@@ -492,7 +582,11 @@
     "title": "Calendario",
     "description": "Eventos públicos del sitio, con fechas y texto en portugués, inglés y español.",
     "language": "Idioma del evento",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "fieldTitle": "Título",
     "fieldDescription": "Descripción",
     "startsAt": "Inicio",
@@ -526,7 +620,11 @@
     "title": "FAQ",
     "description": "Artículos de ayuda pública y pasos internos de Denkynho.",
     "language": "Idioma del artículo",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "question": "Pregunta",
     "shortAnswer": "Respuesta rápida",
     "answer": "Respuesta completa",
@@ -571,7 +669,11 @@
     "title": "Wiki",
     "description": "Páginas de la wiki pública, con versiones en portugués, inglés y español.",
     "language": "Idioma de la página",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "fieldTitle": "Título",
     "summary": "Resumen",
     "body": "Contenido",
@@ -724,15 +826,6 @@
       "replySent": "Respuesta enviada al jugador",
       "replyError": "No fue posible responder"
     }
-  },
-  "chrome": {
-    "back": "Central",
-    "save": "Guardar",
-    "saving": "Guardando...",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "cancelEdit": "Cancelar edición",
-    "confirmDelete": "¿Eliminar este registro?"
   },
   "server": {
     "kicker": "Servidor",
@@ -898,13 +991,16 @@
   "integrations": {
     "kicker": "Sistema",
     "title": "Integraciones",
-    "description": "Pagos, base Lineage, hosts del juego, SMTP y OAuth/hCaptcha. Los secretos quedan cifrados en la base y se aplican sin reiniciar Docker. Solo superadmin.",
+    "description": "Pagos, Lineage, SMTP/push, OAuth/WebAuthn, Denkynho, S3/R2 y Sentry. Los secretos se cifran y aplican sin reiniciar. Solo superadmin.",
     "tabsLabel": "Secciones de integración",
     "tabs": {
       "payments": "Pagos",
       "lineage": "Lineage / Game",
-      "smtp": "SMTP",
-      "oauth": "OAuth / hCaptcha"
+      "smtp": "SMTP / Push",
+      "oauth": "OAuth / Auth",
+      "denkynho": "Denkynho",
+      "storage": "S3 / R2",
+      "observability": "Sentry"
     },
     "loadError": "No se pudieron cargar las integraciones",
     "toastSaved": "Integración guardada y aplicada",
@@ -916,34 +1012,60 @@
     "actionsHint": "Guarda cifrado y aplica en los workers sin reiniciar Docker.",
     "configuredHint": "Configurado · {{fingerprint}}",
     "emptyHint": "Aún no configurado — el valor del .env permanece hasta que guardes aquí.",
-    "keepPlaceholder": "Deja en blanco para mantener",
+    "keepPlaceholder": "Deje en blanco para mantener",
     "clear": "Borrar valor",
     "clearArmed": "Se borrará al guardar",
     "payments": {
       "stripeEyebrow": "Stripe",
       "stripeTitle": "Tarjetas y webhooks Stripe",
       "mpEyebrow": "Mercado Pago",
-      "mpTitle": "Pix, boleto y webhooks MP"
+      "mpTitle": "Pix, boleto y webhooks MP",
+      "policyEyebrow": "Política",
+      "policyTitle": "Métodos, webhook y cotización",
+      "policyHint": "Define qué proveedores expone la tienda y la URL pública de webhooks.",
+      "methodsHint": "Separados por coma: mercadopago, stripe, mock"
     },
     "lineage": {
       "dbEyebrow": "MySQL L2",
       "dbTitle": "Base del juego",
-      "gameEyebrow": "Estado",
+      "gameEyebrow": "Status",
       "gameTitle": "Hosts del game y login server"
     },
     "smtp": {
       "eyebrow": "Correo",
       "title": "Servidor SMTP",
-      "hint": "La prueba envía un mensaje al correo de tu cuenta de superadmin."
+      "hint": "La prueba envía un mensaje al correo de su cuenta de superadmin.",
+      "pushEyebrow": "Web Push",
+      "pushTitle": "Claves VAPID",
+      "pushHint": "Par público/privado para notificaciones push del navegador."
     },
     "oauth": {
       "googleEyebrow": "Google",
-      "googleTitle": "Inicio de sesión con Google",
+      "googleTitle": "Inicio con Google",
       "discordEyebrow": "Discord",
-      "discordTitle": "Inicio de sesión con Discord",
+      "discordTitle": "Inicio con Discord",
       "hcaptchaEyebrow": "hCaptcha",
       "hcaptchaTitle": "Protección de registro",
-      "hcaptchaHint": "hCaptcha solo se activa cuando site key y secret están completos."
+      "hcaptchaHint": "hCaptcha solo se activa cuando site key y secret están completos.",
+      "webauthnEyebrow": "WebAuthn",
+      "webauthnTitle": "Passkeys / RP",
+      "webauthnHint": "RP ID y origins del dominio HTTPS de producción.",
+      "originsHint": "Separados por coma, ej.: https://panel.ejemplo.com"
+    },
+    "denkynho": {
+      "eyebrow": "Asistente",
+      "title": "Denkynho LLM",
+      "hint": "Ollama local o API remota compatible con OpenAI."
+    },
+    "storage": {
+      "eyebrow": "Media",
+      "title": "Cloudflare R2 / Amazon S3",
+      "hint": "Endpoint compatible con S3. Compatible con R2 (checksums legacy). Los archivos privados LGPD siguen en el filesystem."
+    },
+    "observability": {
+      "eyebrow": "Monitoreo",
+      "title": "Sentry",
+      "hint": "DSN y tasa de traces. El SDK se reinicializa en el proceso tras guardar."
     },
     "fields": {
       "STRIPE_SECRET_KEY": "Stripe secret key",
@@ -954,10 +1076,15 @@
       "MERCADO_PAGO_PUBLIC_KEY": "Mercado Pago public key",
       "MERCADO_PAGO_WEBHOOK_SECRET": "Mercado Pago webhook secret",
       "MERCADO_PAGO_ACTIVATE_PAYMENTS": "Activar Mercado Pago",
+      "PAYMENT_METHODS": "Métodos de pago",
+      "PAYMENT_WEBHOOK_BASE_URL": "URL base de webhooks",
+      "COINS_PER_USD": "Monedas por USD",
+      "PAYMENT_ALLOW_MOCK": "Permitir método mock",
+      "PAYMENT_REUSE_HOURS": "Reuso de pedido (horas)",
       "LINEAGE_DB_ENABLED": "Habilitar MySQL de Lineage",
       "LINEAGE_DB_HOST": "Host",
       "LINEAGE_DB_PORT": "Puerto",
-      "LINEAGE_DB_NAME": "Base de datos",
+      "LINEAGE_DB_NAME": "Database",
       "LINEAGE_DB_USER": "Usuario",
       "LINEAGE_DB_PASSWORD": "Contraseña",
       "LINEAGE_DB_SSL": "Usar TLS",
@@ -972,7 +1099,10 @@
       "GAME_SERVER_IP": "IP del game server",
       "GAME_SERVER_PORT": "Puerto del game server",
       "LOGIN_SERVER_PORT": "Puerto del login server",
-      "SERVER_STATUS_TIMEOUT": "Timeout del estado (s)",
+      "SERVER_STATUS_TIMEOUT": "Timeout del status (s)",
+      "FAKE_PLAYERS_FACTOR": "Factor de jugadores fake",
+      "FAKE_PLAYERS_MIN": "Mínimo fake",
+      "FAKE_PLAYERS_MAX": "Máximo fake",
       "EMAIL_BACKEND": "Backend Django",
       "EMAIL_HOST": "Host SMTP",
       "EMAIL_PORT": "Puerto SMTP",
@@ -981,12 +1111,42 @@
       "EMAIL_HOST_USER": "Usuario SMTP",
       "EMAIL_HOST_PASSWORD": "Contraseña SMTP",
       "DEFAULT_FROM_EMAIL": "Remitente predeterminado",
+      "VAPID_PUBLIC_KEY": "VAPID public key",
+      "VAPID_PRIVATE_KEY": "VAPID private key",
+      "VAPID_SUBJECT": "VAPID subject",
       "GOOGLE_CLIENT_ID": "Google client ID",
       "GOOGLE_CLIENT_SECRET": "Google client secret",
       "DISCORD_CLIENT_ID": "Discord client ID",
       "DISCORD_CLIENT_SECRET": "Discord client secret",
       "HCAPTCHA_SITE_KEY": "hCaptcha site key",
-      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key"
+      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key",
+      "WEBAUTHN_RP_ID": "WebAuthn RP ID",
+      "WEBAUTHN_RP_NAME": "WebAuthn RP name",
+      "WEBAUTHN_ORIGINS": "WebAuthn origins",
+      "DENKYNHO_LLM_ENABLED": "Habilitar LLM",
+      "DENKYNHO_LLM_PROVIDER": "Proveedor (ollama|remote)",
+      "DENKYNHO_OLLAMA_URL": "URL de Ollama",
+      "DENKYNHO_OLLAMA_DOCKER": "Permitir hostname Docker ollama",
+      "DENKYNHO_LLM_MODEL": "Modelo",
+      "DENKYNHO_LLM_TIMEOUT": "Timeout (s)",
+      "DENKYNHO_LLM_API_URL": "URL de la API remota",
+      "DENKYNHO_LLM_API_KEY": "API key remota",
+      "DENKYNHO_EMBEDDINGS_ENABLED": "Habilitar embeddings",
+      "DENKYNHO_EMBEDDING_MODEL": "Modelo de embedding",
+      "USE_S3": "Usar S3 / R2",
+      "AWS_ACCESS_KEY_ID": "Access key ID",
+      "AWS_SECRET_ACCESS_KEY": "Secret access key",
+      "AWS_STORAGE_BUCKET_NAME": "Bucket",
+      "AWS_S3_REGION_NAME": "Region",
+      "AWS_S3_ENDPOINT_URL": "Endpoint URL",
+      "AWS_S3_CUSTOM_DOMAIN": "Dominio personalizado (CDN)",
+      "AWS_S3_PRIVATE_MEDIA": "Media con URL firmada",
+      "AWS_QUERYSTRING_EXPIRE": "Expiración de URL firmada (s)",
+      "AWS_LOCATION": "Prefijo en el bucket",
+      "SENTRY_DSN": "Sentry DSN",
+      "SENTRY_ENVIRONMENT": "Entorno",
+      "SENTRY_RELEASE": "Release",
+      "SENTRY_TRACES_SAMPLE_RATE": "Tasa de traces"
     }
   },
   "comingSoonAdmin": {
@@ -1485,7 +1645,9 @@
     "disabled": "Recurso desactivado.",
     "emptyTitle": "Ningún módulo registrado",
     "emptyText": "Los recursos del panel aparecen aquí después de la migración inicial.",
-    "toast": { "error": "No fue posible actualizar el recurso" },
+    "toast": {
+      "error": "No fue posible actualizar el recurso"
+    },
     "categories": {
       "economy": "Economía",
       "games": "Juegos",
@@ -1496,31 +1658,106 @@
       "other": "Otros"
     },
     "items": {
-      "supporters": { "name": "Patrocinadores", "description": "Programa de patrocinadores, cupones y comisiones." },
-      "roadmap": { "name": "Roadmap", "description": "Actualizaciones públicas del servidor en PT, EN y ES." },
-      "shop": { "name": "Tienda", "description": "Ítems y paquetes de la tienda del panel." },
-      "wallet": { "name": "Cartera", "description": "Saldo, bono, fichas y cambio con el juego." },
-      "inventory": { "name": "Inventario", "description": "Bag, almacén e ítems de la cuenta vinculada." },
-      "marketplace": { "name": "Mercado", "description": "Compra y venta de ítems entre jugadores." },
-      "auction": { "name": "Subastas", "description": "Subasta de personajes." },
-      "games": { "name": "Central de juegos", "description": "Rueda de la Fortuna, cofres, taberna, pesca y arena." },
-      "battle-pass": { "name": "Pase de batalla", "description": "Temporada, misiones, intercambios y hitos." },
-      "daily-bonus": { "name": "Bono diario", "description": "Reclamo diario del calendario de la temporada." },
-      "fishing": { "name": "Pesca", "description": "Caña, cebos y colección en el lago de la central de juegos." },
-      "hunt": { "name": "Caza del día", "description": "Misiones de PvP, PK, tiempo en línea y nivel del personaje." },
-      "profile": { "name": "Mi perfil", "description": "Datos de la cuenta maestra y preferencias." },
-      "accounts": { "name": "Cuenta L2", "description": "Vínculo, personajes y ficha Lineage." },
-      "progress": { "name": "Nivel y logros", "description": "Nivel, XP, logros y premios de la cuenta en el Panel." },
-      "notifications": { "name": "Avisos", "description": "Campana de la barra superior e historial de avisos." },
-      "support": { "name": "Atención", "description": "Tickets del equipo: el jugador entra por Ayuda; si Ayuda está pausada, el menú apunta a Atención." },
-      "help": { "name": "Ayuda", "description": "Manual, Denkynho y preguntas frecuentes." },
-      "news": { "name": "Noticias", "description": "Noticias públicas del sitio." },
-      "rankings": { "name": "Rankings", "description": "Rankings públicos del servidor." },
-      "wiki": { "name": "Wiki", "description": "Enciclopedia pública del servidor." },
-      "faq": { "name": "Preguntas frecuentes", "description": "FAQ pública del sitio." },
-      "downloads": { "name": "Descargas", "description": "Archivos, parches y cliente." },
-      "calendar": { "name": "Calendario", "description": "Eventos públicos del servidor." },
-      "game-stores": { "name": "Tiendas del juego", "description": "Private stores offline publicadas por el servidor." }
+      "supporters": {
+        "name": "Patrocinadores",
+        "description": "Programa de patrocinadores, cupones y comisiones."
+      },
+      "roadmap": {
+        "name": "Roadmap",
+        "description": "Actualizaciones públicas del servidor en PT, EN y ES."
+      },
+      "shop": {
+        "name": "Tienda",
+        "description": "Ítems y paquetes de la tienda del panel."
+      },
+      "wallet": {
+        "name": "Cartera",
+        "description": "Saldo, bono, fichas y cambio con el juego."
+      },
+      "inventory": {
+        "name": "Inventario",
+        "description": "Bag, almacén e ítems de la cuenta vinculada."
+      },
+      "marketplace": {
+        "name": "Mercado",
+        "description": "Compra y venta de ítems entre jugadores."
+      },
+      "auction": {
+        "name": "Subastas",
+        "description": "Subasta de personajes."
+      },
+      "games": {
+        "name": "Central de juegos",
+        "description": "Rueda de la Fortuna, cofres, taberna, pesca y arena."
+      },
+      "battle-pass": {
+        "name": "Pase de batalla",
+        "description": "Temporada, misiones, intercambios y hitos."
+      },
+      "daily-bonus": {
+        "name": "Bono diario",
+        "description": "Reclamo diario del calendario de la temporada."
+      },
+      "fishing": {
+        "name": "Pesca",
+        "description": "Caña, cebos y colección en el lago de la central de juegos."
+      },
+      "hunt": {
+        "name": "Caza del día",
+        "description": "Misiones de PvP, PK, tiempo en línea y nivel del personaje."
+      },
+      "profile": {
+        "name": "Mi perfil",
+        "description": "Datos de la cuenta maestra y preferencias."
+      },
+      "accounts": {
+        "name": "Cuenta L2",
+        "description": "Vínculo, personajes y ficha Lineage."
+      },
+      "progress": {
+        "name": "Nivel y logros",
+        "description": "Nivel, XP, logros y premios de la cuenta en el Panel."
+      },
+      "notifications": {
+        "name": "Avisos",
+        "description": "Campana de la barra superior e historial de avisos."
+      },
+      "support": {
+        "name": "Atención",
+        "description": "Tickets del equipo: el jugador entra por Ayuda; si Ayuda está pausada, el menú apunta a Atención."
+      },
+      "help": {
+        "name": "Ayuda",
+        "description": "Manual, Denkynho y preguntas frecuentes."
+      },
+      "news": {
+        "name": "Noticias",
+        "description": "Noticias públicas del sitio."
+      },
+      "rankings": {
+        "name": "Rankings",
+        "description": "Rankings públicos del servidor."
+      },
+      "wiki": {
+        "name": "Wiki",
+        "description": "Enciclopedia pública del servidor."
+      },
+      "faq": {
+        "name": "Preguntas frecuentes",
+        "description": "FAQ pública del sitio."
+      },
+      "downloads": {
+        "name": "Descargas",
+        "description": "Archivos, parches y cliente."
+      },
+      "calendar": {
+        "name": "Calendario",
+        "description": "Eventos públicos del servidor."
+      },
+      "game-stores": {
+        "name": "Tiendas del juego",
+        "description": "Private stores offline publicadas por el servidor."
+      }
     }
   },
   "roadmap": {
@@ -1528,7 +1765,11 @@
     "title": "Gestionar el roadmap",
     "description": "Organiza los próximos pasos en portugués, inglés y español.",
     "language": "Idioma de la actualización",
-    "languages": { "pt": "Português", "en": "English", "es": "Español" },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    },
     "new": "Nueva actualización",
     "edit": "Editar la actualización",
     "titleRequired": "Informa el título de la actualización",
@@ -1669,11 +1910,26 @@
       "price": "Precio"
     },
     "categories": {
-      "financial": { "title": "Finanzas", "description": "Saldos, flujo de caja, pedidos y conciliación de carteras." },
-      "inventory": { "title": "Inventario", "description": "Movimientos del inventario del panel, tops de ítems y usuarios." },
-      "auctions": { "title": "Subastas", "description": "Estado de las subastas, pujas e ítems más activos." },
-      "purchases": { "title": "Compras de la tienda", "description": "Ingresos, carritos abandonados y tops de ítems y cupones." },
-      "marketplace": { "title": "Marketplace", "description": "Anuncios de personajes, ventas y ranking de vendedores." }
+      "financial": {
+        "title": "Finanzas",
+        "description": "Saldos, flujo de caja, pedidos y conciliación de carteras."
+      },
+      "inventory": {
+        "title": "Inventario",
+        "description": "Movimientos del inventario del panel, tops de ítems y usuarios."
+      },
+      "auctions": {
+        "title": "Subastas",
+        "description": "Estado de las subastas, pujas e ítems más activos."
+      },
+      "purchases": {
+        "title": "Compras de la tienda",
+        "description": "Ingresos, carritos abandonados y tops de ítems y cupones."
+      },
+      "marketplace": {
+        "title": "Marketplace",
+        "description": "Anuncios de personajes, ventas y ranking de vendedores."
+      }
     },
     "finance": {
       "title": "Finanzas",

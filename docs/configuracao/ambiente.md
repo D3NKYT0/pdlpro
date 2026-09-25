@@ -146,11 +146,30 @@ Mantenha as flags de ativação como `false` até as credenciais, URLs públicas
 
 As chaves VAPID formam um par e devem ser armazenadas como segredo fora do Git. A funcionalidade de push fica indisponível quando o par não está configurado.
 
-Stripe, Mercado Pago, Lineage/game, SMTP e OAuth/hCaptcha também podem ser
+Stripe, Mercado Pago (credenciais e política), Lineage/game, SMTP/VAPID,
+OAuth/hCaptcha/WebAuthn, Denkynho, S3/R2 e Sentry também podem ser
 gerenciados em runtime pelo painel **Integrações** (`/panel/admin/integrations`),
 com blobs Fernet no banco e hot-apply sem restart. O `.env` continua obrigatório
 para o bootstrap (`SECRET_KEY`, `DATABASE_URL`, `REDIS_*`, `PDL_DATA_ENCRYPTION_KEY`).
 Guia: [Configurador admin de integrações](../operacao/integracoes-admin.md).
+
+## Armazenamento S3 / Cloudflare R2
+
+| Variável | Descrição |
+|---|---|
+| `USE_S3` | Liga o backend S3-compatível para mídia pública |
+| `AWS_ACCESS_KEY_ID` | Access key (R2 ou AWS) |
+| `AWS_SECRET_ACCESS_KEY` | Secret key |
+| `AWS_STORAGE_BUCKET_NAME` | Nome do bucket |
+| `AWS_S3_REGION_NAME` | Região (`auto` no R2) |
+| `AWS_S3_ENDPOINT_URL` | Endpoint R2/S3, ex. `https://<accountid>.r2.cloudflarestorage.com` |
+| `AWS_S3_CUSTOM_DOMAIN` | Domínio CDN público (opcional) |
+| `AWS_S3_PRIVATE_MEDIA` | Usa URLs assinadas (`AWS_QUERYSTRING_AUTH`) |
+| `AWS_QUERYSTRING_EXPIRE` | TTL das URLs assinadas (segundos) |
+| `AWS_LOCATION` | Prefixo no bucket (padrão `media`) |
+
+Com `USE_S3=false` (padrão), a mídia fica em `MEDIA_ROOT`. Arquivos privados LGPD
+permanecem em `PRIVATE_MEDIA_ROOT` no filesystem, mesmo com S3 ativo.
 
 ## OAuth e hCaptcha
 

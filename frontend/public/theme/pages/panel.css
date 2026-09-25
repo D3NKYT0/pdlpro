@@ -17886,6 +17886,13 @@ html.pdl-panel .admin-integrations-section[data-tone='mercado'] {
   --admin-tone-border: rgba(61, 184, 217, 0.32);
 }
 
+html.pdl-panel .admin-integrations-section[data-tone='policy'] {
+  --admin-tone: #c5a161;
+  --admin-tone-soft: rgba(197, 161, 97, 0.14);
+  --admin-tone-mid: rgba(197, 161, 97, 0.08);
+  --admin-tone-border: rgba(197, 161, 97, 0.28);
+}
+
 html.pdl-panel .admin-integrations-section[data-tone='lineage'],
 html.pdl-panel .admin-integrations-tabs[data-tone='lineage'] {
   --admin-tone: #4fa84c;
@@ -17909,6 +17916,13 @@ html.pdl-panel .admin-integrations-tabs[data-tone='smtp'] {
   --admin-tone-border: rgba(224, 122, 95, 0.3);
 }
 
+html.pdl-panel .admin-integrations-section[data-tone='push'] {
+  --admin-tone: #6ba3d4;
+  --admin-tone-soft: rgba(107, 163, 212, 0.15);
+  --admin-tone-mid: rgba(107, 163, 212, 0.09);
+  --admin-tone-border: rgba(107, 163, 212, 0.3);
+}
+
 html.pdl-panel .admin-integrations-section[data-tone='google'],
 html.pdl-panel .admin-integrations-tabs[data-tone='oauth'] {
   --admin-tone: #5b9fd4;
@@ -17929,6 +17943,37 @@ html.pdl-panel .admin-integrations-section[data-tone='hcaptcha'] {
   --admin-tone-soft: rgba(63, 185, 160, 0.15);
   --admin-tone-mid: rgba(63, 185, 160, 0.09);
   --admin-tone-border: rgba(63, 185, 160, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='webauthn'] {
+  --admin-tone: #d4a574;
+  --admin-tone-soft: rgba(212, 165, 116, 0.15);
+  --admin-tone-mid: rgba(212, 165, 116, 0.09);
+  --admin-tone-border: rgba(212, 165, 116, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='denkynho'],
+html.pdl-panel .admin-integrations-tabs[data-tone='denkynho'] {
+  --admin-tone: #a78bfa;
+  --admin-tone-soft: rgba(167, 139, 250, 0.16);
+  --admin-tone-mid: rgba(167, 139, 250, 0.1);
+  --admin-tone-border: rgba(167, 139, 250, 0.32);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='storage'],
+html.pdl-panel .admin-integrations-tabs[data-tone='storage'] {
+  --admin-tone: #38bdf8;
+  --admin-tone-soft: rgba(56, 189, 248, 0.15);
+  --admin-tone-mid: rgba(56, 189, 248, 0.09);
+  --admin-tone-border: rgba(56, 189, 248, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='observability'],
+html.pdl-panel .admin-integrations-tabs[data-tone='observability'] {
+  --admin-tone: #fb7185;
+  --admin-tone-soft: rgba(251, 113, 133, 0.15);
+  --admin-tone-mid: rgba(251, 113, 133, 0.09);
+  --admin-tone-border: rgba(251, 113, 133, 0.3);
 }
 
 html.pdl-panel .admin-integrations-section > header {

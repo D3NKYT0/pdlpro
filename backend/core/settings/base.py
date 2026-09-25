@@ -2,6 +2,7 @@
 
 from datetime import timedelta
 from pathlib import Path
+import sys
 
 import environ
 
@@ -173,6 +174,19 @@ MEDIA_ROOT = BASE_DIR / "media"
 # O valor pode chegar vazio pelo .env; nesse caso vale o diretório padrão.
 PRIVATE_MEDIA_ROOT = Path(env("PRIVATE_MEDIA_ROOT", default="") or BASE_DIR / "private")
 
+# Cloudflare R2 / S3-compatível (hot-apply via /panel/admin/integrations → storage).
+USE_S3 = env.bool("USE_S3", default=False)
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default="")
+AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default="auto")
+AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL", default="")
+AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default="")
+AWS_S3_PRIVATE_MEDIA = env.bool("AWS_S3_PRIVATE_MEDIA", default=False)
+AWS_QUERYSTRING_EXPIRE = env.int("AWS_QUERYSTRING_EXPIRE", default=3600)
+AWS_LOCATION = env("AWS_LOCATION", default="media")
+_BOOT_MEDIA_URL = MEDIA_URL
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = get_rest_framework_settings(TRUSTED_PROXY_COUNT)
@@ -330,3 +344,13 @@ DENKYNHO_EMBEDDING_MODEL = env(
     "DENKYNHO_EMBEDDING_MODEL",
     default="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
 )
+
+SENTRY_DSN = env("SENTRY_DSN", default="")
+SENTRY_ENVIRONMENT = env("SENTRY_ENVIRONMENT", default="development")
+SENTRY_RELEASE = env("SENTRY_RELEASE", default="")
+SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0)
+
+from common.storage_config import apply_media_storage  # noqa: E402
+
+apply_media_storage(sys.modules[__name__])
+

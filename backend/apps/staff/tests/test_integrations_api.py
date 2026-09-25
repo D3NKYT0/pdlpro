@@ -77,6 +77,9 @@ def test_integrations_status_requires_superuser(api, staff_user, superuser, host
     assert "lineage" in body
     assert "smtp" in body
     assert "oauth" in body
+    assert "denkynho" in body
+    assert "storage" in body
+    assert "observability" in body
     assert "revision" in body
 
 
@@ -225,6 +228,56 @@ def test_applier_bumps_revision_and_refresh_reapplies(settings):
     mod._process_bootstrapped = True
     assert applier.refresh_if_stale() is True
     assert settings.STRIPE_PUBLISHABLE_KEY == "pk_rev_2"
+
+
+@pytest.mark.django_db
+def test_storage_patch_toggles_s3_backend(api, superuser, hosts, settings):
+    settings.USE_S3 = False
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "storage"}),
+        {
+            "USE_S3": True,
+            "AWS_ACCESS_KEY_ID": "akid",
+            "AWS_SECRET_ACCESS_KEY": "secret",
+            "AWS_STORAGE_BUCKET_NAME": "pdl-media",
+            "AWS_S3_ENDPOINT_URL": "https://example.r2.cloudflarestorage.com",
+            "AWS_S3_CUSTOM_DOMAIN": "cdn.example.com",
+            "AWS_LOCATION": "media",
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.USE_S3 is True
+    assert settings.STORAGES["default"]["BACKEND"] == "common.storage_s3.MediaStorage"
+    assert settings.MEDIA_URL.startswith("https://cdn.example.com/")
+    assert "secret" not in str(response.json())
+
+
+@pytest.mark.django_db
+def test_payments_patch_methods_list(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "payments"}),
+        {"PAYMENT_METHODS": "stripe, mercadopago", "COINS_PER_USD": "7.50"},
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.PAYMENT_METHODS == ["stripe", "mercadopago"]
+    assert settings.COINS_PER_USD == "7.50"
+
+
+@pytest.mark.django_db
+def test_storage_test_local_ok(api, superuser, hosts, settings):
+    settings.USE_S3 = False
+    api.force_authenticate(superuser)
+    response = api.post(
+        reverse("staff-integrations-test", kwargs={"section": "storage"}),
+        {},
+        format="json",
+    )
+    assert response.status_code == 200
+    assert response.json()["ok"] is True
 
 
 def test_lineage_gateway_reset_engine_disposes_pool():
