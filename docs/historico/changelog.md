@@ -8,6 +8,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Adicionado
+
+- Soft-rotate de `SECRET_KEY` com `SECRET_KEY_FALLBACKS`, prune, MultiFernet
+  (`PDL_DATA_ENCRYPTION_KEY_FALLBACKS`), HMAC estável `PDL_DATA_HMAC_KEY`,
+  fallbacks de backup, painel `/panel/admin/secrets`, jobs auditáveis,
+  `manage.py apply_secret_rotations` e Beat `secret-maintenance`. Guia:
+  [Rotação de segredos](../operacao/rotacao-de-segredos.md).
+
 ## [2.5.10] - 2026-09-24
 
 Coming Soon sem reabrir a contagem ao pedir Início, consolidado em

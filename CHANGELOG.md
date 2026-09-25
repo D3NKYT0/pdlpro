@@ -2,7 +2,9 @@
 
 O registro completo segue em [histórico de versões](docs/historico/changelog.md).
 
-Última atualização: **24 de setembro de 2026** — Publicado: **[2.5.10]** —
+Última atualização: **25 de setembro de 2026** — Em andamento: soft-rotate de
+segredos (`SECRET_KEY_FALLBACKS`, MultiFernet, painel admin e Beat).
+Anterior publicado: **[2.5.10]** —
 com Coming Soon ativo, Início/`home` leva visitante e logado para `/home`
 (sem reabrir a contagem).
 Anterior: **[2.5.9]** —

@@ -20,6 +20,12 @@ from apps.staff.application.notifications import (
 )
 from apps.staff.application.observability import PruneObservabilityLogsUseCase
 from apps.staff.application.operational_reports import GetOperationalReportUseCase
+from apps.staff.application.secrets import (
+    ApplySecretRotationJobUseCase,
+    AutoSecretMaintenanceUseCase,
+    GetSecretsStatusUseCase,
+    RequestSecretActionUseCase,
+)
 from apps.staff.application.use_cases import (
     DeleteStaffCoinPackageUseCase,
     GetPanelSettingsUseCase,
@@ -42,10 +48,22 @@ from apps.staff.application.use_cases import (
 from apps.staff.domain.financial_reports import IFinancialReportRepository
 from apps.staff.domain.observability import IObservabilityLogRepository
 from apps.staff.domain.operational_reports import IOperationalReportRepository
+from apps.staff.domain.secrets import (
+    IGlobalSessionRevoker,
+    ISealedDataReencryptor,
+    ISecretRotationJobStore,
+    ISecretsEnvStore,
+)
 from apps.staff.infrastructure.financial_reports import DjangoFinancialReportRepository
 from apps.staff.infrastructure.observability import DjangoObservabilityLogRepository
 from apps.staff.infrastructure.operational_reports import (
     DjangoOperationalReportRepository,
+)
+from apps.staff.infrastructure.secrets import (
+    DjangoGlobalSessionRevoker,
+    DjangoSealedDataReencryptor,
+    DjangoSecretRotationJobStore,
+    DjangoSecretsEnvStore,
 )
 from common.di.container import Container
 from common.di.lifetime import Lifetime
@@ -68,10 +86,18 @@ class StaffProvider(AppProvider):
         container.register(
             IObservabilityLogRepository, DjangoObservabilityLogRepository, lifetime=Lifetime.SCOPED
         )
+        container.register(ISecretsEnvStore, DjangoSecretsEnvStore, lifetime=Lifetime.SCOPED)
+        container.register(ISealedDataReencryptor, DjangoSealedDataReencryptor, lifetime=Lifetime.SCOPED)
+        container.register(IGlobalSessionRevoker, DjangoGlobalSessionRevoker, lifetime=Lifetime.SCOPED)
+        container.register(ISecretRotationJobStore, DjangoSecretRotationJobStore, lifetime=Lifetime.SCOPED)
         for use_case in (
             GetFinancialReportUseCase,
             GetOperationalReportUseCase,
             PruneObservabilityLogsUseCase,
+            GetSecretsStatusUseCase,
+            RequestSecretActionUseCase,
+            ApplySecretRotationJobUseCase,
+            AutoSecretMaintenanceUseCase,
             GetPanelSettingsUseCase,
             UpdatePanelSettingsUseCase,
             ListStaffServicePricesUseCase,

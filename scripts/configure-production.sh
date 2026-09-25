@@ -17,9 +17,14 @@ Opcoes:
   --bind-address IP         IP HTTP local (padrao: o valor atual ou 0.0.0.0).
   --port PORTA              Porta do proxy reverso (padrao: o valor atual ou 8080).
   --rotate-secrets          Rotaciona SECRET_KEY, DB_PASSWORD e REDIS_PASSWORD.
-  --rotate-secret-key       Rotaciona somente a SECRET_KEY.
+  --rotate-secret-key       Rotaciona a SECRET_KEY (antiga vai para SECRET_KEY_FALLBACKS).
+  --prune-secret-fallbacks  Remove SECRET_KEY_FALLBACKS apos a janela de graca.
+  --rotate-data-encryption-key  Rotaciona a Fernet (antiga em PDL_DATA_ENCRYPTION_KEY_FALLBACKS).
+  --prune-data-fallbacks    Remove fallbacks Fernet (rode reencrypt antes).
+  --rotate-backup-encryption-key  Rotaciona BACKUP_ENCRYPTION_KEY com fallbacks.
   --rotate-db-password      Rotaciona somente a senha PostgreSQL.
   --rotate-redis-password   Rotaciona somente a senha do Redis.
+  --apply-pending-rotations Aplica jobs pendentes via manage.py apply_secret_rotations.
   --denkynho-provider MODO  ollama | remote. Liga a geracao nesse modo.
   --denkynho-enabled BOOL   true | false. Padrao true se --denkynho-provider for passado.
   --denkynho-embeddings BOOL  true | false. MiniLM no worker.
@@ -33,9 +38,9 @@ Sem flags de rotacao, segredos fortes existentes sao preservados. Chaves novas
 do .env.example sao acrescentadas sem alterar valores ja definidos. Flags do
 Denkynho so mudam as variaveis correspondentes. PDL_DATA_ENCRYPTION_KEY e
 BACKUP_ENCRYPTION_KEY sao geradas se estiverem fracas e nao acompanham
---rotate-secret-key (rotaciona-las sem regravar TOTP/LGPD impede a leitura).
-Se o banco de producao ja existir, a senha do role PostgreSQL e atualizada de
-forma coordenada.
+--rotate-secret-key. A Fernet usa MultiFernet/fallbacks; PDL_DATA_HMAC_KEY e
+estavel e nao rotaciona com a Fernet. Se o banco de producao ja existir, a
+senha do role PostgreSQL e atualizada de forma coordenada.
 EOF
 }
 
@@ -53,6 +58,11 @@ port_flag=0
 rotate_secret_key=0
 rotate_db_password=0
 rotate_redis_password_flag=0
+prune_secret_fallbacks=0
+rotate_data_key=0
+prune_data_fallbacks=0
+rotate_backup_key=0
+apply_pending_rotations=0
 assume_yes=0
 denkynho_provider=""
 denkynho_enabled=""
@@ -87,6 +97,11 @@ while [[ $# -gt 0 ]]; do
       rotate_redis_password_flag=1
       ;;
     --rotate-secret-key) rotate_secret_key=1 ;;
+    --prune-secret-fallbacks) prune_secret_fallbacks=1 ;;
+    --rotate-data-encryption-key) rotate_data_key=1 ;;
+    --prune-data-fallbacks) prune_data_fallbacks=1 ;;
+    --rotate-backup-encryption-key) rotate_backup_key=1 ;;
+    --apply-pending-rotations) apply_pending_rotations=1 ;;
     --rotate-db-password) rotate_db_password=1 ;;
     --rotate-redis-password) rotate_redis_password_flag=1 ;;
     --denkynho-provider)
@@ -202,6 +217,41 @@ is_weak_value() {
   [[ ${#value} -lt "$minimum_length" || "$value" == change-me-* || "$value" == "pdl" || "$value" =~ [[:space:]] ]]
 }
 
+push_csv_fallback() {
+  local current="$1"
+  local existing="$2"
+  local maximum="${3:-3}"
+  local result="$current"
+  local part
+  if [[ -n "$existing" ]]; then
+    IFS=',' read -r -a parts <<< "$existing"
+    for part in "${parts[@]}"; do
+      part="$(printf '%s' "$part" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+      [[ -n "$part" && "$part" != "$current" ]] || continue
+      result="${result},${part}"
+    done
+  fi
+  # Mantém no máximo N entradas.
+  IFS=',' read -r -a all <<< "$result"
+  local joined=""
+  local i=0
+  for part in "${all[@]}"; do
+    (( i >= maximum )) && break
+    [[ -n "$part" ]] || continue
+    if [[ -z "$joined" ]]; then
+      joined="$part"
+    else
+      joined="${joined},${part}"
+    fi
+    i=$((i + 1))
+  done
+  printf '%s' "$joined"
+}
+
+utc_now() {
+  date -u +'%Y-%m-%dT%H:%M:%SZ'
+}
+
 wait_for_database() {
   local attempt
   for attempt in $(seq 1 60); do
@@ -226,10 +276,14 @@ alter_database_password() {
 }
 
 current_secret_key="$(read_env_value SECRET_KEY)"
+current_secret_fallbacks="$(read_env_value SECRET_KEY_FALLBACKS)"
 current_db_password="$(read_env_value DB_PASSWORD)"
 current_redis_password="$(read_env_value REDIS_PASSWORD)"
 current_data_key="$(read_env_value PDL_DATA_ENCRYPTION_KEY)"
+current_data_fallbacks="$(read_env_value PDL_DATA_ENCRYPTION_KEY_FALLBACKS)"
+current_hmac_key="$(read_env_value PDL_DATA_HMAC_KEY)"
 current_backup_key="$(read_env_value BACKUP_ENCRYPTION_KEY)"
+current_backup_fallbacks="$(read_env_value BACKUP_ENCRYPTION_KEY_FALLBACKS)"
 database_user="$(read_env_value DB_USER)"
 database_name="$(read_env_value DB_NAME)"
 database_user="${database_user:-pdl}"
@@ -256,9 +310,14 @@ if [[ "$assume_yes" -ne 1 ]]; then
   fi
   printf '\nDominio: https://%s\n' "$domain"
   printf 'Proxy reverso: http://%s:%s\n' "$bind_address" "$http_port"
-  [[ "$rotate_secret_key" -eq 1 ]] && printf 'SECRET_KEY: sera gerada novamente\n'
+  [[ "$rotate_secret_key" -eq 1 ]] && printf 'SECRET_KEY: soft-rotate (antiga em SECRET_KEY_FALLBACKS)\n'
+  [[ "$prune_secret_fallbacks" -eq 1 ]] && printf 'SECRET_KEY_FALLBACKS: serao removidos\n'
+  [[ "$rotate_data_key" -eq 1 ]] && printf 'PDL_DATA_ENCRYPTION_KEY: soft-rotate (MultiFernet)\n'
+  [[ "$prune_data_fallbacks" -eq 1 ]] && printf 'PDL_DATA_ENCRYPTION_KEY_FALLBACKS: serao removidos\n'
+  [[ "$rotate_backup_key" -eq 1 ]] && printf 'BACKUP_ENCRYPTION_KEY: soft-rotate com fallbacks\n'
   [[ "$rotate_db_password" -eq 1 ]] && printf 'DB_PASSWORD: sera rotacionada\n'
   [[ "$rotate_redis_password" -eq 1 ]] && printf 'REDIS_PASSWORD: sera rotacionada\n'
+  [[ "$apply_pending_rotations" -eq 1 ]] && printf 'Jobs pendentes de rotação: serao aplicados via manage.py\n'
   [[ -n "$denkynho_provider" ]] && printf 'Denkynho: provider=%s enabled=%s\n' "$denkynho_provider" "${denkynho_enabled:-true}"
   printf '\nContinuar? [s/N] '
   read -r answer
@@ -273,19 +332,49 @@ cp -p -- "$ENV_FILE" "$backup_path"
 chmod 600 "$backup_path"
 
 new_secret_key="$current_secret_key"
+new_secret_fallbacks="$current_secret_fallbacks"
 new_db_password="$current_db_password"
 new_redis_password="$current_redis_password"
 new_data_key="$current_data_key"
+new_data_fallbacks="$current_data_fallbacks"
+new_hmac_key="$current_hmac_key"
 new_backup_key="$current_backup_key"
-[[ "$rotate_secret_key" -eq 1 ]] && new_secret_key="$(generate_hex 64)"
+new_backup_fallbacks="$current_backup_fallbacks"
+secret_rotated_at="$(read_env_value SECRET_KEY_ROTATED_AT)"
+data_rotated_at="$(read_env_value PDL_DATA_ENCRYPTION_ROTATED_AT)"
+[[ "$rotate_secret_key" -eq 1 ]] && {
+  if [[ -n "$current_secret_key" ]] && ! is_weak_value "$current_secret_key" 50; then
+    new_secret_fallbacks="$(push_csv_fallback "$current_secret_key" "$current_secret_fallbacks" 3)"
+  fi
+  new_secret_key="$(generate_hex 64)"
+  secret_rotated_at="$(utc_now)"
+}
+[[ "$prune_secret_fallbacks" -eq 1 ]] && new_secret_fallbacks=""
 [[ "$rotate_db_password" -eq 1 ]] && new_db_password="$(generate_hex 32)"
 [[ "$rotate_redis_password" -eq 1 ]] && new_redis_password="$(generate_hex 24)"
 if [[ ${#new_data_key} -lt 32 || "$new_data_key" == change-me-* ]]; then
   new_data_key="$(generate_fernet_key)"
 fi
+[[ "$rotate_data_key" -eq 1 ]] && {
+  if [[ -n "$current_data_key" && ${#current_data_key} -ge 32 && "$current_data_key" != change-me-* ]]; then
+    new_data_fallbacks="$(push_csv_fallback "$current_data_key" "$current_data_fallbacks" 3)"
+  fi
+  new_data_key="$(generate_fernet_key)"
+  data_rotated_at="$(utc_now)"
+}
+[[ "$prune_data_fallbacks" -eq 1 ]] && new_data_fallbacks=""
+if [[ ${#new_hmac_key} -lt 32 || "$new_hmac_key" == change-me-* ]]; then
+  new_hmac_key="$(generate_hex 32)"
+fi
 if is_weak_value "$new_backup_key" 32; then
   new_backup_key="$(generate_hex 32)"
 fi
+[[ "$rotate_backup_key" -eq 1 ]] && {
+  if [[ -n "$current_backup_key" ]] && ! is_weak_value "$current_backup_key" 32; then
+    new_backup_fallbacks="$(push_csv_fallback "$current_backup_key" "$current_backup_fallbacks" 3)"
+  fi
+  new_backup_key="$(generate_hex 32)"
+}
 
 database_container=""
 database_started_for_rotation=0
@@ -318,6 +407,8 @@ rollback_on_failure() {
   unset current_secret_key current_db_password current_redis_password
   unset new_secret_key new_db_password new_redis_password denkynho_api_key
   unset current_data_key current_backup_key new_data_key new_backup_key
+  unset current_secret_fallbacks new_secret_fallbacks current_data_fallbacks new_data_fallbacks
+  unset current_hmac_key new_hmac_key current_backup_fallbacks new_backup_fallbacks
   exit "$status"
 }
 trap rollback_on_failure EXIT
@@ -377,8 +468,14 @@ fi
 
 set_env_value DEBUG false
 set_env_value SECRET_KEY "$new_secret_key"
+set_env_value SECRET_KEY_FALLBACKS "$new_secret_fallbacks"
+set_env_value SECRET_KEY_ROTATED_AT "$secret_rotated_at"
 set_env_value PDL_DATA_ENCRYPTION_KEY "$new_data_key"
+set_env_value PDL_DATA_ENCRYPTION_KEY_FALLBACKS "$new_data_fallbacks"
+set_env_value PDL_DATA_HMAC_KEY "$new_hmac_key"
+set_env_value PDL_DATA_ENCRYPTION_ROTATED_AT "$data_rotated_at"
 set_env_value BACKUP_ENCRYPTION_KEY "$new_backup_key"
+set_env_value BACKUP_ENCRYPTION_KEY_FALLBACKS "$new_backup_fallbacks"
 set_env_value DJANGO_SETTINGS_MODULE core.settings.production
 set_env_value ALLOWED_HOSTS "$domain"
 set_env_value CORS_ALLOWED_ORIGINS "https://${domain}"
@@ -432,18 +529,35 @@ if [[ "$database_started_for_rotation" -eq 1 ]]; then
   production_compose stop db
 fi
 
+if [[ "$apply_pending_rotations" -eq 1 ]]; then
+  if [[ "$docker_ready" -eq 1 && -n "$(production_compose ps --status running --quiet backend 2>/dev/null)" ]]; then
+    info "Aplicando jobs pendentes de rotacao no container backend..."
+    production_compose exec -T backend python manage.py apply_secret_rotations ||
+      warn "apply_secret_rotations falhou; rode manualmente apos o deploy"
+  else
+    warn "--apply-pending-rotations: backend nao esta em execucao; rode manage.py apply_secret_rotations depois"
+  fi
+fi
+
 trap - EXIT
 unset current_secret_key current_db_password new_secret_key new_db_password denkynho_api_key
 unset current_data_key current_backup_key new_data_key new_backup_key
+unset current_secret_fallbacks new_secret_fallbacks current_data_fallbacks new_data_fallbacks
+unset current_hmac_key new_hmac_key current_backup_fallbacks new_backup_fallbacks
 
 success "Configuracao de producao salva em $ENV_FILE"
 info "Dominio publico: https://${domain}"
 info "Destino do proxy reverso: http://${bind_address}:${http_port}"
 info "Backup anterior: $backup_path"
-if [[ "$rotate_secret_key" -eq 1 || "$rotate_db_password" -eq 1 ]]; then
-  info "Segredos rotacionados sem serem exibidos. Sessoes existentes podem ter sido invalidadas."
+if [[ "$rotate_secret_key" -eq 1 ]]; then
+  info "SECRET_KEY soft-rotacionada; a anterior esta em SECRET_KEY_FALLBACKS ate --prune-secret-fallbacks."
+elif [[ "$rotate_db_password" -eq 1 || "$rotate_redis_password" -eq 1 ]]; then
+  info "Segredos rotacionados sem serem exibidos."
 else
   info "Segredos fortes existentes foram preservados."
+fi
+if [[ "$rotate_data_key" -eq 1 ]]; then
+  info "Fernet soft-rotacionada. Rode: python manage.py apply_secret_rotations (reencrypt) ou a acao no painel."
 fi
 if [[ -n "$denkynho_provider" ]]; then
   info "Denkynho: provider=$(read_env_value DENKYNHO_LLM_PROVIDER) enabled=$(read_env_value DENKYNHO_LLM_ENABLED)"

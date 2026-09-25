@@ -55,10 +55,22 @@ from apps.staff.presentation.views.operational_reports import (
     PurchasesOperationalReportView,
 )
 from apps.staff.presentation.views.payments import StaffConfirmMockPaymentView
+from apps.staff.presentation.views.secrets import (
+    StaffSecretsActionView,
+    StaffSecretsApplyJobView,
+    StaffSecretsStatusView,
+)
 from apps.themes.presentation.urls import staff_urlpatterns
 
 urlpatterns = [
     *staff_urlpatterns,
+    path("secrets/", StaffSecretsStatusView.as_view(), name="staff-secrets-status"),
+    path("secrets/actions/", StaffSecretsActionView.as_view(), name="staff-secrets-actions"),
+    path(
+        "secrets/jobs/<uuid:job_id>/apply/",
+        StaffSecretsApplyJobView.as_view(),
+        name="staff-secrets-apply-job",
+    ),
     path("financial-reports/balances/", BalanceReportView.as_view(), name="staff-report-balances"),
     path("financial-reports/cash-flow/", CashFlowReportView.as_view(), name="staff-report-cash-flow"),
     path("financial-reports/payments/", PaymentReportView.as_view(), name="staff-report-payments"),

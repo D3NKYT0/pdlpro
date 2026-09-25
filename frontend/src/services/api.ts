@@ -74,6 +74,8 @@ export type {
 } from './domain/theme.service'
 export type {
   ApiPanelSettings,
+  ApiSecretActionResult,
+  ApiSecretsStatus,
   ApiStaffCoin,
   ApiStaffCoinPackage,
   ApiStaffGame,

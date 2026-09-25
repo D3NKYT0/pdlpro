@@ -102,6 +102,7 @@ const categories: Category[] = [
     tone: 'server',
     entries: [
       { to: '/panel/admin/server', key: 'server', icon: Server },
+      { to: '/panel/admin/secrets', key: 'secrets', icon: Settings2 },
       { to: '/panel/admin/items', key: 'itemWatch', icon: ChartNoAxesCombined },
       { to: '/panel/admin/items/customs', key: 'customItems', icon: PackagePlus },
       { to: '/panel/admin/services', key: 'services', icon: Settings2 },

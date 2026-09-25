@@ -73,15 +73,30 @@ cleanup_decrypt() {
 
 if [[ "$backup_path" == *.enc ]] || { [[ -f "$backup_path" ]] && [[ "$(head -c 8 "$backup_path" 2>/dev/null || true)" == "Salted__" ]]; }; then
   backup_encryption_key="$(read_env_value BACKUP_ENCRYPTION_KEY)"
+  backup_fallbacks="$(read_env_value BACKUP_ENCRYPTION_KEY_FALLBACKS)"
   [[ -n "$backup_encryption_key" ]] || die "BACKUP_ENCRYPTION_KEY é necessária para decifrar $backup_path"
   command -v openssl >/dev/null 2>&1 || die "openssl é necessário para decifrar o backup"
   decrypted_temp="$(mktemp)"
-  BACKUP_ENCRYPTION_KEY="$backup_encryption_key"
-  export BACKUP_ENCRYPTION_KEY
-  openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
-    -in "$backup_path" -out "$decrypted_temp" \
-    -pass env:BACKUP_ENCRYPTION_KEY
-  unset BACKUP_ENCRYPTION_KEY backup_encryption_key
+  decrypt_ok=0
+  candidates="$backup_encryption_key"
+  if [[ -n "$backup_fallbacks" ]]; then
+    candidates="${candidates},${backup_fallbacks}"
+  fi
+  IFS=',' read -r -a backup_keys <<< "$candidates"
+  for candidate in "${backup_keys[@]}"; do
+    candidate="$(printf '%s' "$candidate" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+    [[ -n "$candidate" ]] || continue
+    BACKUP_ENCRYPTION_KEY="$candidate"
+    export BACKUP_ENCRYPTION_KEY
+    if openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
+      -in "$backup_path" -out "$decrypted_temp" \
+      -pass env:BACKUP_ENCRYPTION_KEY 2>/dev/null; then
+      decrypt_ok=1
+      break
+    fi
+  done
+  unset BACKUP_ENCRYPTION_KEY backup_encryption_key backup_fallbacks
+  [[ "$decrypt_ok" -eq 1 ]] || die "não foi possível decifrar o backup com BACKUP_ENCRYPTION_KEY nem fallbacks"
   restore_source="$decrypted_temp"
   info "Backup cifrado decifrado para restauração."
 fi

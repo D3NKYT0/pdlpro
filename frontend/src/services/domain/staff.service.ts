@@ -206,6 +206,34 @@ export interface ApiStaffGameAccount {
   panel_username: string | null
 }
 
+export interface ApiSecretsStatus {
+  runtime_rotation_enabled: boolean
+  restart_required: boolean
+  auto_rotate_days: number
+  fallback_ttl_days: number
+  confirmation_domain: string
+  secrets: Array<{
+    name: string
+    fingerprint: string
+    present: boolean
+    fallback_count: number
+    rotated_at: string | null
+    stale_fallbacks: boolean
+    notes: string[]
+  }>
+  pending_jobs: Array<Record<string, unknown>>
+  recent_jobs: Array<Record<string, unknown>>
+}
+
+export interface ApiSecretActionResult {
+  ok: boolean
+  job_id: string | null
+  status: string
+  message: string
+  restart_required: boolean
+  details: Record<string, unknown>
+}
+
 export const staffApi = {
   panel: () => request<ApiPanelSettings>('/staff/panel/'),
   savePanel: (payload: Partial<ApiPanelSettings>) =>
@@ -296,4 +324,12 @@ export const staffApi = {
     }),
   confirmMockPayment: (orderId: string) =>
     request<ApiPaymentOrder>(`/staff/payments/${orderId}/confirm-mock/`, { method: 'POST' }),
+  secretsStatus: () => request<ApiSecretsStatus>('/staff/secrets/'),
+  secretsAction: (payload: { kind: string; confirmation: string; apply_now?: boolean }) =>
+    request<ApiSecretActionResult>('/staff/secrets/actions/', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  secretsApplyJob: (jobId: string) =>
+    request<ApiSecretActionResult>(`/staff/secrets/jobs/${jobId}/apply/`, { method: 'POST' }),
 }

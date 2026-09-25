@@ -3,7 +3,49 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from common.models import InternalModel
+from common.models import BaseModel, InternalModel
+
+
+class SecretRotationJob(BaseModel):
+    """Pedido auditável de rotação/prune/reencrypt de segredos operacionais."""
+
+    class Kind(models.TextChoices):
+        ROTATE_SECRET = "rotate_secret_key", _("Rotacionar SECRET_KEY")
+        PRUNE_SECRET = "prune_secret_fallbacks", _("Remover fallbacks da SECRET_KEY")
+        ROTATE_DATA = "rotate_data_encryption_key", _("Rotacionar cifra de dados")
+        PRUNE_DATA = "prune_data_fallbacks", _("Remover fallbacks da cifra de dados")
+        ROTATE_BACKUP = "rotate_backup_encryption_key", _("Rotacionar chave de backup")
+        REENCRYPT = "reencrypt_sealed_data", _("Regravar dados cifrados")
+        REVOKE_SESSIONS = "revoke_all_sessions", _("Revogar todas as sessões JWT")
+
+    class Status(models.TextChoices):
+        PENDING = "pending", _("Pendente")
+        APPLIED = "applied", _("Aplicado")
+        FAILED = "failed", _("Falhou")
+        CANCELLED = "cancelled", _("Cancelado")
+
+    kind = models.CharField(max_length=64, choices=Kind.choices, db_index=True)
+    status = models.CharField(
+        max_length=16, choices=Status.choices, default=Status.PENDING, db_index=True
+    )
+    source = models.CharField(max_length=32, default="panel")
+    actor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="secret_rotation_jobs",
+    )
+    confirmation_domain = models.CharField(max_length=120, blank=True, default="")
+    result = models.JSONField(default=dict, blank=True)
+    error = models.TextField(blank=True, default="")
+    restart_required = models.BooleanField(default=False)
+    applied_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("Job de rotação de segredo")
+        verbose_name_plural = _("Jobs de rotação de segredos")
+        ordering = ("-created_at",)
 
 
 class AuditLog(InternalModel):

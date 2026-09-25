@@ -14,8 +14,14 @@ No Docker Compose, valores definidos em `environment:` têm precedência sobre `
 |---|---|---|
 | `DJANGO_SETTINGS_MODULE` | Seleciona settings de development, test ou production | `core.settings.development` |
 | `SECRET_KEY` | Assinatura criptográfica do Django | Trocar o valor de exemplo; produção recusa iniciar com valor vazio, com marcador de exemplo (`django-insecure`, `change-me`) ou menor que 50 caracteres |
-| `PDL_DATA_ENCRYPTION_KEY` | Fernet (URL-safe Base64 de 32 bytes) para TOTP, códigos de recuperação 2FA e pacotes LGPD em disco | Vazio no exemplo; o configurador de produção gera. Não rotaciona com `--rotate-secret-key` |
+| `SECRET_KEY_FALLBACKS` | CSV de chaves anteriores (soft-rotate) | Vazio; preenchido por `--rotate-secret-key` |
+| `SECRET_KEY_AUTO_ROTATE_DAYS` | Dias entre rotações automáticas (Beat); `0` desliga | `0` |
+| `PDL_DATA_ENCRYPTION_KEY` | Fernet (URL-safe Base64 de 32 bytes) para TOTP, códigos de recuperação 2FA e pacotes LGPD em disco | Vazio no exemplo; o configurador de produção gera. Soft-rotate separado via `--rotate-data-encryption-key` |
+| `PDL_DATA_ENCRYPTION_KEY_FALLBACKS` | MultiFernet: chaves antigas ainda abrem o legado | Vazio |
+| `PDL_DATA_HMAC_KEY` | HMAC estável dos códigos de recuperação | Gerada uma vez; não acompanha a Fernet |
 | `BACKUP_ENCRYPTION_KEY` | Senha AES-256-CBC dos dumps `./setup.sh backup` | Vazio no desenvolvimento (dump em claro com aviso); obrigatória em produção |
+| `BACKUP_ENCRYPTION_KEY_FALLBACKS` | Chaves antigas só para decifrar dumps | Vazio |
+| `PDL_ALLOW_RUNTIME_SECRET_ROTATION` | Painel/Beat podem gravar o `.env` | `false` |
 | `DEBUG` | Modo de debug nos settings base | `true` |
 | `ALLOWED_HOSTS` | Hosts HTTP aceitos, separados por vírgula | `localhost,127.0.0.1` |
 | `DATABASE_URL` | Banco principal do painel | `sqlite:///db.sqlite3` |
@@ -178,14 +184,15 @@ RUN_COLLECTSTATIC=true
 ```
 
 Não reutilize os valores de exemplo e não armazene o `.env` de produção no repositório.
-`./setup.sh configure-production --rotate-secret-key --rotate-redis-password` gera os dois
-segredos e reescreve a `REDIS_URL` com a senha; no Windows,
-`scripts/configure-production.ps1` faz o mesmo ao preencher valores fracos ou ausentes.
+`./setup.sh configure-production --rotate-secret-key --rotate-redis-password` soft-rotaciona a
+`SECRET_KEY` (antiga em `SECRET_KEY_FALLBACKS`) e gera a senha do Redis; no Windows,
+`scripts/configure-production.ps1` preenche valores fracos ou ausentes.
 `PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem vazias ou
-fracas e **não** acompanham `--rotate-secret-key`: rotacioná-las sem regravar TOTP, códigos
-de recuperação e pacotes LGPD impede a leitura do que já está cifrado. O `deploy.sh` recusa
-subir sem `REDIS_PASSWORD` e os settings de produção recusam iniciar com `SECRET_KEY` de
-exemplo ou sem Fernet válido.
+fracas e **não** acompanham `--rotate-secret-key`. Use `--rotate-data-encryption-key` +
+reencrypt no painel antes de `--prune-data-fallbacks`. Guia:
+[Rotação de segredos](../operacao/rotacao-de-segredos.md).
+O `deploy.sh` recusa subir sem `REDIS_PASSWORD` e os settings de produção recusam iniciar com
+`SECRET_KEY` de exemplo ou sem Fernet válido.
 
 ## Denkynho
 

@@ -1,3 +1,3 @@
-from apps.staff.infrastructure.models import AuditLog
+from apps.staff.infrastructure.models import AuditLog, SecretRotationJob
 
-__all__ = ["AuditLog"]
+__all__ = ["AuditLog", "SecretRotationJob"]

@@ -90,6 +90,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | [Distribuição](operacao/distribuicao.md) | Passo a passo da latest: instalar, HTTPS, admin, launcher e atualizar |
 | [Implantação](operacao/implantacao.md) | Topologias, clone Git, proxy, checklist e rollback |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
+| [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, MultiFernet, painel admin e Beat |
 | [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
 | [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, Nginx, FTP, Redis da install, sessão e disco |
 

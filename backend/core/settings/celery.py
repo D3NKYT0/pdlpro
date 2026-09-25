@@ -11,6 +11,12 @@ def get_celery_settings(env):
             "schedule": crontab(minute="*"),
         }
 
+    if env.bool("SECRET_MAINTENANCE_ENABLED", default=True):
+        beat_schedule["secret-maintenance"] = {
+            "task": "apps.staff.tasks.run_secret_maintenance",
+            "schedule": crontab(minute=15, hour=3),
+        }
+
     return {
         "CELERY_BROKER_URL": redis_url,
         "CELERY_RESULT_BACKEND": redis_url,

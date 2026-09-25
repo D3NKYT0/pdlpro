@@ -61,6 +61,7 @@ import { AdminWikiPage as AdminWikiCmsPage } from '../../pages/admin/AdminWikiPa
 import { AdminDownloadsPage } from '../../pages/admin/AdminDownloadsPage'
 import { AdminNotificationsPage } from '../../pages/admin/AdminNotificationsPage'
 import { AdminServerPage } from '../../pages/admin/AdminServerPage'
+import { AdminSecretsPage } from '../../pages/admin/AdminSecretsPage'
 import { AdminComingSoonPage } from '../../pages/admin/AdminComingSoonPage'
 import { AdminServicesPage } from '../../pages/admin/AdminServicesPage'
 import { AdminShopPage } from '../../pages/admin/AdminShopPage'
@@ -153,6 +154,7 @@ export function AppRoutes() {
               <Route path="/panel/admin/items" element={<AdminItemObservationPage />} />
               <Route path="/panel/admin/items/customs" element={<AdminCustomItemsPage />} />
               <Route path="/panel/admin/server" element={<AdminServerPage />} />
+              <Route path="/panel/admin/secrets" element={<AdminSecretsPage />} />
               <Route path="/panel/admin/coming-soon" element={<AdminComingSoonPage />} />
               <Route path="/panel/admin/accounts" element={<AdminAccountsPage />} />
               <Route path="/panel/admin/moderation" element={<AdminModerationPage />} />

@@ -96,16 +96,19 @@ do banco seja sincronizada com o PostgreSQL. Para substituir segredos expostos:
 ./setup.sh configure-production --rotate-secrets
 ```
 
-Tambem e possivel rotacionar apenas um segredo:
+Tambem e possivel rotacionar apenas um segredo (soft-rotate da SECRET_KEY com fallbacks):
 
 ```bash
 ./setup.sh configure-production --rotate-secret-key
+./setup.sh configure-production --prune-secret-fallbacks
 ./setup.sh configure-production --rotate-db-password
+./setup.sh configure-production --apply-pending-rotations
 ```
 
 `PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem vazias
-ou fracas. `--rotate-secret-key` e `--rotate-secrets` **não** as trocam: rotacionar a
-Fernet sem regravar TOTP, códigos de recuperação e pacotes LGPD impede a leitura.
+ou fracas. `--rotate-secret-key` e `--rotate-secrets` **não** as trocam: use
+`--rotate-data-encryption-key` + reencrypt. Detalhes em
+[Rotação de segredos](rotacao-de-segredos.md).
 
 Em uma instalacao existente, a rotacao atualiza o role PostgreSQL, grava o novo
 `.env` e recria os servicos dependentes. Se alguma etapa falhar, o comando tenta
