@@ -912,6 +912,8 @@
     "toastTestOk": "Teste concluído com sucesso",
     "toastTestFail": "O teste falhou",
     "test": "Testar",
+    "actionsTitle": "Aplicar integração",
+    "actionsHint": "Salva cifrado e aplica nos workers sem reiniciar o Docker.",
     "configuredHint": "Configurado · {{fingerprint}}",
     "emptyHint": "Ainda não configurado — o valor do .env permanece até você gravar aqui.",
     "keepPlaceholder": "Deixe em branco para manter",

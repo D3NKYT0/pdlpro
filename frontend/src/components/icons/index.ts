@@ -10,7 +10,12 @@ export {
   CartIcon,
   ENAMEL_ICONS,
   ExchangeIcon,
+  KeyRingIcon,
+  MailSealIcon,
   PackageBoxIcon,
+  PaymentCardIcon,
+  PurseIcon,
+  ServerTowerIcon,
   ShieldOkIcon,
   type EnamelIconKey,
 } from './enamelIcons'

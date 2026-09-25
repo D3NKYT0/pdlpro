@@ -136,12 +136,144 @@ export function BannerFlagIcon(props: EnamelIconProps) {
   )
 }
 
+/** Cartão com chip dourado: pagamentos Stripe / cartões. */
+export function PaymentCardIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="payment-card" {...props}>
+      <defs>
+        <Ramp id={id('body')} tone="night" x1={8} y1={14} x2={56} y2={50} />
+        <Ramp id={id('strip')} tone="arcane" x1={8} y1={18} x2={56} y2={30} />
+        <Ramp id={id('chip')} tone="gold" x1={14} y1={30} x2={28} y2={42} />
+        <Ramp id={id('edge')} tone="silver" x1={8} y1={12} x2={56} y2={52} />
+      </defs>
+      <Shadow rx={22} cy={58} ry={2.6} />
+      <rect x="8" y="14" width="48" height="36" rx="7" fill={url('body')} stroke={INK.night} strokeWidth="3" />
+      <rect x="8" y="14" width="48" height="36" rx="7" fill={url('edge')} opacity=".18" />
+      <path d="M8 24h48" stroke={url('strip')} strokeWidth="10" />
+      <path d="M8 24h48" stroke={INK.arcane} strokeWidth="3.2" opacity=".55" />
+      <rect x="14" y="32" width="13" height="10" rx="2.2" fill={url('chip')} stroke={INK.gold} strokeWidth="2.2" />
+      <path d="M16.2 35h8.6M16.2 38.2h5.4" stroke="#8F6015" strokeWidth="1.6" />
+      <path d="M32 34h18M32 38.5h12" stroke="#E6EEF8" strokeWidth="2.4" opacity=".55" />
+      <path d="M12 18c4-1.4 9-2.2 14-2.2" stroke="#9BB6E8" strokeWidth="2.4" opacity=".55" />
+      <Sparkle x={52} y={12} s={0.95} />
+      <Sparkle x={11} y={46} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Bolsa com moeda: carteira / Mercado Pago. */
+export function PurseIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="purse" {...props}>
+      <defs>
+        <Ramp id={id('bag')} tone="aqua" x1={12} y1={16} x2={52} y2={56} />
+        <Ramp id={id('flap')} tone="azure" x1={14} y1={12} x2={50} y2={28} />
+        <Ramp id={id('coin')} tone="gold" x1={24} y1={28} x2={42} y2={48} />
+        <Ramp id={id('strap')} tone="bronze" x1={20} y1={8} x2={44} y2={18} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <path d="M22 16c0-6 4.4-10 10-10s10 4 10 10" stroke={url('strap')} strokeWidth="5.2" />
+      <path d="M22 16c0-6 4.4-10 10-10s10 4 10 10" stroke={INK.bronze} strokeWidth="2.4" />
+      <path d="M12 24h40l-3.5 28H15.5L12 24Z" fill={url('bag')} stroke={INK.aqua} strokeWidth="3" />
+      <path d="M11 24h42c0 7-7.5 11-7.5 11H18.5S11 31 11 24Z" fill={url('flap')} stroke={INK.azure} strokeWidth="2.6" />
+      <path d="M16 28c3.2-2.2 7-3.4 11-3.6" stroke="#D6F9FF" strokeWidth="2.4" opacity=".7" />
+      <circle cx="33" cy="40" r="9.2" fill={url('coin')} stroke={INK.gold} strokeWidth="2.6" />
+      <path d="M36.4 35.6a5 5 0 1 0 0 8.8" stroke="#8F6015" strokeWidth="2.2" />
+      <path d="M33 33.2v13.6" stroke="#8F6015" strokeWidth="2.2" />
+      <Sparkle x={52} y={14} s={0.9} />
+      <Sparkle x={12} y={44} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Torre com cristal: banco / game server Lineage. */
+export function ServerTowerIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="server-tower" {...props}>
+      <defs>
+        <Ramp id={id('stone')} tone="silver" x1={16} y1={8} x2={48} y2={56} />
+        <Ramp id={id('roof')} tone="jade" x1={14} y1={4} x2={50} y2={22} />
+        <Ramp id={id('crystal')} tone="arcane" x1={26} y1={18} x2={38} y2={36} />
+        <Ramp id={id('gold')} tone="gold" x1={18} y1={40} x2={46} y2={52} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <path d="M18 22h28v30H18V22Z" fill={url('stone')} stroke={INK.silver} strokeWidth="3" />
+      <path d="M14 22 32 6l18 16H14Z" fill={url('roof')} stroke={INK.jade} strokeWidth="3" />
+      <path d="M22 12c3.4-1.6 7-2.4 10.4-2.4" stroke="#C8F3A8" strokeWidth="2.4" opacity=".7" />
+      <path d="M22 28h20M22 36h20M22 44h20" stroke={url('gold')} strokeWidth="3.2" />
+      <path d="M22 28h20M22 36h20M22 44h20" stroke={INK.gold} strokeWidth="1.6" />
+      <circle cx="26" cy="28" r="1.8" fill="#FFF6D8" />
+      <circle cx="26" cy="36" r="1.8" fill="#FFF6D8" />
+      <circle cx="26" cy="44" r="1.8" fill="#FFF6D8" />
+      <path d="M32 18l5 8H27l5-8Z" fill={url('crystal')} stroke={INK.arcane} strokeWidth="2.2" />
+      <path d="M30 22h4" stroke="#F4E8FF" strokeWidth="1.8" opacity=".8" />
+      <Sparkle x={50} y={10} s={0.95} />
+      <Sparkle x={12} y={40} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Carta lacrada: SMTP / e-mail. */
+export function MailSealIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="mail-seal" {...props}>
+      <defs>
+        <Ramp id={id('paper')} tone="parchment" x1={8} y1={14} x2={56} y2={52} />
+        <Ramp id={id('flap')} tone="ivory" x1={10} y1={12} x2={54} y2={34} />
+        <Ramp id={id('wax')} tone="ruby" x1={26} y1={28} x2={40} y2={44} />
+        <Ramp id={id('rim')} tone="gold" x1={24} y1={26} x2={42} y2={46} />
+      </defs>
+      <Shadow rx={20} cy={58} ry={2.6} />
+      <path d="M8 18h48v30a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V18Z" fill={url('paper')} stroke={INK.parchment} strokeWidth="3" />
+      <path d="M8 18 32 36 56 18" fill={url('flap')} stroke={INK.ivory} strokeWidth="2.6" />
+      <path d="M12 22c5.5-2 12-3.2 20-3.2" stroke="#FFFDF4" strokeWidth="2.4" opacity=".7" />
+      <circle cx="33" cy="36" r="9.6" fill={url('rim')} stroke={INK.gold} strokeWidth="2.2" />
+      <circle cx="33" cy="36" r="7.2" fill={url('wax')} stroke={INK.ruby} strokeWidth="2.2" />
+      <path d="M33 31.5v9M29.2 36h7.6" stroke="#FFD5CE" strokeWidth="2.2" />
+      <Sparkle x={52} y={12} s={0.95} />
+      <Sparkle x={11} y={44} s={0.7} />
+    </Glyph>
+  )
+}
+
+/** Chaves cruzadas: OAuth / credenciais. */
+export function KeyRingIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="key-ring" {...props}>
+      <defs>
+        <Ramp id={id('keyA')} tone="gold" x1={10} y1={10} x2={48} y2={48} />
+        <Ramp id={id('keyB')} tone="silver" x1={18} y1={8} x2={54} y2={52} />
+        <Ramp id={id('ring')} tone="bronze" x1={20} y1={8} x2={40} y2={28} />
+      </defs>
+      <Shadow rx={18} cy={59} ry={2.6} />
+      <circle cx="28" cy="18" r="9" fill="none" stroke={INK.bronze} strokeWidth="6.2" />
+      <circle cx="28" cy="18" r="9" fill="none" stroke={url('ring')} strokeWidth="3.2" />
+      <path d="M30 24 48 42l4.5-4.5-4-4 3-3-4.2-4.2-3 3-3.8-3.8L30 24Z" fill={url('keyA')} stroke={INK.gold} strokeWidth="2.4" />
+      <circle cx="27.5" cy="21.5" r="3.2" fill="#FFF6D8" stroke={INK.gold} strokeWidth="1.6" />
+      <path d="M34 28 52 46l3.8-3.8-3.4-3.4 2.6-2.6-3.8-3.8-2.6 2.6-3.4-3.4L34 28Z" fill={url('keyB')} stroke={INK.silver} strokeWidth="2.2" />
+      <path d="M38 18c2.8-1.2 5.6-1.8 8.4-1.8" stroke="#FFF6D8" strokeWidth="2" opacity=".65" />
+      <Sparkle x={52} y={12} s={0.95} />
+      <Sparkle x={12} y={42} s={0.7} />
+    </Glyph>
+  )
+}
+
 export const ENAMEL_ICONS = {
   package: PackageBoxIcon,
   cart: CartIcon,
   shieldOk: ShieldOkIcon,
   exchange: ExchangeIcon,
   flag: BannerFlagIcon,
+  paymentCard: PaymentCardIcon,
+  purse: PurseIcon,
+  serverTower: ServerTowerIcon,
+  mailSeal: MailSealIcon,
+  keyRing: KeyRingIcon,
 } as const satisfies Record<string, ComponentType<EnamelIconProps>>
 
 export type EnamelIconKey = keyof typeof ENAMEL_ICONS

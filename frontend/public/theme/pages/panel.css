@@ -17852,6 +17852,237 @@ html.pdl-panel .supporters-page .ui-empty svg {
   }
 }
 
+/* --- Admin: integrations configurator -------------------------------------- */
+html.pdl-panel .admin-integrations-form {
+  gap: 16px;
+}
+
+html.pdl-panel .admin-integrations-section,
+html.pdl-panel .admin-integrations-tabs {
+  --admin-tone: var(--panel-gold-bright);
+  --admin-tone-soft: color-mix(in srgb, var(--panel-gold) 10%, transparent);
+  --admin-tone-mid: color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  --admin-tone-border: color-mix(in srgb, var(--panel-gold) 24%, transparent);
+  border-color: var(--admin-tone-border);
+  background:
+    radial-gradient(ellipse 70% 55% at 0% 0%, var(--admin-tone-soft), transparent 55%),
+    linear-gradient(135deg, var(--admin-tone-mid), transparent 38%),
+    rgba(5, 5, 4, 0.48);
+  box-shadow: inset 3px 0 0 var(--admin-tone);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='stripe'],
+html.pdl-panel .admin-integrations-tabs[data-tone='payments'] {
+  --admin-tone: #8b7cf6;
+  --admin-tone-soft: rgba(139, 124, 246, 0.16);
+  --admin-tone-mid: rgba(99, 91, 255, 0.1);
+  --admin-tone-border: rgba(139, 124, 246, 0.32);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='mercado'] {
+  --admin-tone: #3db8d9;
+  --admin-tone-soft: rgba(61, 184, 217, 0.16);
+  --admin-tone-mid: rgba(61, 184, 217, 0.1);
+  --admin-tone-border: rgba(61, 184, 217, 0.32);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='lineage'],
+html.pdl-panel .admin-integrations-tabs[data-tone='lineage'] {
+  --admin-tone: #4fa84c;
+  --admin-tone-soft: rgba(79, 168, 76, 0.15);
+  --admin-tone-mid: rgba(79, 168, 76, 0.09);
+  --admin-tone-border: rgba(79, 168, 76, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='game'] {
+  --admin-tone: #8a9bb0;
+  --admin-tone-soft: rgba(138, 155, 176, 0.14);
+  --admin-tone-mid: rgba(138, 155, 176, 0.08);
+  --admin-tone-border: rgba(138, 155, 176, 0.28);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='smtp'],
+html.pdl-panel .admin-integrations-tabs[data-tone='smtp'] {
+  --admin-tone: #e07a5f;
+  --admin-tone-soft: rgba(224, 122, 95, 0.15);
+  --admin-tone-mid: rgba(224, 122, 95, 0.09);
+  --admin-tone-border: rgba(224, 122, 95, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='google'],
+html.pdl-panel .admin-integrations-tabs[data-tone='oauth'] {
+  --admin-tone: #5b9fd4;
+  --admin-tone-soft: rgba(91, 159, 212, 0.15);
+  --admin-tone-mid: rgba(91, 159, 212, 0.09);
+  --admin-tone-border: rgba(91, 159, 212, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='discord'] {
+  --admin-tone: #8b5cd6;
+  --admin-tone-soft: rgba(139, 92, 214, 0.16);
+  --admin-tone-mid: rgba(139, 92, 214, 0.1);
+  --admin-tone-border: rgba(139, 92, 214, 0.32);
+}
+
+html.pdl-panel .admin-integrations-section[data-tone='hcaptcha'] {
+  --admin-tone: #3fb9a0;
+  --admin-tone-soft: rgba(63, 185, 160, 0.15);
+  --admin-tone-mid: rgba(63, 185, 160, 0.09);
+  --admin-tone-border: rgba(63, 185, 160, 0.3);
+}
+
+html.pdl-panel .admin-integrations-section > header {
+  border-bottom-color: color-mix(in srgb, var(--admin-tone) 28%, transparent);
+}
+
+html.pdl-panel .admin-integrations-section .panel-eyebrow {
+  color: var(--admin-tone);
+}
+
+html.pdl-panel .admin-integrations-section h2 {
+  color: color-mix(in srgb, var(--admin-tone) 55%, #f4efe6);
+}
+
+html.pdl-panel .admin-integrations-enamel {
+  width: 52px !important;
+  height: 52px !important;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--admin-tone) 35%, transparent));
+}
+
+html.pdl-panel .admin-integrations-enamel .enamel-glyph,
+html.pdl-panel .admin-integrations-enamel svg {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+html.pdl-panel .admin-integrations-tabs {
+  gap: 0;
+  padding-bottom: 14px;
+}
+
+html.pdl-panel .admin-integrations-tabs .ui-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html.pdl-panel .admin-integrations-tabs .ui-tabs > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 6px 14px 6px 8px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--panel-muted);
+  font-size: 12px;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+html.pdl-panel .admin-integrations-tabs .ui-tabs > button .enamel-glyph,
+html.pdl-panel .admin-integrations-tabs .ui-tabs > button svg.enamel-glyph {
+  width: 28px !important;
+  height: 28px !important;
+  flex: 0 0 auto;
+}
+
+html.pdl-panel .admin-integrations-tabs .ui-tabs > button.active,
+html.pdl-panel .admin-integrations-tabs .ui-tabs > button[aria-selected='true'] {
+  border-color: color-mix(in srgb, var(--admin-tone) 55%, transparent);
+  background: color-mix(in srgb, var(--admin-tone) 14%, rgba(0, 0, 0, 0.35));
+  color: color-mix(in srgb, var(--admin-tone) 40%, #fff);
+}
+
+html.pdl-panel .admin-integrations-stack {
+  display: grid;
+  gap: 12px;
+}
+
+html.pdl-panel .admin-integrations-toggles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+html.pdl-panel .admin-integrations-secret {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--admin-tone) 16%, transparent);
+  background: color-mix(in srgb, #050504 78%, var(--admin-tone) 6%);
+}
+
+html.pdl-panel .admin-integrations-secret .field {
+  margin: 0;
+}
+
+html.pdl-panel .admin-integrations-secret .field > small {
+  margin-left: 0;
+  color: color-mix(in srgb, var(--panel-muted) 88%, #fff);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+html.pdl-panel .admin-integrations-secret .btn {
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+html.pdl-panel .admin-integrations-secret.is-clear {
+  border-color: color-mix(in srgb, var(--danger, #c45) 45%, transparent);
+  background: color-mix(in srgb, var(--danger, #c45) 8%, rgba(5, 5, 4, 0.7));
+}
+
+html.pdl-panel .admin-integrations-secret.is-clear .field input {
+  border-color: color-mix(in srgb, var(--danger, #c45) 55%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger, #c45) 18%, transparent);
+}
+
+html.pdl-panel .admin-integrations-toggle {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--admin-tone) 18%, transparent);
+  background: color-mix(in srgb, #050504 72%, var(--admin-tone) 8%);
+}
+
+html.pdl-panel .admin-integrations-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+html.pdl-panel .admin-integrations-form .admin-config-section .field input {
+  background: color-mix(in srgb, #0a0907 82%, var(--admin-tone, var(--panel-gold)) 6%);
+  border-color: color-mix(in srgb, var(--admin-tone, var(--panel-gold)) 34%, transparent);
+}
+
+@media (max-width: 720px) {
+  html.pdl-panel .admin-integrations-secret,
+  html.pdl-panel .admin-integrations-toggles {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .admin-integrations-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  html.pdl-panel .admin-integrations-actions .btn {
+    flex: 1 1 auto;
+  }
+}
+
 /* --- Admin: secrets rotation ----------------------------------------------- */
 html.pdl-panel .admin-secrets-layout {
   display: grid;

@@ -3,11 +3,20 @@ import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
+import {
+  ExchangeIcon,
+  KeyRingIcon,
+  MailSealIcon,
+  PaymentCardIcon,
+  PurseIcon,
+  ServerTowerIcon,
+  ShieldOkIcon,
+} from '../../components/icons'
 import { apiErrorMessage } from '../../lib/errors'
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Cable, CreditCard, Mail, PlugZap, ShieldCheck, Trash2 } from 'lucide-react'
+import { PlugZap, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import {
   staffApi,
@@ -51,6 +60,15 @@ const BOOL_KEYS = new Set([
 const CLEAR = '__CLEAR__'
 
 type Draft = Record<string, string | boolean>
+type IntegrationTone =
+  | 'stripe'
+  | 'mercado'
+  | 'lineage'
+  | 'game'
+  | 'smtp'
+  | 'google'
+  | 'discord'
+  | 'hcaptcha'
 
 function fieldMap(section: { fields: ApiIntegrationField[] }) {
   return Object.fromEntries(section.fields.map((field) => [field.key, field]))
@@ -90,6 +108,38 @@ function buildPatch(draft: Draft, sectionFields: ApiIntegrationField[]) {
     patch[key] = String(value ?? '')
   }
   return patch
+}
+
+function SectionCard({
+  icon,
+  tone,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  icon: ReactNode
+  tone: IntegrationTone
+  eyebrow: string
+  title: string
+  description?: string
+  children: ReactNode
+}) {
+  return (
+    <Card className="admin-config-section admin-integrations-section" data-tone={tone}>
+      <header>
+        <span className="admin-integrations-enamel" aria-hidden="true">
+          {icon}
+        </span>
+        <div>
+          <span className="panel-eyebrow">{eyebrow}</span>
+          <h2>{title}</h2>
+          {description ? <p>{description}</p> : null}
+        </div>
+      </header>
+      {children}
+    </Card>
+  )
 }
 
 export function AdminIntegrationsPage() {
@@ -142,10 +192,26 @@ export function AdminIntegrationsPage() {
   const tabs = useMemo(
     () =>
       [
-        { id: 'payments' as const, label: t('integrations.tabs.payments'), icon: <CreditCard aria-hidden="true" /> },
-        { id: 'lineage' as const, label: t('integrations.tabs.lineage'), icon: <Cable aria-hidden="true" /> },
-        { id: 'smtp' as const, label: t('integrations.tabs.smtp'), icon: <Mail aria-hidden="true" /> },
-        { id: 'oauth' as const, label: t('integrations.tabs.oauth'), icon: <ShieldCheck aria-hidden="true" /> },
+        {
+          id: 'payments' as const,
+          label: t('integrations.tabs.payments'),
+          icon: <PaymentCardIcon width={28} height={28} />,
+        },
+        {
+          id: 'lineage' as const,
+          label: t('integrations.tabs.lineage'),
+          icon: <ServerTowerIcon width={28} height={28} />,
+        },
+        {
+          id: 'smtp' as const,
+          label: t('integrations.tabs.smtp'),
+          icon: <MailSealIcon width={28} height={28} />,
+        },
+        {
+          id: 'oauth' as const,
+          label: t('integrations.tabs.oauth'),
+          icon: <KeyRingIcon width={28} height={28} />,
+        },
       ] as const,
     [t],
   )
@@ -171,37 +237,40 @@ export function AdminIntegrationsPage() {
   const renderSecret = (key: string) => {
     const meta = fields[key]
     const configured = Boolean(meta?.configured)
+    const armed = Boolean(clears[key])
     return (
-      <Field
-        key={key}
-        label={t(`integrations.fields.${key}`)}
-        hint={
-          configured
-            ? t('integrations.configuredHint', { fingerprint: meta?.fingerprint || meta?.masked || '…' })
-            : t('integrations.emptyHint')
-        }
-      >
-        <input
-          type="password"
-          autoComplete="new-password"
-          value={String(draft[key] ?? '')}
-          placeholder={configured ? t('integrations.keepPlaceholder') : ''}
-          onChange={(event) => setField(key, event.target.value)}
-          disabled={save.isPending}
-        />
+      <div key={key} className={`admin-integrations-secret${armed ? ' is-clear' : ''}`}>
+        <Field
+          label={t(`integrations.fields.${key}`)}
+          hint={
+            configured
+              ? t('integrations.configuredHint', { fingerprint: meta?.fingerprint || meta?.masked || '…' })
+              : t('integrations.emptyHint')
+          }
+        >
+          <input
+            type="password"
+            autoComplete="new-password"
+            value={String(draft[key] ?? '')}
+            placeholder={configured ? t('integrations.keepPlaceholder') : ''}
+            onChange={(event) => setField(key, event.target.value)}
+            disabled={save.isPending}
+          />
+        </Field>
         {configured ? (
           <Button
             type="button"
-            variant="ghost"
+            variant={armed ? 'danger' : 'ghost'}
             size="sm"
             disabled={save.isPending}
+            aria-pressed={armed}
             onClick={() => setClears((prev) => ({ ...prev, [key]: !prev[key] }))}
           >
             <Trash2 aria-hidden="true" />
-            {clears[key] ? t('integrations.clearArmed') : t('integrations.clear')}
+            {armed ? t('integrations.clearArmed') : t('integrations.clear')}
           </Button>
         ) : null}
-      </Field>
+      </div>
     )
   }
 
@@ -219,6 +288,7 @@ export function AdminIntegrationsPage() {
   const renderBool = (key: string) => (
     <Toggle
       key={key}
+      className="admin-integrations-toggle"
       label={t(`integrations.fields.${key}`)}
       checked={Boolean(draft[key])}
       onChange={(event) => setField(key, event.target.checked)}
@@ -227,7 +297,7 @@ export function AdminIntegrationsPage() {
   )
 
   return (
-    <div className="account-page">
+    <div className="account-page admin-integrations-page">
       <AdminHeader
         kicker={t('integrations.kicker')}
         title={t('integrations.title')}
@@ -247,121 +317,170 @@ export function AdminIntegrationsPage() {
       ) : null}
 
       {status.data ? (
-        <Card className="admin-config-section">
-          <Tabs id="admin-integrations" label={t('integrations.tabsLabel')} items={tabs} value={tab} onChange={setTab} />
-          <form id={`admin-integrations-panel-${tab}`} role="tabpanel" aria-labelledby={`admin-integrations-tab-${tab}`} onSubmit={onSubmit} className="admin-server-form">
-            {tab === 'payments' ? (
-              <>
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.payments.stripeEyebrow')}</span>
-                    <h2>{t('integrations.payments.stripeTitle')}</h2>
-                  </div>
-                </div>
-                {renderSecret('STRIPE_SECRET_KEY')}
-                {renderSecret('STRIPE_PUBLISHABLE_KEY')}
-                {renderSecret('STRIPE_WEBHOOK_SECRET')}
-                {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.payments.mpEyebrow')}</span>
-                    <h2>{t('integrations.payments.mpTitle')}</h2>
-                  </div>
-                </div>
-                {renderSecret('MERCADO_PAGO_ACCESS_TOKEN')}
-                {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
-                {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
-                {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
-              </>
-            ) : null}
+        <form
+          id={`admin-integrations-panel-${tab}`}
+          role="tabpanel"
+          aria-labelledby={`admin-integrations-tab-${tab}`}
+          onSubmit={onSubmit}
+          className="admin-server-form admin-integrations-form"
+        >
+          <Card className="admin-config-section admin-integrations-tabs" data-tone={tab}>
+            <Tabs id="admin-integrations" label={t('integrations.tabsLabel')} items={tabs} value={tab} onChange={setTab} />
+          </Card>
 
-            {tab === 'lineage' ? (
-              <>
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.lineage.dbEyebrow')}</span>
-                    <h2>{t('integrations.lineage.dbTitle')}</h2>
-                  </div>
+          {tab === 'payments' ? (
+            <>
+              <SectionCard
+                icon={<PaymentCardIcon />}
+                tone="stripe"
+                eyebrow={t('integrations.payments.stripeEyebrow')}
+                title={t('integrations.payments.stripeTitle')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('STRIPE_SECRET_KEY')}
+                  {renderSecret('STRIPE_PUBLISHABLE_KEY')}
+                  {renderSecret('STRIPE_WEBHOOK_SECRET')}
+                  {renderBool('STRIPE_ACTIVATE_PAYMENTS')}
                 </div>
-                {renderBool('LINEAGE_DB_ENABLED')}
-                {renderText('LINEAGE_DB_HOST')}
-                {renderText('LINEAGE_DB_PORT', 'number')}
-                {renderText('LINEAGE_DB_NAME')}
-                {renderText('LINEAGE_DB_USER')}
-                {renderSecret('LINEAGE_DB_PASSWORD')}
-                {renderBool('LINEAGE_DB_SSL')}
-                {renderBool('LINEAGE_DB_SSL_VERIFY')}
-                {renderText('LINEAGE_DB_SSL_CA')}
-                {renderText('LINEAGE_DB_SSL_CERT')}
-                {renderSecret('LINEAGE_DB_SSL_KEY')}
-                {renderText('LINEAGE_QUERY_MODULE')}
-                {renderText('LINEAGE_PASSWORD_ALGO')}
-                {renderText('LINEAGE_DB_POOL_SIZE', 'number')}
-                {renderText('LINEAGE_DB_MAX_OVERFLOW', 'number')}
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.lineage.gameEyebrow')}</span>
-                    <h2>{t('integrations.lineage.gameTitle')}</h2>
-                  </div>
+              </SectionCard>
+              <SectionCard
+                icon={<PurseIcon />}
+                tone="mercado"
+                eyebrow={t('integrations.payments.mpEyebrow')}
+                title={t('integrations.payments.mpTitle')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('MERCADO_PAGO_ACCESS_TOKEN')}
+                  {renderSecret('MERCADO_PAGO_PUBLIC_KEY')}
+                  {renderSecret('MERCADO_PAGO_WEBHOOK_SECRET')}
+                  {renderBool('MERCADO_PAGO_ACTIVATE_PAYMENTS')}
                 </div>
-                {renderText('GAME_SERVER_IP')}
-                {renderText('GAME_SERVER_PORT', 'number')}
-                {renderText('LOGIN_SERVER_PORT', 'number')}
-                {renderText('SERVER_STATUS_TIMEOUT', 'number')}
-              </>
-            ) : null}
+              </SectionCard>
+            </>
+          ) : null}
 
-            {tab === 'smtp' ? (
-              <>
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.smtp.eyebrow')}</span>
-                    <h2>{t('integrations.smtp.title')}</h2>
-                    <p className="muted">{t('integrations.smtp.hint')}</p>
+          {tab === 'lineage' ? (
+            <>
+              <SectionCard
+                icon={<ServerTowerIcon />}
+                tone="lineage"
+                eyebrow={t('integrations.lineage.dbEyebrow')}
+                title={t('integrations.lineage.dbTitle')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderBool('LINEAGE_DB_ENABLED')}
+                  <div className="account-form-fields">
+                    {renderText('LINEAGE_DB_HOST')}
+                    {renderText('LINEAGE_DB_PORT', 'number')}
+                    {renderText('LINEAGE_DB_NAME')}
+                    {renderText('LINEAGE_DB_USER')}
+                  </div>
+                  {renderSecret('LINEAGE_DB_PASSWORD')}
+                  <div className="admin-integrations-toggles">
+                    {renderBool('LINEAGE_DB_SSL')}
+                    {renderBool('LINEAGE_DB_SSL_VERIFY')}
+                  </div>
+                  <div className="account-form-fields">
+                    {renderText('LINEAGE_DB_SSL_CA')}
+                    {renderText('LINEAGE_DB_SSL_CERT')}
+                  </div>
+                  {renderSecret('LINEAGE_DB_SSL_KEY')}
+                  <div className="account-form-fields">
+                    {renderText('LINEAGE_QUERY_MODULE')}
+                    {renderText('LINEAGE_PASSWORD_ALGO')}
+                    {renderText('LINEAGE_DB_POOL_SIZE', 'number')}
+                    {renderText('LINEAGE_DB_MAX_OVERFLOW', 'number')}
                   </div>
                 </div>
+              </SectionCard>
+              <SectionCard
+                icon={<ExchangeIcon />}
+                tone="game"
+                eyebrow={t('integrations.lineage.gameEyebrow')}
+                title={t('integrations.lineage.gameTitle')}
+              >
+                <div className="account-form-fields">
+                  {renderText('GAME_SERVER_IP')}
+                  {renderText('GAME_SERVER_PORT', 'number')}
+                  {renderText('LOGIN_SERVER_PORT', 'number')}
+                  {renderText('SERVER_STATUS_TIMEOUT', 'number')}
+                </div>
+              </SectionCard>
+            </>
+          ) : null}
+
+          {tab === 'smtp' ? (
+            <SectionCard
+              icon={<MailSealIcon />}
+              tone="smtp"
+              eyebrow={t('integrations.smtp.eyebrow')}
+              title={t('integrations.smtp.title')}
+              description={t('integrations.smtp.hint')}
+            >
+              <div className="admin-integrations-stack">
                 {renderText('EMAIL_BACKEND')}
-                {renderText('EMAIL_HOST')}
-                {renderText('EMAIL_PORT', 'number')}
-                {renderBool('EMAIL_USE_TLS')}
-                {renderBool('EMAIL_USE_SSL')}
-                {renderText('EMAIL_HOST_USER')}
+                <div className="account-form-fields">
+                  {renderText('EMAIL_HOST')}
+                  {renderText('EMAIL_PORT', 'number')}
+                </div>
+                <div className="admin-integrations-toggles">
+                  {renderBool('EMAIL_USE_TLS')}
+                  {renderBool('EMAIL_USE_SSL')}
+                </div>
+                <div className="account-form-fields">
+                  {renderText('EMAIL_HOST_USER')}
+                  {renderText('DEFAULT_FROM_EMAIL')}
+                </div>
                 {renderSecret('EMAIL_HOST_PASSWORD')}
-                {renderText('DEFAULT_FROM_EMAIL')}
-              </>
-            ) : null}
+              </div>
+            </SectionCard>
+          ) : null}
 
-            {tab === 'oauth' ? (
-              <>
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.oauth.googleEyebrow')}</span>
-                    <h2>{t('integrations.oauth.googleTitle')}</h2>
-                  </div>
+          {tab === 'oauth' ? (
+            <>
+              <SectionCard
+                icon={<KeyRingIcon />}
+                tone="google"
+                eyebrow={t('integrations.oauth.googleEyebrow')}
+                title={t('integrations.oauth.googleTitle')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('GOOGLE_CLIENT_ID')}
+                  {renderSecret('GOOGLE_CLIENT_SECRET')}
                 </div>
-                {renderSecret('GOOGLE_CLIENT_ID')}
-                {renderSecret('GOOGLE_CLIENT_SECRET')}
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.oauth.discordEyebrow')}</span>
-                    <h2>{t('integrations.oauth.discordTitle')}</h2>
-                  </div>
+              </SectionCard>
+              <SectionCard
+                icon={<KeyRingIcon />}
+                tone="discord"
+                eyebrow={t('integrations.oauth.discordEyebrow')}
+                title={t('integrations.oauth.discordTitle')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('DISCORD_CLIENT_ID')}
+                  {renderSecret('DISCORD_CLIENT_SECRET')}
                 </div>
-                {renderSecret('DISCORD_CLIENT_ID')}
-                {renderSecret('DISCORD_CLIENT_SECRET')}
-                <div className="account-section-heading">
-                  <div>
-                    <span className="panel-eyebrow">{t('integrations.oauth.hcaptchaEyebrow')}</span>
-                    <h2>{t('integrations.oauth.hcaptchaTitle')}</h2>
-                    <p className="muted">{t('integrations.oauth.hcaptchaHint')}</p>
-                  </div>
+              </SectionCard>
+              <SectionCard
+                icon={<ShieldOkIcon />}
+                tone="hcaptcha"
+                eyebrow={t('integrations.oauth.hcaptchaEyebrow')}
+                title={t('integrations.oauth.hcaptchaTitle')}
+                description={t('integrations.oauth.hcaptchaHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderSecret('HCAPTCHA_SITE_KEY')}
+                  {renderSecret('HCAPTCHA_SECRET_KEY')}
                 </div>
-                {renderSecret('HCAPTCHA_SITE_KEY')}
-                {renderSecret('HCAPTCHA_SECRET_KEY')}
-              </>
-            ) : null}
+              </SectionCard>
+            </>
+          ) : null}
 
-            <div className="admin-server-actions">
+          <Card as="div" className="admin-server-actions">
+            <span>
+              <strong>{t('integrations.actionsTitle')}</strong>
+              <small>{t('integrations.actionsHint')}</small>
+            </span>
+            <div className="admin-integrations-actions">
               <Button
                 type="button"
                 variant="secondary"
@@ -374,8 +493,8 @@ export function AdminIntegrationsPage() {
               </Button>
               <AdminSaveBar saving={save.isPending} />
             </div>
-          </form>
-        </Card>
+          </Card>
+        </form>
       ) : null}
     </div>
   )

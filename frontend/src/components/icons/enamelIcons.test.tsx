@@ -23,6 +23,11 @@ it('expõe o catálogo esmaltado com arte própria e marca estável', () => {
     'shield-ok',
     'exchange',
     'flag',
+    'payment-card',
+    'purse',
+    'server-tower',
+    'mail-seal',
+    'key-ring',
   ])
   icons.forEach((icon) => {
     expect(icon).toHaveAttribute('viewBox', '0 0 64 64')

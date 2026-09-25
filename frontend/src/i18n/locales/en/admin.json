@@ -912,6 +912,8 @@
     "toastTestOk": "Test completed successfully",
     "toastTestFail": "The test failed",
     "test": "Test",
+    "actionsTitle": "Apply integration",
+    "actionsHint": "Saves encrypted and applies to workers without restarting Docker.",
     "configuredHint": "Configured · {{fingerprint}}",
     "emptyHint": "Not set yet — the .env value remains until you save here.",
     "keepPlaceholder": "Leave blank to keep",

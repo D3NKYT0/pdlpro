@@ -137,6 +137,9 @@ describe('AdminIntegrationsPage', () => {
     expect(await screen.findByRole('tab', { name: /pagamentos/i })).toBeInTheDocument()
     expect(screen.getByText(/configurado · abc123def456/i)).toBeInTheDocument()
     expect(screen.queryByDisplayValue('sk_')).toBeNull()
+    expect(document.querySelector('[data-enamel-icon="payment-card"]')).not.toBeNull()
+    expect(document.querySelector('[data-enamel-icon="purse"]')).not.toBeNull()
+    expect(document.querySelector('.admin-integrations-section[data-tone="stripe"]')).not.toBeNull()
   })
 
   it('salva payload sem reenviar segredo vazio e bloqueia double-submit', async () => {
