@@ -858,6 +858,7 @@
     "unlockFirst": "Confirme el dominio",
     "toastOk": "Acción completada",
     "toastFail": "Acción fallida",
+    "loadError": "No fue posible cargar el estado de los secretos.",
     "meta": {
       "health": "Situación",
       "healthOk": "Todo bien",

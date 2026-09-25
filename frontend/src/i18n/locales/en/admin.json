@@ -858,6 +858,7 @@
     "unlockFirst": "Confirm the domain",
     "toastOk": "Action completed",
     "toastFail": "Action failed",
+    "loadError": "Could not load secrets status.",
     "meta": {
       "health": "Status",
       "healthOk": "All clear",

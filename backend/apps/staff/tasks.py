@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from celery import shared_task
 
-from apps.staff.application.secrets import AutoSecretMaintenanceInput, AutoSecretMaintenanceUseCase
+from apps.staff.application.secrets import (
+    AutoSecretMaintenanceInput,
+    AutoSecretMaintenanceUseCase,
+)
 from common.di.bootstrap import DependencyInjection
 
 

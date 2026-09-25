@@ -81,7 +81,7 @@ export function AdminSecretsPage() {
       }
       await queryClient.invalidateQueries({ queryKey: ['staff-secrets'] })
     },
-    onError: (error) => toast.error(apiErrorMessage(error)),
+    onError: (error) => toast.error(apiErrorMessage(error, t('secrets.toastFail'))),
   })
 
   const selectedLabel = t(`secrets.kinds.${selected}`)
@@ -102,7 +102,7 @@ export function AdminSecretsPage() {
       ) : null}
       {status.isError ? (
         <Card className="admin-config-section">
-          <p role="alert">{apiErrorMessage(status.error)}</p>
+          <p role="alert">{apiErrorMessage(status.error, t('secrets.loadError'))}</p>
         </Card>
       ) : null}
 

@@ -9,9 +9,16 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db import transaction
 from django.utils import timezone
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.token_blacklist.models import (
+    BlacklistedToken,
+    OutstandingToken,
+)
 
-from apps.accounts.infrastructure.models import DataExportLog, TwoFactorRecoveryCode, User
+from apps.accounts.infrastructure.models import (
+    DataExportLog,
+    TwoFactorRecoveryCode,
+    User,
+)
 from apps.staff.domain.secrets import (
     IGlobalSessionRevoker,
     ISealedDataReencryptor,
