@@ -44,6 +44,7 @@ it('o casco de autenticação do catálogo tem layout e o Vesperlyn empilha no c
   expect(auth).toMatch(/\.portal-auth-backdrop\s*\{[\s\S]*?var\(--tpl-art-hero/)
   expect(auth).toMatch(/\.portal-auth-frame\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\)/)
   expect(auth).toMatch(/\.portal-auth-card \.auth-field input:not\(\[type='checkbox'\]\)\s*\{[\s\S]*?min-height:\s*48px/)
+  expect(auth).toMatch(/\.auth-panel > \.muted,\s*\.portal-auth-card > \.muted\s*\{[\s\S]*?text-align:\s*center/)
   expect(club).toMatch(/\.club-auth \.portal-auth-frame\s*\{[\s\S]*?grid-template-columns:\s*1fr/)
   expect(club).toMatch(/\.club-auth \.portal-auth-brand\s*\{[\s\S]*?align-items:\s*center/)
   expect(club).toMatch(/\.club-logo--footer\s*\{[\s\S]*?border-radius:\s*50%/)
