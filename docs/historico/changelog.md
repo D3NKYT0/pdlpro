@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+## [2.5.11] - 2026-09-25
+
+Soft-rotate de segredos e fallback de Ajuda para Atendimento, consolidados em
+**25 de setembro de 2026**.
+
 ### Adicionado
 
 - Soft-rotate de `SECRET_KEY` com `SECRET_KEY_FALLBACKS`, prune, MultiFernet
@@ -22,6 +27,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   menu do painel permanece e aponta para `/panel/support`, inclusive com o selo de
   chamados aguardando resposta. O mini-mascote da barra superior também some.
   Guia: [Ajuda e Denkynho](../funcionalidades/ajuda.md).
+
+### Corrigido
+
+- Typecheck da tela admin de segredos (`apiErrorMessage` com fallback) e lint
+  ruff dos adaptadores de rotação, para restaurar o CI de qualidade.
 
 ## [2.5.10] - 2026-09-24
 
