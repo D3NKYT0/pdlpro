@@ -17851,3 +17851,381 @@ html.pdl-panel .supporters-page .ui-empty svg {
     display: none;
   }
 }
+
+/* --- Admin: secrets rotation ----------------------------------------------- */
+html.pdl-panel .admin-secrets-layout {
+  display: grid;
+  gap: 20px;
+}
+
+html.pdl-panel .admin-secrets-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html.pdl-panel .admin-secrets-pill {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+html.pdl-panel .admin-secrets-pill small {
+  color: var(--panel-muted);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .admin-secrets-pill strong {
+  color: var(--panel-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+html.pdl-panel .admin-secrets-pill.is-ok {
+  border-color: rgba(111, 191, 115, 0.35);
+  background: rgba(111, 191, 115, 0.1);
+}
+
+html.pdl-panel .admin-secrets-pill.is-ok strong {
+  color: #8fd19e;
+}
+
+html.pdl-panel .admin-secrets-pill.is-attention {
+  border-color: rgba(226, 180, 120, 0.4);
+  background: rgba(226, 180, 120, 0.12);
+}
+
+html.pdl-panel .admin-secrets-pill.is-attention strong {
+  color: #e2b478;
+}
+
+html.pdl-panel .admin-secrets-pill.is-action {
+  border-color: rgba(214, 112, 98, 0.45);
+  background: rgba(214, 112, 98, 0.14);
+}
+
+html.pdl-panel .admin-secrets-pill.is-action strong {
+  color: #ef9a8c;
+}
+
+html.pdl-panel .admin-secrets-pill.is-muted strong {
+  color: var(--panel-muted);
+}
+
+html.pdl-panel .admin-secrets-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--panel-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+html.pdl-panel .admin-secrets-banner svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+html.pdl-panel .admin-secrets-banner.is-warn {
+  color: #e2b478;
+  border-color: rgba(226, 180, 120, 0.35);
+  background: rgba(226, 180, 120, 0.1);
+}
+
+html.pdl-panel .admin-secrets-banner.is-action {
+  color: #ef9a8c;
+  border-color: rgba(214, 112, 98, 0.4);
+  background: rgba(214, 112, 98, 0.12);
+}
+
+html.pdl-panel .admin-secrets-banner.is-info {
+  color: rgba(239, 224, 194, 0.72);
+}
+
+html.pdl-panel .admin-secrets-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 0;
+}
+
+html.pdl-panel .admin-secrets-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--panel-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .admin-secrets-legend > span::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+html.pdl-panel .admin-secrets-legend > span.is-ok::before {
+  background: #8fd19e;
+  box-shadow: 0 0 8px rgba(143, 209, 158, 0.45);
+}
+
+html.pdl-panel .admin-secrets-legend > span.is-attention::before {
+  background: #e2b478;
+  box-shadow: 0 0 8px rgba(226, 180, 120, 0.4);
+}
+
+html.pdl-panel .admin-secrets-legend > span.is-action::before {
+  background: #ef9a8c;
+  box-shadow: 0 0 8px rgba(239, 154, 140, 0.4);
+}
+
+html.pdl-panel .admin-secrets-legend > span.is-optional::before {
+  background: rgba(239, 224, 194, 0.35);
+}
+
+html.pdl-panel .admin-secrets-inventory {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .admin-secrets-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  border-left-width: 3px;
+  background: color-mix(in srgb, var(--panel-gold) 3.5%, transparent);
+}
+
+html.pdl-panel .admin-secrets-row.is-ok {
+  border-left-color: #8fd19e;
+  background: rgba(111, 191, 115, 0.06);
+}
+
+html.pdl-panel .admin-secrets-row.is-attention {
+  border-left-color: #e2b478;
+  border-color: rgba(226, 180, 120, 0.28);
+  background: rgba(226, 180, 120, 0.08);
+}
+
+html.pdl-panel .admin-secrets-row.is-action {
+  border-left-color: #ef9a8c;
+  border-color: rgba(214, 112, 98, 0.32);
+  background: rgba(214, 112, 98, 0.1);
+}
+
+html.pdl-panel .admin-secrets-row.is-optional {
+  border-left-color: rgba(239, 224, 194, 0.28);
+  opacity: 0.92;
+}
+
+html.pdl-panel .admin-secrets-row > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .admin-secrets-row.is-ok > svg {
+  color: #8fd19e;
+}
+
+html.pdl-panel .admin-secrets-row.is-attention > svg {
+  color: #e2b478;
+}
+
+html.pdl-panel .admin-secrets-row.is-action > svg {
+  color: #ef9a8c;
+}
+
+html.pdl-panel .admin-secrets-row > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+html.pdl-panel .admin-secrets-row strong {
+  color: var(--panel-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+html.pdl-panel .admin-secrets-row small {
+  color: rgba(239, 224, 194, 0.48);
+  font-size: 12px;
+}
+
+html.pdl-panel .admin-secrets-row em {
+  color: var(--panel-muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+html.pdl-panel .admin-secrets-row > b {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .admin-secrets-row > b.is-ok {
+  color: #8fd19e;
+  border: 1px solid rgba(111, 191, 115, 0.35);
+  background: rgba(111, 191, 115, 0.12);
+}
+
+html.pdl-panel .admin-secrets-row > b.is-attention {
+  color: #e2b478;
+  border: 1px solid rgba(226, 180, 120, 0.4);
+  background: rgba(226, 180, 120, 0.14);
+}
+
+html.pdl-panel .admin-secrets-row > b.is-action {
+  color: #ef9a8c;
+  border: 1px solid rgba(214, 112, 98, 0.45);
+  background: rgba(214, 112, 98, 0.16);
+}
+
+html.pdl-panel .admin-secrets-row > b.is-optional {
+  color: rgba(239, 224, 194, 0.62);
+  border: 1px solid rgba(239, 224, 194, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html.pdl-panel .admin-secrets-action-groups {
+  display: grid;
+  gap: 18px;
+}
+
+html.pdl-panel .admin-secrets-action-group {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .admin-secrets-action-group > h3 {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .admin-secrets-choice-list {
+  display: grid;
+  gap: 8px;
+}
+
+html.pdl-panel .admin-secrets-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  background: rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+html.pdl-panel .admin-secrets-choice:hover {
+  border-color: color-mix(in srgb, var(--panel-gold) 34%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 4%, transparent);
+}
+
+html.pdl-panel .admin-secrets-choice.is-selected {
+  border-color: color-mix(in srgb, var(--panel-gold) 48%, transparent);
+  background: color-mix(in srgb, var(--panel-gold) 7%, transparent);
+}
+
+html.pdl-panel .admin-secrets-choice.is-danger.is-selected {
+  border-color: rgba(207, 122, 109, 0.45);
+  background: rgba(207, 122, 109, 0.08);
+}
+
+html.pdl-panel .admin-secrets-choice > input {
+  margin-top: 3px;
+  accent-color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .admin-secrets-choice > span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+html.pdl-panel .admin-secrets-choice strong {
+  color: var(--panel-text);
+  font-size: 14px;
+}
+
+html.pdl-panel .admin-secrets-choice small {
+  color: var(--panel-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+html.pdl-panel .admin-secrets-confirm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 14px;
+  padding-top: 4px;
+  border-top: 1px solid color-mix(in srgb, var(--panel-gold) 12%, transparent);
+}
+
+html.pdl-panel .admin-secrets-confirm .field {
+  margin: 0;
+}
+
+html.pdl-panel .admin-secrets-confirm .field > span {
+  display: grid;
+  gap: 4px;
+}
+
+html.pdl-panel .admin-secrets-confirm .field small {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  html.pdl-panel .admin-secrets-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  html.pdl-panel .admin-secrets-confirm {
+    grid-template-columns: 1fr;
+  }
+
+  html.pdl-panel .admin-secrets-confirm .btn {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 620px) {
+  html.pdl-panel .admin-secrets-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  html.pdl-panel .admin-secrets-row > b {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

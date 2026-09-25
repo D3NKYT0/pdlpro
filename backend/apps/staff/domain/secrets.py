@@ -13,6 +13,7 @@ class SecretFingerprint:
     name: str
     fingerprint: str
     present: bool
+    level: str = "ok"
     fallback_count: int = 0
     rotated_at: str | None = None
     stale_fallbacks: bool = False
@@ -26,9 +27,11 @@ class SecretsStatus:
     auto_rotate_days: int
     fallback_ttl_days: int
     confirmation_domain: str
-    secrets: tuple[SecretFingerprint, ...]
-    pending_jobs: tuple[dict[str, Any], ...]
-    recent_jobs: tuple[dict[str, Any], ...]
+    action_count: int = 0
+    attention_count: int = 0
+    secrets: tuple[SecretFingerprint, ...] = ()
+    pending_jobs: tuple[dict[str, Any], ...] = ()
+    recent_jobs: tuple[dict[str, Any], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

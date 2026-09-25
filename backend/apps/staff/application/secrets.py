@@ -54,12 +54,25 @@ APPLYABLE_KINDS = {
 
 def _domain_confirmation() -> str:
     hosts = getattr(settings, "ALLOWED_HOSTS", None) or []
-    skip = {"*", "localhost", "127.0.0.1", "testserver", ".localhost"}
+    preferred: list[str] = []
+    local_fallback: list[str] = []
+    skip = {"*", "testserver", ".localhost"}
     for host in hosts:
-        value = str(host or "").strip()
-        if value and value not in skip and not value.startswith("."):
-            return value
-    return str(getattr(settings, "DOMAIN", "") or "confirm")
+        value = str(host or "").strip().lower()
+        if not value or value in skip or value.startswith("."):
+            continue
+        if value in {"localhost", "127.0.0.1"}:
+            local_fallback.append(value)
+        else:
+            preferred.append(value)
+    if preferred:
+        return preferred[0]
+    if local_fallback:
+        return local_fallback[0]
+    domain = str(getattr(settings, "DOMAIN", "") or "").strip()
+    if domain:
+        return domain
+    return "localhost"
 
 
 def _require_confirmation(provided: str) -> None:
@@ -79,6 +92,22 @@ def _stale(rotated_at: str | None, ttl_days: int, fallback_count: int) -> bool:
     return timezone.now() - parsed >= timedelta(days=ttl_days)
 
 
+def _secret_level(
+    *,
+    present: bool,
+    stale: bool,
+    required_in_production: bool,
+    debug: bool,
+) -> str:
+    if stale:
+        return "attention"
+    if present:
+        return "ok"
+    if required_in_production and not debug:
+        return "action"
+    return "optional"
+
+
 class GetSecretsStatusUseCase(UseCase[None, SecretsStatus]):
     """Monta o painel de status sem expor valores em claro."""
 
@@ -87,6 +116,7 @@ class GetSecretsStatusUseCase(UseCase[None, SecretsStatus]):
 
     def execute(self, data: None = None) -> SecretsStatus:
         ttl = int(getattr(settings, "SECRET_KEY_FALLBACK_TTL_DAYS", 7) or 7)
+        debug = bool(getattr(settings, "DEBUG", False))
         secret_fallbacks = list(getattr(settings, "SECRET_KEY_FALLBACKS", None) or [])
         data_fallbacks = list(getattr(settings, "PDL_DATA_ENCRYPTION_KEY_FALLBACKS", None) or [])
         backup_fallbacks = list(getattr(settings, "BACKUP_ENCRYPTION_KEY_FALLBACKS", None) or [])
@@ -102,59 +132,144 @@ class GetSecretsStatusUseCase(UseCase[None, SecretsStatus]):
             redis = parsed.password or ""
         except Exception:  # noqa: BLE001
             redis = ""
+
+        # Em DEBUG sem Fernet configurada, o adaptador deriva da SECRET_KEY.
+        data_effective = data_key
+        data_derived = False
+        if not data_effective and debug and secret:
+            from common.crypto import derive_development_fernet_key
+
+            data_effective = derive_development_fernet_key(secret)
+            data_derived = True
+
         secret_rotated = str(getattr(settings, "SECRET_KEY_ROTATED_AT", "") or "") or None
         data_rotated = str(getattr(settings, "PDL_DATA_ENCRYPTION_ROTATED_AT", "") or "") or None
+        secret_stale = _stale(secret_rotated, ttl, len(secret_fallbacks))
+        data_stale = _stale(data_rotated, ttl, len(data_fallbacks))
         pending = self._jobs.list_pending()
         restart = any(bool(job.get("restart_required")) for job in self._jobs.list_recent(limit=5))
+
+        secrets = (
+            SecretFingerprint(
+                name="SECRET_KEY",
+                fingerprint=fingerprint(secret) if secret else "",
+                present=bool(secret),
+                level=_secret_level(
+                    present=bool(secret), stale=secret_stale, required_in_production=True, debug=debug
+                ),
+                fallback_count=len(secret_fallbacks),
+                rotated_at=secret_rotated,
+                stale_fallbacks=secret_stale,
+                notes=(
+                    (_("Fallbacks ativos — considere prune após o TTL"),)
+                    if secret_stale
+                    else ((_("Soft-rotate disponível via SECRET_KEY_FALLBACKS"),) if secret else ())
+                ),
+            ),
+            SecretFingerprint(
+                name="PDL_DATA_ENCRYPTION_KEY",
+                fingerprint=fingerprint(data_effective) if data_effective else "",
+                present=bool(data_effective),
+                level=_secret_level(
+                    present=bool(data_effective),
+                    stale=data_stale,
+                    required_in_production=True,
+                    debug=debug,
+                ),
+                fallback_count=len(data_fallbacks),
+                rotated_at=data_rotated,
+                stale_fallbacks=data_stale,
+                notes=(
+                    (_("Derivada da SECRET_KEY no DEBUG — configure Fernet própria em produção"),)
+                    if data_derived
+                    else (
+                        (_("MultiFernet: regrave dados antes de remover fallbacks"),)
+                        if data_effective
+                        else (_("Obrigatória em produção para TOTP/LGPD"),)
+                    )
+                ),
+            ),
+            SecretFingerprint(
+                name="PDL_DATA_HMAC_KEY",
+                fingerprint=fingerprint(hmac_key) if hmac_key else "",
+                present=bool(hmac_key),
+                level=_secret_level(
+                    present=bool(hmac_key),
+                    stale=False,
+                    required_in_production=True,
+                    debug=debug,
+                ),
+                notes=(
+                    (_("Estável; não rotaciona com a Fernet"),)
+                    if hmac_key
+                    else (
+                        (_("Sem HMAC dedicado — recovery usa derivação da Fernet"),)
+                        if debug
+                        else (_("Gere no configure-production para recovery estável"),)
+                    )
+                ),
+            ),
+            SecretFingerprint(
+                name="BACKUP_ENCRYPTION_KEY",
+                fingerprint=fingerprint(backup) if backup else "",
+                present=bool(backup),
+                level=_secret_level(
+                    present=bool(backup),
+                    stale=False,
+                    required_in_production=True,
+                    debug=debug,
+                ),
+                fallback_count=len(backup_fallbacks),
+                notes=(
+                    (_("Fallbacks só para decifrar dumps antigos"),)
+                    if backup
+                    else (
+                        (_("Opcional no desenvolvimento — dumps saem em claro"),)
+                        if debug
+                        else (_("Obrigatória em produção para cifrar backups"),)
+                    )
+                ),
+            ),
+            SecretFingerprint(
+                name="REDIS_PASSWORD",
+                fingerprint=fingerprint(redis) if redis else "",
+                present=bool(redis),
+                level=_secret_level(
+                    present=bool(redis),
+                    stale=False,
+                    required_in_production=True,
+                    debug=debug,
+                ),
+                notes=(
+                    (_("Somente via configure-production na máquina"),)
+                    if redis
+                    else (
+                        (_("Opcional no desenvolvimento local"),)
+                        if debug
+                        else (_("Obrigatória no Compose de produção"),)
+                    )
+                ),
+            ),
+        )
+        action_count = sum(1 for item in secrets if item.level == "action")
+        attention_count = sum(1 for item in secrets if item.level == "attention")
+        if restart:
+            attention_count += 1
+        if pending:
+            attention_count += 1
+
         return SecretsStatus(
             runtime_rotation_enabled=bool(getattr(settings, "PDL_ALLOW_RUNTIME_SECRET_ROTATION", False)),
             restart_required=restart,
             auto_rotate_days=int(getattr(settings, "SECRET_KEY_AUTO_ROTATE_DAYS", 0) or 0),
             fallback_ttl_days=ttl,
             confirmation_domain=_domain_confirmation(),
-            secrets=(
-                SecretFingerprint(
-                    name="SECRET_KEY",
-                    fingerprint=fingerprint(secret) if secret else "",
-                    present=bool(secret),
-                    fallback_count=len(secret_fallbacks),
-                    rotated_at=secret_rotated,
-                    stale_fallbacks=_stale(secret_rotated, ttl, len(secret_fallbacks)),
-                    notes=(_("Django SECRET_KEY_FALLBACKS ativo") ,),
-                ),
-                SecretFingerprint(
-                    name="PDL_DATA_ENCRYPTION_KEY",
-                    fingerprint=fingerprint(data_key) if data_key else "",
-                    present=bool(data_key),
-                    fallback_count=len(data_fallbacks),
-                    rotated_at=data_rotated,
-                    stale_fallbacks=_stale(data_rotated, ttl, len(data_fallbacks)),
-                    notes=(_("MultiFernet; regrave dados antes de remover fallbacks"),),
-                ),
-                SecretFingerprint(
-                    name="PDL_DATA_HMAC_KEY",
-                    fingerprint=fingerprint(hmac_key) if hmac_key else "",
-                    present=bool(hmac_key),
-                    notes=(_("Estável; não rotaciona com a Fernet"),),
-                ),
-                SecretFingerprint(
-                    name="BACKUP_ENCRYPTION_KEY",
-                    fingerprint=fingerprint(backup) if backup else "",
-                    present=bool(backup),
-                    fallback_count=len(backup_fallbacks),
-                    notes=(_("Fallbacks só para decifrar dumps antigos"),),
-                ),
-                SecretFingerprint(
-                    name="REDIS_PASSWORD",
-                    fingerprint=fingerprint(redis) if redis else "",
-                    present=bool(redis),
-                    notes=(_("Somente via configure-production na máquina"),),
-                ),
-            ),
+            action_count=action_count,
+            attention_count=attention_count,
+            secrets=secrets,
             pending_jobs=tuple(pending),
             recent_jobs=tuple(self._jobs.list_recent()),
         )
-
 
 @dataclass(frozen=True, slots=True)
 class RequestSecretActionInput:

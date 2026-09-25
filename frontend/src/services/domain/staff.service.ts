@@ -212,10 +212,13 @@ export interface ApiSecretsStatus {
   auto_rotate_days: number
   fallback_ttl_days: number
   confirmation_domain: string
+  action_count: number
+  attention_count: number
   secrets: Array<{
     name: string
     fingerprint: string
     present: boolean
+    level: 'ok' | 'attention' | 'action' | 'optional'
     fallback_count: number
     rotated_at: string | null
     stale_fallbacks: boolean
