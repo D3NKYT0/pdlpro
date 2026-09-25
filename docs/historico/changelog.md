@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+## [2.5.10] - 2026-09-24
+
+Coming Soon sem reabrir a contagem ao pedir Início, consolidado em
+**24 de setembro de 2026**.
+
 ### Alterado
 
 - Com Coming Soon ativo, os atalhos de Início (menu, marca, rodapé, temas, login
