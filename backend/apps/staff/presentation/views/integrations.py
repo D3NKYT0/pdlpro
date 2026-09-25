@@ -30,11 +30,12 @@ def _status_payload(status_obj) -> dict:
         "payments": asdict(status_obj.payments),
         "lineage": asdict(status_obj.lineage),
         "smtp": asdict(status_obj.smtp),
+        "oauth": asdict(status_obj.oauth),
     }
 
 
 class StaffIntegrationsStatusView(InjectedAPIView):
-    """GET do status mascarado das três seções."""
+    """GET do status mascarado das seções de integração."""
 
     permission_classes = [IsAuthenticated, IsSuperAdmin]
 

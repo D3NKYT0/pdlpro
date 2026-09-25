@@ -146,11 +146,22 @@ Mantenha as flags de ativação como `false` até as credenciais, URLs públicas
 
 As chaves VAPID formam um par e devem ser armazenadas como segredo fora do Git. A funcionalidade de push fica indisponível quando o par não está configurado.
 
-Stripe, Mercado Pago, Lineage/game e SMTP também podem ser gerenciados em
-runtime pelo painel **Integrações** (`/panel/admin/integrations`), com blobs
-Fernet no banco e hot-apply sem restart. O `.env` continua obrigatório para o
-bootstrap (`SECRET_KEY`, `DATABASE_URL`, `REDIS_*`, `PDL_DATA_ENCRYPTION_KEY`).
+Stripe, Mercado Pago, Lineage/game, SMTP e OAuth/hCaptcha também podem ser
+gerenciados em runtime pelo painel **Integrações** (`/panel/admin/integrations`),
+com blobs Fernet no banco e hot-apply sem restart. O `.env` continua obrigatório
+para o bootstrap (`SECRET_KEY`, `DATABASE_URL`, `REDIS_*`, `PDL_DATA_ENCRYPTION_KEY`).
 Guia: [Configurador admin de integrações](../operacao/integracoes-admin.md).
+
+## OAuth e hCaptcha
+
+| Variável | Descrição |
+|---|---|
+| `GOOGLE_CLIENT_ID` | Client ID OAuth do Google (também espelhável via `VITE_GOOGLE_CLIENT_ID`) |
+| `GOOGLE_CLIENT_SECRET` | Client secret OAuth do Google |
+| `DISCORD_CLIENT_ID` | Client ID OAuth do Discord (também espelhável via `VITE_DISCORD_CLIENT_ID`) |
+| `DISCORD_CLIENT_SECRET` | Client secret OAuth do Discord |
+| `HCAPTCHA_SITE_KEY` | Site key do hCaptcha (também espelhável via `VITE_HCAPTCHA_SITEKEY`) |
+| `HCAPTCHA_SECRET_KEY` | Secret key do hCaptcha; `HCAPTCHA_ENABLED` fica `true` só com o par completo |
 
 ## Operação
 

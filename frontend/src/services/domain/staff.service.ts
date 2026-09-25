@@ -256,6 +256,7 @@ export interface ApiIntegrationsStatus {
   payments: ApiIntegrationSection
   lineage: ApiIntegrationSection
   smtp: ApiIntegrationSection
+  oauth: ApiIntegrationSection
 }
 
 export interface ApiIntegrationProbeResult {
@@ -264,7 +265,7 @@ export interface ApiIntegrationProbeResult {
   details: Record<string, unknown>
 }
 
-export type IntegrationSectionId = 'payments' | 'lineage' | 'smtp'
+export type IntegrationSectionId = 'payments' | 'lineage' | 'smtp' | 'oauth'
 
 export const staffApi = {
   panel: () => request<ApiPanelSettings>('/staff/panel/'),

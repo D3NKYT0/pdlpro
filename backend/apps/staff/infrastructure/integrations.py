@@ -19,6 +19,7 @@ from apps.staff.domain.integrations import (
     INT_KEYS,
     SECTION_KEYS,
     SECTION_LINEAGE,
+    SECTION_OAUTH,
     SECTION_PAYMENTS,
     SECTION_SMTP,
     SECTIONS,
@@ -35,6 +36,7 @@ BLOB_ATTR = {
     SECTION_PAYMENTS: "payments_blob",
     SECTION_LINEAGE: "lineage_blob",
     SECTION_SMTP: "smtp_blob",
+    SECTION_OAUTH: "oauth_blob",
 }
 
 _local_rev: int = 0
@@ -160,6 +162,10 @@ class DjangoRuntimeSettingsApplier(IRuntimeSettingsApplier):
                 setattr(settings, key, defaults[key])
         if section == SECTION_LINEAGE:
             _reset_lineage_engine()
+        if section == SECTION_OAUTH:
+            site = str(getattr(settings, "HCAPTCHA_SITE_KEY", "") or "").strip()
+            secret = str(getattr(settings, "HCAPTCHA_SECRET_KEY", "") or "").strip()
+            settings.HCAPTCHA_ENABLED = bool(site and secret)
 
     def apply_section(self, section: str) -> int:
         data = self._store.load_section(section)
@@ -288,6 +294,29 @@ class DjangoIntegrationProbe(IIntegrationProbe):
         except Exception as exc:  # noqa: BLE001
             details["error"] = type(exc).__name__
             return ProbeResult(False, _("Falha ao enviar e-mail de teste."), details)
+
+    def test_oauth(self) -> ProbeResult:
+        google_id = str(getattr(settings, "GOOGLE_CLIENT_ID", "") or "").strip()
+        google_secret = str(getattr(settings, "GOOGLE_CLIENT_SECRET", "") or "").strip()
+        discord_id = str(getattr(settings, "DISCORD_CLIENT_ID", "") or "").strip()
+        discord_secret = str(getattr(settings, "DISCORD_CLIENT_SECRET", "") or "").strip()
+        site = str(getattr(settings, "HCAPTCHA_SITE_KEY", "") or "").strip()
+        hcaptcha_secret = str(getattr(settings, "HCAPTCHA_SECRET_KEY", "") or "").strip()
+        details = {
+            "google_configured": bool(google_id and google_secret),
+            "discord_configured": bool(discord_id and discord_secret),
+            "hcaptcha_configured": bool(site and hcaptcha_secret),
+            "hcaptcha_enabled": bool(getattr(settings, "HCAPTCHA_ENABLED", False)),
+        }
+        if bool(google_id) != bool(google_secret):
+            return ProbeResult(False, _("Google OAuth incompleto: informe client id e secret."), details)
+        if bool(discord_id) != bool(discord_secret):
+            return ProbeResult(False, _("Discord OAuth incompleto: informe client id e secret."), details)
+        if bool(site) != bool(hcaptcha_secret):
+            return ProbeResult(False, _("hCaptcha incompleto: informe site key e secret."), details)
+        if not details["google_configured"] and not details["discord_configured"] and not details["hcaptcha_configured"]:
+            return ProbeResult(False, _("Nenhum provedor OAuth/hCaptcha configurado."), details)
+        return ProbeResult(True, _("Credenciais OAuth/hCaptcha consistentes."), details)
 
 
 def _tcp_open(host: str, port: int, timeout: float) -> bool:

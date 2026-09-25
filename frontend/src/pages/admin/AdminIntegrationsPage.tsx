@@ -7,7 +7,7 @@ import { apiErrorMessage } from '../../lib/errors'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Cable, CreditCard, Mail, PlugZap, Trash2 } from 'lucide-react'
+import { Cable, CreditCard, Mail, PlugZap, ShieldCheck, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import {
   staffApi,
@@ -25,9 +25,18 @@ const SECRET_KEYS = new Set([
   'LINEAGE_DB_PASSWORD',
   'LINEAGE_DB_SSL_KEY',
   'EMAIL_HOST_PASSWORD',
+  'GOOGLE_CLIENT_SECRET',
+  'DISCORD_CLIENT_SECRET',
+  'HCAPTCHA_SECRET_KEY',
 ])
 
-const MASKED_KEYS = new Set(['STRIPE_PUBLISHABLE_KEY', 'MERCADO_PAGO_PUBLIC_KEY'])
+const MASKED_KEYS = new Set([
+  'STRIPE_PUBLISHABLE_KEY',
+  'MERCADO_PAGO_PUBLIC_KEY',
+  'GOOGLE_CLIENT_ID',
+  'DISCORD_CLIENT_ID',
+  'HCAPTCHA_SITE_KEY',
+])
 
 const BOOL_KEYS = new Set([
   'STRIPE_ACTIVATE_PAYMENTS',
@@ -91,6 +100,7 @@ export function AdminIntegrationsPage() {
     payments: {},
     lineage: {},
     smtp: {},
+    oauth: {},
   })
   const [clears, setClears] = useState<Record<string, boolean>>({})
 
@@ -105,6 +115,7 @@ export function AdminIntegrationsPage() {
       payments: draftFromStatus(status.data, 'payments'),
       lineage: draftFromStatus(status.data, 'lineage'),
       smtp: draftFromStatus(status.data, 'smtp'),
+      oauth: draftFromStatus(status.data, 'oauth'),
     })
     setClears({})
   }, [status.data])
@@ -134,6 +145,7 @@ export function AdminIntegrationsPage() {
         { id: 'payments' as const, label: t('integrations.tabs.payments'), icon: <CreditCard aria-hidden="true" /> },
         { id: 'lineage' as const, label: t('integrations.tabs.lineage'), icon: <Cable aria-hidden="true" /> },
         { id: 'smtp' as const, label: t('integrations.tabs.smtp'), icon: <Mail aria-hidden="true" /> },
+        { id: 'oauth' as const, label: t('integrations.tabs.oauth'), icon: <ShieldCheck aria-hidden="true" /> },
       ] as const,
     [t],
   )
@@ -316,6 +328,36 @@ export function AdminIntegrationsPage() {
                 {renderText('EMAIL_HOST_USER')}
                 {renderSecret('EMAIL_HOST_PASSWORD')}
                 {renderText('DEFAULT_FROM_EMAIL')}
+              </>
+            ) : null}
+
+            {tab === 'oauth' ? (
+              <>
+                <div className="account-section-heading">
+                  <div>
+                    <span className="panel-eyebrow">{t('integrations.oauth.googleEyebrow')}</span>
+                    <h2>{t('integrations.oauth.googleTitle')}</h2>
+                  </div>
+                </div>
+                {renderSecret('GOOGLE_CLIENT_ID')}
+                {renderSecret('GOOGLE_CLIENT_SECRET')}
+                <div className="account-section-heading">
+                  <div>
+                    <span className="panel-eyebrow">{t('integrations.oauth.discordEyebrow')}</span>
+                    <h2>{t('integrations.oauth.discordTitle')}</h2>
+                  </div>
+                </div>
+                {renderSecret('DISCORD_CLIENT_ID')}
+                {renderSecret('DISCORD_CLIENT_SECRET')}
+                <div className="account-section-heading">
+                  <div>
+                    <span className="panel-eyebrow">{t('integrations.oauth.hcaptchaEyebrow')}</span>
+                    <h2>{t('integrations.oauth.hcaptchaTitle')}</h2>
+                    <p className="muted">{t('integrations.oauth.hcaptchaHint')}</p>
+                  </div>
+                </div>
+                {renderSecret('HCAPTCHA_SITE_KEY')}
+                {renderSecret('HCAPTCHA_SECRET_KEY')}
               </>
             ) : null}
 

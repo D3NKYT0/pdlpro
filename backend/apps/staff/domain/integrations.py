@@ -11,7 +11,8 @@ CLEAR_SENTINEL = "__CLEAR__"
 SECTION_PAYMENTS = "payments"
 SECTION_LINEAGE = "lineage"
 SECTION_SMTP = "smtp"
-SECTIONS = (SECTION_PAYMENTS, SECTION_LINEAGE, SECTION_SMTP)
+SECTION_OAUTH = "oauth"
+SECTIONS = (SECTION_PAYMENTS, SECTION_LINEAGE, SECTION_SMTP, SECTION_OAUTH)
 
 # Campos sensíveis: nunca saem em claro na API.
 SECRET_KEYS: frozenset[str] = frozenset(
@@ -23,6 +24,9 @@ SECRET_KEYS: frozenset[str] = frozenset(
         "LINEAGE_DB_PASSWORD",
         "LINEAGE_DB_SSL_KEY",
         "EMAIL_HOST_PASSWORD",
+        "GOOGLE_CLIENT_SECRET",
+        "DISCORD_CLIENT_SECRET",
+        "HCAPTCHA_SECRET_KEY",
     }
 )
 
@@ -31,6 +35,9 @@ MASKED_PUBLIC_KEYS: frozenset[str] = frozenset(
     {
         "STRIPE_PUBLISHABLE_KEY",
         "MERCADO_PAGO_PUBLIC_KEY",
+        "GOOGLE_CLIENT_ID",
+        "DISCORD_CLIENT_ID",
+        "HCAPTCHA_SITE_KEY",
     }
 )
 
@@ -75,6 +82,14 @@ SECTION_KEYS: dict[str, tuple[str, ...]] = {
         "EMAIL_HOST_USER",
         "EMAIL_HOST_PASSWORD",
         "DEFAULT_FROM_EMAIL",
+    ),
+    SECTION_OAUTH: (
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "DISCORD_CLIENT_ID",
+        "DISCORD_CLIENT_SECRET",
+        "HCAPTCHA_SITE_KEY",
+        "HCAPTCHA_SECRET_KEY",
     ),
 }
 
@@ -125,6 +140,7 @@ class IntegrationsStatus:
     payments: SectionStatus
     lineage: SectionStatus
     smtp: SectionStatus
+    oauth: SectionStatus
     revision: int = 0
 
 
@@ -186,4 +202,8 @@ class IIntegrationProbe(ABC):
 
     @abstractmethod
     def test_smtp(self, *, to_email: str) -> ProbeResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def test_oauth(self) -> ProbeResult:
         raise NotImplementedError

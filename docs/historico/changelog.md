@@ -11,9 +11,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Adicionado
 
 - Configurador admin de integrações em `/panel/admin/integrations` (abas
-  Pagamentos, Lineage/Game, SMTP): blobs Fernet no banco, API mascarada,
-  hot-apply via revisão no cache e `reset_engine` do gateway SQLAlchemy.
-  Guia: [Integrações admin](../operacao/integracoes-admin.md).
+  Pagamentos, Lineage/Game, SMTP, OAuth/hCaptcha): blobs Fernet no banco, API
+  mascarada, hot-apply via revisão no cache e `reset_engine` do gateway
+  SQLAlchemy. Guia: [Integrações admin](../operacao/integracoes-admin.md).
 
 ### Alterado
 

@@ -76,6 +76,7 @@ def test_integrations_status_requires_superuser(api, staff_user, superuser, host
     assert "payments" in body
     assert "lineage" in body
     assert "smtp" in body
+    assert "oauth" in body
     assert "revision" in body
 
 
@@ -163,6 +164,47 @@ def test_payments_test_rejects_active_without_key(api, superuser, hosts, setting
     )
     assert response.status_code == 200
     assert response.json()["ok"] is False
+
+
+@pytest.mark.django_db
+def test_oauth_test_rejects_incomplete_pair(api, superuser, hosts, settings):
+    settings.GOOGLE_CLIENT_ID = "google-id"
+    settings.GOOGLE_CLIENT_SECRET = ""
+    settings.DISCORD_CLIENT_ID = ""
+    settings.DISCORD_CLIENT_SECRET = ""
+    settings.HCAPTCHA_SITE_KEY = ""
+    settings.HCAPTCHA_SECRET_KEY = ""
+    settings.HCAPTCHA_ENABLED = False
+    api.force_authenticate(superuser)
+    response = api.post(
+        reverse("staff-integrations-test", kwargs={"section": "oauth"}),
+        {},
+        format="json",
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["ok"] is False
+
+
+@pytest.mark.django_db
+def test_oauth_patch_enables_hcaptcha(api, superuser, hosts, settings):
+    settings.HCAPTCHA_SITE_KEY = ""
+    settings.HCAPTCHA_SECRET_KEY = ""
+    settings.HCAPTCHA_ENABLED = False
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "oauth"}),
+        {
+            "HCAPTCHA_SITE_KEY": "site-public",
+            "HCAPTCHA_SECRET_KEY": "secret-private",
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.HCAPTCHA_ENABLED is True
+    oauth = next(f for f in response.json()["oauth"]["fields"] if f["key"] == "HCAPTCHA_SECRET_KEY")
+    assert oauth["configured"] is True
+    assert "secret-private" not in str(response.json())
 
 
 @pytest.mark.django_db

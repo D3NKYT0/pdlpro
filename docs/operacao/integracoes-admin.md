@@ -5,8 +5,9 @@
 ## Objetivo
 
 Substituir a edição manual do `.env` + restart do Docker para **Stripe, Mercado Pago,
-MySQL L2, hosts do game/login server e SMTP**, com UI em `/panel/admin/integrations`
-(abas), valores sensíveis cifrados no banco (Fernet) e efeito imediato nos workers.
+MySQL L2, hosts do game/login server, SMTP, OAuth Google/Discord e hCaptcha**, com UI
+em `/panel/admin/integrations` (abas), valores sensíveis cifrados no banco (Fernet) e
+efeito imediato nos workers.
 
 ## Bootstrap que permanece no `.env`
 
@@ -32,25 +33,35 @@ No save: grava o blob Fernet, aplica em `django.conf.settings` do processo e
 incrementa `pdl:integrations:rev` no cache (Redis). O middleware
 `IntegrationOverlayMiddleware` compara a revisão local com o cache; se mudou,
 reaplica o overlay. Em mudanças Lineage, o gateway SQLAlchemy dá `dispose` no pool
-(`reset_engine`) e recria o engine na próxima consulta.
+(`reset_engine`) e recria o engine na próxima consulta. Em mudanças OAuth/hCaptcha,
+`HCAPTCHA_ENABLED` é recalculado a partir do par site key + secret.
 
 ## API (somente superadmin)
 
 | Método | Rota | Função |
 | --- | --- | --- |
-| `GET` | `/api/v1/staff/integrations/` | Status mascarado das três seções |
-| `PATCH` | `/api/v1/staff/integrations/{payments\|lineage\|smtp}/` | Mescla e aplica |
-| `POST` | `/api/v1/staff/integrations/{payments\|lineage\|smtp}/test/` | Probe / e-mail de teste |
+| `GET` | `/api/v1/staff/integrations/` | Status mascarado das seções |
+| `PATCH` | `/api/v1/staff/integrations/{payments\|lineage\|smtp\|oauth}/` | Mescla e aplica |
+| `POST` | `/api/v1/staff/integrations/{payments\|lineage\|smtp\|oauth}/test/` | Probe / e-mail de teste |
 
 A API **nunca** devolve segredos em claro: apenas `configured`, `fingerprint`
 (12 hex) e campos públicos (host, porta, chaves publicáveis mascaradas).
+
+### Abas
+
+| Aba | Chaves principais |
+| --- | --- |
+| Pagamentos | Stripe e Mercado Pago (chaves, webhooks, flags de ativação) |
+| Lineage / Game | MySQL L2, SSL, pool, IP/portas do game e login |
+| SMTP | Backend, host, porta, TLS/SSL, usuário, senha, remetente |
+| OAuth / hCaptcha | `GOOGLE_*`, `DISCORD_*`, `HCAPTCHA_SITE_KEY` / `HCAPTCHA_SECRET_KEY` |
 
 ## Operação
 
 1. Entre como superadmin em `/panel/admin/integrations`.
 2. Preencha a aba desejada e salve — não é necessário reiniciar containers.
-3. Use **Testar** para validar credenciais de pagamento, TCP/MySQL do jogo ou
-   envio SMTP (destino = e-mail do superadmin).
+3. Use **Testar** para validar credenciais de pagamento, TCP/MySQL do jogo,
+   consistência OAuth/hCaptcha ou envio SMTP (destino = e-mail do superadmin).
 4. Para voltar ao valor do `.env`, use **Apagar valor** no campo secreto e salve.
 
 Consulte também [Variáveis de ambiente](../configuracao/ambiente.md) para o mapa

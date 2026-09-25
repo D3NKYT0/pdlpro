@@ -17,6 +17,7 @@ from apps.staff.domain.integrations import (
     SECRET_KEYS,
     SECTION_KEYS,
     SECTION_LINEAGE,
+    SECTION_OAUTH,
     SECTION_PAYMENTS,
     SECTION_SMTP,
     SECTIONS,
@@ -157,6 +158,7 @@ class GetIntegrationsStatusUseCase(UseCase[None, IntegrationsStatus]):
             payments=sections[SECTION_PAYMENTS],
             lineage=sections[SECTION_LINEAGE],
             smtp=sections[SECTION_SMTP],
+            oauth=sections[SECTION_OAUTH],
             revision=self._applier.current_revision(),
         )
 
@@ -197,6 +199,8 @@ class TestIntegrationSectionUseCase(UseCase[TestIntegrationSectionInput, ProbeRe
             return self._probe.test_payments()
         if section == SECTION_LINEAGE:
             return self._probe.test_lineage()
+        if section == SECTION_OAUTH:
+            return self._probe.test_oauth()
         email = (command.to_email or "").strip()
         if not email:
             raise ValidationDomainError(_("Informe o e-mail de destino do teste."))

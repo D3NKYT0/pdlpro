@@ -42,7 +42,7 @@
       "comingSoon": { "title": "Coming Soon", "description": "Launch page and access control" },
       "server": { "title": "Panel and server", "description": "Name, rates, chronicle and SEO" },
       "secrets": { "title": "Secrets and rotation", "description": "Status, soft-rotate and reencrypt (superadmin only)" },
-      "integrations": { "title": "Integrations", "description": "Encrypted payments, Lineage/game and SMTP (superadmin only)" },
+      "integrations": { "title": "Integrations", "description": "Payments, Lineage/game, SMTP and OAuth/hCaptcha (superadmin only)" },
       "itemWatch": { "title": "Item watch", "description": "Server economy, favourites, snapshots and date comparison" },
       "customItems": { "title": "Custom items", "description": "Register name, ID, image and metadata in the single catalog" },
       "services": { "title": "Services", "description": "Prices for nickname, sex, slots and unstuck" },
@@ -898,12 +898,13 @@
   "integrations": {
     "kicker": "System",
     "title": "Integrations",
-    "description": "Payments, Lineage database, game hosts and SMTP. Secrets are encrypted in the database and apply without restarting Docker. Superadmin only.",
+    "description": "Payments, Lineage database, game hosts, SMTP and OAuth/hCaptcha. Secrets are encrypted in the database and apply without restarting Docker. Superadmin only.",
     "tabsLabel": "Integration sections",
     "tabs": {
       "payments": "Payments",
       "lineage": "Lineage / Game",
-      "smtp": "SMTP"
+      "smtp": "SMTP",
+      "oauth": "OAuth / hCaptcha"
     },
     "loadError": "Could not load integrations",
     "toastSaved": "Integration saved and applied",
@@ -932,6 +933,15 @@
       "eyebrow": "Email",
       "title": "SMTP server",
       "hint": "The test sends a message to your superadmin account email."
+    },
+    "oauth": {
+      "googleEyebrow": "Google",
+      "googleTitle": "Sign in with Google",
+      "discordEyebrow": "Discord",
+      "discordTitle": "Sign in with Discord",
+      "hcaptchaEyebrow": "hCaptcha",
+      "hcaptchaTitle": "Registration protection",
+      "hcaptchaHint": "hCaptcha is only enabled when both site key and secret are set."
     },
     "fields": {
       "STRIPE_SECRET_KEY": "Stripe secret key",
@@ -968,7 +978,13 @@
       "EMAIL_USE_SSL": "Use implicit SSL",
       "EMAIL_HOST_USER": "SMTP user",
       "EMAIL_HOST_PASSWORD": "SMTP password",
-      "DEFAULT_FROM_EMAIL": "Default from address"
+      "DEFAULT_FROM_EMAIL": "Default from address",
+      "GOOGLE_CLIENT_ID": "Google client ID",
+      "GOOGLE_CLIENT_SECRET": "Google client secret",
+      "DISCORD_CLIENT_ID": "Discord client ID",
+      "DISCORD_CLIENT_SECRET": "Discord client secret",
+      "HCAPTCHA_SITE_KEY": "hCaptcha site key",
+      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key"
     }
   },
   "comingSoonAdmin": {

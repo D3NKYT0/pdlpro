@@ -91,6 +91,18 @@ const statusFixture = {
       { key: 'DEFAULT_FROM_EMAIL', configured: true, fingerprint: '', value: 'noreply@localhost', masked: '' },
     ],
   },
+  oauth: {
+    section: 'oauth',
+    updated_at: null,
+    fields: [
+      { key: 'GOOGLE_CLIENT_ID', configured: false, fingerprint: '', value: null, masked: '' },
+      { key: 'GOOGLE_CLIENT_SECRET', configured: false, fingerprint: '', value: null, masked: '' },
+      { key: 'DISCORD_CLIENT_ID', configured: false, fingerprint: '', value: null, masked: '' },
+      { key: 'DISCORD_CLIENT_SECRET', configured: false, fingerprint: '', value: null, masked: '' },
+      { key: 'HCAPTCHA_SITE_KEY', configured: false, fingerprint: '', value: null, masked: '' },
+      { key: 'HCAPTCHA_SECRET_KEY', configured: false, fingerprint: '', value: null, masked: '' },
+    ],
+  },
 }
 
 function renderPage() {
@@ -148,12 +160,12 @@ describe('AdminIntegrationsPage', () => {
     resolveSave(statusFixture)
   })
 
-  it('alterna para SMTP e dispara teste', async () => {
+  it('alterna para OAuth e dispara teste', async () => {
     const user = userEvent.setup()
     renderPage()
-    await user.click(await screen.findByRole('tab', { name: /smtp/i }))
-    expect(await screen.findByLabelText(/host smtp/i)).toBeInTheDocument()
+    await user.click(await screen.findByRole('tab', { name: /oauth/i }))
+    expect(await screen.findByLabelText(/google client id/i)).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /testar/i }))
-    await waitFor(() => expect(staffApi.testIntegrationSection).toHaveBeenCalledWith('smtp'))
+    await waitFor(() => expect(staffApi.testIntegrationSection).toHaveBeenCalledWith('oauth'))
   })
 })

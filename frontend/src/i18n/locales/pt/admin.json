@@ -42,7 +42,7 @@
       "comingSoon": { "title": "Coming Soon", "description": "Página de lançamento e controle de acesso" },
       "server": { "title": "Painel e servidor", "description": "Nome, rates, chronicle e SEO" },
       "secrets": { "title": "Segredos e rotação", "description": "Status, soft-rotate e reencrypt (somente superadmin)" },
-      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage/game e SMTP cifrados (somente superadmin)" },
+      "integrations": { "title": "Integrações", "description": "Pagamentos, Lineage/game, SMTP e OAuth/hCaptcha (somente superadmin)" },
       "itemWatch": { "title": "Observar itens", "description": "Economia do servidor, favoritos, snapshots e comparação entre datas" },
       "customItems": { "title": "Itens customizados", "description": "Cadastrar nome, ID, imagem e metadados no catálogo único" },
       "services": { "title": "Serviços", "description": "Preços de nick, sexo, slots, destravamento e taverna" },
@@ -898,12 +898,13 @@
   "integrations": {
     "kicker": "Sistema",
     "title": "Integrações",
-    "description": "Pagamentos, banco Lineage, hosts do jogo e SMTP. Valores sensíveis ficam cifrados no banco e aplicam sem reiniciar o Docker. Somente superadmin.",
+    "description": "Pagamentos, banco Lineage, hosts do jogo, SMTP e OAuth/hCaptcha. Valores sensíveis ficam cifrados no banco e aplicam sem reiniciar o Docker. Somente superadmin.",
     "tabsLabel": "Seções de integração",
     "tabs": {
       "payments": "Pagamentos",
       "lineage": "Lineage / Game",
-      "smtp": "SMTP"
+      "smtp": "SMTP",
+      "oauth": "OAuth / hCaptcha"
     },
     "loadError": "Não foi possível carregar as integrações",
     "toastSaved": "Integração salva e aplicada",
@@ -932,6 +933,15 @@
       "eyebrow": "E-mail",
       "title": "Servidor SMTP",
       "hint": "O teste envia uma mensagem para o e-mail da sua conta de superadmin."
+    },
+    "oauth": {
+      "googleEyebrow": "Google",
+      "googleTitle": "Login com Google",
+      "discordEyebrow": "Discord",
+      "discordTitle": "Login com Discord",
+      "hcaptchaEyebrow": "hCaptcha",
+      "hcaptchaTitle": "Proteção de cadastro",
+      "hcaptchaHint": "O hCaptcha só fica ativo quando site key e secret estão preenchidos."
     },
     "fields": {
       "STRIPE_SECRET_KEY": "Stripe secret key",
@@ -968,7 +978,13 @@
       "EMAIL_USE_SSL": "Usar SSL implícito",
       "EMAIL_HOST_USER": "Usuário SMTP",
       "EMAIL_HOST_PASSWORD": "Senha SMTP",
-      "DEFAULT_FROM_EMAIL": "Remetente padrão"
+      "DEFAULT_FROM_EMAIL": "Remetente padrão",
+      "GOOGLE_CLIENT_ID": "Google client ID",
+      "GOOGLE_CLIENT_SECRET": "Google client secret",
+      "DISCORD_CLIENT_ID": "Discord client ID",
+      "DISCORD_CLIENT_SECRET": "Discord client secret",
+      "HCAPTCHA_SITE_KEY": "hCaptcha site key",
+      "HCAPTCHA_SECRET_KEY": "hCaptcha secret key"
     }
   },
   "comingSoonAdmin": {
