@@ -1055,7 +1055,24 @@
     "denkynho": {
       "eyebrow": "Assistant",
       "title": "Denkynho LLM",
-      "hint": "Local Ollama or remote OpenAI-compatible API."
+      "hint": "Enable AI generation. Off = FAQ only. Choose local Ollama or a remote API.",
+      "providerHint": "ollama = local process; remote = OpenAI/Groq/OpenRouter and compatible APIs",
+      "providerOllama": "Ollama (local)",
+      "providerRemote": "Remote API (OpenAI-compatible)",
+      "modelEyebrow": "Model",
+      "modelTitle": "Generation model",
+      "modelHint": "Ollama tag or remote model id. Main quality/cost knob.",
+      "modelExamples": "Examples: qwen3.5:4b · gpt-4o-mini · openai/gpt-oss-20b",
+      "ollamaEyebrow": "Local",
+      "ollamaTitle": "Ollama connection",
+      "ollamaHint": "Used when the provider is ollama.",
+      "remoteEyebrow": "Remote",
+      "remoteTitle": "Remote API",
+      "remoteHint": "Used when the provider is remote. The key stays encrypted.",
+      "apiUrlHint": "Base …/v1 or full …/chat/completions URL",
+      "embedEyebrow": "Search",
+      "embedTitle": "Semantic embeddings",
+      "embedHint": "MiniLM for FAQ/context. Often disabled by default in production."
     },
     "storage": {
       "eyebrow": "Media",

@@ -231,6 +231,33 @@ def test_applier_bumps_revision_and_refresh_reapplies(settings):
 
 
 @pytest.mark.django_db
+def test_denkynho_patch_model_and_provider(api, superuser, hosts, settings):
+    settings.DENKYNHO_LLM_ENABLED = False
+    settings.DENKYNHO_LLM_PROVIDER = "ollama"
+    settings.DENKYNHO_LLM_MODEL = "qwen3.5:4b"
+    api.force_authenticate(superuser)
+    response = api.patch(
+        reverse("staff-integrations-section", kwargs={"section": "denkynho"}),
+        {
+            "DENKYNHO_LLM_ENABLED": True,
+            "DENKYNHO_LLM_PROVIDER": "remote",
+            "DENKYNHO_LLM_MODEL": "gpt-4o-mini",
+            "DENKYNHO_LLM_API_URL": "https://api.openai.com/v1",
+            "DENKYNHO_LLM_API_KEY": "sk-test-not-leaked",
+        },
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    assert settings.DENKYNHO_LLM_ENABLED is True
+    assert settings.DENKYNHO_LLM_PROVIDER == "remote"
+    assert settings.DENKYNHO_LLM_MODEL == "gpt-4o-mini"
+    assert settings.DENKYNHO_LLM_API_URL == "https://api.openai.com/v1"
+    assert "sk-test-not-leaked" not in str(response.json())
+    model = next(f for f in response.json()["denkynho"]["fields"] if f["key"] == "DENKYNHO_LLM_MODEL")
+    assert model["value"] == "gpt-4o-mini"
+
+
+@pytest.mark.django_db
 def test_storage_patch_toggles_s3_backend(api, superuser, hosts, settings):
     settings.USE_S3 = False
     api.force_authenticate(superuser)

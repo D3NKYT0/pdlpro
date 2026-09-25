@@ -219,6 +219,14 @@ describe('AdminIntegrationsPage', () => {
     resolveSave(statusFixture)
   })
 
+  it('abre Denkynho e mostra o campo do modelo de IA', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    await user.click(await screen.findByRole('tab', { name: /denkynho/i }))
+    expect(await screen.findByText(/modelo de geração/i)).toBeInTheDocument()
+    expect(screen.getByDisplayValue('qwen3.5:4b')).toBeInTheDocument()
+  })
+
   it('alterna para OAuth e dispara teste', async () => {
     const user = userEvent.setup()
     renderPage()

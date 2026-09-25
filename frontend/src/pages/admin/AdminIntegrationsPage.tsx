@@ -1,6 +1,7 @@
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
+import { Select } from '../../components/ui/Select'
 import { Tabs } from '../../components/ui/Tabs'
 import { Toggle } from '../../components/ui/Toggle'
 import {
@@ -561,28 +562,79 @@ export function AdminIntegrationsPage() {
           ) : null}
 
           {tab === 'denkynho' ? (
-            <SectionCard
-              icon={<BrainOrbIcon />}
-              tone="denkynho"
-              eyebrow={t('integrations.denkynho.eyebrow')}
-              title={t('integrations.denkynho.title')}
-              description={t('integrations.denkynho.hint')}
-            >
-              <div className="admin-integrations-stack">
-                {renderBool('DENKYNHO_LLM_ENABLED')}
-                <div className="account-form-fields">
-                  {renderText('DENKYNHO_LLM_PROVIDER')}
-                  {renderText('DENKYNHO_LLM_MODEL')}
+            <>
+              <SectionCard
+                icon={<BrainOrbIcon />}
+                tone="denkynho"
+                eyebrow={t('integrations.denkynho.eyebrow')}
+                title={t('integrations.denkynho.title')}
+                description={t('integrations.denkynho.hint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderBool('DENKYNHO_LLM_ENABLED')}
+                  <Field label={t('integrations.fields.DENKYNHO_LLM_PROVIDER')} hint={t('integrations.denkynho.providerHint')}>
+                    <Select
+                      aria-label={t('integrations.fields.DENKYNHO_LLM_PROVIDER')}
+                      value={String(draft.DENKYNHO_LLM_PROVIDER || 'ollama')}
+                      disabled={save.isPending}
+                      options={[
+                        { value: 'ollama', label: t('integrations.denkynho.providerOllama') },
+                        { value: 'remote', label: t('integrations.denkynho.providerRemote') },
+                      ]}
+                      onChange={(value) => setField('DENKYNHO_LLM_PROVIDER', value)}
+                    />
+                  </Field>
                   {renderText('DENKYNHO_LLM_TIMEOUT', 'number')}
                 </div>
-                {renderText('DENKYNHO_OLLAMA_URL')}
-                {renderBool('DENKYNHO_OLLAMA_DOCKER')}
-                {renderText('DENKYNHO_LLM_API_URL')}
-                {renderSecret('DENKYNHO_LLM_API_KEY')}
-                {renderBool('DENKYNHO_EMBEDDINGS_ENABLED')}
-                {renderText('DENKYNHO_EMBEDDING_MODEL')}
-              </div>
-            </SectionCard>
+              </SectionCard>
+              <SectionCard
+                icon={<BrainOrbIcon />}
+                tone="denkynho"
+                eyebrow={t('integrations.denkynho.modelEyebrow')}
+                title={t('integrations.denkynho.modelTitle')}
+                description={t('integrations.denkynho.modelHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('DENKYNHO_LLM_MODEL', 'text', t('integrations.denkynho.modelExamples'))}
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<ServerTowerIcon />}
+                tone="lineage"
+                eyebrow={t('integrations.denkynho.ollamaEyebrow')}
+                title={t('integrations.denkynho.ollamaTitle')}
+                description={t('integrations.denkynho.ollamaHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('DENKYNHO_OLLAMA_URL')}
+                  {renderBool('DENKYNHO_OLLAMA_DOCKER')}
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<KeyRingIcon />}
+                tone="google"
+                eyebrow={t('integrations.denkynho.remoteEyebrow')}
+                title={t('integrations.denkynho.remoteTitle')}
+                description={t('integrations.denkynho.remoteHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderText('DENKYNHO_LLM_API_URL', 'text', t('integrations.denkynho.apiUrlHint'))}
+                  {renderSecret('DENKYNHO_LLM_API_KEY')}
+                </div>
+              </SectionCard>
+              <SectionCard
+                icon={<RadarPulseIcon />}
+                tone="observability"
+                eyebrow={t('integrations.denkynho.embedEyebrow')}
+                title={t('integrations.denkynho.embedTitle')}
+                description={t('integrations.denkynho.embedHint')}
+              >
+                <div className="admin-integrations-stack">
+                  {renderBool('DENKYNHO_EMBEDDINGS_ENABLED')}
+                  {renderText('DENKYNHO_EMBEDDING_MODEL')}
+                </div>
+              </SectionCard>
+            </>
           ) : null}
 
           {tab === 'storage' ? (
