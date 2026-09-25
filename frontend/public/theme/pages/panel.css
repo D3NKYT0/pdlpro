@@ -17887,10 +17887,10 @@ html.pdl-panel .admin-integrations-section[data-tone='mercado'] {
 }
 
 html.pdl-panel .admin-integrations-section[data-tone='policy'] {
-  --admin-tone: #c5a161;
-  --admin-tone-soft: rgba(197, 161, 97, 0.14);
-  --admin-tone-mid: rgba(197, 161, 97, 0.08);
-  --admin-tone-border: rgba(197, 161, 97, 0.28);
+  --admin-tone: var(--panel-gold);
+  --admin-tone-soft: color-mix(in srgb, var(--panel-gold) 14%, transparent);
+  --admin-tone-mid: color-mix(in srgb, var(--panel-gold) 8%, transparent);
+  --admin-tone-border: color-mix(in srgb, var(--panel-gold) 28%, transparent);
 }
 
 html.pdl-panel .admin-integrations-section[data-tone='lineage'],

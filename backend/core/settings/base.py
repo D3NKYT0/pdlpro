@@ -1,8 +1,8 @@
 """Django settings base — PDL PRO."""
 
+import sys
 from datetime import timedelta
 from pathlib import Path
-import sys
 
 import environ
 
@@ -350,7 +350,7 @@ SENTRY_ENVIRONMENT = env("SENTRY_ENVIRONMENT", default="development")
 SENTRY_RELEASE = env("SENTRY_RELEASE", default="")
 SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0)
 
-from common.storage_config import apply_media_storage  # noqa: E402
+from common.storage_config import apply_media_storage
 
 apply_media_storage(sys.modules[__name__])
 

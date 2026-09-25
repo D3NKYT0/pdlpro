@@ -49,3 +49,13 @@ def test_apply_media_storage_mutates_module():
     module.AWS_S3_CUSTOM_DOMAIN = "cdn.test"
     apply_media_storage(module)
     assert module.MEDIA_URL == "https://cdn.test/media/"
+
+
+def test_media_storage_reads_location_from_settings(settings):
+    from common.storage_s3 import MediaStorage
+
+    settings.AWS_LOCATION = "uploads"
+    storage = MediaStorage()
+    assert storage.location == "uploads"
+    assert storage.default_acl is None
+    assert storage.file_overwrite is False

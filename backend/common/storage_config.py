@@ -86,6 +86,6 @@ def apply_media_storage(settings_module: Any) -> None:
     try:
         from django.core.files.storage import storages
 
-        storages._storages.clear()  # noqa: SLF001 — recria backends após hot-apply
+        storages._storages.clear()
     except Exception:  # noqa: BLE001, S110
         pass
