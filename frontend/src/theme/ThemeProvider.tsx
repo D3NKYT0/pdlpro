@@ -2,6 +2,7 @@ import { createContext, Fragment, useContext, useEffect, useState, type ReactNod
 import { themeApi, type ApiTheme } from '../services/api'
 import { applyClassicLayoutArt, applyThemeSurfaceVars, configureRuntimeTheme } from './assets'
 import { persistAppliedLoaderChrome } from './loaderChrome'
+import { applyThemeChromeColors, applyThemeHeadIcons } from './themeHead'
 import { applyThemeLocales } from './themeLocales'
 import { resolveTemplateId } from './templates/resolve'
 
@@ -14,32 +15,6 @@ const DEFAULT_THEME: ApiTheme = {
 
 const ThemeContext = createContext<ApiTheme>(DEFAULT_THEME)
 let activeThemeLink: HTMLLinkElement | null = null
-
-function setFavicon(theme: ApiTheme) {
-  const href = theme.assets['images/favicon.png']
-  let favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
-
-  if (!href) {
-    if (favicon?.dataset.pdlThemeCreated === 'true') {
-      favicon.remove()
-    } else if (favicon?.dataset.pdlOriginalHref !== undefined) {
-      const originalHref = favicon.dataset.pdlOriginalHref
-      if (originalHref) favicon.setAttribute('href', originalHref)
-      else favicon.removeAttribute('href')
-      delete favicon.dataset.pdlOriginalHref
-    }
-    return
-  }
-  if (!favicon) {
-    favicon = document.createElement('link')
-    favicon.rel = 'icon'
-    favicon.dataset.pdlThemeCreated = 'true'
-    document.head.appendChild(favicon)
-  } else if (favicon.dataset.pdlOriginalHref === undefined) {
-    favicon.dataset.pdlOriginalHref = favicon.getAttribute('href') ?? ''
-  }
-  favicon.href = href
-}
 
 const INSTALLED_STYLE_REV = 'bg16'
 
@@ -82,7 +57,8 @@ async function applyTheme(theme: ApiTheme) {
     document.head.appendChild(link)
     await loaded
   }
-  setFavicon(theme)
+  applyThemeHeadIcons(theme)
+  applyThemeChromeColors(theme)
   persistAppliedLoaderChrome(theme.id)
   await applyThemeLocales(theme)
 }

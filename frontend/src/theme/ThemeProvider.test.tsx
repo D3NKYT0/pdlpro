@@ -28,7 +28,8 @@ afterEach(() => {
   localStorage.clear()
   document.getElementById('app-bootstrap-loader')?.remove()
   document.querySelectorAll('link[data-pdl-installed-theme]').forEach((link) => link.remove())
-  document.querySelectorAll('link[rel="icon"]').forEach((link) => link.remove())
+  document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"], link[rel="mask-icon"]').forEach((link) => link.remove())
+  document.head.querySelectorAll('meta[name="theme-color"], meta[name="msapplication-TileColor"]').forEach((node) => node.remove())
   document.documentElement.removeAttribute('data-pdl-theme')
   document.documentElement.removeAttribute('data-pdl-renderer')
   document.documentElement.removeAttribute('data-pdl-template')
@@ -169,10 +170,15 @@ it('injeta knobs de layout como CSS variables', async () => {
 })
 
 it('restaura o favicon original ao voltar para o tema default', async () => {
-  const favicon = document.createElement('link')
-  favicon.rel = 'icon'
-  favicon.href = '/favicon-original.png'
-  document.head.appendChild(favicon)
+  document.head.insertAdjacentHTML(
+    'beforeend',
+    `
+    <link rel="icon" href="/favicon-original.png" />
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0a08" />
+    `,
+  )
+  document.documentElement.style.setProperty('--theme-accent', '#3dd6c6')
   const themed = {
     ...valorem,
     assets: { ...valorem.assets, 'images/favicon.png': '/media/themes/valorem/images/favicon.png' },
@@ -189,11 +195,24 @@ it('restaura o favicon original ao voltar para o tema default', async () => {
   await waitFor(() => expect(document.querySelector('link[data-pdl-installed-theme="valorem"]')).not.toBeNull())
   fireEvent.load(document.querySelector('link[data-pdl-installed-theme="valorem"]')!)
   await screen.findByText(/Valorem/)
-  expect(favicon.getAttribute('href')).toBe('/media/themes/valorem/images/favicon.png')
+  expect(document.querySelector('link[rel="icon"]')).toHaveAttribute(
+    'href',
+    '/media/themes/valorem/images/favicon.png',
+  )
+  expect(document.querySelector('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href',
+    '/media/themes/valorem/images/favicon.png',
+  )
+  expect(document.querySelector('meta[name="theme-color"]')).toHaveAttribute('content', '#3dd6c6')
 
   fireEvent(window, new Event('pdl-theme-refresh'))
   await screen.findByText(/PDL Classic/)
-  expect(favicon.getAttribute('href')).toBe('/favicon-original.png')
+  expect(document.querySelector('link[rel="icon"]')).toHaveAttribute('href', '/favicon-original.png')
+  expect(document.querySelector('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href',
+    '/favicon/apple-touch-icon.png',
+  )
+  expect(document.querySelector('meta[name="theme-color"]')).toHaveAttribute('content', '#0b0a08')
   expect(document.querySelector('link[data-pdl-installed-theme]')).toBeNull()
   expect(document.documentElement).not.toHaveAttribute('data-pdl-renderer')
 })

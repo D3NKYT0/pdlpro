@@ -8,6 +8,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Alterado
+
+- O head do SPA aplica o overlay completo do tema ativo em runtime: title/OG/Twitter,
+  apple-mobile, todos os favicons/`apple-touch`/`mask-icon` e `theme-color` a partir
+  de `metadados.json` + assets (o `index.html` continua só o shell de boot).
+
 ## [2.5.11] - 2026-09-25
 
 Soft-rotate de segredos e fallback de Ajuda para Atendimento, consolidados em

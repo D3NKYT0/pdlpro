@@ -125,6 +125,15 @@ slogan) de **Painel → Administração → Painel e servidor** alimentam també
 header, o rodapé, o aria da marca e o copyright da área pública; tema e `.env`
 só entram quando o admin deixa o campo vazio.
 
+O `frontend/index.html` permanece o **shell estático de boot** (título, description,
+Open Graph e favicons do Classic). Depois do carregamento, a SPA aplica o overlay
+vivo: `SiteMetadataSync` atualiza title/description/OG/Twitter/apple-mobile a partir
+do merge admin+tema; o `ThemeProvider` troca todos os `link[rel=icon]`,
+`apple-touch-icon` e `mask-icon` pelo `images/favicon.png` (ou `seo.ogImage`) do
+pacote e espelha `--theme-accent` em `theme-color` / `msapplication-TileColor`.
+“Ver código-fonte” continua mostrando o shell; o Inspecionar após o load mostra a
+identidade do tema. Crawlers que não executam JavaScript veem só o shell.
+
 ```json
 {
   "schemaVersion": 1,
