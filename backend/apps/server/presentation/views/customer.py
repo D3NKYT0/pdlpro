@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,6 +8,8 @@ from apps.server.application.account_use_cases import (
     AccountActor,
     ConfirmLinkByEmailInput,
     ConfirmLinkByEmailUseCase,
+    CreateCharacterInput,
+    CreateCharacterUseCase,
     GetCharacterInput,
     GetCharacterUseCase,
     GetLinkSlotsUseCase,
@@ -49,6 +52,7 @@ from apps.server.presentation.serializers import (
     ChangeNicknameSerializer,
     ChangeSexSerializer,
     ClearStatusSerializer,
+    CreateCharacterSerializer,
     GameAccountSerializer,
     GameCharacterSerializer,
     LinkGameAccountSerializer,
@@ -234,6 +238,42 @@ class CharactersView(InjectedAPIView):
             ListCharactersInput(actor=actor_from(request), login=login)
         )
         return Response(GameCharacterSerializer(chars, many=True).data)
+
+
+class CreateCharacterView(InjectedAPIView):
+    """Entrada HTTP para ``CreateCharacterUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Criar personagem"),
+        description=gettext_lazy("Cria um novo personagem na conta Lineage acessível ao usuário autenticado."),
+        request=CreateCharacterSerializer,
+        responses={201: GameCharacterSerializer},
+    )
+    def post(self, request):
+        serializer = CreateCharacterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        char = self.resolve(CreateCharacterUseCase).execute(
+            CreateCharacterInput(
+                actor=actor_from(request),
+                login=data["login"],
+                name=data["name"],
+                race=data["race"],
+                class_id=data["class_id"],
+                sex=data["sex"],
+                hair_style=data.get("hair_style", 0),
+                hair_color=data.get("hair_color", 0),
+                face=data.get("face", 0),
+            )
+        )
+        return Response(GameCharacterSerializer(char).data, status=status.HTTP_201_CREATED)
 
 
 class CharacterDetailView(InjectedAPIView):

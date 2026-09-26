@@ -284,6 +284,19 @@ class ILineageGateway(ABC):
     def get_character(self, login: str, char_id: int) -> GameCharacter | None: ...
 
     @abstractmethod
+    def create_character(
+        self,
+        login: str,
+        name: str,
+        race: int,
+        class_id: int,
+        sex: int,
+        hair_style: int = 0,
+        hair_color: int = 0,
+        face: int = 0,
+    ) -> GameCharacter: ...
+
+    @abstractmethod
     def list_character_items(self, char_id: int) -> list[GameItem]: ...
 
     @abstractmethod

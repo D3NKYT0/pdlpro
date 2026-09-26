@@ -2,6 +2,7 @@ from django.conf import settings
 
 from apps.server.application.account_use_cases import (
     ConfirmLinkByEmailUseCase,
+    CreateCharacterUseCase,
     ForceUnlinkGameAccountUseCase,
     GetCharacterUseCase,
     GetLinkSlotsUseCase,
@@ -159,6 +160,7 @@ class ServerProvider(AppProvider):
             UnlinkGameAccountUseCase,
             ListCharactersUseCase,
             GetCharacterUseCase,
+            CreateCharacterUseCase,
             ListCharacterSkillsUseCase,
             UpdateGamePasswordUseCase,
             ChangeNicknameUseCase,
@@ -194,3 +196,4 @@ class ServerProvider(AppProvider):
             ApplyModerationActionUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)
+        # Reload catalog on character creation updates

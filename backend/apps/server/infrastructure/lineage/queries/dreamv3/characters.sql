@@ -140,3 +140,22 @@ UPDATE characters
 SET pkkills = 0
 WHERE obj_Id = :cid AND account_name = :login
 LIMIT 1
+
+-- name: max_character_id
+SELECT COALESCE(MAX(obj_Id), 268435456) AS max_id
+FROM characters
+
+-- name: insert_character
+INSERT INTO characters (
+    obj_Id, account_name, char_name, face, hairStyle, hairColor, sex, x, y, z, createtime
+) VALUES (
+    :char_id, :login, :name, :face, :hair_style, :hair_color, :sex, :x, :y, :z, UNIX_TIMESTAMP()
+)
+
+-- name: insert_character_subclass
+INSERT INTO character_subclasses (
+    char_obj_id, class_id, level, exp, sp, curHp, curMp, curCp, maxHp, maxMp, maxCp, active, isBase, death_penalty
+) VALUES (
+    :char_id, :class_id, :level, 0, 0, 100, 100, 100, 100, 100, 100, 1, 1, 0
+)
+

@@ -374,6 +374,57 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         rows = self._fetch("get_character", {"login": login, "char_id": char_id})
         return self._character(rows[0]) if rows else None
 
+    def create_character(
+        self,
+        login: str,
+        name: str,
+        race: int,
+        class_id: int,
+        sex: int,
+        hair_style: int = 0,
+        hair_color: int = 0,
+        face: int = 0,
+    ) -> GameCharacter:
+        if self.nickname_exists(name):
+            raise NicknameTakenError()
+        res = self._fetch("max_character_id", {}) if self._sql.has("max_character_id") else []
+        max_id = int(res[0]["max_id"]) if res and res[0].get("max_id") else 268435456
+        new_id = max_id + 1
+        x, y, z = UNSTUCK
+        params = {
+            "char_id": new_id,
+            "login": login,
+            "name": name,
+            "level": 1,
+            "sex": sex,
+            "race": race,
+            "class_id": class_id,
+            "hair_style": hair_style,
+            "hair_color": hair_color,
+            "face": face,
+            "x": x,
+            "y": y,
+            "z": z,
+        }
+        if self._sql.has("insert_character"):
+            self._execute("insert_character", params)
+        if self._sql.has("insert_character_subclass"):
+            self._execute("insert_character_subclass", {"char_id": new_id, "class_id": class_id, "level": 1})
+        char = self.get_character(login, new_id)
+        if char:
+            return char
+        return GameCharacter(
+            char_id=new_id,
+            name=name,
+            level=1,
+            online=False,
+            sex=sex,
+            class_id=class_id,
+            hair_style=hair_style,
+            hair_color=hair_color,
+            face=face,
+        )
+
     def _game_item(self, row, slot: int | None = None) -> GameItem:
         item_id = int(row["item_id"])
         location = row.get("location")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import socket
+import time
 from dataclasses import replace
 
 from django.conf import settings
@@ -164,6 +165,52 @@ class NullLineageGateway(ILineageGateway):
             if char.char_id == char_id:
                 return char
         return None
+
+    def create_character(
+        self,
+        login: str,
+        name: str,
+        race: int,
+        class_id: int,
+        sex: int,
+        hair_style: int = 0,
+        hair_color: int = 0,
+        face: int = 0,
+    ) -> GameCharacter:
+        key = login.lower()
+        if self.nickname_exists(name):
+            from apps.server.domain.exceptions import NicknameTakenError
+
+            raise NicknameTakenError()
+        all_chars = [c for char_list in self._characters.values() for c in char_list]
+        max_id = max([c.char_id for c in all_chars] or [268435456])
+        new_char = GameCharacter(
+            char_id=max_id + 1,
+            name=name,
+            level=1,
+            online=False,
+            sex=sex,
+            pvp=0,
+            pk=0,
+            class_id=class_id,
+            title="",
+            clan_name="",
+            is_clan_leader=False,
+            karma=0,
+            adena=0,
+            online_time=0,
+            last_access=int(time.time()),
+            clan_id=0,
+            ally_id=0,
+            ally_name="",
+            clan_crest_base64="",
+            ally_crest_base64="",
+            hair_style=hair_style,
+            hair_color=hair_color,
+            face=face,
+        )
+        self._characters.setdefault(key, []).append(new_char)
+        return new_char
 
     def list_character_items(self, char_id: int) -> list[GameItem]:
         return [item for item in self._items.get(char_id, []) if item.slot is None]

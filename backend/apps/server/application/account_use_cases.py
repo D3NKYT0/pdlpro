@@ -439,6 +439,87 @@ class GetCharacterUseCase(UseCase[GetCharacterInput, GameCharacter]):
         return char
 
 
+@dataclass(frozen=True, slots=True)
+class CreateCharacterInput:
+    """Dados de entrada de ``CreateCharacterUseCase.execute``."""
+
+    actor: AccountActor
+    login: str
+    name: str
+    race: int
+    class_id: int
+    sex: int
+    hair_style: int = 0
+    hair_color: int = 0
+    face: int = 0
+
+
+class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
+    """Cria um novo personagem na conta Lineage autorizada.
+
+    Valida propriedade da conta, nickname, limites de personagens, raça, classe inicial
+    e características visuais.
+    """
+
+    def __init__(self, lineage: ILineageGateway, access: IAccountAccessService) -> None:
+        self._lineage = lineage
+        self._access = access
+
+    def execute(self, data: CreateCharacterInput) -> GameCharacter:
+        login = (data.login or data.actor.username).strip().lower()
+        if self._lineage.get_account(login) is None:
+            raise GameAccountNotFoundError()
+        if not self._access.can_access(data.actor.user_id, data.actor.username, login):
+            raise AuthorizationError(_("Você não tem acesso a esta conta Lineage."))
+
+        cleaned_name = data.name.strip()
+        if not cleaned_name.isalnum() or not (2 <= len(cleaned_name) <= 16):
+            raise ValidationDomainError(_("Nick inválido. Use 2 a 16 letras ou números."))
+        if self._lineage.nickname_exists(cleaned_name):
+            raise ValidationDomainError(_("Este nick já está em uso."))
+
+        chars = self._lineage.list_characters(login)
+        from django.conf import settings
+
+        max_chars = getattr(settings, "MAX_CHARACTERS_PER_ACCOUNT", 7)
+        if len(chars) >= max_chars:
+            raise ValidationDomainError(_("Limite de personagens atingido nesta conta."))
+
+        if data.sex not in (0, 1):
+            raise ValidationDomainError(_("Gênero inválido."))
+
+        allowed_classes = {
+            0: (0, 10),   # Human: Human Fighter, Human Mage
+            1: (18, 25),  # Elf: Elven Fighter, Elven Mage
+            2: (31, 38),  # Dark Elf: Dark Elven Fighter, Dark Elven Mage
+            3: (44, 49),  # Orc: Orc Fighter, Orc Mage
+            4: (53,),     # Dwarf: Dwarven Fighter
+        }
+        if data.race not in allowed_classes:
+            raise ValidationDomainError(_("Raça inválida."))
+        if data.class_id not in allowed_classes[data.race]:
+            raise ValidationDomainError(_("Classe inicial incompatível com a raça selecionada."))
+
+        max_hair = 6 if data.sex == 1 else 4
+        if not 0 <= data.hair_style <= max_hair:
+            raise ValidationDomainError(_("Estilo de cabelo inválido."))
+        if not 0 <= data.hair_color <= 3:
+            raise ValidationDomainError(_("Cor de cabelo inválida."))
+        if not 0 <= data.face <= 2:
+            raise ValidationDomainError(_("Rosto inválido."))
+
+        return self._lineage.create_character(
+            login=login,
+            name=cleaned_name,
+            race=data.race,
+            class_id=data.class_id,
+            sex=data.sex,
+            hair_style=data.hair_style,
+            hair_color=data.hair_color,
+            face=data.face,
+        )
+
+
 class ListCharacterSkillsUseCase(UseCase[GetCharacterInput, list[GameSkill]]):
     """Lista as skills do personagem após confirmar acesso à conta e propriedade.
 

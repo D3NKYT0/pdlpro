@@ -142,6 +142,28 @@ class GameCharacterSerializer(serializers.Serializer):
     face = serializers.IntegerField()
 
 
+class CreateCharacterSerializer(serializers.Serializer):
+    """Valida os parâmetros para criação de um novo personagem no jogo.
+
+    Campos declarados: login, name, race, class_id, sex, hair_style, hair_color, face.
+    """
+
+    login = serializers.CharField(max_length=45)
+    name = serializers.CharField(min_length=2, max_length=16)
+    race = serializers.IntegerField(min_value=0, max_value=4)
+    class_id = serializers.IntegerField(min_value=0)
+    sex = serializers.IntegerField(min_value=0, max_value=1)
+    hair_style = serializers.IntegerField(required=False, default=0, min_value=0)
+    hair_color = serializers.IntegerField(required=False, default=0, min_value=0)
+    face = serializers.IntegerField(required=False, default=0, min_value=0)
+
+    def validate_name(self, value: str) -> str:
+        name = (value or "").strip()
+        if not name.isalnum() or not (2 <= len(name) <= 16):
+            raise serializers.ValidationError(_("Nick inválido. Use 2 a 16 letras ou números."))
+        return name
+
+
 class RegisterGameAccountSerializer(serializers.Serializer):
     """Valida senha e eventual login alternativo para registrar a conta principal no jogo.
 

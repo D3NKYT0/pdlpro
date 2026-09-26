@@ -13,6 +13,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { BuySlotsModal } from '../components/character/BuySlotsModal'
+import { CreateCharacterModal } from '../components/character/CreateCharacterModal'
 import { GamepadIcon } from '../components/icons'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi, serviceAvailable, walletApi } from '../services/api'
@@ -40,6 +41,8 @@ export function AccountsPage() {
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
   const [buySlotsOpen, setBuySlotsOpen] = useState(false)
   const [buyingSlots, setBuyingSlots] = useState(false)
+  const [createCharacterOpen, setCreateCharacterOpen] = useState(false)
+  const [creatingCharacter, setCreatingCharacter] = useState(false)
 
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
@@ -76,6 +79,34 @@ export function AccountsPage() {
       toast.error(apiErrorMessage(err, t('common.error', { defaultValue: 'Falha ao processar compra' })))
     } finally {
       setBuyingSlots(false)
+    }
+  }
+
+  async function handleCreateCharacter(payload: {
+    login: string
+    name: string
+    race: number
+    class_id: number
+    sex: number
+    hair_style: number
+    hair_color: number
+    face: number
+  }) {
+    setCreatingCharacter(true)
+    try {
+      await lineageApi.createCharacter(payload)
+      toast.success(
+        t('accounts.characterCreated', {
+          name: payload.name,
+          defaultValue: `Personagem ${payload.name} criado com sucesso!`,
+        }),
+      )
+      setCreateCharacterOpen(false)
+      await queryClient.invalidateQueries({ queryKey: ['characters', payload.login] })
+    } catch (err) {
+      toast.error(apiErrorMessage(err, t('accounts.createCharError', { defaultValue: 'Falha ao criar personagem' })))
+    } finally {
+      setCreatingCharacter(false)
     }
   }
 
@@ -491,11 +522,26 @@ export function AccountsPage() {
               <span className="panel-eyebrow">{t('accounts.gameWorld')}</span>
               <h2>{t('accounts.characters')}</h2>
             </div>
-            {selectedLogin ? (
-              <span className="account-login-chip">
-                {t('accounts.activeLabel', { defaultValue: 'Conta ativa' })}: <strong>{selectedLogin}</strong>
-              </span>
-            ) : null}
+            <div className="account-characters-header-actions">
+              {selectedLogin ? (
+                <span className="account-login-chip">
+                  {t('accounts.activeLabel', { defaultValue: 'Conta ativa' })}: <strong>{selectedLogin}</strong>
+                </span>
+              ) : null}
+              {selectedLogin ? (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  type="button"
+                  className="account-create-character-btn"
+                  onClick={() => setCreateCharacterOpen(true)}
+                  aria-label={t('accounts.createCharacterBtn', { defaultValue: 'Criar personagem' })}
+                >
+                  <Plus aria-hidden="true" />
+                  <span>{t('accounts.createCharacterBtn', { defaultValue: 'Criar personagem' })}</span>
+                </Button>
+              ) : null}
+            </div>
           </div>
           {characters.isLoading ? <div className="account-empty-state">{t('accounts.loadingCharacters')}</div> : null}
           {characters.isError ? (
@@ -564,6 +610,16 @@ export function AccountsPage() {
               <UsersRound aria-hidden="true" />
               <strong>{t('accounts.noCharactersTitle')}</strong>
               <p className="muted">{t('accounts.noCharactersText', { login: selectedLogin })}</p>
+              <Button
+                variant="primary"
+                size="sm"
+                type="button"
+                className="account-create-character-empty-btn"
+                onClick={() => setCreateCharacterOpen(true)}
+              >
+                <Plus aria-hidden="true" />
+                <span>{t('accounts.createCharacterBtn', { defaultValue: 'Criar personagem' })}</span>
+              </Button>
             </div>
           ) : null}
           {!selectedLogin ? (
@@ -588,6 +644,14 @@ export function AccountsPage() {
         isAvailable={isSlotServiceAvailable}
         onClose={() => setBuySlotsOpen(false)}
         onConfirm={handlePurchaseSlots}
+      />
+
+      <CreateCharacterModal
+        open={createCharacterOpen}
+        accountLogin={selectedLogin ?? ''}
+        pending={creatingCharacter}
+        onClose={() => setCreateCharacterOpen(false)}
+        onConfirm={handleCreateCharacter}
       />
     </div>
   )

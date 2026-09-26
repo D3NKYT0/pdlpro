@@ -21,6 +21,7 @@ vi.mock('../services/domain/lineage.service', () => ({
     confirmLinkByEmail: vi.fn(),
     servicePrices: vi.fn(),
     purchaseSlots: vi.fn(),
+    createCharacter: vi.fn(),
   },
   serviceAvailable: vi.fn(() => true),
 }))
@@ -193,5 +194,50 @@ it('abre modal de compra de slots ao clicar no botão de expandir e conclui comp
   await user.click(screen.getByRole('button', { name: /Comprar 1 slot\(s\) por 10\.00 moedas/i }))
 
   expect(lineageApi.purchaseSlots).toHaveBeenCalledWith(1)
+})
+
+it('abre modal de criação de personagem e chama lineageApi.createCharacter', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue([
+    { char_id: 1, name: 'Sic', level: 35, class_id: 10, sex: 1, online: false },
+  ] as Awaited<ReturnType<typeof lineageApi.characters>>)
+  vi.mocked(lineageApi.createCharacter).mockResolvedValue({
+    char_id: 2,
+    name: 'Gimli',
+    class_id: 53,
+    level: 1,
+  } as any)
+
+  const user = mount()
+
+  const createBtn = await screen.findByRole('button', { name: /^Criar personagem/i })
+  expect(createBtn).toBeVisible()
+
+  await user.click(createBtn)
+
+  expect(screen.getByText('Criar Novo Personagem')).toBeVisible()
+  const nameInput = screen.getByLabelText(/1\. Nick do Personagem/i)
+  await user.type(nameInput, 'Gimli')
+
+  await user.click(screen.getByRole('radio', { name: 'Anão' }))
+
+  await user.click(screen.getByRole('button', { name: 'Criar Personagem' }))
+
+  await waitFor(() => {
+    expect(lineageApi.createCharacter).toHaveBeenCalledWith({
+      login: 'denky',
+      name: 'Gimli',
+      race: 4,
+      class_id: 53,
+      sex: 0,
+      hair_style: 0,
+      hair_color: 0,
+      face: 0,
+    })
+  })
 })
 

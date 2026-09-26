@@ -219,6 +219,20 @@ export const lineageApi = {
     request<ApiGameSkill[]>(
       `/customer/server/characters/${charId}/skills/${login ? `?login=${encodeURIComponent(login)}` : ''}`,
     ),
+  createCharacter: (payload: {
+    login: string
+    name: string
+    race: number
+    class_id: number
+    sex: number
+    hair_style?: number
+    hair_color?: number
+    face?: number
+  }) =>
+    request<ApiGameCharacter>('/customer/server/characters/create/', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
 }
 
 export const inventoryApi = {
