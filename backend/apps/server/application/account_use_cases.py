@@ -140,53 +140,82 @@ class RegisterGameAccountUseCase(UseCase[RegisterGameAccountInput, GameAccount])
         unit_of_work: UnitOfWork,
         managed_accounts: IManagedLineageAccountRepository,
         index_config: IIndexConfigRepository,
+        access: IAccountAccessService,
+        hooks: IHookBus,
     ) -> None:
         self._lineage = lineage
         self._unit_of_work = unit_of_work
         self._managed = managed_accounts
         self._index_config = index_config
+        self._access = access
+        self._hooks = hooks
 
     def execute(self, data: RegisterGameAccountInput) -> GameAccount:
         from apps.server.application.access import assert_l2_registration_allowed
 
         assert_l2_registration_allowed(data.actor, self._index_config)
-        if self._managed.has_primary(data.actor.user_id):
-            raise ValidationDomainError("Você já possui uma conta principal.")
-        preferred = data.actor.username
+        has_primary = self._managed.has_primary(data.actor.user_id)
+        if has_primary and not self._access.can_link_more(data.actor.user_id, data.actor.username):
+            raise LinkSlotLimitError()
+
         custom = (data.login or "").strip()
-        if custom.lower() == preferred.lower():
-            custom = ""
-        preferred_account = self._lineage.get_account(preferred)
-        preferred_taken = bool(
-            preferred_account
-            and preferred_account.linked_user_id
-            and not same_linked_user(preferred_account.linked_user_id, data.actor.user_id)
-        )
-        if preferred_taken:
-            if not custom:
+        preferred = data.actor.username
+        login = custom or preferred
+
+        existing_account = self._lineage.get_account(login)
+        if existing_account is not None:
+            if existing_account.linked_user_id and not same_linked_user(existing_account.linked_user_id, data.actor.user_id):
                 raise AccountAlreadyLinkedError(
-                    f"O login {preferred} já está vinculado a outro painel. "
+                    f"O login {login} já está vinculado a outro painel. "
                     "Crie a conta com outro login ou vincule uma conta existente."
                 )
-            if self._lineage.get_account(custom) is not None:
-                raise GameAccountAlreadyExistsError()
-            login = custom
-            account = self._lineage.register_account(login, data.password, data.actor.email)
-        else:
-            login = preferred
-            if preferred_account is None:
-                account = self._lineage.register_account(login, data.password, data.actor.email)
-            elif same_linked_user(preferred_account.linked_user_id, data.actor.user_id):
-                account = preferred_account
-            else:
+            if not existing_account.linked_user_id:
                 if not self._lineage.validate_credentials(login, data.password):
                     raise ValidationDomainError("Login ou senha da conta Lineage inválidos.")
-                account = preferred_account
+                account = existing_account
+            else:
+                account = existing_account
+        else:
+            account = self._lineage.register_account(login, data.password, data.actor.email)
+
         with self._unit_of_work:
             if not same_linked_user(account.linked_user_id, data.actor.user_id):
                 account = self._lineage.link_account(login, str(data.actor.user_id))
-            self._managed.remember(data.actor.user_id, login, primary=True)
+            self._managed.remember(data.actor.user_id, login, primary=not has_primary)
+        self._hooks.publish(
+            HookNames.ACCOUNT_LINKED,
+            {"user_id": str(data.actor.user_id), "login": login},
+        )
         return account
+
+
+@dataclass(frozen=True, slots=True)
+class SetActiveAccountInput:
+    """Dados de entrada de ``SetActiveAccountUseCase.execute``."""
+
+    actor: AccountActor
+    login: str
+
+
+class SetActiveAccountUseCase(UseCase[SetActiveAccountInput, None]):
+    """Define a conta de jogo informada como a conta ativa (principal) do usuário."""
+
+    def __init__(
+        self,
+        access: IAccountAccessService,
+        managed_accounts: IManagedLineageAccountRepository,
+        unit_of_work: UnitOfWork,
+    ) -> None:
+        self._access = access
+        self._managed = managed_accounts
+        self._unit_of_work = unit_of_work
+
+    def execute(self, data: SetActiveAccountInput) -> None:
+        login = data.login.strip()
+        if not self._access.can_access(data.actor.user_id, data.actor.username, login):
+            raise GameAccountNotFoundError("Conta de jogo não encontrada ou não vinculada ao seu usuário.")
+        with self._unit_of_work:
+            self._managed.remember(data.actor.user_id, login, primary=True)
 
 
 @dataclass(frozen=True, slots=True)

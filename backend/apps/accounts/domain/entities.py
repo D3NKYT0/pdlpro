@@ -21,6 +21,8 @@ class UserEntity:
     is_email_verified: bool
     fichas: int
     avatar_url: str | None
+    first_name: str = ""
+    last_name: str = ""
     is_2fa_enabled: bool = False
     is_staff: bool = False
     is_superuser: bool = False

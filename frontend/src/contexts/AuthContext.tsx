@@ -18,7 +18,15 @@ interface AuthContextValue {
   loading: boolean
   login: (login: string, password: string, hcaptchaToken?: string) => Promise<ApiUser | TwoFactorChallenge>
   verifyTwoFactor: (challenge: string, code: string) => Promise<void>
-  register: (payload: { username: string; email: string; password: string; accept_terms: boolean; hcaptcha_token?: string }) => Promise<void>
+  register: (payload: {
+    email: string
+    password: string
+    first_name?: string
+    last_name?: string
+    username?: string
+    accept_terms: boolean
+    hcaptcha_token?: string
+  }) => Promise<void>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
 }

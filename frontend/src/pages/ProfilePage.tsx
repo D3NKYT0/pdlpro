@@ -28,6 +28,8 @@ export function ProfilePage() {
   const { t } = useTranslation('panel')
   const { user, refreshUser } = useAuth()
   const progress = useQuery({ queryKey: ['progress'], queryFn: authApi.progress })
+  const [firstName, setFirstName] = useState(user?.first_name ?? '')
+  const [lastName, setLastName] = useState(user?.last_name ?? '')
   const [displayName, setDisplayName] = useState(user?.display_name ?? '')
   const [bio, setBio] = useState(user?.bio ?? '')
   const [avatar, setAvatar] = useState<File | null>(null)
@@ -35,9 +37,11 @@ export function ProfilePage() {
   const fileInput = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    setFirstName(user?.first_name ?? '')
+    setLastName(user?.last_name ?? '')
     setDisplayName(user?.display_name ?? '')
     setBio(user?.bio ?? '')
-  }, [user?.display_name, user?.bio])
+  }, [user?.first_name, user?.last_name, user?.display_name, user?.bio])
 
   const avatarPreview = useMemo(() => (avatar ? URL.createObjectURL(avatar) : user?.avatar_url), [avatar, user?.avatar_url])
 
@@ -47,7 +51,7 @@ export function ProfilePage() {
     }
   }, [avatarPreview])
 
-  const completedFields = [Boolean(user?.avatar_url || avatar), Boolean(displayName.trim()), Boolean(bio.trim())].filter(Boolean).length
+  const completedFields = [Boolean(user?.avatar_url || avatar), Boolean((firstName || displayName).trim()), Boolean(bio.trim())].filter(Boolean).length
   const completeness = Math.round((completedFields / 3) * 100)
   const unlockedCount = progress.data?.unlocked_count ?? progress.data?.achievements?.filter((row) => row.unlocked).length ?? 0
   const totalAchievements = progress.data?.total_achievements ?? progress.data?.achievements?.length ?? 0
@@ -75,6 +79,8 @@ export function ProfilePage() {
     setSaving(true)
     try {
       const data = new FormData()
+      data.append('first_name', firstName.trim())
+      data.append('last_name', lastName.trim())
       data.append('display_name', displayName.trim())
       data.append('bio', bio.trim())
       if (avatar) data.append('avatar', avatar)
@@ -119,6 +125,26 @@ export function ProfilePage() {
             </div>
             <form onSubmit={saveProfile}>
               <input ref={fileInput} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={chooseAvatar} />
+              <div className="grid cols-2" style={{ gap: '1rem' }}>
+                <Field>
+                  {t('profile.firstName', { defaultValue: 'Nome' })}
+                  <input
+                    value={firstName}
+                    maxLength={60}
+                    onChange={(event) => setFirstName(event.target.value)}
+                    placeholder={t('profile.firstName', { defaultValue: 'Nome' })}
+                  />
+                </Field>
+                <Field>
+                  {t('profile.lastName', { defaultValue: 'Sobrenome' })}
+                  <input
+                    value={lastName}
+                    maxLength={60}
+                    onChange={(event) => setLastName(event.target.value)}
+                    placeholder={t('profile.lastName', { defaultValue: 'Sobrenome' })}
+                  />
+                </Field>
+              </div>
               <Field>
                 {t('profile.displayName')}
                 <input value={displayName} maxLength={80} onChange={(event) => setDisplayName(event.target.value)} placeholder={user?.username} />
@@ -155,7 +181,7 @@ export function ProfilePage() {
               <div><span className="panel-eyebrow">{t('profile.accountData')}</span><h2>{t('profile.identification')}</h2></div>
             </div>
             <dl>
-              <div><dt>{t('profile.username')}</dt><dd>{user?.username}</dd></div>
+              <div><dt>{t('profile.fullName', { defaultValue: 'Nome completo' })}</dt><dd>{(user?.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : user?.display_name) || '-'}</dd></div>
               <div><dt>{t('profile.email')}</dt><dd>{user?.email}</dd></div>
               <div><dt>{t('profile.role')}</dt><dd>{user?.role === 'player' ? t('profile.rolePlayer') : user?.role}</dd></div>
               <div><dt>{t('profile.security')}</dt><dd>{user?.is_2fa_enabled ? t('profile.twoFactorOn') : t('profile.twoFactorOff')}</dd></div>

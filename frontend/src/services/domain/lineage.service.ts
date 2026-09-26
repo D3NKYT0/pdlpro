@@ -139,6 +139,11 @@ export const lineageApi = {
       method: 'POST',
       body: JSON.stringify({ password, ...(login ? { login } : {}) }),
     }),
+  setActiveAccount: (login: string) =>
+    request<{ ok: boolean; active_login: string }>('/customer/server/accounts/active/', {
+      method: 'POST',
+      body: JSON.stringify({ login }),
+    }),
   link: (login: string, password: string) =>
     request<ApiGameAccount>('/customer/server/accounts/link/', {
       method: 'POST',

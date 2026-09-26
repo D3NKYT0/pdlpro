@@ -24,12 +24,20 @@ class UserManager(BaseUserManager["User"]):
     e-mail.
     """
 
-    def create_user(self, username, email, password=None, **extra_fields):
-        if not username:
-            raise ValueError("Username é obrigatório")
+    def create_user(self, username=None, email=None, password=None, **extra_fields):
         if not email:
             raise ValueError("Email é obrigatório")
         email = self.normalize_email(email)
+        if not username:
+            import re
+            base = email.split("@")[0].lower()
+            clean = re.sub(r"[^a-zA-Z0-9_]", "", base)[:10] or "user"
+            candidate = clean
+            suffix = 1
+            while self.model.objects.filter(username__iexact=candidate).exists():
+                candidate = f"{clean[:8]}{suffix}"
+                suffix += 1
+            username = candidate
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -70,6 +78,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators=[validate_ascii_username],
     )
     email = models.EmailField(unique=True, db_index=True)
+    first_name = models.CharField(_("Nome"), max_length=60, blank=True, default="")
+    last_name = models.CharField(_("Sobrenome"), max_length=60, blank=True, default="")
     display_name = models.CharField(max_length=80, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
@@ -97,13 +107,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ["-created_at"]
 
     def __str__(self) -> str:
-        return self.username
+        return self.get_full_name() or self.username
 
     def get_full_name(self) -> str:
-        return self.display_name or self.username
+        full = f"{self.first_name} {self.last_name}".strip()
+        return full or self.display_name or self.username
 
     def get_short_name(self) -> str:
-        return self.username
+        return self.first_name or self.display_name or self.username
 
     @property
     def is_staff_member(self) -> bool:

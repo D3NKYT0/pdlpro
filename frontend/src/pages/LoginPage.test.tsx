@@ -56,7 +56,7 @@ function mount(path = '/login') {
   return userEvent.setup()
 }
 async function fill(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Usuário'), 'hero')
+  await user.type(screen.getByLabelText('E-mail'), 'hero@pdl.dev')
   await user.type(screen.getByLabelText('Senha', { selector: 'input' }), 'secret')
   await user.click(screen.getByRole('button', { name: 'Entrar no Reino' }))
 }
@@ -115,7 +115,7 @@ it.each(['/panel/wallet?tab=history', 'https://evil.test', '//evil.test'])('redi
   session.login.mockResolvedValue({ username: 'hero' })
   const user = mount(`/login?next=${encodeURIComponent(next)}`)
   await fill(user)
-  expect(session.login).toHaveBeenCalledWith('hero', 'secret', '')
+  expect(session.login).toHaveBeenCalledWith('hero@pdl.dev', 'secret', '')
   expect(await screen.findByRole('heading', { name: next.startsWith('/panel') ? next : '/panel' })).toBeTruthy()
 })
 
@@ -148,7 +148,7 @@ it('mostra erro da API e envia CAPTCHA quando solicitado', async () => {
   expect(toast.error).toHaveBeenCalledWith('Resolva o CAPTCHA')
   await user.click(await screen.findByRole('button', { name: 'Resolver CAPTCHA' }))
   await user.click(screen.getByRole('button', { name: 'Entrar no Reino' }))
-  expect(session.login).toHaveBeenLastCalledWith('hero', 'secret', 'captcha-token')
+  expect(session.login).toHaveBeenLastCalledWith('hero@pdl.dev', 'secret', 'captcha-token')
 })
 
 it('provedores não configurados permanecem desabilitados', async () => {

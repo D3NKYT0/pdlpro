@@ -23,7 +23,8 @@ export function RegisterPage() {
   const capabilities = useQuery({ queryKey: ['auth-capabilities'], queryFn: authApi.capabilities })
   const launch = useLaunchAccess()
   const landingPath = useLandingPath()
-  const [username, setUsername] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
@@ -62,7 +63,14 @@ export function RegisterPage() {
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     try {
-      await register({ username, email, password, accept_terms: acceptTerms, hcaptcha_token: captchaToken })
+      await register({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password,
+        accept_terms: acceptTerms,
+        hcaptcha_token: captchaToken,
+      })
       toast.success(t('register.success'))
       navigate('/panel')
     } catch (error) {
@@ -76,8 +84,25 @@ export function RegisterPage() {
       lead={t('register.lead')}
     >
       <form className="auth-form" onSubmit={onSubmit}>
-        <AuthField label={t('common.username')}>
-          <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} maxLength={16} autoComplete="username" />
+        <AuthField label={t('common.firstName', { defaultValue: 'Nome' })}>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+            required
+            autoComplete="given-name"
+            maxLength={60}
+          />
+        </AuthField>
+        <AuthField label={t('common.lastName', { defaultValue: 'Sobrenome' })}>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+            required
+            autoComplete="family-name"
+            maxLength={60}
+          />
         </AuthField>
         <AuthField label={t('common.email')}>
           <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />

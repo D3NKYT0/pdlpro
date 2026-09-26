@@ -961,7 +961,30 @@
     "linkEmailSent": "We sent the link to the Lineage account e-mail",
     "linkEmailError": "Could not request the link",
     "accountLinked": "Account linked",
-    "linkError": "Linking failed"
+    "linkError": "Linking failed",
+    "activeBadge": "Active Account",
+    "active": "Active",
+    "setActive": "Activate",
+    "activeLabel": "Active account",
+    "createFirstTitle": "Create game account",
+    "createAdditionalTitle": "Create new game account",
+    "createFirstDescription": "Set the login and password for your Lineage 2 account.",
+    "createAdditionalDescription": "Register a new Lineage 2 account with its own login and password.",
+    "gameLogin": "Game login",
+    "gameLoginPlaceholder": "e.g. myhero",
+    "createFirstBtn": "Create game account",
+    "createAccountBtn": "Create L2 account",
+    "slotsFullTitle": "Account limit reached",
+    "slotsFull": "All available game account slots are occupied."
+  },
+  "activeAccount": {
+    "title": "Active Account",
+    "ariaLabel": "Active game account selector",
+    "createFirst": "Create L2 account",
+    "manageAccounts": "Manage L2 accounts",
+    "switchSuccess": "Active account switched to {{login}}",
+    "switchError": "Could not switch active account on server",
+    "activeBadge": "Active"
   },
   "notifications": {
     "title": "Alerts",

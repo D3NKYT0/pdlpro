@@ -21,7 +21,8 @@ export function ProfileHero({
   progress?: ApiGamerProfile
 }) {
   const { t } = useTranslation('panel')
-  const name = displayName || user?.username || ''
+  const fullName = user?.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : ''
+  const name = displayName || fullName || user?.email?.split('@')[0] || ''
   const story = bio.trim() || user?.bio?.trim() || ''
   const unlocked = progress?.unlocked_count ?? progress?.achievements?.filter((row) => row.unlocked).length ?? 0
   const totalAchievements = progress?.total_achievements ?? progress?.achievements?.length ?? 0
@@ -31,7 +32,7 @@ export function ProfileHero({
       <div className="user-profile-hero-main">
         <button className="user-profile-avatar" type="button" onClick={onPickAvatar} aria-label={t('profile.changeAvatar')}>
           {avatarPreview ? (
-            <img src={avatarPreview} alt={t('profile.avatarAlt', { username: user?.username })} />
+            <img src={avatarPreview} alt={t('profile.avatarAlt', { username: user?.username || name })} />
           ) : (
             <CircleUserRound aria-hidden="true" />
           )}
@@ -43,7 +44,7 @@ export function ProfileHero({
           <span className="panel-eyebrow">{t('profile.eyebrow')}</span>
           <h1>{name}</h1>
           <p className="user-profile-hero-meta">
-            <span>@{user?.username}</span>
+            <span>{user?.email}</span>
             <b>{t('profile.welcomeBack')}</b>
           </p>
           {story ? <p className="user-profile-hero-bio">{story}</p> : null}

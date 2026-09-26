@@ -141,6 +141,19 @@ def test_login(api, user):
 
 
 @pytest.mark.django_db
+def test_login_with_email(api, user):
+    response = api.post(
+        "/api/v1/auth/login/",
+        {"login": user.email, "password": "Secret123"},
+        format="json",
+    )
+    assert response.status_code == 200
+    assert response.data["username"] == "hero"
+    assert "access" not in response.data
+    assert "refresh" not in response.data
+
+
+@pytest.mark.django_db
 def test_login_blocked_for_players_during_coming_soon_staff_only(api, user):
     from apps.server.infrastructure.models import IndexConfig
 

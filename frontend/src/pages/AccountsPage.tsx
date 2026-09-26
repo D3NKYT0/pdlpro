@@ -10,6 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
@@ -18,6 +19,7 @@ import { useLaunchAccess } from '../hooks/useLaunchAccess'
 export function AccountsPage() {
   const { t } = useTranslation('panel')
   const { user } = useAuth()
+  const { activeLogin, setActiveAccount: selectActiveAccount } = useActiveAccount()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
@@ -25,6 +27,7 @@ export function AccountsPage() {
   const [params, setParams] = useSearchParams()
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const [registerLogin, setRegisterLogin] = useState('')
   const [registerPassword, setRegisterPassword] = useState('')
   const [alternateLogin, setAlternateLogin] = useState('')
   const [useAlternateLogin, setUseAlternateLogin] = useState(false)
@@ -32,13 +35,15 @@ export function AccountsPage() {
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
-  const selectedLogin = primaryAccount?.login ?? linkedAccounts[0]?.login
+  const selectedLogin = activeLogin ?? primaryAccount?.login ?? linkedAccounts[0]?.login
   const preferredLogin = accounts.data?.primary?.login ?? user?.username ?? ''
   const primaryStatus = accounts.data?.primary?.status
   const primaryTaken = Boolean(!primaryAccount && (primaryStatus === 'taken' || useAlternateLogin))
   const primaryUnclaimed = Boolean(!primaryAccount && primaryStatus === 'unclaimed' && !useAlternateLogin)
   const isStaff = Boolean(user?.is_staff || user?.is_superuser || user?.is_staff_member)
   const l2RegistrationClosed = !launch.l2RegistrationOpen && !isStaff
+
+  const canLinkMore = Boolean(accounts.data?.slots ? accounts.data.slots.can_link : true)
 
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],
@@ -50,10 +55,15 @@ export function AccountsPage() {
     event.preventDefault()
     setSubmitting('register')
     try {
-      await lineageApi.register(registerPassword, primaryTaken ? alternateLogin : undefined)
+      const chosenLogin = (registerLogin || alternateLogin).trim()
+      await lineageApi.register(registerPassword, chosenLogin || undefined)
       toast.success(primaryUnclaimed ? t('accounts.accountClaimed') : t('accounts.accountCreated'))
       await queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] })
+      if (chosenLogin) {
+        await selectActiveAccount(chosenLogin)
+      }
       setRegisterPassword('')
+      setRegisterLogin('')
       setAlternateLogin('')
       setUseAlternateLogin(false)
     } catch (error) {
@@ -133,9 +143,9 @@ export function AccountsPage() {
               <span className="panel-eyebrow">{t('accounts.serverAccess')}</span>
               <h2>{t('accounts.yourAccounts')}</h2>
             </div>
-            <span className={`account-status-pill ${primaryAccount ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
-              {primaryAccount ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
-              {primaryAccount ? t('accounts.statusPrimaryActive') : primaryTaken ? t('accounts.statusLoginTaken') : t('accounts.statusWaiting')}
+            <span className={`account-status-pill ${linkedAccounts.length > 0 ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
+              {linkedAccounts.length > 0 ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
+              {linkedAccounts.length > 0 ? t('accounts.statusPrimaryActive') : primaryTaken ? t('accounts.statusLoginTaken') : t('accounts.statusWaiting')}
             </span>
           </div>
 
@@ -143,18 +153,39 @@ export function AccountsPage() {
 
           {!accounts.isLoading && linkedAccounts.length > 0 ? (
             <div className="account-list">
-              {linkedAccounts.map((item) => (
-                <div className="account-list-item" key={item.login}>
-                  <span className="account-list-icon">
-                    {item.is_primary ? <Crown aria-hidden="true" /> : <Link2 aria-hidden="true" />}
-                  </span>
-                  <span>
-                    <strong>{item.login}</strong>
-                    <small>{item.is_primary ? t('accounts.primaryAccount') : t('accounts.additionalAccount')}</small>
-                  </span>
-                  <b>{characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}</b>
-                </div>
-              ))}
+              {linkedAccounts.map((item) => {
+                const isActive = item.login.toLowerCase() === selectedLogin?.toLowerCase()
+                return (
+                  <div className={`account-list-item ${isActive ? 'is-active-card' : ''}`} key={item.login}>
+                    <span className="account-list-icon">
+                      {isActive ? <Crown aria-hidden="true" /> : <Link2 aria-hidden="true" />}
+                    </span>
+                    <span className="account-list-meta">
+                      <strong>{item.login}</strong>
+                      <small>
+                        {isActive
+                          ? t('accounts.activeBadge', { defaultValue: 'Conta Ativa' })
+                          : (item.is_primary ? t('accounts.primaryAccount') : t('accounts.additionalAccount'))}
+                      </small>
+                    </span>
+                    <b>{characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}</b>
+                    <div className="account-list-action">
+                      {isActive ? (
+                        <span className="account-active-badge">{t('accounts.active', { defaultValue: 'Ativa' })}</span>
+                      ) : (
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          type="button"
+                          onClick={() => void selectActiveAccount(item.login)}
+                        >
+                          {t('accounts.setActive', { defaultValue: 'Ativar' })}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           ) : null}
 
@@ -168,7 +199,7 @@ export function AccountsPage() {
             </div>
           ) : null}
 
-          {!accounts.isLoading && !primaryAccount && l2RegistrationClosed ? (
+          {!accounts.isLoading && l2RegistrationClosed ? (
             <div className="account-created-state is-conflict">
               <ShieldAlert aria-hidden="true" />
               <div>
@@ -178,65 +209,86 @@ export function AccountsPage() {
             </div>
           ) : null}
 
-          {!accounts.isLoading && !primaryAccount && !l2RegistrationClosed ? (
+          {!accounts.isLoading && !l2RegistrationClosed && canLinkMore ? (
             <form className="account-action-form" onSubmit={onRegister}>
               <div className="account-form-title">
                 <UserRoundPlus aria-hidden="true" />
                 <div>
-                  <h3>{primaryTaken ? t('accounts.createWithOtherLogin') : primaryUnclaimed ? t('accounts.claimPrimary') : t('accounts.createPrimary')}</h3>
+                  <h3>
+                    {linkedAccounts.length === 0
+                      ? (primaryUnclaimed ? t('accounts.claimPrimary') : t('accounts.createFirstTitle', { defaultValue: 'Criar Conta de Jogo' }))
+                      : t('accounts.createAdditionalTitle', { defaultValue: 'Criar Nova Conta de Jogo' })}
+                  </h3>
                   <p>
-                    {primaryTaken
-                      ? t('accounts.createWithOtherLoginHint')
-                      : <Trans
-                          t={t}
-                          i18nKey={primaryUnclaimed ? 'accounts.claimHint' : 'accounts.createHint'}
-                          values={{ login: preferredLogin }}
-                          components={{ strong: <strong /> }}
-                        />}
+                    {linkedAccounts.length === 0
+                      ? (primaryUnclaimed
+                          ? <Trans t={t} i18nKey="accounts.claimHint" values={{ login: preferredLogin }} components={{ strong: <strong /> }} />
+                          : t('accounts.createFirstDescription', { defaultValue: 'Defina o login e a senha da sua conta Lineage 2.' }))
+                      : t('accounts.createAdditionalDescription', { defaultValue: 'Cadastre uma nova conta Lineage 2 com login e senha próprios.' })}
                   </p>
                 </div>
               </div>
-              {primaryTaken ? (
+              <div className="account-form-fields">
                 <Field>
-                  {t('accounts.newGameLogin')}
+                  {t('accounts.gameLogin', { defaultValue: 'Login no jogo' })}
                   <input
-                    value={alternateLogin}
-                    onChange={(e) => setAlternateLogin(e.target.value)}
+                    value={registerLogin}
+                    onChange={(e) => setRegisterLogin(e.target.value)}
                     required
                     minLength={3}
                     maxLength={16}
                     autoComplete="username"
+                    placeholder={t('accounts.gameLoginPlaceholder', { defaultValue: 'ex: meuhero' })}
                   />
                 </Field>
-              ) : null}
-              <Field>
-                {t('accounts.gamePassword')}
-                <input type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} required minLength={8} />
-              </Field>
+                <Field>
+                  {t('accounts.gamePassword', { defaultValue: 'Senha do jogo' })}
+                  <input
+                    type="password"
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                  />
+                </Field>
+              </div>
               <Button type="submit" disabled={submitting !== null}>
                 {submitting === 'register'
-                  ? (primaryUnclaimed ? t('accounts.linking') : t('accounts.creating'))
-                  : (primaryTaken ? t('accounts.createPrimary') : primaryUnclaimed ? t('accounts.linkAccount') : t('accounts.createAndLink'))}
+                  ? t('accounts.creating')
+                  : (linkedAccounts.length === 0
+                      ? (primaryUnclaimed ? t('accounts.linkAccount') : t('accounts.createFirstBtn', { defaultValue: 'Criar Conta de Jogo' }))
+                      : t('accounts.createAccountBtn', { defaultValue: 'Criar Conta L2' }))}
               </Button>
             </form>
           ) : null}
 
-          {primaryAccount && !characters.isError ? (
+          {!accounts.isLoading && !canLinkMore && linkedAccounts.length > 0 ? (
             <div className="account-created-state">
-              <CheckCircle2 aria-hidden="true" />
+              <ShieldCheck aria-hidden="true" />
               <div>
-                <strong>{t('accounts.readyTitle')}</strong>
-                <span>{t('accounts.readyText', { login: primaryAccount.login })}</span>
+                <strong>{t('accounts.slotsFullTitle', { defaultValue: 'Limite de contas atingido' })}</strong>
+                <span>{t('accounts.slotsFull', { defaultValue: 'Todos os slots de contas de jogo disponíveis estão ocupados.' })}</span>
               </div>
             </div>
           ) : null}
 
-          {primaryAccount && characters.isError ? (
+          {selectedLogin && !characters.isError ? (
+            <div className="account-created-state">
+              <CheckCircle2 aria-hidden="true" />
+              <div>
+                <strong>{t('accounts.readyTitle')}</strong>
+                <span>{t('accounts.readyText', { login: selectedLogin })}</span>
+              </div>
+            </div>
+          ) : null}
+
+          {selectedLogin && characters.isError ? (
             <div className="account-created-state is-conflict">
               <ShieldAlert aria-hidden="true" />
               <div>
                 <strong>{t('accounts.inconsistentTitle')}</strong>
-                <span>{t('accounts.inconsistentText', { login: primaryAccount.login })}</span>
+                <span>{t('accounts.inconsistentText', { login: selectedLogin })}</span>
               </div>
             </div>
           ) : null}
@@ -278,7 +330,11 @@ export function AccountsPage() {
               <span className="panel-eyebrow">{t('accounts.gameWorld')}</span>
               <h2>{t('accounts.characters')}</h2>
             </div>
-            {selectedLogin ? <span className="account-login-chip">{selectedLogin}</span> : null}
+            {selectedLogin ? (
+              <span className="account-login-chip">
+                {t('accounts.activeLabel', { defaultValue: 'Conta ativa' })}: <strong>{selectedLogin}</strong>
+              </span>
+            ) : null}
           </div>
           {characters.isLoading ? <div className="account-empty-state">{t('accounts.loadingCharacters')}</div> : null}
           {characters.isError ? (

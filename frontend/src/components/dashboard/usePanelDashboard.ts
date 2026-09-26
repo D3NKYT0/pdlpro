@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { useActiveAccount } from '../../contexts/ActiveAccountContext'
 import { canAccessStaff } from '../../lib/staff'
 import { authApi, gamesApi, lineageApi, programsApi, serverApi, walletApi } from '../../services/api'
 
@@ -25,6 +26,7 @@ const shortcuts: Array<{ to: string; key: string; icon: LucideIcon; resource?: s
 /** Agrega o que o índice do painel precisa mostrar sem espalhar queries na página. */
 export function usePanelDashboard() {
   const { user } = useAuth()
+  const { activeLogin } = useActiveAccount()
   const resources = useQuery({
     queryKey: ['resources'],
     queryFn: programsApi.resources,
@@ -53,7 +55,7 @@ export function usePanelDashboard() {
     enabled: accountsEnabled,
   })
   const selectedLogin =
-    accounts.data?.accounts.find((row) => row.is_primary)?.login ?? accounts.data?.accounts[0]?.login
+    activeLogin ?? accounts.data?.accounts.find((row) => row.is_primary)?.login ?? accounts.data?.accounts[0]?.login
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],
     queryFn: () => lineageApi.characters(selectedLogin),

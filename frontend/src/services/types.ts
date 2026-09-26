@@ -4,6 +4,8 @@ export interface ApiUser {
   id: string
   username: string
   email: string
+  first_name?: string
+  last_name?: string
   display_name: string
   bio: string
   role: string

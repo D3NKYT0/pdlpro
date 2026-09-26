@@ -961,7 +961,30 @@
     "linkEmailSent": "Enviamos el enlace al correo de la cuenta Lineage",
     "linkEmailError": "Falló la solicitud de vínculo",
     "accountLinked": "Cuenta vinculada",
-    "linkError": "Falló la vinculación"
+    "linkError": "Falló la vinculación",
+    "activeBadge": "Cuenta Activa",
+    "active": "Activa",
+    "setActive": "Activar",
+    "activeLabel": "Cuenta activa",
+    "createFirstTitle": "Crear cuenta de juego",
+    "createAdditionalTitle": "Crear nueva cuenta de juego",
+    "createFirstDescription": "Define el login y la contraseña de tu cuenta Lineage 2.",
+    "createAdditionalDescription": "Registra una nueva cuenta Lineage 2 con login y contraseña propios.",
+    "gameLogin": "Login en el juego",
+    "gameLoginPlaceholder": "ej: miheroe",
+    "createFirstBtn": "Crear cuenta de juego",
+    "createAccountBtn": "Crear cuenta L2",
+    "slotsFullTitle": "Límite de cuentas alcanzado",
+    "slotsFull": "Todos los espacios de cuentas de juego disponibles están ocupados."
+  },
+  "activeAccount": {
+    "title": "Cuenta Activa",
+    "ariaLabel": "Selector de cuenta de juego activa",
+    "createFirst": "Crear cuenta L2",
+    "manageAccounts": "Gestionar cuentas L2",
+    "switchSuccess": "Cuenta activa cambiada a {{login}}",
+    "switchError": "No se pudo cambiar la cuenta activa en el servidor",
+    "activeBadge": "Activa"
   },
   "notifications": {
     "title": "Avisos",

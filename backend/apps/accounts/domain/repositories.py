@@ -91,7 +91,16 @@ class IUserRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def create(self, *, username: str, email: str, password: str, display_name: str = "") -> UserEntity:
+    def create(
+        self,
+        *,
+        email: str,
+        password: str,
+        username: str = "",
+        first_name: str = "",
+        last_name: str = "",
+        display_name: str = "",
+    ) -> UserEntity:
         raise NotImplementedError
 
     @abstractmethod
@@ -103,8 +112,10 @@ class IUserRepository(ABC):
         self,
         user_id: UUID,
         *,
-        display_name: str | None,
-        bio: str | None,
+        display_name: str | None = None,
+        first_name: str | None = None,
+        last_name: str | None = None,
+        bio: str | None = None,
         avatar: object | None = None,
     ) -> UserEntity:
         raise NotImplementedError

@@ -16,6 +16,7 @@ from apps.server.presentation.views.customer import (
     RegisterGameAccountView,
     RequestLinkByEmailView,
     ServicePricesView,
+    SetActiveAccountView,
     TeleportView,
     UnlinkGameAccountView,
     UnstuckView,
@@ -26,6 +27,7 @@ from apps.server.presentation.views.public import ServerStatusView
 urlpatterns = [
     path("status/", ServerStatusView.as_view(), name="customer-server-status"),
     path("accounts/", LineageAccountsView.as_view(), name="customer-accounts"),
+    path("accounts/active/", SetActiveAccountView.as_view(), name="customer-accounts-active"),
     path("accounts/register/", RegisterGameAccountView.as_view(), name="customer-accounts-register"),
     path("accounts/link/", LinkGameAccountView.as_view(), name="customer-accounts-link"),
     path("accounts/link-email/", RequestLinkByEmailView.as_view(), name="customer-accounts-link-email"),

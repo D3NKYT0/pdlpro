@@ -163,6 +163,21 @@ class RegisterGameAccountSerializer(serializers.Serializer):
         return login
 
 
+class SetActiveAccountSerializer(serializers.Serializer):
+    """Valida o login da conta Lineage a ser definida como conta ativa.
+
+    Campos declarados: ``login``.
+    """
+
+    login = serializers.CharField(max_length=45)
+
+    def validate_login(self, value: str) -> str:
+        login = (value or "").strip()
+        if not login:
+            raise serializers.ValidationError(_("Informe o login da conta."))
+        return login
+
+
 class PrimaryLoginStateSerializer(serializers.Serializer):
     """Representa o estado do login preferido para orientar cadastro ou vínculo de conta.
 

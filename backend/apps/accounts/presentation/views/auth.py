@@ -160,7 +160,9 @@ class RegisterView(InjectedAPIView):
             )
         user = self.resolve(RegisterUserUseCase).execute(
             RegisterUserInput(
-                username=data["username"],
+                username=data.get("username", ""),
+                first_name=data.get("first_name", ""),
+                last_name=data.get("last_name", ""),
                 email=data["email"],
                 password=data["password"],
                 display_name=data.get("display_name", ""),

@@ -63,12 +63,13 @@ function mount() {
 it.each([false, true])('cadastro envia consentimento; erro=%s', async fail => {
   if (fail) session.register.mockRejectedValue(new ApiError('E-mail já cadastrado', 400, 'DUPLICATE'))
   const user = mount()
-  await user.type(screen.getByLabelText('Usuário'), 'hero')
+  await user.type(screen.getByLabelText('Nome'), 'Hero')
+  await user.type(screen.getByLabelText('Sobrenome'), 'Player')
   await user.type(screen.getByLabelText('E-mail'), 'hero@test.dev')
   await user.type(screen.getByLabelText('Senha', { selector: 'input' }), 'Secret123!')
   await user.click(screen.getByRole('checkbox'))
   await user.click(screen.getByRole('button', { name: 'Crie sua conta mestra' }))
-  expect(session.register).toHaveBeenCalledWith({ username: 'hero', email: 'hero@test.dev', password: 'Secret123!', accept_terms: true, hcaptcha_token: '' })
+  expect(session.register).toHaveBeenCalledWith({ first_name: 'Hero', last_name: 'Player', email: 'hero@test.dev', password: 'Secret123!', accept_terms: true, hcaptcha_token: '' })
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('E-mail já cadastrado')
     expect(screen.getByLabelText('E-mail')).toHaveValue('hero@test.dev')

@@ -36,7 +36,8 @@ it.each([false, true])('salva textos sem espaços externos; preserva edição qu
   await user.type(screen.getByRole('textbox', { name: /Biografia/ }), ' Minha jornada ')
   await user.click(screen.getByRole('button', { name: 'Salvar alterações' }))
   const form = vi.mocked(authApi.updateMe).mock.calls[0][0] as FormData
-  expect([...form.entries()]).toEqual([['display_name', 'Novo herói'], ['bio', 'Minha jornada']])
+  expect(form.get('display_name')).toBe('Novo herói')
+  expect(form.get('bio')).toBe('Minha jornada')
   if (fail) {
     expect(toast.error).toHaveBeenCalledWith('Perfil indisponível')
     expect(name).toHaveValue(' Novo herói ')

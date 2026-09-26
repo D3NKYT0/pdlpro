@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { apiErrorMessage } from '../../lib/errors'
 import { gamesApi, inventoryApi, lineageApi } from '../../services/api'
+import { useActiveAccount } from '../../contexts/ActiveAccountContext'
 import i18n from '../../i18n'
 import { INTL_LOCALES, isAppLanguage } from '../../i18n/locale'
 import type { InventoryTab, PanelItemAction } from './types'
@@ -14,12 +15,13 @@ function searchLocale() {
 
 export function useInventoryDashboard() {
   const { t } = useTranslation('panel')
+  const { activeLogin } = useActiveAccount()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
   const bag = useQuery({ queryKey: ['bag'], queryFn: gamesApi.bag })
   const [activeTab, setActiveTab] = useState<InventoryTab>('characters')
   const [selectedLogin, setSelectedLogin] = useState('')
-  const primaryLogin = accounts.data?.accounts.find((account) => account.is_primary)?.login
+  const primaryLogin = activeLogin ?? accounts.data?.accounts.find((account) => account.is_primary)?.login
   const fallbackLogin = primaryLogin ?? accounts.data?.accounts[0]?.login ?? ''
   const login = selectedLogin || fallbackLogin
   const dashboard = useQuery({

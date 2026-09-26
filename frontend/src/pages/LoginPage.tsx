@@ -73,7 +73,7 @@ export function LoginPage() {
         navigate(next)
         return
       }
-      const result = await login(loginValue, password, captchaToken)
+      const result = await login(loginValue.trim(), password, captchaToken)
       if (isTwoFactorChallenge(result)) {
         setChallenge(result.challenge)
         toast.success(t('login.toast2fa'))
@@ -96,7 +96,7 @@ export function LoginPage() {
     }
     setPasskeyLoading(true)
     try {
-      const begin = await authApi.beginPasskeyLogin(loginValue)
+      const begin = await authApi.beginPasskeyLogin(loginValue.trim())
       const credential = await navigator.credentials.get({ publicKey: requestOptions(begin.options) }) as PublicKeyCredential | null
       if (!credential) throw new Error(t('login.passkeyCancelled'))
       const result = await authApi.completePasskeyLogin(begin.state, credentialJSON(credential))
@@ -151,8 +151,14 @@ export function LoginPage() {
           </AuthField>
         ) : (
           <>
-            <AuthField label={t('common.username')}>
-              <input type="text" value={loginValue} onChange={(event) => setLoginValue(event.target.value)} required autoComplete="username" />
+            <AuthField label={t('common.email')}>
+              <input
+                type="email"
+                value={loginValue}
+                onChange={(event) => setLoginValue(event.target.value)}
+                required
+                autoComplete="email"
+              />
             </AuthField>
             <AuthField label={t('common.password')}>
               <AuthPassword value={password} onChange={setPassword} required autoComplete="current-password" />

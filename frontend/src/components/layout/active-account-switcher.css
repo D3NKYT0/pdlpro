@@ -1,0 +1,275 @@
+/* Active Account Switcher - PDL 2 Component Styles */
+
+.active-account-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.active-account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  min-height: 40px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a059) 24%, transparent);
+  background: rgba(18, 16, 14, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.active-account-trigger:hover,
+.active-account-trigger.is-open {
+  border-color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 50%, transparent);
+  background: rgba(28, 24, 20, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 12px rgba(229, 169, 59, 0.12);
+}
+
+.active-account-trigger.is-empty {
+  border-style: dashed;
+  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 80%, white);
+}
+
+.active-account-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #80c987;
+  box-shadow: 0 0 8px #80c987;
+  flex-shrink: 0;
+}
+
+.account-switcher-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--panel-gold-bright, #e5a93b);
+  flex-shrink: 0;
+}
+
+.active-account-trigger-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.active-account-caption {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--panel-gold, #c5a059) 70%, transparent);
+}
+
+.account-switcher-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.account-switcher-chevron {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.account-switcher-chevron.is-rotated {
+  transform: rotate(180deg);
+}
+
+.account-switcher-add-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--panel-gold-bright, #e5a93b);
+  flex-shrink: 0;
+}
+
+.active-account-skeleton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  min-height: 40px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown Menu */
+.active-account-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  max-width: calc(100vw - 32px);
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a059) 30%, transparent);
+  background: rgba(14, 13, 11, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 0, 0, 0.4);
+  z-index: 120;
+  overflow: hidden;
+  animation: accountDropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes accountDropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.active-account-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.active-account-dropdown-header span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--panel-gold, #c5a059) 85%, white);
+}
+
+.active-account-dropdown-header small {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.active-account-list {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.active-account-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.active-account-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.active-account-item.is-active {
+  background: color-mix(in srgb, var(--panel-gold, #c5a059) 12%, transparent);
+  border-color: color-mix(in srgb, var(--panel-gold, #c5a059) 25%, transparent);
+}
+
+.active-account-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.active-account-item.is-active .active-account-item-icon {
+  background: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 20%, transparent);
+  color: var(--panel-gold-bright, #e5a93b);
+}
+
+.active-account-item-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.active-account-item-details strong {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.active-account-item-details .active-badge {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #80c987;
+}
+
+.active-account-check {
+  width: 16px;
+  height: 16px;
+  color: #80c987;
+  flex-shrink: 0;
+}
+
+.active-account-dropdown-footer {
+  padding: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.active-account-manage-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 85%, white);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.active-account-manage-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.active-account-manage-btn svg {
+  width: 14px;
+  height: 14px;
+}

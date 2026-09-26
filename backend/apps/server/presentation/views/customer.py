@@ -21,6 +21,8 @@ from apps.server.application.account_use_cases import (
     RegisterGameAccountUseCase,
     RequestLinkByEmailInput,
     RequestLinkByEmailUseCase,
+    SetActiveAccountInput,
+    SetActiveAccountUseCase,
     UnlinkGameAccountInput,
     UnlinkGameAccountUseCase,
     UpdateGamePasswordInput,
@@ -53,6 +55,7 @@ from apps.server.presentation.serializers import (
     PrimaryLoginStateSerializer,
     PurchaseSlotSerializer,
     RegisterGameAccountSerializer,
+    SetActiveAccountSerializer,
     TeleportSerializer,
     UnlinkGameAccountSerializer,
     UnstuckSerializer,
@@ -129,6 +132,34 @@ class RegisterGameAccountView(InjectedAPIView):
             )
         )
         return Response(GameAccountSerializer(account).data)
+
+
+class SetActiveAccountView(InjectedAPIView):
+    """Entrada HTTP para ``SetActiveAccountUseCase``.
+
+    Implementa POST; registre ``as_view()`` nas URLs do módulo. Controle de acesso declarado:
+    [IsAuthenticated]. Resolve a aplicação no escopo da requisição antes de montar a resposta.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        tags=["Conta Lineage"],
+        summary=gettext_lazy("Definir conta ativa"),
+        description=gettext_lazy("Define a conta de jogo selecionada como conta ativa no painel."),
+        request=SetActiveAccountSerializer,
+    )
+    def post(self, request):
+        serializer = SetActiveAccountSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        login = serializer.validated_data["login"]
+        self.resolve(SetActiveAccountUseCase).execute(
+            SetActiveAccountInput(
+                actor=actor_from(request),
+                login=login,
+            )
+        )
+        return Response({"ok": True, "active_login": login})
 
 
 class LinkGameAccountView(InjectedAPIView):

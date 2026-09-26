@@ -69,7 +69,9 @@ class DjangoUserRepository(IUserRepository):
             id=user.id,
             username=user.username,
             email=user.email,
-            display_name=user.display_name or user.username,
+            display_name=user.display_name or user.get_full_name(),
+            first_name=getattr(user, "first_name", ""),
+            last_name=getattr(user, "last_name", ""),
             bio=user.bio,
             role=user.role,
             is_email_verified=user.is_email_verified,
@@ -114,11 +116,24 @@ class DjangoUserRepository(IUserRepository):
     def exists_email(self, email: str) -> bool:
         return User.objects.filter(email__iexact=email).exists()
 
-    def create(self, *, username: str, email: str, password: str, display_name: str = "") -> UserEntity:
+    def create(
+        self,
+        *,
+        email: str,
+        password: str,
+        username: str = "",
+        first_name: str = "",
+        last_name: str = "",
+        display_name: str = "",
+    ) -> UserEntity:
+        if not display_name and (first_name or last_name):
+            display_name = f"{first_name} {last_name}".strip()
         user = User.objects.create_user(
-            username=username,
+            username=username or None,
             email=email,
             password=password,
+            first_name=first_name,
+            last_name=last_name,
             display_name=display_name,
         )
         return self._to_entity(user)
@@ -131,12 +146,20 @@ class DjangoUserRepository(IUserRepository):
         self,
         user_id: UUID,
         *,
-        display_name: str | None,
-        bio: str | None,
+        display_name: str | None = None,
+        first_name: str | None = None,
+        last_name: str | None = None,
+        bio: str | None = None,
         avatar: object | None = None,
     ) -> UserEntity:
         user = User.objects.get(id=user_id)
         update_fields = ["updated_at"]
+        if first_name is not None:
+            user.first_name = first_name
+            update_fields.append("first_name")
+        if last_name is not None:
+            user.last_name = last_name
+            update_fields.append("last_name")
         if display_name is not None:
             user.display_name = display_name
             update_fields.append("display_name")

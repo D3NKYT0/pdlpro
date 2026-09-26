@@ -248,3 +248,49 @@ def test_l2_registration_allowed_for_staff_when_closed_to_players(api):
     )
     assert created.status_code == 200, created.data
     assert created.data["login"] == "gm"
+
+
+@pytest.mark.django_db
+def test_register_multiple_l2_accounts_and_switch_active(api):
+    player = User.objects.create_user(username="masteruser", email="master@pdl.dev", password="Secret123")
+    api.force_authenticate(user=player)
+
+    # 1. Cria a primeira conta L2
+    first = api.post(
+        "/api/v1/customer/server/accounts/register/",
+        {"login": "firstl2", "password": "L2Password1"},
+        format="json",
+    )
+    assert first.status_code == 200
+    assert first.data["login"] == "firstl2"
+
+    # 2. Cria a segunda conta L2
+    second = api.post(
+        "/api/v1/customer/server/accounts/register/",
+        {"login": "secondl2", "password": "L2Password2"},
+        format="json",
+    )
+    assert second.status_code == 200
+    assert second.data["login"] == "secondl2"
+
+    # 3. Lista contas: firstl2 deve ser primária/ativa inicial, secondl2 secundária
+    listed = api.get("/api/v1/customer/server/accounts/")
+    assert listed.status_code == 200
+    logins = {row["login"]: row["is_primary"] for row in listed.data["accounts"]}
+    assert logins["firstl2"] is True
+    assert logins["secondl2"] is False
+
+    # 4. Alterna conta ativa para secondl2
+    switch = api.post(
+        "/api/v1/customer/server/accounts/active/",
+        {"login": "secondl2"},
+        format="json",
+    )
+    assert switch.status_code == 200
+    assert switch.data["active_login"] == "secondl2"
+
+    # 5. Lista novamente: secondl2 agora é primária/ativa
+    listed_after = api.get("/api/v1/customer/server/accounts/")
+    logins_after = {row["login"]: row["is_primary"] for row in listed_after.data["accounts"]}
+    assert logins_after["secondl2"] is True
+    assert logins_after["firstl2"] is False

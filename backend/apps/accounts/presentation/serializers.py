@@ -42,6 +42,8 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
     id = serializers.UUIDField(read_only=True)
     username = serializers.CharField(read_only=True)
     email = serializers.EmailField(read_only=True)
+    first_name = serializers.CharField(read_only=True, required=False)
+    last_name = serializers.CharField(read_only=True, required=False)
     display_name = serializers.CharField()
     role = serializers.CharField(read_only=True)
     is_email_verified = serializers.BooleanField(read_only=True)
@@ -79,6 +81,8 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 "id": str(instance.id),
                 "username": instance.username,
                 "email": instance.email,
+                "first_name": instance.first_name,
+                "last_name": instance.last_name,
                 "display_name": instance.display_name,
                 "bio": instance.bio,
                 "role": instance.role,
@@ -99,6 +103,8 @@ class UserSerializer(UUIDPublicFieldsMixin, serializers.Serializer):
                 ),
             }
         data = super().to_representation(instance)
+        data["first_name"] = getattr(instance, "first_name", "")
+        data["last_name"] = getattr(instance, "last_name", "")
         data["avatar_url"] = instance.avatar.url if getattr(instance, "avatar", None) else None
         data["is_staff"] = bool(getattr(instance, "is_staff", False))
         data["is_superuser"] = bool(getattr(instance, "is_superuser", False))
@@ -146,11 +152,13 @@ class RegisterSerializer(serializers.Serializer):
     Instancie com ``data=payload`` e chame ``is_valid(raise_exception=True)`` antes de consumir
     validated_data. A autorização pertence ao fluxo chamador.
 
-    Campos declarados: ``username``, ``email``, ``password``, ``display_name``,
-    ``accept_terms``, ``hcaptcha_token``.
+    Campos declarados: ``first_name``, ``last_name``, ``username``, ``email``, ``password``,
+    ``display_name``, ``accept_terms``, ``hcaptcha_token``.
     """
 
-    username = serializers.CharField(max_length=16, validators=[validate_ascii_username])
+    first_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
+    last_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
+    username = serializers.CharField(required=False, allow_blank=True, max_length=16, validators=[validate_ascii_username])
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=8)
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
@@ -179,9 +187,11 @@ class UpdateProfileSerializer(serializers.Serializer):
     validated_data. A autorização pertence ao fluxo chamador. O avatar aprovado chega em
     ``validated_data`` já reescrito como PNG estático.
 
-    Campos declarados: ``display_name``, ``bio``, ``avatar``.
+    Campos declarados: ``first_name``, ``last_name``, ``display_name``, ``bio``, ``avatar``.
     """
 
+    first_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
+    last_name = serializers.CharField(required=False, allow_blank=True, max_length=60)
     display_name = serializers.CharField(required=False, allow_blank=True, max_length=80)
     bio = serializers.CharField(required=False, allow_blank=True, max_length=500)
     avatar = serializers.ImageField(required=False)

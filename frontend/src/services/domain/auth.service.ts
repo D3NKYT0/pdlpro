@@ -44,9 +44,11 @@ export const authApi = {
   claimReward: (rewardId: string) =>
     request<{ claimed: boolean; item_name: string }>(`/shared/me/rewards/${rewardId}/claim/`, { method: 'POST' }),
   register: (payload: {
-    username: string
     email: string
     password: string
+    first_name?: string
+    last_name?: string
+    username?: string
     display_name?: string
     accept_terms: boolean
     hcaptcha_token?: string
@@ -79,7 +81,7 @@ export const authApi = {
   me: () => request<ApiUser>('/shared/me/'),
   acceptTerms: (payload: { terms_accepted: boolean }) =>
     request<ApiUser>('/shared/me/accept-terms/', { method: 'POST', body: JSON.stringify(payload) }),
-  updateMe: (payload: { display_name?: string; bio?: string } | FormData) =>
+  updateMe: (payload: { first_name?: string; last_name?: string; display_name?: string; bio?: string } | FormData) =>
     request<ApiUser>('/shared/me/', {
       method: 'PATCH',
       body: payload instanceof FormData ? payload : JSON.stringify(payload),

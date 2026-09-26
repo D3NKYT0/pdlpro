@@ -13,6 +13,7 @@ from apps.server.application.account_use_cases import (
     ListCharactersUseCase,
     RegisterGameAccountUseCase,
     RequestLinkByEmailUseCase,
+    SetActiveAccountUseCase,
     UnlinkGameAccountUseCase,
     UpdateGamePasswordUseCase,
 )
@@ -153,6 +154,7 @@ class ServerProvider(AppProvider):
             InspectGameAccountUseCase,
             ForceUnlinkGameAccountUseCase,
             RegisterGameAccountUseCase,
+            SetActiveAccountUseCase,
             LinkGameAccountUseCase,
             UnlinkGameAccountUseCase,
             ListCharactersUseCase,

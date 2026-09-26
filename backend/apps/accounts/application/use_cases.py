@@ -26,9 +26,11 @@ class RegisterUserInput:
     permissões nem regras de negócio por conta própria.
     """
 
-    username: str
     email: str
     password: str
+    first_name: str = ""
+    last_name: str = ""
+    username: str = ""
     display_name: str = ""
     accept_terms: bool = False
     ip: str | None = None
@@ -61,18 +63,26 @@ class RegisterUserUseCase(UseCase[RegisterUserInput, UserEntity]):
         assert_registration_allowed(self._index_config)
         if not data.accept_terms:
             raise ValidationDomainError("Aceite os termos de uso e a política de privacidade.")
-        username = data.username.strip()
         email = data.email.strip().lower()
-        if self._users.exists_username(username):
-            raise UsernameTakenError()
         if self._users.exists_email(email):
             raise EmailTakenError()
+        username = (data.username or "").strip()
+        if username and self._users.exists_username(username):
+            raise UsernameTakenError()
+        first_name = (data.first_name or "").strip()
+        last_name = (data.last_name or "").strip()
+        display_name = (data.display_name or "").strip()
+        if not display_name and (first_name or last_name):
+            display_name = f"{first_name} {last_name}".strip()
+
         with self._unit_of_work:
             user = self._users.create(
                 username=username,
                 email=email,
                 password=data.password,
-                display_name=data.display_name.strip() or username,
+                first_name=first_name,
+                last_name=last_name,
+                display_name=display_name or username,
             )
             user = self._users.accept_terms(
                 user.id,
@@ -160,6 +170,8 @@ class UpdateProfileInput:
 
     user_id: UUID
     display_name: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
     bio: str | None = None
     avatar: object | None = None
 
@@ -182,6 +194,8 @@ class UpdateProfileUseCase(UseCase[UpdateProfileInput, UserEntity]):
             return self._users.update_profile(
                 data.user_id,
                 display_name=data.display_name,
+                first_name=data.first_name,
+                last_name=data.last_name,
                 bio=data.bio,
                 avatar=data.avatar,
             )

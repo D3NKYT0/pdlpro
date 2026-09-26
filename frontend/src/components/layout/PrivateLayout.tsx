@@ -38,6 +38,7 @@ import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
 import { NotificationCenter } from "../notifications/NotificationCenter";
 import { PdlSymbol } from "../PdlSymbol";
 import { extensionNavItems, isExtensionResourceEnabled } from "../../extensions";
+import { ActiveAccountSwitcher } from "./ActiveAccountSwitcher";
 
 type PanelNavLink = {
   to: string;
@@ -222,7 +223,11 @@ export function PrivateLayout() {
                     )}
                   </NavLink>
                   <NavLink className="panel-user-copy" to="/panel/profile">
-                    <strong>{user.display_name || user.username}</strong>
+                    <strong>
+                      {user.first_name
+                        ? `${user.first_name} ${user.last_name || ''}`.trim()
+                        : user.display_name || user.username}
+                    </strong>
                     <span>
                       {user.is_email_verified
                         ? t("shell.verifiedAccount")
@@ -259,11 +264,12 @@ export function PrivateLayout() {
               <ContextualHelp path={location.pathname} user={user} resources={resources.data} loading={resources.isPending} error={resources.error} pet={pet.data} />
             ) : null}
           </div>
-          {resourceEnabled("notifications") ? (
-            <div className="panel-topbar-end">
+          <div className="panel-topbar-end">
+            <ActiveAccountSwitcher />
+            {resourceEnabled("notifications") ? (
               <NotificationCenter />
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </header>
         <main className="content">
           <div id={CONTEXTUAL_HELP_OUTLET_ID} className="panel-help-outlet" />
