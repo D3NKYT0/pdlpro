@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from uuid import UUID
 
@@ -61,11 +61,9 @@ def _is_job_restart_pending(job: dict[str, Any], boot_time: Any = None) -> bool:
     if not applied_at_str:
         return True
     try:
-        from datetime import datetime, timezone as dt_timezone
-
         applied_at = datetime.fromisoformat(applied_at_str)
         if applied_at.tzinfo is None:
-            applied_at = applied_at.replace(tzinfo=dt_timezone.utc)
+            applied_at = applied_at.replace(tzinfo=UTC)
         current_boot = boot_time or PROCESS_BOOT_TIME
         return applied_at > current_boot
     except Exception:  # noqa: BLE001

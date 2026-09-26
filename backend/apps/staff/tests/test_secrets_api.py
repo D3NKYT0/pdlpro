@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
+
 import pytest
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.accounts.infrastructure.models import User
+from apps.staff.application import secrets as secrets_module
 from apps.staff.infrastructure.models import SecretRotationJob
 
 
@@ -115,10 +119,6 @@ def test_secrets_status_detects_redis_password(api, superuser, hosts, settings):
 
 @pytest.mark.django_db
 def test_secrets_status_clears_restart_required_if_process_booted_after_job(api, superuser, hosts):
-    from datetime import timedelta
-    from django.utils import timezone
-    from apps.staff.application import secrets as secrets_module
-
     api.force_authenticate(superuser)
     url = reverse("staff-secrets-status")
 

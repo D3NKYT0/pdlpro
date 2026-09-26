@@ -7,7 +7,6 @@ import pytest
 from django.core.management import call_command
 from sqlalchemy import create_engine, text
 
-from apps.server.domain.gateways import ILineageGateway
 from apps.server.infrastructure.lineage.catalog import LineageQueryCatalog
 from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGateway
 

@@ -86,8 +86,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             with self._engine_or_create().begin() as conn:
                 try:
                     res = conn.execute(text("SELECT * FROM accounts WHERE 1=0"))
-                    existing = {col.lower() for col in res.keys()}
-                except Exception:
+                    existing = {col.lower() for col in res.keys()}  # noqa: SIM118
+                except Exception:  # noqa: BLE001
                     # Se a tabela accounts ainda não existe ou o banco não respondeu, não interrompe
                     return []
 
