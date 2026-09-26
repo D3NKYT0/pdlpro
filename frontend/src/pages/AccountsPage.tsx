@@ -8,7 +8,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, Plus, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, Plus, ShieldAlert, ShieldCheck, UserPlus, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
@@ -92,6 +92,11 @@ export function AccountsPage() {
   const characterCount = characterList.length
   const MAX_CHARACTERS_PER_ACCOUNT = 7
   const isCharacterLimitReached = characterCount >= MAX_CHARACTERS_PER_ACCOUNT
+
+  const characterSlots = Array.from({ length: MAX_CHARACTERS_PER_ACCOUNT }, (_, index) => ({
+    slotNumber: index + 1,
+    character: characterList[index] ?? null,
+  }))
 
   async function handleCreateCharacter(payload: {
     login: string
@@ -576,79 +581,146 @@ export function AccountsPage() {
             <ErrorNotice error={characters.error} onRetry={() => void characters.refetch()} />
           ) : null}
           {!characters.isLoading && !characters.isError && selectedLogin ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>{t('accounts.columnName')}</th>
-                  <th>{t('accounts.columnLevel')}</th>
-                  <th>{t('accounts.columnClass')}</th>
-                  <th>{t('accounts.columnStatus')}</th>
-                  <th aria-label={t('common.actions')} />
-                </tr>
-              </thead>
-              <tbody>
-                {characters.data?.map((character) => (
-                  <tr
-                    key={character.char_id}
-                    role="link"
-                    tabIndex={0}
-                    onClick={() => navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault()
-                        navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)
-                      }
-                    }}
-                  >
-                    <td>
-                      <Link
-                        className="account-character-link"
-                        to={`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`}
-                        onClick={(event) => event.stopPropagation()}
-                      >
-                        <CharacterAvatar
-                          classId={character.class_id}
-                          className="character-avatar"
-                          name={character.name}
-                          sex={character.sex}
-                          size="sm"
-                        />
-                        <span>{character.name}</span>
-                      </Link>
-                    </td>
-                    <td>{character.level}</td>
-                    <td>{getClassName(character.class_id)}</td>
-                    <td>
-                      <span className={`badge ${character.online ? '' : 'off'}`}>
-                        {character.online ? t('accounts.online') : t('accounts.offline')}
-                      </span>
-                    </td>
-                    <td className="account-character-action">
-                      <span className="account-character-open">
-                        <ChevronRight aria-hidden="true" />
-                      </span>
-                    </td>
+            <>
+              {characterCount === 0 ? (
+                <div className="account-characters-empty-banner">
+                  <UsersRound aria-hidden="true" />
+                  <div>
+                    <strong>{t('accounts.noCharactersTitle')}</strong>
+                    <span>{t('accounts.noCharactersText', { login: selectedLogin })}</span>
+                  </div>
+                </div>
+              ) : null}
+              <table className="table account-characters-table">
+                <thead>
+                  <tr>
+                    <th className="account-col-slot">{t('accounts.columnSlot', { defaultValue: '#' })}</th>
+                    <th>{t('accounts.columnName')}</th>
+                    <th>{t('accounts.columnLevel')}</th>
+                    <th>{t('accounts.columnClass')}</th>
+                    <th>{t('accounts.columnStatus')}</th>
+                    <th aria-label={t('common.actions')} className="account-col-action" />
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : null}
-          {!characters.isLoading && !characters.isError && selectedLogin && characters.data?.length === 0 ? (
-            <div className="account-empty-state">
-              <UsersRound aria-hidden="true" />
-              <strong>{t('accounts.noCharactersTitle')}</strong>
-              <p className="muted">{t('accounts.noCharactersText', { login: selectedLogin })}</p>
-              <Button
-                variant="primary"
-                size="sm"
-                type="button"
-                className="account-create-character-empty-btn"
-                onClick={() => setCreateCharacterOpen(true)}
-              >
-                <Plus aria-hidden="true" />
-                <span>{t('accounts.createCharacterBtn', { defaultValue: 'Criar personagem' })}</span>
-              </Button>
-            </div>
+                </thead>
+                <tbody>
+                  {characterSlots.map((slot) => {
+                    const character = slot.character
+                    if (character) {
+                      return (
+                        <tr
+                          key={character.char_id}
+                          className="account-character-row is-occupied"
+                          onClick={() => navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault()
+                              navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)
+                            }
+                          }}
+                        >
+                          <td className="account-col-slot">
+                            <span className="account-slot-number is-occupied">
+                              #{slot.slotNumber}
+                            </span>
+                          </td>
+                          <td>
+                            <Link
+                              className="account-character-link"
+                              to={`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              <CharacterAvatar
+                                classId={character.class_id}
+                                className="character-avatar"
+                                name={character.name}
+                                sex={character.sex}
+                                size="sm"
+                              />
+                              <span className="account-character-name">{character.name}</span>
+                            </Link>
+                          </td>
+                          <td className="account-character-level">{character.level}</td>
+                          <td className="account-character-class">{getClassName(character.class_id)}</td>
+                          <td>
+                            <span className={`badge ${character.online ? '' : 'off'}`}>
+                              {character.online ? t('accounts.online') : t('accounts.offline')}
+                            </span>
+                          </td>
+                          <td className="account-character-action">
+                            <span className="account-character-open">
+                              <ChevronRight aria-hidden="true" />
+                            </span>
+                          </td>
+                        </tr>
+                      )
+                    }
+
+                    return (
+                      <tr
+                        key={`empty-slot-${slot.slotNumber}`}
+                        className="account-character-row is-empty"
+                        onClick={() => {
+                          if (!isCharacterLimitReached) {
+                            setCreateCharacterOpen(true)
+                          }
+                        }}
+                        onKeyDown={(event) => {
+                          if ((event.key === 'Enter' || event.key === ' ') && !isCharacterLimitReached) {
+                            event.preventDefault()
+                            setCreateCharacterOpen(true)
+                          }
+                        }}
+                        title={t('accounts.emptySlotHint', { defaultValue: 'Clique para criar um personagem nesta vaga' })}
+                      >
+                        <td className="account-col-slot">
+                          <span className="account-slot-number is-empty">
+                            #{slot.slotNumber}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="account-slot-empty-profile">
+                            <div className="account-slot-empty-avatar" aria-hidden="true">
+                              <UserPlus />
+                            </div>
+                            <div className="account-slot-empty-info">
+                              <span className="account-slot-empty-title">{t('accounts.slotEmpty', { defaultValue: 'Vazia' })}</span>
+                              <span className="account-slot-empty-hint">{t('accounts.slotAvailableHint', { defaultValue: 'Disponível para criação' })}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="account-slot-dash" aria-hidden="true">—</span>
+                        </td>
+                        <td>
+                          <span className="account-slot-dash" aria-hidden="true">—</span>
+                        </td>
+                        <td>
+                          <span className="badge badge-slot-empty">
+                            {t('accounts.slotEmptyStatus', { defaultValue: 'Vazia' })}
+                          </span>
+                        </td>
+                        <td className="account-character-action">
+                          <button
+                            type="button"
+                            className="account-slot-create-btn"
+                            disabled={isCharacterLimitReached}
+                            onClick={(event) => {
+                              event.stopPropagation()
+                              setCreateCharacterOpen(true)
+                            }}
+                            title={t('accounts.createInSlot', { slot: slot.slotNumber, defaultValue: `Criar personagem na vaga ${slot.slotNumber}` })}
+                            aria-label={t('accounts.createInSlot', { slot: slot.slotNumber, defaultValue: `Criar personagem na vaga ${slot.slotNumber}` })}
+                          >
+                            <Plus aria-hidden="true" />
+                            <span>{t('accounts.createCharShort', { defaultValue: 'Criar' })}</span>
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </>
           ) : null}
           {!selectedLogin ? (
             <div className="account-empty-state">

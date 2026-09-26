@@ -265,4 +265,39 @@ it('mostra contador e desabilita criação quando atingir 7 personagens', async 
   expect(createBtn).toBeDisabled()
 })
 
+it('renderiza as 7 vagas de personagens exibindo as desocupadas como vazias e clicáveis', async () => {
+  const twoChars = [
+    { char_id: 1, name: 'BUBY', level: 73, class_id: 54, sex: 1, online: false },
+    { char_id: 2, name: 'Sic', level: 35, class_id: 10, sex: 1, online: false },
+  ]
+
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue(twoChars as any)
+
+  const user = mount()
+
+  expect(await screen.findByText('BUBY')).toBeVisible()
+  expect(screen.getByText('Sic')).toBeVisible()
+
+  // 7 slots from #1 to #7
+  for (let i = 1; i <= 7; i++) {
+    expect(screen.getByText(`#${i}`)).toBeVisible()
+  }
+
+  // 5 empty slots showing "Vazia"
+  const emptyLabels = screen.getAllByText('Vazia')
+  expect(emptyLabels.length).toBeGreaterThanOrEqual(5)
+
+  // Clicking an empty slot opens the create character modal
+  const emptySlotButtons = screen.getAllByRole('button', { name: /^Criar personagem na vaga/i })
+  expect(emptySlotButtons).toHaveLength(5)
+  await user.click(emptySlotButtons[0])
+
+  expect(await screen.findByText('Criar Novo Personagem')).toBeVisible()
+})
+
 

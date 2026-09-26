@@ -2019,30 +2019,141 @@ html.pdl-panel .account-empty-state span {
   font-size: 11px;
 }
 
-html.pdl-panel .account-characters tbody tr {
-  cursor: pointer;
-  transition: background-color 0.15s ease;
+html.pdl-panel .account-characters-empty-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 8%, rgba(0, 0, 0, 0.35));
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c59a3f) 25%, transparent);
+  color: rgba(255, 255, 255, 0.85);
 }
 
-html.pdl-panel .account-characters tbody tr:hover {
-  background: rgba(229, 169, 59, 0.05);
+html.pdl-panel .account-characters-empty-banner > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--panel-gold, #c59a3f);
+  flex-shrink: 0;
 }
 
-html.pdl-panel .account-characters tbody tr:hover .account-character-open {
-  color: var(--panel-gold-bright);
+html.pdl-panel .account-characters-empty-banner strong {
+  display: block;
+  font-size: 13px;
+  color: var(--panel-gold-bright, #ffd277);
+}
+
+html.pdl-panel .account-characters-empty-banner span {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+html.pdl-panel .account-characters .table {
+  margin-top: 10px;
 }
 
 html.pdl-panel .account-characters .table td {
   vertical-align: middle;
-  padding: 10px 8px;
+  padding: 9px 8px;
 }
 
 html.pdl-panel .account-characters .table th {
-  padding: 10px 8px;
+  padding: 9px 8px;
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--panel-muted);
+}
+
+html.pdl-panel .account-col-slot {
+  width: 44px;
+  text-align: center;
+}
+
+html.pdl-panel .account-col-action {
+  width: 72px;
+  text-align: right;
+}
+
+html.pdl-panel .account-slot-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+html.pdl-panel .account-slot-number.is-occupied {
+  color: var(--panel-gold-bright, #ffd277);
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c59a3f) 35%, transparent);
+}
+
+html.pdl-panel .account-slot-number.is-empty {
+  color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+html.pdl-panel .account-character-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+html.pdl-panel .account-character-row.is-occupied:hover {
+  background: rgba(229, 169, 59, 0.06);
+}
+
+html.pdl-panel .account-character-row.is-occupied:hover .account-character-open {
+  color: var(--panel-gold-bright);
+}
+
+html.pdl-panel .account-character-row.is-occupied:hover .account-character-open svg {
+  transform: translateX(2px);
+}
+
+html.pdl-panel .account-character-row.is-empty {
+  background: rgba(255, 255, 255, 0.01);
+  border-bottom: 1px dashed color-mix(in srgb, var(--panel-gold, #c59a3f) 12%, rgba(255, 255, 255, 0.05));
+}
+
+html.pdl-panel .account-character-row.is-empty:hover {
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 4.5%, transparent);
+}
+
+html.pdl-panel .account-character-row.is-empty:hover .account-slot-number.is-empty {
+  color: var(--panel-gold-bright, #ffd277);
+  border-color: color-mix(in srgb, var(--panel-gold, #c59a3f) 45%, transparent);
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 10%, transparent);
+}
+
+html.pdl-panel .account-character-row.is-empty:hover .account-slot-empty-avatar {
+  border-color: color-mix(in srgb, var(--panel-gold, #c59a3f) 60%, transparent);
+  color: var(--panel-gold-bright, #ffd277);
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 12%, transparent);
+  transform: scale(1.04);
+}
+
+html.pdl-panel .account-character-row.is-empty:hover .account-slot-empty-title {
+  color: var(--panel-gold-bright, #ffd277);
+}
+
+html.pdl-panel .account-character-row.is-empty:hover .account-slot-create-btn {
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 16%, transparent);
+  border-color: color-mix(in srgb, var(--panel-gold, #c59a3f) 50%, transparent);
+  color: var(--panel-gold-bright, #ffd277);
+  box-shadow: 0 0 8px rgba(229, 169, 59, 0.15);
 }
 
 html.pdl-panel .account-character-link {
@@ -2064,6 +2175,99 @@ html.pdl-panel .account-character-link .character-avatar {
   flex-shrink: 0;
 }
 
+html.pdl-panel .account-slot-empty-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+html.pdl-panel .account-slot-empty-avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  border: 1px dashed color-mix(in srgb, var(--panel-gold, #c59a3f) 25%, rgba(255, 255, 255, 0.14));
+  background: rgba(0, 0, 0, 0.22);
+  color: color-mix(in srgb, var(--panel-gold, #c59a3f) 60%, rgba(255, 255, 255, 0.35));
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+html.pdl-panel .account-slot-empty-avatar svg {
+  width: 16px;
+  height: 16px;
+}
+
+html.pdl-panel .account-slot-empty-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+html.pdl-panel .account-slot-empty-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.52);
+  transition: color 0.18s ease;
+}
+
+html.pdl-panel .account-slot-empty-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+html.pdl-panel .account-slot-dash {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+}
+
+html.pdl-panel .account-character-level {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+html.pdl-panel .account-character-class {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+html.pdl-panel .badge.badge-slot-empty {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.38);
+  border: 1px dashed rgba(255, 255, 255, 0.13);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+html.pdl-panel .account-slot-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel-gold, #c59a3f) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-gold, #c59a3f) 26%, transparent);
+  color: var(--panel-gold, #c59a3f);
+  transition: all 0.18s ease;
+}
+
+html.pdl-panel .account-slot-create-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
 html.pdl-panel .account-character-open {
   display: grid;
   width: 28px;
@@ -2073,8 +2277,10 @@ html.pdl-panel .account-character-open {
   transition: color 0.15s ease, transform 0.15s ease;
 }
 
-html.pdl-panel .account-characters tbody tr:hover .account-character-open svg {
-  transform: translateX(2px);
+html.pdl-panel .account-character-open svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
 }
 
 html.pdl-panel .character-back {
