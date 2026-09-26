@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest'
-import { confirmStripePayment, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument } from './payments'
+import { confirmStripePayment, formatDocument, inferDocumentType, loadScript, mountMercadoPagoBrick, sanitizeDocument } from './payments'
 
 afterEach(() => { document.body.innerHTML = ''; vi.unstubAllGlobals() })
 it.each([['123.456.789-09', '12345678909'], ['12.345.678/0001-90', '12345678000190'], ['x abc', '']])('normaliza documento %s', (value, digits) => {
@@ -8,6 +8,14 @@ it.each([['123.456.789-09', '12345678909'], ['12.345.678/0001-90', '123456780001
 })
 it.each([['12345678909', 'CPF'], ['12345678000190', 'CNPJ'], ['', null], ['1234', null]])('identifica tipo pelo tamanho: %s', (digits, type) => {
   expect(inferDocumentType(digits)).toBe(type)
+})
+it.each([
+  ['10505627477', '105.056.274-77'],
+  ['12345678000190', '12.345.678/0001-90'],
+  ['123', '123'],
+  ['', ''],
+])('formata documento %s em %s', (raw, expected) => {
+  expect(formatDocument(raw)).toBe(expected)
 })
 
 it('compartilha tag de script entre carregamentos simultâneos', async () => {

@@ -22,6 +22,21 @@ export function inferDocumentType(digits: string): 'CPF' | 'CNPJ' | null {
   return null
 }
 
+export function formatDocument(value: string) {
+  const digits = sanitizeDocument(value).slice(0, 14)
+  if (digits.length <= 11) {
+    return digits
+      .replace(/^(\d{3})(\d)/, '$1.$2')
+      .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4')
+  }
+  return digits
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+}
+
 export function loadScript(src: string) {
   return new Promise<void>((resolve, reject) => {
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`)
@@ -75,7 +90,27 @@ export async function mountMercadoPagoBrick(options: {
     },
     customization: {
       paymentMethods: { creditCard: 'all', debitCard: 'all', ticket: 'all', bankTransfer: 'all' },
-      visual: { style: { theme: 'dark' } },
+      visual: {
+        style: {
+          theme: 'dark',
+          customVariables: {
+            baseColor: '#c5a161',
+            baseColorFirstVariant: '#d8b573',
+            baseColorSecondVariant: '#a98748',
+            buttonTextColor: '#090807',
+            formBackgroundColor: '#12100d',
+            inputBackgroundColor: '#0a0907',
+            textPrimaryColor: '#f7f2e8',
+            textSecondaryColor: 'rgba(247, 242, 232, 0.65)',
+            outlinePrimaryColor: '#c5a161',
+            outlineSecondaryColor: '#e6c77d',
+            borderRadiusSmall: '2px',
+            borderRadiusMedium: '3px',
+            borderRadiusLarge: '4px',
+            formPadding: '16px',
+          },
+        },
+      },
     },
     callbacks: {
       onReady: options.onReady,

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { Modal } from '../components/ui/Modal'
 import { WalletActivityCard } from '../components/wallet/WalletActivityCard'
+import { WalletCheckoutModal } from '../components/wallet/WalletCheckoutModal'
 import { WalletHero } from '../components/wallet/WalletHero'
 import { WalletPurchaseCard } from '../components/wallet/WalletPurchaseCard'
 import { WalletTransferCard } from '../components/wallet/WalletTransferCard'
@@ -38,6 +39,7 @@ export function WalletPage() {
   const [selectedTx, setSelectedTx] = useState<ApiWalletTransaction | null>(null)
   const [busy, setBusy] = useState(false)
   const [transferBusy, setTransferBusy] = useState(false)
+  const [isBrickReady, setIsBrickReady] = useState(false)
   const brickRef = useRef<{ unmount: () => void } | null>(null)
 
   const methods = catalog.data?.methods ?? []
@@ -54,6 +56,13 @@ export function WalletPage() {
     await queryClient.invalidateQueries({ queryKey: ['payments'] })
   }
 
+  function handleCloseCheckout() {
+    void brickRef.current?.unmount()
+    brickRef.current = null
+    setIsBrickReady(false)
+    setOrder(null)
+  }
+
   async function startPurchase(packageId?: string) {
     if (!paymentMethod) {
       toast.error(t('wallet.toast.rechargeUnavailable'))
@@ -63,6 +72,7 @@ export function WalletPage() {
     try {
       await brickRef.current?.unmount()
       brickRef.current = null
+      setIsBrickReady(false)
       const created = await paymentApi.create({
         package_id: packageId,
         amount: packageId ? undefined : customAmount,
@@ -81,25 +91,35 @@ export function WalletPage() {
   }
 
   useEffect(() => {
-    if (!order || order.method !== 'mercadopago' || !mp?.public_key) return
-    if (!inferDocumentType(sanitizeDocument(document))) return
+    setIsBrickReady(false)
+    if (!order || order.method !== 'mercadopago' || !mp?.public_key || order.pix_qr_code) return
+    const sanitized = sanitizeDocument(document)
+    if (!inferDocumentType(sanitized)) {
+      void brickRef.current?.unmount()
+      brickRef.current = null
+      return
+    }
     let cancelled = false
     void (async () => {
       try {
+        await brickRef.current?.unmount()
+        brickRef.current = null
         const controller = await mountMercadoPagoBrick({
           publicKey: mp.public_key,
           amount: Number(order.amount),
           email: user?.email || '',
-          document,
+          document: sanitized,
           containerId: 'payment-brick',
-          onReady: () => undefined,
+          onReady: () => {
+            if (!cancelled) setIsBrickReady(true)
+          },
           onError: (message) => toast.error(message),
           onSubmit: async (formData) => {
             const result = await paymentApi.process(order.id, formData)
             setOrder(result)
             if (result.status === 'confirmed') {
               toast.success(t('wallet.toast.coinsCredited', { coins: result.coins }))
-              setOrder(null)
+              handleCloseCheckout()
               await refreshWallet()
             } else if (result.pix_qr_code) {
               toast.success(t('wallet.toast.pixGenerated'))
@@ -118,8 +138,9 @@ export function WalletPage() {
     return () => {
       cancelled = true
       void brickRef.current?.unmount()
+      brickRef.current = null
     }
-  }, [order?.id, order?.method, document, mp?.public_key])
+  }, [order?.id, order?.method, order?.pix_qr_code, sanitizeDocument(document), mp?.public_key])
 
   useEffect(() => {
     if (!order || order.method !== 'stripe' || !stripe?.public_key || !order.client_secret) return
@@ -219,10 +240,6 @@ export function WalletPage() {
           onCustomAmountChange={setCustomAmount}
           busy={busy}
           onStartPurchase={startPurchase}
-          order={order}
-          document={document}
-          onDocumentChange={setDocument}
-          onPayStripe={payStripe}
         />
 
         <aside className="wallet-side-column">
@@ -247,6 +264,19 @@ export function WalletPage() {
           />
         </aside>
       </div>
+
+      <WalletCheckoutModal
+        open={Boolean(order)}
+        order={order}
+        onClose={handleCloseCheckout}
+        document={document}
+        onDocumentChange={setDocument}
+        busy={busy}
+        onPayStripe={payStripe}
+        simulatedPayment={simulatedPayment}
+        packages={packages}
+        isBrickReady={isBrickReady}
+      />
 
       <Modal open={Boolean(selectedOrder)} title={t('wallet.modal.order')} onClose={() => setSelectedOrder(null)}>
         {selectedOrder ? (

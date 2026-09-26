@@ -1,4 +1,3 @@
-import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Banknote,
@@ -12,7 +11,7 @@ import {
 import { Card } from '../ui/Card'
 import { Field } from '../ui/Field'
 import { Button } from '../ui/Button'
-import type { ApiCoinPackage, ApiPaymentOrder, ApiWalletPromo } from '../../services/types'
+import type { ApiCoinPackage, ApiWalletPromo } from '../../services/types'
 import { formatWalletMoney } from './walletHistory'
 import { WalletPromoBanner } from './WalletPromoBanner'
 
@@ -28,10 +27,6 @@ type WalletPurchaseCardProps = {
   onCustomAmountChange: (value: string) => void
   busy: boolean
   onStartPurchase: (packageId?: string) => void
-  order: ApiPaymentOrder | null
-  document: string
-  onDocumentChange: (value: string) => void
-  onPayStripe: (event: FormEvent) => void
 }
 
 export function WalletPurchaseCard({
@@ -46,10 +41,6 @@ export function WalletPurchaseCard({
   onCustomAmountChange,
   busy,
   onStartPurchase,
-  order,
-  document,
-  onDocumentChange,
-  onPayStripe,
 }: WalletPurchaseCardProps) {
   const { t } = useTranslation('panel')
   const priceKey = currency === 'USD' ? 'price_usd' : 'price_brl'
@@ -162,33 +153,6 @@ export function WalletPurchaseCard({
       </div>
 
       {promo ? <WalletPromoBanner promo={promo} /> : null}
-
-      <div className="wallet-checkout">
-        {order?.method === 'mercadopago' && !order.pix_qr_code ? (
-          <Field>
-            <span>{t('wallet.purchase.document')}</span>
-            <input value={document} onChange={(event) => onDocumentChange(event.target.value)} placeholder="000.000.000-00" />
-          </Field>
-        ) : null}
-        {order?.method === 'mercadopago' ? <div id="payment-brick" /> : null}
-        {order?.method === 'stripe' ? (
-          <form onSubmit={(event) => void onPayStripe(event)}>
-            <div id="stripe-element" />
-            <Button type="submit" disabled={busy}>
-              <CreditCard aria-hidden="true" /> {t('wallet.purchase.payCard')}
-            </Button>
-          </form>
-        ) : null}
-        {order?.pix_qr_code ? (
-          <div className="wallet-pix-result">
-            <h3>{t('wallet.purchase.pixTitle')}</h3>
-            <textarea readOnly value={order.pix_qr_code} rows={3} />
-            {order.pix_qr_code_base64 ? (
-              <img alt={t('wallet.purchase.pixAlt')} src={`data:image/png;base64,${order.pix_qr_code_base64}`} width={180} />
-            ) : null}
-          </div>
-        ) : null}
-      </div>
     </Card>
   )
 }
