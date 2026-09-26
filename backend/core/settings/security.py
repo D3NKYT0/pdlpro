@@ -6,6 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 _CSP_SCRIPT_HOSTS = (
     "https://cdn.jsdelivr.net https://js.stripe.com https://sdk.mercadopago.com "
+    "https://*.mlstatic.com https://http2.mlstatic.com "
     "https://hcaptcha.com https://*.hcaptcha.com"
 )
 _CSP_STYLE = (
@@ -17,7 +18,7 @@ _CSP_REST = (
     "font-src 'self' data: https://fonts.gstatic.com "
     "https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' "
     "https: ws: wss:; frame-src 'self' https://*.stripe.com https://*.mercadopago.com "
-    "https://*.mercadopago.com.br https://www.youtube-nocookie.com https://hcaptcha.com "
+    "https://*.mercadopago.com.br https://*.mercadolibre.com https://www.youtube-nocookie.com https://hcaptcha.com "
     "https://*.hcaptcha.com; media-src 'self' blob:; worker-src 'self' blob:; "
     "manifest-src 'self';"
 )

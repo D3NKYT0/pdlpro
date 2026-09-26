@@ -64,12 +64,14 @@ def test_every_location_with_add_header_repeats_the_security_baseline(nginx_conf
             assert f"add_header {header}" in body, f"{target} perdeu {header}"
 
 
-def test_default_csp_omits_script_unsafe_inline(nginx_config):
+def test_default_csp_allows_payment_sdk_inline_and_mlstatic(nginx_config):
     match = re.search(r'add_header Content-Security-Policy "([^"]+)"', nginx_config)
     assert match
     policy = match.group(1)
     script = next(part.strip() for part in policy.split(";") if part.strip().startswith("script-src "))
-    assert "'unsafe-inline'" not in script
+    assert "'unsafe-inline'" in script
+    assert "https://sdk.mercadopago.com" in script
+    assert "https://*.mlstatic.com" in script
 
 
 def test_uploaded_media_is_served_without_permission_to_run_script(nginx_config):

@@ -23,6 +23,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Falso positivo de `REDIS_PASSWORD` ausente no status de segredos (`/panel/admin/secrets`): expostos atributos `REDIS_URL` e `REDIS_PASSWORD` nas configurações Django e adicionados fallbacks de leitura de `settings.CACHES` e variáveis de ambiente.
 - Alerta de reinicialização pendente (`restart_required`) no painel de segredos passa a considerar o horário de inicialização do processo (`PROCESS_BOOT_TIME`), limpando o aviso automaticamente após a reinicialização dos containers.
+- Bloqueio de inicialização do Mercado Pago Bricks na carteira (`/panel/wallet`): adicionados domínios CDN do Mercado Livre/Mercado Pago (`*.mlstatic.com`, `http2.mlstatic.com`, `*.mercadolibre.com`) e permissão de scripts inline exigida pelo SDK na política Content-Security-Policy do Nginx e Django.
 
 ### Alterado
 
