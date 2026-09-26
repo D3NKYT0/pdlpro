@@ -12,15 +12,24 @@ export function ResetPasswordPage() {
   const token = params.get('token') || ''
   const navigate = useNavigate()
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [busy, setBusy] = useState(false)
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
+    if (password !== confirmPassword) {
+      toast.error(t('reset.passwordMismatch'))
+      return
+    }
+    setBusy(true)
     try {
       await authApi.confirmPasswordReset(token, password)
       toast.success(t('reset.success'))
       navigate('/login')
     } catch (error) {
       toast.error(apiErrorMessage(error, t('reset.error')))
+    } finally {
+      setBusy(false)
     }
   }
 
@@ -34,9 +43,12 @@ export function ResetPasswordPage() {
         <AuthField label={t('reset.passwordLabel')}>
           <AuthPassword value={password} onChange={setPassword} required minLength={8} autoComplete="new-password" />
         </AuthField>
+        <AuthField label={t('reset.confirmPasswordLabel')}>
+          <AuthPassword value={confirmPassword} onChange={setConfirmPassword} required minLength={8} autoComplete="new-password" />
+        </AuthField>
         <div className="h-link">
-          <button type="submit" disabled={!token}>
-            {t('reset.submit')}
+          <button type="submit" disabled={!token || busy}>
+            {busy ? t('reset.submitting') : t('reset.submit')}
           </button>
           <Link to="/login">{t('common.enterRealm')}</Link>
         </div>
