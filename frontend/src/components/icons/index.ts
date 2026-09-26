@@ -12,6 +12,7 @@ export {
   CloudBucketIcon,
   ENAMEL_ICONS,
   ExchangeIcon,
+  GamepadIcon,
   KeyRingIcon,
   MailSealIcon,
   PackageBoxIcon,

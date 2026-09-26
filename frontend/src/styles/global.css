@@ -77,6 +77,8 @@ button, input, select { font: inherit; }
 }
 .panel-topbar {
   grid-area: topbar;
+  position: relative;
+  z-index: 80;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -96,6 +98,7 @@ button, input, select { font: inherit; }
 .panel-topbar-end {
   flex: 0 0 auto;
   margin-left: auto;
+  gap: 14px;
 }
 .panel-topbar .contextual-help {
   display: flex;

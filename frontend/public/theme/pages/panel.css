@@ -445,6 +445,8 @@ html.pdl-panel .panel-user-account > .btn {
 
 html.pdl-panel .panel-topbar {
   grid-area: topbar;
+  position: relative;
+  z-index: 80;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -477,6 +479,7 @@ html.pdl-panel .panel-topbar-start {
 html.pdl-panel .panel-topbar-end {
   flex: 0 0 auto;
   margin-left: auto;
+  gap: 14px;
 }
 
 html.pdl-panel .panel-topbar .contextual-help {

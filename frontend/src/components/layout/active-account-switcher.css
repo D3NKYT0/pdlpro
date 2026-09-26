@@ -1,98 +1,157 @@
 /* Active Account Switcher - PDL 2 Component Styles */
 
+/* Ensure proper spacing between topbar items */
+.panel-topbar-end {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .active-account-switcher {
   position: relative;
   display: inline-flex;
   align-items: center;
+  z-index: 60;
 }
 
 .active-account-trigger {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 14px;
-  min-height: 40px;
-  border-radius: 6px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a059) 24%, transparent);
-  background: rgba(18, 16, 14, 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: 5px 12px 5px 10px;
+  min-height: 42px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: linear-gradient(180deg, rgba(28, 24, 20, 0.88) 0%, rgba(16, 14, 12, 0.95) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 240, 190, 0.12);
   color: #fff;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
   text-decoration: none;
+  user-select: none;
 }
 
-.active-account-trigger:hover,
+.active-account-trigger:hover {
+  border-color: rgba(229, 169, 59, 0.6);
+  background: linear-gradient(180deg, rgba(36, 30, 24, 0.92) 0%, rgba(22, 18, 14, 0.98) 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(229, 169, 59, 0.18), inset 0 1px 0 rgba(255, 240, 190, 0.2);
+  transform: translateY(-1px);
+}
+
 .active-account-trigger.is-open {
-  border-color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 50%, transparent);
-  background: rgba(28, 24, 20, 0.85);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 12px rgba(229, 169, 59, 0.12);
+  border-color: rgba(229, 169, 59, 0.8);
+  background: linear-gradient(180deg, rgba(40, 33, 26, 0.95) 0%, rgba(24, 20, 16, 1) 100%);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55), 0 0 18px rgba(229, 169, 59, 0.25), inset 0 1px 0 rgba(255, 240, 190, 0.25);
 }
 
 .active-account-trigger.is-empty {
   border-style: dashed;
-  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 80%, white);
+  border-color: rgba(212, 175, 55, 0.45);
+  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 85%, white);
 }
 
+.active-account-trigger.is-empty:hover {
+  border-color: rgba(229, 169, 59, 0.8);
+}
+
+/* Emerald pulsing status dot */
 .active-account-status-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #80c987;
-  box-shadow: 0 0 8px #80c987;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80, 0 0 16px rgba(74, 222, 128, 0.4), 0 0 2px #fff;
   flex-shrink: 0;
+  position: relative;
 }
 
+.active-account-status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.35);
+  animation: accountDotPulse 2.8s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes accountDotPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Enamel SVG Icon */
 .account-switcher-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--panel-gold-bright, #e5a93b);
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.active-account-trigger:hover .account-switcher-icon {
+  transform: scale(1.05);
 }
 
 .active-account-trigger-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 1px;
   line-height: 1.15;
   min-width: 0;
 }
 
 .active-account-caption {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--panel-gold, #c5a059) 70%, transparent);
+  color: #d4af37;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .account-switcher-label {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 13.5px;
+  font-weight: 700;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 140px;
+  letter-spacing: 0.02em;
 }
 
 .account-switcher-chevron {
-  width: 14px;
-  height: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  transition: transform 0.2s ease;
+  width: 15px;
+  height: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
   flex-shrink: 0;
+  margin-left: 2px;
 }
 
 .account-switcher-chevron.is-rotated {
   transform: rotate(180deg);
+  color: #e5a93b;
 }
 
 .account-switcher-add-icon {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   color: var(--panel-gold-bright, #e5a93b);
   flex-shrink: 0;
 }
@@ -102,35 +161,35 @@
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  min-height: 40px;
-  border-radius: 6px;
+  min-height: 42px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
   color: rgba(255, 255, 255, 0.3);
 }
 
-/* Dropdown Menu */
+/* ========================================================
+   Dropdown Menu - Rendered via Portal at document.body
+   ======================================================== */
 .active-account-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 260px;
-  max-width: calc(100vw - 32px);
-  border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold, #c5a059) 30%, transparent);
-  background: rgba(14, 13, 11, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 0, 0, 0.4);
-  z-index: 120;
+  position: fixed;
+  width: 270px;
+  max-width: calc(100vw - 24px);
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  background: linear-gradient(180deg, rgba(22, 20, 17, 0.98) 0%, rgba(13, 12, 10, 0.99) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(229, 169, 59, 0.14), inset 0 1px 0 rgba(255, 240, 190, 0.15);
+  z-index: 9999;
   overflow: hidden;
-  animation: accountDropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: accountDropdownIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes accountDropdownIn {
   from {
     opacity: 0;
-    transform: translateY(-6px) scale(0.98);
+    transform: translateY(-8px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -143,28 +202,52 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .active-account-dropdown-header span {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--panel-gold, #c5a059) 85%, white);
+  color: #e5a93b;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .active-account-dropdown-header small {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: 10px;
 }
 
 .active-account-list {
   display: flex;
   flex-direction: column;
-  padding: 6px;
-  max-height: 240px;
+  gap: 4px;
+  padding: 8px;
+  max-height: 250px;
   overflow-y: auto;
+}
+
+.active-account-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.active-account-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.active-account-list::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+
+.active-account-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 169, 59, 0.5);
 }
 
 .active-account-item {
@@ -173,40 +256,56 @@
   gap: 10px;
   width: 100%;
   padding: 8px 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid transparent;
   background: transparent;
   color: #fff;
   cursor: pointer;
   text-align: left;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
 }
 
 .active-account-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(229, 169, 59, 0.08);
+  border-color: rgba(229, 169, 59, 0.22);
+  transform: translateX(2px);
 }
 
 .active-account-item.is-active {
-  background: color-mix(in srgb, var(--panel-gold, #c5a059) 12%, transparent);
-  border-color: color-mix(in srgb, var(--panel-gold, #c5a059) 25%, transparent);
+  background: linear-gradient(90deg, rgba(229, 169, 59, 0.18) 0%, rgba(229, 169, 59, 0.05) 100%);
+  border-color: rgba(229, 169, 59, 0.42);
+  box-shadow: inset 2px 0 0 #e5a93b;
 }
 
 .active-account-item-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.active-account-item:hover .active-account-item-icon {
+  background: rgba(229, 169, 59, 0.12);
+  border-color: rgba(229, 169, 59, 0.3);
 }
 
 .active-account-item.is-active .active-account-item-icon {
-  background: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 20%, transparent);
-  color: var(--panel-gold-bright, #e5a93b);
+  background: rgba(229, 169, 59, 0.22);
+  border-color: rgba(229, 169, 59, 0.5);
+  box-shadow: 0 0 10px rgba(229, 169, 59, 0.25);
+}
+
+.account-switcher-item-glyph {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .active-account-item-details {
@@ -218,32 +317,35 @@
 }
 
 .active-account-item-details strong {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .active-account-item-details .active-badge {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #80c987;
+  color: #4ade80;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
 }
 
 .active-account-check {
   width: 16px;
   height: 16px;
-  color: #80c987;
+  color: #4ade80;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.6));
   flex-shrink: 0;
 }
 
 .active-account-dropdown-footer {
-  padding: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  background: rgba(0, 0, 0, 0.32);
 }
 
 .active-account-manage-btn {
@@ -253,20 +355,22 @@
   gap: 8px;
   width: 100%;
   padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  background: transparent;
-  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 85%, white);
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: rgba(212, 175, 55, 0.06);
+  color: color-mix(in srgb, var(--panel-gold-bright, #e5a93b) 90%, white);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
   font-family: inherit;
 }
 
 .active-account-manage-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(212, 175, 55, 0.18);
+  border-color: rgba(229, 169, 59, 0.5);
   color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(229, 169, 59, 0.15);
 }
 
 .active-account-manage-btn svg {

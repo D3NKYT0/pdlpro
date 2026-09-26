@@ -333,6 +333,58 @@ export function RadarPulseIcon(props: EnamelIconProps) {
   )
 }
 
+/** Controle de jogo esmaltado com ferragens douradas: conta de jogo Lineage / gameplay. */
+export function GamepadIcon(props: EnamelIconProps) {
+  const { id, url } = useGlyphIds()
+  return (
+    <Glyph data-enamel-icon="gamepad" {...props}>
+      <defs>
+        <Ramp id={id('body')} tone="night" x1={10} y1={16} x2={54} y2={50} />
+        <Ramp id={id('trim')} tone="gold" x1={8} y1={12} x2={56} y2={52} />
+        <Ramp id={id('dpad')} tone="silver" x1={14} y1={22} x2={28} y2={36} />
+        <Ramp id={id('stick')} tone="bronze" x1={22} y1={34} x2={42} y2={48} />
+        <Ramp id={id('gemA')} tone="ruby" x1={40} y1={18} x2={46} y2={24} />
+        <Ramp id={id('gemB')} tone="jade" x1={46} y1={24} x2={52} y2={30} />
+        <Ramp id={id('gemC')} tone="gold" x1={40} y1={30} x2={46} y2={36} />
+        <Ramp id={id('gemD')} tone="azure" x1={34} y1={24} x2={40} y2={30} />
+      </defs>
+      <Shadow rx={21} cy={59} ry={2.6} />
+      <path
+        d="M18 19c-5.5 0-9 4-10 11l-2 12c-.8 5.2 2.8 9.5 7.5 9.5 3.5 0 6.6-2.2 8-5.5l2.5-6c1.2-3 3.8-4.8 6-4.8s4.8 1.8 6 4.8l2.5 6c1.4 3.3 4.5 5.5 8 5.5 4.7 0 8.3-4.3 7.5-9.5l-2-12c-1-7-4.5-11-10-11H18Z"
+        fill={url('body')}
+        stroke={INK.night}
+        strokeWidth="3"
+      />
+      <path
+        d="M19 19h26c3 0 5.5 1.8 6.5 4.8-3-1.4-6.8-2-10.5-2h-18c-3.7 0-7.5.6-10.5 2 1-3 3.5-4.8 6.5-4.8Z"
+        fill={url('trim')}
+        stroke={INK.gold}
+        strokeWidth="2.2"
+      />
+      <path d="M17 22.5c4-2 9-2.8 15-2.8s11 .8 15 2.8" stroke="#FFF0BE" strokeWidth="2" opacity=".7" />
+      <path
+        d="M20 26h4v4h4v4h-4v4h-4v-4h-4v-4h4v-4Z"
+        fill={url('dpad')}
+        stroke={INK.silver}
+        strokeWidth="2"
+      />
+      <circle cx="22" cy="32" r="1.5" fill="#EAB74F" stroke={INK.gold} strokeWidth="1" />
+      <circle cx="42" cy="27" r="2.5" fill={url('gemA')} stroke={INK.ruby} strokeWidth="1.5" />
+      <circle cx="47" cy="32" r="2.5" fill={url('gemB')} stroke={INK.jade} strokeWidth="1.5" />
+      <circle cx="42" cy="37" r="2.5" fill={url('gemC')} stroke={INK.gold} strokeWidth="1.5" />
+      <circle cx="37" cy="32" r="2.5" fill={url('gemD')} stroke={INK.azure} strokeWidth="1.5" />
+      <circle cx="27" cy="41" r="3.8" fill={url('stick')} stroke={INK.bronze} strokeWidth="1.8" />
+      <circle cx="27" cy="41" r="1.8" fill="#FFF0BE" opacity=".8" />
+      <circle cx="37" cy="41" r="3.8" fill={url('stick')} stroke={INK.bronze} strokeWidth="1.8" />
+      <circle cx="37" cy="41" r="1.8" fill="#FFF0BE" opacity=".8" />
+      <path d="M32 25l2.8 3.5h-5.6L32 25Z" fill={url('trim')} stroke={INK.gold} strokeWidth="1.4" />
+      <circle cx="32" cy="31" r="1.2" fill="#EAB74F" />
+      <Sparkle x={53} y={13} s={0.95} />
+      <Sparkle x={11} y={43} s={0.7} />
+    </Glyph>
+  )
+}
+
 export const ENAMEL_ICONS = {
   package: PackageBoxIcon,
   cart: CartIcon,
@@ -347,6 +399,7 @@ export const ENAMEL_ICONS = {
   cloudBucket: CloudBucketIcon,
   brainOrb: BrainOrbIcon,
   radarPulse: RadarPulseIcon,
+  gamepad: GamepadIcon,
 } as const satisfies Record<string, ComponentType<EnamelIconProps>>
 
 export type EnamelIconKey = keyof typeof ENAMEL_ICONS

@@ -31,6 +31,7 @@ it('expõe o catálogo esmaltado com arte própria e marca estável', () => {
     'cloud-bucket',
     'brain-orb',
     'radar-pulse',
+    'gamepad',
   ])
   icons.forEach((icon) => {
     expect(icon).toHaveAttribute('viewBox', '0 0 64 64')
