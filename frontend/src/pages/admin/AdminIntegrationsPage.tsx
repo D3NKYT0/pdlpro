@@ -57,6 +57,26 @@ const MASKED_KEYS = new Set([
   'AWS_ACCESS_KEY_ID',
 ])
 
+const EMAIL_BACKEND_OPTIONS = [
+  {
+    value: 'django.core.mail.backends.smtp.EmailBackend',
+    labelKey: 'integrations.smtp.backendSmtp',
+  },
+  {
+    value: 'django.core.mail.backends.console.EmailBackend',
+    labelKey: 'integrations.smtp.backendConsole',
+  },
+  {
+    value: 'django.core.mail.backends.dummy.EmailBackend',
+    labelKey: 'integrations.smtp.backendDummy',
+  },
+  {
+    value: 'django.core.mail.backends.locmem.EmailBackend',
+    labelKey: 'integrations.smtp.backendLocmem',
+  },
+] as const
+
+
 const BOOL_KEYS = new Set([
   'STRIPE_ACTIVATE_PAYMENTS',
   'MERCADO_PAGO_ACTIVATE_PAYMENTS',
@@ -251,6 +271,21 @@ export function AdminIntegrationsPage() {
       ] as const,
     [t],
   )
+
+  const emailBackendOptions = useMemo(() => {
+    const list: { value: string; label: string }[] = EMAIL_BACKEND_OPTIONS.map((item) => ({
+      value: item.value,
+      label: t(item.labelKey),
+    }))
+    const current = String(drafts.smtp?.EMAIL_BACKEND ?? '').trim()
+    if (current && !list.some((opt) => opt.value === current)) {
+      list.push({
+        value: current,
+        label: `${t('integrations.smtp.backendCustom')} (${current})`,
+      })
+    }
+    return list
+  }, [drafts.smtp?.EMAIL_BACKEND, t])
 
   const section = status.data?.[tab]
   const fields = section ? fieldMap(section) : {}
@@ -477,7 +512,24 @@ export function AdminIntegrationsPage() {
                 description={t('integrations.smtp.hint')}
               >
                 <div className="admin-integrations-stack">
-                  {renderText('EMAIL_BACKEND')}
+                  <Field
+                    label={t('integrations.fields.EMAIL_BACKEND')}
+                    hint={
+                      String(draft.EMAIL_BACKEND ?? '').includes('console')
+                        ? t('integrations.smtp.warningConsole')
+                        : String(draft.EMAIL_BACKEND ?? '').includes('dummy')
+                          ? t('integrations.smtp.warningDummy')
+                          : t('integrations.smtp.backendHint')
+                    }
+                  >
+                    <Select
+                      aria-label={t('integrations.fields.EMAIL_BACKEND')}
+                      value={String(draft.EMAIL_BACKEND || 'django.core.mail.backends.console.EmailBackend')}
+                      disabled={save.isPending}
+                      options={emailBackendOptions}
+                      onChange={(value) => setField('EMAIL_BACKEND', value)}
+                    />
+                  </Field>
                   <div className="account-form-fields">
                     {renderText('EMAIL_HOST')}
                     {renderText('EMAIL_PORT', 'number')}

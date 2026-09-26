@@ -154,6 +154,22 @@ def test_smtp_test_sends_mail(api, superuser, hosts, settings):
 
 
 @pytest.mark.django_db
+def test_smtp_console_mock_explains_no_real_mail_sent(api, superuser, hosts, settings):
+    settings.EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    api.force_authenticate(superuser)
+    response = api.post(
+        reverse("staff-integrations-test", kwargs={"section": "smtp"}),
+        {},
+        format="json",
+    )
+    assert response.status_code == 200, response.content
+    body = response.json()
+    assert body["ok"] is True
+    assert "Mock" in body["message"]
+
+
+
+@pytest.mark.django_db
 def test_payments_test_rejects_active_without_key(api, superuser, hosts, settings):
     settings.STRIPE_SECRET_KEY = ""
     settings.STRIPE_ACTIVATE_PAYMENTS = True

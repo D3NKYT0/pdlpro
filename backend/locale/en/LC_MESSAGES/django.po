@@ -5208,5 +5208,11 @@ msgstr "Shows the side characters on the launch page."
 msgid "A URL do YouTube precisa ser HTTPS."
 msgstr "The YouTube URL must use HTTPS."
 
+msgid "E-mail simulado nos logs do servidor (Mock). Nenhum e-mail real foi enviado pela rede."
+msgstr "Email simulated in server logs (Mock). No real email was sent over the network."
+
+msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
+msgstr "Disabled mode (Dummy). The test message was discarded on purpose."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Sample extension"

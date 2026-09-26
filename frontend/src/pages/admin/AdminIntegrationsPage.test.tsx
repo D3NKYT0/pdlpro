@@ -235,4 +235,18 @@ describe('AdminIntegrationsPage', () => {
     await user.click(screen.getByRole('button', { name: /testar/i }))
     await waitFor(() => expect(staffApi.testIntegrationSection).toHaveBeenCalledWith('oauth'))
   })
+
+  it('alterna para SMTP e exibe select intuitivo de backend com alerta de mock', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    await user.click(await screen.findByRole('tab', { name: /smtp/i }))
+    expect(await screen.findByRole('combobox', { name: /modo de envio/i })).toBeInTheDocument()
+    expect(screen.getByText(/atenção: no modo mock/i)).toBeInTheDocument()
+    expect(screen.getByText(/console \/ log \(mock/i)).toBeInTheDocument()
+
+    await user.click(screen.getByRole('combobox', { name: /modo de envio/i }))
+    const smtpRealOption = await screen.findByRole('option', { name: /smtp real/i })
+    await user.click(smtpRealOption)
+    expect(screen.getByText(/smtp real/i)).toBeInTheDocument()
+  })
 })

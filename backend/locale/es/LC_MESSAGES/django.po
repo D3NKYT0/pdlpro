@@ -5317,5 +5317,11 @@ msgstr "Muestra los personajes laterales en la página de lanzamiento."
 msgid "A URL do YouTube precisa ser HTTPS."
 msgstr "La URL de YouTube debe usar HTTPS."
 
+msgid "E-mail simulado nos logs do servidor (Mock). Nenhum e-mail real foi enviado pela rede."
+msgstr "Correo simulado en los logs del servidor (Mock). No se envió ningún correo real por la red."
+
+msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
+msgstr "Modo desactivado (Dummy). El mensaje de prueba fue descartado a propósito."
+
 #~ msgid "Extensão de exemplo"
 #~ msgstr "Extensión de ejemplo"

@@ -332,6 +332,18 @@ class DjangoIntegrationProbe(IIntegrationProbe):
                 fail_silently=False,
             )
             details["sent"] = int(sent)
+            if "console" in backend.lower():
+                return ProbeResult(
+                    True,
+                    _("E-mail simulado nos logs do servidor (Mock). Nenhum e-mail real foi enviado pela rede."),
+                    details,
+                )
+            if "dummy" in backend.lower():
+                return ProbeResult(
+                    True,
+                    _("Modo desativado (Dummy). A mensagem foi descartada propositalmente."),
+                    details,
+                )
             return ProbeResult(True, _("E-mail de teste enviado."), details)
         except Exception as exc:  # noqa: BLE001
             details["error"] = type(exc).__name__

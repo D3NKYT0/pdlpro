@@ -4884,3 +4884,9 @@ msgstr ""
 
 msgid "A vitória contra o chefe entrega o prêmio e zera a arma no máximo."
 msgstr ""
+
+msgid "E-mail simulado nos logs do servidor (Mock). Nenhum e-mail real foi enviado pela rede."
+msgstr ""
+
+msgid "Modo desativado (Dummy). A mensagem foi descartada propositalmente."
+msgstr ""

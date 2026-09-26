@@ -27,6 +27,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Alterado
 
+- Configurador de integrações SMTP (`/panel/admin/integrations`): campo `EMAIL_BACKEND` substituído por seleção intuitiva entre SMTP Real (Produção), Console/Log (Mock de desenvolvimento), Desativado e Memória, com alertas contextuais quando em modo Mock e feedback descritivo no probe de teste.
 - Documentação só em Markdown: removidos PDFs de migração e scripts em
   `docs/_pdf/`.
 - Auditorias Python movidas de `desenvolvimento/` para `historico/`.
