@@ -957,7 +957,7 @@
       "webauthnEyebrow": "WebAuthn",
       "webauthnTitle": "Passkeys / RP",
       "webauthnHint": "RP ID e origins do domínio HTTPS de produção.",
-      "originsHint": "Separados por vírgula, ex.: https://painel.exemplo.com"
+      "originsHint": "Separados por vírgula, ex.: https://seudominio.com"
     },
     "denkynho": {
       "eyebrow": "Assistente",

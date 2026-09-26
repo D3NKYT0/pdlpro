@@ -36,7 +36,7 @@ na rede privada) é quem recebe 80/443.
   `root`/`sudo`).
 - `curl` no Linux.
 - Um domínio com registro `A` (e `AAAA` só se o IPv6 do servidor funcionar),
-  por exemplo `painel.exemplo.com`.
+  por exemplo `seudominio.com`.
 - Portas `80` e `443` livres no servidor, para o certificado e o HTTPS.
 - O diretório de instalação criado e com permissão de escrita pelo usuário que
   vai rodar o Docker (veja o passo 0 abaixo).
@@ -81,13 +81,13 @@ chmod 750 ~/pdlpro
 
 ```bash
 curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
+bash install.sh --dir /opt/pdlpro --domain seudominio.com --yes
 ```
 
 Se o Docker ainda não estiver instalado, adicione `--install-docker`:
 
 ```bash
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes --install-docker
+bash install.sh --dir /opt/pdlpro --domain seudominio.com --yes --install-docker
 ```
 
 Sem `--yes` o script pergunta o domínio e pede confirmação. `--dir`, `--port`
@@ -114,7 +114,7 @@ O DNS já precisa apontar para este servidor. Na pasta da instalação:
 
 ```bash
 cd /opt/pdlpro
-./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
+./setup.sh nginx --yes --ssl --email voce@seudominio.com
 ```
 
 Um comando, um arquivo de site (`/etc/nginx/sites-available/pdlpro`). Ele
@@ -129,7 +129,7 @@ Se o proxy estiver em **outra** máquina, não rode este comando lá: aponte ess
 proxy para `http://IP_PRIVADO_DO_PDL:8080` com `Host`, `X-Forwarded-For`,
 `X-Forwarded-Proto: https` e upgrade de WebSocket.
 
-Como conferir: o navegador abre `https://painel.exemplo.com` sem aviso de
+Como conferir: o navegador abre `https://seudominio.com` sem aviso de
 certificado.
 
 ### 3. Criar o administrador
@@ -140,14 +140,14 @@ docker compose --env-file .env -f docker-compose.prod.yml exec backend python ma
 ```
 
 O Django pede usuário, e-mail e senha. Essa conta entra no Django Admin e no
-painel staff. Depois abra `https://painel.exemplo.com/admin/`.
+painel staff. Depois abra `https://seudominio.com/admin/`.
 
 ### 4. Conferir se está no ar
 
 No navegador, ou com `curl` no servidor:
 
-- `https://painel.exemplo.com/api/v1/system/health/`
-- `https://painel.exemplo.com/api/v1/system/version/`
+- `https://seudominio.com/api/v1/system/health/`
+- `https://seudominio.com/api/v1/system/version/`
 
 A version deve ser a da latest que o instalador baixou.
 
@@ -158,14 +158,14 @@ e senha.
 
 ```bash
 cd /opt/pdlpro
-./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
+./setup.sh ftp --yes --http --domain launcher.seudominio.com --ssl --email voce@seudominio.com
 ```
 
 `--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`),
 sem misturar com o site do painel. `--yes` sem `--password-file` gera a senha
 e mostra uma vez no final. FTPS: `--ftps`. Ajuda: `./setup.sh help ftp`.
 
-O DNS de `launcher.painel.exemplo.com` também precisa apontar para este
+O DNS de `launcher.seudominio.com` também precisa apontar para este
 servidor. Abra as portas `21` e a faixa passiva `40000-50000` no firewall.
 
 ## Windows
@@ -196,7 +196,7 @@ New-Item -ItemType Directory -Force -Path "C:\PDL\PRO"
 Invoke-WebRequest -UseBasicParsing `
   -Uri https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.ps1 `
   -OutFile install.ps1
-powershell -File .\install.ps1 -Domain painel.exemplo.com -Yes
+powershell -File .\install.ps1 -Domain seudominio.com -Yes
 ```
 
 Pasta padrão: `%LOCALAPPDATA%\PDL\PRO`. Também aceita `-InstallDir`, `-Port` e
@@ -216,7 +216,7 @@ instala a latest. O `.env` existente é preservado; só as imagens mudam.
 cd /opt/pdlpro
 ./setup.sh backup
 curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
+bash install.sh --dir /opt/pdlpro --domain seudominio.com --yes
 ```
 
 Não misture um clone Git (imagens `pdl_*:local`) com um diretório instalado
@@ -234,8 +234,8 @@ catálogo; `./setup.sh help <comando>` a ajuda de cada um.
 | Ver os containers | `docker compose --env-file .env -f docker-compose.prod.yml ps` |
 | Ver logs | `docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web backend` |
 | Criar o admin | `docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser` |
-| Ligar HTTPS | `./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com` |
-| Ligar o FTP do launcher | `./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com` |
+| Ligar HTTPS | `./setup.sh nginx --yes --ssl --email voce@seudominio.com` |
+| Ligar o FTP do launcher | `./setup.sh ftp --yes --http --domain launcher.seudominio.com --ssl --email voce@seudominio.com` |
 | Backup do PostgreSQL | `./setup.sh backup` |
 | Restaurar um dump | `./setup.sh restore --path backups/db/ARQUIVO.dump.enc` |
 

@@ -143,12 +143,12 @@ jobs:
 
           \`\`\`bash
           curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ steps.meta.outputs.tag }}/install.sh -o install.sh
-          bash install.sh --domain painel.exemplo.com --yes
+          bash install.sh --domain seudominio.com --yes
           \`\`\`
 
           \`\`\`powershell
           Invoke-WebRequest -UseBasicParsing -Uri https://github.com/${{ github.repository }}/releases/download/${{ steps.meta.outputs.tag }}/install.ps1 -OutFile install.ps1
-          powershell -File .\\install.ps1 -Domain painel.exemplo.com -Yes
+          powershell -File .\\install.ps1 -Domain seudominio.com -Yes
           \`\`\`
 
           Imagens: \`${{ steps.meta.outputs.backend }}:${{ steps.meta.outputs.version }}\` e \`${{ steps.meta.outputs.web }}:${{ steps.meta.outputs.version }}\`.

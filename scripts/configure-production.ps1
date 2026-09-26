@@ -16,7 +16,7 @@ function Show-Help {
 Configura o .env de producao do PDL PRO (Windows).
 
 Uso:
-  .\scripts\configure-production.ps1 -Domain painel.exemplo.com -Yes
+  .\scripts\configure-production.ps1 -Domain seudominio.com -Yes
 
 Opcoes:
   -Domain DOMINIO       Dominio publico HTTPS

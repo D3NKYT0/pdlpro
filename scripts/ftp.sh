@@ -16,7 +16,7 @@ Instala o vsftpd e grava um único vsftpd.conf para o launcher.
 Uso:
   ./setup.sh ftp
   ./setup.sh ftp --yes --password-file /root/ftp.secret
-  ./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
+  ./setup.sh ftp --yes --http --domain launcher.seudominio.com --ssl --email voce@seudominio.com
 
 Sem flags, pergunta diretório, usuário, senha e se publica a pasta no Nginx.
 
@@ -220,7 +220,7 @@ if [[ "$assume_yes" -ne 1 && -z "$write_config" && -z "$write_http_config" && "$
     prompt_yes "Publicar a pasta no Nginx (index)?" 0 && setup_http=1
   fi
   if [[ "$setup_http" -eq 1 && -z "$http_domain" ]]; then
-    http_domain="$(prompt_value "Domínio HTTP do launcher" "launcher.${DOMAIN:-painel.exemplo.com}")"
+    http_domain="$(prompt_value "Domínio HTTP do launcher" "launcher.${DOMAIN:-seudominio.com}")"
   fi
   if [[ "$setup_http" -eq 1 && "$setup_ssl" -eq 0 ]]; then
     prompt_yes "Emitir Let's Encrypt nesse domínio?" 1 && setup_ssl=1

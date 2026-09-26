@@ -13,7 +13,7 @@ Instala o Nginx da máquina e grava um único site com HTTP, HTTPS, WebSocket e 
 
 Uso:
   ./setup.sh nginx
-  ./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
+  ./setup.sh nginx --yes --ssl --email voce@seudominio.com
 
 Sem flags, pergunta domínio, porta, SSL e e-mail. Com --yes usa o .env
 (DOMAIN, APP_HTTP_PORT) e só pede certificado se passar --ssl.

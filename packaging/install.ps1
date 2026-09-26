@@ -21,7 +21,7 @@ function Show-Help {
 Instala uma versao publicada do PDL PRO (imagens Docker + Compose).
 
 Uso:
-  .\install.ps1 -Domain painel.exemplo.com -Yes
+  .\install.ps1 -Domain seudominio.com -Yes
 
 Opcoes:
   -Version X.Y.Z      Versao (padrao: latest da GitHub Release)
@@ -180,7 +180,7 @@ function Set-PublishedImages {
 
 function Test-Domain {
     param([string]$Value)
-    if (-not $Value) { throw 'informe -Domain (ex.: painel.exemplo.com)' }
+    if (-not $Value) { throw 'informe -Domain (ex.: seudominio.com)' }
     if ($Value -notmatch '^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$') {
         throw "dominio invalido: $Value"
     }

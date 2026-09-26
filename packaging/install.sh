@@ -16,8 +16,8 @@ show_help() {
 Instala uma versão publicada do PDL PRO (imagens Docker + Compose).
 
 Uso:
-  ./install.sh --domain painel.exemplo.com [--yes]
-  curl -fsSL .../install.sh -o install.sh && bash install.sh --domain painel.exemplo.com --yes
+  ./install.sh --domain seudominio.com [--yes]
+  curl -fsSL .../install.sh -o install.sh && bash install.sh --domain seudominio.com --yes
 
 Opções:
   --version X.Y.Z     Versão (padrão: latest da GitHub Release)
@@ -232,7 +232,7 @@ copy_bundle() {
 }
 
 require_domain() {
-  [[ -n "$domain" ]] || die "informe --domain (ex.: painel.exemplo.com)"
+  [[ -n "$domain" ]] || die "informe --domain (ex.: seudominio.com)"
   [[ "$domain" =~ ^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$ ]] || die "domínio inválido: $domain"
 }
 
@@ -258,7 +258,7 @@ if [[ "$assume_yes" -eq 1 ]]; then
 elif [[ ! -t 0 ]]; then
   die "execução não interativa exige --yes e --domain"
 elif [[ -z "$domain" ]]; then
-  printf 'Domínio público (ex.: painel.exemplo.com): '
+  printf 'Domínio público (ex.: seudominio.com): '
   read -r domain
   require_domain
 fi

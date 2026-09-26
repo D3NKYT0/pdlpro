@@ -1050,7 +1050,7 @@
       "webauthnEyebrow": "WebAuthn",
       "webauthnTitle": "Passkeys / RP",
       "webauthnHint": "RP ID y origins del dominio HTTPS de producción.",
-      "originsHint": "Separados por coma, ej.: https://panel.ejemplo.com"
+      "originsHint": "Separados por coma, ej.: https://tudominio.com"
     },
     "denkynho": {
       "eyebrow": "Asistente",

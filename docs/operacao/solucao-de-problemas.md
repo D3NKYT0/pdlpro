@@ -132,7 +132,7 @@ grep -q '^REDIS_URL=' .env || echo "REDIS_URL=redis://:${REDIS_PW}@redis:6379/0"
 unset REDIS_PW
 cd ~
 curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh -o install.sh
-bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
+bash install.sh --dir /opt/pdlpro --domain seudominio.com --yes
 ```
 
 Baixar de novo o `install.sh` da latest também resolve, sem o `sed`.
