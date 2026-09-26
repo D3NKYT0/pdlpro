@@ -51,6 +51,26 @@ APPLYABLE_KINDS = {
     KIND_REVOKE_SESSIONS,
 }
 
+PROCESS_BOOT_TIME = timezone.now()
+
+
+def _is_job_restart_pending(job: dict[str, Any], boot_time: Any = None) -> bool:
+    if not job.get("restart_required"):
+        return False
+    applied_at_str = job.get("applied_at")
+    if not applied_at_str:
+        return True
+    try:
+        from datetime import datetime, timezone as dt_timezone
+
+        applied_at = datetime.fromisoformat(applied_at_str)
+        if applied_at.tzinfo is None:
+            applied_at = applied_at.replace(tzinfo=dt_timezone.utc)
+        current_boot = boot_time or PROCESS_BOOT_TIME
+        return applied_at > current_boot
+    except Exception:  # noqa: BLE001
+        return True
+
 
 def _domain_confirmation() -> str:
     hosts = getattr(settings, "ALLOWED_HOSTS", None) or []
@@ -126,10 +146,20 @@ class GetSecretsStatusUseCase(UseCase[None, SecretsStatus]):
         backup = str(getattr(settings, "BACKUP_ENCRYPTION_KEY", "") or "")
         redis = ""
         try:
+            import os
             from urllib.parse import urlparse
 
-            parsed = urlparse(str(getattr(settings, "REDIS_URL", "") or ""))
-            redis = parsed.password or ""
+            redis_target = str(getattr(settings, "REDIS_URL", "") or "")
+            if not redis_target:
+                caches = getattr(settings, "CACHES", {}) or {}
+                redis_target = str(caches.get("default", {}).get("LOCATION", "") or "")
+            if not redis_target:
+                redis_target = os.environ.get("REDIS_URL", "")
+
+            parsed = urlparse(redis_target)
+            redis = parsed.password or str(getattr(settings, "REDIS_PASSWORD", "") or "")
+            if not redis:
+                redis = os.environ.get("REDIS_PASSWORD", "")
         except Exception:  # noqa: BLE001
             redis = ""
 
@@ -147,7 +177,7 @@ class GetSecretsStatusUseCase(UseCase[None, SecretsStatus]):
         secret_stale = _stale(secret_rotated, ttl, len(secret_fallbacks))
         data_stale = _stale(data_rotated, ttl, len(data_fallbacks))
         pending = self._jobs.list_pending()
-        restart = any(bool(job.get("restart_required")) for job in self._jobs.list_recent(limit=5))
+        restart = any(_is_job_restart_pending(job) for job in self._jobs.list_recent(limit=5))
 
         secrets = (
             SecretFingerprint(

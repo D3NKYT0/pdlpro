@@ -82,3 +82,69 @@ def test_rotate_secret_without_runtime_flag_stays_pending(api, superuser, hosts,
     body = response.json()
     assert body["status"] == "pending"
     assert SecretRotationJob.objects.filter(kind="rotate_secret_key", status="pending").exists()
+
+
+@pytest.mark.django_db
+def test_secrets_status_detects_redis_password(api, superuser, hosts, settings):
+    api.force_authenticate(superuser)
+    url = reverse("staff-secrets-status")
+
+    # Sem senha de redis no test.py (memory://)
+    r1 = api.get(url)
+    assert r1.status_code == 200
+    redis_item = next(s for s in r1.json()["secrets"] if s["name"] == "REDIS_PASSWORD")
+    assert redis_item["present"] is False
+
+    # Com REDIS_URL autenticada
+    settings.REDIS_URL = "redis://:my_super_secret_redis_pw@redis:6379/0"
+    r2 = api.get(url)
+    assert r2.status_code == 200
+    redis_item2 = next(s for s in r2.json()["secrets"] if s["name"] == "REDIS_PASSWORD")
+    assert redis_item2["present"] is True
+    assert redis_item2["fingerprint"] != ""
+    assert redis_item2["level"] == "ok"
+
+    # Ou com REDIS_PASSWORD direto em settings
+    settings.REDIS_URL = "redis://redis:6379/0"
+    settings.REDIS_PASSWORD = "another_redis_pw"
+    r3 = api.get(url)
+    assert r3.status_code == 200
+    redis_item3 = next(s for s in r3.json()["secrets"] if s["name"] == "REDIS_PASSWORD")
+    assert redis_item3["present"] is True
+
+
+@pytest.mark.django_db
+def test_secrets_status_clears_restart_required_if_process_booted_after_job(api, superuser, hosts):
+    from datetime import timedelta
+    from django.utils import timezone
+    from apps.staff.application import secrets as secrets_module
+
+    api.force_authenticate(superuser)
+    url = reverse("staff-secrets-status")
+
+    # Job aplicado no passado (antes do boot do processo atual)
+    past_time = timezone.now() - timedelta(minutes=5)
+    SecretRotationJob.objects.create(
+        kind="rotate_secret_key",
+        status="applied",
+        restart_required=True,
+        applied_at=past_time,
+    )
+    # Garante que PROCESS_BOOT_TIME é mais recente que o job
+    secrets_module.PROCESS_BOOT_TIME = timezone.now()
+
+    response = api.get(url)
+    assert response.status_code == 200
+    assert response.json()["restart_required"] is False
+
+    # Se um novo job for aplicado após o boot do processo:
+    SecretRotationJob.objects.create(
+        kind="rotate_secret_key",
+        status="applied",
+        restart_required=True,
+        applied_at=timezone.now() + timedelta(minutes=1),
+    )
+    response2 = api.get(url)
+    assert response2.status_code == 200
+    assert response2.json()["restart_required"] is True
+

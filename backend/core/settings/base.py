@@ -120,10 +120,13 @@ if DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     if not sqlite_name.is_absolute():
         DATABASES["default"]["NAME"] = BASE_DIR / sqlite_name
 
+REDIS_URL = env("REDIS_URL", default="redis://127.0.0.1:6379/0")
+REDIS_PASSWORD = env("REDIS_PASSWORD", default="")
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env("REDIS_URL", default="redis://127.0.0.1:6379/0"),
+        "LOCATION": REDIS_URL,
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }
@@ -132,7 +135,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [env("REDIS_URL", default="redis://127.0.0.1:6379/0")],
+            "hosts": [REDIS_URL],
         },
     }
 }

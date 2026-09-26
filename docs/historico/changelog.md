@@ -19,6 +19,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
   loja, marketplace e leilão.
 - Índice de [histórico](README.md) para registros datados.
 
+### Corrigido
+
+- Falso positivo de `REDIS_PASSWORD` ausente no status de segredos (`/panel/admin/secrets`): expostos atributos `REDIS_URL` e `REDIS_PASSWORD` nas configurações Django e adicionados fallbacks de leitura de `settings.CACHES` e variáveis de ambiente.
+- Alerta de reinicialização pendente (`restart_required`) no painel de segredos passa a considerar o horário de inicialização do processo (`PROCESS_BOOT_TIME`), limpando o aviso automaticamente após a reinicialização dos containers.
+
 ### Alterado
 
 - Documentação só em Markdown: removidos PDFs de migração e scripts em
