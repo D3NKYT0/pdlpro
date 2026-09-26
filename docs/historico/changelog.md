@@ -8,6 +8,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+## [2.5.12] - 2026-09-25
+
+Configurador admin de integrações (Fernet + hot-apply), consolidado em
+**25 de setembro de 2026**.
+
 ### Adicionado
 
 - Configurador admin de integrações em `/panel/admin/integrations` (abas

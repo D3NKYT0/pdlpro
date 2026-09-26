@@ -28,11 +28,31 @@ describe('item observation service', () => {
     await api.removeSnapshot('snapshot-uuid')
     expect(request).toHaveBeenLastCalledWith('/staff/item-observation/snapshots/snapshot-uuid/', { method: 'DELETE' })
   })
+  it('reads live inventory, snapshots and categories', async () => {
+    const filters = { search: '', minimum: '', category: '', favorites: false, sort: 'quantity' as const, page: 1 }
+    await api.access()
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/access/')
+    await api.live(filters)
+    expect(request).toHaveBeenLastCalledWith(`/staff/item-observation/?${observationParams(filters)}`)
+    await api.snapshots(2)
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/snapshots/?page=2')
+    await api.detail('snap/id', 4)
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/snapshots/snap%2Fid/?page=4')
+    await api.categories()
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/categories/')
+  })
   it('uses UUIDs for history comparison and category edits', async () => {
     await api.compare('old-uuid', 'new-uuid', 3)
     expect(request).toHaveBeenLastCalledWith('/staff/item-observation/compare/?before=old-uuid&after=new-uuid&page=3')
     const category = { name: 'Moedas', description: '', item_ids: [57], order: 0 }
+    await api.saveCategory(category)
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/categories/', { method: 'POST', body: JSON.stringify(category) })
     await api.saveCategory(category, 'category-uuid')
     expect(request).toHaveBeenLastCalledWith('/staff/item-observation/categories/category-uuid/', { method: 'PUT', body: JSON.stringify(category) })
+    await api.removeCategory('category-uuid')
+    expect(request).toHaveBeenLastCalledWith('/staff/item-observation/categories/category-uuid/', { method: 'DELETE' })
+  })
+  it('falls back when quantity is not an integer string', () => {
+    expect(formatItemQuantity('not-a-number')).toBe('not-a-number')
   })
 })
