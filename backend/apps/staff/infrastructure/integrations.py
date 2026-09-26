@@ -335,11 +335,19 @@ class DjangoIntegrationProbe(IIntegrationProbe):
                 _("VAPID incompleto: informe chave pública e privada."),
                 details,
             )
+        from_email = (
+            str(getattr(settings, "DEFAULT_FROM_EMAIL", "") or "").strip()
+            or str(getattr(settings, "EMAIL_HOST_USER", "") or "").strip()
+            or "noreply@localhost"
+        )
+        if from_email == "noreply@localhost" and getattr(settings, "EMAIL_HOST_USER", ""):
+            from_email = str(settings.EMAIL_HOST_USER).strip()
+
         try:
             sent = send_mail(
                 subject=_("PDL PRO — teste SMTP"),
                 message=_("Este é um e-mail de teste do configurador de integrações."),
-                from_email=getattr(settings, "DEFAULT_FROM_EMAIL", None),
+                from_email=from_email,
                 recipient_list=[to_email],
                 fail_silently=False,
             )

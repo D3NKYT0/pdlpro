@@ -327,7 +327,12 @@ EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL", default=False)
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@localhost")
+_configured_from = env("DEFAULT_FROM_EMAIL", default="").strip()
+DEFAULT_FROM_EMAIL = (
+    _configured_from
+    if (_configured_from and _configured_from != "noreply@localhost")
+    else (EMAIL_HOST_USER or "noreply@localhost")
+)
 
 WEBSOCKET_ALLOWED_ORIGINS = env.list(
     "WEBSOCKET_ALLOWED_ORIGINS",

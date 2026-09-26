@@ -16,8 +16,16 @@ class DjangoMailer(IMailer):
     """
 
     def send(self, to: str, subject: str, body: str) -> None:
+        from_email = (
+            str(getattr(settings, "DEFAULT_FROM_EMAIL", "") or "").strip()
+            or str(getattr(settings, "EMAIL_HOST_USER", "") or "").strip()
+            or "noreply@localhost"
+        )
+        if from_email == "noreply@localhost" and getattr(settings, "EMAIL_HOST_USER", ""):
+            from_email = str(settings.EMAIL_HOST_USER).strip()
+
         try:
-            send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [to], fail_silently=False)
+            send_mail(subject, body, from_email, [to], fail_silently=False)
         except Exception:
             logger.exception(
                 "Falha ao enviar e-mail via DjangoMailer",
@@ -25,5 +33,6 @@ class DjangoMailer(IMailer):
                     "event": "email.send_failed",
                     "recipient": to,
                     "subject": subject,
+                    "from_email": from_email,
                 },
             )
