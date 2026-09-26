@@ -1,6 +1,6 @@
 # Segurança de contas e operações
 
-[Índice](../README.md) · [Testes](../desenvolvimento/testes.md) · [Implantação](implantacao.md)
+[Índice](../README.md) · [Testes](../desenvolvimento/testes.md) · [Instalar (Release)](distribuicao.md)
 
 ## Atualização
 
@@ -28,7 +28,11 @@ Os JWTs anteriores, sem a informação de revogação por senha, deixam de ser a
 
 `REST_FRAMEWORK.NUM_PROXIES` usa `TRUSTED_PROXY_COUNT`: a identidade vem da direita da cadeia, descartando o prefixo que o cliente pode inventar. Produção assume dois proxies (externo HTTPS e Nginx interno); o Compose de desenvolvimento assume um. Sem proxy, configure zero. Ajuste o valor à topologia real, não ao cabeçalho recebido.
 
-Somente os proxies confiáveis devem alcançar o backend/Nginx interno; mantenha a restrição de rede descrita na implantação. O proxy deve acrescentar o endereço real do remetente. Adicionar proxies exige revisar a contagem. Uma contagem incorreta pode agrupar visitantes na mesma cota ou confiar em dados enviados pelo cliente.
+Somente os proxies confiáveis devem alcançar o backend/Nginx interno; mantenha
+a restrição de rede da [Distribuição](distribuicao.md) (porta 8080 só na rede
+privada). O proxy deve acrescentar o endereço real do remetente. Adicionar
+proxies exige revisar a contagem. Uma contagem incorreta pode agrupar
+visitantes na mesma cota ou confiar em dados enviados pelo cliente.
 
 O DRF aplica limites globais e escopos separados para login (10/minuto) e cadastro (10/hora).
 O Nginx absorve rajadas da API em 20 requisições/segundo por IP, com burst de 40; ele complementa

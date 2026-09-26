@@ -8,6 +8,15 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Alterado
+
+- Documentação operacional: a [Release](../operacao/distribuicao.md) é o
+  caminho recomendado para VPS; [implantação avançada](../operacao/implantacao.md)
+  fica restrita a clone/build e topologias para mantenedores. Índices e
+  cruzamentos deixam de apresentar o clone Git como instalação padrão.
+- [CHANGELOG.md](../../CHANGELOG.md) da raiz é só ponteiro fixo para este
+  histórico.
+
 ## [2.5.12] - 2026-09-25
 
 Configurador admin de integrações (Fernet + hot-apply), consolidado em

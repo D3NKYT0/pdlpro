@@ -1,6 +1,8 @@
 # Configurador admin de integrações
 
-[← Índice](../README.md) · [Variáveis de ambiente](../configuracao/ambiente.md) · [Pagamentos](../integracoes/pagamentos.md) · [Lineage](../integracoes/lineage.md)
+[← Índice](../README.md) · [Variáveis de ambiente](../configuracao/ambiente.md) ·
+[Instalar (Release)](distribuicao.md) · [Pagamentos](../integracoes/pagamentos.md) ·
+[Lineage](../integracoes/lineage.md)
 
 ## Objetivo
 

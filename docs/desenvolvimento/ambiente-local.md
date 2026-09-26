@@ -1,6 +1,12 @@
 # Desenvolvimento
 
-[← Índice da documentação](../README.md)
+[← Índice da documentação](../README.md) ·
+[Instalar em produção (Release)](../operacao/distribuicao.md)
+
+Este guia prepara o **ambiente de desenvolvimento** (clone do repositório).
+Para colocar o painel no ar numa VPS, use a
+[instalação pela Release](../operacao/distribuicao.md) — não clone o Git só
+para operar.
 
 Para entender como usar e estender as classes do backend, consulte os guias de [apps](../arquitetura/apps.md) e [common](../arquitetura/common.md), além das docstrings no código.
 

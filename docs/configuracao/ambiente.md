@@ -255,5 +255,8 @@ Em produção, `./setup.sh configure-production` acrescenta chaves ausentes do
 `.env.example` sem alterar valores já definidos. Use `--denkynho-provider remote`
 (com URL, modelo e chave) ou `--denkynho-provider ollama` para ligar a geração.
 Sem essas flags a geração permanece como estava. Consulte
-[Ajuda e Denkynho](../funcionalidades/ajuda.md) e
-[Implantação](../operacao/implantacao.md).
+[Ajuda e Denkynho](../funcionalidades/ajuda.md). Em instalação pela Release o
+`.env` já nasce pelo instalador; o configurador do `setup.sh` e o
+[painel de integrações](../operacao/integracoes-admin.md) cobrem ajustes
+posteriores. Detalhe de clone/build:
+[Implantação avançada](../operacao/implantacao.md).

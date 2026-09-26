@@ -5,16 +5,18 @@ Site público, área do jogador e central da equipe em uma aplicação.</p>
 
 <p align="center">
   <a href="docs/README.md">Documentação</a> ·
-  <a href="docs/primeiros-passos/docker.md">Começar</a> ·
-  <a href="docs/desenvolvimento/ambiente-local.md">Desenvolver</a> ·
-  <a href="docs/operacao/distribuicao.md">Instalar</a>
+  <a href="docs/operacao/distribuicao.md">Instalar (Release)</a> ·
+  <a href="docs/desenvolvimento/ambiente-local.md">Desenvolver</a>
 </p>
 
 ---
 
 O **PDL PRO 2.0** conecta a gestão do servidor à experiência dos jogadores: contas e personagens, economia, conteúdo, recompensas e atendimento. O backend Django e o frontend React são separados, com uma API versionada e módulos de negócio próprios.
 
-> **Em desenvolvimento ativo.** Prepare e valide as integrações antes de liberar uma instalação para jogadores. O [passo a passo da latest](docs/operacao/distribuicao.md) cobre instalar, HTTPS, admin e atualizar.
+> **Em desenvolvimento ativo.** Para colocar o painel no ar, use a
+> [instalação pela Release](docs/operacao/distribuicao.md) (`install.sh` /
+> imagens do GHCR) — não é necessário clonar o repositório. Prepare e
+> valide as integrações antes de liberar o acesso aos jogadores.
 
 ## O que você encontra
 
@@ -34,14 +36,14 @@ Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral d
 
 | Quero… | Começar por… |
 | --- | --- |
-| Executar o painel pela primeira vez | [Início rápido com Docker](docs/primeiros-passos/docker.md) |
-| Instalar a latest numa VPS | [Distribuição](docs/operacao/distribuicao.md) |
-| Preparar o ambiente de desenvolvimento | [Execução local](docs/desenvolvimento/ambiente-local.md) |
+| Instalar o painel numa VPS (**recomendado**) | [Instalar a partir da Release](docs/operacao/distribuicao.md) |
+| Manter, atualizar e fazer backup | [Distribuição](docs/operacao/distribuicao.md) → [Backup](docs/operacao/backup-e-restauracao.md) |
+| Desenvolver ou contribuir com código | [Ambiente local](docs/desenvolvimento/ambiente-local.md) · [Docker de desenvolvimento](docs/primeiros-passos/docker.md) |
 | Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) e [guia dos apps](docs/arquitetura/apps.md) |
 | Rodar ou escrever testes | [Testes e qualidade](docs/desenvolvimento/testes.md) |
 | Conectar meu servidor Lineage | [Integração e dialetos](docs/integracoes/lineage.md) |
 | Instalar ou desenvolver um tema | [Temas instaláveis](docs/funcionalidades/temas.md) |
-| Publicar e manter uma instalação | [Distribuição](docs/operacao/distribuicao.md), [implantação](docs/operacao/implantacao.md) e [backup](docs/operacao/backup-e-restauracao.md) |
+| Build a partir do Git / topologia customizada | [Implantação avançada](docs/operacao/implantacao.md) (só para quem mantém o código) |
 
 ## Base técnica
 

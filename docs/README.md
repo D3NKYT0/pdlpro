@@ -1,18 +1,29 @@
 # Documentação do PDL PRO
 
-Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha ou consulte o índice por assunto. Cada explicação tem um documento principal; os READMEs próximos ao código apontam para ele.
+Guias para instalar, desenvolver, integrar e operar o painel. Cada explicação
+tem um documento principal; os READMEs próximos ao código apontam para ele.
 
-**[Projeto](../README.md)** · **[Instalar a latest](operacao/distribuicao.md)** · **[Começar no Docker](primeiros-passos/docker.md)** · **[Testes](desenvolvimento/testes.md)** · **[Melhorar estas docs](projeto/documentacao.md)**
+**[Projeto](../README.md)** ·
+**[Instalar (Release)](operacao/distribuicao.md)** ·
+**[Desenvolver](desenvolvimento/ambiente-local.md)** ·
+**[Testes](desenvolvimento/testes.md)** ·
+**[Melhorar estas docs](projeto/documentacao.md)**
 
-## Trilhas de leitura
+## Qual caminho seguir
 
-| Seu objetivo | Caminho sugerido |
+| Seu objetivo | Use |
 | --- | --- |
-| Conhecer e experimentar | [Produto](produto/visao-geral.md) → [Docker](primeiros-passos/docker.md) → [Preview](desenvolvimento/preview.md) |
-| Contribuir com código | [Ambiente](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Apps](arquitetura/apps.md) → [Testes](desenvolvimento/testes.md) |
-| Trabalhar no frontend | [Frontend](desenvolvimento/frontend.md) → [Temas](funcionalidades/temas.md) → [Componentes](desenvolvimento/componentes.md) → [Testes](desenvolvimento/testes.md) |
-| Instalar a latest numa VPS | [Distribuição](operacao/distribuicao.md) → [Backup](operacao/backup-e-restauracao.md) |
-| Administrar um servidor | [Distribuição](operacao/distribuicao.md) → [Configuração](configuracao/ambiente.md) → [Lineage](integracoes/lineage.md) → [Backup](operacao/backup-e-restauracao.md) |
+| Colocar o painel no ar numa VPS | **[Distribuição / Release](operacao/distribuicao.md)** — instalador + imagens prontas. **Não precisa clonar o Git.** |
+| Atualizar, HTTPS, backup, diagnóstico | [Distribuição](operacao/distribuicao.md) → [Backup](operacao/backup-e-restauracao.md) → [Problemas](operacao/solucao-de-problemas.md) |
+| Administrar integrações e o jogo | [Configuração](configuracao/ambiente.md) → [Integrações admin](operacao/integracoes-admin.md) → [Lineage](integracoes/lineage.md) |
+| Desenvolver ou contribuir | [Ambiente local](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Testes](desenvolvimento/testes.md) |
+| Frontend / temas | [Frontend](desenvolvimento/frontend.md) → [Temas](funcionalidades/temas.md) → [Componentes](desenvolvimento/componentes.md) |
+| Build a partir do clone / topologia especial | [Implantação avançada](operacao/implantacao.md) — apenas quem mantém o código ou publica releases |
+
+> **Distribuição × Implantação.** *Distribuição* é o fluxo recomendado (releases
+> públicas). *Implantação avançada* descreve clone Git, build local, checklist
+> e topologias alternativas — não substitui o instalador para quem só quer o
+> painel rodando.
 
 ## Índice completo
 
@@ -21,7 +32,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Documento | O que explica |
 | --- | --- |
 | [Visão geral](produto/visao-geral.md) | Recursos, stack, estrutura e diferenças do PDL 2.0 |
-| [Início rápido com Docker](primeiros-passos/docker.md) | Instalação local, primeiro administrador e endereços |
+| [Docker de desenvolvimento](primeiros-passos/docker.md) | Clone local com Compose `dev` (não é instalação de produção) |
 
 ### Desenvolvimento
 
@@ -54,6 +65,7 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | --- | --- |
 | [Guia da API](api/README.md) | Namespaces, sessão, CSRF, paginação e erros |
 | [API de relatórios financeiros](api/relatorios-financeiros.md) | Filtros, respostas, unidades e regras de cálculo |
+| [API de relatórios operacionais](api/relatorios-operacionais.md) | Inventário, leilões, compras e marketplace (staff) |
 | [API do catálogo de itens](api/catalogo-de-itens.md) | Metadados públicos e administração de customs |
 | [Variáveis de ambiente](configuracao/ambiente.md) | Settings, origens, bancos, pagamentos, e-mail e push |
 
@@ -87,13 +99,14 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 
 | Documento | O que explica |
 | --- | --- |
-| [Distribuição](operacao/distribuicao.md) | Passo a passo da latest: instalar, HTTPS, admin, launcher e atualizar |
-| [Implantação](operacao/implantacao.md) | Topologias, clone Git, proxy, checklist e rollback |
+| [Distribuição (recomendado)](operacao/distribuicao.md) | Release: instalar, HTTPS, admin, launcher e atualizar com imagens prontas |
+| [Implantação avançada](operacao/implantacao.md) | Clone Git, build local, topologias, checklist e rollback (mantenedores) |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
 | [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, MultiFernet, painel admin e Beat |
-| [Configurador admin de integrações](operacao/integracoes-admin.md) | Stripe/MP, Lineage/game e SMTP cifrados com hot-apply |
+| [Configurador admin de integrações](operacao/integracoes-admin.md) | Pagamentos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 e Sentry com hot-apply |
 | [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
 | [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, Nginx, FTP, Redis da install, sessão e disco |
+| [Segurança de contas e operações](operacao/seguranca.md) | Sessões, OAuth, proxies e conciliação de serviços pagos |
 
 ### Projeto e histórico
 
@@ -123,8 +136,12 @@ Guias para instalar, desenvolver, integrar e operar o painel. Escolha uma trilha
 | Testes backend | [pytest.ini](../backend/pytest.ini) e [settings de teste](../backend/core/settings/test.py) |
 | Testes frontend | [vite.config.ts](../frontend/vite.config.ts) |
 
-Ao mudar comportamento, atualize o guia correspondente no mesmo trabalho. Exemplos e registros datados descrevem o contexto informado; a implementação e uma nova execução determinam o comportamento do checkout atual.
+Ao mudar comportamento, atualize o guia correspondente no mesmo trabalho.
+Exemplos e registros datados descrevem o contexto informado; a implementação
+e uma nova execução determinam o comportamento do checkout atual.
 
 ## Proteções de autenticação e transações
 
-Consulte [Segurança de contas e operações](operacao/seguranca.md) para migração, revogação de sessões, OAuth, proxies e conciliação de serviços pagos.
+Consulte [Segurança de contas e operações](operacao/seguranca.md) para
+migração, revogação de sessões, OAuth, proxies e conciliação de serviços
+pagos.

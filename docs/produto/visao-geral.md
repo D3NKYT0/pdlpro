@@ -14,9 +14,9 @@ estudado, instalado, modificado para uso próprio e utilizado em servidores de
 Lineage 2, mas não pode ser comercializado por terceiros. Consulte o [resumo de uso e licença](../projeto/licenca.md).
 
 > [!WARNING]
-> O PDL 2.0 está em desenvolvimento ativo. Antes de usar em produção, revise as
-> configurações, prepare o banco do jogo, configure provedores reais e execute o
-> checklist de implantação.
+> O PDL 2.0 está em desenvolvimento ativo. Antes de liberar para jogadores,
+> revise as configurações, prepare o banco do jogo, configure provedores reais
+> e siga a [instalação pela Release](../operacao/distribuicao.md).
 
 ## O que mudou no PDL 2.0
 
@@ -141,6 +141,13 @@ infraestrutura e apresentação, com casos de uso e injeção de dependência ex
 
 ## Como instalar
 
-Na VPS use a [latest da Release](../operacao/distribuicao.md): `install.sh`,
-`./setup.sh nginx`, `createsuperuser` e, se precisar, `./setup.sh ftp`. Para
-experimentar no Docker local, o [início rápido](../primeiros-passos/docker.md).
+**Produção (recomendado):** [Release publicada](../operacao/distribuicao.md) —
+`install.sh` / `install.ps1`, imagens do GHCR, `./setup.sh nginx`,
+`createsuperuser` e, se precisar, `./setup.sh ftp`. Não é necessário clonar
+o repositório.
+
+**Desenvolvimento local:** [Docker de desenvolvimento](../primeiros-passos/docker.md)
+ou [ambiente local](../desenvolvimento/ambiente-local.md).
+
+**Clone + build em produção:** só para mantenedores —
+[Implantação avançada](../operacao/implantacao.md).

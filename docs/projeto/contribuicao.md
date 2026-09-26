@@ -17,7 +17,9 @@ Obrigado pelo interesse no PDL PRO. Este é um projeto de código publicamente d
 2. Mantenha cada alteração focada em um único objetivo.
 3. Preserve as fronteiras entre domínio, aplicação, infraestrutura e apresentação.
 4. Inclua ou atualize testes para toda mudança de comportamento.
-5. Atualize o README, a documentação e o changelog quando houver impacto público.
+5. Atualize a documentação em `docs/` e o [changelog](../historico/changelog.md)
+   quando houver impacto público. O `CHANGELOG.md` da raiz é só ponteiro — não
+   acrescente resumos nele.
 6. Abra o pull request explicando contexto, solução, riscos e como a mudança foi validada.
 
 Nomes de branch recomendados: `feature/...`, `fix/...`, `docs/...` e `refactor/...`.

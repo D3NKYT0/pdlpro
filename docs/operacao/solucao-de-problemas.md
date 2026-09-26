@@ -1,6 +1,6 @@
 # Solução de problemas
 
-[Índice](../README.md) · [Instalar a latest](distribuicao.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
+[Índice](../README.md) · [Instalar (Release)](distribuicao.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
 
 Comece identificando ambiente, URL, revisão e operação que falhou. Registre horário, status HTTP, `error_code` e `X-Request-ID` quando disponíveis. Não compartilhe `.env`, cookies, tokens ou payloads privados em logs públicos.
 
@@ -145,7 +145,7 @@ Baixar de novo o `install.sh` da latest também resolve, sem o `sed`.
 
 Use o mesmo hostname durante todo o fluxo: alternar `localhost` e `127.0.0.1` cria origens e cookies diferentes. Obtenha CSRF antes de uma escrita, envie credenciais e `X-CSRFToken` e confira CORS/CSRF nas configurações.
 
-Em produção, confirme HTTPS e `X-Forwarded-Proto` no proxy. Cookies seguros não devem ser corrigidos desativando sua proteção em produção. Passkeys também dependem do RP ID e das origens configuradas. Veja [API](../api/README.md) e [Implantação](implantacao.md).
+Em produção, confirme HTTPS e `X-Forwarded-Proto` no proxy. Cookies seguros não devem ser corrigidos desativando sua proteção em produção. Passkeys também dependem do RP ID e das origens configuradas. Veja [API](../api/README.md) e [Distribuição](distribuicao.md).
 
 ## Itens e imagens
 

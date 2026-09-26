@@ -1,11 +1,15 @@
-# Início rápido com Docker
+# Docker de desenvolvimento
 
 [← Índice da documentação](../README.md)
 
-Este roteiro prepara um ambiente local a partir do clone. Para colocar a
-latest no ar numa VPS (instalar, HTTPS, admin e atualizar), use
-[Distribuição](../operacao/distribuicao.md). Para produção a partir do Git,
-siga [Implantação](../operacao/implantacao.md).
+Este roteiro sobe o painel **no seu PC** a partir do clone, com Compose de
+desenvolvimento (Vite, hot reload). Serve para contribuir com código ou
+experimentar localmente.
+
+**Para instalar numa VPS e liberar para jogadores, não use este guia.** Siga
+a [instalação pela Release](../operacao/distribuicao.md) (`install.sh`,
+imagens prontas). Build de produção a partir do Git fica em
+[Implantação avançada](../operacao/implantacao.md).
 
 ### Pré-requisitos
 

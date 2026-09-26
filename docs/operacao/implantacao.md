@@ -1,53 +1,74 @@
-# Implantação
+# Implantação avançada (clone Git e topologias)
 
-[← Índice da documentação](../README.md) · [Instalar a latest](distribuicao.md)
+[← Índice da documentação](../README.md) ·
+[Instalar a partir da Release (recomendado)](distribuicao.md)
 
-Na VPS o caminho usual é a [instalação pela Release](distribuicao.md): latest,
-`./setup.sh nginx`, administrador e, se precisar, `./setup.sh ftp`. As seções
-abaixo descrevem topologia, clone Git, checklist e o detalhe do proxy.
+> **Não use este guia para a instalação típica numa VPS.** O caminho
+> suportado e recomendado é a
+> [Release publicada](distribuicao.md) (`install.sh` / `install.ps1`, imagens
+> do GHCR, HTTPS com `./setup.sh nginx`). Clone + build existem para quem
+> desenvolve o painel, publica releases ou precisa de uma topologia que o
+> instalador não cobre.
+
+Este documento cobre:
+
+- topologias (Compose completo, frontend separado);
+- modos dos arquivos Compose;
+- primeira subida **a partir do clone Git** (build local);
+- checklist e verificação de produção;
+- atualização e rollback quando o código vem do Git.
+
+HTTPS, administrador, FTP do launcher e atualização pela latest continuam
+descritos só em [Distribuição](distribuicao.md) — não os repita daqui.
 
 ## Formas de implantação
 
-### Stack completa em VPS
+### Stack completa em VPS (produção habitual)
 
-É o modo principal de produção. Docker Compose executa frontend compilado, Nginx,
-Django, Daphne, Celery, Redis e PostgreSQL na mesma infraestrutura. O MySQL do jogo
-pode estar na própria rede ou em outro servidor com acesso restrito.
+Docker Compose executa frontend compilado, Nginx interno, Django, Daphne,
+Celery, Redis e PostgreSQL. O MySQL do jogo pode estar na mesma rede ou em
+outro host com acesso restrito.
+
+**Operadores:** prefira a [Release](distribuicao.md). **Mantenedores:** o
+clone abaixo constrói `pdl_backend:local` / `pdl_web:local` quando as
+variáveis de imagem da release não estão no `.env`.
 
 ### Frontend separado
 
-O build de `frontend/dist` pode ser publicado como conteúdo estático em cPanel, CDN
-ou storage estático. O backend permanece em uma VPS ou infraestrutura centralizada.
+O build de `frontend/dist` pode ir para cPanel, CDN ou storage estático. O
+backend permanece numa VPS ou infraestrutura centralizada.
 
-Nesse modelo, configure HTTPS, fallback da SPA e encaminhamento de `/api/`, `/admin/`,
-`/i18n/`, `/ws/` e `/media/` para o backend. Sem `/i18n/`, o seletor de idioma do admin
-(POST `/i18n/setlang/`) cai no estático da SPA e o Nginx responde **405**. Também ajuste
-`ALLOWED_HOSTS`, CORS, CSRF, WebAuthn e as URLs públicas para os domínios reais.
+Nesse modelo, configure HTTPS, fallback da SPA e encaminhamento de `/api/`,
+`/admin/`, `/i18n/`, `/ws/` e `/media/` para o backend. Sem `/i18n/`, o
+seletor de idioma do admin (POST `/i18n/setlang/`) cai no estático da SPA e
+o Nginx responde **405**. Também ajuste `ALLOWED_HOSTS`, CORS, CSRF,
+WebAuthn e as URLs públicas.
 
-As próximas seções detalham a implantação pelo Compose de produção. Para recuperar dados, consulte [Backup e restauração](backup-e-restauracao.md).
+Temas instalados não fazem parte de `frontend/dist`: CSS e assets são mídia
+dinâmica em `/media/themes/`. Em topologia separada, o frontend precisa
+alcançar esse caminho no mesmo domínio lógico da API ou por proxy
+compatível.
 
-Temas instalados não fazem parte de `frontend/dist`: CSS e assets são mídia dinâmica
-servida em `/media/themes/`. Em uma topologia separada, o frontend precisa alcançar esse
-caminho no mesmo domínio lógico da API ou por proxy compatível.
+Para recuperar dados, consulte [Backup e restauração](backup-e-restauracao.md).
 
 ## Modos do Compose
 
-- `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil `dev`.
-- `docker-compose.prod.yml`: produção, com frontend compilado, Django em settings
-  de produção e Nginx interno atrás do proxy reverso HTTPS.
-- `docker-compose.ollama.yml`: complemento opcional com Qwen local. Use quando a
-  máquina aguentar o modelo; caso contrário, configure a API remota ou deixe a
-  geração desligada. O overlay não é removido da implantação.
+- `docker-compose.yml`: desenvolvimento e integração, com Vite no perfil
+  `dev` — veja também o [Docker de desenvolvimento](../primeiros-passos/docker.md).
+- `docker-compose.prod.yml`: produção, com frontend compilado, Django em
+  settings de produção e Nginx interno atrás do proxy HTTPS.
+- `docker-compose.ollama.yml`: overlay opcional com Qwen local. Use quando a
+  máquina aguentar o modelo; senão, API remota ou geração desligada.
 
-O domínio padrão da produção é `pdl.denky.dev.br`, mas pode ser alterado pela
-variável `DOMAIN`.
+O domínio padrão de exemplo nos scripts é `pdl.denky.dev.br`; altere com
+`DOMAIN` / `--domain`.
 
 ## Topologia atual
 
 ```text
 Internet/local host
-       │ :80
-  Proxy reverso HTTPS
+       │ :80/:443
+  Proxy reverso HTTPS (Nginx da máquina ou externo)
        │ HTTP :8080
   Nginx interno
        ├── /api, /admin ──> Gunicorn :8000
@@ -59,24 +80,16 @@ Gunicorn/Daphne/Celery ──> PostgreSQL + Redis
                        └─> MySQL Lineage 2 (opcional)
 ```
 
-## Primeira implantação
+A porta `8080` **não** deve ficar aberta na internet.
 
-Quem já rodou o `install.sh` da [Release](distribuicao.md) **não** clona o
-repositório. Pule para [HTTPS e launcher na máquina](#https-e-launcher-na-máquina).
+## Primeira subida a partir do clone
 
-Antes do deploy pelo Git:
+Pré-requisitos: DNS `A` (e `AAAA` só se o IPv6 funcionar), Docker Engine com
+Compose v2, e o proxy (local ou externo) alcançando a porta `8080` do PDL
+somente pela rede privada.
 
-1. Crie um registro DNS `A` para `pdl.denky.dev.br` apontando para o IPv4 do
-   servidor (e `AAAA` somente se o IPv6 funcionar no servidor).
-2. Permita que o servidor do proxy reverso alcance a porta TCP `8080` do PDL.
-   Essa porta não deve ser publicada para toda a internet.
-3. Instale Docker Engine com o plugin Docker Compose v2.
-
-O certificado e a configuração Cloudflare ficam sob responsabilidade do proxy
-reverso externo. Ele deve encaminhar `Host`, `X-Forwarded-For` e
-`X-Forwarded-Proto: https`, além de suportar upgrade de WebSocket.
-
-No servidor:
+Se o TLS fica num proxy externo, ele deve encaminhar `Host`,
+`X-Forwarded-For`, `X-Forwarded-Proto: https` e upgrade de WebSocket.
 
 ```bash
 sudo mkdir -p /opt/pdlpro
@@ -89,14 +102,15 @@ cd /opt/pdlpro
 Esse comando cria o `.env`, gera os segredos sem exibi-los e salva o arquivo
 anterior em `backups/config/`. A senha do Redis é gravada antes de qualquer
 `docker compose`, porque o YAML de produção interpola `REDIS_PASSWORD` mesmo
-só para subir o Postgres. O Docker deve estar em execucao para que a senha
-do banco seja sincronizada com o PostgreSQL. Para substituir segredos expostos:
+só para subir o Postgres. O Docker deve estar em execução para sincronizar a
+senha do banco com o PostgreSQL. Para substituir segredos expostos:
 
 ```bash
 ./setup.sh configure-production --rotate-secrets
 ```
 
-Tambem e possivel rotacionar apenas um segredo (soft-rotate da SECRET_KEY com fallbacks):
+Também é possível rotacionar só um segredo (soft-rotate da `SECRET_KEY` com
+fallbacks):
 
 ```bash
 ./setup.sh configure-production --rotate-secret-key
@@ -105,24 +119,24 @@ Tambem e possivel rotacionar apenas um segredo (soft-rotate da SECRET_KEY com fa
 ./setup.sh configure-production --apply-pending-rotations
 ```
 
-`PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem vazias
-ou fracas. `--rotate-secret-key` e `--rotate-secrets` **não** as trocam: use
-`--rotate-data-encryption-key` + reencrypt. Detalhes em
+`PDL_DATA_ENCRYPTION_KEY` e `BACKUP_ENCRYPTION_KEY` são geradas se estiverem
+vazias ou fracas. `--rotate-secret-key` e `--rotate-secrets` **não** as
+trocam: use `--rotate-data-encryption-key` + reencrypt. Detalhes em
 [Rotação de segredos](rotacao-de-segredos.md).
 
-Em uma instalacao existente, a rotacao atualiza o role PostgreSQL, grava o novo
-`.env` e recria os servicos dependentes. Se alguma etapa falhar, o comando tenta
-restaurar tanto a senha anterior do banco quanto o arquivo de configuracao.
+Em instalação existente, a rotação atualiza o role PostgreSQL, grava o novo
+`.env` e recria os serviços dependentes. Se alguma etapa falhar, o comando
+tenta restaurar a senha anterior do banco e o arquivo de configuração.
 
-O configurador nao apaga nem sobrescreve chaves que ja existem no `.env`,
-exceto as de producao que ele mesmo gerencia (`DEBUG`, hosts, URLs publicas,
-Django settings) e as flags do Denkynho que voce passar. Variaveis novas do
-`.env.example` sao acrescentadas no final. `DENKYNHO_EMBEDDINGS_ENABLED`, se
-ainda nao existir, entra como `false` para nao baixar MiniLM no primeiro chat.
-A geracao continua desligada ate voce passar `--denkynho-provider`.
+O configurador não apaga chaves que já existem no `.env`, exceto as de
+produção que ele gerencia (`DEBUG`, hosts, URLs públicas, settings Django) e
+as flags do Denkynho que você passar. Variáveis novas do `.env.example` são
+acrescentadas no final. `DENKYNHO_EMBEDDINGS_ENABLED`, se ainda não existir,
+entra como `false` para não baixar MiniLM no primeiro chat. A geração
+continua desligada até você passar `--denkynho-provider`.
 
-Para ligar uma API remota (Groq, OpenAI ou outro endpoint `/v1`) sem mexer
-no dominio nem nos segredos ja definidos:
+API remota (Groq, OpenAI ou outro endpoint `/v1`) sem mexer no domínio nem
+nos segredos já definidos:
 
 ```bash
 ./setup.sh configure-production --yes \
@@ -132,11 +146,10 @@ no dominio nem nos segredos ja definidos:
   --denkynho-model openai/gpt-oss-20b
 ```
 
-Ollama local: `--denkynho-provider ollama`. Para so acrescentar chaves
-ausentes, rode o comando sem flags do Denkynho. A chave da API nunca e
-impressa nos logs.
+Ollama local: `--denkynho-provider ollama`. Só acrescentar chaves ausentes:
+rode sem flags do Denkynho. A chave da API nunca é impressa nos logs.
 
-O resultado relevante sera equivalente aos valores abaixo:
+Resultado típico (valores ilustrativos):
 
 ```dotenv
 DOMAIN=pdl.denky.dev.br
@@ -160,11 +173,10 @@ RUN_COLLECTSTATIC=true
 OPENAPI_DOCS_PUBLIC=false
 ```
 
-Inicie a aplicação. Reserve disco para imagens, cache de build e, se usar
-Ollama, os pesos do modelo. Um `pip install` com PyTorch CUDA esgota VPS
-pequenas; o backend pinna a wheel CPU. Se o build falhar com
-`No space left on device`, siga [espaço em disco no build](solucao-de-problemas.md#espaço-em-disco-no-build-docker)
-antes de repetir o `up --build`.
+Reserve disco para imagens, cache de build e, se usar Ollama, os pesos do
+modelo. Um `pip install` com PyTorch CUDA esgota VPS pequenas; o backend
+pinna a wheel CPU. Se o build falhar com `No space left on device`, veja
+[espaço em disco no build](solucao-de-problemas.md#espaço-em-disco-no-build-docker).
 
 ```bash
 ./setup.sh install --production
@@ -173,49 +185,20 @@ docker compose --env-file .env -f docker-compose.prod.yml logs --tail=100 web ba
 ```
 
 Sem `PDL_BACKEND_IMAGE` / `PDL_WEB_IMAGE`, o Compose constrói
-`pdl_backend:local` e `pdl_web:local`. Com as variáveis da [release](distribuicao.md),
-`deploy --production` passa a puxar as imagens publicadas.
+`pdl_backend:local` e `pdl_web:local`. Com as variáveis preenchidas pelo
+instalador da [Release](distribuicao.md), `deploy --production` puxa as
+imagens publicadas.
 
-O Compose publica o painel em `http://127.0.0.1:8080`. **Não abra essa porta
-na internet.**
-
-## HTTPS e launcher na máquina
-
-Na mesma VPS Ubuntu, o Nginx do sistema termina o TLS. O DNS `A` precisa
-apontar para este servidor. Receita completa na
-[instalação pela Release](distribuicao.md):
-
-```bash
-cd /opt/pdlpro
-./setup.sh nginx --yes --ssl --email voce@painel.exemplo.com
-docker compose --env-file .env -f docker-compose.prod.yml exec backend python manage.py createsuperuser
-```
-
-`--ssl` emite Let's Encrypt com `certbot certonly --webroot` e não reescreve o
-site. Sem `--yes` o comando pergunta domínio, porta, `www` e SSL. O arquivo
-único fica em `/etc/nginx/sites-available/pdlpro` (HTTP, HTTPS, WebSocket, ACME
-e recusa de outros `Host`). Ajuda: `./setup.sh help nginx`.
-
-Se o proxy estiver em outro host, aponte-o para
-`http://IP_PRIVADO_DO_PDL:8080` com `Host`, `X-Forwarded-For`,
-`X-Forwarded-Proto: https` e upgrade de WebSocket.
-
-O launcher (arquivos para download) é outro comando, outro arquivo
-(`scripts/ftp/vsftpd.conf.template`):
-
-```bash
-./setup.sh ftp --yes --http --domain launcher.painel.exemplo.com --ssl --email voce@painel.exemplo.com
-```
-
-`--http` publica `/var/www/launcher` com index no Nginx (`pdlpro-launcher`),
-sem misturar com o site do painel. FTPS: `--ftps`. Ajuda: `./setup.sh help ftp`.
+HTTPS, `createsuperuser` e FTP do launcher: use os mesmos comandos da
+[Distribuição](distribuicao.md) na pasta do projeto (`./setup.sh nginx`,
+etc.).
 
 ## Atualizações
 
-Quem instalou pela Release: backup e o mesmo `install.sh` no mesmo diretório,
-sem `--version`. Passo a passo em [Distribuição](distribuicao.md#atualizar).
-
-Quem implantou pelo clone Git:
+| Origem da instalação | Como atualizar |
+| --- | --- |
+| Release (`install.sh`) | [Distribuição → Atualizar](distribuicao.md#atualizar) |
+| Clone Git | Backup, `git pull --ff-only`, `./setup.sh deploy --production` |
 
 ```bash
 cd /opt/pdlpro
@@ -224,88 +207,89 @@ git pull --ff-only
 ./setup.sh deploy --production
 ```
 
+Para publicar uma versão nova para os operadores, siga
+[Publicar uma versão](distribuicao.md#publicar-uma-versão-mantenedor).
+
 ## Checklist de produção
 
 ### Aplicação
 
 - Defina `DJANGO_SETTINGS_MODULE=core.settings.production`.
-- Gere um `SECRET_KEY` longo, aleatório e exclusivo; os settings de produção recusam iniciar com
-  valor vazio, marcador de exemplo ou menos de 50 caracteres.
-- Defina `REDIS_PASSWORD`: o Compose de produção sobe o Redis com `--requirepass` e o
-  `deploy.sh` interrompe quando a senha tem menos de 16 caracteres.
+- Gere um `SECRET_KEY` longo, aleatório e exclusivo; produção recusa valor
+  vazio, marcador de exemplo ou menos de 50 caracteres.
+- Defina `REDIS_PASSWORD`: o Compose sobe o Redis com `--requirepass` e o
+  `deploy.sh` interrompe com senha com menos de 16 caracteres.
 - Configure `ALLOWED_HOSTS`, CORS, CSRF e WebSocket com os domínios reais.
 - Use `GUNICORN_RELOAD=false`.
 - Execute `python manage.py check --deploy`.
-- Decida como migrações serão serializadas entre réplicas; evite múltiplos containers migrando simultaneamente.
+- Decida como migrações serão serializadas entre réplicas.
 - Execute e verifique `collectstatic`.
 
 ### Frontend e proxy
 
-- Gere o frontend com `npm ci && npm run build`.
-- Sirva `frontend/dist` por Nginx, CDN ou storage estático; não use Vite em produção.
+- Gere o frontend com `npm ci && npm run build` (ou use a imagem `web` da
+  release).
+- Sirva `frontend/dist` por Nginx, CDN ou storage; não use Vite em produção.
 - Configure fallback da SPA para `index.html`.
-- Ajuste `server_name` e os limites de upload.
-- Preserve o `limit_req` da API e dimensione sua zona somente após observar tráfego legítimo.
-- Preserve a CSP do proxy alinhada a `CONTENT_SECURITY_POLICY` (SPA/API) e
-  `CONTENT_SECURITY_POLICY_HTML` (admin/docs) do Django; teste pagamentos,
-  CAPTCHA, fontes e vídeo ao acrescentar ou remover uma origem.
-- Termine TLS no proxy e preserve corretamente os cabeçalhos `X-Forwarded-*`.
-- Garanta upgrade de conexão em `/ws/`.
-- Encaminhe `/media/themes/` ao backend/Nginx de mídia e aceite uploads ZIP de até 32 MB
-  na rota administrativa, sem tornar `/app/media` gravável pelo processo do frontend.
+- Ajuste `server_name` e limites de upload.
+- Preserve o `limit_req` da API.
+- Preserve a CSP do proxy alinhada a `CONTENT_SECURITY_POLICY` e
+  `CONTENT_SECURITY_POLICY_HTML`.
+- Termine TLS no proxy e preserve `X-Forwarded-*`.
+- Garanta upgrade em `/ws/`.
+- Encaminhe `/media/themes/` ao backend/Nginx de mídia; uploads ZIP de tema
+  até 32 MB na rota administrativa.
 
 ### Dados e filas
 
-- Use PostgreSQL e Redis gerenciados ou com persistência, autenticação e rede privada.
-- Restrinja o MySQL do Lineage aos hosts e permissões necessários.
-- Execute worker Celery e Celery Beat separadamente se o fechamento automático de leilões estiver habilitado.
-- Defina política de retry, observabilidade e fila de falhas para tarefas críticas.
-- Faça backups automáticos de banco e mídia e teste a restauração.
-- Preserve o volume `media_files`: ele contém versões de temas instaladas e outros uploads.
-  O entrypoint cria `/app/media/themes` e libera `a+rX` para o Nginx do `web`.
-- Preserve o volume `private_files` (`/app/private`, modo 700): guarda os pacotes de
-  portabilidade LGPD, que só saem pela view com token assinado e não são servidos em `/media/`.
+- PostgreSQL e Redis com persistência, autenticação e rede privada.
+- Restrinja o MySQL do Lineage.
+- Worker Celery e Beat separados se o fechamento automático de leilões
+  estiver habilitado.
+- Backups de banco e mídia com restauração ensaiada.
+- Preserve `media_files` (temas e uploads) e `private_files` (LGPD).
 
 ### Integrações
 
 - Remova `mock` de `PAYMENT_METHODS` em produção.
-- Valide assinaturas de webhooks e use endpoints HTTPS públicos.
-- Ative Mercado Pago/Stripe somente após testes de pagamento, duplicidade, cancelamento e estorno.
-- Configure backend SMTP real e monitore rejeições.
-- Proteja a chave VAPID privada como segredo.
-- Escolha o modo do Denkynho: Ollama local, API remota (`DENKYNHO_LLM_API_KEY` no
-  cofre) ou geração desligada. `DENKYNHO_EMBEDDINGS_ENABLED` é independente; o
-  padrão de produção evita baixar MiniLM no primeiro chat, mas pode ser ligado.
+- Valide webhooks em HTTPS públicos.
+- Ative Mercado Pago/Stripe só após testes de pagamento.
+- SMTP real e monitoramento de rejeições.
+- Proteja a chave VAPID privada.
+- Denkynho: Ollama, API remota ou desligado; embeddings são independentes.
+- Segredos de pagamento/L2/SMTP/OAuth/S3/Sentry também podem ir pelo
+  [configurador admin](integracoes-admin.md) após o bootstrap do `.env`.
 
 ### Segurança e observabilidade
 
-- Armazene segredos em cofre/secret manager, nunca na imagem ou no Git.
-- Centralize logs sem tokens, senhas ou dados de pagamento.
-- Monitore latência, erros 5xx, fila Celery, conexões e espaço em disco.
-- Use `X-Request-ID` para correlação entre proxy e aplicação.
-- Restrinja ou proteja admin e documentação OpenAPI conforme o ambiente.
-- Confirme que `OPENAPI_DOCS_PUBLIC=false` devolve 401 ao visitante e permite acesso à equipe.
-- Aplique atualizações de segurança e siga [SECURITY.md](../projeto/seguranca.md).
+- Segredos em cofre, nunca na imagem ou no Git.
+- Logs sem tokens, senhas ou dados de pagamento.
+- Monitore latência, 5xx, fila Celery, conexões e disco.
+- Use `X-Request-ID` para correlação.
+- `OPENAPI_DOCS_PUBLIC=false` em produção.
+- Siga [SECURITY.md](../projeto/seguranca.md).
 
-## Verificação após implantação
+## Verificação após subir
 
-1. Consulte `/api/v1/system/health/` e `/api/v1/system/version/`.
-2. Faça cadastro/login e confirme cookies `Secure`, `HttpOnly` e política `SameSite`.
-3. Exercite uma requisição mutável para validar CSRF.
-4. Teste a renovação e o logout da sessão.
-5. Abra um WebSocket autenticado e confirme rejeição de origem indevida.
-6. Verifique conectividade do Lineage com uma operação somente leitura.
-7. Faça transação de pagamento em sandbox antes de ativar o modo real.
-8. Confirme envio de e-mail, push, tarefa Celery e restauração de backup.
-9. Consulte `/api/v1/public/theme/`, instale um pacote de homologação, ative-o e restaure
-   o default; confira páginas públicas, login, jogador e administração em desktop/celular.
+1. `/api/v1/system/health/` e `/api/v1/system/version/`.
+2. Cadastro/login e cookies `Secure` / `HttpOnly` / `SameSite`.
+3. Requisição mutável com CSRF.
+4. Renovação e logout da sessão.
+5. WebSocket autenticado e rejeição de origem indevida.
+6. Lineage somente leitura, se aplicável.
+7. Pagamento em sandbox antes do modo real.
+8. E-mail, push, Celery e restauração de backup.
+9. Tema público: instalar, ativar e restaurar o default.
 
 ## Rollback
 
-Mantenha imagens versionadas e trate migrações destrutivas em etapas compatíveis com a versão anterior. Antes de cada release:
+Mantenha imagens versionadas. Em instalação pela Release, use
+`--version X.Y.Z` no instalador após backup. Em clone, trate migrações
+destrutivas em etapas compatíveis com a versão anterior. Antes de cada
+release:
 
-- registre a versão implantada de `version.json`;
+- registre a versão de `version.json`;
 - crie backup verificável;
 - documente se a migração permite downgrade;
-- defina como reverter frontend, backend e workers juntos;
-- não reverta código que dependa de uma migração irreversível sem um plano de dados.
+- reverta frontend, backend e workers juntos;
+- não reverta código que dependa de migração irreversível sem plano de dados.

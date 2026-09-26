@@ -147,7 +147,10 @@ A URL pode ser a base (`…/v1`) ou o caminho completo `…/v1/chat/completions`
 Em um `.env` de produção já existente, use `./setup.sh configure-production` para
 acrescentar as chaves novas sem sobrescrever domínio e segredos. As flags
 `--denkynho-provider remote`, `--denkynho-api-url`, `--denkynho-api-key` e
-`--denkynho-model` ligam esse modo. Detalhes em [Implantação](../operacao/implantacao.md).
+`--denkynho-model` ligam esse modo. Em instalação pela Release, o `.env` já
+existe; use `./setup.sh configure-production` na pasta da instalação ou o
+[painel de integrações](../operacao/integracoes-admin.md). Detalhe de
+clone/build: [Implantação avançada](../operacao/implantacao.md).
 
 ## Qwen dentro do Docker do projeto
 

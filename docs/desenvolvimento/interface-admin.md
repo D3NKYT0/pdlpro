@@ -93,4 +93,4 @@ O item ativo da topbar (`aria-current="page"`) usa o tom verde de sucesso com br
 - [admin-buttons.test.ts](../../frontend/src/lib/admin-buttons.test.ts): executa o JavaScript entregue pelo backend em jsdom; cobre repetição, FormData, AJAX, teclado, histórico e validação nativa. Roda com o Vitest do frontend. A cobertura percentual do frontend continua medindo `frontend/src`, não este script estático do backend.
 - [docs-loader.test.ts](../../frontend/src/lib/docs-loader.test.ts): dismiss do overlay de carregamento das docs (Swagger/ReDoc) e timeout de segurança.
 
-Antes de concluir mudanças, execute as verificações completas do [guia de testes](testes.md) e confira catálogo, formulário real e documentação em desktop/celular. Na implantação, publique também os arquivos estáticos via `collectstatic`, conforme o [guia de implantação](../operacao/implantacao.md).
+Antes de concluir mudanças, execute as verificações completas do [guia de testes](testes.md) e confira catálogo, formulário real e documentação em desktop/celular. Em produção, `collectstatic` roda no entrypoint quando `RUN_COLLECTSTATIC=true` (padrão da Release e do Compose de produção).

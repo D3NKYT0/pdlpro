@@ -1,6 +1,6 @@
 # Observabilidade e auditoria
 
-[Índice](../README.md) · [Implantação](implantacao.md) · [Solução de problemas](solucao-de-problemas.md)
+[Índice](../README.md) · [Instalar (Release)](distribuicao.md) · [Solução de problemas](solucao-de-problemas.md)
 
 O PDL PRO registra eventos operacionais em `stdout`/`stderr`, adequados para coleta pelo Docker,
 Loki, Elastic, CloudWatch ou pelo agente da plataforma. Em produção cada linha da aplicação e do

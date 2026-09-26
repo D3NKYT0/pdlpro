@@ -9,18 +9,22 @@ A documentação acompanha o código. O README principal apresenta o produto e e
 | Pasta | Conteúdo |
 | --- | --- |
 | `produto/` | Visão do painel, recursos e limitações |
-| `primeiros-passos/` | Caminhos curtos para a primeira execução |
+| `primeiros-passos/` | Docker de desenvolvimento local (não substitui a Release) |
 | `desenvolvimento/` | Ambiente, frontend, testes e fluxos de implementação |
 | `arquitetura/` | Responsabilidades, decisões, classes e contratos internos |
 | `api/` | Autenticação, endpoints e contratos públicos |
 | `configuracao/` | Referência de variáveis e comportamento dos ambientes |
 | `integracoes/` | Lineage, pagamentos, catálogos e serviços externos |
 | `funcionalidades/` | Regras e operação de recursos do produto |
-| `operacao/` | Deploy, manutenção, diagnóstico e recuperação |
+| `operacao/` | Release (distribuição), backup, diagnóstico; implantação avançada (clone/build) para mantenedores |
 | `projeto/` | Contribuição, segurança, licença e convenções |
 | `historico/` | Registros datados de validação e contexto de entregas |
 
 Crie nomes descritivos em português, minúsculos, sem acentos e separados por hífen. Não crie arquivos genéricos como `novo.md`, `outros.md` ou `final-v2.md`. Uma nova categoria só precisa de README próprio quando isso ajudar a navegar por vários documentos; o índice central deve continuar listando todos os guias.
+
+Em `operacao/`, **distribuição** é o guia do operador (Release). **Implantação
+avançada** é só para clone/build e topologias — não apresente os dois como
+caminhos equivalentes para “instalar o painel”.
 
 ## Estrutura sugerida
 

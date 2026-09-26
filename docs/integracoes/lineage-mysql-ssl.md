@@ -125,13 +125,15 @@ Cópias de distribuições L2 antigas às vezes usam MariaDB sem pacote TLS. Ins
 Copie **somente** `ca.pem` (a cadeia pública) para a máquina do PDL. Não copie
 `ca-key.pem` nem a chave do servidor.
 
-Na raiz do repositório (Compose de produção):
+Na pasta da instalação (Release em `/opt/pdlpro` ou clone, se for o caso):
 
 ```text
 secrets/lineage-mysql/ca.pem
 ```
 
 Esse diretório está no Git só como pasta vazia; os PEM ficam fora do repositório.
+Em instalação pela [Release](../operacao/distribuicao.md) o ZIP já traz a
+estrutura do Compose — crie `secrets/lineage-mysql/` e o PEM no host.
 
 No `.env` da instalação:
 
@@ -159,8 +161,8 @@ exemplo `D:/certs/l2-ca.pem` no Windows ou `/etc/pdl/lineage-mysql-ca.pem` no Li
 
 ### 3. Conferir
 
-1. Recrie os containers da aplicação (`./setup.sh deploy` ou `compose up -d` com o
-   arquivo de produção).
+1. Recrie os containers (`docker compose --env-file .env -f docker-compose.prod.yml up -d`
+   na pasta da instalação, ou `./setup.sh deploy --production` no clone).
 2. No log do backend, uma falha de TLS aparece na primeira consulta ao jogo (status,
    ranking, vínculo de conta), não na subida do Gunicorn.
 3. No MySQL: `SHOW STATUS LIKE 'Ssl_cipher';` na sessão do usuário do painel deve

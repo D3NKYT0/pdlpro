@@ -1,13 +1,19 @@
-# Instalar uma versão publicada
+# Instalar a partir da Release (recomendado)
 
-[← Índice da documentação](../README.md) · [Implantação pelo Git](implantacao.md) ·
-[Backup](backup-e-restauracao.md) · [Problemas](solucao-de-problemas.md)
+[← Índice da documentação](../README.md) · [Backup](backup-e-restauracao.md) ·
+[Problemas](solucao-de-problemas.md)
 
-Este é o caminho usual de produção: baixar a **latest** da GitHub Release, subir
-as imagens prontas e configurar a máquina. O jogador só acessa o domínio; ele
-não instala o PDL.
+**Este é o caminho recomendado para colocar o PDL PRO no ar.** As
+[GitHub Releases](https://github.com/D3NKYT0/pdlpro/releases) publicam
+instaladores, ZIP e imagens prontas no GHCR. Você não clona o repositório nem
+compila o código.
 
-Quem precisa buildar a partir do código segue a [implantação pelo clone](implantacao.md).
+O jogador só acessa o domínio; ele não instala o PDL.
+
+> Precisa buildar a partir do código-fonte, mudar a topologia ou publicar uma
+> versão? Isso é trabalho de manutenção técnica — veja
+> [Implantação avançada](implantacao.md). Operadores de VPS devem ficar neste
+> guia.
 
 ## O que você vai fazer
 
@@ -213,11 +219,10 @@ curl -fsSL https://github.com/D3NKYT0/pdlpro/releases/latest/download/install.sh
 bash install.sh --dir /opt/pdlpro --domain painel.exemplo.com --yes
 ```
 
-Não misture um clone Git que constrói imagens locais com um diretório instalado
-por release sem revisar `PDL_BACKEND_IMAGE` e `PDL_IMAGE_PULL_POLICY`. Para
-voltar ao build a partir do código, esvazie essas variáveis e use
-`./setup.sh deploy --production --build`. Detalhe em
-[Implantação](implantacao.md).
+Não misture um clone Git (imagens `pdl_*:local`) com um diretório instalado
+por release sem revisar `PDL_BACKEND_IMAGE`, `PDL_WEB_IMAGE` e
+`PDL_IMAGE_PULL_POLICY`. Quem precisa voltar a buildar a partir do código
+segue [Implantação avançada](implantacao.md).
 
 ## Comandos do dia a dia
 
@@ -253,9 +258,8 @@ catálogo; `./setup.sh help <comando>` a ajuda de cada um.
 | `pdl-pro-X.Y.Z.zip.sha256` | Checksum do ZIP |
 | `install.sh` / `install.ps1` | Bootstrap Linux e Windows |
 
-O ZIP **não** inclui o código-fonte. Quem precisa buildar a partir do Git
-continua usando `docker-compose.prod.yml` no clone, com `pdl_backend:local` /
-`pdl_web:local`.
+O ZIP **não** inclui o código-fonte. Imagens locais a partir do Git ficam
+descritas em [Implantação avançada](implantacao.md).
 
 ## Fixar uma versão
 

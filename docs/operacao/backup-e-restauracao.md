@@ -1,8 +1,11 @@
 # Backup e restauração
 
-[Índice](../README.md) · [Instalar a latest](distribuicao.md) · [Implantação](implantacao.md) · [Segurança](../projeto/seguranca.md)
+[Índice](../README.md) · [Instalar (Release)](distribuicao.md) · [Segurança](../projeto/seguranca.md)
 
-Os scripts operacionais são Bash e usam Docker Compose. Execute a partir da raiz do projeto em um ambiente preparado para esses scripts. Antes de qualquer restauração, confirme qual instalação e qual banco serão afetados.
+Os scripts operacionais são Bash e usam Docker Compose. Execute a partir da
+**pasta da instalação** (Release em `/opt/pdlpro` ou clone, se for o caso).
+Antes de qualquer restauração, confirme qual instalação e qual banco serão
+afetados.
 
 ## O que o backup inclui
 
