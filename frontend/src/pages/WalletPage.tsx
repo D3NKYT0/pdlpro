@@ -104,10 +104,15 @@ export function WalletPage() {
       try {
         await brickRef.current?.unmount()
         brickRef.current = null
+        const nameParts = (user?.display_name || user?.username || '').trim().split(/\s+/)
+        const firstName = nameParts[0] || ''
+        const lastName = nameParts.slice(1).join(' ') || firstName
         const controller = await mountMercadoPagoBrick({
           publicKey: mp.public_key,
           amount: Number(order.amount),
           email: user?.email || '',
+          firstName,
+          lastName,
           document: sanitized,
           containerId: 'payment-brick',
           onReady: () => {

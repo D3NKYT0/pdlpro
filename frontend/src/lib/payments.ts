@@ -71,6 +71,8 @@ export async function mountMercadoPagoBrick(options: {
   amount: number
   email: string
   document: string
+  firstName?: string
+  lastName?: string
   containerId: string
   onSubmit: (formData: Record<string, unknown>) => Promise<void>
   onReady: () => void
@@ -85,6 +87,8 @@ export async function mountMercadoPagoBrick(options: {
       amount: options.amount,
       payer: {
         email: options.email,
+        ...(options.firstName ? { firstName: options.firstName } : {}),
+        ...(options.lastName ? { lastName: options.lastName } : {}),
         identification: docType ? { type: docType, number: sanitizeDocument(options.document) } : undefined,
       },
     },
