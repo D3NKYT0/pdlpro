@@ -37,6 +37,7 @@ Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral d
 | Quero… | Começar por… |
 | --- | --- |
 | Instalar o painel numa VPS (**recomendado**) | [Instalar a partir da Release](docs/operacao/distribuicao.md) |
+| Configurar DNS, OAuth, pagamentos, LLM… | [Tutoriais de integração](docs/tutoriais/README.md) |
 | Manter, atualizar e fazer backup | [Distribuição](docs/operacao/distribuicao.md) → [Backup](docs/operacao/backup-e-restauracao.md) |
 | Desenvolver ou contribuir com código | [Ambiente local](docs/desenvolvimento/ambiente-local.md) · [Docker de desenvolvimento](docs/primeiros-passos/docker.md) |
 | Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) e [guia dos apps](docs/arquitetura/apps.md) |

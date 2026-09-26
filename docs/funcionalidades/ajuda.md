@@ -1,6 +1,7 @@
 # Ajuda e Denkynho
 
-[Índice](../README.md) · [Componentes](../desenvolvimento/componentes.md) · [Testes](../desenvolvimento/testes.md)
+[Índice](../README.md) · [Tutorial LLM](../tutoriais/denkynho-llm.md) ·
+[Componentes](../desenvolvimento/componentes.md) · [Testes](../desenvolvimento/testes.md)
 
 ## Interação com o personagem
 

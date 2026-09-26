@@ -8,12 +8,20 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+### Adicionado
+
+- Tutoriais de integração para o operador em
+  [docs/tutoriais/](../tutoriais/README.md): DNS/Cloudflare, SMTP, hCaptcha,
+  OAuth Google/Discord, WebAuthn, Mercado Pago, Stripe, Lineage, VAPID,
+  Denkynho LLM, S3/R2 e Sentry.
+
 ### Alterado
 
 - Documentação operacional: a [Release](../operacao/distribuicao.md) é o
   caminho recomendado para VPS; [implantação avançada](../operacao/implantacao.md)
   fica restrita a clone/build e topologias para mantenedores. Índices e
   cruzamentos deixam de apresentar o clone Git como instalação padrão.
+- Exemplos de domínio passam a usar `seudominio.com`.
 - [CHANGELOG.md](../../CHANGELOG.md) da raiz é só ponteiro fixo para este
   histórico.
 

@@ -16,6 +16,7 @@ A documentação acompanha o código. O README principal apresenta o produto e e
 | `configuracao/` | Referência de variáveis e comportamento dos ambientes |
 | `integracoes/` | Lineage, pagamentos, catálogos e serviços externos |
 | `funcionalidades/` | Regras e operação de recursos do produto |
+| `tutoriais/` | Guias passo a passo para o operador (DNS, OAuth, pagamentos, LLM…) |
 | `operacao/` | Release (distribuição), backup, diagnóstico; implantação avançada (clone/build) para mantenedores |
 | `projeto/` | Contribuição, segurança, licença e convenções |
 | `historico/` | Registros datados de validação e contexto de entregas |

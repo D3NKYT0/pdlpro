@@ -1,6 +1,8 @@
 # Integração com o Lineage 2
 
-[← Índice da documentação](../README.md)
+[← Índice da documentação](../README.md) ·
+[Tutorial do operador](../tutoriais/lineage-game.md) ·
+[Configurador admin](../operacao/integracoes-admin.md)
 
 O banco do PDL permanece separado do banco do jogo. Quando a integração está ativa,
 o backend seleciona um catálogo de consultas adequado ao schema configurado.

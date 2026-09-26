@@ -1,8 +1,8 @@
 # Configurador admin de integrações
 
 [← Índice](../README.md) · [Variáveis de ambiente](../configuracao/ambiente.md) ·
-[Instalar (Release)](distribuicao.md) · [Pagamentos](../integracoes/pagamentos.md) ·
-[Lineage](../integracoes/lineage.md)
+[Instalar (Release)](distribuicao.md) · [Tutoriais](../tutoriais/README.md) ·
+[Pagamentos](../integracoes/pagamentos.md) · [Lineage](../integracoes/lineage.md)
 
 ## Objetivo
 
@@ -86,6 +86,9 @@ opcional e checksums boto3 em modo `when_required` (compatível com R2).
 3. Use **Testar** para validar credenciais, TCP/MySQL, SMTP, OAuth, Ollama/API,
    `head_bucket` S3/R2 ou formato do DSN Sentry.
 4. Para voltar ao valor do `.env`, use **Apagar valor** no campo secreto e salve.
+
+Passo a passo por provedor (DNS, OAuth, hCaptcha, pagamentos, LLM, …):
+[Tutoriais de integração](../tutoriais/README.md).
 
 Consulte também [Variáveis de ambiente](../configuracao/ambiente.md) para o mapa
 completo das chaves cobertas por cada aba.

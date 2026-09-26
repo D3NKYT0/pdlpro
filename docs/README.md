@@ -5,6 +5,7 @@ tem um documento principal; os READMEs próximos ao código apontam para ele.
 
 **[Projeto](../README.md)** ·
 **[Instalar (Release)](operacao/distribuicao.md)** ·
+**[Tutoriais](tutoriais/README.md)** ·
 **[Desenvolver](desenvolvimento/ambiente-local.md)** ·
 **[Testes](desenvolvimento/testes.md)** ·
 **[Melhorar estas docs](projeto/documentacao.md)**
@@ -14,6 +15,7 @@ tem um documento principal; os READMEs próximos ao código apontam para ele.
 | Seu objetivo | Use |
 | --- | --- |
 | Colocar o painel no ar numa VPS | **[Distribuição / Release](operacao/distribuicao.md)** — instalador + imagens prontas. **Não precisa clonar o Git.** |
+| Configurar DNS, OAuth, pagamentos, LLM… | **[Tutoriais de integração](tutoriais/README.md)** (após a Release) |
 | Atualizar, HTTPS, backup, diagnóstico | [Distribuição](operacao/distribuicao.md) → [Backup](operacao/backup-e-restauracao.md) → [Problemas](operacao/solucao-de-problemas.md) |
 | Administrar integrações e o jogo | [Configuração](configuracao/ambiente.md) → [Integrações admin](operacao/integracoes-admin.md) → [Lineage](integracoes/lineage.md) |
 | Desenvolver ou contribuir | [Ambiente local](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Testes](desenvolvimento/testes.md) |
@@ -100,6 +102,7 @@ tem um documento principal; os READMEs próximos ao código apontam para ele.
 | Documento | O que explica |
 | --- | --- |
 | [Distribuição (recomendado)](operacao/distribuicao.md) | Release: instalar, HTTPS, admin, launcher e atualizar com imagens prontas |
+| [Tutoriais de integração](tutoriais/README.md) | DNS/Cloudflare, SMTP, hCaptcha, OAuth, Mercado Pago, Stripe, Lineage, LLM, S3/R2, Sentry |
 | [Implantação avançada](operacao/implantacao.md) | Clone Git, build local, topologias, checklist e rollback (mantenedores) |
 | [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
 | [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, MultiFernet, painel admin e Beat |

@@ -1,6 +1,7 @@
 # Pagamentos e webhooks
 
-[Índice](../README.md) · [Configuração](../configuracao/ambiente.md) · [Testes](../desenvolvimento/testes.md)
+[Índice](../README.md) · [Configuração](../configuracao/ambiente.md) ·
+[Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
@@ -34,9 +35,19 @@ Configure a campanha em `/panel/admin/wallet`, confira o banner em `/panel/walle
 
 ## Configuração
 
-Use `PAYMENT_METHODS` para selecionar métodos expostos e configure as chaves e segredos de webhook conforme [Variáveis de ambiente](../configuracao/ambiente.md). As flags de ativação dos provedores controlam disponibilidade do processamento real. O mock é exclusivo de desenvolvimento e testes; `core.settings.test` o habilita explicitamente.
+Use `PAYMENT_METHODS` e as chaves na aba **Pagamentos** do
+[configurador admin](../operacao/integracoes-admin.md). Tutoriais do
+operador: [Mercado Pago](../tutoriais/mercado-pago.md) e
+[Stripe](../tutoriais/stripe.md). Mapa de variáveis:
+[Ambiente](../configuracao/ambiente.md).
 
-`PAYMENT_WEBHOOK_BASE_URL` deve apontar para o endereço público correto da instalação. Consulte as rotas efetivas em [URLs do pagamento](../../backend/apps/payment/presentation/urls/) e o schema OpenAPI; não copie URLs de outro ambiente sem conferir o prefixo publicado pelo proxy.
+As flags de ativação dos provedores controlam o processamento real. O mock é
+exclusivo de desenvolvimento e testes; `core.settings.test` o habilita
+explicitamente.
+
+`PAYMENT_WEBHOOK_BASE_URL` deve ser o HTTPS público da instalação. Rotas:
+`/api/v1/system/webhooks/mercadopago/` e `/api/v1/system/webhooks/stripe/`.
+Não copie URL de outro ambiente sem conferir o domínio.
 
 ## Confirmação, repetição e erros
 

@@ -168,6 +168,14 @@ e mostra uma vez no final. FTPS: `--ftps`. Ajuda: `./setup.sh help ftp`.
 O DNS de `launcher.seudominio.com` também precisa apontar para este
 servidor. Abra as portas `21` e a faixa passiva `40000-50000` no firewall.
 
+## Depois de instalar
+
+Com HTTPS e superadmin no ar, configure as integrações no painel
+(`/panel/admin/integrations`). Roteiro completo:
+
+**[Tutoriais de integração](../tutoriais/README.md)** — DNS/Cloudflare, SMTP,
+hCaptcha, OAuth, pagamentos, Lineage, LLM, S3/R2, Sentry, etc.
+
 ## Windows
 
 Pré-requisito: Docker Desktop em execução. Git Bash é opcional: quando existe,
