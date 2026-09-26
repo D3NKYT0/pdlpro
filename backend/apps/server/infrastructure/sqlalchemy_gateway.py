@@ -481,6 +481,8 @@ class SqlAlchemyLineageGateway(ILineageGateway):
             return False
         if capability == "LINK_SLOT":
             return True
+        if capability == "GAME_STORES":
+            return self._sql.has("list_private_stores") or self._sql.has("list_private_stores_fallback")
         return self._sql.has(query_name)
 
     def search_moderation_characters(
@@ -598,13 +600,34 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         self._execute("clear_pk", {"cid": char.char_id, "login": login})
 
+    def _fetch_store_rows(self, primary_name: str, fallback_name: str) -> list[dict]:
+        variant_attr = f"_store_schema_{primary_name}"
+        active = getattr(self, variant_attr, None)
+        if active == "fallback" and self._sql.has(fallback_name):
+            return self._fetch(fallback_name)
+
+        if self._sql.has(primary_name):
+            try:
+                rows = self._fetch(primary_name)
+                setattr(self, variant_attr, "primary")
+                return rows
+            except SQLAlchemyError:
+                if self._sql.has(fallback_name):
+                    rows = self._fetch(fallback_name)
+                    setattr(self, variant_attr, "fallback")
+                    return rows
+                raise
+        elif self._sql.has(fallback_name):
+            return self._fetch(fallback_name)
+        return []
+
     def list_private_stores(self) -> list[GameStore]:
-        if not self._sql.has("list_private_stores"):
+        if not self._sql.has("list_private_stores") and not self._sql.has("list_private_stores_fallback"):
             return []
         try:
             rows = cached_fetch(
                 f"lineage:game-stores:list:{self._sql.dialect}",
-                lambda: self._fetch("list_private_stores"),
+                lambda: self._fetch_store_rows("list_private_stores", "list_private_stores_fallback"),
                 GAME_STORES_TTL,
             )
         except SQLAlchemyError as exc:
@@ -628,12 +651,12 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return stores
 
     def list_private_store_items(self) -> list[GameStoreItem]:
-        if not self._sql.has("list_private_store_items"):
+        if not self._sql.has("list_private_store_items") and not self._sql.has("list_private_store_items_fallback"):
             return []
         try:
             rows = cached_fetch(
                 f"lineage:game-stores:items:{self._sql.dialect}",
-                lambda: self._fetch("list_private_store_items"),
+                lambda: self._fetch_store_rows("list_private_store_items", "list_private_store_items_fallback"),
                 GAME_STORES_TTL,
             )
         except SQLAlchemyError as exc:

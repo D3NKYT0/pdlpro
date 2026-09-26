@@ -9,7 +9,7 @@ from apps.server.domain.races import race_from_class
 from apps.server.domain.towns import nearest_town_code
 from common.architecture.base import UseCase
 
-STORE_TYPES = {1: "sell", 3: "buy", 5: "package", 8: "craft", 10: "sell"}
+STORE_TYPES = {1: "sell", 3: "buy", 4: "craft", 5: "package", 8: "craft", 10: "sell"}
 
 
 class ListGameStoresUseCase(UseCase[dict | None, dict]):

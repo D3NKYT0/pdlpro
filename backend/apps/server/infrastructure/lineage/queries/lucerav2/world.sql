@@ -53,6 +53,7 @@ SELECT
     W.name AS name,
     W.siege_date AS sdate,
     W.treasury AS stax,
+    COALESCE(W.tax_percent, 0) AS tax,
     P.char_name AS leader,
     CS.name AS clan_name,
     C.clan_id,

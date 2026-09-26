@@ -29,6 +29,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Corrigido
 
+- Issue #1 — Suporte a lojas offline em `character_trade_lists` (Lucera 2): adaptado o dialeto `lucerav2` para ler lojas offline de `character_trade_lists` e `character_variables` (marcador `offline`, `storemode` ativo `1` venda, `3` compra, `4` manufatura e títulos em `sellstorename`/`buystorename`/`manufacturename`) com fallback transparente para `character_offline_trade` e resposta controlada `available: false` na ausência de ambas as tabelas.
+- Paridade de consultas SQL entre Lucera 2 e Dream v3: adicionada a consulta `list_character_equipment` ao catálogo `lucerav2` (lendo `PAPERDOLL` via `loc_data`) habilitando exibição de itens equipados em inventário, leilões e mercado de personagens; restritas exclusão e decremento de itens a `INVENTORY` e `WAREHOUSE`; e incluído `tax_percent` na consulta de `siege`.
 - Diagnóstico e visibilidade de falhas SMTP no envio de e-mails: adaptador `DjangoMailer` agora captura e registra exceções em log estruturado (`logger.exception`) em caso de recusa de conexão ou autenticação pelo servidor de e-mail, preservando a proteção contra enumeração de contas na API pública.
 - Falso positivo de `REDIS_PASSWORD` ausente no status de segredos (`/panel/admin/secrets`): expostos atributos `REDIS_URL` e `REDIS_PASSWORD` nas configurações Django e adicionados fallbacks de leitura de `settings.CACHES` e variáveis de ambiente.
 - Alerta de reinicialização pendente (`restart_required`) no painel de segredos passa a considerar o horário de inicialização do processo (`PROCESS_BOOT_TIME`), limpando o aviso automaticamente após a reinicialização dos containers.
