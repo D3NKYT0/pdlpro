@@ -87,3 +87,38 @@ def test_password_reset_views_use_dedicated_throttles():
     )
     assert PasswordResetRateThrottle in RequestPasswordResetView.throttle_classes
     assert LoginRateThrottle in ConfirmPasswordResetView.throttle_classes
+
+
+def test_django_mailer_send_success():
+    from apps.accounts.infrastructure.mailer import DjangoMailer
+
+    mailer = DjangoMailer()
+    mailer.send("test@pdl.dev", "Assunto Teste", "Corpo da mensagem")
+    assert len(mail.outbox) == 1
+    assert mail.outbox[-1].to == ["test@pdl.dev"]
+    assert mail.outbox[-1].subject == "Assunto Teste"
+
+
+def test_django_mailer_catches_and_logs_exception(monkeypatch):
+    from apps.accounts.infrastructure import mailer as mailer_module
+
+    logged = []
+
+    def mock_send_mail(*args, **kwargs):
+        raise ConnectionRefusedError("SMTP server down")
+
+    def mock_exception(msg, *args, **kwargs):
+        logged.append((msg, kwargs.get("extra")))
+
+    monkeypatch.setattr(mailer_module, "send_mail", mock_send_mail)
+    monkeypatch.setattr(mailer_module.logger, "exception", mock_exception)
+
+    mailer = mailer_module.DjangoMailer()
+    # Não deve levantar exceção para o caller
+    mailer.send("fail@pdl.dev", "Assunto", "Corpo")
+
+    assert len(logged) == 1
+    msg, extra = logged[0]
+    assert msg == "Falha ao enviar e-mail via DjangoMailer"
+    assert extra["recipient"] == "fail@pdl.dev"
+    assert extra["event"] == "email.send_failed"

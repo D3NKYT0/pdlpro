@@ -1,9 +1,11 @@
-from __future__ import annotations
+import logging
 
 from django.conf import settings
 from django.core.mail import send_mail
 
 from apps.accounts.domain.mailer import IMailer
+
+logger = logging.getLogger(__name__)
 
 
 class DjangoMailer(IMailer):
@@ -14,4 +16,14 @@ class DjangoMailer(IMailer):
     """
 
     def send(self, to: str, subject: str, body: str) -> None:
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [to], fail_silently=True)
+        try:
+            send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [to], fail_silently=False)
+        except Exception:
+            logger.exception(
+                "Falha ao enviar e-mail via DjangoMailer",
+                extra={
+                    "event": "email.send_failed",
+                    "recipient": to,
+                    "subject": subject,
+                },
+            )
