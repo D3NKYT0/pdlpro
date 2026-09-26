@@ -10,20 +10,22 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
-- Tutoriais de integração para o operador em
-  [docs/tutoriais/](../tutoriais/README.md): DNS/Cloudflare, SMTP, hCaptcha,
-  OAuth Google/Discord, WebAuthn, Mercado Pago, Stripe, Lineage, VAPID,
-  Denkynho LLM, S3/R2 e Sentry.
+- Tutoriais de integração em [docs/tutoriais/](../tutoriais/README.md).
+- [Fonte única](../projeto/fonte-unica.md): mapa canônico (segurança, ops,
+  tutoriais) e callouts GitHub.
+- [Economia do jogador](../funcionalidades/economia-jogador.md): carteira,
+  loja, marketplace e leilão.
+- Índice de [histórico](README.md) para registros datados.
 
 ### Alterado
 
-- Documentação operacional: a [Release](../operacao/distribuicao.md) é o
-  caminho recomendado para VPS; [implantação avançada](../operacao/implantacao.md)
-  fica restrita a clone/build e topologias para mantenedores. Índices e
-  cruzamentos deixam de apresentar o clone Git como instalação padrão.
-- Exemplos de domínio passam a usar `seudominio.com`.
-- [CHANGELOG.md](../../CHANGELOG.md) da raiz é só ponteiro fixo para este
-  histórico.
+- Documentação só em Markdown: removidos PDFs de migração e scripts em
+  `docs/_pdf/`.
+- Auditorias Python movidas de `desenvolvimento/` para `historico/`.
+- Índice e guias de operação usam callouts; segurança operacional deixa de
+  ser repetida na implantação avançada.
+- Release como caminho recomendado; exemplos com `seudominio.com`.
+- [CHANGELOG.md](../../CHANGELOG.md) da raiz permanece só como ponteiro.
 
 ## [2.5.12] - 2026-09-25
 

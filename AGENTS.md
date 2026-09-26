@@ -5,8 +5,7 @@
 O detalhe vive em [Visão geral](docs/arquitetura/visao-geral.md), [Apps](docs/arquitetura/apps.md),
 [Extensões de cliente](docs/arquitetura/extensoes.md), [Frontend](docs/desenvolvimento/frontend.md),
 [Temas](docs/funcionalidades/temas.md) e [Internacionalização](docs/desenvolvimento/i18n.md).
-Registros da migração: [backend PDF](docs/arquitetura/migracao-clean-architecture-di.pdf),
-[frontend PDF](docs/arquitetura/migracao-frontend-camadas.pdf).
+Mapa da documentação: [Fonte única](docs/projeto/fonte-unica.md).
 
 ### Backend (Clean Architecture + DI)
 
@@ -124,3 +123,5 @@ alterações quando expõe texto ao usuário (API, admin, e-mail ou UI).
   impacto para o produto — não liste commit a commit. O [CHANGELOG.md](CHANGELOG.md)
   da raiz é só um ponteiro fixo para esse histórico; não o atualize com
   resumos de versão.
+- A documentação em `docs/` é **somente Markdown**. Não acrescente PDF, scripts
+  geradores nem binários em `docs/`. Siga [Fonte única](docs/projeto/fonte-unica.md).

@@ -1,150 +1,149 @@
 # Documentação do PDL PRO
 
-Guias para instalar, desenvolver, integrar e operar o painel. Cada explicação
-tem um documento principal; os READMEs próximos ao código apontam para ele.
+> [!IMPORTANT]
+> **Produção = Release.** Instale com
+> [Distribuição](operacao/distribuicao.md). Não clone o Git só para operar o
+> painel.
 
-**[Projeto](../README.md)** ·
-**[Instalar (Release)](operacao/distribuicao.md)** ·
-**[Tutoriais](tutoriais/README.md)** ·
-**[Desenvolver](desenvolvimento/ambiente-local.md)** ·
-**[Testes](desenvolvimento/testes.md)** ·
-**[Melhorar estas docs](projeto/documentacao.md)**
+> [!TIP]
+> Cada assunto tem **um documento canônico**. Se for segurança, abra
+> [Segurança](projeto/fonte-unica.md#segurança). Evite copiar o mesmo checklist
+> em vários guias — use links.
 
-## Qual caminho seguir
+**Atalhos:** [Instalar](operacao/distribuicao.md) ·
+[Tutoriais](tutoriais/README.md) ·
+[Fonte única](projeto/fonte-unica.md) ·
+[Desenvolver](desenvolvimento/ambiente-local.md) ·
+[Changelog](historico/changelog.md)
 
-| Seu objetivo | Use |
+---
+
+## Por onde começar
+
+| Quero… | Abrir |
 | --- | --- |
-| Colocar o painel no ar numa VPS | **[Distribuição / Release](operacao/distribuicao.md)** — instalador + imagens prontas. **Não precisa clonar o Git.** |
-| Configurar DNS, OAuth, pagamentos, LLM… | **[Tutoriais de integração](tutoriais/README.md)** (após a Release) |
-| Atualizar, HTTPS, backup, diagnóstico | [Distribuição](operacao/distribuicao.md) → [Backup](operacao/backup-e-restauracao.md) → [Problemas](operacao/solucao-de-problemas.md) |
-| Administrar integrações e o jogo | [Configuração](configuracao/ambiente.md) → [Integrações admin](operacao/integracoes-admin.md) → [Lineage](integracoes/lineage.md) |
-| Desenvolver ou contribuir | [Ambiente local](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) → [Testes](desenvolvimento/testes.md) |
-| Frontend / temas | [Frontend](desenvolvimento/frontend.md) → [Temas](funcionalidades/temas.md) → [Componentes](desenvolvimento/componentes.md) |
-| Build a partir do clone / topologia especial | [Implantação avançada](operacao/implantacao.md) — apenas quem mantém o código ou publica releases |
+| Colocar o painel no ar | [Distribuição (Release)](operacao/distribuicao.md) |
+| DNS, OAuth, pagamentos, LLM… | [Tutoriais](tutoriais/README.md) |
+| Entender o produto | [Visão geral](produto/visao-geral.md) |
+| Desenvolver / contribuir | [Ambiente local](desenvolvimento/ambiente-local.md) → [Arquitetura](arquitetura/visao-geral.md) |
+| Reportar vulnerabilidade | [Política de segurança](projeto/seguranca.md) |
+| Variável de ambiente | [Configuração](configuracao/ambiente.md) |
 
-> **Distribuição × Implantação.** *Distribuição* é o fluxo recomendado (releases
-> públicas). *Implantação avançada* descreve clone Git, build local, checklist
-> e topologias alternativas — não substitui o instalador para quem só quer o
-> painel rodando.
+> [!NOTE]
+> **Distribuição** = instalador + imagens GHCR (recomendado).  
+> **Implantação avançada** = clone/build para mantenedores
+> ([guia](operacao/implantacao.md)).
 
-## Índice completo
+---
 
-### Produto e primeiros passos
+## Índice
 
-| Documento | O que explica |
+### Produto
+
+| Documento | Conteúdo |
 | --- | --- |
-| [Visão geral](produto/visao-geral.md) | Recursos, stack, estrutura e diferenças do PDL 2.0 |
-| [Docker de desenvolvimento](primeiros-passos/docker.md) | Clone local com Compose `dev` (não é instalação de produção) |
-
-### Desenvolvimento
-
-| Documento | O que explica |
-| --- | --- |
-| [Ambiente local](desenvolvimento/ambiente-local.md) | Python, frontend, execução nativa, Docker e migrações |
-| [Frontend](desenvolvimento/frontend.md) | Organização, serviços HTTP, sessão, cache, rotas e assets |
-| [Componentes e padrão visual](desenvolvimento/componentes.md) | Catálogo local, botões, campos, estados, hooks e composição de novas telas |
-| [Interface do admin/backend](desenvolvimento/interface-admin.md) | Jazzmin, login, botões compartilhados, envio nativo e documentação HTTP |
-| [Testes e qualidade](desenvolvimento/testes.md) | Pytest, Vitest, isolamento, exemplos, cobertura e limites |
-| [Política de testes](desenvolvimento/politica-de-testes.md) | Testes obrigatórios para features e correções, critérios de review e CI |
-| [Internacionalização](desenvolvimento/i18n.md) | Idiomas pt/en/es, seletor, namespaces e conteúdo CMS |
-| [Preview isolado](desenvolvimento/preview.md) | Dados demonstrativos sem acessar pagamentos ou jogo reais |
-
-### Arquitetura
-
-| Documento | O que explica |
-| --- | --- |
-| [Visão geral técnica](arquitetura/visao-geral.md) | Camadas, dependências e fluxo de uma mudança |
-| [Guia dos apps](arquitetura/apps.md) | Responsabilidades dos módulos e exemplos de casos de uso |
-| [Extensões de cliente](arquitetura/extensoes.md) | Overlay `extensions/*`, contrato de imports e updates do core |
-| [Componentes compartilhados](arquitetura/common.md) | DI, lifetimes, transações, UUIDs, erros e admin |
-| [Reutilização e código repetido](arquitetura/reutilizacao.md) | Políticas compartilhadas, limites das abstrações e auditoria reproduzível |
-| [Migração Clean Architecture + DI (PDF)](arquitetura/migracao-clean-architecture-di.pdf) | Registro técnico do que migrámos, decisões e estado validado |
-| [Migração frontend em camadas (PDF)](arquitetura/migracao-frontend-camadas.pdf) | Paridade SPA: barrel, serviços, páginas finas e invalidação escopada |
-
-### API e configuração
-
-| Documento | O que explica |
-| --- | --- |
-| [Guia da API](api/README.md) | Namespaces, sessão, CSRF, paginação e erros |
-| [API de relatórios financeiros](api/relatorios-financeiros.md) | Filtros, respostas, unidades e regras de cálculo |
-| [API de relatórios operacionais](api/relatorios-operacionais.md) | Inventário, leilões, compras e marketplace (staff) |
-| [API do catálogo de itens](api/catalogo-de-itens.md) | Metadados públicos e administração de customs |
-| [Variáveis de ambiente](configuracao/ambiente.md) | Settings, origens, bancos, pagamentos, e-mail e push |
-
-### Integrações
-
-| Documento | O que explica |
-| --- | --- |
-| [Lineage 2](integracoes/lineage.md) | Gateways, dialetos SQL, schema e homologação |
-| [TLS no MySQL do Lineage 2](integracoes/lineage-mysql-ssl.md) | Escolha entre TCP simples e TLS, certificados e volume Docker |
-| [Catálogo de itens](integracoes/catalogo-de-itens.md) | XML, customs, imagens, cache e permissões |
-| [Ícones de itens e skills](integracoes/icones.md) | Importação, pacote de assets e publicação |
-| [Câmbio entre painel e jogo](integracoes/cambio-painel-jogo.md) | Recibos, requisitos transacionais e retomada |
-| [Pagamentos e webhooks](integracoes/pagamentos.md) | Cotação, gateways, assinatura, liquidação e testes |
-
-### Funcionalidades
-
-| Documento | O que explica |
-| --- | --- |
-| [Temas instaláveis](funcionalidades/temas.md) | Pacotes ZIP, renderer Valorem, segurança, ativação e restauração do default |
-| [Templates públicos clássicos](funcionalidades/templates-publicos.md) | Catálogo de 20 layouts da landing; aliases `portal-v1` / `club-v1` |
-| [Coming Soon](funcionalidades/coming-soon.md) | Página de lançamento, countdown do tema e login restrito à staff |
-| [Identidade visual da página inicial](funcionalidades/identidade-visual-da-home.md) | Artes próprias, personagem central, mapa de uso e regras de manutenção |
-| [Ajuda e Denkynho](funcionalidades/ajuda.md) | Chat sobre o FAQ publicado, personagem animado, limites e atendimento |
-| [Documentos legais e LGPD](funcionalidades/documentos-legais-e-lgpd.md) | Termos, privacidade, cookies, histórico de versões e reaceitação |
-| [Animações do Denkynho](funcionalidades/denkynho-animacoes.md) | Sequências de comer, jogar e rir, assets, reprodução e prompts |
-| [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Apoiadores, comissões, comércio, passe, caça do dia, lojas do jogo, bônus e pesca |
-| [Observação de itens](funcionalidades/observacao-de-itens.md) | Capturas, categorias, favoritos, comparação e acesso |
-| [Moderação de personagens](funcionalidades/moderacao.md) | Kick, prisão, banimento e teleporte no admin SPA |
+| [Visão geral](produto/visao-geral.md) | Recursos, stack, estrutura |
+| [Docker de desenvolvimento](primeiros-passos/docker.md) | Compose `dev` no PC (não é produção) |
 
 ### Operação
 
-| Documento | O que explica |
+| Documento | Conteúdo |
 | --- | --- |
-| [Distribuição (recomendado)](operacao/distribuicao.md) | Release: instalar, HTTPS, admin, launcher e atualizar com imagens prontas |
-| [Tutoriais de integração](tutoriais/README.md) | DNS/Cloudflare, SMTP, hCaptcha, OAuth, Mercado Pago, Stripe, Lineage, LLM, S3/R2, Sentry |
-| [Implantação avançada](operacao/implantacao.md) | Clone Git, build local, topologias, checklist e rollback (mantenedores) |
-| [Backup e restauração](operacao/backup-e-restauracao.md) | Escopo dos scripts, mídia, segredos e ensaio de recuperação |
-| [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, MultiFernet, painel admin e Beat |
-| [Configurador admin de integrações](operacao/integracoes-admin.md) | Pagamentos, Lineage, SMTP/VAPID, OAuth, Denkynho, S3/R2 e Sentry com hot-apply |
-| [Observabilidade e auditoria](operacao/observabilidade.md) | Logs estruturados, correlação, alertas, auditoria e retenção |
-| [Solução de problemas](operacao/solucao-de-problemas.md) | Diagnóstico de ambiente, Nginx, FTP, Redis da install, sessão e disco |
-| [Segurança de contas e operações](operacao/seguranca.md) | Sessões, OAuth, proxies e conciliação de serviços pagos |
+| [Distribuição](operacao/distribuicao.md) | Instalar, HTTPS, admin, atualizar |
+| [Tutoriais de integração](tutoriais/README.md) | Passo a passo por provedor |
+| [Configurador admin](operacao/integracoes-admin.md) | Hot-apply, abas, API staff |
+| [Backup e restauração](operacao/backup-e-restauracao.md) | Dump PostgreSQL e recuperação |
+| [Rotação de segredos](operacao/rotacao-de-segredos.md) | Soft-rotate, Fernet, Beat |
+| [Segurança operacional](operacao/seguranca.md) | Sessões, proxies, pagamentos |
+| [Observabilidade](operacao/observabilidade.md) | Logs, Sentry, auditoria |
+| [Solução de problemas](operacao/solucao-de-problemas.md) | Sintomas e correções |
+| [Implantação avançada](operacao/implantacao.md) | Clone Git, topologias, checklist |
 
-### Projeto e histórico
+### Configuração e integrações técnicas
 
-| Documento | O que explica |
+| Documento | Conteúdo |
 | --- | --- |
-| [Contribuição](projeto/contribuicao.md) | Fluxo de mudança, padrões e evidências de validação |
-| [Manutenção da documentação](projeto/documentacao.md) | Organização, padrão de escrita e inclusão de novos guias |
-| [Segurança](projeto/seguranca.md) | Relato privado de vulnerabilidades, agradecimentos e práticas operacionais |
-| [Uso e licença](projeto/licenca.md) | Resumo das condições e referência ao texto da licença |
-| [Validação de 02/09/2026](historico/2026-09-02-validacao.md) | Registro histórico de programas e recompensas; não é garantia de homologação atual |
-| [Ampliação dos testes em 02/09/2026](historico/2026-09-02-testes.md) | Cenários adicionados, resultados, cobertura, correções e lacunas restantes |
-| [Reutilização em 02/09/2026](historico/2026-09-02-reutilizacao.md) | Biblioteca visual, políticas consolidadas, botões, testes e validação no navegador |
-| [Evolução do Denkynho em 04/09/2026](historico/2026-09-04-denkynho-evolucao.md) | Conversa, preferências, ajuda contextual, armário e validação |
-| [Changelog](historico/changelog.md) | Alterações entre versões |
-| [Licença completa](../LICENSE) | Texto que rege o uso e a redistribuição |
+| [Variáveis de ambiente](configuracao/ambiente.md) | Mapa completo de settings |
+| [Lineage 2](integracoes/lineage.md) | Dialetos SQL e gateways |
+| [TLS MySQL L2](integracoes/lineage-mysql-ssl.md) | Certificados e volume Docker |
+| [Pagamentos](integracoes/pagamentos.md) | Fluxo interno MP/Stripe |
+| [Catálogo de itens](integracoes/catalogo-de-itens.md) | XML, customs, cache |
+| [Ícones](integracoes/icones.md) | Pacote de assets |
+| [Câmbio painel ↔ jogo](integracoes/cambio-painel-jogo.md) | Inventário e recibos |
 
-## Fontes da implementação
+### Funcionalidades
 
-| Informação | Fonte |
+| Documento | Conteúdo |
 | --- | --- |
-| Versão do produto/API | [version.json](../version.json) |
-| Dependências Python | [requirements.txt](../backend/requirements.txt) |
-| Scripts e dependências frontend | [package.json](../frontend/package.json) |
-| Configuração disponível | [.env.example](../.env.example) e [settings](../backend/core/settings/) |
-| Rotas HTTP | [api_urls.py](../backend/core/api_urls.py) e URLs dos apps |
-| Rotas WebSocket | [websocket_routing.py](../backend/core/websocket_routing.py) |
-| Testes backend | [pytest.ini](../backend/pytest.ini) e [settings de teste](../backend/core/settings/test.py) |
-| Testes frontend | [vite.config.ts](../frontend/vite.config.ts) |
+| [Economia do jogador](funcionalidades/economia-jogador.md) | Carteira, loja, marketplace, leilão |
+| [Programas e recompensas](funcionalidades/programas-e-recompensas.md) | Passe, pesca, caixas, apoiadores |
+| [Temas](funcionalidades/temas.md) | ZIP, Valorem, default |
+| [Templates públicos](funcionalidades/templates-publicos.md) | Layouts da landing |
+| [Coming Soon](funcionalidades/coming-soon.md) | Countdown e acesso staff |
+| [Ajuda / Denkynho](funcionalidades/ajuda.md) | FAQ, LLM, mascote |
+| [Animações Denkynho](funcionalidades/denkynho-animacoes.md) | Assets e sequências |
+| [Identidade da home](funcionalidades/identidade-visual-da-home.md) | Artes e mapa de uso |
+| [Legais e LGPD](funcionalidades/documentos-legais-e-lgpd.md) | Termos, cookies, portabilidade |
+| [Observação de itens](funcionalidades/observacao-de-itens.md) | Snapshots staff |
+| [Moderação](funcionalidades/moderacao.md) | Kick, ban, teleporte |
 
-Ao mudar comportamento, atualize o guia correspondente no mesmo trabalho.
-Exemplos e registros datados descrevem o contexto informado; a implementação
-e uma nova execução determinam o comportamento do checkout atual.
+### Desenvolvimento
 
-## Proteções de autenticação e transações
+| Documento | Conteúdo |
+| --- | --- |
+| [Ambiente local](desenvolvimento/ambiente-local.md) | Python, Node, Docker, migrações |
+| [Frontend](desenvolvimento/frontend.md) | Camadas SPA, `api.ts`, Query |
+| [Componentes](desenvolvimento/componentes.md) | Catálogo UI e composição |
+| [Interface admin](desenvolvimento/interface-admin.md) | Jazzmin e botões |
+| [Testes](desenvolvimento/testes.md) | Pytest, Vitest, cobertura |
+| [Política de testes](desenvolvimento/politica-de-testes.md) | Obrigatório por mudança |
+| [i18n](desenvolvimento/i18n.md) | pt / en / es |
+| [Preview](desenvolvimento/preview.md) | Dados demo isolados |
 
-Consulte [Segurança de contas e operações](operacao/seguranca.md) para
-migração, revogação de sessões, OAuth, proxies e conciliação de serviços
-pagos.
+### Arquitetura
+
+| Documento | Conteúdo |
+| --- | --- |
+| [Visão técnica](arquitetura/visao-geral.md) | Camadas e fluxo de mudança |
+| [Apps](arquitetura/apps.md) | Responsabilidades dos módulos |
+| [Extensões](arquitetura/extensoes.md) | Overlay de cliente |
+| [Common](arquitetura/common.md) | DI, UoW, erros, admin |
+| [Reutilização](arquitetura/reutilizacao.md) | Políticas e auditoria visual |
+
+### API
+
+| Documento | Conteúdo |
+| --- | --- |
+| [Guia da API](api/README.md) | Namespaces, CSRF, erros |
+| [Relatórios financeiros](api/relatorios-financeiros.md) | Staff financeiro |
+| [Relatórios operacionais](api/relatorios-operacionais.md) | Inventário, leilões, loja |
+| [Catálogo (API)](api/catalogo-de-itens.md) | Metadados e customs |
+
+### Projeto
+
+| Documento | Conteúdo |
+| --- | --- |
+| [Fonte única](projeto/fonte-unica.md) | Onde cada assunto vive |
+| [Manutenção das docs](projeto/documentacao.md) | Como escrever e organizar |
+| [Contribuição](projeto/contribuicao.md) | Fluxo de PR |
+| [Política de segurança](projeto/seguranca.md) | Relato de vulnerabilidade |
+| [Licença](projeto/licenca.md) | Uso e restrições |
+| [Changelog](historico/changelog.md) | Versões |
+| [Histórico datado](historico/README.md) | Registros de validação (arquivo) |
+
+---
+
+## Fontes no código
+
+| Informação | Arquivo |
+| --- | --- |
+| Versão | [version.json](../version.json) |
+| Python | [requirements.txt](../backend/requirements.txt) |
+| Frontend | [package.json](../frontend/package.json) |
+| Env de exemplo | [.env.example](../.env.example) |
+| Settings | [backend/core/settings/](../backend/core/settings/) |
+| Rotas HTTP | [api_urls.py](../backend/core/api_urls.py) |
+
+> [!CAUTION]
+> A documentação descreve o comportamento do código. Se divergir, o código e os
+> testes vencem — atualize o guia no mesmo trabalho.

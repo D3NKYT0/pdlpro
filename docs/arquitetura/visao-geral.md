@@ -143,7 +143,8 @@ O backend valida o ZIP, publica os arquivos de forma atômica e expõe apenas me
 rotas internas e caminhos locais. O frontend nunca executa HTML ou JavaScript fornecido
 pelo pacote. O `default` não é um registro de banco e permanece disponível como fallback.
 
-Registro da migração: [migracao-frontend-camadas.pdf](migracao-frontend-camadas.pdf).
+Camadas e contratos atuais: este guia e [Frontend](../desenvolvimento/frontend.md).
+Não há PDF de migração em `docs/` — o estado válido é o código + estes Markdown.
 
 ## Como implementar uma mudança
 

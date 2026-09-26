@@ -1,19 +1,23 @@
 # Instalar a partir da Release (recomendado)
 
 [← Índice da documentação](../README.md) · [Backup](backup-e-restauracao.md) ·
-[Problemas](solucao-de-problemas.md)
+[Tutoriais](../tutoriais/README.md) · [Problemas](solucao-de-problemas.md)
 
-**Este é o caminho recomendado para colocar o PDL PRO no ar.** As
-[GitHub Releases](https://github.com/D3NKYT0/pdlpro/releases) publicam
-instaladores, ZIP e imagens prontas no GHCR. Você não clona o repositório nem
-compila o código.
+> [!IMPORTANT]
+> **Este é o caminho recomendado.** As
+> [GitHub Releases](https://github.com/D3NKYT0/pdlpro/releases) publicam
+> instaladores, ZIP e imagens no GHCR. Você **não** clona o repositório nem
+> compila o código.
+
+> [!TIP]
+> Depois do HTTPS e do superadmin, siga os
+> [tutoriais de integração](../tutoriais/README.md).
 
 O jogador só acessa o domínio; ele não instala o PDL.
 
-> Precisa buildar a partir do código-fonte, mudar a topologia ou publicar uma
-> versão? Isso é trabalho de manutenção técnica — veja
-> [Implantação avançada](implantacao.md). Operadores de VPS devem ficar neste
-> guia.
+> [!NOTE]
+> Build a partir do código ou topologia especial:
+> [Implantação avançada](implantacao.md) (mantenedores).
 
 ## O que você vai fazer
 

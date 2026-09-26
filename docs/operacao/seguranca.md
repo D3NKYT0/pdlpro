@@ -1,6 +1,11 @@
 # Segurança de contas e operações
 
-[Índice](../README.md) · [Testes](../desenvolvimento/testes.md) · [Instalar (Release)](distribuicao.md)
+[Índice](../README.md) · [Política de relato](../projeto/seguranca.md) ·
+[Instalar (Release)](distribuicao.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> [!IMPORTANT]
+> Documento canônico de **segurança operacional**. Outros guias devem linkar
+> para cá em vez de repetir checklists.
 
 ## Atualização
 

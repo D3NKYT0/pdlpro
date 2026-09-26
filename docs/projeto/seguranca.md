@@ -1,6 +1,12 @@
 # Política de segurança
 
-[← Índice da documentação](../README.md)
+[← Índice da documentação](../README.md) ·
+[Segurança operacional](../operacao/seguranca.md) ·
+[Fonte única](fonte-unica.md)
+
+> [!IMPORTANT]
+> Este documento é só a **política de relato**. Hardening, proxies, sessões e
+> liquidação ficam em [Segurança operacional](../operacao/seguranca.md).
 
 ## Versões suportadas
 

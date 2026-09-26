@@ -1,6 +1,7 @@
 # Visão geral do PDL PRO
 
-[← Índice da documentação](../README.md)
+[← Índice da documentação](../README.md) · [Fonte única](../projeto/fonte-unica.md) ·
+[Economia](../funcionalidades/economia-jogador.md)
 
 Painel web completo para comunidades e servidores de **Lineage 2**.
 
@@ -15,8 +16,8 @@ Lineage 2, mas não pode ser comercializado por terceiros. Consulte o [resumo de
 
 > [!WARNING]
 > O PDL 2.0 está em desenvolvimento ativo. Antes de liberar para jogadores,
-> revise as configurações, prepare o banco do jogo, configure provedores reais
-> e siga a [instalação pela Release](../operacao/distribuicao.md).
+> siga a [Release](../operacao/distribuicao.md) e os
+> [tutoriais de integração](../tutoriais/README.md).
 
 ## O que mudou no PDL 2.0
 

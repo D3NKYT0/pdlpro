@@ -1,14 +1,14 @@
 # Implantação avançada (clone Git e topologias)
 
 [← Índice da documentação](../README.md) ·
-[Instalar a partir da Release (recomendado)](distribuicao.md)
+[Instalar a partir da Release (recomendado)](distribuicao.md) ·
+[Fonte única](../projeto/fonte-unica.md)
 
+> [!CAUTION]
 > **Não use este guia para a instalação típica numa VPS.** O caminho
-> suportado e recomendado é a
-> [Release publicada](distribuicao.md) (`install.sh` / `install.ps1`, imagens
-> do GHCR, HTTPS com `./setup.sh nginx`). Clone + build existem para quem
-> desenvolve o painel, publica releases ou precisa de uma topologia que o
-> instalador não cobre.
+> suportado é a [Release](distribuicao.md). Clone + build são para quem
+> desenvolve, publica releases ou precisa de topologia que o instalador não
+> cobre.
 
 Este documento cobre:
 
@@ -262,12 +262,12 @@ Para publicar uma versão nova para os operadores, siga
 
 ### Segurança e observabilidade
 
-- Segredos em cofre, nunca na imagem ou no Git.
-- Logs sem tokens, senhas ou dados de pagamento.
-- Monitore latência, 5xx, fila Celery, conexões e disco.
-- Use `X-Request-ID` para correlação.
-- `OPENAPI_DOCS_PUBLIC=false` em produção.
-- Siga [SECURITY.md](../projeto/seguranca.md).
+Não duplique hardening aqui. Siga:
+
+- [Segurança operacional](seguranca.md) — proxies, sessões, OpenAPI, liquidação
+- [Política de segurança](../projeto/seguranca.md) — relato de vulnerabilidade
+- [Observabilidade](observabilidade.md) — logs, Sentry, correlação
+- [Rotação de segredos](rotacao-de-segredos.md) — soft-rotate e Fernet
 
 ## Verificação após subir
 

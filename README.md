@@ -6,6 +6,7 @@ Site público, área do jogador e central da equipe em uma aplicação.</p>
 <p align="center">
   <a href="docs/README.md">Documentação</a> ·
   <a href="docs/operacao/distribuicao.md">Instalar (Release)</a> ·
+  <a href="docs/tutoriais/README.md">Tutoriais</a> ·
   <a href="docs/desenvolvimento/ambiente-local.md">Desenvolver</a>
 </p>
 
@@ -13,10 +14,10 @@ Site público, área do jogador e central da equipe em uma aplicação.</p>
 
 O **PDL PRO 2.0** conecta a gestão do servidor à experiência dos jogadores: contas e personagens, economia, conteúdo, recompensas e atendimento. O backend Django e o frontend React são separados, com uma API versionada e módulos de negócio próprios.
 
-> **Em desenvolvimento ativo.** Para colocar o painel no ar, use a
-> [instalação pela Release](docs/operacao/distribuicao.md) (`install.sh` /
-> imagens do GHCR) — não é necessário clonar o repositório. Prepare e
-> valide as integrações antes de liberar o acesso aos jogadores.
+> [!IMPORTANT]
+> Em desenvolvimento ativo. Para colocar o painel no ar use a
+> [instalação pela Release](docs/operacao/distribuicao.md) — sem clonar o Git.
+> Depois configure provedores com os [tutoriais](docs/tutoriais/README.md).
 
 ## O que você encontra
 
@@ -40,11 +41,11 @@ Conheça os recursos e as diferenças em relação ao PDL 1.x na [visão geral d
 | Configurar DNS, OAuth, pagamentos, LLM… | [Tutoriais de integração](docs/tutoriais/README.md) |
 | Manter, atualizar e fazer backup | [Distribuição](docs/operacao/distribuicao.md) → [Backup](docs/operacao/backup-e-restauracao.md) |
 | Desenvolver ou contribuir com código | [Ambiente local](docs/desenvolvimento/ambiente-local.md) · [Docker de desenvolvimento](docs/primeiros-passos/docker.md) |
-| Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) e [guia dos apps](docs/arquitetura/apps.md) |
+| Entender ou criar uma funcionalidade | [Arquitetura](docs/arquitetura/visao-geral.md) · [Fonte única](docs/projeto/fonte-unica.md) |
 | Rodar ou escrever testes | [Testes e qualidade](docs/desenvolvimento/testes.md) |
-| Conectar meu servidor Lineage | [Integração e dialetos](docs/integracoes/lineage.md) |
+| Conectar meu servidor Lineage | [Tutorial Lineage](docs/tutoriais/lineage-game.md) · [Dialetos](docs/integracoes/lineage.md) |
 | Instalar ou desenvolver um tema | [Temas instaláveis](docs/funcionalidades/temas.md) |
-| Build a partir do Git / topologia customizada | [Implantação avançada](docs/operacao/implantacao.md) (só para quem mantém o código) |
+| Build a partir do Git / topologia customizada | [Implantação avançada](docs/operacao/implantacao.md) |
 
 ## Base técnica
 
