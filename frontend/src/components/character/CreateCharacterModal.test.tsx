@@ -87,3 +87,19 @@ it('valida nick curto ou com caracteres inválidos', async () => {
   expect(onConfirm).not.toHaveBeenCalled()
   expect(screen.getByRole('alert')).toHaveTextContent(/Nick deve conter entre 2 e 16 letras ou números/i)
 })
+
+it('bloqueia submissão e exibe aviso quando a conta já possui 7 personagens', () => {
+  render(
+    <CreateCharacterModal
+      open={true}
+      accountLogin="denky"
+      characterCount={7}
+      onClose={vi.fn()}
+      onConfirm={vi.fn()}
+    />,
+  )
+
+  expect(screen.getByText(/limite máximo de 7 personagens/i)).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Criar Personagem' })).toBeDisabled()
+})
+

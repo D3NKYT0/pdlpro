@@ -196,4 +196,4 @@ class ServerProvider(AppProvider):
             ApplyModerationActionUseCase,
         ):
             container.register_self(use_case, lifetime=Lifetime.TRANSIENT)
-        # Reload catalog on character creation updates
+

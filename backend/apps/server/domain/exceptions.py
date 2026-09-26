@@ -107,3 +107,15 @@ class CharacterServiceUnavailableError(ValidationDomainError):
 
     error_code = "SERVICE_UNAVAILABLE"
     message = "Este serviço não está disponível neste servidor."
+
+
+class CharacterLimitReachedError(ValidationDomainError):
+    """Falha de domínio: Limite de personagens atingido nesta conta (máximo de 7).
+
+    A apresentação expõe o código ``CHARACTER_LIMIT_REACHED``. Lance quando a conta
+    já atingir o limite de 7 personagens.
+    """
+
+    error_code = "CHARACTER_LIMIT_REACHED"
+    message = "Limite de personagens atingido. Uma conta pode ter até 7 personagens."
+

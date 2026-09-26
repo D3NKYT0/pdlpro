@@ -387,6 +387,10 @@ class SqlAlchemyLineageGateway(ILineageGateway):
     ) -> GameCharacter:
         if self.nickname_exists(name):
             raise NicknameTakenError()
+        if len(self.list_characters(login)) >= 7:
+            from apps.server.domain.exceptions import CharacterLimitReachedError
+
+            raise CharacterLimitReachedError()
         res = self._fetch("max_character_id", {}) if self._sql.has("max_character_id") else []
         max_id = int(res[0]["max_id"]) if res and res[0].get("max_id") else 268435456
         new_id = max_id + 1

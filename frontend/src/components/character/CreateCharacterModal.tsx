@@ -75,6 +75,7 @@ export const CHARACTER_CREATION_RACES: RaceConfig[] = [
 export interface CreateCharacterModalProps {
   open: boolean
   accountLogin: string
+  characterCount?: number
   pending?: boolean
   onClose: () => void
   onConfirm: (payload: {
@@ -92,11 +93,14 @@ export interface CreateCharacterModalProps {
 export function CreateCharacterModal({
   open,
   accountLogin,
+  characterCount = 0,
   pending = false,
   onClose,
   onConfirm,
 }: CreateCharacterModalProps) {
   const { t } = useTranslation('panel')
+  const MAX_CHARACTERS = 7
+  const isLimitReached = characterCount >= MAX_CHARACTERS
 
   const [name, setName] = useState('')
   const [raceId, setRaceId] = useState(0)
@@ -128,6 +132,10 @@ export function CreateCharacterModal({
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+    if (isLimitReached) {
+      setValidationError(t('accounts.createCharModal.limitNotice', { defaultValue: 'Esta conta já possui o limite máximo de 7 personagens.' }))
+      return
+    }
     const cleaned = name.trim()
     if (!cleaned) {
       setValidationError(t('accounts.createCharModal.errors.nameRequired', { defaultValue: 'Informe o nick do personagem.' }))
@@ -194,7 +202,7 @@ export function CreateCharacterModal({
                   <span className="create-char-tag class-tag">{activeClass?.name}</span>
                 </div>
                 <p className="create-char-preview-meta">
-                  <span>Lv 1</span> • <span>Conta: {accountLogin}</span>
+                  <span>Lv 1</span> • <span>Conta: {accountLogin}</span> • <span>{Math.min(characterCount + 1, MAX_CHARACTERS)}/{MAX_CHARACTERS}</span>
                 </p>
                 <div className="create-char-visual-summary">
                   <span>Cabelo: #{hairStyle + 1}</span>
@@ -217,6 +225,13 @@ export function CreateCharacterModal({
               COLUNA DIREITA: CUSTOMIZAÇÃO (NICK, RAÇA, CLASSE, VISUAL)
               ======================================================== */}
           <div className="create-char-controls-panel">
+            {isLimitReached ? (
+              <div className="create-char-error-notice" role="alert">
+                <Shield aria-hidden="true" />
+                <span>{t('accounts.createCharModal.limitNotice', { defaultValue: 'Esta conta já possui o limite máximo de 7 personagens.' })}</span>
+              </div>
+            ) : null}
+
             {/* 1. Nome do personagem */}
             <div className="create-char-section">
               <label className="create-char-section-label" htmlFor="char-name-input">
@@ -411,7 +426,7 @@ export function CreateCharacterModal({
           <Button variant="ghost" type="button" onClick={onClose} disabled={pending}>
             {t('common.cancel', { defaultValue: 'Cancelar' })}
           </Button>
-          <Button variant="primary" type="submit" disabled={pending || !name.trim()}>
+          <Button variant="primary" type="submit" disabled={pending || !name.trim() || isLimitReached}>
             {pending
               ? t('accounts.createCharModal.creating', { defaultValue: 'Criando personagem...' })
               : t('accounts.createCharModal.submit', { defaultValue: 'Criar Personagem' })}

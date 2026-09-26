@@ -950,6 +950,8 @@
     "createCharacterBtn": "Create Character",
     "characterCreated": "Character {{name}} created successfully!",
     "createCharError": "Failed to create character",
+    "characterCountBadge": "{{count}}/{{max}} characters",
+    "characterLimitReached": "Limit of 7 characters reached on this account",
     "createCharModal": {
       "title": "Create New Character",
       "unnamed": "Unnamed",
@@ -969,6 +971,8 @@
       "face": "Face",
       "creating": "Creating character...",
       "submit": "Create Character",
+      "slotsNotice": "Characters on account: {{count}}/{{max}}",
+      "limitNotice": "This account has already reached the maximum limit of 7 characters.",
       "errors": {
         "nameRequired": "Enter the character nickname.",
         "nameInvalid": "Nickname must contain between 2 and 16 alphanumeric characters, no spaces."

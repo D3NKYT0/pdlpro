@@ -136,3 +136,37 @@ def test_create_character_api_endpoint(api, player):
     assert data["name"] == "ApiHero"
     assert data["class_id"] == 18
     assert data["sex"] == 1
+
+
+@pytest.mark.django_db
+def test_create_character_limit_exceeded(actor, player):
+    container = DependencyInjection.root()
+    gateway = container.resolve(ILineageGateway)
+    gateway.register_account("fullacc", "password123", player.email)
+    gateway.link_account("fullacc", str(player.id))
+
+    use_case = container.resolve(CreateCharacterUseCase)
+    for i in range(7):
+        use_case.execute(
+            CreateCharacterInput(
+                actor=actor,
+                login="fullacc",
+                name=f"Hero{i}",
+                race=0,
+                class_id=0,
+                sex=0,
+            )
+        )
+
+    with pytest.raises(ValidationDomainError, match="7"):
+        use_case.execute(
+            CreateCharacterInput(
+                actor=actor,
+                login="fullacc",
+                name="HeroEight",
+                race=0,
+                class_id=0,
+                sex=0,
+            )
+        )
+

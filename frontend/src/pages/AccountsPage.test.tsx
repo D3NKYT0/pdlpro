@@ -241,3 +241,28 @@ it('abre modal de criação de personagem e chama lineageApi.createCharacter', a
   })
 })
 
+it('mostra contador e desabilita criação quando atingir 7 personagens', async () => {
+  const sevenChars = Array.from({ length: 7 }, (_, i) => ({
+    char_id: i + 1,
+    name: `Hero${i}`,
+    level: 10,
+    class_id: 0,
+    sex: 0,
+    online: false,
+  }))
+
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 1, total: 3, can_link: true },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue(sevenChars as any)
+
+  mount()
+
+  expect(await screen.findByText('7/7')).toBeVisible()
+  const createBtn = screen.getByRole('button', { name: /^Criar personagem/i })
+  expect(createBtn).toBeDisabled()
+})
+
+

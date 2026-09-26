@@ -880,6 +880,36 @@ html.pdl-panel .account-login-chip {
   text-transform: none;
 }
 
+html.pdl-panel .account-char-slots-chip {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+html.pdl-panel .account-char-slots-chip svg {
+  width: 13px;
+  height: 13px;
+  color: var(--panel-gold);
+}
+
+html.pdl-panel .account-char-slots-chip.is-limit {
+  border-color: rgba(232, 164, 92, 0.4);
+  background: rgba(232, 164, 92, 0.08);
+  color: #e8a45c;
+}
+
+html.pdl-panel .account-char-slots-chip.is-limit svg {
+  color: #e8a45c;
+}
+
 html.pdl-panel .account-list {
   display: grid;
   gap: 8px;

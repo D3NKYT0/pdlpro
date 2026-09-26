@@ -82,6 +82,17 @@ export function AccountsPage() {
     }
   }
 
+  const characters = useQuery({
+    queryKey: ['characters', selectedLogin],
+    queryFn: () => lineageApi.characters(selectedLogin),
+    enabled: Boolean(selectedLogin),
+  })
+
+  const characterList = characters.data ?? []
+  const characterCount = characterList.length
+  const MAX_CHARACTERS_PER_ACCOUNT = 7
+  const isCharacterLimitReached = characterCount >= MAX_CHARACTERS_PER_ACCOUNT
+
   async function handleCreateCharacter(payload: {
     login: string
     name: string
@@ -92,6 +103,10 @@ export function AccountsPage() {
     hair_color: number
     face: number
   }) {
+    if (isCharacterLimitReached) {
+      toast.error(t('accounts.characterLimitReached', { defaultValue: 'Limite de 7 personagens atingido nesta conta' }))
+      return
+    }
     setCreatingCharacter(true)
     try {
       await lineageApi.createCharacter(payload)
@@ -109,12 +124,6 @@ export function AccountsPage() {
       setCreatingCharacter(false)
     }
   }
-
-  const characters = useQuery({
-    queryKey: ['characters', selectedLogin],
-    queryFn: () => lineageApi.characters(selectedLogin),
-    enabled: Boolean(selectedLogin),
-  })
 
   async function onRegister(event: FormEvent) {
     event.preventDefault()
@@ -529,12 +538,31 @@ export function AccountsPage() {
                 </span>
               ) : null}
               {selectedLogin ? (
+                <span
+                  className={`account-char-slots-chip ${isCharacterLimitReached ? 'is-limit' : ''}`}
+                  title={
+                    isCharacterLimitReached
+                      ? t('accounts.characterLimitReached', { defaultValue: 'Limite de 7 personagens atingido nesta conta' })
+                      : undefined
+                  }
+                >
+                  <UsersRound aria-hidden="true" />
+                  <span>{characterCount}/{MAX_CHARACTERS_PER_ACCOUNT}</span>
+                </span>
+              ) : null}
+              {selectedLogin ? (
                 <Button
                   variant="secondary"
                   size="sm"
                   type="button"
                   className="account-create-character-btn"
+                  disabled={isCharacterLimitReached}
                   onClick={() => setCreateCharacterOpen(true)}
+                  title={
+                    isCharacterLimitReached
+                      ? t('accounts.characterLimitReached', { defaultValue: 'Limite de 7 personagens atingido nesta conta' })
+                      : undefined
+                  }
                   aria-label={t('accounts.createCharacterBtn', { defaultValue: 'Criar personagem' })}
                 >
                   <Plus aria-hidden="true" />
@@ -649,6 +677,7 @@ export function AccountsPage() {
       <CreateCharacterModal
         open={createCharacterOpen}
         accountLogin={selectedLogin ?? ''}
+        characterCount={characterCount}
         pending={creatingCharacter}
         onClose={() => setCreateCharacterOpen(false)}
         onConfirm={handleCreateCharacter}

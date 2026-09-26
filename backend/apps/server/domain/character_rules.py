@@ -6,6 +6,8 @@ from apps.server.domain.exceptions import (
 )
 from apps.server.domain.gateways import GameCharacter
 
+MAX_CHARACTERS_PER_ACCOUNT: int = 7
+
 
 def require_offline_character(character: GameCharacter | None) -> GameCharacter:
     """Valida o resultado de uma busca já restrita à conta autorizada.

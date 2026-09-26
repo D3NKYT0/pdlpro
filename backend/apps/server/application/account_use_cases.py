@@ -13,8 +13,10 @@ from apps.server.domain.access import (
     PrimaryLoginState,
     same_linked_user,
 )
+from apps.server.domain.character_rules import MAX_CHARACTERS_PER_ACCOUNT
 from apps.server.domain.exceptions import (
     AccountAlreadyLinkedError,
+    CharacterLimitReachedError,
     GameAccountAlreadyExistsError,
     GameAccountNotFoundError,
     LinkSlotLimitError,
@@ -479,11 +481,8 @@ class CreateCharacterUseCase(UseCase[CreateCharacterInput, GameCharacter]):
             raise ValidationDomainError(_("Este nick já está em uso."))
 
         chars = self._lineage.list_characters(login)
-        from django.conf import settings
-
-        max_chars = getattr(settings, "MAX_CHARACTERS_PER_ACCOUNT", 7)
-        if len(chars) >= max_chars:
-            raise ValidationDomainError(_("Limite de personagens atingido nesta conta."))
+        if len(chars) >= MAX_CHARACTERS_PER_ACCOUNT:
+            raise CharacterLimitReachedError()
 
         if data.sex not in (0, 1):
             raise ValidationDomainError(_("Gênero inválido."))

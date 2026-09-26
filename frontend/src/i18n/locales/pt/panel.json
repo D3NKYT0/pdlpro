@@ -950,6 +950,8 @@
     "createCharacterBtn": "Criar personagem",
     "characterCreated": "Personagem {{name}} criado com sucesso!",
     "createCharError": "Falha ao criar personagem",
+    "characterCountBadge": "{{count}}/{{max}} personagens",
+    "characterLimitReached": "Limite de 7 personagens atingido nesta conta",
     "createCharModal": {
       "title": "Criar Novo Personagem",
       "unnamed": "Sem Nome",
@@ -969,6 +971,8 @@
       "face": "Rosto",
       "creating": "Criando personagem...",
       "submit": "Criar Personagem",
+      "slotsNotice": "Personagens na conta: {{count}}/{{max}}",
+      "limitNotice": "Esta conta já possui o limite máximo de 7 personagens.",
       "errors": {
         "nameRequired": "Informe o nick do personagem.",
         "nameInvalid": "Nick deve conter entre 2 e 16 letras ou números, sem espaços."

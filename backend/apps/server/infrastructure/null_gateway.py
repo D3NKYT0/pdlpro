@@ -182,6 +182,10 @@ class NullLineageGateway(ILineageGateway):
             from apps.server.domain.exceptions import NicknameTakenError
 
             raise NicknameTakenError()
+        if len(self._characters.get(key, [])) >= 7:
+            from apps.server.domain.exceptions import CharacterLimitReachedError
+
+            raise CharacterLimitReachedError()
         all_chars = [c for char_list in self._characters.values() for c in char_list]
         max_id = max([c.char_id for c in all_chars] or [268435456])
         new_char = GameCharacter(
