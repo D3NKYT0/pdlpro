@@ -975,7 +975,15 @@
     "createFirstBtn": "Criar conta de jogo",
     "createAccountBtn": "Criar conta L2",
     "slotsFullTitle": "Limite de contas atingido",
-    "slotsFull": "Todos os slots de contas de jogo disponíveis estão ocupados."
+    "slotsFull": "Todos os slots de contas de jogo disponíveis estão ocupados.",
+    "createAccountEyebrow": "Criação de conta",
+    "linkAccountEyebrow": "Vinculação de conta",
+    "linkMethodCredentials": "Por login e senha",
+    "linkMethodEmail": "Por e-mail",
+    "yourAccountsHint": "A conta com status Ativa define os personagens e dados exibidos no painel.",
+    "linkExplanation": "Já possui uma conta criada no servidor? Conecte-a ao seu painel por credenciais ou e-mail.",
+    "noAccountsYet": "Nenhuma conta vinculada ainda. Crie sua conta abaixo ou vincule uma existente.",
+    "linkCredentialsHint": "Informe o login e a senha da sua conta existente no jogo para vincular imediatamente."
   },
   "activeAccount": {
     "title": "Conta Ativa",

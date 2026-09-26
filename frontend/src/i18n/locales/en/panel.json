@@ -975,7 +975,15 @@
     "createFirstBtn": "Create game account",
     "createAccountBtn": "Create L2 account",
     "slotsFullTitle": "Account limit reached",
-    "slotsFull": "All available game account slots are occupied."
+    "slotsFull": "All available game account slots are occupied.",
+    "createAccountEyebrow": "Account creation",
+    "linkAccountEyebrow": "Account linking",
+    "linkMethodCredentials": "By login and password",
+    "linkMethodEmail": "By email",
+    "yourAccountsHint": "The active account defines the characters and data displayed in the panel.",
+    "linkExplanation": "Already have an account created on the server? Connect it to your panel via credentials or email.",
+    "noAccountsYet": "No game accounts linked yet. Create an account below or link an existing one.",
+    "linkCredentialsHint": "Enter the login and password of your existing game account to link immediately."
   },
   "activeAccount": {
     "title": "Active Account",

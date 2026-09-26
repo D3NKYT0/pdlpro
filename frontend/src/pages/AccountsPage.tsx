@@ -8,10 +8,11 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { CheckCircle2, ChevronRight, Crown, Link2, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
+import { GamepadIcon } from '../components/icons'
 import { getClassName } from '../lib/lineage'
 import { isApiError, lineageApi } from '../services/api'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
@@ -32,6 +33,7 @@ export function AccountsPage() {
   const [alternateLogin, setAlternateLogin] = useState('')
   const [useAlternateLogin, setUseAlternateLogin] = useState(false)
   const [linkEmail, setLinkEmail] = useState('')
+  const [linkMode, setLinkMode] = useState<'credentials' | 'email'>('credentials')
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
@@ -137,193 +139,286 @@ export function AccountsPage() {
       </Card>
 
       <div className="grid cols-2 account-content-grid">
-        <Card className="account-management">
-          <div className="account-section-heading">
-            <div>
-              <span className="panel-eyebrow">{t('accounts.serverAccess')}</span>
-              <h2>{t('accounts.yourAccounts')}</h2>
+        <div className="account-management account-management-column">
+          {/* ========================================================
+              CARD 1: SUAS CONTAS (Lista e Seleção de Conta Ativa)
+              ======================================================== */}
+          <Card className="account-section-card account-card-list">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">{t('accounts.serverAccess')}</span>
+                <h2>{t('accounts.yourAccounts')}</h2>
+              </div>
+              <span className={`account-status-pill ${linkedAccounts.length > 0 ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
+                {linkedAccounts.length > 0 ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
+                {linkedAccounts.length > 0 ? t('accounts.statusPrimaryActive') : primaryTaken ? t('accounts.statusLoginTaken') : t('accounts.statusWaiting')}
+              </span>
             </div>
-            <span className={`account-status-pill ${linkedAccounts.length > 0 ? 'is-active' : ''} ${primaryTaken ? 'is-conflict' : ''}`}>
-              {linkedAccounts.length > 0 ? <CheckCircle2 aria-hidden="true" /> : primaryTaken ? <ShieldAlert aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
-              {linkedAccounts.length > 0 ? t('accounts.statusPrimaryActive') : primaryTaken ? t('accounts.statusLoginTaken') : t('accounts.statusWaiting')}
-            </span>
-          </div>
 
-          {accounts.isLoading ? <div className="account-empty-state">{t('accounts.loadingAccounts')}</div> : null}
+            <p className="account-section-description">
+              {t('accounts.yourAccountsHint')}
+            </p>
 
-          {!accounts.isLoading && linkedAccounts.length > 0 ? (
-            <div className="account-list">
-              {linkedAccounts.map((item) => {
-                const isActive = item.login.toLowerCase() === selectedLogin?.toLowerCase()
-                return (
-                  <div className={`account-list-item ${isActive ? 'is-active-card' : ''}`} key={item.login}>
-                    <span className="account-list-icon">
-                      {isActive ? <Crown aria-hidden="true" /> : <Link2 aria-hidden="true" />}
-                    </span>
-                    <span className="account-list-meta">
-                      <strong>{item.login}</strong>
-                      <small>
-                        {isActive
-                          ? t('accounts.activeBadge', { defaultValue: 'Conta Ativa' })
-                          : (item.is_primary ? t('accounts.primaryAccount') : t('accounts.additionalAccount'))}
-                      </small>
-                    </span>
-                    <b>{characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}</b>
-                    <div className="account-list-action">
-                      {isActive ? (
-                        <span className="account-active-badge">{t('accounts.active', { defaultValue: 'Ativa' })}</span>
-                      ) : (
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          type="button"
-                          onClick={() => void selectActiveAccount(item.login)}
-                        >
-                          {t('accounts.setActive', { defaultValue: 'Ativar' })}
-                        </Button>
-                      )}
+            {accounts.isLoading ? <div className="account-empty-state">{t('accounts.loadingAccounts')}</div> : null}
+
+            {!accounts.isLoading && linkedAccounts.length > 0 ? (
+              <div className="account-list">
+                {linkedAccounts.map((item) => {
+                  const isActive = item.login.toLowerCase() === selectedLogin?.toLowerCase()
+                  return (
+                    <div className={`account-list-item ${isActive ? 'is-active-card' : ''}`} key={item.login}>
+                      <span className="account-list-icon">
+                        {isActive ? <Crown aria-hidden="true" /> : <GamepadIcon className="account-item-glyph" aria-hidden="true" />}
+                      </span>
+                      <span className="account-list-meta">
+                        <strong>{item.login}</strong>
+                        <small>
+                          {isActive
+                            ? t('accounts.activeBadge', { defaultValue: 'Conta Ativa' })
+                            : (item.is_primary ? t('accounts.primaryAccount') : t('accounts.additionalAccount'))}
+                        </small>
+                      </span>
+                      <div className="account-list-action">
+                        <b className={characters.isError && item.login === selectedLogin ? 'is-invalid' : ''}>
+                          {characters.isError && item.login === selectedLogin ? t('accounts.invalid') : t('accounts.linked')}
+                        </b>
+                        {isActive ? (
+                          <span className="account-status-active">{t('accounts.active', { defaultValue: 'Ativa' })}</span>
+                        ) : (
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            type="button"
+                            onClick={() => void selectActiveAccount(item.login)}
+                          >
+                            {t('accounts.setActive', { defaultValue: 'Ativar' })}
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-            </div>
-          ) : null}
-
-          {!accounts.isLoading && !primaryAccount && primaryTaken ? (
-            <div className="account-created-state is-conflict">
-              <ShieldAlert aria-hidden="true" />
-              <div>
-                <strong>{t('accounts.conflictTitle', { login: preferredLogin })}</strong>
-                <span>{t('accounts.conflictText')}</span>
+                  )
+                })}
               </div>
-            </div>
-          ) : null}
+            ) : null}
 
-          {!accounts.isLoading && l2RegistrationClosed ? (
-            <div className="account-created-state is-conflict">
-              <ShieldAlert aria-hidden="true" />
-              <div>
-                <strong>{t('accounts.l2RegistrationClosedTitle')}</strong>
-                <span>{t('accounts.l2RegistrationClosedText')}</span>
+            {!accounts.isLoading && linkedAccounts.length === 0 ? (
+              <div className="account-empty-notice">
+                <UsersRound aria-hidden="true" />
+                <span>{t('accounts.noAccountsYet')}</span>
               </div>
-            </div>
-          ) : null}
+            ) : null}
 
-          {!accounts.isLoading && !l2RegistrationClosed && canLinkMore ? (
-            <form className="account-action-form" onSubmit={onRegister}>
-              <div className="account-form-title">
-                <UserRoundPlus aria-hidden="true" />
+            {selectedLogin && !characters.isError ? (
+              <div className="account-created-state">
+                <CheckCircle2 aria-hidden="true" />
                 <div>
-                  <h3>
-                    {linkedAccounts.length === 0
-                      ? (primaryUnclaimed ? t('accounts.claimPrimary') : t('accounts.createFirstTitle', { defaultValue: 'Criar Conta de Jogo' }))
-                      : t('accounts.createAdditionalTitle', { defaultValue: 'Criar Nova Conta de Jogo' })}
-                  </h3>
-                  <p>
-                    {linkedAccounts.length === 0
-                      ? (primaryUnclaimed
-                          ? <Trans t={t} i18nKey="accounts.claimHint" values={{ login: preferredLogin }} components={{ strong: <strong /> }} />
-                          : t('accounts.createFirstDescription', { defaultValue: 'Defina o login e a senha da sua conta Lineage 2.' }))
-                      : t('accounts.createAdditionalDescription', { defaultValue: 'Cadastre uma nova conta Lineage 2 com login e senha próprios.' })}
-                  </p>
+                  <strong>{t('accounts.readyTitle')}</strong>
+                  <span>{t('accounts.readyText', { login: selectedLogin })}</span>
                 </div>
               </div>
-              <div className="account-form-fields">
+            ) : null}
+
+            {selectedLogin && characters.isError ? (
+              <div className="account-created-state is-conflict">
+                <ShieldAlert aria-hidden="true" />
+                <div>
+                  <strong>{t('accounts.inconsistentTitle')}</strong>
+                  <span>{t('accounts.inconsistentText', { login: selectedLogin })}</span>
+                </div>
+              </div>
+            ) : null}
+          </Card>
+
+          {/* ========================================================
+              CARD 2: CRIAÇÃO DE CONTA (Criar Nova Conta no Jogo)
+              ======================================================== */}
+          <Card className="account-section-card account-card-create">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">{t('accounts.createAccountEyebrow')}</span>
+                <h2>
+                  {linkedAccounts.length === 0
+                    ? (primaryUnclaimed ? t('accounts.claimPrimary') : t('accounts.createFirstTitle', { defaultValue: 'Criar conta de jogo' }))
+                    : t('accounts.createAdditionalTitle', { defaultValue: 'Criar nova conta de jogo' })}
+                </h2>
+              </div>
+              <span className="account-type-tag">
+                <UserRoundPlus aria-hidden="true" />
+                {t('accounts.gameWorld')}
+              </span>
+            </div>
+
+            <p className="account-section-description">
+              {linkedAccounts.length === 0
+                ? (primaryUnclaimed
+                    ? <Trans t={t} i18nKey="accounts.claimHint" values={{ login: preferredLogin }} components={{ strong: <strong /> }} />
+                    : t('accounts.createFirstDescription', { defaultValue: 'Defina o login e a senha da sua conta Lineage 2.' }))
+                : t('accounts.createAdditionalDescription', { defaultValue: 'Cadastre uma nova conta Lineage 2 com login e senha próprios.' })}
+            </p>
+
+            {!accounts.isLoading && !primaryAccount && primaryTaken ? (
+              <div className="account-created-state is-conflict">
+                <ShieldAlert aria-hidden="true" />
+                <div>
+                  <strong>{t('accounts.conflictTitle', { login: preferredLogin })}</strong>
+                  <span>{t('accounts.conflictText')}</span>
+                </div>
+              </div>
+            ) : null}
+
+            {!accounts.isLoading && l2RegistrationClosed ? (
+              <div className="account-created-state is-conflict">
+                <ShieldAlert aria-hidden="true" />
+                <div>
+                  <strong>{t('accounts.l2RegistrationClosedTitle')}</strong>
+                  <span>{t('accounts.l2RegistrationClosedText')}</span>
+                </div>
+              </div>
+            ) : null}
+
+            {!accounts.isLoading && !canLinkMore && linkedAccounts.length > 0 ? (
+              <div className="account-created-state">
+                <ShieldCheck aria-hidden="true" />
+                <div>
+                  <strong>{t('accounts.slotsFullTitle', { defaultValue: 'Limite de contas atingido' })}</strong>
+                  <span>{t('accounts.slotsFull', { defaultValue: 'Todos os slots de contas de jogo disponíveis estão ocupados.' })}</span>
+                </div>
+              </div>
+            ) : null}
+
+            {!accounts.isLoading && !l2RegistrationClosed && canLinkMore ? (
+              <form className="account-form-body" onSubmit={onRegister}>
+                <div className="account-form-fields">
+                  <Field>
+                    {t('accounts.gameLogin', { defaultValue: 'Login no jogo' })}
+                    <input
+                      value={registerLogin}
+                      onChange={(e) => setRegisterLogin(e.target.value)}
+                      required
+                      minLength={3}
+                      maxLength={16}
+                      autoComplete="username"
+                      placeholder={t('accounts.gameLoginPlaceholder', { defaultValue: 'ex: meuhero' })}
+                    />
+                  </Field>
+                  <Field>
+                    {t('accounts.gamePassword', { defaultValue: 'Senha do jogo' })}
+                    <input
+                      type="password"
+                      value={registerPassword}
+                      onChange={(e) => setRegisterPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      autoComplete="new-password"
+                      placeholder="••••••••"
+                    />
+                  </Field>
+                </div>
+                <Button type="submit" disabled={submitting !== null}>
+                  {submitting === 'register'
+                    ? t('accounts.creating')
+                    : (linkedAccounts.length === 0
+                        ? (primaryUnclaimed ? t('accounts.linkAccount') : t('accounts.createFirstBtn', { defaultValue: 'Criar conta de jogo' }))
+                        : t('accounts.createAccountBtn', { defaultValue: 'Criar conta L2' }))}
+                </Button>
+              </form>
+            ) : null}
+          </Card>
+
+          {/* ========================================================
+              CARD 3: VINCULAÇÃO DE CONTA (Já possui conta no servidor?)
+              ======================================================== */}
+          <Card className="account-section-card account-card-link">
+            <div className="account-section-heading">
+              <div>
+                <span className="panel-eyebrow">{t('accounts.linkAccountEyebrow')}</span>
+                <h2>{t('accounts.linkExistingTitle')}</h2>
+              </div>
+              <span className="account-type-tag">
+                <Link2 aria-hidden="true" />
+                {t('accounts.linkAccountEyebrow')}
+              </span>
+            </div>
+
+            <p className="account-section-description">
+              {t('accounts.linkExplanation')}
+            </p>
+
+            <div className="account-link-tabs" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={linkMode === 'credentials'}
+                className={`account-link-tab ${linkMode === 'credentials' ? 'is-active' : ''}`}
+                onClick={() => setLinkMode('credentials')}
+              >
+                <KeyRound aria-hidden="true" />
+                <span>{t('accounts.linkMethodCredentials')}</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={linkMode === 'email'}
+                className={`account-link-tab ${linkMode === 'email' ? 'is-active' : ''}`}
+                onClick={() => setLinkMode('email')}
+              >
+                <Mail aria-hidden="true" />
+                <span>{t('accounts.linkMethodEmail')}</span>
+              </button>
+            </div>
+
+            {linkMode === 'credentials' ? (
+              <form className="account-form-body" onSubmit={onLink}>
+                <p className="account-tab-hint">{t('accounts.linkCredentialsHint')}</p>
+                <div className="account-form-fields">
+                  <Field>
+                    {t('accounts.login')}
+                    <input
+                      value={login}
+                      onChange={(e) => setLogin(e.target.value)}
+                      required
+                      placeholder={t('accounts.login')}
+                    />
+                  </Field>
+                  <Field>
+                    {t('accounts.password')}
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      placeholder="••••••••"
+                    />
+                  </Field>
+                </div>
+                <Button type="submit" disabled={submitting !== null}>
+                  {submitting === 'link' ? t('accounts.linking') : t('accounts.linkAccount')}
+                </Button>
+              </form>
+            ) : (
+              <form className="account-form-body" onSubmit={onLinkByEmail}>
+                <p className="account-tab-hint">{t('accounts.linkByEmailHint')}</p>
                 <Field>
-                  {t('accounts.gameLogin', { defaultValue: 'Login no jogo' })}
+                  {t('accounts.gameEmail')}
                   <input
-                    value={registerLogin}
-                    onChange={(e) => setRegisterLogin(e.target.value)}
+                    type="email"
+                    value={linkEmail}
+                    onChange={(e) => setLinkEmail(e.target.value)}
                     required
-                    minLength={3}
-                    maxLength={16}
-                    autoComplete="username"
-                    placeholder={t('accounts.gameLoginPlaceholder', { defaultValue: 'ex: meuhero' })}
+                    placeholder="email@servidor.com"
                   />
                 </Field>
-                <Field>
-                  {t('accounts.gamePassword', { defaultValue: 'Senha do jogo' })}
-                  <input
-                    type="password"
-                    value={registerPassword}
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                    required
-                    minLength={8}
-                    autoComplete="new-password"
-                  />
-                </Field>
-              </div>
-              <Button type="submit" disabled={submitting !== null}>
-                {submitting === 'register'
-                  ? t('accounts.creating')
-                  : (linkedAccounts.length === 0
-                      ? (primaryUnclaimed ? t('accounts.linkAccount') : t('accounts.createFirstBtn', { defaultValue: 'Criar Conta de Jogo' }))
-                      : t('accounts.createAccountBtn', { defaultValue: 'Criar Conta L2' }))}
-              </Button>
-            </form>
-          ) : null}
+                <Button type="submit" disabled={submitting !== null}>
+                  {submitting === 'email' ? t('accounts.sending') : t('accounts.sendLink')}
+                </Button>
+              </form>
+            )}
+          </Card>
+        </div>
 
-          {!accounts.isLoading && !canLinkMore && linkedAccounts.length > 0 ? (
-            <div className="account-created-state">
-              <ShieldCheck aria-hidden="true" />
-              <div>
-                <strong>{t('accounts.slotsFullTitle', { defaultValue: 'Limite de contas atingido' })}</strong>
-                <span>{t('accounts.slotsFull', { defaultValue: 'Todos os slots de contas de jogo disponíveis estão ocupados.' })}</span>
-              </div>
-            </div>
-          ) : null}
-
-          {selectedLogin && !characters.isError ? (
-            <div className="account-created-state">
-              <CheckCircle2 aria-hidden="true" />
-              <div>
-                <strong>{t('accounts.readyTitle')}</strong>
-                <span>{t('accounts.readyText', { login: selectedLogin })}</span>
-              </div>
-            </div>
-          ) : null}
-
-          {selectedLogin && characters.isError ? (
-            <div className="account-created-state is-conflict">
-              <ShieldAlert aria-hidden="true" />
-              <div>
-                <strong>{t('accounts.inconsistentTitle')}</strong>
-                <span>{t('accounts.inconsistentText', { login: selectedLogin })}</span>
-              </div>
-            </div>
-          ) : null}
-
-          <form className="account-action-form" onSubmit={onLinkByEmail}>
-            <h3>{t('accounts.linkByEmailTitle')}</h3>
-            <p className="muted">{t('accounts.linkByEmailHint')}</p>
-            <Field>
-              {t('accounts.gameEmail')}
-              <input type="email" value={linkEmail} onChange={(e) => setLinkEmail(e.target.value)} required />
-            </Field>
-            <Button type="submit" disabled={submitting !== null}>
-              {submitting === 'email' ? t('accounts.sending') : t('accounts.sendLink')}
-            </Button>
-          </form>
-
-          <form className="account-action-form" onSubmit={onLink}>
-            <h3>{t('accounts.linkExistingTitle')}</h3>
-            <p className="muted">{t('accounts.linkExistingHint')}</p>
-            <div className="account-form-fields">
-              <Field>
-                {t('accounts.login')}
-                <input value={login} onChange={(e) => setLogin(e.target.value)} required />
-              </Field>
-              <Field>
-                {t('accounts.password')}
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </Field>
-            </div>
-            <Button type="submit" disabled={submitting !== null}>
-              {submitting === 'link' ? t('accounts.linking') : t('accounts.linkAccount')}
-            </Button>
-          </form>
-        </Card>
-
+        {/* ========================================================
+            COLUNA DIREITA: PERSONAGENS DA CONTA ATIVA
+            ======================================================== */}
         <Card className="account-characters">
           <div className="account-section-heading">
             <div>
@@ -348,63 +443,68 @@ export function AccountsPage() {
                   <th>{t('accounts.columnLevel')}</th>
                   <th>{t('accounts.columnClass')}</th>
                   <th>{t('accounts.columnStatus')}</th>
-                  <th></th>
+                  <th aria-label={t('common.actions')} />
                 </tr>
               </thead>
               <tbody>
-                {(characters.data ?? []).map((char) => (
+                {characters.data?.map((character) => (
                   <tr
-                    key={char.char_id}
+                    key={character.char_id}
                     role="link"
                     tabIndex={0}
-                    onClick={() => navigate(`/panel/accounts/${selectedLogin}/${char.char_id}`)}
+                    onClick={() => navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === ' ') {
                         event.preventDefault()
-                        navigate(`/panel/accounts/${selectedLogin}/${char.char_id}`)
+                        navigate(`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`)
                       }
                     }}
                   >
                     <td>
                       <Link
                         className="account-character-link"
-                        to={`/panel/accounts/${selectedLogin}/${char.char_id}`}
+                        to={`/panel/accounts/${encodeURIComponent(selectedLogin)}/${character.char_id}`}
                         onClick={(event) => event.stopPropagation()}
                       >
-                        <CharacterAvatar name={char.name} classId={char.class_id} sex={char.sex} size="sm" />
-                        {char.name}
+                        <CharacterAvatar
+                          classId={character.class_id}
+                          className="character-avatar"
+                          name={character.name}
+                          sex={character.sex}
+                          size="sm"
+                        />
+                        <span>{character.name}</span>
                       </Link>
                     </td>
-                    <td>{char.level}</td>
-                    <td>{getClassName(char.class_id)}</td>
-                    <td><span className={`badge ${char.online ? '' : 'off'}`}>{char.online ? t('accounts.online') : t('accounts.offline')}</span></td>
+                    <td>{character.level}</td>
+                    <td>{getClassName(character.class_id)}</td>
                     <td>
-                      <Link
-                        className="account-character-open"
-                        to={`/panel/accounts/${selectedLogin}/${char.char_id}`}
-                        aria-label={t('accounts.openCharacter', { name: char.name })}
-                        onClick={(event) => event.stopPropagation()}
-                      >
+                      <span className={`badge ${character.online ? '' : 'off'}`}>
+                        {character.online ? t('accounts.online') : t('accounts.offline')}
+                      </span>
+                    </td>
+                    <td className="account-character-action">
+                      <span className="account-character-open">
                         <ChevronRight aria-hidden="true" />
-                      </Link>
+                      </span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : null}
-          {!characters.isLoading && !characters.isError && selectedLogin && !characters.data?.length ? (
+          {!characters.isLoading && !characters.isError && selectedLogin && characters.data?.length === 0 ? (
             <div className="account-empty-state">
               <UsersRound aria-hidden="true" />
               <strong>{t('accounts.noCharactersTitle')}</strong>
-              <span>{t('accounts.noCharactersText', { login: selectedLogin })}</span>
+              <p className="muted">{t('accounts.noCharactersText', { login: selectedLogin })}</p>
             </div>
           ) : null}
-          {!characters.isLoading && !selectedLogin ? (
+          {!selectedLogin ? (
             <div className="account-empty-state">
-              <UserRoundPlus aria-hidden="true" />
+              <UsersRound aria-hidden="true" />
               <strong>{t('accounts.noAccountTitle')}</strong>
-              <span>{t('accounts.noAccountText')}</span>
+              <p className="muted">{t('accounts.noAccountText')}</p>
             </div>
           ) : null}
         </Card>
