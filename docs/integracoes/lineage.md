@@ -42,6 +42,30 @@ Com `LINEAGE_DB_ENABLED=false`, o painel funciona sem acessar personagens e iten
 jogo. Essa configuração é adequada para desenvolvimento da interface e das funções
 que dependem somente do banco do PDL.
 
+## Preparação do schema e colunas do PDL (`ensure_columns`)
+
+O PDL PRO requer três colunas específicas na tabela `accounts` do banco do Lineage 2:
+
+- `email`: `VARCHAR(100) NOT NULL DEFAULT ''` — associação, busca e vínculo por e-mail.
+- `created_time`: `INT NULL DEFAULT NULL` — registro do timestamp de criação da conta.
+- `linked_uuid`: `VARCHAR(36) NULL DEFAULT NULL` — UUID do usuário no PDL PRO que gerencia a conta do jogo.
+
+### Execução automática transparente
+
+O gateway `SqlAlchemyLineageGateway` implementa `ensure_columns()`. Antes de executar consultas de contas (`get_account`, `find_accounts_by_email`, `register_account`, moderação de personagens, etc.), o sistema inspeciona a tabela `accounts` e adiciona automaticamente as colunas ausentes sem interromper o serviço e sem conflitos (`ALTER TABLE accounts ADD COLUMN ...`). O resultado é memorizado em memória para não onerar as consultas subsequentes.
+
+### Comando management para o operador
+
+O operador também pode rodar a verificação e criação manual a qualquer momento via terminal:
+
+```bash
+python manage.py prepare_lineage_database
+# Para também provisionar a tabela pdl_exchange_receipts do câmbio de moedas:
+python manage.py prepare_lineage_database --with-exchange
+```
+
+O probe de teste de conexão em `/panel/admin/integrations` (aba Lineage/Game) também executa a verificação automaticamente e informa no resultado as colunas garantidas.
+
 ## Escolha do adaptador
 
 `ServerProvider` registra `ILineageGateway`: sem banco do jogo, usa `NullLineageGateway`, que mantém dados apenas em memória para desenvolvimento; com integração ativa, carrega `LineageQueryCatalog` e `SqlAlchemyLineageGateway`. O status por socket continua separado do acesso SQL.

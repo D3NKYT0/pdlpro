@@ -64,16 +64,63 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         self._probe = probe or SocketStatusProbe()
         self._hasher = hasher or LineagePasswordHasher()
         self._engine: Engine | None = None
+        self._checked_columns: bool = False
 
     def reset_engine(self) -> None:
         """Descarta o pool SQLAlchemy para recriar com as settings atuais (hot-apply L2)."""
-
+        self._checked_columns = False
         if self._engine is not None:
             try:
                 self._engine.dispose()
             except Exception:  # noqa: BLE001, S110
                 pass
             self._engine = None
+
+    def ensure_columns(self) -> list[str]:
+        """Garante a existência das colunas email, created_time e linked_uuid na tabela accounts."""
+        if getattr(self, "_checked_columns", False):
+            return []
+
+        added: list[str] = []
+        try:
+            with self._engine_or_create().begin() as conn:
+                try:
+                    res = conn.execute(text("SELECT * FROM accounts WHERE 1=0"))
+                    existing = {col.lower() for col in res.keys()}
+                except Exception:
+                    # Se a tabela accounts ainda não existe ou o banco não respondeu, não interrompe
+                    return []
+
+                if "email" not in existing:
+                    try:
+                        conn.execute(text("ALTER TABLE accounts ADD COLUMN email VARCHAR(100) NOT NULL DEFAULT ''"))
+                        added.append("email")
+                    except Exception as exc:
+                        if "1060" not in str(exc) and "duplicate column" not in str(exc).lower():
+                            raise
+
+                if "created_time" not in existing:
+                    try:
+                        conn.execute(text("ALTER TABLE accounts ADD COLUMN created_time INT NULL DEFAULT NULL"))
+                        added.append("created_time")
+                    except Exception as exc:
+                        if "1060" not in str(exc) and "duplicate column" not in str(exc).lower():
+                            raise
+
+                if "linked_uuid" not in existing:
+                    try:
+                        conn.execute(text("ALTER TABLE accounts ADD COLUMN linked_uuid VARCHAR(36) NULL DEFAULT NULL"))
+                        added.append("linked_uuid")
+                    except Exception as exc:
+                        if "1060" not in str(exc) and "duplicate column" not in str(exc).lower():
+                            raise
+
+            self._checked_columns = True
+        except Exception as exc:  # noqa: BLE001
+            import logging
+            logging.getLogger(__name__).warning("Não foi possível verificar/adicionar colunas em accounts: %s", exc)
+
+        return added
 
     def _engine_or_create(self) -> Engine:
         if self._engine is None:
@@ -249,17 +296,21 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return GameAccount(login=row["login"], email=row.get("email") or "", linked_user_id=linked or None)
 
     def get_account(self, login: str) -> GameAccount | None:
+        self.ensure_columns()
         rows = self._fetch("get_account", {"login": login})
         return self._account_from_row(rows[0]) if rows else None
 
     def find_accounts_by_email(self, email: str) -> list[GameAccount]:
+        self.ensure_columns()
         return [self._account_from_row(row) for row in self._fetch("find_accounts_by_email", {"email": email})]
 
     def get_account_by_login_and_email(self, login: str, email: str) -> GameAccount | None:
+        self.ensure_columns()
         rows = self._fetch("get_account_by_login_and_email", {"login": login, "email": email})
         return self._account_from_row(rows[0]) if rows else None
 
     def register_account(self, login: str, password: str, email: str) -> GameAccount:
+        self.ensure_columns()
         if self.get_account(login):
             raise GameAccountAlreadyExistsError()
         self._execute(
@@ -441,6 +492,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         limit: int,
         offset: int,
     ) -> list[ModerationCharacter]:
+        self.ensure_columns()
         rows = self._fetch(
             "search_moderation_characters",
             {
@@ -460,6 +512,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         online_filter: int,
         banned_filter: int,
     ) -> int:
+        self.ensure_columns()
         rows = self._fetch(
             "count_moderation_characters",
             {"like": like, "online_filter": online_filter, "banned_filter": banned_filter},
@@ -467,6 +520,7 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return int(rows[0]["total"]) if rows else 0
 
     def get_moderation_character(self, char_id: int) -> ModerationCharacter | None:
+        self.ensure_columns()
         rows = self._fetch("get_moderation_character", {"char_id": char_id})
         return self._moderation_character(rows[0]) if rows else None
 

@@ -21,6 +21,7 @@ class Command(BaseCommand):
                 "Ative LINEAGE_DB_ENABLED e configure o banco do jogo antes de preparar recibos."
             )
         gateway = DependencyInjection.root().resolve(ILineageGateway)
+        gateway.ensure_columns()
         gateway._execute("exchange_create_receipts")
         try:
             gateway.assert_exchange_ready()

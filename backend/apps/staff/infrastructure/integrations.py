@@ -288,6 +288,18 @@ class DjangoIntegrationProbe(IIntegrationProbe):
                     conn.execute(text("SELECT 1"))
                 engine.dispose()
                 details["db_ok"] = True
+
+                try:
+                    from apps.server.domain.gateways import ILineageGateway
+                    from common.di.bootstrap import DependencyInjection
+
+                    gateway = DependencyInjection.root().resolve(ILineageGateway)
+                    added = gateway.ensure_columns()
+                    details["columns_ensured"] = True
+                    details["columns_added"] = added
+                except Exception as col_exc:  # noqa: BLE001
+                    details["columns_ensured"] = False
+                    details["columns_error"] = type(col_exc).__name__
             except Exception as exc:  # noqa: BLE001
                 details["db_ok"] = False
                 details["db_error"] = type(exc).__name__

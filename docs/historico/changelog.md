@@ -12,6 +12,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- Compatibilidade de schema do banco Lineage 2: rotina automática `ensure_columns()` no `SqlAlchemyLineageGateway` para verificar e adicionar colunas ausentes (`email`, `created_time`, `linked_uuid`) na tabela `accounts` de forma transparente em tempo de execução, comando management `prepare_lineage_database` (com flag `--with-exchange`) e verificação integrada ao probe do configurador de integrações.
 - Tutoriais de integração em [docs/tutoriais/](../tutoriais/README.md).
 - [Fonte única](../projeto/fonte-unica.md): mapa canônico (segurança, ops,
   tutoriais) e callouts GitHub.

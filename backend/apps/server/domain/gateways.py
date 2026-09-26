@@ -225,6 +225,10 @@ class ILineageGateway(ABC):
         """Apply once, atomically with a durable receipt in the game database."""
         raise NotImplementedError("Transferência de moedas indisponível neste servidor.")
 
+    def ensure_columns(self) -> list[str]:
+        """Garante a existência de colunas exigidas pelo PDL na tabela accounts do jogo."""
+        return []
+
     @abstractmethod
     def get_status(self) -> ServerStatus: ...
 
