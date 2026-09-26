@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 25 de setembro de 2026
+> **Atualizado:** 26 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -10,9 +10,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
+## [2.5.13] - 2026-09-26
+
 ### Adicionado
 
 - Compatibilidade de schema do banco Lineage 2: rotina automática `ensure_columns()` no `SqlAlchemyLineageGateway` para verificar e adicionar colunas ausentes (`email`, `created_time`, `linked_uuid`) na tabela `accounts` de forma transparente em tempo de execução, comando management `prepare_lineage_database` (com flag `--with-exchange`) e verificação integrada ao probe do configurador de integrações.
+- Suporte explícito ao alias de hash `whirlpool2` em `LineagePasswordHasher` (`LINEAGE_PASSWORD_ALGO=whirlpool2`), alinhando o PDL PRO às convenções de configuração do loginserver da Lucera 2.
 - Tutoriais de integração em [docs/tutoriais/](../tutoriais/README.md).
 - [Fonte única](../projeto/fonte-unica.md): mapa canônico (segurança, ops,
   tutoriais) e callouts GitHub.
