@@ -21,7 +21,8 @@ from apps.server.infrastructure.sqlalchemy_gateway import SqlAlchemyLineageGatew
 CATALOG = LineageQueryCatalog.load("lucerav2")
 READ_QUERIES = [
     name for name, sql in CATALOG._statements.items()
-    if re.sub(r"(?m)^\s*--.*$", "", sql).strip().upper().startswith("SELECT") and name != "exchange_table_engines"
+    if re.sub(r"(?m)^\s*--.*$", "", sql).strip().upper().startswith("SELECT")
+    and name not in ("exchange_table_engines", "list_character_equipment_fallback")
 ]
 
 
@@ -56,7 +57,7 @@ def schema():
         CREATE TABLE ally_data (ally_id INTEGER, ally_name TEXT, crest BLOB);
         CREATE TABLE items (
             item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER,
-            amount INTEGER, location TEXT, enchant INTEGER, loc_data INTEGER
+            amount INTEGER, location TEXT, enchant INTEGER, slot INTEGER
         );
         CREATE TABLE character_skills (
             char_obj_id INTEGER, skill_id INTEGER, skill_level INTEGER, class_index INTEGER
@@ -155,6 +156,7 @@ def test_complete_feature_catalog():
     assert set(CATALOG.REQUIRED) <= CATALOG._statements.keys()
     assert PUBLIC_LINEAGE_QUERIES <= CATALOG._statements.keys()
     assert CATALOG.has("list_character_equipment")
+    assert CATALOG.has("list_character_equipment_fallback")
     assert CATALOG.has("list_character_skills")
     assert CATALOG.has("list_private_stores")
     assert CATALOG.has("list_private_store_items")
@@ -172,6 +174,26 @@ def test_selects_resolve_against_schema(schema, name):
 
 def test_character_equipment_query_resolves_paperdoll(schema):
     rows = schema.execute(CATALOG["list_character_equipment"], {"char_id": 101}).fetchall()
+    assert len(rows) == 1
+    assert dict(rows[0]) == {
+        "item_id": 100,
+        "quantity": 1,
+        "enchant": 7,
+        "slot": 10,
+    }
+
+
+def test_character_equipment_fallback_query_resolves_loc_data():
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.executescript("""
+        CREATE TABLE items (
+            item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER,
+            amount INTEGER, location TEXT, enchant INTEGER, loc_data INTEGER
+        );
+        INSERT INTO items VALUES (2001, 101, 100, 1, 'PAPERDOLL', 7, 10);
+    """)
+    rows = conn.execute(CATALOG["list_character_equipment_fallback"], {"char_id": 101}).fetchall()
     assert len(rows) == 1
     assert dict(rows[0]) == {
         "item_id": 100,
@@ -327,4 +349,42 @@ def test_private_stores_unavailable_when_neither_table_exists():
 
     with pytest.raises(CharacterServiceUnavailableError):
         gw.list_private_store_items()
+
+
+@pytest.mark.django_db
+def test_gateway_list_character_equipment_primary_and_fallback():
+    from sqlalchemy import create_engine, text
+
+    # 1. Primary schema with items.slot
+    engine_primary = create_engine("sqlite://")
+    with engine_primary.begin() as conn:
+        conn.execute(text("CREATE TABLE items (item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER, amount INTEGER, location TEXT, enchant INTEGER, slot INTEGER)"))
+        conn.execute(text("INSERT INTO items VALUES (101, 1, 100, 1, 'PAPERDOLL', 7, 10)"))
+
+    gw_primary = SqlAlchemyLineageGateway(CATALOG)
+    gw_primary._engine = engine_primary
+    eq_primary = gw_primary.list_character_equipment(1)
+    assert len(eq_primary) == 1
+    assert eq_primary[0].item_id == 100
+    assert eq_primary[0].quantity == 1
+    assert eq_primary[0].enchant == 7
+    assert eq_primary[0].slot == 10
+    assert getattr(gw_primary, "_schema_variant_list_character_equipment") == "primary"
+
+    # 2. Fallback schema with items.loc_data (no slot column)
+    engine_fallback = create_engine("sqlite://")
+    with engine_fallback.begin() as conn:
+        conn.execute(text("CREATE TABLE items (item_id INTEGER PRIMARY KEY, owner_id INTEGER, item_type INTEGER, amount INTEGER, location TEXT, enchant INTEGER, loc_data INTEGER)"))
+        conn.execute(text("INSERT INTO items VALUES (102, 1, 200, 1, 'PAPERDOLL', 5, 12)"))
+
+    gw_fallback = SqlAlchemyLineageGateway(CATALOG)
+    gw_fallback._engine = engine_fallback
+    eq_fallback = gw_fallback.list_character_equipment(1)
+    assert len(eq_fallback) == 1
+    assert eq_fallback[0].item_id == 200
+    assert eq_fallback[0].quantity == 1
+    assert eq_fallback[0].enchant == 5
+    assert eq_fallback[0].slot == 12
+    assert getattr(gw_fallback, "_schema_variant_list_character_equipment") == "fallback"
+
 

@@ -391,10 +391,17 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         return [self._game_item(row) for row in rows]
 
     def list_character_equipment(self, char_id: int) -> list[GameItem]:
-        if not self._sql.has("list_character_equipment"):
+        if not self._sql.has("list_character_equipment") and not self._sql.has("list_character_equipment_fallback"):
             return []
-        rows = self._fetch("list_character_equipment", {"char_id": char_id})
-        return [self._game_item(row, slot=int(row["slot"])) for row in rows]
+        rows = self._fetch_with_fallback(
+            "list_character_equipment",
+            "list_character_equipment_fallback",
+            {"char_id": char_id},
+        )
+        return [
+            self._game_item(row, slot=int(row["slot"]) if row.get("slot") is not None else None)
+            for row in rows
+        ]
 
     def list_character_skills(self, char_id: int) -> list[GameSkill]:
         if not self._sql.has("list_character_skills"):
@@ -600,26 +607,31 @@ class SqlAlchemyLineageGateway(ILineageGateway):
         char = self._require_offline(login, char_id)
         self._execute("clear_pk", {"cid": char.char_id, "login": login})
 
-    def _fetch_store_rows(self, primary_name: str, fallback_name: str) -> list[dict]:
-        variant_attr = f"_store_schema_{primary_name}"
+    def _fetch_with_fallback(
+        self, primary_name: str, fallback_name: str, params: dict | None = None
+    ) -> list[dict]:
+        variant_attr = f"_schema_variant_{primary_name}"
         active = getattr(self, variant_attr, None)
         if active == "fallback" and self._sql.has(fallback_name):
-            return self._fetch(fallback_name)
+            return self._fetch(fallback_name, params)
 
         if self._sql.has(primary_name):
             try:
-                rows = self._fetch(primary_name)
+                rows = self._fetch(primary_name, params)
                 setattr(self, variant_attr, "primary")
                 return rows
             except SQLAlchemyError:
                 if self._sql.has(fallback_name):
-                    rows = self._fetch(fallback_name)
+                    rows = self._fetch(fallback_name, params)
                     setattr(self, variant_attr, "fallback")
                     return rows
                 raise
         elif self._sql.has(fallback_name):
-            return self._fetch(fallback_name)
+            return self._fetch(fallback_name, params)
         return []
+
+    def _fetch_store_rows(self, primary_name: str, fallback_name: str) -> list[dict]:
+        return self._fetch_with_fallback(primary_name, fallback_name)
 
     def list_private_stores(self) -> list[GameStore]:
         if not self._sql.has("list_private_stores") and not self._sql.has("list_private_stores_fallback"):

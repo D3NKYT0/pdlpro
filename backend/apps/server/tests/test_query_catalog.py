@@ -20,6 +20,10 @@ def test_lucerav2_catalog_loads_required_queries():
     assert "account_name" in catalog["search_moderation_characters"]
     assert "from_acc" in catalog["transfer_character"]
     assert "accessLevel" in catalog["set_account_access_level"]
+    assert catalog.has("list_character_equipment")
+    assert "slot" in catalog["list_character_equipment"]
+    assert catalog.has("list_character_equipment_fallback")
+    assert "loc_data AS slot" in catalog["list_character_equipment_fallback"]
 
 
 def test_dreamv3_catalog_matches_character_schema():

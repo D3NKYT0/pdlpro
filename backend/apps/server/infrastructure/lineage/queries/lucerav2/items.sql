@@ -8,11 +8,19 @@ WHERE owner_id = :char_id
 ORDER BY location, item_type
 
 -- name: list_character_equipment
+SELECT item_type AS item_id, amount AS quantity, enchant, slot
+FROM items
+WHERE owner_id = :char_id
+  AND location = 'PAPERDOLL'
+ORDER BY slot, item_type
+
+-- name: list_character_equipment_fallback
 SELECT item_type AS item_id, amount AS quantity, enchant, loc_data AS slot
 FROM items
 WHERE owner_id = :char_id
   AND location = 'PAPERDOLL'
 ORDER BY loc_data, item_type
+
 
 -- name: list_character_skills
 SELECT skill_id, skill_level AS level, class_index

@@ -80,7 +80,7 @@ SQL de instalação entra na extensão, não nessa pasta.
 O catálogo `lucerav2` atende distribuições Lucera 2 (Interlude / Classic) em total paridade de consultas com o `dreamv3` (63 consultas SQL):
 
 - **Contas e personagens:** `characters.obj_Id`, `accounts`, vínculos e histórico.
-- **Equipamentos e inventário:** `list_character_equipment` lê os itens equipados em `location = 'PAPERDOLL'` com o slot em `loc_data`, alimentando inventário, leilões e vitrine de personagens.
+- **Equipamentos e inventário:** `list_character_equipment` lê os itens equipados em `location = 'PAPERDOLL'` utilizando a coluna `slot` (padrão Lucera 2) com contingência automática para `loc_data AS slot` (`list_character_equipment_fallback`) em variantes legadas, alimentando inventário, leilões e vitrine de personagens.
 - **Segurança de inventário:** exclusão e decremento de itens (`delete_item_stack`, `update_item_amount`) restritos a `location IN ('INVENTORY', 'WAREHOUSE')`, evitando afetar itens equipados.
 - **Lojas offline (Dual Schema):** suporte nativo ao schema oficial Lucera 2:
   - Tabelas: `character_trade_lists` e `character_variables`.
