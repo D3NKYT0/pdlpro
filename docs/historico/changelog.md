@@ -10,7 +10,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Unreleased]
 
-## [2.5.13] - 2026-09-26
+### Alterado
+
+- Checkout de recarga na Carteira (`/panel/wallet`): fluxo de "Meios de pagamento", documento do pagador (CPF/CNPJ), Mercado Pago Bricks, Stripe e resultado do PIX migrados para modal dedicado (`WalletCheckoutModal`), eliminando a expansão inline e a perda de contexto na tela.
+- Estilização e identidade visual do Mercado Pago Bricks: integração de `customVariables` com o design system do PDL PRO (paleta escura obsidiana e botões em ouro `--panel-gold`), máscara/formatação de documento e tela dedicada de PIX com QR code em alta fidelidade e cópia rápida.
+
 
 ### Adicionado
 
