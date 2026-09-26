@@ -168,6 +168,11 @@ export const lineageApi = {
       `/customer/server/characters/${charId}/?login=${encodeURIComponent(login)}`,
     ),
   servicePrices: () => request<ApiServicePrices>('/customer/server/services/'),
+  purchaseSlots: (quantity: number) =>
+    request<{ extra_slots: number; paid: string }>('/customer/server/accounts/slots/', {
+      method: 'POST',
+      body: JSON.stringify({ quantity }),
+    }),
   changeNickname: (login: string, char_id: number, name: string, request_key?: string) =>
     request('/customer/server/characters/nickname/', {
       method: 'POST',

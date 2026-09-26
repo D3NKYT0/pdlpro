@@ -983,7 +983,29 @@
     "yourAccountsHint": "La cuenta con estado Activa define los personajes y datos mostrados en el panel.",
     "linkExplanation": "¿Ya posees una cuenta creada en el servidor? Conéctala a tu panel por credenciales o correo.",
     "noAccountsYet": "Ninguna cuenta vinculada aún. Crea tu cuenta abajo o vincula una existente.",
-    "linkCredentialsHint": "Ingresa el login y la contraseña de tu cuenta existente en el juego para vincular inmediatamente."
+    "linkCredentialsHint": "Ingresa el login y la contraseña de tu cuenta existente en el juego para vincular inmediatamente.",
+    "buySlotsBtn": "Comprar espacios adicionales",
+    "expandSlots": "Expandir",
+    "slotPriceHint": "Costo por espacio adicional: {{price}} monedas",
+    "buySlotsModal": {
+      "title": "Comprar espacios de cuenta",
+      "lead": "Adquiere espacios permanentes para vincular cuentas de juego adicionales a tu panel.",
+      "currentSlots": "Espacios actuales",
+      "walletBalance": "Saldo en la billetera",
+      "pricePerSlot": "Precio por espacio",
+      "coinsUnit": "monedas",
+      "quantityLabel": "Cantidad de espacios",
+      "quantityHint": "Selecciona entre 1 y 10 espacios adicionales.",
+      "totalLabel": "Total a pagar",
+      "newLimit": "Nuevo límite total: {{limit}} cuentas",
+      "insufficientBalance": "Saldo insuficiente en la billetera para esta cantidad.",
+      "rechargeWallet": "Recargar billetera",
+      "serviceUnavailable": "La compra de espacios está temporalmente desactivada por el servidor.",
+      "confirmBtn": "Confirmar compra",
+      "confirmBtnPrice": "Comprar {{quantity}} espacio(s) por {{price}} monedas",
+      "cancelBtn": "Cancelar",
+      "successToast": "¡{{quantity}} espacio(s) añadido(s) con éxito!"
+    }
   },
   "activeAccount": {
     "title": "Cuenta Activa",

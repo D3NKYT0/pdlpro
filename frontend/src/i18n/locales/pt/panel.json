@@ -983,7 +983,29 @@
     "yourAccountsHint": "A conta com status Ativa define os personagens e dados exibidos no painel.",
     "linkExplanation": "Já possui uma conta criada no servidor? Conecte-a ao seu painel por credenciais ou e-mail.",
     "noAccountsYet": "Nenhuma conta vinculada ainda. Crie sua conta abaixo ou vincule uma existente.",
-    "linkCredentialsHint": "Informe o login e a senha da sua conta existente no jogo para vincular imediatamente."
+    "linkCredentialsHint": "Informe o login e a senha da sua conta existente no jogo para vincular imediatamente.",
+    "buySlotsBtn": "Comprar slots adicionais",
+    "expandSlots": "Expandir",
+    "slotPriceHint": "Custo por slot adicional: {{price}} moedas",
+    "buySlotsModal": {
+      "title": "Comprar slots de conta",
+      "lead": "Adquira slots permanentes para vincular contas de jogo adicionais ao seu painel.",
+      "currentSlots": "Slots atuais",
+      "walletBalance": "Saldo na carteira",
+      "pricePerSlot": "Preço por slot",
+      "coinsUnit": "moedas",
+      "quantityLabel": "Quantidade de slots",
+      "quantityHint": "Selecione entre 1 e 10 slots adicionais.",
+      "totalLabel": "Total a pagar",
+      "newLimit": "Novo limite total: {{limit}} contas",
+      "insufficientBalance": "Saldo insuficiente na carteira para esta quantidade.",
+      "rechargeWallet": "Recarregar carteira",
+      "serviceUnavailable": "A compra de slots está temporariamente desativada pelo servidor.",
+      "confirmBtn": "Confirmar compra",
+      "confirmBtnPrice": "Comprar {{quantity}} slot(s) por {{price}} moedas",
+      "cancelBtn": "Cancelar",
+      "successToast": "{{quantity}} slot(s) adicionado(s) com sucesso!"
+    }
   },
   "activeAccount": {
     "title": "Conta Ativa",

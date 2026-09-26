@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import { ApiError, lineageApi, serverApi } from '../services/api'
+import { ApiError, lineageApi, serverApi, walletApi } from '../services/api'
 import i18n from '../i18n'
 import { AccountsPage } from './AccountsPage'
 
@@ -19,6 +19,14 @@ vi.mock('../services/domain/lineage.service', () => ({
     link: vi.fn(),
     requestLinkByEmail: vi.fn(),
     confirmLinkByEmail: vi.fn(),
+    servicePrices: vi.fn(),
+    purchaseSlots: vi.fn(),
+  },
+  serviceAvailable: vi.fn(() => true),
+}))
+vi.mock('../services/domain/wallet.service', () => ({
+  walletApi: {
+    me: vi.fn(),
   },
 }))
 vi.mock('../services/domain/server.service', () => ({
@@ -39,6 +47,17 @@ beforeEach(() => {
     allow_l2_registration: true,
     staff_only_login: false,
   } as Awaited<ReturnType<typeof serverApi.info>>)
+  vi.mocked(lineageApi.servicePrices).mockResolvedValue({
+    CHANGE_NICKNAME: '10',
+    CHANGE_SEX: '10',
+    UNSTUCK: '0',
+    LINK_SLOT: '10.00',
+  } as any)
+  vi.mocked(walletApi.me).mockResolvedValue({
+    id: 'w1',
+    balance: '50.00',
+    bonus_balance: '0.00',
+  } as any)
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
 })
 
@@ -150,3 +169,29 @@ it('esconde criação de conta L2 quando o Coming Soon fecha o cadastro', async 
   expect(screen.queryByRole('heading', { name: 'Criar conta principal' })).not.toBeInTheDocument()
   expect(screen.getByRole('heading', { name: 'Vincular conta existente' })).toBeVisible()
 })
+
+it('abre modal de compra de slots ao clicar no botão de expandir e conclui compra', async () => {
+  vi.mocked(lineageApi.accounts).mockResolvedValue({
+    accounts: [{ login: 'denky', is_primary: true, linked: true }],
+    slots: { used: 3, total: 3, can_link: false },
+    primary: { login: 'denky', status: 'owned' },
+  } as Awaited<ReturnType<typeof lineageApi.accounts>>)
+  vi.mocked(lineageApi.characters).mockResolvedValue([])
+  vi.mocked(lineageApi.purchaseSlots).mockResolvedValue({ extra_slots: 1, paid: '10.00' })
+
+  const user = mount()
+
+  expect(await screen.findByText('Limite de contas atingido')).toBeVisible()
+  const buyBtns = screen.getAllByRole('button', { name: /Comprar slots adicionais/i })
+  expect(buyBtns.length).toBeGreaterThan(0)
+
+  await user.click(buyBtns[0])
+
+  expect(screen.getByText('Comprar slots de conta')).toBeVisible()
+  expect(screen.getByText('Saldo na carteira')).toBeVisible()
+
+  await user.click(screen.getByRole('button', { name: /Comprar 1 slot\(s\) por 10\.00 moedas/i }))
+
+  expect(lineageApi.purchaseSlots).toHaveBeenCalledWith(1)
+})
+

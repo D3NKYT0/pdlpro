@@ -192,6 +192,22 @@ html.pdl-panel .btn.ui-button.ui-modal-close:hover {
 .ui-modal-body {
   overflow: auto;
   padding: 16px 18px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 35%, transparent) rgba(10, 9, 7, 0.6);
+}
+.ui-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.ui-modal-body::-webkit-scrollbar-track {
+  background: rgba(10, 9, 7, 0.6);
+  border-radius: 4px;
+}
+.ui-modal-body::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 35%, transparent);
+  border-radius: 4px;
+}
+.ui-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent, var(--panel-gold, #c5a161));
 }
 .ui-detail-list {
   display: grid;

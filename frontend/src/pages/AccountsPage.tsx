@@ -8,13 +8,14 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Trans, useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Crown, KeyRound, Link2, Mail, Plus, ShieldAlert, ShieldCheck, UserRoundPlus, UsersRound } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useActiveAccount } from '../contexts/ActiveAccountContext'
 import { CharacterAvatar } from '../components/character/CharacterAvatar'
+import { BuySlotsModal } from '../components/character/BuySlotsModal'
 import { GamepadIcon } from '../components/icons'
 import { getClassName } from '../lib/lineage'
-import { isApiError, lineageApi } from '../services/api'
+import { isApiError, lineageApi, serviceAvailable, walletApi } from '../services/api'
 import { useLaunchAccess } from '../hooks/useLaunchAccess'
 
 export function AccountsPage() {
@@ -24,6 +25,8 @@ export function AccountsPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const accounts = useQuery({ queryKey: ['lineage-accounts'], queryFn: lineageApi.accounts })
+  const servicePrices = useQuery({ queryKey: ['service-prices'], queryFn: lineageApi.servicePrices })
+  const wallet = useQuery({ queryKey: ['wallet'], queryFn: walletApi.me })
   const launch = useLaunchAccess()
   const [params, setParams] = useSearchParams()
   const [login, setLogin] = useState('')
@@ -35,6 +38,9 @@ export function AccountsPage() {
   const [linkEmail, setLinkEmail] = useState('')
   const [linkMode, setLinkMode] = useState<'credentials' | 'email'>('credentials')
   const [submitting, setSubmitting] = useState<'register' | 'email' | 'link' | null>(null)
+  const [buySlotsOpen, setBuySlotsOpen] = useState(false)
+  const [buyingSlots, setBuyingSlots] = useState(false)
+
   const linkedAccounts = accounts.data?.accounts ?? []
   const primaryAccount = linkedAccounts.find((item) => item.is_primary)
   const selectedLogin = activeLogin ?? primaryAccount?.login ?? linkedAccounts[0]?.login
@@ -46,6 +52,32 @@ export function AccountsPage() {
   const l2RegistrationClosed = !launch.l2RegistrationOpen && !isStaff
 
   const canLinkMore = Boolean(accounts.data?.slots ? accounts.data.slots.can_link : true)
+  const rawSlotPrice = servicePrices.data?.LINK_SLOT
+  const unitSlotPrice = rawSlotPrice ? Number(rawSlotPrice) || 10 : 10
+  const isSlotServiceAvailable = servicePrices.data ? serviceAvailable(servicePrices.data, 'LINK_SLOT') : true
+  const walletCoins = wallet.data ? Number(wallet.data.balance) || 0 : 0
+
+  async function handlePurchaseSlots(qty: number) {
+    setBuyingSlots(true)
+    try {
+      await lineageApi.purchaseSlots(qty)
+      toast.success(
+        t('accounts.buySlotsModal.successToast', {
+          quantity: qty,
+          defaultValue: `${qty} slot(s) adicionado(s) com sucesso!`,
+        }),
+      )
+      setBuySlotsOpen(false)
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['lineage-accounts'] }),
+        queryClient.invalidateQueries({ queryKey: ['wallet'] }),
+      ])
+    } catch (err) {
+      toast.error(apiErrorMessage(err, t('common.error', { defaultValue: 'Falha ao processar compra' })))
+    } finally {
+      setBuyingSlots(false)
+    }
+  }
 
   const characters = useQuery({
     queryKey: ['characters', selectedLogin],
@@ -132,9 +164,26 @@ export function AccountsPage() {
           <p className="muted">{t('accounts.subtitle')}</p>
         </div>
         <div className="account-slot-summary" aria-label={t('accounts.slotsAria')}>
-          <UsersRound aria-hidden="true" />
-          <span>{t('accounts.slotsLabel')}</span>
-          <strong>{accounts.data?.slots.used ?? 0}/{accounts.data?.slots.total ?? 0}</strong>
+          <div className="account-slot-icon-wrap" aria-hidden="true">
+            <UsersRound />
+          </div>
+          <div className="account-slot-info">
+            <span className="account-slot-label">{t('accounts.slotsLabel')}</span>
+            <strong className="account-slot-value">
+              {accounts.data?.slots.used ?? 0}/{accounts.data?.slots.total ?? 0}
+            </strong>
+          </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            type="button"
+            className="account-buy-slot-btn"
+            onClick={() => setBuySlotsOpen(true)}
+            aria-label={t('accounts.buySlotsBtn')}
+          >
+            <Plus aria-hidden="true" />
+            <span>{t('accounts.expandSlots')}</span>
+          </Button>
         </div>
       </Card>
 
@@ -277,12 +326,29 @@ export function AccountsPage() {
             ) : null}
 
             {!accounts.isLoading && !canLinkMore && linkedAccounts.length > 0 ? (
-              <div className="account-created-state">
+              <div className="account-created-state is-slots-full">
                 <ShieldCheck aria-hidden="true" />
-                <div>
+                <div className="account-slots-full-content">
                   <strong>{t('accounts.slotsFullTitle', { defaultValue: 'Limite de contas atingido' })}</strong>
                   <span>{t('accounts.slotsFull', { defaultValue: 'Todos os slots de contas de jogo disponíveis estão ocupados.' })}</span>
+                  {rawSlotPrice ? (
+                    <span className="account-slot-price-hint">
+                      {t('accounts.slotPriceHint', {
+                        price: rawSlotPrice,
+                        defaultValue: `Custo por slot adicional: ${rawSlotPrice} moedas`,
+                      })}
+                    </span>
+                  ) : null}
                 </div>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  type="button"
+                  onClick={() => setBuySlotsOpen(true)}
+                >
+                  <Plus aria-hidden="true" />
+                  {t('accounts.buySlotsBtn', { defaultValue: 'Comprar slots adicionais' })}
+                </Button>
               </div>
             ) : null}
 
@@ -509,6 +575,20 @@ export function AccountsPage() {
           ) : null}
         </Card>
       </div>
+
+      <BuySlotsModal
+        open={buySlotsOpen}
+        unitPrice={unitSlotPrice}
+        walletBalance={walletCoins}
+        currentSlots={{
+          used: accounts.data?.slots.used ?? 0,
+          total: accounts.data?.slots.total ?? 0,
+        }}
+        pending={buyingSlots}
+        isAvailable={isSlotServiceAvailable}
+        onClose={() => setBuySlotsOpen(false)}
+        onConfirm={handlePurchaseSlots}
+      />
     </div>
   )
 }

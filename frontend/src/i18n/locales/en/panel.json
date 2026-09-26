@@ -983,7 +983,29 @@
     "yourAccountsHint": "The active account defines the characters and data displayed in the panel.",
     "linkExplanation": "Already have an account created on the server? Connect it to your panel via credentials or email.",
     "noAccountsYet": "No game accounts linked yet. Create an account below or link an existing one.",
-    "linkCredentialsHint": "Enter the login and password of your existing game account to link immediately."
+    "linkCredentialsHint": "Enter the login and password of your existing game account to link immediately.",
+    "buySlotsBtn": "Buy additional slots",
+    "expandSlots": "Expand",
+    "slotPriceHint": "Cost per additional slot: {{price}} coins",
+    "buySlotsModal": {
+      "title": "Buy account slots",
+      "lead": "Acquire permanent slots to link additional game accounts to your panel.",
+      "currentSlots": "Current slots",
+      "walletBalance": "Wallet balance",
+      "pricePerSlot": "Price per slot",
+      "coinsUnit": "coins",
+      "quantityLabel": "Number of slots",
+      "quantityHint": "Select between 1 and 10 additional slots.",
+      "totalLabel": "Total to pay",
+      "newLimit": "New total limit: {{limit}} accounts",
+      "insufficientBalance": "Insufficient wallet balance for this quantity.",
+      "rechargeWallet": "Top up wallet",
+      "serviceUnavailable": "Slot purchasing is temporarily disabled by the server.",
+      "confirmBtn": "Confirm purchase",
+      "confirmBtnPrice": "Buy {{quantity}} slot(s) for {{price}} coins",
+      "cancelBtn": "Cancel",
+      "successToast": "{{quantity}} slot(s) successfully added!"
+    }
   },
   "activeAccount": {
     "title": "Active Account",
