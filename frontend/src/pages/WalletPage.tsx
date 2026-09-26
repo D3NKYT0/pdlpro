@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -56,12 +56,12 @@ export function WalletPage() {
     await queryClient.invalidateQueries({ queryKey: ['payments'] })
   }
 
-  function handleCloseCheckout() {
+  const handleCloseCheckout = useCallback(() => {
     void brickRef.current?.unmount()
     brickRef.current = null
     setIsBrickReady(false)
     setOrder(null)
-  }
+  }, [])
 
   async function startPurchase(packageId?: string) {
     if (!paymentMethod) {

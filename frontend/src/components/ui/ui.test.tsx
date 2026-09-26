@@ -81,6 +81,24 @@ it('modal abre com diálogo, fecha no Escape e restaura o foco', async () => {
   expect(screen.queryByRole('dialog')).toBeNull()
 })
 
+it('modal preserva o foco em campos ativos ao re-renderizar', async () => {
+  const user = userEvent.setup()
+  function DynamicModal() {
+    const [val, setVal] = useState('')
+    // inline function para simular re-render com nova referência de onClose
+    return (
+      <Modal open={true} title="Formulário" onClose={() => {}}>
+        <input aria-label="Documento" value={val} onChange={(e) => setVal(e.target.value)} />
+      </Modal>
+    )
+  }
+  render(<DynamicModal />)
+  const input = screen.getByLabelText('Documento')
+  await user.type(input, '12345678901')
+  expect(input).toHaveValue('12345678901')
+  expect(document.activeElement).toBe(input)
+})
+
 it('botão padrão não envia formulário; submit é explícito', async () => {
   const submit = vi.fn(event => event.preventDefault())
   render(<form onSubmit={submit}><Button>Cancelar</Button><Button type="submit">Salvar</Button></form>)

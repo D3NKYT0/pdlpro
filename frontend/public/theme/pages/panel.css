@@ -5877,9 +5877,9 @@ html.pdl-panel .field {
   letter-spacing: 0.015em;
 }
 
-html.pdl-panel .field input,
+html.pdl-panel .field input:not([type="checkbox"]):not([type="radio"]),
 html.pdl-panel .field select,
-html.pdl-panel input,
+html.pdl-panel input:not([type="checkbox"]):not([type="radio"]),
 html.pdl-panel select,
 html.pdl-panel textarea {
   width: 100%;
@@ -5900,17 +5900,17 @@ html.pdl-panel select option {
   color: #f5efe3;
 }
 
-html.pdl-panel .field input:hover,
+html.pdl-panel .field input:not([type="checkbox"]):not([type="radio"]):hover,
 html.pdl-panel .field select:hover,
-html.pdl-panel input:hover,
+html.pdl-panel input:not([type="checkbox"]):not([type="radio"]):hover,
 html.pdl-panel select:hover,
 html.pdl-panel textarea:hover {
   border-color: color-mix(in srgb, var(--panel-gold) 46%, transparent);
 }
 
-html.pdl-panel .field input:focus,
+html.pdl-panel .field input:not([type="checkbox"]):not([type="radio"]):focus,
 html.pdl-panel .field select:focus,
-html.pdl-panel input:focus,
+html.pdl-panel input:not([type="checkbox"]):not([type="radio"]):focus,
 html.pdl-panel select:focus,
 html.pdl-panel textarea:focus {
   border-color: var(--panel-gold);
@@ -6833,8 +6833,12 @@ html.pdl-panel .wallet-checkout .field > span {
 
 /* Checkout Modal */
 html.pdl-panel .ui-modal.wallet-checkout-modal {
-  width: min(100%, 640px);
+  width: min(100%, 660px);
   max-height: min(92vh, 880px);
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold-bright, #e6c77d) 32%, transparent);
+  background: linear-gradient(180deg, rgba(16, 14, 11, 0.98) 0%, rgba(8, 7, 5, 0.99) 100%);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 0 1px color-mix(in srgb, var(--panel-gold) 20%, transparent);
 }
 
 html.pdl-panel .wallet-checkout-modal .ui-modal-body {
@@ -6842,6 +6846,26 @@ html.pdl-panel .wallet-checkout-modal .ui-modal-body {
   flex-direction: column;
   gap: 16px;
   padding: 20px 22px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--panel-gold) 35%, transparent) rgba(10, 9, 7, 0.6);
+}
+
+html.pdl-panel .wallet-checkout-modal .ui-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+html.pdl-panel .wallet-checkout-modal .ui-modal-body::-webkit-scrollbar-track {
+  background: rgba(10, 9, 7, 0.6);
+  border-radius: 4px;
+}
+
+html.pdl-panel .wallet-checkout-modal .ui-modal-body::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--panel-gold) 35%, transparent);
+  border-radius: 4px;
+}
+
+html.pdl-panel .wallet-checkout-modal .ui-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--panel-gold, #c5a161);
 }
 
 /* Order Summary Box inside Modal */
@@ -6852,10 +6876,11 @@ html.pdl-panel .wallet-checkout-summary {
   gap: 16px;
   padding: 14px 18px;
   border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent);
-  border-radius: var(--panel-radius, 3px);
+  border-radius: var(--panel-radius, 4px);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--panel-gold) 8%, transparent), transparent 60%),
-    rgba(8, 7, 5, 0.6);
+    rgba(8, 7, 5, 0.7);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html.pdl-panel .wallet-checkout-summary-main {
@@ -6951,11 +6976,11 @@ html.pdl-panel .wallet-checkout-summary-price-val {
 html.pdl-panel .wallet-document-section {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
-  border-radius: var(--panel-radius, 3px);
-  background: rgba(6, 6, 5, 0.45);
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 22%, transparent);
+  border-radius: var(--panel-radius, 4px);
+  background: rgba(6, 6, 5, 0.55);
 }
 
 html.pdl-panel .wallet-document-header {
@@ -6969,7 +6994,7 @@ html.pdl-panel .wallet-document-title {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -7018,6 +7043,19 @@ html.pdl-panel .wallet-document-field {
   margin: 0;
 }
 
+html.pdl-panel .wallet-document-field input {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  background: rgba(8, 7, 5, 0.85);
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 30%, transparent);
+}
+
+html.pdl-panel .wallet-document-field input:focus {
+  border-color: var(--panel-gold-bright, #e6c77d);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--panel-gold) 18%, transparent);
+}
+
 html.pdl-panel .wallet-document-prompt {
   margin: 0;
   color: color-mix(in srgb, var(--panel-gold-bright) 75%, transparent);
@@ -7040,10 +7078,52 @@ html.pdl-panel .wallet-brick-wrapper {
 html.pdl-panel #payment-brick {
   width: 100%;
   min-height: 280px;
-  border-radius: var(--panel-radius, 3px);
+  border-radius: var(--panel-radius, 4px);
   overflow: hidden;
-  background: #12100d;
-  border: 1px solid color-mix(in srgb, var(--panel-gold) 18%, transparent);
+  background: #110f0c;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  padding: 6px;
+}
+
+/* Isolamento e correção dos círculos de seleção (rádio) do Mercado Pago Brick */
+html.pdl-panel #payment-brick input[type="radio"],
+#payment-brick input[type="radio"] {
+  display: inline-block !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  max-height: 18px !important;
+  min-width: 18px !important;
+  max-width: 18px !important;
+  padding: 0 !important;
+  margin: 0 10px 0 0 !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--panel-gold, #c5a161) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  accent-color: var(--panel-gold, #c5a161) !important;
+  box-shadow: none !important;
+  flex-shrink: 0 !important;
+  align-self: center !important;
+  cursor: pointer !important;
+  appearance: auto !important;
+}
+
+html.pdl-panel #payment-brick input[type="radio"]:checked,
+#payment-brick input[type="radio"]:checked {
+  background: var(--panel-gold, #c5a161) !important;
+  border-color: var(--panel-gold-bright, #e6c77d) !important;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--panel-gold) 50%, transparent) !important;
+}
+
+html.pdl-panel #payment-brick input:not([type="radio"]):not([type="checkbox"]) {
+  min-height: 40px !important;
+  padding: 8px 12px !important;
+  border-radius: 3px !important;
+  background: #0a0907 !important;
+  border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent) !important;
+  color: #f7f2e8 !important;
+  font-family: inherit !important;
 }
 
 html.pdl-panel #payment-brick iframe {

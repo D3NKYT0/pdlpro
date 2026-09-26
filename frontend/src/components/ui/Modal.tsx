@@ -16,14 +16,18 @@ export interface ModalProps {
 export function Modal({ open, title, onClose, children, className = '' }: ModalProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
 
   useEffect(() => {
     if (!open) return
     const previous = document.activeElement as HTMLElement | null
     const node = panelRef.current
-    node?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')?.focus()
+    if (node && !node.contains(document.activeElement)) {
+      node.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')?.focus()
+    }
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') onCloseRef.current()
     }
     document.addEventListener('keydown', onKeyDown)
     const original = document.body.style.overflow
@@ -33,7 +37,7 @@ export function Modal({ open, title, onClose, children, className = '' }: ModalP
       document.body.style.overflow = original
       previous?.focus?.()
     }
-  }, [open, onClose])
+  }, [open])
 
   if (!open || typeof document === 'undefined') return null
 
@@ -49,7 +53,9 @@ export function Modal({ open, title, onClose, children, className = '' }: ModalP
       >
         <header className="ui-modal-header">
           <h2 id={titleId}>{title}</h2>
-          <IconButton label="Fechar" onClick={onClose}><X aria-hidden="true" /></IconButton>
+          <IconButton label="Fechar" variant="ghost" size="sm" onClick={onClose} className="ui-modal-close">
+            <X aria-hidden="true" />
+          </IconButton>
         </header>
         <div className="ui-modal-body">{children}</div>
       </div>

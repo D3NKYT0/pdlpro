@@ -158,6 +158,37 @@ html.pdl-panel .btn.ui-button--icon.ui-button--lg { height: 54px; padding: 0 17p
   font-size: 20px;
   font-weight: 500;
 }
+.ui-modal-close,
+html.pdl-panel .btn.ui-button.ui-modal-close {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  max-height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  background-image: none;
+  border: 1px solid color-mix(in srgb, var(--theme-accent, var(--panel-gold, #c5a161)) 22%, transparent);
+  color: var(--panel-muted, rgba(255, 255, 255, 0.7));
+  cursor: pointer;
+  transition: all 150ms ease;
+  box-shadow: none;
+}
+.ui-modal-close:hover,
+html.pdl-panel .btn.ui-button.ui-modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  background-image: none;
+  border-color: color-mix(in srgb, var(--theme-accent-bright, var(--panel-gold-bright, #e6c77d)) 45%, transparent);
+  color: #fff;
+  transform: none;
+}
+.ui-modal-close svg {
+  width: 16px;
+  height: 16px;
+}
 .ui-modal-body {
   overflow: auto;
   padding: 16px 18px 20px;
