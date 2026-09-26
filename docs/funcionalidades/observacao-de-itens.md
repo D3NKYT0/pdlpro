@@ -1,6 +1,8 @@
 # Observação de itens e economia
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Em `/panel/admin`, acesse **Servidor → Observar itens** (`/panel/admin/items`).
 Esta é uma tela operacional nativa do frontend, não uma tela do Django Admin.

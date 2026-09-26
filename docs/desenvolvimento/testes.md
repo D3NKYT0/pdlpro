@@ -1,6 +1,8 @@
 # Testes e qualidade
 
-[Índice](../README.md) · [Ambiente local](ambiente-local.md) · [Contribuição](../projeto/contribuicao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Ambiente local](ambiente-local.md) · [Política](politica-de-testes.md) · [Contribuição](../projeto/contribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O backend usa Pytest com pytest-django, pytest-mock e pytest-cov. O frontend usa Vitest, Testing Library, jsdom e cobertura V8. Toda feature ou correção precisa de testes para o comportamento alterado; consulte a [política de testes](politica-de-testes.md) e [AGENTS.md](../../AGENTS.md).
 

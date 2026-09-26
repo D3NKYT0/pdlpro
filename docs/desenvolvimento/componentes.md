@@ -1,6 +1,8 @@
 # Componentes e padrão visual
 
-[Índice](../README.md) · [Frontend](frontend.md) · [Reutilização](../arquitetura/reutilizacao.md) · [Testes](testes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Frontend](frontend.md) · [Reutilização](../arquitetura/reutilizacao.md) · [Testes](testes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Novas telas devem compor a biblioteca existente. Os componentes compartilham interação e acessibilidade; o tema do painel define a aparência. O catálogo usa o mesmo `usePanelTheme` de `PrivateLayout`, incluindo as fontes, o fundo e as texturas originais dos botões.
 

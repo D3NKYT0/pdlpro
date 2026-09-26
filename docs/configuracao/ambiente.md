@@ -1,6 +1,14 @@
 # Configuração
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
+> [!TIP]
+> Operador na VPS: instale pela [Release](../operacao/distribuicao.md) e
+> preencha provedores pelos [tutoriais](../tutoriais/README.md) /
+> `/panel/admin/integrations`. Esta página é o **mapa de variáveis**, não o
+> passo a passo.
 
 ## Carregamento
 

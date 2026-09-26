@@ -1,8 +1,8 @@
 # Tutoriais de integração
 
-[← Índice](../README.md) · [Distribuição](../operacao/distribuicao.md) ·
-[Configurador admin](../operacao/integracoes-admin.md) ·
-[Fonte única](../projeto/fonte-unica.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Distribuição](../operacao/distribuicao.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!IMPORTANT]
 > Faça a [instalação pela Release](../operacao/distribuicao.md) antes. Quase

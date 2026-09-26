@@ -1,7 +1,9 @@
 # Configurador admin de integrações
 
-[← Índice](../README.md) · [Variáveis de ambiente](../configuracao/ambiente.md) ·
-[Instalar (Release)](distribuicao.md) · [Tutoriais](../tutoriais/README.md) ·
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Variáveis de ambiente](../configuracao/ambiente.md) · [Instalar (Release)](distribuicao.md) · [Tutoriais](../tutoriais/README.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
 [Pagamentos](../integracoes/pagamentos.md) · [Lineage](../integracoes/lineage.md)
 
 ## Objetivo

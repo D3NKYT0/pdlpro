@@ -1,6 +1,8 @@
 # Política de testes para novas features
 
-[Índice](../README.md) · [Executar os testes](testes.md) · [Contribuição](../projeto/contribuicao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Executar os testes](testes.md) · [Contribuição](../projeto/contribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Uma feature só está pronta quando seu comportamento está protegido por testes, os testes passam e a documentação descreve como usá-la. A regra vale também para correções e refatorações que alterem contratos. Está registrada em [AGENTS.md](../../AGENTS.md) para orientar as próximas tarefas no repositório.
 

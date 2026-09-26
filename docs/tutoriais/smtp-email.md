@@ -1,6 +1,8 @@
 # Tutorial: e-mail (SMTP)
 
-[← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: o painel envia e-mail de verificação, recuperação de senha, códigos
 e avisos. Configure na aba **SMTP / Push** em `/panel/admin/integrations`.

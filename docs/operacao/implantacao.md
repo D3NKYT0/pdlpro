@@ -1,7 +1,9 @@
 # Implantação avançada (clone Git e topologias)
 
-[← Índice da documentação](../README.md) ·
-[Instalar a partir da Release (recomendado)](distribuicao.md) ·
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Instalar a partir da Release (recomendado)](distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
 [Fonte única](../projeto/fonte-unica.md)
 
 > [!CAUTION]

@@ -1,6 +1,8 @@
 # Componentes compartilhados do backend
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 `common` reúne contratos e infraestrutura reutilizados pelos apps. Coloque aqui mecanismos transversais; regras específicas de carteira, inventário ou pagamento pertencem ao app responsável. As docstrings das classes e dos métodos públicos detalham os contratos de uso.
 

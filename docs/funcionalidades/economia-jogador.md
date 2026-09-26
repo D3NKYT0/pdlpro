@@ -1,7 +1,8 @@
 # Economia do jogador
 
-[← Índice](../README.md) · [Pagamentos](../integracoes/pagamentos.md) ·
-[Tutoriais MP](../tutoriais/mercado-pago.md) · [Tutoriais Stripe](../tutoriais/stripe.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Pagamentos](../integracoes/pagamentos.md) · [Tutoriais MP](../tutoriais/mercado-pago.md) · [Tutoriais Stripe](../tutoriais/stripe.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!NOTE]
 > Visão do **produto** (o que o jogador e a staff fazem). Detalhe de gateway e

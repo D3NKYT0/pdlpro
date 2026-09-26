@@ -1,6 +1,8 @@
 # API do catálogo de itens
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 `GET /api/v1/public/items/catalog/` é público e independe da conexão com o jogo.
 Retorna `items` e `default_icon_url`. Cada item contém `id` (ID L2 como string),

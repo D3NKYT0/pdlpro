@@ -1,6 +1,8 @@
 # Como usar e estender os apps
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Economia](../funcionalidades/economia-jogador.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Cada app reúne uma capacidade do painel. As docstrings das classes explicam sua responsabilidade, a entrada esperada e os efeitos relevantes. Comece pelo caso de uso da operação e siga as portas até os adaptadores quando precisar entender a persistência ou uma integração.
 

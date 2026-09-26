@@ -1,7 +1,8 @@
 # Desenvolvimento
 
-[← Índice da documentação](../README.md) ·
-[Instalar em produção (Release)](../operacao/distribuicao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Instalar em produção (Release)](../operacao/distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Este guia prepara o **ambiente de desenvolvimento** (clone do repositório).
 Para colocar o painel no ar numa VPS, use a

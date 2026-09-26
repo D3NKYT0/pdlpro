@@ -1,6 +1,8 @@
 # Identidade visual da página inicial
 
-[Índice](../README.md) · [Frontend](../desenvolvimento/frontend.md) · [Temas](temas.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Frontend](../desenvolvimento/frontend.md) · [Temas](temas.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 A página inicial do tema padrão usa uma coleção própria de arte em `frontend/public/theme/default/images/home/`. As imagens mantêm a direção de fantasia sombria do PDL: preto, ouro envelhecido, azul-petróleo e luz volumétrica. Nenhum arquivo contém texto ou logotipo, para que títulos e links permaneçam componentes HTML acessíveis e traduzíveis.
 

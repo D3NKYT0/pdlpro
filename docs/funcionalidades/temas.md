@@ -1,6 +1,8 @@
 # Temas instaláveis
 
-[Índice](../README.md) · [Componentes](../desenvolvimento/componentes.md) · [Distribuição](../operacao/distribuicao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes](../desenvolvimento/componentes.md) · [Distribuição](../operacao/distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O PDL PRO aplica uma única identidade visual às páginas públicas, autenticação, painel do
 jogador e administração React. Além de CSS e assets locais, um pacote pode selecionar um

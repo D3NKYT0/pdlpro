@@ -1,6 +1,8 @@
 # Changelog
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -22,6 +24,9 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - Documentação só em Markdown: removidos PDFs de migração e scripts em
   `docs/_pdf/`.
 - Auditorias Python movidas de `desenvolvimento/` para `historico/`.
+- Todos os `.md` de `docs/` passam a ter chrome padrão (índice, fonte única)
+  e `> **Atualizado:**` com a data da revisão. Registros de `historico/2026-*`
+  ficam marcados como arquivo.
 - Índice e guias de operação usam callouts; segurança operacional deixa de
   ser repetida na implantação avançada.
 - Release como caminho recomendado; exemplos com `seudominio.com`.

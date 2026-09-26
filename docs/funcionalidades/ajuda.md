@@ -1,7 +1,8 @@
 # Ajuda e Denkynho
 
-[Índice](../README.md) · [Tutorial LLM](../tutoriais/denkynho-llm.md) ·
-[Componentes](../desenvolvimento/componentes.md) · [Testes](../desenvolvimento/testes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Tutorial LLM](../tutoriais/denkynho-llm.md) · [Componentes](../desenvolvimento/componentes.md) · [Testes](../desenvolvimento/testes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 ## Interação com o personagem
 

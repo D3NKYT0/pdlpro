@@ -1,6 +1,8 @@
 # Uso e licença
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Copyright © 2026 Daniel Amaral.
 

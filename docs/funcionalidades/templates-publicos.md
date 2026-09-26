@@ -1,6 +1,8 @@
 # Templates públicos clássicos
 
-[Índice](../README.md) · [Temas](temas.md) · [Extensões](../arquitetura/extensoes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Temas](temas.md) · [Extensões](../arquitetura/extensoes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O `presentation.renderer` do tema ZIP **escolhe** um layout do catálogo. Não cria um
 layout novo. Os 20 nomes abaixo são React homologado no core: o pacote manda textos,

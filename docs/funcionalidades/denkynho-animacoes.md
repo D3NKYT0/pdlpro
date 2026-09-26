@@ -1,6 +1,8 @@
 # Assets e sequências do Denkynho
 
-[Índice](../README.md) · [Ajuda](ajuda.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Ajuda](ajuda.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 ## Arquivos e reprodução
 

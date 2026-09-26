@@ -1,6 +1,8 @@
 # Como contribuir
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Obrigado pelo interesse no PDL PRO. Este é um projeto de código publicamente disponível sob uma [licença source-available](../../LICENSE): o uso é permitido, mas a comercialização do PDL por terceiros é proibida. Contribuições externas precisam ser combinadas com o mantenedor antes do início do trabalho.
 

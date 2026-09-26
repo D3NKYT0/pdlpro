@@ -1,6 +1,8 @@
 # Coming Soon
 
-[Índice](../README.md) · [Temas](temas.md) · [Painel e servidor](../desenvolvimento/interface-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Temas](temas.md) · [Painel e servidor](../desenvolvimento/interface-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O Coming Soon exibe uma **página de lançamento própria** em `/`, sem o chrome público
 (nav/rodapé padrão ou portal). A **landing** (`HomePage`) continua acessível em `/home`

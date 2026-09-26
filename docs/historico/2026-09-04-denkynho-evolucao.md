@@ -1,7 +1,13 @@
 # Denkynho: conversa, contexto e evolução
 
-[Índice](../README.md) · [Guia da funcionalidade](../funcionalidades/ajuda.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Guia da funcionalidade](../funcionalidades/ajuda.md)
 
+> **Atualizado:** 25 de setembro de 2026
+
+> [!NOTE]
+> Registro **arquivado**. Descreve o contexto da data do título,
+> não o comportamento atual. Consulte o [índice](../README.md)
+> e a [fonte única](../projeto/fonte-unica.md).
 Esta alteração acrescenta busca lexical ao chat generativo sem embeddings, preservação do contexto durante falhas, envio imediato da pergunta com rascunho independente, preferências opcionais por conta neste navegador, orientação contextual do painel, armário e interações por nível. O backend continua determinando permissões e propriedade; a IA não executa operações na conta.
 
 ## Validação

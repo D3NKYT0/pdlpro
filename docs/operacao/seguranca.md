@@ -1,7 +1,8 @@
 # Segurança de contas e operações
 
-[Índice](../README.md) · [Política de relato](../projeto/seguranca.md) ·
-[Instalar (Release)](distribuicao.md) · [Fonte única](../projeto/fonte-unica.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Política de relato](../projeto/seguranca.md) · [Instalar (Release)](distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!IMPORTANT]
 > Documento canônico de **segurança operacional**. Outros guias devem linkar

@@ -1,6 +1,8 @@
 # TLS no MySQL do Lineage 2
 
-[← Índice](../README.md) · [Integração Lineage](lineage.md) · [Variáveis de ambiente](../configuracao/ambiente.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Integração Lineage](lineage.md) · [Variáveis de ambiente](../configuracao/ambiente.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O painel fala com o banco do jogo por TCP (`mysql+pymysql`). Sem TLS, usuário, senha e
 SQL atravessam a rede em claro. A escolha é só de ambiente: o mesmo binário aceita

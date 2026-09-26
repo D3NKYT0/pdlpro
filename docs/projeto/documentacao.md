@@ -1,6 +1,8 @@
 # Como manter a documentação
 
-[Índice](../README.md) · [Fonte única](fonte-unica.md) · [Contribuição](contribuicao.md)
+[← Índice](../README.md) · [Fonte única](fonte-unica.md) · [Contribuição](contribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!IMPORTANT]
 > `docs/` contém **apenas `.md`**. Sem PDF, scripts, imagens geradas ou
@@ -36,7 +38,9 @@ A documentação acompanha o código. O README do repositório apresenta o produ
 ```markdown
 # Nome do assunto
 
-[← Índice](../README.md) · [Guia relacionado](outro.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Guia relacionado](../operacao/distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!NOTE]
 > Para quem é este guia e o que **não** cobre (com link para o canônico).
@@ -56,6 +60,8 @@ A documentação acompanha o código. O README do repositório apresenta o produ
 - Exemplos com `seudominio.com` e dados fictícios.
 - Declare se o comando roda na pasta da Release, em `backend/` ou no container.
 - Atualize o [índice](../README.md) ao criar guia novo.
+- Todo guia vivo leva `> **Atualizado:**` com a data da última revisão
+  contra o código (não a data de criação do arquivo).
 - Registre impacto no [changelog](../historico/changelog.md), não no
   `CHANGELOG.md` da raiz.
 

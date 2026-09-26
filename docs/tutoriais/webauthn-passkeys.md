@@ -1,6 +1,8 @@
 # Tutorial: Passkeys (WebAuthn)
 
-[← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: login sem senha com chave do dispositivo (Windows Hello, Face ID,
 YubiKey, etc.). Campos na aba **OAuth / Auth**.

@@ -1,7 +1,8 @@
 # Tutorial: Denkynho (LLM)
 
-[← Tutoriais](README.md) · [Ajuda e Denkynho](../funcionalidades/ajuda.md) ·
-[Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Ajuda e Denkynho](../funcionalidades/ajuda.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: respostas geradas na Ajuda além do FAQ. Aba **Denkynho**.
 

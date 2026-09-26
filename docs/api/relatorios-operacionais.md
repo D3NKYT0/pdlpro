@@ -1,6 +1,8 @@
 # Relatórios operacionais (staff)
 
-[← Índice da API](README.md) · [Relatórios financeiros](relatorios-financeiros.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Relatórios financeiros](relatorios-financeiros.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 A área `/panel/admin/reports` agrupa consultas agregadas do painel por categoria. As APIs financeiras permanecem em `/api/v1/staff/financial-reports/`; as operacionais usam `/api/v1/staff/operational-reports/`.
 

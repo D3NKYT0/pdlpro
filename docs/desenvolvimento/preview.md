@@ -1,6 +1,8 @@
 # Ambiente de demonstração isolado
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 `core.settings.preview` usa `backend/preview.sqlite3`, sem acesso ao banco do jogo ou pagamentos reais. Nunca use essas configurações em produção.
 

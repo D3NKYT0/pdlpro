@@ -1,5 +1,13 @@
 # Auditoria de dependências Python — 2026-09-03
 
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
+> [!NOTE]
+> Registro **arquivado**. Descreve o contexto da data do título,
+> não o comportamento atual. Consulte o [índice](../README.md)
+> e a [fonte única](../projeto/fonte-unica.md).
 Ambiente: backend/.venv, Python 3.14. Nenhuma dependência de aplicação foi atualizada.
 
 ## Segurança

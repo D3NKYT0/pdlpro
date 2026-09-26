@@ -1,6 +1,8 @@
 # Interface compartilhada do backend
 
-[Índice](../README.md) · [Componentes React](componentes.md) · [Common](../arquitetura/common.md) · [Testes](testes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes React](componentes.md) · [Common](../arquitetura/common.md) · [Testes](testes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O Django Admin/Jazzmin, o login administrativo e a documentação HTTP compartilham os botões em [buttons.css](../../backend/static/pdl_admin/css/buttons.css). A biblioteca preserva as texturas PDL e as mesmas tonalidades de sucesso, atenção e perigo usadas no React. Cada renderer mantém sua implementação; o backend não precisa carregar React para apresentar seus formulários.
 

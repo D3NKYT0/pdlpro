@@ -1,6 +1,8 @@
 # Tutorial: OAuth Google e Discord
 
-[← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: botões “Entrar com Google/Discord” no login e cadastro. Aba
 **OAuth / Auth**.

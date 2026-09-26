@@ -1,6 +1,8 @@
 # Ícones de itens e skills
 
-[Índice](../README.md) · [Catálogo de itens](catalogo-de-itens.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Catálogo de itens](catalogo-de-itens.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Os ícones estáticos dos XMLs ficam em `frontend/public/`, com um arquivo por ID. Essas pastas são geradas; a documentação e as regras de resolução ficam separadas delas.
 

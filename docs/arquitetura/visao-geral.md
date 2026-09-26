@@ -1,6 +1,8 @@
 # Arquitetura do PDL PRO
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 ## Visão geral
 

@@ -1,8 +1,10 @@
 # Desenvolvimento do frontend
 
-[Índice](../README.md) · [Ambiente local](ambiente-local.md) · [Testes](testes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Ambiente local](ambiente-local.md) · [Testes](testes.md)
 
-A interface é uma SPA React com TypeScript e Vite. Site público, autenticação, jogador e equipe compartilham serviços de API e componentes. As versões e os comandos disponíveis estão em [package.json](../../frontend/package.json).
+> **Atualizado:** 25 de setembro de 2026
+
+A interface é uma SPA React com TypeScript e Vite. Site público, autenticação, jogador e equipe compartilham serviços de API e componentes. As versões e os comandos disponíveis estão em [package.json](../../frontend/package.json). Integrações de produção (pagamentos, OAuth, SMTP, LLM, S3, Sentry) se configuram no admin SPA `/panel/admin/integrations` — ver [tutoriais](../tutoriais/README.md).
 
 ## Organização
 

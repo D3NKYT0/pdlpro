@@ -1,7 +1,9 @@
 # Tutorial: Lineage 2 (MySQL e game)
 
-[← Tutoriais](README.md) · [Lineage (técnica)](../integracoes/lineage.md) ·
-[TLS MySQL](../integracoes/lineage-mysql-ssl.md) ·
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Lineage (técnica)](../integracoes/lineage.md) · [TLS MySQL](../integracoes/lineage-mysql-ssl.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
 [Configurador admin](../operacao/integracoes-admin.md)
 
 Objetivo: o painel lê/escreve no MySQL do jogo e mostra status do servidor.

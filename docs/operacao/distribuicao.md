@@ -1,7 +1,8 @@
 # Instalar a partir da Release (recomendado)
 
-[← Índice da documentação](../README.md) · [Backup](backup-e-restauracao.md) ·
-[Tutoriais](../tutoriais/README.md) · [Problemas](solucao-de-problemas.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Backup](backup-e-restauracao.md) · [Tutoriais](../tutoriais/README.md) · [Problemas](solucao-de-problemas.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 > [!IMPORTANT]
 > **Este é o caminho recomendado.** As

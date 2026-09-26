@@ -1,6 +1,8 @@
 # Documentos legais, cookies e LGPD
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O PDL PRO publica um pacote legal versionado para o painel Lineage 2: Termos de
 uso, Política de privacidade, Acordo do usuário, Política de cookies e página

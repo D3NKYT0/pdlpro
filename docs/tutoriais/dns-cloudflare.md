@@ -1,6 +1,8 @@
 # Tutorial: DNS e Cloudflare
 
-[← Tutoriais](README.md) · [Instalar (Release)](../operacao/distribuicao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Instalar (Release)](../operacao/distribuicao.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: o domínio `seudominio.com` aponta para a VPS e o HTTPS funciona com
 o `./setup.sh nginx` da Release.

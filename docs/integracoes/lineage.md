@@ -1,7 +1,9 @@
 # Integração com o Lineage 2
 
-[← Índice da documentação](../README.md) ·
-[Tutorial do operador](../tutoriais/lineage-game.md) ·
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Tutorial do operador](../tutoriais/lineage-game.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
 [Configurador admin](../operacao/integracoes-admin.md)
 
 O banco do PDL permanece separado do banco do jogo. Quando a integração está ativa,

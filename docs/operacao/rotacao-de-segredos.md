@@ -1,7 +1,8 @@
 # Rotação de segredos
 
-[← Índice da documentação](../README.md) · [Instalar (Release)](distribuicao.md) ·
-[Integrações admin](integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Instalar (Release)](distribuicao.md) · [Integrações admin](integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O PDL PRO combina soft-rotate do Django (`SECRET_KEY_FALLBACKS`), MultiFernet para
 dados em repouso, jobs auditáveis no painel e manutenção via Celery Beat.

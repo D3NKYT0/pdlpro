@@ -1,8 +1,12 @@
 # Programas, comércio e recompensas
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Economia](economia-jogador.md)
 
-Implementação de 02/09/2026. Clãs e rede social permanecem fora do escopo.
+> **Atualizado:** 25 de setembro de 2026
+
+Clãs e rede social permanecem fora do escopo. O registro de homologação inicial
+está em [histórico 2026-09-02](../historico/2026-09-02-validacao.md) — não
+substitui o comportamento atual deste guia.
 
 ## Onde gerenciar
 

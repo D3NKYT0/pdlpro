@@ -1,6 +1,8 @@
 # Reutilização e revisão de código repetido
 
-[Índice](../README.md) · [Arquitetura](visao-geral.md) · [Componentes frontend](../desenvolvimento/componentes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Arquitetura](visao-geral.md) · [Componentes frontend](../desenvolvimento/componentes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Centralize código quando ele representa a mesma responsabilidade e precisa evoluir junto. Uma mudança na regra compartilhada deve chegar a todos os consumidores. A semelhança entre duas funções não autoriza misturar políticas, permissões ou transações de domínios diferentes.
 

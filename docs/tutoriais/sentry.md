@@ -1,7 +1,8 @@
 # Tutorial: Sentry
 
-[← Tutoriais](README.md) · [Observabilidade](../operacao/observabilidade.md) ·
-[Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Observabilidade](../operacao/observabilidade.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: erros e traces no Sentry. Aba **Sentry**.
 

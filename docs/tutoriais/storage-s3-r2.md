@@ -1,6 +1,8 @@
 # Tutorial: mídia S3 / Cloudflare R2
 
-[← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: uploads de mídia (temas, imagens) no object storage em vez do disco
 local. Aba **S3 / R2**.

@@ -1,6 +1,8 @@
 # Extensões de cliente (core + overlay)
 
-[← Índice da documentação](../README.md) · [Visão geral](visao-geral.md) · [Apps](apps.md) · [Temas](../funcionalidades/temas.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Visão geral](visao-geral.md) · [Apps](apps.md) · [Temas](../funcionalidades/temas.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Este guia descreve como manter o **PDL core** atualizável enquanto cada cliente
 ganha código exclusivo **fora** de `apps/`, `common/` e `core/`.

@@ -1,7 +1,9 @@
 # Política de segurança
 
-[← Índice da documentação](../README.md) ·
-[Segurança operacional](../operacao/seguranca.md) ·
+[← Índice](../README.md) · [Fonte única](fonte-unica.md) · [Segurança operacional](../operacao/seguranca.md)
+
+> **Atualizado:** 25 de setembro de 2026
+
 [Fonte única](fonte-unica.md)
 
 > [!IMPORTANT]

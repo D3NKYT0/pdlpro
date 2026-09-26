@@ -1,6 +1,8 @@
 # Relatórios financeiros
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Disponíveis na central administrativa em `/panel/admin/reports/financial/balances`
 (atalho legado `/panel/admin/financial/` redireciona).

@@ -1,7 +1,13 @@
 # Validação das correções de segurança — 4 de setembro de 2026
 
-[Índice](../README.md) · [Atualização e operação](../operacao/seguranca.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Atualização e operação](../operacao/seguranca.md)
 
+> **Atualizado:** 25 de setembro de 2026
+
+> [!NOTE]
+> Registro **arquivado**. Descreve o contexto da data do título,
+> não o comportamento atual. Consulte o [índice](../README.md)
+> e a [fonte única](../projeto/fonte-unica.md).
 Validação local em Windows, Python 3.14, Django 6.0.8 e PostgreSQL 16 descartável. Não foram utilizados pagamentos, e-mails ou operações reais no servidor de jogo.
 
 Foram reproduzidas antes das correções nove regressões de autenticação, autorização, recuperação, limitação de requisições e serviços pagos. A confirmação concorrente de pagamento também reproduziu crédito duplicado antes do bloqueio do pedido e passou depois.

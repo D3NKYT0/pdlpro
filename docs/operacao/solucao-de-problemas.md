@@ -1,6 +1,8 @@
 # Solução de problemas
 
-[Índice](../README.md) · [Instalar (Release)](distribuicao.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Instalar (Release)](distribuicao.md) · [Ambiente local](../desenvolvimento/ambiente-local.md) · [Configuração](../configuracao/ambiente.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Comece identificando ambiente, URL, revisão e operação que falhou. Registre horário, status HTTP, `error_code` e `X-Request-ID` quando disponíveis. Não compartilhe `.env`, cookies, tokens ou payloads privados em logs públicos.
 

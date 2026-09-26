@@ -1,6 +1,8 @@
 # Catálogo de itens do Lineage 2
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 O diretório `backend/data/items/` contém os XMLs usados pelo PDL para identificar itens do Lineage 2.
 O catálogo fornece uma fonte única de metadados para loja, inventário, equipamentos,

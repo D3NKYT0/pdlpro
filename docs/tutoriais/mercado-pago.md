@@ -1,7 +1,8 @@
 # Tutorial: Mercado Pago
 
-[← Tutoriais](README.md) · [Pagamentos (técnica)](../integracoes/pagamentos.md) ·
-[Configurador admin](../operacao/integracoes-admin.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [← Tutoriais](README.md) · [Pagamentos (técnica)](../integracoes/pagamentos.md) · [Configurador admin](../operacao/integracoes-admin.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Objetivo: vender moedas em **BRL** via Mercado Pago. Aba **Pagamentos**.
 

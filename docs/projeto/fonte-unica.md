@@ -2,6 +2,8 @@
 
 [← Índice](../README.md) · [Como manter a documentação](documentacao.md)
 
+> **Atualizado:** 25 de setembro de 2026
+
 > [!IMPORTANT]
 > **Um assunto → um guia principal.** Os demais só resumem e linkam. Isso
 > evita checklist duplicado e deixa a busca previsível.
@@ -30,6 +32,7 @@
 | Testes (obrigatoriedade) | [Política](../desenvolvimento/politica-de-testes.md) | — |
 | Versões publicadas | [Changelog](../historico/changelog.md) | `CHANGELOG.md` da raiz (só ponteiro) |
 | Arquivo datado | [historico/](../historico/) | `desenvolvimento/` |
+| Data de revisão | `> **Atualizado:**` no topo de cada guia vivo | Inventar data sem reler o código |
 
 ## Segurança
 

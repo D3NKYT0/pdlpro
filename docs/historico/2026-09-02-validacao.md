@@ -1,7 +1,13 @@
 # Validação de programas e recompensas — 02/09/2026
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
+> **Atualizado:** 25 de setembro de 2026
+
+> [!NOTE]
+> Registro **arquivado**. Descreve o contexto da data do título,
+> não o comportamento atual. Consulte o [índice](../README.md)
+> e a [fonte única](../projeto/fonte-unica.md).
 Registro preservado da documentação anterior. Os resultados descrevem aquele ambiente e aquela execução; não comprovam o estado de outra instalação nem substituem uma nova validação.
 
 - Backend: 258 testes aprovados. Frontend: 39 testes aprovados. Build de produção concluído; permanece o aviso de tamanho do bundle principal.

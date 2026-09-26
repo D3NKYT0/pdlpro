@@ -1,7 +1,13 @@
 # Consolidação de componentes e regras — 02/09/2026
 
-[Índice](../README.md) · [Componentes](../desenvolvimento/componentes.md) · [Reutilização](../arquitetura/reutilizacao.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Componentes](../desenvolvimento/componentes.md) · [Reutilização](../arquitetura/reutilizacao.md)
 
+> **Atualizado:** 25 de setembro de 2026
+
+> [!NOTE]
+> Registro **arquivado**. Descreve o contexto da data do título,
+> não o comportamento atual. Consulte o [índice](../README.md)
+> e a [fonte única](../projeto/fonte-unica.md).
 Registro da revisão de código repetido no backend e frontend. Os resultados abaixo descrevem esta execução local; não substituem validação de uma revisão futura.
 
 ## Alterações

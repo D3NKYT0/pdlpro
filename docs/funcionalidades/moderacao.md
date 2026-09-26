@@ -1,6 +1,8 @@
 # Moderação de personagens
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Em `/panel/admin`, acesse **Servidor → Moderação** (`/panel/admin/moderation`).
 Esta é uma tela da SPA da equipe, não do Django Admin. A lista mostra

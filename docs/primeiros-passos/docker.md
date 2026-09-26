@@ -1,6 +1,8 @@
 # Docker de desenvolvimento
 
-[← Índice da documentação](../README.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 Este roteiro sobe o painel **no seu PC** a partir do clone, com Compose de
 desenvolvimento (Vite, hot reload). Serve para contribuir com código ou

@@ -1,7 +1,8 @@
 # Pagamentos e webhooks
 
-[Índice](../README.md) · [Configuração](../configuracao/ambiente.md) ·
-[Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
+[← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md) · [Configuração](../configuracao/ambiente.md) · [Tutoriais](../tutoriais/README.md) · [Testes](../desenvolvimento/testes.md)
+
+> **Atualizado:** 25 de setembro de 2026
 
 `apps/payment` coordena compra de moedas; `apps/wallet` mantém saldo e extrato. Os adaptadores disponíveis são mock, Mercado Pago e Stripe. Este guia descreve o fluxo implementado pelo painel; credenciais e homologação devem corresponder ao ambiente do provedor escolhido.
 
