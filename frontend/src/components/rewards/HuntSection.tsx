@@ -270,10 +270,7 @@ export function HuntSection() {
           {!data.character ? (
             <Card className="rewards-empty-card">
               <Empty icon={<Swords aria-hidden="true" />}>
-                <strong style={{ display: 'block', marginBottom: 4 }}>{t('rewards.hunt.noCharactersTitle')}</strong>
-                <span className="muted">
-                  {t('rewards.hunt.noCharactersHint', { account: currentAccount || t('rewards.hunt.account') })}
-                </span>
+                {t('rewards.hunt.noCharactersHint', { account: currentAccount || t('rewards.hunt.account') })}
               </Empty>
             </Card>
           ) : null}
@@ -350,7 +347,7 @@ export function HuntSection() {
                                 data.character?.char_id,
                               ),
                               t('rewards.hunt.claimToast'),
-                              [['hunt']],
+                              [['hunt', selectedAccount, selectedCharId]],
                             )
                           }
                         >
@@ -364,15 +361,6 @@ export function HuntSection() {
             </div>
           ) : null}
         </>
-      ) : !query.isPending && query.error ? (
-        <Card className="rewards-empty-card">
-          <Empty icon={<Swords aria-hidden="true" />}>
-            <strong style={{ display: 'block', marginBottom: 4 }}>{t('rewards.hunt.noCharactersTitle')}</strong>
-            <span className="muted">
-              {t('rewards.hunt.noCharactersHint', { account: currentAccount || activeLogin || t('rewards.hunt.account') })}
-            </span>
-          </Empty>
-        </Card>
       ) : null}
     </div>
   )

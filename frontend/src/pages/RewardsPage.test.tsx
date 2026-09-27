@@ -396,8 +396,7 @@ it('caça com conta sem personagens criados exibe aviso amigável e seletor', as
     quests: [],
   } as Awaited<ReturnType<typeof gamesApi.hunt>>)
   mount('/panel/rewards?tab=hunt')
-  expect(await screen.findByText('Nenhum personagem nesta conta')).toBeVisible()
-  expect(screen.getByText(/ainda não possui personagens criados no servidor/)).toBeVisible()
+  expect(await screen.findByText(/ainda não possui personagens criados no servidor/)).toBeVisible()
   expect(screen.getByRole('combobox', { name: 'Conta de jogo' })).toBeVisible()
 })
 
