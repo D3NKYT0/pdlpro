@@ -78,7 +78,7 @@ export function DashboardSummary({
     tiles.push({
       key: 'chips',
       to: '/panel/games',
-      art: 'games',
+      art: 'chips',
       icon: Coins,
       label: t('dashboard.statChips'),
       value: formatNumber(user?.fichas ?? 0),

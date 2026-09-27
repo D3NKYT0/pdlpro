@@ -87,6 +87,19 @@ const SURFACE_STYLE_KEYS = [
   '--theme-art-shop-hall',
   '--theme-art-shop-crate',
   '--theme-art-shop-coins',
+  '--theme-art-panel-level',
+  '--theme-art-panel-wallet',
+  '--theme-art-panel-chips',
+  '--theme-art-panel-bag',
+  '--theme-art-panel-characters',
+  '--theme-art-panel-accounts',
+  '--theme-art-panel-achievements',
+  '--theme-art-panel-security',
+  '--theme-art-panel-profile',
+  '--theme-art-panel-inventory',
+  '--theme-art-panel-shop',
+  '--theme-art-panel-games',
+  '--theme-art-panel-admin',
   '--tpl-art-hero',
   '--tpl-art-cta',
 ] as const
@@ -156,6 +169,22 @@ const SHOP_ART = {
   '--theme-art-shop-hall': 'shop/hall.png',
   '--theme-art-shop-crate': 'shop/crate.png',
   '--theme-art-shop-coins': 'shop/coins.png',
+} as const
+
+const PANEL_ART = {
+  '--theme-art-panel-level': 'panel/summary-level.jpg',
+  '--theme-art-panel-wallet': 'panel/summary-wallet.jpg',
+  '--theme-art-panel-chips': 'panel/summary-chips.jpg',
+  '--theme-art-panel-bag': 'panel/summary-bag.jpg',
+  '--theme-art-panel-characters': 'panel/summary-characters.jpg',
+  '--theme-art-panel-accounts': 'panel/summary-accounts.jpg',
+  '--theme-art-panel-achievements': 'panel/summary-achievements.jpg',
+  '--theme-art-panel-security': 'panel/summary-security.jpg',
+  '--theme-art-panel-profile': 'panel/shortcut-profile.jpg',
+  '--theme-art-panel-inventory': 'panel/shortcut-inventory.jpg',
+  '--theme-art-panel-shop': 'panel/shortcut-shop.jpg',
+  '--theme-art-panel-games': 'panel/shortcut-games.jpg',
+  '--theme-art-panel-admin': 'panel/shortcut-admin.jpg',
 } as const
 
 const DENSITY_PRESETS = {
@@ -246,7 +275,7 @@ export function applyThemeSurfaceVars(layout?: ThemeLayout | null) {
   style.setProperty('--tpl-art-hero', cssUrl(themeImage('bg/5.jpg')))
   style.setProperty('--tpl-art-cta', cssUrl(themeAsset('images/cta-banner.jpg')))
   style.setProperty('--theme-art-wallet-promo', cssUrl(themeImage('bg/wallet-promo-banner.png')))
-  for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART })) {
+  for (const [key, path] of Object.entries({ ...GAME_ART, ...SHOP_ART, ...PANEL_ART })) {
     style.setProperty(key, cssUrl(themeImage(path)))
   }
 

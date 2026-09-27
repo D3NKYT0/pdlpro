@@ -6810,24 +6810,53 @@ html.pdl-panel .dashboard-summary-card {
   background-position: center;
 }
 
+html.pdl-panel .dashboard-summary-card[data-art="level"] {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-level, var(--theme-art-bg-2));
+}
+
 html.pdl-panel .dashboard-summary-card[data-art="wallet"] {
   background-image:
-    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 70%, transparent)),
-    var(--theme-art-bg-4);
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-wallet, var(--theme-art-bg-4));
 }
 
-html.pdl-panel .dashboard-summary-card[data-art="games"],
+html.pdl-panel .dashboard-summary-card[data-art="chips"],
+html.pdl-panel .dashboard-summary-card[data-art="games"] {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-chips, var(--theme-art-games-fishing));
+}
+
 html.pdl-panel .dashboard-summary-card[data-art="bag"] {
   background-image:
-    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 70%, transparent)),
-    var(--theme-art-games-fishing);
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-bag, var(--theme-art-games-fishing));
 }
 
-html.pdl-panel .dashboard-summary-card[data-art="characters"],
+html.pdl-panel .dashboard-summary-card[data-art="characters"] {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 88%, transparent), color-mix(in srgb, var(--theme-bg-deep) 66%, transparent)),
+    var(--theme-art-panel-characters, var(--theme-art-bg-3));
+}
+
 html.pdl-panel .dashboard-summary-card[data-art="accounts"] {
   background-image:
-    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 88%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
-    var(--theme-art-bg-3);
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 88%, transparent), color-mix(in srgb, var(--theme-bg-deep) 66%, transparent)),
+    var(--theme-art-panel-accounts, var(--theme-art-bg-3));
+}
+
+html.pdl-panel .dashboard-summary-card[data-art="achievements"] {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-achievements, var(--theme-art-bg-2));
+}
+
+html.pdl-panel .dashboard-summary-card[data-art="security"] {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--theme-bg-deep) 90%, transparent), color-mix(in srgb, var(--theme-bg-deep) 68%, transparent)),
+    var(--theme-art-panel-security, var(--theme-art-bg-2));
 }
 
 html.pdl-panel .dashboard-summary-icon {
@@ -6925,27 +6954,58 @@ html.pdl-panel .dashboard-roster-card b {
   text-transform: uppercase;
 }
 
-html.pdl-panel .shortcut-card[data-art="games"] {
+html.pdl-panel .shortcut-card[data-art="profile"] {
   background-image:
-    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 94%, transparent), color-mix(in srgb, var(--theme-bg-deep) 78%, transparent)),
-    var(--theme-art-games-fishing);
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-profile, var(--theme-art-bg-2));
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="accounts"] {
+  background-image:
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-accounts, var(--theme-art-bg-3));
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="inventory"] {
+  background-image:
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-inventory, var(--theme-art-bg-3));
   background-size: cover;
   background-position: center;
 }
 
 html.pdl-panel .shortcut-card[data-art="wallet"] {
   background-image:
-    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 94%, transparent), color-mix(in srgb, var(--theme-bg-deep) 78%, transparent)),
-    var(--theme-art-bg-4);
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-wallet, var(--theme-art-bg-4));
   background-size: cover;
   background-position: center;
 }
 
-html.pdl-panel .shortcut-card[data-art="accounts"],
-html.pdl-panel .shortcut-card[data-art="inventory"] {
+html.pdl-panel .shortcut-card[data-art="shop"] {
   background-image:
-    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 94%, transparent), color-mix(in srgb, var(--theme-bg-deep) 80%, transparent)),
-    var(--theme-art-bg-3);
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-shop, var(--theme-art-shop-hall));
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="games"] {
+  background-image:
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-games, var(--theme-art-games-fishing));
+  background-size: cover;
+  background-position: center;
+}
+
+html.pdl-panel .shortcut-card[data-art="admin"] {
+  background-image:
+    linear-gradient(120deg, color-mix(in srgb, var(--theme-bg-deep) 92%, transparent), color-mix(in srgb, var(--theme-bg-deep) 76%, transparent)),
+    var(--theme-art-panel-admin, var(--theme-art-bg-2));
   background-size: cover;
   background-position: center;
 }
@@ -7033,6 +7093,7 @@ html.pdl-panel .shortcut-card {
   gap: 14px;
   min-height: 118px;
   padding: 20px;
+  overflow: hidden;
 }
 
 html.pdl-panel .shortcut-icon {

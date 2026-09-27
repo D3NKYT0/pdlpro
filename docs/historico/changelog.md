@@ -19,6 +19,12 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 - **Seletores independentes de Conta e Personagem na Caça do Dia**:
   - Substituição do seletor único da Caça (`/panel/rewards?tab=hunt`) por dois componentes de seleção dedicados: **Conta de jogo** e **Personagem**, permitindo alternar de conta e navegar entre seus personagens com sincronismo à conta ativa global.
   - Resolução automática do primeiro personagem da conta pelo backend e frontend quando nenhum personagem for informado explicitamente na consulta da Caça.
+- **Artes temáticas exclusivas para cards de resumo e atalhos do painel**:
+  - Criação e integração de 13 ilustrações de alta definição no estilo dark fantasy Lineage 2 dedicadas a cada assunto do painel (`/panel`):
+    - *Cards de resumo (`DashboardSummary`)*: Nível da Jornada (`summary-level`), Carteira (`summary-wallet`), Fichas (`summary-chips`), Itens na Bag (`summary-bag`), Personagens (`summary-characters`), Contas L2 (`summary-accounts`), Conquistas (`summary-achievements`) e Proteção (`summary-security`).
+    - *Cards de atalho (`DashboardShortcuts`)*: Meu Perfil (`shortcut-profile`), Conta L2 (`summary-accounts`), Inventário (`shortcut-inventory`), Carteira (`summary-wallet`), Loja (`shortcut-shop`), Jogos (`shortcut-games`) e Admin (`shortcut-admin`).
+  - Registro de tokens CSS `--theme-art-panel-*` no `applyThemeSurfaceVars` em `assets.ts`, permitindo remapeamento customizado por pacotes ZIP de temas de clientes.
+  - Atualização dos seletores `[data-art]` em `panel.css` com gradientes escuros translúcidos preservando contraste, nitidez e legibilidade da tipografia e ícones.
 
 ### Alterado
 
