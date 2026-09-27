@@ -2,7 +2,7 @@
 
 [← Índice](../README.md) · [Fonte única](../projeto/fonte-unica.md)
 
-> **Atualizado:** 26 de setembro de 2026
+> **Atualizado:** 27 de setembro de 2026
 
 Todas as mudanças relevantes do PDL PRO serão registradas neste arquivo.
 
@@ -12,9 +12,26 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Suporte à troca de conta de jogo no Mercado e Leilões**:
+  - Seletor de conta de jogo nos formulários e cabeçalhos de `/panel/marketplace` (`MarketplacePage`) e `/panel/auctions` (`AuctionPage`), sincronizado bidirecionalmente com o contexto global `useActiveAccount()`.
+  - Formulários de anúncio de personagens (`MarketplaceSellForm`), criação de leilões (`AuctionCreateForm`) e ofertas (`AuctionDetail`) passam a respeitar e filtrar os personagens associados à conta ativa selecionada.
+  - Invalidação automática das consultas de itens e personagens no TanStack Query ao alternar de conta ativa em `ActiveAccountContext`.
+- **Seletores independentes de Conta e Personagem na Caça do Dia**:
+  - Substituição do seletor único da Caça (`/panel/rewards?tab=hunt`) por dois componentes de seleção dedicados: **Conta de jogo** e **Personagem**, permitindo alternar de conta e navegar entre seus personagens com sincronismo à conta ativa global.
+  - Resolução automática do primeiro personagem da conta pelo backend e frontend quando nenhum personagem for informado explicitamente na consulta da Caça.
+
 ### Alterado
 
+- **Tratamento de estado vazio na Caça do Dia sem personagens**:
+  - `GetHuntDetailsUseCase` no backend passa a responder com HTTP 200, `character: None` e lista de missões vazia quando a conta selecionada não tiver personagens criados no servidor Lineage, em vez de disparar erro de validação 400 (`ValidationDomainError`), respeitando a diretriz de que estado vazio não é erro.
+  - A interface de Caça (`HuntSection`) preserva o cabeçalho herói e os seletores de conta acessíveis e renderiza o componente compartilhado `<EmptyState>` com orientações claras para o jogador criar um personagem no jogo ou selecionar outra conta, eliminando o banner vermelho de erro.
+  - Invalidação de cache TanStack Query no resgate de missões (`useProgramAction`) rigorosamente escopada para `[['hunt', selectedAccount, selectedCharId]]`.
+  - Internacionalização completa em `pt`, `en` e `es` dos rótulos dos seletores e mensagens de estado vazio da Caça em `panel.json`.
+
 ### Corrigido
+
+- Remoção de estilos inline em `HuntSection` e eliminação de fallback redundante para `query.error`, preservando a consistência visual com os tokens do tema e componentes compartilhados de feedback (`ErrorNotice` para falhas reais de rede/servidor e `EmptyState` para ausência de registros).
+- Ajustada contagem de consultas no teste de integração do gateway Lineage Dream v3 para personagens.
 
 ## [2.6.0] - 2026-09-26
 
