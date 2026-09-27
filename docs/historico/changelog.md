@@ -12,6 +12,14 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ### Adicionado
 
+- **Campo Interativo de Imagem / Flyer para Banners Administrativos**:
+  - Transformação do campo de texto de imagem em `/panel/admin/banners` (`AdminBannersPage`) em componente interativo completo com alternância entre upload local do dispositivo e URL externa.
+  - Área de dropzone com suporte a arrastar e soltar (drag & drop), validação de tamanho (máximo 10MB) e formatos compatíveis (PNG, JPG, JPEG, WEBP, GIF, SVG).
+  - Card de visualização imediata com thumbnail real do flyer, dados do arquivo/URL, botão para visualizar em tamanho real, trocar imagem e remover imagem com confirmação.
+  - Exibição direta das miniaturas reais dos flyers na listagem do catálogo administrativo (`.admin-banner-thumb`), substituindo ícones genéricos.
+  - Atualização do backend em `UpsertStaffBannerUseCase` e `StaffBannersView` com `MultiPartParser` para processar upload de arquivos de imagem e expor campos unificados `image` e `image_url` nas APIs pública e administrativa.
+  - Internacionalização completa em `pt`, `en` e `es` em `admin.json`.
+
 ### Alterado
 
 ### Corrigido

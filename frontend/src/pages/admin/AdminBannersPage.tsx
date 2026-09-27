@@ -1,7 +1,7 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { ExternalLink, Eye, Image as ImageIcon, Megaphone, Trash2 } from 'lucide-react'
+import { ExternalLink, Eye, Image as ImageIcon, ImagePlus, Link as LinkIcon, Megaphone, Trash2, Upload } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Card } from '../../components/ui/Card'
 import { Field } from '../../components/ui/Field'
@@ -54,25 +54,71 @@ export function AdminBannersPage() {
   const [form, setForm] = useState<ApiStaffBanner>(emptyForm)
   const [langTab, setLangTab] = useState<(typeof LANGS)[number]>('pt')
   const [previewingBanner, setPreviewingBanner] = useState<ApiBanner | null>(null)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('')
+  const [imageSourceMode, setImageSourceMode] = useState<'upload' | 'url'>('upload')
+  const [clearedImage, setClearedImage] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const action = useFeedbackAction()
 
   function reset() {
     setEditingId(null)
     setForm(emptyForm)
     setLangTab('pt')
+    setImageFile(null)
+    setImagePreviewUrl('')
+    setImageSourceMode('upload')
+    setClearedImage(false)
+    if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   function load(item: ApiStaffBanner) {
     setEditingId(item.id || null)
+    const currentImg = item.image || item.image_url || ''
     setForm({
       ...emptyForm,
       ...item,
+      image: currentImg,
       dismiss_days: item.dismiss_days ?? 1,
       auto_close_delay: item.auto_close_delay ?? 10,
       width: item.width ?? 600,
       height: item.height ?? 0,
     })
+    setImageFile(null)
+    setImagePreviewUrl(currentImg)
+    setImageSourceMode(currentImg.startsWith('http') ? 'url' : 'upload')
+    setClearedImage(false)
+    if (fileInputRef.current) fileInputRef.current.value = ''
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function handleFileSelected(file: File) {
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('A imagem deve ter no máximo 10MB.')
+      return
+    }
+    setImageFile(file)
+    setClearedImage(false)
+    const url = URL.createObjectURL(file)
+    setImagePreviewUrl(url)
+    setForm((prev) => ({ ...prev, image: url }))
+  }
+
+  function handleUrlChange(url: string) {
+    setImageFile(null)
+    setClearedImage(false)
+    setImagePreviewUrl(url)
+    setForm((prev) => ({ ...prev, image: url }))
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
+  function handleRemoveImage() {
+    setImageFile(null)
+    setClearedImage(true)
+    setImagePreviewUrl('')
+    setForm((prev) => ({ ...prev, image: '' }))
+    if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   function handlePreviewForm() {
@@ -81,7 +127,8 @@ export function AdminBannersPage() {
       title: langTab === 'en' ? (form.title_en || form.title) : langTab === 'es' ? (form.title_es || form.title) : form.title,
       badge: form.badge,
       description: langTab === 'en' ? (form.description_en || form.description) : langTab === 'es' ? (form.description_es || form.description) : form.description,
-      image: form.image,
+      image: imagePreviewUrl || form.image,
+      image_url: imagePreviewUrl || form.image,
       link: form.link,
       link_text: langTab === 'en' ? (form.link_text_en || form.link_text) : langTab === 'es' ? (form.link_text_es || form.link_text) : form.link_text,
       secondary_link: form.secondary_link,
@@ -101,12 +148,14 @@ export function AdminBannersPage() {
   }
 
   function handlePreviewExisting(item: ApiStaffBanner) {
+    const bannerImg = item.image || item.image_url || ''
     const previewData: ApiBanner = {
       id: item.id || 'preview-banner',
       title: item.title,
       badge: item.badge,
       description: item.description,
-      image: item.image,
+      image: bannerImg,
+      image_url: bannerImg,
       link: item.link,
       link_text: item.link_text,
       secondary_link: item.secondary_link,
@@ -128,15 +177,54 @@ export function AdminBannersPage() {
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     await action.run(async () => {
-      await staffApi.saveBanner({
-        ...form,
-        id: editingId || undefined,
-        dismiss_days: Number(form.dismiss_days) || 1,
-        auto_close_delay: Number(form.auto_close_delay) || 10,
-        width: Number(form.width) || 600,
-        height: Number(form.height) || 0,
-        order: Number(form.order) || 0,
-      })
+      if (imageFile) {
+        const formData = new FormData()
+        if (editingId) formData.append('id', editingId)
+        formData.append('title', form.title)
+        formData.append('title_en', form.title_en || '')
+        formData.append('title_es', form.title_es || '')
+        formData.append('badge', form.badge || '')
+        formData.append('badge_en', form.badge_en || '')
+        formData.append('badge_es', form.badge_es || '')
+        formData.append('description', form.description || '')
+        formData.append('description_en', form.description_en || '')
+        formData.append('description_es', form.description_es || '')
+        formData.append('image', imageFile)
+        formData.append('link', form.link || '')
+        formData.append('link_text', form.link_text || '')
+        formData.append('link_text_en', form.link_text_en || '')
+        formData.append('link_text_es', form.link_text_es || '')
+        formData.append('secondary_link', form.secondary_link || '')
+        formData.append('secondary_link_text', form.secondary_link_text || '')
+        formData.append('secondary_link_text_en', form.secondary_link_text_en || '')
+        formData.append('secondary_link_text_es', form.secondary_link_text_es || '')
+        formData.append('display_type', form.display_type)
+        formData.append('target_location', form.target_location)
+        formData.append('dismiss_policy', form.dismiss_policy)
+        formData.append('dismiss_days', String(Number(form.dismiss_days) || 1))
+        formData.append('auto_close', String(Boolean(form.auto_close)))
+        formData.append('auto_close_delay', String(Number(form.auto_close_delay) || 10))
+        formData.append('show_close_button', String(Boolean(form.show_close_button)))
+        formData.append('width_px', String(Number(form.width) || 600))
+        formData.append('width', String(Number(form.width) || 600))
+        formData.append('height', String(Number(form.height) || 0))
+        formData.append('order', String(Number(form.order) || 0))
+        formData.append('is_active', String(Boolean(form.is_active)))
+        if (clearedImage) formData.append('clear_image', 'true')
+        await staffApi.saveBanner(formData)
+      } else {
+        await staffApi.saveBanner({
+          ...form,
+          id: editingId || undefined,
+          image: clearedImage ? '' : form.image,
+          dismiss_days: Number(form.dismiss_days) || 1,
+          auto_close_delay: Number(form.auto_close_delay) || 10,
+          width: Number(form.width) || 600,
+          height: Number(form.height) || 0,
+          order: Number(form.order) || 0,
+          clear_image: clearedImage,
+        } as Partial<ApiStaffBanner>)
+      }
       toast.success(editingId ? t('banners.toast.updated') : t('banners.toast.created'))
       reset()
       await queryClient.invalidateQueries({ queryKey: ['staff-banners'] })
@@ -395,15 +483,156 @@ export function AdminBannersPage() {
               </Field>
             )}
 
-            <Field style={{ gridColumn: '1 / -1' }}>
-              {t('banners.fieldImage')}
-              <input
-                type="text"
-                value={form.image}
-                onChange={(e) => setForm({ ...form, image: e.target.value })}
-                placeholder="https://... ou /theme/assets/..."
-              />
-            </Field>
+            {/* Interactive Image / Flyer Field with direct preview and upload */}
+            <div className="admin-banner-image-wrapper" style={{ gridColumn: '1 / -1' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <span className="field-label" style={{ margin: 0, fontWeight: 600, fontSize: '0.85rem' }}>
+                  {t('banners.fieldImage')}
+                </span>
+                <div className="admin-banner-mode-toggle" style={{ display: 'flex', gap: '0.35rem' }}>
+                  <Button
+                    type="button"
+                    className={`btn-xs ${imageSourceMode === 'upload' ? 'primary' : 'ghost'}`}
+                    onClick={() => setImageSourceMode('upload')}
+                  >
+                    <Upload size={13} style={{ marginRight: 4 }} />
+                    {t('banners.fieldImageUpload')}
+                  </Button>
+                  <Button
+                    type="button"
+                    className={`btn-xs ${imageSourceMode === 'url' ? 'primary' : 'ghost'}`}
+                    onClick={() => setImageSourceMode('url')}
+                  >
+                    <LinkIcon size={13} style={{ marginRight: 4 }} />
+                    {t('banners.fieldImageUrl')}
+                  </Button>
+                </div>
+              </div>
+
+              {/* Upload Dropzone */}
+              {imageSourceMode === 'upload' ? (
+                <div
+                  className={`admin-banner-dropzone ${isDragging ? 'is-dragging' : ''}`}
+                  onDragOver={(e) => {
+                    e.preventDefault()
+                    setIsDragging(true)
+                  }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    setIsDragging(false)
+                    const file = e.dataTransfer.files?.[0]
+                    if (file) handleFileSelected(file)
+                  }}
+                  onClick={() => fileInputRef.current?.click()}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click()
+                  }}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                    style={{ display: 'none' }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) handleFileSelected(file)
+                    }}
+                  />
+                  <div className="admin-banner-dropzone-content">
+                    <div className="admin-banner-dropzone-icon">
+                      <ImagePlus size={24} />
+                    </div>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '0.9rem', color: 'var(--panel-gold-bright, #d4af37)' }}>
+                        {t('banners.fieldImageDrop')}
+                      </strong>
+                      <small style={{ color: 'var(--panel-muted, #9c9a96)', fontSize: '0.78rem' }}>
+                        {t('banners.fieldImageHelp')}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* External URL Input */
+                <Field>
+                  <input
+                    type="text"
+                    value={form.image}
+                    onChange={(e) => handleUrlChange(e.target.value)}
+                    placeholder={t('banners.fieldImagePlaceholderUrl')}
+                  />
+                  <small style={{ color: 'var(--panel-muted, #9c9a96)', fontSize: '0.78rem', marginTop: 4 }}>
+                    {t('banners.fieldImageHelp')}
+                  </small>
+                </Field>
+              )}
+
+              {/* Live Preview Card */}
+              {imagePreviewUrl ? (
+                <div className="admin-banner-preview-card" style={{ marginTop: '0.75rem' }}>
+                  <div className="admin-banner-preview-thumb">
+                    <img
+                      src={imagePreviewUrl}
+                      alt={form.title || 'Preview Banner'}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.opacity = '0.5'
+                      }}
+                    />
+                  </div>
+                  <div className="admin-banner-preview-info">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <span className="panel-badge-soft" style={{ fontSize: '0.72rem' }}>
+                        {imageFile ? imageFile.name : (imagePreviewUrl.startsWith('http') || imagePreviewUrl.startsWith('/') ? 'URL' : 'Imagem')}
+                      </span>
+                      {imageFile && (
+                        <span className="panel-badge-soft" style={{ fontSize: '0.72rem' }}>
+                          {(imageFile.size / 1024).toFixed(1)} KB
+                        </span>
+                      )}
+                      <span className="panel-badge-soft" style={{ fontSize: '0.72rem', color: '#4ade80' }}>
+                        ✓ {t('banners.fieldImageCurrent')}
+                      </span>
+                    </div>
+                    <div className="admin-banner-preview-actions" style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <Button
+                        type="button"
+                        className="ghost"
+                        onClick={() => window.open(imagePreviewUrl, '_blank', 'noopener,noreferrer')}
+                      >
+                        <ExternalLink size={13} />
+                        <span>{t('banners.fieldImageViewReal')}</span>
+                      </Button>
+                      <Button
+                        type="button"
+                        className="ghost"
+                        onClick={() => {
+                          if (imageSourceMode === 'upload') {
+                            fileInputRef.current?.click()
+                          } else {
+                            const input = document.querySelector('input[placeholder*="https://"]') as HTMLInputElement | null
+                            input?.focus()
+                          }
+                        }}
+                      >
+                        <Upload size={13} />
+                        <span>{t('banners.fieldImageChange')}</span>
+                      </Button>
+                      <Button
+                        type="button"
+                        className="ghost danger"
+                        onClick={handleRemoveImage}
+                      >
+                        <Trash2 size={13} />
+                        <span>{t('banners.fieldImageRemove')}</span>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
 
             <Field>
               {t('banners.fieldLink')}
@@ -510,13 +739,26 @@ export function AdminBannersPage() {
 
         {(banners.data ?? []).length ? (
           <div className="admin-news-list">
-            {(banners.data ?? []).map((item) => (
-              <article className="admin-news-item" key={item.id}>
-                <span>
-                  {item.image ? <ImageIcon size={20} /> : <Megaphone size={20} />}
-                </span>
-                <div>
-                  <strong>{item.title}</strong>
+            {(banners.data ?? []).map((item) => {
+              const bannerImg = item.image || item.image_url
+              return (
+                <article className="admin-news-item" key={item.id}>
+                  <span className="admin-banner-thumb">
+                    {bannerImg ? (
+                      <img
+                        src={bannerImg}
+                        alt={item.title}
+                        onError={(e) => {
+                          const target = e.currentTarget
+                          target.style.display = 'none'
+                        }}
+                      />
+                    ) : (
+                      <Megaphone size={20} />
+                    )}
+                  </span>
+                  <div>
+                    <strong>{item.title}</strong>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
                     {item.badge && (
                       <span className="panel-badge-soft" style={{ fontSize: '0.72rem' }}>
@@ -571,8 +813,9 @@ export function AdminBannersPage() {
                     <Trash2 size={16} />
                   </Button>
                 </div>
-              </article>
-            ))}
+                </article>
+              )
+            })}
           </div>
         ) : null}
       </Card>

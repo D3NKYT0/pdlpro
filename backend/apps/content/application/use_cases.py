@@ -438,6 +438,7 @@ class ListPublicBannersUseCase(UseCase[ListBannersInput | None, list[dict[str, A
             "description_pt": item.description,
             "description_en": item.description_en,
             "description_es": item.description_es,
+            "image": item.get_image_url(),
             "image_url": item.get_image_url(),
             "link": item.link,
             "link_text": localized_text(item, "link_text", language) or item.link_text,

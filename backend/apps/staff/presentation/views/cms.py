@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy
 from drf_spectacular.utils import extend_schema
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -180,6 +181,7 @@ class StaffBannersView(InjectedAPIView):
     """Entrada HTTP do CRUD administrativo de banners e modais pop-up."""
 
     permission_classes = [IsAuthenticated, IsStaffMember]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     @extend_schema(
         tags=["Staff"],

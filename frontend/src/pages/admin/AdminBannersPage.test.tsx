@@ -142,5 +142,56 @@ describe('AdminBannersPage', () => {
     expect(dialog).toHaveTextContent('Compre 100 e ganhe 20 bônus.')
   })
 
+  it('handles image upload and submits FormData', async () => {
+    mount()
 
+    const titleInput = screen.getByPlaceholderText('Ex: Inauguração do Servidor')
+    fireEvent.change(titleInput, { target: { value: 'Novo Banner Flyer' } })
+
+    const file = new File(['dummy png content'], 'flyer.png', { type: 'image/png' })
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+    expect(fileInput).toBeInTheDocument()
+
+    fireEvent.change(fileInput, { target: { files: [file] } })
+
+    expect(await screen.findByText('flyer.png')).toBeInTheDocument()
+    expect(screen.getByText('✓ Visualização da Imagem / Flyer')).toBeInTheDocument()
+
+    const submitBtn = screen.getByRole('button', { name: 'Criar Banner' })
+    fireEvent.click(submitBtn)
+
+    await waitFor(() => {
+      expect(staffApi.saveBanner).toHaveBeenCalledWith(expect.any(FormData))
+      const callArg = vi.mocked(staffApi.saveBanner).mock.calls[0][0] as FormData
+      expect(callArg.get('title')).toBe('Novo Banner Flyer')
+      expect(callArg.get('image')).toBeInstanceOf(File)
+    })
+  })
+
+  it('handles removing an image from existing banner', async () => {
+    mount()
+
+    const editBtn = await screen.findByRole('button', { name: 'Editar' })
+    fireEvent.click(editBtn)
+
+    expect(await screen.findByText('✓ Visualização da Imagem / Flyer')).toBeInTheDocument()
+
+    const removeBtn = screen.getByRole('button', { name: 'Remover Imagem' })
+    fireEvent.click(removeBtn)
+
+    expect(screen.queryByText('✓ Visualização da Imagem / Flyer')).not.toBeInTheDocument()
+
+    const submitBtn = screen.getByRole('button', { name: 'Atualizar Banner' })
+    fireEvent.click(submitBtn)
+
+    await waitFor(() => {
+      expect(staffApi.saveBanner).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'banner-test-1',
+          image: '',
+          clear_image: true,
+        }),
+      )
+    })
+  })
 })

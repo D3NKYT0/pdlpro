@@ -31,7 +31,10 @@ def _text(data: dict, key: str, *, limit: int | None = None) -> str:
 def _bool(data: dict, key: str, default: bool = False) -> bool:
     if key not in data:
         return default
-    return bool(data.get(key))
+    val = data.get(key)
+    if isinstance(val, str):
+        return val.strip().lower() in ("true", "1", "yes", "on")
+    return bool(val)
 
 
 def _dump_calendar(row) -> dict:
@@ -362,6 +365,7 @@ class DeleteStaffDownloadUseCase(UseCase[dict, dict]):
 
 
 def _dump_banner(row) -> dict:
+    image_url = row.get_image_url()
     return {
         "id": str(row.id),
         "title": row.title,
@@ -373,7 +377,8 @@ def _dump_banner(row) -> dict:
         "description": row.description,
         "description_en": row.description_en,
         "description_es": row.description_es,
-        "image_url": row.get_image_url(),
+        "image": image_url,
+        "image_url": image_url,
         "link": row.link,
         "link_text": row.link_text,
         "link_text_en": row.link_text_en,
@@ -436,7 +441,39 @@ class UpsertStaffBannerUseCase(UseCase[dict, dict]):
         row.description = _text(data, "description")
         row.description_en = _text(data, "description_en")
         row.description_es = _text(data, "description_es")
-        row.image_url = _text(data, "image_url", limit=500)
+        # Image handling: file upload, external URL, or clearing
+        if _bool(data, "clear_image", default=False):
+            if row.image:
+                try:
+                    row.image.delete(save=False)
+                except Exception:
+                    pass
+            row.image = None
+            row.image_url = ""
+        else:
+            image_val = data.get("image") if "image" in data else data.get("image_file")
+            if hasattr(image_val, "read"):
+                row.image = image_val
+                row.image_url = ""
+            elif isinstance(image_val, str):
+                trimmed = image_val.strip()
+                if not trimmed:
+                    if row.image:
+                        try:
+                            row.image.delete(save=False)
+                        except Exception:
+                            pass
+                        row.image = None
+                    row.image_url = ""
+                else:
+                    existing_url = row.get_image_url()
+                    if not (existing_url and trimmed == existing_url and row.image):
+                        row.image_url = trimmed[:500]
+            elif "image_url" in data:
+                img_url_str = _text(data, "image_url", limit=500)
+                if img_url_str:
+                    row.image_url = img_url_str
+
         row.link = _text(data, "link", limit=300)
         row.link_text = _text(data, "link_text", limit=100)
         row.link_text_en = _text(data, "link_text_en", limit=100)
@@ -452,15 +489,23 @@ class UpsertStaffBannerUseCase(UseCase[dict, dict]):
         row.auto_close = _bool(data, "auto_close", default=False)
         row.auto_close_delay = parse_non_negative_int(data.get("auto_close_delay"), default=10)
         row.show_close_button = _bool(data, "show_close_button", default=True)
-        width_val = data.get("width_px")
+        width_val = data.get("width_px") if "width_px" in data else data.get("width")
         row.width_px = parse_non_negative_int(width_val, default=640) if width_val else 640
         row.is_active = _bool(data, "is_active", default=True)
         row.order = parse_non_negative_int(data.get("order"), default=0)
 
         start_date_raw = data.get("start_date")
-        row.start_date = parse_required_datetime(start_date_raw) if start_date_raw else None
+        row.start_date = (
+            parse_required_datetime(start_date_raw, missing_message="Data de início inválida.")
+            if start_date_raw
+            else None
+        )
         end_date_raw = data.get("end_date")
-        row.end_date = parse_required_datetime(end_date_raw) if end_date_raw else None
+        row.end_date = (
+            parse_required_datetime(end_date_raw, missing_message="Data de término inválida.")
+            if end_date_raw
+            else None
+        )
 
         self._banners.save(row)
         return _dump_banner(row)

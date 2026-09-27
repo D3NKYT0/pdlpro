@@ -3759,6 +3759,18 @@ html.pdl-panel .admin-news-item b.is-published { color: #8fd19e; border-color: r
 html.pdl-panel .admin-news-item .btn { height: 36px; }
 html.pdl-panel .admin-news-item .btn svg { width: 14px; }
 
+html.pdl-panel .admin-banner-thumb { position: relative; display: flex; align-items: center; justify-content: center; width: 76px; height: 48px; border-radius: 4px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--panel-gold) 24%, transparent); background: rgba(0, 0, 0, 0.4); flex-shrink: 0; }
+html.pdl-panel .admin-banner-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+html.pdl-panel .admin-banner-image-wrapper { display: flex; flex-direction: column; gap: 8px; }
+html.pdl-panel .admin-banner-dropzone { display: flex; align-items: center; justify-content: center; padding: 22px 16px; border: 2px dashed color-mix(in srgb, var(--panel-gold) 35%, transparent); border-radius: 6px; background: color-mix(in srgb, var(--panel-gold) 3%, transparent); cursor: pointer; transition: border-color 0.2s, background-color 0.2s; text-align: center; }
+html.pdl-panel .admin-banner-dropzone:hover, html.pdl-panel .admin-banner-dropzone.is-dragging { border-color: var(--panel-gold-bright, #d4af37); background: color-mix(in srgb, var(--panel-gold) 8%, transparent); }
+html.pdl-panel .admin-banner-dropzone-content { display: flex; align-items: center; gap: 16px; text-align: left; }
+html.pdl-panel .admin-banner-dropzone-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--panel-gold-bright, #d4af37); background: color-mix(in srgb, var(--panel-gold) 15%, transparent); border: 1px solid color-mix(in srgb, var(--panel-gold) 30%, transparent); flex-shrink: 0; }
+html.pdl-panel .admin-banner-preview-card { display: flex; align-items: center; gap: 16px; padding: 12px 14px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--panel-gold) 20%, transparent); background: rgba(0, 0, 0, 0.3); }
+html.pdl-panel .admin-banner-preview-thumb { position: relative; width: 130px; height: 75px; border-radius: 4px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--panel-gold) 25%, transparent); background: rgba(0, 0, 0, 0.5); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+html.pdl-panel .admin-banner-preview-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+html.pdl-panel .admin-banner-preview-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
 @media (max-width: 1050px) {
   html.pdl-panel .admin-server-columns { grid-template-columns: 1fr; }
   html.pdl-panel .admin-game-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }

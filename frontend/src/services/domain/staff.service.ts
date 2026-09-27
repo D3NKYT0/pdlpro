@@ -387,11 +387,19 @@ export const staffApi = {
       body: JSON.stringify(payload || {}),
     }),
   banners: () => request<ApiStaffBanner[]>('/staff/banners/'),
-  saveBanner: (payload: Partial<ApiStaffBanner>) =>
-    request<ApiStaffBanner>('/staff/banners/', {
+  saveBanner: (payload: Partial<ApiStaffBanner> | FormData) => {
+    if (payload instanceof FormData) {
+      const id = payload.get('id') as string | null
+      return request<ApiStaffBanner>('/staff/banners/', {
+        method: id ? 'PUT' : 'POST',
+        body: payload,
+      })
+    }
+    return request<ApiStaffBanner>('/staff/banners/', {
       method: payload.id ? 'PUT' : 'POST',
       body: JSON.stringify(payload),
-    }),
+    })
+  },
   deleteBanner: (id: string) =>
     request<{ deleted: boolean }>('/staff/banners/', { method: 'DELETE', body: JSON.stringify({ id }) }),
 }

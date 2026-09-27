@@ -532,6 +532,8 @@ export interface ApiStaffBanner {
   title_en: string
   title_es: string
   badge: string
+  badge_en?: string
+  badge_es?: string
   description: string
   description_en: string
   description_es: string

@@ -145,3 +145,62 @@ def test_staff_banner_crud(staff_client):
 
     # 5. Confirm deleted
     assert not Banner.objects.filter(id=banner_id).exists()
+
+
+@pytest.mark.django_db
+def test_staff_banner_image_upload_and_url(staff_client):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    # 1. Create banner with external URL
+    res_url = staff_client.post(
+        "/api/v1/staff/banners/",
+        {
+            "title": "Banner com URL Externa",
+            "image": "https://cdn.example.com/banner.webp",
+        },
+        format="json",
+    )
+    assert res_url.status_code == 200
+    banner_url_id = res_url.data["id"]
+    assert res_url.data["image"] == "https://cdn.example.com/banner.webp"
+    assert res_url.data["image_url"] == "https://cdn.example.com/banner.webp"
+
+    # 2. Create banner with uploaded image file (multipart/form-data)
+    dummy_img = SimpleUploadedFile(
+        "flyer.png",
+        b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15c4\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82",
+        content_type="image/png",
+    )
+    res_upload = staff_client.post(
+        "/api/v1/staff/banners/",
+        {
+            "title": "Banner com Arquivo",
+            "image": dummy_img,
+            "display_type": "popup",
+            "is_active": "true",
+            "dismiss_days": "5",
+        },
+        format="multipart",
+    )
+    assert res_upload.status_code == 200
+    banner_file_id = res_upload.data["id"]
+    assert "banners/" in res_upload.data["image"]
+    assert res_upload.data["is_active"] is True
+    assert res_upload.data["dismiss_days"] == 5
+
+    # 3. Clear image from banner
+    res_clear = staff_client.put(
+        "/api/v1/staff/banners/",
+        {
+            "id": banner_file_id,
+            "title": "Banner com Arquivo Limpo",
+            "clear_image": "true",
+        },
+        format="json",
+    )
+    assert res_clear.status_code == 200
+    assert res_clear.data["image"] == ""
+    assert res_clear.data["image_url"] == ""
+
+    # Cleanup
+    Banner.objects.filter(id__in=[banner_url_id, banner_file_id]).delete()
